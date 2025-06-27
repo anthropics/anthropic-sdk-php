@@ -1,0 +1,68 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\Models;
+
+use Anthropic\Core\None;
+use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Serde\ListOf;
+use Anthropic\Core\Serde\UnionOf;
+
+class MessageParam implements BaseModel
+{
+    use Model;
+
+    /**
+     * @var string|list<ServerToolUseBlockParam|WebSearchToolResultBlockParam|TextBlockParam|ImageBlockParam|ToolUseBlockParam|ToolResultBlockParam|DocumentBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam> $content
+     */
+    #[Api(
+        type: new UnionOf(
+            [
+                'string',
+                new ListOf(
+                    new UnionOf(
+                        [
+                            ServerToolUseBlockParam::class,
+                            WebSearchToolResultBlockParam::class,
+                            TextBlockParam::class,
+                            ImageBlockParam::class,
+                            ToolUseBlockParam::class,
+                            ToolResultBlockParam::class,
+                            DocumentBlockParam::class,
+                            ThinkingBlockParam::class,
+                            RedactedThinkingBlockParam::class,
+                        ],
+                    ),
+                ),
+            ],
+        ),
+    )]
+    public mixed $content;
+
+    #[Api]
+    public string $role;
+
+    /**
+     * @param string|list<ServerToolUseBlockParam|WebSearchToolResultBlockParam|TextBlockParam|ImageBlockParam|ToolUseBlockParam|ToolResultBlockParam|DocumentBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam> $content
+     */
+    final public function __construct(mixed $content, string $role)
+    {
+
+        $args = func_get_args();
+
+        $data = [];
+        for ($i = 0; $i < count($args); ++$i) {
+            if (None::NOT_SET !== $args[$i]) {
+                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
+            }
+        }
+
+        $this->__unserialize($data);
+
+    }
+}
+
+MessageParam::_loadMetadata();

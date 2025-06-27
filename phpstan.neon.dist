@@ -1,0 +1,12 @@
+parameters:
+    level: max
+    phpVersion:
+        min: 80100
+        max: 80499
+    paths:
+        - src
+        - tests
+    ignoreErrors:
+        - identifier: parameter.defaultValue
+
+    reportUnmatchedIgnoredErrors: false

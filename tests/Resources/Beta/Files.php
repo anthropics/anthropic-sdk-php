@@ -1,0 +1,82 @@
+<?php
+
+namespace Anthropic\Tests\Resources\Beta;
+
+use Anthropic\Client;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Test;
+use Tests\Core\UnsupportedMockTests;
+
+/**
+ * @internal
+ */
+#[CoversNothing]
+final class FilesTest extends TestCase
+{
+    protected Client $client;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $testUrl = getenv('TEST_API_BASE_URL') ?: 'http://127.0.0.1:4010';
+        $client = new Client(apiKey: 'my-anthropic-api-key', baseUrl: $testUrl);
+
+        $this->client = $client;
+    }
+
+    #[Test]
+    public function testList(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('skipped: currently unsupported');
+        }
+
+        $result = $this->client->beta->files->list([]);
+        $this->assertTrue(true); // @phpstan-ignore-line
+    }
+
+    #[Test]
+    public function testDelete(): void
+    {
+        $result = $this->client->beta->files->delete('file_id', []);
+        $this->assertTrue(true); // @phpstan-ignore-line
+    }
+
+    #[Test]
+    public function testDownload(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('skipped: test server currently has no support for method content-type');
+        }
+
+        $result = $this->client->beta->files->download('file_id', []);
+        $this->assertTrue(true); // @phpstan-ignore-line
+    }
+
+    #[Test]
+    public function testRetrieveMetadata(): void
+    {
+        $result = $this->client->beta->files->retrieveMetadata('file_id', []);
+        $this->assertTrue(true); // @phpstan-ignore-line
+    }
+
+    #[Test]
+    public function testUpload(): void
+    {
+        $result = $this->client->beta->files->upload(['file' => 'file']);
+        $this->assertTrue(true); // @phpstan-ignore-line
+    }
+
+    #[Test]
+    public function testUploadWithOptionalParams(): void
+    {
+        $result = $this
+            ->client
+            ->beta
+            ->files
+            ->upload(['file' => 'file', 'betas' => ['string']]);
+        $this->assertTrue(true); // @phpstan-ignore-line
+    }
+}
