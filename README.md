@@ -34,13 +34,15 @@ use Anthropic\Models\MessageParam;
 
 $client = new Client(apiKey: getenv("ANTHROPIC_API_KEY") ?: null);
 
-$message = $client->create(
-  maxTokens: 1024,
-  messages: [new MessageParam(role: "user", content: "Hello, Claude")],
-  model: "claude-3-5-sonnet-latest",
+$message = $client->messages->create(
+  [
+    "maxTokens" => 1024,
+    "messages" => [new MessageParam(role: "user", content: "Hello, Claude")],
+    "model" => "claude-3-5-sonnet-latest",
+  ],
 );
 
-var_dump(message->content);
+var_dump($message->content);
 ```
 
 ### Handling errors
@@ -54,10 +56,14 @@ use Anthropic\Errors\APIConnectionError;
 use Anthropic\Models\MessageParam;
 
 try {
-    $Messages = $client->create(
-      maxTokens: 1024,
-      messages: [new MessageParam(role: "user", content: "Hello, Claude")],
-      model: "claude-3-5-sonnet-latest",
+    $Messages = $client->messages->create(
+      [
+        "maxTokens" => 1024,
+        "messages" => [
+          new MessageParam(role: "user", content: "Hello, Claude")
+        ],
+        "model" => "claude-3-5-sonnet-latest",
+      ],
     );
 } catch (APIConnectionError $e) {
     echo "The server could not be reached", PHP_EOL;
@@ -104,10 +110,12 @@ use Anthropic\Models\MessageParam;
 $client = new Client(max_retries: 0);
 
 // Or, configure per-request:
-$client->create(
-  maxTokens: 1024,
-  messages: [new MessageParam(role: "user", content: "Hello, Claude")],
-  model: "claude-3-5-sonnet-latest",
+$client->messages->create(
+  [
+    "maxTokens" => 1024,
+    "messages" => [new MessageParam(role: "user", content: "Hello, Claude")],
+    "model" => "claude-3-5-sonnet-latest",
+  ],
   requestOptions: ["max_retries" => 5],
 );
 ```
@@ -126,10 +134,12 @@ use Anthropic\Models\MessageParam;
 $client = new Client(timeout: nil);
 
 // Or, configure per-request:
-$client->create(
-  maxTokens: 1024,
-  messages: [new MessageParam(role: "user", content: "Hello, Claude")],
-  model: "claude-3-5-sonnet-latest",
+$client->messages->create(
+  [
+    "maxTokens" => 1024,
+    "messages" => [new MessageParam(role: "user", content: "Hello, Claude")],
+    "model" => "claude-3-5-sonnet-latest",
+  ],
   requestOptions: ["timeout" => 5],
 );
 ```
@@ -153,10 +163,12 @@ Note: the `extra_` parameters of the same name overrides the documented paramete
 
 use Anthropic\Models\MessageParam;
 
-$message = $client->create(
-  maxTokens: 1024,
-  messages: [new MessageParam(role: "user", content: "Hello, Claude")],
-  model: "claude-3-5-sonnet-latest",
+$message = $client->messages->create(
+  [
+    "maxTokens" => 1024,
+    "messages" => [new MessageParam(role: "user", content: "Hello, Claude")],
+    "model" => "claude-3-5-sonnet-latest",
+  ],
   requestOptions: [
     "extraQueryParams" => ["my_query_parameter" => "value"],
     "extraBodyParams" => ["my_body_parameter" => "value"],
