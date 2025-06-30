@@ -29,7 +29,7 @@ class RequestOptions
      */
     public static function parse(mixed $options): self
     {
-        if (null === $options) {
+        if (is_null($options)) {
             return new self();
         }
 

@@ -170,7 +170,7 @@ class BaseClient
     }
 
     /**
-     * @param array<string, string|list<string>> $headers
+     * @param array<string, string|list<string>|null> $headers
      */
     public function __construct(
         protected array $headers,
