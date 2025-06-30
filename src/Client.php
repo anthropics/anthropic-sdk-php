@@ -67,7 +67,7 @@ class Client extends BaseClient
 
         parent::__construct(
             headers: [
-                'anthropic-version' => '2023-06-01',
+                'anthropic-version' => 2023 - 06 - 01,
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ],

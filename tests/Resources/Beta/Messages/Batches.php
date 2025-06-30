@@ -16,7 +16,7 @@ use Anthropic\Models\Beta\BetaCacheControlEphemeral;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
-use Tests\Core\UnsupportedMockTests;
+use Tests\UnsupportedMockTests;
 
 /**
  * @internal
