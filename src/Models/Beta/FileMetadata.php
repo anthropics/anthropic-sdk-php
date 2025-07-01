@@ -17,7 +17,7 @@ class FileMetadata implements BaseModel
     public string $id;
 
     #[Api('created_at')]
-    public mixed $createdAt;
+    public \DateTimeInterface $createdAt;
 
     #[Api]
     public string $filename;
@@ -39,7 +39,7 @@ class FileMetadata implements BaseModel
      */
     final public function __construct(
         string $id,
-        mixed $createdAt,
+        \DateTimeInterface $createdAt,
         string $filename,
         string $mimeType,
         int $sizeBytes,

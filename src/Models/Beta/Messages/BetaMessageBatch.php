@@ -16,29 +16,20 @@ class BetaMessageBatch implements BaseModel
     #[Api]
     public string $id;
 
-    /**
-     * @var null|mixed $archivedAt
-     */
     #[Api('archived_at')]
-    public mixed $archivedAt;
+    public ?\DateTimeInterface $archivedAt;
 
-    /**
-     * @var null|mixed $cancelInitiatedAt
-     */
     #[Api('cancel_initiated_at')]
-    public mixed $cancelInitiatedAt;
+    public ?\DateTimeInterface $cancelInitiatedAt;
 
     #[Api('created_at')]
-    public mixed $createdAt;
+    public \DateTimeInterface $createdAt;
 
-    /**
-     * @var null|mixed $endedAt
-     */
     #[Api('ended_at')]
-    public mixed $endedAt;
+    public ?\DateTimeInterface $endedAt;
 
     #[Api('expires_at')]
-    public mixed $expiresAt;
+    public \DateTimeInterface $expiresAt;
 
     #[Api('processing_status')]
     public string $processingStatus;
@@ -52,18 +43,13 @@ class BetaMessageBatch implements BaseModel
     #[Api]
     public string $type;
 
-    /**
-     * @param null|mixed $archivedAt
-     * @param null|mixed $cancelInitiatedAt
-     * @param null|mixed $endedAt
-     */
     final public function __construct(
         string $id,
-        mixed $archivedAt,
-        mixed $cancelInitiatedAt,
-        mixed $createdAt,
-        mixed $endedAt,
-        mixed $expiresAt,
+        ?\DateTimeInterface $archivedAt,
+        ?\DateTimeInterface $cancelInitiatedAt,
+        \DateTimeInterface $createdAt,
+        ?\DateTimeInterface $endedAt,
+        \DateTimeInterface $expiresAt,
         string $processingStatus,
         BetaMessageBatchRequestCounts $requestCounts,
         ?string $resultsURL,

@@ -17,7 +17,7 @@ class ModelInfo implements BaseModel
     public string $id;
 
     #[Api('created_at')]
-    public mixed $createdAt;
+    public \DateTimeInterface $createdAt;
 
     #[Api('display_name')]
     public string $displayName;
@@ -27,7 +27,7 @@ class ModelInfo implements BaseModel
 
     final public function __construct(
         string $id,
-        mixed $createdAt,
+        \DateTimeInterface $createdAt,
         string $displayName,
         string $type
     ) {

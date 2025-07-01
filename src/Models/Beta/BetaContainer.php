@@ -17,9 +17,9 @@ class BetaContainer implements BaseModel
     public string $id;
 
     #[Api('expires_at')]
-    public mixed $expiresAt;
+    public \DateTimeInterface $expiresAt;
 
-    final public function __construct(string $id, mixed $expiresAt)
+    final public function __construct(string $id, \DateTimeInterface $expiresAt)
     {
         $args = func_get_args();
 
