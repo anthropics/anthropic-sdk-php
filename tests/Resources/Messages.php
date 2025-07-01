@@ -3,17 +3,17 @@
 namespace Anthropic\Tests\Resources;
 
 use Anthropic\Client;
-use Anthropic\Models\Metadata;
-use Anthropic\Models\MessageParam;
-use Anthropic\Models\TextBlockParam;
 use Anthropic\Models\CacheControlEphemeral;
 use Anthropic\Models\CitationCharLocationParam;
+use Anthropic\Models\MessageParam;
+use Anthropic\Models\Metadata;
+use Anthropic\Models\TextBlockParam;
 use Anthropic\Models\ThinkingConfigEnabled;
-use Anthropic\Models\ToolChoiceAuto;
 use Anthropic\Models\Tool;
-use PHPUnit\Framework\TestCase;
+use Anthropic\Models\ToolChoiceAuto;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
@@ -43,7 +43,8 @@ final class MessagesTest extends TestCase
                 'maxTokens' => 1024,
                 'messages' => [new MessageParam(content: 'Hello, world', role: 'user')],
                 'model' => 'claude-3-7-sonnet-20250219',
-            ]);
+            ])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -111,7 +112,8 @@ final class MessagesTest extends TestCase
                 ],
                 'topK' => 5,
                 'topP' => 0.7,
-            ]);
+            ])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -124,7 +126,8 @@ final class MessagesTest extends TestCase
             ->countTokens([
                 'messages' => [new MessageParam(content: 'string', role: 'user')],
                 'model' => 'claude-3-7-sonnet-latest',
-            ]);
+            ])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -184,7 +187,8 @@ final class MessagesTest extends TestCase
                         type: 'custom'
                     ),
                 ],
-            ]);
+            ])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 }

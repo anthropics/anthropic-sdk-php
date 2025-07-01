@@ -3,17 +3,17 @@
 namespace Anthropic\Tests\Resources\Messages;
 
 use Anthropic\Client;
+use Anthropic\Models\CacheControlEphemeral;
+use Anthropic\Models\CitationCharLocationParam;
+use Anthropic\Models\MessageParam;
 use Anthropic\Models\Metadata;
 use Anthropic\Models\TextBlockParam;
-use Anthropic\Models\CitationCharLocationParam;
 use Anthropic\Models\ThinkingConfigEnabled;
-use Anthropic\Models\ToolChoiceAuto;
 use Anthropic\Models\Tool;
-use Anthropic\Models\MessageParam;
-use Anthropic\Models\CacheControlEphemeral;
-use PHPUnit\Framework\TestCase;
+use Anthropic\Models\ToolChoiceAuto;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 use Tests\UnsupportedMockTests;
 
 /**
@@ -54,7 +54,8 @@ final class BatchesTest extends TestCase
                         ],
                     ],
                 ],
-            ]);
+            ])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -132,7 +133,8 @@ final class BatchesTest extends TestCase
                         ],
                     ],
                 ],
-            ]);
+            ])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -143,7 +145,8 @@ final class BatchesTest extends TestCase
             ->client
             ->messages
             ->batches
-            ->retrieve('message_batch_id', []);
+            ->retrieve('message_batch_id', [])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 

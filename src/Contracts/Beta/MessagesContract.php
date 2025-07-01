@@ -4,29 +4,29 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts\Beta;
 
-use Anthropic\RequestOptions;
-use Anthropic\Models\Beta\BetaMetadata;
+use Anthropic\Models\Beta\BetaCodeExecutionTool20250522;
+use Anthropic\Models\Beta\BetaMessage;
 use Anthropic\Models\Beta\BetaMessageParam;
+use Anthropic\Models\Beta\BetaMessageTokensCount;
+use Anthropic\Models\Beta\BetaMetadata;
 use Anthropic\Models\Beta\BetaRequestMCPServerURLDefinition;
 use Anthropic\Models\Beta\BetaTextBlockParam;
-use Anthropic\Models\Beta\BetaThinkingConfigEnabled;
 use Anthropic\Models\Beta\BetaThinkingConfigDisabled;
-use Anthropic\Models\Beta\BetaToolChoiceAuto;
-use Anthropic\Models\Beta\BetaToolChoiceAny;
-use Anthropic\Models\Beta\BetaToolChoiceTool;
-use Anthropic\Models\Beta\BetaToolChoiceNone;
+use Anthropic\Models\Beta\BetaThinkingConfigEnabled;
 use Anthropic\Models\Beta\BetaTool;
-use Anthropic\Models\Beta\BetaToolComputerUse20241022;
 use Anthropic\Models\Beta\BetaToolBash20241022;
-use Anthropic\Models\Beta\BetaToolTextEditor20241022;
-use Anthropic\Models\Beta\BetaToolComputerUse20250124;
 use Anthropic\Models\Beta\BetaToolBash20250124;
+use Anthropic\Models\Beta\BetaToolChoiceAny;
+use Anthropic\Models\Beta\BetaToolChoiceAuto;
+use Anthropic\Models\Beta\BetaToolChoiceNone;
+use Anthropic\Models\Beta\BetaToolChoiceTool;
+use Anthropic\Models\Beta\BetaToolComputerUse20241022;
+use Anthropic\Models\Beta\BetaToolComputerUse20250124;
+use Anthropic\Models\Beta\BetaToolTextEditor20241022;
 use Anthropic\Models\Beta\BetaToolTextEditor20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20250429;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305;
-use Anthropic\Models\Beta\BetaCodeExecutionTool20250522;
-use Anthropic\Models\Beta\BetaMessage;
-use Anthropic\Models\Beta\BetaMessageTokensCount;
+use Anthropic\RequestOptions;
 
 interface MessagesContract
 {
@@ -66,7 +66,7 @@ interface MessagesContract
      */
     public function create(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): BetaMessage;
 
     /**
@@ -96,6 +96,6 @@ interface MessagesContract
      */
     public function countTokens(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): BetaMessageTokensCount;
 }

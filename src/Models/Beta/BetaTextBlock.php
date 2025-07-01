@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
@@ -16,7 +16,7 @@ class BetaTextBlock implements BaseModel
     use Model;
 
     /**
-     * @var list<BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation>|null $citations
+     * @var null|list<BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationsWebSearchResultLocation> $citations
      */
     #[Api(
         type: new UnionOf(
@@ -44,14 +44,13 @@ class BetaTextBlock implements BaseModel
     public string $type;
 
     /**
-     * @param list<BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation>|null $citations
+     * @param null|list<BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationsWebSearchResultLocation> $citations
      */
     final public function __construct(
         ?array $citations,
         string $text,
-        string $type,
+        string $type
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -62,7 +61,6 @@ class BetaTextBlock implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

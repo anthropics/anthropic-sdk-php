@@ -2,6 +2,4 @@
 
 namespace Anthropic\Errors;
 
-class RateLimitError extends APIStatusError
-{
-}
+class RateLimitError extends APIStatusError {}

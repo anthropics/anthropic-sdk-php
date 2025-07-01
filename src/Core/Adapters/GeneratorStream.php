@@ -14,8 +14,15 @@ final class GeneratorStream implements StreamInterface
     /**
      * @param \Generator<string> $st
      */
-    public function __construct(private \Generator $st)
+    public function __construct(private \Generator $st) {}
+
+    public function __toString(): string
     {
+        try {
+            return $this->getContents();
+        } catch (\Throwable) {
+            return '';
+        }
     }
 
     public function getSize(): ?int
@@ -30,7 +37,8 @@ final class GeneratorStream implements StreamInterface
 
     public function close(): void
     {
-        $ex = new class () extends \Exception {};
+        $ex = new class extends \Exception {};
+
         try {
             $this->st->throw(new $ex());
         } catch (\Throwable) {
@@ -61,9 +69,7 @@ final class GeneratorStream implements StreamInterface
         return false;
     }
 
-    public function seek(int $offset, int $whence = SEEK_SET): void
-    {
-    }
+    public function seek(int $offset, int $whence = SEEK_SET): void {}
 
     public function isWritable(): bool
     {
@@ -97,14 +103,5 @@ final class GeneratorStream implements StreamInterface
     public function getMetadata(?string $key = null): mixed
     {
         return null;
-    }
-
-    public function __toString(): string
-    {
-        try {
-            return $this->getContents();
-        } catch (\Throwable) {
-            return '';
-        }
     }
 }

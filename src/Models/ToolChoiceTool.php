@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class ToolChoiceTool implements BaseModel
 {
@@ -28,9 +28,8 @@ class ToolChoiceTool implements BaseModel
     final public function __construct(
         string $name,
         string $type,
-        bool|None $disableParallelToolUse = None::NOT_SET,
+        bool|None $disableParallelToolUse = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -41,7 +40,6 @@ class ToolChoiceTool implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

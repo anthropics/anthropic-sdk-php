@@ -9,19 +9,19 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
+use Anthropic\Models\CacheControlEphemeral;
 use Anthropic\Models\MessageParam;
 use Anthropic\Models\Metadata;
 use Anthropic\Models\TextBlockParam;
-use Anthropic\Models\ThinkingConfigEnabled;
 use Anthropic\Models\ThinkingConfigDisabled;
-use Anthropic\Models\ToolChoiceAuto;
-use Anthropic\Models\ToolChoiceAny;
-use Anthropic\Models\ToolChoiceTool;
-use Anthropic\Models\ToolChoiceNone;
+use Anthropic\Models\ThinkingConfigEnabled;
 use Anthropic\Models\Tool;
 use Anthropic\Models\ToolBash20250124;
+use Anthropic\Models\ToolChoiceAny;
+use Anthropic\Models\ToolChoiceAuto;
+use Anthropic\Models\ToolChoiceNone;
+use Anthropic\Models\ToolChoiceTool;
 use Anthropic\Models\ToolTextEditor20250124;
-use Anthropic\Models\CacheControlEphemeral;
 use Anthropic\Models\WebSearchTool20250305;
 
 class CreateParams implements BaseModel

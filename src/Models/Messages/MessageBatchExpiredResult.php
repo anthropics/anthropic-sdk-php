@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Messages;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class MessageBatchExpiredResult implements BaseModel
 {
@@ -18,7 +18,6 @@ class MessageBatchExpiredResult implements BaseModel
 
     final public function __construct(string $type)
     {
-
         $args = func_get_args();
 
         $data = [];
@@ -29,7 +28,6 @@ class MessageBatchExpiredResult implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

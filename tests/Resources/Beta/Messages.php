@@ -3,19 +3,19 @@
 namespace Anthropic\Tests\Resources\Beta;
 
 use Anthropic\Client;
-use Anthropic\Models\Beta\BetaMetadata;
-use Anthropic\Models\Beta\BetaMessageParam;
-use Anthropic\Models\Beta\BetaRequestMCPServerURLDefinition;
-use Anthropic\Models\Beta\BetaRequestMCPServerToolConfiguration;
-use Anthropic\Models\Beta\BetaTextBlockParam;
 use Anthropic\Models\Beta\BetaCacheControlEphemeral;
 use Anthropic\Models\Beta\BetaCitationCharLocationParam;
+use Anthropic\Models\Beta\BetaMessageParam;
+use Anthropic\Models\Beta\BetaMetadata;
+use Anthropic\Models\Beta\BetaRequestMCPServerToolConfiguration;
+use Anthropic\Models\Beta\BetaRequestMCPServerURLDefinition;
+use Anthropic\Models\Beta\BetaTextBlockParam;
 use Anthropic\Models\Beta\BetaThinkingConfigEnabled;
-use Anthropic\Models\Beta\BetaToolChoiceAuto;
 use Anthropic\Models\Beta\BetaTool;
-use PHPUnit\Framework\TestCase;
+use Anthropic\Models\Beta\BetaToolChoiceAuto;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
@@ -48,7 +48,8 @@ final class MessagesTest extends TestCase
                     new BetaMessageParam(content: 'Hello, world', role: 'user'),
                 ],
                 'model' => 'claude-3-7-sonnet-20250219',
-            ]);
+            ])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -141,7 +142,8 @@ final class MessagesTest extends TestCase
                 'topK' => 5,
                 'topP' => 0.7,
                 'betas' => ['string'],
-            ]);
+            ])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -155,7 +157,8 @@ final class MessagesTest extends TestCase
             ->countTokens([
                 'messages' => [new BetaMessageParam(content: 'string', role: 'user')],
                 'model' => 'claude-3-7-sonnet-latest',
-            ]);
+            ])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -237,7 +240,8 @@ final class MessagesTest extends TestCase
                     ),
                 ],
                 'betas' => ['string'],
-            ]);
+            ])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 }

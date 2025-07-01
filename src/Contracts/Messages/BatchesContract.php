@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts\Messages;
 
-use Anthropic\RequestOptions;
+use Anthropic\Models\CacheControlEphemeral;
 use Anthropic\Models\MessageParam;
+use Anthropic\Models\Messages\DeletedMessageBatch;
+use Anthropic\Models\Messages\MessageBatch;
+use Anthropic\Models\Messages\MessageBatchIndividualResponse;
 use Anthropic\Models\Metadata;
 use Anthropic\Models\TextBlockParam;
-use Anthropic\Models\ThinkingConfigEnabled;
 use Anthropic\Models\ThinkingConfigDisabled;
-use Anthropic\Models\ToolChoiceAuto;
-use Anthropic\Models\ToolChoiceAny;
-use Anthropic\Models\ToolChoiceTool;
-use Anthropic\Models\ToolChoiceNone;
+use Anthropic\Models\ThinkingConfigEnabled;
 use Anthropic\Models\Tool;
 use Anthropic\Models\ToolBash20250124;
+use Anthropic\Models\ToolChoiceAny;
+use Anthropic\Models\ToolChoiceAuto;
+use Anthropic\Models\ToolChoiceNone;
+use Anthropic\Models\ToolChoiceTool;
 use Anthropic\Models\ToolTextEditor20250124;
-use Anthropic\Models\CacheControlEphemeral;
 use Anthropic\Models\WebSearchTool20250305;
-use Anthropic\Models\Messages\MessageBatch;
-use Anthropic\Models\Messages\DeletedMessageBatch;
-use Anthropic\Models\Messages\MessageBatchIndividualResponse;
+use Anthropic\RequestOptions;
 
 interface BatchesContract
 {
@@ -73,7 +73,7 @@ interface BatchesContract
      */
     public function create(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): MessageBatch;
 
     /**
@@ -93,7 +93,7 @@ interface BatchesContract
     public function retrieve(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): MessageBatch;
 
     /**
@@ -112,7 +112,7 @@ interface BatchesContract
      */
     public function list(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): MessageBatch;
 
     /**
@@ -132,7 +132,7 @@ interface BatchesContract
     public function delete(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DeletedMessageBatch;
 
     /**
@@ -152,7 +152,7 @@ interface BatchesContract
     public function cancel(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): MessageBatch;
 
     /**
@@ -172,6 +172,6 @@ interface BatchesContract
     public function results(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): MessageBatchIndividualResponse;
 }

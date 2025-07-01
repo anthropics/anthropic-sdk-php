@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
+use Anthropic\Core\Serde\UnionOf;
 
 class WebSearchToolResultBlock implements BaseModel
 {
     use Model;
 
     /**
-     * @var WebSearchToolResultError|list<WebSearchResultBlock> $content
+     * @var list<WebSearchResultBlock>|WebSearchToolResultError $content
      */
     #[Api(
         type: new UnionOf(
@@ -32,14 +32,13 @@ class WebSearchToolResultBlock implements BaseModel
     public string $type;
 
     /**
-     * @param WebSearchToolResultError|list<WebSearchResultBlock> $content
+     * @param list<WebSearchResultBlock>|WebSearchToolResultError $content
      */
     final public function __construct(
         mixed $content,
         string $toolUseID,
-        string $type,
+        string $type
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -50,7 +49,6 @@ class WebSearchToolResultBlock implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

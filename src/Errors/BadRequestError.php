@@ -2,6 +2,4 @@
 
 namespace Anthropic\Errors;
 
-class BadRequestError extends APIStatusError
-{
-}
+class BadRequestError extends APIStatusError {}

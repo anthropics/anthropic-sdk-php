@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class BetaRawContentBlockStartEvent implements BaseModel
 {
     use Model;
 
     /**
-     * @var BetaTextBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock|BetaThinkingBlock|BetaRedactedThinkingBlock $contentBlock
+     * @var BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock $contentBlock
      */
     #[Api('content_block')]
     public mixed $contentBlock;
@@ -26,14 +26,13 @@ class BetaRawContentBlockStartEvent implements BaseModel
     public string $type;
 
     /**
-     * @param BetaTextBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock|BetaThinkingBlock|BetaRedactedThinkingBlock $contentBlock
+     * @param BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock $contentBlock
      */
     final public function __construct(
         mixed $contentBlock,
         int $index,
-        string $type,
+        string $type
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -44,7 +43,6 @@ class BetaRawContentBlockStartEvent implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

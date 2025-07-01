@@ -4,43 +4,45 @@ declare(strict_types=1);
 
 namespace Anthropic\Resources\Beta\Messages;
 
-use Anthropic\RequestOptions;
 use Anthropic\Client;
 use Anthropic\Contracts\Beta\Messages\BatchesContract;
-use Anthropic\Core\Util;
 use Anthropic\Core\Serde;
+use Anthropic\Core\Util;
+use Anthropic\Models\Beta\BetaCodeExecutionTool20250522;
 use Anthropic\Models\Beta\BetaMessageParam;
-use Anthropic\Models\Beta\BetaRequestMCPServerURLDefinition;
 use Anthropic\Models\Beta\BetaMetadata;
+use Anthropic\Models\Beta\BetaRequestMCPServerURLDefinition;
 use Anthropic\Models\Beta\BetaTextBlockParam;
-use Anthropic\Models\Beta\BetaThinkingConfigEnabled;
 use Anthropic\Models\Beta\BetaThinkingConfigDisabled;
-use Anthropic\Models\Beta\BetaToolChoiceAuto;
-use Anthropic\Models\Beta\BetaToolChoiceAny;
-use Anthropic\Models\Beta\BetaToolChoiceTool;
-use Anthropic\Models\Beta\BetaToolChoiceNone;
+use Anthropic\Models\Beta\BetaThinkingConfigEnabled;
 use Anthropic\Models\Beta\BetaTool;
-use Anthropic\Models\Beta\BetaToolComputerUse20241022;
 use Anthropic\Models\Beta\BetaToolBash20241022;
-use Anthropic\Models\Beta\BetaToolTextEditor20241022;
-use Anthropic\Models\Beta\BetaToolComputerUse20250124;
 use Anthropic\Models\Beta\BetaToolBash20250124;
+use Anthropic\Models\Beta\BetaToolChoiceAny;
+use Anthropic\Models\Beta\BetaToolChoiceAuto;
+use Anthropic\Models\Beta\BetaToolChoiceNone;
+use Anthropic\Models\Beta\BetaToolChoiceTool;
+use Anthropic\Models\Beta\BetaToolComputerUse20241022;
+use Anthropic\Models\Beta\BetaToolComputerUse20250124;
+use Anthropic\Models\Beta\BetaToolTextEditor20241022;
 use Anthropic\Models\Beta\BetaToolTextEditor20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20250429;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305;
-use Anthropic\Models\Beta\BetaCodeExecutionTool20250522;
-use Anthropic\Models\Beta\Messages\BetaMessageBatch;
 use Anthropic\Models\Beta\Messages\BetaDeletedMessageBatch;
+use Anthropic\Models\Beta\Messages\BetaMessageBatch;
 use Anthropic\Models\Beta\Messages\BetaMessageBatchIndividualResponse;
-use Anthropic\Parameters\Beta\Messages\Batches\CreateParams;
-use Anthropic\Parameters\Beta\Messages\Batches\RetrieveParams;
-use Anthropic\Parameters\Beta\Messages\Batches\ListParams;
-use Anthropic\Parameters\Beta\Messages\Batches\DeleteParams;
 use Anthropic\Parameters\Beta\Messages\Batches\CancelParams;
+use Anthropic\Parameters\Beta\Messages\Batches\CreateParams;
+use Anthropic\Parameters\Beta\Messages\Batches\DeleteParams;
+use Anthropic\Parameters\Beta\Messages\Batches\ListParams;
 use Anthropic\Parameters\Beta\Messages\Batches\ResultsParams;
+use Anthropic\Parameters\Beta\Messages\Batches\RetrieveParams;
+use Anthropic\RequestOptions;
 
 class Batches implements BatchesContract
 {
+    public function __construct(protected Client $client) {}
+
     /**
      * @param array{
      *
@@ -86,7 +88,7 @@ class Batches implements BatchesContract
      */
     public function create(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): BetaMessageBatch {
         [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
         $header_params = ['betas' => 'anthropic-beta'];
@@ -125,7 +127,7 @@ class Batches implements BatchesContract
     public function retrieve(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): BetaMessageBatch {
         [$parsed, $options] = RetrieveParams::parseRequest(
             $params,
@@ -171,10 +173,11 @@ class Batches implements BatchesContract
      */
     public function list(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): BetaMessageBatch {
         [$parsed, $options] = ListParams::parseRequest($params, $requestOptions);
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
+
         /** @var array<string, string> */
         $header_params = array_diff_key($parsed, $query_params);
         $resp = $this->client->request(
@@ -212,7 +215,7 @@ class Batches implements BatchesContract
     public function delete(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): BetaDeletedMessageBatch {
         [$parsed, $options] = DeleteParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(
@@ -249,7 +252,7 @@ class Batches implements BatchesContract
     public function cancel(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): BetaMessageBatch {
         [$parsed, $options] = CancelParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(
@@ -286,7 +289,7 @@ class Batches implements BatchesContract
     public function results(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): BetaMessageBatchIndividualResponse {
         [$parsed, $options] = ResultsParams::parseRequest(
             $params,
@@ -310,9 +313,5 @@ class Batches implements BatchesContract
             BetaMessageBatchIndividualResponse::class,
             value: $resp
         );
-    }
-
-    public function __construct(protected Client $client)
-    {
     }
 }

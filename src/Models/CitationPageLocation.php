@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class CitationPageLocation implements BaseModel
 {
@@ -37,9 +37,8 @@ class CitationPageLocation implements BaseModel
         ?string $documentTitle,
         int $endPageNumber,
         int $startPageNumber,
-        string $type,
+        string $type
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -50,7 +49,6 @@ class CitationPageLocation implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

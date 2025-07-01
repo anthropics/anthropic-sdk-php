@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
@@ -19,7 +19,7 @@ class Message implements BaseModel
     public string $id;
 
     /**
-     * @var list<TextBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock|ThinkingBlock|RedactedThinkingBlock> $content
+     * @var list<RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock> $content
      */
     #[Api(
         type: new ListOf(
@@ -59,7 +59,7 @@ class Message implements BaseModel
     public Usage $usage;
 
     /**
-     * @param list<TextBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock|ThinkingBlock|RedactedThinkingBlock> $content
+     * @param list<RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock> $content
      * @param string|string                                                                                                $model
      */
     final public function __construct(
@@ -70,9 +70,8 @@ class Message implements BaseModel
         string $stopReason,
         ?string $stopSequence,
         string $type,
-        Usage $usage,
+        Usage $usage
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -83,7 +82,6 @@ class Message implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

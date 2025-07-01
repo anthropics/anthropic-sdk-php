@@ -10,17 +10,17 @@ use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
-use Anthropic\Models\ThinkingConfigEnabled;
-use Anthropic\Models\ThinkingConfigDisabled;
-use Anthropic\Models\ToolChoiceAuto;
-use Anthropic\Models\ToolChoiceAny;
-use Anthropic\Models\ToolChoiceTool;
-use Anthropic\Models\ToolChoiceNone;
 use Anthropic\Models\CacheControlEphemeral;
 use Anthropic\Models\MessageParam;
 use Anthropic\Models\TextBlockParam;
+use Anthropic\Models\ThinkingConfigDisabled;
+use Anthropic\Models\ThinkingConfigEnabled;
 use Anthropic\Models\Tool;
 use Anthropic\Models\ToolBash20250124;
+use Anthropic\Models\ToolChoiceAny;
+use Anthropic\Models\ToolChoiceAuto;
+use Anthropic\Models\ToolChoiceNone;
+use Anthropic\Models\ToolChoiceTool;
 use Anthropic\Models\ToolTextEditor20250124;
 use Anthropic\Models\WebSearchTool20250305;
 
@@ -42,7 +42,7 @@ class CountTokensParams implements BaseModel
     public mixed $model;
 
     /**
-     * @var string|list<TextBlockParam> $system
+     * @var list<TextBlockParam>|string $system
      */
     #[Api(
         type: new UnionOf(['string', new ListOf(TextBlockParam::class)]),
@@ -51,13 +51,13 @@ class CountTokensParams implements BaseModel
     public mixed $system;
 
     /**
-     * @var ThinkingConfigEnabled|ThinkingConfigDisabled $thinking
+     * @var ThinkingConfigDisabled|ThinkingConfigEnabled $thinking
      */
     #[Api(optional: true)]
     public mixed $thinking;
 
     /**
-     * @var ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone $toolChoice
+     * @var ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice
      */
     #[Api('tool_choice', optional: true)]
     public mixed $toolChoice;

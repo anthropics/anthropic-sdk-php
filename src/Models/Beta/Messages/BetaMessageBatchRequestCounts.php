@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta\Messages;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class BetaMessageBatchRequestCounts implements BaseModel
 {
@@ -33,9 +33,8 @@ class BetaMessageBatchRequestCounts implements BaseModel
         int $errored,
         int $expired,
         int $processing,
-        int $succeeded,
+        int $succeeded
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -46,7 +45,6 @@ class BetaMessageBatchRequestCounts implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
@@ -16,7 +16,7 @@ class ContentBlockSource implements BaseModel
     use Model;
 
     /**
-     * @var string|list<TextBlockParam|ImageBlockParam> $content
+     * @var list<ImageBlockParam|TextBlockParam>|string $content
      */
     #[Api(
         type: new UnionOf(
@@ -34,11 +34,10 @@ class ContentBlockSource implements BaseModel
     public string $type;
 
     /**
-     * @param string|list<TextBlockParam|ImageBlockParam> $content
+     * @param list<ImageBlockParam|TextBlockParam>|string $content
      */
     final public function __construct(mixed $content, string $type)
     {
-
         $args = func_get_args();
 
         $data = [];
@@ -49,7 +48,6 @@ class ContentBlockSource implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

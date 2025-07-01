@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
+use Anthropic\Core\Serde\UnionOf;
 
 class BetaRequestMCPToolResultBlockParam implements BaseModel
 {
@@ -25,7 +25,7 @@ class BetaRequestMCPToolResultBlockParam implements BaseModel
     public BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * @var string|list<BetaTextBlockParam> $content
+     * @var list<BetaTextBlockParam>|string $content
      */
     #[Api(
         type: new UnionOf(['string', new ListOf(BetaTextBlockParam::class)]),
@@ -38,7 +38,7 @@ class BetaRequestMCPToolResultBlockParam implements BaseModel
 
     /**
      * @param BetaCacheControlEphemeral       $cacheControl
-     * @param string|list<BetaTextBlockParam> $content
+     * @param list<BetaTextBlockParam>|string $content
      * @param bool                            $isError
      */
     final public function __construct(
@@ -46,9 +46,8 @@ class BetaRequestMCPToolResultBlockParam implements BaseModel
         string $type,
         BetaCacheControlEphemeral|None $cacheControl = None::NOT_SET,
         mixed $content = None::NOT_SET,
-        bool|None $isError = None::NOT_SET,
+        bool|None $isError = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -59,7 +58,6 @@ class BetaRequestMCPToolResultBlockParam implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

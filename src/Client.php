@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Anthropic;
 
 use Anthropic\Core\BaseClient;
+use Anthropic\Resources\Beta;
 use Anthropic\Resources\Completions;
 use Anthropic\Resources\Messages;
 use Anthropic\Resources\Models;
-use Anthropic\Resources\Beta;
 
 class Client extends BaseClient
 {
@@ -23,6 +23,34 @@ class Client extends BaseClient
     public Models $models;
 
     public Beta $beta;
+
+    public function __construct(
+        ?string $apiKey = null,
+        ?string $authToken = null,
+        ?string $baseUrl = null
+    ) {
+        $this->apiKey = (string) ($apiKey ?? getenv('ANTHROPIC_API_KEY'));
+        $this->authToken = (string) ($authToken ?? getenv('ANTHROPIC_AUTH_TOKEN'));
+
+        $base = $baseUrl ?? getenv(
+            'ANTHROPIC_BASE_URL'
+        ) ?: 'https://api.anthropic.com';
+
+        parent::__construct(
+            headers: [
+                'anthropic-version' => 2023 - 06 - 01,
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ],
+            options: new RequestOptions(),
+            baseUrl: $base,
+        );
+
+        $this->completions = new Completions($this);
+        $this->messages = new Messages($this);
+        $this->models = new Models($this);
+        $this->beta = new Beta($this);
+    }
 
     /**
      * @return array<string, string>
@@ -50,35 +78,5 @@ class Client extends BaseClient
         }
 
         return ['Authorization' => "Bearer {$this->authToken}"];
-    }
-
-    public function __construct(
-        ?string $apiKey = null,
-        ?string $authToken = null,
-        ?string $baseUrl = null,
-    ) {
-
-        $this->apiKey = (string) ($apiKey ?? getenv('ANTHROPIC_API_KEY'));
-        $this->authToken = (string) ($authToken ?? getenv('ANTHROPIC_AUTH_TOKEN'));
-
-        $base = $baseUrl ?? getenv(
-            'ANTHROPIC_BASE_URL'
-        ) ?: 'https://api.anthropic.com';
-
-        parent::__construct(
-            headers: [
-                'anthropic-version' => 2023 - 06 - 01,
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-            ],
-            options: new RequestOptions(),
-            baseUrl: $base,
-        );
-
-        $this->completions = new Completions($this);
-        $this->messages = new Messages($this);
-        $this->models = new Models($this);
-        $this->beta = new Beta($this);
-
     }
 }

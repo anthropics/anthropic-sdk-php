@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts\Beta;
 
-use Anthropic\RequestOptions;
-use Anthropic\Models\Beta\FileMetadata;
 use Anthropic\Models\Beta\DeletedFile;
+use Anthropic\Models\Beta\FileMetadata;
+use Anthropic\RequestOptions;
 
 interface FilesContract
 {
@@ -33,7 +33,7 @@ interface FilesContract
      */
     public function list(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): FileMetadata;
 
     /**
@@ -53,7 +53,7 @@ interface FilesContract
     public function delete(
         string $fileID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DeletedFile;
 
     /**
@@ -73,7 +73,7 @@ interface FilesContract
     public function download(
         string $fileID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): mixed;
 
     /**
@@ -93,7 +93,7 @@ interface FilesContract
     public function retrieveMetadata(
         string $fileID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): FileMetadata;
 
     /**
@@ -112,6 +112,6 @@ interface FilesContract
      */
     public function upload(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): FileMetadata;
 }

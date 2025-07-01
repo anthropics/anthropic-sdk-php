@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts;
 
-use Anthropic\RequestOptions;
-use Anthropic\Models\Metadata;
 use Anthropic\Models\Completion;
+use Anthropic\Models\Metadata;
+use Anthropic\RequestOptions;
 
 interface CompletionsContract
 {
@@ -39,6 +39,6 @@ interface CompletionsContract
      */
     public function create(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): Completion;
 }

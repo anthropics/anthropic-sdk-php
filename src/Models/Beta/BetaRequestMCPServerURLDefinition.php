@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class BetaRequestMCPServerURLDefinition implements BaseModel
 {
@@ -29,17 +29,16 @@ class BetaRequestMCPServerURLDefinition implements BaseModel
     public BetaRequestMCPServerToolConfiguration $toolConfiguration;
 
     /**
-     * @param string|null                           $authorizationToken
+     * @param null|string                           $authorizationToken
      * @param BetaRequestMCPServerToolConfiguration $toolConfiguration
      */
     final public function __construct(
         string $name,
         string $type,
         string $url,
-        string|None|null $authorizationToken = None::NOT_SET,
-        BetaRequestMCPServerToolConfiguration|None $toolConfiguration = None::NOT_SET,
+        null|None|string $authorizationToken = None::NOT_SET,
+        BetaRequestMCPServerToolConfiguration|None $toolConfiguration = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -50,7 +49,6 @@ class BetaRequestMCPServerURLDefinition implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

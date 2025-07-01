@@ -2,6 +2,4 @@
 
 namespace Anthropic\Errors;
 
-class Error extends \Exception
-{
-}
+class Error extends \Exception {}

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class OverloadedError implements BaseModel
 {
@@ -21,7 +21,6 @@ class OverloadedError implements BaseModel
 
     final public function __construct(string $message, string $type)
     {
-
         $args = func_get_args();
 
         $data = [];
@@ -32,7 +31,6 @@ class OverloadedError implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

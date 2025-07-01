@@ -5,4 +5,4 @@ set -e
 cd -- "$(dirname -- "$0")/.."
 
 echo "==> Cleaning up..."
-rm -fr -- vendor/ .php-cs-fixer.cache
+exec -- rm -fr -- ./vendor/ ./.php-cs-fixer.cache

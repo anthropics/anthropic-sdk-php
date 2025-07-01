@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Anthropic\Core\Concerns;
 
-use Psr\Http\Message\ResponseInterface;
 use Anthropic\Core\BaseClient;
 use Anthropic\Core\Pagination\PageRequestOptions;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @internal

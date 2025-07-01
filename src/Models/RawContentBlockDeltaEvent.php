@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class RawContentBlockDeltaEvent implements BaseModel
 {
     use Model;
 
     /**
-     * @var TextDelta|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta $delta
+     * @var CitationsDelta|InputJSONDelta|SignatureDelta|TextDelta|ThinkingDelta $delta
      */
     #[Api]
     public mixed $delta;
@@ -26,11 +26,10 @@ class RawContentBlockDeltaEvent implements BaseModel
     public string $type;
 
     /**
-     * @param TextDelta|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta $delta
+     * @param CitationsDelta|InputJSONDelta|SignatureDelta|TextDelta|ThinkingDelta $delta
      */
     final public function __construct(mixed $delta, int $index, string $type)
     {
-
         $args = func_get_args();
 
         $data = [];
@@ -41,7 +40,6 @@ class RawContentBlockDeltaEvent implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
+use Anthropic\Core\Serde\UnionOf;
 
 class BetaMCPToolResultBlock implements BaseModel
 {
     use Model;
 
     /**
-     * @var string|list<BetaTextBlock> $content
+     * @var list<BetaTextBlock>|string $content
      */
     #[Api(type: new UnionOf(['string', new ListOf(BetaTextBlock::class)]))]
     public mixed $content;
@@ -31,15 +31,14 @@ class BetaMCPToolResultBlock implements BaseModel
     public string $type;
 
     /**
-     * @param string|list<BetaTextBlock> $content
+     * @param list<BetaTextBlock>|string $content
      */
     final public function __construct(
         mixed $content,
         bool $isError,
         string $toolUseID,
-        string $type,
+        string $type
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -50,7 +49,6 @@ class BetaMCPToolResultBlock implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

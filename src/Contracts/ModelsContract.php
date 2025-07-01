@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts;
 
-use Anthropic\RequestOptions;
 use Anthropic\Models\ModelInfo;
+use Anthropic\RequestOptions;
 
 interface ModelsContract
 {
@@ -26,7 +26,7 @@ interface ModelsContract
     public function retrieve(
         string $modelID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): ModelInfo;
 
     /**
@@ -52,6 +52,6 @@ interface ModelsContract
      */
     public function list(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): ModelInfo;
 }

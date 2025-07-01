@@ -1,18 +1,11 @@
 <?php
 
-$finder = (new PhpCsFixer\Finder())
-    ->in([__DIR__.'/src', __DIR__.'/tests']);
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
 
-return (new PhpCsFixer\Config())
-    ->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
-    ->setRules([
-        '@PhpCsFixer' => true,
-        '@PER' => true,
-        '@Symfony' => true,
-        '@PSR12' => true,
-        'array_indentation' => true,
-        'align_multiline_comment' => true,
-        'multiline_whitespace_before_semicolons' => false,
-        'phpdoc_line_span' => true,
-    ])
-    ->setFinder($finder);
+return (new Config())
+    ->setParallelConfig(ParallelConfigFactory::detect())
+    ->setFinder(Finder::create()->in([__DIR__.'/src', __DIR__.'/tests']))
+    ->setRules(['@PhpCsFixer' => true])
+;

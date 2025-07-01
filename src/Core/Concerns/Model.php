@@ -54,6 +54,19 @@ trait Model
         }
     }
 
+    /**
+     * @return array<string, mixed>
+     */
+    public function __debugInfo(): array
+    {
+        return $this->__serialize();
+    }
+
+    public function __toString(): string
+    {
+        return json_encode($this->__debugInfo(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
+    }
+
     public function offsetExists(mixed $offset): bool
     {
         if (!is_string($offset)) { // @phpstan-ignore-line
@@ -170,7 +183,7 @@ trait Model
             $item = $val[$srcName];
             unset($val[$srcName]);
 
-            if (is_null($item) && ($info->nullable  || $info->optional)) {
+            if (is_null($item) && ($info->nullable || $info->optional)) {
                 if ($info->nullable) {
                     ++$state->yes;
                 } elseif ($info->optional) {
@@ -222,19 +235,6 @@ trait Model
     {
         // @phpstan-ignore-next-line
         return Serde::dump($this::class, value: $this->__serialize());
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    public function __debugInfo(): array
-    {
-        return $this->__serialize();
-    }
-
-    public function __toString(): string
-    {
-        return json_encode($this->__debugInfo(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
     }
 
     public static function from(mixed $data): self

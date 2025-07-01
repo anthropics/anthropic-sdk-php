@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class RawMessageDeltaEvent implements BaseModel
 {
     use Model;
 
     /**
-     * @var array{stopReason?: string, stopSequence?: string|null} $delta
+     * @var array{stopReason?: string, stopSequence?: null|string} $delta
      */
     #[Api]
     public array $delta;
@@ -26,14 +26,13 @@ class RawMessageDeltaEvent implements BaseModel
     public MessageDeltaUsage $usage;
 
     /**
-     * @param array{stopReason?: string, stopSequence?: string|null} $delta
+     * @param array{stopReason?: string, stopSequence?: null|string} $delta
      */
     final public function __construct(
         array $delta,
         string $type,
-        MessageDeltaUsage $usage,
+        MessageDeltaUsage $usage
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -44,7 +43,6 @@ class RawMessageDeltaEvent implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

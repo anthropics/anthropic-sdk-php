@@ -3,19 +3,19 @@
 namespace Anthropic\Tests\Resources\Beta\Messages;
 
 use Anthropic\Client;
-use Anthropic\Models\Beta\BetaRequestMCPServerURLDefinition;
-use Anthropic\Models\Beta\BetaRequestMCPServerToolConfiguration;
-use Anthropic\Models\Beta\BetaMetadata;
-use Anthropic\Models\Beta\BetaTextBlockParam;
-use Anthropic\Models\Beta\BetaCitationCharLocationParam;
-use Anthropic\Models\Beta\BetaThinkingConfigEnabled;
-use Anthropic\Models\Beta\BetaToolChoiceAuto;
-use Anthropic\Models\Beta\BetaTool;
-use Anthropic\Models\Beta\BetaMessageParam;
 use Anthropic\Models\Beta\BetaCacheControlEphemeral;
-use PHPUnit\Framework\TestCase;
+use Anthropic\Models\Beta\BetaCitationCharLocationParam;
+use Anthropic\Models\Beta\BetaMessageParam;
+use Anthropic\Models\Beta\BetaMetadata;
+use Anthropic\Models\Beta\BetaRequestMCPServerToolConfiguration;
+use Anthropic\Models\Beta\BetaRequestMCPServerURLDefinition;
+use Anthropic\Models\Beta\BetaTextBlockParam;
+use Anthropic\Models\Beta\BetaThinkingConfigEnabled;
+use Anthropic\Models\Beta\BetaTool;
+use Anthropic\Models\Beta\BetaToolChoiceAuto;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 use Tests\UnsupportedMockTests;
 
 /**
@@ -57,7 +57,8 @@ final class BatchesTest extends TestCase
                         ],
                     ],
                 ],
-            ]);
+            ])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -158,7 +159,8 @@ final class BatchesTest extends TestCase
                     ],
                 ],
                 'betas' => ['string'],
-            ]);
+            ])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -170,7 +172,8 @@ final class BatchesTest extends TestCase
             ->beta
             ->messages
             ->batches
-            ->retrieve('message_batch_id', []);
+            ->retrieve('message_batch_id', [])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -193,7 +196,8 @@ final class BatchesTest extends TestCase
             ->beta
             ->messages
             ->batches
-            ->delete('message_batch_id', []);
+            ->delete('message_batch_id', [])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -205,7 +209,8 @@ final class BatchesTest extends TestCase
             ->beta
             ->messages
             ->batches
-            ->cancel('message_batch_id', []);
+            ->cancel('message_batch_id', [])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -221,7 +226,8 @@ final class BatchesTest extends TestCase
             ->beta
             ->messages
             ->batches
-            ->results('message_batch_id', []);
+            ->results('message_batch_id', [])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 }

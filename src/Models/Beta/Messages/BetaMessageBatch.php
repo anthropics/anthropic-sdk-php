@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta\Messages;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class BetaMessageBatch implements BaseModel
 {
@@ -17,13 +17,13 @@ class BetaMessageBatch implements BaseModel
     public string $id;
 
     /**
-     * @var mixed|null $archivedAt
+     * @var null|mixed $archivedAt
      */
     #[Api('archived_at')]
     public mixed $archivedAt;
 
     /**
-     * @var mixed|null $cancelInitiatedAt
+     * @var null|mixed $cancelInitiatedAt
      */
     #[Api('cancel_initiated_at')]
     public mixed $cancelInitiatedAt;
@@ -32,7 +32,7 @@ class BetaMessageBatch implements BaseModel
     public mixed $createdAt;
 
     /**
-     * @var mixed|null $endedAt
+     * @var null|mixed $endedAt
      */
     #[Api('ended_at')]
     public mixed $endedAt;
@@ -53,9 +53,9 @@ class BetaMessageBatch implements BaseModel
     public string $type;
 
     /**
-     * @param mixed|null $archivedAt
-     * @param mixed|null $cancelInitiatedAt
-     * @param mixed|null $endedAt
+     * @param null|mixed $archivedAt
+     * @param null|mixed $cancelInitiatedAt
+     * @param null|mixed $endedAt
      */
     final public function __construct(
         string $id,
@@ -67,9 +67,8 @@ class BetaMessageBatch implements BaseModel
         string $processingStatus,
         BetaMessageBatchRequestCounts $requestCounts,
         ?string $resultsURL,
-        string $type,
+        string $type
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -80,7 +79,6 @@ class BetaMessageBatch implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

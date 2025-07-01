@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class BetaCodeExecutionToolResultBlock implements BaseModel
 {
     use Model;
 
     /**
-     * @var BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock $content
+     * @var BetaCodeExecutionResultBlock|BetaCodeExecutionToolResultError $content
      */
     #[Api]
     public mixed $content;
@@ -26,14 +26,13 @@ class BetaCodeExecutionToolResultBlock implements BaseModel
     public string $type;
 
     /**
-     * @param BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock $content
+     * @param BetaCodeExecutionResultBlock|BetaCodeExecutionToolResultError $content
      */
     final public function __construct(
         mixed $content,
         string $toolUseID,
-        string $type,
+        string $type
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -44,7 +43,6 @@ class BetaCodeExecutionToolResultBlock implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

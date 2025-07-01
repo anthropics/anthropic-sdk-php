@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class BetaErrorResponse implements BaseModel
 {
     use Model;
 
     /**
-     * @var BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error
+     * @var BetaAPIError|BetaAuthenticationError|BetaBillingError|BetaGatewayTimeoutError|BetaInvalidRequestError|BetaNotFoundError|BetaOverloadedError|BetaPermissionError|BetaRateLimitError $error
      */
     #[Api]
     public mixed $error;
@@ -23,11 +23,10 @@ class BetaErrorResponse implements BaseModel
     public string $type;
 
     /**
-     * @param BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error
+     * @param BetaAPIError|BetaAuthenticationError|BetaBillingError|BetaGatewayTimeoutError|BetaInvalidRequestError|BetaNotFoundError|BetaOverloadedError|BetaPermissionError|BetaRateLimitError $error
      */
     final public function __construct(mixed $error, string $type)
     {
-
         $args = func_get_args();
 
         $data = [];
@@ -38,7 +37,6 @@ class BetaErrorResponse implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

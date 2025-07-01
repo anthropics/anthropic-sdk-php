@@ -13,10 +13,9 @@ use Anthropic\Core\Serde\DumpState;
 trait ArrayOf
 {
     public function __construct(
-        private readonly string|Converter|StaticConverter $type,
+        private readonly Converter|StaticConverter|string $type,
         private readonly bool $nullable = false,
-    ) {
-    }
+    ) {}
 
     public function coerce(mixed $value, CoerceState $state): mixed
     {

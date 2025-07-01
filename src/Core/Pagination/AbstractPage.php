@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Anthropic\Core\Pagination;
 
+use Anthropic\Core\BaseClient;
 use Anthropic\Core\Concerns\Pager;
 use Anthropic\Core\Errors\AnthropicError;
-use Anthropic\Core\BaseClient;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -23,8 +23,7 @@ abstract class AbstractPage implements \IteratorAggregate, Pager
         protected PageRequestOptions $options,
         protected ResponseInterface $response,
         protected mixed $body,
-    ) {
-    }
+    ) {}
 
     abstract public function nextPageRequestOptions(): ?PageRequestOptions;
 
@@ -56,7 +55,9 @@ abstract class AbstractPage implements \IteratorAggregate, Pager
     {
         $nextOptions = $this->nextPageRequestOptions();
         if (!$nextOptions) {
-            throw new AnthropicError('No next page expected; please check `.hasNextPage()` before calling `.getNextPage()`.');
+            throw new AnthropicError(
+                'No next page expected; please check `.hasNextPage()` before calling `.getNextPage()`.'
+            );
         }
 
         $response = $this->client->requestApiList($this, $nextOptions);
@@ -80,9 +81,11 @@ abstract class AbstractPage implements \IteratorAggregate, Pager
     public function iterPages(): \Generator
     {
         $page = $this;
+
         yield $page;
         while ($page->hasNextPage()) {
             $page = $page->getNextPage();
+
             yield $page;
         }
     }

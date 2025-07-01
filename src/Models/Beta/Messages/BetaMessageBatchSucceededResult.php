@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta\Messages;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 use Anthropic\Models\Beta\BetaMessage;
 
 class BetaMessageBatchSucceededResult implements BaseModel
@@ -22,7 +22,6 @@ class BetaMessageBatchSucceededResult implements BaseModel
 
     final public function __construct(BetaMessage $message, string $type)
     {
-
         $args = func_get_args();
 
         $data = [];
@@ -33,7 +32,6 @@ class BetaMessageBatchSucceededResult implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

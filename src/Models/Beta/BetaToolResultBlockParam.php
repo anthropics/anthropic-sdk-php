@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
@@ -25,7 +25,7 @@ class BetaToolResultBlockParam implements BaseModel
     public BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * @var string|list<BetaTextBlockParam|BetaImageBlockParam> $content
+     * @var list<BetaImageBlockParam|BetaTextBlockParam>|string $content
      */
     #[Api(
         type: new UnionOf(
@@ -45,7 +45,7 @@ class BetaToolResultBlockParam implements BaseModel
 
     /**
      * @param BetaCacheControlEphemeral                           $cacheControl
-     * @param string|list<BetaTextBlockParam|BetaImageBlockParam> $content
+     * @param list<BetaImageBlockParam|BetaTextBlockParam>|string $content
      * @param bool                                                $isError
      */
     final public function __construct(
@@ -53,9 +53,8 @@ class BetaToolResultBlockParam implements BaseModel
         string $type,
         BetaCacheControlEphemeral|None $cacheControl = None::NOT_SET,
         mixed $content = None::NOT_SET,
-        bool|None $isError = None::NOT_SET,
+        bool|None $isError = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -66,7 +65,6 @@ class BetaToolResultBlockParam implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

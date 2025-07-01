@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class BetaImageBlockParam implements BaseModel
 {
     use Model;
 
     /**
-     * @var BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource $source
+     * @var BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source
      */
     #[Api]
     public mixed $source;
@@ -26,15 +26,14 @@ class BetaImageBlockParam implements BaseModel
     public BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * @param BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource $source
+     * @param BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source
      * @param BetaCacheControlEphemeral                                    $cacheControl
      */
     final public function __construct(
         mixed $source,
         string $type,
-        BetaCacheControlEphemeral|None $cacheControl = None::NOT_SET,
+        BetaCacheControlEphemeral|None $cacheControl = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -45,7 +44,6 @@ class BetaImageBlockParam implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

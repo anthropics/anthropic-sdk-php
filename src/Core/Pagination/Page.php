@@ -13,6 +13,17 @@ use Psr\Http\Message\ResponseInterface;
 class Page extends AbstractPage
 {
     /**
+     * @var list<TItem>
+     */
+    public array $data;
+
+    public bool $hasMore;
+
+    public ?string $firstID;
+
+    public ?string $lastID;
+
+    /**
      * @param array{
      *
      *     data?: list<TItem>,
@@ -26,26 +37,13 @@ class Page extends AbstractPage
         protected BaseClient $client,
         protected PageRequestOptions $options,
         protected ResponseInterface $response,
-        protected mixed $body,
+        protected mixed $body
     ) {
-
         $this->data = $body['data'] ?? [];
         $this->hasMore = $body['hasMore'] ?? false;
         $this->firstID = $body['firstID'] ?? '';
         $this->lastID = $body['lastID'] ?? '';
-
     }
-
-    /**
-     * @var list<TItem>
-     */
-    public array $data;
-
-    public bool $hasMore;
-
-    public ?string $firstID;
-
-    public ?string $lastID;
 
     public function nextPageRequestOptions(): ?PageRequestOptions
     {

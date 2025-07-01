@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
+use Anthropic\Core\Serde\UnionOf;
 
 class BetaRequestMCPServerToolConfiguration implements BaseModel
 {
     use Model;
 
     /**
-     * @var list<string>|null $allowedTools
+     * @var null|list<string> $allowedTools
      */
     #[Api(
         'allowed_tools',
@@ -29,14 +29,13 @@ class BetaRequestMCPServerToolConfiguration implements BaseModel
     public ?bool $enabled;
 
     /**
-     * @param list<string>|null $allowedTools
-     * @param bool|null         $enabled
+     * @param null|list<string> $allowedTools
+     * @param null|bool         $enabled
      */
     final public function __construct(
-        array|None|null $allowedTools = None::NOT_SET,
-        bool|None|null $enabled = None::NOT_SET,
+        null|array|None $allowedTools = None::NOT_SET,
+        null|bool|None $enabled = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -47,7 +46,6 @@ class BetaRequestMCPServerToolConfiguration implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

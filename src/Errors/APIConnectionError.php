@@ -2,6 +2,4 @@
 
 namespace Anthropic\Errors;
 
-class APIConnectionError extends APIError
-{
-}
+class APIConnectionError extends APIError {}

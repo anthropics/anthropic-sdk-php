@@ -12,39 +12,11 @@ final class PropertyInfo
 {
     public readonly string $apiName;
 
-    public readonly string|Converter|StaticConverter $type;
+    public readonly Converter|StaticConverter|string $type;
 
     public readonly bool $nullable;
 
     public readonly bool $optional;
-
-    /**
-     * @param string|Converter|StaticConverter|\ReflectionType|array<string|int,string>|null $type
-     */
-    private static function parse(string|Converter|StaticConverter|\ReflectionType|array|null $type): string|Converter|StaticConverter
-    {
-        if (is_string($type) || $type instanceof Converter) {
-            return $type;
-        }
-
-        if (is_array($type)) {
-            return new UnionOf($type);
-        }
-
-        if ($type instanceof \ReflectionUnionType) {
-            return new UnionOf(array_map(static fn ($t) => self::parse($t), array: $type->getTypes()));
-        }
-
-        if ($type instanceof \ReflectionNamedType) {
-            return $type->getName();
-        }
-
-        if ($type instanceof \ReflectionIntersectionType) {
-            throw new \ValueError();
-        }
-
-        return 'mixed';
-    }
 
     public function __construct(public readonly \ReflectionProperty $property)
     {
@@ -70,5 +42,33 @@ final class PropertyInfo
         $this->apiName = $apiName;
         $this->type = self::parse($type);
         $this->optional = $optional;
+    }
+
+    /**
+     * @param null|array<int|string,string>|Converter|\ReflectionType|StaticConverter|string $type
+     */
+    private static function parse(null|array|Converter|\ReflectionType|StaticConverter|string $type): Converter|StaticConverter|string
+    {
+        if (is_string($type) || $type instanceof Converter) {
+            return $type;
+        }
+
+        if (is_array($type)) {
+            return new UnionOf($type);
+        }
+
+        if ($type instanceof \ReflectionUnionType) {
+            return new UnionOf(array_map(static fn ($t) => self::parse($t), array: $type->getTypes()));
+        }
+
+        if ($type instanceof \ReflectionNamedType) {
+            return $type->getName();
+        }
+
+        if ($type instanceof \ReflectionIntersectionType) {
+            throw new \ValueError();
+        }
+
+        return 'mixed';
     }
 }

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta\Messages;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class BetaMessageBatchIndividualResponse implements BaseModel
 {
@@ -17,17 +17,16 @@ class BetaMessageBatchIndividualResponse implements BaseModel
     public string $customID;
 
     /**
-     * @var BetaMessageBatchSucceededResult|BetaMessageBatchErroredResult|BetaMessageBatchCanceledResult|BetaMessageBatchExpiredResult $result
+     * @var BetaMessageBatchCanceledResult|BetaMessageBatchErroredResult|BetaMessageBatchExpiredResult|BetaMessageBatchSucceededResult $result
      */
     #[Api]
     public mixed $result;
 
     /**
-     * @param BetaMessageBatchSucceededResult|BetaMessageBatchErroredResult|BetaMessageBatchCanceledResult|BetaMessageBatchExpiredResult $result
+     * @param BetaMessageBatchCanceledResult|BetaMessageBatchErroredResult|BetaMessageBatchExpiredResult|BetaMessageBatchSucceededResult $result
      */
     final public function __construct(string $customID, mixed $result)
     {
-
         $args = func_get_args();
 
         $data = [];
@@ -38,7 +37,6 @@ class BetaMessageBatchIndividualResponse implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

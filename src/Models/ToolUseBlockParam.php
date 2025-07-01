@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class ToolUseBlockParam implements BaseModel
 {
@@ -36,9 +36,8 @@ class ToolUseBlockParam implements BaseModel
         mixed $input,
         string $name,
         string $type,
-        CacheControlEphemeral|None $cacheControl = None::NOT_SET,
+        CacheControlEphemeral|None $cacheControl = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -49,7 +48,6 @@ class ToolUseBlockParam implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

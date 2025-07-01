@@ -4,40 +4,45 @@ declare(strict_types=1);
 
 namespace Anthropic\Resources\Beta;
 
-use Anthropic\RequestOptions;
 use Anthropic\Client;
 use Anthropic\Contracts\Beta\MessagesContract;
-use Anthropic\Core\Util;
 use Anthropic\Core\Serde;
-use Anthropic\Models\Beta\BetaMetadata;
+use Anthropic\Core\Util;
+use Anthropic\Models\Beta\BetaCodeExecutionTool20250522;
+use Anthropic\Models\Beta\BetaMessage;
 use Anthropic\Models\Beta\BetaMessageParam;
+use Anthropic\Models\Beta\BetaMessageTokensCount;
+use Anthropic\Models\Beta\BetaMetadata;
 use Anthropic\Models\Beta\BetaRequestMCPServerURLDefinition;
 use Anthropic\Models\Beta\BetaTextBlockParam;
-use Anthropic\Models\Beta\BetaThinkingConfigEnabled;
 use Anthropic\Models\Beta\BetaThinkingConfigDisabled;
-use Anthropic\Models\Beta\BetaToolChoiceAuto;
-use Anthropic\Models\Beta\BetaToolChoiceAny;
-use Anthropic\Models\Beta\BetaToolChoiceTool;
-use Anthropic\Models\Beta\BetaToolChoiceNone;
+use Anthropic\Models\Beta\BetaThinkingConfigEnabled;
 use Anthropic\Models\Beta\BetaTool;
-use Anthropic\Models\Beta\BetaToolComputerUse20241022;
 use Anthropic\Models\Beta\BetaToolBash20241022;
-use Anthropic\Models\Beta\BetaToolTextEditor20241022;
-use Anthropic\Models\Beta\BetaToolComputerUse20250124;
 use Anthropic\Models\Beta\BetaToolBash20250124;
+use Anthropic\Models\Beta\BetaToolChoiceAny;
+use Anthropic\Models\Beta\BetaToolChoiceAuto;
+use Anthropic\Models\Beta\BetaToolChoiceNone;
+use Anthropic\Models\Beta\BetaToolChoiceTool;
+use Anthropic\Models\Beta\BetaToolComputerUse20241022;
+use Anthropic\Models\Beta\BetaToolComputerUse20250124;
+use Anthropic\Models\Beta\BetaToolTextEditor20241022;
 use Anthropic\Models\Beta\BetaToolTextEditor20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20250429;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305;
-use Anthropic\Models\Beta\BetaCodeExecutionTool20250522;
-use Anthropic\Models\Beta\BetaMessage;
-use Anthropic\Models\Beta\BetaMessageTokensCount;
-use Anthropic\Parameters\Beta\Messages\CreateParams;
 use Anthropic\Parameters\Beta\Messages\CountTokensParams;
+use Anthropic\Parameters\Beta\Messages\CreateParams;
+use Anthropic\RequestOptions;
 use Anthropic\Resources\Beta\Messages\Batches;
 
 class Messages implements MessagesContract
 {
     public Batches $batches;
+
+    public function __construct(protected Client $client)
+    {
+        $this->batches = new Batches($client);
+    }
 
     /**
      * @param array{
@@ -75,7 +80,7 @@ class Messages implements MessagesContract
      */
     public function create(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): BetaMessage {
         [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
         $header_params = ['betas' => 'anthropic-beta'];
@@ -121,7 +126,7 @@ class Messages implements MessagesContract
      */
     public function countTokens(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): BetaMessageTokensCount {
         [$parsed, $options] = CountTokensParams::parseRequest(
             $params,
@@ -141,12 +146,5 @@ class Messages implements MessagesContract
 
         // @phpstan-ignore-next-line;
         return Serde::coerce(BetaMessageTokensCount::class, value: $resp);
-    }
-
-    public function __construct(protected Client $client)
-    {
-
-        $this->batches = new Batches($client);
-
     }
 }

@@ -3,11 +3,25 @@
 namespace Tests\Core;
 
 use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
 class TestModel implements BaseModel
 {
-    use \Anthropic\Core\Concerns\Model;
+    use Model;
+
+    #[Api(optional: false)]
+    public ?string $name = null;
+
+    #[Api('age_years')]
+    public ?int $ageYears = null;
+
+    /** @var null|list<string> */
+    #[Api]
+    public ?array $friends = null;
+
+    #[Api]
+    public ?string $owner;
 
     /**
      * @param array{
@@ -22,23 +36,7 @@ class TestModel implements BaseModel
         $this->_loadMetadata();
         $this->__unserialize($data);
     }
-
-    #[Api(optional: false)]
-    public ?string $name = null;
-
-    #[Api('age_years')]
-    public ?int $ageYears = null;
-
-    /**
-     * @var list<string>|null
-     */
-    #[Api]
-    public ?array $friends = null;
-
-    #[Api]
-    public ?string $owner;
 }
-
 
 describe('try serializing from array', function () {
     it('supports basic get and set', function () {
@@ -83,7 +81,7 @@ describe('try serializing from array', function () {
         expect($model->offsetExists('ageYears'))->toBeTrue();
         expect($model2->offsetExists('ageYears'))->toBeTrue();
 
-        /* expect($model->owner)->toBe(null); */
+        // expect($model->owner)->toBe(null);
         expect($model2->owner)->toBe(null);
 
         expect($model->offsetExists('owner'))->toBeFalse();

@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class BetaRequestDocumentBlock implements BaseModel
 {
     use Model;
 
     /**
-     * @var BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource $source
+     * @var BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source
      */
     #[Api]
     public mixed $source;
@@ -35,21 +35,20 @@ class BetaRequestDocumentBlock implements BaseModel
     public ?string $title;
 
     /**
-     * @param BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource $source
+     * @param BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source
      * @param BetaCacheControlEphemeral                                                                              $cacheControl
      * @param BetaCitationsConfigParam                                                                               $citations
-     * @param string|null                                                                                            $context
-     * @param string|null                                                                                            $title
+     * @param null|string                                                                                            $context
+     * @param null|string                                                                                            $title
      */
     final public function __construct(
         mixed $source,
         string $type,
         BetaCacheControlEphemeral|None $cacheControl = None::NOT_SET,
         BetaCitationsConfigParam|None $citations = None::NOT_SET,
-        string|None|null $context = None::NOT_SET,
-        string|None|null $title = None::NOT_SET,
+        null|None|string $context = None::NOT_SET,
+        null|None|string $title = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -60,7 +59,6 @@ class BetaRequestDocumentBlock implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

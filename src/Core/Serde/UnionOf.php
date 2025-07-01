@@ -12,29 +12,12 @@ use Anthropic\Core\Serde;
 final class UnionOf implements Converter
 {
     /**
-     * @param array<string|int, string|Converter|StaticConverter> $variants
+     * @param array<int|string, Converter|StaticConverter|string> $variants
      */
     public function __construct(
         private readonly array $variants,
         private readonly ?string $discriminator = null,
-    ) {
-    }
-
-    private function resolveVariant(
-        mixed $value,
-    ): string|Converter|StaticConverter|null {
-        if ($value instanceof BaseModel) {
-            return $value::class;
-        }
-
-        if (!is_null($this->discriminator) && is_array($value) && array_key_exists($this->discriminator, array: $value)) {
-            $discriminator = $value[$this->discriminator];
-
-            return $this->variants[$discriminator] ?? null;
-        }
-
-        return null;
-    }
+    ) {}
 
     public function coerce(mixed $value, CoerceState $state): mixed
     {
@@ -90,5 +73,21 @@ final class UnionOf implements Converter
         }
 
         return Serde::dump_unknown($value, state: $state);
+    }
+
+    private function resolveVariant(
+        mixed $value,
+    ): null|Converter|StaticConverter|string {
+        if ($value instanceof BaseModel) {
+            return $value::class;
+        }
+
+        if (!is_null($this->discriminator) && is_array($value) && array_key_exists($this->discriminator, array: $value)) {
+            $discriminator = $value[$this->discriminator];
+
+            return $this->variants[$discriminator] ?? null;
+        }
+
+        return null;
     }
 }

@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Anthropic\Resources;
 
-use Anthropic\RequestOptions;
 use Anthropic\Client;
 use Anthropic\Contracts\CompletionsContract;
-use Anthropic\Core\Util;
 use Anthropic\Core\Serde;
-use Anthropic\Models\Metadata;
+use Anthropic\Core\Util;
 use Anthropic\Models\Completion;
+use Anthropic\Models\Metadata;
 use Anthropic\Parameters\Completions\CreateParams;
+use Anthropic\RequestOptions;
 
 class Completions implements CompletionsContract
 {
+    public function __construct(protected Client $client) {}
+
     /**
      * @param array{
      *
@@ -44,7 +46,7 @@ class Completions implements CompletionsContract
      */
     public function create(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): Completion {
         [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
         $header_params = ['betas' => 'anthropic-beta'];
@@ -61,9 +63,5 @@ class Completions implements CompletionsContract
 
         // @phpstan-ignore-next-line;
         return Serde::coerce(Completion::class, value: $resp);
-    }
-
-    public function __construct(protected Client $client)
-    {
     }
 }

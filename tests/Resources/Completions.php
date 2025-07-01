@@ -4,9 +4,9 @@ namespace Anthropic\Tests\Resources;
 
 use Anthropic\Client;
 use Anthropic\Models\Metadata;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
@@ -36,7 +36,8 @@ final class CompletionsTest extends TestCase
                 'maxTokensToSample' => 256,
                 'model' => 'claude-3-7-sonnet-latest',
                 'prompt' => "\n\nHuman: Hello, world!\n\nAssistant:",
-            ]);
+            ])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 
@@ -57,7 +58,8 @@ final class CompletionsTest extends TestCase
                 'topK' => 5,
                 'topP' => 0.7,
                 'betas' => ['string'],
-            ]);
+            ])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 }

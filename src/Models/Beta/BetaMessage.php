@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
@@ -22,7 +22,7 @@ class BetaMessage implements BaseModel
     public BetaContainer $container;
 
     /**
-     * @var list<BetaTextBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock|BetaThinkingBlock|BetaRedactedThinkingBlock> $content
+     * @var list<BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock> $content
      */
     #[Api(
         type: new ListOf(
@@ -66,7 +66,7 @@ class BetaMessage implements BaseModel
     public BetaUsage $usage;
 
     /**
-     * @param list<BetaTextBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock|BetaThinkingBlock|BetaRedactedThinkingBlock> $content
+     * @param list<BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock> $content
      * @param string|string                                                                                                                                                                                                                             $model
      */
     final public function __construct(
@@ -78,9 +78,8 @@ class BetaMessage implements BaseModel
         string $stopReason,
         ?string $stopSequence,
         string $type,
-        BetaUsage $usage,
+        BetaUsage $usage
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -91,7 +90,6 @@ class BetaMessage implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

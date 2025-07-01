@@ -4,32 +4,34 @@ declare(strict_types=1);
 
 namespace Anthropic\Resources\Messages;
 
-use Anthropic\RequestOptions;
 use Anthropic\Client;
 use Anthropic\Contracts\Messages\BatchesContract;
 use Anthropic\Core\Serde;
+use Anthropic\Models\CacheControlEphemeral;
 use Anthropic\Models\MessageParam;
+use Anthropic\Models\Messages\DeletedMessageBatch;
+use Anthropic\Models\Messages\MessageBatch;
+use Anthropic\Models\Messages\MessageBatchIndividualResponse;
 use Anthropic\Models\Metadata;
 use Anthropic\Models\TextBlockParam;
-use Anthropic\Models\ThinkingConfigEnabled;
 use Anthropic\Models\ThinkingConfigDisabled;
-use Anthropic\Models\ToolChoiceAuto;
-use Anthropic\Models\ToolChoiceAny;
-use Anthropic\Models\ToolChoiceTool;
-use Anthropic\Models\ToolChoiceNone;
+use Anthropic\Models\ThinkingConfigEnabled;
 use Anthropic\Models\Tool;
 use Anthropic\Models\ToolBash20250124;
+use Anthropic\Models\ToolChoiceAny;
+use Anthropic\Models\ToolChoiceAuto;
+use Anthropic\Models\ToolChoiceNone;
+use Anthropic\Models\ToolChoiceTool;
 use Anthropic\Models\ToolTextEditor20250124;
-use Anthropic\Models\CacheControlEphemeral;
 use Anthropic\Models\WebSearchTool20250305;
-use Anthropic\Models\Messages\MessageBatch;
-use Anthropic\Models\Messages\DeletedMessageBatch;
-use Anthropic\Models\Messages\MessageBatchIndividualResponse;
 use Anthropic\Parameters\Messages\Batches\CreateParams;
 use Anthropic\Parameters\Messages\Batches\ListParams;
+use Anthropic\RequestOptions;
 
 class Batches implements BatchesContract
 {
+    public function __construct(protected Client $client) {}
+
     /**
      * @param array{
      *
@@ -78,7 +80,7 @@ class Batches implements BatchesContract
      */
     public function create(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): MessageBatch {
         [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(
@@ -109,7 +111,7 @@ class Batches implements BatchesContract
     public function retrieve(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): MessageBatch {
         $resp = $this->client->request(
             method: 'get',
@@ -137,7 +139,7 @@ class Batches implements BatchesContract
      */
     public function list(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): MessageBatch {
         [$parsed, $options] = ListParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(
@@ -168,7 +170,7 @@ class Batches implements BatchesContract
     public function delete(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DeletedMessageBatch {
         $resp = $this->client->request(
             method: 'delete',
@@ -197,7 +199,7 @@ class Batches implements BatchesContract
     public function cancel(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): MessageBatch {
         $resp = $this->client->request(
             method: 'post',
@@ -226,7 +228,7 @@ class Batches implements BatchesContract
     public function results(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): MessageBatchIndividualResponse {
         $resp = $this->client->request(
             method: 'get',
@@ -237,9 +239,5 @@ class Batches implements BatchesContract
 
         // @phpstan-ignore-next-line;
         return Serde::coerce(MessageBatchIndividualResponse::class, value: $resp);
-    }
-
-    public function __construct(protected Client $client)
-    {
     }
 }

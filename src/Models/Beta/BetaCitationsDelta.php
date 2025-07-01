@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class BetaCitationsDelta implements BaseModel
 {
     use Model;
 
     /**
-     * @var BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation $citation
+     * @var BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationsWebSearchResultLocation $citation
      */
     #[Api]
     public mixed $citation;
@@ -23,11 +23,10 @@ class BetaCitationsDelta implements BaseModel
     public string $type;
 
     /**
-     * @param BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation $citation
+     * @param BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationsWebSearchResultLocation $citation
      */
     final public function __construct(mixed $citation, string $type)
     {
-
         $args = func_get_args();
 
         $data = [];
@@ -38,7 +37,6 @@ class BetaCitationsDelta implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

@@ -4,30 +4,30 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts\Beta\Messages;
 
-use Anthropic\RequestOptions;
+use Anthropic\Models\Beta\BetaCodeExecutionTool20250522;
 use Anthropic\Models\Beta\BetaMessageParam;
-use Anthropic\Models\Beta\BetaRequestMCPServerURLDefinition;
 use Anthropic\Models\Beta\BetaMetadata;
+use Anthropic\Models\Beta\BetaRequestMCPServerURLDefinition;
 use Anthropic\Models\Beta\BetaTextBlockParam;
-use Anthropic\Models\Beta\BetaThinkingConfigEnabled;
 use Anthropic\Models\Beta\BetaThinkingConfigDisabled;
-use Anthropic\Models\Beta\BetaToolChoiceAuto;
-use Anthropic\Models\Beta\BetaToolChoiceAny;
-use Anthropic\Models\Beta\BetaToolChoiceTool;
-use Anthropic\Models\Beta\BetaToolChoiceNone;
+use Anthropic\Models\Beta\BetaThinkingConfigEnabled;
 use Anthropic\Models\Beta\BetaTool;
-use Anthropic\Models\Beta\BetaToolComputerUse20241022;
 use Anthropic\Models\Beta\BetaToolBash20241022;
-use Anthropic\Models\Beta\BetaToolTextEditor20241022;
-use Anthropic\Models\Beta\BetaToolComputerUse20250124;
 use Anthropic\Models\Beta\BetaToolBash20250124;
+use Anthropic\Models\Beta\BetaToolChoiceAny;
+use Anthropic\Models\Beta\BetaToolChoiceAuto;
+use Anthropic\Models\Beta\BetaToolChoiceNone;
+use Anthropic\Models\Beta\BetaToolChoiceTool;
+use Anthropic\Models\Beta\BetaToolComputerUse20241022;
+use Anthropic\Models\Beta\BetaToolComputerUse20250124;
+use Anthropic\Models\Beta\BetaToolTextEditor20241022;
 use Anthropic\Models\Beta\BetaToolTextEditor20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20250429;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305;
-use Anthropic\Models\Beta\BetaCodeExecutionTool20250522;
-use Anthropic\Models\Beta\Messages\BetaMessageBatch;
 use Anthropic\Models\Beta\Messages\BetaDeletedMessageBatch;
+use Anthropic\Models\Beta\Messages\BetaMessageBatch;
 use Anthropic\Models\Beta\Messages\BetaMessageBatchIndividualResponse;
+use Anthropic\RequestOptions;
 
 interface BatchesContract
 {
@@ -76,7 +76,7 @@ interface BatchesContract
      */
     public function create(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): BetaMessageBatch;
 
     /**
@@ -100,7 +100,7 @@ interface BatchesContract
     public function retrieve(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): BetaMessageBatch;
 
     /**
@@ -126,7 +126,7 @@ interface BatchesContract
      */
     public function list(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): BetaMessageBatch;
 
     /**
@@ -150,7 +150,7 @@ interface BatchesContract
     public function delete(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): BetaDeletedMessageBatch;
 
     /**
@@ -174,7 +174,7 @@ interface BatchesContract
     public function cancel(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): BetaMessageBatch;
 
     /**
@@ -198,6 +198,6 @@ interface BatchesContract
     public function results(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): BetaMessageBatchIndividualResponse;
 }

@@ -3,9 +3,9 @@
 namespace Anthropic\Tests\Resources\Beta;
 
 use Anthropic\Client;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 use Tests\UnsupportedMockTests;
 
 /**

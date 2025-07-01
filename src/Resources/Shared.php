@@ -9,7 +9,5 @@ use Anthropic\Contracts\SharedContract;
 
 class Shared implements SharedContract
 {
-    public function __construct(protected Client $client)
-    {
-    }
+    public function __construct(protected Client $client) {}
 }

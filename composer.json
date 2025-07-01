@@ -28,20 +28,20 @@
   "name": "anthropic/anthropic",
   "require": {
     "php": "^8.1",
-    "php-http/discovery": "^1.17",
-    "php-http/multipart-stream-builder": "^1.4.2",
-    "psr/http-client": "^1.0.3",
-    "psr/http-client-implementation": "*",
-    "psr/http-factory-implementation": "*",
-    "psr/http-message": "^1.1.0|^2.0.0"
+    "php-http/discovery": "^1",
+    "php-http/multipart-stream-builder": "^1",
+    "psr/http-client": "^1",
+    "psr/http-client-implementation": "^1",
+    "psr/http-factory-implementation": "^1",
+    "psr/http-message": "^1|^2"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "^3.75",
-    "nyholm/psr7": "^1.8",
-    "pestphp/pest": "^3.8",
-    "phpstan/phpstan": "^2.1",
-    "phpunit/phpunit": "*",
-    "symfony/http-client": "^7.2"
+    "friendsofphp/php-cs-fixer": "^3",
+    "nyholm/psr7": "^1",
+    "pestphp/pest": "^3",
+    "phpstan/phpstan": "^2",
+    "phpunit/phpunit": "^11",
+    "symfony/http-client": "^7"
   },
   "scripts": {
     "lint": "./scripts/lint",

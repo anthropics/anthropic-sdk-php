@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class BetaToolComputerUse20250124 implements BaseModel
 {
@@ -33,7 +33,7 @@ class BetaToolComputerUse20250124 implements BaseModel
 
     /**
      * @param BetaCacheControlEphemeral $cacheControl
-     * @param int|null                  $displayNumber
+     * @param null|int                  $displayNumber
      */
     final public function __construct(
         int $displayHeightPx,
@@ -41,9 +41,8 @@ class BetaToolComputerUse20250124 implements BaseModel
         string $name,
         string $type,
         BetaCacheControlEphemeral|None $cacheControl = None::NOT_SET,
-        int|None|null $displayNumber = None::NOT_SET,
+        null|int|None $displayNumber = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -54,7 +53,6 @@ class BetaToolComputerUse20250124 implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

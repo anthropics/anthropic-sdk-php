@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class BetaRawMessageDeltaEvent implements BaseModel
 {
@@ -39,9 +39,8 @@ class BetaRawMessageDeltaEvent implements BaseModel
     final public function __construct(
         array $delta,
         string $type,
-        BetaMessageDeltaUsage $usage,
+        BetaMessageDeltaUsage $usage
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -52,7 +51,6 @@ class BetaRawMessageDeltaEvent implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

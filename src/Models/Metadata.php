@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class Metadata implements BaseModel
 {
@@ -17,11 +17,10 @@ class Metadata implements BaseModel
     public ?string $userID;
 
     /**
-     * @param string|null $userID
+     * @param null|string $userID
      */
-    final public function __construct(string|None|null $userID = None::NOT_SET)
+    final public function __construct(null|None|string $userID = None::NOT_SET)
     {
-
         $args = func_get_args();
 
         $data = [];
@@ -32,7 +31,6 @@ class Metadata implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

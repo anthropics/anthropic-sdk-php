@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
@@ -25,7 +25,7 @@ class ToolResultBlockParam implements BaseModel
     public CacheControlEphemeral $cacheControl;
 
     /**
-     * @var string|list<TextBlockParam|ImageBlockParam> $content
+     * @var list<ImageBlockParam|TextBlockParam>|string $content
      */
     #[Api(
         type: new UnionOf(
@@ -45,7 +45,7 @@ class ToolResultBlockParam implements BaseModel
 
     /**
      * @param CacheControlEphemeral                       $cacheControl
-     * @param string|list<TextBlockParam|ImageBlockParam> $content
+     * @param list<ImageBlockParam|TextBlockParam>|string $content
      * @param bool                                        $isError
      */
     final public function __construct(
@@ -53,9 +53,8 @@ class ToolResultBlockParam implements BaseModel
         string $type,
         CacheControlEphemeral|None $cacheControl = None::NOT_SET,
         mixed $content = None::NOT_SET,
-        bool|None $isError = None::NOT_SET,
+        bool|None $isError = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -66,7 +65,6 @@ class ToolResultBlockParam implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

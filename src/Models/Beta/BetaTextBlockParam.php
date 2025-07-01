@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
@@ -25,7 +25,7 @@ class BetaTextBlockParam implements BaseModel
     public BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * @var list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam>|null $citations
+     * @var null|list<BetaCitationCharLocationParam|BetaCitationContentBlockLocationParam|BetaCitationPageLocationParam|BetaCitationWebSearchResultLocationParam> $citations
      */
     #[Api(
         type: new UnionOf(
@@ -49,15 +49,14 @@ class BetaTextBlockParam implements BaseModel
 
     /**
      * @param BetaCacheControlEphemeral                                                                                                                             $cacheControl
-     * @param list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam>|null $citations
+     * @param null|list<BetaCitationCharLocationParam|BetaCitationContentBlockLocationParam|BetaCitationPageLocationParam|BetaCitationWebSearchResultLocationParam> $citations
      */
     final public function __construct(
         string $text,
         string $type,
         BetaCacheControlEphemeral|None $cacheControl = None::NOT_SET,
-        array|None|null $citations = None::NOT_SET,
+        null|array|None $citations = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -68,7 +67,6 @@ class BetaTextBlockParam implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

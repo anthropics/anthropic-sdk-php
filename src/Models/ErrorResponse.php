@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class ErrorResponse implements BaseModel
 {
     use Model;
 
     /**
-     * @var InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error
+     * @var APIErrorObject|AuthenticationError|BillingError|GatewayTimeoutError|InvalidRequestError|NotFoundError|OverloadedError|PermissionError|RateLimitError $error
      */
     #[Api]
     public mixed $error;
@@ -23,11 +23,10 @@ class ErrorResponse implements BaseModel
     public string $type;
 
     /**
-     * @param InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error
+     * @param APIErrorObject|AuthenticationError|BillingError|GatewayTimeoutError|InvalidRequestError|NotFoundError|OverloadedError|PermissionError|RateLimitError $error
      */
     final public function __construct(mixed $error, string $type)
     {
-
         $args = func_get_args();
 
         $data = [];
@@ -38,7 +37,6 @@ class ErrorResponse implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

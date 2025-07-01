@@ -8,8 +8,8 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Serde\UnionOf;
 use Anthropic\Core\Serde\ListOf;
+use Anthropic\Core\Serde\UnionOf;
 use Anthropic\Models\Metadata;
 
 class CreateParams implements BaseModel

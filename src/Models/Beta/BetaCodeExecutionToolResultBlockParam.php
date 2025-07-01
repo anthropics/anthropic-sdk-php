@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class BetaCodeExecutionToolResultBlockParam implements BaseModel
 {
     use Model;
 
     /**
-     * @var BetaCodeExecutionToolResultErrorParam|BetaCodeExecutionResultBlockParam $content
+     * @var BetaCodeExecutionResultBlockParam|BetaCodeExecutionToolResultErrorParam $content
      */
     #[Api]
     public mixed $content;
@@ -29,16 +29,15 @@ class BetaCodeExecutionToolResultBlockParam implements BaseModel
     public BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * @param BetaCodeExecutionToolResultErrorParam|BetaCodeExecutionResultBlockParam $content
+     * @param BetaCodeExecutionResultBlockParam|BetaCodeExecutionToolResultErrorParam $content
      * @param BetaCacheControlEphemeral                                               $cacheControl
      */
     final public function __construct(
         mixed $content,
         string $toolUseID,
         string $type,
-        BetaCacheControlEphemeral|None $cacheControl = None::NOT_SET,
+        BetaCacheControlEphemeral|None $cacheControl = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -49,7 +48,6 @@ class BetaCodeExecutionToolResultBlockParam implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

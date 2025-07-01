@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class BetaWebSearchResultBlockParam implements BaseModel
 {
@@ -29,16 +29,15 @@ class BetaWebSearchResultBlockParam implements BaseModel
     public ?string $pageAge;
 
     /**
-     * @param string|null $pageAge
+     * @param null|string $pageAge
      */
     final public function __construct(
         string $encryptedContent,
         string $title,
         string $type,
         string $url,
-        string|None|null $pageAge = None::NOT_SET,
+        null|None|string $pageAge = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -49,7 +48,6 @@ class BetaWebSearchResultBlockParam implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

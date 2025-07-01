@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class BetaCacheControlEphemeral implements BaseModel
 {
@@ -24,9 +24,8 @@ class BetaCacheControlEphemeral implements BaseModel
      */
     final public function __construct(
         string $type,
-        string|None $ttl = None::NOT_SET,
+        None|string $ttl = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -37,7 +36,6 @@ class BetaCacheControlEphemeral implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

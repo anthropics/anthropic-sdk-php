@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
+use Anthropic\Core\Serde\UnionOf;
 
 class BetaWebSearchTool20250305 implements BaseModel
 {
@@ -22,7 +22,7 @@ class BetaWebSearchTool20250305 implements BaseModel
     public string $type;
 
     /**
-     * @var list<string>|null $allowedDomains
+     * @var null|list<string> $allowedDomains
      */
     #[Api(
         'allowed_domains',
@@ -32,7 +32,7 @@ class BetaWebSearchTool20250305 implements BaseModel
     public ?array $allowedDomains;
 
     /**
-     * @var list<string>|null $blockedDomains
+     * @var null|list<string> $blockedDomains
      */
     #[Api(
         'blocked_domains',
@@ -62,10 +62,10 @@ class BetaWebSearchTool20250305 implements BaseModel
     public ?array $userLocation;
 
     /**
-     * @param list<string>|null         $allowedDomains
-     * @param list<string>|null         $blockedDomains
+     * @param null|list<string>         $allowedDomains
+     * @param null|list<string>         $blockedDomains
      * @param BetaCacheControlEphemeral $cacheControl
-     * @param int|null                  $maxUses
+     * @param null|int                  $maxUses
      * @param array{
      *
      *     type?: string,
@@ -79,13 +79,12 @@ class BetaWebSearchTool20250305 implements BaseModel
     final public function __construct(
         string $name,
         string $type,
-        array|None|null $allowedDomains = None::NOT_SET,
-        array|None|null $blockedDomains = None::NOT_SET,
+        null|array|None $allowedDomains = None::NOT_SET,
+        null|array|None $blockedDomains = None::NOT_SET,
         BetaCacheControlEphemeral|None $cacheControl = None::NOT_SET,
-        int|None|null $maxUses = None::NOT_SET,
-        array|None|null $userLocation = None::NOT_SET,
+        null|int|None $maxUses = None::NOT_SET,
+        null|array|None $userLocation = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -96,7 +95,6 @@ class BetaWebSearchTool20250305 implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

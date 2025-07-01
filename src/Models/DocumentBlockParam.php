@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class DocumentBlockParam implements BaseModel
 {
     use Model;
 
     /**
-     * @var Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource $source
+     * @var Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source
      */
     #[Api]
     public mixed $source;
@@ -35,21 +35,20 @@ class DocumentBlockParam implements BaseModel
     public ?string $title;
 
     /**
-     * @param Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource $source
+     * @param Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source
      * @param CacheControlEphemeral                                           $cacheControl
      * @param CitationsConfigParam                                            $citations
-     * @param string|null                                                     $context
-     * @param string|null                                                     $title
+     * @param null|string                                                     $context
+     * @param null|string                                                     $title
      */
     final public function __construct(
         mixed $source,
         string $type,
         CacheControlEphemeral|None $cacheControl = None::NOT_SET,
         CitationsConfigParam|None $citations = None::NOT_SET,
-        string|None|null $context = None::NOT_SET,
-        string|None|null $title = None::NOT_SET,
+        null|None|string $context = None::NOT_SET,
+        null|None|string $title = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -60,7 +59,6 @@ class DocumentBlockParam implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

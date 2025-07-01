@@ -2,6 +2,4 @@
 
 namespace Anthropic\Errors;
 
-class AuthenticationError extends APIStatusError
-{
-}
+class AuthenticationError extends APIStatusError {}

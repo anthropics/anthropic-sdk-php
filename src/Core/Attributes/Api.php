@@ -11,14 +11,13 @@ use Anthropic\Core\Contracts\StaticConverter;
 class Api
 {
     /**
-     * @param ?array<string|int,string|Converter|StaticConverter> $union
+     * @param ?array<int|string,Converter|StaticConverter|string> $union
      */
     public function __construct(
         public ?string $apiName = null,
-        public string|Converter|StaticConverter|null $type = null,
+        public null|Converter|StaticConverter|string $type = null,
         public bool $optional = false,
         public ?string $discriminator = null,
         public ?array $union = null,
-    ) {
-    }
+    ) {}
 }

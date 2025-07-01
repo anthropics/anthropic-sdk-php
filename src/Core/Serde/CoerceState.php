@@ -12,6 +12,5 @@ final class CoerceState
         public int $no = 0,
         public int $maybe = 0,
         public int $branched = 0,
-    ) {
-    }
+    ) {}
 }

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class FileMetadata implements BaseModel
 {
@@ -44,9 +44,8 @@ class FileMetadata implements BaseModel
         string $mimeType,
         int $sizeBytes,
         string $type,
-        bool|None $downloadable = None::NOT_SET,
+        bool|None $downloadable = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -57,7 +56,6 @@ class FileMetadata implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

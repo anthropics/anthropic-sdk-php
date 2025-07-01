@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
+use Anthropic\Core\Serde\UnionOf;
 
 class BetaWebSearchToolResultBlock implements BaseModel
 {
@@ -40,9 +40,8 @@ class BetaWebSearchToolResultBlock implements BaseModel
     final public function __construct(
         mixed $content,
         string $toolUseID,
-        string $type,
+        string $type
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -53,7 +52,6 @@ class BetaWebSearchToolResultBlock implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

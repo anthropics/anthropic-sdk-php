@@ -11,8 +11,8 @@ use Anthropic\RequestOptions;
 trait Params
 {
     /**
-     * @param self|array<string, mixed>|null           $params
-     * @param RequestOptions|array<string, mixed>|null $options
+     * @param null|array<string, mixed>|self           $params
+     * @param null|array<string, mixed>|RequestOptions $options
      *
      * @return array{array<string, mixed>, array{
      *     timeout: float,
@@ -24,7 +24,7 @@ trait Params
      *     extraBodyParams: list<string>,
      * }}
      */
-    public static function parseRequest(self|array|null $params, RequestOptions|array|null $options): array
+    public static function parseRequest(null|array|self $params, null|array|RequestOptions $options): array
     {
         $state = new DumpState();
         $dumped = Serde::dump(self::class, value: $params, state: $state);

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class BetaWebSearchResultBlock implements BaseModel
 {
@@ -33,9 +33,8 @@ class BetaWebSearchResultBlock implements BaseModel
         ?string $pageAge,
         string $title,
         string $type,
-        string $url,
+        string $url
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -46,7 +45,6 @@ class BetaWebSearchResultBlock implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

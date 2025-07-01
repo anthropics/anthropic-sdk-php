@@ -6,16 +6,14 @@ use Anthropic\Core\None;
 
 class OptionalNullable
 {
-    /**
-     * @var array<mixed>
-     */
+    /** @var array<mixed> */
     public array $args;
 
     public function __construct(
         ?int $x = null,
-        string|None $y = None::NOT_SET,
-        string|None|null $z = None::NOT_SET,
-        string|None|null $w = None::NOT_SET,
+        None|string $y = None::NOT_SET,
+        null|None|string $z = None::NOT_SET,
+        null|None|string $w = None::NOT_SET,
     ) {
         $this->args = ['x' => null];
         $args = func_get_args();
@@ -61,5 +59,4 @@ describe('disambiguate null vs not set', function () {
         expect(isset($x->args['z']))->toBe(false);
         expect($x->args['w'])->toBe('hello');
     });
-
 });

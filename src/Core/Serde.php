@@ -30,7 +30,7 @@ final class Serde
         return $value;
     }
 
-    public static function coerce(string|StaticConverter|Converter $target, mixed $value, CoerceState $state = new CoerceState()): mixed
+    public static function coerce(Converter|StaticConverter|string $target, mixed $value, CoerceState $state = new CoerceState()): mixed
     {
         if ($value instanceof $target) {
             ++$state->yes;
@@ -51,6 +51,7 @@ final class Serde
                 ++$state->yes;
 
                 return $value;
+
             case 'null':
                 if (is_null($value)) {
                     ++$state->yes;
@@ -61,6 +62,7 @@ final class Serde
                 ++$state->maybe;
 
                 return null;
+
             case 'bool':
                 if (is_bool($value)) {
                     ++$state->yes;
@@ -71,6 +73,7 @@ final class Serde
                 ++$state->no;
 
                 return $value;
+
             case 'int':
                 if (is_int($value)) {
                     ++$state->yes;
@@ -93,6 +96,7 @@ final class Serde
                 ++$state->no;
 
                 return $value;
+
             case 'float':
                 if (is_numeric($value)) {
                     ++$state->yes;
@@ -109,6 +113,7 @@ final class Serde
                 ++$state->no;
 
                 return $value;
+
             case 'string':
                 if (is_string($value)) {
                     ++$state->yes;
@@ -125,6 +130,7 @@ final class Serde
                 ++$state->no;
 
                 return $value;
+
             default:
                 ++$state->no;
 
@@ -132,7 +138,7 @@ final class Serde
         }
     }
 
-    public static function dump(string|StaticConverter|Converter $target, mixed $value, DumpState $state = new DumpState()): mixed
+    public static function dump(Converter|StaticConverter|string $target, mixed $value, DumpState $state = new DumpState()): mixed
     {
         if ($target instanceof Converter) {
             return $target->dump($value, state: $state);

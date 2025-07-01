@@ -4,33 +4,38 @@ declare(strict_types=1);
 
 namespace Anthropic\Resources;
 
-use Anthropic\RequestOptions;
 use Anthropic\Client;
 use Anthropic\Contracts\MessagesContract;
 use Anthropic\Core\Serde;
-use Anthropic\Models\Metadata;
+use Anthropic\Models\CacheControlEphemeral;
+use Anthropic\Models\Message;
 use Anthropic\Models\MessageParam;
+use Anthropic\Models\MessageTokensCount;
+use Anthropic\Models\Metadata;
 use Anthropic\Models\TextBlockParam;
-use Anthropic\Models\ThinkingConfigEnabled;
 use Anthropic\Models\ThinkingConfigDisabled;
-use Anthropic\Models\ToolChoiceAuto;
-use Anthropic\Models\ToolChoiceAny;
-use Anthropic\Models\ToolChoiceTool;
-use Anthropic\Models\ToolChoiceNone;
+use Anthropic\Models\ThinkingConfigEnabled;
 use Anthropic\Models\Tool;
 use Anthropic\Models\ToolBash20250124;
+use Anthropic\Models\ToolChoiceAny;
+use Anthropic\Models\ToolChoiceAuto;
+use Anthropic\Models\ToolChoiceNone;
+use Anthropic\Models\ToolChoiceTool;
 use Anthropic\Models\ToolTextEditor20250124;
-use Anthropic\Models\CacheControlEphemeral;
 use Anthropic\Models\WebSearchTool20250305;
-use Anthropic\Models\Message;
-use Anthropic\Models\MessageTokensCount;
-use Anthropic\Parameters\Messages\CreateParams;
 use Anthropic\Parameters\Messages\CountTokensParams;
+use Anthropic\Parameters\Messages\CreateParams;
+use Anthropic\RequestOptions;
 use Anthropic\Resources\Messages\Batches;
 
 class Messages implements MessagesContract
 {
     public Batches $batches;
+
+    public function __construct(protected Client $client)
+    {
+        $this->batches = new Batches($client);
+    }
 
     /**
      * @param array{
@@ -110,7 +115,7 @@ class Messages implements MessagesContract
      */
     public function countTokens(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): MessageTokensCount {
         [$parsed, $options] = CountTokensParams::parseRequest(
             $params,
@@ -125,12 +130,5 @@ class Messages implements MessagesContract
 
         // @phpstan-ignore-next-line;
         return Serde::coerce(MessageTokensCount::class, value: $resp);
-    }
-
-    public function __construct(protected Client $client)
-    {
-
-        $this->batches = new Batches($client);
-
     }
 }

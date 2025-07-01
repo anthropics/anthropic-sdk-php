@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class BetaMCPToolUseBlockParam implements BaseModel
 {
@@ -40,9 +40,8 @@ class BetaMCPToolUseBlockParam implements BaseModel
         string $name,
         string $serverName,
         string $type,
-        BetaCacheControlEphemeral|None $cacheControl = None::NOT_SET,
+        BetaCacheControlEphemeral|None $cacheControl = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -53,7 +52,6 @@ class BetaMCPToolUseBlockParam implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

@@ -4,21 +4,23 @@ declare(strict_types=1);
 
 namespace Anthropic\Resources\Beta;
 
-use Anthropic\RequestOptions;
 use Anthropic\Client;
 use Anthropic\Contracts\Beta\FilesContract;
-use Anthropic\Core\Util;
 use Anthropic\Core\Serde;
-use Anthropic\Models\Beta\FileMetadata;
+use Anthropic\Core\Util;
 use Anthropic\Models\Beta\DeletedFile;
-use Anthropic\Parameters\Beta\Files\ListParams;
+use Anthropic\Models\Beta\FileMetadata;
 use Anthropic\Parameters\Beta\Files\DeleteParams;
 use Anthropic\Parameters\Beta\Files\DownloadParams;
+use Anthropic\Parameters\Beta\Files\ListParams;
 use Anthropic\Parameters\Beta\Files\RetrieveMetadataParams;
 use Anthropic\Parameters\Beta\Files\UploadParams;
+use Anthropic\RequestOptions;
 
 class Files implements FilesContract
 {
+    public function __construct(protected Client $client) {}
+
     /**
      * @param array{
      *
@@ -42,10 +44,11 @@ class Files implements FilesContract
      */
     public function list(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): FileMetadata {
         [$parsed, $options] = ListParams::parseRequest($params, $requestOptions);
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
+
         /** @var array<string, string> */
         $header_params = array_diff_key($parsed, $query_params);
         $resp = $this->client->request(
@@ -83,7 +86,7 @@ class Files implements FilesContract
     public function delete(
         string $fileID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): DeletedFile {
         [$parsed, $options] = DeleteParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(
@@ -120,7 +123,7 @@ class Files implements FilesContract
     public function download(
         string $fileID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): mixed {
         [$parsed, $options] = DownloadParams::parseRequest(
             $params,
@@ -160,7 +163,7 @@ class Files implements FilesContract
     public function retrieveMetadata(
         string $fileID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): FileMetadata {
         [$parsed, $options] = RetrieveMetadataParams::parseRequest(
             $params,
@@ -199,7 +202,7 @@ class Files implements FilesContract
      */
     public function upload(
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): FileMetadata {
         [$parsed, $options] = UploadParams::parseRequest($params, $requestOptions);
         $header_params = ['betas' => 'anthropic-beta'];
@@ -222,9 +225,5 @@ class Files implements FilesContract
 
         // @phpstan-ignore-next-line;
         return Serde::coerce(FileMetadata::class, value: $resp);
-    }
-
-    public function __construct(protected Client $client)
-    {
     }
 }

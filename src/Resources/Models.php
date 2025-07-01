@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Anthropic\Resources;
 
-use Anthropic\RequestOptions;
 use Anthropic\Client;
 use Anthropic\Contracts\ModelsContract;
-use Anthropic\Core\Util;
 use Anthropic\Core\Serde;
+use Anthropic\Core\Util;
 use Anthropic\Models\ModelInfo;
-use Anthropic\Parameters\Models\RetrieveParams;
 use Anthropic\Parameters\Models\ListParams;
+use Anthropic\Parameters\Models\RetrieveParams;
+use Anthropic\RequestOptions;
 
 class Models implements ModelsContract
 {
+    public function __construct(protected Client $client) {}
+
     /**
      * @param array{modelID?: string, betas?: list<string|string>} $params
      * @param RequestOptions|array{
@@ -32,7 +34,7 @@ class Models implements ModelsContract
     public function retrieve(
         string $modelID,
         array $params,
-        mixed $requestOptions = [],
+        mixed $requestOptions = []
     ): ModelInfo {
         [$parsed, $options] = RetrieveParams::parseRequest(
             $params,
@@ -77,6 +79,7 @@ class Models implements ModelsContract
     {
         [$parsed, $options] = ListParams::parseRequest($params, $requestOptions);
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
+
         /** @var array<string, string> */
         $header_params = array_diff_key($parsed, $query_params);
         $resp = $this->client->request(
@@ -92,9 +95,5 @@ class Models implements ModelsContract
 
         // @phpstan-ignore-next-line;
         return Serde::coerce(ModelInfo::class, value: $resp);
-    }
-
-    public function __construct(protected Client $client)
-    {
     }
 }

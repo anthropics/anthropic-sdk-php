@@ -3,9 +3,9 @@
 namespace Anthropic\Tests\Resources\Beta;
 
 use Anthropic\Client;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 use Tests\UnsupportedMockTests;
 
 /**
@@ -76,7 +76,8 @@ final class FilesTest extends TestCase
             ->client
             ->beta
             ->files
-            ->upload(['file' => 'file', 'betas' => ['string']]);
+            ->upload(['file' => 'file', 'betas' => ['string']])
+        ;
         $this->assertTrue(true); // @phpstan-ignore-line
     }
 }

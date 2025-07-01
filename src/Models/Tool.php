@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class Tool implements BaseModel
 {
@@ -43,16 +43,15 @@ class Tool implements BaseModel
      * } $inputSchema
      * @param CacheControlEphemeral $cacheControl
      * @param string                $description
-     * @param string|null           $type
+     * @param null|string           $type
      */
     final public function __construct(
         array $inputSchema,
         string $name,
         CacheControlEphemeral|None $cacheControl = None::NOT_SET,
-        string|None $description = None::NOT_SET,
-        string|None|null $type = None::NOT_SET,
+        None|string $description = None::NOT_SET,
+        null|None|string $type = None::NOT_SET
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -63,7 +62,6 @@ class Tool implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 

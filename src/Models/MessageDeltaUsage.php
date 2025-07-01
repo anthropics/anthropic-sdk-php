@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-use Anthropic\Core\None;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 
 class MessageDeltaUsage implements BaseModel
 {
@@ -33,9 +33,8 @@ class MessageDeltaUsage implements BaseModel
         ?int $cacheReadInputTokens,
         ?int $inputTokens,
         int $outputTokens,
-        ServerToolUsage $serverToolUse,
+        ServerToolUsage $serverToolUse
     ) {
-
         $args = func_get_args();
 
         $data = [];
@@ -46,7 +45,6 @@ class MessageDeltaUsage implements BaseModel
         }
 
         $this->__unserialize($data);
-
     }
 }
 
