@@ -34,14 +34,14 @@ trait Model
      */
     private array $_data = [];
 
-    private static bool $_metadataLoaded = false;
-
     /**
      * @return array<string, mixed>
      */
     public function __serialize(): array
     {
-        return [...Util::get_object_vars($this), ...$this->_data];
+        $rows = [...Util::get_object_vars($this), ...$this->_data]; // @phpstan-ignore-line
+
+        return array_map(static fn ($v) => self::serialize($v), array: $rows);
     }
 
     /**
@@ -239,8 +239,6 @@ trait Model
 
     public static function from(mixed $data): self
     {
-        self::_loadMetadata();
-
         /** @var self $instance */
         $instance = self::$_class->newInstanceWithoutConstructor();
         $instance->__unserialize($data); // @phpstan-ignore-line
@@ -250,10 +248,6 @@ trait Model
 
     public static function _loadMetadata(): void
     {
-        if (self::$_metadataLoaded) {
-            return;
-        }
-
         self::$_class = new \ReflectionClass(static::class);
 
         foreach (self::$_class->getConstructor()?->getParameters() ?? [] as $parameter) {
@@ -266,7 +260,18 @@ trait Model
                 self::$_properties[$name] = new PropertyInfo($property);
             }
         }
+    }
 
-        self::$_metadataLoaded = true;
+    private static function serialize(mixed $value): mixed
+    {
+        if ($value instanceof BaseModel) {
+            return $value->__serialize(); // @phpstan-ignore-line
+        }
+
+        if (is_array($value) || is_object($value)) {
+            return array_map(static fn ($v) => self::serialize($v), array: (array) $value);
+        }
+
+        return $value;
     }
 }
