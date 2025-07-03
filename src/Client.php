@@ -42,8 +42,8 @@ class Client extends BaseClient
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ],
-            options: new RequestOptions(),
             baseUrl: $base,
+            options: new RequestOptions(),
         );
 
         $this->completions = new Completions($this);

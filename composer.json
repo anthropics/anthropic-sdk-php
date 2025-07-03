@@ -16,7 +16,8 @@
   "config": {
     "allow-plugins": {
       "pestphp/pest-plugin": true,
-      "php-http/discovery": false
+      "php-http/discovery": false,
+      "phpstan/extension-installer": true
     },
     "platform": {
       "php": "8.3"
@@ -39,7 +40,9 @@
     "friendsofphp/php-cs-fixer": "^3",
     "nyholm/psr7": "^1",
     "pestphp/pest": "^3",
+    "phpstan/extension-installer": "^1",
     "phpstan/phpstan": "^2",
+    "phpstan/phpstan-phpunit": "^2",
     "phpunit/phpunit": "^11",
     "symfony/http-client": "^7"
   },

@@ -3,16 +3,16 @@
   cacheDirectory=".phpunit.cache"
   colors="true"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/sebastianbergmann/phpunit/refs/heads/main/phpunit.xsd"
+  xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
 >
   <source>
     <include>
-      <directory suffix=".php">./src</directory>
+      <directory>./src</directory>
     </include>
   </source>
   <testsuites>
     <testsuite name="default">
-      <directory suffix=".php">./tests</directory>
+      <directory>./tests</directory>
     </testsuite>
   </testsuites>
 </phpunit>
