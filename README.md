@@ -38,7 +38,7 @@ $message = $client->messages->create(
   [
     "maxTokens" => 1024,
     "messages" => [new MessageParam(role: "user", content: "Hello, Claude")],
-    "model" => "claude-3-5-sonnet-latest",
+    "model" => "claude-sonnet-4-20250514",
   ],
 );
 
@@ -62,7 +62,7 @@ try {
         "messages" => [
           new MessageParam(role: "user", content: "Hello, Claude")
         ],
-        "model" => "claude-3-5-sonnet-latest",
+        "model" => "claude-sonnet-4-20250514",
       ],
     );
 } catch (APIConnectionError $e) {
@@ -114,7 +114,7 @@ $client->messages->create(
   [
     "maxTokens" => 1024,
     "messages" => [new MessageParam(role: "user", content: "Hello, Claude")],
-    "model" => "claude-3-5-sonnet-latest",
+    "model" => "claude-sonnet-4-20250514",
   ],
   requestOptions: ["max_retries" => 5],
 );
@@ -138,7 +138,7 @@ $client->messages->create(
   [
     "maxTokens" => 1024,
     "messages" => [new MessageParam(role: "user", content: "Hello, Claude")],
-    "model" => "claude-3-5-sonnet-latest",
+    "model" => "claude-sonnet-4-20250514",
   ],
   requestOptions: ["timeout" => 5],
 );
@@ -167,7 +167,7 @@ $message = $client->messages->create(
   [
     "maxTokens" => 1024,
     "messages" => [new MessageParam(role: "user", content: "Hello, Claude")],
-    "model" => "claude-3-5-sonnet-latest",
+    "model" => "claude-sonnet-4-20250514",
   ],
   requestOptions: [
     "extraQueryParams" => ["my_query_parameter" => "value"],
