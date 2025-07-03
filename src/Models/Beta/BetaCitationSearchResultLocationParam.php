@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\None;
 
-class BetaSearchResultLocationCitation implements BaseModel
+class BetaCitationSearchResultLocationParam implements BaseModel
 {
     use Model;
 
@@ -56,4 +56,4 @@ class BetaSearchResultLocationCitation implements BaseModel
     }
 }
 
-BetaSearchResultLocationCitation::_loadMetadata();
+BetaCitationSearchResultLocationParam::_loadMetadata();

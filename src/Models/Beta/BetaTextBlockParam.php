@@ -25,7 +25,7 @@ class BetaTextBlockParam implements BaseModel
     public BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * @var null|list<BetaCitationCharLocationParam|BetaCitationContentBlockLocationParam|BetaCitationPageLocationParam|BetaCitationWebSearchResultLocationParam|BetaSearchResultLocationCitationParam> $citations
+     * @var null|list<BetaCitationCharLocationParam|BetaCitationContentBlockLocationParam|BetaCitationPageLocationParam|BetaCitationSearchResultLocationParam|BetaCitationWebSearchResultLocationParam> $citations
      */
     #[Api(
         type: new UnionOf(
@@ -37,7 +37,7 @@ class BetaTextBlockParam implements BaseModel
                             BetaCitationPageLocationParam::class,
                             BetaCitationContentBlockLocationParam::class,
                             BetaCitationWebSearchResultLocationParam::class,
-                            BetaSearchResultLocationCitationParam::class,
+                            BetaCitationSearchResultLocationParam::class,
                         ],
                     ),
                 ),
@@ -50,7 +50,7 @@ class BetaTextBlockParam implements BaseModel
 
     /**
      * @param BetaCacheControlEphemeral                                                                                                                                                                   $cacheControl
-     * @param null|list<BetaCitationCharLocationParam|BetaCitationContentBlockLocationParam|BetaCitationPageLocationParam|BetaCitationWebSearchResultLocationParam|BetaSearchResultLocationCitationParam> $citations
+     * @param null|list<BetaCitationCharLocationParam|BetaCitationContentBlockLocationParam|BetaCitationPageLocationParam|BetaCitationSearchResultLocationParam|BetaCitationWebSearchResultLocationParam> $citations
      */
     final public function __construct(
         string $text,

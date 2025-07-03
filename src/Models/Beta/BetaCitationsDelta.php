@@ -14,7 +14,7 @@ class BetaCitationsDelta implements BaseModel
     use Model;
 
     /**
-     * @var BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationsWebSearchResultLocation|BetaSearchResultLocationCitation $citation
+     * @var BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationSearchResultLocation|BetaCitationsWebSearchResultLocation $citation
      */
     #[Api]
     public mixed $citation;
@@ -23,7 +23,7 @@ class BetaCitationsDelta implements BaseModel
     public string $type;
 
     /**
-     * @param BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationsWebSearchResultLocation|BetaSearchResultLocationCitation $citation
+     * @param BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationSearchResultLocation|BetaCitationsWebSearchResultLocation $citation
      */
     final public function __construct(mixed $citation, string $type)
     {
