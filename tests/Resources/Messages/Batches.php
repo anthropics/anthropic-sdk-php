@@ -50,7 +50,7 @@ final class BatchesTest extends TestCase
                             'messages' => [
                                 new MessageParam(content: 'Hello, world', role: 'user'),
                             ],
-                            'model' => 'claude-3-7-sonnet-20250219',
+                            'model' => 'claude-sonnet-4-20250514',
                         ],
                     ],
                 ],
@@ -75,7 +75,7 @@ final class BatchesTest extends TestCase
                             'messages' => [
                                 new MessageParam(content: 'Hello, world', role: 'user'),
                             ],
-                            'model' => 'claude-3-7-sonnet-20250219',
+                            'model' => 'claude-sonnet-4-20250514',
                             'metadata' => new Metadata(userID: '13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
                             'serviceTier' => 'auto',
                             'stopSequences' => ['string'],

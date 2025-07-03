@@ -25,14 +25,20 @@ class BetaToolResultBlockParam implements BaseModel
     public BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * @var list<BetaImageBlockParam|BetaTextBlockParam>|string $content
+     * @var list<BetaImageBlockParam|BetaSearchResultBlockParam|BetaTextBlockParam>|string $content
      */
     #[Api(
         type: new UnionOf(
             [
                 'string',
                 new ListOf(
-                    new UnionOf([BetaTextBlockParam::class, BetaImageBlockParam::class])
+                    new UnionOf(
+                        [
+                            BetaTextBlockParam::class,
+                            BetaImageBlockParam::class,
+                            BetaSearchResultBlockParam::class,
+                        ],
+                    ),
                 ),
             ],
         ),
@@ -44,9 +50,9 @@ class BetaToolResultBlockParam implements BaseModel
     public bool $isError;
 
     /**
-     * @param BetaCacheControlEphemeral                           $cacheControl
-     * @param list<BetaImageBlockParam|BetaTextBlockParam>|string $content
-     * @param bool                                                $isError
+     * @param BetaCacheControlEphemeral                                                      $cacheControl
+     * @param list<BetaImageBlockParam|BetaSearchResultBlockParam|BetaTextBlockParam>|string $content
+     * @param bool                                                                           $isError
      */
     final public function __construct(
         string $toolUseID,

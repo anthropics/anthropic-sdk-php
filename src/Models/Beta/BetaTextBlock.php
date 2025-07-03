@@ -16,7 +16,7 @@ class BetaTextBlock implements BaseModel
     use Model;
 
     /**
-     * @var null|list<BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationsWebSearchResultLocation> $citations
+     * @var null|list<BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationsWebSearchResultLocation|BetaSearchResultLocationCitation> $citations
      */
     #[Api(
         type: new UnionOf(
@@ -28,6 +28,7 @@ class BetaTextBlock implements BaseModel
                             BetaCitationPageLocation::class,
                             BetaCitationContentBlockLocation::class,
                             BetaCitationsWebSearchResultLocation::class,
+                            BetaSearchResultLocationCitation::class,
                         ],
                     ),
                 ),
@@ -44,7 +45,7 @@ class BetaTextBlock implements BaseModel
     public string $type;
 
     /**
-     * @param null|list<BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationsWebSearchResultLocation> $citations
+     * @param null|list<BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationsWebSearchResultLocation|BetaSearchResultLocationCitation> $citations
      */
     final public function __construct(
         ?array $citations,

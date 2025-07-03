@@ -25,15 +25,15 @@ class MessageParam implements BaseModel
                 new ListOf(
                     new UnionOf(
                         [
-                            ServerToolUseBlockParam::class,
-                            WebSearchToolResultBlockParam::class,
                             TextBlockParam::class,
                             ImageBlockParam::class,
-                            ToolUseBlockParam::class,
-                            ToolResultBlockParam::class,
                             DocumentBlockParam::class,
                             ThinkingBlockParam::class,
                             RedactedThinkingBlockParam::class,
+                            ToolUseBlockParam::class,
+                            ToolResultBlockParam::class,
+                            ServerToolUseBlockParam::class,
+                            WebSearchToolResultBlockParam::class,
                         ],
                     ),
                 ),

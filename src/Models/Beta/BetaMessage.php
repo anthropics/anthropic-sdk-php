@@ -29,6 +29,8 @@ class BetaMessage implements BaseModel
             new UnionOf(
                 [
                     BetaTextBlock::class,
+                    BetaThinkingBlock::class,
+                    BetaRedactedThinkingBlock::class,
                     BetaToolUseBlock::class,
                     BetaServerToolUseBlock::class,
                     BetaWebSearchToolResultBlock::class,
@@ -36,8 +38,6 @@ class BetaMessage implements BaseModel
                     BetaMCPToolUseBlock::class,
                     BetaMCPToolResultBlock::class,
                     BetaContainerUploadBlock::class,
-                    BetaThinkingBlock::class,
-                    BetaRedactedThinkingBlock::class,
                 ],
             ),
         ),

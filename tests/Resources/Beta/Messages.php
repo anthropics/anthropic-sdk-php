@@ -47,7 +47,7 @@ final class MessagesTest extends TestCase
                 'messages' => [
                     new BetaMessageParam(content: 'Hello, world', role: 'user'),
                 ],
-                'model' => 'claude-3-7-sonnet-20250219',
+                'model' => 'claude-sonnet-4-20250514',
             ])
         ;
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -65,7 +65,7 @@ final class MessagesTest extends TestCase
                 'messages' => [
                     new BetaMessageParam(content: 'Hello, world', role: 'user'),
                 ],
-                'model' => 'claude-3-7-sonnet-20250219',
+                'model' => 'claude-sonnet-4-20250514',
                 'container' => 'container',
                 'mcpServers' => [
                     new BetaRequestMCPServerURLDefinition(

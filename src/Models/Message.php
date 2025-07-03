@@ -26,11 +26,11 @@ class Message implements BaseModel
             new UnionOf(
                 [
                     TextBlock::class,
+                    ThinkingBlock::class,
+                    RedactedThinkingBlock::class,
                     ToolUseBlock::class,
                     ServerToolUseBlock::class,
                     WebSearchToolResultBlock::class,
-                    ThinkingBlock::class,
-                    RedactedThinkingBlock::class,
                 ],
             ),
         ),

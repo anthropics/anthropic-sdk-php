@@ -16,7 +16,7 @@ class BetaMessageParam implements BaseModel
     use Model;
 
     /**
-     * @var list<BetaCodeExecutionToolResultBlockParam|BetaContainerUploadBlockParam|BetaImageBlockParam|BetaMCPToolUseBlockParam|BetaRedactedThinkingBlockParam|BetaRequestDocumentBlock|BetaRequestMCPToolResultBlockParam|BetaServerToolUseBlockParam|BetaTextBlockParam|BetaThinkingBlockParam|BetaToolResultBlockParam|BetaToolUseBlockParam|BetaWebSearchToolResultBlockParam>|string $content
+     * @var list<BetaCodeExecutionToolResultBlockParam|BetaContainerUploadBlockParam|BetaImageBlockParam|BetaMCPToolUseBlockParam|BetaRedactedThinkingBlockParam|BetaRequestDocumentBlock|BetaRequestMCPToolResultBlockParam|BetaSearchResultBlockParam|BetaServerToolUseBlockParam|BetaTextBlockParam|BetaThinkingBlockParam|BetaToolResultBlockParam|BetaToolUseBlockParam|BetaWebSearchToolResultBlockParam>|string $content
      */
     #[Api(
         type: new UnionOf(
@@ -25,18 +25,19 @@ class BetaMessageParam implements BaseModel
                 new ListOf(
                     new UnionOf(
                         [
+                            BetaTextBlockParam::class,
+                            BetaImageBlockParam::class,
+                            BetaRequestDocumentBlock::class,
+                            BetaSearchResultBlockParam::class,
+                            BetaThinkingBlockParam::class,
+                            BetaRedactedThinkingBlockParam::class,
+                            BetaToolUseBlockParam::class,
+                            BetaToolResultBlockParam::class,
                             BetaServerToolUseBlockParam::class,
                             BetaWebSearchToolResultBlockParam::class,
                             BetaCodeExecutionToolResultBlockParam::class,
                             BetaMCPToolUseBlockParam::class,
                             BetaRequestMCPToolResultBlockParam::class,
-                            BetaTextBlockParam::class,
-                            BetaImageBlockParam::class,
-                            BetaToolUseBlockParam::class,
-                            BetaToolResultBlockParam::class,
-                            BetaRequestDocumentBlock::class,
-                            BetaThinkingBlockParam::class,
-                            BetaRedactedThinkingBlockParam::class,
                             BetaContainerUploadBlockParam::class,
                         ],
                     ),
@@ -50,7 +51,7 @@ class BetaMessageParam implements BaseModel
     public string $role;
 
     /**
-     * @param list<BetaCodeExecutionToolResultBlockParam|BetaContainerUploadBlockParam|BetaImageBlockParam|BetaMCPToolUseBlockParam|BetaRedactedThinkingBlockParam|BetaRequestDocumentBlock|BetaRequestMCPToolResultBlockParam|BetaServerToolUseBlockParam|BetaTextBlockParam|BetaThinkingBlockParam|BetaToolResultBlockParam|BetaToolUseBlockParam|BetaWebSearchToolResultBlockParam>|string $content
+     * @param list<BetaCodeExecutionToolResultBlockParam|BetaContainerUploadBlockParam|BetaImageBlockParam|BetaMCPToolUseBlockParam|BetaRedactedThinkingBlockParam|BetaRequestDocumentBlock|BetaRequestMCPToolResultBlockParam|BetaSearchResultBlockParam|BetaServerToolUseBlockParam|BetaTextBlockParam|BetaThinkingBlockParam|BetaToolResultBlockParam|BetaToolUseBlockParam|BetaWebSearchToolResultBlockParam>|string $content
      */
     final public function __construct(mixed $content, string $role)
     {
