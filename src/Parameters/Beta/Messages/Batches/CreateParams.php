@@ -30,6 +30,7 @@ use Anthropic\Models\Beta\BetaToolTextEditor20241022;
 use Anthropic\Models\Beta\BetaToolTextEditor20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20250429;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305;
+use Anthropic\Resources\Beta\Messages;
 
 class CreateParams implements BaseModel
 {
@@ -67,10 +68,10 @@ class CreateParams implements BaseModel
     public array $requests;
 
     /**
-     * @var list<string|string> $betas
+     * @var list<string|string> $anthropicBeta
      */
     #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
-    public array $betas;
+    public array $anthropicBeta;
 }
 
 CreateParams::_loadMetadata();

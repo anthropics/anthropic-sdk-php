@@ -51,10 +51,10 @@ class CreateParams implements BaseModel
     public float $topP;
 
     /**
-     * @var list<string|string> $betas
+     * @var list<string|string> $anthropicBeta
      */
     #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
-    public array $betas;
+    public array $anthropicBeta;
 }
 
 CreateParams::_loadMetadata();

@@ -26,10 +26,10 @@ class ListParams implements BaseModel
     public int $limit;
 
     /**
-     * @var list<string|string> $betas
+     * @var list<string|string> $anthropicBeta
      */
     #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
-    public array $betas;
+    public array $anthropicBeta;
 }
 
 ListParams::_loadMetadata();

@@ -23,6 +23,7 @@ use Anthropic\Models\ToolChoiceNone;
 use Anthropic\Models\ToolChoiceTool;
 use Anthropic\Models\ToolTextEditor20250124;
 use Anthropic\Models\WebSearchTool20250305;
+use Anthropic\Resources\Messages;
 
 class CreateParams implements BaseModel
 {

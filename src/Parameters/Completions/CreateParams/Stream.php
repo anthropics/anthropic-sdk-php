@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Parameters\Messages;
+namespace Anthropic\Parameters\Completions\CreateParams;
 
-class MessagesCreateStream
+class Stream
 {
     final public const TRUE = true;
 }

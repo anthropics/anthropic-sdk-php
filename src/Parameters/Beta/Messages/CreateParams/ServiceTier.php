@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Parameters\Beta\Messages;
+namespace Anthropic\Parameters\Beta\Messages\CreateParams;
 
-class BetaMessagesCreateServiceTier
+class ServiceTier
 {
     final public const AUTO = 'auto';
 

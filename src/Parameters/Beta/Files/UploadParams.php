@@ -20,10 +20,10 @@ class UploadParams implements BaseModel
     public string $file;
 
     /**
-     * @var list<string|string> $betas
+     * @var list<string|string> $anthropicBeta
      */
     #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
-    public array $betas;
+    public array $anthropicBeta;
 }
 
 UploadParams::_loadMetadata();
