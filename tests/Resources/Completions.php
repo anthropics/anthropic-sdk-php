@@ -3,6 +3,7 @@
 namespace Anthropic\Tests\Resources;
 
 use Anthropic\Client;
+use Anthropic\Models\Completion;
 use Anthropic\Models\Metadata;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -38,7 +39,8 @@ final class CompletionsTest extends TestCase
                 'prompt' => "\n\nHuman: Hello, world!\n\nAssistant:",
             ])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(Completion::class, $result);
     }
 
     #[Test]
@@ -60,6 +62,7 @@ final class CompletionsTest extends TestCase
                 'betas' => ['string'],
             ])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(Completion::class, $result);
     }
 }

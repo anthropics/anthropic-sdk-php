@@ -3,6 +3,8 @@
 namespace Anthropic\Tests\Resources\Beta;
 
 use Anthropic\Client;
+use Anthropic\Models\Beta\DeletedFile;
+use Anthropic\Models\Beta\FileMetadata;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -34,14 +36,16 @@ final class FilesTest extends TestCase
         }
 
         $result = $this->client->beta->files->list([]);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(FileMetadata::class, $result);
     }
 
     #[Test]
     public function testDelete(): void
     {
         $result = $this->client->beta->files->delete('file_id', []);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(DeletedFile::class, $result);
     }
 
     #[Test]
@@ -52,21 +56,24 @@ final class FilesTest extends TestCase
         }
 
         $result = $this->client->beta->files->download('file_id', []);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertIsString($result);
     }
 
     #[Test]
     public function testRetrieveMetadata(): void
     {
         $result = $this->client->beta->files->retrieveMetadata('file_id', []);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(FileMetadata::class, $result);
     }
 
     #[Test]
     public function testUpload(): void
     {
         $result = $this->client->beta->files->upload(['file' => 'file']);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(FileMetadata::class, $result);
     }
 
     #[Test]
@@ -78,6 +85,7 @@ final class FilesTest extends TestCase
             ->files
             ->upload(['file' => 'file', 'betas' => ['string']])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(FileMetadata::class, $result);
     }
 }

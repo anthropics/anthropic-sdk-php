@@ -5,7 +5,9 @@ namespace Anthropic\Tests\Resources;
 use Anthropic\Client;
 use Anthropic\Models\CacheControlEphemeral;
 use Anthropic\Models\CitationCharLocationParam;
+use Anthropic\Models\Message;
 use Anthropic\Models\MessageParam;
+use Anthropic\Models\MessageTokensCount;
 use Anthropic\Models\Metadata;
 use Anthropic\Models\TextBlockParam;
 use Anthropic\Models\ThinkingConfigEnabled;
@@ -45,7 +47,8 @@ final class MessagesTest extends TestCase
                 'model' => 'claude-sonnet-4-20250514',
             ])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(Message::class, $result);
     }
 
     #[Test]
@@ -114,7 +117,8 @@ final class MessagesTest extends TestCase
                 'topP' => 0.7,
             ])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(Message::class, $result);
     }
 
     #[Test]
@@ -128,7 +132,8 @@ final class MessagesTest extends TestCase
                 'model' => 'claude-3-7-sonnet-latest',
             ])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(MessageTokensCount::class, $result);
     }
 
     #[Test]
@@ -189,6 +194,7 @@ final class MessagesTest extends TestCase
                 ],
             ])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(MessageTokensCount::class, $result);
     }
 }

@@ -13,6 +13,9 @@ use Anthropic\Models\Beta\BetaTextBlockParam;
 use Anthropic\Models\Beta\BetaThinkingConfigEnabled;
 use Anthropic\Models\Beta\BetaTool;
 use Anthropic\Models\Beta\BetaToolChoiceAuto;
+use Anthropic\Models\Beta\Messages\BetaDeletedMessageBatch;
+use Anthropic\Models\Beta\Messages\BetaMessageBatch;
+use Anthropic\Models\Beta\Messages\BetaMessageBatchIndividualResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -59,7 +62,8 @@ final class BatchesTest extends TestCase
                 ],
             ])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(BetaMessageBatch::class, $result);
     }
 
     #[Test]
@@ -161,7 +165,8 @@ final class BatchesTest extends TestCase
                 'betas' => ['string'],
             ])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(BetaMessageBatch::class, $result);
     }
 
     #[Test]
@@ -174,7 +179,8 @@ final class BatchesTest extends TestCase
             ->batches
             ->retrieve('message_batch_id', [])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(BetaMessageBatch::class, $result);
     }
 
     #[Test]
@@ -185,7 +191,8 @@ final class BatchesTest extends TestCase
         }
 
         $result = $this->client->beta->messages->batches->list([]);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(BetaMessageBatch::class, $result);
     }
 
     #[Test]
@@ -198,7 +205,8 @@ final class BatchesTest extends TestCase
             ->batches
             ->delete('message_batch_id', [])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(BetaDeletedMessageBatch::class, $result);
     }
 
     #[Test]
@@ -211,7 +219,8 @@ final class BatchesTest extends TestCase
             ->batches
             ->cancel('message_batch_id', [])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(BetaMessageBatch::class, $result);
     }
 
     #[Test]
@@ -228,6 +237,7 @@ final class BatchesTest extends TestCase
             ->batches
             ->results('message_batch_id', [])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(BetaMessageBatchIndividualResponse::class, $result);
     }
 }

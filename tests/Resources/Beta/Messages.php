@@ -5,7 +5,9 @@ namespace Anthropic\Tests\Resources\Beta;
 use Anthropic\Client;
 use Anthropic\Models\Beta\BetaCacheControlEphemeral;
 use Anthropic\Models\Beta\BetaCitationCharLocationParam;
+use Anthropic\Models\Beta\BetaMessage;
 use Anthropic\Models\Beta\BetaMessageParam;
+use Anthropic\Models\Beta\BetaMessageTokensCount;
 use Anthropic\Models\Beta\BetaMetadata;
 use Anthropic\Models\Beta\BetaRequestMCPServerToolConfiguration;
 use Anthropic\Models\Beta\BetaRequestMCPServerURLDefinition;
@@ -50,7 +52,8 @@ final class MessagesTest extends TestCase
                 'model' => 'claude-sonnet-4-20250514',
             ])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(BetaMessage::class, $result);
     }
 
     #[Test]
@@ -144,7 +147,8 @@ final class MessagesTest extends TestCase
                 'betas' => ['string'],
             ])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(BetaMessage::class, $result);
     }
 
     #[Test]
@@ -159,7 +163,8 @@ final class MessagesTest extends TestCase
                 'model' => 'claude-3-7-sonnet-latest',
             ])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(BetaMessageTokensCount::class, $result);
     }
 
     #[Test]
@@ -242,6 +247,7 @@ final class MessagesTest extends TestCase
                 'betas' => ['string'],
             ])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(BetaMessageTokensCount::class, $result);
     }
 }

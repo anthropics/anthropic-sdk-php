@@ -6,6 +6,9 @@ use Anthropic\Client;
 use Anthropic\Models\CacheControlEphemeral;
 use Anthropic\Models\CitationCharLocationParam;
 use Anthropic\Models\MessageParam;
+use Anthropic\Models\Messages\DeletedMessageBatch;
+use Anthropic\Models\Messages\MessageBatch;
+use Anthropic\Models\Messages\MessageBatchIndividualResponse;
 use Anthropic\Models\Metadata;
 use Anthropic\Models\TextBlockParam;
 use Anthropic\Models\ThinkingConfigEnabled;
@@ -56,7 +59,8 @@ final class BatchesTest extends TestCase
                 ],
             ])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(MessageBatch::class, $result);
     }
 
     #[Test]
@@ -135,7 +139,8 @@ final class BatchesTest extends TestCase
                 ],
             ])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(MessageBatch::class, $result);
     }
 
     #[Test]
@@ -147,7 +152,8 @@ final class BatchesTest extends TestCase
             ->batches
             ->retrieve('message_batch_id', [])
         ;
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(MessageBatch::class, $result);
     }
 
     #[Test]
@@ -158,21 +164,24 @@ final class BatchesTest extends TestCase
         }
 
         $result = $this->client->messages->batches->list([]);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(MessageBatch::class, $result);
     }
 
     #[Test]
     public function testDelete(): void
     {
         $result = $this->client->messages->batches->delete('message_batch_id', []);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(DeletedMessageBatch::class, $result);
     }
 
     #[Test]
     public function testCancel(): void
     {
         $result = $this->client->messages->batches->cancel('message_batch_id', []);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(MessageBatch::class, $result);
     }
 
     #[Test]
@@ -183,6 +192,7 @@ final class BatchesTest extends TestCase
         }
 
         $result = $this->client->messages->batches->results('message_batch_id', []);
-        $this->assertTrue(true); // @phpstan-ignore-line
+
+        $this->assertInstanceOf(MessageBatchIndividualResponse::class, $result);
     }
 }
