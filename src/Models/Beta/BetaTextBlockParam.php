@@ -22,7 +22,7 @@ class BetaTextBlockParam implements BaseModel
     public string $type;
 
     #[Api('cache_control', optional: true)]
-    public BetaCacheControlEphemeral $cacheControl;
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * @var null|list<BetaCitationCharLocationParam|BetaCitationContentBlockLocationParam|BetaCitationPageLocationParam|BetaCitationSearchResultLocationParam|BetaCitationWebSearchResultLocationParam> $citations
@@ -51,7 +51,7 @@ class BetaTextBlockParam implements BaseModel
     /**
      * @param string                                                                                                                                                                                      $text
      * @param string                                                                                                                                                                                      $type
-     * @param BetaCacheControlEphemeral                                                                                                                                                                   $cacheControl
+     * @param null|BetaCacheControlEphemeral                                                                                                                                                              $cacheControl
      * @param null|list<BetaCitationCharLocationParam|BetaCitationContentBlockLocationParam|BetaCitationPageLocationParam|BetaCitationSearchResultLocationParam|BetaCitationWebSearchResultLocationParam> $citations
      */
     final public function __construct(

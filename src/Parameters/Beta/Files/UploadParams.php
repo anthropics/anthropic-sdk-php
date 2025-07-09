@@ -20,10 +20,7 @@ class UploadParams implements BaseModel
     public string $file;
 
     /** @var null|list<string|string> $anthropicBeta */
-    #[Api(
-        type: new UnionOf([new ListOf(new UnionOf(['string', 'string'])), 'null']),
-        optional: true,
-    )]
+    #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
     public ?array $anthropicBeta;
 }
 

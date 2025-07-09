@@ -22,7 +22,7 @@ class BetaToolResultBlockParam implements BaseModel
     public string $type;
 
     #[Api('cache_control', optional: true)]
-    public BetaCacheControlEphemeral $cacheControl;
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * @var null|list<BetaImageBlockParam|BetaSearchResultBlockParam|BetaTextBlockParam>|string $content
@@ -40,7 +40,6 @@ class BetaToolResultBlockParam implements BaseModel
                         ],
                     ),
                 ),
-                'null',
             ],
         ),
         optional: true,
@@ -53,7 +52,7 @@ class BetaToolResultBlockParam implements BaseModel
     /**
      * @param string                                                                              $toolUseID
      * @param string                                                                              $type
-     * @param BetaCacheControlEphemeral                                                           $cacheControl
+     * @param null|BetaCacheControlEphemeral                                                      $cacheControl
      * @param null|list<BetaImageBlockParam|BetaSearchResultBlockParam|BetaTextBlockParam>|string $content
      * @param null|bool                                                                           $isError
      */

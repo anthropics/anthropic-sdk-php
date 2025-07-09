@@ -46,28 +46,24 @@ class CountTokensParams implements BaseModel
     /** @var null|list<BetaRequestMCPServerURLDefinition> $mcpServers */
     #[Api(
         'mcp_servers',
-        type: new UnionOf(
-            [new ListOf(BetaRequestMCPServerURLDefinition::class), 'null']
-        ),
+        type: new ListOf(BetaRequestMCPServerURLDefinition::class),
         optional: true,
     )]
     public ?array $mcpServers;
 
     /** @var null|list<BetaTextBlockParam>|string $system */
     #[Api(
-        type: new UnionOf(
-            ['string', new ListOf(BetaTextBlockParam::class), 'null']
-        ),
+        type: new UnionOf(['string', new ListOf(BetaTextBlockParam::class)]),
         optional: true,
     )]
     public mixed $system;
 
-    /** @var BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking */
+    /** @var null|BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking */
     #[Api(optional: true)]
     public mixed $thinking;
 
     /**
-     * @var BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice
+     * @var null|BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice
      */
     #[Api('tool_choice', optional: true)]
     public mixed $toolChoice;
@@ -76,36 +72,28 @@ class CountTokensParams implements BaseModel
      * @var null|list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305> $tools
      */
     #[Api(
-        type: new UnionOf(
-            [
-                new ListOf(
-                    new UnionOf(
-                        [
-                            BetaTool::class,
-                            BetaToolBash20241022::class,
-                            BetaToolBash20250124::class,
-                            BetaCodeExecutionTool20250522::class,
-                            BetaToolComputerUse20241022::class,
-                            BetaToolComputerUse20250124::class,
-                            BetaToolTextEditor20241022::class,
-                            BetaToolTextEditor20250124::class,
-                            BetaToolTextEditor20250429::class,
-                            BetaWebSearchTool20250305::class,
-                        ],
-                    ),
-                ),
-                'null',
-            ],
+        type: new ListOf(
+            new UnionOf(
+                [
+                    BetaTool::class,
+                    BetaToolBash20241022::class,
+                    BetaToolBash20250124::class,
+                    BetaCodeExecutionTool20250522::class,
+                    BetaToolComputerUse20241022::class,
+                    BetaToolComputerUse20250124::class,
+                    BetaToolTextEditor20241022::class,
+                    BetaToolTextEditor20250124::class,
+                    BetaToolTextEditor20250429::class,
+                    BetaWebSearchTool20250305::class,
+                ],
+            ),
         ),
         optional: true,
     )]
     public ?array $tools;
 
     /** @var null|list<string|string> $anthropicBeta */
-    #[Api(
-        type: new UnionOf([new ListOf(new UnionOf(['string', 'string'])), 'null']),
-        optional: true,
-    )]
+    #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
     public ?array $anthropicBeta;
 }
 

@@ -21,12 +21,12 @@ class ImageBlockParam implements BaseModel
     public string $type;
 
     #[Api('cache_control', optional: true)]
-    public CacheControlEphemeral $cacheControl;
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
      * @param Base64ImageSource|URLImageSource $source
      * @param string                           $type
-     * @param CacheControlEphemeral            $cacheControl
+     * @param null|CacheControlEphemeral       $cacheControl
      */
     final public function __construct(
         $source,

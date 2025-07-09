@@ -21,12 +21,12 @@ class BetaImageBlockParam implements BaseModel
     public string $type;
 
     #[Api('cache_control', optional: true)]
-    public BetaCacheControlEphemeral $cacheControl;
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * @param BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source
      * @param string                                                       $type
-     * @param BetaCacheControlEphemeral                                    $cacheControl
+     * @param null|BetaCacheControlEphemeral                               $cacheControl
      */
     final public function __construct(
         $source,

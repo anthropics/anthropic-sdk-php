@@ -25,7 +25,7 @@ class BetaTool implements BaseModel
     public string $name;
 
     #[Api('cache_control', optional: true)]
-    public BetaCacheControlEphemeral $cacheControl;
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     #[Api(optional: true)]
     public ?string $description;
@@ -37,10 +37,10 @@ class BetaTool implements BaseModel
      * @param array{
      *   type?: string, properties?: mixed|null, required?: list<string>|null
      * } $inputSchema
-     * @param string                    $name
-     * @param BetaCacheControlEphemeral $cacheControl
-     * @param null|string               $description
-     * @param null|string               $type
+     * @param string                         $name
+     * @param null|BetaCacheControlEphemeral $cacheControl
+     * @param null|string                    $description
+     * @param null|string                    $type
      */
     final public function __construct(
         $inputSchema,

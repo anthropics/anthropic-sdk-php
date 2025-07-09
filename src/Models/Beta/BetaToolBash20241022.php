@@ -20,12 +20,12 @@ class BetaToolBash20241022 implements BaseModel
     public string $type;
 
     #[Api('cache_control', optional: true)]
-    public BetaCacheControlEphemeral $cacheControl;
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * @param string                    $name
-     * @param string                    $type
-     * @param BetaCacheControlEphemeral $cacheControl
+     * @param string                         $name
+     * @param string                         $type
+     * @param null|BetaCacheControlEphemeral $cacheControl
      */
     final public function __construct(
         $name,

@@ -39,17 +39,17 @@ class CountTokensParams implements BaseModel
 
     /** @var null|list<TextBlockParam>|string $system */
     #[Api(
-        type: new UnionOf(['string', new ListOf(TextBlockParam::class), 'null']),
+        type: new UnionOf(['string', new ListOf(TextBlockParam::class)]),
         optional: true,
     )]
     public mixed $system;
 
-    /** @var ThinkingConfigDisabled|ThinkingConfigEnabled $thinking */
+    /** @var null|ThinkingConfigDisabled|ThinkingConfigEnabled $thinking */
     #[Api(optional: true)]
     public mixed $thinking;
 
     /**
-     * @var ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice
+     * @var null|ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice
      */
     #[Api('tool_choice', optional: true)]
     public mixed $toolChoice;
@@ -60,21 +60,16 @@ class CountTokensParams implements BaseModel
      * }|WebSearchTool20250305>|null $tools
      */
     #[Api(
-        type: new UnionOf(
-            [
-                new ListOf(
-                    new UnionOf(
-                        [
-                            Tool::class,
-                            ToolBash20250124::class,
-                            ToolTextEditor20250124::class,
-                            new ListOf('mixed'),
-                            WebSearchTool20250305::class,
-                        ],
-                    ),
-                ),
-                'null',
-            ],
+        type: new ListOf(
+            new UnionOf(
+                [
+                    Tool::class,
+                    ToolBash20250124::class,
+                    ToolTextEditor20250124::class,
+                    new ListOf('mixed'),
+                    WebSearchTool20250305::class,
+                ],
+            ),
         ),
         optional: true,
     )]

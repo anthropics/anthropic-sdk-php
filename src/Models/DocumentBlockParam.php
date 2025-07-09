@@ -23,10 +23,10 @@ class DocumentBlockParam implements BaseModel
     public string $type;
 
     #[Api('cache_control', optional: true)]
-    public CacheControlEphemeral $cacheControl;
+    public ?CacheControlEphemeral $cacheControl;
 
     #[Api(optional: true)]
-    public CitationsConfigParam $citations;
+    public ?CitationsConfigParam $citations;
 
     #[Api(optional: true)]
     public ?string $context;
@@ -37,8 +37,8 @@ class DocumentBlockParam implements BaseModel
     /**
      * @param Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source
      * @param string                                                          $type
-     * @param CacheControlEphemeral                                           $cacheControl
-     * @param CitationsConfigParam                                            $citations
+     * @param null|CacheControlEphemeral                                      $cacheControl
+     * @param null|CitationsConfigParam                                       $citations
      * @param null|string                                                     $context
      * @param null|string                                                     $title
      */

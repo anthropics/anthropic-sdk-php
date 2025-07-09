@@ -26,13 +26,13 @@ class BetaCodeExecutionToolResultBlockParam implements BaseModel
     public string $type;
 
     #[Api('cache_control', optional: true)]
-    public BetaCacheControlEphemeral $cacheControl;
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * @param BetaCodeExecutionResultBlockParam|BetaCodeExecutionToolResultErrorParam $content
      * @param string                                                                  $toolUseID
      * @param string                                                                  $type
-     * @param BetaCacheControlEphemeral                                               $cacheControl
+     * @param null|BetaCacheControlEphemeral                                          $cacheControl
      */
     final public function __construct(
         $content,

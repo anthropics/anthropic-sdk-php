@@ -22,7 +22,7 @@ class TextBlockParam implements BaseModel
     public string $type;
 
     #[Api('cache_control', optional: true)]
-    public CacheControlEphemeral $cacheControl;
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
      * @var null|list<CitationCharLocationParam|CitationContentBlockLocationParam|CitationPageLocationParam|CitationWebSearchResultLocationParam> $citations
@@ -50,7 +50,7 @@ class TextBlockParam implements BaseModel
     /**
      * @param string                                                                                                                                $text
      * @param string                                                                                                                                $type
-     * @param CacheControlEphemeral                                                                                                                 $cacheControl
+     * @param null|CacheControlEphemeral                                                                                                            $cacheControl
      * @param null|list<CitationCharLocationParam|CitationContentBlockLocationParam|CitationPageLocationParam|CitationWebSearchResultLocationParam> $citations
      */
     final public function __construct(

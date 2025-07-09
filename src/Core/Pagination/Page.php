@@ -15,7 +15,7 @@ class Page extends AbstractPage
     /** @var list<TItem> */
     public array $data;
 
-    public ?bool $hasMore;
+    public bool $hasMore;
 
     public ?string $firstID;
 

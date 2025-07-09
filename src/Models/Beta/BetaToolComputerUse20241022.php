@@ -26,18 +26,18 @@ class BetaToolComputerUse20241022 implements BaseModel
     public string $type;
 
     #[Api('cache_control', optional: true)]
-    public BetaCacheControlEphemeral $cacheControl;
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     #[Api('display_number', optional: true)]
     public ?int $displayNumber;
 
     /**
-     * @param int                       $displayHeightPx
-     * @param int                       $displayWidthPx
-     * @param string                    $name
-     * @param string                    $type
-     * @param BetaCacheControlEphemeral $cacheControl
-     * @param null|int                  $displayNumber
+     * @param int                            $displayHeightPx
+     * @param int                            $displayWidthPx
+     * @param string                         $name
+     * @param string                         $type
+     * @param null|BetaCacheControlEphemeral $cacheControl
+     * @param null|int                       $displayNumber
      */
     final public function __construct(
         $displayHeightPx,

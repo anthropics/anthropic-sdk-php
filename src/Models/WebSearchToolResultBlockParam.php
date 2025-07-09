@@ -33,13 +33,13 @@ class WebSearchToolResultBlockParam implements BaseModel
     public string $type;
 
     #[Api('cache_control', optional: true)]
-    public CacheControlEphemeral $cacheControl;
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
      * @param list<WebSearchResultBlockParam>|WebSearchToolRequestError $content
      * @param string                                                    $toolUseID
      * @param string                                                    $type
-     * @param CacheControlEphemeral                                     $cacheControl
+     * @param null|CacheControlEphemeral                                $cacheControl
      */
     final public function __construct(
         $content,

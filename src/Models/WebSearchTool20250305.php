@@ -38,7 +38,7 @@ class WebSearchTool20250305 implements BaseModel
     public ?array $blockedDomains;
 
     #[Api('cache_control', optional: true)]
-    public CacheControlEphemeral $cacheControl;
+    public ?CacheControlEphemeral $cacheControl;
 
     #[Api('max_uses', optional: true)]
     public ?int $maxUses;
@@ -56,12 +56,12 @@ class WebSearchTool20250305 implements BaseModel
     public ?array $userLocation;
 
     /**
-     * @param string                $name
-     * @param string                $type
-     * @param null|list<string>     $allowedDomains
-     * @param null|list<string>     $blockedDomains
-     * @param CacheControlEphemeral $cacheControl
-     * @param null|int              $maxUses
+     * @param string                     $name
+     * @param string                     $type
+     * @param null|list<string>          $allowedDomains
+     * @param null|list<string>          $blockedDomains
+     * @param null|CacheControlEphemeral $cacheControl
+     * @param null|int                   $maxUses
      * @param array{
      *   type?: string,
      *   city?: string|null,

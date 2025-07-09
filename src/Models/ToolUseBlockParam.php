@@ -26,14 +26,14 @@ class ToolUseBlockParam implements BaseModel
     public string $type;
 
     #[Api('cache_control', optional: true)]
-    public CacheControlEphemeral $cacheControl;
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
-     * @param string                $id
-     * @param mixed                 $input
-     * @param string                $name
-     * @param string                $type
-     * @param CacheControlEphemeral $cacheControl
+     * @param string                     $id
+     * @param mixed                      $input
+     * @param string                     $name
+     * @param string                     $type
+     * @param null|CacheControlEphemeral $cacheControl
      */
     final public function __construct(
         $id,

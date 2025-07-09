@@ -22,13 +22,11 @@ class BetaRequestMCPToolResultBlockParam implements BaseModel
     public string $type;
 
     #[Api('cache_control', optional: true)]
-    public BetaCacheControlEphemeral $cacheControl;
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /** @var null|list<BetaTextBlockParam>|string $content */
     #[Api(
-        type: new UnionOf(
-            ['string', new ListOf(BetaTextBlockParam::class), 'null']
-        ),
+        type: new UnionOf(['string', new ListOf(BetaTextBlockParam::class)]),
         optional: true,
     )]
     public mixed $content;
@@ -39,7 +37,7 @@ class BetaRequestMCPToolResultBlockParam implements BaseModel
     /**
      * @param string                               $toolUseID
      * @param string                               $type
-     * @param BetaCacheControlEphemeral            $cacheControl
+     * @param null|BetaCacheControlEphemeral       $cacheControl
      * @param null|list<BetaTextBlockParam>|string $content
      * @param null|bool                            $isError
      */

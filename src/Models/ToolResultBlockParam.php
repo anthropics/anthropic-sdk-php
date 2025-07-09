@@ -22,7 +22,7 @@ class ToolResultBlockParam implements BaseModel
     public string $type;
 
     #[Api('cache_control', optional: true)]
-    public CacheControlEphemeral $cacheControl;
+    public ?CacheControlEphemeral $cacheControl;
 
     /** @var null|list<ImageBlockParam|TextBlockParam>|string $content */
     #[Api(
@@ -32,7 +32,6 @@ class ToolResultBlockParam implements BaseModel
                 new ListOf(
                     new UnionOf([TextBlockParam::class, ImageBlockParam::class])
                 ),
-                'null',
             ],
         ),
         optional: true,
@@ -45,7 +44,7 @@ class ToolResultBlockParam implements BaseModel
     /**
      * @param string                                           $toolUseID
      * @param string                                           $type
-     * @param CacheControlEphemeral                            $cacheControl
+     * @param null|CacheControlEphemeral                       $cacheControl
      * @param null|list<ImageBlockParam|TextBlockParam>|string $content
      * @param null|bool                                        $isError
      */

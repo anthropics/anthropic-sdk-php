@@ -28,18 +28,14 @@ class CreateParams implements BaseModel
     public string $prompt;
 
     #[Api(optional: true)]
-    public Metadata $metadata;
+    public ?Metadata $metadata;
 
     /** @var null|list<string> $stopSequences */
-    #[Api(
-        'stop_sequences',
-        type: new UnionOf([new ListOf('string'), 'null']),
-        optional: true,
-    )]
+    #[Api('stop_sequences', type: new ListOf('string'), optional: true)]
     public ?array $stopSequences;
 
     #[Api(optional: true)]
-    public ?bool $stream;
+    public bool $stream;
 
     #[Api(optional: true)]
     public ?float $temperature;
@@ -51,10 +47,7 @@ class CreateParams implements BaseModel
     public ?float $topP;
 
     /** @var null|list<string|string> $anthropicBeta */
-    #[Api(
-        type: new UnionOf([new ListOf(new UnionOf(['string', 'string'])), 'null']),
-        optional: true,
-    )]
+    #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
     public ?array $anthropicBeta;
 }
 

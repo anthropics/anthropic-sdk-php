@@ -42,25 +42,21 @@ class CreateParams implements BaseModel
     public mixed $model;
 
     #[Api(optional: true)]
-    public Metadata $metadata;
+    public ?Metadata $metadata;
 
     #[Api('service_tier', optional: true)]
     public ?string $serviceTier;
 
     /** @var null|list<string> $stopSequences */
-    #[Api(
-        'stop_sequences',
-        type: new UnionOf([new ListOf('string'), 'null']),
-        optional: true,
-    )]
+    #[Api('stop_sequences', type: new ListOf('string'), optional: true)]
     public ?array $stopSequences;
 
     #[Api(optional: true)]
-    public ?bool $stream;
+    public bool $stream;
 
     /** @var null|list<TextBlockParam>|string $system */
     #[Api(
-        type: new UnionOf(['string', new ListOf(TextBlockParam::class), 'null']),
+        type: new UnionOf(['string', new ListOf(TextBlockParam::class)]),
         optional: true,
     )]
     public mixed $system;
@@ -68,12 +64,12 @@ class CreateParams implements BaseModel
     #[Api(optional: true)]
     public ?float $temperature;
 
-    /** @var ThinkingConfigDisabled|ThinkingConfigEnabled $thinking */
+    /** @var null|ThinkingConfigDisabled|ThinkingConfigEnabled $thinking */
     #[Api(optional: true)]
     public mixed $thinking;
 
     /**
-     * @var ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice
+     * @var null|ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice
      */
     #[Api('tool_choice', optional: true)]
     public mixed $toolChoice;
@@ -84,21 +80,16 @@ class CreateParams implements BaseModel
      * }|WebSearchTool20250305>|null $tools
      */
     #[Api(
-        type: new UnionOf(
-            [
-                new ListOf(
-                    new UnionOf(
-                        [
-                            Tool::class,
-                            ToolBash20250124::class,
-                            ToolTextEditor20250124::class,
-                            new ListOf('mixed'),
-                            WebSearchTool20250305::class,
-                        ],
-                    ),
-                ),
-                'null',
-            ],
+        type: new ListOf(
+            new UnionOf(
+                [
+                    Tool::class,
+                    ToolBash20250124::class,
+                    ToolTextEditor20250124::class,
+                    new ListOf('mixed'),
+                    WebSearchTool20250305::class,
+                ],
+            ),
         ),
         optional: true,
     )]

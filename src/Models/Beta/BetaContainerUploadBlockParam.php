@@ -20,12 +20,12 @@ class BetaContainerUploadBlockParam implements BaseModel
     public string $type;
 
     #[Api('cache_control', optional: true)]
-    public BetaCacheControlEphemeral $cacheControl;
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * @param string                    $fileID
-     * @param string                    $type
-     * @param BetaCacheControlEphemeral $cacheControl
+     * @param string                         $fileID
+     * @param string                         $type
+     * @param null|BetaCacheControlEphemeral $cacheControl
      */
     final public function __construct(
         $fileID,

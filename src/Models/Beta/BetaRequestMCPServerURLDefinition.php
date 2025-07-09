@@ -26,14 +26,14 @@ class BetaRequestMCPServerURLDefinition implements BaseModel
     public ?string $authorizationToken;
 
     #[Api('tool_configuration', optional: true)]
-    public BetaRequestMCPServerToolConfiguration $toolConfiguration;
+    public ?BetaRequestMCPServerToolConfiguration $toolConfiguration;
 
     /**
-     * @param string                                $name
-     * @param string                                $type
-     * @param string                                $url
-     * @param null|string                           $authorizationToken
-     * @param BetaRequestMCPServerToolConfiguration $toolConfiguration
+     * @param string                                     $name
+     * @param string                                     $type
+     * @param string                                     $url
+     * @param null|string                                $authorizationToken
+     * @param null|BetaRequestMCPServerToolConfiguration $toolConfiguration
      */
     final public function __construct(
         $name,

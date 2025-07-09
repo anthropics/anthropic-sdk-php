@@ -23,10 +23,10 @@ class BetaRequestDocumentBlock implements BaseModel
     public string $type;
 
     #[Api('cache_control', optional: true)]
-    public BetaCacheControlEphemeral $cacheControl;
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     #[Api(optional: true)]
-    public BetaCitationsConfigParam $citations;
+    public ?BetaCitationsConfigParam $citations;
 
     #[Api(optional: true)]
     public ?string $context;
@@ -37,8 +37,8 @@ class BetaRequestDocumentBlock implements BaseModel
     /**
      * @param BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source
      * @param string                                                                                                 $type
-     * @param BetaCacheControlEphemeral                                                                              $cacheControl
-     * @param BetaCitationsConfigParam                                                                               $citations
+     * @param null|BetaCacheControlEphemeral                                                                         $cacheControl
+     * @param null|BetaCitationsConfigParam                                                                          $citations
      * @param null|string                                                                                            $context
      * @param null|string                                                                                            $title
      */

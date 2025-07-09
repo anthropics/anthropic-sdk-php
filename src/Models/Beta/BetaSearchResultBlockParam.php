@@ -28,18 +28,18 @@ class BetaSearchResultBlockParam implements BaseModel
     public string $type;
 
     #[Api('cache_control', optional: true)]
-    public BetaCacheControlEphemeral $cacheControl;
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     #[Api(optional: true)]
-    public BetaCitationsConfigParam $citations;
+    public ?BetaCitationsConfigParam $citations;
 
     /**
-     * @param list<BetaTextBlockParam>  $content
-     * @param string                    $source
-     * @param string                    $title
-     * @param string                    $type
-     * @param BetaCacheControlEphemeral $cacheControl
-     * @param BetaCitationsConfigParam  $citations
+     * @param list<BetaTextBlockParam>       $content
+     * @param string                         $source
+     * @param string                         $title
+     * @param string                         $type
+     * @param null|BetaCacheControlEphemeral $cacheControl
+     * @param null|BetaCitationsConfigParam  $citations
      */
     final public function __construct(
         $content,
