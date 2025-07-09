@@ -29,30 +29,22 @@ class CountTokensParams implements BaseModel
     use Model;
     use Params;
 
-    /**
-     * @var list<MessageParam> $messages
-     */
+    /** @var list<MessageParam> $messages */
     #[Api(type: new ListOf(MessageParam::class))]
     public array $messages;
 
-    /**
-     * @var string|string $model
-     */
+    /** @var string|string $model */
     #[Api]
     public mixed $model;
 
-    /**
-     * @var list<TextBlockParam>|string $system
-     */
+    /** @var null|list<TextBlockParam>|string $system */
     #[Api(
-        type: new UnionOf(['string', new ListOf(TextBlockParam::class)]),
+        type: new UnionOf(['string', new ListOf(TextBlockParam::class), 'null']),
         optional: true,
     )]
     public mixed $system;
 
-    /**
-     * @var ThinkingConfigDisabled|ThinkingConfigEnabled $thinking
-     */
+    /** @var ThinkingConfigDisabled|ThinkingConfigEnabled $thinking */
     #[Api(optional: true)]
     public mixed $thinking;
 
@@ -64,26 +56,29 @@ class CountTokensParams implements BaseModel
 
     /**
      * @var list<Tool|ToolBash20250124|ToolTextEditor20250124|array{
-     *
-     * name?: string, type?: string, cacheControl?: CacheControlEphemeral
-     *
-     * }|WebSearchTool20250305> $tools
+     *   name?: string, type?: string, cacheControl?: CacheControlEphemeral
+     * }|WebSearchTool20250305>|null $tools
      */
     #[Api(
-        type: new ListOf(
-            new UnionOf(
-                [
-                    Tool::class,
-                    ToolBash20250124::class,
-                    ToolTextEditor20250124::class,
-                    new ListOf('mixed'),
-                    WebSearchTool20250305::class,
-                ],
-            ),
+        type: new UnionOf(
+            [
+                new ListOf(
+                    new UnionOf(
+                        [
+                            Tool::class,
+                            ToolBash20250124::class,
+                            ToolTextEditor20250124::class,
+                            new ListOf('mixed'),
+                            WebSearchTool20250305::class,
+                        ],
+                    ),
+                ),
+                'null',
+            ],
         ),
         optional: true,
     )]
-    public array $tools;
+    public ?array $tools;
 }
 
 CountTokensParams::_loadMetadata();

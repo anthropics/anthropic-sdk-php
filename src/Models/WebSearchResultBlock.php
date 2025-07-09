@@ -7,7 +7,6 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 class WebSearchResultBlock implements BaseModel
 {
@@ -28,23 +27,21 @@ class WebSearchResultBlock implements BaseModel
     #[Api]
     public string $url;
 
+    /**
+     * @param string      $encryptedContent
+     * @param null|string $pageAge
+     * @param string      $title
+     * @param string      $type
+     * @param string      $url
+     */
     final public function __construct(
-        string $encryptedContent,
-        ?string $pageAge,
-        string $title,
-        string $type,
-        string $url
+        $encryptedContent,
+        $pageAge,
+        $title,
+        $type,
+        $url
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

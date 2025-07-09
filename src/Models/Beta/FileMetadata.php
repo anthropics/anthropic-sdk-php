@@ -32,30 +32,27 @@ class FileMetadata implements BaseModel
     public string $type;
 
     #[Api(optional: true)]
-    public bool $downloadable;
+    public ?bool $downloadable;
 
     /**
-     * @param bool $downloadable
+     * @param string             $id
+     * @param \DateTimeInterface $createdAt
+     * @param string             $filename
+     * @param string             $mimeType
+     * @param int                $sizeBytes
+     * @param string             $type
+     * @param null|bool          $downloadable
      */
     final public function __construct(
-        string $id,
-        \DateTimeInterface $createdAt,
-        string $filename,
-        string $mimeType,
-        int $sizeBytes,
-        string $type,
-        bool|None $downloadable = None::NOT_SET
+        $id,
+        $createdAt,
+        $filename,
+        $mimeType,
+        $sizeBytes,
+        $type,
+        $downloadable = None::NOT_GIVEN,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

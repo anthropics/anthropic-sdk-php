@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
@@ -15,9 +14,7 @@ class BetaContentBlockSource implements BaseModel
 {
     use Model;
 
-    /**
-     * @var list<BetaImageBlockParam|BetaTextBlockParam>|string $content
-     */
+    /** @var list<BetaImageBlockParam|BetaTextBlockParam>|string $content */
     #[Api(
         type: new UnionOf(
             [
@@ -35,19 +32,11 @@ class BetaContentBlockSource implements BaseModel
 
     /**
      * @param list<BetaImageBlockParam|BetaTextBlockParam>|string $content
+     * @param string                                              $type
      */
-    final public function __construct(mixed $content, string $type)
+    final public function __construct($content, $type)
     {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

@@ -20,26 +20,19 @@ class ToolChoiceTool implements BaseModel
     public string $type;
 
     #[Api('disable_parallel_tool_use', optional: true)]
-    public bool $disableParallelToolUse;
+    public ?bool $disableParallelToolUse;
 
     /**
-     * @param bool $disableParallelToolUse
+     * @param string    $name
+     * @param string    $type
+     * @param null|bool $disableParallelToolUse
      */
     final public function __construct(
-        string $name,
-        string $type,
-        bool|None $disableParallelToolUse = None::NOT_SET
+        $name,
+        $type,
+        $disableParallelToolUse = None::NOT_GIVEN
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

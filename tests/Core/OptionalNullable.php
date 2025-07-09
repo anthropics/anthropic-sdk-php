@@ -11,14 +11,14 @@ class OptionalNullable
 
     public function __construct(
         ?int $x = null,
-        None|string $y = None::NOT_SET,
-        null|None|string $z = None::NOT_SET,
-        null|None|string $w = None::NOT_SET,
+        None|string $y = None::NOT_GIVEN,
+        null|None|string $z = None::NOT_GIVEN,
+        null|None|string $w = None::NOT_GIVEN,
     ) {
         $this->args = ['x' => null];
         $args = func_get_args();
         foreach ($args as $key => $value) {
-            if (None::NOT_SET == $value) {
+            if (None::NOT_GIVEN == $value) {
                 continue;
             }
             $argName = ['x', 'y', 'z', 'w'][$key];

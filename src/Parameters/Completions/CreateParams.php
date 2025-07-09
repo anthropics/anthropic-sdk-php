@@ -20,9 +20,7 @@ class CreateParams implements BaseModel
     #[Api('max_tokens_to_sample')]
     public int $maxTokensToSample;
 
-    /**
-     * @var string|string $model
-     */
+    /** @var string|string $model */
     #[Api]
     public mixed $model;
 
@@ -32,29 +30,32 @@ class CreateParams implements BaseModel
     #[Api(optional: true)]
     public Metadata $metadata;
 
-    /**
-     * @var list<string> $stopSequences
-     */
-    #[Api('stop_sequences', type: new ListOf('string'), optional: true)]
-    public array $stopSequences;
+    /** @var null|list<string> $stopSequences */
+    #[Api(
+        'stop_sequences',
+        type: new UnionOf([new ListOf('string'), 'null']),
+        optional: true,
+    )]
+    public ?array $stopSequences;
 
     #[Api(optional: true)]
-    public bool $stream;
+    public ?bool $stream;
 
     #[Api(optional: true)]
-    public float $temperature;
+    public ?float $temperature;
 
     #[Api('top_k', optional: true)]
-    public int $topK;
+    public ?int $topK;
 
     #[Api('top_p', optional: true)]
-    public float $topP;
+    public ?float $topP;
 
-    /**
-     * @var list<string|string> $anthropicBeta
-     */
-    #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
-    public array $anthropicBeta;
+    /** @var null|list<string|string> $anthropicBeta */
+    #[Api(
+        type: new UnionOf([new ListOf(new UnionOf(['string', 'string'])), 'null']),
+        optional: true,
+    )]
+    public ?array $anthropicBeta;
 }
 
 CreateParams::_loadMetadata();

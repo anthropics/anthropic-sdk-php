@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 class BetaMessageDeltaUsage implements BaseModel
 {
@@ -28,23 +27,21 @@ class BetaMessageDeltaUsage implements BaseModel
     #[Api('server_tool_use')]
     public BetaServerToolUsage $serverToolUse;
 
+    /**
+     * @param null|int            $cacheCreationInputTokens
+     * @param null|int            $cacheReadInputTokens
+     * @param null|int            $inputTokens
+     * @param int                 $outputTokens
+     * @param BetaServerToolUsage $serverToolUse
+     */
     final public function __construct(
-        ?int $cacheCreationInputTokens,
-        ?int $cacheReadInputTokens,
-        ?int $inputTokens,
-        int $outputTokens,
-        BetaServerToolUsage $serverToolUse
+        $cacheCreationInputTokens,
+        $cacheReadInputTokens,
+        $inputTokens,
+        $outputTokens,
+        $serverToolUse,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

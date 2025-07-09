@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
@@ -44,9 +43,7 @@ class BetaMessage implements BaseModel
     )]
     public array $content;
 
-    /**
-     * @var string|string $model
-     */
+    /** @var string|string $model */
     #[Api]
     public mixed $model;
 
@@ -66,30 +63,28 @@ class BetaMessage implements BaseModel
     public BetaUsage $usage;
 
     /**
+     * @param string                                                                                                                                                                                                                                    $id
+     * @param BetaContainer                                                                                                                                                                                                                             $container
      * @param list<BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock> $content
      * @param string|string                                                                                                                                                                                                                             $model
+     * @param string                                                                                                                                                                                                                                    $role
+     * @param string                                                                                                                                                                                                                                    $stopReason
+     * @param null|string                                                                                                                                                                                                                               $stopSequence
+     * @param string                                                                                                                                                                                                                                    $type
+     * @param BetaUsage                                                                                                                                                                                                                                 $usage
      */
     final public function __construct(
-        string $id,
-        BetaContainer $container,
-        array $content,
-        mixed $model,
-        string $role,
-        string $stopReason,
-        ?string $stopSequence,
-        string $type,
-        BetaUsage $usage
+        $id,
+        $container,
+        $content,
+        $model,
+        $role,
+        $stopReason,
+        $stopSequence,
+        $type,
+        $usage,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

@@ -7,7 +7,6 @@ namespace Anthropic\Models\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 class MessageBatch implements BaseModel
 {
@@ -43,28 +42,31 @@ class MessageBatch implements BaseModel
     #[Api]
     public string $type;
 
+    /**
+     * @param string                    $id
+     * @param null|\DateTimeInterface   $archivedAt
+     * @param null|\DateTimeInterface   $cancelInitiatedAt
+     * @param \DateTimeInterface        $createdAt
+     * @param null|\DateTimeInterface   $endedAt
+     * @param \DateTimeInterface        $expiresAt
+     * @param string                    $processingStatus
+     * @param MessageBatchRequestCounts $requestCounts
+     * @param null|string               $resultsURL
+     * @param string                    $type
+     */
     final public function __construct(
-        string $id,
-        ?\DateTimeInterface $archivedAt,
-        ?\DateTimeInterface $cancelInitiatedAt,
-        \DateTimeInterface $createdAt,
-        ?\DateTimeInterface $endedAt,
-        \DateTimeInterface $expiresAt,
-        string $processingStatus,
-        MessageBatchRequestCounts $requestCounts,
-        ?string $resultsURL,
-        string $type
+        $id,
+        $archivedAt,
+        $cancelInitiatedAt,
+        $createdAt,
+        $endedAt,
+        $expiresAt,
+        $processingStatus,
+        $requestCounts,
+        $resultsURL,
+        $type,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

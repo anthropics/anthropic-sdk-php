@@ -29,26 +29,20 @@ class BetaRequestMCPServerURLDefinition implements BaseModel
     public BetaRequestMCPServerToolConfiguration $toolConfiguration;
 
     /**
+     * @param string                                $name
+     * @param string                                $type
+     * @param string                                $url
      * @param null|string                           $authorizationToken
      * @param BetaRequestMCPServerToolConfiguration $toolConfiguration
      */
     final public function __construct(
-        string $name,
-        string $type,
-        string $url,
-        null|None|string $authorizationToken = None::NOT_SET,
-        BetaRequestMCPServerToolConfiguration|None $toolConfiguration = None::NOT_SET
+        $name,
+        $type,
+        $url,
+        $authorizationToken = None::NOT_GIVEN,
+        $toolConfiguration = None::NOT_GIVEN,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 class BetaCitationPageLocationParam implements BaseModel
 {
@@ -31,24 +30,23 @@ class BetaCitationPageLocationParam implements BaseModel
     #[Api]
     public string $type;
 
+    /**
+     * @param string      $citedText
+     * @param int         $documentIndex
+     * @param null|string $documentTitle
+     * @param int         $endPageNumber
+     * @param int         $startPageNumber
+     * @param string      $type
+     */
     final public function __construct(
-        string $citedText,
-        int $documentIndex,
-        ?string $documentTitle,
-        int $endPageNumber,
-        int $startPageNumber,
-        string $type
+        $citedText,
+        $documentIndex,
+        $documentTitle,
+        $endPageNumber,
+        $startPageNumber,
+        $type,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

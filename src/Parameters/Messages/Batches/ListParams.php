@@ -15,13 +15,13 @@ class ListParams implements BaseModel
     use Params;
 
     #[Api(optional: true)]
-    public string $afterID;
+    public ?string $afterID;
 
     #[Api(optional: true)]
-    public string $beforeID;
+    public ?string $beforeID;
 
     #[Api(optional: true)]
-    public int $limit;
+    public ?int $limit;
 }
 
 ListParams::_loadMetadata();

@@ -25,7 +25,7 @@ class BetaToolResultBlockParam implements BaseModel
     public BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * @var list<BetaImageBlockParam|BetaSearchResultBlockParam|BetaTextBlockParam>|string $content
+     * @var null|list<BetaImageBlockParam|BetaSearchResultBlockParam|BetaTextBlockParam>|string $content
      */
     #[Api(
         type: new UnionOf(
@@ -40,6 +40,7 @@ class BetaToolResultBlockParam implements BaseModel
                         ],
                     ),
                 ),
+                'null',
             ],
         ),
         optional: true,
@@ -47,30 +48,23 @@ class BetaToolResultBlockParam implements BaseModel
     public mixed $content;
 
     #[Api('is_error', optional: true)]
-    public bool $isError;
+    public ?bool $isError;
 
     /**
-     * @param BetaCacheControlEphemeral                                                      $cacheControl
-     * @param list<BetaImageBlockParam|BetaSearchResultBlockParam|BetaTextBlockParam>|string $content
-     * @param bool                                                                           $isError
+     * @param string                                                                              $toolUseID
+     * @param string                                                                              $type
+     * @param BetaCacheControlEphemeral                                                           $cacheControl
+     * @param null|list<BetaImageBlockParam|BetaSearchResultBlockParam|BetaTextBlockParam>|string $content
+     * @param null|bool                                                                           $isError
      */
     final public function __construct(
-        string $toolUseID,
-        string $type,
-        BetaCacheControlEphemeral|None $cacheControl = None::NOT_SET,
-        mixed $content = None::NOT_SET,
-        bool|None $isError = None::NOT_SET
+        $toolUseID,
+        $type,
+        $cacheControl = None::NOT_GIVEN,
+        $content = None::NOT_GIVEN,
+        $isError = None::NOT_GIVEN,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

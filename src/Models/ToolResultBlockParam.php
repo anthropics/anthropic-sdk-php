@@ -24,9 +24,7 @@ class ToolResultBlockParam implements BaseModel
     #[Api('cache_control', optional: true)]
     public CacheControlEphemeral $cacheControl;
 
-    /**
-     * @var list<ImageBlockParam|TextBlockParam>|string $content
-     */
+    /** @var null|list<ImageBlockParam|TextBlockParam>|string $content */
     #[Api(
         type: new UnionOf(
             [
@@ -34,6 +32,7 @@ class ToolResultBlockParam implements BaseModel
                 new ListOf(
                     new UnionOf([TextBlockParam::class, ImageBlockParam::class])
                 ),
+                'null',
             ],
         ),
         optional: true,
@@ -41,30 +40,23 @@ class ToolResultBlockParam implements BaseModel
     public mixed $content;
 
     #[Api('is_error', optional: true)]
-    public bool $isError;
+    public ?bool $isError;
 
     /**
-     * @param CacheControlEphemeral                       $cacheControl
-     * @param list<ImageBlockParam|TextBlockParam>|string $content
-     * @param bool                                        $isError
+     * @param string                                           $toolUseID
+     * @param string                                           $type
+     * @param CacheControlEphemeral                            $cacheControl
+     * @param null|list<ImageBlockParam|TextBlockParam>|string $content
+     * @param null|bool                                        $isError
      */
     final public function __construct(
-        string $toolUseID,
-        string $type,
-        CacheControlEphemeral|None $cacheControl = None::NOT_SET,
-        mixed $content = None::NOT_SET,
-        bool|None $isError = None::NOT_SET
+        $toolUseID,
+        $type,
+        $cacheControl = None::NOT_GIVEN,
+        $content = None::NOT_GIVEN,
+        $isError = None::NOT_GIVEN,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

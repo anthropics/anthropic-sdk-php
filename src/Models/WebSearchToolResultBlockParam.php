@@ -15,9 +15,7 @@ class WebSearchToolResultBlockParam implements BaseModel
 {
     use Model;
 
-    /**
-     * @var list<WebSearchResultBlockParam>|WebSearchToolRequestError $content
-     */
+    /** @var list<WebSearchResultBlockParam>|WebSearchToolRequestError $content */
     #[Api(
         type: new UnionOf(
             [
@@ -39,24 +37,17 @@ class WebSearchToolResultBlockParam implements BaseModel
 
     /**
      * @param list<WebSearchResultBlockParam>|WebSearchToolRequestError $content
+     * @param string                                                    $toolUseID
+     * @param string                                                    $type
      * @param CacheControlEphemeral                                     $cacheControl
      */
     final public function __construct(
-        mixed $content,
-        string $toolUseID,
-        string $type,
-        CacheControlEphemeral|None $cacheControl = None::NOT_SET
+        $content,
+        $toolUseID,
+        $type,
+        $cacheControl = None::NOT_GIVEN
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

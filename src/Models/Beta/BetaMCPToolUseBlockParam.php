@@ -32,26 +32,22 @@ class BetaMCPToolUseBlockParam implements BaseModel
     public BetaCacheControlEphemeral $cacheControl;
 
     /**
+     * @param string                    $id
+     * @param mixed                     $input
+     * @param string                    $name
+     * @param string                    $serverName
+     * @param string                    $type
      * @param BetaCacheControlEphemeral $cacheControl
      */
     final public function __construct(
-        string $id,
-        mixed $input,
-        string $name,
-        string $serverName,
-        string $type,
-        BetaCacheControlEphemeral|None $cacheControl = None::NOT_SET
+        $id,
+        $input,
+        $name,
+        $serverName,
+        $type,
+        $cacheControl = None::NOT_GIVEN
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

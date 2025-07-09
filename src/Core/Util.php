@@ -34,10 +34,8 @@ final class Util
      *
      * @return array<string, T>
      */
-    public static function array_transform_keys(
-        array $array,
-        array $map
-    ): array {
+    public static function array_transform_keys(array $array, array $map): array
+    {
         $acc = [];
         foreach ($array as $key => $value) {
             $acc[$map[$key] ?? $key] = $value;
@@ -165,9 +163,9 @@ final class Util
     }
 
     /**
-     * @param array<
-     * string, mixed
-     * >|bool|int|float|string|resource|\Traversable<mixed>|null $body
+     * @param array<string, mixed>|bool|int|float|string|resource|\Traversable<
+     *   mixed
+     * >|null $body
      *
      * @return array{string, \Generator<string>}
      */
@@ -202,9 +200,9 @@ final class Util
     }
 
     /**
-     * @param array<
-     * string, mixed
-     * >|bool|int|float|string|resource|\Traversable<mixed>|null $body
+     * @param array<string, mixed>|bool|int|float|string|resource|\Traversable<
+     *   mixed
+     * >|null $body
      */
     public static function withSetBody(
         StreamFactoryInterface $factory,
@@ -265,14 +263,11 @@ final class Util
     /**
      * @param \Iterator<string> $lines
      *
-     * @return \Iterator<array{
-     *
-     *     event?: string|null,
-     *     data?: string|null,
-     *     id?: string|null,
-     *     retry?: int|null,
-     *
-     * },>
+     * @return \Iterator<
+     *   array{
+     *     event?: string|null, data?: string|null, id?: string|null, retry?: int|null
+     *   },
+     * >
      */
     public static function decodeSSE(\Iterator $lines): \Iterator
     {

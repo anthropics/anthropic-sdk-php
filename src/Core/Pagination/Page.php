@@ -12,12 +12,10 @@ use Psr\Http\Message\ResponseInterface;
  */
 class Page extends AbstractPage
 {
-    /**
-     * @var list<TItem>
-     */
+    /** @var list<TItem> */
     public array $data;
 
-    public bool $hasMore;
+    public ?bool $hasMore;
 
     public ?string $firstID;
 
@@ -25,19 +23,17 @@ class Page extends AbstractPage
 
     /**
      * @param array{
-     *
-     *     data?: list<TItem>,
-     *     hasMore?: bool,
-     *     firstID?: string|null,
-     *     lastID?: string|null,
-     *
+     *   data?: list<TItem>,
+     *   hasMore?: bool,
+     *   firstID?: string|null,
+     *   lastID?: string|null,
      * } $body
      */
     public function __construct(
         protected BaseClient $client,
         protected PageRequestOptions $options,
         protected ResponseInterface $response,
-        protected mixed $body
+        protected mixed $body,
     ) {
         $this->data = $body['data'] ?? [];
         $this->hasMore = $body['hasMore'] ?? false;
@@ -52,9 +48,7 @@ class Page extends AbstractPage
         return $this->options->withQuery('after_id', $next);
     }
 
-    /**
-     * @return list<TItem>
-     */
+    /** @return list<TItem> */
     public function getPaginatedItems(): array
     {
         return $this->data;

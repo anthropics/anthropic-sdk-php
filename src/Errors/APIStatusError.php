@@ -15,7 +15,7 @@ class APIStatusError extends APIError
         public RequestInterface $request,
         ResponseInterface $response,
         ?\Throwable $previous = null,
-        string $message = ''
+        string $message = '',
     ) {
         $this->response = $response;
         $this->status = $response->getStatusCode();

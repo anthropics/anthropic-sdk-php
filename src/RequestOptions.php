@@ -26,20 +26,18 @@ class RequestOptions
         public float $maxRetryDelay = self::DEFAULT_MAX_RETRY_DELAY,
         public array $extraHeaders = [],
         public array $extraQueryParams = [],
-        public array $extraBodyParams = []
+        public array $extraBodyParams = [],
     ) {}
 
     /**
      * @return array{
-     *
-     *     timeout?: float,
-     *     maxRetries?: int,
-     *     initialRetryDelay?: float,
-     *     maxRetryDelay?: float,
-     *     extraHeaders?: list<string>,
-     *     extraQueryParams?: list<string>,
-     *     extraBodyParams?: list<string>,
-     *
+     *   timeout?: float,
+     *   maxRetries?: int,
+     *   initialRetryDelay?: float,
+     *   maxRetryDelay?: float,
+     *   extraHeaders?: list<string>,
+     *   extraQueryParams?: list<string>,
+     *   extraBodyParams?: list<string>,
      * }
      */
     public function __serialize(): array
@@ -57,15 +55,13 @@ class RequestOptions
 
     /**
      * @param array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
+     *   timeout?: float|null,
+     *   maxRetries?: int|null,
+     *   initialRetryDelay?: float|null,
+     *   maxRetryDelay?: float|null,
+     *   extraHeaders?: list<string>|null,
+     *   extraQueryParams?: list<string>|null,
+     *   extraBodyParams?: list<string>|null,
      * } $data
      */
     public function __unserialize(array $data): void
@@ -93,15 +89,13 @@ class RequestOptions
 
     /**
      * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
+     *   timeout?: float|null,
+     *   maxRetries?: int|null,
+     *   initialRetryDelay?: float|null,
+     *   maxRetryDelay?: float|null,
+     *   extraHeaders?: list<string>|null,
+     *   extraQueryParams?: list<string>|null,
+     *   extraBodyParams?: list<string>|null,
      * }|null $options
      */
     public static function parse(mixed $options): self

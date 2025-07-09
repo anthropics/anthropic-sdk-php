@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
@@ -15,9 +14,7 @@ class BetaMCPToolResultBlock implements BaseModel
 {
     use Model;
 
-    /**
-     * @var list<BetaTextBlock>|string $content
-     */
+    /** @var list<BetaTextBlock>|string $content */
     #[Api(type: new UnionOf(['string', new ListOf(BetaTextBlock::class)]))]
     public mixed $content;
 
@@ -32,23 +29,13 @@ class BetaMCPToolResultBlock implements BaseModel
 
     /**
      * @param list<BetaTextBlock>|string $content
+     * @param bool                       $isError
+     * @param string                     $toolUseID
+     * @param string                     $type
      */
-    final public function __construct(
-        mixed $content,
-        bool $isError,
-        string $toolUseID,
-        string $type
-    ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+    final public function __construct($content, $isError, $toolUseID, $type)
+    {
+        $this->constructFromArgs(func_get_args());
     }
 }
 

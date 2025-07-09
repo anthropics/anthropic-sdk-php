@@ -13,9 +13,7 @@ class ImageBlockParam implements BaseModel
 {
     use Model;
 
-    /**
-     * @var Base64ImageSource|URLImageSource $source
-     */
+    /** @var Base64ImageSource|URLImageSource $source */
     #[Api]
     public mixed $source;
 
@@ -27,23 +25,15 @@ class ImageBlockParam implements BaseModel
 
     /**
      * @param Base64ImageSource|URLImageSource $source
+     * @param string                           $type
      * @param CacheControlEphemeral            $cacheControl
      */
     final public function __construct(
-        mixed $source,
-        string $type,
-        CacheControlEphemeral|None $cacheControl = None::NOT_SET
+        $source,
+        $type,
+        $cacheControl = None::NOT_GIVEN
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

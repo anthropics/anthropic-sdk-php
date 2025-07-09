@@ -6,6 +6,7 @@ namespace Anthropic\Core\Concerns;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 use Anthropic\Core\Serde;
 use Anthropic\Core\Serde\CoerceState;
 use Anthropic\Core\Serde\DumpState;
@@ -260,6 +261,18 @@ trait Model
                 self::$_properties[$name] = new PropertyInfo($property);
             }
         }
+    }
+
+    /** @param array<mixed> $args */
+    protected function constructFromArgs(array $args): void
+    {
+        $data = [];
+        for ($i = 0; $i < count($args); ++$i) {
+            if (None::NOT_GIVEN !== $args[$i]) {
+                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
+            }
+        }
+        $this->__unserialize($data);
     }
 
     private static function serialize(mixed $value): mixed

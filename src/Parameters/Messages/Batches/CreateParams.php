@@ -32,31 +32,25 @@ class CreateParams implements BaseModel
 
     /**
      * @var list<array{
-     *
-     *     customID?: string,
-     *     params?: array{
-     *
-     *         maxTokens?: int,
-     *         messages?: list<MessageParam>,
-     *         model?: string|string,
-     *         metadata?: Metadata,
-     *         serviceTier?: string,
-     *         stopSequences?: list<string>,
-     *         stream?: bool,
-     *         system?: string|list<TextBlockParam>,
-     *         temperature?: float,
-     *         thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
-     *         toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
-     *         tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|array{
-     *
-     * name?: string, type?: string, cacheControl?: CacheControlEphemeral
-     *
-     * }|WebSearchTool20250305>,
-     *         topK?: int,
-     *         topP?: float,
-     *
-     * },
-     *
+     *   customID?: string,
+     *   params?: array{
+     *     maxTokens?: int,
+     *     messages?: list<MessageParam>,
+     *     model?: string|string,
+     *     metadata?: Metadata,
+     *     serviceTier?: string,
+     *     stopSequences?: list<string>,
+     *     stream?: bool,
+     *     system?: string|list<TextBlockParam>,
+     *     temperature?: float,
+     *     thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
+     *     toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
+     *     tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|array{
+     *       name?: string, type?: string, cacheControl?: CacheControlEphemeral
+     *     }|WebSearchTool20250305>,
+     *     topK?: int,
+     *     topP?: float,
+     *   },
      * }> $requests
      */
     #[Api(type: new ListOf(new ListOf('mixed')))]

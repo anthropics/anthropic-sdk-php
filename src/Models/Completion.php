@@ -7,7 +7,6 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 class Completion implements BaseModel
 {
@@ -19,9 +18,7 @@ class Completion implements BaseModel
     #[Api]
     public string $completion;
 
-    /**
-     * @var string|string $model
-     */
+    /** @var string|string $model */
     #[Api]
     public mixed $model;
 
@@ -32,25 +29,20 @@ class Completion implements BaseModel
     public string $type;
 
     /**
+     * @param string        $id
+     * @param string        $completion
      * @param string|string $model
+     * @param null|string   $stopReason
+     * @param string        $type
      */
     final public function __construct(
-        string $id,
-        string $completion,
-        mixed $model,
-        ?string $stopReason,
-        string $type
+        $id,
+        $completion,
+        $model,
+        $stopReason,
+        $type
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

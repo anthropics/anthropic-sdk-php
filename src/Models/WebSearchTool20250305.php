@@ -21,9 +21,7 @@ class WebSearchTool20250305 implements BaseModel
     #[Api]
     public string $type;
 
-    /**
-     * @var null|list<string> $allowedDomains
-     */
+    /** @var null|list<string> $allowedDomains */
     #[Api(
         'allowed_domains',
         type: new UnionOf([new ListOf('string'), 'null']),
@@ -31,9 +29,7 @@ class WebSearchTool20250305 implements BaseModel
     )]
     public ?array $allowedDomains;
 
-    /**
-     * @var null|list<string> $blockedDomains
-     */
+    /** @var null|list<string> $blockedDomains */
     #[Api(
         'blocked_domains',
         type: new UnionOf([new ListOf('string'), 'null']),
@@ -49,52 +45,41 @@ class WebSearchTool20250305 implements BaseModel
 
     /**
      * @var array{
-     *
-     *     type?: string,
-     *     city?: string|null,
-     *     country?: string|null,
-     *     region?: string|null,
-     *     timezone?: string|null,
-     *
+     *   type?: string,
+     *   city?: string|null,
+     *   country?: string|null,
+     *   region?: string|null,
+     *   timezone?: string|null,
      * }|null $userLocation
      */
     #[Api('user_location', optional: true)]
     public ?array $userLocation;
 
     /**
+     * @param string                $name
+     * @param string                $type
      * @param null|list<string>     $allowedDomains
      * @param null|list<string>     $blockedDomains
      * @param CacheControlEphemeral $cacheControl
      * @param null|int              $maxUses
      * @param array{
-     *
-     *     type?: string,
-     *     city?: string|null,
-     *     country?: string|null,
-     *     region?: string|null,
-     *     timezone?: string|null,
-     *
+     *   type?: string,
+     *   city?: string|null,
+     *   country?: string|null,
+     *   region?: string|null,
+     *   timezone?: string|null,
      * }|null $userLocation
      */
     final public function __construct(
-        string $name,
-        string $type,
-        null|array|None $allowedDomains = None::NOT_SET,
-        null|array|None $blockedDomains = None::NOT_SET,
-        CacheControlEphemeral|None $cacheControl = None::NOT_SET,
-        null|int|None $maxUses = None::NOT_SET,
-        null|array|None $userLocation = None::NOT_SET
+        $name,
+        $type,
+        $allowedDomains = None::NOT_GIVEN,
+        $blockedDomains = None::NOT_GIVEN,
+        $cacheControl = None::NOT_GIVEN,
+        $maxUses = None::NOT_GIVEN,
+        $userLocation = None::NOT_GIVEN,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

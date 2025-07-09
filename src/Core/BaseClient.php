@@ -34,7 +34,7 @@ class BaseClient
     public function __construct(
         protected array $headers,
         string $baseUrl,
-        protected RequestOptions $options = new RequestOptions()
+        protected RequestOptions $options = new RequestOptions(),
     ) {
         $this->uriFactory = Psr17FactoryDiscovery::findUriFactory();
         $this->streamFactory = Psr17FactoryDiscovery::findStreamFactory();
@@ -55,7 +55,7 @@ class BaseClient
         array $query = [],
         array $headers = [],
         mixed $body = null,
-        mixed $options = []
+        mixed $options = [],
     ): mixed {
         // @phpstan-ignore-next-line
         [$req, $opts] = $this->buildRequest(method: $method, path: $path, query: $query, headers: $headers, opts: $options);
@@ -81,9 +81,7 @@ class BaseClient
         return null;
     }
 
-    /**
-     * @return array<string, string>
-     */
+    /** @return array<string, string> */
     protected function authHeaders(): array
     {
         return [];
@@ -94,15 +92,13 @@ class BaseClient
      * @param array<string, mixed>                            $query
      * @param array<string, null|int|list<int|string>|string> $headers
      * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
+     *   timeout?: float|null,
+     *   maxRetries?: int|null,
+     *   initialRetryDelay?: float|null,
+     *   maxRetryDelay?: float|null,
+     *   extraHeaders?: list<string>|null,
+     *   extraQueryParams?: list<string>|null,
+     *   extraBodyParams?: list<string>|null,
      * }|null $opts
      *
      * @return array{RequestInterface, RequestOptions}
@@ -150,16 +146,16 @@ class BaseClient
     }
 
     /**
-     * @param array<
-     * string, mixed
-     * >|bool|int|float|string|resource|\Traversable<mixed>|null $data
+     * @param array<string, mixed>|bool|int|float|string|resource|\Traversable<
+     *   mixed
+     * >|null $data
      */
     protected function sendRequest(
         RequestInterface $req,
         mixed $data,
         RequestOptions $opts,
         int $retryCount,
-        int $redirectCount
+        int $redirectCount,
     ): ResponseInterface {
         $req = Util::withSetBody($this->streamFactory, req: $req, body: $data);
         $rsp = $this->requester->sendRequest($req);

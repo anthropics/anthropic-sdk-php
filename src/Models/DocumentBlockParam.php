@@ -36,29 +36,21 @@ class DocumentBlockParam implements BaseModel
 
     /**
      * @param Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source
+     * @param string                                                          $type
      * @param CacheControlEphemeral                                           $cacheControl
      * @param CitationsConfigParam                                            $citations
      * @param null|string                                                     $context
      * @param null|string                                                     $title
      */
     final public function __construct(
-        mixed $source,
-        string $type,
-        CacheControlEphemeral|None $cacheControl = None::NOT_SET,
-        CitationsConfigParam|None $citations = None::NOT_SET,
-        null|None|string $context = None::NOT_SET,
-        null|None|string $title = None::NOT_SET
+        $source,
+        $type,
+        $cacheControl = None::NOT_GIVEN,
+        $citations = None::NOT_GIVEN,
+        $context = None::NOT_GIVEN,
+        $title = None::NOT_GIVEN,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

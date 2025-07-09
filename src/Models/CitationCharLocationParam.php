@@ -7,7 +7,6 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 class CitationCharLocationParam implements BaseModel
 {
@@ -31,24 +30,23 @@ class CitationCharLocationParam implements BaseModel
     #[Api]
     public string $type;
 
+    /**
+     * @param string      $citedText
+     * @param int         $documentIndex
+     * @param null|string $documentTitle
+     * @param int         $endCharIndex
+     * @param int         $startCharIndex
+     * @param string      $type
+     */
     final public function __construct(
-        string $citedText,
-        int $documentIndex,
-        ?string $documentTitle,
-        int $endCharIndex,
-        int $startCharIndex,
-        string $type
+        $citedText,
+        $documentIndex,
+        $documentTitle,
+        $endCharIndex,
+        $startCharIndex,
+        $type,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

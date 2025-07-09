@@ -29,25 +29,20 @@ class WebSearchResultBlockParam implements BaseModel
     public ?string $pageAge;
 
     /**
+     * @param string      $encryptedContent
+     * @param string      $title
+     * @param string      $type
+     * @param string      $url
      * @param null|string $pageAge
      */
     final public function __construct(
-        string $encryptedContent,
-        string $title,
-        string $type,
-        string $url,
-        null|None|string $pageAge = None::NOT_SET
+        $encryptedContent,
+        $title,
+        $type,
+        $url,
+        $pageAge = None::NOT_GIVEN
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

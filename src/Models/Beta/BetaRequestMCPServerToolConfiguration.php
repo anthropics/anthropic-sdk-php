@@ -15,9 +15,7 @@ class BetaRequestMCPServerToolConfiguration implements BaseModel
 {
     use Model;
 
-    /**
-     * @var null|list<string> $allowedTools
-     */
+    /** @var null|list<string> $allowedTools */
     #[Api(
         'allowed_tools',
         type: new UnionOf([new ListOf('string'), 'null']),
@@ -33,19 +31,10 @@ class BetaRequestMCPServerToolConfiguration implements BaseModel
      * @param null|bool         $enabled
      */
     final public function __construct(
-        null|array|None $allowedTools = None::NOT_SET,
-        null|bool|None $enabled = None::NOT_SET
+        $allowedTools = None::NOT_GIVEN,
+        $enabled = None::NOT_GIVEN
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

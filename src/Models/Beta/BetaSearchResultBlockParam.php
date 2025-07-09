@@ -14,9 +14,7 @@ class BetaSearchResultBlockParam implements BaseModel
 {
     use Model;
 
-    /**
-     * @var list<BetaTextBlockParam> $content
-     */
+    /** @var list<BetaTextBlockParam> $content */
     #[Api(type: new ListOf(BetaTextBlockParam::class))]
     public array $content;
 
@@ -37,27 +35,21 @@ class BetaSearchResultBlockParam implements BaseModel
 
     /**
      * @param list<BetaTextBlockParam>  $content
+     * @param string                    $source
+     * @param string                    $title
+     * @param string                    $type
      * @param BetaCacheControlEphemeral $cacheControl
      * @param BetaCitationsConfigParam  $citations
      */
     final public function __construct(
-        array $content,
-        string $source,
-        string $title,
-        string $type,
-        BetaCacheControlEphemeral|None $cacheControl = None::NOT_SET,
-        BetaCitationsConfigParam|None $citations = None::NOT_SET
+        $content,
+        $source,
+        $title,
+        $type,
+        $cacheControl = None::NOT_GIVEN,
+        $citations = None::NOT_GIVEN,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

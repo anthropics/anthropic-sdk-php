@@ -46,41 +46,28 @@ class Messages implements MessagesContract
 
     /**
      * @param array{
-     *
-     *     maxTokens?: int,
-     *     messages?: list<BetaMessageParam>,
-     *     model?: string|string,
-     *     container?: string|null,
-     *     mcpServers?: list<BetaRequestMCPServerURLDefinition>,
-     *     metadata?: BetaMetadata,
-     *     serviceTier?: string,
-     *     stopSequences?: list<string>,
-     *     stream?: bool,
-     *     system?: string|list<BetaTextBlockParam>,
-     *     temperature?: float,
-     *     thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
-     *     toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
-     *     tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305>,
-     *     topK?: int,
-     *     topP?: float,
-     *     betas?: list<string|string>,
-     *
+     *   maxTokens?: int,
+     *   messages?: list<BetaMessageParam>,
+     *   model?: string|string,
+     *   container?: string|null,
+     *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
+     *   metadata?: BetaMetadata,
+     *   serviceTier?: string,
+     *   stopSequences?: list<string>,
+     *   stream?: bool,
+     *   system?: string|list<BetaTextBlockParam>,
+     *   temperature?: float,
+     *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
+     *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
+     *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305>,
+     *   topK?: int,
+     *   topP?: float,
+     *   betas?: list<string|string>,
      * } $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      */
     public function create(
         array $params,
-        mixed $requestOptions = []
+        ?RequestOptions $requestOptions = null
     ): BetaMessage {
         [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
         $header_params = ['betas' => 'anthropic-beta'];
@@ -101,32 +88,19 @@ class Messages implements MessagesContract
 
     /**
      * @param array{
-     *
-     *     messages?: list<BetaMessageParam>,
-     *     model?: string|string,
-     *     mcpServers?: list<BetaRequestMCPServerURLDefinition>,
-     *     system?: string|list<BetaTextBlockParam>,
-     *     thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
-     *     toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
-     *     tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305>,
-     *     betas?: list<string|string>,
-     *
+     *   messages?: list<BetaMessageParam>,
+     *   model?: string|string,
+     *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
+     *   system?: string|list<BetaTextBlockParam>,
+     *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
+     *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
+     *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305>,
+     *   betas?: list<string|string>,
      * } $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      */
     public function countTokens(
         array $params,
-        mixed $requestOptions = []
+        ?RequestOptions $requestOptions = null
     ): BetaMessageTokensCount {
         [$parsed, $options] = CountTokensParams::parseRequest(
             $params,

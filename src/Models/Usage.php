@@ -7,7 +7,6 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 class Usage implements BaseModel
 {
@@ -31,24 +30,23 @@ class Usage implements BaseModel
     #[Api('service_tier')]
     public ?string $serviceTier;
 
+    /**
+     * @param null|int        $cacheCreationInputTokens
+     * @param null|int        $cacheReadInputTokens
+     * @param int             $inputTokens
+     * @param int             $outputTokens
+     * @param ServerToolUsage $serverToolUse
+     * @param null|string     $serviceTier
+     */
     final public function __construct(
-        ?int $cacheCreationInputTokens,
-        ?int $cacheReadInputTokens,
-        int $inputTokens,
-        int $outputTokens,
-        ServerToolUsage $serverToolUse,
-        ?string $serviceTier
+        $cacheCreationInputTokens,
+        $cacheReadInputTokens,
+        $inputTokens,
+        $outputTokens,
+        $serverToolUse,
+        $serviceTier,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

@@ -17,25 +17,15 @@ class DeletedFile implements BaseModel
     public string $id;
 
     #[Api(optional: true)]
-    public string $type;
+    public ?string $type;
 
     /**
-     * @param string $type
+     * @param string      $id
+     * @param null|string $type
      */
-    final public function __construct(
-        string $id,
-        None|string $type = None::NOT_SET
-    ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+    final public function __construct($id, $type = None::NOT_GIVEN)
+    {
+        $this->constructFromArgs(func_get_args());
     }
 }
 

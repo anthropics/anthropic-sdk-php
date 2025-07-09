@@ -16,11 +16,12 @@ class RetrieveMetadataParams implements BaseModel
     use Model;
     use Params;
 
-    /**
-     * @var list<string|string> $anthropicBeta
-     */
-    #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
-    public array $anthropicBeta;
+    /** @var null|list<string|string> $anthropicBeta */
+    #[Api(
+        type: new UnionOf([new ListOf(new UnionOf(['string', 'string'])), 'null']),
+        optional: true,
+    )]
+    public ?array $anthropicBeta;
 }
 
 RetrieveMetadataParams::_loadMetadata();

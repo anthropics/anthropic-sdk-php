@@ -15,9 +15,7 @@ class BetaTool implements BaseModel
 
     /**
      * @var array{
-     *
-     * type?: string, properties?: mixed|null, required?: list<string>|null
-     *
+     *   type?: string, properties?: mixed|null, required?: list<string>|null
      * } $inputSchema
      */
     #[Api('input_schema')]
@@ -30,38 +28,28 @@ class BetaTool implements BaseModel
     public BetaCacheControlEphemeral $cacheControl;
 
     #[Api(optional: true)]
-    public string $description;
+    public ?string $description;
 
     #[Api(optional: true)]
     public ?string $type;
 
     /**
      * @param array{
-     *
-     * type?: string, properties?: mixed|null, required?: list<string>|null
-     *
+     *   type?: string, properties?: mixed|null, required?: list<string>|null
      * } $inputSchema
+     * @param string                    $name
      * @param BetaCacheControlEphemeral $cacheControl
-     * @param string                    $description
+     * @param null|string               $description
      * @param null|string               $type
      */
     final public function __construct(
-        array $inputSchema,
-        string $name,
-        BetaCacheControlEphemeral|None $cacheControl = None::NOT_SET,
-        None|string $description = None::NOT_SET,
-        null|None|string $type = None::NOT_SET
+        $inputSchema,
+        $name,
+        $cacheControl = None::NOT_GIVEN,
+        $description = None::NOT_GIVEN,
+        $type = None::NOT_GIVEN,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

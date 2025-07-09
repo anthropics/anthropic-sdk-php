@@ -35,40 +35,34 @@ class CountTokensParams implements BaseModel
     use Model;
     use Params;
 
-    /**
-     * @var list<BetaMessageParam> $messages
-     */
+    /** @var list<BetaMessageParam> $messages */
     #[Api(type: new ListOf(BetaMessageParam::class))]
     public array $messages;
 
-    /**
-     * @var string|string $model
-     */
+    /** @var string|string $model */
     #[Api]
     public mixed $model;
 
-    /**
-     * @var list<BetaRequestMCPServerURLDefinition> $mcpServers
-     */
+    /** @var null|list<BetaRequestMCPServerURLDefinition> $mcpServers */
     #[Api(
         'mcp_servers',
-        type: new ListOf(BetaRequestMCPServerURLDefinition::class),
+        type: new UnionOf(
+            [new ListOf(BetaRequestMCPServerURLDefinition::class), 'null']
+        ),
         optional: true,
     )]
-    public array $mcpServers;
+    public ?array $mcpServers;
 
-    /**
-     * @var list<BetaTextBlockParam>|string $system
-     */
+    /** @var null|list<BetaTextBlockParam>|string $system */
     #[Api(
-        type: new UnionOf(['string', new ListOf(BetaTextBlockParam::class)]),
+        type: new UnionOf(
+            ['string', new ListOf(BetaTextBlockParam::class), 'null']
+        ),
         optional: true,
     )]
     public mixed $system;
 
-    /**
-     * @var BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking
-     */
+    /** @var BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking */
     #[Api(optional: true)]
     public mixed $thinking;
 
@@ -79,34 +73,40 @@ class CountTokensParams implements BaseModel
     public mixed $toolChoice;
 
     /**
-     * @var list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305> $tools
+     * @var null|list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305> $tools
      */
     #[Api(
-        type: new ListOf(
-            new UnionOf(
-                [
-                    BetaTool::class,
-                    BetaToolBash20241022::class,
-                    BetaToolBash20250124::class,
-                    BetaCodeExecutionTool20250522::class,
-                    BetaToolComputerUse20241022::class,
-                    BetaToolComputerUse20250124::class,
-                    BetaToolTextEditor20241022::class,
-                    BetaToolTextEditor20250124::class,
-                    BetaToolTextEditor20250429::class,
-                    BetaWebSearchTool20250305::class,
-                ],
-            ),
+        type: new UnionOf(
+            [
+                new ListOf(
+                    new UnionOf(
+                        [
+                            BetaTool::class,
+                            BetaToolBash20241022::class,
+                            BetaToolBash20250124::class,
+                            BetaCodeExecutionTool20250522::class,
+                            BetaToolComputerUse20241022::class,
+                            BetaToolComputerUse20250124::class,
+                            BetaToolTextEditor20241022::class,
+                            BetaToolTextEditor20250124::class,
+                            BetaToolTextEditor20250429::class,
+                            BetaWebSearchTool20250305::class,
+                        ],
+                    ),
+                ),
+                'null',
+            ],
         ),
         optional: true,
     )]
-    public array $tools;
+    public ?array $tools;
 
-    /**
-     * @var list<string|string> $anthropicBeta
-     */
-    #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
-    public array $anthropicBeta;
+    /** @var null|list<string|string> $anthropicBeta */
+    #[Api(
+        type: new UnionOf([new ListOf(new UnionOf(['string', 'string'])), 'null']),
+        optional: true,
+    )]
+    public ?array $anthropicBeta;
 }
 
 CountTokensParams::_loadMetadata();

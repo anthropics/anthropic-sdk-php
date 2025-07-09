@@ -13,9 +13,7 @@ class BetaImageBlockParam implements BaseModel
 {
     use Model;
 
-    /**
-     * @var BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source
-     */
+    /** @var BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source */
     #[Api]
     public mixed $source;
 
@@ -27,23 +25,15 @@ class BetaImageBlockParam implements BaseModel
 
     /**
      * @param BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source
+     * @param string                                                       $type
      * @param BetaCacheControlEphemeral                                    $cacheControl
      */
     final public function __construct(
-        mixed $source,
-        string $type,
-        BetaCacheControlEphemeral|None $cacheControl = None::NOT_SET
+        $source,
+        $type,
+        $cacheControl = None::NOT_GIVEN
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

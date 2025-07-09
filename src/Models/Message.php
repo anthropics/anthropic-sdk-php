@@ -7,7 +7,6 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
@@ -37,9 +36,7 @@ class Message implements BaseModel
     )]
     public array $content;
 
-    /**
-     * @var string|string $model
-     */
+    /** @var string|string $model */
     #[Api]
     public mixed $model;
 
@@ -59,29 +56,26 @@ class Message implements BaseModel
     public Usage $usage;
 
     /**
+     * @param string                                                                                                       $id
      * @param list<RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock> $content
      * @param string|string                                                                                                $model
+     * @param string                                                                                                       $role
+     * @param string                                                                                                       $stopReason
+     * @param null|string                                                                                                  $stopSequence
+     * @param string                                                                                                       $type
+     * @param Usage                                                                                                        $usage
      */
     final public function __construct(
-        string $id,
-        array $content,
-        mixed $model,
-        string $role,
-        string $stopReason,
-        ?string $stopSequence,
-        string $type,
-        Usage $usage
+        $id,
+        $content,
+        $model,
+        $role,
+        $stopReason,
+        $stopSequence,
+        $type,
+        $usage
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

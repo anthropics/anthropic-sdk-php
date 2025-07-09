@@ -7,7 +7,6 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 class ToolUseBlock implements BaseModel
 {
@@ -25,22 +24,15 @@ class ToolUseBlock implements BaseModel
     #[Api]
     public string $type;
 
-    final public function __construct(
-        string $id,
-        mixed $input,
-        string $name,
-        string $type
-    ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+    /**
+     * @param string $id
+     * @param mixed  $input
+     * @param string $name
+     * @param string $type
+     */
+    final public function __construct($id, $input, $name, $type)
+    {
+        $this->constructFromArgs(func_get_args());
     }
 }
 

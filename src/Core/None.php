@@ -11,5 +11,5 @@ namespace Anthropic\Core;
  */
 enum None
 {
-    case NOT_SET;
+    case NOT_GIVEN;
 }

@@ -9,9 +9,7 @@ class APIError extends Error
 {
     public ?int $status = null;
 
-    /**
-     * @var null|mixed
-     */
+    /** @var null|mixed */
     public mixed $body = null;
 
     public ?ResponseInterface $response = null;
@@ -19,7 +17,7 @@ class APIError extends Error
     public function __construct(
         public RequestInterface $request,
         ?\Throwable $previous = null,
-        string $message = ''
+        string $message = '',
     ) {
         parent::__construct(message: $message, previous: $previous);
     }

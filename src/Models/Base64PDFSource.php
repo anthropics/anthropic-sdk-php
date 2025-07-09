@@ -7,7 +7,6 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 class Base64PDFSource implements BaseModel
 {
@@ -22,21 +21,14 @@ class Base64PDFSource implements BaseModel
     #[Api]
     public string $type;
 
-    final public function __construct(
-        string $data,
-        string $mediaType,
-        string $type
-    ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+    /**
+     * @param string $data
+     * @param string $mediaType
+     * @param string $type
+     */
+    final public function __construct($data, $mediaType, $type)
+    {
+        $this->constructFromArgs(func_get_args());
     }
 }
 

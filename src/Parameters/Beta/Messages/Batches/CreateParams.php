@@ -39,39 +39,36 @@ class CreateParams implements BaseModel
 
     /**
      * @var list<array{
-     *
-     *     customID?: string,
-     *     params?: array{
-     *
-     *         maxTokens?: int,
-     *         messages?: list<BetaMessageParam>,
-     *         model?: string|string,
-     *         container?: string|null,
-     *         mcpServers?: list<BetaRequestMCPServerURLDefinition>,
-     *         metadata?: BetaMetadata,
-     *         serviceTier?: string,
-     *         stopSequences?: list<string>,
-     *         stream?: bool,
-     *         system?: string|list<BetaTextBlockParam>,
-     *         temperature?: float,
-     *         thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
-     *         toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
-     *         tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305>,
-     *         topK?: int,
-     *         topP?: float,
-     *
-     * },
-     *
+     *   customID?: string,
+     *   params?: array{
+     *     maxTokens?: int,
+     *     messages?: list<BetaMessageParam>,
+     *     model?: string|string,
+     *     container?: string|null,
+     *     mcpServers?: list<BetaRequestMCPServerURLDefinition>,
+     *     metadata?: BetaMetadata,
+     *     serviceTier?: string,
+     *     stopSequences?: list<string>,
+     *     stream?: bool,
+     *     system?: string|list<BetaTextBlockParam>,
+     *     temperature?: float,
+     *     thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
+     *     toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
+     *     tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305>,
+     *     topK?: int,
+     *     topP?: float,
+     *   },
      * }> $requests
      */
     #[Api(type: new ListOf(new ListOf('mixed')))]
     public array $requests;
 
-    /**
-     * @var list<string|string> $anthropicBeta
-     */
-    #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
-    public array $anthropicBeta;
+    /** @var null|list<string|string> $anthropicBeta */
+    #[Api(
+        type: new UnionOf([new ListOf(new UnionOf(['string', 'string'])), 'null']),
+        optional: true,
+    )]
+    public ?array $anthropicBeta;
 }
 
 CreateParams::_loadMetadata();

@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 class BetaCitationWebSearchResultLocationParam implements BaseModel
 {
@@ -28,23 +27,21 @@ class BetaCitationWebSearchResultLocationParam implements BaseModel
     #[Api]
     public string $url;
 
+    /**
+     * @param string      $citedText
+     * @param string      $encryptedIndex
+     * @param null|string $title
+     * @param string      $type
+     * @param string      $url
+     */
     final public function __construct(
-        string $citedText,
-        string $encryptedIndex,
-        ?string $title,
-        string $type,
-        string $url
+        $citedText,
+        $encryptedIndex,
+        $title,
+        $type,
+        $url
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

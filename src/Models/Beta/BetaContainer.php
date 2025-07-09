@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 class BetaContainer implements BaseModel
 {
@@ -19,18 +18,13 @@ class BetaContainer implements BaseModel
     #[Api('expires_at')]
     public \DateTimeInterface $expiresAt;
 
-    final public function __construct(string $id, \DateTimeInterface $expiresAt)
+    /**
+     * @param string             $id
+     * @param \DateTimeInterface $expiresAt
+     */
+    final public function __construct($id, $expiresAt)
     {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

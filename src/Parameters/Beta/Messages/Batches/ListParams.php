@@ -17,19 +17,20 @@ class ListParams implements BaseModel
     use Params;
 
     #[Api(optional: true)]
-    public string $afterID;
+    public ?string $afterID;
 
     #[Api(optional: true)]
-    public string $beforeID;
+    public ?string $beforeID;
 
     #[Api(optional: true)]
-    public int $limit;
+    public ?int $limit;
 
-    /**
-     * @var list<string|string> $anthropicBeta
-     */
-    #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
-    public array $anthropicBeta;
+    /** @var null|list<string|string> $anthropicBeta */
+    #[Api(
+        type: new UnionOf([new ListOf(new UnionOf(['string', 'string'])), 'null']),
+        optional: true,
+    )]
+    public ?array $anthropicBeta;
 }
 
 ListParams::_loadMetadata();

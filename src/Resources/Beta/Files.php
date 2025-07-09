@@ -23,28 +23,12 @@ class Files implements FilesContract
 
     /**
      * @param array{
-     *
-     *     afterID?: string,
-     *     beforeID?: string,
-     *     limit?: int,
-     *     betas?: list<string|string>,
-     *
+     *   afterID?: string, beforeID?: string, limit?: int, betas?: list<string|string>
      * } $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      */
     public function list(
         array $params,
-        mixed $requestOptions = []
+        ?RequestOptions $requestOptions = null
     ): FileMetadata {
         [$parsed, $options] = ListParams::parseRequest($params, $requestOptions);
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
@@ -71,22 +55,11 @@ class Files implements FilesContract
 
     /**
      * @param array{fileID?: string, betas?: list<string|string>} $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      */
     public function delete(
         string $fileID,
         array $params,
-        mixed $requestOptions = []
+        ?RequestOptions $requestOptions = null
     ): DeletedFile {
         [$parsed, $options] = DeleteParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(
@@ -108,22 +81,11 @@ class Files implements FilesContract
 
     /**
      * @param array{fileID?: string, betas?: list<string|string>} $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      */
     public function download(
         string $fileID,
         array $params,
-        mixed $requestOptions = []
+        ?RequestOptions $requestOptions = null
     ): mixed {
         [$parsed, $options] = DownloadParams::parseRequest(
             $params,
@@ -148,22 +110,11 @@ class Files implements FilesContract
 
     /**
      * @param array{fileID?: string, betas?: list<string|string>} $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      */
     public function retrieveMetadata(
         string $fileID,
         array $params,
-        mixed $requestOptions = []
+        ?RequestOptions $requestOptions = null
     ): FileMetadata {
         [$parsed, $options] = RetrieveMetadataParams::parseRequest(
             $params,
@@ -188,21 +139,10 @@ class Files implements FilesContract
 
     /**
      * @param array{file?: string, betas?: list<string|string>} $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      */
     public function upload(
         array $params,
-        mixed $requestOptions = []
+        ?RequestOptions $requestOptions = null
     ): FileMetadata {
         [$parsed, $options] = UploadParams::parseRequest($params, $requestOptions);
         $header_params = ['betas' => 'anthropic-beta'];

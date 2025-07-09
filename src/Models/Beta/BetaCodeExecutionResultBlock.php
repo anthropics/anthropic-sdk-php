@@ -7,16 +7,13 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 
 class BetaCodeExecutionResultBlock implements BaseModel
 {
     use Model;
 
-    /**
-     * @var list<BetaCodeExecutionOutputBlock> $content
-     */
+    /** @var list<BetaCodeExecutionOutputBlock> $content */
     #[Api(type: new ListOf(BetaCodeExecutionOutputBlock::class))]
     public array $content;
 
@@ -34,24 +31,19 @@ class BetaCodeExecutionResultBlock implements BaseModel
 
     /**
      * @param list<BetaCodeExecutionOutputBlock> $content
+     * @param int                                $returnCode
+     * @param string                             $stderr
+     * @param string                             $stdout
+     * @param string                             $type
      */
     final public function __construct(
-        array $content,
-        int $returnCode,
-        string $stderr,
-        string $stdout,
-        string $type
+        $content,
+        $returnCode,
+        $stderr,
+        $stdout,
+        $type
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

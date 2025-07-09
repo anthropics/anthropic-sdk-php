@@ -34,53 +34,32 @@ class Batches implements BatchesContract
 
     /**
      * @param array{
-     *
-     *     requests?: list<array{
-     *
-     *         customID?: string,
-     *         params?: array{
-     *
-     *             maxTokens?: int,
-     *             messages?: list<MessageParam>,
-     *             model?: string|string,
-     *             metadata?: Metadata,
-     *             serviceTier?: string,
-     *             stopSequences?: list<string>,
-     *             stream?: bool,
-     *             system?: string|list<TextBlockParam>,
-     *             temperature?: float,
-     *             thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
-     *             toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
-     *             tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|array{
-     *
-     *                 name?: string,
-     *                 type?: string,
-     *                 cacheControl?: CacheControlEphemeral,
-     *
-     * }|WebSearchTool20250305>,
-     *             topK?: int,
-     *             topP?: float,
-     *
-     * },
-     *
-     * }>,
-     *
+     *   requests?: list<array{
+     *     customID?: string,
+     *     params?: array{
+     *       maxTokens?: int,
+     *       messages?: list<MessageParam>,
+     *       model?: string|string,
+     *       metadata?: Metadata,
+     *       serviceTier?: string,
+     *       stopSequences?: list<string>,
+     *       stream?: bool,
+     *       system?: string|list<TextBlockParam>,
+     *       temperature?: float,
+     *       thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
+     *       toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
+     *       tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|array{
+     *         name?: string, type?: string, cacheControl?: CacheControlEphemeral
+     *       }|WebSearchTool20250305>,
+     *       topK?: int,
+     *       topP?: float,
+     *     },
+     *   }>,
      * } $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      */
     public function create(
         array $params,
-        mixed $requestOptions = []
+        ?RequestOptions $requestOptions = null
     ): MessageBatch {
         [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(
@@ -96,22 +75,11 @@ class Batches implements BatchesContract
 
     /**
      * @param array{messageBatchID?: string} $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      */
     public function retrieve(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = []
+        ?RequestOptions $requestOptions = null,
     ): MessageBatch {
         $resp = $this->client->request(
             method: 'get',
@@ -125,21 +93,10 @@ class Batches implements BatchesContract
 
     /**
      * @param array{afterID?: string, beforeID?: string, limit?: int} $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      */
     public function list(
         array $params,
-        mixed $requestOptions = []
+        ?RequestOptions $requestOptions = null
     ): MessageBatch {
         [$parsed, $options] = ListParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(
@@ -155,22 +112,11 @@ class Batches implements BatchesContract
 
     /**
      * @param array{messageBatchID?: string} $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      */
     public function delete(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = []
+        ?RequestOptions $requestOptions = null,
     ): DeletedMessageBatch {
         $resp = $this->client->request(
             method: 'delete',
@@ -184,22 +130,11 @@ class Batches implements BatchesContract
 
     /**
      * @param array{messageBatchID?: string} $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      */
     public function cancel(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = []
+        ?RequestOptions $requestOptions = null,
     ): MessageBatch {
         $resp = $this->client->request(
             method: 'post',
@@ -213,22 +148,11 @@ class Batches implements BatchesContract
 
     /**
      * @param array{messageBatchID?: string} $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      */
     public function results(
         string $messageBatchID,
         array $params,
-        mixed $requestOptions = []
+        ?RequestOptions $requestOptions = null,
     ): MessageBatchIndividualResponse {
         $resp = $this->client->request(
             method: 'get',

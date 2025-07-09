@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 class BetaUsage implements BaseModel
 {
@@ -34,25 +33,25 @@ class BetaUsage implements BaseModel
     #[Api('service_tier')]
     public ?string $serviceTier;
 
+    /**
+     * @param BetaCacheCreation   $cacheCreation
+     * @param null|int            $cacheCreationInputTokens
+     * @param null|int            $cacheReadInputTokens
+     * @param int                 $inputTokens
+     * @param int                 $outputTokens
+     * @param BetaServerToolUsage $serverToolUse
+     * @param null|string         $serviceTier
+     */
     final public function __construct(
-        BetaCacheCreation $cacheCreation,
-        ?int $cacheCreationInputTokens,
-        ?int $cacheReadInputTokens,
-        int $inputTokens,
-        int $outputTokens,
-        BetaServerToolUsage $serverToolUse,
-        ?string $serviceTier
+        $cacheCreation,
+        $cacheCreationInputTokens,
+        $cacheReadInputTokens,
+        $inputTokens,
+        $outputTokens,
+        $serverToolUse,
+        $serviceTier,
     ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

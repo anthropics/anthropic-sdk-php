@@ -6,7 +6,7 @@ namespace Anthropic\Core\Pagination;
 
 use Anthropic\Core\BaseClient;
 use Anthropic\Core\Concerns\Pager;
-use Anthropic\Core\Errors\AnthropicError;
+use Anthropic\Errors\Error;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -49,13 +49,13 @@ abstract class AbstractPage implements \IteratorAggregate, Pager
      *
      * @return static of AbstractPage<Item>
      *
-     * @throws AnthropicError
+     * @throws Error
      */
     public function getNextPage(): static
     {
         $nextOptions = $this->nextPageRequestOptions();
         if (!$nextOptions) {
-            throw new AnthropicError(
+            throw new Error(
                 'No next page expected; please check `.hasNextPage()` before calling `.getNextPage()`.'
             );
         }

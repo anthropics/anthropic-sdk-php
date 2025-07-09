@@ -17,25 +17,15 @@ class BetaCacheControlEphemeral implements BaseModel
     public string $type;
 
     #[Api(optional: true)]
-    public string $ttl;
+    public ?string $ttl;
 
     /**
-     * @param string $ttl
+     * @param string      $type
+     * @param null|string $ttl
      */
-    final public function __construct(
-        string $type,
-        None|string $ttl = None::NOT_SET
-    ) {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+    final public function __construct($type, $ttl = None::NOT_GIVEN)
+    {
+        $this->constructFromArgs(func_get_args());
     }
 }
 

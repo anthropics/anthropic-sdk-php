@@ -16,21 +16,10 @@ class Metadata implements BaseModel
     #[Api('user_id', optional: true)]
     public ?string $userID;
 
-    /**
-     * @param null|string $userID
-     */
-    final public function __construct(null|None|string $userID = None::NOT_SET)
+    /** @param null|string $userID */
+    final public function __construct($userID = None::NOT_GIVEN)
     {
-        $args = func_get_args();
-
-        $data = [];
-        for ($i = 0; $i < count($args); ++$i) {
-            if (None::NOT_SET !== $args[$i]) {
-                $data[self::$_constructorArgNames[$i]] = $args[$i] ?? null;
-            }
-        }
-
-        $this->__unserialize($data);
+        $this->constructFromArgs(func_get_args());
     }
 }
 

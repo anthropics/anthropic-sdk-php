@@ -39,41 +39,28 @@ class Messages implements MessagesContract
 
     /**
      * @param array{
-     *
-     *     maxTokens?: int,
-     *     messages?: list<MessageParam>,
-     *     model?: string|string,
-     *     metadata?: Metadata,
-     *     serviceTier?: string,
-     *     stopSequences?: list<string>,
-     *     stream?: bool,
-     *     system?: string|list<TextBlockParam>,
-     *     temperature?: float,
-     *     thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
-     *     toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
-     *     tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|array{
-     *
-     * name?: string, type?: string, cacheControl?: CacheControlEphemeral
-     *
-     * }|WebSearchTool20250305>,
-     *     topK?: int,
-     *     topP?: float,
-     *
+     *   maxTokens?: int,
+     *   messages?: list<MessageParam>,
+     *   model?: string|string,
+     *   metadata?: Metadata,
+     *   serviceTier?: string,
+     *   stopSequences?: list<string>,
+     *   stream?: bool,
+     *   system?: string|list<TextBlockParam>,
+     *   temperature?: float,
+     *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
+     *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
+     *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|array{
+     *     name?: string, type?: string, cacheControl?: CacheControlEphemeral
+     *   }|WebSearchTool20250305>,
+     *   topK?: int,
+     *   topP?: float,
      * } $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      */
-    public function create(array $params, mixed $requestOptions = []): Message
-    {
+    public function create(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Message {
         [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(
             method: 'post',
@@ -88,34 +75,19 @@ class Messages implements MessagesContract
 
     /**
      * @param array{
-     *
-     *     messages?: list<MessageParam>,
-     *     model?: string|string,
-     *     system?: string|list<TextBlockParam>,
-     *     thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
-     *     toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
-     *     tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|array{
-     *
-     * name?: string, type?: string, cacheControl?: CacheControlEphemeral
-     *
-     * }|WebSearchTool20250305>,
-     *
+     *   messages?: list<MessageParam>,
+     *   model?: string|string,
+     *   system?: string|list<TextBlockParam>,
+     *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
+     *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
+     *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|array{
+     *     name?: string, type?: string, cacheControl?: CacheControlEphemeral
+     *   }|WebSearchTool20250305>,
      * } $params
-     * @param RequestOptions|array{
-     *
-     *     timeout?: float|null,
-     *     maxRetries?: int|null,
-     *     initialRetryDelay?: float|null,
-     *     maxRetryDelay?: float|null,
-     *     extraHeaders?: list<string>|null,
-     *     extraQueryParams?: list<string>|null,
-     *     extraBodyParams?: list<string>|null,
-     *
-     * }|null $requestOptions
      */
     public function countTokens(
         array $params,
-        mixed $requestOptions = []
+        ?RequestOptions $requestOptions = null
     ): MessageTokensCount {
         [$parsed, $options] = CountTokensParams::parseRequest(
             $params,

@@ -33,15 +33,11 @@ class CreateParams implements BaseModel
     #[Api('max_tokens')]
     public int $maxTokens;
 
-    /**
-     * @var list<MessageParam> $messages
-     */
+    /** @var list<MessageParam> $messages */
     #[Api(type: new ListOf(MessageParam::class))]
     public array $messages;
 
-    /**
-     * @var string|string $model
-     */
+    /** @var string|string $model */
     #[Api]
     public mixed $model;
 
@@ -49,32 +45,30 @@ class CreateParams implements BaseModel
     public Metadata $metadata;
 
     #[Api('service_tier', optional: true)]
-    public string $serviceTier;
+    public ?string $serviceTier;
 
-    /**
-     * @var list<string> $stopSequences
-     */
-    #[Api('stop_sequences', type: new ListOf('string'), optional: true)]
-    public array $stopSequences;
+    /** @var null|list<string> $stopSequences */
+    #[Api(
+        'stop_sequences',
+        type: new UnionOf([new ListOf('string'), 'null']),
+        optional: true,
+    )]
+    public ?array $stopSequences;
 
     #[Api(optional: true)]
-    public bool $stream;
+    public ?bool $stream;
 
-    /**
-     * @var list<TextBlockParam>|string $system
-     */
+    /** @var null|list<TextBlockParam>|string $system */
     #[Api(
-        type: new UnionOf(['string', new ListOf(TextBlockParam::class)]),
+        type: new UnionOf(['string', new ListOf(TextBlockParam::class), 'null']),
         optional: true,
     )]
     public mixed $system;
 
     #[Api(optional: true)]
-    public float $temperature;
+    public ?float $temperature;
 
-    /**
-     * @var ThinkingConfigDisabled|ThinkingConfigEnabled $thinking
-     */
+    /** @var ThinkingConfigDisabled|ThinkingConfigEnabled $thinking */
     #[Api(optional: true)]
     public mixed $thinking;
 
@@ -86,32 +80,35 @@ class CreateParams implements BaseModel
 
     /**
      * @var list<Tool|ToolBash20250124|ToolTextEditor20250124|array{
-     *
-     * name?: string, type?: string, cacheControl?: CacheControlEphemeral
-     *
-     * }|WebSearchTool20250305> $tools
+     *   name?: string, type?: string, cacheControl?: CacheControlEphemeral
+     * }|WebSearchTool20250305>|null $tools
      */
     #[Api(
-        type: new ListOf(
-            new UnionOf(
-                [
-                    Tool::class,
-                    ToolBash20250124::class,
-                    ToolTextEditor20250124::class,
-                    new ListOf('mixed'),
-                    WebSearchTool20250305::class,
-                ],
-            ),
+        type: new UnionOf(
+            [
+                new ListOf(
+                    new UnionOf(
+                        [
+                            Tool::class,
+                            ToolBash20250124::class,
+                            ToolTextEditor20250124::class,
+                            new ListOf('mixed'),
+                            WebSearchTool20250305::class,
+                        ],
+                    ),
+                ),
+                'null',
+            ],
         ),
         optional: true,
     )]
-    public array $tools;
+    public ?array $tools;
 
     #[Api('top_k', optional: true)]
-    public int $topK;
+    public ?int $topK;
 
     #[Api('top_p', optional: true)]
-    public float $topP;
+    public ?float $topP;
 }
 
 CreateParams::_loadMetadata();
