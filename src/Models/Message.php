@@ -56,14 +56,19 @@ class Message implements BaseModel
     public Usage $usage;
 
     /**
-     * @param string                                                                                                       $id
-     * @param list<RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock> $content
-     * @param string|string                                                                                                $model
-     * @param string                                                                                                       $role
-     * @param string                                                                                                       $stopReason
-     * @param null|string                                                                                                  $stopSequence
-     * @param string                                                                                                       $type
-     * @param Usage                                                                                                        $usage
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string                                                                                                       $id           `required`
+     * @param list<RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock> $content      `required`
+     * @param string|string                                                                                                $model        `required`
+     * @param string                                                                                                       $role         `required`
+     * @param string                                                                                                       $stopReason   `required`
+     * @param null|string                                                                                                  $stopSequence `required`
+     * @param string                                                                                                       $type         `required`
+     * @param Usage                                                                                                        $usage        `required`
      */
     final public function __construct(
         $id,

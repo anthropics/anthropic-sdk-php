@@ -29,11 +29,16 @@ class Completion implements BaseModel
     public string $type;
 
     /**
-     * @param string        $id
-     * @param string        $completion
-     * @param string|string $model
-     * @param null|string   $stopReason
-     * @param string        $type
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string        $id         `required`
+     * @param string        $completion `required`
+     * @param string|string $model      `required`
+     * @param null|string   $stopReason `required`
+     * @param string        $type       `required`
      */
     final public function __construct(
         $id,

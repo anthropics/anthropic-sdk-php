@@ -23,9 +23,14 @@ class RawMessageDeltaEvent implements BaseModel
     public MessageDeltaUsage $usage;
 
     /**
-     * @param array{stopReason?: string, stopSequence?: null|string} $delta
-     * @param string                                                 $type
-     * @param MessageDeltaUsage                                      $usage
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param array{stopReason?: string, stopSequence?: null|string} $delta `required`
+     * @param string                                                 $type  `required`
+     * @param MessageDeltaUsage                                      $usage `required`
      */
     final public function __construct($delta, $type, $usage)
     {

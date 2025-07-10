@@ -25,10 +25,15 @@ class BetaServerToolUseBlock implements BaseModel
     public string $type;
 
     /**
-     * @param string $id
-     * @param mixed  $input
-     * @param string $name
-     * @param string $type
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string $id    `required`
+     * @param mixed  $input `required`
+     * @param string $name  `required`
+     * @param string $type  `required`
      */
     final public function __construct($id, $input, $name, $type)
     {

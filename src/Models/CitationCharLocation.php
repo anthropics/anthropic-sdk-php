@@ -31,12 +31,17 @@ class CitationCharLocation implements BaseModel
     public string $type;
 
     /**
-     * @param string      $citedText
-     * @param int         $documentIndex
-     * @param null|string $documentTitle
-     * @param int         $endCharIndex
-     * @param int         $startCharIndex
-     * @param string      $type
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string      $citedText      `required`
+     * @param int         $documentIndex  `required`
+     * @param null|string $documentTitle  `required`
+     * @param int         $endCharIndex   `required`
+     * @param int         $startCharIndex `required`
+     * @param string      $type           `required`
      */
     final public function __construct(
         $citedText,

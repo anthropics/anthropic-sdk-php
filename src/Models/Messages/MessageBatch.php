@@ -43,16 +43,21 @@ class MessageBatch implements BaseModel
     public string $type;
 
     /**
-     * @param string                    $id
-     * @param null|\DateTimeInterface   $archivedAt
-     * @param null|\DateTimeInterface   $cancelInitiatedAt
-     * @param \DateTimeInterface        $createdAt
-     * @param null|\DateTimeInterface   $endedAt
-     * @param \DateTimeInterface        $expiresAt
-     * @param string                    $processingStatus
-     * @param MessageBatchRequestCounts $requestCounts
-     * @param null|string               $resultsURL
-     * @param string                    $type
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string                    $id                `required`
+     * @param null|\DateTimeInterface   $archivedAt        `required`
+     * @param null|\DateTimeInterface   $cancelInitiatedAt `required`
+     * @param \DateTimeInterface        $createdAt         `required`
+     * @param null|\DateTimeInterface   $endedAt           `required`
+     * @param \DateTimeInterface        $expiresAt         `required`
+     * @param string                    $processingStatus  `required`
+     * @param MessageBatchRequestCounts $requestCounts     `required`
+     * @param null|string               $resultsURL        `required`
+     * @param string                    $type              `required`
      */
     final public function __construct(
         $id,

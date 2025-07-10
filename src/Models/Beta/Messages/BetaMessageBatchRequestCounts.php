@@ -28,11 +28,16 @@ class BetaMessageBatchRequestCounts implements BaseModel
     public int $succeeded;
 
     /**
-     * @param int $canceled
-     * @param int $errored
-     * @param int $expired
-     * @param int $processing
-     * @param int $succeeded
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param int $canceled   `required`
+     * @param int $errored    `required`
+     * @param int $expired    `required`
+     * @param int $processing `required`
+     * @param int $succeeded  `required`
      */
     final public function __construct(
         $canceled,

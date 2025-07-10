@@ -68,6 +68,12 @@ trait Model
         return json_encode($this->__debugInfo(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
     }
 
+    /** @return array<string, mixed> */
+    public function toArray(): array
+    {
+        return $this->__serialize();
+    }
+
     public function offsetExists(mixed $offset): bool
     {
         if (!is_string($offset)) { // @phpstan-ignore-line
@@ -278,7 +284,7 @@ trait Model
     private static function serialize(mixed $value): mixed
     {
         if ($value instanceof BaseModel) {
-            return $value->__serialize(); // @phpstan-ignore-line
+            return $value->toArray();
         }
 
         if (is_array($value) || is_object($value)) {

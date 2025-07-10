@@ -34,13 +34,18 @@ class BetaCitationSearchResultLocationParam implements BaseModel
     public string $type;
 
     /**
-     * @param string      $citedText
-     * @param int         $endBlockIndex
-     * @param int         $searchResultIndex
-     * @param string      $source
-     * @param int         $startBlockIndex
-     * @param null|string $title
-     * @param string      $type
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string      $citedText         `required`
+     * @param int         $endBlockIndex     `required`
+     * @param int         $searchResultIndex `required`
+     * @param string      $source            `required`
+     * @param int         $startBlockIndex   `required`
+     * @param null|string $title             `required`
+     * @param string      $type              `required`
      */
     final public function __construct(
         $citedText,

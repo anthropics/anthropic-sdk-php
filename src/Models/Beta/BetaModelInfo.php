@@ -25,10 +25,15 @@ class BetaModelInfo implements BaseModel
     public string $type;
 
     /**
-     * @param string             $id
-     * @param \DateTimeInterface $createdAt
-     * @param string             $displayName
-     * @param string             $type
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string             $id          `required`
+     * @param \DateTimeInterface $createdAt   `required`
+     * @param string             $displayName `required`
+     * @param string             $type        `required`
      */
     final public function __construct($id, $createdAt, $displayName, $type)
     {

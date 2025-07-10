@@ -19,8 +19,13 @@ class URLImageSource implements BaseModel
     public string $url;
 
     /**
-     * @param string $type
-     * @param string $url
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string $type `required`
+     * @param string $url  `required`
      */
     final public function __construct($type, $url)
     {

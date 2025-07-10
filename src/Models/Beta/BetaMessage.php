@@ -63,15 +63,20 @@ class BetaMessage implements BaseModel
     public BetaUsage $usage;
 
     /**
-     * @param string                                                                                                                                                                                                                                    $id
-     * @param BetaContainer                                                                                                                                                                                                                             $container
-     * @param list<BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock> $content
-     * @param string|string                                                                                                                                                                                                                             $model
-     * @param string                                                                                                                                                                                                                                    $role
-     * @param string                                                                                                                                                                                                                                    $stopReason
-     * @param null|string                                                                                                                                                                                                                               $stopSequence
-     * @param string                                                                                                                                                                                                                                    $type
-     * @param BetaUsage                                                                                                                                                                                                                                 $usage
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string                                                                                                                                                                                                                                    $id           `required`
+     * @param BetaContainer                                                                                                                                                                                                                             $container    `required`
+     * @param list<BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock> $content      `required`
+     * @param string|string                                                                                                                                                                                                                             $model        `required`
+     * @param string                                                                                                                                                                                                                                    $role         `required`
+     * @param string                                                                                                                                                                                                                                    $stopReason   `required`
+     * @param null|string                                                                                                                                                                                                                               $stopSequence `required`
+     * @param string                                                                                                                                                                                                                                    $type         `required`
+     * @param BetaUsage                                                                                                                                                                                                                                 $usage        `required`
      */
     final public function __construct(
         $id,

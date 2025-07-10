@@ -34,13 +34,18 @@ class BetaUsage implements BaseModel
     public ?string $serviceTier;
 
     /**
-     * @param BetaCacheCreation   $cacheCreation
-     * @param null|int            $cacheCreationInputTokens
-     * @param null|int            $cacheReadInputTokens
-     * @param int                 $inputTokens
-     * @param int                 $outputTokens
-     * @param BetaServerToolUsage $serverToolUse
-     * @param null|string         $serviceTier
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param BetaCacheCreation   $cacheCreation            `required`
+     * @param null|int            $cacheCreationInputTokens `required`
+     * @param null|int            $cacheReadInputTokens     `required`
+     * @param int                 $inputTokens              `required`
+     * @param int                 $outputTokens             `required`
+     * @param BetaServerToolUsage $serverToolUse            `required`
+     * @param null|string         $serviceTier              `required`
      */
     final public function __construct(
         $cacheCreation,

@@ -10,4 +10,8 @@ use Stringable;
 /**
  * @extends \ArrayAccess<string, mixed>
  */
-interface BaseModel extends \ArrayAccess, JsonSerializable, Stringable, StaticConverter {}
+interface BaseModel extends \ArrayAccess, JsonSerializable, Stringable, StaticConverter
+{
+    /** @return array<string, mixed> */
+    public function toArray(): array;
+}

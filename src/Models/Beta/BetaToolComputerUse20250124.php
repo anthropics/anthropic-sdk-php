@@ -32,10 +32,15 @@ class BetaToolComputerUse20250124 implements BaseModel
     public ?int $displayNumber;
 
     /**
-     * @param int                            $displayHeightPx
-     * @param int                            $displayWidthPx
-     * @param string                         $name
-     * @param string                         $type
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param int                            $displayHeightPx `required`
+     * @param int                            $displayWidthPx  `required`
+     * @param string                         $name            `required`
+     * @param string                         $type            `required`
      * @param null|BetaCacheControlEphemeral $cacheControl
      * @param null|int                       $displayNumber
      */

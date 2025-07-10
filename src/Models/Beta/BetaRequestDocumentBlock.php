@@ -35,8 +35,13 @@ class BetaRequestDocumentBlock implements BaseModel
     public ?string $title;
 
     /**
-     * @param BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source
-     * @param string                                                                                                 $type
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source       `required`
+     * @param string                                                                                                 $type         `required`
      * @param null|BetaCacheControlEphemeral                                                                         $cacheControl
      * @param null|BetaCitationsConfigParam                                                                          $citations
      * @param null|string                                                                                            $context

@@ -34,10 +34,15 @@ class BetaTool implements BaseModel
     public ?string $type;
 
     /**
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
      * @param array{
      *   type?: string, properties?: mixed|null, required?: list<string>|null
-     * } $inputSchema
-     * @param string                         $name
+     * } $inputSchema `required`
+     * @param string                         $name         `required`
      * @param null|BetaCacheControlEphemeral $cacheControl
      * @param null|string                    $description
      * @param null|string                    $type

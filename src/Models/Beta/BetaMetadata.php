@@ -16,7 +16,14 @@ class BetaMetadata implements BaseModel
     #[Api('user_id', optional: true)]
     public ?string $userID;
 
-    /** @param null|string $userID */
+    /**
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param null|string $userID
+     */
     final public function __construct($userID = None::NOT_GIVEN)
     {
         $this->constructFromArgs(func_get_args());

@@ -31,12 +31,17 @@ class Usage implements BaseModel
     public ?string $serviceTier;
 
     /**
-     * @param null|int        $cacheCreationInputTokens
-     * @param null|int        $cacheReadInputTokens
-     * @param int             $inputTokens
-     * @param int             $outputTokens
-     * @param ServerToolUsage $serverToolUse
-     * @param null|string     $serviceTier
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param null|int        $cacheCreationInputTokens `required`
+     * @param null|int        $cacheReadInputTokens     `required`
+     * @param int             $inputTokens              `required`
+     * @param int             $outputTokens             `required`
+     * @param ServerToolUsage $serverToolUse            `required`
+     * @param null|string     $serviceTier              `required`
      */
     final public function __construct(
         $cacheCreationInputTokens,

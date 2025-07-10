@@ -35,12 +35,17 @@ class FileMetadata implements BaseModel
     public ?bool $downloadable;
 
     /**
-     * @param string             $id
-     * @param \DateTimeInterface $createdAt
-     * @param string             $filename
-     * @param string             $mimeType
-     * @param int                $sizeBytes
-     * @param string             $type
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param string             $id           `required`
+     * @param \DateTimeInterface $createdAt    `required`
+     * @param string             $filename     `required`
+     * @param string             $mimeType     `required`
+     * @param int                $sizeBytes    `required`
+     * @param string             $type         `required`
      * @param null|bool          $downloadable
      */
     final public function __construct(

@@ -34,10 +34,15 @@ class BetaSearchResultBlockParam implements BaseModel
     public ?BetaCitationsConfigParam $citations;
 
     /**
-     * @param list<BetaTextBlockParam>       $content
-     * @param string                         $source
-     * @param string                         $title
-     * @param string                         $type
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param list<BetaTextBlockParam>       $content      `required`
+     * @param string                         $source       `required`
+     * @param string                         $title        `required`
+     * @param string                         $type         `required`
      * @param null|BetaCacheControlEphemeral $cacheControl
      * @param null|BetaCitationsConfigParam  $citations
      */
