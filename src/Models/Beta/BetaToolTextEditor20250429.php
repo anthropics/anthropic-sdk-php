@@ -28,9 +28,9 @@ class BetaToolTextEditor20250429 implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param string                         $name         `required`
-     * @param string                         $type         `required`
-     * @param null|BetaCacheControlEphemeral $cacheControl
+     * @param string                    $name         `required`
+     * @param string                    $type         `required`
+     * @param BetaCacheControlEphemeral $cacheControl
      */
     final public function __construct(
         $name,

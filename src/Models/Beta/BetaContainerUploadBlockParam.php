@@ -28,9 +28,9 @@ class BetaContainerUploadBlockParam implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param string                         $fileID       `required`
-     * @param string                         $type         `required`
-     * @param null|BetaCacheControlEphemeral $cacheControl
+     * @param string                    $fileID       `required`
+     * @param string                    $type         `required`
+     * @param BetaCacheControlEphemeral $cacheControl
      */
     final public function __construct(
         $fileID,

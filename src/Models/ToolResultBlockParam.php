@@ -49,7 +49,7 @@ class ToolResultBlockParam implements BaseModel
      *
      * @param string                                           $toolUseID    `required`
      * @param string                                           $type         `required`
-     * @param null|CacheControlEphemeral                       $cacheControl
+     * @param CacheControlEphemeral                            $cacheControl
      * @param null|list<ImageBlockParam|TextBlockParam>|string $content
      * @param null|bool                                        $isError
      */

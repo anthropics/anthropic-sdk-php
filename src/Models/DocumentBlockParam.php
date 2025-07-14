@@ -42,8 +42,8 @@ class DocumentBlockParam implements BaseModel
      *
      * @param Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source       `required`
      * @param string                                                          $type         `required`
-     * @param null|CacheControlEphemeral                                      $cacheControl
-     * @param null|CitationsConfigParam                                       $citations
+     * @param CacheControlEphemeral                                           $cacheControl
+     * @param CitationsConfigParam                                            $citations
      * @param null|string                                                     $context
      * @param null|string                                                     $title
      */

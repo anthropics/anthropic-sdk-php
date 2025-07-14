@@ -34,11 +34,11 @@ class BetaRequestMCPServerURLDefinition implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param string                                     $name               `required`
-     * @param string                                     $type               `required`
-     * @param string                                     $url                `required`
-     * @param null|string                                $authorizationToken
-     * @param null|BetaRequestMCPServerToolConfiguration $toolConfiguration
+     * @param string                                $name               `required`
+     * @param string                                $type               `required`
+     * @param string                                $url                `required`
+     * @param null|string                           $authorizationToken
+     * @param BetaRequestMCPServerToolConfiguration $toolConfiguration
      */
     final public function __construct(
         $name,

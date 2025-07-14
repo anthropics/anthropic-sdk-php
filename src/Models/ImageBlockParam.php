@@ -31,7 +31,7 @@ class ImageBlockParam implements BaseModel
      *
      * @param Base64ImageSource|URLImageSource $source       `required`
      * @param string                           $type         `required`
-     * @param null|CacheControlEphemeral       $cacheControl
+     * @param CacheControlEphemeral            $cacheControl
      */
     final public function __construct(
         $source,

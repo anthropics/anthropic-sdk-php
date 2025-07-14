@@ -42,10 +42,10 @@ class BetaTool implements BaseModel
      * @param array{
      *   type?: string, properties?: mixed|null, required?: list<string>|null
      * } $inputSchema `required`
-     * @param string                         $name         `required`
-     * @param null|BetaCacheControlEphemeral $cacheControl
-     * @param null|string                    $description
-     * @param null|string                    $type
+     * @param string                    $name         `required`
+     * @param BetaCacheControlEphemeral $cacheControl
+     * @param null|string               $description
+     * @param null|string               $type
      */
     final public function __construct(
         $inputSchema,

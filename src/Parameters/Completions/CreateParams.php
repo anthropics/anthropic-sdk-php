@@ -35,7 +35,7 @@ class CreateParams implements BaseModel
     public ?array $stopSequences;
 
     #[Api(optional: true)]
-    public bool $stream;
+    public ?bool $stream;
 
     #[Api(optional: true)]
     public ?float $temperature;

@@ -42,8 +42,8 @@ class BetaRequestDocumentBlock implements BaseModel
      *
      * @param BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source       `required`
      * @param string                                                                                                 $type         `required`
-     * @param null|BetaCacheControlEphemeral                                                                         $cacheControl
-     * @param null|BetaCitationsConfigParam                                                                          $citations
+     * @param BetaCacheControlEphemeral                                                                              $cacheControl
+     * @param BetaCitationsConfigParam                                                                               $citations
      * @param null|string                                                                                            $context
      * @param null|string                                                                                            $title
      */

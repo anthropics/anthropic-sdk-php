@@ -61,12 +61,12 @@ class BetaWebSearchTool20250305 implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param string                         $name           `required`
-     * @param string                         $type           `required`
-     * @param null|list<string>              $allowedDomains
-     * @param null|list<string>              $blockedDomains
-     * @param null|BetaCacheControlEphemeral $cacheControl
-     * @param null|int                       $maxUses
+     * @param string                    $name           `required`
+     * @param string                    $type           `required`
+     * @param null|list<string>         $allowedDomains
+     * @param null|list<string>         $blockedDomains
+     * @param BetaCacheControlEphemeral $cacheControl
+     * @param null|int                  $maxUses
      * @param array{
      *   type?: string,
      *   city?: string|null,

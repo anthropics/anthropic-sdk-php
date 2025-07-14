@@ -55,7 +55,7 @@ class TextBlockParam implements BaseModel
      *
      * @param string                                                                                                                                $text         `required`
      * @param string                                                                                                                                $type         `required`
-     * @param null|CacheControlEphemeral                                                                                                            $cacheControl
+     * @param CacheControlEphemeral                                                                                                                 $cacheControl
      * @param null|list<CitationCharLocationParam|CitationContentBlockLocationParam|CitationPageLocationParam|CitationWebSearchResultLocationParam> $citations
      */
     final public function __construct(

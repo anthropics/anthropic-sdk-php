@@ -31,7 +31,7 @@ class BetaImageBlockParam implements BaseModel
      *
      * @param BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source       `required`
      * @param string                                                       $type         `required`
-     * @param null|BetaCacheControlEphemeral                               $cacheControl
+     * @param BetaCacheControlEphemeral                                    $cacheControl
      */
     final public function __construct(
         $source,

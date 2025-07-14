@@ -37,7 +37,7 @@ class BetaCodeExecutionToolResultBlockParam implements BaseModel
      * @param BetaCodeExecutionResultBlockParam|BetaCodeExecutionToolResultErrorParam $content      `required`
      * @param string                                                                  $toolUseID    `required`
      * @param string                                                                  $type         `required`
-     * @param null|BetaCacheControlEphemeral                                          $cacheControl
+     * @param BetaCacheControlEphemeral                                               $cacheControl
      */
     final public function __construct(
         $content,

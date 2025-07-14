@@ -56,7 +56,7 @@ class BetaTextBlockParam implements BaseModel
      *
      * @param string                                                                                                                                                                                      $text         `required`
      * @param string                                                                                                                                                                                      $type         `required`
-     * @param null|BetaCacheControlEphemeral                                                                                                                                                              $cacheControl
+     * @param BetaCacheControlEphemeral                                                                                                                                                                   $cacheControl
      * @param null|list<BetaCitationCharLocationParam|BetaCitationContentBlockLocationParam|BetaCitationPageLocationParam|BetaCitationSearchResultLocationParam|BetaCitationWebSearchResultLocationParam> $citations
      */
     final public function __construct(

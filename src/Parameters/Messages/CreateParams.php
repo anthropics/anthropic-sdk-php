@@ -52,7 +52,7 @@ class CreateParams implements BaseModel
     public ?array $stopSequences;
 
     #[Api(optional: true)]
-    public bool $stream;
+    public ?bool $stream;
 
     /** @var null|list<TextBlockParam>|string $system */
     #[Api(

@@ -37,12 +37,12 @@ class BetaToolComputerUse20250124 implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param int                            $displayHeightPx `required`
-     * @param int                            $displayWidthPx  `required`
-     * @param string                         $name            `required`
-     * @param string                         $type            `required`
-     * @param null|BetaCacheControlEphemeral $cacheControl
-     * @param null|int                       $displayNumber
+     * @param int                       $displayHeightPx `required`
+     * @param int                       $displayWidthPx  `required`
+     * @param string                    $name            `required`
+     * @param string                    $type            `required`
+     * @param BetaCacheControlEphemeral $cacheControl
+     * @param null|int                  $displayNumber
      */
     final public function __construct(
         $displayHeightPx,

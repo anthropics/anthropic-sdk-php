@@ -34,11 +34,11 @@ class ServerToolUseBlockParam implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param string                     $id           `required`
-     * @param mixed                      $input        `required`
-     * @param string                     $name         `required`
-     * @param string                     $type         `required`
-     * @param null|CacheControlEphemeral $cacheControl
+     * @param string                $id           `required`
+     * @param mixed                 $input        `required`
+     * @param string                $name         `required`
+     * @param string                $type         `required`
+     * @param CacheControlEphemeral $cacheControl
      */
     final public function __construct(
         $id,

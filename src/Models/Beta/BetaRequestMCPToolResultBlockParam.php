@@ -42,7 +42,7 @@ class BetaRequestMCPToolResultBlockParam implements BaseModel
      *
      * @param string                               $toolUseID    `required`
      * @param string                               $type         `required`
-     * @param null|BetaCacheControlEphemeral       $cacheControl
+     * @param BetaCacheControlEphemeral            $cacheControl
      * @param null|list<BetaTextBlockParam>|string $content
      * @param null|bool                            $isError
      */

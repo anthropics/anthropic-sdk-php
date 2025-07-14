@@ -44,7 +44,7 @@ class WebSearchToolResultBlockParam implements BaseModel
      * @param list<WebSearchResultBlockParam>|WebSearchToolRequestError $content      `required`
      * @param string                                                    $toolUseID    `required`
      * @param string                                                    $type         `required`
-     * @param null|CacheControlEphemeral                                $cacheControl
+     * @param CacheControlEphemeral                                     $cacheControl
      */
     final public function __construct(
         $content,

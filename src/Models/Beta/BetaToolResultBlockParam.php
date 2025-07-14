@@ -57,7 +57,7 @@ class BetaToolResultBlockParam implements BaseModel
      *
      * @param string                                                                              $toolUseID    `required`
      * @param string                                                                              $type         `required`
-     * @param null|BetaCacheControlEphemeral                                                      $cacheControl
+     * @param BetaCacheControlEphemeral                                                           $cacheControl
      * @param null|list<BetaImageBlockParam|BetaSearchResultBlockParam|BetaTextBlockParam>|string $content
      * @param null|bool                                                                           $isError
      */
