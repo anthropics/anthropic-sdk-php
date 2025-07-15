@@ -127,6 +127,10 @@ final class Serde
                     return (string) $value;
                 }
 
+                if ($value instanceof \Generator) {
+                    return implode('', iterator_to_array($value));
+                }
+
                 ++$state->no;
 
                 return $value;

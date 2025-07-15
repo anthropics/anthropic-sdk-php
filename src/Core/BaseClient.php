@@ -91,7 +91,15 @@ class BaseClient
      * @param list<string>|string                             $path
      * @param array<string, mixed>                            $query
      * @param array<string, null|int|list<int|string>|string> $headers
-     * @param null|RequestOptions|RequestOptions              $opts
+     * @param RequestOptions|array{
+     *   timeout?: float|null,
+     *   maxRetries?: int|null,
+     *   initialRetryDelay?: float|null,
+     *   maxRetryDelay?: float|null,
+     *   extraHeaders?: list<string>|null,
+     *   extraQueryParams?: list<string>|null,
+     *   extraBodyParams?: list<string>|null,
+     * }|null $opts
      *
      * @return array{RequestInterface, RequestOptions}
      */
@@ -100,7 +108,7 @@ class BaseClient
         array|string $path,
         array $query,
         array $headers,
-        ?RequestOptions $opts,
+        null|array|RequestOptions $opts,
     ): array {
         $opts = [...$this->options->__serialize(), ...RequestOptions::parse($opts)->__serialize()];
         $options = new RequestOptions(...$opts);
