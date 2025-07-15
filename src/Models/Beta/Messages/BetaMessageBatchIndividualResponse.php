@@ -15,11 +15,8 @@ final class BetaMessageBatchIndividualResponse implements BaseModel
     #[Api('custom_id')]
     public string $customID;
 
-    /**
-     * @var BetaMessageBatchCanceledResult|BetaMessageBatchErroredResult|BetaMessageBatchExpiredResult|BetaMessageBatchSucceededResult $result
-     */
     #[Api]
-    public mixed $result;
+    public BetaMessageBatchCanceledResult|BetaMessageBatchErroredResult|BetaMessageBatchExpiredResult|BetaMessageBatchSucceededResult $result;
 
     /**
      * You must use named parameters to construct this object. If an named argument is not

@@ -18,7 +18,7 @@ final class Models implements ModelsContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{modelID?: string, betas?: list<string|string>} $params
+     * @param array{modelID?: string, betas?: list<string>} $params
      */
     public function retrieve(
         string $modelID,
@@ -45,7 +45,7 @@ final class Models implements ModelsContract
 
     /**
      * @param array{
-     *   afterID?: string, beforeID?: string, limit?: int, betas?: list<string|string>
+     *   afterID?: string, beforeID?: string, limit?: int, betas?: list<string>
      * } $params
      */
     public function list(

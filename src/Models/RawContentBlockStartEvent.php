@@ -12,11 +12,8 @@ final class RawContentBlockStartEvent implements BaseModel
 {
     use Model;
 
-    /**
-     * @var RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock $contentBlock
-     */
     #[Api('content_block')]
-    public mixed $contentBlock;
+    public RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock $contentBlock;
 
     #[Api]
     public int $index;

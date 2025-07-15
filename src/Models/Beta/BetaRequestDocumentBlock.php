@@ -13,11 +13,8 @@ final class BetaRequestDocumentBlock implements BaseModel
 {
     use Model;
 
-    /**
-     * @var BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source
-     */
     #[Api]
-    public mixed $source;
+    public BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source;
 
     #[Api]
     public string $type;

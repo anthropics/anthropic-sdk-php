@@ -13,7 +13,7 @@ use Anthropic\RequestOptions;
 interface BatchesContract
 {
     /**
-     * @param array{requests?: list<Request>, betas?: list<string|string>} $params
+     * @param array{requests?: list<Request>, betas?: list<string>} $params
      */
     public function create(
         array $params,
@@ -21,7 +21,7 @@ interface BatchesContract
     ): BetaMessageBatch;
 
     /**
-     * @param array{messageBatchID?: string, betas?: list<string|string>} $params
+     * @param array{messageBatchID?: string, betas?: list<string>} $params
      */
     public function retrieve(
         string $messageBatchID,
@@ -31,7 +31,7 @@ interface BatchesContract
 
     /**
      * @param array{
-     *   afterID?: string, beforeID?: string, limit?: int, betas?: list<string|string>
+     *   afterID?: string, beforeID?: string, limit?: int, betas?: list<string>
      * } $params
      */
     public function list(
@@ -40,7 +40,7 @@ interface BatchesContract
     ): BetaMessageBatch;
 
     /**
-     * @param array{messageBatchID?: string, betas?: list<string|string>} $params
+     * @param array{messageBatchID?: string, betas?: list<string>} $params
      */
     public function delete(
         string $messageBatchID,
@@ -49,7 +49,7 @@ interface BatchesContract
     ): BetaDeletedMessageBatch;
 
     /**
-     * @param array{messageBatchID?: string, betas?: list<string|string>} $params
+     * @param array{messageBatchID?: string, betas?: list<string>} $params
      */
     public function cancel(
         string $messageBatchID,
@@ -58,7 +58,7 @@ interface BatchesContract
     ): BetaMessageBatch;
 
     /**
-     * @param array{messageBatchID?: string, betas?: list<string|string>} $params
+     * @param array{messageBatchID?: string, betas?: list<string>} $params
      */
     public function results(
         string $messageBatchID,

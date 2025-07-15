@@ -48,7 +48,7 @@ final class Messages implements MessagesContract
      * @param array{
      *   maxTokens?: int,
      *   messages?: list<BetaMessageParam>,
-     *   model?: string|string,
+     *   model?: string,
      *   container?: string|null,
      *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
      *   metadata?: BetaMetadata,
@@ -64,7 +64,7 @@ final class Messages implements MessagesContract
      *   >,
      *   topK?: int,
      *   topP?: float,
-     *   betas?: list<string|string>,
+     *   betas?: list<string>,
      * } $params
      */
     public function create(
@@ -91,7 +91,7 @@ final class Messages implements MessagesContract
     /**
      * @param array{
      *   messages?: list<BetaMessageParam>,
-     *   model?: string|string,
+     *   model?: string,
      *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
      *   system?: string|list<BetaTextBlockParam>,
      *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
@@ -99,7 +99,7 @@ final class Messages implements MessagesContract
      *   tools?: list<
      *     BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305
      *   >,
-     *   betas?: list<string|string>,
+     *   betas?: list<string>,
      * } $params
      */
     public function countTokens(

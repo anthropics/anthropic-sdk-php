@@ -40,9 +40,8 @@ final class CountTokensParams implements BaseModel
     #[Api(type: new ListOf(BetaMessageParam::class))]
     public array $messages;
 
-    /** @var string|string $model */
     #[Api]
-    public mixed $model;
+    public string $model;
 
     /** @var null|list<BetaRequestMCPServerURLDefinition> $mcpServers */
     #[Api(
@@ -57,17 +56,13 @@ final class CountTokensParams implements BaseModel
         type: new UnionOf(['string', new ListOf(BetaTextBlockParam::class)]),
         optional: true,
     )]
-    public mixed $system;
+    public null|array|string $system;
 
-    /** @var null|BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking */
     #[Api(optional: true)]
-    public mixed $thinking;
+    public null|BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking;
 
-    /**
-     * @var null|BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice
-     */
     #[Api('tool_choice', optional: true)]
-    public mixed $toolChoice;
+    public null|BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice;
 
     /**
      * @var list<
@@ -95,7 +90,7 @@ final class CountTokensParams implements BaseModel
     )]
     public ?array $tools;
 
-    /** @var null|list<string|string> $anthropicBeta */
+    /** @var null|list<string> $anthropicBeta */
     #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
     public ?array $anthropicBeta;
 
@@ -106,7 +101,7 @@ final class CountTokensParams implements BaseModel
      * the PHPDoc types.
      *
      * @param list<BetaMessageParam>                                                     $messages   `required`
-     * @param string|string                                                              $model      `required`
+     * @param string                                                                     $model      `required`
      * @param null|list<BetaRequestMCPServerURLDefinition>                               $mcpServers
      * @param null|list<BetaTextBlockParam>|string                                       $system
      * @param BetaThinkingConfigDisabled|BetaThinkingConfigEnabled                       $thinking
@@ -114,7 +109,7 @@ final class CountTokensParams implements BaseModel
      * @param list<
      *   BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305
      * >|null $tools
-     * @param null|list<string|string> $anthropicBeta
+     * @param null|list<string> $anthropicBeta
      */
     final public function __construct(
         $messages,

@@ -12,11 +12,8 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
 {
     use Model;
 
-    /**
-     * @var BetaCitationsDelta|BetaInputJSONDelta|BetaSignatureDelta|BetaTextDelta|BetaThinkingDelta $delta
-     */
     #[Api]
-    public mixed $delta;
+    public BetaCitationsDelta|BetaInputJSONDelta|BetaSignatureDelta|BetaTextDelta|BetaThinkingDelta $delta;
 
     #[Api]
     public int $index;

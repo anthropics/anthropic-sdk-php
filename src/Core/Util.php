@@ -47,8 +47,10 @@ final class Util
     /**
      * @param callable|int|list<int|string>|string $key
      */
-    public static function dig(mixed $array, mixed $key): mixed
-    {
+    public static function dig(
+        mixed $array,
+        array|callable|int|string $key
+    ): mixed {
         if (is_callable($key)) {
             return $key($array);
         }
@@ -71,7 +73,7 @@ final class Util
     /**
      * @param list<string>|string $path
      */
-    public static function parsePath(mixed $path): string
+    public static function parsePath(array|string $path): string
     {
         if (is_string($path)) {
             return $path;

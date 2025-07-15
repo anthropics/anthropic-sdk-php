@@ -38,9 +38,8 @@ final class Message implements BaseModel
     )]
     public array $content;
 
-    /** @var string|string $model */
     #[Api]
-    public mixed $model;
+    public string $model;
 
     #[Api]
     public string $role = 'assistant';
@@ -67,12 +66,12 @@ final class Message implements BaseModel
      * @param list<
      *   TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock
      * > $content `required`
-     * @param string|string $model        `required`
-     * @param string        $role         `required`
-     * @param string        $stopReason   `required`
-     * @param null|string   $stopSequence `required`
-     * @param string        $type         `required`
-     * @param Usage         $usage        `required`
+     * @param string      $model        `required`
+     * @param string      $role         `required`
+     * @param string      $stopReason   `required`
+     * @param null|string $stopSequence `required`
+     * @param string      $type         `required`
+     * @param Usage       $usage        `required`
      */
     final public function __construct(
         $id,

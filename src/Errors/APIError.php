@@ -9,7 +9,6 @@ class APIError extends Error
 {
     public ?int $status = null;
 
-    /** @var null|mixed */
     public mixed $body = null;
 
     public ?ResponseInterface $response = null;

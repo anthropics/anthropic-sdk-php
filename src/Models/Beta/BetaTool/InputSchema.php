@@ -18,7 +18,6 @@ final class InputSchema implements BaseModel
     #[Api]
     public string $type;
 
-    /** @var null|mixed $properties */
     #[Api(optional: true)]
     public mixed $properties;
 
@@ -33,7 +32,7 @@ final class InputSchema implements BaseModel
      * the PHPDoc types.
      *
      * @param string            $type       `required`
-     * @param null|mixed        $properties
+     * @param mixed             $properties
      * @param null|list<string> $required
      */
     final public function __construct(

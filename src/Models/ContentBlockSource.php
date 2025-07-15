@@ -25,7 +25,7 @@ final class ContentBlockSource implements BaseModel
             ],
         ),
     )]
-    public mixed $content;
+    public array|string $content;
 
     #[Api]
     public string $type;

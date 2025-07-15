@@ -23,7 +23,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
             ],
         ),
     )]
-    public mixed $content;
+    public array|BetaWebSearchToolResultError $content;
 
     #[Api('tool_use_id')]
     public string $toolUseID;

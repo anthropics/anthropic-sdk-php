@@ -29,7 +29,7 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
         type: new UnionOf(['string', new ListOf(BetaTextBlockParam::class)]),
         optional: true,
     )]
-    public mixed $content;
+    public null|array|string $content;
 
     #[Api('is_error', optional: true)]
     public ?bool $isError;

@@ -17,7 +17,7 @@ final class DeleteParams implements BaseModel
     use Model;
     use Params;
 
-    /** @var null|list<string|string> $anthropicBeta */
+    /** @var null|list<string> $anthropicBeta */
     #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
     public ?array $anthropicBeta;
 
@@ -27,7 +27,7 @@ final class DeleteParams implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param null|list<string|string> $anthropicBeta
+     * @param null|list<string> $anthropicBeta
      */
     final public function __construct($anthropicBeta = None::NOT_GIVEN)
     {

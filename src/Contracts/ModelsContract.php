@@ -10,7 +10,7 @@ use Anthropic\RequestOptions;
 interface ModelsContract
 {
     /**
-     * @param array{modelID?: string, betas?: list<string|string>} $params
+     * @param array{modelID?: string, betas?: list<string>} $params
      */
     public function retrieve(
         string $modelID,
@@ -20,7 +20,7 @@ interface ModelsContract
 
     /**
      * @param array{
-     *   afterID?: string, beforeID?: string, limit?: int, betas?: list<string|string>
+     *   afterID?: string, beforeID?: string, limit?: int, betas?: list<string>
      * } $params
      */
     public function list(

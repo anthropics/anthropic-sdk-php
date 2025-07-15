@@ -21,9 +21,8 @@ final class CreateParams implements BaseModel
     #[Api('max_tokens_to_sample')]
     public int $maxTokensToSample;
 
-    /** @var string|string $model */
     #[Api]
-    public mixed $model;
+    public string $model;
 
     #[Api]
     public string $prompt;
@@ -47,7 +46,7 @@ final class CreateParams implements BaseModel
     #[Api('top_p', optional: true)]
     public ?float $topP;
 
-    /** @var null|list<string|string> $anthropicBeta */
+    /** @var null|list<string> $anthropicBeta */
     #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
     public ?array $anthropicBeta;
 
@@ -57,16 +56,16 @@ final class CreateParams implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param int                      $maxTokensToSample `required`
-     * @param string|string            $model             `required`
-     * @param string                   $prompt            `required`
-     * @param Metadata                 $metadata
-     * @param null|list<string>        $stopSequences
-     * @param null|bool                $stream            `required`
-     * @param null|float               $temperature
-     * @param null|int                 $topK
-     * @param null|float               $topP
-     * @param null|list<string|string> $anthropicBeta
+     * @param int               $maxTokensToSample `required`
+     * @param string            $model             `required`
+     * @param string            $prompt            `required`
+     * @param Metadata          $metadata
+     * @param null|list<string> $stopSequences
+     * @param null|bool         $stream            `required`
+     * @param null|float        $temperature
+     * @param null|int          $topK
+     * @param null|float        $topP
+     * @param null|list<string> $anthropicBeta
      */
     final public function __construct(
         $maxTokensToSample,

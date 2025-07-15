@@ -13,11 +13,8 @@ final class DocumentBlockParam implements BaseModel
 {
     use Model;
 
-    /**
-     * @var Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source
-     */
     #[Api]
-    public mixed $source;
+    public Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source;
 
     #[Api]
     public string $type;

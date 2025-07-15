@@ -24,7 +24,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
             ],
         ),
     )]
-    public mixed $content;
+    public array|WebSearchToolRequestError $content;
 
     #[Api('tool_use_id')]
     public string $toolUseID;

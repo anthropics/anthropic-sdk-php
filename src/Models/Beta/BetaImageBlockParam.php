@@ -13,9 +13,8 @@ final class BetaImageBlockParam implements BaseModel
 {
     use Model;
 
-    /** @var BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source */
     #[Api]
-    public mixed $source;
+    public BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source;
 
     #[Api]
     public string $type;

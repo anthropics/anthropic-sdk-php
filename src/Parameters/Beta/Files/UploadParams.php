@@ -20,7 +20,7 @@ final class UploadParams implements BaseModel
     #[Api]
     public string $file;
 
-    /** @var null|list<string|string> $anthropicBeta */
+    /** @var null|list<string> $anthropicBeta */
     #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
     public ?array $anthropicBeta;
 
@@ -30,8 +30,8 @@ final class UploadParams implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param string                   $file          `required`
-     * @param null|list<string|string> $anthropicBeta
+     * @param string            $file          `required`
+     * @param null|list<string> $anthropicBeta
      */
     final public function __construct($file, $anthropicBeta = None::NOT_GIVEN)
     {

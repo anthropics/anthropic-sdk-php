@@ -26,7 +26,7 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
             ],
         ),
     )]
-    public mixed $content;
+    public array|BetaWebSearchToolRequestError $content;
 
     #[Api('tool_use_id')]
     public string $toolUseID;

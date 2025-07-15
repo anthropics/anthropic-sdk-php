@@ -13,7 +13,7 @@ interface CompletionsContract
     /**
      * @param array{
      *   maxTokensToSample?: int,
-     *   model?: string|string,
+     *   model?: string,
      *   prompt?: string,
      *   metadata?: Metadata,
      *   stopSequences?: list<string>,
@@ -21,7 +21,7 @@ interface CompletionsContract
      *   temperature?: float,
      *   topK?: int,
      *   topP?: float,
-     *   betas?: list<string|string>,
+     *   betas?: list<string>,
      * } $params
      */
     public function create(

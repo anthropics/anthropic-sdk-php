@@ -12,11 +12,8 @@ final class CitationsDelta implements BaseModel
 {
     use Model;
 
-    /**
-     * @var CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsWebSearchResultLocation $citation
-     */
     #[Api]
-    public mixed $citation;
+    public CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsWebSearchResultLocation $citation;
 
     #[Api]
     public string $type = 'citations_delta';

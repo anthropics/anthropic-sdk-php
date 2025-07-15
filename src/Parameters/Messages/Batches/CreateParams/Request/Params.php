@@ -36,9 +36,8 @@ final class Params implements BaseModel
     #[Api(type: new ListOf(MessageParam::class))]
     public array $messages;
 
-    /** @var string|string $model */
     #[Api]
-    public mixed $model;
+    public string $model;
 
     #[Api(optional: true)]
     public ?Metadata $metadata;
@@ -58,20 +57,16 @@ final class Params implements BaseModel
         type: new UnionOf(['string', new ListOf(TextBlockParam::class)]),
         optional: true,
     )]
-    public mixed $system;
+    public null|array|string $system;
 
     #[Api(optional: true)]
     public ?float $temperature;
 
-    /** @var null|ThinkingConfigDisabled|ThinkingConfigEnabled $thinking */
     #[Api(optional: true)]
-    public mixed $thinking;
+    public null|ThinkingConfigDisabled|ThinkingConfigEnabled $thinking;
 
-    /**
-     * @var null|ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice
-     */
     #[Api('tool_choice', optional: true)]
-    public mixed $toolChoice;
+    public null|ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice;
 
     /**
      * @var list<
@@ -108,7 +103,7 @@ final class Params implements BaseModel
      *
      * @param int                                                        $maxTokens     `required`
      * @param list<MessageParam>                                         $messages      `required`
-     * @param string|string                                              $model         `required`
+     * @param string                                                     $model         `required`
      * @param Metadata                                                   $metadata
      * @param null|string                                                $serviceTier
      * @param null|list<string>                                          $stopSequences

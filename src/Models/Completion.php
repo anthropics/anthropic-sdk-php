@@ -18,9 +18,8 @@ final class Completion implements BaseModel
     #[Api]
     public string $completion;
 
-    /** @var string|string $model */
     #[Api]
-    public mixed $model;
+    public string $model;
 
     #[Api('stop_reason')]
     public ?string $stopReason;
@@ -34,11 +33,11 @@ final class Completion implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param string        $id         `required`
-     * @param string        $completion `required`
-     * @param string|string $model      `required`
-     * @param null|string   $stopReason `required`
-     * @param string        $type       `required`
+     * @param string      $id         `required`
+     * @param string      $completion `required`
+     * @param string      $model      `required`
+     * @param null|string $stopReason `required`
+     * @param string      $type       `required`
      */
     final public function __construct(
         $id,

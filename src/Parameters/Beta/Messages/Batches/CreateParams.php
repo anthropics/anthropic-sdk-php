@@ -22,7 +22,7 @@ final class CreateParams implements BaseModel
     #[Api(type: new ListOf(Request::class))]
     public array $requests;
 
-    /** @var null|list<string|string> $anthropicBeta */
+    /** @var null|list<string> $anthropicBeta */
     #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
     public ?array $anthropicBeta;
 
@@ -32,8 +32,8 @@ final class CreateParams implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param list<Request>            $requests      `required`
-     * @param null|list<string|string> $anthropicBeta
+     * @param list<Request>     $requests      `required`
+     * @param null|list<string> $anthropicBeta
      */
     final public function __construct(
         $requests,

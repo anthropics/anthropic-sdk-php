@@ -51,7 +51,7 @@ class BaseClient
      */
     public function request(
         string $method,
-        mixed $path,
+        array|string $path,
         array $query = [],
         array $headers = [],
         mixed $body = null,
@@ -97,10 +97,10 @@ class BaseClient
      */
     protected function buildRequest(
         string $method,
-        mixed $path,
+        array|string $path,
         array $query,
         array $headers,
-        mixed $opts
+        ?RequestOptions $opts,
     ): array {
         $opts = [...$this->options->__serialize(), ...RequestOptions::parse($opts)->__serialize()];
         $options = new RequestOptions(...$opts);

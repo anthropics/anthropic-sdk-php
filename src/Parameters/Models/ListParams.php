@@ -26,7 +26,7 @@ final class ListParams implements BaseModel
     #[Api(optional: true)]
     public ?int $limit = 20;
 
-    /** @var null|list<string|string> $anthropicBeta */
+    /** @var null|list<string> $anthropicBeta */
     #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
     public ?array $anthropicBeta;
 
@@ -36,10 +36,10 @@ final class ListParams implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param null|string              $afterID
-     * @param null|string              $beforeID
-     * @param null|int                 $limit
-     * @param null|list<string|string> $anthropicBeta
+     * @param null|string       $afterID
+     * @param null|string       $beforeID
+     * @param null|int          $limit
+     * @param null|list<string> $anthropicBeta
      */
     final public function __construct(
         $afterID = None::NOT_GIVEN,

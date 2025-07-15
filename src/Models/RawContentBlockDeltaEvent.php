@@ -12,11 +12,8 @@ final class RawContentBlockDeltaEvent implements BaseModel
 {
     use Model;
 
-    /**
-     * @var CitationsDelta|InputJSONDelta|SignatureDelta|TextDelta|ThinkingDelta $delta
-     */
     #[Api]
-    public mixed $delta;
+    public CitationsDelta|InputJSONDelta|SignatureDelta|TextDelta|ThinkingDelta $delta;
 
     #[Api]
     public int $index;

@@ -12,11 +12,8 @@ final class ErrorResponse implements BaseModel
 {
     use Model;
 
-    /**
-     * @var APIErrorObject|AuthenticationError|BillingError|GatewayTimeoutError|InvalidRequestError|NotFoundError|OverloadedError|PermissionError|RateLimitError $error
-     */
     #[Api]
-    public mixed $error;
+    public APIErrorObject|AuthenticationError|BillingError|GatewayTimeoutError|InvalidRequestError|NotFoundError|OverloadedError|PermissionError|RateLimitError $error;
 
     #[Api]
     public string $type = 'error';

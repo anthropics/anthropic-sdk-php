@@ -42,9 +42,8 @@ final class Params implements BaseModel
     #[Api(type: new ListOf(BetaMessageParam::class))]
     public array $messages;
 
-    /** @var string|string $model */
     #[Api]
-    public mixed $model;
+    public string $model;
 
     #[Api(optional: true)]
     public ?string $container;
@@ -75,20 +74,16 @@ final class Params implements BaseModel
         type: new UnionOf(['string', new ListOf(BetaTextBlockParam::class)]),
         optional: true,
     )]
-    public mixed $system;
+    public null|array|string $system;
 
     #[Api(optional: true)]
     public ?float $temperature;
 
-    /** @var null|BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking */
     #[Api(optional: true)]
-    public mixed $thinking;
+    public null|BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking;
 
-    /**
-     * @var null|BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice
-     */
     #[Api('tool_choice', optional: true)]
-    public mixed $toolChoice;
+    public null|BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice;
 
     /**
      * @var list<
@@ -130,7 +125,7 @@ final class Params implements BaseModel
      *
      * @param int                                                                        $maxTokens     `required`
      * @param list<BetaMessageParam>                                                     $messages      `required`
-     * @param string|string                                                              $model         `required`
+     * @param string                                                                     $model         `required`
      * @param null|string                                                                $container
      * @param null|list<BetaRequestMCPServerURLDefinition>                               $mcpServers
      * @param BetaMetadata                                                               $metadata

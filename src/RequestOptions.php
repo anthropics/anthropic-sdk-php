@@ -98,7 +98,7 @@ class RequestOptions
      *   extraBodyParams?: list<string>|null,
      * }|null $options
      */
-    public static function parse(mixed $options): self
+    public static function parse(null|array|RequestOptions $options): self
     {
         if (is_null($options)) {
             return new self();

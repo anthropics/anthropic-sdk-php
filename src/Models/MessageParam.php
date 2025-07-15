@@ -41,7 +41,7 @@ final class MessageParam implements BaseModel
             ],
         ),
     )]
-    public mixed $content;
+    public array|string $content;
 
     #[Api]
     public string $role;

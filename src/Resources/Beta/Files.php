@@ -23,7 +23,7 @@ final class Files implements FilesContract
 
     /**
      * @param array{
-     *   afterID?: string, beforeID?: string, limit?: int, betas?: list<string|string>
+     *   afterID?: string, beforeID?: string, limit?: int, betas?: list<string>
      * } $params
      */
     public function list(
@@ -54,7 +54,7 @@ final class Files implements FilesContract
     }
 
     /**
-     * @param array{fileID?: string, betas?: list<string|string>} $params
+     * @param array{fileID?: string, betas?: list<string>} $params
      */
     public function delete(
         string $fileID,
@@ -80,7 +80,7 @@ final class Files implements FilesContract
     }
 
     /**
-     * @param array{fileID?: string, betas?: list<string|string>} $params
+     * @param array{fileID?: string, betas?: list<string>} $params
      */
     public function download(
         string $fileID,
@@ -109,7 +109,7 @@ final class Files implements FilesContract
     }
 
     /**
-     * @param array{fileID?: string, betas?: list<string|string>} $params
+     * @param array{fileID?: string, betas?: list<string>} $params
      */
     public function retrieveMetadata(
         string $fileID,
@@ -138,7 +138,7 @@ final class Files implements FilesContract
     }
 
     /**
-     * @param array{file?: string, betas?: list<string|string>} $params
+     * @param array{file?: string, betas?: list<string>} $params
      */
     public function upload(
         array $params,

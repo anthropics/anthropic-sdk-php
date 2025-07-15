@@ -12,11 +12,8 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
 {
     use Model;
 
-    /**
-     * @var BetaCodeExecutionResultBlock|BetaCodeExecutionToolResultError $content
-     */
     #[Api]
-    public mixed $content;
+    public BetaCodeExecutionResultBlock|BetaCodeExecutionToolResultError $content;
 
     #[Api('tool_use_id')]
     public string $toolUseID;

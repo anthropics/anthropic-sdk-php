@@ -42,7 +42,7 @@ final class Messages implements MessagesContract
      * @param array{
      *   maxTokens?: int,
      *   messages?: list<MessageParam>,
-     *   model?: string|string,
+     *   model?: string,
      *   metadata?: Metadata,
      *   serviceTier?: string,
      *   stopSequences?: list<string>,
@@ -77,7 +77,7 @@ final class Messages implements MessagesContract
     /**
      * @param array{
      *   messages?: list<MessageParam>,
-     *   model?: string|string,
+     *   model?: string,
      *   system?: string|list<TextBlockParam>,
      *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
      *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,

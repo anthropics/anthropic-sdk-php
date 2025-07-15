@@ -20,7 +20,7 @@ final class WebSearchToolResultBlock implements BaseModel
             [WebSearchToolResultError::class, new ListOf(WebSearchResultBlock::class)]
         ),
     )]
-    public mixed $content;
+    public array|WebSearchToolResultError $content;
 
     #[Api('tool_use_id')]
     public string $toolUseID;

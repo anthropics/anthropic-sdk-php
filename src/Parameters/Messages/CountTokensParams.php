@@ -34,26 +34,21 @@ final class CountTokensParams implements BaseModel
     #[Api(type: new ListOf(MessageParam::class))]
     public array $messages;
 
-    /** @var string|string $model */
     #[Api]
-    public mixed $model;
+    public string $model;
 
     /** @var null|list<TextBlockParam>|string $system */
     #[Api(
         type: new UnionOf(['string', new ListOf(TextBlockParam::class)]),
         optional: true,
     )]
-    public mixed $system;
+    public null|array|string $system;
 
-    /** @var null|ThinkingConfigDisabled|ThinkingConfigEnabled $thinking */
     #[Api(optional: true)]
-    public mixed $thinking;
+    public null|ThinkingConfigDisabled|ThinkingConfigEnabled $thinking;
 
-    /**
-     * @var null|ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice
-     */
     #[Api('tool_choice', optional: true)]
-    public mixed $toolChoice;
+    public null|ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice;
 
     /**
      * @var list<
@@ -83,7 +78,7 @@ final class CountTokensParams implements BaseModel
      * the PHPDoc types.
      *
      * @param list<MessageParam>                                         $messages   `required`
-     * @param string|string                                              $model      `required`
+     * @param string                                                     $model      `required`
      * @param null|list<TextBlockParam>|string                           $system
      * @param ThinkingConfigDisabled|ThinkingConfigEnabled               $thinking
      * @param ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice

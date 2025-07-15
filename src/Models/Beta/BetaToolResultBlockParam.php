@@ -46,7 +46,7 @@ final class BetaToolResultBlockParam implements BaseModel
         ),
         optional: true,
     )]
-    public mixed $content;
+    public null|array|string $content;
 
     #[Api('is_error', optional: true)]
     public ?bool $isError;

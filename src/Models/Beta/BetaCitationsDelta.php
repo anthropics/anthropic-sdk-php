@@ -12,11 +12,8 @@ final class BetaCitationsDelta implements BaseModel
 {
     use Model;
 
-    /**
-     * @var BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationSearchResultLocation|BetaCitationsWebSearchResultLocation $citation
-     */
     #[Api]
-    public mixed $citation;
+    public BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationSearchResultLocation|BetaCitationsWebSearchResultLocation $citation;
 
     #[Api]
     public string $type = 'citations_delta';

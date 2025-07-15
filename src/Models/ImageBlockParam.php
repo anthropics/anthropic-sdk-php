@@ -13,9 +13,8 @@ final class ImageBlockParam implements BaseModel
 {
     use Model;
 
-    /** @var Base64ImageSource|URLImageSource $source */
     #[Api]
-    public mixed $source;
+    public Base64ImageSource|URLImageSource $source;
 
     #[Api]
     public string $type;

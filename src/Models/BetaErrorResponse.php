@@ -12,11 +12,8 @@ final class BetaErrorResponse implements BaseModel
 {
     use Model;
 
-    /**
-     * @var BetaAPIError|BetaAuthenticationError|BetaBillingError|BetaGatewayTimeoutError|BetaInvalidRequestError|BetaNotFoundError|BetaOverloadedError|BetaPermissionError|BetaRateLimitError $error
-     */
     #[Api]
-    public mixed $error;
+    public BetaAPIError|BetaAuthenticationError|BetaBillingError|BetaGatewayTimeoutError|BetaInvalidRequestError|BetaNotFoundError|BetaOverloadedError|BetaPermissionError|BetaRateLimitError $error;
 
     #[Api]
     public string $type = 'error';
