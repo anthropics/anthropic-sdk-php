@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 
 final class BetaSearchResultBlockParam implements BaseModel
@@ -34,27 +33,24 @@ final class BetaSearchResultBlockParam implements BaseModel
     public ?BetaCitationsConfigParam $citations;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param list<BetaTextBlockParam>  $content      `required`
-     * @param string                    $source       `required`
-     * @param string                    $title        `required`
-     * @param string                    $type         `required`
-     * @param BetaCacheControlEphemeral $cacheControl
-     * @param BetaCitationsConfigParam  $citations
+     * @param list<BetaTextBlockParam> $content
      */
     final public function __construct(
-        $content,
-        $source,
-        $title,
-        $type,
-        $cacheControl = None::NOT_GIVEN,
-        $citations = None::NOT_GIVEN,
+        array $content,
+        string $source,
+        string $title,
+        string $type,
+        ?BetaCacheControlEphemeral $cacheControl = null,
+        ?BetaCitationsConfigParam $citations = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->content = $content;
+        $this->source = $source;
+        $this->title = $title;
+        $this->type = $type;
+        $this->cacheControl = $cacheControl;
+        $this->citations = $citations;
     }
 }
 

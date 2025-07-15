@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 final class BetaCacheControlEphemeral implements BaseModel
 {
@@ -20,17 +19,12 @@ final class BetaCacheControlEphemeral implements BaseModel
     public ?string $ttl;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string      $type `required`
-     * @param null|string $ttl
+     * You must use named parameters to construct this object.
      */
-    final public function __construct($type, $ttl = None::NOT_GIVEN)
+    final public function __construct(string $type, ?string $ttl = null)
     {
-        $this->constructFromArgs(func_get_args());
+        $this->type = $type;
+        $this->ttl = $ttl;
     }
 }
 

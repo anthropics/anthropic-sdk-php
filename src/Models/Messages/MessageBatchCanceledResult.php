@@ -16,16 +16,11 @@ final class MessageBatchCanceledResult implements BaseModel
     public string $type = 'canceled';
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string $type `required`
+     * You must use named parameters to construct this object.
      */
-    final public function __construct($type = 'canceled')
+    final public function __construct(string $type = 'canceled')
     {
-        $this->constructFromArgs(func_get_args());
+        $this->type = $type;
     }
 }
 

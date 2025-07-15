@@ -7,7 +7,6 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
@@ -50,25 +49,22 @@ final class TextBlockParam implements BaseModel
     public ?array $citations;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param string                $text         `required`
-     * @param string                $type         `required`
-     * @param CacheControlEphemeral $cacheControl
      * @param list<
      *   CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam
      * >|null $citations
      */
     final public function __construct(
-        $text,
-        $type,
-        $cacheControl = None::NOT_GIVEN,
-        $citations = None::NOT_GIVEN
+        string $text,
+        string $type,
+        ?CacheControlEphemeral $cacheControl = null,
+        ?array $citations = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->text = $text;
+        $this->type = $type;
+        $this->cacheControl = $cacheControl;
+        $this->citations = $citations;
     }
 }
 

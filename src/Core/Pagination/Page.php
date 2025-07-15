@@ -44,6 +44,9 @@ final class Page extends AbstractPage
     public function nextPageRequestOptions(): ?PageRequestOptions
     {
         $next = $this->lastID ?? null;
+        if (!$next) {
+            return null;
+        }
 
         return $this->options->withQuery('after_id', $next);
     }

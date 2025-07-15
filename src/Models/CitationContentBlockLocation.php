@@ -31,27 +31,22 @@ final class CitationContentBlockLocation implements BaseModel
     public string $type = 'content_block_location';
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string      $citedText       `required`
-     * @param int         $documentIndex   `required`
-     * @param null|string $documentTitle   `required`
-     * @param int         $endBlockIndex   `required`
-     * @param int         $startBlockIndex `required`
-     * @param string      $type            `required`
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $citedText,
-        $documentIndex,
-        $documentTitle,
-        $endBlockIndex,
-        $startBlockIndex,
-        $type = 'content_block_location',
+        string $citedText,
+        int $documentIndex,
+        ?string $documentTitle,
+        int $endBlockIndex,
+        int $startBlockIndex,
+        string $type = 'content_block_location',
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->citedText = $citedText;
+        $this->documentIndex = $documentIndex;
+        $this->documentTitle = $documentTitle;
+        $this->endBlockIndex = $endBlockIndex;
+        $this->startBlockIndex = $startBlockIndex;
+        $this->type = $type;
     }
 }
 

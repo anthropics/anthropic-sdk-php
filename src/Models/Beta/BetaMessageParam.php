@@ -52,19 +52,16 @@ final class BetaMessageParam implements BaseModel
     public string $role;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
      * @param string|list<
      *   BetaTextBlockParam|BetaImageBlockParam|BetaRequestDocumentBlock|BetaSearchResultBlockParam|BetaThinkingBlockParam|BetaRedactedThinkingBlockParam|BetaToolUseBlockParam|BetaToolResultBlockParam|BetaServerToolUseBlockParam|BetaWebSearchToolResultBlockParam|BetaCodeExecutionToolResultBlockParam|BetaMCPToolUseBlockParam|BetaRequestMCPToolResultBlockParam|BetaContainerUploadBlockParam
-     * > $content `required`
-     * @param string $role `required`
+     * > $content
      */
-    final public function __construct($content, $role)
+    final public function __construct(array|string $content, string $role)
     {
-        $this->constructFromArgs(func_get_args());
+        $this->content = $content;
+        $this->role = $role;
     }
 }
 

@@ -8,7 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 final class ListParams implements BaseModel
 {
@@ -25,21 +24,16 @@ final class ListParams implements BaseModel
     public ?int $limit = 20;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param null|string $afterID
-     * @param null|string $beforeID
-     * @param null|int    $limit
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $afterID = None::NOT_GIVEN,
-        $beforeID = None::NOT_GIVEN,
-        $limit = None::NOT_GIVEN,
+        ?string $afterID = null,
+        ?string $beforeID = null,
+        ?int $limit = null
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->afterID = $afterID;
+        $this->beforeID = $beforeID;
+        $this->limit = $limit;
     }
 }
 

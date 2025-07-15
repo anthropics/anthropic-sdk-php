@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 final class BetaMCPToolUseBlockParam implements BaseModel
 {
@@ -32,27 +31,22 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string                    $id           `required`
-     * @param mixed                     $input        `required`
-     * @param string                    $name         `required`
-     * @param string                    $serverName   `required`
-     * @param string                    $type         `required`
-     * @param BetaCacheControlEphemeral $cacheControl
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $id,
-        $input,
-        $name,
-        $serverName,
-        $type,
-        $cacheControl = None::NOT_GIVEN
+        string $id,
+        mixed $input,
+        string $name,
+        string $serverName,
+        string $type,
+        ?BetaCacheControlEphemeral $cacheControl = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->id = $id;
+        $this->input = $input;
+        $this->name = $name;
+        $this->serverName = $serverName;
+        $this->type = $type;
+        $this->cacheControl = $cacheControl;
     }
 }
 

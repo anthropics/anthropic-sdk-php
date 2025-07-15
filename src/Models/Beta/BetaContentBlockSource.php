@@ -31,17 +31,14 @@ final class BetaContentBlockSource implements BaseModel
     public string $type;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param list<BetaImageBlockParam|BetaTextBlockParam>|string $content `required`
-     * @param string                                              $type    `required`
+     * @param list<BetaImageBlockParam|BetaTextBlockParam>|string $content
      */
-    final public function __construct($content, $type)
+    final public function __construct(array|string $content, string $type)
     {
-        $this->constructFromArgs(func_get_args());
+        $this->content = $content;
+        $this->type = $type;
     }
 }
 

@@ -28,25 +28,20 @@ final class MessageBatchRequestCounts implements BaseModel
     public int $succeeded = 0;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param int $canceled   `required`
-     * @param int $errored    `required`
-     * @param int $expired    `required`
-     * @param int $processing `required`
-     * @param int $succeeded  `required`
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $canceled = 0,
-        $errored = 0,
-        $expired = 0,
-        $processing = 0,
-        $succeeded = 0
+        int $canceled = 0,
+        int $errored = 0,
+        int $expired = 0,
+        int $processing = 0,
+        int $succeeded = 0,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->canceled = $canceled;
+        $this->errored = $errored;
+        $this->expired = $expired;
+        $this->processing = $processing;
+        $this->succeeded = $succeeded;
     }
 }
 

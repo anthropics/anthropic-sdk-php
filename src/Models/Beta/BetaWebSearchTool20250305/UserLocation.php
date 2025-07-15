@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta\BetaWebSearchTool20250305;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 final class UserLocation implements BaseModel
 {
@@ -29,25 +28,20 @@ final class UserLocation implements BaseModel
     public ?string $timezone;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string      $type     `required`
-     * @param null|string $city
-     * @param null|string $country
-     * @param null|string $region
-     * @param null|string $timezone
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $type,
-        $city = None::NOT_GIVEN,
-        $country = None::NOT_GIVEN,
-        $region = None::NOT_GIVEN,
-        $timezone = None::NOT_GIVEN,
+        string $type,
+        ?string $city = null,
+        ?string $country = null,
+        ?string $region = null,
+        ?string $timezone = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->type = $type;
+        $this->city = $city;
+        $this->country = $country;
+        $this->region = $region;
+        $this->timezone = $timezone;
     }
 }
 

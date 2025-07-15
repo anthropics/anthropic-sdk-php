@@ -57,33 +57,30 @@ final class Message implements BaseModel
     public Usage $usage;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param string $id `required`
      * @param list<
      *   TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock
-     * > $content `required`
-     * @param string      $model        `required`
-     * @param string      $role         `required`
-     * @param string      $stopReason   `required`
-     * @param null|string $stopSequence `required`
-     * @param string      $type         `required`
-     * @param Usage       $usage        `required`
+     * > $content
      */
     final public function __construct(
-        $id,
-        $content,
-        $model,
-        $stopReason,
-        $stopSequence,
-        $usage,
-        $role = 'assistant',
-        $type = 'message',
+        string $id,
+        array $content,
+        string $model,
+        string $stopReason,
+        ?string $stopSequence,
+        Usage $usage,
+        string $role = 'assistant',
+        string $type = 'message',
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->id = $id;
+        $this->content = $content;
+        $this->model = $model;
+        $this->role = $role;
+        $this->stopReason = $stopReason;
+        $this->stopSequence = $stopSequence;
+        $this->type = $type;
+        $this->usage = $usage;
     }
 }
 

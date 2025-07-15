@@ -19,17 +19,14 @@ final class BetaDeletedMessageBatch implements BaseModel
     public string $type = 'message_batch_deleted';
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string $id   `required`
-     * @param string $type `required`
+     * You must use named parameters to construct this object.
      */
-    final public function __construct($id, $type = 'message_batch_deleted')
-    {
-        $this->constructFromArgs(func_get_args());
+    final public function __construct(
+        string $id,
+        string $type = 'message_batch_deleted'
+    ) {
+        $this->id = $id;
+        $this->type = $type;
     }
 }
 

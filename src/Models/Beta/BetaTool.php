@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 use Anthropic\Models\Beta\BetaTool\InputSchema;
 
 final class BetaTool implements BaseModel
@@ -30,25 +29,20 @@ final class BetaTool implements BaseModel
     public ?string $type;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param InputSchema               $inputSchema  `required`
-     * @param string                    $name         `required`
-     * @param BetaCacheControlEphemeral $cacheControl
-     * @param null|string               $description
-     * @param null|string               $type
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $inputSchema,
-        $name,
-        $cacheControl = None::NOT_GIVEN,
-        $description = None::NOT_GIVEN,
-        $type = None::NOT_GIVEN,
+        InputSchema $inputSchema,
+        string $name,
+        ?BetaCacheControlEphemeral $cacheControl = null,
+        ?string $description = null,
+        ?string $type = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->inputSchema = $inputSchema;
+        $this->name = $name;
+        $this->cacheControl = $cacheControl;
+        $this->description = $description;
+        $this->type = $type;
     }
 }
 

@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
@@ -52,27 +51,24 @@ final class BetaToolResultBlockParam implements BaseModel
     public ?bool $isError;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param string                    $toolUseID    `required`
-     * @param string                    $type         `required`
-     * @param BetaCacheControlEphemeral $cacheControl
      * @param string|list<
      *   BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam
      * >|null $content
-     * @param null|bool $isError
      */
     final public function __construct(
-        $toolUseID,
-        $type,
-        $cacheControl = None::NOT_GIVEN,
-        $content = None::NOT_GIVEN,
-        $isError = None::NOT_GIVEN,
+        string $toolUseID,
+        string $type,
+        ?BetaCacheControlEphemeral $cacheControl = null,
+        null|array|string $content = null,
+        ?bool $isError = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->toolUseID = $toolUseID;
+        $this->type = $type;
+        $this->cacheControl = $cacheControl;
+        $this->content = $content;
+        $this->isError = $isError;
     }
 }
 

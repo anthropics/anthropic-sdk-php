@@ -34,29 +34,24 @@ final class BetaUsage implements BaseModel
     public ?string $serviceTier;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param BetaCacheCreation   $cacheCreation            `required`
-     * @param null|int            $cacheCreationInputTokens `required`
-     * @param null|int            $cacheReadInputTokens     `required`
-     * @param int                 $inputTokens              `required`
-     * @param int                 $outputTokens             `required`
-     * @param BetaServerToolUsage $serverToolUse            `required`
-     * @param null|string         $serviceTier              `required`
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $cacheCreation,
-        $cacheCreationInputTokens,
-        $cacheReadInputTokens,
-        $inputTokens,
-        $outputTokens,
-        $serverToolUse,
-        $serviceTier,
+        BetaCacheCreation $cacheCreation,
+        ?int $cacheCreationInputTokens,
+        ?int $cacheReadInputTokens,
+        int $inputTokens,
+        int $outputTokens,
+        BetaServerToolUsage $serverToolUse,
+        ?string $serviceTier,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->cacheCreation = $cacheCreation;
+        $this->cacheCreationInputTokens = $cacheCreationInputTokens;
+        $this->cacheReadInputTokens = $cacheReadInputTokens;
+        $this->inputTokens = $inputTokens;
+        $this->outputTokens = $outputTokens;
+        $this->serverToolUse = $serverToolUse;
+        $this->serviceTier = $serviceTier;
     }
 }
 

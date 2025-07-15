@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 final class BetaImageBlockParam implements BaseModel
 {
@@ -23,21 +22,16 @@ final class BetaImageBlockParam implements BaseModel
     public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source       `required`
-     * @param string                                                       $type         `required`
-     * @param BetaCacheControlEphemeral                                    $cacheControl
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $source,
-        $type,
-        $cacheControl = None::NOT_GIVEN
+        BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source,
+        string $type,
+        ?BetaCacheControlEphemeral $cacheControl = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->source = $source;
+        $this->type = $type;
+        $this->cacheControl = $cacheControl;
     }
 }
 

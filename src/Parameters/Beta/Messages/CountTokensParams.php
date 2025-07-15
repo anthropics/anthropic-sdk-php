@@ -8,7 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 use Anthropic\Models\Beta\BetaCodeExecutionTool20250522;
@@ -95,33 +94,34 @@ final class CountTokensParams implements BaseModel
     public ?array $anthropicBeta;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param list<BetaMessageParam>                                                     $messages   `required`
-     * @param string                                                                     $model      `required`
-     * @param null|list<BetaRequestMCPServerURLDefinition>                               $mcpServers
-     * @param null|list<BetaTextBlockParam>|string                                       $system
-     * @param BetaThinkingConfigDisabled|BetaThinkingConfigEnabled                       $thinking
-     * @param BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice
+     * @param list<BetaMessageParam>                       $messages
+     * @param null|list<BetaRequestMCPServerURLDefinition> $mcpServers
+     * @param null|list<BetaTextBlockParam>|string         $system
      * @param list<
      *   BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305
      * >|null $tools
      * @param null|list<string> $anthropicBeta
      */
     final public function __construct(
-        $messages,
-        $model,
-        $mcpServers = None::NOT_GIVEN,
-        $system = None::NOT_GIVEN,
-        $thinking = None::NOT_GIVEN,
-        $toolChoice = None::NOT_GIVEN,
-        $tools = None::NOT_GIVEN,
-        $anthropicBeta = None::NOT_GIVEN,
+        array $messages,
+        string $model,
+        ?array $mcpServers = null,
+        null|array|string $system = null,
+        null|BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking = null,
+        null|BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice = null,
+        ?array $tools = null,
+        ?array $anthropicBeta = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->messages = $messages;
+        $this->model = $model;
+        $this->mcpServers = $mcpServers;
+        $this->system = $system;
+        $this->thinking = $thinking;
+        $this->toolChoice = $toolChoice;
+        $this->tools = $tools;
+        $this->anthropicBeta = $anthropicBeta;
     }
 }
 

@@ -16,16 +16,11 @@ final class BetaMessageTokensCount implements BaseModel
     public int $inputTokens;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param int $inputTokens `required`
+     * You must use named parameters to construct this object.
      */
-    final public function __construct($inputTokens)
+    final public function __construct(int $inputTokens)
     {
-        $this->constructFromArgs(func_get_args());
+        $this->inputTokens = $inputTokens;
     }
 }
 

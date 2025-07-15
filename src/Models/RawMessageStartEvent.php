@@ -19,17 +19,14 @@ final class RawMessageStartEvent implements BaseModel
     public string $type = 'message_start';
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param Message $message `required`
-     * @param string  $type    `required`
+     * You must use named parameters to construct this object.
      */
-    final public function __construct($message, $type = 'message_start')
-    {
-        $this->constructFromArgs(func_get_args());
+    final public function __construct(
+        Message $message,
+        string $type = 'message_start'
+    ) {
+        $this->message = $message;
+        $this->type = $type;
     }
 }
 

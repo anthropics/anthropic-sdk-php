@@ -7,7 +7,6 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 final class DocumentBlockParam implements BaseModel
 {
@@ -32,27 +31,22 @@ final class DocumentBlockParam implements BaseModel
     public ?string $title;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source       `required`
-     * @param string                                                          $type         `required`
-     * @param CacheControlEphemeral                                           $cacheControl
-     * @param CitationsConfigParam                                            $citations
-     * @param null|string                                                     $context
-     * @param null|string                                                     $title
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $source,
-        $type,
-        $cacheControl = None::NOT_GIVEN,
-        $citations = None::NOT_GIVEN,
-        $context = None::NOT_GIVEN,
-        $title = None::NOT_GIVEN,
+        Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source,
+        string $type,
+        ?CacheControlEphemeral $cacheControl = null,
+        ?CitationsConfigParam $citations = null,
+        ?string $context = null,
+        ?string $title = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->source = $source;
+        $this->type = $type;
+        $this->cacheControl = $cacheControl;
+        $this->citations = $citations;
+        $this->context = $context;
+        $this->title = $title;
     }
 }
 

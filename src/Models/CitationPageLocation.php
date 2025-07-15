@@ -31,27 +31,22 @@ final class CitationPageLocation implements BaseModel
     public string $type = 'page_location';
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string      $citedText       `required`
-     * @param int         $documentIndex   `required`
-     * @param null|string $documentTitle   `required`
-     * @param int         $endPageNumber   `required`
-     * @param int         $startPageNumber `required`
-     * @param string      $type            `required`
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $citedText,
-        $documentIndex,
-        $documentTitle,
-        $endPageNumber,
-        $startPageNumber,
-        $type = 'page_location',
+        string $citedText,
+        int $documentIndex,
+        ?string $documentTitle,
+        int $endPageNumber,
+        int $startPageNumber,
+        string $type = 'page_location',
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->citedText = $citedText;
+        $this->documentIndex = $documentIndex;
+        $this->documentTitle = $documentTitle;
+        $this->endPageNumber = $endPageNumber;
+        $this->startPageNumber = $startPageNumber;
+        $this->type = $type;
     }
 }
 

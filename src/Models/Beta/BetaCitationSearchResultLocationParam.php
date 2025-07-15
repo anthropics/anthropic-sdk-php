@@ -34,29 +34,24 @@ final class BetaCitationSearchResultLocationParam implements BaseModel
     public string $type = 'search_result_location';
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string      $citedText         `required`
-     * @param int         $endBlockIndex     `required`
-     * @param int         $searchResultIndex `required`
-     * @param string      $source            `required`
-     * @param int         $startBlockIndex   `required`
-     * @param null|string $title             `required`
-     * @param string      $type              `required`
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $citedText,
-        $endBlockIndex,
-        $searchResultIndex,
-        $source,
-        $startBlockIndex,
-        $title,
-        $type = 'search_result_location',
+        string $citedText,
+        int $endBlockIndex,
+        int $searchResultIndex,
+        string $source,
+        int $startBlockIndex,
+        ?string $title,
+        string $type = 'search_result_location',
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->citedText = $citedText;
+        $this->endBlockIndex = $endBlockIndex;
+        $this->searchResultIndex = $searchResultIndex;
+        $this->source = $source;
+        $this->startBlockIndex = $startBlockIndex;
+        $this->title = $title;
+        $this->type = $type;
     }
 }
 

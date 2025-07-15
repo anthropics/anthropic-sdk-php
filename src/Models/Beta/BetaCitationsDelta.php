@@ -19,17 +19,14 @@ final class BetaCitationsDelta implements BaseModel
     public string $type = 'citations_delta';
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationSearchResultLocation|BetaCitationsWebSearchResultLocation $citation `required`
-     * @param string                                                                                                                                                   $type     `required`
+     * You must use named parameters to construct this object.
      */
-    final public function __construct($citation, $type = 'citations_delta')
-    {
-        $this->constructFromArgs(func_get_args());
+    final public function __construct(
+        BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationSearchResultLocation|BetaCitationsWebSearchResultLocation $citation,
+        string $type = 'citations_delta',
+    ) {
+        $this->citation = $citation;
+        $this->type = $type;
     }
 }
 

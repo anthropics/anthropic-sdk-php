@@ -19,17 +19,14 @@ final class BetaThinkingDelta implements BaseModel
     public string $type = 'thinking_delta';
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string $thinking `required`
-     * @param string $type     `required`
+     * You must use named parameters to construct this object.
      */
-    final public function __construct($thinking, $type = 'thinking_delta')
-    {
-        $this->constructFromArgs(func_get_args());
+    final public function __construct(
+        string $thinking,
+        string $type = 'thinking_delta'
+    ) {
+        $this->thinking = $thinking;
+        $this->type = $type;
     }
 }
 

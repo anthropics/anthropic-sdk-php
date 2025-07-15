@@ -25,23 +25,18 @@ final class BetaModelInfo implements BaseModel
     public string $type = 'model';
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string             $id          `required`
-     * @param \DateTimeInterface $createdAt   `required`
-     * @param string             $displayName `required`
-     * @param string             $type        `required`
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $id,
-        $createdAt,
-        $displayName,
-        $type = 'model'
+        string $id,
+        \DateTimeInterface $createdAt,
+        string $displayName,
+        string $type = 'model',
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->id = $id;
+        $this->createdAt = $createdAt;
+        $this->displayName = $displayName;
+        $this->type = $type;
     }
 }
 

@@ -13,10 +13,7 @@ final class RetrieveParams implements BaseModel
     use Model;
     use Params;
 
-    final public function __construct()
-    {
-        $this->constructFromArgs(func_get_args());
-    }
+    final public function __construct() {}
 }
 
 RetrieveParams::_loadMetadata();

@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 final class BetaToolChoiceAny implements BaseModel
 {
@@ -20,19 +19,14 @@ final class BetaToolChoiceAny implements BaseModel
     public ?bool $disableParallelToolUse;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string    $type                   `required`
-     * @param null|bool $disableParallelToolUse
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $type,
-        $disableParallelToolUse = None::NOT_GIVEN
+        string $type,
+        ?bool $disableParallelToolUse = null
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->type = $type;
+        $this->disableParallelToolUse = $disableParallelToolUse;
     }
 }
 

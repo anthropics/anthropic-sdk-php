@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 final class FileMetadata implements BaseModel
 {
@@ -35,29 +34,24 @@ final class FileMetadata implements BaseModel
     public ?bool $downloadable = false;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string             $id           `required`
-     * @param \DateTimeInterface $createdAt    `required`
-     * @param string             $filename     `required`
-     * @param string             $mimeType     `required`
-     * @param int                $sizeBytes    `required`
-     * @param string             $type         `required`
-     * @param null|bool          $downloadable
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $id,
-        $createdAt,
-        $filename,
-        $mimeType,
-        $sizeBytes,
-        $type,
-        $downloadable = None::NOT_GIVEN,
+        string $id,
+        \DateTimeInterface $createdAt,
+        string $filename,
+        string $mimeType,
+        int $sizeBytes,
+        string $type,
+        ?bool $downloadable = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->id = $id;
+        $this->createdAt = $createdAt;
+        $this->filename = $filename;
+        $this->mimeType = $mimeType;
+        $this->sizeBytes = $sizeBytes;
+        $this->type = $type;
+        $this->downloadable = $downloadable;
     }
 }
 

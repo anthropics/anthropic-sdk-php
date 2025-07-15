@@ -20,17 +20,12 @@ final class Request implements BaseModel
     public Params $params;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string $customID `required`
-     * @param Params $params   `required`
+     * You must use named parameters to construct this object.
      */
-    final public function __construct($customID, $params)
+    final public function __construct(string $customID, Params $params)
     {
-        $this->constructFromArgs(func_get_args());
+        $this->customID = $customID;
+        $this->params = $params;
     }
 }
 

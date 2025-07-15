@@ -28,23 +28,20 @@ final class BetaMCPToolResultBlock implements BaseModel
     public string $type = 'mcp_tool_result';
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param list<BetaTextBlock>|string $content   `required`
-     * @param bool                       $isError   `required`
-     * @param string                     $toolUseID `required`
-     * @param string                     $type      `required`
+     * @param list<BetaTextBlock>|string $content
      */
     final public function __construct(
-        $content,
-        $toolUseID,
-        $isError = false,
-        $type = 'mcp_tool_result'
+        array|string $content,
+        string $toolUseID,
+        bool $isError = false,
+        string $type = 'mcp_tool_result',
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->content = $content;
+        $this->isError = $isError;
+        $this->toolUseID = $toolUseID;
+        $this->type = $type;
     }
 }
 

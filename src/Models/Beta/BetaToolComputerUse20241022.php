@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 
 final class BetaToolComputerUse20241022 implements BaseModel
 {
@@ -32,27 +31,22 @@ final class BetaToolComputerUse20241022 implements BaseModel
     public ?int $displayNumber;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param int                       $displayHeightPx `required`
-     * @param int                       $displayWidthPx  `required`
-     * @param string                    $name            `required`
-     * @param string                    $type            `required`
-     * @param BetaCacheControlEphemeral $cacheControl
-     * @param null|int                  $displayNumber
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $displayHeightPx,
-        $displayWidthPx,
-        $name,
-        $type,
-        $cacheControl = None::NOT_GIVEN,
-        $displayNumber = None::NOT_GIVEN,
+        int $displayHeightPx,
+        int $displayWidthPx,
+        string $name,
+        string $type,
+        ?BetaCacheControlEphemeral $cacheControl = null,
+        ?int $displayNumber = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->displayHeightPx = $displayHeightPx;
+        $this->displayWidthPx = $displayWidthPx;
+        $this->name = $name;
+        $this->type = $type;
+        $this->cacheControl = $cacheControl;
+        $this->displayNumber = $displayNumber;
     }
 }
 

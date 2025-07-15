@@ -7,7 +7,6 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 use Anthropic\Models\WebSearchTool20250305\UserLocation;
@@ -48,29 +47,27 @@ final class WebSearchTool20250305 implements BaseModel
     public ?UserLocation $userLocation;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param string                $name           `required`
-     * @param string                $type           `required`
-     * @param null|list<string>     $allowedDomains
-     * @param null|list<string>     $blockedDomains
-     * @param CacheControlEphemeral $cacheControl
-     * @param null|int              $maxUses
-     * @param null|UserLocation     $userLocation
+     * @param null|list<string> $allowedDomains
+     * @param null|list<string> $blockedDomains
      */
     final public function __construct(
-        $name,
-        $type,
-        $allowedDomains = None::NOT_GIVEN,
-        $blockedDomains = None::NOT_GIVEN,
-        $cacheControl = None::NOT_GIVEN,
-        $maxUses = None::NOT_GIVEN,
-        $userLocation = None::NOT_GIVEN,
+        string $name,
+        string $type,
+        ?array $allowedDomains = null,
+        ?array $blockedDomains = null,
+        ?CacheControlEphemeral $cacheControl = null,
+        ?int $maxUses = null,
+        ?UserLocation $userLocation = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->name = $name;
+        $this->type = $type;
+        $this->allowedDomains = $allowedDomains;
+        $this->blockedDomains = $blockedDomains;
+        $this->cacheControl = $cacheControl;
+        $this->maxUses = $maxUses;
+        $this->userLocation = $userLocation;
     }
 }
 

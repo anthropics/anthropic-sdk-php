@@ -7,7 +7,6 @@ namespace Anthropic\Parameters\Messages\Batches\CreateParams\Request;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 use Anthropic\Models\MessageParam;
@@ -96,45 +95,45 @@ final class Params implements BaseModel
     public ?float $topP;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param int                                                        $maxTokens     `required`
-     * @param list<MessageParam>                                         $messages      `required`
-     * @param string                                                     $model         `required`
-     * @param Metadata                                                   $metadata
-     * @param null|string                                                $serviceTier
-     * @param null|list<string>                                          $stopSequences
-     * @param null|bool                                                  $stream
-     * @param null|list<TextBlockParam>|string                           $system
-     * @param null|float                                                 $temperature
-     * @param ThinkingConfigDisabled|ThinkingConfigEnabled               $thinking
-     * @param ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice
+     * @param list<MessageParam>               $messages
+     * @param null|list<string>                $stopSequences
+     * @param null|list<TextBlockParam>|string $system
      * @param list<
      *   Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
      * >|null $tools
-     * @param null|int   $topK
-     * @param null|float $topP
      */
     final public function __construct(
-        $maxTokens,
-        $messages,
-        $model,
-        $metadata = None::NOT_GIVEN,
-        $serviceTier = None::NOT_GIVEN,
-        $stopSequences = None::NOT_GIVEN,
-        $stream = None::NOT_GIVEN,
-        $system = None::NOT_GIVEN,
-        $temperature = None::NOT_GIVEN,
-        $thinking = None::NOT_GIVEN,
-        $toolChoice = None::NOT_GIVEN,
-        $tools = None::NOT_GIVEN,
-        $topK = None::NOT_GIVEN,
-        $topP = None::NOT_GIVEN,
+        int $maxTokens,
+        array $messages,
+        string $model,
+        ?Metadata $metadata = null,
+        ?string $serviceTier = null,
+        ?array $stopSequences = null,
+        ?bool $stream = null,
+        null|array|string $system = null,
+        ?float $temperature = null,
+        null|ThinkingConfigDisabled|ThinkingConfigEnabled $thinking = null,
+        null|ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice = null,
+        ?array $tools = null,
+        ?int $topK = null,
+        ?float $topP = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->maxTokens = $maxTokens;
+        $this->messages = $messages;
+        $this->model = $model;
+        $this->metadata = $metadata;
+        $this->serviceTier = $serviceTier;
+        $this->stopSequences = $stopSequences;
+        $this->stream = $stream;
+        $this->system = $system;
+        $this->temperature = $temperature;
+        $this->thinking = $thinking;
+        $this->toolChoice = $toolChoice;
+        $this->tools = $tools;
+        $this->topK = $topK;
+        $this->topP = $topP;
     }
 }
 

@@ -30,25 +30,22 @@ final class BetaCodeExecutionResultBlock implements BaseModel
     public string $type = 'code_execution_result';
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param list<BetaCodeExecutionOutputBlock> $content    `required`
-     * @param int                                $returnCode `required`
-     * @param string                             $stderr     `required`
-     * @param string                             $stdout     `required`
-     * @param string                             $type       `required`
+     * @param list<BetaCodeExecutionOutputBlock> $content
      */
     final public function __construct(
-        $content,
-        $returnCode,
-        $stderr,
-        $stdout,
-        $type = 'code_execution_result'
+        array $content,
+        int $returnCode,
+        string $stderr,
+        string $stdout,
+        string $type = 'code_execution_result',
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->content = $content;
+        $this->returnCode = $returnCode;
+        $this->stderr = $stderr;
+        $this->stdout = $stdout;
+        $this->type = $type;
     }
 }
 

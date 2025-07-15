@@ -19,17 +19,14 @@ final class BetaRedactedThinkingBlock implements BaseModel
     public string $type = 'redacted_thinking';
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string $data `required`
-     * @param string $type `required`
+     * You must use named parameters to construct this object.
      */
-    final public function __construct($data, $type = 'redacted_thinking')
-    {
-        $this->constructFromArgs(func_get_args());
+    final public function __construct(
+        string $data,
+        string $type = 'redacted_thinking'
+    ) {
+        $this->data = $data;
+        $this->type = $type;
     }
 }
 

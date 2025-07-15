@@ -21,16 +21,13 @@ final class CreateParams implements BaseModel
     public array $requests;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param list<Request> $requests `required`
+     * @param list<Request> $requests
      */
-    final public function __construct($requests)
+    final public function __construct(array $requests)
     {
-        $this->constructFromArgs(func_get_args());
+        $this->requests = $requests;
     }
 }
 

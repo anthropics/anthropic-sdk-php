@@ -19,19 +19,14 @@ final class RateLimitError implements BaseModel
     public string $type = 'rate_limit_error';
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string $message `required`
-     * @param string $type    `required`
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $message = 'Rate limited',
-        $type = 'rate_limit_error'
+        string $message = 'Rate limited',
+        string $type = 'rate_limit_error'
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->message = $message;
+        $this->type = $type;
     }
 }
 

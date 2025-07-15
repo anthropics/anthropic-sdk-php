@@ -31,27 +31,22 @@ final class BetaCitationCharLocation implements BaseModel
     public string $type = 'char_location';
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string      $citedText      `required`
-     * @param int         $documentIndex  `required`
-     * @param null|string $documentTitle  `required`
-     * @param int         $endCharIndex   `required`
-     * @param int         $startCharIndex `required`
-     * @param string      $type           `required`
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $citedText,
-        $documentIndex,
-        $documentTitle,
-        $endCharIndex,
-        $startCharIndex,
-        $type = 'char_location',
+        string $citedText,
+        int $documentIndex,
+        ?string $documentTitle,
+        int $endCharIndex,
+        int $startCharIndex,
+        string $type = 'char_location',
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->citedText = $citedText;
+        $this->documentIndex = $documentIndex;
+        $this->documentTitle = $documentTitle;
+        $this->endCharIndex = $endCharIndex;
+        $this->startCharIndex = $startCharIndex;
+        $this->type = $type;
     }
 }
 

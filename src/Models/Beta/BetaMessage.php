@@ -64,35 +64,32 @@ final class BetaMessage implements BaseModel
     public BetaUsage $usage;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param string        $id        `required`
-     * @param BetaContainer $container `required`
      * @param list<
      *   BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock
-     * > $content `required`
-     * @param string      $model        `required`
-     * @param string      $role         `required`
-     * @param string      $stopReason   `required`
-     * @param null|string $stopSequence `required`
-     * @param string      $type         `required`
-     * @param BetaUsage   $usage        `required`
+     * > $content
      */
     final public function __construct(
-        $id,
-        $container,
-        $content,
-        $model,
-        $stopReason,
-        $stopSequence,
-        $usage,
-        $role = 'assistant',
-        $type = 'message',
+        string $id,
+        BetaContainer $container,
+        array $content,
+        string $model,
+        string $stopReason,
+        ?string $stopSequence,
+        BetaUsage $usage,
+        string $role = 'assistant',
+        string $type = 'message',
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->id = $id;
+        $this->container = $container;
+        $this->content = $content;
+        $this->model = $model;
+        $this->role = $role;
+        $this->stopReason = $stopReason;
+        $this->stopSequence = $stopSequence;
+        $this->type = $type;
+        $this->usage = $usage;
     }
 }
 

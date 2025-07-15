@@ -2,7 +2,7 @@
   "$schema": "https://getcomposer.org/schema.json",
   "autoload": {
     "files": [
-      "src/Anthropic.php"
+      "src/Client.php"
     ],
     "psr-4": {
       "Anthropic\\": "src/"

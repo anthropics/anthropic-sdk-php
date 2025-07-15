@@ -7,7 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
@@ -27,19 +26,16 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
     public ?bool $enabled;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
      * @param null|list<string> $allowedTools
-     * @param null|bool         $enabled
      */
     final public function __construct(
-        $allowedTools = None::NOT_GIVEN,
-        $enabled = None::NOT_GIVEN
+        ?array $allowedTools = null,
+        ?bool $enabled = null
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->allowedTools = $allowedTools;
+        $this->enabled = $enabled;
     }
 }
 

@@ -28,25 +28,20 @@ final class CitationWebSearchResultLocationParam implements BaseModel
     public string $url;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string      $citedText      `required`
-     * @param string      $encryptedIndex `required`
-     * @param null|string $title          `required`
-     * @param string      $type           `required`
-     * @param string      $url            `required`
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $citedText,
-        $encryptedIndex,
-        $title,
-        $type,
-        $url
+        string $citedText,
+        string $encryptedIndex,
+        ?string $title,
+        string $type,
+        string $url,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->citedText = $citedText;
+        $this->encryptedIndex = $encryptedIndex;
+        $this->title = $title;
+        $this->type = $type;
+        $this->url = $url;
     }
 }
 

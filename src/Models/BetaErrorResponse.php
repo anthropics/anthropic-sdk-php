@@ -19,17 +19,14 @@ final class BetaErrorResponse implements BaseModel
     public string $type = 'error';
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param BetaAPIError|BetaAuthenticationError|BetaBillingError|BetaGatewayTimeoutError|BetaInvalidRequestError|BetaNotFoundError|BetaOverloadedError|BetaPermissionError|BetaRateLimitError $error `required`
-     * @param string                                                                                                                                                                             $type  `required`
+     * You must use named parameters to construct this object.
      */
-    final public function __construct($error, $type = 'error')
-    {
-        $this->constructFromArgs(func_get_args());
+    final public function __construct(
+        BetaAPIError|BetaAuthenticationError|BetaBillingError|BetaGatewayTimeoutError|BetaInvalidRequestError|BetaNotFoundError|BetaOverloadedError|BetaPermissionError|BetaRateLimitError $error,
+        string $type = 'error',
+    ) {
+        $this->error = $error;
+        $this->type = $type;
     }
 }
 

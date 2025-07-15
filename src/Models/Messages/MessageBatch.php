@@ -43,35 +43,30 @@ final class MessageBatch implements BaseModel
     public string $type = 'message_batch';
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string                    $id                `required`
-     * @param null|\DateTimeInterface   $archivedAt        `required`
-     * @param null|\DateTimeInterface   $cancelInitiatedAt `required`
-     * @param \DateTimeInterface        $createdAt         `required`
-     * @param null|\DateTimeInterface   $endedAt           `required`
-     * @param \DateTimeInterface        $expiresAt         `required`
-     * @param string                    $processingStatus  `required`
-     * @param MessageBatchRequestCounts $requestCounts     `required`
-     * @param null|string               $resultsURL        `required`
-     * @param string                    $type              `required`
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $id,
-        $archivedAt,
-        $cancelInitiatedAt,
-        $createdAt,
-        $endedAt,
-        $expiresAt,
-        $processingStatus,
-        $requestCounts,
-        $resultsURL,
-        $type = 'message_batch',
+        string $id,
+        ?\DateTimeInterface $archivedAt,
+        ?\DateTimeInterface $cancelInitiatedAt,
+        \DateTimeInterface $createdAt,
+        ?\DateTimeInterface $endedAt,
+        \DateTimeInterface $expiresAt,
+        string $processingStatus,
+        MessageBatchRequestCounts $requestCounts,
+        ?string $resultsURL,
+        string $type = 'message_batch',
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->id = $id;
+        $this->archivedAt = $archivedAt;
+        $this->cancelInitiatedAt = $cancelInitiatedAt;
+        $this->createdAt = $createdAt;
+        $this->endedAt = $endedAt;
+        $this->expiresAt = $expiresAt;
+        $this->processingStatus = $processingStatus;
+        $this->requestCounts = $requestCounts;
+        $this->resultsURL = $resultsURL;
+        $this->type = $type;
     }
 }
 

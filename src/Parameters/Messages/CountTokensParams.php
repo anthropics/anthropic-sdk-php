@@ -8,7 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 use Anthropic\Models\MessageCountTokensTool\TextEditor20250429;
@@ -72,29 +71,28 @@ final class CountTokensParams implements BaseModel
     public ?array $tools;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
+     * You must use named parameters to construct this object.
      *
-     * @param list<MessageParam>                                         $messages   `required`
-     * @param string                                                     $model      `required`
-     * @param null|list<TextBlockParam>|string                           $system
-     * @param ThinkingConfigDisabled|ThinkingConfigEnabled               $thinking
-     * @param ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice
+     * @param list<MessageParam>               $messages
+     * @param null|list<TextBlockParam>|string $system
      * @param list<
      *   Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
      * >|null $tools
      */
     final public function __construct(
-        $messages,
-        $model,
-        $system = None::NOT_GIVEN,
-        $thinking = None::NOT_GIVEN,
-        $toolChoice = None::NOT_GIVEN,
-        $tools = None::NOT_GIVEN,
+        array $messages,
+        string $model,
+        null|array|string $system = null,
+        null|ThinkingConfigDisabled|ThinkingConfigEnabled $thinking = null,
+        null|ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice = null,
+        ?array $tools = null,
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->messages = $messages;
+        $this->model = $model;
+        $this->system = $system;
+        $this->thinking = $thinking;
+        $this->toolChoice = $toolChoice;
+        $this->tools = $tools;
     }
 }
 

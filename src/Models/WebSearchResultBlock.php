@@ -28,25 +28,20 @@ final class WebSearchResultBlock implements BaseModel
     public string $url;
 
     /**
-     * You must use named parameters to construct this object. If an named argument is not
-     * given, it will not be included during JSON serialization. The arguments are untyped
-     * so you can pass any JSON serializable value, but the API expects the types to match
-     * the PHPDoc types.
-     *
-     * @param string      $encryptedContent `required`
-     * @param null|string $pageAge          `required`
-     * @param string      $title            `required`
-     * @param string      $type             `required`
-     * @param string      $url              `required`
+     * You must use named parameters to construct this object.
      */
     final public function __construct(
-        $encryptedContent,
-        $pageAge,
-        $title,
-        $url,
-        $type = 'web_search_result'
+        string $encryptedContent,
+        ?string $pageAge,
+        string $title,
+        string $url,
+        string $type = 'web_search_result',
     ) {
-        $this->constructFromArgs(func_get_args());
+        $this->encryptedContent = $encryptedContent;
+        $this->pageAge = $pageAge;
+        $this->title = $title;
+        $this->type = $type;
+        $this->url = $url;
     }
 }
 
