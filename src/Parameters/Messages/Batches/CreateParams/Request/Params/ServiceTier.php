@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Parameters\Messages\Batches\CreateParams;
+namespace Anthropic\Parameters\Messages\Batches\CreateParams\Request\Params;
 
 final class ServiceTier
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Parameters\Beta\Messages\Batches\CreateParams;
+namespace Anthropic\Parameters\Beta\Messages\Batches\CreateParams\Request;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;

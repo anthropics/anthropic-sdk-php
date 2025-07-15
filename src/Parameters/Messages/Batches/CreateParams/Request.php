@@ -7,6 +7,7 @@ namespace Anthropic\Parameters\Messages\Batches\CreateParams;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Parameters\Messages\Batches\CreateParams\Request\Params;
 
 final class Request implements BaseModel
 {
