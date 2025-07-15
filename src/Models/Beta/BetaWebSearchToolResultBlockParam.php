@@ -43,10 +43,12 @@ class BetaWebSearchToolResultBlockParam implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param BetaWebSearchToolRequestError|list<BetaWebSearchResultBlockParam> $content      `required`
-     * @param string                                                            $toolUseID    `required`
-     * @param string                                                            $type         `required`
-     * @param BetaCacheControlEphemeral                                         $cacheControl
+     * @param list<
+     *   BetaWebSearchResultBlockParam
+     * >|BetaWebSearchToolRequestError $content `required`
+     * @param string                    $toolUseID    `required`
+     * @param string                    $type         `required`
+     * @param BetaCacheControlEphemeral $cacheControl
      */
     final public function __construct(
         $content,

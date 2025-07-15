@@ -18,7 +18,9 @@ class Message implements BaseModel
     public string $id;
 
     /**
-     * @var list<RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock> $content
+     * @var list<
+     *   TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock
+     * > $content
      */
     #[Api(
         type: new ListOf(
@@ -61,14 +63,16 @@ class Message implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param string                                                                                                       $id           `required`
-     * @param list<RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock> $content      `required`
-     * @param string|string                                                                                                $model        `required`
-     * @param string                                                                                                       $role         `required`
-     * @param string                                                                                                       $stopReason   `required`
-     * @param null|string                                                                                                  $stopSequence `required`
-     * @param string                                                                                                       $type         `required`
-     * @param Usage                                                                                                        $usage        `required`
+     * @param string $id `required`
+     * @param list<
+     *   TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock
+     * > $content `required`
+     * @param string|string $model        `required`
+     * @param string        $role         `required`
+     * @param string        $stopReason   `required`
+     * @param null|string   $stopSequence `required`
+     * @param string        $type         `required`
+     * @param Usage         $usage        `required`
      */
     final public function __construct(
         $id,

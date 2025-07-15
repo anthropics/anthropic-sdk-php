@@ -1,0 +1,10 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\Models\Beta\BetaCacheControlEphemeral;
+
+class Type
+{
+    final public const EPHEMERAL = 'ephemeral';
+}

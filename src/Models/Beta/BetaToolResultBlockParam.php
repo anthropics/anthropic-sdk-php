@@ -25,7 +25,9 @@ class BetaToolResultBlockParam implements BaseModel
     public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * @var null|list<BetaImageBlockParam|BetaSearchResultBlockParam|BetaTextBlockParam>|string $content
+     * @var string|list<
+     *   BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam
+     * >|null $content
      */
     #[Api(
         type: new UnionOf(
@@ -55,11 +57,13 @@ class BetaToolResultBlockParam implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param string                                                                              $toolUseID    `required`
-     * @param string                                                                              $type         `required`
-     * @param BetaCacheControlEphemeral                                                           $cacheControl
-     * @param null|list<BetaImageBlockParam|BetaSearchResultBlockParam|BetaTextBlockParam>|string $content
-     * @param null|bool                                                                           $isError
+     * @param string                    $toolUseID    `required`
+     * @param string                    $type         `required`
+     * @param BetaCacheControlEphemeral $cacheControl
+     * @param string|list<
+     *   BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam
+     * >|null $content
+     * @param null|bool $isError
      */
     final public function __construct(
         $toolUseID,

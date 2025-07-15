@@ -21,7 +21,9 @@ class BetaMessage implements BaseModel
     public BetaContainer $container;
 
     /**
-     * @var list<BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock> $content
+     * @var list<
+     *   BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock
+     * > $content
      */
     #[Api(
         type: new ListOf(
@@ -68,15 +70,17 @@ class BetaMessage implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param string                                                                                                                                                                                                                                    $id           `required`
-     * @param BetaContainer                                                                                                                                                                                                                             $container    `required`
-     * @param list<BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock> $content      `required`
-     * @param string|string                                                                                                                                                                                                                             $model        `required`
-     * @param string                                                                                                                                                                                                                                    $role         `required`
-     * @param string                                                                                                                                                                                                                                    $stopReason   `required`
-     * @param null|string                                                                                                                                                                                                                               $stopSequence `required`
-     * @param string                                                                                                                                                                                                                                    $type         `required`
-     * @param BetaUsage                                                                                                                                                                                                                                 $usage        `required`
+     * @param string        $id        `required`
+     * @param BetaContainer $container `required`
+     * @param list<
+     *   BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock
+     * > $content `required`
+     * @param string|string $model        `required`
+     * @param string        $role         `required`
+     * @param string        $stopReason   `required`
+     * @param null|string   $stopSequence `required`
+     * @param string        $type         `required`
+     * @param BetaUsage     $usage        `required`
      */
     final public function __construct(
         $id,

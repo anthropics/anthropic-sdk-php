@@ -41,10 +41,12 @@ class WebSearchToolResultBlockParam implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param list<WebSearchResultBlockParam>|WebSearchToolRequestError $content      `required`
-     * @param string                                                    $toolUseID    `required`
-     * @param string                                                    $type         `required`
-     * @param CacheControlEphemeral                                     $cacheControl
+     * @param list<
+     *   WebSearchResultBlockParam
+     * >|WebSearchToolRequestError $content `required`
+     * @param string                $toolUseID    `required`
+     * @param string                $type         `required`
+     * @param CacheControlEphemeral $cacheControl
      */
     final public function __construct(
         $content,

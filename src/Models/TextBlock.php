@@ -15,7 +15,9 @@ class TextBlock implements BaseModel
     use Model;
 
     /**
-     * @var null|list<CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsWebSearchResultLocation> $citations
+     * @var list<
+     *   CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation
+     * >|null $citations
      */
     #[Api(
         type: new UnionOf(
@@ -48,9 +50,11 @@ class TextBlock implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param null|list<CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsWebSearchResultLocation> $citations `required`
-     * @param string                                                                                                             $text      `required`
-     * @param string                                                                                                             $type      `required`
+     * @param list<
+     *   CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation
+     * >|null $citations `required`
+     * @param string $text `required`
+     * @param string $type `required`
      */
     final public function __construct($citations, $text, $type)
     {

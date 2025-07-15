@@ -8,18 +8,14 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\None;
+use Anthropic\Models\Beta\BetaTool\InputSchema;
 
 class BetaTool implements BaseModel
 {
     use Model;
 
-    /**
-     * @var array{
-     *   type?: string, properties?: mixed|null, required?: list<string>|null
-     * } $inputSchema
-     */
     #[Api('input_schema')]
-    public array $inputSchema;
+    public InputSchema $inputSchema;
 
     #[Api]
     public string $name;
@@ -39,9 +35,7 @@ class BetaTool implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param array{
-     *   type?: string, properties?: mixed|null, required?: list<string>|null
-     * } $inputSchema `required`
+     * @param InputSchema               $inputSchema  `required`
      * @param string                    $name         `required`
      * @param BetaCacheControlEphemeral $cacheControl
      * @param null|string               $description

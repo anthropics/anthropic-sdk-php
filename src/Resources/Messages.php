@@ -7,8 +7,8 @@ namespace Anthropic\Resources;
 use Anthropic\Client;
 use Anthropic\Contracts\MessagesContract;
 use Anthropic\Core\Serde;
-use Anthropic\Models\CacheControlEphemeral;
 use Anthropic\Models\Message;
+use Anthropic\Models\MessageCountTokensTool\TextEditor20250429 as TextEditor202504291;
 use Anthropic\Models\MessageParam;
 use Anthropic\Models\MessageTokensCount;
 use Anthropic\Models\Metadata;
@@ -22,6 +22,7 @@ use Anthropic\Models\ToolChoiceAuto;
 use Anthropic\Models\ToolChoiceNone;
 use Anthropic\Models\ToolChoiceTool;
 use Anthropic\Models\ToolTextEditor20250124;
+use Anthropic\Models\ToolUnion\TextEditor20250429;
 use Anthropic\Models\WebSearchTool20250305;
 use Anthropic\Parameters\Messages\CountTokensParams;
 use Anthropic\Parameters\Messages\CreateParams;
@@ -50,9 +51,9 @@ class Messages implements MessagesContract
      *   temperature?: float,
      *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
      *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
-     *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|array{
-     *     name?: string, type?: string, cacheControl?: CacheControlEphemeral
-     *   }|WebSearchTool20250305>,
+     *   tools?: list<
+     *     Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
+     *   >,
      *   topK?: int,
      *   topP?: float,
      * } $params
@@ -80,9 +81,9 @@ class Messages implements MessagesContract
      *   system?: string|list<TextBlockParam>,
      *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
      *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
-     *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|array{
-     *     name?: string, type?: string, cacheControl?: CacheControlEphemeral
-     *   }|WebSearchTool20250305>,
+     *   tools?: list<
+     *     Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor202504291|WebSearchTool20250305
+     *   >,
      * } $params
      */
     public function countTokens(

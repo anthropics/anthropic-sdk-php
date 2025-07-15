@@ -15,7 +15,9 @@ class BetaTextBlock implements BaseModel
     use Model;
 
     /**
-     * @var null|list<BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationSearchResultLocation|BetaCitationsWebSearchResultLocation> $citations
+     * @var list<
+     *   BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation
+     * >|null $citations
      */
     #[Api(
         type: new UnionOf(
@@ -49,9 +51,11 @@ class BetaTextBlock implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param null|list<BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationSearchResultLocation|BetaCitationsWebSearchResultLocation> $citations `required`
-     * @param string                                                                                                                                                              $text      `required`
-     * @param string                                                                                                                                                              $type      `required`
+     * @param list<
+     *   BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation
+     * >|null $citations `required`
+     * @param string $text `required`
+     * @param string $type `required`
      */
     final public function __construct($citations, $text, $type)
     {

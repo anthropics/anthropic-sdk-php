@@ -10,7 +10,10 @@ use Anthropic\Models\Metadata;
 use Anthropic\Models\TextBlockParam;
 use Anthropic\Models\ThinkingConfigEnabled;
 use Anthropic\Models\Tool;
+use Anthropic\Models\Tool\InputSchema;
 use Anthropic\Models\ToolChoiceAuto;
+use Anthropic\Parameters\Messages\Batches\CreateParams\Params;
+use Anthropic\Parameters\Messages\Batches\CreateParams\Request;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -41,20 +44,22 @@ final class BatchesTest extends TestCase
             ->client
             ->messages
             ->batches
-            ->create([
-                'requests' => [
-                    [
-                        'customID' => 'my-custom-id-1',
-                        'params' => [
-                            'maxTokens' => 1024,
-                            'messages' => [
-                                new MessageParam(content: 'Hello, world', role: 'user'),
-                            ],
-                            'model' => 'claude-sonnet-4-20250514',
-                        ],
+            ->create(
+                [
+                    'requests' => [
+                        new Request(
+                            customID: 'my-custom-id-1',
+                            params: new Params(
+                                maxTokens: 1024,
+                                messages: [
+                                    new MessageParam(content: 'Hello, world', role: 'user'),
+                                ],
+                                model: 'claude-sonnet-4-20250514',
+                            ),
+                        ),
                     ],
-                ],
-            ])
+                ]
+            )
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -67,74 +72,78 @@ final class BatchesTest extends TestCase
             ->client
             ->messages
             ->batches
-            ->create([
-                'requests' => [
-                    [
-                        'customID' => 'my-custom-id-1',
-                        'params' => [
-                            'maxTokens' => 1024,
-                            'messages' => [
-                                new MessageParam(content: 'Hello, world', role: 'user'),
-                            ],
-                            'model' => 'claude-sonnet-4-20250514',
-                            'metadata' => new Metadata(userID: '13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
-                            'serviceTier' => 'auto',
-                            'stopSequences' => ['string'],
-                            'stream' => true,
-                            'system' => [
-                                new TextBlockParam(
-                                    text: "Today's date is 2024-06-01.",
-                                    type: 'text',
-                                    cacheControl: new CacheControlEphemeral(type: 'ephemeral'),
-                                    citations: [
-                                        new CitationCharLocationParam(
-                                            citedText: 'cited_text',
-                                            documentIndex: 0,
-                                            documentTitle: 'x',
-                                            endCharIndex: 0,
-                                            startCharIndex: 0,
-                                            type: 'char_location'
-                                        ),
-                                    ]
+            ->create(
+                [
+                    'requests' => [
+                        new Request(
+                            customID: 'my-custom-id-1',
+                            params: new Params(
+                                maxTokens: 1024,
+                                messages: [
+                                    new MessageParam(content: 'Hello, world', role: 'user'),
+                                ],
+                                model: 'claude-sonnet-4-20250514',
+                                metadata: new Metadata(
+                                    userID: '13803d75-b4b5-4c3e-b2a2-6f21399b021b'
                                 ),
-                            ],
-                            'temperature' => 1,
-                            'thinking' => new ThinkingConfigEnabled(
-                                budgetTokens: 1024,
-                                type: 'enabled'
-                            ),
-                            'toolChoice' => new ToolChoiceAuto(
-                                type: 'auto',
-                                disableParallelToolUse: true
-                            ),
-                            'tools' => [
-                                new Tool(
-                                    inputSchema: [
-                                        'type' => 'object',
-                                        'properties' => [
-                                            'location' => [
-                                                'description' => 'The city and state, e.g. San Francisco, CA',
-                                                'type' => 'string',
-                                            ],
-                                            'unit' => [
-                                                'description' => 'Unit for the output - one of (celsius, fahrenheit)',
-                                                'type' => 'string',
-                                            ],
+                                serviceTier: 'auto',
+                                stopSequences: ['string'],
+                                stream: true,
+                                system: [
+                                    new TextBlockParam(
+                                        text: "Today's date is 2024-06-01.",
+                                        type: 'text',
+                                        cacheControl: new CacheControlEphemeral(type: 'ephemeral'),
+                                        citations: [
+                                            new CitationCharLocationParam(
+                                                citedText: 'cited_text',
+                                                documentIndex: 0,
+                                                documentTitle: 'x',
+                                                endCharIndex: 0,
+                                                startCharIndex: 0,
+                                                type: 'char_location',
+                                            ),
                                         ],
-                                        'required' => ['location'],
-                                    ],
-                                    name: 'name',
-                                    cacheControl: new CacheControlEphemeral(type: 'ephemeral'),
-                                    description: 'Get the current weather in a given location',
-                                    type: 'custom'
+                                    ),
+                                ],
+                                temperature: 1,
+                                thinking: new ThinkingConfigEnabled(
+                                    budgetTokens: 1024,
+                                    type: 'enabled'
                                 ),
-                            ],
-                            'topK' => 5,
-                            'topP' => 0.7,
-                        ],
+                                toolChoice: new ToolChoiceAuto(
+                                    type: 'auto',
+                                    disableParallelToolUse: true
+                                ),
+                                tools: [
+                                    new Tool(
+                                        inputSchema: new InputSchema(
+                                            type: 'object',
+                                            properties: [
+                                                'location' => [
+                                                    'description' => 'The city and state, e.g. San Francisco, CA',
+                                                    'type' => 'string',
+                                                ],
+                                                'unit' => [
+                                                    'description' => 'Unit for the output - one of (celsius, fahrenheit)',
+                                                    'type' => 'string',
+                                                ],
+                                            ],
+                                            required: ['location'],
+                                        ),
+                                        name: 'name',
+                                        cacheControl: new CacheControlEphemeral(type: 'ephemeral'),
+                                        description: 'Get the current weather in a given location',
+                                        type: 'custom',
+                                    ),
+                                ],
+                                topK: 5,
+                                topP: 0.7,
+                            ),
+                        ),
                     ],
-                ],
-            ])
+                ]
+            )
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

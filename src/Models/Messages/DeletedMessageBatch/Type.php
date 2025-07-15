@@ -1,0 +1,10 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\Models\Messages\DeletedMessageBatch;
+
+class Type
+{
+    final public const MESSAGE_BATCH_DELETED = 'message_batch_deleted';
+}

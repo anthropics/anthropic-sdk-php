@@ -10,6 +10,7 @@ use Anthropic\Models\Metadata;
 use Anthropic\Models\TextBlockParam;
 use Anthropic\Models\ThinkingConfigEnabled;
 use Anthropic\Models\Tool;
+use Anthropic\Models\Tool\InputSchema;
 use Anthropic\Models\ToolChoiceAuto;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -39,11 +40,14 @@ final class MessagesTest extends TestCase
         $result = $this
             ->client
             ->messages
-            ->create([
-                'maxTokens' => 1024,
-                'messages' => [new MessageParam(content: 'Hello, world', role: 'user')],
-                'model' => 'claude-sonnet-4-20250514',
-            ])
+            ->create(
+                [
+                    'maxTokens' => 1024,
+                    'messages' => [new MessageParam(content: 'Hello, world', role: 'user')],
+                    'model' => 'claude-sonnet-4-20250514',
+                    'stream' => true,
+                ]
+            )
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -55,65 +59,69 @@ final class MessagesTest extends TestCase
         $result = $this
             ->client
             ->messages
-            ->create([
-                'maxTokens' => 1024,
-                'messages' => [new MessageParam(content: 'Hello, world', role: 'user')],
-                'model' => 'claude-sonnet-4-20250514',
-                'metadata' => new Metadata(userID: '13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
-                'serviceTier' => 'auto',
-                'stopSequences' => ['string'],
-                'stream' => false,
-                'system' => [
-                    new TextBlockParam(
-                        text: "Today's date is 2024-06-01.",
-                        type: 'text',
-                        cacheControl: new CacheControlEphemeral(type: 'ephemeral'),
-                        citations: [
-                            new CitationCharLocationParam(
-                                citedText: 'cited_text',
-                                documentIndex: 0,
-                                documentTitle: 'x',
-                                endCharIndex: 0,
-                                startCharIndex: 0,
-                                type: 'char_location'
-                            ),
-                        ]
+            ->create(
+                [
+                    'maxTokens' => 1024,
+                    'messages' => [new MessageParam(content: 'Hello, world', role: 'user')],
+                    'model' => 'claude-sonnet-4-20250514',
+                    'metadata' => new Metadata(
+                        userID: '13803d75-b4b5-4c3e-b2a2-6f21399b021b'
                     ),
-                ],
-                'temperature' => 1,
-                'thinking' => new ThinkingConfigEnabled(
-                    budgetTokens: 1024,
-                    type: 'enabled'
-                ),
-                'toolChoice' => new ToolChoiceAuto(
-                    type: 'auto',
-                    disableParallelToolUse: true
-                ),
-                'tools' => [
-                    new Tool(
-                        inputSchema: [
-                            'type' => 'object',
-                            'properties' => [
-                                'location' => [
-                                    'description' => 'The city and state, e.g. San Francisco, CA',
-                                    'type' => 'string',
-                                ],
-                                'unit' => [
-                                    'description' => 'Unit for the output - one of (celsius, fahrenheit)',
-                                    'type' => 'string',
-                                ],
+                    'serviceTier' => 'auto',
+                    'stopSequences' => ['string'],
+                    'stream' => true,
+                    'system' => [
+                        new TextBlockParam(
+                            text: "Today's date is 2024-06-01.",
+                            type: 'text',
+                            cacheControl: new CacheControlEphemeral(type: 'ephemeral'),
+                            citations: [
+                                new CitationCharLocationParam(
+                                    citedText: 'cited_text',
+                                    documentIndex: 0,
+                                    documentTitle: 'x',
+                                    endCharIndex: 0,
+                                    startCharIndex: 0,
+                                    type: 'char_location',
+                                ),
                             ],
-                            'required' => ['location'],
-                        ],
-                        name: 'name',
-                        cacheControl: new CacheControlEphemeral(type: 'ephemeral'),
-                        description: 'Get the current weather in a given location',
-                        type: 'custom'
+                        ),
+                    ],
+                    'temperature' => 1,
+                    'thinking' => new ThinkingConfigEnabled(
+                        budgetTokens: 1024,
+                        type: 'enabled'
                     ),
-                ],
-                'topK' => 5,
-                'topP' => 0.7,
-            ])
+                    'toolChoice' => new ToolChoiceAuto(
+                        type: 'auto',
+                        disableParallelToolUse: true
+                    ),
+                    'tools' => [
+                        new Tool(
+                            inputSchema: new InputSchema(
+                                type: 'object',
+                                properties: [
+                                    'location' => [
+                                        'description' => 'The city and state, e.g. San Francisco, CA',
+                                        'type' => 'string',
+                                    ],
+                                    'unit' => [
+                                        'description' => 'Unit for the output - one of (celsius, fahrenheit)',
+                                        'type' => 'string',
+                                    ],
+                                ],
+                                required: ['location'],
+                            ),
+                            name: 'name',
+                            cacheControl: new CacheControlEphemeral(type: 'ephemeral'),
+                            description: 'Get the current weather in a given location',
+                            type: 'custom',
+                        ),
+                    ],
+                    'topK' => 5,
+                    'topP' => 0.7,
+                ]
+            )
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -125,10 +133,12 @@ final class MessagesTest extends TestCase
         $result = $this
             ->client
             ->messages
-            ->countTokens([
-                'messages' => [new MessageParam(content: 'string', role: 'user')],
-                'model' => 'claude-3-7-sonnet-latest',
-            ])
+            ->countTokens(
+                [
+                    'messages' => [new MessageParam(content: 'string', role: 'user')],
+                    'model' => 'claude-3-7-sonnet-latest',
+                ]
+            )
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -140,57 +150,59 @@ final class MessagesTest extends TestCase
         $result = $this
             ->client
             ->messages
-            ->countTokens([
-                'messages' => [new MessageParam(content: 'string', role: 'user')],
-                'model' => 'claude-3-7-sonnet-latest',
-                'system' => [
-                    new TextBlockParam(
-                        text: "Today's date is 2024-06-01.",
-                        type: 'text',
-                        cacheControl: new CacheControlEphemeral(type: 'ephemeral'),
-                        citations: [
-                            new CitationCharLocationParam(
-                                citedText: 'cited_text',
-                                documentIndex: 0,
-                                documentTitle: 'x',
-                                endCharIndex: 0,
-                                startCharIndex: 0,
-                                type: 'char_location'
-                            ),
-                        ]
-                    ),
-                ],
-                'thinking' => new ThinkingConfigEnabled(
-                    budgetTokens: 1024,
-                    type: 'enabled'
-                ),
-                'toolChoice' => new ToolChoiceAuto(
-                    type: 'auto',
-                    disableParallelToolUse: true
-                ),
-                'tools' => [
-                    new Tool(
-                        inputSchema: [
-                            'type' => 'object',
-                            'properties' => [
-                                'location' => [
-                                    'description' => 'The city and state, e.g. San Francisco, CA',
-                                    'type' => 'string',
-                                ],
-                                'unit' => [
-                                    'description' => 'Unit for the output - one of (celsius, fahrenheit)',
-                                    'type' => 'string',
-                                ],
+            ->countTokens(
+                [
+                    'messages' => [new MessageParam(content: 'string', role: 'user')],
+                    'model' => 'claude-3-7-sonnet-latest',
+                    'system' => [
+                        new TextBlockParam(
+                            text: "Today's date is 2024-06-01.",
+                            type: 'text',
+                            cacheControl: new CacheControlEphemeral(type: 'ephemeral'),
+                            citations: [
+                                new CitationCharLocationParam(
+                                    citedText: 'cited_text',
+                                    documentIndex: 0,
+                                    documentTitle: 'x',
+                                    endCharIndex: 0,
+                                    startCharIndex: 0,
+                                    type: 'char_location',
+                                ),
                             ],
-                            'required' => ['location'],
-                        ],
-                        name: 'name',
-                        cacheControl: new CacheControlEphemeral(type: 'ephemeral'),
-                        description: 'Get the current weather in a given location',
-                        type: 'custom'
+                        ),
+                    ],
+                    'thinking' => new ThinkingConfigEnabled(
+                        budgetTokens: 1024,
+                        type: 'enabled'
                     ),
-                ],
-            ])
+                    'toolChoice' => new ToolChoiceAuto(
+                        type: 'auto',
+                        disableParallelToolUse: true
+                    ),
+                    'tools' => [
+                        new Tool(
+                            inputSchema: new InputSchema(
+                                type: 'object',
+                                properties: [
+                                    'location' => [
+                                        'description' => 'The city and state, e.g. San Francisco, CA',
+                                        'type' => 'string',
+                                    ],
+                                    'unit' => [
+                                        'description' => 'Unit for the output - one of (celsius, fahrenheit)',
+                                        'type' => 'string',
+                                    ],
+                                ],
+                                required: ['location'],
+                            ),
+                            name: 'name',
+                            cacheControl: new CacheControlEphemeral(type: 'ephemeral'),
+                            description: 'Get the current weather in a given location',
+                            type: 'custom',
+                        ),
+                    ],
+                ]
+            )
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

@@ -7,18 +7,14 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Beta\BetaRawMessageDeltaEvent\Delta;
 
 class BetaRawMessageDeltaEvent implements BaseModel
 {
     use Model;
 
-    /**
-     * @var array{
-     *   container?: BetaContainer, stopReason?: string, stopSequence?: string|null
-     * } $delta
-     */
     #[Api]
-    public array $delta;
+    public Delta $delta;
 
     #[Api]
     public string $type;
@@ -32,9 +28,7 @@ class BetaRawMessageDeltaEvent implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param array{
-     *   container?: BetaContainer, stopReason?: string, stopSequence?: string|null
-     * } $delta `required`
+     * @param Delta                 $delta `required`
      * @param string                $type  `required`
      * @param BetaMessageDeltaUsage $usage `required`
      */

@@ -15,7 +15,9 @@ class MessageParam implements BaseModel
     use Model;
 
     /**
-     * @var list<DocumentBlockParam|ImageBlockParam|RedactedThinkingBlockParam|ServerToolUseBlockParam|TextBlockParam|ThinkingBlockParam|ToolResultBlockParam|ToolUseBlockParam|WebSearchToolResultBlockParam>|string $content
+     * @var string|list<
+     *   TextBlockParam|ImageBlockParam|DocumentBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam
+     * > $content
      */
     #[Api(
         type: new UnionOf(
@@ -50,8 +52,10 @@ class MessageParam implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param list<DocumentBlockParam|ImageBlockParam|RedactedThinkingBlockParam|ServerToolUseBlockParam|TextBlockParam|ThinkingBlockParam|ToolResultBlockParam|ToolUseBlockParam|WebSearchToolResultBlockParam>|string $content `required`
-     * @param string                                                                                                                                                                                                    $role    `required`
+     * @param string|list<
+     *   TextBlockParam|ImageBlockParam|DocumentBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam
+     * > $content `required`
+     * @param string $role `required`
      */
     final public function __construct($content, $role)
     {

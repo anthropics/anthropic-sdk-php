@@ -25,7 +25,9 @@ class BetaTextBlockParam implements BaseModel
     public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * @var null|list<BetaCitationCharLocationParam|BetaCitationContentBlockLocationParam|BetaCitationPageLocationParam|BetaCitationSearchResultLocationParam|BetaCitationWebSearchResultLocationParam> $citations
+     * @var list<
+     *   BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam
+     * >|null $citations
      */
     #[Api(
         type: new UnionOf(
@@ -54,10 +56,12 @@ class BetaTextBlockParam implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param string                                                                                                                                                                                      $text         `required`
-     * @param string                                                                                                                                                                                      $type         `required`
-     * @param BetaCacheControlEphemeral                                                                                                                                                                   $cacheControl
-     * @param null|list<BetaCitationCharLocationParam|BetaCitationContentBlockLocationParam|BetaCitationPageLocationParam|BetaCitationSearchResultLocationParam|BetaCitationWebSearchResultLocationParam> $citations
+     * @param string                    $text         `required`
+     * @param string                    $type         `required`
+     * @param BetaCacheControlEphemeral $cacheControl
+     * @param list<
+     *   BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam
+     * >|null $citations
      */
     final public function __construct(
         $text,

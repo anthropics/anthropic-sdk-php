@@ -25,7 +25,9 @@ class TextBlockParam implements BaseModel
     public ?CacheControlEphemeral $cacheControl;
 
     /**
-     * @var null|list<CitationCharLocationParam|CitationContentBlockLocationParam|CitationPageLocationParam|CitationWebSearchResultLocationParam> $citations
+     * @var list<
+     *   CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam
+     * >|null $citations
      */
     #[Api(
         type: new UnionOf(
@@ -53,10 +55,12 @@ class TextBlockParam implements BaseModel
      * so you can pass any JSON serializable value, but the API expects the types to match
      * the PHPDoc types.
      *
-     * @param string                                                                                                                                $text         `required`
-     * @param string                                                                                                                                $type         `required`
-     * @param CacheControlEphemeral                                                                                                                 $cacheControl
-     * @param null|list<CitationCharLocationParam|CitationContentBlockLocationParam|CitationPageLocationParam|CitationWebSearchResultLocationParam> $citations
+     * @param string                $text         `required`
+     * @param string                $type         `required`
+     * @param CacheControlEphemeral $cacheControl
+     * @param list<
+     *   CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam
+     * >|null $citations
      */
     final public function __construct(
         $text,

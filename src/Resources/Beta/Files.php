@@ -86,7 +86,7 @@ class Files implements FilesContract
         string $fileID,
         array $params,
         ?RequestOptions $requestOptions = null
-    ): mixed {
+    ): string {
         [$parsed, $options] = DownloadParams::parseRequest(
             $params,
             $requestOptions
@@ -105,7 +105,7 @@ class Files implements FilesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce('mixed', value: $resp);
+        return Serde::coerce('string', value: $resp);
     }
 
     /**

@@ -10,7 +10,6 @@ use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
-use Anthropic\Models\CacheControlEphemeral;
 use Anthropic\Models\MessageParam;
 use Anthropic\Models\Metadata;
 use Anthropic\Models\TextBlockParam;
@@ -23,6 +22,7 @@ use Anthropic\Models\ToolChoiceAuto;
 use Anthropic\Models\ToolChoiceNone;
 use Anthropic\Models\ToolChoiceTool;
 use Anthropic\Models\ToolTextEditor20250124;
+use Anthropic\Models\ToolUnion\TextEditor20250429;
 use Anthropic\Models\WebSearchTool20250305;
 
 class CreateParams implements BaseModel
@@ -75,9 +75,9 @@ class CreateParams implements BaseModel
     public mixed $toolChoice;
 
     /**
-     * @var list<Tool|ToolBash20250124|ToolTextEditor20250124|array{
-     *   name?: string, type?: string, cacheControl?: CacheControlEphemeral
-     * }|WebSearchTool20250305>|null $tools
+     * @var list<
+     *   Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
+     * >|null $tools
      */
     #[Api(
         type: new ListOf(
@@ -86,7 +86,7 @@ class CreateParams implements BaseModel
                     Tool::class,
                     ToolBash20250124::class,
                     ToolTextEditor20250124::class,
-                    new ListOf('mixed'),
+                    TextEditor20250429::class,
                     WebSearchTool20250305::class,
                 ],
             ),

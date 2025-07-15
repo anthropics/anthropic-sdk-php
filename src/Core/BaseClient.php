@@ -91,15 +91,7 @@ class BaseClient
      * @param list<string>|string                             $path
      * @param array<string, mixed>                            $query
      * @param array<string, null|int|list<int|string>|string> $headers
-     * @param RequestOptions|array{
-     *   timeout?: float|null,
-     *   maxRetries?: int|null,
-     *   initialRetryDelay?: float|null,
-     *   maxRetryDelay?: float|null,
-     *   extraHeaders?: list<string>|null,
-     *   extraQueryParams?: list<string>|null,
-     *   extraBodyParams?: list<string>|null,
-     * }|null $opts
+     * @param null|RequestOptions|RequestOptions              $opts
      *
      * @return array{RequestInterface, RequestOptions}
      */

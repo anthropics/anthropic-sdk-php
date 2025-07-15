@@ -36,7 +36,7 @@ interface FilesContract
         string $fileID,
         array $params,
         ?RequestOptions $requestOptions = null
-    ): mixed;
+    ): string;
 
     /**
      * @param array{fileID?: string, betas?: list<string|string>} $params

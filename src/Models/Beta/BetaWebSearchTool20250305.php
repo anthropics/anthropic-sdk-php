@@ -10,6 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Models\Beta\BetaWebSearchTool20250305\UserLocation;
 
 class BetaWebSearchTool20250305 implements BaseModel
 {
@@ -43,17 +44,8 @@ class BetaWebSearchTool20250305 implements BaseModel
     #[Api('max_uses', optional: true)]
     public ?int $maxUses;
 
-    /**
-     * @var array{
-     *   type?: string,
-     *   city?: string|null,
-     *   country?: string|null,
-     *   region?: string|null,
-     *   timezone?: string|null,
-     * }|null $userLocation
-     */
     #[Api('user_location', optional: true)]
-    public ?array $userLocation;
+    public ?UserLocation $userLocation;
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -67,13 +59,7 @@ class BetaWebSearchTool20250305 implements BaseModel
      * @param null|list<string>         $blockedDomains
      * @param BetaCacheControlEphemeral $cacheControl
      * @param null|int                  $maxUses
-     * @param array{
-     *   type?: string,
-     *   city?: string|null,
-     *   country?: string|null,
-     *   region?: string|null,
-     *   timezone?: string|null,
-     * }|null $userLocation
+     * @param null|UserLocation         $userLocation
      */
     final public function __construct(
         $name,
