@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
-class BetaContentBlockSource implements BaseModel
+final class BetaContentBlockSource implements BaseModel
 {
     use Model;
 

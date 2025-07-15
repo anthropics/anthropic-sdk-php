@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-class StopReason
+final class StopReason
 {
     final public const END_TURN = 'end_turn';
 

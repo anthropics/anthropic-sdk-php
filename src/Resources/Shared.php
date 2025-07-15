@@ -7,7 +7,7 @@ namespace Anthropic\Resources;
 use Anthropic\Client;
 use Anthropic\Contracts\SharedContract;
 
-class Shared implements SharedContract
+final class Shared implements SharedContract
 {
-    public function __construct(protected Client $client) {}
+    public function __construct(private Client $client) {}
 }

@@ -8,24 +8,24 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class MessageBatchRequestCounts implements BaseModel
+final class MessageBatchRequestCounts implements BaseModel
 {
     use Model;
 
     #[Api]
-    public int $canceled;
+    public int $canceled = 0;
 
     #[Api]
-    public int $errored;
+    public int $errored = 0;
 
     #[Api]
-    public int $expired;
+    public int $expired = 0;
 
     #[Api]
-    public int $processing;
+    public int $processing = 0;
 
     #[Api]
-    public int $succeeded;
+    public int $succeeded = 0;
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -40,11 +40,11 @@ class MessageBatchRequestCounts implements BaseModel
      * @param int $succeeded  `required`
      */
     final public function __construct(
-        $canceled,
-        $errored,
-        $expired,
-        $processing,
-        $succeeded
+        $canceled = 0,
+        $errored = 0,
+        $expired = 0,
+        $processing = 0,
+        $succeeded = 0
     ) {
         $this->constructFromArgs(func_get_args());
     }

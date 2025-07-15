@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class CitationWebSearchResultLocationParam implements BaseModel
+final class CitationWebSearchResultLocationParam implements BaseModel
 {
     use Model;
 

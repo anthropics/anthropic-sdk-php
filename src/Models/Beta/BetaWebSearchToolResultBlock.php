@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
-class BetaWebSearchToolResultBlock implements BaseModel
+final class BetaWebSearchToolResultBlock implements BaseModel
 {
     use Model;
 
@@ -29,7 +29,7 @@ class BetaWebSearchToolResultBlock implements BaseModel
     public string $toolUseID;
 
     #[Api]
-    public string $type;
+    public string $type = 'web_search_tool_result';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -43,8 +43,11 @@ class BetaWebSearchToolResultBlock implements BaseModel
      * @param string $toolUseID `required`
      * @param string $type      `required`
      */
-    final public function __construct($content, $toolUseID, $type)
-    {
+    final public function __construct(
+        $content,
+        $toolUseID,
+        $type = 'web_search_tool_result'
+    ) {
         $this->constructFromArgs(func_get_args());
     }
 }

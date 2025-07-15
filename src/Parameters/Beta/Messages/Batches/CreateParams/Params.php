@@ -31,7 +31,7 @@ use Anthropic\Models\Beta\BetaToolTextEditor20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20250429;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305;
 
-class Params implements BaseModel
+final class Params implements BaseModel
 {
     use Model;
 

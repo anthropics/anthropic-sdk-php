@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\None;
 use Anthropic\Models\Tool\InputSchema;
 
-class Tool implements BaseModel
+final class Tool implements BaseModel
 {
     use Model;
 

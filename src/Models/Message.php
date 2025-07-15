@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
-class Message implements BaseModel
+final class Message implements BaseModel
 {
     use Model;
 
@@ -43,7 +43,7 @@ class Message implements BaseModel
     public mixed $model;
 
     #[Api]
-    public string $role;
+    public string $role = 'assistant';
 
     #[Api('stop_reason')]
     public string $stopReason;
@@ -52,7 +52,7 @@ class Message implements BaseModel
     public ?string $stopSequence;
 
     #[Api]
-    public string $type;
+    public string $type = 'message';
 
     #[Api]
     public Usage $usage;
@@ -78,11 +78,11 @@ class Message implements BaseModel
         $id,
         $content,
         $model,
-        $role,
         $stopReason,
         $stopSequence,
-        $type,
-        $usage
+        $usage,
+        $role = 'assistant',
+        $type = 'message',
     ) {
         $this->constructFromArgs(func_get_args());
     }

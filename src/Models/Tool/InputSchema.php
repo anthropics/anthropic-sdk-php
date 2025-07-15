@@ -11,7 +11,7 @@ use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
-class InputSchema implements BaseModel
+final class InputSchema implements BaseModel
 {
     use Model;
 

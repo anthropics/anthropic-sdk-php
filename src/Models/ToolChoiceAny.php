@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\None;
 
-class ToolChoiceAny implements BaseModel
+final class ToolChoiceAny implements BaseModel
 {
     use Model;
 

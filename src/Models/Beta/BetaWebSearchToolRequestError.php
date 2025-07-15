@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaWebSearchToolRequestError implements BaseModel
+final class BetaWebSearchToolRequestError implements BaseModel
 {
     use Model;
 

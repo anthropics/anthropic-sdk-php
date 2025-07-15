@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Base64ImageSource;
 
-class MediaType
+final class MediaType
 {
     final public const IMAGE_JPEG = 'image/jpeg';
 

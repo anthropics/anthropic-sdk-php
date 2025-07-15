@@ -11,7 +11,7 @@ use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
-class BetaToolResultBlockParam implements BaseModel
+final class BetaToolResultBlockParam implements BaseModel
 {
     use Model;
 

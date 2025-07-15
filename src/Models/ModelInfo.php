@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class ModelInfo implements BaseModel
+final class ModelInfo implements BaseModel
 {
     use Model;
 
@@ -22,7 +22,7 @@ class ModelInfo implements BaseModel
     public string $displayName;
 
     #[Api]
-    public string $type;
+    public string $type = 'model';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -35,8 +35,12 @@ class ModelInfo implements BaseModel
      * @param string             $displayName `required`
      * @param string             $type        `required`
      */
-    final public function __construct($id, $createdAt, $displayName, $type)
-    {
+    final public function __construct(
+        $id,
+        $createdAt,
+        $displayName,
+        $type = 'model'
+    ) {
         $this->constructFromArgs(func_get_args());
     }
 }

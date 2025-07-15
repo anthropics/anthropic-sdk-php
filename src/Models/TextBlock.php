@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
-class TextBlock implements BaseModel
+final class TextBlock implements BaseModel
 {
     use Model;
 
@@ -42,7 +42,7 @@ class TextBlock implements BaseModel
     public string $text;
 
     #[Api]
-    public string $type;
+    public string $type = 'text';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -56,7 +56,7 @@ class TextBlock implements BaseModel
      * @param string $text `required`
      * @param string $type `required`
      */
-    final public function __construct($citations, $text, $type)
+    final public function __construct($citations, $text, $type = 'text')
     {
         $this->constructFromArgs(func_get_args());
     }

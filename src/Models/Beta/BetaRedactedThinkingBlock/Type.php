@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta\BetaRedactedThinkingBlock;
 
-class Type
+final class Type
 {
     final public const REDACTED_THINKING = 'redacted_thinking';
 }

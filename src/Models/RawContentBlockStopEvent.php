@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class RawContentBlockStopEvent implements BaseModel
+final class RawContentBlockStopEvent implements BaseModel
 {
     use Model;
 
@@ -16,7 +16,7 @@ class RawContentBlockStopEvent implements BaseModel
     public int $index;
 
     #[Api]
-    public string $type;
+    public string $type = 'content_block_stop';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -27,7 +27,7 @@ class RawContentBlockStopEvent implements BaseModel
      * @param int    $index `required`
      * @param string $type  `required`
      */
-    final public function __construct($index, $type)
+    final public function __construct($index, $type = 'content_block_stop')
     {
         $this->constructFromArgs(func_get_args());
     }

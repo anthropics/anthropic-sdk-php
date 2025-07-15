@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\None;
 
-class BetaRequestDocumentBlock implements BaseModel
+final class BetaRequestDocumentBlock implements BaseModel
 {
     use Model;
 

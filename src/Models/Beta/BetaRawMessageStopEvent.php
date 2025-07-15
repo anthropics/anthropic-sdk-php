@@ -8,12 +8,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaRawMessageStopEvent implements BaseModel
+final class BetaRawMessageStopEvent implements BaseModel
 {
     use Model;
 
     #[Api]
-    public string $type;
+    public string $type = 'message_stop';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -23,7 +23,7 @@ class BetaRawMessageStopEvent implements BaseModel
      *
      * @param string $type `required`
      */
-    final public function __construct($type)
+    final public function __construct($type = 'message_stop')
     {
         $this->constructFromArgs(func_get_args());
     }

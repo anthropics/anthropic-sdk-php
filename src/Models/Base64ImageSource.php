@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class Base64ImageSource implements BaseModel
+final class Base64ImageSource implements BaseModel
 {
     use Model;
 

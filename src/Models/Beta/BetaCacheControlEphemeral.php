@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\None;
 
-class BetaCacheControlEphemeral implements BaseModel
+final class BetaCacheControlEphemeral implements BaseModel
 {
     use Model;
 

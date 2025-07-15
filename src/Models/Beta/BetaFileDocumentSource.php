@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaFileDocumentSource implements BaseModel
+final class BetaFileDocumentSource implements BaseModel
 {
     use Model;
 

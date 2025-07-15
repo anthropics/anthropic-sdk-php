@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaMCPToolUseBlock implements BaseModel
+final class BetaMCPToolUseBlock implements BaseModel
 {
     use Model;
 
@@ -25,7 +25,7 @@ class BetaMCPToolUseBlock implements BaseModel
     public string $serverName;
 
     #[Api]
-    public string $type;
+    public string $type = 'mcp_tool_use';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -39,8 +39,13 @@ class BetaMCPToolUseBlock implements BaseModel
      * @param string $serverName `required`
      * @param string $type       `required`
      */
-    final public function __construct($id, $input, $name, $serverName, $type)
-    {
+    final public function __construct(
+        $id,
+        $input,
+        $name,
+        $serverName,
+        $type = 'mcp_tool_use'
+    ) {
         $this->constructFromArgs(func_get_args());
     }
 }

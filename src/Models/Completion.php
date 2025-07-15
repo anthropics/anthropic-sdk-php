@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class Completion implements BaseModel
+final class Completion implements BaseModel
 {
     use Model;
 
@@ -26,7 +26,7 @@ class Completion implements BaseModel
     public ?string $stopReason;
 
     #[Api]
-    public string $type;
+    public string $type = 'completion';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -45,7 +45,7 @@ class Completion implements BaseModel
         $completion,
         $model,
         $stopReason,
-        $type
+        $type = 'completion'
     ) {
         $this->constructFromArgs(func_get_args());
     }

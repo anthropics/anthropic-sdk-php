@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class ThinkingDelta implements BaseModel
+final class ThinkingDelta implements BaseModel
 {
     use Model;
 
@@ -16,7 +16,7 @@ class ThinkingDelta implements BaseModel
     public string $thinking;
 
     #[Api]
-    public string $type;
+    public string $type = 'thinking_delta';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -27,7 +27,7 @@ class ThinkingDelta implements BaseModel
      * @param string $thinking `required`
      * @param string $type     `required`
      */
-    final public function __construct($thinking, $type)
+    final public function __construct($thinking, $type = 'thinking_delta')
     {
         $this->constructFromArgs(func_get_args());
     }

@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaToolChoiceNone implements BaseModel
+final class BetaToolChoiceNone implements BaseModel
 {
     use Model;
 

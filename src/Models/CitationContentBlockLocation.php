@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class CitationContentBlockLocation implements BaseModel
+final class CitationContentBlockLocation implements BaseModel
 {
     use Model;
 
@@ -28,7 +28,7 @@ class CitationContentBlockLocation implements BaseModel
     public int $startBlockIndex;
 
     #[Api]
-    public string $type;
+    public string $type = 'content_block_location';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -49,7 +49,7 @@ class CitationContentBlockLocation implements BaseModel
         $documentTitle,
         $endBlockIndex,
         $startBlockIndex,
-        $type,
+        $type = 'content_block_location',
     ) {
         $this->constructFromArgs(func_get_args());
     }

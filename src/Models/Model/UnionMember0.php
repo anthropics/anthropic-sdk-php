@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Model;
 
-class UnionMember0
+final class UnionMember0
 {
     final public const CLAUDE_3_7_SONNET_LATEST = 'claude-3-7-sonnet-latest';
 

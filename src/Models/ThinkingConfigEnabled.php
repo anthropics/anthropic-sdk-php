@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class ThinkingConfigEnabled implements BaseModel
+final class ThinkingConfigEnabled implements BaseModel
 {
     use Model;
 

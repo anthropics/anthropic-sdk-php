@@ -8,15 +8,15 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaCacheCreation implements BaseModel
+final class BetaCacheCreation implements BaseModel
 {
     use Model;
 
     #[Api('ephemeral_1h_input_tokens')]
-    public int $ephemeral1hInputTokens;
+    public int $ephemeral1hInputTokens = 0;
 
     #[Api('ephemeral_5m_input_tokens')]
-    public int $ephemeral5mInputTokens;
+    public int $ephemeral5mInputTokens = 0;
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -28,8 +28,8 @@ class BetaCacheCreation implements BaseModel
      * @param int $ephemeral5mInputTokens `required`
      */
     final public function __construct(
-        $ephemeral1hInputTokens,
-        $ephemeral5mInputTokens
+        $ephemeral1hInputTokens = 0,
+        $ephemeral5mInputTokens = 0
     ) {
         $this->constructFromArgs(func_get_args());
     }

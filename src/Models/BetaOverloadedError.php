@@ -8,15 +8,15 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaOverloadedError implements BaseModel
+final class BetaOverloadedError implements BaseModel
 {
     use Model;
 
     #[Api]
-    public string $message;
+    public string $message = 'Overloaded';
 
     #[Api]
-    public string $type;
+    public string $type = 'overloaded_error';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -27,8 +27,10 @@ class BetaOverloadedError implements BaseModel
      * @param string $message `required`
      * @param string $type    `required`
      */
-    final public function __construct($message, $type)
-    {
+    final public function __construct(
+        $message = 'Overloaded',
+        $type = 'overloaded_error'
+    ) {
         $this->constructFromArgs(func_get_args());
     }
 }

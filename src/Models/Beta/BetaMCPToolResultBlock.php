@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
-class BetaMCPToolResultBlock implements BaseModel
+final class BetaMCPToolResultBlock implements BaseModel
 {
     use Model;
 
@@ -19,13 +19,13 @@ class BetaMCPToolResultBlock implements BaseModel
     public mixed $content;
 
     #[Api('is_error')]
-    public bool $isError;
+    public bool $isError = false;
 
     #[Api('tool_use_id')]
     public string $toolUseID;
 
     #[Api]
-    public string $type;
+    public string $type = 'mcp_tool_result';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -38,8 +38,12 @@ class BetaMCPToolResultBlock implements BaseModel
      * @param string                     $toolUseID `required`
      * @param string                     $type      `required`
      */
-    final public function __construct($content, $isError, $toolUseID, $type)
-    {
+    final public function __construct(
+        $content,
+        $toolUseID,
+        $isError = false,
+        $type = 'mcp_tool_result'
+    ) {
         $this->constructFromArgs(func_get_args());
     }
 }

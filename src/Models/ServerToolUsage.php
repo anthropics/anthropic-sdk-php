@@ -8,12 +8,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class ServerToolUsage implements BaseModel
+final class ServerToolUsage implements BaseModel
 {
     use Model;
 
     #[Api('web_search_requests')]
-    public int $webSearchRequests;
+    public int $webSearchRequests = 0;
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -23,7 +23,7 @@ class ServerToolUsage implements BaseModel
      *
      * @param int $webSearchRequests `required`
      */
-    final public function __construct($webSearchRequests)
+    final public function __construct($webSearchRequests = 0)
     {
         $this->constructFromArgs(func_get_args());
     }

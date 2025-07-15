@@ -17,9 +17,9 @@ use Anthropic\Parameters\Beta\Files\RetrieveMetadataParams;
 use Anthropic\Parameters\Beta\Files\UploadParams;
 use Anthropic\RequestOptions;
 
-class Files implements FilesContract
+final class Files implements FilesContract
 {
-    public function __construct(protected Client $client) {}
+    public function __construct(private Client $client) {}
 
     /**
      * @param array{

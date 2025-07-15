@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Usage;
 
-class ServiceTier
+final class ServiceTier
 {
     final public const STANDARD = 'standard';
 

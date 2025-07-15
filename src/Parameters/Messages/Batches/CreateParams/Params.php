@@ -25,7 +25,7 @@ use Anthropic\Models\ToolTextEditor20250124;
 use Anthropic\Models\ToolUnion\TextEditor20250429;
 use Anthropic\Models\WebSearchTool20250305;
 
-class Params implements BaseModel
+final class Params implements BaseModel
 {
     use Model;
 

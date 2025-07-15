@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class URLPDFSource implements BaseModel
+final class URLPDFSource implements BaseModel
 {
     use Model;
 

@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaCitationSearchResultLocationParam implements BaseModel
+final class BetaCitationSearchResultLocationParam implements BaseModel
 {
     use Model;
 
@@ -31,7 +31,7 @@ class BetaCitationSearchResultLocationParam implements BaseModel
     public ?string $title;
 
     #[Api]
-    public string $type;
+    public string $type = 'search_result_location';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -54,7 +54,7 @@ class BetaCitationSearchResultLocationParam implements BaseModel
         $source,
         $startBlockIndex,
         $title,
-        $type,
+        $type = 'search_result_location',
     ) {
         $this->constructFromArgs(func_get_args());
     }

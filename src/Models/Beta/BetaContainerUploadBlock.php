@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaContainerUploadBlock implements BaseModel
+final class BetaContainerUploadBlock implements BaseModel
 {
     use Model;
 
@@ -16,7 +16,7 @@ class BetaContainerUploadBlock implements BaseModel
     public string $fileID;
 
     #[Api]
-    public string $type;
+    public string $type = 'container_upload';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -27,7 +27,7 @@ class BetaContainerUploadBlock implements BaseModel
      * @param string $fileID `required`
      * @param string $type   `required`
      */
-    final public function __construct($fileID, $type)
+    final public function __construct($fileID, $type = 'container_upload')
     {
         $this->constructFromArgs(func_get_args());
     }

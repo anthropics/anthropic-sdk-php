@@ -20,9 +20,9 @@ use Anthropic\Parameters\Beta\Messages\Batches\ResultsParams;
 use Anthropic\Parameters\Beta\Messages\Batches\RetrieveParams;
 use Anthropic\RequestOptions;
 
-class Batches implements BatchesContract
+final class Batches implements BatchesContract
 {
-    public function __construct(protected Client $client) {}
+    public function __construct(private Client $client) {}
 
     /**
      * @param array{requests?: list<Request>, betas?: list<string|string>} $params

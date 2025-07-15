@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class DeletedMessageBatch implements BaseModel
+final class DeletedMessageBatch implements BaseModel
 {
     use Model;
 
@@ -16,7 +16,7 @@ class DeletedMessageBatch implements BaseModel
     public string $id;
 
     #[Api]
-    public string $type;
+    public string $type = 'message_batch_deleted';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -27,7 +27,7 @@ class DeletedMessageBatch implements BaseModel
      * @param string $id   `required`
      * @param string $type `required`
      */
-    final public function __construct($id, $type)
+    final public function __construct($id, $type = 'message_batch_deleted')
     {
         $this->constructFromArgs(func_get_args());
     }

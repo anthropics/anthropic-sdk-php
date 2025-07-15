@@ -4,4 +4,4 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta\BetaRequestMCPToolResultBlockParam;
 
-class Content {}
+final class Content {}

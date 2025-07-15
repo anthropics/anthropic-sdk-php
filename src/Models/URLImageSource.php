@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class URLImageSource implements BaseModel
+final class URLImageSource implements BaseModel
 {
     use Model;
 

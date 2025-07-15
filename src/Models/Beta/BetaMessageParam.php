@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
-class BetaMessageParam implements BaseModel
+final class BetaMessageParam implements BaseModel
 {
     use Model;
 

@@ -4,4 +4,4 @@ declare(strict_types=1);
 
 namespace Anthropic\Parameters\Messages\CountTokensParams;
 
-class System {}
+final class System {}

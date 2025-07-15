@@ -13,9 +13,9 @@ use Anthropic\Parameters\Beta\Models\ListParams;
 use Anthropic\Parameters\Beta\Models\RetrieveParams;
 use Anthropic\RequestOptions;
 
-class Models implements ModelsContract
+final class Models implements ModelsContract
 {
-    public function __construct(protected Client $client) {}
+    public function __construct(private Client $client) {}
 
     /**
      * @param array{modelID?: string, betas?: list<string|string>} $params

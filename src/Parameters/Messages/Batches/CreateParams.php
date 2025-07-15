@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Parameters\Messages\Batches\CreateParams\Request;
 
-class CreateParams implements BaseModel
+final class CreateParams implements BaseModel
 {
     use Model;
     use Params;
@@ -19,6 +19,19 @@ class CreateParams implements BaseModel
     /** @var list<Request> $requests */
     #[Api(type: new ListOf(Request::class))]
     public array $requests;
+
+    /**
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param list<Request> $requests `required`
+     */
+    final public function __construct($requests)
+    {
+        $this->constructFromArgs(func_get_args());
+    }
 }
 
 CreateParams::_loadMetadata();

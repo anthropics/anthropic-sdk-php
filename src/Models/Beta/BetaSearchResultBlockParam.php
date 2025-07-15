@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 
-class BetaSearchResultBlockParam implements BaseModel
+final class BetaSearchResultBlockParam implements BaseModel
 {
     use Model;
 

@@ -4,4 +4,4 @@ declare(strict_types=1);
 
 namespace Anthropic\Parameters\Messages\CreateParams;
 
-class System {}
+final class System {}

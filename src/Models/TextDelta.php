@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class TextDelta implements BaseModel
+final class TextDelta implements BaseModel
 {
     use Model;
 
@@ -16,7 +16,7 @@ class TextDelta implements BaseModel
     public string $text;
 
     #[Api]
-    public string $type;
+    public string $type = 'text_delta';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -27,7 +27,7 @@ class TextDelta implements BaseModel
      * @param string $text `required`
      * @param string $type `required`
      */
-    final public function __construct($text, $type)
+    final public function __construct($text, $type = 'text_delta')
     {
         $this->constructFromArgs(func_get_args());
     }

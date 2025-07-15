@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class RedactedThinkingBlock implements BaseModel
+final class RedactedThinkingBlock implements BaseModel
 {
     use Model;
 
@@ -16,7 +16,7 @@ class RedactedThinkingBlock implements BaseModel
     public string $data;
 
     #[Api]
-    public string $type;
+    public string $type = 'redacted_thinking';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -27,7 +27,7 @@ class RedactedThinkingBlock implements BaseModel
      * @param string $data `required`
      * @param string $type `required`
      */
-    final public function __construct($data, $type)
+    final public function __construct($data, $type = 'redacted_thinking')
     {
         $this->constructFromArgs(func_get_args());
     }

@@ -11,7 +11,7 @@ use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
-class TextBlockParam implements BaseModel
+final class TextBlockParam implements BaseModel
 {
     use Model;
 

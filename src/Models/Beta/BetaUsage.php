@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaUsage implements BaseModel
+final class BetaUsage implements BaseModel
 {
     use Model;
 

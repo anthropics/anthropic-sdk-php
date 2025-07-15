@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\None;
 
-class ImageBlockParam implements BaseModel
+final class ImageBlockParam implements BaseModel
 {
     use Model;
 

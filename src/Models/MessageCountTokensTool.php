@@ -4,4 +4,4 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-class MessageCountTokensTool {}
+final class MessageCountTokensTool {}

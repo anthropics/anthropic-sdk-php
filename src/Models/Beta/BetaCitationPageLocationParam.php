@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaCitationPageLocationParam implements BaseModel
+final class BetaCitationPageLocationParam implements BaseModel
 {
     use Model;
 

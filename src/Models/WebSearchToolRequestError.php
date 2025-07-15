@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class WebSearchToolRequestError implements BaseModel
+final class WebSearchToolRequestError implements BaseModel
 {
     use Model;
 

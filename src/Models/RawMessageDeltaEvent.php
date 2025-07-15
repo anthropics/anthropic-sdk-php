@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\RawMessageDeltaEvent\Delta;
 
-class RawMessageDeltaEvent implements BaseModel
+final class RawMessageDeltaEvent implements BaseModel
 {
     use Model;
 
@@ -17,7 +17,7 @@ class RawMessageDeltaEvent implements BaseModel
     public Delta $delta;
 
     #[Api]
-    public string $type;
+    public string $type = 'message_delta';
 
     #[Api]
     public MessageDeltaUsage $usage;
@@ -32,7 +32,7 @@ class RawMessageDeltaEvent implements BaseModel
      * @param string            $type  `required`
      * @param MessageDeltaUsage $usage `required`
      */
-    final public function __construct($delta, $type, $usage)
+    final public function __construct($delta, $usage, $type = 'message_delta')
     {
         $this->constructFromArgs(func_get_args());
     }

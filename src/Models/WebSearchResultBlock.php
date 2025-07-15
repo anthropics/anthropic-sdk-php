@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class WebSearchResultBlock implements BaseModel
+final class WebSearchResultBlock implements BaseModel
 {
     use Model;
 
@@ -22,7 +22,7 @@ class WebSearchResultBlock implements BaseModel
     public string $title;
 
     #[Api]
-    public string $type;
+    public string $type = 'web_search_result';
 
     #[Api]
     public string $url;
@@ -43,8 +43,8 @@ class WebSearchResultBlock implements BaseModel
         $encryptedContent,
         $pageAge,
         $title,
-        $type,
-        $url
+        $url,
+        $type = 'web_search_result'
     ) {
         $this->constructFromArgs(func_get_args());
     }

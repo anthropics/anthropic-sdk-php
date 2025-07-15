@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta\BetaWebSearchToolResultError;
 
-class Type
+final class Type
 {
     final public const WEB_SEARCH_TOOL_RESULT_ERROR = 'web_search_tool_result_error';
 }

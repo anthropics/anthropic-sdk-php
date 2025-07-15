@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\None;
 
-class BetaToolChoiceTool implements BaseModel
+final class BetaToolChoiceTool implements BaseModel
 {
     use Model;
 

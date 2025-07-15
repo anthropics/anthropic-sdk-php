@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class ToolUseBlock implements BaseModel
+final class ToolUseBlock implements BaseModel
 {
     use Model;
 
@@ -22,7 +22,7 @@ class ToolUseBlock implements BaseModel
     public string $name;
 
     #[Api]
-    public string $type;
+    public string $type = 'tool_use';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -35,7 +35,7 @@ class ToolUseBlock implements BaseModel
      * @param string $name  `required`
      * @param string $type  `required`
      */
-    final public function __construct($id, $input, $name, $type)
+    final public function __construct($id, $input, $name, $type = 'tool_use')
     {
         $this->constructFromArgs(func_get_args());
     }

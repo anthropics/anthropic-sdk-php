@@ -12,7 +12,7 @@ use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305\UserLocation;
 
-class BetaWebSearchTool20250305 implements BaseModel
+final class BetaWebSearchTool20250305 implements BaseModel
 {
     use Model;
 

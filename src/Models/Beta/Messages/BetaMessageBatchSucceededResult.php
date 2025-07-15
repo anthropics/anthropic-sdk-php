@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Beta\BetaMessage;
 
-class BetaMessageBatchSucceededResult implements BaseModel
+final class BetaMessageBatchSucceededResult implements BaseModel
 {
     use Model;
 
@@ -17,7 +17,7 @@ class BetaMessageBatchSucceededResult implements BaseModel
     public BetaMessage $message;
 
     #[Api]
-    public string $type;
+    public string $type = 'succeeded';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -28,7 +28,7 @@ class BetaMessageBatchSucceededResult implements BaseModel
      * @param BetaMessage $message `required`
      * @param string      $type    `required`
      */
-    final public function __construct($message, $type)
+    final public function __construct($message, $type = 'succeeded')
     {
         $this->constructFromArgs(func_get_args());
     }

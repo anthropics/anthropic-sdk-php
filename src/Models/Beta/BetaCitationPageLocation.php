@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaCitationPageLocation implements BaseModel
+final class BetaCitationPageLocation implements BaseModel
 {
     use Model;
 
@@ -28,7 +28,7 @@ class BetaCitationPageLocation implements BaseModel
     public int $startPageNumber;
 
     #[Api]
-    public string $type;
+    public string $type = 'page_location';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -49,7 +49,7 @@ class BetaCitationPageLocation implements BaseModel
         $documentTitle,
         $endPageNumber,
         $startPageNumber,
-        $type,
+        $type = 'page_location',
     ) {
         $this->constructFromArgs(func_get_args());
     }

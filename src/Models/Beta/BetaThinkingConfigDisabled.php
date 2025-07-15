@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaThinkingConfigDisabled implements BaseModel
+final class BetaThinkingConfigDisabled implements BaseModel
 {
     use Model;
 

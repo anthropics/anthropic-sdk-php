@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 use Anthropic\Models\Beta\BetaCodeExecutionTool20250522;
@@ -31,7 +32,7 @@ use Anthropic\Models\Beta\BetaToolTextEditor20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20250429;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305;
 
-class CreateParams implements BaseModel
+final class CreateParams implements BaseModel
 {
     use Model;
     use Params;
@@ -126,6 +127,54 @@ class CreateParams implements BaseModel
     /** @var null|list<string|string> $anthropicBeta */
     #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
     public ?array $anthropicBeta;
+
+    /**
+     * You must use named parameters to construct this object. If an named argument is not
+     * given, it will not be included during JSON serialization. The arguments are untyped
+     * so you can pass any JSON serializable value, but the API expects the types to match
+     * the PHPDoc types.
+     *
+     * @param int                                                                        $maxTokens     `required`
+     * @param list<BetaMessageParam>                                                     $messages      `required`
+     * @param string|string                                                              $model         `required`
+     * @param null|string                                                                $container
+     * @param null|list<BetaRequestMCPServerURLDefinition>                               $mcpServers
+     * @param BetaMetadata                                                               $metadata
+     * @param null|string                                                                $serviceTier
+     * @param null|list<string>                                                          $stopSequences
+     * @param null|bool                                                                  $stream        `required`
+     * @param null|list<BetaTextBlockParam>|string                                       $system
+     * @param null|float                                                                 $temperature
+     * @param BetaThinkingConfigDisabled|BetaThinkingConfigEnabled                       $thinking
+     * @param BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice
+     * @param list<
+     *   BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305
+     * >|null $tools
+     * @param null|int                 $topK
+     * @param null|float               $topP
+     * @param null|list<string|string> $anthropicBeta
+     */
+    final public function __construct(
+        $maxTokens,
+        $messages,
+        $model,
+        $stream,
+        $container = None::NOT_GIVEN,
+        $mcpServers = None::NOT_GIVEN,
+        $metadata = None::NOT_GIVEN,
+        $serviceTier = None::NOT_GIVEN,
+        $stopSequences = None::NOT_GIVEN,
+        $system = None::NOT_GIVEN,
+        $temperature = None::NOT_GIVEN,
+        $thinking = None::NOT_GIVEN,
+        $toolChoice = None::NOT_GIVEN,
+        $tools = None::NOT_GIVEN,
+        $topK = None::NOT_GIVEN,
+        $topP = None::NOT_GIVEN,
+        $anthropicBeta = None::NOT_GIVEN,
+    ) {
+        $this->constructFromArgs(func_get_args());
+    }
 }
 
 CreateParams::_loadMetadata();

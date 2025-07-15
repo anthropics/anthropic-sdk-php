@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\None;
 
-class BetaMCPToolUseBlockParam implements BaseModel
+final class BetaMCPToolUseBlockParam implements BaseModel
 {
     use Model;
 

@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class ThinkingBlockParam implements BaseModel
+final class ThinkingBlockParam implements BaseModel
 {
     use Model;
 

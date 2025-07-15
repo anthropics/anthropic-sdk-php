@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class RawContentBlockStartEvent implements BaseModel
+final class RawContentBlockStartEvent implements BaseModel
 {
     use Model;
 
@@ -22,7 +22,7 @@ class RawContentBlockStartEvent implements BaseModel
     public int $index;
 
     #[Api]
-    public string $type;
+    public string $type = 'content_block_start';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -34,8 +34,11 @@ class RawContentBlockStartEvent implements BaseModel
      * @param int                                                                                                    $index        `required`
      * @param string                                                                                                 $type         `required`
      */
-    final public function __construct($contentBlock, $index, $type)
-    {
+    final public function __construct(
+        $contentBlock,
+        $index,
+        $type = 'content_block_start'
+    ) {
         $this->constructFromArgs(func_get_args());
     }
 }

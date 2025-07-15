@@ -15,9 +15,9 @@ use Anthropic\Parameters\Messages\Batches\CreateParams\Request;
 use Anthropic\Parameters\Messages\Batches\ListParams;
 use Anthropic\RequestOptions;
 
-class Batches implements BatchesContract
+final class Batches implements BatchesContract
 {
-    public function __construct(protected Client $client) {}
+    public function __construct(private Client $client) {}
 
     /**
      * @param array{requests?: list<Request>} $params

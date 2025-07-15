@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\None;
 use Anthropic\Models\CacheControlEphemeral;
 
-class TextEditor20250429 implements BaseModel
+final class TextEditor20250429 implements BaseModel
 {
     use Model;
 

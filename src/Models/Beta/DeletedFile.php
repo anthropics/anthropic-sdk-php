@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\None;
 
-class DeletedFile implements BaseModel
+final class DeletedFile implements BaseModel
 {
     use Model;
 
@@ -17,7 +17,7 @@ class DeletedFile implements BaseModel
     public string $id;
 
     #[Api(optional: true)]
-    public ?string $type;
+    public ?string $type = 'file_deleted';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not

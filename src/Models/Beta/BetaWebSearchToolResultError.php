@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaWebSearchToolResultError implements BaseModel
+final class BetaWebSearchToolResultError implements BaseModel
 {
     use Model;
 
@@ -16,7 +16,7 @@ class BetaWebSearchToolResultError implements BaseModel
     public string $errorCode;
 
     #[Api]
-    public string $type;
+    public string $type = 'web_search_tool_result_error';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -27,8 +27,10 @@ class BetaWebSearchToolResultError implements BaseModel
      * @param string $errorCode `required`
      * @param string $type      `required`
      */
-    final public function __construct($errorCode, $type)
-    {
+    final public function __construct(
+        $errorCode,
+        $type = 'web_search_tool_result_error'
+    ) {
         $this->constructFromArgs(func_get_args());
     }
 }

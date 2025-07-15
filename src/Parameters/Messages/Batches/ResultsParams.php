@@ -8,10 +8,15 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 
-class ResultsParams implements BaseModel
+final class ResultsParams implements BaseModel
 {
     use Model;
     use Params;
+
+    final public function __construct()
+    {
+        $this->constructFromArgs(func_get_args());
+    }
 }
 
 ResultsParams::_loadMetadata();

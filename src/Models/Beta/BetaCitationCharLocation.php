@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaCitationCharLocation implements BaseModel
+final class BetaCitationCharLocation implements BaseModel
 {
     use Model;
 
@@ -28,7 +28,7 @@ class BetaCitationCharLocation implements BaseModel
     public int $startCharIndex;
 
     #[Api]
-    public string $type;
+    public string $type = 'char_location';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -49,7 +49,7 @@ class BetaCitationCharLocation implements BaseModel
         $documentTitle,
         $endCharIndex,
         $startCharIndex,
-        $type,
+        $type = 'char_location',
     ) {
         $this->constructFromArgs(func_get_args());
     }

@@ -13,9 +13,9 @@ use Anthropic\Models\Metadata;
 use Anthropic\Parameters\Completions\CreateParams;
 use Anthropic\RequestOptions;
 
-class Completions implements CompletionsContract
+final class Completions implements CompletionsContract
 {
-    public function __construct(protected Client $client) {}
+    public function __construct(private Client $client) {}
 
     /**
      * @param array{

@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaMessageTokensCount implements BaseModel
+final class BetaMessageTokensCount implements BaseModel
 {
     use Model;
 

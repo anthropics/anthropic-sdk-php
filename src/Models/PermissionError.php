@@ -8,15 +8,15 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class PermissionError implements BaseModel
+final class PermissionError implements BaseModel
 {
     use Model;
 
     #[Api]
-    public string $message;
+    public string $message = 'Permission denied';
 
     #[Api]
-    public string $type;
+    public string $type = 'permission_error';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -27,8 +27,10 @@ class PermissionError implements BaseModel
      * @param string $message `required`
      * @param string $type    `required`
      */
-    final public function __construct($message, $type)
-    {
+    final public function __construct(
+        $message = 'Permission denied',
+        $type = 'permission_error'
+    ) {
         $this->constructFromArgs(func_get_args());
     }
 }

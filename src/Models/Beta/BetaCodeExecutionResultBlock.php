@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 
-class BetaCodeExecutionResultBlock implements BaseModel
+final class BetaCodeExecutionResultBlock implements BaseModel
 {
     use Model;
 
@@ -27,7 +27,7 @@ class BetaCodeExecutionResultBlock implements BaseModel
     public string $stdout;
 
     #[Api]
-    public string $type;
+    public string $type = 'code_execution_result';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -46,7 +46,7 @@ class BetaCodeExecutionResultBlock implements BaseModel
         $returnCode,
         $stderr,
         $stdout,
-        $type
+        $type = 'code_execution_result'
     ) {
         $this->constructFromArgs(func_get_args());
     }

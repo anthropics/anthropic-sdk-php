@@ -29,13 +29,13 @@ use Anthropic\Parameters\Messages\CreateParams;
 use Anthropic\RequestOptions;
 use Anthropic\Resources\Messages\Batches;
 
-class Messages implements MessagesContract
+final class Messages implements MessagesContract
 {
     public Batches $batches;
 
-    public function __construct(protected Client $client)
+    public function __construct(private Client $client)
     {
-        $this->batches = new Batches($client);
+        $this->batches = new Batches($this->client);
     }
 
     /**

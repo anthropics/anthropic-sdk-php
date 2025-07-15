@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Beta\BetaContainer;
 
-class Delta implements BaseModel
+final class Delta implements BaseModel
 {
     use Model;
 

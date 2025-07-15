@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\None;
 
-class ServerToolUseBlockParam implements BaseModel
+final class ServerToolUseBlockParam implements BaseModel
 {
     use Model;
 

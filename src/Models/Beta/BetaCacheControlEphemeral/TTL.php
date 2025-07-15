@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta\BetaCacheControlEphemeral;
 
-class TTL
+final class TTL
 {
     final public const TTL_5M = '5m';
 

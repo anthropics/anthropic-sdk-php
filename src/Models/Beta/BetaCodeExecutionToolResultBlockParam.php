@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\None;
 
-class BetaCodeExecutionToolResultBlockParam implements BaseModel
+final class BetaCodeExecutionToolResultBlockParam implements BaseModel
 {
     use Model;
 

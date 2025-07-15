@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\None;
 
-class ToolTextEditor20250124 implements BaseModel
+final class ToolTextEditor20250124 implements BaseModel
 {
     use Model;
 

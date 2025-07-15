@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
  *
  * @extends AbstractPage<TItem>
  */
-class Page extends AbstractPage
+final class Page extends AbstractPage
 {
     /** @var list<TItem> */
     public array $data;

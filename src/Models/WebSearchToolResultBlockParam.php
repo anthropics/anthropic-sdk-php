@@ -11,7 +11,7 @@ use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
-class WebSearchToolResultBlockParam implements BaseModel
+final class WebSearchToolResultBlockParam implements BaseModel
 {
     use Model;
 

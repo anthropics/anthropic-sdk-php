@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\GatewayTimeoutError;
 
-class Type
+final class Type
 {
     final public const TIMEOUT_ERROR = 'timeout_error';
 }

@@ -8,12 +8,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class MessageBatchExpiredResult implements BaseModel
+final class MessageBatchExpiredResult implements BaseModel
 {
     use Model;
 
     #[Api]
-    public string $type;
+    public string $type = 'expired';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -23,7 +23,7 @@ class MessageBatchExpiredResult implements BaseModel
      *
      * @param string $type `required`
      */
-    final public function __construct($type)
+    final public function __construct($type = 'expired')
     {
         $this->constructFromArgs(func_get_args());
     }

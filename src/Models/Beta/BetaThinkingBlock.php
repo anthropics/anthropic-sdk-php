@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaThinkingBlock implements BaseModel
+final class BetaThinkingBlock implements BaseModel
 {
     use Model;
 
@@ -19,7 +19,7 @@ class BetaThinkingBlock implements BaseModel
     public string $thinking;
 
     #[Api]
-    public string $type;
+    public string $type = 'thinking';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -31,7 +31,7 @@ class BetaThinkingBlock implements BaseModel
      * @param string $thinking  `required`
      * @param string $type      `required`
      */
-    final public function __construct($signature, $thinking, $type)
+    final public function __construct($signature, $thinking, $type = 'thinking')
     {
         $this->constructFromArgs(func_get_args());
     }

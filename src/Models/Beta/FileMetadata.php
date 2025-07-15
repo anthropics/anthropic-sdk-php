@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\None;
 
-class FileMetadata implements BaseModel
+final class FileMetadata implements BaseModel
 {
     use Model;
 
@@ -32,7 +32,7 @@ class FileMetadata implements BaseModel
     public string $type;
 
     #[Api(optional: true)]
-    public ?bool $downloadable;
+    public ?bool $downloadable = false;
 
     /**
      * You must use named parameters to construct this object. If an named argument is not

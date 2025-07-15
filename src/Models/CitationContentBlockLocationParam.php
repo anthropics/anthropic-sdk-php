@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class CitationContentBlockLocationParam implements BaseModel
+final class CitationContentBlockLocationParam implements BaseModel
 {
     use Model;
 

@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\ErrorResponse;
 
-class MessageBatchErroredResult implements BaseModel
+final class MessageBatchErroredResult implements BaseModel
 {
     use Model;
 
@@ -17,7 +17,7 @@ class MessageBatchErroredResult implements BaseModel
     public ErrorResponse $error;
 
     #[Api]
-    public string $type;
+    public string $type = 'errored';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -28,7 +28,7 @@ class MessageBatchErroredResult implements BaseModel
      * @param ErrorResponse $error `required`
      * @param string        $type  `required`
      */
-    final public function __construct($error, $type)
+    final public function __construct($error, $type = 'errored')
     {
         $this->constructFromArgs(func_get_args());
     }

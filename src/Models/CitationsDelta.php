@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class CitationsDelta implements BaseModel
+final class CitationsDelta implements BaseModel
 {
     use Model;
 
@@ -19,7 +19,7 @@ class CitationsDelta implements BaseModel
     public mixed $citation;
 
     #[Api]
-    public string $type;
+    public string $type = 'citations_delta';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -30,7 +30,7 @@ class CitationsDelta implements BaseModel
      * @param CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsWebSearchResultLocation $citation `required`
      * @param string                                                                                                  $type     `required`
      */
-    final public function __construct($citation, $type)
+    final public function __construct($citation, $type = 'citations_delta')
     {
         $this->constructFromArgs(func_get_args());
     }

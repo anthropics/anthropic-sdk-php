@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaBase64PDFSource implements BaseModel
+final class BetaBase64PDFSource implements BaseModel
 {
     use Model;
 

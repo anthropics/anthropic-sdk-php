@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaCitationsWebSearchResultLocation implements BaseModel
+final class BetaCitationsWebSearchResultLocation implements BaseModel
 {
     use Model;
 
@@ -22,7 +22,7 @@ class BetaCitationsWebSearchResultLocation implements BaseModel
     public ?string $title;
 
     #[Api]
-    public string $type;
+    public string $type = 'web_search_result_location';
 
     #[Api]
     public string $url;
@@ -43,8 +43,8 @@ class BetaCitationsWebSearchResultLocation implements BaseModel
         $citedText,
         $encryptedIndex,
         $title,
-        $type,
-        $url
+        $url,
+        $type = 'web_search_result_location',
     ) {
         $this->constructFromArgs(func_get_args());
     }

@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaRawMessageStartEvent implements BaseModel
+final class BetaRawMessageStartEvent implements BaseModel
 {
     use Model;
 
@@ -16,7 +16,7 @@ class BetaRawMessageStartEvent implements BaseModel
     public BetaMessage $message;
 
     #[Api]
-    public string $type;
+    public string $type = 'message_start';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -27,7 +27,7 @@ class BetaRawMessageStartEvent implements BaseModel
      * @param BetaMessage $message `required`
      * @param string      $type    `required`
      */
-    final public function __construct($message, $type)
+    final public function __construct($message, $type = 'message_start')
     {
         $this->constructFromArgs(func_get_args());
     }

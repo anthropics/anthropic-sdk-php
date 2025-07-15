@@ -4,4 +4,4 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta\Messages;
 
-class BetaMessageBatchResult {}
+final class BetaMessageBatchResult {}

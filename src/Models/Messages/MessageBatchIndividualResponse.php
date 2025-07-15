@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class MessageBatchIndividualResponse implements BaseModel
+final class MessageBatchIndividualResponse implements BaseModel
 {
     use Model;
 

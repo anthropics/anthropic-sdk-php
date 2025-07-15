@@ -8,15 +8,15 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BillingError implements BaseModel
+final class BillingError implements BaseModel
 {
     use Model;
 
     #[Api]
-    public string $message;
+    public string $message = 'Billing error';
 
     #[Api]
-    public string $type;
+    public string $type = 'billing_error';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -27,8 +27,10 @@ class BillingError implements BaseModel
      * @param string $message `required`
      * @param string $type    `required`
      */
-    final public function __construct($message, $type)
-    {
+    final public function __construct(
+        $message = 'Billing error',
+        $type = 'billing_error'
+    ) {
         $this->constructFromArgs(func_get_args());
     }
 }

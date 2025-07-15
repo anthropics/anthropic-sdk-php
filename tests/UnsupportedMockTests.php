@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-class UnsupportedMockTests
+final class UnsupportedMockTests
 {
     public static bool $skip = true;
 }

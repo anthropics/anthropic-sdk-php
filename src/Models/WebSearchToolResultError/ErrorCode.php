@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\WebSearchToolResultError;
 
-class ErrorCode
+final class ErrorCode
 {
     final public const INVALID_TOOL_INPUT = 'invalid_tool_input';
 

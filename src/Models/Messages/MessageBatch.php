@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class MessageBatch implements BaseModel
+final class MessageBatch implements BaseModel
 {
     use Model;
 
@@ -40,7 +40,7 @@ class MessageBatch implements BaseModel
     public ?string $resultsURL;
 
     #[Api]
-    public string $type;
+    public string $type = 'message_batch';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -69,7 +69,7 @@ class MessageBatch implements BaseModel
         $processingStatus,
         $requestCounts,
         $resultsURL,
-        $type,
+        $type = 'message_batch',
     ) {
         $this->constructFromArgs(func_get_args());
     }

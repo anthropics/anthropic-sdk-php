@@ -11,7 +11,7 @@ use Anthropic\Core\None;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 
-class BetaRequestMCPServerToolConfiguration implements BaseModel
+final class BetaRequestMCPServerToolConfiguration implements BaseModel
 {
     use Model;
 

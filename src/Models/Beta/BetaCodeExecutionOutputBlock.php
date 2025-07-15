@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaCodeExecutionOutputBlock implements BaseModel
+final class BetaCodeExecutionOutputBlock implements BaseModel
 {
     use Model;
 
@@ -16,7 +16,7 @@ class BetaCodeExecutionOutputBlock implements BaseModel
     public string $fileID;
 
     #[Api]
-    public string $type;
+    public string $type = 'code_execution_output';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -27,7 +27,7 @@ class BetaCodeExecutionOutputBlock implements BaseModel
      * @param string $fileID `required`
      * @param string $type   `required`
      */
-    final public function __construct($fileID, $type)
+    final public function __construct($fileID, $type = 'code_execution_output')
     {
         $this->constructFromArgs(func_get_args());
     }

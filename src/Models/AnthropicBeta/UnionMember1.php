@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\AnthropicBeta;
 
-class UnionMember1
+final class UnionMember1
 {
     final public const MESSAGE_BATCHES_2024_09_24 = 'message-batches-2024-09-24';
 

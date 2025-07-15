@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
-class BetaCodeExecutionToolResultBlock implements BaseModel
+final class BetaCodeExecutionToolResultBlock implements BaseModel
 {
     use Model;
 
@@ -22,7 +22,7 @@ class BetaCodeExecutionToolResultBlock implements BaseModel
     public string $toolUseID;
 
     #[Api]
-    public string $type;
+    public string $type = 'code_execution_tool_result';
 
     /**
      * You must use named parameters to construct this object. If an named argument is not
@@ -34,8 +34,11 @@ class BetaCodeExecutionToolResultBlock implements BaseModel
      * @param string                                                        $toolUseID `required`
      * @param string                                                        $type      `required`
      */
-    final public function __construct($content, $toolUseID, $type)
-    {
+    final public function __construct(
+        $content,
+        $toolUseID,
+        $type = 'code_execution_tool_result'
+    ) {
         $this->constructFromArgs(func_get_args());
     }
 }
