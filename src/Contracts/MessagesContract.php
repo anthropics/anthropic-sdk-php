@@ -21,12 +21,14 @@ use Anthropic\Models\ToolChoiceTool;
 use Anthropic\Models\ToolTextEditor20250124;
 use Anthropic\Models\ToolUnion\TextEditor20250429;
 use Anthropic\Models\WebSearchTool20250305;
+use Anthropic\Parameters\Messages\CountTokensParams;
+use Anthropic\Parameters\Messages\CreateParams;
 use Anthropic\RequestOptions;
 
 interface MessagesContract
 {
     /**
-     * @param array{
+     * @param CreateParams|array{
      *   maxTokens?: int,
      *   messages?: list<MessageParam>,
      *   model?: string,
@@ -46,12 +48,12 @@ interface MessagesContract
      * } $params
      */
     public function create(
-        array $params,
+        array|CreateParams $params,
         ?RequestOptions $requestOptions = null
     ): Message;
 
     /**
-     * @param array{
+     * @param CountTokensParams|array{
      *   messages?: list<MessageParam>,
      *   model?: string,
      *   system?: string|list<TextBlockParam>,
@@ -63,7 +65,7 @@ interface MessagesContract
      * } $params
      */
     public function countTokens(
-        array $params,
+        array|CountTokensParams $params,
         ?RequestOptions $requestOptions = null
     ): MessageTokensCount;
 }

@@ -5,26 +5,28 @@ declare(strict_types=1);
 namespace Anthropic\Contracts\Beta;
 
 use Anthropic\Models\Beta\BetaModelInfo;
+use Anthropic\Parameters\Beta\Models\ListParams;
+use Anthropic\Parameters\Beta\Models\RetrieveParams;
 use Anthropic\RequestOptions;
 
 interface ModelsContract
 {
     /**
-     * @param array{modelID?: string, betas?: list<string>} $params
+     * @param array{anthropicBeta?: list<string>}|RetrieveParams $params
      */
     public function retrieve(
         string $modelID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|RetrieveParams $params,
+        ?RequestOptions $requestOptions = null,
     ): BetaModelInfo;
 
     /**
-     * @param array{
-     *   afterID?: string, beforeID?: string, limit?: int, betas?: list<string>
+     * @param ListParams|array{
+     *   afterID?: string, beforeID?: string, limit?: int, anthropicBeta?: list<string>
      * } $params
      */
     public function list(
-        array $params,
+        array|ListParams $params,
         ?RequestOptions $requestOptions = null
     ): BetaModelInfo;
 }

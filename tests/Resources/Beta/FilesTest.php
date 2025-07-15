@@ -81,7 +81,7 @@ final class FilesTest extends TestCase
             ->client
             ->beta
             ->files
-            ->upload(['file' => 'file', 'betas' => ['string']])
+            ->upload(['file' => 'file', 'anthropicBeta' => ['string']])
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

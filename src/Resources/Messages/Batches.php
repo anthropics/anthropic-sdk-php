@@ -20,10 +20,10 @@ final class Batches implements BatchesContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{requests?: list<Request>} $params
+     * @param array{requests?: list<Request>}|CreateParams $params
      */
     public function create(
-        array $params,
+        array|CreateParams $params,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
         [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
@@ -38,13 +38,9 @@ final class Batches implements BatchesContract
         return Serde::coerce(MessageBatch::class, value: $resp);
     }
 
-    /**
-     * @param array{messageBatchID?: string} $params
-     */
     public function retrieve(
         string $messageBatchID,
-        array $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): MessageBatch {
         $resp = $this->client->request(
             method: 'get',
@@ -57,10 +53,12 @@ final class Batches implements BatchesContract
     }
 
     /**
-     * @param array{afterID?: string, beforeID?: string, limit?: int} $params
+     * @param ListParams|array{
+     *   afterID?: string, beforeID?: string, limit?: int
+     * } $params
      */
     public function list(
-        array $params,
+        array|ListParams $params,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
         [$parsed, $options] = ListParams::parseRequest($params, $requestOptions);
@@ -75,13 +73,9 @@ final class Batches implements BatchesContract
         return Serde::coerce(MessageBatch::class, value: $resp);
     }
 
-    /**
-     * @param array{messageBatchID?: string} $params
-     */
     public function delete(
         string $messageBatchID,
-        array $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): DeletedMessageBatch {
         $resp = $this->client->request(
             method: 'delete',
@@ -93,13 +87,9 @@ final class Batches implements BatchesContract
         return Serde::coerce(DeletedMessageBatch::class, value: $resp);
     }
 
-    /**
-     * @param array{messageBatchID?: string} $params
-     */
     public function cancel(
         string $messageBatchID,
-        array $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): MessageBatch {
         $resp = $this->client->request(
             method: 'post',
@@ -111,13 +101,9 @@ final class Batches implements BatchesContract
         return Serde::coerce(MessageBatch::class, value: $resp);
     }
 
-    /**
-     * @param array{messageBatchID?: string} $params
-     */
     public function results(
         string $messageBatchID,
-        array $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): MessageBatchIndividualResponse {
         $resp = $this->client->request(
             method: 'get',

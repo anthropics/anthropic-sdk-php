@@ -18,12 +18,12 @@ final class Models implements ModelsContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{modelID?: string, betas?: list<string>} $params
+     * @param array{anthropicBeta?: list<string>}|RetrieveParams $params
      */
     public function retrieve(
         string $modelID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|RetrieveParams $params,
+        ?RequestOptions $requestOptions = null,
     ): ModelInfo {
         [$parsed, $options] = RetrieveParams::parseRequest(
             $params,
@@ -44,12 +44,12 @@ final class Models implements ModelsContract
     }
 
     /**
-     * @param array{
-     *   afterID?: string, beforeID?: string, limit?: int, betas?: list<string>
+     * @param ListParams|array{
+     *   afterID?: string, beforeID?: string, limit?: int, anthropicBeta?: list<string>
      * } $params
      */
     public function list(
-        array $params,
+        array|ListParams $params,
         ?RequestOptions $requestOptions = null
     ): ModelInfo {
         [$parsed, $options] = ListParams::parseRequest($params, $requestOptions);

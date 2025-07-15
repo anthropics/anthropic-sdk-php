@@ -165,7 +165,7 @@ final class BatchesTest extends TestCase
                             ),
                         ),
                     ],
-                    'betas' => ['string'],
+                    'anthropicBeta' => ['string'],
                 ]
             )
         ;

@@ -152,12 +152,7 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this
-            ->client
-            ->messages
-            ->batches
-            ->retrieve('message_batch_id', [])
-        ;
+        $result = $this->client->messages->batches->retrieve('message_batch_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -177,7 +172,7 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $result = $this->client->messages->batches->delete('message_batch_id', []);
+        $result = $this->client->messages->batches->delete('message_batch_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -185,7 +180,7 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCancel(): void
     {
-        $result = $this->client->messages->batches->cancel('message_batch_id', []);
+        $result = $this->client->messages->batches->cancel('message_batch_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -197,7 +192,7 @@ final class BatchesTest extends TestCase
             $this->markTestSkipped("Prism doesn't support JSONL responses yet");
         }
 
-        $result = $this->client->messages->batches->results('message_batch_id', []);
+        $result = $this->client->messages->batches->results('message_batch_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

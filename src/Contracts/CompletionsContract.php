@@ -6,12 +6,13 @@ namespace Anthropic\Contracts;
 
 use Anthropic\Models\Completion;
 use Anthropic\Models\Metadata;
+use Anthropic\Parameters\Completions\CreateParams;
 use Anthropic\RequestOptions;
 
 interface CompletionsContract
 {
     /**
-     * @param array{
+     * @param CreateParams|array{
      *   maxTokensToSample?: int,
      *   model?: string,
      *   prompt?: string,
@@ -21,11 +22,11 @@ interface CompletionsContract
      *   temperature?: float,
      *   topK?: int,
      *   topP?: float,
-     *   betas?: list<string>,
+     *   anthropicBeta?: list<string>,
      * } $params
      */
     public function create(
-        array $params,
+        array|CreateParams $params,
         ?RequestOptions $requestOptions = null
     ): Completion;
 }

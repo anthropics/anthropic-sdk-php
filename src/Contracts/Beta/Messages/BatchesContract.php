@@ -7,62 +7,70 @@ namespace Anthropic\Contracts\Beta\Messages;
 use Anthropic\Models\Beta\Messages\BetaDeletedMessageBatch;
 use Anthropic\Models\Beta\Messages\BetaMessageBatch;
 use Anthropic\Models\Beta\Messages\BetaMessageBatchIndividualResponse;
+use Anthropic\Parameters\Beta\Messages\Batches\CancelParams;
+use Anthropic\Parameters\Beta\Messages\Batches\CreateParams;
 use Anthropic\Parameters\Beta\Messages\Batches\CreateParams\Request;
+use Anthropic\Parameters\Beta\Messages\Batches\DeleteParams;
+use Anthropic\Parameters\Beta\Messages\Batches\ListParams;
+use Anthropic\Parameters\Beta\Messages\Batches\ResultsParams;
+use Anthropic\Parameters\Beta\Messages\Batches\RetrieveParams;
 use Anthropic\RequestOptions;
 
 interface BatchesContract
 {
     /**
-     * @param array{requests?: list<Request>, betas?: list<string>} $params
+     * @param CreateParams|array{
+     *   requests?: list<Request>, anthropicBeta?: list<string>
+     * } $params
      */
     public function create(
-        array $params,
+        array|CreateParams $params,
         ?RequestOptions $requestOptions = null
     ): BetaMessageBatch;
 
     /**
-     * @param array{messageBatchID?: string, betas?: list<string>} $params
+     * @param array{anthropicBeta?: list<string>}|RetrieveParams $params
      */
     public function retrieve(
         string $messageBatchID,
-        array $params,
+        array|RetrieveParams $params,
         ?RequestOptions $requestOptions = null,
     ): BetaMessageBatch;
 
     /**
-     * @param array{
-     *   afterID?: string, beforeID?: string, limit?: int, betas?: list<string>
+     * @param ListParams|array{
+     *   afterID?: string, beforeID?: string, limit?: int, anthropicBeta?: list<string>
      * } $params
      */
     public function list(
-        array $params,
+        array|ListParams $params,
         ?RequestOptions $requestOptions = null
     ): BetaMessageBatch;
 
     /**
-     * @param array{messageBatchID?: string, betas?: list<string>} $params
+     * @param array{anthropicBeta?: list<string>}|DeleteParams $params
      */
     public function delete(
         string $messageBatchID,
-        array $params,
+        array|DeleteParams $params,
         ?RequestOptions $requestOptions = null,
     ): BetaDeletedMessageBatch;
 
     /**
-     * @param array{messageBatchID?: string, betas?: list<string>} $params
+     * @param array{anthropicBeta?: list<string>}|CancelParams $params
      */
     public function cancel(
         string $messageBatchID,
-        array $params,
+        array|CancelParams $params,
         ?RequestOptions $requestOptions = null,
     ): BetaMessageBatch;
 
     /**
-     * @param array{messageBatchID?: string, betas?: list<string>} $params
+     * @param array{anthropicBeta?: list<string>}|ResultsParams $params
      */
     public function results(
         string $messageBatchID,
-        array $params,
+        array|ResultsParams $params,
         ?RequestOptions $requestOptions = null,
     ): BetaMessageBatchIndividualResponse;
 }

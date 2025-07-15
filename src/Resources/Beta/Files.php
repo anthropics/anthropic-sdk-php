@@ -22,12 +22,12 @@ final class Files implements FilesContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{
-     *   afterID?: string, beforeID?: string, limit?: int, betas?: list<string>
+     * @param ListParams|array{
+     *   afterID?: string, beforeID?: string, limit?: int, anthropicBeta?: list<string>
      * } $params
      */
     public function list(
-        array $params,
+        array|ListParams $params,
         ?RequestOptions $requestOptions = null
     ): FileMetadata {
         [$parsed, $options] = ListParams::parseRequest($params, $requestOptions);
@@ -54,12 +54,12 @@ final class Files implements FilesContract
     }
 
     /**
-     * @param array{fileID?: string, betas?: list<string>} $params
+     * @param array{anthropicBeta?: list<string>}|DeleteParams $params
      */
     public function delete(
         string $fileID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|DeleteParams $params,
+        ?RequestOptions $requestOptions = null,
     ): DeletedFile {
         [$parsed, $options] = DeleteParams::parseRequest($params, $requestOptions);
         $resp = $this->client->request(
@@ -80,12 +80,12 @@ final class Files implements FilesContract
     }
 
     /**
-     * @param array{fileID?: string, betas?: list<string>} $params
+     * @param array{anthropicBeta?: list<string>}|DownloadParams $params
      */
     public function download(
         string $fileID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|DownloadParams $params,
+        ?RequestOptions $requestOptions = null,
     ): string {
         [$parsed, $options] = DownloadParams::parseRequest(
             $params,
@@ -109,12 +109,12 @@ final class Files implements FilesContract
     }
 
     /**
-     * @param array{fileID?: string, betas?: list<string>} $params
+     * @param array{anthropicBeta?: list<string>}|RetrieveMetadataParams $params
      */
     public function retrieveMetadata(
         string $fileID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|RetrieveMetadataParams $params,
+        ?RequestOptions $requestOptions = null,
     ): FileMetadata {
         [$parsed, $options] = RetrieveMetadataParams::parseRequest(
             $params,
@@ -138,10 +138,10 @@ final class Files implements FilesContract
     }
 
     /**
-     * @param array{file?: string, betas?: list<string>} $params
+     * @param array{file?: string, anthropicBeta?: list<string>}|UploadParams $params
      */
     public function upload(
-        array $params,
+        array|UploadParams $params,
         ?RequestOptions $requestOptions = null
     ): FileMetadata {
         [$parsed, $options] = UploadParams::parseRequest($params, $requestOptions);

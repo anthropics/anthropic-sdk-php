@@ -25,10 +25,12 @@ final class Batches implements BatchesContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{requests?: list<Request>, betas?: list<string>} $params
+     * @param CreateParams|array{
+     *   requests?: list<Request>, anthropicBeta?: list<string>
+     * } $params
      */
     public function create(
-        array $params,
+        array|CreateParams $params,
         ?RequestOptions $requestOptions = null
     ): BetaMessageBatch {
         [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
@@ -52,11 +54,11 @@ final class Batches implements BatchesContract
     }
 
     /**
-     * @param array{messageBatchID?: string, betas?: list<string>} $params
+     * @param array{anthropicBeta?: list<string>}|RetrieveParams $params
      */
     public function retrieve(
         string $messageBatchID,
-        array $params,
+        array|RetrieveParams $params,
         ?RequestOptions $requestOptions = null,
     ): BetaMessageBatch {
         [$parsed, $options] = RetrieveParams::parseRequest(
@@ -81,12 +83,12 @@ final class Batches implements BatchesContract
     }
 
     /**
-     * @param array{
-     *   afterID?: string, beforeID?: string, limit?: int, betas?: list<string>
+     * @param ListParams|array{
+     *   afterID?: string, beforeID?: string, limit?: int, anthropicBeta?: list<string>
      * } $params
      */
     public function list(
-        array $params,
+        array|ListParams $params,
         ?RequestOptions $requestOptions = null
     ): BetaMessageBatch {
         [$parsed, $options] = ListParams::parseRequest($params, $requestOptions);
@@ -113,11 +115,11 @@ final class Batches implements BatchesContract
     }
 
     /**
-     * @param array{messageBatchID?: string, betas?: list<string>} $params
+     * @param array{anthropicBeta?: list<string>}|DeleteParams $params
      */
     public function delete(
         string $messageBatchID,
-        array $params,
+        array|DeleteParams $params,
         ?RequestOptions $requestOptions = null,
     ): BetaDeletedMessageBatch {
         [$parsed, $options] = DeleteParams::parseRequest($params, $requestOptions);
@@ -139,11 +141,11 @@ final class Batches implements BatchesContract
     }
 
     /**
-     * @param array{messageBatchID?: string, betas?: list<string>} $params
+     * @param array{anthropicBeta?: list<string>}|CancelParams $params
      */
     public function cancel(
         string $messageBatchID,
-        array $params,
+        array|CancelParams $params,
         ?RequestOptions $requestOptions = null,
     ): BetaMessageBatch {
         [$parsed, $options] = CancelParams::parseRequest($params, $requestOptions);
@@ -165,11 +167,11 @@ final class Batches implements BatchesContract
     }
 
     /**
-     * @param array{messageBatchID?: string, betas?: list<string>} $params
+     * @param array{anthropicBeta?: list<string>}|ResultsParams $params
      */
     public function results(
         string $messageBatchID,
-        array $params,
+        array|ResultsParams $params,
         ?RequestOptions $requestOptions = null,
     ): BetaMessageBatchIndividualResponse {
         [$parsed, $options] = ResultsParams::parseRequest($params, $requestOptions);

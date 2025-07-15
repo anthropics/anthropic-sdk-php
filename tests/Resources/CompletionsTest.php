@@ -64,7 +64,7 @@ final class CompletionsTest extends TestCase
                     'temperature' => 1,
                     'topK' => 5,
                     'topP' => 0.7,
-                    'betas' => ['string'],
+                    'anthropicBeta' => ['string'],
                 ]
             )
         ;

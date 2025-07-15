@@ -18,7 +18,7 @@ final class Completions implements CompletionsContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{
+     * @param CreateParams|array{
      *   maxTokensToSample?: int,
      *   model?: string,
      *   prompt?: string,
@@ -28,11 +28,11 @@ final class Completions implements CompletionsContract
      *   temperature?: float,
      *   topK?: int,
      *   topP?: float,
-     *   betas?: list<string>,
+     *   anthropicBeta?: list<string>,
      * } $params
      */
     public function create(
-        array $params,
+        array|CreateParams $params,
         ?RequestOptions $requestOptions = null
     ): Completion {
         [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);

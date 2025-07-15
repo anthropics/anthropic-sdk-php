@@ -6,52 +6,57 @@ namespace Anthropic\Contracts\Beta;
 
 use Anthropic\Models\Beta\DeletedFile;
 use Anthropic\Models\Beta\FileMetadata;
+use Anthropic\Parameters\Beta\Files\DeleteParams;
+use Anthropic\Parameters\Beta\Files\DownloadParams;
+use Anthropic\Parameters\Beta\Files\ListParams;
+use Anthropic\Parameters\Beta\Files\RetrieveMetadataParams;
+use Anthropic\Parameters\Beta\Files\UploadParams;
 use Anthropic\RequestOptions;
 
 interface FilesContract
 {
     /**
-     * @param array{
-     *   afterID?: string, beforeID?: string, limit?: int, betas?: list<string>
+     * @param ListParams|array{
+     *   afterID?: string, beforeID?: string, limit?: int, anthropicBeta?: list<string>
      * } $params
      */
     public function list(
-        array $params,
+        array|ListParams $params,
         ?RequestOptions $requestOptions = null
     ): FileMetadata;
 
     /**
-     * @param array{fileID?: string, betas?: list<string>} $params
+     * @param array{anthropicBeta?: list<string>}|DeleteParams $params
      */
     public function delete(
         string $fileID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|DeleteParams $params,
+        ?RequestOptions $requestOptions = null,
     ): DeletedFile;
 
     /**
-     * @param array{fileID?: string, betas?: list<string>} $params
+     * @param array{anthropicBeta?: list<string>}|DownloadParams $params
      */
     public function download(
         string $fileID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|DownloadParams $params,
+        ?RequestOptions $requestOptions = null,
     ): string;
 
     /**
-     * @param array{fileID?: string, betas?: list<string>} $params
+     * @param array{anthropicBeta?: list<string>}|RetrieveMetadataParams $params
      */
     public function retrieveMetadata(
         string $fileID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|RetrieveMetadataParams $params,
+        ?RequestOptions $requestOptions = null,
     ): FileMetadata;
 
     /**
-     * @param array{file?: string, betas?: list<string>} $params
+     * @param array{file?: string, anthropicBeta?: list<string>}|UploadParams $params
      */
     public function upload(
-        array $params,
+        array|UploadParams $params,
         ?RequestOptions $requestOptions = null
     ): FileMetadata;
 }

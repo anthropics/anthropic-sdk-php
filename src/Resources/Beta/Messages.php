@@ -45,7 +45,7 @@ final class Messages implements MessagesContract
     }
 
     /**
-     * @param array{
+     * @param CreateParams|array{
      *   maxTokens?: int,
      *   messages?: list<BetaMessageParam>,
      *   model?: string,
@@ -64,11 +64,11 @@ final class Messages implements MessagesContract
      *   >,
      *   topK?: int,
      *   topP?: float,
-     *   betas?: list<string>,
+     *   anthropicBeta?: list<string>,
      * } $params
      */
     public function create(
-        array $params,
+        array|CreateParams $params,
         ?RequestOptions $requestOptions = null
     ): BetaMessage {
         [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
@@ -89,7 +89,7 @@ final class Messages implements MessagesContract
     }
 
     /**
-     * @param array{
+     * @param CountTokensParams|array{
      *   messages?: list<BetaMessageParam>,
      *   model?: string,
      *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
@@ -99,11 +99,11 @@ final class Messages implements MessagesContract
      *   tools?: list<
      *     BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305
      *   >,
-     *   betas?: list<string>,
+     *   anthropicBeta?: list<string>,
      * } $params
      */
     public function countTokens(
-        array $params,
+        array|CountTokensParams $params,
         ?RequestOptions $requestOptions = null
     ): BetaMessageTokensCount {
         [$parsed, $options] = CountTokensParams::parseRequest(

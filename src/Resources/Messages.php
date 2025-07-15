@@ -39,7 +39,7 @@ final class Messages implements MessagesContract
     }
 
     /**
-     * @param array{
+     * @param CreateParams|array{
      *   maxTokens?: int,
      *   messages?: list<MessageParam>,
      *   model?: string,
@@ -59,7 +59,7 @@ final class Messages implements MessagesContract
      * } $params
      */
     public function create(
-        array $params,
+        array|CreateParams $params,
         ?RequestOptions $requestOptions = null
     ): Message {
         [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
@@ -75,7 +75,7 @@ final class Messages implements MessagesContract
     }
 
     /**
-     * @param array{
+     * @param CountTokensParams|array{
      *   messages?: list<MessageParam>,
      *   model?: string,
      *   system?: string|list<TextBlockParam>,
@@ -87,7 +87,7 @@ final class Messages implements MessagesContract
      * } $params
      */
     public function countTokens(
-        array $params,
+        array|CountTokensParams $params,
         ?RequestOptions $requestOptions = null
     ): MessageTokensCount {
         [$parsed, $options] = CountTokensParams::parseRequest(

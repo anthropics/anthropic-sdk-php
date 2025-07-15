@@ -147,7 +147,7 @@ final class MessagesTest extends TestCase
                     ],
                     'topK' => 5,
                     'topP' => 0.7,
-                    'betas' => ['string'],
+                    'anthropicBeta' => ['string'],
                 ]
             )
         ;
@@ -249,7 +249,7 @@ final class MessagesTest extends TestCase
                             type: 'custom',
                         ),
                     ],
-                    'betas' => ['string'],
+                    'anthropicBeta' => ['string'],
                 ]
             )
         ;
