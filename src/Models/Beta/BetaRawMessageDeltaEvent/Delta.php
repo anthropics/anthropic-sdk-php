@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Beta\BetaContainer;
+use Anthropic\Models\Beta\BetaStopReason;
 
 final class Delta implements BaseModel
 {
@@ -16,6 +17,7 @@ final class Delta implements BaseModel
     #[Api]
     public BetaContainer $container;
 
+    /** @var BetaStopReason::* $stopReason */
     #[Api('stop_reason')]
     public string $stopReason;
 
@@ -24,6 +26,8 @@ final class Delta implements BaseModel
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param BetaStopReason::* $stopReason
      */
     final public function __construct(
         BetaContainer $container,

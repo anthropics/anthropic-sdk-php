@@ -9,15 +9,19 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Models\WebSearchTool20250305\Name;
+use Anthropic\Models\WebSearchTool20250305\Type;
 use Anthropic\Models\WebSearchTool20250305\UserLocation;
 
 final class WebSearchTool20250305 implements BaseModel
 {
     use Model;
 
+    /** @var Name::* $name */
     #[Api]
     public string $name;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
@@ -49,6 +53,8 @@ final class WebSearchTool20250305 implements BaseModel
     /**
      * You must use named parameters to construct this object.
      *
+     * @param Name::*           $name
+     * @param Type::*           $type
      * @param null|list<string> $allowedDomains
      * @param null|list<string> $blockedDomains
      */

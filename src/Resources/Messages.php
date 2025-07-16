@@ -12,6 +12,7 @@ use Anthropic\Models\MessageCountTokensTool\TextEditor20250429 as TextEditor2025
 use Anthropic\Models\MessageParam;
 use Anthropic\Models\MessageTokensCount;
 use Anthropic\Models\Metadata;
+use Anthropic\Models\Model\UnionMember0;
 use Anthropic\Models\TextBlockParam;
 use Anthropic\Models\ThinkingConfigDisabled;
 use Anthropic\Models\ThinkingConfigEnabled;
@@ -26,6 +27,8 @@ use Anthropic\Models\ToolUnion\TextEditor20250429;
 use Anthropic\Models\WebSearchTool20250305;
 use Anthropic\Parameters\Messages\CountTokensParams;
 use Anthropic\Parameters\Messages\CreateParams;
+use Anthropic\Parameters\Messages\CreateParams\ServiceTier;
+use Anthropic\Parameters\Messages\CreateParams\Stream;
 use Anthropic\RequestOptions;
 use Anthropic\Resources\Messages\Batches;
 
@@ -42,11 +45,11 @@ final class Messages implements MessagesContract
      * @param CreateParams|array{
      *   maxTokens?: int,
      *   messages?: list<MessageParam>,
-     *   model?: string,
+     *   model?: UnionMember0::*|string,
      *   metadata?: Metadata,
-     *   serviceTier?: string,
+     *   serviceTier?: ServiceTier::*,
      *   stopSequences?: list<string>,
-     *   stream?: bool,
+     *   stream?: Stream::*,
      *   system?: string|list<TextBlockParam>,
      *   temperature?: float,
      *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
@@ -77,7 +80,7 @@ final class Messages implements MessagesContract
     /**
      * @param CountTokensParams|array{
      *   messages?: list<MessageParam>,
-     *   model?: string,
+     *   model?: UnionMember0::*|string,
      *   system?: string|list<TextBlockParam>,
      *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
      *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,

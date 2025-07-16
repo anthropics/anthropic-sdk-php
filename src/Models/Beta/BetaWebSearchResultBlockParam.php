@@ -7,6 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Beta\BetaWebSearchResultBlockParam\Type;
 
 final class BetaWebSearchResultBlockParam implements BaseModel
 {
@@ -18,6 +19,7 @@ final class BetaWebSearchResultBlockParam implements BaseModel
     #[Api]
     public string $title;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
@@ -29,6 +31,8 @@ final class BetaWebSearchResultBlockParam implements BaseModel
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         string $encryptedContent,

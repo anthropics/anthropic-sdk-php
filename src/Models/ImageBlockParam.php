@@ -7,6 +7,7 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\ImageBlockParam\Type;
 
 final class ImageBlockParam implements BaseModel
 {
@@ -15,6 +16,7 @@ final class ImageBlockParam implements BaseModel
     #[Api]
     public Base64ImageSource|URLImageSource $source;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
@@ -23,6 +25,8 @@ final class ImageBlockParam implements BaseModel
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         Base64ImageSource|URLImageSource $source,

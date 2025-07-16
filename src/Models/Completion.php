@@ -7,6 +7,8 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Completion\Type;
+use Anthropic\Models\Model\UnionMember0;
 
 final class Completion implements BaseModel
 {
@@ -18,17 +20,22 @@ final class Completion implements BaseModel
     #[Api]
     public string $completion;
 
+    /** @var string|UnionMember0::* $model */
     #[Api]
     public string $model;
 
     #[Api('stop_reason')]
     public ?string $stopReason;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type = 'completion';
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param string|UnionMember0::* $model
+     * @param Type::*                $type
      */
     final public function __construct(
         string $id,

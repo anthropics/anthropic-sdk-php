@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
+use Anthropic\Models\Beta\BetaCodeExecutionResultBlockParam\Type;
 
 final class BetaCodeExecutionResultBlockParam implements BaseModel
 {
@@ -26,6 +27,7 @@ final class BetaCodeExecutionResultBlockParam implements BaseModel
     #[Api]
     public string $stdout;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
@@ -33,6 +35,7 @@ final class BetaCodeExecutionResultBlockParam implements BaseModel
      * You must use named parameters to construct this object.
      *
      * @param list<BetaCodeExecutionOutputBlockParam> $content
+     * @param Type::*                                 $type
      */
     final public function __construct(
         array $content,

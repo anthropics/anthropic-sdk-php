@@ -10,6 +10,7 @@ use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Parameters\Beta\Messages\Batches\CreateParams\Request;
 
 final class CreateParams implements BaseModel
@@ -21,15 +22,18 @@ final class CreateParams implements BaseModel
     #[Api(type: new ListOf(Request::class))]
     public array $requests;
 
-    /** @var null|list<string> $anthropicBeta */
-    #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
+    /** @var null|list<string|UnionMember1::*> $anthropicBeta */
+    #[Api(
+        type: new ListOf(new UnionOf(['string', UnionMember1::class])),
+        optional: true,
+    )]
     public ?array $anthropicBeta;
 
     /**
      * You must use named parameters to construct this object.
      *
-     * @param list<Request>     $requests
-     * @param null|list<string> $anthropicBeta
+     * @param list<Request>                     $requests
+     * @param null|list<string|UnionMember1::*> $anthropicBeta
      */
     final public function __construct(
         array $requests,

@@ -7,6 +7,8 @@ namespace Anthropic\Models\Beta\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Beta\Messages\BetaMessageBatch\ProcessingStatus;
+use Anthropic\Models\Beta\Messages\BetaMessageBatch\Type;
 
 final class BetaMessageBatch implements BaseModel
 {
@@ -30,6 +32,7 @@ final class BetaMessageBatch implements BaseModel
     #[Api('expires_at')]
     public \DateTimeInterface $expiresAt;
 
+    /** @var ProcessingStatus::* $processingStatus */
     #[Api('processing_status')]
     public string $processingStatus;
 
@@ -39,11 +42,15 @@ final class BetaMessageBatch implements BaseModel
     #[Api('results_url')]
     public ?string $resultsURL;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type = 'message_batch';
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param ProcessingStatus::* $processingStatus
+     * @param Type::*             $type
      */
     final public function __construct(
         string $id,

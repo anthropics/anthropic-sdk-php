@@ -12,6 +12,7 @@ use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 use Anthropic\Models\MessageCountTokensTool\TextEditor20250429;
 use Anthropic\Models\MessageParam;
+use Anthropic\Models\Model\UnionMember0;
 use Anthropic\Models\TextBlockParam;
 use Anthropic\Models\ThinkingConfigDisabled;
 use Anthropic\Models\ThinkingConfigEnabled;
@@ -33,6 +34,7 @@ final class CountTokensParams implements BaseModel
     #[Api(type: new ListOf(MessageParam::class))]
     public array $messages;
 
+    /** @var string|UnionMember0::* $model */
     #[Api]
     public string $model;
 
@@ -74,6 +76,7 @@ final class CountTokensParams implements BaseModel
      * You must use named parameters to construct this object.
      *
      * @param list<MessageParam>               $messages
+     * @param string|UnionMember0::*           $model
      * @param null|list<TextBlockParam>|string $system
      * @param list<
      *   Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305

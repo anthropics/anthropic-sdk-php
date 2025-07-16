@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
+use Anthropic\Models\Beta\BetaSearchResultBlockParam\Type;
 
 final class BetaSearchResultBlockParam implements BaseModel
 {
@@ -23,6 +24,7 @@ final class BetaSearchResultBlockParam implements BaseModel
     #[Api]
     public string $title;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
@@ -36,6 +38,7 @@ final class BetaSearchResultBlockParam implements BaseModel
      * You must use named parameters to construct this object.
      *
      * @param list<BetaTextBlockParam> $content
+     * @param Type::*                  $type
      */
     final public function __construct(
         array $content,

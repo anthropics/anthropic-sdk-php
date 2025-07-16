@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts\Beta\Messages;
 
+use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Beta\Messages\BetaDeletedMessageBatch;
 use Anthropic\Models\Beta\Messages\BetaMessageBatch;
 use Anthropic\Models\Beta\Messages\BetaMessageBatchIndividualResponse;
@@ -20,7 +21,7 @@ interface BatchesContract
 {
     /**
      * @param CreateParams|array{
-     *   requests?: list<Request>, anthropicBeta?: list<string>
+     *   requests?: list<Request>, anthropicBeta?: list<string|UnionMember1::*>
      * } $params
      */
     public function create(
@@ -29,7 +30,9 @@ interface BatchesContract
     ): BetaMessageBatch;
 
     /**
-     * @param array{anthropicBeta?: list<string>}|RetrieveParams $params
+     * @param RetrieveParams|array{
+     *   anthropicBeta?: list<string|UnionMember1::*>
+     * } $params
      */
     public function retrieve(
         string $messageBatchID,
@@ -39,7 +42,10 @@ interface BatchesContract
 
     /**
      * @param ListParams|array{
-     *   afterID?: string, beforeID?: string, limit?: int, anthropicBeta?: list<string>
+     *   afterID?: string,
+     *   beforeID?: string,
+     *   limit?: int,
+     *   anthropicBeta?: list<string|UnionMember1::*>,
      * } $params
      */
     public function list(
@@ -48,7 +54,7 @@ interface BatchesContract
     ): BetaMessageBatch;
 
     /**
-     * @param array{anthropicBeta?: list<string>}|DeleteParams $params
+     * @param array{anthropicBeta?: list<string|UnionMember1::*>}|DeleteParams $params
      */
     public function delete(
         string $messageBatchID,
@@ -57,7 +63,7 @@ interface BatchesContract
     ): BetaDeletedMessageBatch;
 
     /**
-     * @param array{anthropicBeta?: list<string>}|CancelParams $params
+     * @param array{anthropicBeta?: list<string|UnionMember1::*>}|CancelParams $params
      */
     public function cancel(
         string $messageBatchID,
@@ -66,7 +72,7 @@ interface BatchesContract
     ): BetaMessageBatch;
 
     /**
-     * @param array{anthropicBeta?: list<string>}|ResultsParams $params
+     * @param array{anthropicBeta?: list<string|UnionMember1::*>}|ResultsParams $params
      */
     public function results(
         string $messageBatchID,

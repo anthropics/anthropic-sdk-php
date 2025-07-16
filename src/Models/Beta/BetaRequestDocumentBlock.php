@@ -7,6 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Beta\BetaRequestDocumentBlock\Type;
 
 final class BetaRequestDocumentBlock implements BaseModel
 {
@@ -15,6 +16,7 @@ final class BetaRequestDocumentBlock implements BaseModel
     #[Api]
     public BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
@@ -32,6 +34,8 @@ final class BetaRequestDocumentBlock implements BaseModel
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source,

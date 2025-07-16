@@ -7,6 +7,7 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\GatewayTimeoutError\Type;
 
 final class GatewayTimeoutError implements BaseModel
 {
@@ -15,11 +16,14 @@ final class GatewayTimeoutError implements BaseModel
     #[Api]
     public string $message = 'Request timeout';
 
+    /** @var Type::* $type */
     #[Api]
     public string $type = 'timeout_error';
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         string $message = 'Request timeout',

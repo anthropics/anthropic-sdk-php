@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Beta\BetaMessage;
+use Anthropic\Models\Beta\Messages\BetaMessageBatchSucceededResult\Type;
 
 final class BetaMessageBatchSucceededResult implements BaseModel
 {
@@ -16,11 +17,14 @@ final class BetaMessageBatchSucceededResult implements BaseModel
     #[Api]
     public BetaMessage $message;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type = 'succeeded';
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         BetaMessage $message,

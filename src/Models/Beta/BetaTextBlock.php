@@ -9,6 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Models\Beta\BetaTextBlock\Type;
 
 final class BetaTextBlock implements BaseModel
 {
@@ -42,6 +43,7 @@ final class BetaTextBlock implements BaseModel
     #[Api]
     public string $text;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type = 'text';
 
@@ -51,6 +53,7 @@ final class BetaTextBlock implements BaseModel
      * @param list<
      *   BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation
      * >|null $citations
+     * @param Type::* $type
      */
     final public function __construct(
         ?array $citations,

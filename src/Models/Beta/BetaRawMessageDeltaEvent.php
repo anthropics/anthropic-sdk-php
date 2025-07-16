@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Beta\BetaRawMessageDeltaEvent\Delta;
+use Anthropic\Models\Beta\BetaRawMessageDeltaEvent\Type;
 
 final class BetaRawMessageDeltaEvent implements BaseModel
 {
@@ -16,6 +17,7 @@ final class BetaRawMessageDeltaEvent implements BaseModel
     #[Api]
     public Delta $delta;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type = 'message_delta';
 
@@ -24,6 +26,8 @@ final class BetaRawMessageDeltaEvent implements BaseModel
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         Delta $delta,

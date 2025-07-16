@@ -7,6 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Beta\BetaMCPToolUseBlockParam\Type;
 
 final class BetaMCPToolUseBlockParam implements BaseModel
 {
@@ -24,6 +25,7 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     #[Api('server_name')]
     public string $serverName;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
@@ -32,6 +34,8 @@ final class BetaMCPToolUseBlockParam implements BaseModel
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         string $id,

@@ -10,7 +10,10 @@ use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Metadata;
+use Anthropic\Models\Model\UnionMember0;
+use Anthropic\Parameters\Completions\CreateParams\Stream;
 
 final class CreateParams implements BaseModel
 {
@@ -20,6 +23,7 @@ final class CreateParams implements BaseModel
     #[Api('max_tokens_to_sample')]
     public int $maxTokensToSample;
 
+    /** @var string|UnionMember0::* $model */
     #[Api]
     public string $model;
 
@@ -33,6 +37,7 @@ final class CreateParams implements BaseModel
     #[Api('stop_sequences', type: new ListOf('string'), optional: true)]
     public ?array $stopSequences;
 
+    /** @var null|Stream::* $stream */
     #[Api(optional: true)]
     public ?bool $stream;
 
@@ -45,15 +50,20 @@ final class CreateParams implements BaseModel
     #[Api('top_p', optional: true)]
     public ?float $topP;
 
-    /** @var null|list<string> $anthropicBeta */
-    #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
+    /** @var null|list<string|UnionMember1::*> $anthropicBeta */
+    #[Api(
+        type: new ListOf(new UnionOf(['string', UnionMember1::class])),
+        optional: true,
+    )]
     public ?array $anthropicBeta;
 
     /**
      * You must use named parameters to construct this object.
      *
-     * @param null|list<string> $stopSequences
-     * @param null|list<string> $anthropicBeta
+     * @param string|UnionMember0::*            $model
+     * @param null|list<string>                 $stopSequences
+     * @param null|Stream::*                    $stream
+     * @param null|list<string|UnionMember1::*> $anthropicBeta
      */
     final public function __construct(
         int $maxTokensToSample,

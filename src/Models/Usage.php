@@ -7,6 +7,7 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Usage\ServiceTier;
 
 final class Usage implements BaseModel
 {
@@ -27,11 +28,14 @@ final class Usage implements BaseModel
     #[Api('server_tool_use')]
     public ServerToolUsage $serverToolUse;
 
+    /** @var null|ServiceTier::* $serviceTier */
     #[Api('service_tier')]
     public ?string $serviceTier;
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param null|ServiceTier::* $serviceTier
      */
     final public function __construct(
         ?int $cacheCreationInputTokens,

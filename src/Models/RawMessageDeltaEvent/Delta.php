@@ -7,11 +7,13 @@ namespace Anthropic\Models\RawMessageDeltaEvent;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\StopReason;
 
 final class Delta implements BaseModel
 {
     use Model;
 
+    /** @var StopReason::* $stopReason */
     #[Api('stop_reason')]
     public string $stopReason;
 
@@ -20,6 +22,8 @@ final class Delta implements BaseModel
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param StopReason::* $stopReason
      */
     final public function __construct(string $stopReason, ?string $stopSequence)
     {

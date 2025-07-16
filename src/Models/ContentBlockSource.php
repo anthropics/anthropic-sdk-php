@@ -9,6 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Models\ContentBlockSource\Type;
 
 final class ContentBlockSource implements BaseModel
 {
@@ -27,6 +28,7 @@ final class ContentBlockSource implements BaseModel
     )]
     public array|string $content;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
@@ -34,6 +36,7 @@ final class ContentBlockSource implements BaseModel
      * You must use named parameters to construct this object.
      *
      * @param list<ImageBlockParam|TextBlockParam>|string $content
+     * @param Type::*                                     $type
      */
     final public function __construct(array|string $content, string $type)
     {

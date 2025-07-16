@@ -9,6 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Models\Beta\BetaMessageParam\Role;
 
 final class BetaMessageParam implements BaseModel
 {
@@ -48,6 +49,7 @@ final class BetaMessageParam implements BaseModel
     )]
     public array|string $content;
 
+    /** @var Role::* $role */
     #[Api]
     public string $role;
 
@@ -57,6 +59,7 @@ final class BetaMessageParam implements BaseModel
      * @param string|list<
      *   BetaTextBlockParam|BetaImageBlockParam|BetaRequestDocumentBlock|BetaSearchResultBlockParam|BetaThinkingBlockParam|BetaRedactedThinkingBlockParam|BetaToolUseBlockParam|BetaToolResultBlockParam|BetaServerToolUseBlockParam|BetaWebSearchToolResultBlockParam|BetaCodeExecutionToolResultBlockParam|BetaMCPToolUseBlockParam|BetaRequestMCPToolResultBlockParam|BetaContainerUploadBlockParam
      * > $content
+     * @param Role::* $role
      */
     final public function __construct(array|string $content, string $role)
     {

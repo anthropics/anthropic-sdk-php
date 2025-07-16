@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts\Beta;
 
+use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Beta\BetaModelInfo;
 use Anthropic\Parameters\Beta\Models\ListParams;
 use Anthropic\Parameters\Beta\Models\RetrieveParams;
@@ -12,7 +13,9 @@ use Anthropic\RequestOptions;
 interface ModelsContract
 {
     /**
-     * @param array{anthropicBeta?: list<string>}|RetrieveParams $params
+     * @param RetrieveParams|array{
+     *   anthropicBeta?: list<string|UnionMember1::*>
+     * } $params
      */
     public function retrieve(
         string $modelID,
@@ -22,7 +25,10 @@ interface ModelsContract
 
     /**
      * @param ListParams|array{
-     *   afterID?: string, beforeID?: string, limit?: int, anthropicBeta?: list<string>
+     *   afterID?: string,
+     *   beforeID?: string,
+     *   limit?: int,
+     *   anthropicBeta?: list<string|UnionMember1::*>,
      * } $params
      */
     public function list(

@@ -9,6 +9,9 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Models\Message\Role;
+use Anthropic\Models\Message\Type;
+use Anthropic\Models\Model\UnionMember0;
 
 final class Message implements BaseModel
 {
@@ -38,18 +41,22 @@ final class Message implements BaseModel
     )]
     public array $content;
 
+    /** @var string|UnionMember0::* $model */
     #[Api]
     public string $model;
 
+    /** @var Role::* $role */
     #[Api]
     public string $role = 'assistant';
 
+    /** @var StopReason::* $stopReason */
     #[Api('stop_reason')]
     public string $stopReason;
 
     #[Api('stop_sequence')]
     public ?string $stopSequence;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type = 'message';
 
@@ -62,6 +69,10 @@ final class Message implements BaseModel
      * @param list<
      *   TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock
      * > $content
+     * @param string|UnionMember0::* $model
+     * @param Role::*                $role
+     * @param StopReason::*          $stopReason
+     * @param Type::*                $type
      */
     final public function __construct(
         string $id,

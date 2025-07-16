@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\ErrorResponse;
+use Anthropic\Models\Messages\MessageBatchErroredResult\Type;
 
 final class MessageBatchErroredResult implements BaseModel
 {
@@ -16,11 +17,14 @@ final class MessageBatchErroredResult implements BaseModel
     #[Api]
     public ErrorResponse $error;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type = 'errored';
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         ErrorResponse $error,

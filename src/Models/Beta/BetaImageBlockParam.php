@@ -7,6 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Beta\BetaImageBlockParam\Type;
 
 final class BetaImageBlockParam implements BaseModel
 {
@@ -15,6 +16,7 @@ final class BetaImageBlockParam implements BaseModel
     #[Api]
     public BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
@@ -23,6 +25,8 @@ final class BetaImageBlockParam implements BaseModel
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source,

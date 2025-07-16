@@ -9,6 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Models\TextBlockParam\Type;
 
 final class TextBlockParam implements BaseModel
 {
@@ -17,6 +18,7 @@ final class TextBlockParam implements BaseModel
     #[Api]
     public string $text;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
@@ -51,6 +53,7 @@ final class TextBlockParam implements BaseModel
     /**
      * You must use named parameters to construct this object.
      *
+     * @param Type::* $type
      * @param list<
      *   CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam
      * >|null $citations

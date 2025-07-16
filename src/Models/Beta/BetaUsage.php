@@ -7,6 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Beta\BetaUsage\ServiceTier;
 
 final class BetaUsage implements BaseModel
 {
@@ -30,11 +31,14 @@ final class BetaUsage implements BaseModel
     #[Api('server_tool_use')]
     public BetaServerToolUsage $serverToolUse;
 
+    /** @var null|ServiceTier::* $serviceTier */
     #[Api('service_tier')]
     public ?string $serviceTier;
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param null|ServiceTier::* $serviceTier
      */
     final public function __construct(
         BetaCacheCreation $cacheCreation,

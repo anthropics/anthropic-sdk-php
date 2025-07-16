@@ -8,6 +8,7 @@ use Anthropic\Client;
 use Anthropic\Contracts\Beta\Messages\BatchesContract;
 use Anthropic\Core\Serde;
 use Anthropic\Core\Util;
+use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Beta\Messages\BetaDeletedMessageBatch;
 use Anthropic\Models\Beta\Messages\BetaMessageBatch;
 use Anthropic\Models\Beta\Messages\BetaMessageBatchIndividualResponse;
@@ -26,7 +27,7 @@ final class Batches implements BatchesContract
 
     /**
      * @param CreateParams|array{
-     *   requests?: list<Request>, anthropicBeta?: list<string>
+     *   requests?: list<Request>, anthropicBeta?: list<string|UnionMember1::*>
      * } $params
      */
     public function create(
@@ -54,7 +55,9 @@ final class Batches implements BatchesContract
     }
 
     /**
-     * @param array{anthropicBeta?: list<string>}|RetrieveParams $params
+     * @param RetrieveParams|array{
+     *   anthropicBeta?: list<string|UnionMember1::*>
+     * } $params
      */
     public function retrieve(
         string $messageBatchID,
@@ -84,7 +87,10 @@ final class Batches implements BatchesContract
 
     /**
      * @param ListParams|array{
-     *   afterID?: string, beforeID?: string, limit?: int, anthropicBeta?: list<string>
+     *   afterID?: string,
+     *   beforeID?: string,
+     *   limit?: int,
+     *   anthropicBeta?: list<string|UnionMember1::*>,
      * } $params
      */
     public function list(
@@ -115,7 +121,7 @@ final class Batches implements BatchesContract
     }
 
     /**
-     * @param array{anthropicBeta?: list<string>}|DeleteParams $params
+     * @param array{anthropicBeta?: list<string|UnionMember1::*>}|DeleteParams $params
      */
     public function delete(
         string $messageBatchID,
@@ -141,7 +147,7 @@ final class Batches implements BatchesContract
     }
 
     /**
-     * @param array{anthropicBeta?: list<string>}|CancelParams $params
+     * @param array{anthropicBeta?: list<string|UnionMember1::*>}|CancelParams $params
      */
     public function cancel(
         string $messageBatchID,
@@ -167,7 +173,7 @@ final class Batches implements BatchesContract
     }
 
     /**
-     * @param array{anthropicBeta?: list<string>}|ResultsParams $params
+     * @param array{anthropicBeta?: list<string|UnionMember1::*>}|ResultsParams $params
      */
     public function results(
         string $messageBatchID,

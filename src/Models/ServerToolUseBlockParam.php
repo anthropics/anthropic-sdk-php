@@ -7,6 +7,8 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\ServerToolUseBlockParam\Name;
+use Anthropic\Models\ServerToolUseBlockParam\Type;
 
 final class ServerToolUseBlockParam implements BaseModel
 {
@@ -18,9 +20,11 @@ final class ServerToolUseBlockParam implements BaseModel
     #[Api]
     public mixed $input;
 
+    /** @var Name::* $name */
     #[Api]
     public string $name;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
@@ -29,6 +33,9 @@ final class ServerToolUseBlockParam implements BaseModel
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Name::* $name
+     * @param Type::* $type
      */
     final public function __construct(
         string $id,

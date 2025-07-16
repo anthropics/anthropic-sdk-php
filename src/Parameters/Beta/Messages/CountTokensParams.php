@@ -10,6 +10,7 @@ use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Beta\BetaCodeExecutionTool20250522;
 use Anthropic\Models\Beta\BetaMessageParam;
 use Anthropic\Models\Beta\BetaRequestMCPServerURLDefinition;
@@ -29,6 +30,7 @@ use Anthropic\Models\Beta\BetaToolTextEditor20241022;
 use Anthropic\Models\Beta\BetaToolTextEditor20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20250429;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305;
+use Anthropic\Models\Model\UnionMember0;
 
 final class CountTokensParams implements BaseModel
 {
@@ -39,6 +41,7 @@ final class CountTokensParams implements BaseModel
     #[Api(type: new ListOf(BetaMessageParam::class))]
     public array $messages;
 
+    /** @var string|UnionMember0::* $model */
     #[Api]
     public string $model;
 
@@ -89,20 +92,24 @@ final class CountTokensParams implements BaseModel
     )]
     public ?array $tools;
 
-    /** @var null|list<string> $anthropicBeta */
-    #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
+    /** @var null|list<string|UnionMember1::*> $anthropicBeta */
+    #[Api(
+        type: new ListOf(new UnionOf(['string', UnionMember1::class])),
+        optional: true,
+    )]
     public ?array $anthropicBeta;
 
     /**
      * You must use named parameters to construct this object.
      *
      * @param list<BetaMessageParam>                       $messages
+     * @param string|UnionMember0::*                       $model
      * @param null|list<BetaRequestMCPServerURLDefinition> $mcpServers
      * @param null|list<BetaTextBlockParam>|string         $system
      * @param list<
      *   BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305
      * >|null $tools
-     * @param null|list<string> $anthropicBeta
+     * @param null|list<string|UnionMember1::*> $anthropicBeta
      */
     final public function __construct(
         array $messages,

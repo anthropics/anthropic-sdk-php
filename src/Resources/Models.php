@@ -8,6 +8,7 @@ use Anthropic\Client;
 use Anthropic\Contracts\ModelsContract;
 use Anthropic\Core\Serde;
 use Anthropic\Core\Util;
+use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\ModelInfo;
 use Anthropic\Parameters\Models\ListParams;
 use Anthropic\Parameters\Models\RetrieveParams;
@@ -18,7 +19,9 @@ final class Models implements ModelsContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{anthropicBeta?: list<string>}|RetrieveParams $params
+     * @param RetrieveParams|array{
+     *   anthropicBeta?: list<string|UnionMember1::*>
+     * } $params
      */
     public function retrieve(
         string $modelID,
@@ -45,7 +48,10 @@ final class Models implements ModelsContract
 
     /**
      * @param ListParams|array{
-     *   afterID?: string, beforeID?: string, limit?: int, anthropicBeta?: list<string>
+     *   afterID?: string,
+     *   beforeID?: string,
+     *   limit?: int,
+     *   anthropicBeta?: list<string|UnionMember1::*>,
      * } $params
      */
     public function list(

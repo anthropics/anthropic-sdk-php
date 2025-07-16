@@ -9,6 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Models\WebSearchToolResultBlockParam\Type;
 
 final class WebSearchToolResultBlockParam implements BaseModel
 {
@@ -28,6 +29,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
     #[Api('tool_use_id')]
     public string $toolUseID;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
@@ -38,6 +40,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
      * You must use named parameters to construct this object.
      *
      * @param list<WebSearchResultBlockParam>|WebSearchToolRequestError $content
+     * @param Type::*                                                   $type
      */
     final public function __construct(
         array|WebSearchToolRequestError $content,

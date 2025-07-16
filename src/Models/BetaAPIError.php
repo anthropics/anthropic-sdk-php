@@ -7,6 +7,7 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\BetaAPIError\Type;
 
 final class BetaAPIError implements BaseModel
 {
@@ -15,11 +16,14 @@ final class BetaAPIError implements BaseModel
     #[Api]
     public string $message = 'Internal server error';
 
+    /** @var Type::* $type */
     #[Api]
     public string $type = 'api_error';
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         string $message = 'Internal server error',

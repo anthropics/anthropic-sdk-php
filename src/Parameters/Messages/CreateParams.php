@@ -12,6 +12,7 @@ use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
 use Anthropic\Models\MessageParam;
 use Anthropic\Models\Metadata;
+use Anthropic\Models\Model\UnionMember0;
 use Anthropic\Models\TextBlockParam;
 use Anthropic\Models\ThinkingConfigDisabled;
 use Anthropic\Models\ThinkingConfigEnabled;
@@ -24,6 +25,8 @@ use Anthropic\Models\ToolChoiceTool;
 use Anthropic\Models\ToolTextEditor20250124;
 use Anthropic\Models\ToolUnion\TextEditor20250429;
 use Anthropic\Models\WebSearchTool20250305;
+use Anthropic\Parameters\Messages\CreateParams\ServiceTier;
+use Anthropic\Parameters\Messages\CreateParams\Stream;
 
 final class CreateParams implements BaseModel
 {
@@ -37,12 +40,14 @@ final class CreateParams implements BaseModel
     #[Api(type: new ListOf(MessageParam::class))]
     public array $messages;
 
+    /** @var string|UnionMember0::* $model */
     #[Api]
     public string $model;
 
     #[Api(optional: true)]
     public ?Metadata $metadata;
 
+    /** @var null|ServiceTier::* $serviceTier */
     #[Api('service_tier', optional: true)]
     public ?string $serviceTier;
 
@@ -50,6 +55,7 @@ final class CreateParams implements BaseModel
     #[Api('stop_sequences', type: new ListOf('string'), optional: true)]
     public ?array $stopSequences;
 
+    /** @var null|Stream::* $stream */
     #[Api(optional: true)]
     public ?bool $stream;
 
@@ -100,7 +106,10 @@ final class CreateParams implements BaseModel
      * You must use named parameters to construct this object.
      *
      * @param list<MessageParam>               $messages
+     * @param string|UnionMember0::*           $model
+     * @param null|ServiceTier::*              $serviceTier
      * @param null|list<string>                $stopSequences
+     * @param null|Stream::*                   $stream
      * @param null|list<TextBlockParam>|string $system
      * @param list<
      *   Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305

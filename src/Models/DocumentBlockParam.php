@@ -7,6 +7,7 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\DocumentBlockParam\Type;
 
 final class DocumentBlockParam implements BaseModel
 {
@@ -15,6 +16,7 @@ final class DocumentBlockParam implements BaseModel
     #[Api]
     public Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
@@ -32,6 +34,8 @@ final class DocumentBlockParam implements BaseModel
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source,

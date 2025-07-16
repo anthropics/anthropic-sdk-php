@@ -7,6 +7,7 @@ namespace Anthropic\Models\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Messages\DeletedMessageBatch\Type;
 
 final class DeletedMessageBatch implements BaseModel
 {
@@ -15,11 +16,14 @@ final class DeletedMessageBatch implements BaseModel
     #[Api]
     public string $id;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type = 'message_batch_deleted';
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         string $id,

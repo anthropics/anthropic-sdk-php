@@ -7,6 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Beta\BetaCitationSearchResultLocation\Type;
 
 final class BetaCitationSearchResultLocation implements BaseModel
 {
@@ -30,11 +31,14 @@ final class BetaCitationSearchResultLocation implements BaseModel
     #[Api]
     public ?string $title;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type = 'search_result_location';
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         string $citedText,

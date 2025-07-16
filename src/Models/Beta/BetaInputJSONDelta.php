@@ -7,6 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Beta\BetaInputJSONDelta\Type;
 
 final class BetaInputJSONDelta implements BaseModel
 {
@@ -15,11 +16,14 @@ final class BetaInputJSONDelta implements BaseModel
     #[Api('partial_json')]
     public string $partialJSON;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type = 'input_json_delta';
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         string $partialJSON,

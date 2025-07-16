@@ -7,6 +7,7 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\ModelInfo\Type;
 
 final class ModelInfo implements BaseModel
 {
@@ -21,11 +22,14 @@ final class ModelInfo implements BaseModel
     #[Api('display_name')]
     public string $displayName;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type = 'model';
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         string $id,

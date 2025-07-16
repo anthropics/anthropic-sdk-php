@@ -29,6 +29,8 @@ use Anthropic\Models\Beta\BetaToolTextEditor20241022;
 use Anthropic\Models\Beta\BetaToolTextEditor20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20250429;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305;
+use Anthropic\Models\Model\UnionMember0;
+use Anthropic\Parameters\Beta\Messages\Batches\CreateParams\Request\Params\ServiceTier;
 
 final class Params implements BaseModel
 {
@@ -41,6 +43,7 @@ final class Params implements BaseModel
     #[Api(type: new ListOf(BetaMessageParam::class))]
     public array $messages;
 
+    /** @var string|UnionMember0::* $model */
     #[Api]
     public string $model;
 
@@ -58,6 +61,7 @@ final class Params implements BaseModel
     #[Api(optional: true)]
     public ?BetaMetadata $metadata;
 
+    /** @var null|ServiceTier::* $serviceTier */
     #[Api('service_tier', optional: true)]
     public ?string $serviceTier;
 
@@ -120,7 +124,9 @@ final class Params implements BaseModel
      * You must use named parameters to construct this object.
      *
      * @param list<BetaMessageParam>                       $messages
+     * @param string|UnionMember0::*                       $model
      * @param null|list<BetaRequestMCPServerURLDefinition> $mcpServers
+     * @param null|ServiceTier::*                          $serviceTier
      * @param null|list<string>                            $stopSequences
      * @param null|list<BetaTextBlockParam>|string         $system
      * @param list<

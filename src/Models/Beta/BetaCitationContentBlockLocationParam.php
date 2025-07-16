@@ -7,6 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Beta\BetaCitationContentBlockLocationParam\Type;
 
 final class BetaCitationContentBlockLocationParam implements BaseModel
 {
@@ -27,11 +28,14 @@ final class BetaCitationContentBlockLocationParam implements BaseModel
     #[Api('start_block_index')]
     public int $startBlockIndex;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         string $citedText,

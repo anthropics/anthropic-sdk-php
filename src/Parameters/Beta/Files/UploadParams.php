@@ -10,6 +10,7 @@ use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Models\AnthropicBeta\UnionMember1;
 
 final class UploadParams implements BaseModel
 {
@@ -19,14 +20,17 @@ final class UploadParams implements BaseModel
     #[Api]
     public string $file;
 
-    /** @var null|list<string> $anthropicBeta */
-    #[Api(type: new ListOf(new UnionOf(['string', 'string'])), optional: true)]
+    /** @var null|list<string|UnionMember1::*> $anthropicBeta */
+    #[Api(
+        type: new ListOf(new UnionOf(['string', UnionMember1::class])),
+        optional: true,
+    )]
     public ?array $anthropicBeta;
 
     /**
      * You must use named parameters to construct this object.
      *
-     * @param null|list<string> $anthropicBeta
+     * @param null|list<string|UnionMember1::*> $anthropicBeta
      */
     final public function __construct(string $file, ?array $anthropicBeta = null)
     {

@@ -7,6 +7,7 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\ToolUseBlock\Type;
 
 final class ToolUseBlock implements BaseModel
 {
@@ -21,11 +22,14 @@ final class ToolUseBlock implements BaseModel
     #[Api]
     public string $name;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type = 'tool_use';
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         string $id,

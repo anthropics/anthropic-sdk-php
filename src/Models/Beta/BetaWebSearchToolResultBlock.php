@@ -9,6 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Models\Beta\BetaWebSearchToolResultBlock\Type;
 
 final class BetaWebSearchToolResultBlock implements BaseModel
 {
@@ -28,6 +29,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     #[Api('tool_use_id')]
     public string $toolUseID;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type = 'web_search_tool_result';
 
@@ -35,6 +37,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
      * You must use named parameters to construct this object.
      *
      * @param BetaWebSearchToolResultError|list<BetaWebSearchResultBlock> $content
+     * @param Type::*                                                     $type
      */
     final public function __construct(
         array|BetaWebSearchToolResultError $content,

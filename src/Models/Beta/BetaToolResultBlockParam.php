@@ -9,6 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Models\Beta\BetaToolResultBlockParam\Type;
 
 final class BetaToolResultBlockParam implements BaseModel
 {
@@ -17,6 +18,7 @@ final class BetaToolResultBlockParam implements BaseModel
     #[Api('tool_use_id')]
     public string $toolUseID;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
@@ -53,6 +55,7 @@ final class BetaToolResultBlockParam implements BaseModel
     /**
      * You must use named parameters to construct this object.
      *
+     * @param Type::* $type
      * @param string|list<
      *   BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam
      * >|null $content

@@ -7,6 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Beta\BetaRawContentBlockDeltaEvent\Type;
 
 final class BetaRawContentBlockDeltaEvent implements BaseModel
 {
@@ -18,11 +19,14 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
     #[Api]
     public int $index;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type = 'content_block_delta';
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         BetaCitationsDelta|BetaInputJSONDelta|BetaSignatureDelta|BetaTextDelta|BetaThinkingDelta $delta,

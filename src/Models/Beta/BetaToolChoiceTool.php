@@ -7,6 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Beta\BetaToolChoiceTool\Type;
 
 final class BetaToolChoiceTool implements BaseModel
 {
@@ -15,6 +16,7 @@ final class BetaToolChoiceTool implements BaseModel
     #[Api]
     public string $name;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
@@ -23,6 +25,8 @@ final class BetaToolChoiceTool implements BaseModel
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         string $name,

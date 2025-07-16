@@ -7,6 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Beta\BetaCodeExecutionToolResultBlockParam\Type;
 
 final class BetaCodeExecutionToolResultBlockParam implements BaseModel
 {
@@ -18,6 +19,7 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
     #[Api('tool_use_id')]
     public string $toolUseID;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
@@ -26,6 +28,8 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         BetaCodeExecutionResultBlockParam|BetaCodeExecutionToolResultErrorParam $content,

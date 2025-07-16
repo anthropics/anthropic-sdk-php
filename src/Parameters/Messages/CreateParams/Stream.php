@@ -6,5 +6,5 @@ namespace Anthropic\Parameters\Messages\CreateParams;
 
 final class Stream
 {
-    final public const TRUE = true;
+    final public const FALSE = false;
 }

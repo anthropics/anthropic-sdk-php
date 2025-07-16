@@ -9,11 +9,13 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Models\Beta\BetaTool\InputSchema\Type;
 
 final class InputSchema implements BaseModel
 {
     use Model;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type;
 
@@ -27,6 +29,7 @@ final class InputSchema implements BaseModel
     /**
      * You must use named parameters to construct this object.
      *
+     * @param Type::*           $type
      * @param null|list<string> $required
      */
     final public function __construct(

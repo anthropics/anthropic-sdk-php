@@ -7,6 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Beta\BetaThinkingDelta\Type;
 
 final class BetaThinkingDelta implements BaseModel
 {
@@ -15,11 +16,14 @@ final class BetaThinkingDelta implements BaseModel
     #[Api]
     public string $thinking;
 
+    /** @var Type::* $type */
     #[Api]
     public string $type = 'thinking_delta';
 
     /**
      * You must use named parameters to construct this object.
+     *
+     * @param Type::* $type
      */
     final public function __construct(
         string $thinking,
