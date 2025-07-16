@@ -28,8 +28,10 @@ final class DeletedFile implements BaseModel
     final public function __construct(string $id, ?string $type = null)
     {
         $this->id = $id;
-        $this->type = $type;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $type && $this->type = $type;
     }
 }
-
-DeletedFile::__introspect();

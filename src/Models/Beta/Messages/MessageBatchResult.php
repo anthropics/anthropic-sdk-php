@@ -11,5 +11,3 @@ final class MessageBatchResult implements StaticConverter
 {
     use Union;
 }
-
-MessageBatchResult::__introspect();

@@ -67,20 +67,30 @@ trait Model
         return json_encode($this->__debugInfo(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
     }
 
-    public static function __introspect(): void
+    /**
+     * Magic get is intended to occur when we have manually unset
+     * a native class property, indicating an omitted value,
+     * or a property overridden with an incongruent type.
+     *
+     * @throws \Exception
+     */
+    public function __get(string $key): mixed
     {
-        self::$_class = new \ReflectionClass(static::class);
-
-        foreach (self::$_class->getConstructor()?->getParameters() ?? [] as $parameter) {
-            self::$_constructorArgNames[] = $parameter->getName();
+        if (!array_key_exists($key, self::$_properties)) {
+            throw new \Exception("Property '{$key}' does not exist in {$this}::class");
         }
 
-        foreach (self::$_class->getProperties() as $property) {
-            if (!empty($property->getAttributes(Api::class))) {
-                $name = $property->getName();
-                self::$_properties[$name] = new PropertyInfo($property);
-            }
+        // The unset property was overridden by a value with an incongruent type.
+        // It's forbidden for an optional value to be `null` in the payload.
+        if (array_key_exists($key, $this->_data)) {
+            throw new \Exception(
+                "The {$key} property is overridden, use the array access ['{$key}'] syntax to the raw payload property.",
+            );
         }
+
+        // An optional property which was unset to be omitted from serialized is being accessed.
+        // Return null to match user's expectations.
+        return null;
     }
 
     /** @return array<string, mixed> */
@@ -261,11 +271,42 @@ trait Model
 
     public static function from(mixed $data): self
     {
+        self::_introspect();
+
         /** @var self $instance */
         $instance = self::$_class->newInstanceWithoutConstructor();
         $instance->__unserialize($data); // @phpstan-ignore-line
 
         return $instance;
+    }
+
+    private function unsetOptionalProperties(): void
+    {
+        foreach (self::$_properties as $name => $info) {
+            if ($info->optional) {
+                unset($this->{$name});
+            }
+        }
+    }
+
+    private static function _introspect(): void
+    {
+        if (isset(self::$_class)) {
+            return;
+        }
+
+        self::$_class = new \ReflectionClass(static::class);
+
+        foreach (self::$_class->getConstructor()?->getParameters() ?? [] as $parameter) {
+            self::$_constructorArgNames[] = $parameter->getName();
+        }
+
+        foreach (self::$_class->getProperties() as $property) {
+            if (!empty($property->getAttributes(Api::class))) {
+                $name = $property->getName();
+                self::$_properties[$name] = new PropertyInfo($property);
+            }
+        }
     }
 
     private static function serialize(mixed $value): mixed

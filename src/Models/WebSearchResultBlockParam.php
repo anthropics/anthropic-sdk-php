@@ -39,8 +39,10 @@ final class WebSearchResultBlockParam implements BaseModel
         $this->encryptedContent = $encryptedContent;
         $this->title = $title;
         $this->url = $url;
-        $this->pageAge = $pageAge;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $pageAge && $this->pageAge = $pageAge;
     }
 }
-
-WebSearchResultBlockParam::__introspect();

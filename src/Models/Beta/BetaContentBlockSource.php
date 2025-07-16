@@ -38,7 +38,7 @@ final class BetaContentBlockSource implements BaseModel
     final public function __construct(array|string $content)
     {
         $this->content = $content;
+
+        self::_introspect();
     }
 }
-
-BetaContentBlockSource::__introspect();

@@ -23,5 +23,3 @@ final class StopReason implements StaticConverter
 
     final public const REFUSAL = 'refusal';
 }
-
-StopReason::__introspect();

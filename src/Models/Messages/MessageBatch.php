@@ -69,7 +69,7 @@ final class MessageBatch implements BaseModel
         $this->processingStatus = $processingStatus;
         $this->requestCounts = $requestCounts;
         $this->resultsURL = $resultsURL;
+
+        self::_introspect();
     }
 }
-
-MessageBatch::__introspect();

@@ -11,5 +11,3 @@ final class BetaCodeExecutionToolResultBlockParamContent implements StaticConver
 {
     use Union;
 }
-
-BetaCodeExecutionToolResultBlockParamContent::__introspect();

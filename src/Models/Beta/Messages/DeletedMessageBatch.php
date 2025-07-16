@@ -24,7 +24,7 @@ final class DeletedMessageBatch implements BaseModel
     final public function __construct(string $id)
     {
         $this->id = $id;
+
+        self::_introspect();
     }
 }
-
-DeletedMessageBatch::__introspect();

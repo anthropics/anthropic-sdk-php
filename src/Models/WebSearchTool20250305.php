@@ -59,12 +59,13 @@ final class WebSearchTool20250305 implements BaseModel
         ?int $maxUses = null,
         ?UserLocation $userLocation = null,
     ) {
-        $this->allowedDomains = $allowedDomains;
-        $this->blockedDomains = $blockedDomains;
-        $this->cacheControl = $cacheControl;
-        $this->maxUses = $maxUses;
-        $this->userLocation = $userLocation;
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $allowedDomains && $this->allowedDomains = $allowedDomains;
+        null != $blockedDomains && $this->blockedDomains = $blockedDomains;
+        null != $cacheControl && $this->cacheControl = $cacheControl;
+        null != $maxUses && $this->maxUses = $maxUses;
+        null != $userLocation && $this->userLocation = $userLocation;
     }
 }
-
-WebSearchTool20250305::__introspect();

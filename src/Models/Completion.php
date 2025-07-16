@@ -44,7 +44,7 @@ final class Completion implements BaseModel
         $this->completion = $completion;
         $this->model = $model;
         $this->stopReason = $stopReason;
+
+        self::_introspect();
     }
 }
-
-Completion::__introspect();

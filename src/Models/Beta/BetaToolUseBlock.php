@@ -32,7 +32,7 @@ final class BetaToolUseBlock implements BaseModel
         $this->id = $id;
         $this->input = $input;
         $this->name = $name;
+
+        self::_introspect();
     }
 }
-
-BetaToolUseBlock::__introspect();

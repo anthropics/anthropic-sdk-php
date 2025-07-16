@@ -29,8 +29,10 @@ final class ImageBlockParam implements BaseModel
         ?CacheControlEphemeral $cacheControl = null,
     ) {
         $this->source = $source;
-        $this->cacheControl = $cacheControl;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $cacheControl && $this->cacheControl = $cacheControl;
     }
 }
-
-ImageBlockParam::__introspect();

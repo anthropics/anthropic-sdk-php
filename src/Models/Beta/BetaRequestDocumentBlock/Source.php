@@ -11,5 +11,3 @@ final class Source implements StaticConverter
 {
     use Union;
 }
-
-Source::__introspect();

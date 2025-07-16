@@ -27,7 +27,7 @@ final class BetaCacheCreation implements BaseModel
     ) {
         $this->ephemeral1hInputTokens = $ephemeral1hInputTokens;
         $this->ephemeral5mInputTokens = $ephemeral5mInputTokens;
+
+        self::_introspect();
     }
 }
-
-BetaCacheCreation::__introspect();

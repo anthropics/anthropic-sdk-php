@@ -62,9 +62,11 @@ final class BetaTextBlockParam implements BaseModel
         ?array $citations = null,
     ) {
         $this->text = $text;
-        $this->cacheControl = $cacheControl;
-        $this->citations = $citations;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $cacheControl && $this->cacheControl = $cacheControl;
+        null != $citations && $this->citations = $citations;
     }
 }
-
-BetaTextBlockParam::__introspect();

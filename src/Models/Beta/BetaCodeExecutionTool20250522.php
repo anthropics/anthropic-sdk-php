@@ -27,8 +27,9 @@ final class BetaCodeExecutionTool20250522 implements BaseModel
     final public function __construct(
         ?BetaCacheControlEphemeral $cacheControl = null
     ) {
-        $this->cacheControl = $cacheControl;
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $cacheControl && $this->cacheControl = $cacheControl;
     }
 }
-
-BetaCodeExecutionTool20250522::__introspect();

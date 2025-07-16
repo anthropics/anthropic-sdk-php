@@ -27,7 +27,7 @@ final class BetaCodeExecutionToolResultError implements BaseModel
     final public function __construct(string $errorCode)
     {
         $this->errorCode = $errorCode;
+
+        self::_introspect();
     }
 }
-
-BetaCodeExecutionToolResultError::__introspect();

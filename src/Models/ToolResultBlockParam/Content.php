@@ -11,5 +11,3 @@ final class Content implements StaticConverter
 {
     use Union;
 }
-
-Content::__introspect();

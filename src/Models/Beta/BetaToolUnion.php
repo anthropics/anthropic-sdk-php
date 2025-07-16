@@ -11,5 +11,3 @@ final class BetaToolUnion implements StaticConverter
 {
     use Union;
 }
-
-BetaToolUnion::__introspect();

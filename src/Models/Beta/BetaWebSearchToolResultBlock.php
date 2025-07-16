@@ -42,7 +42,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     ) {
         $this->content = $content;
         $this->toolUseID = $toolUseID;
+
+        self::_introspect();
     }
 }
-
-BetaWebSearchToolResultBlock::__introspect();

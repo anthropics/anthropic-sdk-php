@@ -15,5 +15,3 @@ final class Name implements StaticConverter
 
     final public const CODE_EXECUTION = 'code_execution';
 }
-
-Name::__introspect();

@@ -29,7 +29,7 @@ final class BetaRawMessageDeltaEvent implements BaseModel
     {
         $this->delta = $delta;
         $this->usage = $usage;
+
+        self::_introspect();
     }
 }
-
-BetaRawMessageDeltaEvent::__introspect();

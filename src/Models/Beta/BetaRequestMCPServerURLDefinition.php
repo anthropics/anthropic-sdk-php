@@ -38,9 +38,11 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
     ) {
         $this->name = $name;
         $this->url = $url;
-        $this->authorizationToken = $authorizationToken;
-        $this->toolConfiguration = $toolConfiguration;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $authorizationToken && $this->authorizationToken = $authorizationToken;
+        null != $toolConfiguration && $this->toolConfiguration = $toolConfiguration;
     }
 }
-
-BetaRequestMCPServerURLDefinition::__introspect();

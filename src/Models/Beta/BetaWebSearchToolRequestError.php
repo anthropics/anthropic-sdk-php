@@ -27,7 +27,7 @@ final class BetaWebSearchToolRequestError implements BaseModel
     final public function __construct(string $errorCode)
     {
         $this->errorCode = $errorCode;
+
+        self::_introspect();
     }
 }
-
-BetaWebSearchToolRequestError::__introspect();

@@ -11,5 +11,3 @@ final class ErrorObject implements StaticConverter
 {
     use Union;
 }
-
-ErrorObject::__introspect();

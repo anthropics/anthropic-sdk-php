@@ -40,8 +40,10 @@ final class BatchCreateParam implements BaseModel
         ?array $anthropicBeta = null
     ) {
         $this->requests = $requests;
-        $this->anthropicBeta = $anthropicBeta;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $anthropicBeta && $this->anthropicBeta = $anthropicBeta;
     }
 }
-
-BatchCreateParam::__introspect();

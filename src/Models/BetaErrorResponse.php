@@ -25,7 +25,7 @@ final class BetaErrorResponse implements BaseModel
         BetaAPIError|BetaAuthenticationError|BetaBillingError|BetaGatewayTimeoutError|BetaInvalidRequestError|BetaNotFoundError|BetaOverloadedError|BetaPermissionError|BetaRateLimitError $error,
     ) {
         $this->error = $error;
+
+        self::_introspect();
     }
 }
-
-BetaErrorResponse::__introspect();

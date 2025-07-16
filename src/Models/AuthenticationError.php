@@ -24,7 +24,7 @@ final class AuthenticationError implements BaseModel
     final public function __construct(string $message = 'Authentication error')
     {
         $this->message = $message;
+
+        self::_introspect();
     }
 }
-
-AuthenticationError::__introspect();

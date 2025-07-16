@@ -24,7 +24,7 @@ final class BetaPermissionError implements BaseModel
     final public function __construct(string $message = 'Permission denied')
     {
         $this->message = $message;
+
+        self::_introspect();
     }
 }
-
-BetaPermissionError::__introspect();

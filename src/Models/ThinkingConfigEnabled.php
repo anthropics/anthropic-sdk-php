@@ -24,7 +24,7 @@ final class ThinkingConfigEnabled implements BaseModel
     final public function __construct(int $budgetTokens)
     {
         $this->budgetTokens = $budgetTokens;
+
+        self::_introspect();
     }
 }
-
-ThinkingConfigEnabled::__introspect();

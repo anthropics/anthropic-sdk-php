@@ -25,7 +25,7 @@ final class BetaContainer implements BaseModel
     {
         $this->id = $id;
         $this->expiresAt = $expiresAt;
+
+        self::_introspect();
     }
 }
-
-BetaContainer::__introspect();

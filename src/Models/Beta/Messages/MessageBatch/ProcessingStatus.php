@@ -17,5 +17,3 @@ final class ProcessingStatus implements StaticConverter
 
     final public const ENDED = 'ended';
 }
-
-ProcessingStatus::__introspect();

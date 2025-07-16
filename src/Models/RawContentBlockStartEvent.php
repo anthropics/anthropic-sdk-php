@@ -30,7 +30,7 @@ final class RawContentBlockStartEvent implements BaseModel
     ) {
         $this->contentBlock = $contentBlock;
         $this->index = $index;
+
+        self::_introspect();
     }
 }
-
-RawContentBlockStartEvent::__introspect();

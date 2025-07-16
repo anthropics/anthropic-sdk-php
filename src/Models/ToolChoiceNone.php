@@ -15,7 +15,8 @@ final class ToolChoiceNone implements BaseModel
     #[Api]
     public string $type = 'none';
 
-    final public function __construct() {}
+    final public function __construct()
+    {
+        self::_introspect();
+    }
 }
-
-ToolChoiceNone::__introspect();

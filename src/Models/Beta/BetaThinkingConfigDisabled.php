@@ -15,7 +15,8 @@ final class BetaThinkingConfigDisabled implements BaseModel
     #[Api]
     public string $type = 'disabled';
 
-    final public function __construct() {}
+    final public function __construct()
+    {
+        self::_introspect();
+    }
 }
-
-BetaThinkingConfigDisabled::__introspect();

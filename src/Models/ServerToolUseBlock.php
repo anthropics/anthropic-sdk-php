@@ -31,7 +31,7 @@ final class ServerToolUseBlock implements BaseModel
     {
         $this->id = $id;
         $this->input = $input;
+
+        self::_introspect();
     }
 }
-
-ServerToolUseBlock::__introspect();

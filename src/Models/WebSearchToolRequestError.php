@@ -28,7 +28,7 @@ final class WebSearchToolRequestError implements BaseModel
     final public function __construct(string $errorCode)
     {
         $this->errorCode = $errorCode;
+
+        self::_introspect();
     }
 }
-
-WebSearchToolRequestError::__introspect();

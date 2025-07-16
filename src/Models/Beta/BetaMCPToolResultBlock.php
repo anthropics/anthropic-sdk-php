@@ -40,7 +40,7 @@ final class BetaMCPToolResultBlock implements BaseModel
         $this->content = $content;
         $this->isError = $isError;
         $this->toolUseID = $toolUseID;
+
+        self::_introspect();
     }
 }
-
-BetaMCPToolResultBlock::__introspect();

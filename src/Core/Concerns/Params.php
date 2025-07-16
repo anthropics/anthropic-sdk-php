@@ -26,6 +26,8 @@ trait Params
      */
     public static function parseRequest(null|array|self $params, null|array|RequestOptions $options): array
     {
+        self::_introspect(); // @phpstan-ignore-line
+
         $state = new DumpState();
         $dumped = Serde::dump(self::class, value: $params, state: $state);
         $opts = RequestOptions::parse($options); // @phpstan-ignore-line

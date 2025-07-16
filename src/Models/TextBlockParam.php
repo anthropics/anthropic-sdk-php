@@ -61,9 +61,11 @@ final class TextBlockParam implements BaseModel
         ?array $citations = null,
     ) {
         $this->text = $text;
-        $this->cacheControl = $cacheControl;
-        $this->citations = $citations;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $cacheControl && $this->cacheControl = $cacheControl;
+        null != $citations && $this->citations = $citations;
     }
 }
-
-TextBlockParam::__introspect();

@@ -24,7 +24,7 @@ final class BetaThinkingDelta implements BaseModel
     final public function __construct(string $thinking)
     {
         $this->thinking = $thinking;
+
+        self::_introspect();
     }
 }
-
-BetaThinkingDelta::__introspect();

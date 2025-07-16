@@ -11,5 +11,3 @@ final class RawContentBlockDelta implements StaticConverter
 {
     use Union;
 }
-
-RawContentBlockDelta::__introspect();

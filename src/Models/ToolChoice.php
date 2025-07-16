@@ -11,5 +11,3 @@ final class ToolChoice implements StaticConverter
 {
     use Union;
 }
-
-ToolChoice::__introspect();

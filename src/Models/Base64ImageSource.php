@@ -32,7 +32,7 @@ final class Base64ImageSource implements BaseModel
     {
         $this->data = $data;
         $this->mediaType = $mediaType;
+
+        self::_introspect();
     }
 }
-
-Base64ImageSource::__introspect();

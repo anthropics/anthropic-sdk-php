@@ -11,5 +11,3 @@ final class BetaError implements StaticConverter
 {
     use Union;
 }
-
-BetaError::__introspect();

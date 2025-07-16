@@ -11,5 +11,3 @@ final class BetaContentBlockSourceContent implements StaticConverter
 {
     use Union;
 }
-
-BetaContentBlockSourceContent::__introspect();

@@ -24,7 +24,7 @@ final class SignatureDelta implements BaseModel
     final public function __construct(string $signature)
     {
         $this->signature = $signature;
+
+        self::_introspect();
     }
 }
-
-SignatureDelta::__introspect();

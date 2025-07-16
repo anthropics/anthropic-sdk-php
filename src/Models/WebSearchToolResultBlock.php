@@ -39,7 +39,7 @@ final class WebSearchToolResultBlock implements BaseModel
     ) {
         $this->content = $content;
         $this->toolUseID = $toolUseID;
+
+        self::_introspect();
     }
 }
-
-WebSearchToolResultBlock::__introspect();

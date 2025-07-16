@@ -41,11 +41,13 @@ final class DocumentBlockParam implements BaseModel
         ?string $title = null,
     ) {
         $this->source = $source;
-        $this->cacheControl = $cacheControl;
-        $this->citations = $citations;
-        $this->context = $context;
-        $this->title = $title;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $cacheControl && $this->cacheControl = $cacheControl;
+        null != $citations && $this->citations = $citations;
+        null != $context && $this->context = $context;
+        null != $title && $this->title = $title;
     }
 }
-
-DocumentBlockParam::__introspect();

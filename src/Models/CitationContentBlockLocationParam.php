@@ -45,7 +45,7 @@ final class CitationContentBlockLocationParam implements BaseModel
         $this->documentTitle = $documentTitle;
         $this->endBlockIndex = $endBlockIndex;
         $this->startBlockIndex = $startBlockIndex;
+
+        self::_introspect();
     }
 }
-
-CitationContentBlockLocationParam::__introspect();

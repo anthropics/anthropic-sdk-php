@@ -29,8 +29,10 @@ final class BetaToolChoiceTool implements BaseModel
         ?bool $disableParallelToolUse = null
     ) {
         $this->name = $name;
-        $this->disableParallelToolUse = $disableParallelToolUse;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $disableParallelToolUse && $this->disableParallelToolUse = $disableParallelToolUse;
     }
 }
-
-BetaToolChoiceTool::__introspect();

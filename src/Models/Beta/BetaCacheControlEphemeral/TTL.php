@@ -15,5 +15,3 @@ final class TTL implements StaticConverter
 
     final public const TTL_1H = '1h';
 }
-
-TTL::__introspect();

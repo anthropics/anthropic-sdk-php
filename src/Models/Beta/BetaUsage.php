@@ -56,7 +56,7 @@ final class BetaUsage implements BaseModel
         $this->outputTokens = $outputTokens;
         $this->serverToolUse = $serverToolUse;
         $this->serviceTier = $serviceTier;
+
+        self::_introspect();
     }
 }
-
-BetaUsage::__introspect();

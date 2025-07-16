@@ -56,7 +56,7 @@ final class BetaTextBlock implements BaseModel
     {
         $this->citations = $citations;
         $this->text = $text;
+
+        self::_introspect();
     }
 }
-
-BetaTextBlock::__introspect();

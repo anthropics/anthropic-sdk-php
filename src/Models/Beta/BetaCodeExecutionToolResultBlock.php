@@ -30,7 +30,7 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
     ) {
         $this->content = $content;
         $this->toolUseID = $toolUseID;
+
+        self::_introspect();
     }
 }
-
-BetaCodeExecutionToolResultBlock::__introspect();

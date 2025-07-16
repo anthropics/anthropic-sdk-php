@@ -21,7 +21,7 @@ final class BetaMessageTokensCount implements BaseModel
     final public function __construct(int $inputTokens)
     {
         $this->inputTokens = $inputTokens;
+
+        self::_introspect();
     }
 }
-
-BetaMessageTokensCount::__introspect();

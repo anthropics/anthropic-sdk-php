@@ -11,5 +11,3 @@ final class BetaRawMessageStreamEvent implements StaticConverter
 {
     use Union;
 }
-
-BetaRawMessageStreamEvent::__introspect();

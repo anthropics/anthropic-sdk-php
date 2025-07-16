@@ -24,7 +24,7 @@ final class BillingError implements BaseModel
     final public function __construct(string $message = 'Billing error')
     {
         $this->message = $message;
+
+        self::_introspect();
     }
 }
-
-BillingError::__introspect();

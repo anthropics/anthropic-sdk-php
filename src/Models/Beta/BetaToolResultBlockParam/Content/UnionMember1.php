@@ -11,5 +11,3 @@ final class UnionMember1 implements StaticConverter
 {
     use Union;
 }
-
-UnionMember1::__introspect();

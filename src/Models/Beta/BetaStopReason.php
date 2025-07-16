@@ -23,5 +23,3 @@ final class BetaStopReason implements StaticConverter
 
     final public const REFUSAL = 'refusal';
 }
-
-BetaStopReason::__introspect();

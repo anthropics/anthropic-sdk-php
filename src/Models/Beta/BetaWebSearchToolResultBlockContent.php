@@ -11,5 +11,3 @@ final class BetaWebSearchToolResultBlockContent implements StaticConverter
 {
     use Union;
 }
-
-BetaWebSearchToolResultBlockContent::__introspect();

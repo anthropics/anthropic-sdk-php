@@ -19,5 +19,3 @@ final class MediaType implements StaticConverter
 
     final public const IMAGE_WEBP = 'image/webp';
 }
-
-MediaType::__introspect();

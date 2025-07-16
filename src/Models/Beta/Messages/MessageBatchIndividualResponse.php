@@ -27,7 +27,7 @@ final class MessageBatchIndividualResponse implements BaseModel
     ) {
         $this->customID = $customID;
         $this->result = $result;
+
+        self::_introspect();
     }
 }
-
-MessageBatchIndividualResponse::__introspect();

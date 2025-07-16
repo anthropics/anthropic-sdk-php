@@ -169,21 +169,23 @@ final class MessageCreateParam implements BaseModel
         $this->maxTokens = $maxTokens;
         $this->messages = $messages;
         $this->model = $model;
-        $this->container = $container;
-        $this->mcpServers = $mcpServers;
-        $this->metadata = $metadata;
-        $this->serviceTier = $serviceTier;
-        $this->stopSequences = $stopSequences;
-        $this->stream = $stream;
-        $this->system = $system;
-        $this->temperature = $temperature;
-        $this->thinking = $thinking;
-        $this->toolChoice = $toolChoice;
-        $this->tools = $tools;
-        $this->topK = $topK;
-        $this->topP = $topP;
-        $this->anthropicBeta = $anthropicBeta;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $container && $this->container = $container;
+        null != $mcpServers && $this->mcpServers = $mcpServers;
+        null != $metadata && $this->metadata = $metadata;
+        null != $serviceTier && $this->serviceTier = $serviceTier;
+        null != $stopSequences && $this->stopSequences = $stopSequences;
+        null != $stream && $this->stream = $stream;
+        null != $system && $this->system = $system;
+        null != $temperature && $this->temperature = $temperature;
+        null != $thinking && $this->thinking = $thinking;
+        null != $toolChoice && $this->toolChoice = $toolChoice;
+        null != $tools && $this->tools = $tools;
+        null != $topK && $this->topK = $topK;
+        null != $topP && $this->topP = $topP;
+        null != $anthropicBeta && $this->anthropicBeta = $anthropicBeta;
     }
 }
-
-MessageCreateParam::__introspect();

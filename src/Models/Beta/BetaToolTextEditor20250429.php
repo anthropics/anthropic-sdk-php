@@ -27,8 +27,9 @@ final class BetaToolTextEditor20250429 implements BaseModel
     final public function __construct(
         ?BetaCacheControlEphemeral $cacheControl = null
     ) {
-        $this->cacheControl = $cacheControl;
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $cacheControl && $this->cacheControl = $cacheControl;
     }
 }
-
-BetaToolTextEditor20250429::__introspect();

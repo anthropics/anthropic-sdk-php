@@ -21,7 +21,7 @@ final class MessageTokensCount implements BaseModel
     final public function __construct(int $inputTokens)
     {
         $this->inputTokens = $inputTokens;
+
+        self::_introspect();
     }
 }
-
-MessageTokensCount::__introspect();

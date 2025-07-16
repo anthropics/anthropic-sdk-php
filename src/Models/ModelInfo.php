@@ -35,7 +35,7 @@ final class ModelInfo implements BaseModel
         $this->id = $id;
         $this->createdAt = $createdAt;
         $this->displayName = $displayName;
+
+        self::_introspect();
     }
 }
-
-ModelInfo::__introspect();

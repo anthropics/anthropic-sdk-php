@@ -24,7 +24,7 @@ final class RawMessageStartEvent implements BaseModel
     final public function __construct(Message $message)
     {
         $this->message = $message;
+
+        self::_introspect();
     }
 }
-
-RawMessageStartEvent::__introspect();

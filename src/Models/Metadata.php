@@ -20,8 +20,9 @@ final class Metadata implements BaseModel
      */
     final public function __construct(?string $userID = null)
     {
-        $this->userID = $userID;
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $userID && $this->userID = $userID;
     }
 }
-
-Metadata::__introspect();

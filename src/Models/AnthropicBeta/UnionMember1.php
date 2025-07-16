@@ -39,5 +39,3 @@ final class UnionMember1 implements StaticConverter
 
     final public const EXTENDED_CACHE_TTL_2025_04_11 = 'extended-cache-ttl-2025-04-11';
 }
-
-UnionMember1::__introspect();

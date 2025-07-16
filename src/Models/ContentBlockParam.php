@@ -11,5 +11,3 @@ final class ContentBlockParam implements StaticConverter
 {
     use Union;
 }
-
-ContentBlockParam::__introspect();

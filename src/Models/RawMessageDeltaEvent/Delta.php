@@ -29,7 +29,7 @@ final class Delta implements BaseModel
     {
         $this->stopReason = $stopReason;
         $this->stopSequence = $stopSequence;
+
+        self::_introspect();
     }
 }
-
-Delta::__introspect();

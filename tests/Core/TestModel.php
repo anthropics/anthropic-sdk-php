@@ -5,105 +5,176 @@ namespace Tests\Core;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 
 class TestModel implements BaseModel
 {
     use Model;
 
-    #[Api(optional: false)]
-    public ?string $name = null;
+    #[Api]
+    public string $name;
 
     #[Api('age_years')]
-    public ?int $ageYears = null;
+    public int $ageYears;
 
     /** @var null|list<string> */
-    #[Api]
-    public ?array $friends = null;
+    #[Api(optional: true)]
+    public ?array $friends;
 
     #[Api]
     public ?string $owner;
 
     /**
-     * @param array{
-     *    name: string,
-     *    age_years?: int,
-     *    friends?: list<string>,
-     *    owner?: string|null,
-     * } $data
+     * @param null|list<string> $friends
      */
-    public function __construct(array $data)
-    {
-        $this->__introspect();
-        $this->__unserialize($data);
+    public function __construct(
+        string $name,
+        int $ageYears,
+        ?string $owner,
+        ?array $friends = null,
+    ) {
+        $this->name = $name;
+        $this->ageYears = $ageYears;
+        $this->owner = $owner;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $friends && $this->friends = $friends;
     }
 }
 
-describe('try serializing from array', function () {
-    it('supports basic get and set', function () {
-        $model = new TestModel([
-            'name' => 'Bob',
-            'ageYears' => 12,
-        ]);
-
-        expect($model->ageYears)->toBe(12);
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
+#[CoversNothing]
+class TestModelTest extends TestCase
+{
+    #[Test]
+    public function testBasicGetAndSet(): void
+    {
+        $model = new TestModel(
+            name: 'Bob',
+            ageYears: 12,
+            owner: null,
+        );
+        $this->assertEquals(12, $model->ageYears);
 
         ++$model->ageYears;
-        expect($model->ageYears)->toBe(13);
-    });
+        $this->assertEquals(13, $model->ageYears);
+    }
 
-    it('supports array get and set', function () {
-        $model = new TestModel([
-            'name' => 'Bob',
-        ]);
+    #[Test]
+    public function testNullAccess(): void
+    {
+        $model = new TestModel(
+            name: 'Bob',
+            ageYears: 12,
+            owner: null,
+        );
+        $this->assertNull($model->owner);
+        $this->assertNull($model->friends);
+    }
+
+    #[Test]
+    public function testArrayGetAndSet(): void
+    {
+        $model = new TestModel(
+            name: 'Bob',
+            ageYears: 12,
+            owner: null,
+        );
         $model->friends ??= [];
-        expect($model->friends)->toBe([]);
-
-        // TODO(alpha): this doesn't work yet but should.
+        $this->assertEquals([], $model->friends);
         $model->friends[] = 'Alice';
-        expect($model->friends)->toBe(['Alice']);
-    });
+        $this->assertEquals(['Alice'], $model->friends);
+    }
 
-    it('discerns between null and unset', function () {
-        $model = new TestModel([
-            'name' => 'bob',
-            'ageYears' => 12,
-        ]);
+    #[Test]
+    public function testDiscernsBetweenNullAndUnset(): void
+    {
+        $modelUnsetFriends = new TestModel(
+            name: 'Bob',
+            ageYears: 12,
+            owner: null,
+        );
+        $modelNullFriends = new TestModel(
+            name: 'bob',
+            ageYears: 12,
+            owner: null,
+        );
+        $modelNullFriends->friends = null;
 
-        $model2 = new TestModel([
-            'name' => 'bob',
-            'ageYears' => 12,
-            'owner' => null,
-        ]);
+        $this->assertEquals(12, $modelUnsetFriends->ageYears);
+        $this->assertEquals(12, $modelNullFriends->ageYears);
 
-        expect($model->ageYears)->toBe(12);
-        expect($model2->ageYears)->toBe(12);
+        $this->assertTrue($modelUnsetFriends->offsetExists('ageYears'));
+        $this->assertTrue($modelNullFriends->offsetExists('ageYears'));
 
-        expect($model->offsetExists('ageYears'))->toBeTrue();
-        expect($model2->offsetExists('ageYears'))->toBeTrue();
+        $this->assertNull($modelUnsetFriends->friends);
+        $this->assertNull($modelNullFriends->friends);
 
-        // expect($model->owner)->toBe(null);
-        expect($model2->owner)->toBe(null);
+        $this->assertFalse($modelUnsetFriends->offsetExists('friends'));
+        $this->assertTrue($modelNullFriends->offsetExists('friends'));
+    }
 
-        expect($model->offsetExists('owner'))->toBeFalse();
-        expect($model2->offsetExists('owner'))->toBeTrue();
-    });
+    #[Test]
+    public function testIssetOnOmittedProperties(): void
+    {
+        $model = new TestModel(
+            name: 'Bob',
+            ageYears: 12,
+            owner: null,
+        );
+        $this->assertFalse(isset($model->owner));
+        $this->assertFalse(isset($model->friends));
+    }
 
-    it('can serialize a basic model', function () {
-        $model = new TestModel([
-            'name' => 'Bob',
-            'age_years' => 12,
-            'friends' => ['Alice', 'Charlie'],
-        ]);
-        expect(json_encode($model))->toBe('{"name":"Bob","age_years":12,"friends":["Alice","Charlie"]}');
-    });
+    #[Test]
+    public function testSerializeBasicModel(): void
+    {
+        $model = new TestModel(
+            name: 'Bob',
+            ageYears: 12,
+            owner: 'Eve',
+            friends: ['Alice', 'Charlie'],
+        );
+        $this->assertEquals(
+            '{"name":"Bob","age_years":12,"friends":["Alice","Charlie"],"owner":"Eve"}',
+            json_encode($model)
+        );
+    }
 
-    it('can serialize a basic model with explicit null', function () {
-        $model = new TestModel([
-            'name' => 'Bob',
-            'age_years' => 12,
-            'friends' => ['Alice', 'Charlie'],
-            'owner' => null,
-        ]);
-        expect(json_encode($model))->toBe('{"name":"Bob","age_years":12,"friends":["Alice","Charlie"],"owner":null}');
-    });
-});
+    #[Test]
+    public function testSerializeModelWithOmittedProperties(): void
+    {
+        $model = new TestModel(
+            name: 'Bob',
+            ageYears: 12,
+            owner: null,
+        );
+        $this->assertEquals(
+            '{"name":"Bob","age_years":12,"owner":null}',
+            json_encode($model)
+        );
+    }
+
+    #[Test]
+    public function testSerializeModelWithExplicitNull(): void
+    {
+        $model = new TestModel(
+            name: 'Bob',
+            ageYears: 12,
+            owner: null,
+        );
+        $model->friends = null;
+        $this->assertEquals(
+            '{"name":"Bob","age_years":12,"friends":null,"owner":null}',
+            json_encode($model)
+        );
+    }
+}

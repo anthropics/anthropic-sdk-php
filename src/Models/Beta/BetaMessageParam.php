@@ -65,7 +65,7 @@ final class BetaMessageParam implements BaseModel
     {
         $this->content = $content;
         $this->role = $role;
+
+        self::_introspect();
     }
 }
-
-BetaMessageParam::__introspect();

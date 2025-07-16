@@ -26,7 +26,7 @@ final class Request implements BaseModel
     {
         $this->customID = $customID;
         $this->params = $params;
+
+        self::_introspect();
     }
 }
-
-Request::__introspect();

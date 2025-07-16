@@ -31,10 +31,11 @@ final class BatchListParam implements BaseModel
         ?string $beforeID = null,
         ?int $limit = null
     ) {
-        $this->afterID = $afterID;
-        $this->beforeID = $beforeID;
-        $this->limit = $limit;
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $afterID && $this->afterID = $afterID;
+        null != $beforeID && $this->beforeID = $beforeID;
+        null != $limit && $this->limit = $limit;
     }
 }
-
-BatchListParam::__introspect();

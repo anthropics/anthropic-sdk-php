@@ -45,7 +45,7 @@ final class BetaCitationContentBlockLocation implements BaseModel
         $this->documentTitle = $documentTitle;
         $this->endBlockIndex = $endBlockIndex;
         $this->startBlockIndex = $startBlockIndex;
+
+        self::_introspect();
     }
 }
-
-BetaCitationContentBlockLocation::__introspect();

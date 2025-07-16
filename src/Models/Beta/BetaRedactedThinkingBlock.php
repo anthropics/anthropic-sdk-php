@@ -24,7 +24,7 @@ final class BetaRedactedThinkingBlock implements BaseModel
     final public function __construct(string $data)
     {
         $this->data = $data;
+
+        self::_introspect();
     }
 }
-
-BetaRedactedThinkingBlock::__introspect();

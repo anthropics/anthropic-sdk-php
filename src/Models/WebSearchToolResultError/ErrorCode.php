@@ -21,5 +21,3 @@ final class ErrorCode implements StaticConverter
 
     final public const QUERY_TOO_LONG = 'query_too_long';
 }
-
-ErrorCode::__introspect();

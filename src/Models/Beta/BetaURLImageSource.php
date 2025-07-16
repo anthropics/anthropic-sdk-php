@@ -24,7 +24,7 @@ final class BetaURLImageSource implements BaseModel
     final public function __construct(string $url)
     {
         $this->url = $url;
+
+        self::_introspect();
     }
 }
-
-BetaURLImageSource::__introspect();

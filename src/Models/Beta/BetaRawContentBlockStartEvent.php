@@ -30,7 +30,7 @@ final class BetaRawContentBlockStartEvent implements BaseModel
     ) {
         $this->contentBlock = $contentBlock;
         $this->index = $index;
+
+        self::_introspect();
     }
 }
-
-BetaRawContentBlockStartEvent::__introspect();

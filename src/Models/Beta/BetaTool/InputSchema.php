@@ -33,9 +33,10 @@ final class InputSchema implements BaseModel
         mixed $properties = null,
         ?array $required = null
     ) {
-        $this->properties = $properties;
-        $this->required = $required;
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $properties && $this->properties = $properties;
+        null != $required && $this->required = $required;
     }
 }
-
-InputSchema::__introspect();

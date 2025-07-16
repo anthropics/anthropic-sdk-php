@@ -24,7 +24,7 @@ final class BetaNotFoundError implements BaseModel
     final public function __construct(string $message = 'Not found')
     {
         $this->message = $message;
+
+        self::_introspect();
     }
 }
-
-BetaNotFoundError::__introspect();

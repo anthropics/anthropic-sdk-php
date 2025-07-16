@@ -15,7 +15,8 @@ final class RawMessageStopEvent implements BaseModel
     #[Api]
     public string $type = 'message_stop';
 
-    final public function __construct() {}
+    final public function __construct()
+    {
+        self::_introspect();
+    }
 }
-
-RawMessageStopEvent::__introspect();

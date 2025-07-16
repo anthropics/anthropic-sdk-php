@@ -11,5 +11,3 @@ final class Citation implements StaticConverter
 {
     use Union;
 }
-
-Citation::__introspect();

@@ -15,7 +15,8 @@ final class MessageBatchCanceledResult implements BaseModel
     #[Api]
     public string $type = 'canceled';
 
-    final public function __construct() {}
+    final public function __construct()
+    {
+        self::_introspect();
+    }
 }
-
-MessageBatchCanceledResult::__introspect();

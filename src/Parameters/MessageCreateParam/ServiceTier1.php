@@ -15,5 +15,3 @@ final class ServiceTier implements StaticConverter
 
     final public const STANDARD_ONLY = 'standard_only';
 }
-
-ServiceTier::__introspect();

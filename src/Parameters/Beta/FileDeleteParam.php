@@ -31,8 +31,9 @@ final class FileDeleteParam implements BaseModel
      */
     final public function __construct(?array $anthropicBeta = null)
     {
-        $this->anthropicBeta = $anthropicBeta;
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $anthropicBeta && $this->anthropicBeta = $anthropicBeta;
     }
 }
-
-FileDeleteParam::__introspect();

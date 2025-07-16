@@ -11,5 +11,3 @@ final class TextCitation implements StaticConverter
 {
     use Union;
 }
-
-TextCitation::__introspect();

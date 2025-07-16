@@ -24,7 +24,7 @@ final class BetaTextDelta implements BaseModel
     final public function __construct(string $text)
     {
         $this->text = $text;
+
+        self::_introspect();
     }
 }
-
-BetaTextDelta::__introspect();

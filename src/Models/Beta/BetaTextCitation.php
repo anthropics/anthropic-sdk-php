@@ -11,5 +11,3 @@ final class BetaTextCitation implements StaticConverter
 {
     use Union;
 }
-
-BetaTextCitation::__introspect();

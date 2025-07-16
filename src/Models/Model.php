@@ -11,5 +11,3 @@ final class Model implements StaticConverter
 {
     use Union;
 }
-
-Model::__introspect();

@@ -24,7 +24,7 @@ final class BetaRawMessageStartEvent implements BaseModel
     final public function __construct(BetaMessage $message)
     {
         $this->message = $message;
+
+        self::_introspect();
     }
 }
-
-BetaRawMessageStartEvent::__introspect();

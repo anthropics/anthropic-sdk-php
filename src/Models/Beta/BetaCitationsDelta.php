@@ -25,7 +25,7 @@ final class BetaCitationsDelta implements BaseModel
         BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationSearchResultLocation|BetaCitationsWebSearchResultLocation $citation,
     ) {
         $this->citation = $citation;
+
+        self::_introspect();
     }
 }
-
-BetaCitationsDelta::__introspect();

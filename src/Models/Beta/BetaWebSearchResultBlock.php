@@ -40,7 +40,7 @@ final class BetaWebSearchResultBlock implements BaseModel
         $this->pageAge = $pageAge;
         $this->title = $title;
         $this->url = $url;
+
+        self::_introspect();
     }
 }
-
-BetaWebSearchResultBlock::__introspect();

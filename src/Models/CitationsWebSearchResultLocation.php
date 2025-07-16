@@ -40,7 +40,7 @@ final class CitationsWebSearchResultLocation implements BaseModel
         $this->encryptedIndex = $encryptedIndex;
         $this->title = $title;
         $this->url = $url;
+
+        self::_introspect();
     }
 }
-
-CitationsWebSearchResultLocation::__introspect();

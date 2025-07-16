@@ -11,5 +11,3 @@ final class WebSearchToolResultBlockContent implements StaticConverter
 {
     use Union;
 }
-
-WebSearchToolResultBlockContent::__introspect();

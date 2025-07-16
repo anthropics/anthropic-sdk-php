@@ -50,7 +50,7 @@ final class BetaCitationSearchResultLocation implements BaseModel
         $this->source = $source;
         $this->startBlockIndex = $startBlockIndex;
         $this->title = $title;
+
+        self::_introspect();
     }
 }
-
-BetaCitationSearchResultLocation::__introspect();

@@ -24,7 +24,7 @@ final class InvalidRequestError implements BaseModel
     final public function __construct(string $message = 'Invalid request')
     {
         $this->message = $message;
+
+        self::_introspect();
     }
 }
-
-InvalidRequestError::__introspect();

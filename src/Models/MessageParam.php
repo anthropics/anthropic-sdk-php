@@ -60,7 +60,7 @@ final class MessageParam implements BaseModel
     {
         $this->content = $content;
         $this->role = $role;
+
+        self::_introspect();
     }
 }
-
-MessageParam::__introspect();

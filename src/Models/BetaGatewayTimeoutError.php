@@ -24,7 +24,7 @@ final class BetaGatewayTimeoutError implements BaseModel
     final public function __construct(string $message = 'Request timeout')
     {
         $this->message = $message;
+
+        self::_introspect();
     }
 }
-
-BetaGatewayTimeoutError::__introspect();

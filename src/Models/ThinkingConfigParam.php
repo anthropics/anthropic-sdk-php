@@ -11,5 +11,3 @@ final class ThinkingConfigParam implements StaticConverter
 {
     use Union;
 }
-
-ThinkingConfigParam::__introspect();

@@ -15,7 +15,8 @@ final class ThinkingConfigDisabled implements BaseModel
     #[Api]
     public string $type = 'disabled';
 
-    final public function __construct() {}
+    final public function __construct()
+    {
+        self::_introspect();
+    }
 }
-
-ThinkingConfigDisabled::__introspect();

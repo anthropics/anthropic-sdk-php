@@ -49,5 +49,3 @@ final class UnionMember0 implements StaticConverter
 
     final public const CLAUDE_2_0 = 'claude-2.0';
 }
-
-UnionMember0::__introspect();

@@ -11,5 +11,3 @@ final class AnthropicBeta implements StaticConverter
 {
     use Union;
 }
-
-AnthropicBeta::__introspect();

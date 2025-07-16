@@ -36,7 +36,7 @@ final class BetaServerToolUseBlock implements BaseModel
         $this->id = $id;
         $this->input = $input;
         $this->name = $name;
+
+        self::_introspect();
     }
 }
-
-BetaServerToolUseBlock::__introspect();

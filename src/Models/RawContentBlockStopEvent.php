@@ -24,7 +24,7 @@ final class RawContentBlockStopEvent implements BaseModel
     final public function __construct(int $index)
     {
         $this->index = $index;
+
+        self::_introspect();
     }
 }
-
-RawContentBlockStopEvent::__introspect();

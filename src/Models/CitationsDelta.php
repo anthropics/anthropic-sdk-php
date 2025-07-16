@@ -25,7 +25,7 @@ final class CitationsDelta implements BaseModel
         CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsWebSearchResultLocation $citation,
     ) {
         $this->citation = $citation;
+
+        self::_introspect();
     }
 }
-
-CitationsDelta::__introspect();

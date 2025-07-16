@@ -28,7 +28,7 @@ final class BetaThinkingBlock implements BaseModel
     {
         $this->signature = $signature;
         $this->thinking = $thinking;
+
+        self::_introspect();
     }
 }
-
-BetaThinkingBlock::__introspect();

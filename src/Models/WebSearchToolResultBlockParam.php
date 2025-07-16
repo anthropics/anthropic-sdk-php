@@ -46,8 +46,10 @@ final class WebSearchToolResultBlockParam implements BaseModel
     ) {
         $this->content = $content;
         $this->toolUseID = $toolUseID;
-        $this->cacheControl = $cacheControl;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $cacheControl && $this->cacheControl = $cacheControl;
     }
 }
-
-WebSearchToolResultBlockParam::__introspect();

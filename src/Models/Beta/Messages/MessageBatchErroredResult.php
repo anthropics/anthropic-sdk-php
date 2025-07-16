@@ -25,7 +25,7 @@ final class MessageBatchErroredResult implements BaseModel
     final public function __construct(BetaErrorResponse $error)
     {
         $this->error = $error;
+
+        self::_introspect();
     }
 }
-
-MessageBatchErroredResult::__introspect();

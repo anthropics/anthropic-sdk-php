@@ -27,7 +27,7 @@ final class PlainTextSource implements BaseModel
     final public function __construct(string $data)
     {
         $this->data = $data;
+
+        self::_introspect();
     }
 }
-
-PlainTextSource::__introspect();

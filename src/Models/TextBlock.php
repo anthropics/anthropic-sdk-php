@@ -55,7 +55,7 @@ final class TextBlock implements BaseModel
     {
         $this->citations = $citations;
         $this->text = $text;
+
+        self::_introspect();
     }
 }
-
-TextBlock::__introspect();

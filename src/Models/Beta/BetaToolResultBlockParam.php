@@ -64,10 +64,12 @@ final class BetaToolResultBlockParam implements BaseModel
         ?bool $isError = null,
     ) {
         $this->toolUseID = $toolUseID;
-        $this->cacheControl = $cacheControl;
-        $this->content = $content;
-        $this->isError = $isError;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $cacheControl && $this->cacheControl = $cacheControl;
+        null != $content && $this->content = $content;
+        null != $isError && $this->isError = $isError;
     }
 }
-
-BetaToolResultBlockParam::__introspect();

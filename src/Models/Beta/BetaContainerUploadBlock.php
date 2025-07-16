@@ -24,7 +24,7 @@ final class BetaContainerUploadBlock implements BaseModel
     final public function __construct(string $fileID)
     {
         $this->fileID = $fileID;
+
+        self::_introspect();
     }
 }
-
-BetaContainerUploadBlock::__introspect();

@@ -21,7 +21,7 @@ final class BetaServerToolUsage implements BaseModel
     final public function __construct(int $webSearchRequests = 0)
     {
         $this->webSearchRequests = $webSearchRequests;
+
+        self::_introspect();
     }
 }
-
-BetaServerToolUsage::__introspect();

@@ -51,7 +51,7 @@ final class Usage implements BaseModel
         $this->outputTokens = $outputTokens;
         $this->serverToolUse = $serverToolUse;
         $this->serviceTier = $serviceTier;
+
+        self::_introspect();
     }
 }
-
-Usage::__introspect();

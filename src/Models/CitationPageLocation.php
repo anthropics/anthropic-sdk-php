@@ -45,7 +45,7 @@ final class CitationPageLocation implements BaseModel
         $this->documentTitle = $documentTitle;
         $this->endPageNumber = $endPageNumber;
         $this->startPageNumber = $startPageNumber;
+
+        self::_introspect();
     }
 }
-
-CitationPageLocation::__introspect();

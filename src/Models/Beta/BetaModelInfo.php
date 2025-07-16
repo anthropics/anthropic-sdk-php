@@ -35,7 +35,7 @@ final class BetaModelInfo implements BaseModel
         $this->id = $id;
         $this->createdAt = $createdAt;
         $this->displayName = $displayName;
+
+        self::_introspect();
     }
 }
-
-BetaModelInfo::__introspect();

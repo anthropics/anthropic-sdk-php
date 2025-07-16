@@ -24,7 +24,7 @@ final class OverloadedError implements BaseModel
     final public function __construct(string $message = 'Overloaded')
     {
         $this->message = $message;
+
+        self::_introspect();
     }
 }
-
-OverloadedError::__introspect();

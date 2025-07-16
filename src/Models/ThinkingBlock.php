@@ -28,7 +28,7 @@ final class ThinkingBlock implements BaseModel
     {
         $this->signature = $signature;
         $this->thinking = $thinking;
+
+        self::_introspect();
     }
 }
-
-ThinkingBlock::__introspect();

@@ -30,7 +30,7 @@ final class RawContentBlockDeltaEvent implements BaseModel
     ) {
         $this->delta = $delta;
         $this->index = $index;
+
+        self::_introspect();
     }
 }
-
-RawContentBlockDeltaEvent::__introspect();

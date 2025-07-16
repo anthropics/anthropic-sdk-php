@@ -28,7 +28,7 @@ final class BatchCreateParam implements BaseModel
     final public function __construct(array $requests)
     {
         $this->requests = $requests;
+
+        self::_introspect();
     }
 }
-
-BatchCreateParam::__introspect();

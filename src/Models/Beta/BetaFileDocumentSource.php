@@ -24,7 +24,7 @@ final class BetaFileDocumentSource implements BaseModel
     final public function __construct(string $fileID)
     {
         $this->fileID = $fileID;
+
+        self::_introspect();
     }
 }
-
-BetaFileDocumentSource::__introspect();

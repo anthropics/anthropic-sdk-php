@@ -92,11 +92,13 @@ final class MessageCountTokensParam implements BaseModel
     ) {
         $this->messages = $messages;
         $this->model = $model;
-        $this->system = $system;
-        $this->thinking = $thinking;
-        $this->toolChoice = $toolChoice;
-        $this->tools = $tools;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $system && $this->system = $system;
+        null != $thinking && $this->thinking = $thinking;
+        null != $toolChoice && $this->toolChoice = $toolChoice;
+        null != $tools && $this->tools = $tools;
     }
 }
-
-MessageCountTokensParam::__introspect();

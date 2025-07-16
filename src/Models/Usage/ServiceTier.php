@@ -17,5 +17,3 @@ final class ServiceTier implements StaticConverter
 
     final public const BATCH = 'batch';
 }
-
-ServiceTier::__introspect();

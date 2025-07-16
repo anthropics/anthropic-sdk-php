@@ -11,5 +11,3 @@ final class BetaThinkingConfigParam implements StaticConverter
 {
     use Union;
 }
-
-BetaThinkingConfigParam::__introspect();

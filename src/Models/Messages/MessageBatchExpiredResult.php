@@ -15,7 +15,8 @@ final class MessageBatchExpiredResult implements BaseModel
     #[Api]
     public string $type = 'expired';
 
-    final public function __construct() {}
+    final public function __construct()
+    {
+        self::_introspect();
+    }
 }
-
-MessageBatchExpiredResult::__introspect();

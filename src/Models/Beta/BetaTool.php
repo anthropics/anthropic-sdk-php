@@ -44,10 +44,12 @@ final class BetaTool implements BaseModel
     ) {
         $this->inputSchema = $inputSchema;
         $this->name = $name;
-        $this->cacheControl = $cacheControl;
-        $this->description = $description;
-        $this->type = $type;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $cacheControl && $this->cacheControl = $cacheControl;
+        null != $description && $this->description = $description;
+        null != $type && $this->type = $type;
     }
 }
-
-BetaTool::__introspect();

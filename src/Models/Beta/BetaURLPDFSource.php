@@ -24,7 +24,7 @@ final class BetaURLPDFSource implements BaseModel
     final public function __construct(string $url)
     {
         $this->url = $url;
+
+        self::_introspect();
     }
 }
-
-BetaURLPDFSource::__introspect();

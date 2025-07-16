@@ -40,7 +40,7 @@ final class WebSearchResultBlock implements BaseModel
         $this->pageAge = $pageAge;
         $this->title = $title;
         $this->url = $url;
+
+        self::_introspect();
     }
 }
-
-WebSearchResultBlock::__introspect();

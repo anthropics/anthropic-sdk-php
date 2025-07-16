@@ -15,5 +15,3 @@ final class Role implements StaticConverter
 
     final public const ASSISTANT = 'assistant';
 }
-
-Role::__introspect();

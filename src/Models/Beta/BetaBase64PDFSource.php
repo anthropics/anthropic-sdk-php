@@ -27,7 +27,7 @@ final class BetaBase64PDFSource implements BaseModel
     final public function __construct(string $data)
     {
         $this->data = $data;
+
+        self::_introspect();
     }
 }
-
-BetaBase64PDFSource::__introspect();

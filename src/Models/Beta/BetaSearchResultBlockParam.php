@@ -47,9 +47,11 @@ final class BetaSearchResultBlockParam implements BaseModel
         $this->content = $content;
         $this->source = $source;
         $this->title = $title;
-        $this->cacheControl = $cacheControl;
-        $this->citations = $citations;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $cacheControl && $this->cacheControl = $cacheControl;
+        null != $citations && $this->citations = $citations;
     }
 }
-
-BetaSearchResultBlockParam::__introspect();

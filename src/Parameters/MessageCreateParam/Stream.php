@@ -13,5 +13,3 @@ final class Stream implements StaticConverter
 
     final public const FALSE = false;
 }
-
-Stream::__introspect();

@@ -11,5 +11,3 @@ final class MessageCountTokensTool implements StaticConverter
 {
     use Union;
 }
-
-MessageCountTokensTool::__introspect();

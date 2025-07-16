@@ -45,7 +45,7 @@ final class CitationCharLocationParam implements BaseModel
         $this->documentTitle = $documentTitle;
         $this->endCharIndex = $endCharIndex;
         $this->startCharIndex = $startCharIndex;
+
+        self::_introspect();
     }
 }
-
-CitationCharLocationParam::__introspect();

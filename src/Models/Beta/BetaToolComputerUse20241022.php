@@ -41,9 +41,11 @@ final class BetaToolComputerUse20241022 implements BaseModel
     ) {
         $this->displayHeightPx = $displayHeightPx;
         $this->displayWidthPx = $displayWidthPx;
-        $this->cacheControl = $cacheControl;
-        $this->displayNumber = $displayNumber;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $cacheControl && $this->cacheControl = $cacheControl;
+        null != $displayNumber && $this->displayNumber = $displayNumber;
     }
 }
-
-BetaToolComputerUse20241022::__introspect();

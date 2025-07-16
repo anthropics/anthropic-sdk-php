@@ -32,7 +32,7 @@ final class ToolUseBlock implements BaseModel
         $this->id = $id;
         $this->input = $input;
         $this->name = $name;
+
+        self::_introspect();
     }
 }
-
-ToolUseBlock::__introspect();

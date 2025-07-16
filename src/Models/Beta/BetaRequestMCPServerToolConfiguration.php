@@ -34,9 +34,10 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
         ?array $allowedTools = null,
         ?bool $enabled = null
     ) {
-        $this->allowedTools = $allowedTools;
-        $this->enabled = $enabled;
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $allowedTools && $this->allowedTools = $allowedTools;
+        null != $enabled && $this->enabled = $enabled;
     }
 }
-
-BetaRequestMCPServerToolConfiguration::__introspect();

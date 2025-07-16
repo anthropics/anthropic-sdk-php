@@ -19,5 +19,3 @@ final class BetaCodeExecutionToolResultErrorCode implements StaticConverter
 
     final public const EXECUTION_TIME_EXCEEDED = 'execution_time_exceeded';
 }
-
-BetaCodeExecutionToolResultErrorCode::__introspect();

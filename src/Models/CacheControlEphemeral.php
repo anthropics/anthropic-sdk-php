@@ -15,7 +15,8 @@ final class CacheControlEphemeral implements BaseModel
     #[Api]
     public string $type = 'ephemeral';
 
-    final public function __construct() {}
+    final public function __construct()
+    {
+        self::_introspect();
+    }
 }
-
-CacheControlEphemeral::__introspect();

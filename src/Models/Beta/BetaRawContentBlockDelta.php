@@ -11,5 +11,3 @@ final class BetaRawContentBlockDelta implements StaticConverter
 {
     use Union;
 }
-
-BetaRawContentBlockDelta::__introspect();

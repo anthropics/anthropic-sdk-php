@@ -37,7 +37,7 @@ final class Delta implements BaseModel
         $this->container = $container;
         $this->stopReason = $stopReason;
         $this->stopSequence = $stopSequence;
+
+        self::_introspect();
     }
 }
-
-Delta::__introspect();

@@ -11,5 +11,3 @@ final class System implements StaticConverter
 {
     use Union;
 }
-
-System::__introspect();

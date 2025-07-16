@@ -24,7 +24,7 @@ final class BetaOverloadedError implements BaseModel
     final public function __construct(string $message = 'Overloaded')
     {
         $this->message = $message;
+
+        self::_introspect();
     }
 }
-
-BetaOverloadedError::__introspect();

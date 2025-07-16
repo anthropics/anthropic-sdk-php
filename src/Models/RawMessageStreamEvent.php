@@ -11,5 +11,3 @@ final class RawMessageStreamEvent implements StaticConverter
 {
     use Union;
 }
-
-RawMessageStreamEvent::__introspect();

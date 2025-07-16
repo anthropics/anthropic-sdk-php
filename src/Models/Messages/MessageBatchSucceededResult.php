@@ -25,7 +25,7 @@ final class MessageBatchSucceededResult implements BaseModel
     final public function __construct(Message $message)
     {
         $this->message = $message;
+
+        self::_introspect();
     }
 }
-
-MessageBatchSucceededResult::__introspect();

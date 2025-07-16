@@ -13,5 +13,3 @@ final class Type implements StaticConverter
 
     final public const FILE_DELETED = 'file_deleted';
 }
-
-Type::__introspect();

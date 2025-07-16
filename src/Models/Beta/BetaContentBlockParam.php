@@ -11,5 +11,3 @@ final class BetaContentBlockParam implements StaticConverter
 {
     use Union;
 }
-
-BetaContentBlockParam::__introspect();

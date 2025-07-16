@@ -44,11 +44,12 @@ final class ModelListParam implements BaseModel
         ?int $limit = null,
         ?array $anthropicBeta = null,
     ) {
-        $this->afterID = $afterID;
-        $this->beforeID = $beforeID;
-        $this->limit = $limit;
-        $this->anthropicBeta = $anthropicBeta;
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $afterID && $this->afterID = $afterID;
+        null != $beforeID && $this->beforeID = $beforeID;
+        null != $limit && $this->limit = $limit;
+        null != $anthropicBeta && $this->anthropicBeta = $anthropicBeta;
     }
 }
-
-ModelListParam::__introspect();

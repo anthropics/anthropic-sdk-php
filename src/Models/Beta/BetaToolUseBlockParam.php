@@ -39,8 +39,10 @@ final class BetaToolUseBlockParam implements BaseModel
         $this->id = $id;
         $this->input = $input;
         $this->name = $name;
-        $this->cacheControl = $cacheControl;
+
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $cacheControl && $this->cacheControl = $cacheControl;
     }
 }
-
-BetaToolUseBlockParam::__introspect();

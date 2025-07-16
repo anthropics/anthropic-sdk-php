@@ -24,7 +24,7 @@ final class RateLimitError implements BaseModel
     final public function __construct(string $message = 'Rate limited')
     {
         $this->message = $message;
+
+        self::_introspect();
     }
 }
-
-RateLimitError::__introspect();

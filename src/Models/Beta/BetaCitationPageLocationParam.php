@@ -45,7 +45,7 @@ final class BetaCitationPageLocationParam implements BaseModel
         $this->documentTitle = $documentTitle;
         $this->endPageNumber = $endPageNumber;
         $this->startPageNumber = $startPageNumber;
+
+        self::_introspect();
     }
 }
-
-BetaCitationPageLocationParam::__introspect();

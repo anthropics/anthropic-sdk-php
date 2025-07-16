@@ -36,11 +36,12 @@ final class UserLocation implements BaseModel
         ?string $region = null,
         ?string $timezone = null,
     ) {
-        $this->city = $city;
-        $this->country = $country;
-        $this->region = $region;
-        $this->timezone = $timezone;
+        self::_introspect();
+        $this->unsetOptionalProperties();
+
+        null != $city && $this->city = $city;
+        null != $country && $this->country = $country;
+        null != $region && $this->region = $region;
+        null != $timezone && $this->timezone = $timezone;
     }
 }
-
-UserLocation::__introspect();

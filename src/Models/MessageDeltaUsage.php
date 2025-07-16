@@ -42,7 +42,7 @@ final class MessageDeltaUsage implements BaseModel
         $this->inputTokens = $inputTokens;
         $this->outputTokens = $outputTokens;
         $this->serverToolUse = $serverToolUse;
+
+        self::_introspect();
     }
 }
-
-MessageDeltaUsage::__introspect();
