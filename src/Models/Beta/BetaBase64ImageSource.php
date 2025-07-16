@@ -8,11 +8,13 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Beta\BetaBase64ImageSource\MediaType;
-use Anthropic\Models\Beta\BetaBase64ImageSource\Type;
 
 final class BetaBase64ImageSource implements BaseModel
 {
     use Model;
+
+    #[Api]
+    public string $type = 'base64';
 
     #[Api]
     public string $data;
@@ -21,24 +23,15 @@ final class BetaBase64ImageSource implements BaseModel
     #[Api('media_type')]
     public string $mediaType;
 
-    /** @var Type::* $type */
-    #[Api]
-    public string $type;
-
     /**
      * You must use named parameters to construct this object.
      *
      * @param MediaType::* $mediaType
-     * @param Type::*      $type
      */
-    final public function __construct(
-        string $data,
-        string $mediaType,
-        string $type
-    ) {
+    final public function __construct(string $data, string $mediaType)
+    {
         $this->data = $data;
         $this->mediaType = $mediaType;
-        $this->type = $type;
     }
 }
 

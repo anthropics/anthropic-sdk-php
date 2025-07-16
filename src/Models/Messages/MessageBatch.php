@@ -8,11 +8,13 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Messages\MessageBatch\ProcessingStatus;
-use Anthropic\Models\Messages\MessageBatch\Type;
 
 final class MessageBatch implements BaseModel
 {
     use Model;
+
+    #[Api]
+    public string $type = 'message_batch';
 
     #[Api]
     public string $id;
@@ -42,15 +44,10 @@ final class MessageBatch implements BaseModel
     #[Api('results_url')]
     public ?string $resultsURL;
 
-    /** @var Type::* $type */
-    #[Api]
-    public string $type = 'message_batch';
-
     /**
      * You must use named parameters to construct this object.
      *
      * @param ProcessingStatus::* $processingStatus
-     * @param Type::*             $type
      */
     final public function __construct(
         string $id,
@@ -62,7 +59,6 @@ final class MessageBatch implements BaseModel
         string $processingStatus,
         MessageBatchRequestCounts $requestCounts,
         ?string $resultsURL,
-        string $type = 'message_batch',
     ) {
         $this->id = $id;
         $this->archivedAt = $archivedAt;
@@ -73,7 +69,6 @@ final class MessageBatch implements BaseModel
         $this->processingStatus = $processingStatus;
         $this->requestCounts = $requestCounts;
         $this->resultsURL = $resultsURL;
-        $this->type = $type;
     }
 }
 

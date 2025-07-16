@@ -9,13 +9,17 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
-use Anthropic\Models\Message\Role;
-use Anthropic\Models\Message\Type;
 use Anthropic\Models\Model\UnionMember0;
 
 final class Message implements BaseModel
 {
     use Model;
+
+    #[Api]
+    public string $role = 'assistant';
+
+    #[Api]
+    public string $type = 'message';
 
     #[Api]
     public string $id;
@@ -45,20 +49,12 @@ final class Message implements BaseModel
     #[Api]
     public string $model;
 
-    /** @var Role::* $role */
-    #[Api]
-    public string $role = 'assistant';
-
     /** @var StopReason::* $stopReason */
     #[Api('stop_reason')]
     public string $stopReason;
 
     #[Api('stop_sequence')]
     public ?string $stopSequence;
-
-    /** @var Type::* $type */
-    #[Api]
-    public string $type = 'message';
 
     #[Api]
     public Usage $usage;
@@ -70,9 +66,7 @@ final class Message implements BaseModel
      *   TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock
      * > $content
      * @param string|UnionMember0::* $model
-     * @param Role::*                $role
      * @param StopReason::*          $stopReason
-     * @param Type::*                $type
      */
     final public function __construct(
         string $id,
@@ -81,16 +75,12 @@ final class Message implements BaseModel
         string $stopReason,
         ?string $stopSequence,
         Usage $usage,
-        string $role = 'assistant',
-        string $type = 'message',
     ) {
         $this->id = $id;
         $this->content = $content;
         $this->model = $model;
-        $this->role = $role;
         $this->stopReason = $stopReason;
         $this->stopSequence = $stopSequence;
-        $this->type = $type;
         $this->usage = $usage;
     }
 }

@@ -7,12 +7,14 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\Completion\Type;
 use Anthropic\Models\Model\UnionMember0;
 
 final class Completion implements BaseModel
 {
     use Model;
+
+    #[Api]
+    public string $type = 'completion';
 
     #[Api]
     public string $id;
@@ -27,28 +29,21 @@ final class Completion implements BaseModel
     #[Api('stop_reason')]
     public ?string $stopReason;
 
-    /** @var Type::* $type */
-    #[Api]
-    public string $type = 'completion';
-
     /**
      * You must use named parameters to construct this object.
      *
      * @param string|UnionMember0::* $model
-     * @param Type::*                $type
      */
     final public function __construct(
         string $id,
         string $completion,
         string $model,
-        ?string $stopReason,
-        string $type = 'completion',
+        ?string $stopReason
     ) {
         $this->id = $id;
         $this->completion = $completion;
         $this->model = $model;
         $this->stopReason = $stopReason;
-        $this->type = $type;
     }
 }
 

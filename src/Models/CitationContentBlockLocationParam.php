@@ -7,11 +7,13 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\CitationContentBlockLocationParam\Type;
 
 final class CitationContentBlockLocationParam implements BaseModel
 {
     use Model;
+
+    #[Api]
+    public string $type = 'content_block_location';
 
     #[Api('cited_text')]
     public string $citedText;
@@ -28,14 +30,8 @@ final class CitationContentBlockLocationParam implements BaseModel
     #[Api('start_block_index')]
     public int $startBlockIndex;
 
-    /** @var Type::* $type */
-    #[Api]
-    public string $type;
-
     /**
      * You must use named parameters to construct this object.
-     *
-     * @param Type::* $type
      */
     final public function __construct(
         string $citedText,
@@ -43,14 +39,12 @@ final class CitationContentBlockLocationParam implements BaseModel
         ?string $documentTitle,
         int $endBlockIndex,
         int $startBlockIndex,
-        string $type,
     ) {
         $this->citedText = $citedText;
         $this->documentIndex = $documentIndex;
         $this->documentTitle = $documentTitle;
         $this->endBlockIndex = $endBlockIndex;
         $this->startBlockIndex = $startBlockIndex;
-        $this->type = $type;
     }
 }
 

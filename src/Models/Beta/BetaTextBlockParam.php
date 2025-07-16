@@ -9,18 +9,16 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
-use Anthropic\Models\Beta\BetaTextBlockParam\Type;
 
 final class BetaTextBlockParam implements BaseModel
 {
     use Model;
 
     #[Api]
-    public string $text;
+    public string $type = 'text';
 
-    /** @var Type::* $type */
     #[Api]
-    public string $type;
+    public string $text;
 
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
@@ -54,19 +52,16 @@ final class BetaTextBlockParam implements BaseModel
     /**
      * You must use named parameters to construct this object.
      *
-     * @param Type::* $type
      * @param list<
      *   BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam
      * >|null $citations
      */
     final public function __construct(
         string $text,
-        string $type,
         ?BetaCacheControlEphemeral $cacheControl = null,
         ?array $citations = null,
     ) {
         $this->text = $text;
-        $this->type = $type;
         $this->cacheControl = $cacheControl;
         $this->citations = $citations;
     }

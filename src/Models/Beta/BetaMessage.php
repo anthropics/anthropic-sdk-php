@@ -9,13 +9,17 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
-use Anthropic\Models\Beta\BetaMessage\Role;
-use Anthropic\Models\Beta\BetaMessage\Type;
 use Anthropic\Models\Model\UnionMember0;
 
 final class BetaMessage implements BaseModel
 {
     use Model;
+
+    #[Api]
+    public string $role = 'assistant';
+
+    #[Api]
+    public string $type = 'message';
 
     #[Api]
     public string $id;
@@ -52,20 +56,12 @@ final class BetaMessage implements BaseModel
     #[Api]
     public string $model;
 
-    /** @var Role::* $role */
-    #[Api]
-    public string $role = 'assistant';
-
     /** @var BetaStopReason::* $stopReason */
     #[Api('stop_reason')]
     public string $stopReason;
 
     #[Api('stop_sequence')]
     public ?string $stopSequence;
-
-    /** @var Type::* $type */
-    #[Api]
-    public string $type = 'message';
 
     #[Api]
     public BetaUsage $usage;
@@ -77,9 +73,7 @@ final class BetaMessage implements BaseModel
      *   BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock
      * > $content
      * @param string|UnionMember0::* $model
-     * @param Role::*                $role
      * @param BetaStopReason::*      $stopReason
-     * @param Type::*                $type
      */
     final public function __construct(
         string $id,
@@ -89,17 +83,13 @@ final class BetaMessage implements BaseModel
         string $stopReason,
         ?string $stopSequence,
         BetaUsage $usage,
-        string $role = 'assistant',
-        string $type = 'message',
     ) {
         $this->id = $id;
         $this->container = $container;
         $this->content = $content;
         $this->model = $model;
-        $this->role = $role;
         $this->stopReason = $stopReason;
         $this->stopSequence = $stopSequence;
-        $this->type = $type;
         $this->usage = $usage;
     }
 }

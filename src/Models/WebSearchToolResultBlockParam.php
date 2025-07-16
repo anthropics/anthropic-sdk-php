@@ -9,11 +9,13 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
-use Anthropic\Models\WebSearchToolResultBlockParam\Type;
 
 final class WebSearchToolResultBlockParam implements BaseModel
 {
     use Model;
+
+    #[Api]
+    public string $type = 'web_search_tool_result';
 
     /** @var list<WebSearchResultBlockParam>|WebSearchToolRequestError $content */
     #[Api(
@@ -29,10 +31,6 @@ final class WebSearchToolResultBlockParam implements BaseModel
     #[Api('tool_use_id')]
     public string $toolUseID;
 
-    /** @var Type::* $type */
-    #[Api]
-    public string $type;
-
     #[Api('cache_control', optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 
@@ -40,17 +38,14 @@ final class WebSearchToolResultBlockParam implements BaseModel
      * You must use named parameters to construct this object.
      *
      * @param list<WebSearchResultBlockParam>|WebSearchToolRequestError $content
-     * @param Type::*                                                   $type
      */
     final public function __construct(
         array|WebSearchToolRequestError $content,
         string $toolUseID,
-        string $type,
         ?CacheControlEphemeral $cacheControl = null,
     ) {
         $this->content = $content;
         $this->toolUseID = $toolUseID;
-        $this->type = $type;
         $this->cacheControl = $cacheControl;
     }
 }

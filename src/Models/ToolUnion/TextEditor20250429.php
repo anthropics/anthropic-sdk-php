@@ -8,37 +8,25 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\CacheControlEphemeral;
-use Anthropic\Models\ToolUnion\TextEditor20250429\Name;
-use Anthropic\Models\ToolUnion\TextEditor20250429\Type;
 
 final class TextEditor20250429 implements BaseModel
 {
     use Model;
 
-    /** @var Name::* $name */
     #[Api]
-    public string $name;
+    public string $name = 'str_replace_based_edit_tool';
 
-    /** @var Type::* $type */
     #[Api]
-    public string $type;
+    public string $type = 'text_editor_20250429';
 
     #[Api('cache_control', optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 
     /**
      * You must use named parameters to construct this object.
-     *
-     * @param Name::* $name
-     * @param Type::* $type
      */
-    final public function __construct(
-        string $name,
-        string $type,
-        ?CacheControlEphemeral $cacheControl = null
-    ) {
-        $this->name = $name;
-        $this->type = $type;
+    final public function __construct(?CacheControlEphemeral $cacheControl = null)
+    {
         $this->cacheControl = $cacheControl;
     }
 }

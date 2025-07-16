@@ -7,11 +7,13 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\Beta\BetaThinkingBlock\Type;
 
 final class BetaThinkingBlock implements BaseModel
 {
     use Model;
+
+    #[Api]
+    public string $type = 'thinking';
 
     #[Api]
     public string $signature;
@@ -19,23 +21,13 @@ final class BetaThinkingBlock implements BaseModel
     #[Api]
     public string $thinking;
 
-    /** @var Type::* $type */
-    #[Api]
-    public string $type = 'thinking';
-
     /**
      * You must use named parameters to construct this object.
-     *
-     * @param Type::* $type
      */
-    final public function __construct(
-        string $signature,
-        string $thinking,
-        string $type = 'thinking'
-    ) {
+    final public function __construct(string $signature, string $thinking)
+    {
         $this->signature = $signature;
         $this->thinking = $thinking;
-        $this->type = $type;
     }
 }
 

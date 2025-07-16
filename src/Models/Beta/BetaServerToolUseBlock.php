@@ -8,11 +8,13 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Beta\BetaServerToolUseBlock\Name;
-use Anthropic\Models\Beta\BetaServerToolUseBlock\Type;
 
 final class BetaServerToolUseBlock implements BaseModel
 {
     use Model;
+
+    #[Api]
+    public string $type = 'server_tool_use';
 
     #[Api]
     public string $id;
@@ -24,26 +26,16 @@ final class BetaServerToolUseBlock implements BaseModel
     #[Api]
     public string $name;
 
-    /** @var Type::* $type */
-    #[Api]
-    public string $type = 'server_tool_use';
-
     /**
      * You must use named parameters to construct this object.
      *
      * @param Name::* $name
-     * @param Type::* $type
      */
-    final public function __construct(
-        string $id,
-        mixed $input,
-        string $name,
-        string $type = 'server_tool_use'
-    ) {
+    final public function __construct(string $id, mixed $input, string $name)
+    {
         $this->id = $id;
         $this->input = $input;
         $this->name = $name;
-        $this->type = $type;
     }
 }
 

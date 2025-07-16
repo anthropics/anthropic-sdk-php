@@ -7,18 +7,16 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\Beta\BetaRequestMCPServerURLDefinition\Type;
 
 final class BetaRequestMCPServerURLDefinition implements BaseModel
 {
     use Model;
 
     #[Api]
-    public string $name;
+    public string $type = 'url';
 
-    /** @var Type::* $type */
     #[Api]
-    public string $type;
+    public string $name;
 
     #[Api]
     public string $url;
@@ -31,18 +29,14 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
 
     /**
      * You must use named parameters to construct this object.
-     *
-     * @param Type::* $type
      */
     final public function __construct(
         string $name,
-        string $type,
         string $url,
         ?string $authorizationToken = null,
         ?BetaRequestMCPServerToolConfiguration $toolConfiguration = null,
     ) {
         $this->name = $name;
-        $this->type = $type;
         $this->url = $url;
         $this->authorizationToken = $authorizationToken;
         $this->toolConfiguration = $toolConfiguration;

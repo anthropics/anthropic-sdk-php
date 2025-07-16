@@ -7,18 +7,16 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\Beta\BetaRequestDocumentBlock\Type;
 
 final class BetaRequestDocumentBlock implements BaseModel
 {
     use Model;
 
     #[Api]
-    public BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source;
+    public string $type = 'document';
 
-    /** @var Type::* $type */
     #[Api]
-    public string $type;
+    public BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source;
 
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
@@ -34,19 +32,15 @@ final class BetaRequestDocumentBlock implements BaseModel
 
     /**
      * You must use named parameters to construct this object.
-     *
-     * @param Type::* $type
      */
     final public function __construct(
         BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source,
-        string $type,
         ?BetaCacheControlEphemeral $cacheControl = null,
         ?BetaCitationsConfigParam $citations = null,
         ?string $context = null,
         ?string $title = null,
     ) {
         $this->source = $source;
-        $this->type = $type;
         $this->cacheControl = $cacheControl;
         $this->citations = $citations;
         $this->context = $context;

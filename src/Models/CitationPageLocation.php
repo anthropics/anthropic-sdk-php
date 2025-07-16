@@ -7,11 +7,13 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\CitationPageLocation\Type;
 
 final class CitationPageLocation implements BaseModel
 {
     use Model;
+
+    #[Api]
+    public string $type = 'page_location';
 
     #[Api('cited_text')]
     public string $citedText;
@@ -28,14 +30,8 @@ final class CitationPageLocation implements BaseModel
     #[Api('start_page_number')]
     public int $startPageNumber;
 
-    /** @var Type::* $type */
-    #[Api]
-    public string $type = 'page_location';
-
     /**
      * You must use named parameters to construct this object.
-     *
-     * @param Type::* $type
      */
     final public function __construct(
         string $citedText,
@@ -43,14 +39,12 @@ final class CitationPageLocation implements BaseModel
         ?string $documentTitle,
         int $endPageNumber,
         int $startPageNumber,
-        string $type = 'page_location',
     ) {
         $this->citedText = $citedText;
         $this->documentIndex = $documentIndex;
         $this->documentTitle = $documentTitle;
         $this->endPageNumber = $endPageNumber;
         $this->startPageNumber = $startPageNumber;
-        $this->type = $type;
     }
 }
 

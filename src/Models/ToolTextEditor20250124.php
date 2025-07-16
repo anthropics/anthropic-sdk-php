@@ -7,37 +7,25 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\ToolTextEditor20250124\Name;
-use Anthropic\Models\ToolTextEditor20250124\Type;
 
 final class ToolTextEditor20250124 implements BaseModel
 {
     use Model;
 
-    /** @var Name::* $name */
     #[Api]
-    public string $name;
+    public string $name = 'str_replace_editor';
 
-    /** @var Type::* $type */
     #[Api]
-    public string $type;
+    public string $type = 'text_editor_20250124';
 
     #[Api('cache_control', optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 
     /**
      * You must use named parameters to construct this object.
-     *
-     * @param Name::* $name
-     * @param Type::* $type
      */
-    final public function __construct(
-        string $name,
-        string $type,
-        ?CacheControlEphemeral $cacheControl = null
-    ) {
-        $this->name = $name;
-        $this->type = $type;
+    final public function __construct(?CacheControlEphemeral $cacheControl = null)
+    {
         $this->cacheControl = $cacheControl;
     }
 }

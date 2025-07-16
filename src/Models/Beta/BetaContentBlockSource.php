@@ -9,11 +9,13 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
-use Anthropic\Models\Beta\BetaContentBlockSource\Type;
 
 final class BetaContentBlockSource implements BaseModel
 {
     use Model;
+
+    #[Api]
+    public string $type = 'content';
 
     /** @var list<BetaImageBlockParam|BetaTextBlockParam>|string $content */
     #[Api(
@@ -28,20 +30,14 @@ final class BetaContentBlockSource implements BaseModel
     )]
     public array|string $content;
 
-    /** @var Type::* $type */
-    #[Api]
-    public string $type;
-
     /**
      * You must use named parameters to construct this object.
      *
      * @param list<BetaImageBlockParam|BetaTextBlockParam>|string $content
-     * @param Type::*                                             $type
      */
-    final public function __construct(array|string $content, string $type)
+    final public function __construct(array|string $content)
     {
         $this->content = $content;
-        $this->type = $type;
     }
 }
 

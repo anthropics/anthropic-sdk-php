@@ -7,30 +7,23 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\InvalidRequestError\Type;
 
 final class InvalidRequestError implements BaseModel
 {
     use Model;
 
     #[Api]
-    public string $message = 'Invalid request';
-
-    /** @var Type::* $type */
-    #[Api]
     public string $type = 'invalid_request_error';
+
+    #[Api]
+    public string $message = 'Invalid request';
 
     /**
      * You must use named parameters to construct this object.
-     *
-     * @param Type::* $type
      */
-    final public function __construct(
-        string $message = 'Invalid request',
-        string $type = 'invalid_request_error'
-    ) {
+    final public function __construct(string $message = 'Invalid request')
+    {
         $this->message = $message;
-        $this->type = $type;
     }
 }
 

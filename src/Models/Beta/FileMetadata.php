@@ -7,11 +7,13 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\Beta\FileMetadata\Type;
 
 final class FileMetadata implements BaseModel
 {
     use Model;
+
+    #[Api]
+    public string $type = 'file';
 
     #[Api]
     public string $id;
@@ -28,17 +30,11 @@ final class FileMetadata implements BaseModel
     #[Api('size_bytes')]
     public int $sizeBytes;
 
-    /** @var Type::* $type */
-    #[Api]
-    public string $type;
-
     #[Api(optional: true)]
     public ?bool $downloadable = false;
 
     /**
      * You must use named parameters to construct this object.
-     *
-     * @param Type::* $type
      */
     final public function __construct(
         string $id,
@@ -46,7 +42,6 @@ final class FileMetadata implements BaseModel
         string $filename,
         string $mimeType,
         int $sizeBytes,
-        string $type,
         ?bool $downloadable = null,
     ) {
         $this->id = $id;
@@ -54,7 +49,6 @@ final class FileMetadata implements BaseModel
         $this->filename = $filename;
         $this->mimeType = $mimeType;
         $this->sizeBytes = $sizeBytes;
-        $this->type = $type;
         $this->downloadable = $downloadable;
     }
 }

@@ -9,15 +9,13 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
-use Anthropic\Models\Tool\InputSchema\Type;
 
 final class InputSchema implements BaseModel
 {
     use Model;
 
-    /** @var Type::* $type */
     #[Api]
-    public string $type;
+    public string $type = 'object';
 
     #[Api(optional: true)]
     public mixed $properties;
@@ -29,15 +27,12 @@ final class InputSchema implements BaseModel
     /**
      * You must use named parameters to construct this object.
      *
-     * @param Type::*           $type
      * @param null|list<string> $required
      */
     final public function __construct(
-        string $type,
         mixed $properties = null,
         ?array $required = null
     ) {
-        $this->type = $type;
         $this->properties = $properties;
         $this->required = $required;
     }

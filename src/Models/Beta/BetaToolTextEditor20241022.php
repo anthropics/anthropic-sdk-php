@@ -7,37 +7,26 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\Beta\BetaToolTextEditor20241022\Name;
-use Anthropic\Models\Beta\BetaToolTextEditor20241022\Type;
 
 final class BetaToolTextEditor20241022 implements BaseModel
 {
     use Model;
 
-    /** @var Name::* $name */
     #[Api]
-    public string $name;
+    public string $name = 'str_replace_editor';
 
-    /** @var Type::* $type */
     #[Api]
-    public string $type;
+    public string $type = 'text_editor_20241022';
 
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * You must use named parameters to construct this object.
-     *
-     * @param Name::* $name
-     * @param Type::* $type
      */
     final public function __construct(
-        string $name,
-        string $type,
         ?BetaCacheControlEphemeral $cacheControl = null
     ) {
-        $this->name = $name;
-        $this->type = $type;
         $this->cacheControl = $cacheControl;
     }
 }

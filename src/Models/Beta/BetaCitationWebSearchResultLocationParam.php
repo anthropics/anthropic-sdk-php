@@ -7,11 +7,13 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\Beta\BetaCitationWebSearchResultLocationParam\Type;
 
 final class BetaCitationWebSearchResultLocationParam implements BaseModel
 {
     use Model;
+
+    #[Api]
+    public string $type = 'web_search_result_location';
 
     #[Api('cited_text')]
     public string $citedText;
@@ -22,29 +24,21 @@ final class BetaCitationWebSearchResultLocationParam implements BaseModel
     #[Api]
     public ?string $title;
 
-    /** @var Type::* $type */
-    #[Api]
-    public string $type;
-
     #[Api]
     public string $url;
 
     /**
      * You must use named parameters to construct this object.
-     *
-     * @param Type::* $type
      */
     final public function __construct(
         string $citedText,
         string $encryptedIndex,
         ?string $title,
-        string $type,
-        string $url,
+        string $url
     ) {
         $this->citedText = $citedText;
         $this->encryptedIndex = $encryptedIndex;
         $this->title = $title;
-        $this->type = $type;
         $this->url = $url;
     }
 }

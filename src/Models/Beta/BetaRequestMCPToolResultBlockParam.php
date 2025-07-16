@@ -9,18 +9,16 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
-use Anthropic\Models\Beta\BetaRequestMCPToolResultBlockParam\Type;
 
 final class BetaRequestMCPToolResultBlockParam implements BaseModel
 {
     use Model;
 
+    #[Api]
+    public string $type = 'mcp_tool_result';
+
     #[Api('tool_use_id')]
     public string $toolUseID;
-
-    /** @var Type::* $type */
-    #[Api]
-    public string $type;
 
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
@@ -38,18 +36,15 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
     /**
      * You must use named parameters to construct this object.
      *
-     * @param Type::*                              $type
      * @param null|list<BetaTextBlockParam>|string $content
      */
     final public function __construct(
         string $toolUseID,
-        string $type,
         ?BetaCacheControlEphemeral $cacheControl = null,
         null|array|string $content = null,
         ?bool $isError = null,
     ) {
         $this->toolUseID = $toolUseID;
-        $this->type = $type;
         $this->cacheControl = $cacheControl;
         $this->content = $content;
         $this->isError = $isError;

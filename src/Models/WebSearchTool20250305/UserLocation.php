@@ -7,15 +7,13 @@ namespace Anthropic\Models\WebSearchTool20250305;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\WebSearchTool20250305\UserLocation\Type;
 
 final class UserLocation implements BaseModel
 {
     use Model;
 
-    /** @var Type::* $type */
     #[Api]
-    public string $type;
+    public string $type = 'approximate';
 
     #[Api(optional: true)]
     public ?string $city;
@@ -31,17 +29,13 @@ final class UserLocation implements BaseModel
 
     /**
      * You must use named parameters to construct this object.
-     *
-     * @param Type::* $type
      */
     final public function __construct(
-        string $type,
         ?string $city = null,
         ?string $country = null,
         ?string $region = null,
         ?string $timezone = null,
     ) {
-        $this->type = $type;
         $this->city = $city;
         $this->country = $country;
         $this->region = $region;

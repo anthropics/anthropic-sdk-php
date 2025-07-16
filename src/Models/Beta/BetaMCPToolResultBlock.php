@@ -9,11 +9,13 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
-use Anthropic\Models\Beta\BetaMCPToolResultBlock\Type;
 
 final class BetaMCPToolResultBlock implements BaseModel
 {
     use Model;
+
+    #[Api]
+    public string $type = 'mcp_tool_result';
 
     /** @var list<BetaTextBlock>|string $content */
     #[Api(type: new UnionOf(['string', new ListOf(BetaTextBlock::class)]))]
@@ -25,26 +27,19 @@ final class BetaMCPToolResultBlock implements BaseModel
     #[Api('tool_use_id')]
     public string $toolUseID;
 
-    /** @var Type::* $type */
-    #[Api]
-    public string $type = 'mcp_tool_result';
-
     /**
      * You must use named parameters to construct this object.
      *
      * @param list<BetaTextBlock>|string $content
-     * @param Type::*                    $type
      */
     final public function __construct(
         array|string $content,
         string $toolUseID,
-        bool $isError = false,
-        string $type = 'mcp_tool_result',
+        bool $isError = false
     ) {
         $this->content = $content;
         $this->isError = $isError;
         $this->toolUseID = $toolUseID;
-        $this->type = $type;
     }
 }
 

@@ -9,11 +9,13 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
 use Anthropic\Core\Serde\UnionOf;
-use Anthropic\Models\TextBlock\Type;
 
 final class TextBlock implements BaseModel
 {
     use Model;
+
+    #[Api]
+    public string $type = 'text';
 
     /**
      * @var list<
@@ -42,26 +44,17 @@ final class TextBlock implements BaseModel
     #[Api]
     public string $text;
 
-    /** @var Type::* $type */
-    #[Api]
-    public string $type = 'text';
-
     /**
      * You must use named parameters to construct this object.
      *
      * @param list<
      *   CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation
      * >|null $citations
-     * @param Type::* $type
      */
-    final public function __construct(
-        ?array $citations,
-        string $text,
-        string $type = 'text'
-    ) {
+    final public function __construct(?array $citations, string $text)
+    {
         $this->citations = $citations;
         $this->text = $text;
-        $this->type = $type;
     }
 }
 

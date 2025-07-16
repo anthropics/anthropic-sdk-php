@@ -7,18 +7,16 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\DocumentBlockParam\Type;
 
 final class DocumentBlockParam implements BaseModel
 {
     use Model;
 
     #[Api]
-    public Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source;
+    public string $type = 'document';
 
-    /** @var Type::* $type */
     #[Api]
-    public string $type;
+    public Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source;
 
     #[Api('cache_control', optional: true)]
     public ?CacheControlEphemeral $cacheControl;
@@ -34,19 +32,15 @@ final class DocumentBlockParam implements BaseModel
 
     /**
      * You must use named parameters to construct this object.
-     *
-     * @param Type::* $type
      */
     final public function __construct(
         Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source,
-        string $type,
         ?CacheControlEphemeral $cacheControl = null,
         ?CitationsConfigParam $citations = null,
         ?string $context = null,
         ?string $title = null,
     ) {
         $this->source = $source;
-        $this->type = $type;
         $this->cacheControl = $cacheControl;
         $this->citations = $citations;
         $this->context = $context;

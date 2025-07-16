@@ -7,30 +7,23 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\RateLimitError\Type;
 
 final class RateLimitError implements BaseModel
 {
     use Model;
 
     #[Api]
-    public string $message = 'Rate limited';
-
-    /** @var Type::* $type */
-    #[Api]
     public string $type = 'rate_limit_error';
+
+    #[Api]
+    public string $message = 'Rate limited';
 
     /**
      * You must use named parameters to construct this object.
-     *
-     * @param Type::* $type
      */
-    final public function __construct(
-        string $message = 'Rate limited',
-        string $type = 'rate_limit_error'
-    ) {
+    final public function __construct(string $message = 'Rate limited')
+    {
         $this->message = $message;
-        $this->type = $type;
     }
 }
 

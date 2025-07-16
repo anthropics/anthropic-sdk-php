@@ -7,11 +7,13 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\Beta\BetaMCPToolUseBlockParam\Type;
 
 final class BetaMCPToolUseBlockParam implements BaseModel
 {
     use Model;
+
+    #[Api]
+    public string $type = 'mcp_tool_use';
 
     #[Api]
     public string $id;
@@ -25,31 +27,23 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     #[Api('server_name')]
     public string $serverName;
 
-    /** @var Type::* $type */
-    #[Api]
-    public string $type;
-
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * You must use named parameters to construct this object.
-     *
-     * @param Type::* $type
      */
     final public function __construct(
         string $id,
         mixed $input,
         string $name,
         string $serverName,
-        string $type,
         ?BetaCacheControlEphemeral $cacheControl = null,
     ) {
         $this->id = $id;
         $this->input = $input;
         $this->name = $name;
         $this->serverName = $serverName;
-        $this->type = $type;
         $this->cacheControl = $cacheControl;
     }
 }

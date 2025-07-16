@@ -7,11 +7,13 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\CitationCharLocationParam\Type;
 
 final class CitationCharLocationParam implements BaseModel
 {
     use Model;
+
+    #[Api]
+    public string $type = 'char_location';
 
     #[Api('cited_text')]
     public string $citedText;
@@ -28,14 +30,8 @@ final class CitationCharLocationParam implements BaseModel
     #[Api('start_char_index')]
     public int $startCharIndex;
 
-    /** @var Type::* $type */
-    #[Api]
-    public string $type;
-
     /**
      * You must use named parameters to construct this object.
-     *
-     * @param Type::* $type
      */
     final public function __construct(
         string $citedText,
@@ -43,14 +39,12 @@ final class CitationCharLocationParam implements BaseModel
         ?string $documentTitle,
         int $endCharIndex,
         int $startCharIndex,
-        string $type,
     ) {
         $this->citedText = $citedText;
         $this->documentIndex = $documentIndex;
         $this->documentTitle = $documentTitle;
         $this->endCharIndex = $endCharIndex;
         $this->startCharIndex = $startCharIndex;
-        $this->type = $type;
     }
 }
 

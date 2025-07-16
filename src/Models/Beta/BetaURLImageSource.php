@@ -7,27 +7,22 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\Beta\BetaURLImageSource\Type;
 
 final class BetaURLImageSource implements BaseModel
 {
     use Model;
 
-    /** @var Type::* $type */
     #[Api]
-    public string $type;
+    public string $type = 'url';
 
     #[Api]
     public string $url;
 
     /**
      * You must use named parameters to construct this object.
-     *
-     * @param Type::* $type
      */
-    final public function __construct(string $type, string $url)
+    final public function __construct(string $url)
     {
-        $this->type = $type;
         $this->url = $url;
     }
 }
