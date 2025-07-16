@@ -10,9 +10,9 @@ use Anthropic\Core\Serde;
 use Anthropic\Models\Messages\DeletedMessageBatch;
 use Anthropic\Models\Messages\MessageBatch;
 use Anthropic\Models\Messages\MessageBatchIndividualResponse;
-use Anthropic\Parameters\Messages\Batches\CreateParams;
-use Anthropic\Parameters\Messages\Batches\CreateParams\Request;
-use Anthropic\Parameters\Messages\Batches\ListParams;
+use Anthropic\Parameters\Messages\BatchCreateParam;
+use Anthropic\Parameters\Messages\BatchCreateParam\Request;
+use Anthropic\Parameters\Messages\BatchListParam;
 use Anthropic\RequestOptions;
 
 final class Batches implements BatchesContract
@@ -20,13 +20,16 @@ final class Batches implements BatchesContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{requests?: list<Request>}|CreateParams $params
+     * @param array{requests?: list<Request>}|BatchCreateParam $params
      */
     public function create(
-        array|CreateParams $params,
+        array|BatchCreateParam $params,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
-        [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = BatchCreateParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'post',
             path: 'v1/messages/batches',
@@ -53,15 +56,18 @@ final class Batches implements BatchesContract
     }
 
     /**
-     * @param ListParams|array{
+     * @param BatchListParam|array{
      *   afterID?: string, beforeID?: string, limit?: int
      * } $params
      */
     public function list(
-        array|ListParams $params,
+        array|BatchListParam $params,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
-        [$parsed, $options] = ListParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = BatchListParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'get',
             path: 'v1/messages/batches',

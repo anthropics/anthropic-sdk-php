@@ -9,16 +9,16 @@ use Anthropic\Contracts\Beta\Messages\BatchesContract;
 use Anthropic\Core\Serde;
 use Anthropic\Core\Util;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
-use Anthropic\Models\Beta\Messages\BetaDeletedMessageBatch;
-use Anthropic\Models\Beta\Messages\BetaMessageBatch;
-use Anthropic\Models\Beta\Messages\BetaMessageBatchIndividualResponse;
-use Anthropic\Parameters\Beta\Messages\Batches\CancelParams;
-use Anthropic\Parameters\Beta\Messages\Batches\CreateParams;
-use Anthropic\Parameters\Beta\Messages\Batches\CreateParams\Request;
-use Anthropic\Parameters\Beta\Messages\Batches\DeleteParams;
-use Anthropic\Parameters\Beta\Messages\Batches\ListParams;
-use Anthropic\Parameters\Beta\Messages\Batches\ResultsParams;
-use Anthropic\Parameters\Beta\Messages\Batches\RetrieveParams;
+use Anthropic\Models\Beta\Messages\DeletedMessageBatch;
+use Anthropic\Models\Beta\Messages\MessageBatch;
+use Anthropic\Models\Beta\Messages\MessageBatchIndividualResponse;
+use Anthropic\Parameters\Beta\Messages\BatchCancelParam;
+use Anthropic\Parameters\Beta\Messages\BatchCreateParam;
+use Anthropic\Parameters\Beta\Messages\BatchCreateParam\Request;
+use Anthropic\Parameters\Beta\Messages\BatchDeleteParam;
+use Anthropic\Parameters\Beta\Messages\BatchListParam;
+use Anthropic\Parameters\Beta\Messages\BatchResultsParam;
+use Anthropic\Parameters\Beta\Messages\BatchRetrieveParam;
 use Anthropic\RequestOptions;
 
 final class Batches implements BatchesContract
@@ -26,15 +26,18 @@ final class Batches implements BatchesContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param CreateParams|array{
+     * @param BatchCreateParam|array{
      *   requests?: list<Request>, anthropicBeta?: list<string|UnionMember1::*>
      * } $params
      */
     public function create(
-        array|CreateParams $params,
+        array|BatchCreateParam $params,
         ?RequestOptions $requestOptions = null
-    ): BetaMessageBatch {
-        [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
+    ): MessageBatch {
+        [$parsed, $options] = BatchCreateParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $header_params = ['betas' => 'anthropic-beta'];
         $resp = $this->client->request(
             method: 'post',
@@ -51,20 +54,20 @@ final class Batches implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(BetaMessageBatch::class, value: $resp);
+        return Serde::coerce(MessageBatch::class, value: $resp);
     }
 
     /**
-     * @param RetrieveParams|array{
+     * @param BatchRetrieveParam|array{
      *   anthropicBeta?: list<string|UnionMember1::*>
      * } $params
      */
     public function retrieve(
         string $messageBatchID,
-        array|RetrieveParams $params,
+        array|BatchRetrieveParam $params,
         ?RequestOptions $requestOptions = null,
-    ): BetaMessageBatch {
-        [$parsed, $options] = RetrieveParams::parseRequest(
+    ): MessageBatch {
+        [$parsed, $options] = BatchRetrieveParam::parseRequest(
             $params,
             $requestOptions
         );
@@ -82,11 +85,11 @@ final class Batches implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(BetaMessageBatch::class, value: $resp);
+        return Serde::coerce(MessageBatch::class, value: $resp);
     }
 
     /**
-     * @param ListParams|array{
+     * @param BatchListParam|array{
      *   afterID?: string,
      *   beforeID?: string,
      *   limit?: int,
@@ -94,10 +97,13 @@ final class Batches implements BatchesContract
      * } $params
      */
     public function list(
-        array|ListParams $params,
+        array|BatchListParam $params,
         ?RequestOptions $requestOptions = null
-    ): BetaMessageBatch {
-        [$parsed, $options] = ListParams::parseRequest($params, $requestOptions);
+    ): MessageBatch {
+        [$parsed, $options] = BatchListParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
 
         /** @var array<string, string> */
@@ -117,18 +123,23 @@ final class Batches implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(BetaMessageBatch::class, value: $resp);
+        return Serde::coerce(MessageBatch::class, value: $resp);
     }
 
     /**
-     * @param array{anthropicBeta?: list<string|UnionMember1::*>}|DeleteParams $params
+     * @param BatchDeleteParam|array{
+     *   anthropicBeta?: list<string|UnionMember1::*>
+     * } $params
      */
     public function delete(
         string $messageBatchID,
-        array|DeleteParams $params,
+        array|BatchDeleteParam $params,
         ?RequestOptions $requestOptions = null,
-    ): BetaDeletedMessageBatch {
-        [$parsed, $options] = DeleteParams::parseRequest($params, $requestOptions);
+    ): DeletedMessageBatch {
+        [$parsed, $options] = BatchDeleteParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'delete',
             path: ['v1/messages/batches/%1$s?beta=true', $messageBatchID],
@@ -143,18 +154,23 @@ final class Batches implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(BetaDeletedMessageBatch::class, value: $resp);
+        return Serde::coerce(DeletedMessageBatch::class, value: $resp);
     }
 
     /**
-     * @param array{anthropicBeta?: list<string|UnionMember1::*>}|CancelParams $params
+     * @param BatchCancelParam|array{
+     *   anthropicBeta?: list<string|UnionMember1::*>
+     * } $params
      */
     public function cancel(
         string $messageBatchID,
-        array|CancelParams $params,
+        array|BatchCancelParam $params,
         ?RequestOptions $requestOptions = null,
-    ): BetaMessageBatch {
-        [$parsed, $options] = CancelParams::parseRequest($params, $requestOptions);
+    ): MessageBatch {
+        [$parsed, $options] = BatchCancelParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'post',
             path: ['v1/messages/batches/%1$s/cancel?beta=true', $messageBatchID],
@@ -169,18 +185,23 @@ final class Batches implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(BetaMessageBatch::class, value: $resp);
+        return Serde::coerce(MessageBatch::class, value: $resp);
     }
 
     /**
-     * @param array{anthropicBeta?: list<string|UnionMember1::*>}|ResultsParams $params
+     * @param BatchResultsParam|array{
+     *   anthropicBeta?: list<string|UnionMember1::*>
+     * } $params
      */
     public function results(
         string $messageBatchID,
-        array|ResultsParams $params,
+        array|BatchResultsParam $params,
         ?RequestOptions $requestOptions = null,
-    ): BetaMessageBatchIndividualResponse {
-        [$parsed, $options] = ResultsParams::parseRequest($params, $requestOptions);
+    ): MessageBatchIndividualResponse {
+        [$parsed, $options] = BatchResultsParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'get',
             path: ['v1/messages/batches/%1$s/results?beta=true', $messageBatchID],
@@ -195,9 +216,6 @@ final class Batches implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(
-            BetaMessageBatchIndividualResponse::class,
-            value: $resp
-        );
+        return Serde::coerce(MessageBatchIndividualResponse::class, value: $resp);
     }
 }

@@ -12,8 +12,8 @@ use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Completion;
 use Anthropic\Models\Metadata;
 use Anthropic\Models\Model\UnionMember0;
-use Anthropic\Parameters\Completions\CreateParams;
-use Anthropic\Parameters\Completions\CreateParams\Stream;
+use Anthropic\Parameters\CompletionCreateParam;
+use Anthropic\Parameters\CompletionCreateParam\Stream;
 use Anthropic\RequestOptions;
 
 final class Completions implements CompletionsContract
@@ -21,7 +21,7 @@ final class Completions implements CompletionsContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param CreateParams|array{
+     * @param CompletionCreateParam|array{
      *   maxTokensToSample?: int,
      *   model?: UnionMember0::*|string,
      *   prompt?: string,
@@ -35,10 +35,13 @@ final class Completions implements CompletionsContract
      * } $params
      */
     public function create(
-        array|CreateParams $params,
+        array|CompletionCreateParam $params,
         ?RequestOptions $requestOptions = null
     ): Completion {
-        [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = CompletionCreateParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $header_params = ['betas' => 'anthropic-beta'];
         $resp = $this->client->request(
             method: 'post',

@@ -22,16 +22,16 @@ use Anthropic\Models\ToolChoiceTool;
 use Anthropic\Models\ToolTextEditor20250124;
 use Anthropic\Models\ToolUnion\TextEditor20250429;
 use Anthropic\Models\WebSearchTool20250305;
-use Anthropic\Parameters\Messages\CountTokensParams;
-use Anthropic\Parameters\Messages\CreateParams;
-use Anthropic\Parameters\Messages\CreateParams\ServiceTier;
-use Anthropic\Parameters\Messages\CreateParams\Stream;
+use Anthropic\Parameters\MessageCountTokensParam;
+use Anthropic\Parameters\MessageCreateParam;
+use Anthropic\Parameters\MessageCreateParam\ServiceTier;
+use Anthropic\Parameters\MessageCreateParam\Stream;
 use Anthropic\RequestOptions;
 
 interface MessagesContract
 {
     /**
-     * @param CreateParams|array{
+     * @param MessageCreateParam|array{
      *   maxTokens?: int,
      *   messages?: list<MessageParam>,
      *   model?: UnionMember0::*|string,
@@ -51,12 +51,12 @@ interface MessagesContract
      * } $params
      */
     public function create(
-        array|CreateParams $params,
+        array|MessageCreateParam $params,
         ?RequestOptions $requestOptions = null
     ): Message;
 
     /**
-     * @param CountTokensParams|array{
+     * @param MessageCountTokensParam|array{
      *   messages?: list<MessageParam>,
      *   model?: UnionMember0::*|string,
      *   system?: string|list<TextBlockParam>,
@@ -68,7 +68,7 @@ interface MessagesContract
      * } $params
      */
     public function countTokens(
-        array|CountTokensParams $params,
-        ?RequestOptions $requestOptions = null
+        array|MessageCountTokensParam $params,
+        ?RequestOptions $requestOptions = null,
     ): MessageTokensCount;
 }

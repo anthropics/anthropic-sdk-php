@@ -10,8 +10,8 @@ use Anthropic\Core\Serde;
 use Anthropic\Core\Util;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Beta\BetaModelInfo;
-use Anthropic\Parameters\Beta\Models\ListParams;
-use Anthropic\Parameters\Beta\Models\RetrieveParams;
+use Anthropic\Parameters\Beta\ModelListParam;
+use Anthropic\Parameters\Beta\ModelRetrieveParam;
 use Anthropic\RequestOptions;
 
 final class Models implements ModelsContract
@@ -19,16 +19,16 @@ final class Models implements ModelsContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param RetrieveParams|array{
+     * @param ModelRetrieveParam|array{
      *   anthropicBeta?: list<string|UnionMember1::*>
      * } $params
      */
     public function retrieve(
         string $modelID,
-        array|RetrieveParams $params,
+        array|ModelRetrieveParam $params,
         ?RequestOptions $requestOptions = null,
     ): BetaModelInfo {
-        [$parsed, $options] = RetrieveParams::parseRequest(
+        [$parsed, $options] = ModelRetrieveParam::parseRequest(
             $params,
             $requestOptions
         );
@@ -47,7 +47,7 @@ final class Models implements ModelsContract
     }
 
     /**
-     * @param ListParams|array{
+     * @param ModelListParam|array{
      *   afterID?: string,
      *   beforeID?: string,
      *   limit?: int,
@@ -55,10 +55,13 @@ final class Models implements ModelsContract
      * } $params
      */
     public function list(
-        array|ListParams $params,
+        array|ModelListParam $params,
         ?RequestOptions $requestOptions = null
     ): BetaModelInfo {
-        [$parsed, $options] = ListParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = ModelListParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
 
         /** @var array<string, string> */

@@ -8,14 +8,14 @@ use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Completion;
 use Anthropic\Models\Metadata;
 use Anthropic\Models\Model\UnionMember0;
-use Anthropic\Parameters\Completions\CreateParams;
-use Anthropic\Parameters\Completions\CreateParams\Stream;
+use Anthropic\Parameters\CompletionCreateParam;
+use Anthropic\Parameters\CompletionCreateParam\Stream;
 use Anthropic\RequestOptions;
 
 interface CompletionsContract
 {
     /**
-     * @param CreateParams|array{
+     * @param CompletionCreateParam|array{
      *   maxTokensToSample?: int,
      *   model?: UnionMember0::*|string,
      *   prompt?: string,
@@ -29,7 +29,7 @@ interface CompletionsContract
      * } $params
      */
     public function create(
-        array|CreateParams $params,
-        ?RequestOptions $requestOptions = null
+        array|CompletionCreateParam $params,
+        ?RequestOptions $requestOptions = null,
     ): Completion;
 }

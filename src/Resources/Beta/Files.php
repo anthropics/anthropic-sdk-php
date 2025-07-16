@@ -11,11 +11,11 @@ use Anthropic\Core\Util;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Beta\DeletedFile;
 use Anthropic\Models\Beta\FileMetadata;
-use Anthropic\Parameters\Beta\Files\DeleteParams;
-use Anthropic\Parameters\Beta\Files\DownloadParams;
-use Anthropic\Parameters\Beta\Files\ListParams;
-use Anthropic\Parameters\Beta\Files\RetrieveMetadataParams;
-use Anthropic\Parameters\Beta\Files\UploadParams;
+use Anthropic\Parameters\Beta\FileDeleteParam;
+use Anthropic\Parameters\Beta\FileDownloadParam;
+use Anthropic\Parameters\Beta\FileListParam;
+use Anthropic\Parameters\Beta\FileRetrieveMetadataParam;
+use Anthropic\Parameters\Beta\FileUploadParam;
 use Anthropic\RequestOptions;
 
 final class Files implements FilesContract
@@ -23,7 +23,7 @@ final class Files implements FilesContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param ListParams|array{
+     * @param FileListParam|array{
      *   afterID?: string,
      *   beforeID?: string,
      *   limit?: int,
@@ -31,10 +31,10 @@ final class Files implements FilesContract
      * } $params
      */
     public function list(
-        array|ListParams $params,
+        array|FileListParam $params,
         ?RequestOptions $requestOptions = null
     ): FileMetadata {
-        [$parsed, $options] = ListParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = FileListParam::parseRequest($params, $requestOptions);
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
 
         /** @var array<string, string> */
@@ -58,14 +58,19 @@ final class Files implements FilesContract
     }
 
     /**
-     * @param array{anthropicBeta?: list<string|UnionMember1::*>}|DeleteParams $params
+     * @param FileDeleteParam|array{
+     *   anthropicBeta?: list<string|UnionMember1::*>
+     * } $params
      */
     public function delete(
         string $fileID,
-        array|DeleteParams $params,
+        array|FileDeleteParam $params,
         ?RequestOptions $requestOptions = null,
     ): DeletedFile {
-        [$parsed, $options] = DeleteParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = FileDeleteParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'delete',
             path: ['v1/files/%1$s?beta=true', $fileID],
@@ -84,16 +89,16 @@ final class Files implements FilesContract
     }
 
     /**
-     * @param DownloadParams|array{
+     * @param FileDownloadParam|array{
      *   anthropicBeta?: list<string|UnionMember1::*>
      * } $params
      */
     public function download(
         string $fileID,
-        array|DownloadParams $params,
+        array|FileDownloadParam $params,
         ?RequestOptions $requestOptions = null,
     ): string {
-        [$parsed, $options] = DownloadParams::parseRequest(
+        [$parsed, $options] = FileDownloadParam::parseRequest(
             $params,
             $requestOptions
         );
@@ -115,16 +120,16 @@ final class Files implements FilesContract
     }
 
     /**
-     * @param RetrieveMetadataParams|array{
+     * @param FileRetrieveMetadataParam|array{
      *   anthropicBeta?: list<string|UnionMember1::*>
      * } $params
      */
     public function retrieveMetadata(
         string $fileID,
-        array|RetrieveMetadataParams $params,
+        array|FileRetrieveMetadataParam $params,
         ?RequestOptions $requestOptions = null,
     ): FileMetadata {
-        [$parsed, $options] = RetrieveMetadataParams::parseRequest(
+        [$parsed, $options] = FileRetrieveMetadataParam::parseRequest(
             $params,
             $requestOptions
         );
@@ -146,15 +151,18 @@ final class Files implements FilesContract
     }
 
     /**
-     * @param UploadParams|array{
+     * @param FileUploadParam|array{
      *   file?: string, anthropicBeta?: list<string|UnionMember1::*>
      * } $params
      */
     public function upload(
-        array|UploadParams $params,
+        array|FileUploadParam $params,
         ?RequestOptions $requestOptions = null
     ): FileMetadata {
-        [$parsed, $options] = UploadParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = FileUploadParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $header_params = ['betas' => 'anthropic-beta'];
         $resp = $this->client->request(
             method: 'post',

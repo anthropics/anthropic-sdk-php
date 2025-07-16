@@ -25,10 +25,10 @@ use Anthropic\Models\ToolChoiceTool;
 use Anthropic\Models\ToolTextEditor20250124;
 use Anthropic\Models\ToolUnion\TextEditor20250429;
 use Anthropic\Models\WebSearchTool20250305;
-use Anthropic\Parameters\Messages\CountTokensParams;
-use Anthropic\Parameters\Messages\CreateParams;
-use Anthropic\Parameters\Messages\CreateParams\ServiceTier;
-use Anthropic\Parameters\Messages\CreateParams\Stream;
+use Anthropic\Parameters\MessageCountTokensParam;
+use Anthropic\Parameters\MessageCreateParam;
+use Anthropic\Parameters\MessageCreateParam\ServiceTier;
+use Anthropic\Parameters\MessageCreateParam\Stream;
 use Anthropic\RequestOptions;
 use Anthropic\Resources\Messages\Batches;
 
@@ -42,7 +42,7 @@ final class Messages implements MessagesContract
     }
 
     /**
-     * @param CreateParams|array{
+     * @param MessageCreateParam|array{
      *   maxTokens?: int,
      *   messages?: list<MessageParam>,
      *   model?: UnionMember0::*|string,
@@ -62,10 +62,13 @@ final class Messages implements MessagesContract
      * } $params
      */
     public function create(
-        array|CreateParams $params,
+        array|MessageCreateParam $params,
         ?RequestOptions $requestOptions = null
     ): Message {
-        [$parsed, $options] = CreateParams::parseRequest($params, $requestOptions);
+        [$parsed, $options] = MessageCreateParam::parseRequest(
+            $params,
+            $requestOptions
+        );
         $resp = $this->client->request(
             method: 'post',
             path: 'v1/messages',
@@ -78,7 +81,7 @@ final class Messages implements MessagesContract
     }
 
     /**
-     * @param CountTokensParams|array{
+     * @param MessageCountTokensParam|array{
      *   messages?: list<MessageParam>,
      *   model?: UnionMember0::*|string,
      *   system?: string|list<TextBlockParam>,
@@ -90,10 +93,10 @@ final class Messages implements MessagesContract
      * } $params
      */
     public function countTokens(
-        array|CountTokensParams $params,
-        ?RequestOptions $requestOptions = null
+        array|MessageCountTokensParam $params,
+        ?RequestOptions $requestOptions = null,
     ): MessageTokensCount {
-        [$parsed, $options] = CountTokensParams::parseRequest(
+        [$parsed, $options] = MessageCountTokensParam::parseRequest(
             $params,
             $requestOptions
         );

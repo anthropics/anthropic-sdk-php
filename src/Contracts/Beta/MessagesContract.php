@@ -28,16 +28,16 @@ use Anthropic\Models\Beta\BetaToolTextEditor20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20250429;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305;
 use Anthropic\Models\Model\UnionMember0;
-use Anthropic\Parameters\Beta\Messages\CountTokensParams;
-use Anthropic\Parameters\Beta\Messages\CreateParams;
-use Anthropic\Parameters\Beta\Messages\CreateParams\ServiceTier;
-use Anthropic\Parameters\Beta\Messages\CreateParams\Stream;
+use Anthropic\Parameters\Beta\MessageCountTokensParam;
+use Anthropic\Parameters\Beta\MessageCreateParam;
+use Anthropic\Parameters\Beta\MessageCreateParam\ServiceTier;
+use Anthropic\Parameters\Beta\MessageCreateParam\Stream;
 use Anthropic\RequestOptions;
 
 interface MessagesContract
 {
     /**
-     * @param CreateParams|array{
+     * @param MessageCreateParam|array{
      *   maxTokens?: int,
      *   messages?: list<BetaMessageParam>,
      *   model?: UnionMember0::*|string,
@@ -60,12 +60,12 @@ interface MessagesContract
      * } $params
      */
     public function create(
-        array|CreateParams $params,
+        array|MessageCreateParam $params,
         ?RequestOptions $requestOptions = null
     ): BetaMessage;
 
     /**
-     * @param CountTokensParams|array{
+     * @param MessageCountTokensParam|array{
      *   messages?: list<BetaMessageParam>,
      *   model?: UnionMember0::*|string,
      *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
@@ -79,7 +79,7 @@ interface MessagesContract
      * } $params
      */
     public function countTokens(
-        array|CountTokensParams $params,
-        ?RequestOptions $requestOptions = null
+        array|MessageCountTokensParam $params,
+        ?RequestOptions $requestOptions = null,
     ): BetaMessageTokensCount;
 }
