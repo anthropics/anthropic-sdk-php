@@ -30,4 +30,4 @@ final class PlainTextSource implements BaseModel
     }
 }
 
-PlainTextSource::_loadMetadata();
+PlainTextSource::__introspect();

@@ -30,4 +30,4 @@ final class BetaMessageBatchIndividualResponse implements BaseModel
     }
 }
 
-BetaMessageBatchIndividualResponse::_loadMetadata();
+BetaMessageBatchIndividualResponse::__introspect();

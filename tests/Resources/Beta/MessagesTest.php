@@ -76,7 +76,6 @@ final class MessagesTest extends TestCase
                     'mcpServers' => [
                         new BetaRequestMCPServerURLDefinition(
                             name: 'name',
-                            type: 'url',
                             url: 'url',
                             authorizationToken: 'authorization_token',
                             toolConfiguration: new BetaRequestMCPServerToolConfiguration(
@@ -94,11 +93,7 @@ final class MessagesTest extends TestCase
                     'system' => [
                         new BetaTextBlockParam(
                             text: "Today's date is 2024-06-01.",
-                            type: 'text',
-                            cacheControl: new BetaCacheControlEphemeral(
-                                type: 'ephemeral',
-                                ttl: '5m'
-                            ),
+                            cacheControl: new BetaCacheControlEphemeral(ttl: '5m'),
                             citations: [
                                 new BetaCitationCharLocationParam(
                                     citedText: 'cited_text',
@@ -106,24 +101,16 @@ final class MessagesTest extends TestCase
                                     documentTitle: 'x',
                                     endCharIndex: 0,
                                     startCharIndex: 0,
-                                    type: 'char_location',
                                 ),
                             ],
                         ),
                     ],
                     'temperature' => 1,
-                    'thinking' => new BetaThinkingConfigEnabled(
-                        budgetTokens: 1024,
-                        type: 'enabled'
-                    ),
-                    'toolChoice' => new BetaToolChoiceAuto(
-                        type: 'auto',
-                        disableParallelToolUse: true
-                    ),
+                    'thinking' => new BetaThinkingConfigEnabled(budgetTokens: 1024),
+                    'toolChoice' => new BetaToolChoiceAuto(disableParallelToolUse: true),
                     'tools' => [
                         new BetaTool(
                             inputSchema: new InputSchema(
-                                type: 'object',
                                 properties: [
                                     'location' => [
                                         'description' => 'The city and state, e.g. San Francisco, CA',
@@ -137,14 +124,11 @@ final class MessagesTest extends TestCase
                                 required: ['location'],
                             ),
                             name: 'name',
-                            cacheControl: new BetaCacheControlEphemeral(
-                                type: 'ephemeral',
-                                ttl: '5m'
-                            ),
+                            cacheControl: new BetaCacheControlEphemeral(ttl: '5m'),
                             description: 'Get the current weather in a given location',
                             type: 'custom',
                         ),
-                    ],
+                ],
                     'topK' => 5,
                     'topP' => 0.7,
                     'anthropicBeta' => ['string'],
@@ -187,7 +171,6 @@ final class MessagesTest extends TestCase
                     'mcpServers' => [
                         new BetaRequestMCPServerURLDefinition(
                             name: 'name',
-                            type: 'url',
                             url: 'url',
                             authorizationToken: 'authorization_token',
                             toolConfiguration: new BetaRequestMCPServerToolConfiguration(
@@ -199,11 +182,7 @@ final class MessagesTest extends TestCase
                     'system' => [
                         new BetaTextBlockParam(
                             text: "Today's date is 2024-06-01.",
-                            type: 'text',
-                            cacheControl: new BetaCacheControlEphemeral(
-                                type: 'ephemeral',
-                                ttl: '5m'
-                            ),
+                            cacheControl: new BetaCacheControlEphemeral(ttl: '5m'),
                             citations: [
                                 new BetaCitationCharLocationParam(
                                     citedText: 'cited_text',
@@ -211,23 +190,15 @@ final class MessagesTest extends TestCase
                                     documentTitle: 'x',
                                     endCharIndex: 0,
                                     startCharIndex: 0,
-                                    type: 'char_location',
                                 ),
                             ],
                         ),
                 ],
-                    'thinking' => new BetaThinkingConfigEnabled(
-                        budgetTokens: 1024,
-                        type: 'enabled'
-                    ),
-                    'toolChoice' => new BetaToolChoiceAuto(
-                        type: 'auto',
-                        disableParallelToolUse: true
-                    ),
+                    'thinking' => new BetaThinkingConfigEnabled(budgetTokens: 1024),
+                    'toolChoice' => new BetaToolChoiceAuto(disableParallelToolUse: true),
                     'tools' => [
                         new BetaTool(
                             inputSchema: new InputSchema(
-                                type: 'object',
                                 properties: [
                                     'location' => [
                                         'description' => 'The city and state, e.g. San Francisco, CA',
@@ -241,14 +212,11 @@ final class MessagesTest extends TestCase
                                 required: ['location'],
                             ),
                             name: 'name',
-                            cacheControl: new BetaCacheControlEphemeral(
-                                type: 'ephemeral',
-                                ttl: '5m'
-                            ),
+                            cacheControl: new BetaCacheControlEphemeral(ttl: '5m'),
                             description: 'Get the current weather in a given location',
                             type: 'custom',
                         ),
-                    ],
+                ],
                     'anthropicBeta' => ['string'],
                 ]
             )

@@ -67,4 +67,4 @@ final class WebSearchTool20250305 implements BaseModel
     }
 }
 
-WebSearchTool20250305::_loadMetadata();
+WebSearchTool20250305::__introspect();

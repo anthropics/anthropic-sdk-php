@@ -67,4 +67,4 @@ final class BetaWebSearchTool20250305 implements BaseModel
     }
 }
 
-BetaWebSearchTool20250305::_loadMetadata();
+BetaWebSearchTool20250305::__introspect();

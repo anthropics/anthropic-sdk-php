@@ -18,4 +18,4 @@ final class BetaMessageBatchCanceledResult implements BaseModel
     final public function __construct() {}
 }
 
-BetaMessageBatchCanceledResult::_loadMetadata();
+BetaMessageBatchCanceledResult::__introspect();

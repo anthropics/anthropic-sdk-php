@@ -27,4 +27,4 @@ final class URLPDFSource implements BaseModel
     }
 }
 
-URLPDFSource::_loadMetadata();
+URLPDFSource::__introspect();

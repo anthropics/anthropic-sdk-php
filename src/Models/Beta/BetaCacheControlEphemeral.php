@@ -31,4 +31,4 @@ final class BetaCacheControlEphemeral implements BaseModel
     }
 }
 
-BetaCacheControlEphemeral::_loadMetadata();
+BetaCacheControlEphemeral::__introspect();

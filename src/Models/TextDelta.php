@@ -27,4 +27,4 @@ final class TextDelta implements BaseModel
     }
 }
 
-TextDelta::_loadMetadata();
+TextDelta::__introspect();

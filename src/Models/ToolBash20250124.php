@@ -30,4 +30,4 @@ final class ToolBash20250124 implements BaseModel
     }
 }
 
-ToolBash20250124::_loadMetadata();
+ToolBash20250124::__introspect();

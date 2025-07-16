@@ -32,4 +32,4 @@ final class Delta implements BaseModel
     }
 }
 
-Delta::_loadMetadata();
+Delta::__introspect();

@@ -27,4 +27,4 @@ final class GatewayTimeoutError implements BaseModel
     }
 }
 
-GatewayTimeoutError::_loadMetadata();
+GatewayTimeoutError::__introspect();

@@ -43,4 +43,4 @@ final class BetaCitationsWebSearchResultLocation implements BaseModel
     }
 }
 
-BetaCitationsWebSearchResultLocation::_loadMetadata();
+BetaCitationsWebSearchResultLocation::__introspect();

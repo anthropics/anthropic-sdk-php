@@ -4,11 +4,18 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Usage;
 
-final class ServiceTier
+use Anthropic\Core\Concerns\Enum;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class ServiceTier implements StaticConverter
 {
+    use Enum;
+
     final public const STANDARD = 'standard';
 
     final public const PRIORITY = 'priority';
 
     final public const BATCH = 'batch';
 }
+
+ServiceTier::__introspect();

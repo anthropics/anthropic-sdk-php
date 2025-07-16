@@ -94,4 +94,4 @@ final class BetaMessage implements BaseModel
     }
 }
 
-BetaMessage::_loadMetadata();
+BetaMessage::__introspect();

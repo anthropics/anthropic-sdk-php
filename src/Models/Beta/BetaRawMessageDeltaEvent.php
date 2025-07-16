@@ -32,4 +32,4 @@ final class BetaRawMessageDeltaEvent implements BaseModel
     }
 }
 
-BetaRawMessageDeltaEvent::_loadMetadata();
+BetaRawMessageDeltaEvent::__introspect();

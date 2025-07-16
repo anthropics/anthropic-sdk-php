@@ -37,4 +37,4 @@ final class ListParams implements BaseModel
     }
 }
 
-ListParams::_loadMetadata();
+ListParams::__introspect();

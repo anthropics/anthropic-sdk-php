@@ -31,4 +31,4 @@ final class BetaCodeExecutionTool20250522 implements BaseModel
     }
 }
 
-BetaCodeExecutionTool20250522::_loadMetadata();
+BetaCodeExecutionTool20250522::__introspect();

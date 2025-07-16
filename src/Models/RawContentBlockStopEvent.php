@@ -27,4 +27,4 @@ final class RawContentBlockStopEvent implements BaseModel
     }
 }
 
-RawContentBlockStopEvent::_loadMetadata();
+RawContentBlockStopEvent::__introspect();

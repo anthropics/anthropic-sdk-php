@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-final class BetaWebSearchToolResultErrorCode
+use Anthropic\Core\Concerns\Enum;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class BetaWebSearchToolResultErrorCode implements StaticConverter
 {
+    use Enum;
+
     final public const INVALID_TOOL_INPUT = 'invalid_tool_input';
 
     final public const UNAVAILABLE = 'unavailable';
@@ -16,3 +21,5 @@ final class BetaWebSearchToolResultErrorCode
 
     final public const QUERY_TOO_LONG = 'query_too_long';
 }
+
+BetaWebSearchToolResultErrorCode::__introspect();

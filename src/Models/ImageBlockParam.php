@@ -33,4 +33,4 @@ final class ImageBlockParam implements BaseModel
     }
 }
 
-ImageBlockParam::_loadMetadata();
+ImageBlockParam::__introspect();

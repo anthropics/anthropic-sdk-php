@@ -30,4 +30,4 @@ final class BetaCacheCreation implements BaseModel
     }
 }
 
-BetaCacheCreation::_loadMetadata();
+BetaCacheCreation::__introspect();

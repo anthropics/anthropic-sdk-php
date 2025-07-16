@@ -51,4 +51,4 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
     }
 }
 
-BetaRequestMCPToolResultBlockParam::_loadMetadata();
+BetaRequestMCPToolResultBlockParam::__introspect();

@@ -18,4 +18,4 @@ final class BetaRawMessageStopEvent implements BaseModel
     final public function __construct() {}
 }
 
-BetaRawMessageStopEvent::_loadMetadata();
+BetaRawMessageStopEvent::__introspect();

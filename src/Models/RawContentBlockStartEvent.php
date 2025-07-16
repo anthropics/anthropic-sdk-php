@@ -33,4 +33,4 @@ final class RawContentBlockStartEvent implements BaseModel
     }
 }
 
-RawContentBlockStartEvent::_loadMetadata();
+RawContentBlockStartEvent::__introspect();

@@ -27,4 +27,4 @@ final class APIErrorObject implements BaseModel
     }
 }
 
-APIErrorObject::_loadMetadata();
+APIErrorObject::__introspect();

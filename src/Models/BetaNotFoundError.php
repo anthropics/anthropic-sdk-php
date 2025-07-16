@@ -27,4 +27,4 @@ final class BetaNotFoundError implements BaseModel
     }
 }
 
-BetaNotFoundError::_loadMetadata();
+BetaNotFoundError::__introspect();

@@ -67,6 +67,22 @@ trait Model
         return json_encode($this->__debugInfo(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
     }
 
+    public static function __introspect(): void
+    {
+        self::$_class = new \ReflectionClass(static::class);
+
+        foreach (self::$_class->getConstructor()?->getParameters() ?? [] as $parameter) {
+            self::$_constructorArgNames[] = $parameter->getName();
+        }
+
+        foreach (self::$_class->getProperties() as $property) {
+            if (!empty($property->getAttributes(Api::class))) {
+                $name = $property->getName();
+                self::$_properties[$name] = new PropertyInfo($property);
+            }
+        }
+    }
+
     /** @return array<string, mixed> */
     public function toArray(): array
     {
@@ -250,22 +266,6 @@ trait Model
         $instance->__unserialize($data); // @phpstan-ignore-line
 
         return $instance;
-    }
-
-    public static function _loadMetadata(): void
-    {
-        self::$_class = new \ReflectionClass(static::class);
-
-        foreach (self::$_class->getConstructor()?->getParameters() ?? [] as $parameter) {
-            self::$_constructorArgNames[] = $parameter->getName();
-        }
-
-        foreach (self::$_class->getProperties() as $property) {
-            if (!empty($property->getAttributes(Api::class))) {
-                $name = $property->getName();
-                self::$_properties[$name] = new PropertyInfo($property);
-            }
-        }
     }
 
     private static function serialize(mixed $value): mixed

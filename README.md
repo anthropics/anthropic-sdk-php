@@ -164,34 +164,6 @@ $client->messages->create(
 );
 ```
 
-### Timeouts
-
-By default, requests will time out after 600 seconds. You can use the timeout option to configure or disable this:
-
-```php
-<?php
-
-use Anthropic\Client;
-use Anthropic\Models\MessageParam;
-
-// Configure the default for all requests:
-$client = new Client(timeout: nil);
-
-// Or, configure per-request:
-$client->messages->create(
-  [
-    "maxTokens" => 1024,
-    "messages" => [new MessageParam(role: "user", content: "Hello, Claude")],
-    "model" => "claude-sonnet-4-20250514",
-  ],
-  requestOptions: ["timeout" => 5],
-);
-```
-
-On timeout, `Anthropic\Errors\APITimeoutError` is raised.
-
-Note that requests that time out are retried by default.
-
 ## Advanced concepts
 
 ### Making custom or undocumented requests

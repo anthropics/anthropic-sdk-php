@@ -46,4 +46,4 @@ final class BetaToolComputerUse20250124 implements BaseModel
     }
 }
 
-BetaToolComputerUse20250124::_loadMetadata();
+BetaToolComputerUse20250124::__introspect();

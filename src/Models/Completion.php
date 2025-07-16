@@ -47,4 +47,4 @@ final class Completion implements BaseModel
     }
 }
 
-Completion::_loadMetadata();
+Completion::__introspect();

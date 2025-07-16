@@ -4,4 +4,12 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-final class ToolUnion {}
+use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class ToolUnion implements StaticConverter
+{
+    use Union;
+}
+
+ToolUnion::__introspect();

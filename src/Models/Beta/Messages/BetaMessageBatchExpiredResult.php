@@ -18,4 +18,4 @@ final class BetaMessageBatchExpiredResult implements BaseModel
     final public function __construct() {}
 }
 
-BetaMessageBatchExpiredResult::_loadMetadata();
+BetaMessageBatchExpiredResult::__introspect();

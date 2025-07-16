@@ -27,4 +27,4 @@ final class URLImageSource implements BaseModel
     }
 }
 
-URLImageSource::_loadMetadata();
+URLImageSource::__introspect();

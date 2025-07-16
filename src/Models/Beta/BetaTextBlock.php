@@ -59,4 +59,4 @@ final class BetaTextBlock implements BaseModel
     }
 }
 
-BetaTextBlock::_loadMetadata();
+BetaTextBlock::__introspect();

@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-final class BetaCodeExecutionToolResultErrorCode
+use Anthropic\Core\Concerns\Enum;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class BetaCodeExecutionToolResultErrorCode implements StaticConverter
 {
+    use Enum;
+
     final public const INVALID_TOOL_INPUT = 'invalid_tool_input';
 
     final public const UNAVAILABLE = 'unavailable';
@@ -14,3 +19,5 @@ final class BetaCodeExecutionToolResultErrorCode
 
     final public const EXECUTION_TIME_EXCEEDED = 'execution_time_exceeded';
 }
+
+BetaCodeExecutionToolResultErrorCode::__introspect();

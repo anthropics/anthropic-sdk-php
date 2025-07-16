@@ -4,4 +4,12 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-final class BetaWebSearchToolResultBlockParamContent {}
+use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class BetaWebSearchToolResultBlockParamContent implements StaticConverter
+{
+    use Union;
+}
+
+BetaWebSearchToolResultBlockParamContent::__introspect();

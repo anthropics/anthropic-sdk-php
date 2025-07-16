@@ -27,4 +27,4 @@ final class BetaURLPDFSource implements BaseModel
     }
 }
 
-BetaURLPDFSource::_loadMetadata();
+BetaURLPDFSource::__introspect();

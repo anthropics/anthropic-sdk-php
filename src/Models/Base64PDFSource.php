@@ -30,4 +30,4 @@ final class Base64PDFSource implements BaseModel
     }
 }
 
-Base64PDFSource::_loadMetadata();
+Base64PDFSource::__introspect();

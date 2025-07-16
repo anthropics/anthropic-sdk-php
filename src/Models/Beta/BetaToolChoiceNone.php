@@ -18,4 +18,4 @@ final class BetaToolChoiceNone implements BaseModel
     final public function __construct() {}
 }
 
-BetaToolChoiceNone::_loadMetadata();
+BetaToolChoiceNone::__introspect();

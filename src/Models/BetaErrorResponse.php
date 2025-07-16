@@ -28,4 +28,4 @@ final class BetaErrorResponse implements BaseModel
     }
 }
 
-BetaErrorResponse::_loadMetadata();
+BetaErrorResponse::__introspect();

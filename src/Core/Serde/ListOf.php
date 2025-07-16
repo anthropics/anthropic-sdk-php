@@ -10,4 +10,10 @@ use Anthropic\Core\Contracts\Converter;
 final class ListOf implements Converter
 {
     use ArrayOf;
+
+    // @phpstan-ignore-next-line
+    private function empty(): array|object
+    {
+        return [];
+    }
 }

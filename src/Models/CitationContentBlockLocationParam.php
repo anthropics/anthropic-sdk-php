@@ -48,4 +48,4 @@ final class CitationContentBlockLocationParam implements BaseModel
     }
 }
 
-CitationContentBlockLocationParam::_loadMetadata();
+CitationContentBlockLocationParam::__introspect();

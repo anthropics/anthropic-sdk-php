@@ -27,4 +27,4 @@ final class BetaAPIError implements BaseModel
     }
 }
 
-BetaAPIError::_loadMetadata();
+BetaAPIError::__introspect();

@@ -132,4 +132,4 @@ final class CountTokensParams implements BaseModel
     }
 }
 
-CountTokensParams::_loadMetadata();
+CountTokensParams::__introspect();

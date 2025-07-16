@@ -28,4 +28,4 @@ final class BetaContainer implements BaseModel
     }
 }
 
-BetaContainer::_loadMetadata();
+BetaContainer::__introspect();

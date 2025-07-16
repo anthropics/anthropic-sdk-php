@@ -41,4 +41,4 @@ final class ContentBlockSource implements BaseModel
     }
 }
 
-ContentBlockSource::_loadMetadata();
+ContentBlockSource::__introspect();

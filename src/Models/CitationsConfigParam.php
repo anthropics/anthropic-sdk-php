@@ -24,4 +24,4 @@ final class CitationsConfigParam implements BaseModel
     }
 }
 
-CitationsConfigParam::_loadMetadata();
+CitationsConfigParam::__introspect();

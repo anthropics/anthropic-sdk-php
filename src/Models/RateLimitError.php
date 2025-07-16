@@ -27,4 +27,4 @@ final class RateLimitError implements BaseModel
     }
 }
 
-RateLimitError::_loadMetadata();
+RateLimitError::__introspect();

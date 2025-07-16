@@ -27,4 +27,4 @@ final class BetaRawContentBlockStopEvent implements BaseModel
     }
 }
 
-BetaRawContentBlockStopEvent::_loadMetadata();
+BetaRawContentBlockStopEvent::__introspect();

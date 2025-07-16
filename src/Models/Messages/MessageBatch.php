@@ -72,4 +72,4 @@ final class MessageBatch implements BaseModel
     }
 }
 
-MessageBatch::_loadMetadata();
+MessageBatch::__introspect();

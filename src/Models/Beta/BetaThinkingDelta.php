@@ -27,4 +27,4 @@ final class BetaThinkingDelta implements BaseModel
     }
 }
 
-BetaThinkingDelta::_loadMetadata();
+BetaThinkingDelta::__introspect();

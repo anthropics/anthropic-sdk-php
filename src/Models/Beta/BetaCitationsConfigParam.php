@@ -24,4 +24,4 @@ final class BetaCitationsConfigParam implements BaseModel
     }
 }
 
-BetaCitationsConfigParam::_loadMetadata();
+BetaCitationsConfigParam::__introspect();

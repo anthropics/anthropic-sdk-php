@@ -29,4 +29,4 @@ final class Request implements BaseModel
     }
 }
 
-Request::_loadMetadata();
+Request::__introspect();

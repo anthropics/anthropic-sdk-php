@@ -27,4 +27,4 @@ final class BetaBillingError implements BaseModel
     }
 }
 
-BetaBillingError::_loadMetadata();
+BetaBillingError::__introspect();

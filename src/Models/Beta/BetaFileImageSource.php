@@ -27,4 +27,4 @@ final class BetaFileImageSource implements BaseModel
     }
 }
 
-BetaFileImageSource::_loadMetadata();
+BetaFileImageSource::__introspect();

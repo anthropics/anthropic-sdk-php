@@ -27,4 +27,4 @@ final class BetaToolChoiceAuto implements BaseModel
     }
 }
 
-BetaToolChoiceAuto::_loadMetadata();
+BetaToolChoiceAuto::__introspect();

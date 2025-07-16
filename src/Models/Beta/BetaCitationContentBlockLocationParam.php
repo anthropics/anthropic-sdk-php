@@ -48,4 +48,4 @@ final class BetaCitationContentBlockLocationParam implements BaseModel
     }
 }
 
-BetaCitationContentBlockLocationParam::_loadMetadata();
+BetaCitationContentBlockLocationParam::__introspect();

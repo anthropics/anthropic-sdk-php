@@ -31,4 +31,4 @@ final class TextEditor20250429 implements BaseModel
     }
 }
 
-TextEditor20250429::_loadMetadata();
+TextEditor20250429::__introspect();

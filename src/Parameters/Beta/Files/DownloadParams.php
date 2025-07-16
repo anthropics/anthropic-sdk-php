@@ -35,4 +35,4 @@ final class DownloadParams implements BaseModel
     }
 }
 
-DownloadParams::_loadMetadata();
+DownloadParams::__introspect();

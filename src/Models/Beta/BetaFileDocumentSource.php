@@ -27,4 +27,4 @@ final class BetaFileDocumentSource implements BaseModel
     }
 }
 
-BetaFileDocumentSource::_loadMetadata();
+BetaFileDocumentSource::__introspect();

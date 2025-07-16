@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-final class StopReason
+use Anthropic\Core\Concerns\Enum;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class StopReason implements StaticConverter
 {
+    use Enum;
+
     final public const END_TURN = 'end_turn';
 
     final public const MAX_TOKENS = 'max_tokens';
@@ -18,3 +23,5 @@ final class StopReason
 
     final public const REFUSAL = 'refusal';
 }
+
+StopReason::__introspect();

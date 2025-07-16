@@ -33,4 +33,4 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
     }
 }
 
-BetaRawContentBlockDeltaEvent::_loadMetadata();
+BetaRawContentBlockDeltaEvent::__introspect();

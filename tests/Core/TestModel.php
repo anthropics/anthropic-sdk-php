@@ -33,7 +33,7 @@ class TestModel implements BaseModel
      */
     public function __construct(array $data)
     {
-        $this->_loadMetadata();
+        $this->__introspect();
         $this->__unserialize($data);
     }
 }

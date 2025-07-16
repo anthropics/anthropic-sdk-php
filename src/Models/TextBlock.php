@@ -58,4 +58,4 @@ final class TextBlock implements BaseModel
     }
 }
 
-TextBlock::_loadMetadata();
+TextBlock::__introspect();

@@ -31,4 +31,4 @@ final class BetaThinkingBlockParam implements BaseModel
     }
 }
 
-BetaThinkingBlockParam::_loadMetadata();
+BetaThinkingBlockParam::__introspect();

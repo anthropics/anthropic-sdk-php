@@ -45,4 +45,4 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     }
 }
 
-BetaWebSearchToolResultBlock::_loadMetadata();
+BetaWebSearchToolResultBlock::__introspect();

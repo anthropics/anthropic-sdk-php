@@ -43,4 +43,4 @@ final class BetaToolUseBlockParam implements BaseModel
     }
 }
 
-BetaToolUseBlockParam::_loadMetadata();
+BetaToolUseBlockParam::__introspect();

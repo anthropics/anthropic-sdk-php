@@ -18,4 +18,4 @@ final class ToolChoiceNone implements BaseModel
     final public function __construct() {}
 }
 
-ToolChoiceNone::_loadMetadata();
+ToolChoiceNone::__introspect();

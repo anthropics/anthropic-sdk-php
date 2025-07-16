@@ -54,4 +54,4 @@ final class Usage implements BaseModel
     }
 }
 
-Usage::_loadMetadata();
+Usage::__introspect();

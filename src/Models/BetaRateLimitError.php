@@ -27,4 +27,4 @@ final class BetaRateLimitError implements BaseModel
     }
 }
 
-BetaRateLimitError::_loadMetadata();
+BetaRateLimitError::__introspect();

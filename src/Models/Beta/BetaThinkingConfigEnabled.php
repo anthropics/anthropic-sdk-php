@@ -27,4 +27,4 @@ final class BetaThinkingConfigEnabled implements BaseModel
     }
 }
 
-BetaThinkingConfigEnabled::_loadMetadata();
+BetaThinkingConfigEnabled::__introspect();

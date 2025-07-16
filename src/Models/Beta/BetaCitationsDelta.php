@@ -28,4 +28,4 @@ final class BetaCitationsDelta implements BaseModel
     }
 }
 
-BetaCitationsDelta::_loadMetadata();
+BetaCitationsDelta::__introspect();

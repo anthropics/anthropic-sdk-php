@@ -27,4 +27,4 @@ final class BetaOverloadedError implements BaseModel
     }
 }
 
-BetaOverloadedError::_loadMetadata();
+BetaOverloadedError::__introspect();

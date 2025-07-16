@@ -4,4 +4,12 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-final class ContentBlockSourceContent {}
+use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class ContentBlockSourceContent implements StaticConverter
+{
+    use Union;
+}
+
+ContentBlockSourceContent::__introspect();

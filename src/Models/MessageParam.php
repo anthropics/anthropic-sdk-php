@@ -63,4 +63,4 @@ final class MessageParam implements BaseModel
     }
 }
 
-MessageParam::_loadMetadata();
+MessageParam::__introspect();

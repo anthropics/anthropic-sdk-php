@@ -27,4 +27,4 @@ final class BetaInvalidRequestError implements BaseModel
     }
 }
 
-BetaInvalidRequestError::_loadMetadata();
+BetaInvalidRequestError::__introspect();

@@ -27,4 +27,4 @@ final class NotFoundError implements BaseModel
     }
 }
 
-NotFoundError::_loadMetadata();
+NotFoundError::__introspect();

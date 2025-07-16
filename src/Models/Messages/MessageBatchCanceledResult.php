@@ -18,4 +18,4 @@ final class MessageBatchCanceledResult implements BaseModel
     final public function __construct() {}
 }
 
-MessageBatchCanceledResult::_loadMetadata();
+MessageBatchCanceledResult::__introspect();

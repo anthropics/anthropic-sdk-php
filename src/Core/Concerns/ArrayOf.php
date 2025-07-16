@@ -42,6 +42,16 @@ trait ArrayOf
             return Serde::dump_unknown($value, state: $state);
         }
 
+        if (empty($value)) {
+            return $this->empty();
+        }
+
         return array_map(fn ($v) => Serde::dump($this->type, value: $v, state: $state), array: $value);
+    }
+
+    // @phpstan-ignore-next-line
+    private function empty(): array|object
+    {
+        return new \stdClass();
     }
 }

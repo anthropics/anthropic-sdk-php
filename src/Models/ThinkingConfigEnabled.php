@@ -27,4 +27,4 @@ final class ThinkingConfigEnabled implements BaseModel
     }
 }
 
-ThinkingConfigEnabled::_loadMetadata();
+ThinkingConfigEnabled::__introspect();

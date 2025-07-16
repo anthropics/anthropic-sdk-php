@@ -48,4 +48,4 @@ final class CitationPageLocation implements BaseModel
     }
 }
 
-CitationPageLocation::_loadMetadata();
+CitationPageLocation::__introspect();

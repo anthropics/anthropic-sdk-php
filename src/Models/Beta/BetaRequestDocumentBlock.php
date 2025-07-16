@@ -48,4 +48,4 @@ final class BetaRequestDocumentBlock implements BaseModel
     }
 }
 
-BetaRequestDocumentBlock::_loadMetadata();
+BetaRequestDocumentBlock::__introspect();

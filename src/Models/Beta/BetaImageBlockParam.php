@@ -33,4 +33,4 @@ final class BetaImageBlockParam implements BaseModel
     }
 }
 
-BetaImageBlockParam::_loadMetadata();
+BetaImageBlockParam::__introspect();

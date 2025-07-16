@@ -27,4 +27,4 @@ final class BetaSignatureDelta implements BaseModel
     }
 }
 
-BetaSignatureDelta::_loadMetadata();
+BetaSignatureDelta::__introspect();

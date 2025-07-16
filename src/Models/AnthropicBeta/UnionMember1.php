@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\AnthropicBeta;
 
-final class UnionMember1
+use Anthropic\Core\Concerns\Enum;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class UnionMember1 implements StaticConverter
 {
+    use Enum;
+
     final public const MESSAGE_BATCHES_2024_09_24 = 'message-batches-2024-09-24';
 
     final public const PROMPT_CACHING_2024_07_31 = 'prompt-caching-2024-07-31';
@@ -34,3 +39,5 @@ final class UnionMember1
 
     final public const EXTENDED_CACHE_TTL_2025_04_11 = 'extended-cache-ttl-2025-04-11';
 }
+
+UnionMember1::__introspect();

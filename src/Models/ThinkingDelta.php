@@ -27,4 +27,4 @@ final class ThinkingDelta implements BaseModel
     }
 }
 
-ThinkingDelta::_loadMetadata();
+ThinkingDelta::__introspect();

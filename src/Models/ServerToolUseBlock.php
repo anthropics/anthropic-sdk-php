@@ -34,4 +34,4 @@ final class ServerToolUseBlock implements BaseModel
     }
 }
 
-ServerToolUseBlock::_loadMetadata();
+ServerToolUseBlock::__introspect();

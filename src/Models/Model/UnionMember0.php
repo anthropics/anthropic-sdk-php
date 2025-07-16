@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Model;
 
-final class UnionMember0
+use Anthropic\Core\Concerns\Enum;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class UnionMember0 implements StaticConverter
 {
+    use Enum;
+
     final public const CLAUDE_3_7_SONNET_LATEST = 'claude-3-7-sonnet-latest';
 
     final public const CLAUDE_3_7_SONNET_20250219 = 'claude-3-7-sonnet-20250219';
@@ -44,3 +49,5 @@ final class UnionMember0
 
     final public const CLAUDE_2_0 = 'claude-2.0';
 }
+
+UnionMember0::__introspect();

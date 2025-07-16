@@ -24,4 +24,4 @@ final class ServerToolUsage implements BaseModel
     }
 }
 
-ServerToolUsage::_loadMetadata();
+ServerToolUsage::__introspect();

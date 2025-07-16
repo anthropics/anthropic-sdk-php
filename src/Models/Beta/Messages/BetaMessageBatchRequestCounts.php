@@ -45,4 +45,4 @@ final class BetaMessageBatchRequestCounts implements BaseModel
     }
 }
 
-BetaMessageBatchRequestCounts::_loadMetadata();
+BetaMessageBatchRequestCounts::__introspect();

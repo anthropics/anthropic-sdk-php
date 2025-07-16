@@ -4,4 +4,12 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-final class ThinkingConfigParam {}
+use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class ThinkingConfigParam implements StaticConverter
+{
+    use Union;
+}
+
+ThinkingConfigParam::__introspect();

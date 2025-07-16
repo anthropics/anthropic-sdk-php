@@ -38,4 +38,4 @@ final class BetaModelInfo implements BaseModel
     }
 }
 
-BetaModelInfo::_loadMetadata();
+BetaModelInfo::__introspect();

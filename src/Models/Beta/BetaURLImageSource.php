@@ -27,4 +27,4 @@ final class BetaURLImageSource implements BaseModel
     }
 }
 
-BetaURLImageSource::_loadMetadata();
+BetaURLImageSource::__introspect();

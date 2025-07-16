@@ -27,4 +27,4 @@ final class BetaPermissionError implements BaseModel
     }
 }
 
-BetaPermissionError::_loadMetadata();
+BetaPermissionError::__introspect();

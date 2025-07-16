@@ -148,4 +148,4 @@ final class CreateParams implements BaseModel
     }
 }
 
-CreateParams::_loadMetadata();
+CreateParams::__introspect();

@@ -28,4 +28,4 @@ final class ErrorResponse implements BaseModel
     }
 }
 
-ErrorResponse::_loadMetadata();
+ErrorResponse::__introspect();

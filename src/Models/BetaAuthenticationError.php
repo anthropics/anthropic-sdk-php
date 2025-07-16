@@ -27,4 +27,4 @@ final class BetaAuthenticationError implements BaseModel
     }
 }
 
-BetaAuthenticationError::_loadMetadata();
+BetaAuthenticationError::__introspect();

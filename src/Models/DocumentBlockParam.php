@@ -48,4 +48,4 @@ final class DocumentBlockParam implements BaseModel
     }
 }
 
-DocumentBlockParam::_loadMetadata();
+DocumentBlockParam::__introspect();

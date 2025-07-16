@@ -35,4 +35,4 @@ final class BetaBase64ImageSource implements BaseModel
     }
 }
 
-BetaBase64ImageSource::_loadMetadata();
+BetaBase64ImageSource::__introspect();

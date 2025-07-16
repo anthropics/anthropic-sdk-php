@@ -27,4 +27,4 @@ final class BillingError implements BaseModel
     }
 }
 
-BillingError::_loadMetadata();
+BillingError::__introspect();

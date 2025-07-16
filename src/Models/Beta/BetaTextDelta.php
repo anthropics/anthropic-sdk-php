@@ -27,4 +27,4 @@ final class BetaTextDelta implements BaseModel
     }
 }
 
-BetaTextDelta::_loadMetadata();
+BetaTextDelta::__introspect();

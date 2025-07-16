@@ -66,4 +66,4 @@ final class TextBlockParam implements BaseModel
     }
 }
 
-TextBlockParam::_loadMetadata();
+TextBlockParam::__introspect();

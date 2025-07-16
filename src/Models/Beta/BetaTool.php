@@ -50,4 +50,4 @@ final class BetaTool implements BaseModel
     }
 }
 
-BetaTool::_loadMetadata();
+BetaTool::__introspect();

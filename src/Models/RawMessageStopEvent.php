@@ -18,4 +18,4 @@ final class RawMessageStopEvent implements BaseModel
     final public function __construct() {}
 }
 
-RawMessageStopEvent::_loadMetadata();
+RawMessageStopEvent::__introspect();

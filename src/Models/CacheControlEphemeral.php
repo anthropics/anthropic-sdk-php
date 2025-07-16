@@ -18,4 +18,4 @@ final class CacheControlEphemeral implements BaseModel
     final public function __construct() {}
 }
 
-CacheControlEphemeral::_loadMetadata();
+CacheControlEphemeral::__introspect();

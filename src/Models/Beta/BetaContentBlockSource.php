@@ -41,4 +41,4 @@ final class BetaContentBlockSource implements BaseModel
     }
 }
 
-BetaContentBlockSource::_loadMetadata();
+BetaContentBlockSource::__introspect();

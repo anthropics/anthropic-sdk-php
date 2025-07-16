@@ -27,4 +27,4 @@ final class ToolChoiceAny implements BaseModel
     }
 }
 
-ToolChoiceAny::_loadMetadata();
+ToolChoiceAny::__introspect();

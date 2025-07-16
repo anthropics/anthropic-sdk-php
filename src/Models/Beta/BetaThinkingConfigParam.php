@@ -4,4 +4,12 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-final class BetaThinkingConfigParam {}
+use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class BetaThinkingConfigParam implements StaticConverter
+{
+    use Union;
+}
+
+BetaThinkingConfigParam::__introspect();

@@ -53,4 +53,4 @@ final class FileMetadata implements BaseModel
     }
 }
 
-FileMetadata::_loadMetadata();
+FileMetadata::__introspect();

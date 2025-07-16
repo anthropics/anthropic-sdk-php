@@ -24,4 +24,4 @@ final class BetaMetadata implements BaseModel
     }
 }
 
-BetaMetadata::_loadMetadata();
+BetaMetadata::__introspect();

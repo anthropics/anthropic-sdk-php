@@ -43,4 +43,4 @@ final class BetaCitationWebSearchResultLocationParam implements BaseModel
     }
 }
 
-BetaCitationWebSearchResultLocationParam::_loadMetadata();
+BetaCitationWebSearchResultLocationParam::__introspect();

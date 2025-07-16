@@ -30,4 +30,4 @@ final class BetaCodeExecutionToolResultError implements BaseModel
     }
 }
 
-BetaCodeExecutionToolResultError::_loadMetadata();
+BetaCodeExecutionToolResultError::__introspect();

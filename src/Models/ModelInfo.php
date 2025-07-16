@@ -38,4 +38,4 @@ final class ModelInfo implements BaseModel
     }
 }
 
-ModelInfo::_loadMetadata();
+ModelInfo::__introspect();

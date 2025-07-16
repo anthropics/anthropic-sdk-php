@@ -30,4 +30,4 @@ final class ToolTextEditor20250124 implements BaseModel
     }
 }
 
-ToolTextEditor20250124::_loadMetadata();
+ToolTextEditor20250124::__introspect();

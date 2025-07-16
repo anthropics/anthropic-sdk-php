@@ -85,4 +85,4 @@ final class Message implements BaseModel
     }
 }
 
-Message::_loadMetadata();
+Message::__introspect();

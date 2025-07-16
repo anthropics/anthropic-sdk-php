@@ -4,4 +4,12 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-final class WebSearchToolResultBlockContent {}
+use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class WebSearchToolResultBlockContent implements StaticConverter
+{
+    use Union;
+}
+
+WebSearchToolResultBlockContent::__introspect();

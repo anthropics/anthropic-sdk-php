@@ -27,4 +27,4 @@ final class InputJSONDelta implements BaseModel
     }
 }
 
-InputJSONDelta::_loadMetadata();
+InputJSONDelta::__introspect();

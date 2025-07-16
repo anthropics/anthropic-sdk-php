@@ -43,4 +43,4 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
     }
 }
 
-BetaRequestMCPServerURLDefinition::_loadMetadata();
+BetaRequestMCPServerURLDefinition::__introspect();

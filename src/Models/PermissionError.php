@@ -27,4 +27,4 @@ final class PermissionError implements BaseModel
     }
 }
 
-PermissionError::_loadMetadata();
+PermissionError::__introspect();

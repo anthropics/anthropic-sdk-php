@@ -143,4 +143,4 @@ final class Params implements BaseModel
     }
 }
 
-Params::_loadMetadata();
+Params::__introspect();

@@ -4,4 +4,12 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\CitationsDelta;
 
-final class Citation {}
+use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class Citation implements StaticConverter
+{
+    use Union;
+}
+
+Citation::__introspect();

@@ -18,4 +18,4 @@ final class BetaThinkingConfigDisabled implements BaseModel
     final public function __construct() {}
 }
 
-BetaThinkingConfigDisabled::_loadMetadata();
+BetaThinkingConfigDisabled::__introspect();

@@ -4,7 +4,14 @@ declare(strict_types=1);
 
 namespace Anthropic\Parameters\Messages\CreateParams;
 
-final class Stream
+use Anthropic\Core\Concerns\Enum;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class Stream implements StaticConverter
 {
+    use Enum;
+
     final public const FALSE = false;
 }
+
+Stream::__introspect();

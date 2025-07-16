@@ -4,4 +4,12 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-final class AnthropicBeta {}
+use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class AnthropicBeta implements StaticConverter
+{
+    use Union;
+}
+
+AnthropicBeta::__introspect();

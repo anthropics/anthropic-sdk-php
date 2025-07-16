@@ -27,4 +27,4 @@ final class AuthenticationError implements BaseModel
     }
 }
 
-AuthenticationError::_loadMetadata();
+AuthenticationError::__introspect();

@@ -39,4 +39,4 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
     }
 }
 
-BetaRequestMCPServerToolConfiguration::_loadMetadata();
+BetaRequestMCPServerToolConfiguration::__introspect();

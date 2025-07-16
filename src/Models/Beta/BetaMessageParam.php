@@ -68,4 +68,4 @@ final class BetaMessageParam implements BaseModel
     }
 }
 
-BetaMessageParam::_loadMetadata();
+BetaMessageParam::__introspect();

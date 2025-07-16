@@ -4,4 +4,12 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-final class BetaError {}
+use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class BetaError implements StaticConverter
+{
+    use Union;
+}
+
+BetaError::__introspect();

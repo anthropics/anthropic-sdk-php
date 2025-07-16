@@ -27,4 +27,4 @@ final class BetaRawMessageStartEvent implements BaseModel
     }
 }
 
-BetaRawMessageStartEvent::_loadMetadata();
+BetaRawMessageStartEvent::__introspect();

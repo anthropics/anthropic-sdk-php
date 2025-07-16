@@ -43,4 +43,4 @@ final class BetaMCPToolResultBlock implements BaseModel
     }
 }
 
-BetaMCPToolResultBlock::_loadMetadata();
+BetaMCPToolResultBlock::__introspect();

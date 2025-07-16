@@ -33,4 +33,4 @@ final class RawContentBlockDeltaEvent implements BaseModel
     }
 }
 
-RawContentBlockDeltaEvent::_loadMetadata();
+RawContentBlockDeltaEvent::__introspect();

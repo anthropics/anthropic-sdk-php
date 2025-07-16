@@ -27,4 +27,4 @@ final class BetaGatewayTimeoutError implements BaseModel
     }
 }
 
-BetaGatewayTimeoutError::_loadMetadata();
+BetaGatewayTimeoutError::__introspect();

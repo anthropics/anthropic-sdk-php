@@ -27,4 +27,4 @@ final class BetaInputJSONDelta implements BaseModel
     }
 }
 
-BetaInputJSONDelta::_loadMetadata();
+BetaInputJSONDelta::__introspect();

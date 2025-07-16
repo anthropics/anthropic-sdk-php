@@ -28,4 +28,4 @@ final class CitationsDelta implements BaseModel
     }
 }
 
-CitationsDelta::_loadMetadata();
+CitationsDelta::__introspect();

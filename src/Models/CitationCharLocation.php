@@ -48,4 +48,4 @@ final class CitationCharLocation implements BaseModel
     }
 }
 
-CitationCharLocation::_loadMetadata();
+CitationCharLocation::__introspect();

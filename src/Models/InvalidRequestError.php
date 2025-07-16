@@ -27,4 +27,4 @@ final class InvalidRequestError implements BaseModel
     }
 }
 
-InvalidRequestError::_loadMetadata();
+InvalidRequestError::__introspect();

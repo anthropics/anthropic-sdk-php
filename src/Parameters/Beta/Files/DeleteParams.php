@@ -35,4 +35,4 @@ final class DeleteParams implements BaseModel
     }
 }
 
-DeleteParams::_loadMetadata();
+DeleteParams::__introspect();

@@ -4,4 +4,12 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-final class TextCitationParam {}
+use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class TextCitationParam implements StaticConverter
+{
+    use Union;
+}
+
+TextCitationParam::__introspect();

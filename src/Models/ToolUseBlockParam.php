@@ -43,4 +43,4 @@ final class ToolUseBlockParam implements BaseModel
     }
 }
 
-ToolUseBlockParam::_loadMetadata();
+ToolUseBlockParam::__introspect();

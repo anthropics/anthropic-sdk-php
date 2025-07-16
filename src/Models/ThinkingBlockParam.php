@@ -31,4 +31,4 @@ final class ThinkingBlockParam implements BaseModel
     }
 }
 
-ThinkingBlockParam::_loadMetadata();
+ThinkingBlockParam::__introspect();

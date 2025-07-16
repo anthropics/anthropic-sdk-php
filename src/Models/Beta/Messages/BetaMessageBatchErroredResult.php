@@ -28,4 +28,4 @@ final class BetaMessageBatchErroredResult implements BaseModel
     }
 }
 
-BetaMessageBatchErroredResult::_loadMetadata();
+BetaMessageBatchErroredResult::__introspect();

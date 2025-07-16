@@ -18,4 +18,4 @@ final class ThinkingConfigDisabled implements BaseModel
     final public function __construct() {}
 }
 
-ThinkingConfigDisabled::_loadMetadata();
+ThinkingConfigDisabled::__introspect();

@@ -27,4 +27,4 @@ final class RawMessageStartEvent implements BaseModel
     }
 }
 
-RawMessageStartEvent::_loadMetadata();
+RawMessageStartEvent::__introspect();

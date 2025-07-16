@@ -43,4 +43,4 @@ final class BetaWebSearchResultBlockParam implements BaseModel
     }
 }
 
-BetaWebSearchResultBlockParam::_loadMetadata();
+BetaWebSearchResultBlockParam::__introspect();

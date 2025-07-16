@@ -33,4 +33,4 @@ final class BetaContainerUploadBlockParam implements BaseModel
     }
 }
 
-BetaContainerUploadBlockParam::_loadMetadata();
+BetaContainerUploadBlockParam::__introspect();

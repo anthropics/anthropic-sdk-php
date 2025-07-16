@@ -27,4 +27,4 @@ final class BetaDeletedMessageBatch implements BaseModel
     }
 }
 
-BetaDeletedMessageBatch::_loadMetadata();
+BetaDeletedMessageBatch::__introspect();

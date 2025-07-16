@@ -43,4 +43,4 @@ final class UserLocation implements BaseModel
     }
 }
 
-UserLocation::_loadMetadata();
+UserLocation::__introspect();

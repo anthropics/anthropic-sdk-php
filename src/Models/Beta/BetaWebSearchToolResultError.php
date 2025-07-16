@@ -30,4 +30,4 @@ final class BetaWebSearchToolResultError implements BaseModel
     }
 }
 
-BetaWebSearchToolResultError::_loadMetadata();
+BetaWebSearchToolResultError::__introspect();

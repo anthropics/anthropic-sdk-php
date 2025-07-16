@@ -38,4 +38,4 @@ final class InputSchema implements BaseModel
     }
 }
 
-InputSchema::_loadMetadata();
+InputSchema::__introspect();

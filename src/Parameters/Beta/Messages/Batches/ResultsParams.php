@@ -35,4 +35,4 @@ final class ResultsParams implements BaseModel
     }
 }
 
-ResultsParams::_loadMetadata();
+ResultsParams::__introspect();

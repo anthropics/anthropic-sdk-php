@@ -4,4 +4,12 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Messages;
 
-final class MessageBatchResult {}
+use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class MessageBatchResult implements StaticConverter
+{
+    use Union;
+}
+
+MessageBatchResult::__introspect();

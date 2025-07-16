@@ -27,4 +27,4 @@ final class OverloadedError implements BaseModel
     }
 }
 
-OverloadedError::_loadMetadata();
+OverloadedError::__introspect();

@@ -24,4 +24,4 @@ final class BetaServerToolUsage implements BaseModel
     }
 }
 
-BetaServerToolUsage::_loadMetadata();
+BetaServerToolUsage::__introspect();

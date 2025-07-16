@@ -27,4 +27,4 @@ final class RedactedThinkingBlockParam implements BaseModel
     }
 }
 
-RedactedThinkingBlockParam::_loadMetadata();
+RedactedThinkingBlockParam::__introspect();

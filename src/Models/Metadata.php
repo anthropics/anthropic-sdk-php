@@ -24,4 +24,4 @@ final class Metadata implements BaseModel
     }
 }
 
-Metadata::_loadMetadata();
+Metadata::__introspect();

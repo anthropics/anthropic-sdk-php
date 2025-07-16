@@ -27,4 +27,4 @@ final class BetaCodeExecutionOutputBlockParam implements BaseModel
     }
 }
 
-BetaCodeExecutionOutputBlockParam::_loadMetadata();
+BetaCodeExecutionOutputBlockParam::__introspect();

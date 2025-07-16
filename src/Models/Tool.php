@@ -50,4 +50,4 @@ final class Tool implements BaseModel
     }
 }
 
-Tool::_loadMetadata();
+Tool::__introspect();

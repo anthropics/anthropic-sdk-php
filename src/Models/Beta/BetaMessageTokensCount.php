@@ -24,4 +24,4 @@ final class BetaMessageTokensCount implements BaseModel
     }
 }
 
-BetaMessageTokensCount::_loadMetadata();
+BetaMessageTokensCount::__introspect();

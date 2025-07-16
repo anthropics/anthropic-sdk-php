@@ -32,4 +32,4 @@ final class DeletedFile implements BaseModel
     }
 }
 
-DeletedFile::_loadMetadata();
+DeletedFile::__introspect();

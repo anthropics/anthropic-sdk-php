@@ -58,4 +58,4 @@ final class ToolResultBlockParam implements BaseModel
     }
 }
 
-ToolResultBlockParam::_loadMetadata();
+ToolResultBlockParam::__introspect();

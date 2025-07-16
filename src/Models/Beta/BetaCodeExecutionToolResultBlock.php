@@ -33,4 +33,4 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
     }
 }
 
-BetaCodeExecutionToolResultBlock::_loadMetadata();
+BetaCodeExecutionToolResultBlock::__introspect();

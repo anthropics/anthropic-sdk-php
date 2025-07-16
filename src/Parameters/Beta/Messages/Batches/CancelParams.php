@@ -35,4 +35,4 @@ final class CancelParams implements BaseModel
     }
 }
 
-CancelParams::_loadMetadata();
+CancelParams::__introspect();

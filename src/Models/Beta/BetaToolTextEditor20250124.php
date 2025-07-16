@@ -31,4 +31,4 @@ final class BetaToolTextEditor20250124 implements BaseModel
     }
 }
 
-BetaToolTextEditor20250124::_loadMetadata();
+BetaToolTextEditor20250124::__introspect();

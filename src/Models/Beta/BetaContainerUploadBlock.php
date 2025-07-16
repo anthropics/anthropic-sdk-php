@@ -27,4 +27,4 @@ final class BetaContainerUploadBlock implements BaseModel
     }
 }
 
-BetaContainerUploadBlock::_loadMetadata();
+BetaContainerUploadBlock::__introspect();

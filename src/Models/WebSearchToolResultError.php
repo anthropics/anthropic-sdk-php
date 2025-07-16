@@ -31,4 +31,4 @@ final class WebSearchToolResultError implements BaseModel
     }
 }
 
-WebSearchToolResultError::_loadMetadata();
+WebSearchToolResultError::__introspect();

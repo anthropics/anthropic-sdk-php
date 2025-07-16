@@ -24,4 +24,4 @@ final class MessageTokensCount implements BaseModel
     }
 }
 
-MessageTokensCount::_loadMetadata();
+MessageTokensCount::__introspect();

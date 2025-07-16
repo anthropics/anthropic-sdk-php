@@ -33,4 +33,4 @@ final class BetaRawContentBlockStartEvent implements BaseModel
     }
 }
 
-BetaRawContentBlockStartEvent::_loadMetadata();
+BetaRawContentBlockStartEvent::__introspect();

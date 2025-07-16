@@ -42,4 +42,4 @@ final class WebSearchToolResultBlock implements BaseModel
     }
 }
 
-WebSearchToolResultBlock::_loadMetadata();
+WebSearchToolResultBlock::__introspect();

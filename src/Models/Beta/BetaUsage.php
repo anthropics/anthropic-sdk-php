@@ -59,4 +59,4 @@ final class BetaUsage implements BaseModel
     }
 }
 
-BetaUsage::_loadMetadata();
+BetaUsage::__introspect();

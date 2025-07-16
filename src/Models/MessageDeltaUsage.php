@@ -45,4 +45,4 @@ final class MessageDeltaUsage implements BaseModel
     }
 }
 
-MessageDeltaUsage::_loadMetadata();
+MessageDeltaUsage::__introspect();

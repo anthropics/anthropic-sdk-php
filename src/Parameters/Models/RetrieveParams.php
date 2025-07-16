@@ -35,4 +35,4 @@ final class RetrieveParams implements BaseModel
     }
 }
 
-RetrieveParams::_loadMetadata();
+RetrieveParams::__introspect();

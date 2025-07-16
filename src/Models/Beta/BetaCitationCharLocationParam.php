@@ -48,4 +48,4 @@ final class BetaCitationCharLocationParam implements BaseModel
     }
 }
 
-BetaCitationCharLocationParam::_loadMetadata();
+BetaCitationCharLocationParam::__introspect();

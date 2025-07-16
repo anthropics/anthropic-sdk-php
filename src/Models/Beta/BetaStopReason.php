@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Models\Beta;
 
-final class BetaStopReason
+use Anthropic\Core\Concerns\Enum;
+use Anthropic\Core\Contracts\StaticConverter;
+
+final class BetaStopReason implements StaticConverter
 {
+    use Enum;
+
     final public const END_TURN = 'end_turn';
 
     final public const MAX_TOKENS = 'max_tokens';
@@ -18,3 +23,5 @@ final class BetaStopReason
 
     final public const REFUSAL = 'refusal';
 }
+
+BetaStopReason::__introspect();

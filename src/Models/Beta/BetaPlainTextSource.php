@@ -30,4 +30,4 @@ final class BetaPlainTextSource implements BaseModel
     }
 }
 
-BetaPlainTextSource::_loadMetadata();
+BetaPlainTextSource::__introspect();

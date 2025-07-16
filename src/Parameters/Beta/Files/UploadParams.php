@@ -39,4 +39,4 @@ final class UploadParams implements BaseModel
     }
 }
 
-UploadParams::_loadMetadata();
+UploadParams::__introspect();
