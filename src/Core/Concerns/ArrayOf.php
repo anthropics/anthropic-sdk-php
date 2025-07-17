@@ -52,6 +52,6 @@ trait ArrayOf
     // @phpstan-ignore-next-line
     private function empty(): array|object
     {
-        return new \stdClass();
+        return (object) [];
     }
 }
