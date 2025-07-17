@@ -16,8 +16,9 @@ class Api
     public function __construct(
         public ?string $apiName = null,
         public null|Converter|StaticConverter|string $type = null,
+        public null|Converter|StaticConverter|string $enum = null,
+        public null|Converter|StaticConverter|string $union = null,
+        private readonly bool $nullable = false,
         public bool $optional = false,
-        public ?string $discriminator = null,
-        public ?array $union = null,
     ) {}
 }

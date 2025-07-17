@@ -52,7 +52,7 @@ final class CompletionCreateParam implements BaseModel
 
     /** @var null|list<string|UnionMember1::*> $anthropicBeta */
     #[Api(
-        type: new ListOf(new UnionOf(['string', UnionMember1::class])),
+        type: new ListOf(union: new UnionOf(['string', UnionMember1::class])),
         optional: true,
     )]
     public ?array $anthropicBeta;
@@ -84,12 +84,12 @@ final class CompletionCreateParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $metadata && $this->metadata = $metadata;
-        null != $stopSequences && $this->stopSequences = $stopSequences;
-        null != $stream && $this->stream = $stream;
-        null != $temperature && $this->temperature = $temperature;
-        null != $topK && $this->topK = $topK;
-        null != $topP && $this->topP = $topP;
-        null != $anthropicBeta && $this->anthropicBeta = $anthropicBeta;
+        null !== $metadata && $this->metadata = $metadata;
+        null !== $stopSequences && $this->stopSequences = $stopSequences;
+        null !== $stream && $this->stream = $stream;
+        null !== $temperature && $this->temperature = $temperature;
+        null !== $topK && $this->topK = $topK;
+        null !== $topP && $this->topP = $topP;
+        null !== $anthropicBeta && $this->anthropicBeta = $anthropicBeta;
     }
 }

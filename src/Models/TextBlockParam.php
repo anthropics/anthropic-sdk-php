@@ -29,21 +29,17 @@ final class TextBlockParam implements BaseModel
      * >|null $citations
      */
     #[Api(
-        type: new UnionOf(
-            [
-                new ListOf(
-                    new UnionOf(
-                        [
-                            CitationCharLocationParam::class,
-                            CitationPageLocationParam::class,
-                            CitationContentBlockLocationParam::class,
-                            CitationWebSearchResultLocationParam::class,
-                        ],
-                    ),
-                ),
-                'null',
-            ],
+        type: new ListOf(
+            union: new UnionOf(
+                [
+                    CitationCharLocationParam::class,
+                    CitationPageLocationParam::class,
+                    CitationContentBlockLocationParam::class,
+                    CitationWebSearchResultLocationParam::class,
+                ],
+            ),
         ),
+        nullable: true,
         optional: true,
     )]
     public ?array $citations;
@@ -65,7 +61,7 @@ final class TextBlockParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $cacheControl && $this->cacheControl = $cacheControl;
-        null != $citations && $this->citations = $citations;
+        null !== $cacheControl && $this->cacheControl = $cacheControl;
+        null !== $citations && $this->citations = $citations;
     }
 }

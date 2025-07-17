@@ -19,7 +19,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
 
     /** @var list<WebSearchResultBlockParam>|WebSearchToolRequestError $content */
     #[Api(
-        type: new UnionOf(
+        union: new UnionOf(
             [
                 new ListOf(WebSearchResultBlockParam::class),
                 WebSearchToolRequestError::class,
@@ -50,6 +50,6 @@ final class WebSearchToolResultBlockParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $cacheControl && $this->cacheControl = $cacheControl;
+        null !== $cacheControl && $this->cacheControl = $cacheControl;
     }
 }

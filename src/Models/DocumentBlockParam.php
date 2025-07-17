@@ -45,9 +45,9 @@ final class DocumentBlockParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $cacheControl && $this->cacheControl = $cacheControl;
-        null != $citations && $this->citations = $citations;
-        null != $context && $this->context = $context;
-        null != $title && $this->title = $title;
+        null !== $cacheControl && $this->cacheControl = $cacheControl;
+        null !== $citations && $this->citations = $citations;
+        null !== $context && $this->context = $context;
+        null !== $title && $this->title = $title;
     }
 }

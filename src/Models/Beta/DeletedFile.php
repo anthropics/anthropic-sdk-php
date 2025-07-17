@@ -32,6 +32,6 @@ final class DeletedFile implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $type && $this->type = $type;
+        null !== $type && $this->type = $type;
     }
 }

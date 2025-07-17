@@ -29,11 +29,11 @@ final class BetaToolResultBlockParam implements BaseModel
      * >|null $content
      */
     #[Api(
-        type: new UnionOf(
+        union: new UnionOf(
             [
                 'string',
                 new ListOf(
-                    new UnionOf(
+                    union: new UnionOf(
                         [
                             BetaTextBlockParam::class,
                             BetaImageBlockParam::class,
@@ -68,8 +68,8 @@ final class BetaToolResultBlockParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $cacheControl && $this->cacheControl = $cacheControl;
-        null != $content && $this->content = $content;
-        null != $isError && $this->isError = $isError;
+        null !== $cacheControl && $this->cacheControl = $cacheControl;
+        null !== $content && $this->content = $content;
+        null !== $isError && $this->isError = $isError;
     }
 }

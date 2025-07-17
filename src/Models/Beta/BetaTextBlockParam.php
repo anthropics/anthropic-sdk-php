@@ -29,22 +29,18 @@ final class BetaTextBlockParam implements BaseModel
      * >|null $citations
      */
     #[Api(
-        type: new UnionOf(
-            [
-                new ListOf(
-                    new UnionOf(
-                        [
-                            BetaCitationCharLocationParam::class,
-                            BetaCitationPageLocationParam::class,
-                            BetaCitationContentBlockLocationParam::class,
-                            BetaCitationWebSearchResultLocationParam::class,
-                            BetaCitationSearchResultLocationParam::class,
-                        ],
-                    ),
-                ),
-                'null',
-            ],
+        type: new ListOf(
+            union: new UnionOf(
+                [
+                    BetaCitationCharLocationParam::class,
+                    BetaCitationPageLocationParam::class,
+                    BetaCitationContentBlockLocationParam::class,
+                    BetaCitationWebSearchResultLocationParam::class,
+                    BetaCitationSearchResultLocationParam::class,
+                ],
+            ),
         ),
+        nullable: true,
         optional: true,
     )]
     public ?array $citations;
@@ -66,7 +62,7 @@ final class BetaTextBlockParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $cacheControl && $this->cacheControl = $cacheControl;
-        null != $citations && $this->citations = $citations;
+        null !== $cacheControl && $this->cacheControl = $cacheControl;
+        null !== $citations && $this->citations = $citations;
     }
 }

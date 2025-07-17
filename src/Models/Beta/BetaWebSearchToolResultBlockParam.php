@@ -21,7 +21,7 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
      * @var BetaWebSearchToolRequestError|list<BetaWebSearchResultBlockParam> $content
      */
     #[Api(
-        type: new UnionOf(
+        union: new UnionOf(
             [
                 new ListOf(BetaWebSearchResultBlockParam::class),
                 BetaWebSearchToolRequestError::class,
@@ -54,6 +54,6 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $cacheControl && $this->cacheControl = $cacheControl;
+        null !== $cacheControl && $this->cacheControl = $cacheControl;
     }
 }

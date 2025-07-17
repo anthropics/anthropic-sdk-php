@@ -34,7 +34,7 @@ final class BetaMessage implements BaseModel
      */
     #[Api(
         type: new ListOf(
-            new UnionOf(
+            union: new UnionOf(
                 [
                     BetaTextBlock::class,
                     BetaThinkingBlock::class,

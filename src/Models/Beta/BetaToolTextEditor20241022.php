@@ -30,6 +30,6 @@ final class BetaToolTextEditor20241022 implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $cacheControl && $this->cacheControl = $cacheControl;
+        null !== $cacheControl && $this->cacheControl = $cacheControl;
     }
 }

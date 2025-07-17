@@ -19,7 +19,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
 
     /** @var BetaWebSearchToolResultError|list<BetaWebSearchResultBlock> $content */
     #[Api(
-        type: new UnionOf(
+        union: new UnionOf(
             [
                 BetaWebSearchToolResultError::class,
                 new ListOf(BetaWebSearchResultBlock::class),

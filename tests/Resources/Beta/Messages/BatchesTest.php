@@ -14,8 +14,14 @@ use Anthropic\Models\Beta\BetaThinkingConfigEnabled;
 use Anthropic\Models\Beta\BetaTool;
 use Anthropic\Models\Beta\BetaTool\InputSchema;
 use Anthropic\Models\Beta\BetaToolChoiceAuto;
+use Anthropic\Parameters\Beta\Messages\BatchCancelParam;
+use Anthropic\Parameters\Beta\Messages\BatchCreateParam;
 use Anthropic\Parameters\Beta\Messages\BatchCreateParam\Request;
 use Anthropic\Parameters\Beta\Messages\BatchCreateParam\Request\Params;
+use Anthropic\Parameters\Beta\Messages\BatchDeleteParam;
+use Anthropic\Parameters\Beta\Messages\BatchListParam;
+use Anthropic\Parameters\Beta\Messages\BatchResultsParam;
+use Anthropic\Parameters\Beta\Messages\BatchRetrieveParam;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -48,8 +54,8 @@ final class BatchesTest extends TestCase
             ->messages
             ->batches
             ->create(
-                [
-                    'requests' => [
+                new BatchCreateParam(
+                    requests: [
                         new Request(
                             customID: 'my-custom-id-1',
                             params: new Params(
@@ -61,7 +67,7 @@ final class BatchesTest extends TestCase
                             ),
                         ),
                     ],
-                ]
+                )
             )
         ;
 
@@ -77,8 +83,8 @@ final class BatchesTest extends TestCase
             ->messages
             ->batches
             ->create(
-                [
-                    'requests' => [
+                new BatchCreateParam(
+                    requests: [
                         new Request(
                             customID: 'my-custom-id-1',
                             params: new Params(
@@ -149,8 +155,8 @@ final class BatchesTest extends TestCase
                             ),
                         ),
                     ],
-                    'anthropicBeta' => ['string'],
-                ]
+                    anthropicBeta: ['string'],
+                )
             )
         ;
 
@@ -165,7 +171,7 @@ final class BatchesTest extends TestCase
             ->beta
             ->messages
             ->batches
-            ->retrieve('message_batch_id', [])
+            ->retrieve('message_batch_id', new BatchRetrieveParam())
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -178,7 +184,13 @@ final class BatchesTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->beta->messages->batches->list([]);
+        $result = $this
+            ->client
+            ->beta
+            ->messages
+            ->batches
+            ->list(new BatchListParam())
+        ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -191,7 +203,7 @@ final class BatchesTest extends TestCase
             ->beta
             ->messages
             ->batches
-            ->delete('message_batch_id', [])
+            ->delete('message_batch_id', new BatchDeleteParam())
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -205,7 +217,7 @@ final class BatchesTest extends TestCase
             ->beta
             ->messages
             ->batches
-            ->cancel('message_batch_id', [])
+            ->cancel('message_batch_id', new BatchCancelParam())
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -223,7 +235,7 @@ final class BatchesTest extends TestCase
             ->beta
             ->messages
             ->batches
-            ->results('message_batch_id', [])
+            ->results('message_batch_id', new BatchResultsParam())
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

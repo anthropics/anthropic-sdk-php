@@ -19,11 +19,11 @@ final class ContentBlockSource implements BaseModel
 
     /** @var list<ImageBlockParam|TextBlockParam>|string $content */
     #[Api(
-        type: new UnionOf(
+        union: new UnionOf(
             [
                 'string',
                 new ListOf(
-                    new UnionOf([TextBlockParam::class, ImageBlockParam::class])
+                    union: new UnionOf([TextBlockParam::class, ImageBlockParam::class])
                 ),
             ],
         ),

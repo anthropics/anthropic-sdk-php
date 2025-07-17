@@ -25,7 +25,7 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
 
     /** @var null|list<BetaTextBlockParam>|string $content */
     #[Api(
-        type: new UnionOf(['string', new ListOf(BetaTextBlockParam::class)]),
+        union: new UnionOf(['string', new ListOf(BetaTextBlockParam::class)]),
         optional: true,
     )]
     public null|array|string $content;
@@ -49,8 +49,8 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $cacheControl && $this->cacheControl = $cacheControl;
-        null != $content && $this->content = $content;
-        null != $isError && $this->isError = $isError;
+        null !== $cacheControl && $this->cacheControl = $cacheControl;
+        null !== $content && $this->content = $content;
+        null !== $isError && $this->isError = $isError;
     }
 }

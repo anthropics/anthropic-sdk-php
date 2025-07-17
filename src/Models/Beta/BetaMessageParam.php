@@ -21,11 +21,11 @@ final class BetaMessageParam implements BaseModel
      * > $content
      */
     #[Api(
-        type: new UnionOf(
+        union: new UnionOf(
             [
                 'string',
                 new ListOf(
-                    new UnionOf(
+                    union: new UnionOf(
                         [
                             BetaTextBlockParam::class,
                             BetaImageBlockParam::class,

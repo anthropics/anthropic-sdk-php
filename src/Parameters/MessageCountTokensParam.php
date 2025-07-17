@@ -40,7 +40,7 @@ final class MessageCountTokensParam implements BaseModel
 
     /** @var null|list<TextBlockParam>|string $system */
     #[Api(
-        type: new UnionOf(['string', new ListOf(TextBlockParam::class)]),
+        union: new UnionOf(['string', new ListOf(TextBlockParam::class)]),
         optional: true,
     )]
     public null|array|string $system;
@@ -58,7 +58,7 @@ final class MessageCountTokensParam implements BaseModel
      */
     #[Api(
         type: new ListOf(
-            new UnionOf(
+            union: new UnionOf(
                 [
                     Tool::class,
                     ToolBash20250124::class,
@@ -96,9 +96,9 @@ final class MessageCountTokensParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $system && $this->system = $system;
-        null != $thinking && $this->thinking = $thinking;
-        null != $toolChoice && $this->toolChoice = $toolChoice;
-        null != $tools && $this->tools = $tools;
+        null !== $system && $this->system = $system;
+        null !== $thinking && $this->thinking = $thinking;
+        null !== $toolChoice && $this->toolChoice = $toolChoice;
+        null !== $tools && $this->tools = $tools;
     }
 }

@@ -3,6 +3,8 @@
 namespace Tests\Resources;
 
 use Anthropic\Client;
+use Anthropic\Parameters\ModelListParam;
+use Anthropic\Parameters\ModelRetrieveParam;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -29,7 +31,11 @@ final class ModelsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->models->retrieve('model_id', []);
+        $result = $this
+            ->client
+            ->models
+            ->retrieve('model_id', new ModelRetrieveParam())
+        ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -41,7 +47,7 @@ final class ModelsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->models->list([]);
+        $result = $this->client->models->list(new ModelListParam());
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

@@ -53,6 +53,6 @@ final class FileMetadata implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $downloadable && $this->downloadable = $downloadable;
+        null !== $downloadable && $this->downloadable = $downloadable;
     }
 }

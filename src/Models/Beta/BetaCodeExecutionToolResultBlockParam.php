@@ -38,6 +38,6 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $cacheControl && $this->cacheControl = $cacheControl;
+        null !== $cacheControl && $this->cacheControl = $cacheControl;
     }
 }

@@ -19,11 +19,13 @@ final class BetaContentBlockSource implements BaseModel
 
     /** @var list<BetaImageBlockParam|BetaTextBlockParam>|string $content */
     #[Api(
-        type: new UnionOf(
+        union: new UnionOf(
             [
                 'string',
                 new ListOf(
-                    new UnionOf([BetaTextBlockParam::class, BetaImageBlockParam::class])
+                    union: new UnionOf(
+                        [BetaTextBlockParam::class, BetaImageBlockParam::class]
+                    ),
                 ),
             ],
         ),

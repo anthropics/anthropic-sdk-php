@@ -43,6 +43,6 @@ final class BetaWebSearchResultBlockParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $pageAge && $this->pageAge = $pageAge;
+        null !== $pageAge && $this->pageAge = $pageAge;
     }
 }

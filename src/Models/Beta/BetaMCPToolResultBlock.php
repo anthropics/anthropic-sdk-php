@@ -18,7 +18,7 @@ final class BetaMCPToolResultBlock implements BaseModel
     public string $type = 'mcp_tool_result';
 
     /** @var list<BetaTextBlock>|string $content */
-    #[Api(type: new UnionOf(['string', new ListOf(BetaTextBlock::class)]))]
+    #[Api(union: new UnionOf(['string', new ListOf(BetaTextBlock::class)]))]
     public array|string $content;
 
     #[Api('is_error')]

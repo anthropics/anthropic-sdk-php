@@ -48,8 +48,8 @@ final class BetaTool implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $cacheControl && $this->cacheControl = $cacheControl;
-        null != $description && $this->description = $description;
-        null != $type && $this->type = $type;
+        null !== $cacheControl && $this->cacheControl = $cacheControl;
+        null !== $description && $this->description = $description;
+        null !== $type && $this->type = $type;
     }
 }

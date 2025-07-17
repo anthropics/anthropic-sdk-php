@@ -8,7 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
-use Anthropic\Core\Serde\UnionOf;
 
 final class InputSchema implements BaseModel
 {
@@ -21,7 +20,7 @@ final class InputSchema implements BaseModel
     public mixed $properties;
 
     /** @var null|list<string> $required */
-    #[Api(type: new UnionOf([new ListOf('string'), 'null']), optional: true)]
+    #[Api(type: new ListOf('string'), nullable: true, optional: true)]
     public ?array $required;
 
     /**
@@ -36,7 +35,7 @@ final class InputSchema implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $properties && $this->properties = $properties;
-        null != $required && $this->required = $required;
+        null !== $properties && $this->properties = $properties;
+        null !== $required && $this->required = $required;
     }
 }

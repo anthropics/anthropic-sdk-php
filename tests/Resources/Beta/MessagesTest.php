@@ -14,6 +14,8 @@ use Anthropic\Models\Beta\BetaThinkingConfigEnabled;
 use Anthropic\Models\Beta\BetaTool;
 use Anthropic\Models\Beta\BetaTool\InputSchema;
 use Anthropic\Models\Beta\BetaToolChoiceAuto;
+use Anthropic\Parameters\Beta\MessageCountTokensParam;
+use Anthropic\Parameters\Beta\MessageCreateParam;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -44,14 +46,12 @@ final class MessagesTest extends TestCase
             ->beta
             ->messages
             ->create(
-                [
-                    'maxTokens' => 1024,
-                    'messages' => [
-                        new BetaMessageParam(content: 'Hello, world', role: 'user'),
-                    ],
-                    'model' => 'claude-sonnet-4-20250514',
-                    'stream' => true,
-                ]
+                new MessageCreateParam(
+                    maxTokens: 1024,
+                    messages: [new BetaMessageParam(content: 'Hello, world', role: 'user')],
+                    model: 'claude-sonnet-4-20250514',
+                    stream: true,
+                )
             )
         ;
 
@@ -66,14 +66,12 @@ final class MessagesTest extends TestCase
             ->beta
             ->messages
             ->create(
-                [
-                    'maxTokens' => 1024,
-                    'messages' => [
-                        new BetaMessageParam(content: 'Hello, world', role: 'user'),
-                    ],
-                    'model' => 'claude-sonnet-4-20250514',
-                    'container' => 'container',
-                    'mcpServers' => [
+                new MessageCreateParam(
+                    maxTokens: 1024,
+                    messages: [new BetaMessageParam(content: 'Hello, world', role: 'user')],
+                    model: 'claude-sonnet-4-20250514',
+                    container: 'container',
+                    mcpServers: [
                         new BetaRequestMCPServerURLDefinition(
                             name: 'name',
                             url: 'url',
@@ -84,13 +82,13 @@ final class MessagesTest extends TestCase
                             ),
                         ),
                     ],
-                    'metadata' => new BetaMetadata(
+                    metadata: new BetaMetadata(
                         userID: '13803d75-b4b5-4c3e-b2a2-6f21399b021b'
                     ),
-                    'serviceTier' => 'auto',
-                    'stopSequences' => ['string'],
-                    'stream' => true,
-                    'system' => [
+                    serviceTier: 'auto',
+                    stopSequences: ['string'],
+                    stream: true,
+                    system: [
                         new BetaTextBlockParam(
                             text: "Today's date is 2024-06-01.",
                             cacheControl: new BetaCacheControlEphemeral(ttl: '5m'),
@@ -105,10 +103,10 @@ final class MessagesTest extends TestCase
                             ],
                         ),
                     ],
-                    'temperature' => 1,
-                    'thinking' => new BetaThinkingConfigEnabled(budgetTokens: 1024),
-                    'toolChoice' => new BetaToolChoiceAuto(disableParallelToolUse: true),
-                    'tools' => [
+                    temperature: 1,
+                    thinking: new BetaThinkingConfigEnabled(budgetTokens: 1024),
+                    toolChoice: new BetaToolChoiceAuto(disableParallelToolUse: true),
+                    tools: [
                         new BetaTool(
                             inputSchema: new InputSchema(
                                 properties: [
@@ -128,11 +126,11 @@ final class MessagesTest extends TestCase
                             description: 'Get the current weather in a given location',
                             type: 'custom',
                         ),
-                ],
-                    'topK' => 5,
-                    'topP' => 0.7,
-                    'anthropicBeta' => ['string'],
-                ]
+                    ],
+                    topK: 5,
+                    topP: 0.7,
+                    anthropicBeta: ['string'],
+                )
             )
         ;
 
@@ -147,10 +145,10 @@ final class MessagesTest extends TestCase
             ->beta
             ->messages
             ->countTokens(
-                [
-                    'messages' => [new BetaMessageParam(content: 'string', role: 'user')],
-                    'model' => 'claude-3-7-sonnet-latest',
-                ]
+                new MessageCountTokensParam(
+                    messages: [new BetaMessageParam(content: 'string', role: 'user')],
+                    model: 'claude-3-7-sonnet-latest',
+                )
             )
         ;
 
@@ -165,10 +163,10 @@ final class MessagesTest extends TestCase
             ->beta
             ->messages
             ->countTokens(
-                [
-                    'messages' => [new BetaMessageParam(content: 'string', role: 'user')],
-                    'model' => 'claude-3-7-sonnet-latest',
-                    'mcpServers' => [
+                new MessageCountTokensParam(
+                    messages: [new BetaMessageParam(content: 'string', role: 'user')],
+                    model: 'claude-3-7-sonnet-latest',
+                    mcpServers: [
                         new BetaRequestMCPServerURLDefinition(
                             name: 'name',
                             url: 'url',
@@ -179,7 +177,7 @@ final class MessagesTest extends TestCase
                             ),
                         ),
                     ],
-                    'system' => [
+                    system: [
                         new BetaTextBlockParam(
                             text: "Today's date is 2024-06-01.",
                             cacheControl: new BetaCacheControlEphemeral(ttl: '5m'),
@@ -193,10 +191,10 @@ final class MessagesTest extends TestCase
                                 ),
                             ],
                         ),
-                ],
-                    'thinking' => new BetaThinkingConfigEnabled(budgetTokens: 1024),
-                    'toolChoice' => new BetaToolChoiceAuto(disableParallelToolUse: true),
-                    'tools' => [
+                    ],
+                    thinking: new BetaThinkingConfigEnabled(budgetTokens: 1024),
+                    toolChoice: new BetaToolChoiceAuto(disableParallelToolUse: true),
+                    tools: [
                         new BetaTool(
                             inputSchema: new InputSchema(
                                 properties: [
@@ -216,9 +214,9 @@ final class MessagesTest extends TestCase
                             description: 'Get the current weather in a given location',
                             type: 'custom',
                         ),
-                ],
-                    'anthropicBeta' => ['string'],
-                ]
+                    ],
+                    anthropicBeta: ['string'],
+                )
             )
         ;
 

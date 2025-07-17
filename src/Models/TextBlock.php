@@ -23,21 +23,17 @@ final class TextBlock implements BaseModel
      * >|null $citations
      */
     #[Api(
-        type: new UnionOf(
-            [
-                new ListOf(
-                    new UnionOf(
-                        [
-                            CitationCharLocation::class,
-                            CitationPageLocation::class,
-                            CitationContentBlockLocation::class,
-                            CitationsWebSearchResultLocation::class,
-                        ],
-                    ),
-                ),
-                'null',
-            ],
+        type: new ListOf(
+            union: new UnionOf(
+                [
+                    CitationCharLocation::class,
+                    CitationPageLocation::class,
+                    CitationContentBlockLocation::class,
+                    CitationsWebSearchResultLocation::class,
+                ],
+            ),
         ),
+        nullable: true,
     )]
     public ?array $citations;
 

@@ -4,6 +4,7 @@ namespace Tests\Resources;
 
 use Anthropic\Client;
 use Anthropic\Models\Metadata;
+use Anthropic\Parameters\CompletionCreateParam;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -33,12 +34,12 @@ final class CompletionsTest extends TestCase
             ->client
             ->completions
             ->create(
-                [
-                    'maxTokensToSample' => 256,
-                    'model' => 'claude-3-7-sonnet-latest',
-                    'prompt' => "\n\nHuman: Hello, world!\n\nAssistant:",
-                    'stream' => true,
-                ]
+                new CompletionCreateParam(
+                    maxTokensToSample: 256,
+                    model: 'claude-3-7-sonnet-latest',
+                    prompt: "\n\nHuman: Hello, world!\n\nAssistant:",
+                    stream: true,
+                )
             )
         ;
 
@@ -52,20 +53,18 @@ final class CompletionsTest extends TestCase
             ->client
             ->completions
             ->create(
-                [
-                    'maxTokensToSample' => 256,
-                    'model' => 'claude-3-7-sonnet-latest',
-                    'prompt' => "\n\nHuman: Hello, world!\n\nAssistant:",
-                    'metadata' => new Metadata(
-                        userID: '13803d75-b4b5-4c3e-b2a2-6f21399b021b'
-                    ),
-                    'stopSequences' => ['string'],
-                    'stream' => true,
-                    'temperature' => 1,
-                    'topK' => 5,
-                    'topP' => 0.7,
-                    'anthropicBeta' => ['string'],
-                ]
+                new CompletionCreateParam(
+                    maxTokensToSample: 256,
+                    model: 'claude-3-7-sonnet-latest',
+                    prompt: "\n\nHuman: Hello, world!\n\nAssistant:",
+                    metadata: new Metadata(userID: '13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
+                    stopSequences: ['string'],
+                    stream: true,
+                    temperature: 1,
+                    topK: 5,
+                    topP: 0.7,
+                    anthropicBeta: ['string'],
+                )
             )
         ;
 

@@ -12,6 +12,8 @@ use Anthropic\Models\ThinkingConfigEnabled;
 use Anthropic\Models\Tool;
 use Anthropic\Models\Tool\InputSchema;
 use Anthropic\Models\ToolChoiceAuto;
+use Anthropic\Parameters\MessageCountTokensParam;
+use Anthropic\Parameters\MessageCreateParam;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -41,12 +43,12 @@ final class MessagesTest extends TestCase
             ->client
             ->messages
             ->create(
-                [
-                    'maxTokens' => 1024,
-                    'messages' => [new MessageParam(content: 'Hello, world', role: 'user')],
-                    'model' => 'claude-sonnet-4-20250514',
-                    'stream' => true,
-                ]
+                new MessageCreateParam(
+                    maxTokens: 1024,
+                    messages: [new MessageParam(content: 'Hello, world', role: 'user')],
+                    model: 'claude-sonnet-4-20250514',
+                    stream: true,
+                )
             )
         ;
 
@@ -60,17 +62,15 @@ final class MessagesTest extends TestCase
             ->client
             ->messages
             ->create(
-                [
-                    'maxTokens' => 1024,
-                    'messages' => [new MessageParam(content: 'Hello, world', role: 'user')],
-                    'model' => 'claude-sonnet-4-20250514',
-                    'metadata' => new Metadata(
-                        userID: '13803d75-b4b5-4c3e-b2a2-6f21399b021b'
-                    ),
-                    'serviceTier' => 'auto',
-                    'stopSequences' => ['string'],
-                    'stream' => true,
-                    'system' => [
+                new MessageCreateParam(
+                    maxTokens: 1024,
+                    messages: [new MessageParam(content: 'Hello, world', role: 'user')],
+                    model: 'claude-sonnet-4-20250514',
+                    metadata: new Metadata(userID: '13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
+                    serviceTier: 'auto',
+                    stopSequences: ['string'],
+                    stream: true,
+                    system: [
                         new TextBlockParam(
                             text: "Today's date is 2024-06-01.",
                             cacheControl: new CacheControlEphemeral(),
@@ -85,10 +85,10 @@ final class MessagesTest extends TestCase
                             ],
                         ),
                     ],
-                    'temperature' => 1,
-                    'thinking' => new ThinkingConfigEnabled(budgetTokens: 1024),
-                    'toolChoice' => new ToolChoiceAuto(disableParallelToolUse: true),
-                    'tools' => [
+                    temperature: 1,
+                    thinking: new ThinkingConfigEnabled(budgetTokens: 1024),
+                    toolChoice: new ToolChoiceAuto(disableParallelToolUse: true),
+                    tools: [
                         new Tool(
                             inputSchema: new InputSchema(
                                 properties: [
@@ -108,10 +108,10 @@ final class MessagesTest extends TestCase
                             description: 'Get the current weather in a given location',
                             type: 'custom',
                         ),
-                ],
-                    'topK' => 5,
-                    'topP' => 0.7,
-                ]
+                    ],
+                    topK: 5,
+                    topP: 0.7,
+                )
             )
         ;
 
@@ -125,10 +125,10 @@ final class MessagesTest extends TestCase
             ->client
             ->messages
             ->countTokens(
-                [
-                    'messages' => [new MessageParam(content: 'string', role: 'user')],
-                    'model' => 'claude-3-7-sonnet-latest',
-                ]
+                new MessageCountTokensParam(
+                    messages: [new MessageParam(content: 'string', role: 'user')],
+                    model: 'claude-3-7-sonnet-latest',
+                )
             )
         ;
 
@@ -142,10 +142,10 @@ final class MessagesTest extends TestCase
             ->client
             ->messages
             ->countTokens(
-                [
-                    'messages' => [new MessageParam(content: 'string', role: 'user')],
-                    'model' => 'claude-3-7-sonnet-latest',
-                    'system' => [
+                new MessageCountTokensParam(
+                    messages: [new MessageParam(content: 'string', role: 'user')],
+                    model: 'claude-3-7-sonnet-latest',
+                    system: [
                         new TextBlockParam(
                             text: "Today's date is 2024-06-01.",
                             cacheControl: new CacheControlEphemeral(),
@@ -160,9 +160,9 @@ final class MessagesTest extends TestCase
                             ],
                         ),
                     ],
-                    'thinking' => new ThinkingConfigEnabled(budgetTokens: 1024),
-                    'toolChoice' => new ToolChoiceAuto(disableParallelToolUse: true),
-                    'tools' => [
+                    thinking: new ThinkingConfigEnabled(budgetTokens: 1024),
+                    toolChoice: new ToolChoiceAuto(disableParallelToolUse: true),
+                    tools: [
                         new Tool(
                             inputSchema: new InputSchema(
                                 properties: [
@@ -182,8 +182,8 @@ final class MessagesTest extends TestCase
                             description: 'Get the current weather in a given location',
                             type: 'custom',
                         ),
-                ],
-                ]
+                    ],
+                )
             )
         ;
 

@@ -25,11 +25,11 @@ final class ToolResultBlockParam implements BaseModel
 
     /** @var null|list<ImageBlockParam|TextBlockParam>|string $content */
     #[Api(
-        type: new UnionOf(
+        union: new UnionOf(
             [
                 'string',
                 new ListOf(
-                    new UnionOf([TextBlockParam::class, ImageBlockParam::class])
+                    union: new UnionOf([TextBlockParam::class, ImageBlockParam::class])
                 ),
             ],
         ),
@@ -56,8 +56,8 @@ final class ToolResultBlockParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $cacheControl && $this->cacheControl = $cacheControl;
-        null != $content && $this->content = $content;
-        null != $isError && $this->isError = $isError;
+        null !== $cacheControl && $this->cacheControl = $cacheControl;
+        null !== $content && $this->content = $content;
+        null !== $isError && $this->isError = $isError;
     }
 }

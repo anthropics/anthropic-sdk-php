@@ -31,7 +31,7 @@ final class Message implements BaseModel
      */
     #[Api(
         type: new ListOf(
-            new UnionOf(
+            union: new UnionOf(
                 [
                     TextBlock::class,
                     ThinkingBlock::class,

@@ -79,7 +79,7 @@ final class MessageCreateParam implements BaseModel
 
     /** @var null|list<BetaTextBlockParam>|string $system */
     #[Api(
-        type: new UnionOf(['string', new ListOf(BetaTextBlockParam::class)]),
+        union: new UnionOf(['string', new ListOf(BetaTextBlockParam::class)]),
         optional: true,
     )]
     public null|array|string $system;
@@ -100,7 +100,7 @@ final class MessageCreateParam implements BaseModel
      */
     #[Api(
         type: new ListOf(
-            new UnionOf(
+            union: new UnionOf(
                 [
                     BetaTool::class,
                     BetaToolBash20241022::class,
@@ -127,7 +127,7 @@ final class MessageCreateParam implements BaseModel
 
     /** @var null|list<string|UnionMember1::*> $anthropicBeta */
     #[Api(
-        type: new ListOf(new UnionOf(['string', UnionMember1::class])),
+        type: new ListOf(union: new UnionOf(['string', UnionMember1::class])),
         optional: true,
     )]
     public ?array $anthropicBeta;
@@ -173,19 +173,19 @@ final class MessageCreateParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $container && $this->container = $container;
-        null != $mcpServers && $this->mcpServers = $mcpServers;
-        null != $metadata && $this->metadata = $metadata;
-        null != $serviceTier && $this->serviceTier = $serviceTier;
-        null != $stopSequences && $this->stopSequences = $stopSequences;
-        null != $stream && $this->stream = $stream;
-        null != $system && $this->system = $system;
-        null != $temperature && $this->temperature = $temperature;
-        null != $thinking && $this->thinking = $thinking;
-        null != $toolChoice && $this->toolChoice = $toolChoice;
-        null != $tools && $this->tools = $tools;
-        null != $topK && $this->topK = $topK;
-        null != $topP && $this->topP = $topP;
-        null != $anthropicBeta && $this->anthropicBeta = $anthropicBeta;
+        null !== $container && $this->container = $container;
+        null !== $mcpServers && $this->mcpServers = $mcpServers;
+        null !== $metadata && $this->metadata = $metadata;
+        null !== $serviceTier && $this->serviceTier = $serviceTier;
+        null !== $stopSequences && $this->stopSequences = $stopSequences;
+        null !== $stream && $this->stream = $stream;
+        null !== $system && $this->system = $system;
+        null !== $temperature && $this->temperature = $temperature;
+        null !== $thinking && $this->thinking = $thinking;
+        null !== $toolChoice && $this->toolChoice = $toolChoice;
+        null !== $tools && $this->tools = $tools;
+        null !== $topK && $this->topK = $topK;
+        null !== $topP && $this->topP = $topP;
+        null !== $anthropicBeta && $this->anthropicBeta = $anthropicBeta;
     }
 }

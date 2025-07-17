@@ -3,6 +3,11 @@
 namespace Tests\Resources\Beta;
 
 use Anthropic\Client;
+use Anthropic\Parameters\Beta\FileDeleteParam;
+use Anthropic\Parameters\Beta\FileDownloadParam;
+use Anthropic\Parameters\Beta\FileListParam;
+use Anthropic\Parameters\Beta\FileRetrieveMetadataParam;
+use Anthropic\Parameters\Beta\FileUploadParam;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -33,7 +38,7 @@ final class FilesTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->beta->files->list([]);
+        $result = $this->client->beta->files->list(new FileListParam());
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -41,7 +46,12 @@ final class FilesTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $result = $this->client->beta->files->delete('file_id', []);
+        $result = $this
+            ->client
+            ->beta
+            ->files
+            ->delete('file_id', new FileDeleteParam())
+        ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -53,7 +63,12 @@ final class FilesTest extends TestCase
             $this->markTestSkipped('skipped: test server currently has no support for method content-type');
         }
 
-        $result = $this->client->beta->files->download('file_id', []);
+        $result = $this
+            ->client
+            ->beta
+            ->files
+            ->download('file_id', new FileDownloadParam())
+        ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -61,7 +76,12 @@ final class FilesTest extends TestCase
     #[Test]
     public function testRetrieveMetadata(): void
     {
-        $result = $this->client->beta->files->retrieveMetadata('file_id', []);
+        $result = $this
+            ->client
+            ->beta
+            ->files
+            ->retrieveMetadata('file_id', new FileRetrieveMetadataParam())
+        ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -69,7 +89,12 @@ final class FilesTest extends TestCase
     #[Test]
     public function testUpload(): void
     {
-        $result = $this->client->beta->files->upload(['file' => 'file']);
+        $result = $this
+            ->client
+            ->beta
+            ->files
+            ->upload(new FileUploadParam(file: 'file'))
+        ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -81,7 +106,7 @@ final class FilesTest extends TestCase
             ->client
             ->beta
             ->files
-            ->upload(['file' => 'file', 'anthropicBeta' => ['string']])
+            ->upload(new FileUploadParam(file: 'file', anthropicBeta: ['string']))
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

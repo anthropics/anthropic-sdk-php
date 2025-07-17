@@ -19,7 +19,7 @@ final class FileDownloadParam implements BaseModel
 
     /** @var null|list<string|UnionMember1::*> $anthropicBeta */
     #[Api(
-        type: new ListOf(new UnionOf(['string', UnionMember1::class])),
+        type: new ListOf(union: new UnionOf(['string', UnionMember1::class])),
         optional: true,
     )]
     public ?array $anthropicBeta;
@@ -34,6 +34,6 @@ final class FileDownloadParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $anthropicBeta && $this->anthropicBeta = $anthropicBeta;
+        null !== $anthropicBeta && $this->anthropicBeta = $anthropicBeta;
     }
 }

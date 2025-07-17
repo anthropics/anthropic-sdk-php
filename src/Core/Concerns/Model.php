@@ -254,7 +254,7 @@ trait Model
                 }
             }
 
-            return $acc;
+            return empty($acc) ? ((object) []) : $acc;
         }
 
         return Serde::dump_unknown($value, state: $state);

@@ -23,22 +23,18 @@ final class BetaTextBlock implements BaseModel
      * >|null $citations
      */
     #[Api(
-        type: new UnionOf(
-            [
-                new ListOf(
-                    new UnionOf(
-                        [
-                            BetaCitationCharLocation::class,
-                            BetaCitationPageLocation::class,
-                            BetaCitationContentBlockLocation::class,
-                            BetaCitationsWebSearchResultLocation::class,
-                            BetaCitationSearchResultLocation::class,
-                        ],
-                    ),
-                ),
-                'null',
-            ],
+        type: new ListOf(
+            union: new UnionOf(
+                [
+                    BetaCitationCharLocation::class,
+                    BetaCitationPageLocation::class,
+                    BetaCitationContentBlockLocation::class,
+                    BetaCitationsWebSearchResultLocation::class,
+                    BetaCitationSearchResultLocation::class,
+                ],
+            ),
         ),
+        nullable: true,
     )]
     public ?array $citations;
 

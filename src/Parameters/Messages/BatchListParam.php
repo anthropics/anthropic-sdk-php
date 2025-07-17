@@ -34,8 +34,8 @@ final class BatchListParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $afterID && $this->afterID = $afterID;
-        null != $beforeID && $this->beforeID = $beforeID;
-        null != $limit && $this->limit = $limit;
+        null !== $afterID && $this->afterID = $afterID;
+        null !== $beforeID && $this->beforeID = $beforeID;
+        null !== $limit && $this->limit = $limit;
     }
 }

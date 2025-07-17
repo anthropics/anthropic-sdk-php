@@ -23,6 +23,6 @@ final class CitationsConfigParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $enabled && $this->enabled = $enabled;
+        null !== $enabled && $this->enabled = $enabled;
     }
 }

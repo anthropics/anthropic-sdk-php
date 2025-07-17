@@ -29,7 +29,7 @@ trait Params
         self::_introspect(); // @phpstan-ignore-line
 
         $state = new DumpState();
-        $dumped = Serde::dump(self::class, value: $params, state: $state);
+        $dumped = (array) Serde::dump(self::class, value: $params, state: $state);
         $opts = RequestOptions::parse($options); // @phpstan-ignore-line
 
         if (!$state->canRetry) {

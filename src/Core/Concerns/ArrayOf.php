@@ -12,10 +12,17 @@ use Anthropic\Core\Serde\DumpState;
 
 trait ArrayOf
 {
+    private readonly null|Converter|StaticConverter|string $type;
+
     public function __construct(
-        private readonly Converter|StaticConverter|string $type,
+        null|Converter|StaticConverter|string $type = null,
+        null|Converter|StaticConverter|string $enum = null,
+        null|Converter|StaticConverter|string $union = null,
         private readonly bool $nullable = false,
-    ) {}
+    ) {
+        $this->type = $type ?? $enum ?? $union;
+        assert(!is_null($this->type));
+    }
 
     public function coerce(mixed $value, CoerceState $state): mixed
     {

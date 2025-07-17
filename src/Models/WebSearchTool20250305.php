@@ -8,7 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
-use Anthropic\Core\Serde\UnionOf;
 use Anthropic\Models\WebSearchTool20250305\UserLocation;
 
 final class WebSearchTool20250305 implements BaseModel
@@ -24,7 +23,8 @@ final class WebSearchTool20250305 implements BaseModel
     /** @var null|list<string> $allowedDomains */
     #[Api(
         'allowed_domains',
-        type: new UnionOf([new ListOf('string'), 'null']),
+        type: new ListOf('string'),
+        nullable: true,
         optional: true,
     )]
     public ?array $allowedDomains;
@@ -32,7 +32,8 @@ final class WebSearchTool20250305 implements BaseModel
     /** @var null|list<string> $blockedDomains */
     #[Api(
         'blocked_domains',
-        type: new UnionOf([new ListOf('string'), 'null']),
+        type: new ListOf('string'),
+        nullable: true,
         optional: true,
     )]
     public ?array $blockedDomains;
@@ -62,10 +63,10 @@ final class WebSearchTool20250305 implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $allowedDomains && $this->allowedDomains = $allowedDomains;
-        null != $blockedDomains && $this->blockedDomains = $blockedDomains;
-        null != $cacheControl && $this->cacheControl = $cacheControl;
-        null != $maxUses && $this->maxUses = $maxUses;
-        null != $userLocation && $this->userLocation = $userLocation;
+        null !== $allowedDomains && $this->allowedDomains = $allowedDomains;
+        null !== $blockedDomains && $this->blockedDomains = $blockedDomains;
+        null !== $cacheControl && $this->cacheControl = $cacheControl;
+        null !== $maxUses && $this->maxUses = $maxUses;
+        null !== $userLocation && $this->userLocation = $userLocation;
     }
 }

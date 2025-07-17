@@ -45,7 +45,7 @@ final class BetaToolComputerUse20250124 implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $cacheControl && $this->cacheControl = $cacheControl;
-        null != $displayNumber && $this->displayNumber = $displayNumber;
+        null !== $cacheControl && $this->cacheControl = $cacheControl;
+        null !== $displayNumber && $this->displayNumber = $displayNumber;
     }
 }

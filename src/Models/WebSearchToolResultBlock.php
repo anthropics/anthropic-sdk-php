@@ -19,7 +19,7 @@ final class WebSearchToolResultBlock implements BaseModel
 
     /** @var list<WebSearchResultBlock>|WebSearchToolResultError $content */
     #[Api(
-        type: new UnionOf(
+        union: new UnionOf(
             [WebSearchToolResultError::class, new ListOf(WebSearchResultBlock::class)]
         ),
     )]

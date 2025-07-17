@@ -11,6 +11,22 @@ trait Union
 {
     public static function _introspect(): void {}
 
+    // @phpstan-ignore-next-line
+    public static function discriminator(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @return list<string|Converter|StaticConverter>|array<
+     *   string, string|Converter|StaticConverter
+     * >
+     */
+    public static function variants(): array
+    {
+        return [];
+    }
+
     public static function coerce(mixed $value, CoerceState $state): mixed
     {
         return $value;

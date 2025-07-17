@@ -23,6 +23,6 @@ final class Metadata implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $userID && $this->userID = $userID;
+        null !== $userID && $this->userID = $userID;
     }
 }

@@ -32,11 +32,7 @@ final class PropertyInfo
 
             $apiName = $attribute->apiName ?? $apiName;
             $optional = $attribute->optional;
-            if ($attribute->type) {
-                $type = $attribute->type;
-            } elseif ($attribute->union) {
-                $type = new UnionOf($attribute->union, discriminator: $attribute->discriminator);
-            }
+            $type = $attribute->type ?? $attribute->enum ?? $attribute->union ?? $type;
         }
 
         $this->apiName = $apiName;

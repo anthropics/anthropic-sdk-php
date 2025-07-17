@@ -8,7 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Serde\ListOf;
-use Anthropic\Core\Serde\UnionOf;
 
 final class BetaRequestMCPServerToolConfiguration implements BaseModel
 {
@@ -17,8 +16,9 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
     /** @var null|list<string> $allowedTools */
     #[Api(
         'allowed_tools',
-        type: new UnionOf([new ListOf('string'), 'null']),
-        optional: true,
+        type: new ListOf('string'),
+        nullable: true,
+        optional: true
     )]
     public ?array $allowedTools;
 
@@ -37,7 +37,7 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $allowedTools && $this->allowedTools = $allowedTools;
-        null != $enabled && $this->enabled = $enabled;
+        null !== $allowedTools && $this->allowedTools = $allowedTools;
+        null !== $enabled && $this->enabled = $enabled;
     }
 }

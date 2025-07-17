@@ -26,6 +26,8 @@ final class ToolChoiceAny implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $disableParallelToolUse && $this->disableParallelToolUse = $disableParallelToolUse;
+        null !== $disableParallelToolUse && $this
+            ->disableParallelToolUse = $disableParallelToolUse
+        ;
     }
 }

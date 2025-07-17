@@ -55,7 +55,7 @@ final class MessageCountTokensParam implements BaseModel
 
     /** @var null|list<BetaTextBlockParam>|string $system */
     #[Api(
-        type: new UnionOf(['string', new ListOf(BetaTextBlockParam::class)]),
+        union: new UnionOf(['string', new ListOf(BetaTextBlockParam::class)]),
         optional: true,
     )]
     public null|array|string $system;
@@ -73,7 +73,7 @@ final class MessageCountTokensParam implements BaseModel
      */
     #[Api(
         type: new ListOf(
-            new UnionOf(
+            union: new UnionOf(
                 [
                     BetaTool::class,
                     BetaToolBash20241022::class,
@@ -94,7 +94,7 @@ final class MessageCountTokensParam implements BaseModel
 
     /** @var null|list<string|UnionMember1::*> $anthropicBeta */
     #[Api(
-        type: new ListOf(new UnionOf(['string', UnionMember1::class])),
+        type: new ListOf(union: new UnionOf(['string', UnionMember1::class])),
         optional: true,
     )]
     public ?array $anthropicBeta;
@@ -127,11 +127,11 @@ final class MessageCountTokensParam implements BaseModel
         self::_introspect();
         $this->unsetOptionalProperties();
 
-        null != $mcpServers && $this->mcpServers = $mcpServers;
-        null != $system && $this->system = $system;
-        null != $thinking && $this->thinking = $thinking;
-        null != $toolChoice && $this->toolChoice = $toolChoice;
-        null != $tools && $this->tools = $tools;
-        null != $anthropicBeta && $this->anthropicBeta = $anthropicBeta;
+        null !== $mcpServers && $this->mcpServers = $mcpServers;
+        null !== $system && $this->system = $system;
+        null !== $thinking && $this->thinking = $thinking;
+        null !== $toolChoice && $this->toolChoice = $toolChoice;
+        null !== $tools && $this->tools = $tools;
+        null !== $anthropicBeta && $this->anthropicBeta = $anthropicBeta;
     }
 }
