@@ -8,5 +8,6 @@ parameters:
         - tests
     ignoreErrors:
         - identifier: parameter.defaultValue
+        - identifier: trait.unused
 
     reportUnmatchedIgnoredErrors: false

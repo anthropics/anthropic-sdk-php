@@ -76,7 +76,9 @@ To use this package, install via Composer by adding the following to your applic
 use Anthropic\Client;
 use Anthropic\Models\MessageParam;
 
-$client = new Client(apiKey: getenv("ANTHROPIC_API_KEY") ?: null);
+$client = new Client(
+  apiKey: getenv("ANTHROPIC_API_KEY") ?: "my-anthropic-api-key"
+);
 
 $message = $client->messages->create(
   [
