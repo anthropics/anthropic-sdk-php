@@ -37,12 +37,12 @@ final class MessageBatchRequestCounts implements BaseModel
         int $processing = 0,
         int $succeeded = 0,
     ) {
+        self::introspect();
+
         $this->canceled = $canceled;
         $this->errored = $errored;
         $this->expired = $expired;
         $this->processing = $processing;
         $this->succeeded = $succeeded;
-
-        self::_introspect();
     }
 }

@@ -23,7 +23,7 @@ final class BetaToolChoiceAny implements BaseModel
      */
     final public function __construct(?bool $disableParallelToolUse = null)
     {
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
 
         null !== $disableParallelToolUse && $this

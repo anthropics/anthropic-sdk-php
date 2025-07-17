@@ -40,12 +40,12 @@ final class CitationContentBlockLocation implements BaseModel
         int $endBlockIndex,
         int $startBlockIndex,
     ) {
+        self::introspect();
+
         $this->citedText = $citedText;
         $this->documentIndex = $documentIndex;
         $this->documentTitle = $documentTitle;
         $this->endBlockIndex = $endBlockIndex;
         $this->startBlockIndex = $startBlockIndex;
-
-        self::_introspect();
     }
 }

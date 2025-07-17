@@ -28,9 +28,9 @@ final class RawContentBlockDeltaEvent implements BaseModel
         CitationsDelta|InputJSONDelta|SignatureDelta|TextDelta|ThinkingDelta $delta,
         int $index,
     ) {
+        self::introspect();
+
         $this->delta = $delta;
         $this->index = $index;
-
-        self::_introspect();
     }
 }

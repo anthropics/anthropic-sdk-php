@@ -44,11 +44,11 @@ final class WebSearchToolResultBlockParam implements BaseModel
         string $toolUseID,
         ?CacheControlEphemeral $cacheControl = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->content = $content;
         $this->toolUseID = $toolUseID;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $cacheControl && $this->cacheControl = $cacheControl;
     }

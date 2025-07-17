@@ -28,9 +28,9 @@ final class BetaRawContentBlockStartEvent implements BaseModel
         BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock $contentBlock,
         int $index,
     ) {
+        self::introspect();
+
         $this->contentBlock = $contentBlock;
         $this->index = $index;
-
-        self::_introspect();
     }
 }

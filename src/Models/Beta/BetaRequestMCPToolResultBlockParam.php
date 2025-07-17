@@ -44,10 +44,10 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
         null|array|string $content = null,
         ?bool $isError = null,
     ) {
-        $this->toolUseID = $toolUseID;
-
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
+
+        $this->toolUseID = $toolUseID;
 
         null !== $cacheControl && $this->cacheControl = $cacheControl;
         null !== $content && $this->content = $content;

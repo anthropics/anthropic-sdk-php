@@ -27,9 +27,9 @@ final class Delta implements BaseModel
      */
     final public function __construct(string $stopReason, ?string $stopSequence)
     {
+        self::introspect();
+
         $this->stopReason = $stopReason;
         $this->stopSequence = $stopSequence;
-
-        self::_introspect();
     }
 }

@@ -31,7 +31,7 @@ final class ModelRetrieveParam implements BaseModel
      */
     final public function __construct(?array $anthropicBeta = null)
     {
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
 
         null !== $anthropicBeta && $this->anthropicBeta = $anthropicBeta;

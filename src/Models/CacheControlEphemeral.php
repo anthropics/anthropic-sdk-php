@@ -17,6 +17,6 @@ final class CacheControlEphemeral implements BaseModel
 
     final public function __construct()
     {
-        self::_introspect();
+        self::introspect();
     }
 }

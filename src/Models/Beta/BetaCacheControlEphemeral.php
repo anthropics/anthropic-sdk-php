@@ -27,7 +27,7 @@ final class BetaCacheControlEphemeral implements BaseModel
      */
     final public function __construct(?string $ttl = null)
     {
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
 
         null !== $ttl && $this->ttl = $ttl;

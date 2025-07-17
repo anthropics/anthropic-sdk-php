@@ -90,11 +90,11 @@ final class MessageCountTokensParam implements BaseModel
         null|ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice = null,
         ?array $tools = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->messages = $messages;
         $this->model = $model;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $system && $this->system = $system;
         null !== $thinking && $this->thinking = $thinking;

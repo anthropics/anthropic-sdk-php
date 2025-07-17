@@ -23,8 +23,8 @@ final class BetaRedactedThinkingBlockParam implements BaseModel
      */
     final public function __construct(string $data)
     {
-        $this->data = $data;
+        self::introspect();
 
-        self::_introspect();
+        $this->data = $data;
     }
 }

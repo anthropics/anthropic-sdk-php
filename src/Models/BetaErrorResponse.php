@@ -24,8 +24,8 @@ final class BetaErrorResponse implements BaseModel
     final public function __construct(
         BetaAPIError|BetaAuthenticationError|BetaBillingError|BetaGatewayTimeoutError|BetaInvalidRequestError|BetaNotFoundError|BetaOverloadedError|BetaPermissionError|BetaRateLimitError $error,
     ) {
-        $this->error = $error;
+        self::introspect();
 
-        self::_introspect();
+        $this->error = $error;
     }
 }

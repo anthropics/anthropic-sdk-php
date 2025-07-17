@@ -37,10 +37,10 @@ final class BetaMCPToolResultBlock implements BaseModel
         string $toolUseID,
         bool $isError = false
     ) {
+        self::introspect();
+
         $this->content = $content;
         $this->isError = $isError;
         $this->toolUseID = $toolUseID;
-
-        self::_introspect();
     }
 }

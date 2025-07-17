@@ -32,10 +32,10 @@ final class BetaModelInfo implements BaseModel
         \DateTimeInterface $createdAt,
         string $displayName
     ) {
+        self::introspect();
+
         $this->id = $id;
         $this->createdAt = $createdAt;
         $this->displayName = $displayName;
-
-        self::_introspect();
     }
 }

@@ -39,7 +39,7 @@ class TestModel implements BaseModel
         $this->ageYears = $ageYears;
         $this->owner = $owner;
 
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
 
         null != $friends && $this->friends = $friends;

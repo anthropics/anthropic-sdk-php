@@ -60,6 +60,8 @@ final class MessageBatch implements BaseModel
         MessageBatchRequestCounts $requestCounts,
         ?string $resultsURL,
     ) {
+        self::introspect();
+
         $this->id = $id;
         $this->archivedAt = $archivedAt;
         $this->cancelInitiatedAt = $cancelInitiatedAt;
@@ -69,7 +71,5 @@ final class MessageBatch implements BaseModel
         $this->processingStatus = $processingStatus;
         $this->requestCounts = $requestCounts;
         $this->resultsURL = $resultsURL;
-
-        self::_introspect();
     }
 }

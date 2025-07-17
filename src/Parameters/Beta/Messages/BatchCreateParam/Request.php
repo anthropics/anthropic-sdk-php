@@ -24,9 +24,9 @@ final class Request implements BaseModel
      */
     final public function __construct(string $customID, Params $params)
     {
+        self::introspect();
+
         $this->customID = $customID;
         $this->params = $params;
-
-        self::_introspect();
     }
 }

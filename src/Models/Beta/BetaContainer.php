@@ -23,9 +23,9 @@ final class BetaContainer implements BaseModel
      */
     final public function __construct(string $id, \DateTimeInterface $expiresAt)
     {
+        self::introspect();
+
         $this->id = $id;
         $this->expiresAt = $expiresAt;
-
-        self::_introspect();
     }
 }

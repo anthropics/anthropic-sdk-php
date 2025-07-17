@@ -23,8 +23,8 @@ final class ThinkingDelta implements BaseModel
      */
     final public function __construct(string $thinking)
     {
-        $this->thinking = $thinking;
+        self::introspect();
 
-        self::_introspect();
+        $this->thinking = $thinking;
     }
 }

@@ -9,7 +9,7 @@ use Anthropic\Core\Serde\DumpState;
 
 trait Enum
 {
-    public static function _introspect(): void {}
+    public static function introspect(): void {}
 
     public static function coerce(mixed $value, CoerceState $state): mixed
     {

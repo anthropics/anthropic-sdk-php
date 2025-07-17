@@ -60,7 +60,7 @@ final class WebSearchTool20250305 implements BaseModel
         ?int $maxUses = null,
         ?UserLocation $userLocation = null,
     ) {
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
 
         null !== $allowedDomains && $this->allowedDomains = $allowedDomains;

@@ -42,11 +42,11 @@ final class Tool implements BaseModel
         ?string $description = null,
         ?string $type = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->inputSchema = $inputSchema;
         $this->name = $name;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $cacheControl && $this->cacheControl = $cacheControl;
         null !== $description && $this->description = $description;

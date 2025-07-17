@@ -39,11 +39,11 @@ final class BetaToolComputerUse20250124 implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl = null,
         ?int $displayNumber = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->displayHeightPx = $displayHeightPx;
         $this->displayWidthPx = $displayWidthPx;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $cacheControl && $this->cacheControl = $cacheControl;
         null !== $displayNumber && $this->displayNumber = $displayNumber;

@@ -20,7 +20,7 @@ final class CitationsConfigParam implements BaseModel
      */
     final public function __construct(?bool $enabled = null)
     {
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
 
         null !== $enabled && $this->enabled = $enabled;

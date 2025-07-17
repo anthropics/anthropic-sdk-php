@@ -23,8 +23,8 @@ final class BetaSignatureDelta implements BaseModel
      */
     final public function __construct(string $signature)
     {
-        $this->signature = $signature;
+        self::introspect();
 
-        self::_introspect();
+        $this->signature = $signature;
     }
 }

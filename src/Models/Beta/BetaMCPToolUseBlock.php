@@ -36,11 +36,11 @@ final class BetaMCPToolUseBlock implements BaseModel
         string $name,
         string $serverName
     ) {
+        self::introspect();
+
         $this->id = $id;
         $this->input = $input;
         $this->name = $name;
         $this->serverName = $serverName;
-
-        self::_introspect();
     }
 }

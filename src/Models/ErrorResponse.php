@@ -24,8 +24,8 @@ final class ErrorResponse implements BaseModel
     final public function __construct(
         APIErrorObject|AuthenticationError|BillingError|GatewayTimeoutError|InvalidRequestError|NotFoundError|OverloadedError|PermissionError|RateLimitError $error,
     ) {
-        $this->error = $error;
+        self::introspect();
 
-        self::_introspect();
+        $this->error = $error;
     }
 }

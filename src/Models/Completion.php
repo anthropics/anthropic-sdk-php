@@ -40,11 +40,11 @@ final class Completion implements BaseModel
         string $model,
         ?string $stopReason
     ) {
+        self::introspect();
+
         $this->id = $id;
         $this->completion = $completion;
         $this->model = $model;
         $this->stopReason = $stopReason;
-
-        self::_introspect();
     }
 }

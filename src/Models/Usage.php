@@ -45,13 +45,13 @@ final class Usage implements BaseModel
         ServerToolUsage $serverToolUse,
         ?string $serviceTier,
     ) {
+        self::introspect();
+
         $this->cacheCreationInputTokens = $cacheCreationInputTokens;
         $this->cacheReadInputTokens = $cacheReadInputTokens;
         $this->inputTokens = $inputTokens;
         $this->outputTokens = $outputTokens;
         $this->serverToolUse = $serverToolUse;
         $this->serviceTier = $serviceTier;
-
-        self::_introspect();
     }
 }

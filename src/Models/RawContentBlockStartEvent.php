@@ -28,9 +28,9 @@ final class RawContentBlockStartEvent implements BaseModel
         RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock $contentBlock,
         int $index,
     ) {
+        self::introspect();
+
         $this->contentBlock = $contentBlock;
         $this->index = $index;
-
-        self::_introspect();
     }
 }

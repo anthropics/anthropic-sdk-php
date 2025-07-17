@@ -40,12 +40,12 @@ final class CitationPageLocation implements BaseModel
         int $endPageNumber,
         int $startPageNumber,
     ) {
+        self::introspect();
+
         $this->citedText = $citedText;
         $this->documentIndex = $documentIndex;
         $this->documentTitle = $documentTitle;
         $this->endPageNumber = $endPageNumber;
         $this->startPageNumber = $startPageNumber;
-
-        self::_introspect();
     }
 }

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Anthropic\Core\Contracts;
 
+/**
+ * @internal
+ */
 interface BasePage extends \Stringable
 {
     /**

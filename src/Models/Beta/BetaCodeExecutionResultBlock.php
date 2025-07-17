@@ -40,11 +40,11 @@ final class BetaCodeExecutionResultBlock implements BaseModel
         string $stderr,
         string $stdout
     ) {
+        self::introspect();
+
         $this->content = $content;
         $this->returnCode = $returnCode;
         $this->stderr = $stderr;
         $this->stdout = $stdout;
-
-        self::_introspect();
     }
 }

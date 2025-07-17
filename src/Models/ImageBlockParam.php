@@ -28,10 +28,10 @@ final class ImageBlockParam implements BaseModel
         Base64ImageSource|URLImageSource $source,
         ?CacheControlEphemeral $cacheControl = null,
     ) {
-        $this->source = $source;
-
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
+
+        $this->source = $source;
 
         null !== $cacheControl && $this->cacheControl = $cacheControl;
     }

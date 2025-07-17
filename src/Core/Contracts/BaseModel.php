@@ -8,6 +8,8 @@ use JsonSerializable;
 use Stringable;
 
 /**
+ * @internal
+ *
  * @extends \ArrayAccess<string, mixed>
  */
 interface BaseModel extends \ArrayAccess, JsonSerializable, Stringable, StaticConverter

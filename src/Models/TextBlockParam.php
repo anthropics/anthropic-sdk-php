@@ -56,10 +56,10 @@ final class TextBlockParam implements BaseModel
         ?CacheControlEphemeral $cacheControl = null,
         ?array $citations = null,
     ) {
-        $this->text = $text;
-
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
+
+        $this->text = $text;
 
         null !== $cacheControl && $this->cacheControl = $cacheControl;
         null !== $citations && $this->citations = $citations;

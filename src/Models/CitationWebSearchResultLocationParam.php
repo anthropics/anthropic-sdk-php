@@ -36,11 +36,11 @@ final class CitationWebSearchResultLocationParam implements BaseModel
         ?string $title,
         string $url
     ) {
+        self::introspect();
+
         $this->citedText = $citedText;
         $this->encryptedIndex = $encryptedIndex;
         $this->title = $title;
         $this->url = $url;
-
-        self::_introspect();
     }
 }

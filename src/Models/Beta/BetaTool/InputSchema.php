@@ -32,7 +32,7 @@ final class InputSchema implements BaseModel
         mixed $properties = null,
         ?array $required = null
     ) {
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
 
         null !== $properties && $this->properties = $properties;

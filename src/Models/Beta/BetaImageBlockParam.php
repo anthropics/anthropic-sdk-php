@@ -28,10 +28,10 @@ final class BetaImageBlockParam implements BaseModel
         BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source,
         ?BetaCacheControlEphemeral $cacheControl = null,
     ) {
-        $this->source = $source;
-
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
+
+        $this->source = $source;
 
         null !== $cacheControl && $this->cacheControl = $cacheControl;
     }

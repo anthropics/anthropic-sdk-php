@@ -23,8 +23,8 @@ final class NotFoundError implements BaseModel
      */
     final public function __construct(string $message = 'Not found')
     {
-        $this->message = $message;
+        self::introspect();
 
-        self::_introspect();
+        $this->message = $message;
     }
 }

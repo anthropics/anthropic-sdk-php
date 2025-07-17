@@ -30,9 +30,9 @@ final class BetaBase64ImageSource implements BaseModel
      */
     final public function __construct(string $data, string $mediaType)
     {
+        self::introspect();
+
         $this->data = $data;
         $this->mediaType = $mediaType;
-
-        self::_introspect();
     }
 }

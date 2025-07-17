@@ -48,11 +48,11 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
         string $toolUseID,
         ?BetaCacheControlEphemeral $cacheControl = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->content = $content;
         $this->toolUseID = $toolUseID;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $cacheControl && $this->cacheControl = $cacheControl;
     }

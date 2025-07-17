@@ -37,9 +37,9 @@ final class WebSearchToolResultBlock implements BaseModel
         array|WebSearchToolResultError $content,
         string $toolUseID
     ) {
+        self::introspect();
+
         $this->content = $content;
         $this->toolUseID = $toolUseID;
-
-        self::_introspect();
     }
 }

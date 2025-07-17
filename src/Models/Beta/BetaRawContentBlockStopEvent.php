@@ -23,8 +23,8 @@ final class BetaRawContentBlockStopEvent implements BaseModel
      */
     final public function __construct(int $index)
     {
-        $this->index = $index;
+        self::introspect();
 
-        self::_introspect();
+        $this->index = $index;
     }
 }

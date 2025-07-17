@@ -28,9 +28,9 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
         BetaCitationsDelta|BetaInputJSONDelta|BetaSignatureDelta|BetaTextDelta|BetaThinkingDelta $delta,
         int $index,
     ) {
+        self::introspect();
+
         $this->delta = $delta;
         $this->index = $index;
-
-        self::_introspect();
     }
 }

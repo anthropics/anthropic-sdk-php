@@ -34,10 +34,10 @@ final class FileUploadParam implements BaseModel
      */
     final public function __construct(string $file, ?array $anthropicBeta = null)
     {
-        $this->file = $file;
-
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
+
+        $this->file = $file;
 
         null !== $anthropicBeta && $this->anthropicBeta = $anthropicBeta;
     }

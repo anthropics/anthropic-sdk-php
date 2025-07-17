@@ -26,7 +26,7 @@ final class ToolTextEditor20250124 implements BaseModel
      */
     final public function __construct(?CacheControlEphemeral $cacheControl = null)
     {
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
 
         null !== $cacheControl && $this->cacheControl = $cacheControl;

@@ -23,8 +23,8 @@ final class TextDelta implements BaseModel
      */
     final public function __construct(string $text)
     {
-        $this->text = $text;
+        self::introspect();
 
-        self::_introspect();
+        $this->text = $text;
     }
 }

@@ -23,8 +23,8 @@ final class PermissionError implements BaseModel
      */
     final public function __construct(string $message = 'Permission denied')
     {
-        $this->message = $message;
+        self::introspect();
 
-        self::_introspect();
+        $this->message = $message;
     }
 }

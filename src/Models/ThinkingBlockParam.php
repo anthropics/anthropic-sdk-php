@@ -26,9 +26,9 @@ final class ThinkingBlockParam implements BaseModel
      */
     final public function __construct(string $signature, string $thinking)
     {
+        self::introspect();
+
         $this->signature = $signature;
         $this->thinking = $thinking;
-
-        self::_introspect();
     }
 }

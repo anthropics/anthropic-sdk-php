@@ -28,10 +28,10 @@ final class BetaContainerUploadBlockParam implements BaseModel
         string $fileID,
         ?BetaCacheControlEphemeral $cacheControl = null
     ) {
-        $this->fileID = $fileID;
-
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
+
+        $this->fileID = $fileID;
 
         null !== $cacheControl && $this->cacheControl = $cacheControl;
     }

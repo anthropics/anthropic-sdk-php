@@ -23,8 +23,8 @@ final class InputJSONDelta implements BaseModel
      */
     final public function __construct(string $partialJSON)
     {
-        $this->partialJSON = $partialJSON;
+        self::introspect();
 
-        self::_introspect();
+        $this->partialJSON = $partialJSON;
     }
 }

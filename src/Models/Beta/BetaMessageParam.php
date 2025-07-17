@@ -63,9 +63,9 @@ final class BetaMessageParam implements BaseModel
      */
     final public function __construct(array|string $content, string $role)
     {
+        self::introspect();
+
         $this->content = $content;
         $this->role = $role;
-
-        self::_introspect();
     }
 }

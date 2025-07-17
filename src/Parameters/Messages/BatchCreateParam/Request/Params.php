@@ -126,12 +126,12 @@ final class Params implements BaseModel
         ?int $topK = null,
         ?float $topP = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->maxTokens = $maxTokens;
         $this->messages = $messages;
         $this->model = $model;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $metadata && $this->metadata = $metadata;
         null !== $serviceTier && $this->serviceTier = $serviceTier;

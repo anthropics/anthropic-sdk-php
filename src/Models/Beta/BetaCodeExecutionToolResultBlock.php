@@ -28,9 +28,9 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
         BetaCodeExecutionResultBlock|BetaCodeExecutionToolResultError $content,
         string $toolUseID,
     ) {
+        self::introspect();
+
         $this->content = $content;
         $this->toolUseID = $toolUseID;
-
-        self::_introspect();
     }
 }

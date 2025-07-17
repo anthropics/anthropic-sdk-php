@@ -20,7 +20,7 @@ final class BetaMetadata implements BaseModel
      */
     final public function __construct(?string $userID = null)
     {
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
 
         null !== $userID && $this->userID = $userID;

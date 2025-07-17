@@ -77,12 +77,12 @@ final class CompletionCreateParam implements BaseModel
         ?float $topP = null,
         ?array $anthropicBeta = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->maxTokensToSample = $maxTokensToSample;
         $this->model = $model;
         $this->prompt = $prompt;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $metadata && $this->metadata = $metadata;
         null !== $stopSequences && $this->stopSequences = $stopSequences;

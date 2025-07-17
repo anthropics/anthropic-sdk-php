@@ -35,11 +35,11 @@ final class ServerToolUseBlockParam implements BaseModel
         mixed $input,
         ?CacheControlEphemeral $cacheControl = null
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->id = $id;
         $this->input = $input;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $cacheControl && $this->cacheControl = $cacheControl;
     }

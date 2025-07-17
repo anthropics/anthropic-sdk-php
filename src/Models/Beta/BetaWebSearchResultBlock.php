@@ -36,11 +36,11 @@ final class BetaWebSearchResultBlock implements BaseModel
         string $title,
         string $url
     ) {
+        self::introspect();
+
         $this->encryptedContent = $encryptedContent;
         $this->pageAge = $pageAge;
         $this->title = $title;
         $this->url = $url;
-
-        self::_introspect();
     }
 }

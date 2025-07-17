@@ -44,12 +44,12 @@ final class BetaSearchResultBlockParam implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl = null,
         ?BetaCitationsConfigParam $citations = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->content = $content;
         $this->source = $source;
         $this->title = $title;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $cacheControl && $this->cacheControl = $cacheControl;
         null !== $citations && $this->citations = $citations;

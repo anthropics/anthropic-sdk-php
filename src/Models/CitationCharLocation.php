@@ -40,12 +40,12 @@ final class CitationCharLocation implements BaseModel
         int $endCharIndex,
         int $startCharIndex,
     ) {
+        self::introspect();
+
         $this->citedText = $citedText;
         $this->documentIndex = $documentIndex;
         $this->documentTitle = $documentTitle;
         $this->endCharIndex = $endCharIndex;
         $this->startCharIndex = $startCharIndex;
-
-        self::_introspect();
     }
 }

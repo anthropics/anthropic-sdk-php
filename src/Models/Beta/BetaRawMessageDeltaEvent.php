@@ -27,9 +27,9 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      */
     final public function __construct(Delta $delta, BetaMessageDeltaUsage $usage)
     {
+        self::introspect();
+
         $this->delta = $delta;
         $this->usage = $usage;
-
-        self::_introspect();
     }
 }

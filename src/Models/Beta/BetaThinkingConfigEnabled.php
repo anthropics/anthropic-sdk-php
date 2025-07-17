@@ -23,8 +23,8 @@ final class BetaThinkingConfigEnabled implements BaseModel
      */
     final public function __construct(int $budgetTokens)
     {
-        $this->budgetTokens = $budgetTokens;
+        self::introspect();
 
-        self::_introspect();
+        $this->budgetTokens = $budgetTokens;
     }
 }

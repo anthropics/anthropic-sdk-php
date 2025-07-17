@@ -23,8 +23,8 @@ final class APIErrorObject implements BaseModel
      */
     final public function __construct(string $message = 'Internal server error')
     {
-        $this->message = $message;
+        self::introspect();
 
-        self::_introspect();
+        $this->message = $message;
     }
 }

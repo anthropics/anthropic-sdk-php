@@ -23,8 +23,8 @@ final class BetaRateLimitError implements BaseModel
      */
     final public function __construct(string $message = 'Rate limited')
     {
-        $this->message = $message;
+        self::introspect();
 
-        self::_introspect();
+        $this->message = $message;
     }
 }

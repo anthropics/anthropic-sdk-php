@@ -24,8 +24,8 @@ final class CitationsDelta implements BaseModel
     final public function __construct(
         CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsWebSearchResultLocation $citation,
     ) {
-        $this->citation = $citation;
+        self::introspect();
 
-        self::_introspect();
+        $this->citation = $citation;
     }
 }

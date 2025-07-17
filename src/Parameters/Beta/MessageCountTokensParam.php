@@ -121,11 +121,11 @@ final class MessageCountTokensParam implements BaseModel
         ?array $tools = null,
         ?array $anthropicBeta = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->messages = $messages;
         $this->model = $model;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $mcpServers && $this->mcpServers = $mcpServers;
         null !== $system && $this->system = $system;

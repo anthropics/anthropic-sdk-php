@@ -7,18 +7,22 @@ namespace Anthropic\Core\Attributes;
 use Anthropic\Core\Contracts\Converter;
 use Anthropic\Core\Contracts\StaticConverter;
 
+/**
+ * @internal
+ */
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
-class Api
+final class Api
 {
-    /**
-     * @param ?array<int|string,Converter|StaticConverter|string> $union
-     */
+    public readonly null|Converter|StaticConverter|string $type;
+
     public function __construct(
-        public ?string $apiName = null,
-        public null|Converter|StaticConverter|string $type = null,
-        public null|Converter|StaticConverter|string $enum = null,
-        public null|Converter|StaticConverter|string $union = null,
-        private readonly bool $nullable = false,
-        public bool $optional = false,
-    ) {}
+        public readonly ?string $apiName = null,
+        null|Converter|StaticConverter|string $type = null,
+        null|Converter|StaticConverter $enum = null,
+        null|Converter|StaticConverter|string $union = null,
+        public readonly bool $nullable = false,
+        public readonly bool $optional = false,
+    ) {
+        $this->type = $type ?? $enum ?? $union;
+    }
 }

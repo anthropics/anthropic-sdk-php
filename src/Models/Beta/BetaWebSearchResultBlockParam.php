@@ -36,12 +36,12 @@ final class BetaWebSearchResultBlockParam implements BaseModel
         string $url,
         ?string $pageAge = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->encryptedContent = $encryptedContent;
         $this->title = $title;
         $this->url = $url;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $pageAge && $this->pageAge = $pageAge;
     }

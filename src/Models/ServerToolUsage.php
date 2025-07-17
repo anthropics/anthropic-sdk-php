@@ -20,8 +20,8 @@ final class ServerToolUsage implements BaseModel
      */
     final public function __construct(int $webSearchRequests = 0)
     {
-        $this->webSearchRequests = $webSearchRequests;
+        self::introspect();
 
-        self::_introspect();
+        $this->webSearchRequests = $webSearchRequests;
     }
 }

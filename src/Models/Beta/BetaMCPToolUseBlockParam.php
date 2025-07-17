@@ -40,13 +40,13 @@ final class BetaMCPToolUseBlockParam implements BaseModel
         string $serverName,
         ?BetaCacheControlEphemeral $cacheControl = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->id = $id;
         $this->input = $input;
         $this->name = $name;
         $this->serverName = $serverName;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $cacheControl && $this->cacheControl = $cacheControl;
     }

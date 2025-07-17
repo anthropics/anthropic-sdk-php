@@ -84,6 +84,8 @@ final class BetaMessage implements BaseModel
         ?string $stopSequence,
         BetaUsage $usage,
     ) {
+        self::introspect();
+
         $this->id = $id;
         $this->container = $container;
         $this->content = $content;
@@ -91,7 +93,5 @@ final class BetaMessage implements BaseModel
         $this->stopReason = $stopReason;
         $this->stopSequence = $stopSequence;
         $this->usage = $usage;
-
-        self::_introspect();
     }
 }

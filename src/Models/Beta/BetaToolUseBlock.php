@@ -29,10 +29,10 @@ final class BetaToolUseBlock implements BaseModel
      */
     final public function __construct(string $id, mixed $input, string $name)
     {
+        self::introspect();
+
         $this->id = $id;
         $this->input = $input;
         $this->name = $name;
-
-        self::_introspect();
     }
 }

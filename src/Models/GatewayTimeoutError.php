@@ -23,8 +23,8 @@ final class GatewayTimeoutError implements BaseModel
      */
     final public function __construct(string $message = 'Request timeout')
     {
-        $this->message = $message;
+        self::introspect();
 
-        self::_introspect();
+        $this->message = $message;
     }
 }

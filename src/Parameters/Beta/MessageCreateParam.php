@@ -166,12 +166,12 @@ final class MessageCreateParam implements BaseModel
         ?float $topP = null,
         ?array $anthropicBeta = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->maxTokens = $maxTokens;
         $this->messages = $messages;
         $this->model = $model;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $container && $this->container = $container;
         null !== $mcpServers && $this->mcpServers = $mcpServers;

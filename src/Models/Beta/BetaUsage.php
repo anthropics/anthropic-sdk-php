@@ -49,6 +49,8 @@ final class BetaUsage implements BaseModel
         BetaServerToolUsage $serverToolUse,
         ?string $serviceTier,
     ) {
+        self::introspect();
+
         $this->cacheCreation = $cacheCreation;
         $this->cacheCreationInputTokens = $cacheCreationInputTokens;
         $this->cacheReadInputTokens = $cacheReadInputTokens;
@@ -56,7 +58,5 @@ final class BetaUsage implements BaseModel
         $this->outputTokens = $outputTokens;
         $this->serverToolUse = $serverToolUse;
         $this->serviceTier = $serviceTier;
-
-        self::_introspect();
     }
 }

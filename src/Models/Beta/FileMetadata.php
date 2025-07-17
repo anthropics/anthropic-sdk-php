@@ -44,14 +44,14 @@ final class FileMetadata implements BaseModel
         int $sizeBytes,
         ?bool $downloadable = null,
     ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
+
         $this->id = $id;
         $this->createdAt = $createdAt;
         $this->filename = $filename;
         $this->mimeType = $mimeType;
         $this->sizeBytes = $sizeBytes;
-
-        self::_introspect();
-        $this->unsetOptionalProperties();
 
         null !== $downloadable && $this->downloadable = $downloadable;
     }

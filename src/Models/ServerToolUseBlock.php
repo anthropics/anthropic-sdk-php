@@ -29,9 +29,9 @@ final class ServerToolUseBlock implements BaseModel
      */
     final public function __construct(string $id, mixed $input)
     {
+        self::introspect();
+
         $this->id = $id;
         $this->input = $input;
-
-        self::_introspect();
     }
 }

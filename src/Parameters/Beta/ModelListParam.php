@@ -44,7 +44,7 @@ final class ModelListParam implements BaseModel
         ?int $limit = null,
         ?array $anthropicBeta = null,
     ) {
-        self::_introspect();
+        self::introspect();
         $this->unsetOptionalProperties();
 
         null !== $afterID && $this->afterID = $afterID;

@@ -187,7 +187,7 @@ trait Model
             return $value;
         }
 
-        if (!is_array($value) || array_is_list($value)) {
+        if (!is_array($value) || (!empty($value) && array_is_list($value))) {
             ++$state->no;
 
             return $value;
@@ -271,7 +271,7 @@ trait Model
 
     public static function from(mixed $data): self
     {
-        self::_introspect();
+        self::introspect();
 
         /** @var self $instance */
         $instance = self::$_class->newInstanceWithoutConstructor();
@@ -280,16 +280,7 @@ trait Model
         return $instance;
     }
 
-    private function unsetOptionalProperties(): void
-    {
-        foreach (self::$_properties as $name => $info) {
-            if ($info->optional) {
-                unset($this->{$name});
-            }
-        }
-    }
-
-    private static function _introspect(): void
+    public static function introspect(): void
     {
         if (isset(self::$_class)) {
             return;
@@ -305,6 +296,15 @@ trait Model
             if (!empty($property->getAttributes(Api::class))) {
                 $name = $property->getName();
                 self::$_properties[$name] = new PropertyInfo($property);
+            }
+        }
+    }
+
+    private function unsetOptionalProperties(): void
+    {
+        foreach (self::$_properties as $name => $info) {
+            if ($info->optional) {
+                unset($this->{$name});
             }
         }
     }

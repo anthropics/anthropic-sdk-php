@@ -23,8 +23,8 @@ final class URLImageSource implements BaseModel
      */
     final public function __construct(string $url)
     {
-        $this->url = $url;
+        self::introspect();
 
-        self::_introspect();
+        $this->url = $url;
     }
 }

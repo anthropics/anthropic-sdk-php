@@ -76,13 +76,13 @@ final class Message implements BaseModel
         ?string $stopSequence,
         Usage $usage,
     ) {
+        self::introspect();
+
         $this->id = $id;
         $this->content = $content;
         $this->model = $model;
         $this->stopReason = $stopReason;
         $this->stopSequence = $stopSequence;
         $this->usage = $usage;
-
-        self::_introspect();
     }
 }

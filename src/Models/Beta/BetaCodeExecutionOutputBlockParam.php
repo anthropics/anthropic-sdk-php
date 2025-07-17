@@ -23,8 +23,8 @@ final class BetaCodeExecutionOutputBlockParam implements BaseModel
      */
     final public function __construct(string $fileID)
     {
-        $this->fileID = $fileID;
+        self::introspect();
 
-        self::_introspect();
+        $this->fileID = $fileID;
     }
 }
