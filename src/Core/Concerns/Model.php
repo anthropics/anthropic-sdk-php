@@ -315,8 +315,8 @@ trait Model
             return $value->toArray();
         }
 
-        if (is_array($value) || is_object($value)) {
-            return array_map(static fn ($v) => self::serialize($v), array: (array) $value);
+        if (is_array($value)) {
+            return array_map(static fn ($v) => self::serialize($v), array: $value);
         }
 
         return $value;

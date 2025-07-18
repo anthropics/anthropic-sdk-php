@@ -175,10 +175,11 @@ class BaseClient
             throw APIStatusError::from(null, request: $req, response: $rsp);
         }
 
-        // if ($code >= 500 && $retryCount < $opts->max_retries) {
-        //    usleep((int) ($opts->initial_retry_delay * 1_000_000));
-        //    return $this->sendRequest($req, data: $data, opts: $opts, retryCount: ++$retryCount, redirectCount: $redirectCount);
-        // }
+        if ($code >= 500 && $retryCount < $opts->maxRetries) {
+            usleep((int) $opts->initialRetryDelay);
+
+            return $this->sendRequest($req, data: $data, opts: $opts, retryCount: ++$retryCount, redirectCount: $redirectCount);
+        }
 
         return $rsp;
     }

@@ -153,7 +153,7 @@ use Anthropic\Client;
 use Anthropic\Models\MessageParam;
 
 // Configure the default for all requests:
-$client = new Client(max_retries: 0);
+$client = new Client(maxRetries: 0);
 
 // Or, configure per-request:
 $client->messages->create(
@@ -162,7 +162,7 @@ $client->messages->create(
     "messages" => [new MessageParam(role: "user", content: "Hello, Claude")],
     "model" => "claude-sonnet-4-20250514",
   ],
-  requestOptions: ["max_retries" => 5],
+  requestOptions: ["maxRetries" => 5],
 );
 ```
 

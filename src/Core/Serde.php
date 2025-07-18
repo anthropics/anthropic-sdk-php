@@ -22,6 +22,10 @@ final class Serde
                 return $value::dump($value, state: $state);
             }
 
+            if (is_a($value, class: \DateTimeInterface::class)) {
+                return $value->format(format: \DateTimeInterface::RFC3339);
+            }
+
             $acc = get_object_vars($value);
 
             return self::dump_unknown($acc, state: $state);
