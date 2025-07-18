@@ -6,7 +6,7 @@ namespace Anthropic\Resources\Beta\Messages;
 
 use Anthropic\Client;
 use Anthropic\Contracts\Beta\Messages\BatchesContract;
-use Anthropic\Core\Serde;
+use Anthropic\Core\Conversion;
 use Anthropic\Core\Util;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Beta\Messages\DeletedMessageBatch;
@@ -54,7 +54,7 @@ final class Batches implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(MessageBatch::class, value: $resp);
+        return Conversion::coerce(MessageBatch::class, value: $resp);
     }
 
     /**
@@ -85,7 +85,7 @@ final class Batches implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(MessageBatch::class, value: $resp);
+        return Conversion::coerce(MessageBatch::class, value: $resp);
     }
 
     /**
@@ -123,7 +123,7 @@ final class Batches implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(MessageBatch::class, value: $resp);
+        return Conversion::coerce(MessageBatch::class, value: $resp);
     }
 
     /**
@@ -154,7 +154,7 @@ final class Batches implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DeletedMessageBatch::class, value: $resp);
+        return Conversion::coerce(DeletedMessageBatch::class, value: $resp);
     }
 
     /**
@@ -185,7 +185,7 @@ final class Batches implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(MessageBatch::class, value: $resp);
+        return Conversion::coerce(MessageBatch::class, value: $resp);
     }
 
     /**
@@ -216,6 +216,9 @@ final class Batches implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(MessageBatchIndividualResponse::class, value: $resp);
+        return Conversion::coerce(
+            MessageBatchIndividualResponse::class,
+            value: $resp
+        );
     }
 }

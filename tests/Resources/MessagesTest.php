@@ -47,7 +47,6 @@ final class MessagesTest extends TestCase
                     maxTokens: 1024,
                     messages: [new MessageParam(content: 'Hello, world', role: 'user')],
                     model: 'claude-sonnet-4-20250514',
-                    stream: true,
                 )
             )
         ;
@@ -69,7 +68,6 @@ final class MessagesTest extends TestCase
                     metadata: new Metadata(userID: '13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
                     serviceTier: 'auto',
                     stopSequences: ['string'],
-                    stream: true,
                     system: [
                         new TextBlockParam(
                             text: "Today's date is 2024-06-01.",

@@ -6,7 +6,7 @@ namespace Anthropic\Resources;
 
 use Anthropic\Client;
 use Anthropic\Contracts\MessagesContract;
-use Anthropic\Core\Serde;
+use Anthropic\Core\Conversion;
 use Anthropic\Models\Message;
 use Anthropic\Models\MessageCountTokensTool\TextEditor20250429 as TextEditor202504291;
 use Anthropic\Models\MessageParam;
@@ -28,7 +28,6 @@ use Anthropic\Models\WebSearchTool20250305;
 use Anthropic\Parameters\MessageCountTokensParam;
 use Anthropic\Parameters\MessageCreateParam;
 use Anthropic\Parameters\MessageCreateParam\ServiceTier;
-use Anthropic\Parameters\MessageCreateParam\Stream;
 use Anthropic\RequestOptions;
 use Anthropic\Resources\Messages\Batches;
 
@@ -49,7 +48,6 @@ final class Messages implements MessagesContract
      *   metadata?: Metadata,
      *   serviceTier?: ServiceTier::*,
      *   stopSequences?: list<string>,
-     *   stream?: Stream::*,
      *   system?: string|list<TextBlockParam>,
      *   temperature?: float,
      *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
@@ -77,7 +75,7 @@ final class Messages implements MessagesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(Message::class, value: $resp);
+        return Conversion::coerce(Message::class, value: $resp);
     }
 
     /**
@@ -108,6 +106,6 @@ final class Messages implements MessagesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(MessageTokensCount::class, value: $resp);
+        return Conversion::coerce(MessageTokensCount::class, value: $resp);
     }
 }

@@ -7,7 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Concerns\Union;
 use Anthropic\Core\Contracts\Converter;
 use Anthropic\Core\Contracts\StaticConverter;
-use Anthropic\Core\Serde\ListOf;
+use Anthropic\Core\Conversion\ListOf;
 
 final class BetaWebSearchToolResultBlockContent implements StaticConverter
 {

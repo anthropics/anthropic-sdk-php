@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Core\Serde;
+namespace Anthropic\Core\Conversion;
 
 use Anthropic\Core\Concerns\ArrayOf;
 use Anthropic\Core\Contracts\Converter;

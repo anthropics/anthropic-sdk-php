@@ -31,7 +31,6 @@ use Anthropic\Models\Model\UnionMember0;
 use Anthropic\Parameters\Beta\MessageCountTokensParam;
 use Anthropic\Parameters\Beta\MessageCreateParam;
 use Anthropic\Parameters\Beta\MessageCreateParam\ServiceTier;
-use Anthropic\Parameters\Beta\MessageCreateParam\Stream;
 use Anthropic\RequestOptions;
 
 interface MessagesContract
@@ -46,7 +45,6 @@ interface MessagesContract
      *   metadata?: BetaMetadata,
      *   serviceTier?: ServiceTier::*,
      *   stopSequences?: list<string>,
-     *   stream?: Stream::*,
      *   system?: string|list<BetaTextBlockParam>,
      *   temperature?: float,
      *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,

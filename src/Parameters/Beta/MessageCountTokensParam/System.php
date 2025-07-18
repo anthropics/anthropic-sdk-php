@@ -7,7 +7,7 @@ namespace Anthropic\Parameters\Beta\MessageCountTokensParam;
 use Anthropic\Core\Concerns\Union;
 use Anthropic\Core\Contracts\Converter;
 use Anthropic\Core\Contracts\StaticConverter;
-use Anthropic\Core\Serde\ListOf;
+use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Models\Beta\BetaTextBlockParam;
 
 final class System implements StaticConverter

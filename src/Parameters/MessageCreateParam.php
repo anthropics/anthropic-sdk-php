@@ -8,8 +8,8 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Serde\ListOf;
-use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Core\Conversion\ListOf;
+use Anthropic\Core\Conversion\UnionOf;
 use Anthropic\Models\MessageParam;
 use Anthropic\Models\Metadata;
 use Anthropic\Models\Model\UnionMember0;
@@ -26,7 +26,6 @@ use Anthropic\Models\ToolTextEditor20250124;
 use Anthropic\Models\ToolUnion\TextEditor20250429;
 use Anthropic\Models\WebSearchTool20250305;
 use Anthropic\Parameters\MessageCreateParam\ServiceTier;
-use Anthropic\Parameters\MessageCreateParam\Stream;
 
 final class MessageCreateParam implements BaseModel
 {
@@ -54,10 +53,6 @@ final class MessageCreateParam implements BaseModel
     /** @var null|list<string> $stopSequences */
     #[Api('stop_sequences', type: new ListOf('string'), optional: true)]
     public ?array $stopSequences;
-
-    /** @var null|Stream::* $stream */
-    #[Api(optional: true)]
-    public ?bool $stream;
 
     /** @var null|list<TextBlockParam>|string $system */
     #[Api(
@@ -109,7 +104,6 @@ final class MessageCreateParam implements BaseModel
      * @param string|UnionMember0::*           $model
      * @param null|ServiceTier::*              $serviceTier
      * @param null|list<string>                $stopSequences
-     * @param null|Stream::*                   $stream
      * @param null|list<TextBlockParam>|string $system
      * @param list<
      *   Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
@@ -119,7 +113,6 @@ final class MessageCreateParam implements BaseModel
         int $maxTokens,
         array $messages,
         string $model,
-        ?bool $stream,
         ?Metadata $metadata = null,
         ?string $serviceTier = null,
         ?array $stopSequences = null,
@@ -141,7 +134,6 @@ final class MessageCreateParam implements BaseModel
         null !== $metadata && $this->metadata = $metadata;
         null !== $serviceTier && $this->serviceTier = $serviceTier;
         null !== $stopSequences && $this->stopSequences = $stopSequences;
-        null !== $stream && $this->stream = $stream;
         null !== $system && $this->system = $system;
         null !== $temperature && $this->temperature = $temperature;
         null !== $thinking && $this->thinking = $thinking;

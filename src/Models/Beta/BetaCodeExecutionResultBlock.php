@@ -7,7 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Serde\ListOf;
+use Anthropic\Core\Conversion\ListOf;
 
 final class BetaCodeExecutionResultBlock implements BaseModel
 {

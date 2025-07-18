@@ -6,14 +6,13 @@ namespace Anthropic\Resources;
 
 use Anthropic\Client;
 use Anthropic\Contracts\CompletionsContract;
-use Anthropic\Core\Serde;
+use Anthropic\Core\Conversion;
 use Anthropic\Core\Util;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Completion;
 use Anthropic\Models\Metadata;
 use Anthropic\Models\Model\UnionMember0;
 use Anthropic\Parameters\CompletionCreateParam;
-use Anthropic\Parameters\CompletionCreateParam\Stream;
 use Anthropic\RequestOptions;
 
 final class Completions implements CompletionsContract
@@ -27,7 +26,6 @@ final class Completions implements CompletionsContract
      *   prompt?: string,
      *   metadata?: Metadata,
      *   stopSequences?: list<string>,
-     *   stream?: Stream::*,
      *   temperature?: float,
      *   topK?: int,
      *   topP?: float,
@@ -55,6 +53,6 @@ final class Completions implements CompletionsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(Completion::class, value: $resp);
+        return Conversion::coerce(Completion::class, value: $resp);
     }
 }

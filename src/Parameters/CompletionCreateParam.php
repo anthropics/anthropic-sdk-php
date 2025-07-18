@@ -8,12 +8,11 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Serde\ListOf;
-use Anthropic\Core\Serde\UnionOf;
+use Anthropic\Core\Conversion\ListOf;
+use Anthropic\Core\Conversion\UnionOf;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Metadata;
 use Anthropic\Models\Model\UnionMember0;
-use Anthropic\Parameters\CompletionCreateParam\Stream;
 
 final class CompletionCreateParam implements BaseModel
 {
@@ -37,10 +36,6 @@ final class CompletionCreateParam implements BaseModel
     #[Api('stop_sequences', type: new ListOf('string'), optional: true)]
     public ?array $stopSequences;
 
-    /** @var null|Stream::* $stream */
-    #[Api(optional: true)]
-    public ?bool $stream;
-
     #[Api(optional: true)]
     public ?float $temperature;
 
@@ -62,14 +57,12 @@ final class CompletionCreateParam implements BaseModel
      *
      * @param string|UnionMember0::*            $model
      * @param null|list<string>                 $stopSequences
-     * @param null|Stream::*                    $stream
      * @param null|list<string|UnionMember1::*> $anthropicBeta
      */
     final public function __construct(
         int $maxTokensToSample,
         string $model,
         string $prompt,
-        ?bool $stream,
         ?Metadata $metadata = null,
         ?array $stopSequences = null,
         ?float $temperature = null,
@@ -86,7 +79,6 @@ final class CompletionCreateParam implements BaseModel
 
         null !== $metadata && $this->metadata = $metadata;
         null !== $stopSequences && $this->stopSequences = $stopSequences;
-        null !== $stream && $this->stream = $stream;
         null !== $temperature && $this->temperature = $temperature;
         null !== $topK && $this->topK = $topK;
         null !== $topP && $this->topP = $topP;

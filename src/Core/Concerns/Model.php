@@ -6,10 +6,10 @@ namespace Anthropic\Core\Concerns;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Serde;
-use Anthropic\Core\Serde\CoerceState;
-use Anthropic\Core\Serde\DumpState;
-use Anthropic\Core\Serde\PropertyInfo;
+use Anthropic\Core\Conversion;
+use Anthropic\Core\Conversion\CoerceState;
+use Anthropic\Core\Conversion\DumpState;
+use Anthropic\Core\Conversion\PropertyInfo;
 use Anthropic\Core\Util;
 
 trait Model
@@ -149,7 +149,7 @@ trait Model
             ? self::$_properties[$offset]->type
             : 'mixed';
 
-        $coerced = Serde::coerce($type, value: $value, state: new CoerceState(translateNames: false));
+        $coerced = Conversion::coerce($type, value: $value, state: new CoerceState(translateNames: false));
 
         if (property_exists($this, property: $offset)) {
             try {
@@ -223,7 +223,7 @@ trait Model
                 }
                 $acc[$name] = null;
             } else {
-                $coerced = Serde::coerce($info->type, value: $item, state: $state);
+                $coerced = Conversion::coerce($info->type, value: $item, state: $state);
                 $acc[$name] = $coerced;
             }
         }
@@ -248,16 +248,16 @@ trait Model
             foreach ($value as $name => $item) {
                 if (array_key_exists($name, array: self::$_properties)) {
                     $info = self::$_properties[$name];
-                    $acc[$info->apiName] = Serde::dump($info->type, value: $item, state: $state);
+                    $acc[$info->apiName] = Conversion::dump($info->type, value: $item, state: $state);
                 } else {
-                    $acc[$name] = Serde::dump_unknown($item, state: $state);
+                    $acc[$name] = Conversion::dump_unknown($item, state: $state);
                 }
             }
 
             return empty($acc) ? ((object) []) : $acc;
         }
 
-        return Serde::dump_unknown($value, state: $state);
+        return Conversion::dump_unknown($value, state: $state);
     }
 
     /**
@@ -266,7 +266,7 @@ trait Model
     public function jsonSerialize(): array
     {
         // @phpstan-ignore-next-line
-        return Serde::dump($this::class, value: $this->__serialize());
+        return Conversion::dump($this::class, value: $this->__serialize());
     }
 
     public static function from(mixed $data): self

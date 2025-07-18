@@ -6,9 +6,9 @@ namespace Anthropic\Core\Concerns;
 
 use Anthropic\Core\Contracts\Converter;
 use Anthropic\Core\Contracts\StaticConverter;
-use Anthropic\Core\Serde;
-use Anthropic\Core\Serde\CoerceState;
-use Anthropic\Core\Serde\DumpState;
+use Anthropic\Core\Conversion;
+use Anthropic\Core\Conversion\CoerceState;
+use Anthropic\Core\Conversion\DumpState;
 
 /**
  * @internal
@@ -39,7 +39,7 @@ trait ArrayOf
                 ++$state->yes;
                 $acc[$k] = null;
             } else {
-                $acc[$k] = Serde::coerce($this->type, value: $v, state: $state);
+                $acc[$k] = Conversion::coerce($this->type, value: $v, state: $state);
             }
         }
 
@@ -49,14 +49,14 @@ trait ArrayOf
     public function dump(mixed $value, DumpState $state): mixed
     {
         if (!is_array($value)) {
-            return Serde::dump_unknown($value, state: $state);
+            return Conversion::dump_unknown($value, state: $state);
         }
 
         if (empty($value)) {
             return $this->empty();
         }
 
-        return array_map(fn ($v) => Serde::dump($this->type, value: $v, state: $state), array: $value);
+        return array_map(fn ($v) => Conversion::dump($this->type, value: $v, state: $state), array: $value);
     }
 
     private function empty(): array|object // @phpstan-ignore-line

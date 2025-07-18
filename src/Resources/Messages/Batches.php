@@ -6,7 +6,7 @@ namespace Anthropic\Resources\Messages;
 
 use Anthropic\Client;
 use Anthropic\Contracts\Messages\BatchesContract;
-use Anthropic\Core\Serde;
+use Anthropic\Core\Conversion;
 use Anthropic\Models\Messages\DeletedMessageBatch;
 use Anthropic\Models\Messages\MessageBatch;
 use Anthropic\Models\Messages\MessageBatchIndividualResponse;
@@ -38,7 +38,7 @@ final class Batches implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(MessageBatch::class, value: $resp);
+        return Conversion::coerce(MessageBatch::class, value: $resp);
     }
 
     public function retrieve(
@@ -52,7 +52,7 @@ final class Batches implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(MessageBatch::class, value: $resp);
+        return Conversion::coerce(MessageBatch::class, value: $resp);
     }
 
     /**
@@ -76,7 +76,7 @@ final class Batches implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(MessageBatch::class, value: $resp);
+        return Conversion::coerce(MessageBatch::class, value: $resp);
     }
 
     public function delete(
@@ -90,7 +90,7 @@ final class Batches implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DeletedMessageBatch::class, value: $resp);
+        return Conversion::coerce(DeletedMessageBatch::class, value: $resp);
     }
 
     public function cancel(
@@ -104,7 +104,7 @@ final class Batches implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(MessageBatch::class, value: $resp);
+        return Conversion::coerce(MessageBatch::class, value: $resp);
     }
 
     public function results(
@@ -119,6 +119,9 @@ final class Batches implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(MessageBatchIndividualResponse::class, value: $resp);
+        return Conversion::coerce(
+            MessageBatchIndividualResponse::class,
+            value: $resp
+        );
     }
 }

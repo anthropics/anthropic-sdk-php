@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Core\Concerns;
 
-use Anthropic\Core\Serde\CoerceState;
-use Anthropic\Core\Serde\DumpState;
+use Anthropic\Core\Conversion\CoerceState;
+use Anthropic\Core\Conversion\DumpState;
 
 /**
  * @internal

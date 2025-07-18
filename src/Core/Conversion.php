@@ -6,10 +6,10 @@ namespace Anthropic\Core;
 
 use Anthropic\Core\Contracts\Converter;
 use Anthropic\Core\Contracts\StaticConverter;
-use Anthropic\Core\Serde\CoerceState;
-use Anthropic\Core\Serde\DumpState;
+use Anthropic\Core\Conversion\CoerceState;
+use Anthropic\Core\Conversion\DumpState;
 
-final class Serde
+final class Conversion
 {
     public static function dump_unknown(mixed $value, DumpState $state): mixed
     {

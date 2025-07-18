@@ -6,7 +6,7 @@ namespace Anthropic\Resources;
 
 use Anthropic\Client;
 use Anthropic\Contracts\ModelsContract;
-use Anthropic\Core\Serde;
+use Anthropic\Core\Conversion;
 use Anthropic\Core\Util;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\ModelInfo;
@@ -43,7 +43,7 @@ final class Models implements ModelsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(ModelInfo::class, value: $resp);
+        return Conversion::coerce(ModelInfo::class, value: $resp);
     }
 
     /**
@@ -78,6 +78,6 @@ final class Models implements ModelsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(ModelInfo::class, value: $resp);
+        return Conversion::coerce(ModelInfo::class, value: $resp);
     }
 }

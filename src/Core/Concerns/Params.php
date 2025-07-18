@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Core\Concerns;
 
-use Anthropic\Core\Serde;
-use Anthropic\Core\Serde\DumpState;
+use Anthropic\Core\Conversion;
+use Anthropic\Core\Conversion\DumpState;
 use Anthropic\RequestOptions;
 
 /**
@@ -32,7 +32,7 @@ trait Params
         static::introspect();
 
         $state = new DumpState();
-        $dumped = (array) Serde::dump(self::class, value: $params, state: $state);
+        $dumped = (array) Conversion::dump(self::class, value: $params, state: $state);
         $opts = RequestOptions::parse($options); // @phpstan-ignore-line
 
         if (!$state->canRetry) {

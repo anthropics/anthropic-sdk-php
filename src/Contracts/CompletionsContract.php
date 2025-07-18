@@ -9,7 +9,6 @@ use Anthropic\Models\Completion;
 use Anthropic\Models\Metadata;
 use Anthropic\Models\Model\UnionMember0;
 use Anthropic\Parameters\CompletionCreateParam;
-use Anthropic\Parameters\CompletionCreateParam\Stream;
 use Anthropic\RequestOptions;
 
 interface CompletionsContract
@@ -21,7 +20,6 @@ interface CompletionsContract
      *   prompt?: string,
      *   metadata?: Metadata,
      *   stopSequences?: list<string>,
-     *   stream?: Stream::*,
      *   temperature?: float,
      *   topK?: int,
      *   topP?: float,

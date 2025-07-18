@@ -25,7 +25,6 @@ use Anthropic\Models\WebSearchTool20250305;
 use Anthropic\Parameters\MessageCountTokensParam;
 use Anthropic\Parameters\MessageCreateParam;
 use Anthropic\Parameters\MessageCreateParam\ServiceTier;
-use Anthropic\Parameters\MessageCreateParam\Stream;
 use Anthropic\RequestOptions;
 
 interface MessagesContract
@@ -38,7 +37,6 @@ interface MessagesContract
      *   metadata?: Metadata,
      *   serviceTier?: ServiceTier::*,
      *   stopSequences?: list<string>,
-     *   stream?: Stream::*,
      *   system?: string|list<TextBlockParam>,
      *   temperature?: float,
      *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,

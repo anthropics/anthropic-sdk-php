@@ -7,7 +7,7 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Serde\ListOf;
+use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Models\WebSearchTool20250305\UserLocation;
 
 final class WebSearchTool20250305 implements BaseModel

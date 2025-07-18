@@ -6,7 +6,7 @@ namespace Anthropic\Resources\Beta;
 
 use Anthropic\Client;
 use Anthropic\Contracts\Beta\FilesContract;
-use Anthropic\Core\Serde;
+use Anthropic\Core\Conversion;
 use Anthropic\Core\Util;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Beta\DeletedFile;
@@ -54,7 +54,7 @@ final class Files implements FilesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(FileMetadata::class, value: $resp);
+        return Conversion::coerce(FileMetadata::class, value: $resp);
     }
 
     /**
@@ -85,7 +85,7 @@ final class Files implements FilesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(DeletedFile::class, value: $resp);
+        return Conversion::coerce(DeletedFile::class, value: $resp);
     }
 
     /**
@@ -116,7 +116,7 @@ final class Files implements FilesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce('string', value: $resp);
+        return Conversion::coerce('string', value: $resp);
     }
 
     /**
@@ -147,7 +147,7 @@ final class Files implements FilesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(FileMetadata::class, value: $resp);
+        return Conversion::coerce(FileMetadata::class, value: $resp);
     }
 
     /**
@@ -182,6 +182,6 @@ final class Files implements FilesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(FileMetadata::class, value: $resp);
+        return Conversion::coerce(FileMetadata::class, value: $resp);
     }
 }

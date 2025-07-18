@@ -50,7 +50,6 @@ final class MessagesTest extends TestCase
                     maxTokens: 1024,
                     messages: [new BetaMessageParam(content: 'Hello, world', role: 'user')],
                     model: 'claude-sonnet-4-20250514',
-                    stream: true,
                 )
             )
         ;
@@ -87,7 +86,6 @@ final class MessagesTest extends TestCase
                     ),
                     serviceTier: 'auto',
                     stopSequences: ['string'],
-                    stream: true,
                     system: [
                         new BetaTextBlockParam(
                             text: "Today's date is 2024-06-01.",

@@ -6,7 +6,7 @@ namespace Anthropic\Resources\Beta;
 
 use Anthropic\Client;
 use Anthropic\Contracts\Beta\MessagesContract;
-use Anthropic\Core\Serde;
+use Anthropic\Core\Conversion;
 use Anthropic\Core\Util;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Beta\BetaCodeExecutionTool20250522;
@@ -35,7 +35,6 @@ use Anthropic\Models\Model\UnionMember0;
 use Anthropic\Parameters\Beta\MessageCountTokensParam;
 use Anthropic\Parameters\Beta\MessageCreateParam;
 use Anthropic\Parameters\Beta\MessageCreateParam\ServiceTier;
-use Anthropic\Parameters\Beta\MessageCreateParam\Stream;
 use Anthropic\RequestOptions;
 use Anthropic\Resources\Beta\Messages\Batches;
 
@@ -58,7 +57,6 @@ final class Messages implements MessagesContract
      *   metadata?: BetaMetadata,
      *   serviceTier?: ServiceTier::*,
      *   stopSequences?: list<string>,
-     *   stream?: Stream::*,
      *   system?: string|list<BetaTextBlockParam>,
      *   temperature?: float,
      *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
@@ -92,7 +90,7 @@ final class Messages implements MessagesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(BetaMessage::class, value: $resp);
+        return Conversion::coerce(BetaMessage::class, value: $resp);
     }
 
     /**
@@ -130,6 +128,6 @@ final class Messages implements MessagesContract
         );
 
         // @phpstan-ignore-next-line;
-        return Serde::coerce(BetaMessageTokensCount::class, value: $resp);
+        return Conversion::coerce(BetaMessageTokensCount::class, value: $resp);
     }
 }

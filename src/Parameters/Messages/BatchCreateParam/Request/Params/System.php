@@ -7,7 +7,7 @@ namespace Anthropic\Parameters\Messages\BatchCreateParam\Request\Params;
 use Anthropic\Core\Concerns\Union;
 use Anthropic\Core\Contracts\Converter;
 use Anthropic\Core\Contracts\StaticConverter;
-use Anthropic\Core\Serde\ListOf;
+use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Models\TextBlockParam;
 
 final class System implements StaticConverter

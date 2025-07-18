@@ -8,7 +8,7 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Serde\ListOf;
+use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Parameters\Messages\BatchCreateParam\Request;
 
 final class BatchCreateParam implements BaseModel
