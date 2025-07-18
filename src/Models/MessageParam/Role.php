@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Anthropic\Models\MessageParam;
 
 use Anthropic\Core\Concerns\Enum;
-use Anthropic\Core\Contracts\StaticConverter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-final class Role implements StaticConverter
+final class Role implements ConverterSource
 {
     use Enum;
 

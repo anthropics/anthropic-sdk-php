@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Anthropic\Models\Base64ImageSource;
 
 use Anthropic\Core\Concerns\Enum;
-use Anthropic\Core\Contracts\StaticConverter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-final class MediaType implements StaticConverter
+final class MediaType implements ConverterSource
 {
     use Enum;
 

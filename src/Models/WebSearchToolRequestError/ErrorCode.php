@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Anthropic\Models\WebSearchToolRequestError;
 
 use Anthropic\Core\Concerns\Enum;
-use Anthropic\Core\Contracts\StaticConverter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-final class ErrorCode implements StaticConverter
+final class ErrorCode implements ConverterSource
 {
     use Enum;
 

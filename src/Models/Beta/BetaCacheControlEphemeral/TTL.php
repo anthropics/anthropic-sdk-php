@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Anthropic\Models\Beta\BetaCacheControlEphemeral;
 
 use Anthropic\Core\Concerns\Enum;
-use Anthropic\Core\Contracts\StaticConverter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-final class TTL implements StaticConverter
+final class TTL implements ConverterSource
 {
     use Enum;
 

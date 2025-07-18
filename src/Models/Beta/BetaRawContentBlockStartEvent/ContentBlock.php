@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Models\Beta\BetaRawContentBlockStartEvent;
 
 use Anthropic\Core\Concerns\Union;
-use Anthropic\Core\Contracts\Converter;
-use Anthropic\Core\Contracts\StaticConverter;
+use Anthropic\Core\Conversion\Contracts\Converter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Models\Beta\BetaCodeExecutionToolResultBlock;
 use Anthropic\Models\Beta\BetaContainerUploadBlock;
 use Anthropic\Models\Beta\BetaMCPToolResultBlock;
@@ -18,7 +18,7 @@ use Anthropic\Models\Beta\BetaThinkingBlock;
 use Anthropic\Models\Beta\BetaToolUseBlock;
 use Anthropic\Models\Beta\BetaWebSearchToolResultBlock;
 
-final class ContentBlock implements StaticConverter
+final class ContentBlock implements ConverterSource
 {
     use Union;
 
@@ -28,8 +28,8 @@ final class ContentBlock implements StaticConverter
     }
 
     /**
-     * @return list<string|Converter|StaticConverter>|array<
-     *   string, string|Converter|StaticConverter
+     * @return list<string|Converter|ConverterSource>|array<
+     *   string, string|Converter|ConverterSource
      * >
      */
     public static function variants(): array

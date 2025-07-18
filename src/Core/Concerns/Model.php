@@ -4,30 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Core\Concerns;
 
-use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Conversion\CoerceState;
-use Anthropic\Core\Conversion\DumpState;
-use Anthropic\Core\Conversion\PropertyInfo;
+use Anthropic\Core\Conversion\Contracts\Converter;
+use Anthropic\Core\Conversion\ModelOf;
 use Anthropic\Core\Util;
 
 trait Model
 {
-    /**
-     * @var \ReflectionClass<BaseModel>
-     */
-    private static \ReflectionClass $_class;
-
-    /**
-     * @var array<string, PropertyInfo>
-     */
-    private static array $_properties = [];
-
-    /**
-     * @var list<string>
-     */
-    private static array $_constructorArgNames = [];
+    private static ModelOf $converter;
 
     /**
      * @var array<string, mixed> keeps track of undocumented data
@@ -76,7 +62,7 @@ trait Model
      */
     public function __get(string $key): mixed
     {
-        if (!array_key_exists($key, self::$_properties)) {
+        if (!array_key_exists($key, array: self::$converter->properties)) {
             throw new \Exception("Property '{$key}' does not exist in {$this}::class");
         }
 
@@ -109,12 +95,12 @@ trait Model
             return true;
         }
 
-        if (property_exists($this, property: $offset)) {
+        if (array_key_exists($offset, array: self::$converter->properties)) {
             if (isset($this->{$offset})) {
                 return true;
             }
 
-            $property = self::$_properties[$offset]->property ?? new \ReflectionProperty($this, property: $offset);
+            $property = self::$converter->properties[$offset]->property ?? new \ReflectionProperty($this, property: $offset);
 
             return $property->isInitialized($this);
         }
@@ -145,8 +131,8 @@ trait Model
             throw new \InvalidArgumentException();
         }
 
-        $type = array_key_exists($offset, array: self::$_properties)
-            ? self::$_properties[$offset]->type
+        $type = array_key_exists($offset, array: self::$converter->properties)
+            ? self::$converter->properties[$offset]->type
             : 'mixed';
 
         $coerced = Conversion::coerce($type, value: $value, state: new CoerceState(translateNames: false));
@@ -157,8 +143,7 @@ trait Model
                 unset($this->_data[$offset]);
 
                 return;
-                // @phpstan-ignore-next-line
-            } catch (\TypeError) {
+            } catch (\TypeError) { // @phpstan-ignore-line
                 unset($this->{$offset});
             }
         }
@@ -179,94 +164,13 @@ trait Model
         unset($this->_data[$offset]);
     }
 
-    public static function coerce(mixed $value, CoerceState $state): mixed
-    {
-        if ($value instanceof self) {
-            ++$state->yes;
-
-            return $value;
-        }
-
-        if (!is_array($value) || (!empty($value) && array_is_list($value))) {
-            ++$state->no;
-
-            return $value;
-        }
-
-        ++$state->yes;
-
-        $val = [...$value];
-        $acc = [];
-
-        foreach (self::$_properties as $name => $info) {
-            $srcName = $state->translateNames ? $info->apiName : $name;
-            if (!array_key_exists($srcName, array: $val)) {
-                if ($info->optional) {
-                    ++$state->yes;
-                } elseif ($info->nullable) {
-                    ++$state->maybe;
-                } else {
-                    ++$state->no;
-                }
-
-                continue;
-            }
-
-            $item = $val[$srcName];
-            unset($val[$srcName]);
-
-            if (is_null($item) && ($info->nullable || $info->optional)) {
-                if ($info->nullable) {
-                    ++$state->yes;
-                } elseif ($info->optional) {
-                    ++$state->maybe;
-                }
-                $acc[$name] = null;
-            } else {
-                $coerced = Conversion::coerce($info->type, value: $item, state: $state);
-                $acc[$name] = $coerced;
-            }
-        }
-
-        foreach ($val as $name => $item) {
-            $acc[$name] = $item;
-        }
-
-        // @phpstan-ignore-next-line
-        return static::from($acc);
-    }
-
-    public static function dump(mixed $value, DumpState $state): mixed
-    {
-        if ($value instanceof self) {
-            $value = $value->__serialize();
-        }
-
-        if (is_array($value)) {
-            $acc = [];
-
-            foreach ($value as $name => $item) {
-                if (array_key_exists($name, array: self::$_properties)) {
-                    $info = self::$_properties[$name];
-                    $acc[$info->apiName] = Conversion::dump($info->type, value: $item, state: $state);
-                } else {
-                    $acc[$name] = Conversion::dump_unknown($item, state: $state);
-                }
-            }
-
-            return empty($acc) ? ((object) []) : $acc;
-        }
-
-        return Conversion::dump_unknown($value, state: $state);
-    }
-
     /**
      * @return array<string, mixed>
      */
     public function jsonSerialize(): array
     {
         // @phpstan-ignore-next-line
-        return Conversion::dump($this::class, value: $this->__serialize());
+        return Conversion::dump(self::converter(), value: $this->__serialize());
     }
 
     public static function from(mixed $data): self
@@ -274,35 +178,31 @@ trait Model
         self::introspect();
 
         /** @var self $instance */
-        $instance = self::$_class->newInstanceWithoutConstructor();
+        $instance = self::$converter->class->newInstanceWithoutConstructor();
         $instance->__unserialize($data); // @phpstan-ignore-line
 
         return $instance;
     }
 
+    public static function converter(): Converter
+    {
+        if (isset(self::$converter)) {
+            return self::$converter;
+        }
+
+        $class = new \ReflectionClass(static::class);
+
+        return self::$converter = new ModelOf($class);
+    }
+
     public static function introspect(): void
     {
-        if (isset(self::$_class)) {
-            return;
-        }
-
-        self::$_class = new \ReflectionClass(static::class);
-
-        foreach (self::$_class->getConstructor()?->getParameters() ?? [] as $parameter) {
-            self::$_constructorArgNames[] = $parameter->getName();
-        }
-
-        foreach (self::$_class->getProperties() as $property) {
-            if (!empty($property->getAttributes(Api::class))) {
-                $name = $property->getName();
-                self::$_properties[$name] = new PropertyInfo($property);
-            }
-        }
+        static::converter();
     }
 
     private function unsetOptionalProperties(): void
     {
-        foreach (self::$_properties as $name => $info) {
+        foreach (self::$converter->properties as $name => $info) {
             if ($info->optional) {
                 unset($this->{$name});
             }

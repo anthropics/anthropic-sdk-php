@@ -29,10 +29,9 @@ trait Params
      */
     public static function parseRequest(null|array|self $params, null|array|RequestOptions $options): array
     {
-        static::introspect();
-
+        $converter = self::converter();
         $state = new DumpState();
-        $dumped = (array) Conversion::dump(self::class, value: $params, state: $state);
+        $dumped = (array) Conversion::dump($converter, value: $params, state: $state);
         $opts = RequestOptions::parse($options); // @phpstan-ignore-line
 
         if (!$state->canRetry) {

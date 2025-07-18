@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Anthropic\Models\Beta\BetaServerToolUseBlockParam;
 
 use Anthropic\Core\Concerns\Enum;
-use Anthropic\Core\Contracts\StaticConverter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-final class Name implements StaticConverter
+final class Name implements ConverterSource
 {
     use Enum;
 

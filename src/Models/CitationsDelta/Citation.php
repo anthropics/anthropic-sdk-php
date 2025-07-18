@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Anthropic\Models\CitationsDelta;
 
 use Anthropic\Core\Concerns\Union;
-use Anthropic\Core\Contracts\Converter;
-use Anthropic\Core\Contracts\StaticConverter;
+use Anthropic\Core\Conversion\Contracts\Converter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Models\CitationCharLocation;
 use Anthropic\Models\CitationContentBlockLocation;
 use Anthropic\Models\CitationPageLocation;
 use Anthropic\Models\CitationsWebSearchResultLocation;
 
-final class Citation implements StaticConverter
+final class Citation implements ConverterSource
 {
     use Union;
 
@@ -22,8 +22,8 @@ final class Citation implements StaticConverter
     }
 
     /**
-     * @return list<string|Converter|StaticConverter>|array<
-     *   string, string|Converter|StaticConverter
+     * @return list<string|Converter|ConverterSource>|array<
+     *   string, string|Converter|ConverterSource
      * >
      */
     public static function variants(): array

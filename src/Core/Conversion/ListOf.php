@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Core\Conversion;
 
-use Anthropic\Core\Concerns\ArrayOf;
-use Anthropic\Core\Contracts\Converter;
+use Anthropic\Core\Conversion\Concerns\ArrayOf;
+use Anthropic\Core\Conversion\Contracts\Converter;
 
 /**
  * @internal

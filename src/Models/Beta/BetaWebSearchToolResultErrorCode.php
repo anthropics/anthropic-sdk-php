@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Anthropic\Models\Beta;
 
 use Anthropic\Core\Concerns\Enum;
-use Anthropic\Core\Contracts\StaticConverter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-final class BetaWebSearchToolResultErrorCode implements StaticConverter
+final class BetaWebSearchToolResultErrorCode implements ConverterSource
 {
     use Enum;
 

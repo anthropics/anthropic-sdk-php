@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Core\Conversion;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Contracts\Converter;
-use Anthropic\Core\Contracts\StaticConverter;
+use Anthropic\Core\Conversion\Contracts\Converter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * @internal
@@ -15,7 +15,7 @@ final class PropertyInfo
 {
     public readonly string $apiName;
 
-    public readonly Converter|StaticConverter|string $type;
+    public readonly Converter|ConverterSource|string $type;
 
     public readonly bool $nullable;
 
@@ -46,19 +46,20 @@ final class PropertyInfo
     }
 
     /**
-     * @param null|array<int|string,string>|Converter|\ReflectionType|StaticConverter|string $type
+     * @param null|array<int|string,string>|Converter|ConverterSource|\ReflectionType|string $type
      */
-    private static function parse(null|array|Converter|\ReflectionType|StaticConverter|string $type): Converter|StaticConverter|string
+    private static function parse(null|array|Converter|ConverterSource|\ReflectionType|string $type): Converter|ConverterSource|string
     {
         if (is_string($type) || $type instanceof Converter) {
             return $type;
         }
 
         if (is_array($type)) {
-            return new UnionOf($type);
+            return new UnionOf($type); // @phpstan-ignore-line
         }
 
         if ($type instanceof \ReflectionUnionType) {
+            // @phpstan-ignore-next-line
             return new UnionOf(array_map(static fn ($t) => self::parse($t), array: $type->getTypes()));
         }
 

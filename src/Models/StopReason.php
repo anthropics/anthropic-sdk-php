@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Concerns\Enum;
-use Anthropic\Core\Contracts\StaticConverter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-final class StopReason implements StaticConverter
+final class StopReason implements ConverterSource
 {
     use Enum;
 

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Core\Concerns;
+namespace Anthropic\Core\Conversion\Concerns;
 
-use Anthropic\Core\Contracts\Converter;
-use Anthropic\Core\Contracts\StaticConverter;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Conversion\CoerceState;
+use Anthropic\Core\Conversion\Contracts\Converter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\DumpState;
 
 /**
@@ -15,12 +15,12 @@ use Anthropic\Core\Conversion\DumpState;
  */
 trait ArrayOf
 {
-    private readonly null|Converter|StaticConverter|string $type;
+    private readonly null|Converter|ConverterSource|string $type;
 
     public function __construct(
-        null|Converter|StaticConverter|string $type = null,
-        null|Converter|StaticConverter|string $enum = null,
-        null|Converter|StaticConverter|string $union = null,
+        null|Converter|ConverterSource|string $type = null,
+        null|Converter|ConverterSource|string $enum = null,
+        null|Converter|ConverterSource|string $union = null,
         private readonly bool $nullable = false,
     ) {
         $this->type = $type ?? $enum ?? $union;

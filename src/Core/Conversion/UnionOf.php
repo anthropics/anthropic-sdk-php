@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Anthropic\Core\Conversion;
 
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Contracts\Converter;
-use Anthropic\Core\Contracts\StaticConverter;
 use Anthropic\Core\Conversion;
+use Anthropic\Core\Conversion\Contracts\Converter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 final class UnionOf implements Converter
 {
     /**
-     * @param array<int|string, Converter|StaticConverter|string> $variants
+     * @param array<string, Converter|ConverterSource|string>|list<Converter|ConverterSource|string> $variants
      */
     public function __construct(
         private readonly array $variants,
@@ -77,7 +77,7 @@ final class UnionOf implements Converter
 
     private function resolveVariant(
         mixed $value,
-    ): null|Converter|StaticConverter|string {
+    ): null|Converter|ConverterSource|string {
         if ($value instanceof BaseModel) {
             return $value::class;
         }

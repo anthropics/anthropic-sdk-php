@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Parameters\Beta\MessageCountTokensParam;
 
 use Anthropic\Core\Concerns\Union;
-use Anthropic\Core\Contracts\Converter;
-use Anthropic\Core\Contracts\StaticConverter;
+use Anthropic\Core\Conversion\Contracts\Converter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Models\Beta\BetaCodeExecutionTool20250522;
 use Anthropic\Models\Beta\BetaTool;
 use Anthropic\Models\Beta\BetaToolBash20241022;
@@ -18,13 +18,13 @@ use Anthropic\Models\Beta\BetaToolTextEditor20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20250429;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305;
 
-final class Tool implements StaticConverter
+final class Tool implements ConverterSource
 {
     use Union;
 
     /**
-     * @return list<string|Converter|StaticConverter>|array<
-     *   string, string|Converter|StaticConverter
+     * @return list<string|Converter|ConverterSource>|array<
+     *   string, string|Converter|ConverterSource
      * >
      */
     public static function variants(): array

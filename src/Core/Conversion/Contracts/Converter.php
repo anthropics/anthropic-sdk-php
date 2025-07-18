@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Core\Contracts;
+namespace Anthropic\Core\Conversion\Contracts;
 
 use Anthropic\Core\Conversion\CoerceState;
 use Anthropic\Core\Conversion\DumpState;

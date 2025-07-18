@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Anthropic\Core;
 
-use Anthropic\Core\Contracts\Converter;
-use Anthropic\Core\Contracts\StaticConverter;
 use Anthropic\Core\Conversion\CoerceState;
+use Anthropic\Core\Conversion\Contracts\Converter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\DumpState;
 
 final class Conversion
@@ -18,8 +18,8 @@ final class Conversion
         }
 
         if (is_object($value)) {
-            if (is_a($value, class: StaticConverter::class)) {
-                return $value::dump($value, state: $state);
+            if (is_a($value, class: ConverterSource::class)) {
+                return $value::converter()->dump($value, state: $state);
             }
 
             if (is_a($value, class: \DateTimeInterface::class)) {
@@ -34,7 +34,7 @@ final class Conversion
         return $value;
     }
 
-    public static function coerce(Converter|StaticConverter|string $target, mixed $value, CoerceState $state = new CoerceState()): mixed
+    public static function coerce(Converter|ConverterSource|string $target, mixed $value, CoerceState $state = new CoerceState()): mixed
     {
         if ($value instanceof $target) {
             ++$state->yes;
@@ -46,8 +46,8 @@ final class Conversion
             return $target->coerce($value, state: $state);
         }
 
-        if (is_a($target, class: StaticConverter::class, allow_string: true)) {
-            return $target::coerce($value, state: $state);
+        if (is_a($target, class: ConverterSource::class, allow_string: true)) {
+            return $target::converter()->coerce($value, state: $state);
         }
 
         switch ($target) {
@@ -146,14 +146,14 @@ final class Conversion
         }
     }
 
-    public static function dump(Converter|StaticConverter|string $target, mixed $value, DumpState $state = new DumpState()): mixed
+    public static function dump(Converter|ConverterSource|string $target, mixed $value, DumpState $state = new DumpState()): mixed
     {
         if ($target instanceof Converter) {
             return $target->dump($value, state: $state);
         }
 
-        if (is_a($target, class: StaticConverter::class, allow_string: true)) {
-            return $target::dump($value, state: $state);
+        if (is_a($target, class: ConverterSource::class, allow_string: true)) {
+            return $target::converter()->dump($value, state: $state);
         }
 
         return self::dump_unknown($value, state: $state);

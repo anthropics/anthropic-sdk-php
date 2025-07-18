@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Models\RawContentBlockStartEvent;
 
 use Anthropic\Core\Concerns\Union;
-use Anthropic\Core\Contracts\Converter;
-use Anthropic\Core\Contracts\StaticConverter;
+use Anthropic\Core\Conversion\Contracts\Converter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Models\RedactedThinkingBlock;
 use Anthropic\Models\ServerToolUseBlock;
 use Anthropic\Models\TextBlock;
@@ -14,7 +14,7 @@ use Anthropic\Models\ThinkingBlock;
 use Anthropic\Models\ToolUseBlock;
 use Anthropic\Models\WebSearchToolResultBlock;
 
-final class ContentBlock implements StaticConverter
+final class ContentBlock implements ConverterSource
 {
     use Union;
 
@@ -24,8 +24,8 @@ final class ContentBlock implements StaticConverter
     }
 
     /**
-     * @return list<string|Converter|StaticConverter>|array<
-     *   string, string|Converter|StaticConverter
+     * @return list<string|Converter|ConverterSource>|array<
+     *   string, string|Converter|ConverterSource
      * >
      */
     public static function variants(): array

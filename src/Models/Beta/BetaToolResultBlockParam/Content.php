@@ -5,21 +5,21 @@ declare(strict_types=1);
 namespace Anthropic\Models\Beta\BetaToolResultBlockParam;
 
 use Anthropic\Core\Concerns\Union;
-use Anthropic\Core\Contracts\Converter;
-use Anthropic\Core\Contracts\StaticConverter;
+use Anthropic\Core\Conversion\Contracts\Converter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Core\Conversion\UnionOf;
 use Anthropic\Models\Beta\BetaImageBlockParam;
 use Anthropic\Models\Beta\BetaSearchResultBlockParam;
 use Anthropic\Models\Beta\BetaTextBlockParam;
 
-final class Content implements StaticConverter
+final class Content implements ConverterSource
 {
     use Union;
 
     /**
-     * @return list<string|Converter|StaticConverter>|array<
-     *   string, string|Converter|StaticConverter
+     * @return list<string|Converter|ConverterSource>|array<
+     *   string, string|Converter|ConverterSource
      * >
      */
     public static function variants(): array

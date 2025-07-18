@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Anthropic\Models\AnthropicBeta;
 
 use Anthropic\Core\Concerns\Enum;
-use Anthropic\Core\Contracts\StaticConverter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-final class UnionMember1 implements StaticConverter
+final class UnionMember1 implements ConverterSource
 {
     use Enum;
 

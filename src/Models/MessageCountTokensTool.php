@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Concerns\Union;
-use Anthropic\Core\Contracts\Converter;
-use Anthropic\Core\Contracts\StaticConverter;
+use Anthropic\Core\Conversion\Contracts\Converter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Models\MessageCountTokensTool\TextEditor20250429;
 
-final class MessageCountTokensTool implements StaticConverter
+final class MessageCountTokensTool implements ConverterSource
 {
     use Union;
 
     /**
-     * @return list<string|Converter|StaticConverter>|array<
-     *   string, string|Converter|StaticConverter
+     * @return list<string|Converter|ConverterSource>|array<
+     *   string, string|Converter|ConverterSource
      * >
      */
     public static function variants(): array
