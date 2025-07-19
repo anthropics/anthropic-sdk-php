@@ -11,7 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @internal
  */
-interface Pager
+interface Page
 {
     public function __construct(
         BaseClient $client,
