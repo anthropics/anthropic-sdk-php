@@ -7,6 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Beta\BetaImageBlockParam\Source;
 
 final class BetaImageBlockParam implements BaseModel
 {
@@ -15,7 +16,7 @@ final class BetaImageBlockParam implements BaseModel
     #[Api]
     public string $type = 'image';
 
-    #[Api]
+    #[Api(union: Source::class)]
     public BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source;
 
     #[Api('cache_control', optional: true)]

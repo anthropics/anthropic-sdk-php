@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
+use Anthropic\Models\AnthropicBeta;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Parameters\Beta\Messages\BatchCreateParam\Request;
 
@@ -23,10 +23,7 @@ final class BatchCreateParam implements BaseModel
     public array $requests;
 
     /** @var null|list<string|UnionMember1::*> $anthropicBeta */
-    #[Api(
-        type: new ListOf(union: new UnionOf(['string', UnionMember1::class])),
-        optional: true,
-    )]
+    #[Api(type: new ListOf(union: AnthropicBeta::class), optional: true)]
     public ?array $anthropicBeta;
 
     /**

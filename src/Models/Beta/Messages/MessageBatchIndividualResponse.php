@@ -15,7 +15,7 @@ final class MessageBatchIndividualResponse implements BaseModel
     #[Api('custom_id')]
     public string $customID;
 
-    #[Api]
+    #[Api(union: MessageBatchResult::class)]
     public MessageBatchCanceledResult|MessageBatchErroredResult|MessageBatchExpiredResult|MessageBatchSucceededResult $result;
 
     /**

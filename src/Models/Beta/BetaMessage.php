@@ -8,7 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
 use Anthropic\Models\Model\UnionMember0;
 
 final class BetaMessage implements BaseModel
@@ -32,24 +31,7 @@ final class BetaMessage implements BaseModel
      *   BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock
      * > $content
      */
-    #[Api(
-        type: new ListOf(
-            union: new UnionOf(
-                [
-                    BetaTextBlock::class,
-                    BetaThinkingBlock::class,
-                    BetaRedactedThinkingBlock::class,
-                    BetaToolUseBlock::class,
-                    BetaServerToolUseBlock::class,
-                    BetaWebSearchToolResultBlock::class,
-                    BetaCodeExecutionToolResultBlock::class,
-                    BetaMCPToolUseBlock::class,
-                    BetaMCPToolResultBlock::class,
-                    BetaContainerUploadBlock::class,
-                ],
-            ),
-        ),
-    )]
+    #[Api(type: new ListOf(union: BetaContentBlock::class))]
     public array $content;
 
     /** @var string|UnionMember0::* $model */

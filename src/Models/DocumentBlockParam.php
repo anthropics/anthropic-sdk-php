@@ -7,6 +7,7 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\DocumentBlockParam\Source;
 
 final class DocumentBlockParam implements BaseModel
 {
@@ -15,7 +16,7 @@ final class DocumentBlockParam implements BaseModel
     #[Api]
     public string $type = 'document';
 
-    #[Api]
+    #[Api(union: Source::class)]
     public Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source;
 
     #[Api('cache_control', optional: true)]

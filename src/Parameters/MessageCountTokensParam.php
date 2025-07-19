@@ -9,21 +9,24 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
+use Anthropic\Models\MessageCountTokensTool;
 use Anthropic\Models\MessageCountTokensTool\TextEditor20250429;
 use Anthropic\Models\MessageParam;
 use Anthropic\Models\Model\UnionMember0;
 use Anthropic\Models\TextBlockParam;
 use Anthropic\Models\ThinkingConfigDisabled;
 use Anthropic\Models\ThinkingConfigEnabled;
+use Anthropic\Models\ThinkingConfigParam;
 use Anthropic\Models\Tool;
 use Anthropic\Models\ToolBash20250124;
+use Anthropic\Models\ToolChoice;
 use Anthropic\Models\ToolChoiceAny;
 use Anthropic\Models\ToolChoiceAuto;
 use Anthropic\Models\ToolChoiceNone;
 use Anthropic\Models\ToolChoiceTool;
 use Anthropic\Models\ToolTextEditor20250124;
 use Anthropic\Models\WebSearchTool20250305;
+use Anthropic\Parameters\MessageCountTokensParam\System;
 
 final class MessageCountTokensParam implements BaseModel
 {
@@ -39,16 +42,13 @@ final class MessageCountTokensParam implements BaseModel
     public string $model;
 
     /** @var null|list<TextBlockParam>|string $system */
-    #[Api(
-        union: new UnionOf(['string', new ListOf(TextBlockParam::class)]),
-        optional: true,
-    )]
+    #[Api(union: System::class, optional: true)]
     public null|array|string $system;
 
-    #[Api(optional: true)]
+    #[Api(union: ThinkingConfigParam::class, optional: true)]
     public null|ThinkingConfigDisabled|ThinkingConfigEnabled $thinking;
 
-    #[Api('tool_choice', optional: true)]
+    #[Api('tool_choice', union: ToolChoice::class, optional: true)]
     public null|ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice;
 
     /**
@@ -56,20 +56,7 @@ final class MessageCountTokensParam implements BaseModel
      *   Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
      * >|null $tools
      */
-    #[Api(
-        type: new ListOf(
-            union: new UnionOf(
-                [
-                    Tool::class,
-                    ToolBash20250124::class,
-                    ToolTextEditor20250124::class,
-                    TextEditor20250429::class,
-                    WebSearchTool20250305::class,
-                ],
-            ),
-        ),
-        optional: true,
-    )]
+    #[Api(type: new ListOf(union: MessageCountTokensTool::class), optional: true)]
     public ?array $tools;
 
     /**

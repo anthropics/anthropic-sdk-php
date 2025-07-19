@@ -15,7 +15,7 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
     #[Api]
     public string $type = 'content_block_delta';
 
-    #[Api]
+    #[Api(union: BetaRawContentBlockDelta::class)]
     public BetaCitationsDelta|BetaInputJSONDelta|BetaSignatureDelta|BetaTextDelta|BetaThinkingDelta $delta;
 
     #[Api]

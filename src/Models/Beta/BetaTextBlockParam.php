@@ -8,7 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
 
 final class BetaTextBlockParam implements BaseModel
 {
@@ -29,17 +28,7 @@ final class BetaTextBlockParam implements BaseModel
      * >|null $citations
      */
     #[Api(
-        type: new ListOf(
-            union: new UnionOf(
-                [
-                    BetaCitationCharLocationParam::class,
-                    BetaCitationPageLocationParam::class,
-                    BetaCitationContentBlockLocationParam::class,
-                    BetaCitationWebSearchResultLocationParam::class,
-                    BetaCitationSearchResultLocationParam::class,
-                ],
-            ),
-        ),
+        type: new ListOf(union: BetaTextCitationParam::class),
         nullable: true,
         optional: true,
     )]

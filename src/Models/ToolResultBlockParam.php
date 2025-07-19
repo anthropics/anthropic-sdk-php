@@ -7,8 +7,7 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
+use Anthropic\Models\ToolResultBlockParam\Content;
 
 final class ToolResultBlockParam implements BaseModel
 {
@@ -24,17 +23,7 @@ final class ToolResultBlockParam implements BaseModel
     public ?CacheControlEphemeral $cacheControl;
 
     /** @var null|list<ImageBlockParam|TextBlockParam>|string $content */
-    #[Api(
-        union: new UnionOf(
-            [
-                'string',
-                new ListOf(
-                    union: new UnionOf([TextBlockParam::class, ImageBlockParam::class])
-                ),
-            ],
-        ),
-        optional: true,
-    )]
+    #[Api(union: Content::class, optional: true)]
     public null|array|string $content;
 
     #[Api('is_error', optional: true)]

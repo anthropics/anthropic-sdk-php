@@ -8,7 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
 use Anthropic\Models\Model\UnionMember0;
 
 final class Message implements BaseModel
@@ -29,20 +28,7 @@ final class Message implements BaseModel
      *   TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock
      * > $content
      */
-    #[Api(
-        type: new ListOf(
-            union: new UnionOf(
-                [
-                    TextBlock::class,
-                    ThinkingBlock::class,
-                    RedactedThinkingBlock::class,
-                    ToolUseBlock::class,
-                    ServerToolUseBlock::class,
-                    WebSearchToolResultBlock::class,
-                ],
-            ),
-        ),
-    )]
+    #[Api(type: new ListOf(union: ContentBlock::class))]
     public array $content;
 
     /** @var string|UnionMember0::* $model */

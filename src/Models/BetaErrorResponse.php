@@ -15,7 +15,7 @@ final class BetaErrorResponse implements BaseModel
     #[Api]
     public string $type = 'error';
 
-    #[Api]
+    #[Api(union: BetaError::class)]
     public BetaAPIError|BetaAuthenticationError|BetaBillingError|BetaGatewayTimeoutError|BetaInvalidRequestError|BetaNotFoundError|BetaOverloadedError|BetaPermissionError|BetaRateLimitError $error;
 
     /**

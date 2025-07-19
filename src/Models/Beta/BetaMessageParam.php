@@ -7,8 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
+use Anthropic\Models\Beta\BetaMessageParam\Content;
 use Anthropic\Models\Beta\BetaMessageParam\Role;
 
 final class BetaMessageParam implements BaseModel
@@ -20,33 +19,7 @@ final class BetaMessageParam implements BaseModel
      *   BetaTextBlockParam|BetaImageBlockParam|BetaRequestDocumentBlock|BetaSearchResultBlockParam|BetaThinkingBlockParam|BetaRedactedThinkingBlockParam|BetaToolUseBlockParam|BetaToolResultBlockParam|BetaServerToolUseBlockParam|BetaWebSearchToolResultBlockParam|BetaCodeExecutionToolResultBlockParam|BetaMCPToolUseBlockParam|BetaRequestMCPToolResultBlockParam|BetaContainerUploadBlockParam
      * > $content
      */
-    #[Api(
-        union: new UnionOf(
-            [
-                'string',
-                new ListOf(
-                    union: new UnionOf(
-                        [
-                            BetaTextBlockParam::class,
-                            BetaImageBlockParam::class,
-                            BetaRequestDocumentBlock::class,
-                            BetaSearchResultBlockParam::class,
-                            BetaThinkingBlockParam::class,
-                            BetaRedactedThinkingBlockParam::class,
-                            BetaToolUseBlockParam::class,
-                            BetaToolResultBlockParam::class,
-                            BetaServerToolUseBlockParam::class,
-                            BetaWebSearchToolResultBlockParam::class,
-                            BetaCodeExecutionToolResultBlockParam::class,
-                            BetaMCPToolUseBlockParam::class,
-                            BetaRequestMCPToolResultBlockParam::class,
-                            BetaContainerUploadBlockParam::class,
-                        ],
-                    ),
-                ),
-            ],
-        ),
-    )]
+    #[Api(union: Content::class)]
     public array|string $content;
 
     /** @var Role::* $role */

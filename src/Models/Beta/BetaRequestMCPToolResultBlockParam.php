@@ -7,8 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
+use Anthropic\Models\Beta\BetaRequestMCPToolResultBlockParam\Content;
 
 final class BetaRequestMCPToolResultBlockParam implements BaseModel
 {
@@ -24,10 +23,7 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
     public ?BetaCacheControlEphemeral $cacheControl;
 
     /** @var null|list<BetaTextBlockParam>|string $content */
-    #[Api(
-        union: new UnionOf(['string', new ListOf(BetaTextBlockParam::class)]),
-        optional: true,
-    )]
+    #[Api(union: Content::class, optional: true)]
     public null|array|string $content;
 
     #[Api('is_error', optional: true)]

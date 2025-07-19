@@ -88,8 +88,16 @@ final class ModelOf implements Converter
             $acc[$name] = $item;
         }
 
+        return $this->from($acc);
+    }
+
+    /**
+     * @param array<mixed> $data
+     */
+    public function from(array $data): BaseModel
+    {
         $instance = $this->class->newInstanceWithoutConstructor();
-        $instance->__unserialize($acc); // @phpstan-ignore-line
+        $instance->__unserialize($data); // @phpstan-ignore-line
 
         return $instance;
     }

@@ -7,8 +7,6 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
 
 final class BetaWebSearchToolResultBlockParam implements BaseModel
 {
@@ -20,14 +18,7 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
     /**
      * @var BetaWebSearchToolRequestError|list<BetaWebSearchResultBlockParam> $content
      */
-    #[Api(
-        union: new UnionOf(
-            [
-                new ListOf(BetaWebSearchResultBlockParam::class),
-                BetaWebSearchToolRequestError::class,
-            ],
-        ),
-    )]
+    #[Api(union: BetaWebSearchToolResultBlockParamContent::class)]
     public array|BetaWebSearchToolRequestError $content;
 
     #[Api('tool_use_id')]

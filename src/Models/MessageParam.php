@@ -7,8 +7,7 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
+use Anthropic\Models\MessageParam\Content;
 use Anthropic\Models\MessageParam\Role;
 
 final class MessageParam implements BaseModel
@@ -20,28 +19,7 @@ final class MessageParam implements BaseModel
      *   TextBlockParam|ImageBlockParam|DocumentBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam
      * > $content
      */
-    #[Api(
-        union: new UnionOf(
-            [
-                'string',
-                new ListOf(
-                    union: new UnionOf(
-                        [
-                            TextBlockParam::class,
-                            ImageBlockParam::class,
-                            DocumentBlockParam::class,
-                            ThinkingBlockParam::class,
-                            RedactedThinkingBlockParam::class,
-                            ToolUseBlockParam::class,
-                            ToolResultBlockParam::class,
-                            ServerToolUseBlockParam::class,
-                            WebSearchToolResultBlockParam::class,
-                        ],
-                    ),
-                ),
-            ],
-        ),
-    )]
+    #[Api(union: Content::class)]
     public array|string $content;
 
     /** @var Role::* $role */

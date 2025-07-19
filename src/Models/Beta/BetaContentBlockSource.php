@@ -7,8 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
+use Anthropic\Models\Beta\BetaContentBlockSource\Content;
 
 final class BetaContentBlockSource implements BaseModel
 {
@@ -18,18 +17,7 @@ final class BetaContentBlockSource implements BaseModel
     public string $type = 'content';
 
     /** @var list<BetaImageBlockParam|BetaTextBlockParam>|string $content */
-    #[Api(
-        union: new UnionOf(
-            [
-                'string',
-                new ListOf(
-                    union: new UnionOf(
-                        [BetaTextBlockParam::class, BetaImageBlockParam::class]
-                    ),
-                ),
-            ],
-        ),
-    )]
+    #[Api(union: Content::class)]
     public array|string $content;
 
     /**

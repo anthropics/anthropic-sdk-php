@@ -15,7 +15,7 @@ final class ErrorResponse implements BaseModel
     #[Api]
     public string $type = 'error';
 
-    #[Api]
+    #[Api(union: ErrorObject::class)]
     public APIErrorObject|AuthenticationError|BillingError|GatewayTimeoutError|InvalidRequestError|NotFoundError|OverloadedError|PermissionError|RateLimitError $error;
 
     /**

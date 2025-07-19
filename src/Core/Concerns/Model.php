@@ -175,13 +175,7 @@ trait Model
 
     public static function from(mixed $data): self
     {
-        self::introspect();
-
-        /** @var self $instance */
-        $instance = self::$converter->class->newInstanceWithoutConstructor();
-        $instance->__unserialize($data); // @phpstan-ignore-line
-
-        return $instance;
+        return self::converter()->from($data); // @phpstan-ignore-line
     }
 
     public static function converter(): Converter

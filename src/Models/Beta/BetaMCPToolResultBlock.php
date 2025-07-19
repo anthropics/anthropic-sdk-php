@@ -7,8 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
+use Anthropic\Models\Beta\BetaMCPToolResultBlock\Content;
 
 final class BetaMCPToolResultBlock implements BaseModel
 {
@@ -18,7 +17,7 @@ final class BetaMCPToolResultBlock implements BaseModel
     public string $type = 'mcp_tool_result';
 
     /** @var list<BetaTextBlock>|string $content */
-    #[Api(union: new UnionOf(['string', new ListOf(BetaTextBlock::class)]))]
+    #[Api(union: Content::class)]
     public array|string $content;
 
     #[Api('is_error')]

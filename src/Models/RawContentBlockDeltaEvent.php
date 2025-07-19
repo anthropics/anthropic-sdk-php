@@ -15,7 +15,7 @@ final class RawContentBlockDeltaEvent implements BaseModel
     #[Api]
     public string $type = 'content_block_delta';
 
-    #[Api]
+    #[Api(union: RawContentBlockDelta::class)]
     public CitationsDelta|InputJSONDelta|SignatureDelta|TextDelta|ThinkingDelta $delta;
 
     #[Api]

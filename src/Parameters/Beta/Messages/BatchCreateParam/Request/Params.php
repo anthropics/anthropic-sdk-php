@@ -8,7 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
 use Anthropic\Models\Beta\BetaCodeExecutionTool20250522;
 use Anthropic\Models\Beta\BetaMessageParam;
 use Anthropic\Models\Beta\BetaMetadata;
@@ -16,9 +15,11 @@ use Anthropic\Models\Beta\BetaRequestMCPServerURLDefinition;
 use Anthropic\Models\Beta\BetaTextBlockParam;
 use Anthropic\Models\Beta\BetaThinkingConfigDisabled;
 use Anthropic\Models\Beta\BetaThinkingConfigEnabled;
+use Anthropic\Models\Beta\BetaThinkingConfigParam;
 use Anthropic\Models\Beta\BetaTool;
 use Anthropic\Models\Beta\BetaToolBash20241022;
 use Anthropic\Models\Beta\BetaToolBash20250124;
+use Anthropic\Models\Beta\BetaToolChoice;
 use Anthropic\Models\Beta\BetaToolChoiceAny;
 use Anthropic\Models\Beta\BetaToolChoiceAuto;
 use Anthropic\Models\Beta\BetaToolChoiceNone;
@@ -28,9 +29,11 @@ use Anthropic\Models\Beta\BetaToolComputerUse20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20241022;
 use Anthropic\Models\Beta\BetaToolTextEditor20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20250429;
+use Anthropic\Models\Beta\BetaToolUnion;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305;
 use Anthropic\Models\Model\UnionMember0;
 use Anthropic\Parameters\Beta\Messages\BatchCreateParam\Request\Params\ServiceTier;
+use Anthropic\Parameters\Beta\Messages\BatchCreateParam\Request\Params\System;
 
 final class Params implements BaseModel
 {
@@ -73,19 +76,16 @@ final class Params implements BaseModel
     public ?bool $stream;
 
     /** @var null|list<BetaTextBlockParam>|string $system */
-    #[Api(
-        union: new UnionOf(['string', new ListOf(BetaTextBlockParam::class)]),
-        optional: true,
-    )]
+    #[Api(union: System::class, optional: true)]
     public null|array|string $system;
 
     #[Api(optional: true)]
     public ?float $temperature;
 
-    #[Api(optional: true)]
+    #[Api(union: BetaThinkingConfigParam::class, optional: true)]
     public null|BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking;
 
-    #[Api('tool_choice', optional: true)]
+    #[Api('tool_choice', union: BetaToolChoice::class, optional: true)]
     public null|BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice;
 
     /**
@@ -93,25 +93,7 @@ final class Params implements BaseModel
      *   BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305
      * >|null $tools
      */
-    #[Api(
-        type: new ListOf(
-            union: new UnionOf(
-                [
-                    BetaTool::class,
-                    BetaToolBash20241022::class,
-                    BetaToolBash20250124::class,
-                    BetaCodeExecutionTool20250522::class,
-                    BetaToolComputerUse20241022::class,
-                    BetaToolComputerUse20250124::class,
-                    BetaToolTextEditor20241022::class,
-                    BetaToolTextEditor20250124::class,
-                    BetaToolTextEditor20250429::class,
-                    BetaWebSearchTool20250305::class,
-                ],
-            ),
-        ),
-        optional: true,
-    )]
+    #[Api(type: new ListOf(union: BetaToolUnion::class), optional: true)]
     public ?array $tools;
 
     #[Api('top_k', optional: true)]

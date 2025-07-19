@@ -8,9 +8,7 @@ use Anthropic\Core\Concerns\Union;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
-use Anthropic\Models\ImageBlockParam;
-use Anthropic\Models\TextBlockParam;
+use Anthropic\Models\ContentBlockSourceContent;
 
 final class Content implements ConverterSource
 {
@@ -23,9 +21,6 @@ final class Content implements ConverterSource
      */
     public static function variants(): array
     {
-        return [
-            'string',
-            new ListOf(new UnionOf([TextBlockParam::class, ImageBlockParam::class])),
-        ];
+        return ['string', new ListOf(ContentBlockSourceContent::class)];
     }
 }

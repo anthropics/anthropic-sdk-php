@@ -7,8 +7,7 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
+use Anthropic\Models\ContentBlockSource\Content;
 
 final class ContentBlockSource implements BaseModel
 {
@@ -18,16 +17,7 @@ final class ContentBlockSource implements BaseModel
     public string $type = 'content';
 
     /** @var list<ImageBlockParam|TextBlockParam>|string $content */
-    #[Api(
-        union: new UnionOf(
-            [
-                'string',
-                new ListOf(
-                    union: new UnionOf([TextBlockParam::class, ImageBlockParam::class])
-                ),
-            ],
-        ),
-    )]
+    #[Api(union: Content::class)]
     public array|string $content;
 
     /**

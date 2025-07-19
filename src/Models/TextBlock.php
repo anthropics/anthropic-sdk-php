@@ -8,7 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
 
 final class TextBlock implements BaseModel
 {
@@ -22,19 +21,7 @@ final class TextBlock implements BaseModel
      *   CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation
      * >|null $citations
      */
-    #[Api(
-        type: new ListOf(
-            union: new UnionOf(
-                [
-                    CitationCharLocation::class,
-                    CitationPageLocation::class,
-                    CitationContentBlockLocation::class,
-                    CitationsWebSearchResultLocation::class,
-                ],
-            ),
-        ),
-        nullable: true,
-    )]
+    #[Api(type: new ListOf(union: TextCitation::class), nullable: true)]
     public ?array $citations;
 
     #[Api]

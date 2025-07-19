@@ -35,6 +35,6 @@ trait Union
         }
 
         // @phpstan-ignore-next-line
-        return static::$converter = new UnionOf($this->discriminator(), variants: $this->variants());
+        return static::$converter = new UnionOf(discriminator: static::discriminator(), variants: static::variants());
     }
 }

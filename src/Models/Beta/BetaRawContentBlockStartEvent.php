@@ -7,6 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Beta\BetaRawContentBlockStartEvent\ContentBlock;
 
 final class BetaRawContentBlockStartEvent implements BaseModel
 {
@@ -15,7 +16,7 @@ final class BetaRawContentBlockStartEvent implements BaseModel
     #[Api]
     public string $type = 'content_block_start';
 
-    #[Api('content_block')]
+    #[Api('content_block', union: ContentBlock::class)]
     public BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock $contentBlock;
 
     #[Api]

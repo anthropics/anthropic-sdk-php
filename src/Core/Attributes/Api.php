@@ -13,13 +13,21 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
 final class Api
 {
-    public readonly null|Converter|ConverterSource|string $type;
+    /**
+     * @var null|class-string<ConverterSource>|Converter|string
+     */
+    public readonly null|Converter|string $type;
 
+    /**
+     * @param null|class-string<ConverterSource>|Converter|string $type
+     * @param null|class-string<ConverterSource>|Converter        $enum
+     * @param null|class-string<ConverterSource>|Converter        $union
+     */
     public function __construct(
         public readonly ?string $apiName = null,
-        null|Converter|ConverterSource|string $type = null,
-        null|Converter|ConverterSource $enum = null,
-        null|Converter|ConverterSource|string $union = null,
+        null|Converter|string $type = null,
+        null|Converter|string $enum = null,
+        null|Converter|string $union = null,
         public readonly bool $nullable = false,
         public readonly bool $optional = false,
     ) {

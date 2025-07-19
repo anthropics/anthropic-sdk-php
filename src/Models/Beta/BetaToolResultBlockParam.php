@@ -7,8 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
+use Anthropic\Models\Beta\BetaToolResultBlockParam\Content;
 
 final class BetaToolResultBlockParam implements BaseModel
 {
@@ -28,23 +27,7 @@ final class BetaToolResultBlockParam implements BaseModel
      *   BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam
      * >|null $content
      */
-    #[Api(
-        union: new UnionOf(
-            [
-                'string',
-                new ListOf(
-                    union: new UnionOf(
-                        [
-                            BetaTextBlockParam::class,
-                            BetaImageBlockParam::class,
-                            BetaSearchResultBlockParam::class,
-                        ],
-                    ),
-                ),
-            ],
-        ),
-        optional: true,
-    )]
+    #[Api(union: Content::class, optional: true)]
     public null|array|string $content;
 
     #[Api('is_error', optional: true)]

@@ -7,8 +7,6 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
 
 final class WebSearchToolResultBlockParam implements BaseModel
 {
@@ -18,14 +16,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
     public string $type = 'web_search_tool_result';
 
     /** @var list<WebSearchResultBlockParam>|WebSearchToolRequestError $content */
-    #[Api(
-        union: new UnionOf(
-            [
-                new ListOf(WebSearchResultBlockParam::class),
-                WebSearchToolRequestError::class,
-            ],
-        ),
-    )]
+    #[Api(union: WebSearchToolResultBlockParamContent::class)]
     public array|WebSearchToolRequestError $content;
 
     #[Api('tool_use_id')]

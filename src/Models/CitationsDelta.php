@@ -7,6 +7,7 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\CitationsDelta\Citation;
 
 final class CitationsDelta implements BaseModel
 {
@@ -15,7 +16,7 @@ final class CitationsDelta implements BaseModel
     #[Api]
     public string $type = 'citations_delta';
 
-    #[Api]
+    #[Api(union: Citation::class)]
     public CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsWebSearchResultLocation $citation;
 
     /**

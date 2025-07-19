@@ -7,6 +7,7 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\Beta\BetaRequestDocumentBlock\Source;
 
 final class BetaRequestDocumentBlock implements BaseModel
 {
@@ -15,7 +16,7 @@ final class BetaRequestDocumentBlock implements BaseModel
     #[Api]
     public string $type = 'document';
 
-    #[Api]
+    #[Api(union: Source::class)]
     public BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source;
 
     #[Api('cache_control', optional: true)]
