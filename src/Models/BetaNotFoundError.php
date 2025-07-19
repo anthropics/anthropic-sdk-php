@@ -16,7 +16,7 @@ final class BetaNotFoundError implements BaseModel
     public string $type = 'not_found_error';
 
     #[Api]
-    public string $message = 'Not found';
+    public string $message;
 
     /**
      * You must use named parameters to construct this object.

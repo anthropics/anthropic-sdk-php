@@ -21,7 +21,7 @@ final class BatchListParam implements BaseModel
     public ?string $beforeID;
 
     #[Api(optional: true)]
-    public ?int $limit = 20;
+    public ?int $limit;
 
     /**
      * You must use named parameters to construct this object.

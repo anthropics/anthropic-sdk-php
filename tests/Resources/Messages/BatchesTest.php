@@ -112,17 +112,8 @@ final class BatchesTest extends TestCase
                                 tools: [
                                     new Tool(
                                         inputSchema: new InputSchema(
-                                            properties: [
-                                                'location' => [
-                                                    'description' => 'The city and state, e.g. San Francisco, CA',
-                                                    'type' => 'string',
-                                                ],
-                                                'unit' => [
-                                                    'description' => 'Unit for the output - one of (celsius, fahrenheit)',
-                                                    'type' => 'string',
-                                                ],
-                                            ],
-                                            required: ['location'],
+                                            properties: (object) [],
+                                            required: ['location']
                                         ),
                                         name: 'name',
                                         cacheControl: new CacheControlEphemeral(),

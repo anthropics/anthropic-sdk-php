@@ -16,7 +16,7 @@ final class BetaOverloadedError implements BaseModel
     public string $type = 'overloaded_error';
 
     #[Api]
-    public string $message = 'Overloaded';
+    public string $message;
 
     /**
      * You must use named parameters to construct this object.

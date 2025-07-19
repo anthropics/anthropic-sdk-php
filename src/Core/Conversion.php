@@ -26,9 +26,13 @@ final class Conversion
                 return $value->format(format: \DateTimeInterface::RFC3339);
             }
 
+            if (is_a($value, class: \JsonSerializable::class)) {
+                return $value->jsonSerialize();
+            }
+
             $acc = get_object_vars($value);
 
-            return self::dump_unknown($acc, state: $state);
+            return empty($acc) ? (object) $acc : self::dump_unknown($acc, state: $state);
         }
 
         return $value;
@@ -42,12 +46,12 @@ final class Conversion
             return $value;
         }
 
-        if ($target instanceof Converter) {
-            return $target->coerce($value, state: $state);
+        if (is_a($target, class: ConverterSource::class, allow_string: true)) {
+            $target = $target::converter();
         }
 
-        if (is_a($target, class: ConverterSource::class, allow_string: true)) {
-            return $target::converter()->coerce($value, state: $state);
+        if ($target instanceof Converter) {
+            return $target->coerce($value, state: $state);
         }
 
         switch ($target) {

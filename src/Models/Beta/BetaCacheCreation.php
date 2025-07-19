@@ -13,10 +13,10 @@ final class BetaCacheCreation implements BaseModel
     use Model;
 
     #[Api('ephemeral_1h_input_tokens')]
-    public int $ephemeral1hInputTokens = 0;
+    public int $ephemeral1hInputTokens;
 
     #[Api('ephemeral_5m_input_tokens')]
-    public int $ephemeral5mInputTokens = 0;
+    public int $ephemeral5mInputTokens;
 
     /**
      * You must use named parameters to construct this object.

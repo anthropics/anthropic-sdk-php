@@ -16,7 +16,7 @@ final class BetaAPIError implements BaseModel
     public string $type = 'api_error';
 
     #[Api]
-    public string $message = 'Internal server error';
+    public string $message;
 
     /**
      * You must use named parameters to construct this object.

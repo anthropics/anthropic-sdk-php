@@ -16,7 +16,7 @@ final class BetaRateLimitError implements BaseModel
     public string $type = 'rate_limit_error';
 
     #[Api]
-    public string $message = 'Rate limited';
+    public string $message;
 
     /**
      * You must use named parameters to construct this object.

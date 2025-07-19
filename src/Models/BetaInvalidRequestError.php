@@ -16,7 +16,7 @@ final class BetaInvalidRequestError implements BaseModel
     public string $type = 'invalid_request_error';
 
     #[Api]
-    public string $message = 'Invalid request';
+    public string $message;
 
     /**
      * You must use named parameters to construct this object.

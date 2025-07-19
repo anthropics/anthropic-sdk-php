@@ -16,7 +16,7 @@ final class BetaGatewayTimeoutError implements BaseModel
     public string $type = 'timeout_error';
 
     #[Api]
-    public string $message = 'Request timeout';
+    public string $message;
 
     /**
      * You must use named parameters to construct this object.

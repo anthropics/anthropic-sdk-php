@@ -21,7 +21,7 @@ final class BetaMCPToolResultBlock implements BaseModel
     public array|string $content;
 
     #[Api('is_error')]
-    public bool $isError = false;
+    public bool $isError;
 
     #[Api('tool_use_id')]
     public string $toolUseID;

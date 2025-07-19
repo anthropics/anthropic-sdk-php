@@ -36,7 +36,7 @@ trait Model
     public function __unserialize(array $data): void
     {
         foreach ($data as $key => $value) {
-            $this->offsetSet($key, $value);
+            $this->offsetSet($key, value: $value);
         }
     }
 
@@ -50,7 +50,7 @@ trait Model
 
     public function __toString(): string
     {
-        return json_encode($this->__debugInfo(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
+        return json_encode($this->__debugInfo(), flags: JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
     }
 
     /**
@@ -68,7 +68,7 @@ trait Model
 
         // The unset property was overridden by a value with an incongruent type.
         // It's forbidden for an optional value to be `null` in the payload.
-        if (array_key_exists($key, $this->_data)) {
+        if (array_key_exists($key, array: $this->_data)) {
             throw new \Exception(
                 "The {$key} property is overridden, use the array access ['{$key}'] syntax to the raw payload property.",
             );

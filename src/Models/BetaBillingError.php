@@ -16,7 +16,7 @@ final class BetaBillingError implements BaseModel
     public string $type = 'billing_error';
 
     #[Api]
-    public string $message = 'Billing error';
+    public string $message;
 
     /**
      * You must use named parameters to construct this object.

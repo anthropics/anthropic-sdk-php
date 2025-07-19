@@ -24,7 +24,7 @@ final class FileListParam implements BaseModel
     public ?string $beforeID;
 
     #[Api(optional: true)]
-    public ?int $limit = 20;
+    public ?int $limit;
 
     /** @var null|list<string|UnionMember1::*> $anthropicBeta */
     #[Api(type: new ListOf(union: AnthropicBeta::class), optional: true)]

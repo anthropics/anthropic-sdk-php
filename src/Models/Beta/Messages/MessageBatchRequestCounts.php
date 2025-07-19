@@ -13,19 +13,19 @@ final class MessageBatchRequestCounts implements BaseModel
     use Model;
 
     #[Api]
-    public int $canceled = 0;
+    public int $canceled;
 
     #[Api]
-    public int $errored = 0;
+    public int $errored;
 
     #[Api]
-    public int $expired = 0;
+    public int $expired;
 
     #[Api]
-    public int $processing = 0;
+    public int $processing;
 
     #[Api]
-    public int $succeeded = 0;
+    public int $succeeded;
 
     /**
      * You must use named parameters to construct this object.

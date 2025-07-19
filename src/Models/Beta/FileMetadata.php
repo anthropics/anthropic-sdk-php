@@ -31,7 +31,7 @@ final class FileMetadata implements BaseModel
     public int $sizeBytes;
 
     #[Api(optional: true)]
-    public ?bool $downloadable = false;
+    public ?bool $downloadable;
 
     /**
      * You must use named parameters to construct this object.

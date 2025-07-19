@@ -18,7 +18,7 @@ final class DeletedFile implements BaseModel
 
     /** @var null|Type::* $type */
     #[Api(optional: true)]
-    public ?string $type = 'file_deleted';
+    public ?string $type;
 
     /**
      * You must use named parameters to construct this object.

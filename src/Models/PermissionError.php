@@ -16,7 +16,7 @@ final class PermissionError implements BaseModel
     public string $type = 'permission_error';
 
     #[Api]
-    public string $message = 'Permission denied';
+    public string $message;
 
     /**
      * You must use named parameters to construct this object.

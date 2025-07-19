@@ -16,7 +16,7 @@ final class AuthenticationError implements BaseModel
     public string $type = 'authentication_error';
 
     #[Api]
-    public string $message = 'Authentication error';
+    public string $message;
 
     /**
      * You must use named parameters to construct this object.

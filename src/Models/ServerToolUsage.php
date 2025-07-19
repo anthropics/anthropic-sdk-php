@@ -13,7 +13,7 @@ final class ServerToolUsage implements BaseModel
     use Model;
 
     #[Api('web_search_requests')]
-    public int $webSearchRequests = 0;
+    public int $webSearchRequests;
 
     /**
      * You must use named parameters to construct this object.
