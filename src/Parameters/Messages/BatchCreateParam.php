@@ -11,6 +11,9 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Parameters\Messages\BatchCreateParam\Request;
 
+/**
+ * @phpstan-type create_params = array{requests: list<Request>}
+ */
 final class BatchCreateParam implements BaseModel
 {
     use Model;

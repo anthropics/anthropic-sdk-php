@@ -8,6 +8,9 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_message_tokens_count_alias = array{inputTokens: int}
+ */
 final class BetaMessageTokensCount implements BaseModel
 {
     use Model;

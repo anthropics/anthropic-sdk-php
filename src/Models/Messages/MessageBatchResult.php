@@ -8,6 +8,9 @@ use Anthropic\Core\Concerns\Union;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-type message_batch_result_alias = MessageBatchSucceededResult|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult
+ */
 final class MessageBatchResult implements ConverterSource
 {
     use Union;

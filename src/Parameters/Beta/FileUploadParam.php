@@ -12,6 +12,11 @@ use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Models\AnthropicBeta;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 
+/**
+ * @phpstan-type upload_params = array{
+ *   file: string, anthropicBeta?: list<string|UnionMember1::*>
+ * }
+ */
 final class FileUploadParam implements BaseModel
 {
     use Model;

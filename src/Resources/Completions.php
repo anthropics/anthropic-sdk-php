@@ -21,9 +21,9 @@ final class Completions implements CompletionsContract
 
     /**
      * @param CompletionCreateParam|array{
-     *   maxTokensToSample?: int,
-     *   model?: UnionMember0::*|string,
-     *   prompt?: string,
+     *   maxTokensToSample: int,
+     *   model: UnionMember0::*|string,
+     *   prompt: string,
      *   metadata?: Metadata,
      *   stopSequences?: list<string>,
      *   temperature?: float,

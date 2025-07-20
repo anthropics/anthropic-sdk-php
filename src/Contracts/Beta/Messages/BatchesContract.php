@@ -21,7 +21,7 @@ interface BatchesContract
 {
     /**
      * @param BatchCreateParam|array{
-     *   requests?: list<Request>, anthropicBeta?: list<string|UnionMember1::*>
+     *   requests: list<Request>, anthropicBeta?: list<string|UnionMember1::*>
      * } $params
      */
     public function create(

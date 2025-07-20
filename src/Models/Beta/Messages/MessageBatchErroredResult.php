@@ -9,6 +9,11 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\BetaErrorResponse;
 
+/**
+ * @phpstan-type message_batch_errored_result_alias = array{
+ *   error: BetaErrorResponse, type: string
+ * }
+ */
 final class MessageBatchErroredResult implements BaseModel
 {
     use Model;

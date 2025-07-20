@@ -29,6 +29,26 @@ use Anthropic\Models\WebSearchTool20250305;
 use Anthropic\Parameters\Messages\BatchCreateParam\Request\Params\ServiceTier;
 use Anthropic\Parameters\Messages\BatchCreateParam\Request\Params\System;
 
+/**
+ * @phpstan-type params_alias = array{
+ *   maxTokens: int,
+ *   messages: list<MessageParam>,
+ *   model: UnionMember0::*|string,
+ *   metadata?: Metadata,
+ *   serviceTier?: ServiceTier::*,
+ *   stopSequences?: list<string>,
+ *   stream?: bool,
+ *   system?: string|list<TextBlockParam>,
+ *   temperature?: float,
+ *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
+ *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
+ *   tools?: list<
+ *     Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
+ *   >,
+ *   topK?: int,
+ *   topP?: float,
+ * }
+ */
 final class Params implements BaseModel
 {
     use Model;

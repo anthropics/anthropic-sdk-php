@@ -10,6 +10,14 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Beta\BetaMessageParam\Content;
 use Anthropic\Models\Beta\BetaMessageParam\Role;
 
+/**
+ * @phpstan-type beta_message_param_alias = array{
+ *   content: string|list<
+ *     BetaTextBlockParam|BetaImageBlockParam|BetaRequestDocumentBlock|BetaSearchResultBlockParam|BetaThinkingBlockParam|BetaRedactedThinkingBlockParam|BetaToolUseBlockParam|BetaToolResultBlockParam|BetaServerToolUseBlockParam|BetaWebSearchToolResultBlockParam|BetaCodeExecutionToolResultBlockParam|BetaMCPToolUseBlockParam|BetaRequestMCPToolResultBlockParam|BetaContainerUploadBlockParam
+ *   >,
+ *   role: Role::*,
+ * }
+ */
 final class BetaMessageParam implements BaseModel
 {
     use Model;

@@ -8,6 +8,9 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type cache_control_ephemeral_alias = array{type: string}
+ */
 final class CacheControlEphemeral implements BaseModel
 {
     use Model;

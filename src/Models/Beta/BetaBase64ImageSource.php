@@ -9,6 +9,11 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Beta\BetaBase64ImageSource\MediaType;
 
+/**
+ * @phpstan-type beta_base64_image_source_alias = array{
+ *   data: string, mediaType: MediaType::*, type: string
+ * }
+ */
 final class BetaBase64ImageSource implements BaseModel
 {
     use Model;

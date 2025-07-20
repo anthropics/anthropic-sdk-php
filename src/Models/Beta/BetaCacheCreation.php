@@ -8,6 +8,11 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_cache_creation_alias = array{
+ *   ephemeral1hInputTokens: int, ephemeral5mInputTokens: int
+ * }
+ */
 final class BetaCacheCreation implements BaseModel
 {
     use Model;

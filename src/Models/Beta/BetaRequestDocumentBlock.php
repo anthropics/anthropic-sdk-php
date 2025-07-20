@@ -9,6 +9,16 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Beta\BetaRequestDocumentBlock\Source;
 
+/**
+ * @phpstan-type beta_request_document_block_alias = array{
+ *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource,
+ *   type: string,
+ *   cacheControl?: BetaCacheControlEphemeral,
+ *   citations?: BetaCitationsConfigParam,
+ *   context?: string|null,
+ *   title?: string|null,
+ * }
+ */
 final class BetaRequestDocumentBlock implements BaseModel
 {
     use Model;

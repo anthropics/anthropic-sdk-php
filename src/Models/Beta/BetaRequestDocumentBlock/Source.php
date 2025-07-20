@@ -13,6 +13,9 @@ use Anthropic\Models\Beta\BetaFileDocumentSource;
 use Anthropic\Models\Beta\BetaPlainTextSource;
 use Anthropic\Models\Beta\BetaURLPDFSource;
 
+/**
+ * @phpstan-type source_alias = BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource
+ */
 final class Source implements ConverterSource
 {
     use Union;

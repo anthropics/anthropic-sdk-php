@@ -7,6 +7,9 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Concerns\Enum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-type beta_stop_reason_alias = BetaStopReason::*
+ */
 final class BetaStopReason implements ConverterSource
 {
     use Enum;

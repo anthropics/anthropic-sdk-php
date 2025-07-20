@@ -8,6 +8,9 @@ use Anthropic\Core\Concerns\Union;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-type tool_choice_alias = ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone
+ */
 final class ToolChoice implements ConverterSource
 {
     use Union;

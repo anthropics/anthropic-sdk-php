@@ -9,6 +9,9 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Models\Model\UnionMember0;
 
+/**
+ * @phpstan-type model_alias = UnionMember0::*|string
+ */
 final class Model implements ConverterSource
 {
     use Union;

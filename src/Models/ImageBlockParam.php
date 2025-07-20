@@ -9,6 +9,13 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\ImageBlockParam\Source;
 
+/**
+ * @phpstan-type image_block_param_alias = array{
+ *   source: Base64ImageSource|URLImageSource,
+ *   type: string,
+ *   cacheControl?: CacheControlEphemeral,
+ * }
+ */
 final class ImageBlockParam implements BaseModel
 {
     use Model;

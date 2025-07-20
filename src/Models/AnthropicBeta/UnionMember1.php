@@ -7,6 +7,9 @@ namespace Anthropic\Models\AnthropicBeta;
 use Anthropic\Core\Concerns\Enum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-type union_member1_alias = UnionMember1::*
+ */
 final class UnionMember1 implements ConverterSource
 {
     use Enum;

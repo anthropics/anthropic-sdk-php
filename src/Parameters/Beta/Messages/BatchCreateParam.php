@@ -13,6 +13,11 @@ use Anthropic\Models\AnthropicBeta;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Parameters\Beta\Messages\BatchCreateParam\Request;
 
+/**
+ * @phpstan-type create_params = array{
+ *   requests: list<Request>, anthropicBeta?: list<string|UnionMember1::*>
+ * }
+ */
 final class BatchCreateParam implements BaseModel
 {
     use Model;

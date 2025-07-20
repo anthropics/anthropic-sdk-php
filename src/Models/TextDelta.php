@@ -8,6 +8,9 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type text_delta_alias = array{text: string, type: string}
+ */
 final class TextDelta implements BaseModel
 {
     use Model;

@@ -9,6 +9,15 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 
+/**
+ * @phpstan-type beta_text_block_alias = array{
+ *   citations: list<
+ *     BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation
+ *   >|null,
+ *   text: string,
+ *   type: string,
+ * }
+ */
 final class BetaTextBlock implements BaseModel
 {
     use Model;

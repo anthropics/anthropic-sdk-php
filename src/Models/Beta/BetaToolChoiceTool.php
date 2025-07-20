@@ -8,6 +8,11 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_tool_choice_tool_alias = array{
+ *   name: string, type: string, disableParallelToolUse?: bool
+ * }
+ */
 final class BetaToolChoiceTool implements BaseModel
 {
     use Model;

@@ -152,7 +152,7 @@ final class Files implements FilesContract
 
     /**
      * @param FileUploadParam|array{
-     *   file?: string, anthropicBeta?: list<string|UnionMember1::*>
+     *   file: string, anthropicBeta?: list<string|UnionMember1::*>
      * } $params
      */
     public function upload(

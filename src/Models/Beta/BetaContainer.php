@@ -8,6 +8,11 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_container_alias = array{
+ *   id: string, expiresAt: \DateTimeInterface
+ * }
+ */
 final class BetaContainer implements BaseModel
 {
     use Model;

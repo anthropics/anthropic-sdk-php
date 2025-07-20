@@ -10,6 +10,9 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Models\Beta\BetaTextBlockParam;
 
+/**
+ * @phpstan-type content_alias = string|list<BetaTextBlockParam>
+ */
 final class Content implements ConverterSource
 {
     use Union;

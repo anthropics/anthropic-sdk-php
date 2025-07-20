@@ -8,6 +8,9 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type api_error_object_alias = array{message: string, type: string}
+ */
 final class APIErrorObject implements BaseModel
 {
     use Model;

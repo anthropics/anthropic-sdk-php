@@ -8,6 +8,9 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_not_found_error_alias = array{message: string, type: string}
+ */
 final class BetaNotFoundError implements BaseModel
 {
     use Model;

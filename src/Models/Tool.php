@@ -10,6 +10,15 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Tool\InputSchema;
 use Anthropic\Models\Tool\Type;
 
+/**
+ * @phpstan-type tool_alias = array{
+ *   inputSchema: InputSchema,
+ *   name: string,
+ *   cacheControl?: CacheControlEphemeral,
+ *   description?: string,
+ *   type?: Type::*|null,
+ * }
+ */
 final class Tool implements BaseModel
 {
     use Model;

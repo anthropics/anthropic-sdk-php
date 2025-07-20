@@ -8,6 +8,11 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_invalid_request_error_alias = array{
+ *   message: string, type: string
+ * }
+ */
 final class BetaInvalidRequestError implements BaseModel
 {
     use Model;

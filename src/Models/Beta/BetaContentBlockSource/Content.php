@@ -9,7 +9,14 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Models\Beta\BetaContentBlockSourceContent;
+use Anthropic\Models\Beta\BetaImageBlockParam;
+use Anthropic\Models\Beta\BetaTextBlockParam;
 
+/**
+ * @phpstan-type content_alias = string|list<
+ *   BetaTextBlockParam|BetaImageBlockParam
+ * >
+ */
 final class Content implements ConverterSource
 {
     use Union;

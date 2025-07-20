@@ -7,6 +7,9 @@ namespace Anthropic\Models\Beta\BetaCacheControlEphemeral;
 use Anthropic\Core\Concerns\Enum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-type ttl_alias = TTL::*
+ */
 final class TTL implements ConverterSource
 {
     use Enum;

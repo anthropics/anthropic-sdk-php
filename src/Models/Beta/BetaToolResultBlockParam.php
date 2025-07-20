@@ -9,6 +9,17 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Beta\BetaToolResultBlockParam\Content;
 
+/**
+ * @phpstan-type beta_tool_result_block_param_alias = array{
+ *   toolUseID: string,
+ *   type: string,
+ *   cacheControl?: BetaCacheControlEphemeral,
+ *   content?: string|list<
+ *     BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam
+ *   >,
+ *   isError?: bool,
+ * }
+ */
 final class BetaToolResultBlockParam implements BaseModel
 {
     use Model;

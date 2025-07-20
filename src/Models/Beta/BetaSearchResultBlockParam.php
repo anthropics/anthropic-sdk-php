@@ -9,6 +9,16 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 
+/**
+ * @phpstan-type beta_search_result_block_param_alias = array{
+ *   content: list<BetaTextBlockParam>,
+ *   source: string,
+ *   title: string,
+ *   type: string,
+ *   cacheControl?: BetaCacheControlEphemeral,
+ *   citations?: BetaCitationsConfigParam,
+ * }
+ */
 final class BetaSearchResultBlockParam implements BaseModel
 {
     use Model;

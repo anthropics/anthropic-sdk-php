@@ -9,6 +9,11 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\ContentBlockSource\Content;
 
+/**
+ * @phpstan-type content_block_source_alias = array{
+ *   content: string|list<TextBlockParam|ImageBlockParam>, type: string
+ * }
+ */
 final class ContentBlockSource implements BaseModel
 {
     use Model;

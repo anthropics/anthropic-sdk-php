@@ -9,6 +9,11 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\RawMessageDeltaEvent\Delta;
 
+/**
+ * @phpstan-type raw_message_delta_event_alias = array{
+ *   delta: Delta, type: string, usage: MessageDeltaUsage
+ * }
+ */
 final class RawMessageDeltaEvent implements BaseModel
 {
     use Model;

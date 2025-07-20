@@ -7,6 +7,9 @@ namespace Anthropic\Models\Beta;
 use Anthropic\Core\Concerns\Enum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-type beta_web_search_tool_result_error_code_alias = BetaWebSearchToolResultErrorCode::*
+ */
 final class BetaWebSearchToolResultErrorCode implements ConverterSource
 {
     use Enum;

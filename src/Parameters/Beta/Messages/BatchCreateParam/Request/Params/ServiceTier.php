@@ -7,6 +7,9 @@ namespace Anthropic\Parameters\Beta\Messages\BatchCreateParam\Request\Params;
 use Anthropic\Core\Concerns\Enum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-type service_tier_alias = ServiceTier::*
+ */
 final class ServiceTier implements ConverterSource
 {
     use Enum;

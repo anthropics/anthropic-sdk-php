@@ -31,9 +31,9 @@ interface MessagesContract
 {
     /**
      * @param MessageCreateParam|array{
-     *   maxTokens?: int,
-     *   messages?: list<MessageParam>,
-     *   model?: UnionMember0::*|string,
+     *   maxTokens: int,
+     *   messages: list<MessageParam>,
+     *   model: UnionMember0::*|string,
      *   metadata?: Metadata,
      *   serviceTier?: ServiceTier::*,
      *   stopSequences?: list<string>,
@@ -55,8 +55,8 @@ interface MessagesContract
 
     /**
      * @param MessageCountTokensParam|array{
-     *   messages?: list<MessageParam>,
-     *   model?: UnionMember0::*|string,
+     *   messages: list<MessageParam>,
+     *   model: UnionMember0::*|string,
      *   system?: string|list<TextBlockParam>,
      *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
      *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,

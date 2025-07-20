@@ -8,6 +8,9 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_url_image_source_alias = array{type: string, url: string}
+ */
 final class BetaURLImageSource implements BaseModel
 {
     use Model;

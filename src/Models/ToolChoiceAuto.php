@@ -8,6 +8,11 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type tool_choice_auto_alias = array{
+ *   type: string, disableParallelToolUse?: bool
+ * }
+ */
 final class ToolChoiceAuto implements BaseModel
 {
     use Model;

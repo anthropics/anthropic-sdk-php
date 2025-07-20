@@ -8,6 +8,11 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_file_document_source_alias = array{
+ *   fileID: string, type: string
+ * }
+ */
 final class BetaFileDocumentSource implements BaseModel
 {
     use Model;

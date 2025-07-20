@@ -8,6 +8,11 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_redacted_thinking_block_alias = array{
+ *   data: string, type: string
+ * }
+ */
 final class BetaRedactedThinkingBlock implements BaseModel
 {
     use Model;

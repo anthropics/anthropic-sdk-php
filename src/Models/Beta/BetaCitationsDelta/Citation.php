@@ -13,6 +13,9 @@ use Anthropic\Models\Beta\BetaCitationPageLocation;
 use Anthropic\Models\Beta\BetaCitationSearchResultLocation;
 use Anthropic\Models\Beta\BetaCitationsWebSearchResultLocation;
 
+/**
+ * @phpstan-type citation_alias = BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation
+ */
 final class Citation implements ConverterSource
 {
     use Union;

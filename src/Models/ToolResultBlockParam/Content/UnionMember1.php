@@ -10,6 +10,9 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Models\ImageBlockParam;
 use Anthropic\Models\TextBlockParam;
 
+/**
+ * @phpstan-type union_member1_alias = TextBlockParam|ImageBlockParam
+ */
 final class UnionMember1 implements ConverterSource
 {
     use Union;

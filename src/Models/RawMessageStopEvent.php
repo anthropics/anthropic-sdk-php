@@ -8,6 +8,9 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type raw_message_stop_event_alias = array{type: string}
+ */
 final class RawMessageStopEvent implements BaseModel
 {
     use Model;

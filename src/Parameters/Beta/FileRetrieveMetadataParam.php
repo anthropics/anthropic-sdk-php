@@ -12,6 +12,11 @@ use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Models\AnthropicBeta;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 
+/**
+ * @phpstan-type retrieve_metadata_params = array{
+ *   anthropicBeta?: list<string|UnionMember1::*>
+ * }
+ */
 final class FileRetrieveMetadataParam implements BaseModel
 {
     use Model;

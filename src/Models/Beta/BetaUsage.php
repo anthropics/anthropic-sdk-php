@@ -9,6 +9,17 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Beta\BetaUsage\ServiceTier;
 
+/**
+ * @phpstan-type beta_usage_alias = array{
+ *   cacheCreation: BetaCacheCreation,
+ *   cacheCreationInputTokens: int|null,
+ *   cacheReadInputTokens: int|null,
+ *   inputTokens: int,
+ *   outputTokens: int,
+ *   serverToolUse: BetaServerToolUsage,
+ *   serviceTier: ServiceTier::*|null,
+ * }
+ */
 final class BetaUsage implements BaseModel
 {
     use Model;

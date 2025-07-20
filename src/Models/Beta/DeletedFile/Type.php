@@ -7,6 +7,9 @@ namespace Anthropic\Models\Beta\DeletedFile;
 use Anthropic\Core\Concerns\Enum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-type type_alias = Type::*
+ */
 final class Type implements ConverterSource
 {
     use Enum;

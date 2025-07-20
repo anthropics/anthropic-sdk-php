@@ -9,6 +9,11 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\CacheControlEphemeral;
 
+/**
+ * @phpstan-type text_editor20250429_alias = array{
+ *   name: string, type: string, cacheControl?: CacheControlEphemeral
+ * }
+ */
 final class TextEditor20250429 implements BaseModel
 {
     use Model;

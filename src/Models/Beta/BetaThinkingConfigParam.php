@@ -8,6 +8,9 @@ use Anthropic\Core\Concerns\Union;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-type beta_thinking_config_param_alias = BetaThinkingConfigEnabled|BetaThinkingConfigDisabled
+ */
 final class BetaThinkingConfigParam implements ConverterSource
 {
     use Union;

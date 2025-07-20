@@ -9,6 +9,9 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Models\ToolUnion\TextEditor20250429;
 
+/**
+ * @phpstan-type tool_union_alias = Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
+ */
 final class ToolUnion implements ConverterSource
 {
     use Union;

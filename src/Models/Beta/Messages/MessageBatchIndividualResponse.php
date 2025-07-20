@@ -8,6 +8,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type message_batch_individual_response_alias = array{
+ *   customID: string,
+ *   result: MessageBatchSucceededResult|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult,
+ * }
+ */
 final class MessageBatchIndividualResponse implements BaseModel
 {
     use Model;

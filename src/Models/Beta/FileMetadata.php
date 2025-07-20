@@ -8,6 +8,17 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type file_metadata_alias = array{
+ *   id: string,
+ *   createdAt: \DateTimeInterface,
+ *   filename: string,
+ *   mimeType: string,
+ *   sizeBytes: int,
+ *   type: string,
+ *   downloadable?: bool,
+ * }
+ */
 final class FileMetadata implements BaseModel
 {
     use Model;

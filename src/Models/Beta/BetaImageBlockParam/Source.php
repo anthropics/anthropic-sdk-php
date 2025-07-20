@@ -11,6 +11,9 @@ use Anthropic\Models\Beta\BetaBase64ImageSource;
 use Anthropic\Models\Beta\BetaFileImageSource;
 use Anthropic\Models\Beta\BetaURLImageSource;
 
+/**
+ * @phpstan-type source_alias = BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource
+ */
 final class Source implements ConverterSource
 {
     use Union;

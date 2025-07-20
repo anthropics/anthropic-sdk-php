@@ -8,6 +8,11 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type tool_use_block_alias = array{
+ *   id: string, input: mixed, name: string, type: string
+ * }
+ */
 final class ToolUseBlock implements BaseModel
 {
     use Model;

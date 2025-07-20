@@ -9,6 +9,11 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\WebSearchToolResultError\ErrorCode;
 
+/**
+ * @phpstan-type web_search_tool_result_error_alias = array{
+ *   errorCode: ErrorCode::*, type: string
+ * }
+ */
 final class WebSearchToolResultError implements BaseModel
 {
     use Model;

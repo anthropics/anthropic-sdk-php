@@ -10,6 +10,15 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Beta\BetaTool\InputSchema;
 use Anthropic\Models\Beta\BetaTool\Type;
 
+/**
+ * @phpstan-type beta_tool_alias = array{
+ *   inputSchema: InputSchema,
+ *   name: string,
+ *   cacheControl?: BetaCacheControlEphemeral,
+ *   description?: string,
+ *   type?: Type::*|null,
+ * }
+ */
 final class BetaTool implements BaseModel
 {
     use Model;

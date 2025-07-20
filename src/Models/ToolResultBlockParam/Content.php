@@ -8,8 +8,13 @@ use Anthropic\Core\Concerns\Union;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
+use Anthropic\Models\ImageBlockParam;
+use Anthropic\Models\TextBlockParam;
 use Anthropic\Models\ToolResultBlockParam\Content\UnionMember1;
 
+/**
+ * @phpstan-type content_alias = string|list<TextBlockParam|ImageBlockParam>
+ */
 final class Content implements ConverterSource
 {
     use Union;

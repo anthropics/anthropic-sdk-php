@@ -9,6 +9,11 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Beta\BetaCacheControlEphemeral\TTL;
 
+/**
+ * @phpstan-type beta_cache_control_ephemeral_alias = array{
+ *   type: string, ttl?: TTL::*
+ * }
+ */
 final class BetaCacheControlEphemeral implements BaseModel
 {
     use Model;

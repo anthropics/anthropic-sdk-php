@@ -9,6 +9,11 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 
+/**
+ * @phpstan-type input_schema_alias = array{
+ *   type: string, properties?: mixed, required?: list<string>|null
+ * }
+ */
 final class InputSchema implements BaseModel
 {
     use Model;

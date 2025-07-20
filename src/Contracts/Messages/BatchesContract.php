@@ -15,7 +15,7 @@ use Anthropic\RequestOptions;
 interface BatchesContract
 {
     /**
-     * @param array{requests?: list<Request>}|BatchCreateParam $params
+     * @param array{requests: list<Request>}|BatchCreateParam $params
      */
     public function create(
         array|BatchCreateParam $params,

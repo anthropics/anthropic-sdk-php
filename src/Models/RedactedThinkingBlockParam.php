@@ -8,6 +8,11 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type redacted_thinking_block_param_alias = array{
+ *   data: string, type: string
+ * }
+ */
 final class RedactedThinkingBlockParam implements BaseModel
 {
     use Model;

@@ -14,6 +14,19 @@ use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Metadata;
 use Anthropic\Models\Model\UnionMember0;
 
+/**
+ * @phpstan-type create_params = array{
+ *   maxTokensToSample: int,
+ *   model: UnionMember0::*|string,
+ *   prompt: string,
+ *   metadata?: Metadata,
+ *   stopSequences?: list<string>,
+ *   temperature?: float,
+ *   topK?: int,
+ *   topP?: float,
+ *   anthropicBeta?: list<string|UnionMember1::*>,
+ * }
+ */
 final class CompletionCreateParam implements BaseModel
 {
     use Model;

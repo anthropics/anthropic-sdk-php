@@ -10,6 +10,21 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Models\Model\UnionMember0;
 
+/**
+ * @phpstan-type beta_message_alias = array{
+ *   id: string,
+ *   container: BetaContainer,
+ *   content: list<
+ *     BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock
+ *   >,
+ *   model: UnionMember0::*|string,
+ *   role: string,
+ *   stopReason: BetaStopReason::*,
+ *   stopSequence: string|null,
+ *   type: string,
+ *   usage: BetaUsage,
+ * }
+ */
 final class BetaMessage implements BaseModel
 {
     use Model;

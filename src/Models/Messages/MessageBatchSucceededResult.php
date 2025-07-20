@@ -9,6 +9,11 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Message;
 
+/**
+ * @phpstan-type message_batch_succeeded_result_alias = array{
+ *   message: Message, type: string
+ * }
+ */
 final class MessageBatchSucceededResult implements BaseModel
 {
     use Model;

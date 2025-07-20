@@ -8,6 +8,9 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type invalid_request_error_alias = array{message: string, type: string}
+ */
 final class InvalidRequestError implements BaseModel
 {
     use Model;

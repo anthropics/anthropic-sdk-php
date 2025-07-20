@@ -8,6 +8,15 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type web_search_result_block_param_alias = array{
+ *   encryptedContent: string,
+ *   title: string,
+ *   type: string,
+ *   url: string,
+ *   pageAge?: string|null,
+ * }
+ */
 final class WebSearchResultBlockParam implements BaseModel
 {
     use Model;

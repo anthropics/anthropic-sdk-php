@@ -28,6 +28,18 @@ use Anthropic\Models\ToolTextEditor20250124;
 use Anthropic\Models\WebSearchTool20250305;
 use Anthropic\Parameters\MessageCountTokensParam\System;
 
+/**
+ * @phpstan-type count_tokens_params = array{
+ *   messages: list<MessageParam>,
+ *   model: UnionMember0::*|string,
+ *   system?: string|list<TextBlockParam>,
+ *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
+ *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
+ *   tools?: list<
+ *     Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
+ *   >,
+ * }
+ */
 final class MessageCountTokensParam implements BaseModel
 {
     use Model;

@@ -9,6 +9,9 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Beta\DeletedFile\Type;
 
+/**
+ * @phpstan-type deleted_file_alias = array{id: string, type?: Type::*}
+ */
 final class DeletedFile implements BaseModel
 {
     use Model;

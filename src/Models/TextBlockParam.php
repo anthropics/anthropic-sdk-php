@@ -9,6 +9,16 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 
+/**
+ * @phpstan-type text_block_param_alias = array{
+ *   text: string,
+ *   type: string,
+ *   cacheControl?: CacheControlEphemeral,
+ *   citations?: list<
+ *     CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam
+ *   >|null,
+ * }
+ */
 final class TextBlockParam implements BaseModel
 {
     use Model;

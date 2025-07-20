@@ -9,6 +9,13 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Beta\BetaImageBlockParam\Source;
 
+/**
+ * @phpstan-type beta_image_block_param_alias = array{
+ *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource,
+ *   type: string,
+ *   cacheControl?: BetaCacheControlEphemeral,
+ * }
+ */
 final class BetaImageBlockParam implements BaseModel
 {
     use Model;

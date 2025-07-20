@@ -30,6 +30,25 @@ use Anthropic\Models\WebSearchTool20250305;
 use Anthropic\Parameters\MessageCreateParam\ServiceTier;
 use Anthropic\Parameters\MessageCreateParam\System;
 
+/**
+ * @phpstan-type create_params = array{
+ *   maxTokens: int,
+ *   messages: list<MessageParam>,
+ *   model: UnionMember0::*|string,
+ *   metadata?: Metadata,
+ *   serviceTier?: ServiceTier::*,
+ *   stopSequences?: list<string>,
+ *   system?: string|list<TextBlockParam>,
+ *   temperature?: float,
+ *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
+ *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
+ *   tools?: list<
+ *     Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
+ *   >,
+ *   topK?: int,
+ *   topP?: float,
+ * }
+ */
 final class MessageCreateParam implements BaseModel
 {
     use Model;

@@ -8,6 +8,11 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_raw_content_block_stop_event_alias = array{
+ *   index: int, type: string
+ * }
+ */
 final class BetaRawContentBlockStopEvent implements BaseModel
 {
     use Model;

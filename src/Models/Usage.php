@@ -9,6 +9,16 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Usage\ServiceTier;
 
+/**
+ * @phpstan-type usage_alias = array{
+ *   cacheCreationInputTokens: int|null,
+ *   cacheReadInputTokens: int|null,
+ *   inputTokens: int,
+ *   outputTokens: int,
+ *   serverToolUse: ServerToolUsage,
+ *   serviceTier: ServiceTier::*|null,
+ * }
+ */
 final class Usage implements BaseModel
 {
     use Model;

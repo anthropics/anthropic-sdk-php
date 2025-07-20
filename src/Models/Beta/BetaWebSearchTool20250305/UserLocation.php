@@ -8,6 +8,15 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type user_location_alias = array{
+ *   type: string,
+ *   city?: string|null,
+ *   country?: string|null,
+ *   region?: string|null,
+ *   timezone?: string|null,
+ * }
+ */
 final class UserLocation implements BaseModel
 {
     use Model;

@@ -8,6 +8,11 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_container_upload_block_alias = array{
+ *   fileID: string, type: string
+ * }
+ */
 final class BetaContainerUploadBlock implements BaseModel
 {
     use Model;

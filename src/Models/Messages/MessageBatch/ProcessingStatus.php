@@ -7,6 +7,9 @@ namespace Anthropic\Models\Messages\MessageBatch;
 use Anthropic\Core\Concerns\Enum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-type processing_status_alias = ProcessingStatus::*
+ */
 final class ProcessingStatus implements ConverterSource
 {
     use Enum;

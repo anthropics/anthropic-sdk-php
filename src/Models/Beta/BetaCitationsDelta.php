@@ -9,6 +9,12 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Beta\BetaCitationsDelta\Citation;
 
+/**
+ * @phpstan-type beta_citations_delta_alias = array{
+ *   citation: BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation,
+ *   type: string,
+ * }
+ */
 final class BetaCitationsDelta implements BaseModel
 {
     use Model;

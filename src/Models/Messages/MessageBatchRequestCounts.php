@@ -8,6 +8,11 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type message_batch_request_counts_alias = array{
+ *   canceled: int, errored: int, expired: int, processing: int, succeeded: int
+ * }
+ */
 final class MessageBatchRequestCounts implements BaseModel
 {
     use Model;

@@ -12,6 +12,11 @@ use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Models\AnthropicBeta;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 
+/**
+ * @phpstan-type download_params = array{
+ *   anthropicBeta?: list<string|UnionMember1::*>
+ * }
+ */
 final class FileDownloadParam implements BaseModel
 {
     use Model;

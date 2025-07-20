@@ -8,6 +8,11 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type base64_pdf_source_alias = array{
+ *   data: string, mediaType: string, type: string
+ * }
+ */
 final class Base64PDFSource implements BaseModel
 {
     use Model;

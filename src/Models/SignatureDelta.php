@@ -8,6 +8,9 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type signature_delta_alias = array{signature: string, type: string}
+ */
 final class SignatureDelta implements BaseModel
 {
     use Model;

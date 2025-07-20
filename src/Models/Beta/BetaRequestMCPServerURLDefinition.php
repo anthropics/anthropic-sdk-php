@@ -8,6 +8,15 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_request_mcp_server_url_definition_alias = array{
+ *   name: string,
+ *   type: string,
+ *   url: string,
+ *   authorizationToken?: string|null,
+ *   toolConfiguration?: BetaRequestMCPServerToolConfiguration,
+ * }
+ */
 final class BetaRequestMCPServerURLDefinition implements BaseModel
 {
     use Model;

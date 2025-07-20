@@ -9,6 +9,9 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Parameters\Beta\Messages\BatchCreateParam\Request\Params;
 
+/**
+ * @phpstan-type request_alias = array{customID: string, params: Params}
+ */
 final class Request implements BaseModel
 {
     use Model;

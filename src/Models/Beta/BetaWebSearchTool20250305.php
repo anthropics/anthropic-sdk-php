@@ -10,6 +10,17 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305\UserLocation;
 
+/**
+ * @phpstan-type beta_web_search_tool20250305_alias = array{
+ *   name: string,
+ *   type: string,
+ *   allowedDomains?: list<string>|null,
+ *   blockedDomains?: list<string>|null,
+ *   cacheControl?: BetaCacheControlEphemeral,
+ *   maxUses?: int|null,
+ *   userLocation?: UserLocation|null,
+ * }
+ */
 final class BetaWebSearchTool20250305 implements BaseModel
 {
     use Model;

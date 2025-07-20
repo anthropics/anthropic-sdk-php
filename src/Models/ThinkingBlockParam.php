@@ -8,6 +8,11 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type thinking_block_param_alias = array{
+ *   signature: string, thinking: string, type: string
+ * }
+ */
 final class ThinkingBlockParam implements BaseModel
 {
     use Model;

@@ -7,6 +7,9 @@ namespace Anthropic\Models\WebSearchToolRequestError;
 use Anthropic\Core\Concerns\Enum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-type error_code_alias = ErrorCode::*
+ */
 final class ErrorCode implements ConverterSource
 {
     use Enum;

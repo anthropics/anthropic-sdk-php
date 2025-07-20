@@ -12,6 +12,9 @@ use Anthropic\Models\CitationContentBlockLocation;
 use Anthropic\Models\CitationPageLocation;
 use Anthropic\Models\CitationsWebSearchResultLocation;
 
+/**
+ * @phpstan-type citation_alias = CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation
+ */
 final class Citation implements ConverterSource
 {
     use Union;

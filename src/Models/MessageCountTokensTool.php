@@ -9,6 +9,9 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Models\MessageCountTokensTool\TextEditor20250429;
 
+/**
+ * @phpstan-type message_count_tokens_tool_alias = Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
+ */
 final class MessageCountTokensTool implements ConverterSource
 {
     use Union;

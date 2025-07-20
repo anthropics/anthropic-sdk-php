@@ -8,6 +8,11 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_code_execution_tool20250522_alias = array{
+ *   name: string, type: string, cacheControl?: BetaCacheControlEphemeral
+ * }
+ */
 final class BetaCodeExecutionTool20250522 implements BaseModel
 {
     use Model;

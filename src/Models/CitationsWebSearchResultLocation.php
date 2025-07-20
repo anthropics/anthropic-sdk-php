@@ -8,6 +8,15 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type citations_web_search_result_location_alias = array{
+ *   citedText: string,
+ *   encryptedIndex: string,
+ *   title: string|null,
+ *   type: string,
+ *   url: string,
+ * }
+ */
 final class CitationsWebSearchResultLocation implements BaseModel
 {
     use Model;

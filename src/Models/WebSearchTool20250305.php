@@ -10,6 +10,17 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Models\WebSearchTool20250305\UserLocation;
 
+/**
+ * @phpstan-type web_search_tool20250305_alias = array{
+ *   name: string,
+ *   type: string,
+ *   allowedDomains?: list<string>|null,
+ *   blockedDomains?: list<string>|null,
+ *   cacheControl?: CacheControlEphemeral,
+ *   maxUses?: int|null,
+ *   userLocation?: UserLocation|null,
+ * }
+ */
 final class WebSearchTool20250305 implements BaseModel
 {
     use Model;

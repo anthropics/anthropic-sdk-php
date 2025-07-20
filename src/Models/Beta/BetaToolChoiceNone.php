@@ -8,6 +8,9 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_tool_choice_none_alias = array{type: string}
+ */
 final class BetaToolChoiceNone implements BaseModel
 {
     use Model;

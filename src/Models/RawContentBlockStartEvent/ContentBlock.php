@@ -14,6 +14,9 @@ use Anthropic\Models\ThinkingBlock;
 use Anthropic\Models\ToolUseBlock;
 use Anthropic\Models\WebSearchToolResultBlock;
 
+/**
+ * @phpstan-type content_block_alias = TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock
+ */
 final class ContentBlock implements ConverterSource
 {
     use Union;

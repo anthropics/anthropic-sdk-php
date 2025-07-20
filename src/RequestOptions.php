@@ -31,13 +31,13 @@ class RequestOptions
 
     /**
      * @return array{
-     *   timeout?: float,
-     *   maxRetries?: int,
-     *   initialRetryDelay?: float,
-     *   maxRetryDelay?: float,
-     *   extraHeaders?: list<string>,
-     *   extraQueryParams?: list<string>,
-     *   extraBodyParams?: list<string>,
+     *   timeout: float,
+     *   maxRetries: int,
+     *   initialRetryDelay: float,
+     *   maxRetryDelay: float,
+     *   extraHeaders: list<string>,
+     *   extraQueryParams: list<string>,
+     *   extraBodyParams: list<string>,
      * }
      */
     public function __serialize(): array

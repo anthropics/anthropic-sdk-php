@@ -7,6 +7,9 @@ namespace Anthropic\Models\Usage;
 use Anthropic\Core\Concerns\Enum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-type service_tier_alias = ServiceTier::*|null
+ */
 final class ServiceTier implements ConverterSource
 {
     use Enum;

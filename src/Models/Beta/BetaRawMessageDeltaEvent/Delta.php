@@ -10,6 +10,13 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Beta\BetaContainer;
 use Anthropic\Models\Beta\BetaStopReason;
 
+/**
+ * @phpstan-type delta_alias = array{
+ *   container: BetaContainer,
+ *   stopReason: BetaStopReason::*,
+ *   stopSequence: string|null,
+ * }
+ */
 final class Delta implements BaseModel
 {
     use Model;

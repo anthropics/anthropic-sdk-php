@@ -12,6 +12,14 @@ use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Models\AnthropicBeta;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 
+/**
+ * @phpstan-type list_params = array{
+ *   afterID?: string,
+ *   beforeID?: string,
+ *   limit?: int,
+ *   anthropicBeta?: list<string|UnionMember1::*>,
+ * }
+ */
 final class BatchListParam implements BaseModel
 {
     use Model;

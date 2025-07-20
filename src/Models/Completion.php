@@ -9,6 +9,15 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Model\UnionMember0;
 
+/**
+ * @phpstan-type completion_alias = array{
+ *   id: string,
+ *   completion: string,
+ *   model: UnionMember0::*|string,
+ *   stopReason: string|null,
+ *   type: string,
+ * }
+ */
 final class Completion implements BaseModel
 {
     use Model;

@@ -8,6 +8,9 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_thinking_delta_alias = array{thinking: string, type: string}
+ */
 final class BetaThinkingDelta implements BaseModel
 {
     use Model;

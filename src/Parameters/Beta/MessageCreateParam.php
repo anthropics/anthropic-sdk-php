@@ -38,6 +38,28 @@ use Anthropic\Models\Model\UnionMember0;
 use Anthropic\Parameters\Beta\MessageCreateParam\ServiceTier;
 use Anthropic\Parameters\Beta\MessageCreateParam\System;
 
+/**
+ * @phpstan-type create_params = array{
+ *   maxTokens: int,
+ *   messages: list<BetaMessageParam>,
+ *   model: UnionMember0::*|string,
+ *   container?: string|null,
+ *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
+ *   metadata?: BetaMetadata,
+ *   serviceTier?: ServiceTier::*,
+ *   stopSequences?: list<string>,
+ *   system?: string|list<BetaTextBlockParam>,
+ *   temperature?: float,
+ *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
+ *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
+ *   tools?: list<
+ *     BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305
+ *   >,
+ *   topK?: int,
+ *   topP?: float,
+ *   anthropicBeta?: list<string|UnionMember1::*>,
+ * }
+ */
 final class MessageCreateParam implements BaseModel
 {
     use Model;

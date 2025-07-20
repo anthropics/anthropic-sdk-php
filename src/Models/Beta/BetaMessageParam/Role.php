@@ -7,6 +7,9 @@ namespace Anthropic\Models\Beta\BetaMessageParam;
 use Anthropic\Core\Concerns\Enum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-type role_alias = Role::*
+ */
 final class Role implements ConverterSource
 {
     use Enum;

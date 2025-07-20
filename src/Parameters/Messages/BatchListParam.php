@@ -9,6 +9,11 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type list_params = array{
+ *   afterID?: string, beforeID?: string, limit?: int
+ * }
+ */
 final class BatchListParam implements BaseModel
 {
     use Model;

@@ -9,6 +9,13 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\RawContentBlockStartEvent\ContentBlock;
 
+/**
+ * @phpstan-type raw_content_block_start_event_alias = array{
+ *   contentBlock: TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock,
+ *   index: int,
+ *   type: string,
+ * }
+ */
 final class RawContentBlockStartEvent implements BaseModel
 {
     use Model;

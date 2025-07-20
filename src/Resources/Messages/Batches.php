@@ -20,7 +20,7 @@ final class Batches implements BatchesContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{requests?: list<Request>}|BatchCreateParam $params
+     * @param array{requests: list<Request>}|BatchCreateParam $params
      */
     public function create(
         array|BatchCreateParam $params,

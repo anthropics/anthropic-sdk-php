@@ -7,6 +7,9 @@ namespace Anthropic\Models\Beta\BetaServerToolUseBlockParam;
 use Anthropic\Core\Concerns\Enum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-type name_alias = Name::*
+ */
 final class Name implements ConverterSource
 {
     use Enum;

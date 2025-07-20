@@ -12,6 +12,11 @@ use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Models\AnthropicBeta;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 
+/**
+ * @phpstan-type delete_params = array{
+ *   anthropicBeta?: list<string|UnionMember1::*>
+ * }
+ */
 final class BatchDeleteParam implements BaseModel
 {
     use Model;

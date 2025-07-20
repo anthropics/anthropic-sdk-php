@@ -11,6 +11,9 @@ use Anthropic\Models\Beta\BetaImageBlockParam;
 use Anthropic\Models\Beta\BetaSearchResultBlockParam;
 use Anthropic\Models\Beta\BetaTextBlockParam;
 
+/**
+ * @phpstan-type union_member1_alias = BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam
+ */
 final class UnionMember1 implements ConverterSource
 {
     use Union;

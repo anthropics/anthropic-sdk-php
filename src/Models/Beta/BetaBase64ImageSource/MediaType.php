@@ -7,6 +7,9 @@ namespace Anthropic\Models\Beta\BetaBase64ImageSource;
 use Anthropic\Core\Concerns\Enum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-type media_type_alias = MediaType::*
+ */
 final class MediaType implements ConverterSource
 {
     use Enum;

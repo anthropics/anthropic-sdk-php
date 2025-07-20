@@ -37,9 +37,9 @@ interface MessagesContract
 {
     /**
      * @param MessageCreateParam|array{
-     *   maxTokens?: int,
-     *   messages?: list<BetaMessageParam>,
-     *   model?: UnionMember0::*|string,
+     *   maxTokens: int,
+     *   messages: list<BetaMessageParam>,
+     *   model: UnionMember0::*|string,
      *   container?: string|null,
      *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
      *   metadata?: BetaMetadata,
@@ -64,8 +64,8 @@ interface MessagesContract
 
     /**
      * @param MessageCountTokensParam|array{
-     *   messages?: list<BetaMessageParam>,
-     *   model?: UnionMember0::*|string,
+     *   messages: list<BetaMessageParam>,
+     *   model: UnionMember0::*|string,
      *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
      *   system?: string|list<BetaTextBlockParam>,
      *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
