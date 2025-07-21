@@ -44,11 +44,5 @@ final class UnionMember0 implements ConverterSource
 
     final public const CLAUDE_3_OPUS_20240229 = 'claude-3-opus-20240229';
 
-    final public const CLAUDE_3_SONNET_20240229 = 'claude-3-sonnet-20240229';
-
     final public const CLAUDE_3_HAIKU_20240307 = 'claude-3-haiku-20240307';
-
-    final public const CLAUDE_2_1 = 'claude-2.1';
-
-    final public const CLAUDE_2_0 = 'claude-2.0';
 }
