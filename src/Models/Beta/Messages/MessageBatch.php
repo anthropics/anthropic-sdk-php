@@ -80,7 +80,7 @@ final class MessageBatch implements BaseModel
      *
      * @var ProcessingStatus::* $processingStatus
      */
-    #[Api('processing_status')]
+    #[Api('processing_status', enum: ProcessingStatus::class)]
     public string $processingStatus;
 
     /**

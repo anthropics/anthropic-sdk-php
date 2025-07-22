@@ -21,7 +21,7 @@ final class BetaWebSearchToolResultError implements BaseModel
     public string $type = 'web_search_tool_result_error';
 
     /** @var BetaWebSearchToolResultErrorCode::* $errorCode */
-    #[Api('error_code')]
+    #[Api('error_code', enum: BetaWebSearchToolResultErrorCode::class)]
     public string $errorCode;
 
     /**

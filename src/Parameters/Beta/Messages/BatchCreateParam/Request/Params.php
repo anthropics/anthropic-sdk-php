@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Parameters\Beta\Messages\BatchCreateParam\Request;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as Model1;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Models\Beta\BetaCodeExecutionTool20250522;
@@ -31,6 +31,7 @@ use Anthropic\Models\Beta\BetaToolTextEditor20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20250429;
 use Anthropic\Models\Beta\BetaToolUnion;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305;
+use Anthropic\Models\Model;
 use Anthropic\Models\Model\UnionMember0;
 use Anthropic\Parameters\Beta\Messages\BatchCreateParam\Request\Params\ServiceTier;
 use Anthropic\Parameters\Beta\Messages\BatchCreateParam\Request\Params\System;
@@ -63,7 +64,7 @@ use Anthropic\Parameters\Beta\Messages\BatchCreateParam\Request\Params\System;
  */
 final class Params implements BaseModel
 {
-    use Model;
+    use Model1;
 
     /**
      * The maximum number of tokens to generate before stopping.
@@ -153,7 +154,7 @@ final class Params implements BaseModel
      *
      * @var string|UnionMember0::* $model
      */
-    #[Api]
+    #[Api(union: Model::class)]
     public string $model;
 
     /**
@@ -187,7 +188,7 @@ final class Params implements BaseModel
      *
      * @var null|ServiceTier::* $serviceTier
      */
-    #[Api('service_tier', optional: true)]
+    #[Api('service_tier', enum: ServiceTier::class, optional: true)]
     public ?string $serviceTier;
 
     /**

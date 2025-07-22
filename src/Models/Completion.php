@@ -49,7 +49,7 @@ final class Completion implements BaseModel
      *
      * @var string|UnionMember0::* $model
      */
-    #[Api]
+    #[Api(union: Model::class)]
     public string $model;
 
     /**

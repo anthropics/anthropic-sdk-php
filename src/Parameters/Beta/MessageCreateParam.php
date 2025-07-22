@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Parameters\Beta;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as Model1;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
@@ -34,6 +34,7 @@ use Anthropic\Models\Beta\BetaToolTextEditor20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20250429;
 use Anthropic\Models\Beta\BetaToolUnion;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305;
+use Anthropic\Models\Model;
 use Anthropic\Models\Model\UnionMember0;
 use Anthropic\Parameters\Beta\MessageCreateParam\ServiceTier;
 use Anthropic\Parameters\Beta\MessageCreateParam\System;
@@ -68,7 +69,7 @@ use Anthropic\Parameters\Beta\MessageCreateParam\System;
  */
 final class MessageCreateParam implements BaseModel
 {
-    use Model;
+    use Model1;
     use Params;
 
     /**
@@ -159,7 +160,7 @@ final class MessageCreateParam implements BaseModel
      *
      * @var string|UnionMember0::* $model
      */
-    #[Api]
+    #[Api(union: Model::class)]
     public string $model;
 
     /**
@@ -193,7 +194,7 @@ final class MessageCreateParam implements BaseModel
      *
      * @var null|ServiceTier::* $serviceTier
      */
-    #[Api('service_tier', optional: true)]
+    #[Api('service_tier', enum: ServiceTier::class, optional: true)]
     public ?string $serviceTier;
 
     /**

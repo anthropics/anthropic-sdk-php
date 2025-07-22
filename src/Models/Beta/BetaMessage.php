@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Anthropic\Models\Beta;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as Model1;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
+use Anthropic\Models\Model;
 use Anthropic\Models\Model\UnionMember0;
 
 /**
@@ -27,7 +28,7 @@ use Anthropic\Models\Model\UnionMember0;
  */
 final class BetaMessage implements BaseModel
 {
-    use Model;
+    use Model1;
 
     /**
      * Conversational role of the generated message.
@@ -98,7 +99,7 @@ final class BetaMessage implements BaseModel
      *
      * @var string|UnionMember0::* $model
      */
-    #[Api]
+    #[Api(union: Model::class)]
     public string $model;
 
     /**
@@ -116,7 +117,7 @@ final class BetaMessage implements BaseModel
      *
      * @var BetaStopReason::* $stopReason
      */
-    #[Api('stop_reason')]
+    #[Api('stop_reason', enum: BetaStopReason::class)]
     public string $stopReason;
 
     /**

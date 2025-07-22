@@ -25,7 +25,7 @@ final class BetaBase64ImageSource implements BaseModel
     public string $data;
 
     /** @var MediaType::* $mediaType */
-    #[Api('media_type')]
+    #[Api('media_type', enum: MediaType::class)]
     public string $mediaType;
 
     /**

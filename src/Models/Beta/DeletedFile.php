@@ -29,7 +29,7 @@ final class DeletedFile implements BaseModel
      *
      * @var null|Type::* $type
      */
-    #[Api(optional: true)]
+    #[Api(enum: Type::class, optional: true)]
     public ?string $type;
 
     /**

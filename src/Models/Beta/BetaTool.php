@@ -54,7 +54,7 @@ final class BetaTool implements BaseModel
     public ?string $description;
 
     /** @var null|Type::* $type */
-    #[Api(optional: true)]
+    #[Api(enum: Type::class, nullable: true, optional: true)]
     public ?string $type;
 
     /**

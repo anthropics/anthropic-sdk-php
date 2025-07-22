@@ -19,7 +19,7 @@ final class Delta implements BaseModel
     use Model;
 
     /** @var StopReason::* $stopReason */
-    #[Api('stop_reason')]
+    #[Api('stop_reason', enum: StopReason::class)]
     public string $stopReason;
 
     #[Api('stop_sequence')]

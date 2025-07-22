@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Anthropic\Parameters;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as Model1;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Models\MessageParam;
 use Anthropic\Models\Metadata;
+use Anthropic\Models\Model;
 use Anthropic\Models\Model\UnionMember0;
 use Anthropic\Models\TextBlockParam;
 use Anthropic\Models\ThinkingConfigDisabled;
@@ -57,7 +58,7 @@ use Anthropic\Parameters\MessageCreateParam\System;
  */
 final class MessageCreateParam implements BaseModel
 {
-    use Model;
+    use Model1;
     use Params;
 
     /**
@@ -148,7 +149,7 @@ final class MessageCreateParam implements BaseModel
      *
      * @var string|UnionMember0::* $model
      */
-    #[Api]
+    #[Api(union: Model::class)]
     public string $model;
 
     /**
@@ -164,7 +165,7 @@ final class MessageCreateParam implements BaseModel
      *
      * @var null|ServiceTier::* $serviceTier
      */
-    #[Api('service_tier', optional: true)]
+    #[Api('service_tier', enum: ServiceTier::class, optional: true)]
     public ?string $serviceTier;
 
     /**

@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Anthropic\Parameters;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as Model1;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Models\AnthropicBeta;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Metadata;
+use Anthropic\Models\Model;
 use Anthropic\Models\Model\UnionMember0;
 
 /**
@@ -35,7 +36,7 @@ use Anthropic\Models\Model\UnionMember0;
  */
 final class CompletionCreateParam implements BaseModel
 {
-    use Model;
+    use Model1;
     use Params;
 
     /**
@@ -51,7 +52,7 @@ final class CompletionCreateParam implements BaseModel
      *
      * @var string|UnionMember0::* $model
      */
-    #[Api]
+    #[Api(union: Model::class)]
     public string $model;
 
     /**

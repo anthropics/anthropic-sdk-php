@@ -28,7 +28,7 @@ final class Delta implements BaseModel
     public BetaContainer $container;
 
     /** @var BetaStopReason::* $stopReason */
-    #[Api('stop_reason')]
+    #[Api('stop_reason', enum: BetaStopReason::class)]
     public string $stopReason;
 
     #[Api('stop_sequence')]

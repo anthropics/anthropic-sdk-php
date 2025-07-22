@@ -32,7 +32,7 @@ final class BetaServerToolUseBlockParam implements BaseModel
     public mixed $input;
 
     /** @var Name::* $name */
-    #[Api]
+    #[Api(enum: Name::class)]
     public string $name;
 
     /**

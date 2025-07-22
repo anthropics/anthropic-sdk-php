@@ -21,7 +21,7 @@ final class BetaCodeExecutionToolResultErrorParam implements BaseModel
     public string $type = 'code_execution_tool_result_error';
 
     /** @var BetaCodeExecutionToolResultErrorCode::* $errorCode */
-    #[Api('error_code')]
+    #[Api('error_code', enum: BetaCodeExecutionToolResultErrorCode::class)]
     public string $errorCode;
 
     /**

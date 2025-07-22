@@ -31,7 +31,7 @@ final class BetaMessageParam implements BaseModel
     public array|string $content;
 
     /** @var Role::* $role */
-    #[Api]
+    #[Api(enum: Role::class)]
     public string $role;
 
     /**

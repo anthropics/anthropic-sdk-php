@@ -91,7 +91,7 @@ final class Message implements BaseModel
      *
      * @var string|UnionMember0::* $model
      */
-    #[Api]
+    #[Api(union: Model::class)]
     public string $model;
 
     /**
@@ -109,7 +109,7 @@ final class Message implements BaseModel
      *
      * @var StopReason::* $stopReason
      */
-    #[Api('stop_reason')]
+    #[Api('stop_reason', enum: StopReason::class)]
     public string $stopReason;
 
     /**

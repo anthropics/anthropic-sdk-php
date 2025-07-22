@@ -22,7 +22,7 @@ final class WebSearchToolRequestError implements BaseModel
     public string $type = 'web_search_tool_result_error';
 
     /** @var ErrorCode::* $errorCode */
-    #[Api('error_code')]
+    #[Api('error_code', enum: ErrorCode::class)]
     public string $errorCode;
 
     /**

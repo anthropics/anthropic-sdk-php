@@ -32,7 +32,7 @@ final class BetaCacheControlEphemeral implements BaseModel
      *
      * @var null|TTL::* $ttl
      */
-    #[Api(optional: true)]
+    #[Api(enum: TTL::class, optional: true)]
     public ?string $ttl;
 
     /**
