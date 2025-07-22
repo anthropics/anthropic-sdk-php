@@ -9,6 +9,8 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * Information about the container used in the request (for the code execution tool).
+ *
  * @phpstan-type beta_container_alias = array{
  *   id: string, expiresAt: \DateTimeInterface
  * }
@@ -17,9 +19,15 @@ final class BetaContainer implements BaseModel
 {
     use Model;
 
+    /**
+     * Identifier for the container used in this request.
+     */
     #[Api]
     public string $id;
 
+    /**
+     * The time at which the container will expire.
+     */
     #[Api('expires_at')]
     public \DateTimeInterface $expiresAt;
 

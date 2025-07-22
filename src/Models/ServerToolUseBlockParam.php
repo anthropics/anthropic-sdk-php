@@ -33,6 +33,9 @@ final class ServerToolUseBlockParam implements BaseModel
     #[Api]
     public mixed $input;
 
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
     #[Api('cache_control', optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 

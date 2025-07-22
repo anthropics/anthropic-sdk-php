@@ -13,6 +13,8 @@ use Anthropic\Models\AnthropicBeta;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 
 /**
+ * Download File.
+ *
  * @phpstan-type download_params = array{
  *   anthropicBeta?: list<string|UnionMember1::*>
  * }
@@ -22,7 +24,11 @@ final class FileDownloadParam implements BaseModel
     use Model;
     use Params;
 
-    /** @var null|list<string|UnionMember1::*> $anthropicBeta */
+    /**
+     * Optional header to specify the beta version(s) you want to use.
+     *
+     * @var null|list<string|UnionMember1::*> $anthropicBeta
+     */
     #[Api(type: new ListOf(union: AnthropicBeta::class), optional: true)]
     public ?array $anthropicBeta;
 

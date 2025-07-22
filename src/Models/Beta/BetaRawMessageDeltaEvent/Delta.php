@@ -21,6 +21,9 @@ final class Delta implements BaseModel
 {
     use Model;
 
+    /**
+     * Information about the container used in the request (for the code execution tool).
+     */
     #[Api]
     public BetaContainer $container;
 

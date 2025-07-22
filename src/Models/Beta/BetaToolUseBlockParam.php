@@ -33,6 +33,9 @@ final class BetaToolUseBlockParam implements BaseModel
     #[Api]
     public string $name;
 
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 

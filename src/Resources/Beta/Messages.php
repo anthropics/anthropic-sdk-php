@@ -48,6 +48,12 @@ final class Messages implements MessagesContract
     }
 
     /**
+     * Send a structured list of input messages with text and/or image content, and the model will generate the next message in the conversation.
+     *
+     * The Messages API can be used for either single queries or stateless multi-turn conversations.
+     *
+     * Learn more about the Messages API in our [user guide](/en/docs/initial-setup)
+     *
      * @param MessageCreateParam|array{
      *   maxTokens: int,
      *   messages: list<BetaMessageParam>,
@@ -94,6 +100,12 @@ final class Messages implements MessagesContract
     }
 
     /**
+     * Count the number of tokens in a Message.
+     *
+     * The Token Count API can be used to count the number of tokens in a Message, including tools, images, and documents, without creating it.
+     *
+     * Learn more about token counting in our [user guide](/en/docs/build-with-claude/token-counting)
+     *
      * @param MessageCountTokensParam|array{
      *   messages: list<BetaMessageParam>,
      *   model: UnionMember0::*|string,

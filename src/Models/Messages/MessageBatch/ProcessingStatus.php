@@ -8,6 +8,8 @@ use Anthropic\Core\Concerns\Enum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
+ * Processing status of the Message Batch.
+ *
  * @phpstan-type processing_status_alias = ProcessingStatus::*
  */
 final class ProcessingStatus implements ConverterSource

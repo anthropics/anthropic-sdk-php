@@ -13,6 +13,10 @@ use Anthropic\Models\AnthropicBeta;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 
 /**
+ * Get a specific model.
+ *
+ * The Models API response can be used to determine information about a specific model or resolve a model alias to a model ID.
+ *
  * @phpstan-type retrieve_params = array{
  *   anthropicBeta?: list<string|UnionMember1::*>
  * }
@@ -22,7 +26,11 @@ final class ModelRetrieveParam implements BaseModel
     use Model;
     use Params;
 
-    /** @var null|list<string|UnionMember1::*> $anthropicBeta */
+    /**
+     * Optional header to specify the beta version(s) you want to use.
+     *
+     * @var null|list<string|UnionMember1::*> $anthropicBeta
+     */
     #[Api(type: new ListOf(union: AnthropicBeta::class), optional: true)]
     public ?array $anthropicBeta;
 

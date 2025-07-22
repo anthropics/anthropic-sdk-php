@@ -9,6 +9,8 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
+ * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
+ *
  * @phpstan-type tool_choice_alias = ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone
  */
 final class ToolChoice implements ConverterSource

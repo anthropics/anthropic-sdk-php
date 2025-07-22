@@ -34,9 +34,15 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     #[Api]
     public string $name;
 
+    /**
+     * The name of the MCP server.
+     */
     #[Api('server_name')]
     public string $serverName;
 
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 

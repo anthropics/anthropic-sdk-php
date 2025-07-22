@@ -13,6 +13,10 @@ use Anthropic\Models\AnthropicBeta;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 
 /**
+ * This endpoint is idempotent and can be used to poll for Message Batch completion. To access the results of a Message Batch, make a request to the `results_url` field in the response.
+ *
+ * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
+ *
  * @phpstan-type retrieve_params = array{
  *   anthropicBeta?: list<string|UnionMember1::*>
  * }
@@ -22,7 +26,11 @@ final class BatchRetrieveParam implements BaseModel
     use Model;
     use Params;
 
-    /** @var null|list<string|UnionMember1::*> $anthropicBeta */
+    /**
+     * Optional header to specify the beta version(s) you want to use.
+     *
+     * @var null|list<string|UnionMember1::*> $anthropicBeta
+     */
     #[Api(type: new ListOf(union: AnthropicBeta::class), optional: true)]
     public ?array $anthropicBeta;
 

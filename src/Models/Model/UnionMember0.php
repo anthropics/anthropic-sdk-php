@@ -8,6 +8,8 @@ use Anthropic\Core\Concerns\Enum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
+ * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+ *
  * @phpstan-type union_member0_alias = UnionMember0::*
  */
 final class UnionMember0 implements ConverterSource

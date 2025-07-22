@@ -17,9 +17,15 @@ final class BetaCacheCreation implements BaseModel
 {
     use Model;
 
+    /**
+     * The number of input tokens used to create the 1 hour cache entry.
+     */
     #[Api('ephemeral_1h_input_tokens')]
     public int $ephemeral1hInputTokens;
 
+    /**
+     * The number of input tokens used to create the 5 minute cache entry.
+     */
     #[Api('ephemeral_5m_input_tokens')]
     public int $ephemeral5mInputTokens;
 

@@ -9,6 +9,9 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * A content block that represents a file to be uploaded to the container
+ * Files uploaded via this block will be available in the container's input directory.
+ *
  * @phpstan-type beta_container_upload_block_param_alias = array{
  *   fileID: string, type: string, cacheControl?: BetaCacheControlEphemeral
  * }
@@ -23,6 +26,9 @@ final class BetaContainerUploadBlockParam implements BaseModel
     #[Api('file_id')]
     public string $fileID;
 
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 

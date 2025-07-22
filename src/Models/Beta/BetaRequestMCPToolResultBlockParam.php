@@ -28,6 +28,9 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
     #[Api('tool_use_id')]
     public string $toolUseID;
 
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 

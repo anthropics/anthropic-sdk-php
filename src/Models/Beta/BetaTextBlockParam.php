@@ -29,6 +29,9 @@ final class BetaTextBlockParam implements BaseModel
     #[Api]
     public string $text;
 
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 

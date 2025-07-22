@@ -26,6 +26,9 @@ final class BetaImageBlockParam implements BaseModel
     #[Api(union: Source::class)]
     public BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source;
 
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 

@@ -25,13 +25,22 @@ final class WebSearchTool20250305 implements BaseModel
 {
     use Model;
 
+    /**
+     * Name of the tool.
+     *
+     * This is how the tool will be called by the model and in `tool_use` blocks.
+     */
     #[Api]
     public string $name = 'web_search';
 
     #[Api]
     public string $type = 'web_search_20250305';
 
-    /** @var null|list<string> $allowedDomains */
+    /**
+     * If provided, only these domains will be included in results. Cannot be used alongside `blocked_domains`.
+     *
+     * @var null|list<string> $allowedDomains
+     */
     #[Api(
         'allowed_domains',
         type: new ListOf('string'),
@@ -40,7 +49,11 @@ final class WebSearchTool20250305 implements BaseModel
     )]
     public ?array $allowedDomains;
 
-    /** @var null|list<string> $blockedDomains */
+    /**
+     * If provided, these domains will never appear in results. Cannot be used alongside `allowed_domains`.
+     *
+     * @var null|list<string> $blockedDomains
+     */
     #[Api(
         'blocked_domains',
         type: new ListOf('string'),
@@ -49,12 +62,21 @@ final class WebSearchTool20250305 implements BaseModel
     )]
     public ?array $blockedDomains;
 
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
     #[Api('cache_control', optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 
+    /**
+     * Maximum number of times the tool can be used in the API request.
+     */
     #[Api('max_uses', optional: true)]
     public ?int $maxUses;
 
+    /**
+     * Parameters for the user's location. Used to provide more relevant search results.
+     */
     #[Api('user_location', optional: true)]
     public ?UserLocation $userLocation;
 

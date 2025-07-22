@@ -17,18 +17,41 @@ final class MessageBatchRequestCounts implements BaseModel
 {
     use Model;
 
+    /**
+     * Number of requests in the Message Batch that have been canceled.
+     *
+     * This is zero until processing of the entire Message Batch has ended.
+     */
     #[Api]
     public int $canceled;
 
+    /**
+     * Number of requests in the Message Batch that encountered an error.
+     *
+     * This is zero until processing of the entire Message Batch has ended.
+     */
     #[Api]
     public int $errored;
 
+    /**
+     * Number of requests in the Message Batch that have expired.
+     *
+     * This is zero until processing of the entire Message Batch has ended.
+     */
     #[Api]
     public int $expired;
 
+    /**
+     * Number of requests in the Message Batch that are processing.
+     */
     #[Api]
     public int $processing;
 
+    /**
+     * Number of requests in the Message Batch that have completed successfully.
+     *
+     * This is zero until processing of the entire Message Batch has ended.
+     */
     #[Api]
     public int $succeeded;
 

@@ -26,6 +26,9 @@ final class ImageBlockParam implements BaseModel
     #[Api(union: Source::class)]
     public Base64ImageSource|URLImageSource $source;
 
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
     #[Api('cache_control', optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 

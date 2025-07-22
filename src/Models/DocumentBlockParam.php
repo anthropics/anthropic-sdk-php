@@ -29,6 +29,9 @@ final class DocumentBlockParam implements BaseModel
     #[Api(union: Source::class)]
     public Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source;
 
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
     #[Api('cache_control', optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 

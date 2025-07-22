@@ -17,12 +17,20 @@ final class BetaCodeExecutionTool20250522 implements BaseModel
 {
     use Model;
 
+    /**
+     * Name of the tool.
+     *
+     * This is how the tool will be called by the model and in `tool_use` blocks.
+     */
     #[Api]
     public string $name = 'code_execution';
 
     #[Api]
     public string $type = 'code_execution_20250522';
 
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 

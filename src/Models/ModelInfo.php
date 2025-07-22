@@ -17,15 +17,29 @@ final class ModelInfo implements BaseModel
 {
     use Model;
 
+    /**
+     * Object type.
+     *
+     * For Models, this is always `"model"`.
+     */
     #[Api]
     public string $type = 'model';
 
+    /**
+     * Unique model identifier.
+     */
     #[Api]
     public string $id;
 
+    /**
+     * RFC 3339 datetime string representing the time at which the model was released. May be set to an epoch value if the release date is unknown.
+     */
     #[Api('created_at')]
     public \DateTimeInterface $createdAt;
 
+    /**
+     * A human-readable name for the model.
+     */
     #[Api('display_name')]
     public string $displayName;
 

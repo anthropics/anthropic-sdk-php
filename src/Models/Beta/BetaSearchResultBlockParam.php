@@ -36,6 +36,9 @@ final class BetaSearchResultBlockParam implements BaseModel
     #[Api]
     public string $title;
 
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 

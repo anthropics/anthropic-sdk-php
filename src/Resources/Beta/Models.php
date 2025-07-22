@@ -19,6 +19,10 @@ final class Models implements ModelsContract
     public function __construct(private Client $client) {}
 
     /**
+     * Get a specific model.
+     *
+     * The Models API response can be used to determine information about a specific model or resolve a model alias to a model ID.
+     *
      * @param ModelRetrieveParam|array{
      *   anthropicBeta?: list<string|UnionMember1::*>
      * } $params
@@ -47,6 +51,10 @@ final class Models implements ModelsContract
     }
 
     /**
+     * List available models.
+     *
+     * The Models API response can be used to determine which models are available for use in the API. More recently released models are listed first.
+     *
      * @param ModelListParam|array{
      *   afterID?: string,
      *   beforeID?: string,

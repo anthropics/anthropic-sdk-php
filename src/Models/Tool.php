@@ -23,15 +23,33 @@ final class Tool implements BaseModel
 {
     use Model;
 
+    /**
+     * [JSON schema](https://json-schema.org/draft/2020-12) for this tool's input.
+     *
+     * This defines the shape of the `input` that your tool accepts and that the model will produce.
+     */
     #[Api('input_schema')]
     public InputSchema $inputSchema;
 
+    /**
+     * Name of the tool.
+     *
+     * This is how the tool will be called by the model and in `tool_use` blocks.
+     */
     #[Api]
     public string $name;
 
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
     #[Api('cache_control', optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 
+    /**
+     * Description of what this tool does.
+     *
+     * Tool descriptions should be as detailed as possible. The more information that the model has about what the tool is and how to use it, the better it will perform. You can use natural language descriptions to reinforce important aspects of the tool input JSON schema.
+     */
     #[Api(optional: true)]
     public ?string $description;
 

@@ -26,9 +26,15 @@ final class BetaMCPToolUseBlock implements BaseModel
     #[Api]
     public mixed $input;
 
+    /**
+     * The name of the MCP tool.
+     */
     #[Api]
     public string $name;
 
+    /**
+     * The name of the MCP server.
+     */
     #[Api('server_name')]
     public string $serverName;
 

@@ -16,10 +16,19 @@ final class DeletedFile implements BaseModel
 {
     use Model;
 
+    /**
+     * ID of the deleted file.
+     */
     #[Api]
     public string $id;
 
-    /** @var null|Type::* $type */
+    /**
+     * Deleted object type.
+     *
+     * For file deletion, this is always `"file_deleted"`.
+     *
+     * @var null|Type::* $type
+     */
     #[Api(optional: true)]
     public ?string $type;
 

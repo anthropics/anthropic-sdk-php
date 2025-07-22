@@ -23,24 +23,49 @@ final class FileMetadata implements BaseModel
 {
     use Model;
 
+    /**
+     * Object type.
+     *
+     * For files, this is always `"file"`.
+     */
     #[Api]
     public string $type = 'file';
 
+    /**
+     * Unique object identifier.
+     *
+     * The format and length of IDs may change over time.
+     */
     #[Api]
     public string $id;
 
+    /**
+     * RFC 3339 datetime string representing when the file was created.
+     */
     #[Api('created_at')]
     public \DateTimeInterface $createdAt;
 
+    /**
+     * Original filename of the uploaded file.
+     */
     #[Api]
     public string $filename;
 
+    /**
+     * MIME type of the file.
+     */
     #[Api('mime_type')]
     public string $mimeType;
 
+    /**
+     * Size of the file in bytes.
+     */
     #[Api('size_bytes')]
     public int $sizeBytes;
 
+    /**
+     * Whether the file can be downloaded.
+     */
     #[Api(optional: true)]
     public ?bool $downloadable;
 

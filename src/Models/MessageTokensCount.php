@@ -15,6 +15,9 @@ final class MessageTokensCount implements BaseModel
 {
     use Model;
 
+    /**
+     * The total number of tokens across the provided list of messages, system prompt, and tools.
+     */
     #[Api('input_tokens')]
     public int $inputTokens;
 

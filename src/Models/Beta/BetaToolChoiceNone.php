@@ -9,6 +9,8 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * The model will not be allowed to use tools.
+ *
  * @phpstan-type beta_tool_choice_none_alias = array{type: string}
  */
 final class BetaToolChoiceNone implements BaseModel

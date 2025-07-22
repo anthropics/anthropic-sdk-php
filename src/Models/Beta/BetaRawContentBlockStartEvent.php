@@ -23,6 +23,9 @@ final class BetaRawContentBlockStartEvent implements BaseModel
     #[Api]
     public string $type = 'content_block_start';
 
+    /**
+     * Response model for a file uploaded to the container.
+     */
     #[Api('content_block', union: ContentBlock::class)]
     public BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock $contentBlock;
 

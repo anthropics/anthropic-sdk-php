@@ -10,6 +10,8 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Models\Model\UnionMember0;
 
 /**
+ * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+ *
  * @phpstan-type model_alias = UnionMember0::*|string
  */
 final class Model implements ConverterSource

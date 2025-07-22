@@ -23,6 +23,8 @@ final class Files implements FilesContract
     public function __construct(private Client $client) {}
 
     /**
+     * List Files.
+     *
      * @param FileListParam|array{
      *   afterID?: string,
      *   beforeID?: string,
@@ -58,6 +60,8 @@ final class Files implements FilesContract
     }
 
     /**
+     * Delete File.
+     *
      * @param FileDeleteParam|array{
      *   anthropicBeta?: list<string|UnionMember1::*>
      * } $params
@@ -89,6 +93,8 @@ final class Files implements FilesContract
     }
 
     /**
+     * Download File.
+     *
      * @param FileDownloadParam|array{
      *   anthropicBeta?: list<string|UnionMember1::*>
      * } $params
@@ -120,6 +126,8 @@ final class Files implements FilesContract
     }
 
     /**
+     * Get File Metadata.
+     *
      * @param FileRetrieveMetadataParam|array{
      *   anthropicBeta?: list<string|UnionMember1::*>
      * } $params
@@ -151,6 +159,8 @@ final class Files implements FilesContract
     }
 
     /**
+     * Upload File.
+     *
      * @param FileUploadParam|array{
      *   file: string, anthropicBeta?: list<string|UnionMember1::*>
      * } $params

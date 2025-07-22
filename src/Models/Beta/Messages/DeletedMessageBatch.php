@@ -15,9 +15,17 @@ final class DeletedMessageBatch implements BaseModel
 {
     use Model;
 
+    /**
+     * Deleted object type.
+     *
+     * For Message Batches, this is always `"message_batch_deleted"`.
+     */
     #[Api]
     public string $type = 'message_batch_deleted';
 
+    /**
+     * ID of the Message Batch.
+     */
     #[Api]
     public string $id;
 

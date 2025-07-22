@@ -21,7 +21,17 @@ final class BetaCacheControlEphemeral implements BaseModel
     #[Api]
     public string $type = 'ephemeral';
 
-    /** @var null|TTL::* $ttl */
+    /**
+     * The time-to-live for the cache control breakpoint.
+     *
+     * This may be one the following values:
+     * - `5m`: 5 minutes
+     * - `1h`: 1 hour
+     *
+     * Defaults to `5m`.
+     *
+     * @var null|TTL::* $ttl
+     */
     #[Api(optional: true)]
     public ?string $ttl;
 

@@ -10,6 +10,10 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 
 /**
+ * [JSON schema](https://json-schema.org/draft/2020-12) for this tool's input.
+ *
+ * This defines the shape of the `input` that your tool accepts and that the model will produce.
+ *
  * @phpstan-type input_schema_alias = array{
  *   type: string, properties?: mixed, required?: list<string>|null
  * }

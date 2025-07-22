@@ -22,21 +22,38 @@ final class BetaToolComputerUse20250124 implements BaseModel
 {
     use Model;
 
+    /**
+     * Name of the tool.
+     *
+     * This is how the tool will be called by the model and in `tool_use` blocks.
+     */
     #[Api]
     public string $name = 'computer';
 
     #[Api]
     public string $type = 'computer_20250124';
 
+    /**
+     * The height of the display in pixels.
+     */
     #[Api('display_height_px')]
     public int $displayHeightPx;
 
+    /**
+     * The width of the display in pixels.
+     */
     #[Api('display_width_px')]
     public int $displayWidthPx;
 
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
+    /**
+     * The X11 display number (e.g. 0, 1) for the display.
+     */
     #[Api('display_number', optional: true)]
     public ?int $displayNumber;
 

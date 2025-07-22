@@ -15,6 +15,9 @@ final class ServerToolUsage implements BaseModel
 {
     use Model;
 
+    /**
+     * The number of web search tool requests.
+     */
     #[Api('web_search_requests')]
     public int $webSearchRequests;
 

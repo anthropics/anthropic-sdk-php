@@ -8,6 +8,14 @@ use Anthropic\Core\Concerns\Enum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
+ * The time-to-live for the cache control breakpoint.
+ *
+ * This may be one the following values:
+ * - `5m`: 5 minutes
+ * - `1h`: 1 hour
+ *
+ * Defaults to `5m`.
+ *
  * @phpstan-type ttl_alias = TTL::*
  */
 final class TTL implements ConverterSource
