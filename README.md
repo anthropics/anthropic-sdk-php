@@ -1,5 +1,10 @@
 # Anthropic PHP API library
 
+> [!NOTE]
+> The Anthropic PHP API Library is currently in alpha.
+>
+> There may be frequent breaking changes.
+
 The Anthropic PHP library provides convenient access to the Anthropic REST API from any PHP 8.1.0+ application.
 
 > [!WARNING]
