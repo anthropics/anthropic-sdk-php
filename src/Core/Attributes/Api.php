@@ -21,7 +21,7 @@ final class Api
     /**
      * @param null|class-string<ConverterSource>|Converter|string $type
      * @param null|class-string<ConverterSource>|Converter        $enum
-     * @param null|class-string<ConverterSource>|Converter        $union
+     * @param null|class-string<ConverterSource>|Converter|string $union
      */
     public function __construct(
         public readonly ?string $apiName = null,
