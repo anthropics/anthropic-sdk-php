@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Parameters;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model as Model1;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
@@ -36,7 +36,7 @@ use Anthropic\Models\Model\UnionMember0;
  */
 final class CompletionCreateParam implements BaseModel
 {
-    use Model1;
+    use ModelTrait;
     use Params;
 
     /**
@@ -123,14 +123,22 @@ final class CompletionCreateParam implements BaseModel
     #[Api(type: new ListOf(union: AnthropicBeta::class), optional: true)]
     public ?array $anthropicBeta;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
      *
-     * @param string|UnionMember0::*            $model
-     * @param null|list<string>                 $stopSequences
+     * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param string|UnionMember0::* $model
+     * @param null|list<string> $stopSequences
      * @param null|list<string|UnionMember1::*> $anthropicBeta
      */
-    final public function __construct(
+    public static function new(
         int $maxTokensToSample,
         string $model,
         string $prompt,
@@ -140,19 +148,20 @@ final class CompletionCreateParam implements BaseModel
         ?int $topK = null,
         ?float $topP = null,
         ?array $anthropicBeta = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        $this->maxTokensToSample = $maxTokensToSample;
-        $this->model = $model;
-        $this->prompt = $prompt;
+        $obj->maxTokensToSample = $maxTokensToSample;
+        $obj->model = $model;
+        $obj->prompt = $prompt;
 
-        null !== $metadata && $this->metadata = $metadata;
-        null !== $stopSequences && $this->stopSequences = $stopSequences;
-        null !== $temperature && $this->temperature = $temperature;
-        null !== $topK && $this->topK = $topK;
-        null !== $topP && $this->topP = $topP;
-        null !== $anthropicBeta && $this->anthropicBeta = $anthropicBeta;
+        null !== $metadata && $obj->metadata = $metadata;
+        null !== $stopSequences && $obj->stopSequences = $stopSequences;
+        null !== $temperature && $obj->temperature = $temperature;
+        null !== $topK && $obj->topK = $topK;
+        null !== $topP && $obj->topP = $topP;
+        null !== $anthropicBeta && $obj->anthropicBeta = $anthropicBeta;
+
+        return $obj;
     }
 }

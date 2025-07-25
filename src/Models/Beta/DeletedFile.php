@@ -32,18 +32,51 @@ final class DeletedFile implements BaseModel
     #[Api(enum: Type::class, optional: true)]
     public ?string $type;
 
-    /**
-     * You must use named parameters to construct this object.
-     *
-     * @param null|Type::* $type
-     */
-    final public function __construct(string $id, ?string $type = null)
+    public function __construct()
     {
         self::introspect();
         $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param null|Type::* $type
+     */
+    public static function new(string $id, ?string $type = null): self
+    {
+        $obj = new self;
+
+        $obj->id = $id;
+
+        null !== $type && $obj->type = $type;
+
+        return $obj;
+    }
+
+    /**
+     * ID of the deleted file.
+     */
+    public function setID(string $id): self
+    {
         $this->id = $id;
 
-        null !== $type && $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * Deleted object type.
+     *
+     * For file deletion, this is always `"file_deleted"`.
+     *
+     * @param Type::* $type
+     */
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
     }
 }

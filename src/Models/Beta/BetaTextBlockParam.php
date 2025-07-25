@@ -14,9 +14,7 @@ use Anthropic\Core\Conversion\ListOf;
  *   text: string,
  *   type: string,
  *   cacheControl?: BetaCacheControlEphemeral,
- *   citations?: list<
- *     BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam
- *   >|null,
+ *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
  * }
  */
 final class BetaTextBlockParam implements BaseModel
@@ -36,9 +34,7 @@ final class BetaTextBlockParam implements BaseModel
     public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * @var list<
-     *   BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam
-     * >|null $citations
+     * @var null|list<BetaCitationCharLocationParam|BetaCitationContentBlockLocationParam|BetaCitationPageLocationParam|BetaCitationSearchResultLocationParam|BetaCitationWebSearchResultLocationParam> $citations
      */
     #[Api(
         type: new ListOf(union: BetaTextCitationParam::class),
@@ -47,24 +43,59 @@ final class BetaTextBlockParam implements BaseModel
     )]
     public ?array $citations;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
      *
-     * @param list<
-     *   BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam
-     * >|null $citations
+     * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param null|list<BetaCitationCharLocationParam|BetaCitationContentBlockLocationParam|BetaCitationPageLocationParam|BetaCitationSearchResultLocationParam|BetaCitationWebSearchResultLocationParam> $citations
      */
-    final public function __construct(
+    public static function new(
         string $text,
         ?BetaCacheControlEphemeral $cacheControl = null,
         ?array $citations = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->text = $text;
+
+        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $citations && $obj->citations = $citations;
+
+        return $obj;
+    }
+
+    public function setText(string $text): self
+    {
         $this->text = $text;
 
-        null !== $cacheControl && $this->cacheControl = $cacheControl;
-        null !== $citations && $this->citations = $citations;
+        return $this;
+    }
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
+    public function setCacheControl(
+        BetaCacheControlEphemeral $cacheControl
+    ): self {
+        $this->cacheControl = $cacheControl;
+
+        return $this;
+    }
+
+    /**
+     * @param null|list<BetaCitationCharLocationParam|BetaCitationContentBlockLocationParam|BetaCitationPageLocationParam|BetaCitationSearchResultLocationParam|BetaCitationWebSearchResultLocationParam> $citations
+     */
+    public function setCitations(?array $citations): self
+    {
+        $this->citations = $citations;
+
+        return $this;
     }
 }

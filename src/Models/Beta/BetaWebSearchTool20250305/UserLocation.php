@@ -50,21 +50,70 @@ final class UserLocation implements BaseModel
     #[Api(optional: true)]
     public ?string $timezone;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         ?string $city = null,
         ?string $country = null,
         ?string $region = null,
         ?string $timezone = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        null !== $city && $this->city = $city;
-        null !== $country && $this->country = $country;
-        null !== $region && $this->region = $region;
-        null !== $timezone && $this->timezone = $timezone;
+        null !== $city && $obj->city = $city;
+        null !== $country && $obj->country = $country;
+        null !== $region && $obj->region = $region;
+        null !== $timezone && $obj->timezone = $timezone;
+
+        return $obj;
+    }
+
+    /**
+     * The city of the user.
+     */
+    public function setCity(?string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * The two letter [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the user.
+     */
+    public function setCountry(?string $country): self
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * The region of the user.
+     */
+    public function setRegion(?string $region): self
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * The [IANA timezone](https://nodatime.org/TimeZones) of the user.
+     */
+    public function setTimezone(?string $timezone): self
+    {
+        $this->timezone = $timezone;
+
+        return $this;
     }
 }

@@ -20,18 +20,15 @@ use Anthropic\Models\ToolUseBlockParam;
 use Anthropic\Models\WebSearchToolResultBlockParam;
 
 /**
- * @phpstan-type content_alias = string|list<
- *   TextBlockParam|ImageBlockParam|DocumentBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam
- * >
+ * @phpstan-type content_alias = string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam>
  */
 final class Content implements ConverterSource
 {
     use Union;
 
     /**
-     * @return list<string|Converter|ConverterSource>|array<
-     *   string, string|Converter|ConverterSource
-     * >
+     * @return list<string|Converter|ConverterSource>|array<string,
+     * string|Converter|ConverterSource,>
      */
     public static function variants(): array
     {

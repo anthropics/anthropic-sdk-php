@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\RawContentBlockStartEvent\ContentBlock;
+use Anthropic\Models\RawContentBlockStartEvent\ContentBlock as ContentBlock1;
 
 /**
  * @phpstan-type raw_content_block_start_event_alias = array{
@@ -18,27 +18,52 @@ use Anthropic\Models\RawContentBlockStartEvent\ContentBlock;
  */
 final class RawContentBlockStartEvent implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $type = 'content_block_start';
 
-    #[Api('content_block', union: ContentBlock::class)]
+    #[Api('content_block', union: ContentBlock1::class)]
     public RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock $contentBlock;
 
     #[Api]
     public int $index;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock $contentBlock,
         int $index,
-    ) {
-        self::introspect();
+    ): self {
+        $obj = new self;
 
+        $obj->contentBlock = $contentBlock;
+        $obj->index = $index;
+
+        return $obj;
+    }
+
+    public function setContentBlock(
+        RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock $contentBlock,
+    ): self {
         $this->contentBlock = $contentBlock;
+
+        return $this;
+    }
+
+    public function setIndex(int $index): self
+    {
         $this->index = $index;
+
+        return $this;
     }
 }

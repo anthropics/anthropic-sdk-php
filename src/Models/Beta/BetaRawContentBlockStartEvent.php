@@ -32,16 +32,44 @@ final class BetaRawContentBlockStartEvent implements BaseModel
     #[Api]
     public int $index;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock $contentBlock,
         int $index,
-    ) {
-        self::introspect();
+    ): self {
+        $obj = new self;
 
+        $obj->contentBlock = $contentBlock;
+        $obj->index = $index;
+
+        return $obj;
+    }
+
+    /**
+     * Response model for a file uploaded to the container.
+     */
+    public function setContentBlock(
+        BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock $contentBlock,
+    ): self {
         $this->contentBlock = $contentBlock;
+
+        return $this;
+    }
+
+    public function setIndex(int $index): self
+    {
         $this->index = $index;
+
+        return $this;
     }
 }

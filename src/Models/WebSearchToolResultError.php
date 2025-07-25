@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\WebSearchToolResultError\ErrorCode;
 
@@ -16,7 +16,7 @@ use Anthropic\Models\WebSearchToolResultError\ErrorCode;
  */
 final class WebSearchToolResultError implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $type = 'web_search_tool_result_error';
@@ -25,15 +25,35 @@ final class WebSearchToolResultError implements BaseModel
     #[Api('error_code', enum: ErrorCode::class)]
     public string $errorCode;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param ErrorCode::* $errorCode
      */
-    final public function __construct(string $errorCode)
+    public static function new(string $errorCode): self
     {
-        self::introspect();
+        $obj = new self;
 
+        $obj->errorCode = $errorCode;
+
+        return $obj;
+    }
+
+    /**
+     * @param ErrorCode::* $errorCode
+     */
+    public function setErrorCode(string $errorCode): self
+    {
         $this->errorCode = $errorCode;
+
+        return $this;
     }
 }

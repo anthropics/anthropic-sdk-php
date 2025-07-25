@@ -23,13 +23,30 @@ final class BetaSignatureDelta implements BaseModel
     #[Api]
     public string $signature;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(string $signature)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(string $signature): self
+    {
+        $obj = new self;
+
+        $obj->signature = $signature;
+
+        return $obj;
+    }
+
+    public function setSignature(string $signature): self
+    {
         $this->signature = $signature;
+
+        return $this;
     }
 }

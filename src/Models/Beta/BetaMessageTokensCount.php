@@ -21,13 +21,33 @@ final class BetaMessageTokensCount implements BaseModel
     #[Api('input_tokens')]
     public int $inputTokens;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(int $inputTokens)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(int $inputTokens): self
+    {
+        $obj = new self;
+
+        $obj->inputTokens = $inputTokens;
+
+        return $obj;
+    }
+
+    /**
+     * The total number of tokens across the provided list of messages, system prompt, and tools.
+     */
+    public function setInputTokens(int $inputTokens): self
+    {
         $this->inputTokens = $inputTokens;
+
+        return $this;
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class RawContentBlockDeltaEvent implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $type = 'content_block_delta';
@@ -28,16 +28,41 @@ final class RawContentBlockDeltaEvent implements BaseModel
     #[Api]
     public int $index;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         CitationsDelta|InputJSONDelta|SignatureDelta|TextDelta|ThinkingDelta $delta,
         int $index,
-    ) {
-        self::introspect();
+    ): self {
+        $obj = new self;
 
+        $obj->delta = $delta;
+        $obj->index = $index;
+
+        return $obj;
+    }
+
+    public function setDelta(
+        CitationsDelta|InputJSONDelta|SignatureDelta|TextDelta|ThinkingDelta $delta
+    ): self {
         $this->delta = $delta;
+
+        return $this;
+    }
+
+    public function setIndex(int $index): self
+    {
         $this->index = $index;
+
+        return $this;
     }
 }

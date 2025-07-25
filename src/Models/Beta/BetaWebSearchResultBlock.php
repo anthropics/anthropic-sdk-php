@@ -36,20 +36,58 @@ final class BetaWebSearchResultBlock implements BaseModel
     #[Api]
     public string $url;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         string $encryptedContent,
         ?string $pageAge,
         string $title,
         string $url
-    ) {
-        self::introspect();
+    ): self {
+        $obj = new self;
 
+        $obj->encryptedContent = $encryptedContent;
+        $obj->pageAge = $pageAge;
+        $obj->title = $title;
+        $obj->url = $url;
+
+        return $obj;
+    }
+
+    public function setEncryptedContent(string $encryptedContent): self
+    {
         $this->encryptedContent = $encryptedContent;
+
+        return $this;
+    }
+
+    public function setPageAge(?string $pageAge): self
+    {
         $this->pageAge = $pageAge;
+
+        return $this;
+    }
+
+    public function setTitle(string $title): self
+    {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function setURL(string $url): self
+    {
         $this->url = $url;
+
+        return $this;
     }
 }

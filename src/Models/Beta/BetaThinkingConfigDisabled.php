@@ -18,8 +18,19 @@ final class BetaThinkingConfigDisabled implements BaseModel
     #[Api]
     public string $type = 'disabled';
 
-    final public function __construct()
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(): self
+    {
+        return new self;
     }
 }

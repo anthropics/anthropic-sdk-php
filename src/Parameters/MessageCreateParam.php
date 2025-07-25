@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Parameters;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model as Model1;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
@@ -38,7 +38,7 @@ use Anthropic\Parameters\MessageCreateParam\System;
  *
  * Learn more about the Messages API in our [user guide](/en/docs/initial-setup)
  *
- * @phpstan-type create_params = array{
+ * @phpstan-type create_params1 = array{
  *   maxTokens: int,
  *   messages: list<MessageParam>,
  *   model: UnionMember0::*|string,
@@ -49,16 +49,14 @@ use Anthropic\Parameters\MessageCreateParam\System;
  *   temperature?: float,
  *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
  *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
- *   tools?: list<
- *     Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
- *   >,
+ *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305>,
  *   topK?: int,
  *   topP?: float,
  * }
  */
 final class MessageCreateParam implements BaseModel
 {
-    use Model1;
+    use ModelTrait;
     use Params;
 
     /**
@@ -279,9 +277,7 @@ final class MessageCreateParam implements BaseModel
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
-     * @var list<
-     *   Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
-     * >|null $tools
+     * @var null|list<TextEditor20250429|Tool|ToolBash20250124|ToolTextEditor20250124|WebSearchTool20250305> $tools
      */
     #[Api(type: new ListOf(union: ToolUnion::class), optional: true)]
     public ?array $tools;
@@ -306,19 +302,25 @@ final class MessageCreateParam implements BaseModel
     #[Api('top_p', optional: true)]
     public ?float $topP;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
      *
-     * @param list<MessageParam>               $messages
-     * @param string|UnionMember0::*           $model
-     * @param null|ServiceTier::*              $serviceTier
-     * @param null|list<string>                $stopSequences
+     * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param list<MessageParam> $messages
+     * @param string|UnionMember0::* $model
+     * @param null|ServiceTier::* $serviceTier
+     * @param null|list<string> $stopSequences
      * @param null|list<TextBlockParam>|string $system
-     * @param list<
-     *   Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
-     * >|null $tools
+     * @param null|list<TextEditor20250429|Tool|ToolBash20250124|ToolTextEditor20250124|WebSearchTool20250305> $tools
      */
-    final public function __construct(
+    public static function new(
         int $maxTokens,
         array $messages,
         string $model,
@@ -332,23 +334,24 @@ final class MessageCreateParam implements BaseModel
         ?array $tools = null,
         ?int $topK = null,
         ?float $topP = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        $this->maxTokens = $maxTokens;
-        $this->messages = $messages;
-        $this->model = $model;
+        $obj->maxTokens = $maxTokens;
+        $obj->messages = $messages;
+        $obj->model = $model;
 
-        null !== $metadata && $this->metadata = $metadata;
-        null !== $serviceTier && $this->serviceTier = $serviceTier;
-        null !== $stopSequences && $this->stopSequences = $stopSequences;
-        null !== $system && $this->system = $system;
-        null !== $temperature && $this->temperature = $temperature;
-        null !== $thinking && $this->thinking = $thinking;
-        null !== $toolChoice && $this->toolChoice = $toolChoice;
-        null !== $tools && $this->tools = $tools;
-        null !== $topK && $this->topK = $topK;
-        null !== $topP && $this->topP = $topP;
+        null !== $metadata && $obj->metadata = $metadata;
+        null !== $serviceTier && $obj->serviceTier = $serviceTier;
+        null !== $stopSequences && $obj->stopSequences = $stopSequences;
+        null !== $system && $obj->system = $system;
+        null !== $temperature && $obj->temperature = $temperature;
+        null !== $thinking && $obj->thinking = $thinking;
+        null !== $toolChoice && $obj->toolChoice = $toolChoice;
+        null !== $tools && $obj->tools = $tools;
+        null !== $topK && $obj->topK = $topK;
+        null !== $topP && $obj->topP = $topP;
+
+        return $obj;
     }
 }

@@ -80,26 +80,90 @@ final class BetaWebSearchTool20250305 implements BaseModel
     #[Api('user_location', optional: true)]
     public ?UserLocation $userLocation;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param null|list<string> $allowedDomains
      * @param null|list<string> $blockedDomains
      */
-    final public function __construct(
+    public static function new(
         ?array $allowedDomains = null,
         ?array $blockedDomains = null,
         ?BetaCacheControlEphemeral $cacheControl = null,
         ?int $maxUses = null,
         ?UserLocation $userLocation = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        null !== $allowedDomains && $this->allowedDomains = $allowedDomains;
-        null !== $blockedDomains && $this->blockedDomains = $blockedDomains;
-        null !== $cacheControl && $this->cacheControl = $cacheControl;
-        null !== $maxUses && $this->maxUses = $maxUses;
-        null !== $userLocation && $this->userLocation = $userLocation;
+        null !== $allowedDomains && $obj->allowedDomains = $allowedDomains;
+        null !== $blockedDomains && $obj->blockedDomains = $blockedDomains;
+        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $maxUses && $obj->maxUses = $maxUses;
+        null !== $userLocation && $obj->userLocation = $userLocation;
+
+        return $obj;
+    }
+
+    /**
+     * If provided, only these domains will be included in results. Cannot be used alongside `blocked_domains`.
+     *
+     * @param null|list<string> $allowedDomains
+     */
+    public function setAllowedDomains(?array $allowedDomains): self
+    {
+        $this->allowedDomains = $allowedDomains;
+
+        return $this;
+    }
+
+    /**
+     * If provided, these domains will never appear in results. Cannot be used alongside `allowed_domains`.
+     *
+     * @param null|list<string> $blockedDomains
+     */
+    public function setBlockedDomains(?array $blockedDomains): self
+    {
+        $this->blockedDomains = $blockedDomains;
+
+        return $this;
+    }
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
+    public function setCacheControl(
+        BetaCacheControlEphemeral $cacheControl
+    ): self {
+        $this->cacheControl = $cacheControl;
+
+        return $this;
+    }
+
+    /**
+     * Maximum number of times the tool can be used in the API request.
+     */
+    public function setMaxUses(?int $maxUses): self
+    {
+        $this->maxUses = $maxUses;
+
+        return $this;
+    }
+
+    /**
+     * Parameters for the user's location. Used to provide more relevant search results.
+     */
+    public function setUserLocation(?UserLocation $userLocation): self
+    {
+        $this->userLocation = $userLocation;
+
+        return $this;
     }
 }

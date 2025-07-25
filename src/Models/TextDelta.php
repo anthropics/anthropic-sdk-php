@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class TextDelta implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $type = 'text_delta';
@@ -21,13 +21,30 @@ final class TextDelta implements BaseModel
     #[Api]
     public string $text;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(string $text)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(string $text): self
+    {
+        $obj = new self;
+
+        $obj->text = $text;
+
+        return $obj;
+    }
+
+    public function setText(string $text): self
+    {
         $this->text = $text;
+
+        return $this;
     }
 }

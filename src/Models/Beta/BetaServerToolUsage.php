@@ -21,13 +21,33 @@ final class BetaServerToolUsage implements BaseModel
     #[Api('web_search_requests')]
     public int $webSearchRequests;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(int $webSearchRequests = 0)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(int $webSearchRequests = 0): self
+    {
+        $obj = new self;
+
+        $obj->webSearchRequests = $webSearchRequests;
+
+        return $obj;
+    }
+
+    /**
+     * The number of web search tool requests.
+     */
+    public function setWebSearchRequests(int $webSearchRequests): self
+    {
         $this->webSearchRequests = $webSearchRequests;
+
+        return $this;
     }
 }

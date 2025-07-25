@@ -32,16 +32,25 @@ final class FileDownloadParam implements BaseModel
     #[Api(type: new ListOf(union: AnthropicBeta::class), optional: true)]
     public ?array $anthropicBeta;
 
-    /**
-     * You must use named parameters to construct this object.
-     *
-     * @param null|list<string|UnionMember1::*> $anthropicBeta
-     */
-    final public function __construct(?array $anthropicBeta = null)
+    public function __construct()
     {
         self::introspect();
         $this->unsetOptionalProperties();
+    }
 
-        null !== $anthropicBeta && $this->anthropicBeta = $anthropicBeta;
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param null|list<string|UnionMember1::*> $anthropicBeta
+     */
+    public static function new(?array $anthropicBeta = null): self
+    {
+        $obj = new self;
+
+        null !== $anthropicBeta && $obj->anthropicBeta = $anthropicBeta;
+
+        return $obj;
     }
 }

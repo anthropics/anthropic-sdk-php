@@ -38,18 +38,27 @@ final class FileUploadParam implements BaseModel
     #[Api(type: new ListOf(union: AnthropicBeta::class), optional: true)]
     public ?array $anthropicBeta;
 
-    /**
-     * You must use named parameters to construct this object.
-     *
-     * @param null|list<string|UnionMember1::*> $anthropicBeta
-     */
-    final public function __construct(string $file, ?array $anthropicBeta = null)
+    public function __construct()
     {
         self::introspect();
         $this->unsetOptionalProperties();
+    }
 
-        $this->file = $file;
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param null|list<string|UnionMember1::*> $anthropicBeta
+     */
+    public static function new(string $file, ?array $anthropicBeta = null): self
+    {
+        $obj = new self;
 
-        null !== $anthropicBeta && $this->anthropicBeta = $anthropicBeta;
+        $obj->file = $file;
+
+        null !== $anthropicBeta && $obj->anthropicBeta = $anthropicBeta;
+
+        return $obj;
     }
 }

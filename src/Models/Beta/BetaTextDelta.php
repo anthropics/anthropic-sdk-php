@@ -21,13 +21,30 @@ final class BetaTextDelta implements BaseModel
     #[Api]
     public string $text;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(string $text)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(string $text): self
+    {
+        $obj = new self;
+
+        $obj->text = $text;
+
+        return $obj;
+    }
+
+    public function setText(string $text): self
+    {
         $this->text = $text;
+
+        return $this;
     }
 }

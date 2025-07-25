@@ -34,7 +34,7 @@ class BaseClient
     public function __construct(
         protected array $headers,
         string $baseUrl,
-        protected RequestOptions $options = new RequestOptions(),
+        protected RequestOptions $options = new RequestOptions,
     ) {
         $this->uriFactory = Psr17FactoryDiscovery::findUriFactory();
         $this->streamFactory = Psr17FactoryDiscovery::findStreamFactory();
@@ -45,7 +45,7 @@ class BaseClient
     }
 
     /**
-     * @param list<mixed>|string   $path
+     * @param list<mixed>|string $path
      * @param array<string, mixed> $query
      * @param array<string, mixed> $headers
      */
@@ -88,8 +88,8 @@ class BaseClient
     }
 
     /**
-     * @param list<string>|string                             $path
-     * @param array<string, mixed>                            $query
+     * @param list<string>|string $path
+     * @param array<string, mixed> $query
      * @param array<string, null|int|list<int|string>|string> $headers
      * @param RequestOptions|array{
      *   timeout?: float|null,

@@ -40,22 +40,67 @@ final class BetaCitationPageLocationParam implements BaseModel
     #[Api('start_page_number')]
     public int $startPageNumber;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         string $citedText,
         int $documentIndex,
         ?string $documentTitle,
         int $endPageNumber,
         int $startPageNumber,
-    ) {
-        self::introspect();
+    ): self {
+        $obj = new self;
 
+        $obj->citedText = $citedText;
+        $obj->documentIndex = $documentIndex;
+        $obj->documentTitle = $documentTitle;
+        $obj->endPageNumber = $endPageNumber;
+        $obj->startPageNumber = $startPageNumber;
+
+        return $obj;
+    }
+
+    public function setCitedText(string $citedText): self
+    {
         $this->citedText = $citedText;
+
+        return $this;
+    }
+
+    public function setDocumentIndex(int $documentIndex): self
+    {
         $this->documentIndex = $documentIndex;
+
+        return $this;
+    }
+
+    public function setDocumentTitle(?string $documentTitle): self
+    {
         $this->documentTitle = $documentTitle;
+
+        return $this;
+    }
+
+    public function setEndPageNumber(int $endPageNumber): self
+    {
         $this->endPageNumber = $endPageNumber;
+
+        return $this;
+    }
+
+    public function setStartPageNumber(int $startPageNumber): self
+    {
         $this->startPageNumber = $startPageNumber;
+
+        return $this;
     }
 }

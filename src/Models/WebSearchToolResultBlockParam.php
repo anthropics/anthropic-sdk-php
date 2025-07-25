@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -18,7 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class WebSearchToolResultBlockParam implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $type = 'web_search_tool_result';
@@ -36,22 +36,58 @@ final class WebSearchToolResultBlockParam implements BaseModel
     #[Api('cache_control', optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<WebSearchResultBlockParam>|WebSearchToolRequestError $content
      */
-    final public function __construct(
+    public static function new(
         array|WebSearchToolRequestError $content,
         string $toolUseID,
         ?CacheControlEphemeral $cacheControl = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->content = $content;
+        $obj->toolUseID = $toolUseID;
+
+        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+
+        return $obj;
+    }
+
+    /**
+     * @param list<WebSearchResultBlockParam>|WebSearchToolRequestError $content
+     */
+    public function setContent(array|WebSearchToolRequestError $content): self
+    {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function setToolUseID(string $toolUseID): self
+    {
         $this->toolUseID = $toolUseID;
 
-        null !== $cacheControl && $this->cacheControl = $cacheControl;
+        return $this;
+    }
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
+    public function setCacheControl(CacheControlEphemeral $cacheControl): self
+    {
+        $this->cacheControl = $cacheControl;
+
+        return $this;
     }
 }

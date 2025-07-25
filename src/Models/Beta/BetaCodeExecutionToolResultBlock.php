@@ -28,16 +28,41 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
     #[Api('tool_use_id')]
     public string $toolUseID;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         BetaCodeExecutionResultBlock|BetaCodeExecutionToolResultError $content,
         string $toolUseID,
-    ) {
-        self::introspect();
+    ): self {
+        $obj = new self;
 
+        $obj->content = $content;
+        $obj->toolUseID = $toolUseID;
+
+        return $obj;
+    }
+
+    public function setContent(
+        BetaCodeExecutionResultBlock|BetaCodeExecutionToolResultError $content
+    ): self {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function setToolUseID(string $toolUseID): self
+    {
         $this->toolUseID = $toolUseID;
+
+        return $this;
     }
 }

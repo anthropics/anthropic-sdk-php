@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class ServerToolUseBlockParam implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $name = 'web_search';
@@ -39,20 +39,53 @@ final class ServerToolUseBlockParam implements BaseModel
     #[Api('cache_control', optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         string $id,
         mixed $input,
         ?CacheControlEphemeral $cacheControl = null
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->id = $id;
+        $obj->input = $input;
+
+        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+
+        return $obj;
+    }
+
+    public function setID(string $id): self
+    {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function setInput(mixed $input): self
+    {
         $this->input = $input;
 
-        null !== $cacheControl && $this->cacheControl = $cacheControl;
+        return $this;
+    }
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
+    public function setCacheControl(CacheControlEphemeral $cacheControl): self
+    {
+        $this->cacheControl = $cacheControl;
+
+        return $this;
     }
 }

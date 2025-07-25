@@ -35,20 +35,55 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         BetaCodeExecutionResultBlockParam|BetaCodeExecutionToolResultErrorParam $content,
         string $toolUseID,
         ?BetaCacheControlEphemeral $cacheControl = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->content = $content;
+        $obj->toolUseID = $toolUseID;
+
+        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+
+        return $obj;
+    }
+
+    public function setContent(
+        BetaCodeExecutionResultBlockParam|BetaCodeExecutionToolResultErrorParam $content,
+    ): self {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function setToolUseID(string $toolUseID): self
+    {
         $this->toolUseID = $toolUseID;
 
-        null !== $cacheControl && $this->cacheControl = $cacheControl;
+        return $this;
+    }
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
+    public function setCacheControl(
+        BetaCacheControlEphemeral $cacheControl
+    ): self {
+        $this->cacheControl = $cacheControl;
+
+        return $this;
     }
 }

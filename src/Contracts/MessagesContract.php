@@ -41,9 +41,7 @@ interface MessagesContract
      *   temperature?: float,
      *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
      *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
-     *   tools?: list<
-     *     Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
-     *   >,
+     *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305>,
      *   topK?: int,
      *   topP?: float,
      * } $params
@@ -60,9 +58,7 @@ interface MessagesContract
      *   system?: string|list<TextBlockParam>,
      *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
      *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
-     *   tools?: list<
-     *     Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor202504291|WebSearchTool20250305
-     *   >,
+     *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor202504291|WebSearchTool20250305>,
      * } $params
      */
     public function countTokens(

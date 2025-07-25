@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\RawMessageDeltaEvent\Delta;
 
@@ -16,7 +16,7 @@ use Anthropic\Models\RawMessageDeltaEvent\Delta;
  */
 final class RawMessageDeltaEvent implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $type = 'message_delta';
@@ -38,14 +38,49 @@ final class RawMessageDeltaEvent implements BaseModel
     #[Api]
     public MessageDeltaUsage $usage;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(Delta $delta, MessageDeltaUsage $usage)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(Delta $delta, MessageDeltaUsage $usage): self
+    {
+        $obj = new self;
+
+        $obj->delta = $delta;
+        $obj->usage = $usage;
+
+        return $obj;
+    }
+
+    public function setDelta(Delta $delta): self
+    {
         $this->delta = $delta;
+
+        return $this;
+    }
+
+    /**
+     * Billing and rate-limit usage.
+     *
+     * Anthropic's API bills and rate-limits by token counts, as tokens represent the underlying cost to our systems.
+     *
+     * Under the hood, the API transforms requests into a format suitable for the model. The model's output then goes through a parsing stage before becoming an API response. As a result, the token counts in `usage` will not match one-to-one with the exact visible content of an API request or response.
+     *
+     * For example, `output_tokens` will be non-zero, even for an empty string response from Claude.
+     *
+     * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
+     */
+    public function setUsage(MessageDeltaUsage $usage): self
+    {
         $this->usage = $usage;
+
+        return $this;
     }
 }

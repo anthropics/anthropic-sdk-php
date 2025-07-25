@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\CitationsDelta\Citation;
 
@@ -17,7 +17,7 @@ use Anthropic\Models\CitationsDelta\Citation;
  */
 final class CitationsDelta implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $type = 'citations_delta';
@@ -25,14 +25,32 @@ final class CitationsDelta implements BaseModel
     #[Api(union: Citation::class)]
     public CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsWebSearchResultLocation $citation;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(
-        CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsWebSearchResultLocation $citation,
-    ) {
+    public function __construct()
+    {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(
+        CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsWebSearchResultLocation $citation,
+    ): self {
+        $obj = new self;
+
+        $obj->citation = $citation;
+
+        return $obj;
+    }
+
+    public function setCitation(
+        CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsWebSearchResultLocation $citation,
+    ): self {
         $this->citation = $citation;
+
+        return $this;
     }
 }

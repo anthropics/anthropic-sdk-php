@@ -34,15 +34,35 @@ final class BetaToolTextEditor20250429 implements BaseModel
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(
-        ?BetaCacheControlEphemeral $cacheControl = null
-    ) {
+    public function __construct()
+    {
         self::introspect();
         $this->unsetOptionalProperties();
+    }
 
-        null !== $cacheControl && $this->cacheControl = $cacheControl;
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(
+        ?BetaCacheControlEphemeral $cacheControl = null
+    ): self {
+        $obj = new self;
+
+        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+
+        return $obj;
+    }
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
+    public function setCacheControl(
+        BetaCacheControlEphemeral $cacheControl
+    ): self {
+        $this->cacheControl = $cacheControl;
+
+        return $this;
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\DocumentBlockParam\Source;
 
@@ -21,7 +21,7 @@ use Anthropic\Models\DocumentBlockParam\Source;
  */
 final class DocumentBlockParam implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $type = 'document';
@@ -44,24 +44,72 @@ final class DocumentBlockParam implements BaseModel
     #[Api(optional: true)]
     public ?string $title;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source,
         ?CacheControlEphemeral $cacheControl = null,
         ?CitationsConfigParam $citations = null,
         ?string $context = null,
         ?string $title = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->source = $source;
+
+        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $citations && $obj->citations = $citations;
+        null !== $context && $obj->context = $context;
+        null !== $title && $obj->title = $title;
+
+        return $obj;
+    }
+
+    public function setSource(
+        Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source
+    ): self {
         $this->source = $source;
 
-        null !== $cacheControl && $this->cacheControl = $cacheControl;
-        null !== $citations && $this->citations = $citations;
-        null !== $context && $this->context = $context;
-        null !== $title && $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
+    public function setCacheControl(CacheControlEphemeral $cacheControl): self
+    {
+        $this->cacheControl = $cacheControl;
+
+        return $this;
+    }
+
+    public function setCitations(CitationsConfigParam $citations): self
+    {
+        $this->citations = $citations;
+
+        return $this;
+    }
+
+    public function setContext(?string $context): self
+    {
+        $this->context = $context;
+
+        return $this;
+    }
+
+    public function setTitle(?string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
     }
 }

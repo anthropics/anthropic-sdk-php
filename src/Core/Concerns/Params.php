@@ -30,7 +30,7 @@ trait Params
     public static function parseRequest(null|array|self $params, null|array|RequestOptions $options): array
     {
         $converter = self::converter();
-        $state = new DumpState();
+        $state = new DumpState;
         $dumped = (array) Conversion::dump($converter, value: $params, state: $state);
         $opts = RequestOptions::parse($options); // @phpstan-ignore-line
 

@@ -68,12 +68,20 @@ final class BetaUsage implements BaseModel
     #[Api('service_tier', enum: ServiceTier::class, nullable: true)]
     public ?string $serviceTier;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param null|ServiceTier::* $serviceTier
      */
-    final public function __construct(
+    public static function new(
         BetaCacheCreation $cacheCreation,
         ?int $cacheCreationInputTokens,
         ?int $cacheReadInputTokens,
@@ -81,15 +89,90 @@ final class BetaUsage implements BaseModel
         int $outputTokens,
         BetaServerToolUsage $serverToolUse,
         ?string $serviceTier,
-    ) {
-        self::introspect();
+    ): self {
+        $obj = new self;
 
+        $obj->cacheCreation = $cacheCreation;
+        $obj->cacheCreationInputTokens = $cacheCreationInputTokens;
+        $obj->cacheReadInputTokens = $cacheReadInputTokens;
+        $obj->inputTokens = $inputTokens;
+        $obj->outputTokens = $outputTokens;
+        $obj->serverToolUse = $serverToolUse;
+        $obj->serviceTier = $serviceTier;
+
+        return $obj;
+    }
+
+    /**
+     * Breakdown of cached tokens by TTL.
+     */
+    public function setCacheCreation(BetaCacheCreation $cacheCreation): self
+    {
         $this->cacheCreation = $cacheCreation;
+
+        return $this;
+    }
+
+    /**
+     * The number of input tokens used to create the cache entry.
+     */
+    public function setCacheCreationInputTokens(
+        ?int $cacheCreationInputTokens
+    ): self {
         $this->cacheCreationInputTokens = $cacheCreationInputTokens;
+
+        return $this;
+    }
+
+    /**
+     * The number of input tokens read from the cache.
+     */
+    public function setCacheReadInputTokens(?int $cacheReadInputTokens): self
+    {
         $this->cacheReadInputTokens = $cacheReadInputTokens;
+
+        return $this;
+    }
+
+    /**
+     * The number of input tokens which were used.
+     */
+    public function setInputTokens(int $inputTokens): self
+    {
         $this->inputTokens = $inputTokens;
+
+        return $this;
+    }
+
+    /**
+     * The number of output tokens which were used.
+     */
+    public function setOutputTokens(int $outputTokens): self
+    {
         $this->outputTokens = $outputTokens;
+
+        return $this;
+    }
+
+    /**
+     * The number of server tool requests.
+     */
+    public function setServerToolUse(BetaServerToolUsage $serverToolUse): self
+    {
         $this->serverToolUse = $serverToolUse;
+
+        return $this;
+    }
+
+    /**
+     * If the request used the priority, standard, or batch tier.
+     *
+     * @param null|ServiceTier::* $serviceTier
+     */
+    public function setServiceTier(?string $serviceTier): self
+    {
         $this->serviceTier = $serviceTier;
+
+        return $this;
     }
 }

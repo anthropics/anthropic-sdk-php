@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class WebSearchResultBlockParam implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $type = 'web_search_result';
@@ -36,22 +36,59 @@ final class WebSearchResultBlockParam implements BaseModel
     #[Api('page_age', optional: true)]
     public ?string $pageAge;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         string $encryptedContent,
         string $title,
         string $url,
         ?string $pageAge = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->encryptedContent = $encryptedContent;
+        $obj->title = $title;
+        $obj->url = $url;
+
+        null !== $pageAge && $obj->pageAge = $pageAge;
+
+        return $obj;
+    }
+
+    public function setEncryptedContent(string $encryptedContent): self
+    {
         $this->encryptedContent = $encryptedContent;
+
+        return $this;
+    }
+
+    public function setTitle(string $title): self
+    {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function setURL(string $url): self
+    {
         $this->url = $url;
 
-        null !== $pageAge && $this->pageAge = $pageAge;
+        return $this;
+    }
+
+    public function setPageAge(?string $pageAge): self
+    {
+        $this->pageAge = $pageAge;
+
+        return $this;
     }
 }

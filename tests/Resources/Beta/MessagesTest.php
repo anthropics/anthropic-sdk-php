@@ -46,9 +46,11 @@ final class MessagesTest extends TestCase
             ->beta
             ->messages
             ->create(
-                new MessageCreateParam(
+                MessageCreateParam::new(
                     maxTokens: 1024,
-                    messages: [new BetaMessageParam(content: 'Hello, world', role: 'user')],
+                    messages: [
+                        BetaMessageParam::new(content: 'Hello, world', role: 'user'),
+                    ],
                     model: 'claude-sonnet-4-20250514',
                 )
             )
@@ -65,56 +67,54 @@ final class MessagesTest extends TestCase
             ->beta
             ->messages
             ->create(
-                new MessageCreateParam(
+                MessageCreateParam::new(
                     maxTokens: 1024,
-                    messages: [new BetaMessageParam(content: 'Hello, world', role: 'user')],
+                    messages: [
+                        BetaMessageParam::new(content: 'Hello, world', role: 'user'),
+                    ],
                     model: 'claude-sonnet-4-20250514',
                     container: 'container',
                     mcpServers: [
-                        new BetaRequestMCPServerURLDefinition(
-                            name: 'name',
-                            url: 'url',
-                            authorizationToken: 'authorization_token',
-                            toolConfiguration: new BetaRequestMCPServerToolConfiguration(
-                                allowedTools: ['string'],
-                                enabled: true
+                        BetaRequestMCPServerURLDefinition::new(name: 'name', url: 'url')
+                            ->setAuthorizationToken('authorization_token')
+                            ->setToolConfiguration(
+                                (new BetaRequestMCPServerToolConfiguration)
+                                    ->setAllowedTools(['string'])
+                                    ->setEnabled(true),
                             ),
-                        ),
                     ],
-                    metadata: new BetaMetadata(
-                        userID: '13803d75-b4b5-4c3e-b2a2-6f21399b021b'
-                    ),
+                    metadata: (new BetaMetadata)
+                        ->setUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
                     serviceTier: 'auto',
                     stopSequences: ['string'],
                     system: [
-                        new BetaTextBlockParam(
-                            text: "Today's date is 2024-06-01.",
-                            cacheControl: new BetaCacheControlEphemeral(ttl: '5m'),
-                            citations: [
-                                new BetaCitationCharLocationParam(
-                                    citedText: 'cited_text',
-                                    documentIndex: 0,
-                                    documentTitle: 'x',
-                                    endCharIndex: 0,
-                                    startCharIndex: 0,
-                                ),
-                            ],
-                        ),
+                        BetaTextBlockParam::new(text: "Today's date is 2024-06-01.")
+                            ->setCacheControl((new BetaCacheControlEphemeral)->setTTL('5m'))
+                            ->setCitations(
+                                [
+                                    BetaCitationCharLocationParam::new(
+                                        citedText: 'cited_text',
+                                        documentIndex: 0,
+                                        documentTitle: 'x',
+                                        endCharIndex: 0,
+                                        startCharIndex: 0,
+                                    ),
+                                ],
+                            ),
                     ],
                     temperature: 1,
-                    thinking: new BetaThinkingConfigEnabled(budgetTokens: 1024),
-                    toolChoice: new BetaToolChoiceAuto(disableParallelToolUse: true),
+                    thinking: BetaThinkingConfigEnabled::new(budgetTokens: 1024),
+                    toolChoice: (new BetaToolChoiceAuto)->setDisableParallelToolUse(true),
                     tools: [
-                        new BetaTool(
-                            inputSchema: new InputSchema(
-                                properties: (object) [],
-                                required: ['location']
-                            ),
+                        BetaTool::new(
+                            inputSchema: (new InputSchema)
+                                ->setProperties((object) [])
+                                ->setRequired(['location']),
                             name: 'name',
-                            cacheControl: new BetaCacheControlEphemeral(ttl: '5m'),
-                            description: 'Get the current weather in a given location',
-                            type: 'custom',
-                        ),
+                        )
+                            ->setCacheControl((new BetaCacheControlEphemeral)->setTTL('5m'))
+                            ->setDescription('Get the current weather in a given location')
+                            ->setType('custom'),
                     ],
                     topK: 5,
                     topP: 0.7,
@@ -134,8 +134,8 @@ final class MessagesTest extends TestCase
             ->beta
             ->messages
             ->countTokens(
-                new MessageCountTokensParam(
-                    messages: [new BetaMessageParam(content: 'string', role: 'user')],
+                MessageCountTokensParam::new(
+                    messages: [BetaMessageParam::new(content: 'string', role: 'user')],
                     model: 'claude-3-7-sonnet-latest',
                 )
             )
@@ -152,48 +152,45 @@ final class MessagesTest extends TestCase
             ->beta
             ->messages
             ->countTokens(
-                new MessageCountTokensParam(
-                    messages: [new BetaMessageParam(content: 'string', role: 'user')],
+                MessageCountTokensParam::new(
+                    messages: [BetaMessageParam::new(content: 'string', role: 'user')],
                     model: 'claude-3-7-sonnet-latest',
                     mcpServers: [
-                        new BetaRequestMCPServerURLDefinition(
-                            name: 'name',
-                            url: 'url',
-                            authorizationToken: 'authorization_token',
-                            toolConfiguration: new BetaRequestMCPServerToolConfiguration(
-                                allowedTools: ['string'],
-                                enabled: true
+                        BetaRequestMCPServerURLDefinition::new(name: 'name', url: 'url')
+                            ->setAuthorizationToken('authorization_token')
+                            ->setToolConfiguration(
+                                (new BetaRequestMCPServerToolConfiguration)
+                                    ->setAllowedTools(['string'])
+                                    ->setEnabled(true),
                             ),
-                        ),
                     ],
                     system: [
-                        new BetaTextBlockParam(
-                            text: "Today's date is 2024-06-01.",
-                            cacheControl: new BetaCacheControlEphemeral(ttl: '5m'),
-                            citations: [
-                                new BetaCitationCharLocationParam(
-                                    citedText: 'cited_text',
-                                    documentIndex: 0,
-                                    documentTitle: 'x',
-                                    endCharIndex: 0,
-                                    startCharIndex: 0,
-                                ),
-                            ],
-                        ),
-                    ],
-                    thinking: new BetaThinkingConfigEnabled(budgetTokens: 1024),
-                    toolChoice: new BetaToolChoiceAuto(disableParallelToolUse: true),
-                    tools: [
-                        new BetaTool(
-                            inputSchema: new InputSchema(
-                                properties: (object) [],
-                                required: ['location']
+                        BetaTextBlockParam::new(text: "Today's date is 2024-06-01.")
+                            ->setCacheControl((new BetaCacheControlEphemeral)->setTTL('5m'))
+                            ->setCitations(
+                                [
+                                    BetaCitationCharLocationParam::new(
+                                        citedText: 'cited_text',
+                                        documentIndex: 0,
+                                        documentTitle: 'x',
+                                        endCharIndex: 0,
+                                        startCharIndex: 0,
+                                    ),
+                                ],
                             ),
+                    ],
+                    thinking: BetaThinkingConfigEnabled::new(budgetTokens: 1024),
+                    toolChoice: (new BetaToolChoiceAuto)->setDisableParallelToolUse(true),
+                    tools: [
+                        BetaTool::new(
+                            inputSchema: (new InputSchema)
+                                ->setProperties((object) [])
+                                ->setRequired(['location']),
                             name: 'name',
-                            cacheControl: new BetaCacheControlEphemeral(ttl: '5m'),
-                            description: 'Get the current weather in a given location',
-                            type: 'custom',
-                        ),
+                        )
+                            ->setCacheControl((new BetaCacheControlEphemeral)->setTTL('5m'))
+                            ->setDescription('Get the current weather in a given location')
+                            ->setType('custom'),
                     ],
                     anthropicBeta: ['string'],
                 )

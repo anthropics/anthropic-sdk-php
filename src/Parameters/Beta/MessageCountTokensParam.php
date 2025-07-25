@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Parameters\Beta;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model as Model1;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
@@ -51,15 +51,13 @@ use Anthropic\Parameters\Beta\MessageCountTokensParam\Tool;
  *   system?: string|list<BetaTextBlockParam>,
  *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
  *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
- *   tools?: list<
- *     BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305
- *   >,
+ *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305>,
  *   anthropicBeta?: list<string|UnionMember1::*>,
  * }
  */
 final class MessageCountTokensParam implements BaseModel
 {
-    use Model1;
+    use ModelTrait;
     use Params;
 
     /**
@@ -244,9 +242,7 @@ final class MessageCountTokensParam implements BaseModel
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
-     * @var list<
-     *   BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305
-     * >|null $tools
+     * @var null|list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305> $tools
      */
     #[Api(type: new ListOf(union: Tool::class), optional: true)]
     public ?array $tools;
@@ -259,19 +255,25 @@ final class MessageCountTokensParam implements BaseModel
     #[Api(type: new ListOf(union: AnthropicBeta::class), optional: true)]
     public ?array $anthropicBeta;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
      *
-     * @param list<BetaMessageParam>                       $messages
-     * @param string|UnionMember0::*                       $model
+     * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param list<BetaMessageParam> $messages
+     * @param string|UnionMember0::* $model
      * @param null|list<BetaRequestMCPServerURLDefinition> $mcpServers
-     * @param null|list<BetaTextBlockParam>|string         $system
-     * @param list<
-     *   BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305
-     * >|null $tools
+     * @param null|list<BetaTextBlockParam>|string $system
+     * @param null|list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305> $tools
      * @param null|list<string|UnionMember1::*> $anthropicBeta
      */
-    final public function __construct(
+    public static function new(
         array $messages,
         string $model,
         ?array $mcpServers = null,
@@ -280,18 +282,19 @@ final class MessageCountTokensParam implements BaseModel
         null|BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice = null,
         ?array $tools = null,
         ?array $anthropicBeta = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        $this->messages = $messages;
-        $this->model = $model;
+        $obj->messages = $messages;
+        $obj->model = $model;
 
-        null !== $mcpServers && $this->mcpServers = $mcpServers;
-        null !== $system && $this->system = $system;
-        null !== $thinking && $this->thinking = $thinking;
-        null !== $toolChoice && $this->toolChoice = $toolChoice;
-        null !== $tools && $this->tools = $tools;
-        null !== $anthropicBeta && $this->anthropicBeta = $anthropicBeta;
+        null !== $mcpServers && $obj->mcpServers = $mcpServers;
+        null !== $system && $obj->system = $system;
+        null !== $thinking && $obj->thinking = $thinking;
+        null !== $toolChoice && $obj->toolChoice = $toolChoice;
+        null !== $tools && $obj->tools = $tools;
+        null !== $anthropicBeta && $obj->anthropicBeta = $anthropicBeta;
+
+        return $obj;
     }
 }

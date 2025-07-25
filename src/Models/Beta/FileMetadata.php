@@ -69,26 +69,97 @@ final class FileMetadata implements BaseModel
     #[Api(optional: true)]
     public ?bool $downloadable;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         string $id,
         \DateTimeInterface $createdAt,
         string $filename,
         string $mimeType,
         int $sizeBytes,
         ?bool $downloadable = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->id = $id;
+        $obj->createdAt = $createdAt;
+        $obj->filename = $filename;
+        $obj->mimeType = $mimeType;
+        $obj->sizeBytes = $sizeBytes;
+
+        null !== $downloadable && $obj->downloadable = $downloadable;
+
+        return $obj;
+    }
+
+    /**
+     * Unique object identifier.
+     *
+     * The format and length of IDs may change over time.
+     */
+    public function setID(string $id): self
+    {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * RFC 3339 datetime string representing when the file was created.
+     */
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Original filename of the uploaded file.
+     */
+    public function setFilename(string $filename): self
+    {
         $this->filename = $filename;
+
+        return $this;
+    }
+
+    /**
+     * MIME type of the file.
+     */
+    public function setMimeType(string $mimeType): self
+    {
         $this->mimeType = $mimeType;
+
+        return $this;
+    }
+
+    /**
+     * Size of the file in bytes.
+     */
+    public function setSizeBytes(int $sizeBytes): self
+    {
         $this->sizeBytes = $sizeBytes;
 
-        null !== $downloadable && $this->downloadable = $downloadable;
+        return $this;
+    }
+
+    /**
+     * Whether the file can be downloaded.
+     */
+    public function setDownloadable(bool $downloadable): self
+    {
+        $this->downloadable = $downloadable;
+
+        return $this;
     }
 }

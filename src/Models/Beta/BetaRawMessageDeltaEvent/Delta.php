@@ -34,20 +34,57 @@ final class Delta implements BaseModel
     #[Api('stop_sequence')]
     public ?string $stopSequence;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaStopReason::* $stopReason
      */
-    final public function __construct(
+    public static function new(
         BetaContainer $container,
         string $stopReason,
         ?string $stopSequence
-    ) {
-        self::introspect();
+    ): self {
+        $obj = new self;
 
+        $obj->container = $container;
+        $obj->stopReason = $stopReason;
+        $obj->stopSequence = $stopSequence;
+
+        return $obj;
+    }
+
+    /**
+     * Information about the container used in the request (for the code execution tool).
+     */
+    public function setContainer(BetaContainer $container): self
+    {
         $this->container = $container;
+
+        return $this;
+    }
+
+    /**
+     * @param BetaStopReason::* $stopReason
+     */
+    public function setStopReason(string $stopReason): self
+    {
         $this->stopReason = $stopReason;
+
+        return $this;
+    }
+
+    public function setStopSequence(?string $stopSequence): self
+    {
         $this->stopSequence = $stopSequence;
+
+        return $this;
     }
 }

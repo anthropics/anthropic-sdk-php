@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class MessageTokensCount implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     /**
      * The total number of tokens across the provided list of messages, system prompt, and tools.
@@ -21,13 +21,33 @@ final class MessageTokensCount implements BaseModel
     #[Api('input_tokens')]
     public int $inputTokens;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(int $inputTokens)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(int $inputTokens): self
+    {
+        $obj = new self;
+
+        $obj->inputTokens = $inputTokens;
+
+        return $obj;
+    }
+
+    /**
+     * The total number of tokens across the provided list of messages, system prompt, and tools.
+     */
+    public function setInputTokens(int $inputTokens): self
+    {
         $this->inputTokens = $inputTokens;
+
+        return $this;
     }
 }

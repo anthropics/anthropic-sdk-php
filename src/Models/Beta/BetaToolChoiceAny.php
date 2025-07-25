@@ -30,16 +30,36 @@ final class BetaToolChoiceAny implements BaseModel
     #[Api('disable_parallel_tool_use', optional: true)]
     public ?bool $disableParallelToolUse;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(?bool $disableParallelToolUse = null)
+    public function __construct()
     {
         self::introspect();
         $this->unsetOptionalProperties();
+    }
 
-        null !== $disableParallelToolUse && $this
-            ->disableParallelToolUse = $disableParallelToolUse
-        ;
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(?bool $disableParallelToolUse = null): self
+    {
+        $obj = new self;
+
+        null !== $disableParallelToolUse && $obj->disableParallelToolUse = $disableParallelToolUse;
+
+        return $obj;
+    }
+
+    /**
+     * Whether to disable parallel tool use.
+     *
+     * Defaults to `false`. If set to `true`, the model will output exactly one tool use.
+     */
+    public function setDisableParallelToolUse(
+        bool $disableParallelToolUse
+    ): self {
+        $this->disableParallelToolUse = $disableParallelToolUse;
+
+        return $this;
     }
 }

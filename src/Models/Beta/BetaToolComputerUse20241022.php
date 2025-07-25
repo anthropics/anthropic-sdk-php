@@ -57,22 +57,72 @@ final class BetaToolComputerUse20241022 implements BaseModel
     #[Api('display_number', optional: true)]
     public ?int $displayNumber;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         int $displayHeightPx,
         int $displayWidthPx,
         ?BetaCacheControlEphemeral $cacheControl = null,
         ?int $displayNumber = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->displayHeightPx = $displayHeightPx;
+        $obj->displayWidthPx = $displayWidthPx;
+
+        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $displayNumber && $obj->displayNumber = $displayNumber;
+
+        return $obj;
+    }
+
+    /**
+     * The height of the display in pixels.
+     */
+    public function setDisplayHeightPx(int $displayHeightPx): self
+    {
         $this->displayHeightPx = $displayHeightPx;
+
+        return $this;
+    }
+
+    /**
+     * The width of the display in pixels.
+     */
+    public function setDisplayWidthPx(int $displayWidthPx): self
+    {
         $this->displayWidthPx = $displayWidthPx;
 
-        null !== $cacheControl && $this->cacheControl = $cacheControl;
-        null !== $displayNumber && $this->displayNumber = $displayNumber;
+        return $this;
+    }
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
+    public function setCacheControl(
+        BetaCacheControlEphemeral $cacheControl
+    ): self {
+        $this->cacheControl = $cacheControl;
+
+        return $this;
+    }
+
+    /**
+     * The X11 display number (e.g. 0, 1) for the display.
+     */
+    public function setDisplayNumber(?int $displayNumber): self
+    {
+        $this->displayNumber = $displayNumber;
+
+        return $this;
     }
 }

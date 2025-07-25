@@ -43,7 +43,7 @@ class Client extends BaseClient
                 'Accept' => 'application/json',
             ],
             baseUrl: $base,
-            options: new RequestOptions(),
+            options: new RequestOptions,
         );
 
         $this->completions = new Completions($this);

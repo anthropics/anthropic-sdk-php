@@ -23,13 +23,30 @@ final class BetaRawContentBlockStopEvent implements BaseModel
     #[Api]
     public int $index;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(int $index)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(int $index): self
+    {
+        $obj = new self;
+
+        $obj->index = $index;
+
+        return $obj;
+    }
+
+    public function setIndex(int $index): self
+    {
         $this->index = $index;
+
+        return $this;
     }
 }

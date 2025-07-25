@@ -27,9 +27,8 @@ final class ThinkingConfigParam implements ConverterSource
     }
 
     /**
-     * @return list<string|Converter|ConverterSource>|array<
-     *   string, string|Converter|ConverterSource
-     * >
+     * @return list<string|Converter|ConverterSource>|array<string,
+     * string|Converter|ConverterSource,>
      */
     public static function variants(): array
     {

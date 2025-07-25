@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class ErrorResponse implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $type = 'error';
@@ -24,14 +24,32 @@ final class ErrorResponse implements BaseModel
     #[Api(union: ErrorObject::class)]
     public APIErrorObject|AuthenticationError|BillingError|GatewayTimeoutError|InvalidRequestError|NotFoundError|OverloadedError|PermissionError|RateLimitError $error;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(
-        APIErrorObject|AuthenticationError|BillingError|GatewayTimeoutError|InvalidRequestError|NotFoundError|OverloadedError|PermissionError|RateLimitError $error,
-    ) {
+    public function __construct()
+    {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(
+        APIErrorObject|AuthenticationError|BillingError|GatewayTimeoutError|InvalidRequestError|NotFoundError|OverloadedError|PermissionError|RateLimitError $error,
+    ): self {
+        $obj = new self;
+
+        $obj->error = $error;
+
+        return $obj;
+    }
+
+    public function setError(
+        APIErrorObject|AuthenticationError|BillingError|GatewayTimeoutError|InvalidRequestError|NotFoundError|OverloadedError|PermissionError|RateLimitError $error,
+    ): self {
         $this->error = $error;
+
+        return $this;
     }
 }

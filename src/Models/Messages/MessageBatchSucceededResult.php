@@ -24,13 +24,30 @@ final class MessageBatchSucceededResult implements BaseModel
     #[Api]
     public Message $message;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(Message $message)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(Message $message): self
+    {
+        $obj = new self;
+
+        $obj->message = $message;
+
+        return $obj;
+    }
+
+    public function setMessage(Message $message): self
+    {
         $this->message = $message;
+
+        return $this;
     }
 }

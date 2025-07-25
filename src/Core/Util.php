@@ -29,7 +29,7 @@ final class Util
     /**
      * @template T
      *
-     * @param array<string, T>      $array
+     * @param array<string, T> $array
      * @param array<string, string> $map
      *
      * @return array<string, T>

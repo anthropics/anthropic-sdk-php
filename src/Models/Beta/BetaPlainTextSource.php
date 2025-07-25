@@ -26,13 +26,30 @@ final class BetaPlainTextSource implements BaseModel
     #[Api]
     public string $data;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(string $data)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(string $data): self
+    {
+        $obj = new self;
+
+        $obj->data = $data;
+
+        return $obj;
+    }
+
+    public function setData(string $data): self
+    {
         $this->data = $data;
+
+        return $this;
     }
 }

@@ -32,19 +32,45 @@ final class InputSchema implements BaseModel
     #[Api(type: new ListOf('string'), nullable: true, optional: true)]
     public ?array $required;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param null|list<string> $required
      */
-    final public function __construct(
+    public static function new(
         mixed $properties = null,
         ?array $required = null
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        null !== $properties && $this->properties = $properties;
-        null !== $required && $this->required = $required;
+        null !== $properties && $obj->properties = $properties;
+        null !== $required && $obj->required = $required;
+
+        return $obj;
+    }
+
+    public function setProperties(mixed $properties): self
+    {
+        $this->properties = $properties;
+
+        return $this;
+    }
+
+    /**
+     * @param null|list<string> $required
+     */
+    public function setRequired(?array $required): self
+    {
+        $this->required = $required;
+
+        return $this;
     }
 }

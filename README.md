@@ -88,7 +88,7 @@ $client = new Client(
 $message = $client->messages->create(
   [
     "maxTokens" => 1024,
-    "messages" => [new MessageParam(role: "user", content: "Hello, Claude")],
+    "messages" => [MessageParam::new(role: "user", content: "Hello, Claude")],
     "model" => "claude-sonnet-4-20250514",
   ],
 );
@@ -111,7 +111,7 @@ try {
       [
         "maxTokens" => 1024,
         "messages" => [
-          new MessageParam(role: "user", content: "Hello, Claude")
+          MessageParam::new(role: "user", content: "Hello, Claude")
         ],
         "model" => "claude-sonnet-4-20250514",
       ],
@@ -164,7 +164,7 @@ $client = new Client(maxRetries: 0);
 $client->messages->create(
   [
     "maxTokens" => 1024,
-    "messages" => [new MessageParam(role: "user", content: "Hello, Claude")],
+    "messages" => [MessageParam::new(role: "user", content: "Hello, Claude")],
     "model" => "claude-sonnet-4-20250514",
   ],
   requestOptions: ["maxRetries" => 5],
@@ -189,7 +189,7 @@ use Anthropic\Models\MessageParam;
 $message = $client->messages->create(
   [
     "maxTokens" => 1024,
-    "messages" => [new MessageParam(role: "user", content: "Hello, Claude")],
+    "messages" => [MessageParam::new(role: "user", content: "Hello, Claude")],
     "model" => "claude-sonnet-4-20250514",
   ],
   requestOptions: [

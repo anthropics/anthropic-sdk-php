@@ -29,13 +29,33 @@ final class DeletedMessageBatch implements BaseModel
     #[Api]
     public string $id;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(string $id)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(string $id): self
+    {
+        $obj = new self;
+
+        $obj->id = $id;
+
+        return $obj;
+    }
+
+    /**
+     * ID of the Message Batch.
+     */
+    public function setID(string $id): self
+    {
         $this->id = $id;
+
+        return $this;
     }
 }

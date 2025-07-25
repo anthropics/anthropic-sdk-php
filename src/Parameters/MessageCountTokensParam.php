@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Parameters;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model as Model1;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
@@ -42,14 +42,12 @@ use Anthropic\Parameters\MessageCountTokensParam\System;
  *   system?: string|list<TextBlockParam>,
  *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
  *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
- *   tools?: list<
- *     Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
- *   >,
+ *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305>,
  * }
  */
 final class MessageCountTokensParam implements BaseModel
 {
-    use Model1;
+    use ModelTrait;
     use Params;
 
     /**
@@ -222,40 +220,45 @@ final class MessageCountTokensParam implements BaseModel
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
-     * @var list<
-     *   Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
-     * >|null $tools
+     * @var null|list<TextEditor20250429|Tool|ToolBash20250124|ToolTextEditor20250124|WebSearchTool20250305> $tools
      */
     #[Api(type: new ListOf(union: MessageCountTokensTool::class), optional: true)]
     public ?array $tools;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
      *
-     * @param list<MessageParam>               $messages
-     * @param string|UnionMember0::*           $model
+     * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param list<MessageParam> $messages
+     * @param string|UnionMember0::* $model
      * @param null|list<TextBlockParam>|string $system
-     * @param list<
-     *   Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
-     * >|null $tools
+     * @param null|list<TextEditor20250429|Tool|ToolBash20250124|ToolTextEditor20250124|WebSearchTool20250305> $tools
      */
-    final public function __construct(
+    public static function new(
         array $messages,
         string $model,
         null|array|string $system = null,
         null|ThinkingConfigDisabled|ThinkingConfigEnabled $thinking = null,
         null|ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice = null,
         ?array $tools = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        $this->messages = $messages;
-        $this->model = $model;
+        $obj->messages = $messages;
+        $obj->model = $model;
 
-        null !== $system && $this->system = $system;
-        null !== $thinking && $this->thinking = $thinking;
-        null !== $toolChoice && $this->toolChoice = $toolChoice;
-        null !== $tools && $this->tools = $tools;
+        null !== $system && $obj->system = $system;
+        null !== $thinking && $obj->thinking = $thinking;
+        null !== $toolChoice && $obj->toolChoice = $toolChoice;
+        null !== $tools && $obj->tools = $tools;
+
+        return $obj;
     }
 }

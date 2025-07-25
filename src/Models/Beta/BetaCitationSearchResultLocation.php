@@ -44,24 +44,76 @@ final class BetaCitationSearchResultLocation implements BaseModel
     #[Api]
     public ?string $title;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         string $citedText,
         int $endBlockIndex,
         int $searchResultIndex,
         string $source,
         int $startBlockIndex,
         ?string $title,
-    ) {
-        self::introspect();
+    ): self {
+        $obj = new self;
 
+        $obj->citedText = $citedText;
+        $obj->endBlockIndex = $endBlockIndex;
+        $obj->searchResultIndex = $searchResultIndex;
+        $obj->source = $source;
+        $obj->startBlockIndex = $startBlockIndex;
+        $obj->title = $title;
+
+        return $obj;
+    }
+
+    public function setCitedText(string $citedText): self
+    {
         $this->citedText = $citedText;
+
+        return $this;
+    }
+
+    public function setEndBlockIndex(int $endBlockIndex): self
+    {
         $this->endBlockIndex = $endBlockIndex;
+
+        return $this;
+    }
+
+    public function setSearchResultIndex(int $searchResultIndex): self
+    {
         $this->searchResultIndex = $searchResultIndex;
+
+        return $this;
+    }
+
+    public function setSource(string $source): self
+    {
         $this->source = $source;
+
+        return $this;
+    }
+
+    public function setStartBlockIndex(int $startBlockIndex): self
+    {
         $this->startBlockIndex = $startBlockIndex;
+
+        return $this;
+    }
+
+    public function setTitle(?string $title): self
+    {
         $this->title = $title;
+
+        return $this;
     }
 }

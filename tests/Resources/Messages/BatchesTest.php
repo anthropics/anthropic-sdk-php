@@ -47,14 +47,14 @@ final class BatchesTest extends TestCase
             ->messages
             ->batches
             ->create(
-                new BatchCreateParam(
+                BatchCreateParam::new(
                     requests: [
-                        new Request(
+                        Request::new(
                             customID: 'my-custom-id-1',
-                            params: new Params(
+                            params: Params::new(
                                 maxTokens: 1024,
                                 messages: [
-                                    new MessageParam(content: 'Hello, world', role: 'user'),
+                                    MessageParam::new(content: 'Hello, world', role: 'user'),
                                 ],
                                 model: 'claude-sonnet-4-20250514',
                             ),
@@ -75,55 +75,62 @@ final class BatchesTest extends TestCase
             ->messages
             ->batches
             ->create(
-                new BatchCreateParam(
+                BatchCreateParam::new(
                     requests: [
-                        new Request(
+                        Request::new(
                             customID: 'my-custom-id-1',
-                            params: new Params(
+                            params: Params::new(
                                 maxTokens: 1024,
                                 messages: [
-                                    new MessageParam(content: 'Hello, world', role: 'user'),
+                                    MessageParam::new(content: 'Hello, world', role: 'user'),
                                 ],
                                 model: 'claude-sonnet-4-20250514',
-                                metadata: new Metadata(
-                                    userID: '13803d75-b4b5-4c3e-b2a2-6f21399b021b'
-                                ),
-                                serviceTier: 'auto',
-                                stopSequences: ['string'],
-                                stream: true,
-                                system: [
-                                    new TextBlockParam(
-                                        text: "Today's date is 2024-06-01.",
-                                        cacheControl: new CacheControlEphemeral(),
-                                        citations: [
-                                            new CitationCharLocationParam(
-                                                citedText: 'cited_text',
-                                                documentIndex: 0,
-                                                documentTitle: 'x',
-                                                endCharIndex: 0,
-                                                startCharIndex: 0,
+                            )
+                                ->setMetadata(
+                                    (new Metadata)->setUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b')
+                                )
+                                ->setServiceTier('auto')
+                                ->setStopSequences(['string'])
+                                ->setStream(true)
+                                ->setSystem(
+                                    [
+                                        TextBlockParam::new(text: "Today's date is 2024-06-01.")
+                                            ->setCacheControl(new CacheControlEphemeral)
+                                            ->setCitations(
+                                                [
+                                                    CitationCharLocationParam::new(
+                                                        citedText: 'cited_text',
+                                                        documentIndex: 0,
+                                                        documentTitle: 'x',
+                                                        endCharIndex: 0,
+                                                        startCharIndex: 0,
+                                                    ),
+                                                ],
                                             ),
-                                        ],
-                                    ),
-                                ],
-                                temperature: 1,
-                                thinking: new ThinkingConfigEnabled(budgetTokens: 1024),
-                                toolChoice: new ToolChoiceAuto(disableParallelToolUse: true),
-                                tools: [
-                                    new Tool(
-                                        inputSchema: new InputSchema(
-                                            properties: (object) [],
-                                            required: ['location']
-                                        ),
-                                        name: 'name',
-                                        cacheControl: new CacheControlEphemeral(),
-                                        description: 'Get the current weather in a given location',
-                                        type: 'custom',
-                                    ),
-                                ],
-                                topK: 5,
-                                topP: 0.7,
-                            ),
+                                    ],
+                                )
+                                ->setTemperature(1)
+                                ->setThinking(ThinkingConfigEnabled::new(budgetTokens: 1024))
+                                ->setToolChoice(
+                                    (new ToolChoiceAuto)->setDisableParallelToolUse(true)
+                                )
+                                ->setTools(
+                                    [
+                                        Tool::new(
+                                            inputSchema: (new InputSchema)
+                                                ->setProperties((object) [])
+                                                ->setRequired(['location']),
+                                            name: 'name',
+                                        )
+                                            ->setCacheControl(new CacheControlEphemeral)
+                                            ->setDescription(
+                                                'Get the current weather in a given location'
+                                            )
+                                            ->setType('custom'),
+                                    ],
+                                )
+                                ->setTopK(5)
+                                ->setTopP(0.7),
                         ),
                     ],
                 )
@@ -148,7 +155,7 @@ final class BatchesTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->messages->batches->list(new BatchListParam());
+        $result = $this->client->messages->batches->list(new BatchListParam);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

@@ -44,24 +44,73 @@ final class BetaRequestDocumentBlock implements BaseModel
     #[Api(optional: true)]
     public ?string $title;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source,
         ?BetaCacheControlEphemeral $cacheControl = null,
         ?BetaCitationsConfigParam $citations = null,
         ?string $context = null,
         ?string $title = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->source = $source;
+
+        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $citations && $obj->citations = $citations;
+        null !== $context && $obj->context = $context;
+        null !== $title && $obj->title = $title;
+
+        return $obj;
+    }
+
+    public function setSource(
+        BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source,
+    ): self {
         $this->source = $source;
 
-        null !== $cacheControl && $this->cacheControl = $cacheControl;
-        null !== $citations && $this->citations = $citations;
-        null !== $context && $this->context = $context;
-        null !== $title && $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
+    public function setCacheControl(
+        BetaCacheControlEphemeral $cacheControl
+    ): self {
+        $this->cacheControl = $cacheControl;
+
+        return $this;
+    }
+
+    public function setCitations(BetaCitationsConfigParam $citations): self
+    {
+        $this->citations = $citations;
+
+        return $this;
+    }
+
+    public function setContext(?string $context): self
+    {
+        $this->context = $context;
+
+        return $this;
+    }
+
+    public function setTitle(?string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class MessageDeltaUsage implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     /**
      * The cumulative number of input tokens used to create the cache entry.
@@ -51,22 +51,83 @@ final class MessageDeltaUsage implements BaseModel
     #[Api('server_tool_use')]
     public ServerToolUsage $serverToolUse;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         ?int $cacheCreationInputTokens,
         ?int $cacheReadInputTokens,
         ?int $inputTokens,
         int $outputTokens,
         ServerToolUsage $serverToolUse,
-    ) {
-        self::introspect();
+    ): self {
+        $obj = new self;
 
+        $obj->cacheCreationInputTokens = $cacheCreationInputTokens;
+        $obj->cacheReadInputTokens = $cacheReadInputTokens;
+        $obj->inputTokens = $inputTokens;
+        $obj->outputTokens = $outputTokens;
+        $obj->serverToolUse = $serverToolUse;
+
+        return $obj;
+    }
+
+    /**
+     * The cumulative number of input tokens used to create the cache entry.
+     */
+    public function setCacheCreationInputTokens(
+        ?int $cacheCreationInputTokens
+    ): self {
         $this->cacheCreationInputTokens = $cacheCreationInputTokens;
+
+        return $this;
+    }
+
+    /**
+     * The cumulative number of input tokens read from the cache.
+     */
+    public function setCacheReadInputTokens(?int $cacheReadInputTokens): self
+    {
         $this->cacheReadInputTokens = $cacheReadInputTokens;
+
+        return $this;
+    }
+
+    /**
+     * The cumulative number of input tokens which were used.
+     */
+    public function setInputTokens(?int $inputTokens): self
+    {
         $this->inputTokens = $inputTokens;
+
+        return $this;
+    }
+
+    /**
+     * The cumulative number of output tokens which were used.
+     */
+    public function setOutputTokens(int $outputTokens): self
+    {
         $this->outputTokens = $outputTokens;
+
+        return $this;
+    }
+
+    /**
+     * The number of server tool requests.
+     */
+    public function setServerToolUse(ServerToolUsage $serverToolUse): self
+    {
         $this->serverToolUse = $serverToolUse;
+
+        return $this;
     }
 }

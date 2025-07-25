@@ -43,9 +43,9 @@ final class MessagesTest extends TestCase
             ->client
             ->messages
             ->create(
-                new MessageCreateParam(
+                MessageCreateParam::new(
                     maxTokens: 1024,
-                    messages: [new MessageParam(content: 'Hello, world', role: 'user')],
+                    messages: [MessageParam::new(content: 'Hello, world', role: 'user')],
                     model: 'claude-sonnet-4-20250514',
                 )
             )
@@ -61,42 +61,42 @@ final class MessagesTest extends TestCase
             ->client
             ->messages
             ->create(
-                new MessageCreateParam(
+                MessageCreateParam::new(
                     maxTokens: 1024,
-                    messages: [new MessageParam(content: 'Hello, world', role: 'user')],
+                    messages: [MessageParam::new(content: 'Hello, world', role: 'user')],
                     model: 'claude-sonnet-4-20250514',
-                    metadata: new Metadata(userID: '13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
+                    metadata: (new Metadata)
+                        ->setUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
                     serviceTier: 'auto',
                     stopSequences: ['string'],
                     system: [
-                        new TextBlockParam(
-                            text: "Today's date is 2024-06-01.",
-                            cacheControl: new CacheControlEphemeral(),
-                            citations: [
-                                new CitationCharLocationParam(
-                                    citedText: 'cited_text',
-                                    documentIndex: 0,
-                                    documentTitle: 'x',
-                                    endCharIndex: 0,
-                                    startCharIndex: 0,
-                                ),
-                            ],
-                        ),
+                        TextBlockParam::new(text: "Today's date is 2024-06-01.")
+                            ->setCacheControl(new CacheControlEphemeral)
+                            ->setCitations(
+                                [
+                                    CitationCharLocationParam::new(
+                                        citedText: 'cited_text',
+                                        documentIndex: 0,
+                                        documentTitle: 'x',
+                                        endCharIndex: 0,
+                                        startCharIndex: 0,
+                                    ),
+                                ],
+                            ),
                     ],
                     temperature: 1,
-                    thinking: new ThinkingConfigEnabled(budgetTokens: 1024),
-                    toolChoice: new ToolChoiceAuto(disableParallelToolUse: true),
+                    thinking: ThinkingConfigEnabled::new(budgetTokens: 1024),
+                    toolChoice: (new ToolChoiceAuto)->setDisableParallelToolUse(true),
                     tools: [
-                        new Tool(
-                            inputSchema: new InputSchema(
-                                properties: (object) [],
-                                required: ['location']
-                            ),
+                        Tool::new(
+                            inputSchema: (new InputSchema)
+                                ->setProperties((object) [])
+                                ->setRequired(['location']),
                             name: 'name',
-                            cacheControl: new CacheControlEphemeral(),
-                            description: 'Get the current weather in a given location',
-                            type: 'custom',
-                        ),
+                        )
+                            ->setCacheControl(new CacheControlEphemeral)
+                            ->setDescription('Get the current weather in a given location')
+                            ->setType('custom'),
                     ],
                     topK: 5,
                     topP: 0.7,
@@ -114,8 +114,8 @@ final class MessagesTest extends TestCase
             ->client
             ->messages
             ->countTokens(
-                new MessageCountTokensParam(
-                    messages: [new MessageParam(content: 'string', role: 'user')],
+                MessageCountTokensParam::new(
+                    messages: [MessageParam::new(content: 'string', role: 'user')],
                     model: 'claude-3-7-sonnet-latest',
                 )
             )
@@ -131,37 +131,36 @@ final class MessagesTest extends TestCase
             ->client
             ->messages
             ->countTokens(
-                new MessageCountTokensParam(
-                    messages: [new MessageParam(content: 'string', role: 'user')],
+                MessageCountTokensParam::new(
+                    messages: [MessageParam::new(content: 'string', role: 'user')],
                     model: 'claude-3-7-sonnet-latest',
                     system: [
-                        new TextBlockParam(
-                            text: "Today's date is 2024-06-01.",
-                            cacheControl: new CacheControlEphemeral(),
-                            citations: [
-                                new CitationCharLocationParam(
-                                    citedText: 'cited_text',
-                                    documentIndex: 0,
-                                    documentTitle: 'x',
-                                    endCharIndex: 0,
-                                    startCharIndex: 0,
-                                ),
-                            ],
-                        ),
-                    ],
-                    thinking: new ThinkingConfigEnabled(budgetTokens: 1024),
-                    toolChoice: new ToolChoiceAuto(disableParallelToolUse: true),
-                    tools: [
-                        new Tool(
-                            inputSchema: new InputSchema(
-                                properties: (object) [],
-                                required: ['location']
+                        TextBlockParam::new(text: "Today's date is 2024-06-01.")
+                            ->setCacheControl(new CacheControlEphemeral)
+                            ->setCitations(
+                                [
+                                    CitationCharLocationParam::new(
+                                        citedText: 'cited_text',
+                                        documentIndex: 0,
+                                        documentTitle: 'x',
+                                        endCharIndex: 0,
+                                        startCharIndex: 0,
+                                    ),
+                                ],
                             ),
+                    ],
+                    thinking: ThinkingConfigEnabled::new(budgetTokens: 1024),
+                    toolChoice: (new ToolChoiceAuto)->setDisableParallelToolUse(true),
+                    tools: [
+                        Tool::new(
+                            inputSchema: (new InputSchema)
+                                ->setProperties((object) [])
+                                ->setRequired(['location']),
                             name: 'name',
-                            cacheControl: new CacheControlEphemeral(),
-                            description: 'Get the current weather in a given location',
-                            type: 'custom',
-                        ),
+                        )
+                            ->setCacheControl(new CacheControlEphemeral)
+                            ->setDescription('Get the current weather in a given location')
+                            ->setType('custom'),
                     ],
                 )
             )

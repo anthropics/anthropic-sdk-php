@@ -38,7 +38,7 @@ final class Conversion
         return $value;
     }
 
-    public static function coerce(Converter|ConverterSource|string $target, mixed $value, CoerceState $state = new CoerceState()): mixed
+    public static function coerce(Converter|ConverterSource|string $target, mixed $value, CoerceState $state = new CoerceState): mixed
     {
         if ($value instanceof $target) {
             ++$state->yes;
@@ -150,7 +150,7 @@ final class Conversion
         }
     }
 
-    public static function dump(Converter|ConverterSource|string $target, mixed $value, DumpState $state = new DumpState()): mixed
+    public static function dump(Converter|ConverterSource|string $target, mixed $value, DumpState $state = new DumpState): mixed
     {
         if ($target instanceof Converter) {
             return $target->dump($value, state: $state);

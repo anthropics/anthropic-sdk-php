@@ -28,7 +28,7 @@ final class UnionOf implements Converter
         $alternatives = [];
         foreach ($this->variants as $_ => $variant) {
             ++$state->branched;
-            $newState = new CoerceState();
+            $newState = new CoerceState;
 
             $coerced = Conversion::coerce($variant, value: $value, state: $newState);
             if (($newState->no + $newState->maybe) === 0) {

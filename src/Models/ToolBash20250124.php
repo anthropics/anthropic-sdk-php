@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class ToolBash20250124 implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     /**
      * Name of the tool.
@@ -34,14 +34,33 @@ final class ToolBash20250124 implements BaseModel
     #[Api('cache_control', optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(?CacheControlEphemeral $cacheControl = null)
+    public function __construct()
     {
         self::introspect();
         $this->unsetOptionalProperties();
+    }
 
-        null !== $cacheControl && $this->cacheControl = $cacheControl;
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(?CacheControlEphemeral $cacheControl = null): self
+    {
+        $obj = new self;
+
+        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+
+        return $obj;
+    }
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
+    public function setCacheControl(CacheControlEphemeral $cacheControl): self
+    {
+        $this->cacheControl = $cacheControl;
+
+        return $this;
     }
 }

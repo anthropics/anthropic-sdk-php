@@ -22,9 +22,8 @@ final class System implements ConverterSource
     use Union;
 
     /**
-     * @return list<string|Converter|ConverterSource>|array<
-     *   string, string|Converter|ConverterSource
-     * >
+     * @return list<string|Converter|ConverterSource>|array<string,
+     * string|Converter|ConverterSource,>
      */
     public static function variants(): array
     {

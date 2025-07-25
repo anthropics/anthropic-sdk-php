@@ -43,18 +43,58 @@ final class BetaModelInfo implements BaseModel
     #[Api('display_name')]
     public string $displayName;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         string $id,
         \DateTimeInterface $createdAt,
         string $displayName
-    ) {
-        self::introspect();
+    ): self {
+        $obj = new self;
 
+        $obj->id = $id;
+        $obj->createdAt = $createdAt;
+        $obj->displayName = $displayName;
+
+        return $obj;
+    }
+
+    /**
+     * Unique model identifier.
+     */
+    public function setID(string $id): self
+    {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * RFC 3339 datetime string representing the time at which the model was released. May be set to an epoch value if the release date is unknown.
+     */
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * A human-readable name for the model.
+     */
+    public function setDisplayName(string $displayName): self
+    {
         $this->displayName = $displayName;
+
+        return $this;
     }
 }

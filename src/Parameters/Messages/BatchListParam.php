@@ -43,19 +43,28 @@ final class BatchListParam implements BaseModel
     #[Api(optional: true)]
     public ?int $limit;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         ?string $afterID = null,
         ?string $beforeID = null,
         ?int $limit = null
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        null !== $afterID && $this->afterID = $afterID;
-        null !== $beforeID && $this->beforeID = $beforeID;
-        null !== $limit && $this->limit = $limit;
+        null !== $afterID && $obj->afterID = $afterID;
+        null !== $beforeID && $obj->beforeID = $beforeID;
+        null !== $limit && $obj->limit = $limit;
+
+        return $obj;
     }
 }

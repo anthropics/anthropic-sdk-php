@@ -28,16 +28,43 @@ final class BetaBase64ImageSource implements BaseModel
     #[Api('media_type', enum: MediaType::class)]
     public string $mediaType;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param MediaType::* $mediaType
      */
-    final public function __construct(string $data, string $mediaType)
+    public static function new(string $data, string $mediaType): self
     {
-        self::introspect();
+        $obj = new self;
 
+        $obj->data = $data;
+        $obj->mediaType = $mediaType;
+
+        return $obj;
+    }
+
+    public function setData(string $data): self
+    {
         $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * @param MediaType::* $mediaType
+     */
+    public function setMediaType(string $mediaType): self
+    {
         $this->mediaType = $mediaType;
+
+        return $this;
     }
 }

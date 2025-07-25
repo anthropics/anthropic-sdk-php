@@ -101,14 +101,14 @@ class RequestOptions
     public static function parse(null|array|RequestOptions $options): self
     {
         if (is_null($options)) {
-            return new self();
+            return new self;
         }
 
         if ($options instanceof self) {
             return $options;
         }
 
-        $opts = new self();
+        $opts = new self;
         $opts->__unserialize($options);
 
         return $opts;

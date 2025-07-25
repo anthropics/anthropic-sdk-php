@@ -30,19 +30,45 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
     #[Api(optional: true)]
     public ?bool $enabled;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param null|list<string> $allowedTools
      */
-    final public function __construct(
+    public static function new(
         ?array $allowedTools = null,
         ?bool $enabled = null
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
-        null !== $allowedTools && $this->allowedTools = $allowedTools;
-        null !== $enabled && $this->enabled = $enabled;
+        null !== $allowedTools && $obj->allowedTools = $allowedTools;
+        null !== $enabled && $obj->enabled = $enabled;
+
+        return $obj;
+    }
+
+    /**
+     * @param null|list<string> $allowedTools
+     */
+    public function setAllowedTools(?array $allowedTools): self
+    {
+        $this->allowedTools = $allowedTools;
+
+        return $this;
+    }
+
+    public function setEnabled(?bool $enabled): self
+    {
+        $this->enabled = $enabled;
+
+        return $this;
     }
 }

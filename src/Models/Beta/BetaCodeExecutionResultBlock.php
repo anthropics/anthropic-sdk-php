@@ -38,22 +38,63 @@ final class BetaCodeExecutionResultBlock implements BaseModel
     #[Api]
     public string $stdout;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaCodeExecutionOutputBlock> $content
      */
-    final public function __construct(
+    public static function new(
         array $content,
         int $returnCode,
         string $stderr,
         string $stdout
-    ) {
-        self::introspect();
+    ): self {
+        $obj = new self;
 
+        $obj->content = $content;
+        $obj->returnCode = $returnCode;
+        $obj->stderr = $stderr;
+        $obj->stdout = $stdout;
+
+        return $obj;
+    }
+
+    /**
+     * @param list<BetaCodeExecutionOutputBlock> $content
+     */
+    public function setContent(array $content): self
+    {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function setReturnCode(int $returnCode): self
+    {
         $this->returnCode = $returnCode;
+
+        return $this;
+    }
+
+    public function setStderr(string $stderr): self
+    {
         $this->stderr = $stderr;
+
+        return $this;
+    }
+
+    public function setStdout(string $stdout): self
+    {
         $this->stdout = $stdout;
+
+        return $this;
     }
 }

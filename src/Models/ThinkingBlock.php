@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class ThinkingBlock implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $type = 'thinking';
@@ -26,14 +26,38 @@ final class ThinkingBlock implements BaseModel
     #[Api]
     public string $thinking;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(string $signature, string $thinking)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(string $signature, string $thinking): self
+    {
+        $obj = new self;
+
+        $obj->signature = $signature;
+        $obj->thinking = $thinking;
+
+        return $obj;
+    }
+
+    public function setSignature(string $signature): self
+    {
         $this->signature = $signature;
+
+        return $this;
+    }
+
+    public function setThinking(string $thinking): self
+    {
         $this->thinking = $thinking;
+
+        return $this;
     }
 }

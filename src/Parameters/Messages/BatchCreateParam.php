@@ -33,15 +33,25 @@ final class BatchCreateParam implements BaseModel
     #[Api(type: new ListOf(Request::class))]
     public array $requests;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<Request> $requests
      */
-    final public function __construct(array $requests)
+    public static function new(array $requests): self
     {
-        self::introspect();
+        $obj = new self;
 
-        $this->requests = $requests;
+        $obj->requests = $requests;
+
+        return $obj;
     }
 }

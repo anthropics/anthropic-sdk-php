@@ -41,24 +41,68 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
     #[Api('is_error', optional: true)]
     public ?bool $isError;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param null|list<BetaTextBlockParam>|string $content
      */
-    final public function __construct(
+    public static function new(
         string $toolUseID,
         ?BetaCacheControlEphemeral $cacheControl = null,
         null|array|string $content = null,
         ?bool $isError = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->toolUseID = $toolUseID;
+
+        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $content && $obj->content = $content;
+        null !== $isError && $obj->isError = $isError;
+
+        return $obj;
+    }
+
+    public function setToolUseID(string $toolUseID): self
+    {
         $this->toolUseID = $toolUseID;
 
-        null !== $cacheControl && $this->cacheControl = $cacheControl;
-        null !== $content && $this->content = $content;
-        null !== $isError && $this->isError = $isError;
+        return $this;
+    }
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
+    public function setCacheControl(
+        BetaCacheControlEphemeral $cacheControl
+    ): self {
+        $this->cacheControl = $cacheControl;
+
+        return $this;
+    }
+
+    /**
+     * @param list<BetaTextBlockParam>|string $content
+     */
+    public function setContent(array|string $content): self
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    public function setIsError(bool $isError): self
+    {
+        $this->isError = $isError;
+
+        return $this;
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\Usage\ServiceTier;
 
@@ -21,7 +21,7 @@ use Anthropic\Models\Usage\ServiceTier;
  */
 final class Usage implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     /**
      * The number of input tokens used to create the cache entry.
@@ -61,26 +61,99 @@ final class Usage implements BaseModel
     #[Api('service_tier', enum: ServiceTier::class, nullable: true)]
     public ?string $serviceTier;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param null|ServiceTier::* $serviceTier
      */
-    final public function __construct(
+    public static function new(
         ?int $cacheCreationInputTokens,
         ?int $cacheReadInputTokens,
         int $inputTokens,
         int $outputTokens,
         ServerToolUsage $serverToolUse,
         ?string $serviceTier,
-    ) {
-        self::introspect();
+    ): self {
+        $obj = new self;
 
+        $obj->cacheCreationInputTokens = $cacheCreationInputTokens;
+        $obj->cacheReadInputTokens = $cacheReadInputTokens;
+        $obj->inputTokens = $inputTokens;
+        $obj->outputTokens = $outputTokens;
+        $obj->serverToolUse = $serverToolUse;
+        $obj->serviceTier = $serviceTier;
+
+        return $obj;
+    }
+
+    /**
+     * The number of input tokens used to create the cache entry.
+     */
+    public function setCacheCreationInputTokens(
+        ?int $cacheCreationInputTokens
+    ): self {
         $this->cacheCreationInputTokens = $cacheCreationInputTokens;
+
+        return $this;
+    }
+
+    /**
+     * The number of input tokens read from the cache.
+     */
+    public function setCacheReadInputTokens(?int $cacheReadInputTokens): self
+    {
         $this->cacheReadInputTokens = $cacheReadInputTokens;
+
+        return $this;
+    }
+
+    /**
+     * The number of input tokens which were used.
+     */
+    public function setInputTokens(int $inputTokens): self
+    {
         $this->inputTokens = $inputTokens;
+
+        return $this;
+    }
+
+    /**
+     * The number of output tokens which were used.
+     */
+    public function setOutputTokens(int $outputTokens): self
+    {
         $this->outputTokens = $outputTokens;
+
+        return $this;
+    }
+
+    /**
+     * The number of server tool requests.
+     */
+    public function setServerToolUse(ServerToolUsage $serverToolUse): self
+    {
         $this->serverToolUse = $serverToolUse;
+
+        return $this;
+    }
+
+    /**
+     * If the request used the priority, standard, or batch tier.
+     *
+     * @param null|ServiceTier::* $serviceTier
+     */
+    public function setServiceTier(?string $serviceTier): self
+    {
         $this->serviceTier = $serviceTier;
+
+        return $this;
     }
 }

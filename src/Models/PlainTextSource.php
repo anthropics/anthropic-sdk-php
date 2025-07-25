@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class PlainTextSource implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api('media_type')]
     public string $mediaType = 'text/plain';
@@ -26,13 +26,30 @@ final class PlainTextSource implements BaseModel
     #[Api]
     public string $data;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(string $data)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(string $data): self
+    {
+        $obj = new self;
+
+        $obj->data = $data;
+
+        return $obj;
+    }
+
+    public function setData(string $data): self
+    {
         $this->data = $data;
+
+        return $this;
     }
 }

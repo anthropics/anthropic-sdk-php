@@ -46,24 +46,75 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         string $id,
         mixed $input,
         string $name,
         string $serverName,
         ?BetaCacheControlEphemeral $cacheControl = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->id = $id;
+        $obj->input = $input;
+        $obj->name = $name;
+        $obj->serverName = $serverName;
+
+        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+
+        return $obj;
+    }
+
+    public function setID(string $id): self
+    {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function setInput(mixed $input): self
+    {
         $this->input = $input;
+
+        return $this;
+    }
+
+    public function setName(string $name): self
+    {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * The name of the MCP server.
+     */
+    public function setServerName(string $serverName): self
+    {
         $this->serverName = $serverName;
 
-        null !== $cacheControl && $this->cacheControl = $cacheControl;
+        return $this;
+    }
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
+    public function setCacheControl(
+        BetaCacheControlEphemeral $cacheControl
+    ): self {
+        $this->cacheControl = $cacheControl;
+
+        return $this;
     }
 }

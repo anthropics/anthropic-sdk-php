@@ -14,18 +14,15 @@ use Anthropic\Models\Beta\BetaTextBlockParam;
 use Anthropic\Models\Beta\BetaToolResultBlockParam\Content\UnionMember1;
 
 /**
- * @phpstan-type content_alias = string|list<
- *   BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam
- * >
+ * @phpstan-type content_alias = string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam>
  */
 final class Content implements ConverterSource
 {
     use Union;
 
     /**
-     * @return list<string|Converter|ConverterSource>|array<
-     *   string, string|Converter|ConverterSource
-     * >
+     * @return list<string|Converter|ConverterSource>|array<string,
+     * string|Converter|ConverterSource,>
      */
     public static function variants(): array
     {

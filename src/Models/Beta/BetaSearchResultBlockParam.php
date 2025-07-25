@@ -45,26 +45,77 @@ final class BetaSearchResultBlockParam implements BaseModel
     #[Api(optional: true)]
     public ?BetaCitationsConfigParam $citations;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaTextBlockParam> $content
      */
-    final public function __construct(
+    public static function new(
         array $content,
         string $source,
         string $title,
         ?BetaCacheControlEphemeral $cacheControl = null,
         ?BetaCitationsConfigParam $citations = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->content = $content;
+        $obj->source = $source;
+        $obj->title = $title;
+
+        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $citations && $obj->citations = $citations;
+
+        return $obj;
+    }
+
+    /**
+     * @param list<BetaTextBlockParam> $content
+     */
+    public function setContent(array $content): self
+    {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function setSource(string $source): self
+    {
         $this->source = $source;
+
+        return $this;
+    }
+
+    public function setTitle(string $title): self
+    {
         $this->title = $title;
 
-        null !== $cacheControl && $this->cacheControl = $cacheControl;
-        null !== $citations && $this->citations = $citations;
+        return $this;
+    }
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
+    public function setCacheControl(
+        BetaCacheControlEphemeral $cacheControl
+    ): self {
+        $this->cacheControl = $cacheControl;
+
+        return $this;
+    }
+
+    public function setCitations(BetaCitationsConfigParam $citations): self
+    {
+        $this->citations = $citations;
+
+        return $this;
     }
 }

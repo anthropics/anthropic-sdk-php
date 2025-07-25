@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class CitationsWebSearchResultLocation implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $type = 'web_search_result_location';
@@ -36,20 +36,58 @@ final class CitationsWebSearchResultLocation implements BaseModel
     #[Api]
     public string $url;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         string $citedText,
         string $encryptedIndex,
         ?string $title,
         string $url
-    ) {
-        self::introspect();
+    ): self {
+        $obj = new self;
 
+        $obj->citedText = $citedText;
+        $obj->encryptedIndex = $encryptedIndex;
+        $obj->title = $title;
+        $obj->url = $url;
+
+        return $obj;
+    }
+
+    public function setCitedText(string $citedText): self
+    {
         $this->citedText = $citedText;
+
+        return $this;
+    }
+
+    public function setEncryptedIndex(string $encryptedIndex): self
+    {
         $this->encryptedIndex = $encryptedIndex;
+
+        return $this;
+    }
+
+    public function setTitle(?string $title): self
+    {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function setURL(string $url): self
+    {
         $this->url = $url;
+
+        return $this;
     }
 }

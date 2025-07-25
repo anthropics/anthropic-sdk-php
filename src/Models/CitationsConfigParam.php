@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -13,19 +13,35 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class CitationsConfigParam implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api(optional: true)]
     public ?bool $enabled;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(?bool $enabled = null)
+    public function __construct()
     {
         self::introspect();
         $this->unsetOptionalProperties();
+    }
 
-        null !== $enabled && $this->enabled = $enabled;
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(?bool $enabled = null): self
+    {
+        $obj = new self;
+
+        null !== $enabled && $obj->enabled = $enabled;
+
+        return $obj;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
+
+        return $this;
     }
 }

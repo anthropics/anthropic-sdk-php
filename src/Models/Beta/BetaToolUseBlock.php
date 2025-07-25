@@ -29,15 +29,46 @@ final class BetaToolUseBlock implements BaseModel
     #[Api]
     public string $name;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(string $id, mixed $input, string $name)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(string $id, mixed $input, string $name): self
+    {
+        $obj = new self;
+
+        $obj->id = $id;
+        $obj->input = $input;
+        $obj->name = $name;
+
+        return $obj;
+    }
+
+    public function setID(string $id): self
+    {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function setInput(mixed $input): self
+    {
         $this->input = $input;
+
+        return $this;
+    }
+
+    public function setName(string $name): self
+    {
         $this->name = $name;
+
+        return $this;
     }
 }

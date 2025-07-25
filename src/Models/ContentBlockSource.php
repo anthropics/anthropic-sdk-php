@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\ContentBlockSource\Content;
 
@@ -16,7 +16,7 @@ use Anthropic\Models\ContentBlockSource\Content;
  */
 final class ContentBlockSource implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $type = 'content';
@@ -25,15 +25,35 @@ final class ContentBlockSource implements BaseModel
     #[Api(union: Content::class)]
     public array|string $content;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<ImageBlockParam|TextBlockParam>|string $content
      */
-    final public function __construct(array|string $content)
+    public static function new(array|string $content): self
     {
-        self::introspect();
+        $obj = new self;
 
+        $obj->content = $content;
+
+        return $obj;
+    }
+
+    /**
+     * @param list<ImageBlockParam|TextBlockParam>|string $content
+     */
+    public function setContent(array|string $content): self
+    {
         $this->content = $content;
+
+        return $this;
     }
 }

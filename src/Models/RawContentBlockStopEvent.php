@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class RawContentBlockStopEvent implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $type = 'content_block_stop';
@@ -23,13 +23,30 @@ final class RawContentBlockStopEvent implements BaseModel
     #[Api]
     public int $index;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(int $index)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(int $index): self
+    {
+        $obj = new self;
+
+        $obj->index = $index;
+
+        return $obj;
+    }
+
+    public function setIndex(int $index): self
+    {
         $this->index = $index;
+
+        return $this;
     }
 }

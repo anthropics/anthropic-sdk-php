@@ -28,16 +28,41 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
     #[Api]
     public int $index;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         BetaCitationsDelta|BetaInputJSONDelta|BetaSignatureDelta|BetaTextDelta|BetaThinkingDelta $delta,
         int $index,
-    ) {
-        self::introspect();
+    ): self {
+        $obj = new self;
 
+        $obj->delta = $delta;
+        $obj->index = $index;
+
+        return $obj;
+    }
+
+    public function setDelta(
+        BetaCitationsDelta|BetaInputJSONDelta|BetaSignatureDelta|BetaTextDelta|BetaThinkingDelta $delta,
+    ): self {
         $this->delta = $delta;
+
+        return $this;
+    }
+
+    public function setIndex(int $index): self
+    {
         $this->index = $index;
+
+        return $this;
     }
 }

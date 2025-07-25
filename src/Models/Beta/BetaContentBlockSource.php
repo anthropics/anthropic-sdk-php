@@ -25,15 +25,35 @@ final class BetaContentBlockSource implements BaseModel
     #[Api(union: Content::class)]
     public array|string $content;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaImageBlockParam|BetaTextBlockParam>|string $content
      */
-    final public function __construct(array|string $content)
+    public static function new(array|string $content): self
     {
-        self::introspect();
+        $obj = new self;
 
+        $obj->content = $content;
+
+        return $obj;
+    }
+
+    /**
+     * @param list<BetaImageBlockParam|BetaTextBlockParam>|string $content
+     */
+    public function setContent(array|string $content): self
+    {
         $this->content = $content;
+
+        return $this;
     }
 }

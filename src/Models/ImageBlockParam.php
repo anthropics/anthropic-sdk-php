@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Models\ImageBlockParam\Source;
 
@@ -18,7 +18,7 @@ use Anthropic\Models\ImageBlockParam\Source;
  */
 final class ImageBlockParam implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $type = 'image';
@@ -32,18 +32,44 @@ final class ImageBlockParam implements BaseModel
     #[Api('cache_control', optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(
-        Base64ImageSource|URLImageSource $source,
-        ?CacheControlEphemeral $cacheControl = null,
-    ) {
+    public function __construct()
+    {
         self::introspect();
         $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(
+        Base64ImageSource|URLImageSource $source,
+        ?CacheControlEphemeral $cacheControl = null,
+    ): self {
+        $obj = new self;
+
+        $obj->source = $source;
+
+        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+
+        return $obj;
+    }
+
+    public function setSource(Base64ImageSource|URLImageSource $source): self
+    {
         $this->source = $source;
 
-        null !== $cacheControl && $this->cacheControl = $cacheControl;
+        return $this;
+    }
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
+    public function setCacheControl(CacheControlEphemeral $cacheControl): self
+    {
+        $this->cacheControl = $cacheControl;
+
+        return $this;
     }
 }

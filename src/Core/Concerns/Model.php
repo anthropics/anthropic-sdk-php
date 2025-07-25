@@ -11,6 +11,9 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\ModelOf;
 use Anthropic\Core\Util;
 
+/**
+ * @internal
+ */
 trait Model
 {
     private static ModelOf $converter;
@@ -21,6 +24,8 @@ trait Model
     private array $_data = [];
 
     /**
+     * @internal
+     *
      * @return array<string, mixed>
      */
     public function __serialize(): array
@@ -31,6 +36,8 @@ trait Model
     }
 
     /**
+     * @internal
+     *
      * @param array<mixed> $data
      */
     public function __unserialize(array $data): void
@@ -48,6 +55,9 @@ trait Model
         return $this->__serialize();
     }
 
+    /**
+     * @internal
+     */
     public function __toString(): string
     {
         return json_encode($this->__debugInfo(), flags: JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
@@ -59,6 +69,8 @@ trait Model
      * or a property overridden with an incongruent type.
      *
      * @throws \Exception
+     *
+     * @internal
      */
     public function __get(string $key): mixed
     {
@@ -85,10 +97,13 @@ trait Model
         return $this->__serialize();
     }
 
+    /**
+     * @internal
+     */
     public function offsetExists(mixed $offset): bool
     {
         if (!is_string($offset)) { // @phpstan-ignore-line
-            throw new \InvalidArgumentException();
+            throw new \InvalidArgumentException;
         }
 
         if (array_key_exists($offset, array: $this->_data)) {
@@ -108,10 +123,13 @@ trait Model
         return false;
     }
 
+    /**
+     * @internal
+     */
     public function &offsetGet(mixed $offset): mixed
     {
         if (!is_string($offset)) { // @phpstan-ignore-line
-            throw new \InvalidArgumentException();
+            throw new \InvalidArgumentException;
         }
 
         if (!$this->offsetExists($offset)) {
@@ -125,10 +143,13 @@ trait Model
         return $this->{$offset};
     }
 
+    /**
+     * @internal
+     */
     public function offsetSet(mixed $offset, mixed $value): void
     {
         if (!is_string($offset)) { // @phpstan-ignore-line
-            throw new \InvalidArgumentException();
+            throw new \InvalidArgumentException;
         }
 
         $type = array_key_exists($offset, array: self::$converter->properties)
@@ -151,10 +172,13 @@ trait Model
         $this->_data[$offset] = $coerced;
     }
 
+    /**
+     * @internal
+     */
     public function offsetUnset(mixed $offset): void
     {
         if (!is_string($offset)) { // @phpstan-ignore-line
-            throw new \InvalidArgumentException();
+            throw new \InvalidArgumentException;
         }
 
         if (property_exists($this, property: $offset)) {
@@ -173,11 +197,17 @@ trait Model
         return Conversion::dump(self::converter(), value: $this->__serialize());
     }
 
+    /**
+     * @internal
+     */
     public static function from(mixed $data): self
     {
         return self::converter()->from($data); // @phpstan-ignore-line
     }
 
+    /**
+     * @internal
+     */
     public static function converter(): Converter
     {
         if (isset(self::$converter)) {
@@ -189,11 +219,17 @@ trait Model
         return self::$converter = new ModelOf($class);
     }
 
+    /**
+     * @internal
+     */
     public static function introspect(): void
     {
         static::converter();
     }
 
+    /**
+     * @internal
+     */
     private function unsetOptionalProperties(): void
     {
         foreach (self::$converter->properties as $name => $info) {
@@ -203,6 +239,9 @@ trait Model
         }
     }
 
+    /**
+     * @internal
+     */
     private static function serialize(mixed $value): mixed
     {
         if ($value instanceof BaseModel) {

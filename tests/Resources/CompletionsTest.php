@@ -34,7 +34,7 @@ final class CompletionsTest extends TestCase
             ->client
             ->completions
             ->create(
-                new CompletionCreateParam(
+                CompletionCreateParam::new(
                     maxTokensToSample: 256,
                     model: 'claude-3-7-sonnet-latest',
                     prompt: "\n\nHuman: Hello, world!\n\nAssistant:",
@@ -52,11 +52,12 @@ final class CompletionsTest extends TestCase
             ->client
             ->completions
             ->create(
-                new CompletionCreateParam(
+                CompletionCreateParam::new(
                     maxTokensToSample: 256,
                     model: 'claude-3-7-sonnet-latest',
                     prompt: "\n\nHuman: Hello, world!\n\nAssistant:",
-                    metadata: new Metadata(userID: '13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
+                    metadata: (new Metadata)
+                        ->setUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
                     stopSequences: ['string'],
                     temperature: 1,
                     topK: 5,

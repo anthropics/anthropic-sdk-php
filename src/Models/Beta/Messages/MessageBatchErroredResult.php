@@ -24,13 +24,30 @@ final class MessageBatchErroredResult implements BaseModel
     #[Api]
     public BetaErrorResponse $error;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(BetaErrorResponse $error)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(BetaErrorResponse $error): self
+    {
+        $obj = new self;
+
+        $obj->error = $error;
+
+        return $obj;
+    }
+
+    public function setError(BetaErrorResponse $error): self
+    {
         $this->error = $error;
+
+        return $this;
     }
 }

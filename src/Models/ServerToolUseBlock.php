@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class ServerToolUseBlock implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $name = 'web_search';
@@ -29,14 +29,38 @@ final class ServerToolUseBlock implements BaseModel
     #[Api]
     public mixed $input;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(string $id, mixed $input)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(string $id, mixed $input): self
+    {
+        $obj = new self;
+
+        $obj->id = $id;
+        $obj->input = $input;
+
+        return $obj;
+    }
+
+    public function setID(string $id): self
+    {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function setInput(mixed $input): self
+    {
         $this->input = $input;
+
+        return $this;
     }
 }

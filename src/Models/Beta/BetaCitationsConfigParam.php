@@ -18,14 +18,30 @@ final class BetaCitationsConfigParam implements BaseModel
     #[Api(optional: true)]
     public ?bool $enabled;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(?bool $enabled = null)
+    public function __construct()
     {
         self::introspect();
         $this->unsetOptionalProperties();
+    }
 
-        null !== $enabled && $this->enabled = $enabled;
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(?bool $enabled = null): self
+    {
+        $obj = new self;
+
+        null !== $enabled && $obj->enabled = $enabled;
+
+        return $obj;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
+
+        return $this;
     }
 }

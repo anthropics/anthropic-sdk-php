@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class URLImageSource implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $type = 'url';
@@ -21,13 +21,30 @@ final class URLImageSource implements BaseModel
     #[Api]
     public string $url;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(string $url)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(string $url): self
+    {
+        $obj = new self;
+
+        $obj->url = $url;
+
+        return $obj;
+    }
+
+    public function setURL(string $url): self
+    {
         $this->url = $url;
+
+        return $this;
     }
 }

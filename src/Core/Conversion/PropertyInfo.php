@@ -68,7 +68,7 @@ final class PropertyInfo
         }
 
         if ($type instanceof \ReflectionIntersectionType) {
-            throw new \ValueError();
+            throw new \ValueError;
         }
 
         return 'mixed';

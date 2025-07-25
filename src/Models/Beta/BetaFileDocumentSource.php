@@ -23,13 +23,30 @@ final class BetaFileDocumentSource implements BaseModel
     #[Api('file_id')]
     public string $fileID;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(string $fileID)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(string $fileID): self
+    {
+        $obj = new self;
+
+        $obj->fileID = $fileID;
+
+        return $obj;
+    }
+
+    public function setFileID(string $fileID): self
+    {
         $this->fileID = $fileID;
+
+        return $this;
     }
 }

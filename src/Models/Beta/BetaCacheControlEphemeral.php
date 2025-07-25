@@ -35,16 +35,43 @@ final class BetaCacheControlEphemeral implements BaseModel
     #[Api(enum: TTL::class, optional: true)]
     public ?string $ttl;
 
-    /**
-     * You must use named parameters to construct this object.
-     *
-     * @param null|TTL::* $ttl
-     */
-    final public function __construct(?string $ttl = null)
+    public function __construct()
     {
         self::introspect();
         $this->unsetOptionalProperties();
+    }
 
-        null !== $ttl && $this->ttl = $ttl;
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param null|TTL::* $ttl
+     */
+    public static function new(?string $ttl = null): self
+    {
+        $obj = new self;
+
+        null !== $ttl && $obj->ttl = $ttl;
+
+        return $obj;
+    }
+
+    /**
+     * The time-to-live for the cache control breakpoint.
+     *
+     * This may be one the following values:
+     * - `5m`: 5 minutes
+     * - `1h`: 1 hour
+     *
+     * Defaults to `5m`.
+     *
+     * @param TTL::* $ttl
+     */
+    public function setTTL(string $ttl): self
+    {
+        $this->ttl = $ttl;
+
+        return $this;
     }
 }

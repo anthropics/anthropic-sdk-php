@@ -24,15 +24,35 @@ final class BetaCodeExecutionToolResultErrorParam implements BaseModel
     #[Api('error_code', enum: BetaCodeExecutionToolResultErrorCode::class)]
     public string $errorCode;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaCodeExecutionToolResultErrorCode::* $errorCode
      */
-    final public function __construct(string $errorCode)
+    public static function new(string $errorCode): self
     {
-        self::introspect();
+        $obj = new self;
 
+        $obj->errorCode = $errorCode;
+
+        return $obj;
+    }
+
+    /**
+     * @param BetaCodeExecutionToolResultErrorCode::* $errorCode
+     */
+    public function setErrorCode(string $errorCode): self
+    {
         $this->errorCode = $errorCode;
+
+        return $this;
     }
 }

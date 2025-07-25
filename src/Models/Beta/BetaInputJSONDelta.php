@@ -23,13 +23,30 @@ final class BetaInputJSONDelta implements BaseModel
     #[Api('partial_json')]
     public string $partialJSON;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(string $partialJSON)
+    public function __construct()
     {
         self::introspect();
+        $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(string $partialJSON): self
+    {
+        $obj = new self;
+
+        $obj->partialJSON = $partialJSON;
+
+        return $obj;
+    }
+
+    public function setPartialJSON(string $partialJSON): self
+    {
         $this->partialJSON = $partialJSON;
+
+        return $this;
     }
 }

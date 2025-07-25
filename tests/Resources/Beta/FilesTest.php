@@ -38,7 +38,7 @@ final class FilesTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->beta->files->list(new FileListParam());
+        $result = $this->client->beta->files->list(new FileListParam);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -50,7 +50,7 @@ final class FilesTest extends TestCase
             ->client
             ->beta
             ->files
-            ->delete('file_id', new FileDeleteParam())
+            ->delete('file_id', new FileDeleteParam)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -67,7 +67,7 @@ final class FilesTest extends TestCase
             ->client
             ->beta
             ->files
-            ->download('file_id', new FileDownloadParam())
+            ->download('file_id', new FileDownloadParam)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -80,7 +80,7 @@ final class FilesTest extends TestCase
             ->client
             ->beta
             ->files
-            ->retrieveMetadata('file_id', new FileRetrieveMetadataParam())
+            ->retrieveMetadata('file_id', new FileRetrieveMetadataParam)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -93,7 +93,7 @@ final class FilesTest extends TestCase
             ->client
             ->beta
             ->files
-            ->upload(new FileUploadParam(file: 'file'))
+            ->upload(FileUploadParam::new(file: 'file'))
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -106,7 +106,7 @@ final class FilesTest extends TestCase
             ->client
             ->beta
             ->files
-            ->upload(new FileUploadParam(file: 'file', anthropicBeta: ['string']))
+            ->upload(FileUploadParam::new(file: 'file', anthropicBeta: ['string']))
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

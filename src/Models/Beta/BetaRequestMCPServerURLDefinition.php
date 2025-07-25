@@ -36,26 +36,60 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
     #[Api('tool_configuration', optional: true)]
     public ?BetaRequestMCPServerToolConfiguration $toolConfiguration;
 
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
     /**
-     * You must use named parameters to construct this object.
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
      */
-    final public function __construct(
+    public static function new(
         string $name,
         string $url,
         ?string $authorizationToken = null,
         ?BetaRequestMCPServerToolConfiguration $toolConfiguration = null,
-    ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+    ): self {
+        $obj = new self;
 
+        $obj->name = $name;
+        $obj->url = $url;
+
+        null !== $authorizationToken && $obj->authorizationToken = $authorizationToken;
+        null !== $toolConfiguration && $obj->toolConfiguration = $toolConfiguration;
+
+        return $obj;
+    }
+
+    public function setName(string $name): self
+    {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function setURL(string $url): self
+    {
         $this->url = $url;
 
-        null !== $authorizationToken && $this
-            ->authorizationToken = $authorizationToken
-        ;
-        null !== $toolConfiguration && $this
-            ->toolConfiguration = $toolConfiguration
-        ;
+        return $this;
+    }
+
+    public function setAuthorizationToken(?string $authorizationToken): self
+    {
+        $this->authorizationToken = $authorizationToken;
+
+        return $this;
+    }
+
+    public function setToolConfiguration(
+        BetaRequestMCPServerToolConfiguration $toolConfiguration
+    ): self {
+        $this->toolConfiguration = $toolConfiguration;
+
+        return $this;
     }
 }

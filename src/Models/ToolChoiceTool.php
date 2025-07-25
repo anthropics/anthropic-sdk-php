@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class ToolChoiceTool implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     #[Api]
     public string $type = 'tool';
@@ -36,20 +36,50 @@ final class ToolChoiceTool implements BaseModel
     #[Api('disable_parallel_tool_use', optional: true)]
     public ?bool $disableParallelToolUse;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(
-        string $name,
-        ?bool $disableParallelToolUse = null
-    ) {
+    public function __construct()
+    {
         self::introspect();
         $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(
+        string $name,
+        ?bool $disableParallelToolUse = null
+    ): self {
+        $obj = new self;
+
+        $obj->name = $name;
+
+        null !== $disableParallelToolUse && $obj->disableParallelToolUse = $disableParallelToolUse;
+
+        return $obj;
+    }
+
+    /**
+     * The name of the tool to use.
+     */
+    public function setName(string $name): self
+    {
         $this->name = $name;
 
-        null !== $disableParallelToolUse && $this
-            ->disableParallelToolUse = $disableParallelToolUse
-        ;
+        return $this;
+    }
+
+    /**
+     * Whether to disable parallel tool use.
+     *
+     * Defaults to `false`. If set to `true`, the model will output exactly one tool use.
+     */
+    public function setDisableParallelToolUse(
+        bool $disableParallelToolUse
+    ): self {
+        $this->disableParallelToolUse = $disableParallelToolUse;
+
+        return $this;
     }
 }

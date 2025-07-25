@@ -32,18 +32,45 @@ final class BetaContainerUploadBlockParam implements BaseModel
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
-    /**
-     * You must use named parameters to construct this object.
-     */
-    final public function __construct(
-        string $fileID,
-        ?BetaCacheControlEphemeral $cacheControl = null
-    ) {
+    public function __construct()
+    {
         self::introspect();
         $this->unsetOptionalProperties();
+    }
 
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(
+        string $fileID,
+        ?BetaCacheControlEphemeral $cacheControl = null
+    ): self {
+        $obj = new self;
+
+        $obj->fileID = $fileID;
+
+        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+
+        return $obj;
+    }
+
+    public function setFileID(string $fileID): self
+    {
         $this->fileID = $fileID;
 
-        null !== $cacheControl && $this->cacheControl = $cacheControl;
+        return $this;
+    }
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
+    public function setCacheControl(
+        BetaCacheControlEphemeral $cacheControl
+    ): self {
+        $this->cacheControl = $cacheControl;
+
+        return $this;
     }
 }
