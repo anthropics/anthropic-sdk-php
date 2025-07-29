@@ -1,0 +1,88 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\Models;
+
+use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Concerns\Model as ModelTrait;
+use Anthropic\Core\Contracts\BaseModel;
+
+/**
+ * @phpstan-type tool_text_editor20250728_alias = array{
+ *   name: string,
+ *   type: string,
+ *   cacheControl?: CacheControlEphemeral,
+ *   maxCharacters?: int|null,
+ * }
+ */
+final class ToolTextEditor20250728 implements BaseModel
+{
+    use ModelTrait;
+
+    /**
+     * Name of the tool.
+     *
+     * This is how the tool will be called by the model and in `tool_use` blocks.
+     */
+    #[Api]
+    public string $name = 'str_replace_based_edit_tool';
+
+    #[Api]
+    public string $type = 'text_editor_20250728';
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
+    #[Api('cache_control', optional: true)]
+    public ?CacheControlEphemeral $cacheControl;
+
+    /**
+     * Maximum number of characters to display when viewing a file. If not specified, defaults to displaying the full file.
+     */
+    #[Api('max_characters', optional: true)]
+    public ?int $maxCharacters;
+
+    public function __construct()
+    {
+        self::introspect();
+        $this->unsetOptionalProperties();
+    }
+
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function new(
+        ?CacheControlEphemeral $cacheControl = null,
+        ?int $maxCharacters = null
+    ): self {
+        $obj = new self;
+
+        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $maxCharacters && $obj->maxCharacters = $maxCharacters;
+
+        return $obj;
+    }
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
+    public function setCacheControl(CacheControlEphemeral $cacheControl): self
+    {
+        $this->cacheControl = $cacheControl;
+
+        return $this;
+    }
+
+    /**
+     * Maximum number of characters to display when viewing a file. If not specified, defaults to displaying the full file.
+     */
+    public function setMaxCharacters(?int $maxCharacters): self
+    {
+        $this->maxCharacters = $maxCharacters;
+
+        return $this;
+    }
+}

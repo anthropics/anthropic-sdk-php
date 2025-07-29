@@ -31,6 +31,7 @@ use Anthropic\Models\Beta\BetaToolComputerUse20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20241022;
 use Anthropic\Models\Beta\BetaToolTextEditor20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20250429;
+use Anthropic\Models\Beta\BetaToolTextEditor20250728;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305;
 use Anthropic\Models\Model;
 use Anthropic\Models\Model\UnionMember0;
@@ -51,7 +52,7 @@ use Anthropic\Parameters\Beta\MessageCountTokensParam\Tool;
  *   system?: string|list<BetaTextBlockParam>,
  *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
  *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
- *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305>,
+ *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>,
  *   anthropicBeta?: list<string|UnionMember1::*>,
  * }
  */
@@ -242,7 +243,7 @@ final class MessageCountTokensParam implements BaseModel
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
-     * @var null|list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305> $tools
+     * @var null|list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
      */
     #[Api(type: new ListOf(union: Tool::class), optional: true)]
     public ?array $tools;
@@ -270,7 +271,7 @@ final class MessageCountTokensParam implements BaseModel
      * @param string|UnionMember0::* $model
      * @param null|list<BetaRequestMCPServerURLDefinition> $mcpServers
      * @param null|list<BetaTextBlockParam>|string $system
-     * @param null|list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305> $tools
+     * @param null|list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
      * @param null|list<string|UnionMember1::*> $anthropicBeta
      */
     public static function new(

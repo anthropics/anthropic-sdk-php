@@ -25,6 +25,7 @@ use Anthropic\Models\ToolChoiceAuto;
 use Anthropic\Models\ToolChoiceNone;
 use Anthropic\Models\ToolChoiceTool;
 use Anthropic\Models\ToolTextEditor20250124;
+use Anthropic\Models\ToolTextEditor20250728;
 use Anthropic\Models\ToolUnion;
 use Anthropic\Models\ToolUnion\TextEditor20250429;
 use Anthropic\Models\WebSearchTool20250305;
@@ -49,7 +50,7 @@ use Anthropic\Parameters\MessageCreateParam\System;
  *   temperature?: float,
  *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
  *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
- *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305>,
+ *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>,
  *   topK?: int,
  *   topP?: float,
  * }
@@ -277,7 +278,7 @@ final class MessageCreateParam implements BaseModel
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
-     * @var null|list<TextEditor20250429|Tool|ToolBash20250124|ToolTextEditor20250124|WebSearchTool20250305> $tools
+     * @var null|list<TextEditor20250429|Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250728|WebSearchTool20250305> $tools
      */
     #[Api(type: new ListOf(union: ToolUnion::class), optional: true)]
     public ?array $tools;
@@ -318,7 +319,7 @@ final class MessageCreateParam implements BaseModel
      * @param null|ServiceTier::* $serviceTier
      * @param null|list<string> $stopSequences
      * @param null|list<TextBlockParam>|string $system
-     * @param null|list<TextEditor20250429|Tool|ToolBash20250124|ToolTextEditor20250124|WebSearchTool20250305> $tools
+     * @param null|list<TextEditor20250429|Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250728|WebSearchTool20250305> $tools
      */
     public static function new(
         int $maxTokens,

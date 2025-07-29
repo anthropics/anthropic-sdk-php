@@ -14,6 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   documentIndex: int,
  *   documentTitle: string|null,
  *   endCharIndex: int,
+ *   fileID: string|null,
  *   startCharIndex: int,
  *   type: string,
  * }
@@ -37,6 +38,9 @@ final class BetaCitationCharLocation implements BaseModel
     #[Api('end_char_index')]
     public int $endCharIndex;
 
+    #[Api('file_id')]
+    public ?string $fileID;
+
     #[Api('start_char_index')]
     public int $startCharIndex;
 
@@ -56,6 +60,7 @@ final class BetaCitationCharLocation implements BaseModel
         int $documentIndex,
         ?string $documentTitle,
         int $endCharIndex,
+        ?string $fileID,
         int $startCharIndex,
     ): self {
         $obj = new self;
@@ -64,6 +69,7 @@ final class BetaCitationCharLocation implements BaseModel
         $obj->documentIndex = $documentIndex;
         $obj->documentTitle = $documentTitle;
         $obj->endCharIndex = $endCharIndex;
+        $obj->fileID = $fileID;
         $obj->startCharIndex = $startCharIndex;
 
         return $obj;
@@ -93,6 +99,13 @@ final class BetaCitationCharLocation implements BaseModel
     public function setEndCharIndex(int $endCharIndex): self
     {
         $this->endCharIndex = $endCharIndex;
+
+        return $this;
+    }
+
+    public function setFileID(?string $fileID): self
+    {
+        $this->fileID = $fileID;
 
         return $this;
     }

@@ -30,6 +30,7 @@ use Anthropic\Models\Beta\BetaToolComputerUse20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20241022;
 use Anthropic\Models\Beta\BetaToolTextEditor20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20250429;
+use Anthropic\Models\Beta\BetaToolTextEditor20250728;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305;
 use Anthropic\Models\Model\UnionMember0;
 use Anthropic\Parameters\Beta\MessageCountTokensParam;
@@ -67,7 +68,7 @@ final class Messages implements MessagesContract
      *   temperature?: float,
      *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
      *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
-     *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305>,
+     *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>,
      *   topK?: int,
      *   topP?: float,
      *   anthropicBeta?: list<string|UnionMember1::*>,
@@ -111,7 +112,7 @@ final class Messages implements MessagesContract
      *   system?: string|list<BetaTextBlockParam>,
      *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
      *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
-     *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaWebSearchTool20250305>,
+     *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>,
      *   anthropicBeta?: list<string|UnionMember1::*>,
      * } $params
      */

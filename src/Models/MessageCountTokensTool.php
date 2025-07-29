@@ -10,7 +10,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Models\MessageCountTokensTool\TextEditor20250429;
 
 /**
- * @phpstan-type message_count_tokens_tool_alias = Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|WebSearchTool20250305
+ * @phpstan-type message_count_tokens_tool_alias = Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305
  */
 final class MessageCountTokensTool implements ConverterSource
 {
@@ -27,6 +27,7 @@ final class MessageCountTokensTool implements ConverterSource
             ToolBash20250124::class,
             ToolTextEditor20250124::class,
             TextEditor20250429::class,
+            ToolTextEditor20250728::class,
             WebSearchTool20250305::class,
         ];
     }

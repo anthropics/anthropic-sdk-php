@@ -14,6 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   documentIndex: int,
  *   documentTitle: string|null,
  *   endBlockIndex: int,
+ *   fileID: string|null,
  *   startBlockIndex: int,
  *   type: string,
  * }
@@ -37,6 +38,9 @@ final class BetaCitationContentBlockLocation implements BaseModel
     #[Api('end_block_index')]
     public int $endBlockIndex;
 
+    #[Api('file_id')]
+    public ?string $fileID;
+
     #[Api('start_block_index')]
     public int $startBlockIndex;
 
@@ -56,6 +60,7 @@ final class BetaCitationContentBlockLocation implements BaseModel
         int $documentIndex,
         ?string $documentTitle,
         int $endBlockIndex,
+        ?string $fileID,
         int $startBlockIndex,
     ): self {
         $obj = new self;
@@ -64,6 +69,7 @@ final class BetaCitationContentBlockLocation implements BaseModel
         $obj->documentIndex = $documentIndex;
         $obj->documentTitle = $documentTitle;
         $obj->endBlockIndex = $endBlockIndex;
+        $obj->fileID = $fileID;
         $obj->startBlockIndex = $startBlockIndex;
 
         return $obj;
@@ -93,6 +99,13 @@ final class BetaCitationContentBlockLocation implements BaseModel
     public function setEndBlockIndex(int $endBlockIndex): self
     {
         $this->endBlockIndex = $endBlockIndex;
+
+        return $this;
+    }
+
+    public function setFileID(?string $fileID): self
+    {
+        $this->fileID = $fileID;
 
         return $this;
     }

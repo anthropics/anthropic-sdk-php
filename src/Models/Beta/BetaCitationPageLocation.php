@@ -14,6 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   documentIndex: int,
  *   documentTitle: string|null,
  *   endPageNumber: int,
+ *   fileID: string|null,
  *   startPageNumber: int,
  *   type: string,
  * }
@@ -37,6 +38,9 @@ final class BetaCitationPageLocation implements BaseModel
     #[Api('end_page_number')]
     public int $endPageNumber;
 
+    #[Api('file_id')]
+    public ?string $fileID;
+
     #[Api('start_page_number')]
     public int $startPageNumber;
 
@@ -56,6 +60,7 @@ final class BetaCitationPageLocation implements BaseModel
         int $documentIndex,
         ?string $documentTitle,
         int $endPageNumber,
+        ?string $fileID,
         int $startPageNumber,
     ): self {
         $obj = new self;
@@ -64,6 +69,7 @@ final class BetaCitationPageLocation implements BaseModel
         $obj->documentIndex = $documentIndex;
         $obj->documentTitle = $documentTitle;
         $obj->endPageNumber = $endPageNumber;
+        $obj->fileID = $fileID;
         $obj->startPageNumber = $startPageNumber;
 
         return $obj;
@@ -93,6 +99,13 @@ final class BetaCitationPageLocation implements BaseModel
     public function setEndPageNumber(int $endPageNumber): self
     {
         $this->endPageNumber = $endPageNumber;
+
+        return $this;
+    }
+
+    public function setFileID(?string $fileID): self
+    {
+        $this->fileID = $fileID;
 
         return $this;
     }
