@@ -48,21 +48,21 @@ final class Messages implements MessagesContract
      *
      * Learn more about the Messages API in our [user guide](/en/docs/initial-setup)
      *
-     * @param MessageCreateParam|array{
+     * @param array{
      *   maxTokens: int,
      *   messages: list<MessageParam>,
-     *   model: UnionMember0::*|string,
+     *   model: string|UnionMember0::*,
      *   metadata?: Metadata,
      *   serviceTier?: ServiceTier::*,
      *   stopSequences?: list<string>,
-     *   system?: string|list<TextBlockParam>,
+     *   system?: list<TextBlockParam>|string,
      *   temperature?: float,
-     *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
-     *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
-     *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>,
+     *   thinking?: ThinkingConfigDisabled|ThinkingConfigEnabled,
+     *   toolChoice?: ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool,
+     *   tools?: list<TextEditor20250429|Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250728|WebSearchTool20250305>,
      *   topK?: int,
      *   topP?: float,
-     * } $params
+     * }|MessageCreateParam $params
      */
     public function create(
         array|MessageCreateParam $params,
@@ -90,14 +90,14 @@ final class Messages implements MessagesContract
      *
      * Learn more about token counting in our [user guide](/en/docs/build-with-claude/token-counting)
      *
-     * @param MessageCountTokensParam|array{
+     * @param array{
      *   messages: list<MessageParam>,
-     *   model: UnionMember0::*|string,
-     *   system?: string|list<TextBlockParam>,
-     *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
-     *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
-     *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor202504291|ToolTextEditor20250728|WebSearchTool20250305>,
-     * } $params
+     *   model: string|UnionMember0::*,
+     *   system?: list<TextBlockParam>|string,
+     *   thinking?: ThinkingConfigDisabled|ThinkingConfigEnabled,
+     *   toolChoice?: ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool,
+     *   tools?: list<TextEditor202504291|Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250728|WebSearchTool20250305>,
+     * }|MessageCountTokensParam $params
      */
     public function countTokens(
         array|MessageCountTokensParam $params,

@@ -13,9 +13,9 @@ use Anthropic\RequestOptions;
 interface ModelsContract
 {
     /**
-     * @param ModelRetrieveParam|array{
+     * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * } $params
+     * }|ModelRetrieveParam $params
      */
     public function retrieve(
         string $modelID,
@@ -24,12 +24,12 @@ interface ModelsContract
     ): ModelInfo;
 
     /**
-     * @param ModelListParam|array{
+     * @param array{
      *   afterID?: string,
      *   beforeID?: string,
      *   limit?: int,
      *   anthropicBeta?: list<string|UnionMember1::*>,
-     * } $params
+     * }|ModelListParam $params
      */
     public function list(
         array|ModelListParam $params,

@@ -71,9 +71,9 @@ final class Batches implements BatchesContract
      *
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
-     * @param BatchListParam|array{
+     * @param array{
      *   afterID?: string, beforeID?: string, limit?: int
-     * } $params
+     * }|BatchListParam $params
      */
     public function list(
         array|BatchListParam $params,

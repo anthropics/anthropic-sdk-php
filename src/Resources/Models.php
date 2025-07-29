@@ -23,9 +23,9 @@ final class Models implements ModelsContract
      *
      * The Models API response can be used to determine information about a specific model or resolve a model alias to a model ID.
      *
-     * @param ModelRetrieveParam|array{
+     * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * } $params
+     * }|ModelRetrieveParam $params
      */
     public function retrieve(
         string $modelID,
@@ -55,12 +55,12 @@ final class Models implements ModelsContract
      *
      * The Models API response can be used to determine which models are available for use in the API. More recently released models are listed first.
      *
-     * @param ModelListParam|array{
+     * @param array{
      *   afterID?: string,
      *   beforeID?: string,
      *   limit?: int,
      *   anthropicBeta?: list<string|UnionMember1::*>,
-     * } $params
+     * }|ModelListParam $params
      */
     public function list(
         array|ModelListParam $params,

@@ -165,9 +165,9 @@ final class Util
     }
 
     /**
-     * @param array<string, mixed>|bool|int|float|string|resource|\Traversable<
+     * @param null|array<string, mixed>|bool|float|int|resource|string|\Traversable<
      *   mixed
-     * >|null $body
+     * > $body
      *
      * @return array{string, \Generator<string>}
      */
@@ -202,9 +202,9 @@ final class Util
     }
 
     /**
-     * @param array<string, mixed>|bool|int|float|string|resource|\Traversable<
+     * @param null|array<string, mixed>|bool|float|int|resource|string|\Traversable<
      *   mixed
-     * >|null $body
+     * > $body
      */
     public static function withSetBody(
         StreamFactoryInterface $factory,
@@ -267,7 +267,7 @@ final class Util
      *
      * @return \Iterator<
      *   array{
-     *     event?: string|null, data?: string|null, id?: string|null, retry?: int|null
+     *     event?: null|string, data?: null|string, id?: null|string, retry?: null|int
      *   },
      * >
      */

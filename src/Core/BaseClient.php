@@ -91,15 +91,15 @@ class BaseClient
      * @param list<string>|string $path
      * @param array<string, mixed> $query
      * @param array<string, null|int|list<int|string>|string> $headers
-     * @param RequestOptions|array{
-     *   timeout?: float|null,
-     *   maxRetries?: int|null,
-     *   initialRetryDelay?: float|null,
-     *   maxRetryDelay?: float|null,
-     *   extraHeaders?: list<string>|null,
-     *   extraQueryParams?: list<string>|null,
-     *   extraBodyParams?: list<string>|null,
-     * }|null $opts
+     * @param null|array{
+     *   timeout?: null|float,
+     *   maxRetries?: null|int,
+     *   initialRetryDelay?: null|float,
+     *   maxRetryDelay?: null|float,
+     *   extraHeaders?: null|list<string>,
+     *   extraQueryParams?: null|list<string>,
+     *   extraBodyParams?: null|list<string>,
+     * }|RequestOptions $opts
      *
      * @return array{RequestInterface, RequestOptions}
      */
@@ -146,9 +146,9 @@ class BaseClient
     }
 
     /**
-     * @param array<string, mixed>|bool|int|float|string|resource|\Traversable<
+     * @param null|array<string, mixed>|bool|float|int|resource|string|\Traversable<
      *   mixed
-     * >|null $data
+     * > $data
      */
     protected function sendRequest(
         RequestInterface $req,

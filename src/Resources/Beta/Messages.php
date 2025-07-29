@@ -55,24 +55,24 @@ final class Messages implements MessagesContract
      *
      * Learn more about the Messages API in our [user guide](/en/docs/initial-setup)
      *
-     * @param MessageCreateParam|array{
+     * @param array{
      *   maxTokens: int,
      *   messages: list<BetaMessageParam>,
-     *   model: UnionMember0::*|string,
-     *   container?: string|null,
+     *   model: string|UnionMember0::*,
+     *   container?: null|string,
      *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
      *   metadata?: BetaMetadata,
      *   serviceTier?: ServiceTier::*,
      *   stopSequences?: list<string>,
-     *   system?: string|list<BetaTextBlockParam>,
+     *   system?: list<BetaTextBlockParam>|string,
      *   temperature?: float,
-     *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
-     *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
-     *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>,
+     *   thinking?: BetaThinkingConfigDisabled|BetaThinkingConfigEnabled,
+     *   toolChoice?: BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool,
+     *   tools?: list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>,
      *   topK?: int,
      *   topP?: float,
      *   anthropicBeta?: list<string|UnionMember1::*>,
-     * } $params
+     * }|MessageCreateParam $params
      */
     public function create(
         array|MessageCreateParam $params,
@@ -105,16 +105,16 @@ final class Messages implements MessagesContract
      *
      * Learn more about token counting in our [user guide](/en/docs/build-with-claude/token-counting)
      *
-     * @param MessageCountTokensParam|array{
+     * @param array{
      *   messages: list<BetaMessageParam>,
-     *   model: UnionMember0::*|string,
+     *   model: string|UnionMember0::*,
      *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
-     *   system?: string|list<BetaTextBlockParam>,
-     *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
-     *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
-     *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>,
+     *   system?: list<BetaTextBlockParam>|string,
+     *   thinking?: BetaThinkingConfigDisabled|BetaThinkingConfigEnabled,
+     *   toolChoice?: BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool,
+     *   tools?: list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>,
      *   anthropicBeta?: list<string|UnionMember1::*>,
-     * } $params
+     * }|MessageCountTokensParam $params
      */
     public function countTokens(
         array|MessageCountTokensParam $params,

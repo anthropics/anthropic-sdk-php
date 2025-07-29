@@ -28,9 +28,9 @@ interface BatchesContract
     ): MessageBatch;
 
     /**
-     * @param BatchListParam|array{
+     * @param array{
      *   afterID?: string, beforeID?: string, limit?: int
-     * } $params
+     * }|BatchListParam $params
      */
     public function list(
         array|BatchListParam $params,

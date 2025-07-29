@@ -14,9 +14,9 @@ use Anthropic\RequestOptions;
 interface CompletionsContract
 {
     /**
-     * @param CompletionCreateParam|array{
+     * @param array{
      *   maxTokensToSample: int,
-     *   model: UnionMember0::*|string,
+     *   model: string|UnionMember0::*,
      *   prompt: string,
      *   metadata?: Metadata,
      *   stopSequences?: list<string>,
@@ -24,7 +24,7 @@ interface CompletionsContract
      *   topK?: int,
      *   topP?: float,
      *   anthropicBeta?: list<string|UnionMember1::*>,
-     * } $params
+     * }|CompletionCreateParam $params
      */
     public function create(
         array|CompletionCreateParam $params,

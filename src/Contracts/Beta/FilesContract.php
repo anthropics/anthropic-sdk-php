@@ -17,12 +17,12 @@ use Anthropic\RequestOptions;
 interface FilesContract
 {
     /**
-     * @param FileListParam|array{
+     * @param array{
      *   afterID?: string,
      *   beforeID?: string,
      *   limit?: int,
      *   anthropicBeta?: list<string|UnionMember1::*>,
-     * } $params
+     * }|FileListParam $params
      */
     public function list(
         array|FileListParam $params,
@@ -30,9 +30,9 @@ interface FilesContract
     ): FileMetadata;
 
     /**
-     * @param FileDeleteParam|array{
+     * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * } $params
+     * }|FileDeleteParam $params
      */
     public function delete(
         string $fileID,
@@ -41,9 +41,9 @@ interface FilesContract
     ): DeletedFile;
 
     /**
-     * @param FileDownloadParam|array{
+     * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * } $params
+     * }|FileDownloadParam $params
      */
     public function download(
         string $fileID,
@@ -52,9 +52,9 @@ interface FilesContract
     ): string;
 
     /**
-     * @param FileRetrieveMetadataParam|array{
+     * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * } $params
+     * }|FileRetrieveMetadataParam $params
      */
     public function retrieveMetadata(
         string $fileID,
@@ -63,9 +63,9 @@ interface FilesContract
     ): FileMetadata;
 
     /**
-     * @param FileUploadParam|array{
+     * @param array{
      *   file: string, anthropicBeta?: list<string|UnionMember1::*>
-     * } $params
+     * }|FileUploadParam $params
      */
     public function upload(
         array|FileUploadParam $params,

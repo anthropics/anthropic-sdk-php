@@ -26,9 +26,9 @@ final class Completions implements CompletionsContract
      *
      * Future models and features will not be compatible with Text Completions. See our [migration guide](https://docs.anthropic.com/en/api/migrating-from-text-completions-to-messages) for guidance in migrating from Text Completions to Messages.
      *
-     * @param CompletionCreateParam|array{
+     * @param array{
      *   maxTokensToSample: int,
-     *   model: UnionMember0::*|string,
+     *   model: string|UnionMember0::*,
      *   prompt: string,
      *   metadata?: Metadata,
      *   stopSequences?: list<string>,
@@ -36,7 +36,7 @@ final class Completions implements CompletionsContract
      *   topK?: int,
      *   topP?: float,
      *   anthropicBeta?: list<string|UnionMember1::*>,
-     * } $params
+     * }|CompletionCreateParam $params
      */
     public function create(
         array|CompletionCreateParam $params,

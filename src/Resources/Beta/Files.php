@@ -25,12 +25,12 @@ final class Files implements FilesContract
     /**
      * List Files.
      *
-     * @param FileListParam|array{
+     * @param array{
      *   afterID?: string,
      *   beforeID?: string,
      *   limit?: int,
      *   anthropicBeta?: list<string|UnionMember1::*>,
-     * } $params
+     * }|FileListParam $params
      */
     public function list(
         array|FileListParam $params,
@@ -62,9 +62,9 @@ final class Files implements FilesContract
     /**
      * Delete File.
      *
-     * @param FileDeleteParam|array{
+     * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * } $params
+     * }|FileDeleteParam $params
      */
     public function delete(
         string $fileID,
@@ -95,9 +95,9 @@ final class Files implements FilesContract
     /**
      * Download File.
      *
-     * @param FileDownloadParam|array{
+     * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * } $params
+     * }|FileDownloadParam $params
      */
     public function download(
         string $fileID,
@@ -128,9 +128,9 @@ final class Files implements FilesContract
     /**
      * Get File Metadata.
      *
-     * @param FileRetrieveMetadataParam|array{
+     * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * } $params
+     * }|FileRetrieveMetadataParam $params
      */
     public function retrieveMetadata(
         string $fileID,
@@ -161,9 +161,9 @@ final class Files implements FilesContract
     /**
      * Upload File.
      *
-     * @param FileUploadParam|array{
+     * @param array{
      *   file: string, anthropicBeta?: list<string|UnionMember1::*>
-     * } $params
+     * }|FileUploadParam $params
      */
     public function upload(
         array|FileUploadParam $params,

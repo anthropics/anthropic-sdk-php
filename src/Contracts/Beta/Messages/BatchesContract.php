@@ -20,9 +20,9 @@ use Anthropic\RequestOptions;
 interface BatchesContract
 {
     /**
-     * @param BatchCreateParam|array{
+     * @param array{
      *   requests: list<Request>, anthropicBeta?: list<string|UnionMember1::*>
-     * } $params
+     * }|BatchCreateParam $params
      */
     public function create(
         array|BatchCreateParam $params,
@@ -30,9 +30,9 @@ interface BatchesContract
     ): MessageBatch;
 
     /**
-     * @param BatchRetrieveParam|array{
+     * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * } $params
+     * }|BatchRetrieveParam $params
      */
     public function retrieve(
         string $messageBatchID,
@@ -41,12 +41,12 @@ interface BatchesContract
     ): MessageBatch;
 
     /**
-     * @param BatchListParam|array{
+     * @param array{
      *   afterID?: string,
      *   beforeID?: string,
      *   limit?: int,
      *   anthropicBeta?: list<string|UnionMember1::*>,
-     * } $params
+     * }|BatchListParam $params
      */
     public function list(
         array|BatchListParam $params,
@@ -54,9 +54,9 @@ interface BatchesContract
     ): MessageBatch;
 
     /**
-     * @param BatchDeleteParam|array{
+     * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * } $params
+     * }|BatchDeleteParam $params
      */
     public function delete(
         string $messageBatchID,
@@ -65,9 +65,9 @@ interface BatchesContract
     ): DeletedMessageBatch;
 
     /**
-     * @param BatchCancelParam|array{
+     * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * } $params
+     * }|BatchCancelParam $params
      */
     public function cancel(
         string $messageBatchID,
@@ -76,9 +76,9 @@ interface BatchesContract
     ): MessageBatch;
 
     /**
-     * @param BatchResultsParam|array{
+     * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * } $params
+     * }|BatchResultsParam $params
      */
     public function results(
         string $messageBatchID,

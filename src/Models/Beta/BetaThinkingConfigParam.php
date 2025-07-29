@@ -27,8 +27,8 @@ final class BetaThinkingConfigParam implements ConverterSource
     }
 
     /**
-     * @return list<string|Converter|ConverterSource>|array<string,
-     * string|Converter|ConverterSource,>
+     * @return array<string,
+     * Converter|ConverterSource|string,>|list<Converter|ConverterSource|string>
      */
     public static function variants(): array
     {
