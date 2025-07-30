@@ -24,9 +24,9 @@ use Anthropic\Models\ToolChoiceAuto;
 use Anthropic\Models\ToolChoiceNone;
 use Anthropic\Models\ToolChoiceTool;
 use Anthropic\Models\ToolTextEditor20250124;
+use Anthropic\Models\ToolTextEditor20250429;
 use Anthropic\Models\ToolTextEditor20250728;
 use Anthropic\Models\ToolUnion;
-use Anthropic\Models\ToolUnion\TextEditor20250429;
 use Anthropic\Models\WebSearchTool20250305;
 use Anthropic\Parameters\Messages\BatchCreateParam\Request\Params\ServiceTier;
 use Anthropic\Parameters\Messages\BatchCreateParam\Request\Params\System;
@@ -48,7 +48,7 @@ use Anthropic\Parameters\Messages\BatchCreateParam\Request\Params\System;
  *   temperature?: float,
  *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
  *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
- *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|TextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>,
+ *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>,
  *   topK?: int,
  *   topP?: float,
  * }
@@ -283,7 +283,7 @@ final class Params implements BaseModel
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
-     * @var null|list<TextEditor20250429|Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250728|WebSearchTool20250305> $tools
+     * @var null|list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
      */
     #[Api(type: new ListOf(union: ToolUnion::class), optional: true)]
     public ?array $tools;
@@ -324,7 +324,7 @@ final class Params implements BaseModel
      * @param null|ServiceTier::* $serviceTier
      * @param null|list<string> $stopSequences
      * @param null|list<TextBlockParam>|string $system
-     * @param null|list<TextEditor20250429|Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250728|WebSearchTool20250305> $tools
+     * @param null|list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
      */
     public static function new(
         int $maxTokens,
@@ -635,7 +635,7 @@ final class Params implements BaseModel
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
-     * @param list<TextEditor20250429|Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250728|WebSearchTool20250305> $tools
+     * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
      */
     public function setTools(array $tools): self
     {

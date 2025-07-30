@@ -2,21 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Models\ToolUnion;
+namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Models\CacheControlEphemeral;
 
 /**
- * @phpstan-type text_editor20250429_alias = array{
+ * @phpstan-type tool_text_editor20250429_alias = array{
  *   name: string, type: string, cacheControl?: CacheControlEphemeral
  * }
  */
-final class TextEditor20250429 implements BaseModel
+final class ToolTextEditor20250429 implements BaseModel
 {
-    use Model;
+    use ModelTrait;
 
     /**
      * Name of the tool.
