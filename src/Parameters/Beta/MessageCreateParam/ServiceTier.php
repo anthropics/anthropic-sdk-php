@@ -18,7 +18,7 @@ final class ServiceTier implements ConverterSource
 {
     use Enum;
 
-    final public const AUTO = 'auto';
+    public const AUTO = 'auto';
 
-    final public const STANDARD_ONLY = 'standard_only';
+    public const STANDARD_ONLY = 'standard_only';
 }

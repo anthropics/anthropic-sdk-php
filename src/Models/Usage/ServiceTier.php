@@ -16,9 +16,9 @@ final class ServiceTier implements ConverterSource
 {
     use Enum;
 
-    final public const STANDARD = 'standard';
+    public const STANDARD = 'standard';
 
-    final public const PRIORITY = 'priority';
+    public const PRIORITY = 'priority';
 
-    final public const BATCH = 'batch';
+    public const BATCH = 'batch';
 }

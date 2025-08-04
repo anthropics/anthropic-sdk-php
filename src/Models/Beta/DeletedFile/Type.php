@@ -18,5 +18,5 @@ final class Type implements ConverterSource
 {
     use Enum;
 
-    final public const FILE_DELETED = 'file_deleted';
+    public const FILE_DELETED = 'file_deleted';
 }

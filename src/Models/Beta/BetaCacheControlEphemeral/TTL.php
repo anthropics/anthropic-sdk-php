@@ -22,7 +22,7 @@ final class TTL implements ConverterSource
 {
     use Enum;
 
-    final public const TTL_5M = '5m';
+    public const TTL_5M = '5m';
 
-    final public const TTL_1H = '1h';
+    public const TTL_1H = '1h';
 }

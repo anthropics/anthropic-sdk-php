@@ -14,11 +14,11 @@ final class BetaCodeExecutionToolResultErrorCode implements ConverterSource
 {
     use Enum;
 
-    final public const INVALID_TOOL_INPUT = 'invalid_tool_input';
+    public const INVALID_TOOL_INPUT = 'invalid_tool_input';
 
-    final public const UNAVAILABLE = 'unavailable';
+    public const UNAVAILABLE = 'unavailable';
 
-    final public const TOO_MANY_REQUESTS = 'too_many_requests';
+    public const TOO_MANY_REQUESTS = 'too_many_requests';
 
-    final public const EXECUTION_TIME_EXCEEDED = 'execution_time_exceeded';
+    public const EXECUTION_TIME_EXCEEDED = 'execution_time_exceeded';
 }

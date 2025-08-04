@@ -14,15 +14,15 @@ final class StopReason implements ConverterSource
 {
     use Enum;
 
-    final public const END_TURN = 'end_turn';
+    public const END_TURN = 'end_turn';
 
-    final public const MAX_TOKENS = 'max_tokens';
+    public const MAX_TOKENS = 'max_tokens';
 
-    final public const STOP_SEQUENCE = 'stop_sequence';
+    public const STOP_SEQUENCE = 'stop_sequence';
 
-    final public const TOOL_USE = 'tool_use';
+    public const TOOL_USE = 'tool_use';
 
-    final public const PAUSE_TURN = 'pause_turn';
+    public const PAUSE_TURN = 'pause_turn';
 
-    final public const REFUSAL = 'refusal';
+    public const REFUSAL = 'refusal';
 }

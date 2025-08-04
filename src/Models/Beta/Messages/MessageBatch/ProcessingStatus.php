@@ -16,9 +16,9 @@ final class ProcessingStatus implements ConverterSource
 {
     use Enum;
 
-    final public const IN_PROGRESS = 'in_progress';
+    public const IN_PROGRESS = 'in_progress';
 
-    final public const CANCELING = 'canceling';
+    public const CANCELING = 'canceling';
 
-    final public const ENDED = 'ended';
+    public const ENDED = 'ended';
 }

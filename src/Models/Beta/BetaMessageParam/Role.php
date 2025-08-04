@@ -14,7 +14,7 @@ final class Role implements ConverterSource
 {
     use Enum;
 
-    final public const USER = 'user';
+    public const USER = 'user';
 
-    final public const ASSISTANT = 'assistant';
+    public const ASSISTANT = 'assistant';
 }
