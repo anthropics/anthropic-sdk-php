@@ -42,6 +42,8 @@ final class UnionMember0 implements ConverterSource
 
     public const CLAUDE_4_OPUS_20250514 = 'claude-4-opus-20250514';
 
+    public const CLAUDE_OPUS_4_1_20250805 = 'claude-opus-4-1-20250805';
+
     public const CLAUDE_3_OPUS_LATEST = 'claude-3-opus-latest';
 
     public const CLAUDE_3_OPUS_20240229 = 'claude-3-opus-20240229';
