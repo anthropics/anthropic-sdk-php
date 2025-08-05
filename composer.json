@@ -26,7 +26,9 @@
     "sort-packages": true
   },
   "license": "APACHE-2.0",
+  "description": "Anthropic PHP SDK",
   "name": "anthropic/anthropic",
+  "version": "0.0.1",
   "require": {
     "php": "^8.1",
     "php-http/discovery": "^1",

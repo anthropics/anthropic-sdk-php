@@ -27,6 +27,9 @@ jobs:
         with:
           php-version: '8.3'
 
+      - name: Run Bootstrap
+        run: ./scripts/bootstrap
+
       - name: Run lints
         run: ./scripts/lint
   test:
@@ -41,6 +44,9 @@ jobs:
         uses: 'shivammathur/setup-php@v2'
         with:
           php-version: '8.3'
+
+      - name: Run bootstrap
+        run: ./scripts/bootstrap
 
       - name: Run tests
         run: ./scripts/test
