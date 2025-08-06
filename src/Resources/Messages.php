@@ -25,9 +25,9 @@ use Anthropic\Models\ToolTextEditor20250124;
 use Anthropic\Models\ToolTextEditor20250429;
 use Anthropic\Models\ToolTextEditor20250728;
 use Anthropic\Models\WebSearchTool20250305;
-use Anthropic\Parameters\MessageCountTokensParam;
-use Anthropic\Parameters\MessageCreateParam;
-use Anthropic\Parameters\MessageCreateParam\ServiceTier;
+use Anthropic\Parameters\MessageCountTokensParams;
+use Anthropic\Parameters\MessageCreateParams;
+use Anthropic\Parameters\MessageCreateParams\ServiceTier;
 use Anthropic\RequestOptions;
 use Anthropic\Resources\Messages\Batches;
 
@@ -61,13 +61,13 @@ final class Messages implements MessagesContract
      *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>,
      *   topK?: int,
      *   topP?: float,
-     * }|MessageCreateParam $params
+     * }|MessageCreateParams $params
      */
     public function create(
-        array|MessageCreateParam $params,
+        array|MessageCreateParams $params,
         ?RequestOptions $requestOptions = null
     ): Message {
-        [$parsed, $options] = MessageCreateParam::parseRequest(
+        [$parsed, $options] = MessageCreateParams::parseRequest(
             $params,
             $requestOptions
         );
@@ -96,13 +96,13 @@ final class Messages implements MessagesContract
      *   thinking?: ThinkingConfigDisabled|ThinkingConfigEnabled,
      *   toolChoice?: ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool,
      *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>,
-     * }|MessageCountTokensParam $params
+     * }|MessageCountTokensParams $params
      */
     public function countTokens(
-        array|MessageCountTokensParam $params,
+        array|MessageCountTokensParams $params,
         ?RequestOptions $requestOptions = null,
     ): MessageTokensCount {
-        [$parsed, $options] = MessageCountTokensParam::parseRequest(
+        [$parsed, $options] = MessageCountTokensParams::parseRequest(
             $params,
             $requestOptions
         );

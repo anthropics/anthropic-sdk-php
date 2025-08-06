@@ -4,7 +4,7 @@ namespace Tests\Resources;
 
 use Anthropic\Client;
 use Anthropic\Models\Metadata;
-use Anthropic\Parameters\CompletionCreateParam;
+use Anthropic\Parameters\CompletionCreateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -34,7 +34,7 @@ final class CompletionsTest extends TestCase
             ->client
             ->completions
             ->create(
-                CompletionCreateParam::new(
+                CompletionCreateParams::new(
                     maxTokensToSample: 256,
                     model: 'claude-3-7-sonnet-latest',
                     prompt: "\n\nHuman: Hello, world!\n\nAssistant:",
@@ -52,7 +52,7 @@ final class CompletionsTest extends TestCase
             ->client
             ->completions
             ->create(
-                CompletionCreateParam::new(
+                CompletionCreateParams::new(
                     maxTokensToSample: 256,
                     model: 'claude-3-7-sonnet-latest',
                     prompt: "\n\nHuman: Hello, world!\n\nAssistant:",

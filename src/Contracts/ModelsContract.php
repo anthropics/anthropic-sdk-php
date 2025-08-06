@@ -6,8 +6,8 @@ namespace Anthropic\Contracts;
 
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\ModelInfo;
-use Anthropic\Parameters\ModelListParam;
-use Anthropic\Parameters\ModelRetrieveParam;
+use Anthropic\Parameters\ModelListParams;
+use Anthropic\Parameters\ModelRetrieveParams;
 use Anthropic\RequestOptions;
 
 interface ModelsContract
@@ -15,11 +15,11 @@ interface ModelsContract
     /**
      * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * }|ModelRetrieveParam $params
+     * }|ModelRetrieveParams $params
      */
     public function retrieve(
         string $modelID,
-        array|ModelRetrieveParam $params,
+        array|ModelRetrieveParams $params,
         ?RequestOptions $requestOptions = null,
     ): ModelInfo;
 
@@ -29,10 +29,10 @@ interface ModelsContract
      *   beforeID?: string,
      *   limit?: int,
      *   anthropicBeta?: list<string|UnionMember1::*>,
-     * }|ModelListParam $params
+     * }|ModelListParams $params
      */
     public function list(
-        array|ModelListParam $params,
+        array|ModelListParams $params,
         ?RequestOptions $requestOptions = null
     ): ModelInfo;
 }

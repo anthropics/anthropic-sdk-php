@@ -14,14 +14,14 @@ use Anthropic\Models\Beta\BetaThinkingConfigEnabled;
 use Anthropic\Models\Beta\BetaTool;
 use Anthropic\Models\Beta\BetaTool\InputSchema;
 use Anthropic\Models\Beta\BetaToolChoiceAuto;
-use Anthropic\Parameters\Beta\Messages\BatchCancelParam;
-use Anthropic\Parameters\Beta\Messages\BatchCreateParam;
-use Anthropic\Parameters\Beta\Messages\BatchCreateParam\Request;
-use Anthropic\Parameters\Beta\Messages\BatchCreateParam\Request\Params;
-use Anthropic\Parameters\Beta\Messages\BatchDeleteParam;
-use Anthropic\Parameters\Beta\Messages\BatchListParam;
-use Anthropic\Parameters\Beta\Messages\BatchResultsParam;
-use Anthropic\Parameters\Beta\Messages\BatchRetrieveParam;
+use Anthropic\Parameters\Beta\Messages\BatchCancelParams;
+use Anthropic\Parameters\Beta\Messages\BatchCreateParams;
+use Anthropic\Parameters\Beta\Messages\BatchCreateParams\Request;
+use Anthropic\Parameters\Beta\Messages\BatchCreateParams\Request\Params;
+use Anthropic\Parameters\Beta\Messages\BatchDeleteParams;
+use Anthropic\Parameters\Beta\Messages\BatchListParams;
+use Anthropic\Parameters\Beta\Messages\BatchResultsParams;
+use Anthropic\Parameters\Beta\Messages\BatchRetrieveParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -54,7 +54,7 @@ final class BatchesTest extends TestCase
             ->messages
             ->batches
             ->create(
-                BatchCreateParam::new(
+                BatchCreateParams::new(
                     requests: [
                         Request::new(
                             customID: 'my-custom-id-1',
@@ -83,7 +83,7 @@ final class BatchesTest extends TestCase
             ->messages
             ->batches
             ->create(
-                BatchCreateParam::new(
+                BatchCreateParams::new(
                     requests: [
                         Request::new(
                             customID: 'my-custom-id-1',
@@ -174,7 +174,7 @@ final class BatchesTest extends TestCase
             ->beta
             ->messages
             ->batches
-            ->retrieve('message_batch_id', new BatchRetrieveParam)
+            ->retrieve('message_batch_id', new BatchRetrieveParams)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -192,7 +192,7 @@ final class BatchesTest extends TestCase
             ->beta
             ->messages
             ->batches
-            ->list(new BatchListParam)
+            ->list(new BatchListParams)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -206,7 +206,7 @@ final class BatchesTest extends TestCase
             ->beta
             ->messages
             ->batches
-            ->delete('message_batch_id', new BatchDeleteParam)
+            ->delete('message_batch_id', new BatchDeleteParams)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -220,7 +220,7 @@ final class BatchesTest extends TestCase
             ->beta
             ->messages
             ->batches
-            ->cancel('message_batch_id', new BatchCancelParam)
+            ->cancel('message_batch_id', new BatchCancelParams)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -238,7 +238,7 @@ final class BatchesTest extends TestCase
             ->beta
             ->messages
             ->batches
-            ->results('message_batch_id', new BatchResultsParam)
+            ->results('message_batch_id', new BatchResultsParams)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

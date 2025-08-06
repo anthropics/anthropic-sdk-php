@@ -3,11 +3,11 @@
 namespace Tests\Resources\Beta;
 
 use Anthropic\Client;
-use Anthropic\Parameters\Beta\FileDeleteParam;
-use Anthropic\Parameters\Beta\FileDownloadParam;
-use Anthropic\Parameters\Beta\FileListParam;
-use Anthropic\Parameters\Beta\FileRetrieveMetadataParam;
-use Anthropic\Parameters\Beta\FileUploadParam;
+use Anthropic\Parameters\Beta\FileDeleteParams;
+use Anthropic\Parameters\Beta\FileDownloadParams;
+use Anthropic\Parameters\Beta\FileListParams;
+use Anthropic\Parameters\Beta\FileRetrieveMetadataParams;
+use Anthropic\Parameters\Beta\FileUploadParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -38,7 +38,7 @@ final class FilesTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->beta->files->list(new FileListParam);
+        $result = $this->client->beta->files->list(new FileListParams);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -50,7 +50,7 @@ final class FilesTest extends TestCase
             ->client
             ->beta
             ->files
-            ->delete('file_id', new FileDeleteParam)
+            ->delete('file_id', new FileDeleteParams)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -67,7 +67,7 @@ final class FilesTest extends TestCase
             ->client
             ->beta
             ->files
-            ->download('file_id', new FileDownloadParam)
+            ->download('file_id', new FileDownloadParams)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -80,7 +80,7 @@ final class FilesTest extends TestCase
             ->client
             ->beta
             ->files
-            ->retrieveMetadata('file_id', new FileRetrieveMetadataParam)
+            ->retrieveMetadata('file_id', new FileRetrieveMetadataParams)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -93,7 +93,7 @@ final class FilesTest extends TestCase
             ->client
             ->beta
             ->files
-            ->upload(FileUploadParam::new(file: 'file'))
+            ->upload(FileUploadParams::new(file: 'file'))
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -106,7 +106,7 @@ final class FilesTest extends TestCase
             ->client
             ->beta
             ->files
-            ->upload(FileUploadParam::new(file: 'file', anthropicBeta: ['string']))
+            ->upload(FileUploadParams::new(file: 'file', anthropicBeta: ['string']))
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

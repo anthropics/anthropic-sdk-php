@@ -14,8 +14,8 @@ use Anthropic\Models\Beta\BetaThinkingConfigEnabled;
 use Anthropic\Models\Beta\BetaTool;
 use Anthropic\Models\Beta\BetaTool\InputSchema;
 use Anthropic\Models\Beta\BetaToolChoiceAuto;
-use Anthropic\Parameters\Beta\MessageCountTokensParam;
-use Anthropic\Parameters\Beta\MessageCreateParam;
+use Anthropic\Parameters\Beta\MessageCountTokensParams;
+use Anthropic\Parameters\Beta\MessageCreateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -46,7 +46,7 @@ final class MessagesTest extends TestCase
             ->beta
             ->messages
             ->create(
-                MessageCreateParam::new(
+                MessageCreateParams::new(
                     maxTokens: 1024,
                     messages: [
                         BetaMessageParam::new(content: 'Hello, world', role: 'user'),
@@ -67,7 +67,7 @@ final class MessagesTest extends TestCase
             ->beta
             ->messages
             ->create(
-                MessageCreateParam::new(
+                MessageCreateParams::new(
                     maxTokens: 1024,
                     messages: [
                         BetaMessageParam::new(content: 'Hello, world', role: 'user'),
@@ -134,7 +134,7 @@ final class MessagesTest extends TestCase
             ->beta
             ->messages
             ->countTokens(
-                MessageCountTokensParam::new(
+                MessageCountTokensParams::new(
                     messages: [BetaMessageParam::new(content: 'string', role: 'user')],
                     model: 'claude-3-7-sonnet-latest',
                 )
@@ -152,7 +152,7 @@ final class MessagesTest extends TestCase
             ->beta
             ->messages
             ->countTokens(
-                MessageCountTokensParam::new(
+                MessageCountTokensParams::new(
                     messages: [BetaMessageParam::new(content: 'string', role: 'user')],
                     model: 'claude-3-7-sonnet-latest',
                     mcpServers: [

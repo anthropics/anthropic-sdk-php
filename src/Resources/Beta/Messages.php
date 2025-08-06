@@ -33,9 +33,9 @@ use Anthropic\Models\Beta\BetaToolTextEditor20250429;
 use Anthropic\Models\Beta\BetaToolTextEditor20250728;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305;
 use Anthropic\Models\Model\UnionMember0;
-use Anthropic\Parameters\Beta\MessageCountTokensParam;
-use Anthropic\Parameters\Beta\MessageCreateParam;
-use Anthropic\Parameters\Beta\MessageCreateParam\ServiceTier;
+use Anthropic\Parameters\Beta\MessageCountTokensParams;
+use Anthropic\Parameters\Beta\MessageCreateParams;
+use Anthropic\Parameters\Beta\MessageCreateParams\ServiceTier;
 use Anthropic\RequestOptions;
 use Anthropic\Resources\Beta\Messages\Batches;
 
@@ -72,13 +72,13 @@ final class Messages implements MessagesContract
      *   topK?: int,
      *   topP?: float,
      *   anthropicBeta?: list<string|UnionMember1::*>,
-     * }|MessageCreateParam $params
+     * }|MessageCreateParams $params
      */
     public function create(
-        array|MessageCreateParam $params,
+        array|MessageCreateParams $params,
         ?RequestOptions $requestOptions = null
     ): BetaMessage {
-        [$parsed, $options] = MessageCreateParam::parseRequest(
+        [$parsed, $options] = MessageCreateParams::parseRequest(
             $params,
             $requestOptions
         );
@@ -114,13 +114,13 @@ final class Messages implements MessagesContract
      *   toolChoice?: BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool,
      *   tools?: list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>,
      *   anthropicBeta?: list<string|UnionMember1::*>,
-     * }|MessageCountTokensParam $params
+     * }|MessageCountTokensParams $params
      */
     public function countTokens(
-        array|MessageCountTokensParam $params,
+        array|MessageCountTokensParams $params,
         ?RequestOptions $requestOptions = null,
     ): BetaMessageTokensCount {
-        [$parsed, $options] = MessageCountTokensParam::parseRequest(
+        [$parsed, $options] = MessageCountTokensParams::parseRequest(
             $params,
             $requestOptions
         );

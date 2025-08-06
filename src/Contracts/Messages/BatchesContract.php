@@ -7,18 +7,18 @@ namespace Anthropic\Contracts\Messages;
 use Anthropic\Models\Messages\DeletedMessageBatch;
 use Anthropic\Models\Messages\MessageBatch;
 use Anthropic\Models\Messages\MessageBatchIndividualResponse;
-use Anthropic\Parameters\Messages\BatchCreateParam;
-use Anthropic\Parameters\Messages\BatchCreateParam\Request;
-use Anthropic\Parameters\Messages\BatchListParam;
+use Anthropic\Parameters\Messages\BatchCreateParams;
+use Anthropic\Parameters\Messages\BatchCreateParams\Request;
+use Anthropic\Parameters\Messages\BatchListParams;
 use Anthropic\RequestOptions;
 
 interface BatchesContract
 {
     /**
-     * @param array{requests: list<Request>}|BatchCreateParam $params
+     * @param array{requests: list<Request>}|BatchCreateParams $params
      */
     public function create(
-        array|BatchCreateParam $params,
+        array|BatchCreateParams $params,
         ?RequestOptions $requestOptions = null
     ): MessageBatch;
 
@@ -30,10 +30,10 @@ interface BatchesContract
     /**
      * @param array{
      *   afterID?: string, beforeID?: string, limit?: int
-     * }|BatchListParam $params
+     * }|BatchListParams $params
      */
     public function list(
-        array|BatchListParam $params,
+        array|BatchListParams $params,
         ?RequestOptions $requestOptions = null
     ): MessageBatch;
 

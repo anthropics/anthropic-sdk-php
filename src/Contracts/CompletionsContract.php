@@ -8,7 +8,7 @@ use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Completion;
 use Anthropic\Models\Metadata;
 use Anthropic\Models\Model\UnionMember0;
-use Anthropic\Parameters\CompletionCreateParam;
+use Anthropic\Parameters\CompletionCreateParams;
 use Anthropic\RequestOptions;
 
 interface CompletionsContract
@@ -24,10 +24,10 @@ interface CompletionsContract
      *   topK?: int,
      *   topP?: float,
      *   anthropicBeta?: list<string|UnionMember1::*>,
-     * }|CompletionCreateParam $params
+     * }|CompletionCreateParams $params
      */
     public function create(
-        array|CompletionCreateParam $params,
+        array|CompletionCreateParams $params,
         ?RequestOptions $requestOptions = null,
     ): Completion;
 }

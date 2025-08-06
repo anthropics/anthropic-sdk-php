@@ -12,10 +12,10 @@ use Anthropic\Models\ThinkingConfigEnabled;
 use Anthropic\Models\Tool;
 use Anthropic\Models\Tool\InputSchema;
 use Anthropic\Models\ToolChoiceAuto;
-use Anthropic\Parameters\Messages\BatchCreateParam;
-use Anthropic\Parameters\Messages\BatchCreateParam\Request;
-use Anthropic\Parameters\Messages\BatchCreateParam\Request\Params;
-use Anthropic\Parameters\Messages\BatchListParam;
+use Anthropic\Parameters\Messages\BatchCreateParams;
+use Anthropic\Parameters\Messages\BatchCreateParams\Request;
+use Anthropic\Parameters\Messages\BatchCreateParams\Request\Params;
+use Anthropic\Parameters\Messages\BatchListParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -47,7 +47,7 @@ final class BatchesTest extends TestCase
             ->messages
             ->batches
             ->create(
-                BatchCreateParam::new(
+                BatchCreateParams::new(
                     requests: [
                         Request::new(
                             customID: 'my-custom-id-1',
@@ -75,7 +75,7 @@ final class BatchesTest extends TestCase
             ->messages
             ->batches
             ->create(
-                BatchCreateParam::new(
+                BatchCreateParams::new(
                     requests: [
                         Request::new(
                             customID: 'my-custom-id-1',
@@ -155,7 +155,7 @@ final class BatchesTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->messages->batches->list(new BatchListParam);
+        $result = $this->client->messages->batches->list(new BatchListParams);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

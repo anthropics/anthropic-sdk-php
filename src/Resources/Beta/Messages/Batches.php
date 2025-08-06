@@ -12,13 +12,13 @@ use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Beta\Messages\DeletedMessageBatch;
 use Anthropic\Models\Beta\Messages\MessageBatch;
 use Anthropic\Models\Beta\Messages\MessageBatchIndividualResponse;
-use Anthropic\Parameters\Beta\Messages\BatchCancelParam;
-use Anthropic\Parameters\Beta\Messages\BatchCreateParam;
-use Anthropic\Parameters\Beta\Messages\BatchCreateParam\Request;
-use Anthropic\Parameters\Beta\Messages\BatchDeleteParam;
-use Anthropic\Parameters\Beta\Messages\BatchListParam;
-use Anthropic\Parameters\Beta\Messages\BatchResultsParam;
-use Anthropic\Parameters\Beta\Messages\BatchRetrieveParam;
+use Anthropic\Parameters\Beta\Messages\BatchCancelParams;
+use Anthropic\Parameters\Beta\Messages\BatchCreateParams;
+use Anthropic\Parameters\Beta\Messages\BatchCreateParams\Request;
+use Anthropic\Parameters\Beta\Messages\BatchDeleteParams;
+use Anthropic\Parameters\Beta\Messages\BatchListParams;
+use Anthropic\Parameters\Beta\Messages\BatchResultsParams;
+use Anthropic\Parameters\Beta\Messages\BatchRetrieveParams;
 use Anthropic\RequestOptions;
 
 final class Batches implements BatchesContract
@@ -34,13 +34,13 @@ final class Batches implements BatchesContract
      *
      * @param array{
      *   requests: list<Request>, anthropicBeta?: list<string|UnionMember1::*>
-     * }|BatchCreateParam $params
+     * }|BatchCreateParams $params
      */
     public function create(
-        array|BatchCreateParam $params,
+        array|BatchCreateParams $params,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
-        [$parsed, $options] = BatchCreateParam::parseRequest(
+        [$parsed, $options] = BatchCreateParams::parseRequest(
             $params,
             $requestOptions
         );
@@ -70,14 +70,14 @@ final class Batches implements BatchesContract
      *
      * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * }|BatchRetrieveParam $params
+     * }|BatchRetrieveParams $params
      */
     public function retrieve(
         string $messageBatchID,
-        array|BatchRetrieveParam $params,
+        array|BatchRetrieveParams $params,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch {
-        [$parsed, $options] = BatchRetrieveParam::parseRequest(
+        [$parsed, $options] = BatchRetrieveParams::parseRequest(
             $params,
             $requestOptions
         );
@@ -108,13 +108,13 @@ final class Batches implements BatchesContract
      *   beforeID?: string,
      *   limit?: int,
      *   anthropicBeta?: list<string|UnionMember1::*>,
-     * }|BatchListParam $params
+     * }|BatchListParams $params
      */
     public function list(
-        array|BatchListParam $params,
+        array|BatchListParams $params,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
-        [$parsed, $options] = BatchListParam::parseRequest(
+        [$parsed, $options] = BatchListParams::parseRequest(
             $params,
             $requestOptions
         );
@@ -149,14 +149,14 @@ final class Batches implements BatchesContract
      *
      * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * }|BatchDeleteParam $params
+     * }|BatchDeleteParams $params
      */
     public function delete(
         string $messageBatchID,
-        array|BatchDeleteParam $params,
+        array|BatchDeleteParams $params,
         ?RequestOptions $requestOptions = null,
     ): DeletedMessageBatch {
-        [$parsed, $options] = BatchDeleteParam::parseRequest(
+        [$parsed, $options] = BatchDeleteParams::parseRequest(
             $params,
             $requestOptions
         );
@@ -186,14 +186,14 @@ final class Batches implements BatchesContract
      *
      * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * }|BatchCancelParam $params
+     * }|BatchCancelParams $params
      */
     public function cancel(
         string $messageBatchID,
-        array|BatchCancelParam $params,
+        array|BatchCancelParams $params,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch {
-        [$parsed, $options] = BatchCancelParam::parseRequest(
+        [$parsed, $options] = BatchCancelParams::parseRequest(
             $params,
             $requestOptions
         );
@@ -223,14 +223,14 @@ final class Batches implements BatchesContract
      *
      * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * }|BatchResultsParam $params
+     * }|BatchResultsParams $params
      */
     public function results(
         string $messageBatchID,
-        array|BatchResultsParam $params,
+        array|BatchResultsParams $params,
         ?RequestOptions $requestOptions = null,
     ): MessageBatchIndividualResponse {
-        [$parsed, $options] = BatchResultsParam::parseRequest(
+        [$parsed, $options] = BatchResultsParams::parseRequest(
             $params,
             $requestOptions
         );

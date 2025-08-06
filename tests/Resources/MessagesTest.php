@@ -12,8 +12,8 @@ use Anthropic\Models\ThinkingConfigEnabled;
 use Anthropic\Models\Tool;
 use Anthropic\Models\Tool\InputSchema;
 use Anthropic\Models\ToolChoiceAuto;
-use Anthropic\Parameters\MessageCountTokensParam;
-use Anthropic\Parameters\MessageCreateParam;
+use Anthropic\Parameters\MessageCountTokensParams;
+use Anthropic\Parameters\MessageCreateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -43,7 +43,7 @@ final class MessagesTest extends TestCase
             ->client
             ->messages
             ->create(
-                MessageCreateParam::new(
+                MessageCreateParams::new(
                     maxTokens: 1024,
                     messages: [MessageParam::new(content: 'Hello, world', role: 'user')],
                     model: 'claude-sonnet-4-20250514',
@@ -61,7 +61,7 @@ final class MessagesTest extends TestCase
             ->client
             ->messages
             ->create(
-                MessageCreateParam::new(
+                MessageCreateParams::new(
                     maxTokens: 1024,
                     messages: [MessageParam::new(content: 'Hello, world', role: 'user')],
                     model: 'claude-sonnet-4-20250514',
@@ -114,7 +114,7 @@ final class MessagesTest extends TestCase
             ->client
             ->messages
             ->countTokens(
-                MessageCountTokensParam::new(
+                MessageCountTokensParams::new(
                     messages: [MessageParam::new(content: 'string', role: 'user')],
                     model: 'claude-3-7-sonnet-latest',
                 )
@@ -131,7 +131,7 @@ final class MessagesTest extends TestCase
             ->client
             ->messages
             ->countTokens(
-                MessageCountTokensParam::new(
+                MessageCountTokensParams::new(
                     messages: [MessageParam::new(content: 'string', role: 'user')],
                     model: 'claude-3-7-sonnet-latest',
                     system: [

@@ -10,9 +10,9 @@ use Anthropic\Core\Conversion;
 use Anthropic\Models\Messages\DeletedMessageBatch;
 use Anthropic\Models\Messages\MessageBatch;
 use Anthropic\Models\Messages\MessageBatchIndividualResponse;
-use Anthropic\Parameters\Messages\BatchCreateParam;
-use Anthropic\Parameters\Messages\BatchCreateParam\Request;
-use Anthropic\Parameters\Messages\BatchListParam;
+use Anthropic\Parameters\Messages\BatchCreateParams;
+use Anthropic\Parameters\Messages\BatchCreateParams\Request;
+use Anthropic\Parameters\Messages\BatchListParams;
 use Anthropic\RequestOptions;
 
 final class Batches implements BatchesContract
@@ -26,13 +26,13 @@ final class Batches implements BatchesContract
      *
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
-     * @param array{requests: list<Request>}|BatchCreateParam $params
+     * @param array{requests: list<Request>}|BatchCreateParams $params
      */
     public function create(
-        array|BatchCreateParam $params,
+        array|BatchCreateParams $params,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
-        [$parsed, $options] = BatchCreateParam::parseRequest(
+        [$parsed, $options] = BatchCreateParams::parseRequest(
             $params,
             $requestOptions
         );
@@ -73,13 +73,13 @@ final class Batches implements BatchesContract
      *
      * @param array{
      *   afterID?: string, beforeID?: string, limit?: int
-     * }|BatchListParam $params
+     * }|BatchListParams $params
      */
     public function list(
-        array|BatchListParam $params,
+        array|BatchListParams $params,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
-        [$parsed, $options] = BatchListParam::parseRequest(
+        [$parsed, $options] = BatchListParams::parseRequest(
             $params,
             $requestOptions
         );

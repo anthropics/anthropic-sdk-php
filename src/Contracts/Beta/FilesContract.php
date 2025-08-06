@@ -7,11 +7,11 @@ namespace Anthropic\Contracts\Beta;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Beta\DeletedFile;
 use Anthropic\Models\Beta\FileMetadata;
-use Anthropic\Parameters\Beta\FileDeleteParam;
-use Anthropic\Parameters\Beta\FileDownloadParam;
-use Anthropic\Parameters\Beta\FileListParam;
-use Anthropic\Parameters\Beta\FileRetrieveMetadataParam;
-use Anthropic\Parameters\Beta\FileUploadParam;
+use Anthropic\Parameters\Beta\FileDeleteParams;
+use Anthropic\Parameters\Beta\FileDownloadParams;
+use Anthropic\Parameters\Beta\FileListParams;
+use Anthropic\Parameters\Beta\FileRetrieveMetadataParams;
+use Anthropic\Parameters\Beta\FileUploadParams;
 use Anthropic\RequestOptions;
 
 interface FilesContract
@@ -22,53 +22,53 @@ interface FilesContract
      *   beforeID?: string,
      *   limit?: int,
      *   anthropicBeta?: list<string|UnionMember1::*>,
-     * }|FileListParam $params
+     * }|FileListParams $params
      */
     public function list(
-        array|FileListParam $params,
+        array|FileListParams $params,
         ?RequestOptions $requestOptions = null
     ): FileMetadata;
 
     /**
      * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * }|FileDeleteParam $params
+     * }|FileDeleteParams $params
      */
     public function delete(
         string $fileID,
-        array|FileDeleteParam $params,
+        array|FileDeleteParams $params,
         ?RequestOptions $requestOptions = null,
     ): DeletedFile;
 
     /**
      * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * }|FileDownloadParam $params
+     * }|FileDownloadParams $params
      */
     public function download(
         string $fileID,
-        array|FileDownloadParam $params,
+        array|FileDownloadParams $params,
         ?RequestOptions $requestOptions = null,
     ): string;
 
     /**
      * @param array{
      *   anthropicBeta?: list<string|UnionMember1::*>
-     * }|FileRetrieveMetadataParam $params
+     * }|FileRetrieveMetadataParams $params
      */
     public function retrieveMetadata(
         string $fileID,
-        array|FileRetrieveMetadataParam $params,
+        array|FileRetrieveMetadataParams $params,
         ?RequestOptions $requestOptions = null,
     ): FileMetadata;
 
     /**
      * @param array{
      *   file: string, anthropicBeta?: list<string|UnionMember1::*>
-     * }|FileUploadParam $params
+     * }|FileUploadParams $params
      */
     public function upload(
-        array|FileUploadParam $params,
+        array|FileUploadParams $params,
         ?RequestOptions $requestOptions = null
     ): FileMetadata;
 }
