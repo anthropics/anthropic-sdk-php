@@ -14,7 +14,7 @@ use Anthropic\Models\ToolResultBlockParam\Content;
  *   toolUseID: string,
  *   type: string,
  *   cacheControl?: CacheControlEphemeral,
- *   content?: string|list<TextBlockParam|ImageBlockParam>,
+ *   content?: string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam>,
  *   isError?: bool,
  * }
  */
@@ -34,7 +34,9 @@ final class ToolResultBlockParam implements BaseModel
     #[Api('cache_control', optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 
-    /** @var null|list<ImageBlockParam|TextBlockParam>|string $content */
+    /**
+     * @var null|list<ImageBlockParam|SearchResultBlockParam|TextBlockParam>|string $content
+     */
     #[Api(union: Content::class, optional: true)]
     public null|array|string $content;
 
@@ -52,7 +54,7 @@ final class ToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<ImageBlockParam|TextBlockParam>|string $content
+     * @param null|list<ImageBlockParam|SearchResultBlockParam|TextBlockParam>|string $content
      */
     public static function new(
         string $toolUseID,
@@ -89,7 +91,7 @@ final class ToolResultBlockParam implements BaseModel
     }
 
     /**
-     * @param list<ImageBlockParam|TextBlockParam>|string $content
+     * @param list<ImageBlockParam|SearchResultBlockParam|TextBlockParam>|string $content
      */
     public function setContent(array|string $content): self
     {

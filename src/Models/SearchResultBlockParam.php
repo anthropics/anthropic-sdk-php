@@ -10,22 +10,31 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 
 /**
- * @phpstan-type text_block_param_alias = array{
- *   text: string,
+ * @phpstan-type search_result_block_param_alias = array{
+ *   content: list<TextBlockParam>,
+ *   source: string,
+ *   title: string,
  *   type: string,
  *   cacheControl?: CacheControlEphemeral,
- *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
+ *   citations?: CitationsConfigParam,
  * }
  */
-final class TextBlockParam implements BaseModel
+final class SearchResultBlockParam implements BaseModel
 {
     use ModelTrait;
 
     #[Api]
-    public string $type = 'text';
+    public string $type = 'search_result';
+
+    /** @var list<TextBlockParam> $content */
+    #[Api(type: new ListOf(TextBlockParam::class))]
+    public array $content;
 
     #[Api]
-    public string $text;
+    public string $source;
+
+    #[Api]
+    public string $title;
 
     /**
      * Create a cache control breakpoint at this content block.
@@ -33,15 +42,8 @@ final class TextBlockParam implements BaseModel
     #[Api('cache_control', optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 
-    /**
-     * @var null|list<CitationCharLocationParam|CitationContentBlockLocationParam|CitationPageLocationParam|CitationSearchResultLocationParam|CitationWebSearchResultLocationParam> $citations
-     */
-    #[Api(
-        type: new ListOf(union: TextCitationParam::class),
-        nullable: true,
-        optional: true,
-    )]
-    public ?array $citations;
+    #[Api(optional: true)]
+    public ?CitationsConfigParam $citations;
 
     public function __construct()
     {
@@ -54,16 +56,20 @@ final class TextBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<CitationCharLocationParam|CitationContentBlockLocationParam|CitationPageLocationParam|CitationSearchResultLocationParam|CitationWebSearchResultLocationParam> $citations
+     * @param list<TextBlockParam> $content
      */
     public static function new(
-        string $text,
+        array $content,
+        string $source,
+        string $title,
         ?CacheControlEphemeral $cacheControl = null,
-        ?array $citations = null,
+        ?CitationsConfigParam $citations = null,
     ): self {
         $obj = new self;
 
-        $obj->text = $text;
+        $obj->content = $content;
+        $obj->source = $source;
+        $obj->title = $title;
 
         null !== $cacheControl && $obj->cacheControl = $cacheControl;
         null !== $citations && $obj->citations = $citations;
@@ -71,9 +77,26 @@ final class TextBlockParam implements BaseModel
         return $obj;
     }
 
-    public function setText(string $text): self
+    /**
+     * @param list<TextBlockParam> $content
+     */
+    public function setContent(array $content): self
     {
-        $this->text = $text;
+        $this->content = $content;
+
+        return $this;
+    }
+
+    public function setSource(string $source): self
+    {
+        $this->source = $source;
+
+        return $this;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }
@@ -88,10 +111,7 @@ final class TextBlockParam implements BaseModel
         return $this;
     }
 
-    /**
-     * @param null|list<CitationCharLocationParam|CitationContentBlockLocationParam|CitationPageLocationParam|CitationSearchResultLocationParam|CitationWebSearchResultLocationParam> $citations
-     */
-    public function setCitations(?array $citations): self
+    public function setCitations(CitationsConfigParam $citations): self
     {
         $this->citations = $citations;
 

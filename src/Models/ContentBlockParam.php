@@ -11,7 +11,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 /**
  * Regular text content.
  *
- * @phpstan-type content_block_param_alias = TextBlockParam|ImageBlockParam|DocumentBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam
+ * @phpstan-type content_block_param_alias = TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam
  */
 final class ContentBlockParam implements ConverterSource
 {
@@ -32,6 +32,7 @@ final class ContentBlockParam implements ConverterSource
             'text' => TextBlockParam::class,
             'image' => ImageBlockParam::class,
             'document' => DocumentBlockParam::class,
+            'search_result' => SearchResultBlockParam::class,
             'thinking' => ThinkingBlockParam::class,
             'redacted_thinking' => RedactedThinkingBlockParam::class,
             'tool_use' => ToolUseBlockParam::class,

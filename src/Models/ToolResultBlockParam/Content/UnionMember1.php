@@ -8,10 +8,11 @@ use Anthropic\Core\Concerns\Union;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Models\ImageBlockParam;
+use Anthropic\Models\SearchResultBlockParam;
 use Anthropic\Models\TextBlockParam;
 
 /**
- * @phpstan-type union_member1_alias = TextBlockParam|ImageBlockParam
+ * @phpstan-type union_member1_alias = TextBlockParam|ImageBlockParam|SearchResultBlockParam
  */
 final class UnionMember1 implements ConverterSource
 {
@@ -28,6 +29,10 @@ final class UnionMember1 implements ConverterSource
      */
     public static function variants(): array
     {
-        return ['text' => TextBlockParam::class, 'image' => ImageBlockParam::class];
+        return [
+            'text' => TextBlockParam::class,
+            'image' => ImageBlockParam::class,
+            'search_result' => SearchResultBlockParam::class,
+        ];
     }
 }

@@ -10,10 +10,11 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Models\CitationCharLocation;
 use Anthropic\Models\CitationContentBlockLocation;
 use Anthropic\Models\CitationPageLocation;
+use Anthropic\Models\CitationsSearchResultLocation;
 use Anthropic\Models\CitationsWebSearchResultLocation;
 
 /**
- * @phpstan-type citation_alias = CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation
+ * @phpstan-type citation_alias = CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation
  */
 final class Citation implements ConverterSource
 {
@@ -35,6 +36,7 @@ final class Citation implements ConverterSource
             'page_location' => CitationPageLocation::class,
             'content_block_location' => CitationContentBlockLocation::class,
             'web_search_result_location' => CitationsWebSearchResultLocation::class,
+            'search_result_location' => CitationsSearchResultLocation::class,
         ];
     }
 }

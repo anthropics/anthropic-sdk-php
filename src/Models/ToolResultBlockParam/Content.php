@@ -9,11 +9,12 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Models\ImageBlockParam;
+use Anthropic\Models\SearchResultBlockParam;
 use Anthropic\Models\TextBlockParam;
 use Anthropic\Models\ToolResultBlockParam\Content\UnionMember1;
 
 /**
- * @phpstan-type content_alias = string|list<TextBlockParam|ImageBlockParam>
+ * @phpstan-type content_alias = string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam>
  */
 final class Content implements ConverterSource
 {

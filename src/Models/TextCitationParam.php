@@ -9,7 +9,7 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * @phpstan-type text_citation_param_alias = CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam
+ * @phpstan-type text_citation_param_alias = CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam
  */
 final class TextCitationParam implements ConverterSource
 {
@@ -31,6 +31,7 @@ final class TextCitationParam implements ConverterSource
             'page_location' => CitationPageLocationParam::class,
             'content_block_location' => CitationContentBlockLocationParam::class,
             'web_search_result_location' => CitationWebSearchResultLocationParam::class,
+            'search_result_location' => CitationSearchResultLocationParam::class,
         ];
     }
 }

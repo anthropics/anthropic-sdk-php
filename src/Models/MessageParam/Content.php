@@ -12,6 +12,7 @@ use Anthropic\Models\ContentBlockParam;
 use Anthropic\Models\DocumentBlockParam;
 use Anthropic\Models\ImageBlockParam;
 use Anthropic\Models\RedactedThinkingBlockParam;
+use Anthropic\Models\SearchResultBlockParam;
 use Anthropic\Models\ServerToolUseBlockParam;
 use Anthropic\Models\TextBlockParam;
 use Anthropic\Models\ThinkingBlockParam;
@@ -20,7 +21,7 @@ use Anthropic\Models\ToolUseBlockParam;
 use Anthropic\Models\WebSearchToolResultBlockParam;
 
 /**
- * @phpstan-type content_alias = string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam>
+ * @phpstan-type content_alias = string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam>
  */
 final class Content implements ConverterSource
 {

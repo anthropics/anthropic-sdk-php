@@ -11,7 +11,7 @@ use Anthropic\Models\CitationsDelta\Citation;
 
 /**
  * @phpstan-type citations_delta_alias = array{
- *   citation: CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation,
+ *   citation: CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation,
  *   type: string,
  * }
  */
@@ -23,7 +23,7 @@ final class CitationsDelta implements BaseModel
     public string $type = 'citations_delta';
 
     #[Api(union: Citation::class)]
-    public CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsWebSearchResultLocation $citation;
+    public CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsSearchResultLocation|CitationsWebSearchResultLocation $citation;
 
     public function __construct()
     {
@@ -37,7 +37,7 @@ final class CitationsDelta implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function new(
-        CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsWebSearchResultLocation $citation,
+        CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsSearchResultLocation|CitationsWebSearchResultLocation $citation,
     ): self {
         $obj = new self;
 
@@ -47,7 +47,7 @@ final class CitationsDelta implements BaseModel
     }
 
     public function setCitation(
-        CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsWebSearchResultLocation $citation,
+        CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsSearchResultLocation|CitationsWebSearchResultLocation $citation,
     ): self {
         $this->citation = $citation;
 
