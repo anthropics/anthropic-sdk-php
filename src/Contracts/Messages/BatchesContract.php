@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts\Messages;
 
+use Anthropic\Models\Messages\BatchCreateParams;
+use Anthropic\Models\Messages\BatchCreateParams\Request;
+use Anthropic\Models\Messages\BatchListParams;
 use Anthropic\Models\Messages\DeletedMessageBatch;
 use Anthropic\Models\Messages\MessageBatch;
 use Anthropic\Models\Messages\MessageBatchIndividualResponse;
-use Anthropic\Parameters\Messages\BatchCreateParams;
-use Anthropic\Parameters\Messages\BatchCreateParams\Request;
-use Anthropic\Parameters\Messages\BatchListParams;
 use Anthropic\RequestOptions;
 
 interface BatchesContract

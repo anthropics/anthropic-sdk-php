@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Anthropic\Contracts;
 
 use Anthropic\Models\Message;
+use Anthropic\Models\MessageCountTokensParams;
+use Anthropic\Models\MessageCreateParams;
+use Anthropic\Models\MessageCreateParams\ServiceTier;
 use Anthropic\Models\MessageParam;
 use Anthropic\Models\MessageTokensCount;
 use Anthropic\Models\Metadata;
@@ -22,9 +25,6 @@ use Anthropic\Models\ToolTextEditor20250124;
 use Anthropic\Models\ToolTextEditor20250429;
 use Anthropic\Models\ToolTextEditor20250728;
 use Anthropic\Models\WebSearchTool20250305;
-use Anthropic\Parameters\MessageCountTokensParams;
-use Anthropic\Parameters\MessageCreateParams;
-use Anthropic\Parameters\MessageCreateParams\ServiceTier;
 use Anthropic\RequestOptions;
 
 interface MessagesContract

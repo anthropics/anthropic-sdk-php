@@ -7,12 +7,12 @@ namespace Anthropic\Resources\Messages;
 use Anthropic\Client;
 use Anthropic\Contracts\Messages\BatchesContract;
 use Anthropic\Core\Conversion;
+use Anthropic\Models\Messages\BatchCreateParams;
+use Anthropic\Models\Messages\BatchCreateParams\Request;
+use Anthropic\Models\Messages\BatchListParams;
 use Anthropic\Models\Messages\DeletedMessageBatch;
 use Anthropic\Models\Messages\MessageBatch;
 use Anthropic\Models\Messages\MessageBatchIndividualResponse;
-use Anthropic\Parameters\Messages\BatchCreateParams;
-use Anthropic\Parameters\Messages\BatchCreateParams\Request;
-use Anthropic\Parameters\Messages\BatchListParams;
 use Anthropic\RequestOptions;
 
 final class Batches implements BatchesContract

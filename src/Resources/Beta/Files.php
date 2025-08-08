@@ -10,12 +10,12 @@ use Anthropic\Core\Conversion;
 use Anthropic\Core\Util;
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Beta\DeletedFile;
+use Anthropic\Models\Beta\FileDeleteParams;
+use Anthropic\Models\Beta\FileDownloadParams;
+use Anthropic\Models\Beta\FileListParams;
 use Anthropic\Models\Beta\FileMetadata;
-use Anthropic\Parameters\Beta\FileDeleteParams;
-use Anthropic\Parameters\Beta\FileDownloadParams;
-use Anthropic\Parameters\Beta\FileListParams;
-use Anthropic\Parameters\Beta\FileRetrieveMetadataParams;
-use Anthropic\Parameters\Beta\FileUploadParams;
+use Anthropic\Models\Beta\FileRetrieveMetadataParams;
+use Anthropic\Models\Beta\FileUploadParams;
 use Anthropic\RequestOptions;
 
 final class Files implements FilesContract

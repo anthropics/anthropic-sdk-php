@@ -32,10 +32,10 @@ use Anthropic\Models\Beta\BetaToolTextEditor20250124;
 use Anthropic\Models\Beta\BetaToolTextEditor20250429;
 use Anthropic\Models\Beta\BetaToolTextEditor20250728;
 use Anthropic\Models\Beta\BetaWebSearchTool20250305;
+use Anthropic\Models\Beta\MessageCountTokensParams;
+use Anthropic\Models\Beta\MessageCreateParams;
+use Anthropic\Models\Beta\MessageCreateParams\ServiceTier;
 use Anthropic\Models\Model\UnionMember0;
-use Anthropic\Parameters\Beta\MessageCountTokensParams;
-use Anthropic\Parameters\Beta\MessageCreateParams;
-use Anthropic\Parameters\Beta\MessageCreateParams\ServiceTier;
 use Anthropic\RequestOptions;
 use Anthropic\Resources\Beta\Messages\Batches;
 

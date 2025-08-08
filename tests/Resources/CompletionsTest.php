@@ -3,8 +3,8 @@
 namespace Tests\Resources;
 
 use Anthropic\Client;
+use Anthropic\Models\CompletionCreateParams;
 use Anthropic\Models\Metadata;
-use Anthropic\Parameters\CompletionCreateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

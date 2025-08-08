@@ -6,9 +6,9 @@ namespace Anthropic\Contracts;
 
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Completion;
+use Anthropic\Models\CompletionCreateParams;
 use Anthropic\Models\Metadata;
 use Anthropic\Models\Model\UnionMember0;
-use Anthropic\Parameters\CompletionCreateParams;
 use Anthropic\RequestOptions;
 
 interface CompletionsContract

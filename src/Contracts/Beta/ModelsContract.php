@@ -6,8 +6,8 @@ namespace Anthropic\Contracts\Beta;
 
 use Anthropic\Models\AnthropicBeta\UnionMember1;
 use Anthropic\Models\Beta\BetaModelInfo;
-use Anthropic\Parameters\Beta\ModelListParams;
-use Anthropic\Parameters\Beta\ModelRetrieveParams;
+use Anthropic\Models\Beta\ModelListParams;
+use Anthropic\Models\Beta\ModelRetrieveParams;
 use Anthropic\RequestOptions;
 
 interface ModelsContract

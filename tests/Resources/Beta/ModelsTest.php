@@ -3,8 +3,8 @@
 namespace Tests\Resources\Beta;
 
 use Anthropic\Client;
-use Anthropic\Parameters\Beta\ModelListParams;
-use Anthropic\Parameters\Beta\ModelRetrieveParams;
+use Anthropic\Models\Beta\ModelListParams;
+use Anthropic\Models\Beta\ModelRetrieveParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
