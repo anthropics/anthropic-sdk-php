@@ -60,7 +60,7 @@ final class FilesTest extends TestCase
     public function testDownload(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: test server currently has no support for method content-type');
+            $this->markTestSkipped("Prism doesn't support application/binary responses");
         }
 
         $result = $this

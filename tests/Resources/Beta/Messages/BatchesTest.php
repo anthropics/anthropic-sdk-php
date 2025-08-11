@@ -230,7 +230,7 @@ final class BatchesTest extends TestCase
     public function testResults(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped("Prism doesn't support JSONL responses yet");
+            $this->markTestSkipped("Prism doesn't support application/x-jsonl responses");
         }
 
         $result = $this
