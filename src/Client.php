@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic;
 
+use Anthropic\Beta\BetaService;
+use Anthropic\Completions\CompletionsService;
 use Anthropic\Core\BaseClient;
-use Anthropic\Resources\Beta;
-use Anthropic\Resources\Completions;
-use Anthropic\Resources\Messages;
-use Anthropic\Resources\Models;
+use Anthropic\Messages\MessagesService;
+use Anthropic\Models\ModelsService;
 
 class Client extends BaseClient
 {
@@ -16,13 +16,13 @@ class Client extends BaseClient
 
     public string $authToken;
 
-    public Completions $completions;
+    public CompletionsService $completions;
 
-    public Messages $messages;
+    public MessagesService $messages;
 
-    public Models $models;
+    public ModelsService $models;
 
-    public Beta $beta;
+    public BetaService $beta;
 
     public function __construct(
         ?string $apiKey = null,
@@ -46,10 +46,10 @@ class Client extends BaseClient
             options: new RequestOptions,
         );
 
-        $this->completions = new Completions($this);
-        $this->messages = new Messages($this);
-        $this->models = new Models($this);
-        $this->beta = new Beta($this);
+        $this->completions = new CompletionsService($this);
+        $this->messages = new MessagesService($this);
+        $this->models = new ModelsService($this);
+        $this->beta = new BetaService($this);
     }
 
     /** @return array<string, string> */

@@ -2,12 +2,12 @@
 
 namespace Tests\Resources\Beta;
 
+use Anthropic\Beta\Files\FileDeleteParams;
+use Anthropic\Beta\Files\FileDownloadParams;
+use Anthropic\Beta\Files\FileListParams;
+use Anthropic\Beta\Files\FileRetrieveMetadataParams;
+use Anthropic\Beta\Files\FileUploadParams;
 use Anthropic\Client;
-use Anthropic\Models\Beta\FileDeleteParams;
-use Anthropic\Models\Beta\FileDownloadParams;
-use Anthropic\Models\Beta\FileListParams;
-use Anthropic\Models\Beta\FileRetrieveMetadataParams;
-use Anthropic\Models\Beta\FileUploadParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

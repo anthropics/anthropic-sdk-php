@@ -37,7 +37,7 @@ To use this package, install via Composer by adding the following to your applic
 <?php
 
 use Anthropic\Client;
-use Anthropic\Models\MessageParam;
+use Anthropic\Messages\MessageParam;
 
 $client = new Client(
   apiKey: getenv("ANTHROPIC_API_KEY") ?: "my-anthropic-api-key"
@@ -62,7 +62,7 @@ When the library is unable to connect to the API, or if the API returns a non-su
 <?php
 
 use Anthropic\Errors\APIConnectionError;
-use Anthropic\Models\MessageParam;
+use Anthropic\Messages\MessageParam;
 
 try {
     $Messages = $client->messages->create(
@@ -113,7 +113,7 @@ You can use the `max_retries` option to configure or disable this:
 <?php
 
 use Anthropic\Client;
-use Anthropic\Models\MessageParam;
+use Anthropic\Messages\MessageParam;
 
 // Configure the default for all requests:
 $client = new Client(maxRetries: 0);
@@ -142,7 +142,7 @@ Note: the `extra_` parameters of the same name overrides the documented paramete
 ```php
 <?php
 
-use Anthropic\Models\MessageParam;
+use Anthropic\Messages\MessageParam;
 
 $message = $client->messages->create(
   [

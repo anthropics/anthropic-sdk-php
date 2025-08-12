@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
+use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\AnthropicBeta\UnionMember1;
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model as ModelTrait;
+use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Models\AnthropicBeta\UnionMember1;
 
 /**
  * List available models.
@@ -25,7 +26,7 @@ use Anthropic\Models\AnthropicBeta\UnionMember1;
  */
 final class ModelListParams implements BaseModel
 {
-    use ModelTrait;
+    use Model;
     use Params;
 
     /**

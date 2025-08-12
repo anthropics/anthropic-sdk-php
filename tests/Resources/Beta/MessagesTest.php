@@ -2,20 +2,20 @@
 
 namespace Tests\Resources\Beta;
 
+use Anthropic\Beta\Messages\BetaCacheControlEphemeral;
+use Anthropic\Beta\Messages\BetaCitationCharLocationParam;
+use Anthropic\Beta\Messages\BetaMessageParam;
+use Anthropic\Beta\Messages\BetaMetadata;
+use Anthropic\Beta\Messages\BetaRequestMCPServerToolConfiguration;
+use Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition;
+use Anthropic\Beta\Messages\BetaTextBlockParam;
+use Anthropic\Beta\Messages\BetaThinkingConfigEnabled;
+use Anthropic\Beta\Messages\BetaTool;
+use Anthropic\Beta\Messages\BetaTool\InputSchema;
+use Anthropic\Beta\Messages\BetaToolChoiceAuto;
+use Anthropic\Beta\Messages\MessageCountTokensParams;
+use Anthropic\Beta\Messages\MessageCreateParams;
 use Anthropic\Client;
-use Anthropic\Models\Beta\BetaCacheControlEphemeral;
-use Anthropic\Models\Beta\BetaCitationCharLocationParam;
-use Anthropic\Models\Beta\BetaMessageParam;
-use Anthropic\Models\Beta\BetaMetadata;
-use Anthropic\Models\Beta\BetaRequestMCPServerToolConfiguration;
-use Anthropic\Models\Beta\BetaRequestMCPServerURLDefinition;
-use Anthropic\Models\Beta\BetaTextBlockParam;
-use Anthropic\Models\Beta\BetaThinkingConfigEnabled;
-use Anthropic\Models\Beta\BetaTool;
-use Anthropic\Models\Beta\BetaTool\InputSchema;
-use Anthropic\Models\Beta\BetaToolChoiceAuto;
-use Anthropic\Models\Beta\MessageCountTokensParams;
-use Anthropic\Models\Beta\MessageCreateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

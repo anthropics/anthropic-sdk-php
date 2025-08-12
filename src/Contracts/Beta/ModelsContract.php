@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts\Beta;
 
-use Anthropic\Models\AnthropicBeta\UnionMember1;
-use Anthropic\Models\Beta\BetaModelInfo;
-use Anthropic\Models\Beta\ModelListParams;
-use Anthropic\Models\Beta\ModelRetrieveParams;
+use Anthropic\Beta\AnthropicBeta\UnionMember1;
+use Anthropic\Beta\Models\BetaModelInfo;
+use Anthropic\Beta\Models\ModelListParams;
+use Anthropic\Beta\Models\ModelRetrieveParams;
 use Anthropic\RequestOptions;
 
 interface ModelsContract

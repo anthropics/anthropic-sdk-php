@@ -2,9 +2,9 @@
 
 namespace Tests\Resources\Beta;
 
+use Anthropic\Beta\Models\ModelListParams;
+use Anthropic\Beta\Models\ModelRetrieveParams;
 use Anthropic\Client;
-use Anthropic\Models\Beta\ModelListParams;
-use Anthropic\Models\Beta\ModelRetrieveParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

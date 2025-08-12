@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts;
 
-use Anthropic\Models\AnthropicBeta\UnionMember1;
+use Anthropic\Beta\AnthropicBeta\UnionMember1;
 use Anthropic\Models\ModelInfo;
 use Anthropic\Models\ModelListParams;
 use Anthropic\Models\ModelRetrieveParams;

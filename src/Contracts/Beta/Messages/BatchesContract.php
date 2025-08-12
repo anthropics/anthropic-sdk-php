@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts\Beta\Messages;
 
-use Anthropic\Models\AnthropicBeta\UnionMember1;
-use Anthropic\Models\Beta\Messages\BatchCancelParams;
-use Anthropic\Models\Beta\Messages\BatchCreateParams;
-use Anthropic\Models\Beta\Messages\BatchCreateParams\Request;
-use Anthropic\Models\Beta\Messages\BatchDeleteParams;
-use Anthropic\Models\Beta\Messages\BatchListParams;
-use Anthropic\Models\Beta\Messages\BatchResultsParams;
-use Anthropic\Models\Beta\Messages\BatchRetrieveParams;
-use Anthropic\Models\Beta\Messages\DeletedMessageBatch;
-use Anthropic\Models\Beta\Messages\MessageBatch;
-use Anthropic\Models\Beta\Messages\MessageBatchIndividualResponse;
+use Anthropic\Beta\AnthropicBeta\UnionMember1;
+use Anthropic\Beta\Messages\Batches\BatchCancelParams;
+use Anthropic\Beta\Messages\Batches\BatchCreateParams;
+use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request;
+use Anthropic\Beta\Messages\Batches\BatchDeleteParams;
+use Anthropic\Beta\Messages\Batches\BatchListParams;
+use Anthropic\Beta\Messages\Batches\BatchResultsParams;
+use Anthropic\Beta\Messages\Batches\BatchRetrieveParams;
+use Anthropic\Beta\Messages\Batches\DeletedMessageBatch;
+use Anthropic\Beta\Messages\Batches\MessageBatch;
+use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\RequestOptions;
 
 interface BatchesContract
