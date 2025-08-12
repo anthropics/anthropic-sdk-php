@@ -42,27 +42,21 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this
-            ->client
-            ->messages
-            ->batches
-            ->create(
-                BatchCreateParams::new(
-                    requests: [
-                        Request::new(
-                            customID: 'my-custom-id-1',
-                            params: Params::new(
-                                maxTokens: 1024,
-                                messages: [
-                                    MessageParam::new(content: 'Hello, world', role: 'user'),
-                                ],
-                                model: 'claude-sonnet-4-20250514',
-                            ),
-                        ),
-                    ],
-                )
-            )
-        ;
+        $params = BatchCreateParams::new(
+            requests: [
+                Request::new(
+                    customID: 'my-custom-id-1',
+                    params: Params::new(
+                        maxTokens: 1024,
+                        messages: [
+                            MessageParam::new(content: 'Hello, world', role: 'user'),
+                        ],
+                        model: 'claude-sonnet-4-20250514',
+                    ),
+                ),
+            ],
+        );
+        $result = $this->client->messages->batches->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -70,72 +64,64 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this
-            ->client
-            ->messages
-            ->batches
-            ->create(
-                BatchCreateParams::new(
-                    requests: [
-                        Request::new(
-                            customID: 'my-custom-id-1',
-                            params: Params::new(
-                                maxTokens: 1024,
-                                messages: [
-                                    MessageParam::new(content: 'Hello, world', role: 'user'),
-                                ],
-                                model: 'claude-sonnet-4-20250514',
-                            )
-                                ->setMetadata(
-                                    (new Metadata)->setUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b')
-                                )
-                                ->setServiceTier('auto')
-                                ->setStopSequences(['string'])
-                                ->setStream(true)
-                                ->setSystem(
-                                    [
-                                        TextBlockParam::new(text: "Today's date is 2024-06-01.")
-                                            ->setCacheControl(new CacheControlEphemeral)
-                                            ->setCitations(
-                                                [
-                                                    CitationCharLocationParam::new(
-                                                        citedText: 'cited_text',
-                                                        documentIndex: 0,
-                                                        documentTitle: 'x',
-                                                        endCharIndex: 0,
-                                                        startCharIndex: 0,
-                                                    ),
-                                                ],
+        $params = BatchCreateParams::new(
+            requests: [
+                Request::new(
+                    customID: 'my-custom-id-1',
+                    params: Params::new(
+                        maxTokens: 1024,
+                        messages: [
+                            MessageParam::new(content: 'Hello, world', role: 'user'),
+                        ],
+                        model: 'claude-sonnet-4-20250514',
+                    )
+                        ->setMetadata(
+                            (new Metadata)->setUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b')
+                        )
+                        ->setServiceTier('auto')
+                        ->setStopSequences(['string'])
+                        ->setStream(true)
+                        ->setSystem(
+                            [
+                                TextBlockParam::new(text: "Today's date is 2024-06-01.")
+                                    ->setCacheControl(new CacheControlEphemeral)
+                                    ->setCitations(
+                                        [
+                                            CitationCharLocationParam::new(
+                                                citedText: 'cited_text',
+                                                documentIndex: 0,
+                                                documentTitle: 'x',
+                                                endCharIndex: 0,
+                                                startCharIndex: 0,
                                             ),
-                                    ],
+                                        ],
+                                    ),
+                            ],
+                        )
+                        ->setTemperature(1)
+                        ->setThinking(ThinkingConfigEnabled::new(budgetTokens: 1024))
+                        ->setToolChoice(
+                            (new ToolChoiceAuto)->setDisableParallelToolUse(true)
+                        )
+                        ->setTools(
+                            [
+                                Tool::new(
+                                    inputSchema: (new InputSchema)
+                                        ->setProperties((object) [])
+                                        ->setRequired(['location']),
+                                    name: 'name',
                                 )
-                                ->setTemperature(1)
-                                ->setThinking(ThinkingConfigEnabled::new(budgetTokens: 1024))
-                                ->setToolChoice(
-                                    (new ToolChoiceAuto)->setDisableParallelToolUse(true)
-                                )
-                                ->setTools(
-                                    [
-                                        Tool::new(
-                                            inputSchema: (new InputSchema)
-                                                ->setProperties((object) [])
-                                                ->setRequired(['location']),
-                                            name: 'name',
-                                        )
-                                            ->setCacheControl(new CacheControlEphemeral)
-                                            ->setDescription(
-                                                'Get the current weather in a given location'
-                                            )
-                                            ->setType('custom'),
-                                    ],
-                                )
-                                ->setTopK(5)
-                                ->setTopP(0.7),
-                        ),
-                    ],
-                )
-            )
-        ;
+                                    ->setCacheControl(new CacheControlEphemeral)
+                                    ->setDescription('Get the current weather in a given location')
+                                    ->setType('custom'),
+                            ],
+                        )
+                        ->setTopK(5)
+                        ->setTopP(0.7),
+                ),
+            ],
+        );
+        $result = $this->client->messages->batches->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -155,7 +141,8 @@ final class BatchesTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->messages->batches->list(new BatchListParams);
+        $params = (new BatchListParams);
+        $result = $this->client->messages->batches->list($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

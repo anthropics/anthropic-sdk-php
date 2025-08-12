@@ -48,28 +48,21 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this
-            ->client
-            ->beta
-            ->messages
-            ->batches
-            ->create(
-                BatchCreateParams::new(
-                    requests: [
-                        Request::new(
-                            customID: 'my-custom-id-1',
-                            params: Params::new(
-                                maxTokens: 1024,
-                                messages: [
-                                    BetaMessageParam::new(content: 'Hello, world', role: 'user'),
-                                ],
-                                model: 'claude-sonnet-4-20250514',
-                            ),
-                        ),
-                    ],
-                )
-            )
-        ;
+        $params = BatchCreateParams::new(
+            requests: [
+                Request::new(
+                    customID: 'my-custom-id-1',
+                    params: Params::new(
+                        maxTokens: 1024,
+                        messages: [
+                            BetaMessageParam::new(content: 'Hello, world', role: 'user'),
+                        ],
+                        model: 'claude-sonnet-4-20250514',
+                    ),
+                ),
+            ],
+        );
+        $result = $this->client->beta->messages->batches->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -77,91 +70,78 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this
-            ->client
-            ->beta
-            ->messages
-            ->batches
-            ->create(
-                BatchCreateParams::new(
-                    requests: [
-                        Request::new(
-                            customID: 'my-custom-id-1',
-                            params: Params::new(
-                                maxTokens: 1024,
-                                messages: [
-                                    BetaMessageParam::new(content: 'Hello, world', role: 'user'),
-                                ],
-                                model: 'claude-sonnet-4-20250514',
-                            )
-                                ->setContainer('container')
-                                ->setMCPServers(
-                                    [
-                                        BetaRequestMCPServerURLDefinition::new(name: 'name', url: 'url')
-                                            ->setAuthorizationToken('authorization_token')
-                                            ->setToolConfiguration(
-                                                (new BetaRequestMCPServerToolConfiguration)
-                                                    ->setAllowedTools(['string'])
-                                                    ->setEnabled(true),
+        $params = BatchCreateParams::new(
+            requests: [
+                Request::new(
+                    customID: 'my-custom-id-1',
+                    params: Params::new(
+                        maxTokens: 1024,
+                        messages: [
+                            BetaMessageParam::new(content: 'Hello, world', role: 'user'),
+                        ],
+                        model: 'claude-sonnet-4-20250514',
+                    )
+                        ->setContainer('container')
+                        ->setMCPServers(
+                            [
+                                BetaRequestMCPServerURLDefinition::new(name: 'name', url: 'url')
+                                    ->setAuthorizationToken('authorization_token')
+                                    ->setToolConfiguration(
+                                        (new BetaRequestMCPServerToolConfiguration)
+                                            ->setAllowedTools(['string'])
+                                            ->setEnabled(true),
+                                    ),
+                            ],
+                        )
+                        ->setMetadata(
+                            (new BetaMetadata)
+                                ->setUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
+                        )
+                        ->setServiceTier('auto')
+                        ->setStopSequences(['string'])
+                        ->setStream(true)
+                        ->setSystem(
+                            [
+                                BetaTextBlockParam::new(text: "Today's date is 2024-06-01.")
+                                    ->setCacheControl((new BetaCacheControlEphemeral)->setTTL('5m'))
+                                    ->setCitations(
+                                        [
+                                            BetaCitationCharLocationParam::new(
+                                                citedText: 'cited_text',
+                                                documentIndex: 0,
+                                                documentTitle: 'x',
+                                                endCharIndex: 0,
+                                                startCharIndex: 0,
                                             ),
-                                    ],
+                                        ],
+                                    ),
+                            ],
+                        )
+                        ->setTemperature(1)
+                        ->setThinking(BetaThinkingConfigEnabled::new(budgetTokens: 1024))
+                        ->setToolChoice(
+                            (new BetaToolChoiceAuto)->setDisableParallelToolUse(true)
+                        )
+                        ->setTools(
+                            [
+                                BetaTool::new(
+                                    inputSchema: (new InputSchema)
+                                        ->setProperties((object) [])
+                                        ->setRequired(['location']),
+                                    name: 'name',
                                 )
-                                ->setMetadata(
-                                    (new BetaMetadata)
-                                        ->setUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
-                                )
-                                ->setServiceTier('auto')
-                                ->setStopSequences(['string'])
-                                ->setStream(true)
-                                ->setSystem(
-                                    [
-                                        BetaTextBlockParam::new(text: "Today's date is 2024-06-01.")
-                                            ->setCacheControl(
-                                                (new BetaCacheControlEphemeral)->setTTL('5m')
-                                            )
-                                            ->setCitations(
-                                                [
-                                                    BetaCitationCharLocationParam::new(
-                                                        citedText: 'cited_text',
-                                                        documentIndex: 0,
-                                                        documentTitle: 'x',
-                                                        endCharIndex: 0,
-                                                        startCharIndex: 0,
-                                                    ),
-                                                ],
-                                            ),
-                                    ],
-                                )
-                                ->setTemperature(1)
-                                ->setThinking(BetaThinkingConfigEnabled::new(budgetTokens: 1024))
-                                ->setToolChoice(
-                                    (new BetaToolChoiceAuto)->setDisableParallelToolUse(true)
-                                )
-                                ->setTools(
-                                    [
-                                        BetaTool::new(
-                                            inputSchema: (new InputSchema)
-                                                ->setProperties((object) [])
-                                                ->setRequired(['location']),
-                                            name: 'name',
-                                        )
-                                            ->setCacheControl(
-                                                (new BetaCacheControlEphemeral)->setTTL('5m')
-                                            )
-                                            ->setDescription(
-                                                'Get the current weather in a given location'
-                                            )
-                                            ->setType('custom'),
-                                    ],
-                                )
-                                ->setTopK(5)
-                                ->setTopP(0.7),
-                        ),
-                    ],
-                    anthropicBeta: ['string'],
-                )
-            )
-        ;
+                                    ->setCacheControl((new BetaCacheControlEphemeral)->setTTL('5m'))
+                                    ->setDescription('Get the current weather in a given location')
+                                    ->setType('custom'),
+                            ],
+                        )
+                        ->setTopK(5)
+                        ->setTopP(0.7),
+                ),
+            ],
+            anthropicBeta: ['string'],
+        );
+        $result = $this->client->beta->messages->batches->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -169,12 +149,13 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
+        $params = (new BatchRetrieveParams);
         $result = $this
             ->client
             ->beta
             ->messages
             ->batches
-            ->retrieve('message_batch_id', new BatchRetrieveParams)
+            ->retrieve('message_batch_id', $params)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -187,13 +168,8 @@ final class BatchesTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this
-            ->client
-            ->beta
-            ->messages
-            ->batches
-            ->list(new BatchListParams)
-        ;
+        $params = (new BatchListParams);
+        $result = $this->client->beta->messages->batches->list($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -201,12 +177,13 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
+        $params = (new BatchDeleteParams);
         $result = $this
             ->client
             ->beta
             ->messages
             ->batches
-            ->delete('message_batch_id', new BatchDeleteParams)
+            ->delete('message_batch_id', $params)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -215,12 +192,13 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCancel(): void
     {
+        $params = (new BatchCancelParams);
         $result = $this
             ->client
             ->beta
             ->messages
             ->batches
-            ->cancel('message_batch_id', new BatchCancelParams)
+            ->cancel('message_batch_id', $params)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -233,12 +211,13 @@ final class BatchesTest extends TestCase
             $this->markTestSkipped("Prism doesn't support application/x-jsonl responses");
         }
 
+        $params = (new BatchResultsParams);
         $result = $this
             ->client
             ->beta
             ->messages
             ->batches
-            ->results('message_batch_id', new BatchResultsParams)
+            ->results('message_batch_id', $params)
         ;
 
         $this->assertTrue(true); // @phpstan-ignore-line

@@ -31,12 +31,8 @@ final class ModelsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this
-            ->client
-            ->beta
-            ->models
-            ->retrieve('model_id', new ModelRetrieveParams)
-        ;
+        $params = (new ModelRetrieveParams);
+        $result = $this->client->beta->models->retrieve('model_id', $params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -48,7 +44,8 @@ final class ModelsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->beta->models->list(new ModelListParams);
+        $params = (new ModelListParams);
+        $result = $this->client->beta->models->list($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

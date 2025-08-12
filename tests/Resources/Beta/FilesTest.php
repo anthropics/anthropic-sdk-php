@@ -38,7 +38,8 @@ final class FilesTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->beta->files->list(new FileListParams);
+        $params = (new FileListParams);
+        $result = $this->client->beta->files->list($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -46,12 +47,8 @@ final class FilesTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $result = $this
-            ->client
-            ->beta
-            ->files
-            ->delete('file_id', new FileDeleteParams)
-        ;
+        $params = (new FileDeleteParams);
+        $result = $this->client->beta->files->delete('file_id', $params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -63,12 +60,8 @@ final class FilesTest extends TestCase
             $this->markTestSkipped("Prism doesn't support application/binary responses");
         }
 
-        $result = $this
-            ->client
-            ->beta
-            ->files
-            ->download('file_id', new FileDownloadParams)
-        ;
+        $params = (new FileDownloadParams);
+        $result = $this->client->beta->files->download('file_id', $params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -76,12 +69,8 @@ final class FilesTest extends TestCase
     #[Test]
     public function testRetrieveMetadata(): void
     {
-        $result = $this
-            ->client
-            ->beta
-            ->files
-            ->retrieveMetadata('file_id', new FileRetrieveMetadataParams)
-        ;
+        $params = (new FileRetrieveMetadataParams);
+        $result = $this->client->beta->files->retrieveMetadata('file_id', $params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -89,12 +78,8 @@ final class FilesTest extends TestCase
     #[Test]
     public function testUpload(): void
     {
-        $result = $this
-            ->client
-            ->beta
-            ->files
-            ->upload(FileUploadParams::new(file: 'file'))
-        ;
+        $params = FileUploadParams::new(file: 'file');
+        $result = $this->client->beta->files->upload($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -102,12 +87,8 @@ final class FilesTest extends TestCase
     #[Test]
     public function testUploadWithOptionalParams(): void
     {
-        $result = $this
-            ->client
-            ->beta
-            ->files
-            ->upload(FileUploadParams::new(file: 'file', anthropicBeta: ['string']))
-        ;
+        $params = FileUploadParams::new(file: 'file', anthropicBeta: ['string']);
+        $result = $this->client->beta->files->upload($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

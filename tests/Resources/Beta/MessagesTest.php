@@ -41,20 +41,12 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this
-            ->client
-            ->beta
-            ->messages
-            ->create(
-                MessageCreateParams::new(
-                    maxTokens: 1024,
-                    messages: [
-                        BetaMessageParam::new(content: 'Hello, world', role: 'user'),
-                    ],
-                    model: 'claude-sonnet-4-20250514',
-                )
-            )
-        ;
+        $params = MessageCreateParams::new(
+            maxTokens: 1024,
+            messages: [BetaMessageParam::new(content: 'Hello, world', role: 'user')],
+            model: 'claude-sonnet-4-20250514',
+        );
+        $result = $this->client->beta->messages->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -62,66 +54,58 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this
-            ->client
-            ->beta
-            ->messages
-            ->create(
-                MessageCreateParams::new(
-                    maxTokens: 1024,
-                    messages: [
-                        BetaMessageParam::new(content: 'Hello, world', role: 'user'),
-                    ],
-                    model: 'claude-sonnet-4-20250514',
-                    container: 'container',
-                    mcpServers: [
-                        BetaRequestMCPServerURLDefinition::new(name: 'name', url: 'url')
-                            ->setAuthorizationToken('authorization_token')
-                            ->setToolConfiguration(
-                                (new BetaRequestMCPServerToolConfiguration)
-                                    ->setAllowedTools(['string'])
-                                    ->setEnabled(true),
+        $params = MessageCreateParams::new(
+            maxTokens: 1024,
+            messages: [BetaMessageParam::new(content: 'Hello, world', role: 'user')],
+            model: 'claude-sonnet-4-20250514',
+            container: 'container',
+            mcpServers: [
+                BetaRequestMCPServerURLDefinition::new(name: 'name', url: 'url')
+                    ->setAuthorizationToken('authorization_token')
+                    ->setToolConfiguration(
+                        (new BetaRequestMCPServerToolConfiguration)
+                            ->setAllowedTools(['string'])
+                            ->setEnabled(true),
+                    ),
+            ],
+            metadata: (new BetaMetadata)
+                ->setUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
+            serviceTier: 'auto',
+            stopSequences: ['string'],
+            system: [
+                BetaTextBlockParam::new(text: "Today's date is 2024-06-01.")
+                    ->setCacheControl((new BetaCacheControlEphemeral)->setTTL('5m'))
+                    ->setCitations(
+                        [
+                            BetaCitationCharLocationParam::new(
+                                citedText: 'cited_text',
+                                documentIndex: 0,
+                                documentTitle: 'x',
+                                endCharIndex: 0,
+                                startCharIndex: 0,
                             ),
-                    ],
-                    metadata: (new BetaMetadata)
-                        ->setUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
-                    serviceTier: 'auto',
-                    stopSequences: ['string'],
-                    system: [
-                        BetaTextBlockParam::new(text: "Today's date is 2024-06-01.")
-                            ->setCacheControl((new BetaCacheControlEphemeral)->setTTL('5m'))
-                            ->setCitations(
-                                [
-                                    BetaCitationCharLocationParam::new(
-                                        citedText: 'cited_text',
-                                        documentIndex: 0,
-                                        documentTitle: 'x',
-                                        endCharIndex: 0,
-                                        startCharIndex: 0,
-                                    ),
-                                ],
-                            ),
-                    ],
-                    temperature: 1,
-                    thinking: BetaThinkingConfigEnabled::new(budgetTokens: 1024),
-                    toolChoice: (new BetaToolChoiceAuto)->setDisableParallelToolUse(true),
-                    tools: [
-                        BetaTool::new(
-                            inputSchema: (new InputSchema)
-                                ->setProperties((object) [])
-                                ->setRequired(['location']),
-                            name: 'name',
-                        )
-                            ->setCacheControl((new BetaCacheControlEphemeral)->setTTL('5m'))
-                            ->setDescription('Get the current weather in a given location')
-                            ->setType('custom'),
-                    ],
-                    topK: 5,
-                    topP: 0.7,
-                    anthropicBeta: ['string'],
+                        ],
+                    ),
+            ],
+            temperature: 1,
+            thinking: BetaThinkingConfigEnabled::new(budgetTokens: 1024),
+            toolChoice: (new BetaToolChoiceAuto)->setDisableParallelToolUse(true),
+            tools: [
+                BetaTool::new(
+                    inputSchema: (new InputSchema)
+                        ->setProperties((object) [])
+                        ->setRequired(['location']),
+                    name: 'name',
                 )
-            )
-        ;
+                    ->setCacheControl((new BetaCacheControlEphemeral)->setTTL('5m'))
+                    ->setDescription('Get the current weather in a given location')
+                    ->setType('custom'),
+            ],
+            topK: 5,
+            topP: 0.7,
+            anthropicBeta: ['string'],
+        );
+        $result = $this->client->beta->messages->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -129,17 +113,11 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCountTokens(): void
     {
-        $result = $this
-            ->client
-            ->beta
-            ->messages
-            ->countTokens(
-                MessageCountTokensParams::new(
-                    messages: [BetaMessageParam::new(content: 'string', role: 'user')],
-                    model: 'claude-3-7-sonnet-latest',
-                )
-            )
-        ;
+        $params = MessageCountTokensParams::new(
+            messages: [BetaMessageParam::new(content: 'string', role: 'user')],
+            model: 'claude-3-7-sonnet-latest',
+        );
+        $result = $this->client->beta->messages->countTokens($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -147,55 +125,49 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCountTokensWithOptionalParams(): void
     {
-        $result = $this
-            ->client
-            ->beta
-            ->messages
-            ->countTokens(
-                MessageCountTokensParams::new(
-                    messages: [BetaMessageParam::new(content: 'string', role: 'user')],
-                    model: 'claude-3-7-sonnet-latest',
-                    mcpServers: [
-                        BetaRequestMCPServerURLDefinition::new(name: 'name', url: 'url')
-                            ->setAuthorizationToken('authorization_token')
-                            ->setToolConfiguration(
-                                (new BetaRequestMCPServerToolConfiguration)
-                                    ->setAllowedTools(['string'])
-                                    ->setEnabled(true),
+        $params = MessageCountTokensParams::new(
+            messages: [BetaMessageParam::new(content: 'string', role: 'user')],
+            model: 'claude-3-7-sonnet-latest',
+            mcpServers: [
+                BetaRequestMCPServerURLDefinition::new(name: 'name', url: 'url')
+                    ->setAuthorizationToken('authorization_token')
+                    ->setToolConfiguration(
+                        (new BetaRequestMCPServerToolConfiguration)
+                            ->setAllowedTools(['string'])
+                            ->setEnabled(true),
+                    ),
+            ],
+            system: [
+                BetaTextBlockParam::new(text: "Today's date is 2024-06-01.")
+                    ->setCacheControl((new BetaCacheControlEphemeral)->setTTL('5m'))
+                    ->setCitations(
+                        [
+                            BetaCitationCharLocationParam::new(
+                                citedText: 'cited_text',
+                                documentIndex: 0,
+                                documentTitle: 'x',
+                                endCharIndex: 0,
+                                startCharIndex: 0,
                             ),
-                    ],
-                    system: [
-                        BetaTextBlockParam::new(text: "Today's date is 2024-06-01.")
-                            ->setCacheControl((new BetaCacheControlEphemeral)->setTTL('5m'))
-                            ->setCitations(
-                                [
-                                    BetaCitationCharLocationParam::new(
-                                        citedText: 'cited_text',
-                                        documentIndex: 0,
-                                        documentTitle: 'x',
-                                        endCharIndex: 0,
-                                        startCharIndex: 0,
-                                    ),
-                                ],
-                            ),
-                    ],
-                    thinking: BetaThinkingConfigEnabled::new(budgetTokens: 1024),
-                    toolChoice: (new BetaToolChoiceAuto)->setDisableParallelToolUse(true),
-                    tools: [
-                        BetaTool::new(
-                            inputSchema: (new InputSchema)
-                                ->setProperties((object) [])
-                                ->setRequired(['location']),
-                            name: 'name',
-                        )
-                            ->setCacheControl((new BetaCacheControlEphemeral)->setTTL('5m'))
-                            ->setDescription('Get the current weather in a given location')
-                            ->setType('custom'),
-                    ],
-                    anthropicBeta: ['string'],
+                        ],
+                    ),
+            ],
+            thinking: BetaThinkingConfigEnabled::new(budgetTokens: 1024),
+            toolChoice: (new BetaToolChoiceAuto)->setDisableParallelToolUse(true),
+            tools: [
+                BetaTool::new(
+                    inputSchema: (new InputSchema)
+                        ->setProperties((object) [])
+                        ->setRequired(['location']),
+                    name: 'name',
                 )
-            )
-        ;
+                    ->setCacheControl((new BetaCacheControlEphemeral)->setTTL('5m'))
+                    ->setDescription('Get the current weather in a given location')
+                    ->setType('custom'),
+            ],
+            anthropicBeta: ['string'],
+        );
+        $result = $this->client->beta->messages->countTokens($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

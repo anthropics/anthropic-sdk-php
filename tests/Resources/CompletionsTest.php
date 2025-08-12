@@ -30,17 +30,12 @@ final class CompletionsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this
-            ->client
-            ->completions
-            ->create(
-                CompletionCreateParams::new(
-                    maxTokensToSample: 256,
-                    model: 'claude-3-7-sonnet-latest',
-                    prompt: "\n\nHuman: Hello, world!\n\nAssistant:",
-                )
-            )
-        ;
+        $params = CompletionCreateParams::new(
+            maxTokensToSample: 256,
+            model: 'claude-3-7-sonnet-latest',
+            prompt: "\n\nHuman: Hello, world!\n\nAssistant:",
+        );
+        $result = $this->client->completions->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -48,24 +43,19 @@ final class CompletionsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this
-            ->client
-            ->completions
-            ->create(
-                CompletionCreateParams::new(
-                    maxTokensToSample: 256,
-                    model: 'claude-3-7-sonnet-latest',
-                    prompt: "\n\nHuman: Hello, world!\n\nAssistant:",
-                    metadata: (new Metadata)
-                        ->setUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
-                    stopSequences: ['string'],
-                    temperature: 1,
-                    topK: 5,
-                    topP: 0.7,
-                    anthropicBeta: ['string'],
-                )
-            )
-        ;
+        $params = CompletionCreateParams::new(
+            maxTokensToSample: 256,
+            model: 'claude-3-7-sonnet-latest',
+            prompt: "\n\nHuman: Hello, world!\n\nAssistant:",
+            metadata: (new Metadata)
+                ->setUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
+            stopSequences: ['string'],
+            temperature: 1,
+            topK: 5,
+            topP: 0.7,
+            anthropicBeta: ['string'],
+        );
+        $result = $this->client->completions->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

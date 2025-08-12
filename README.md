@@ -37,19 +37,19 @@ To use this package, install via Composer by adding the following to your applic
 <?php
 
 use Anthropic\Client;
+use Anthropic\Messages\MessageCreateParams;
 use Anthropic\Messages\MessageParam;
 
 $client = new Client(
   apiKey: getenv("ANTHROPIC_API_KEY") ?: "my-anthropic-api-key"
 );
 
-$message = $client->messages->create(
-  [
-    "maxTokens" => 1024,
-    "messages" => [MessageParam::new(role: "user", content: "Hello, Claude")],
-    "model" => "claude-sonnet-4-20250514",
-  ],
+$params = MessageCreateParams::new(
+  maxTokens: 1024,
+  messages: [MessageParam::new(role: "user", content: "Hello, Claude")],
+  model: "claude-sonnet-4-20250514",
 );
+$message = $client->messages->create($params);
 
 var_dump($message->content);
 ```
@@ -62,18 +62,16 @@ When the library is unable to connect to the API, or if the API returns a non-su
 <?php
 
 use Anthropic\Errors\APIConnectionError;
+use Anthropic\Messages\MessageCreateParams;
 use Anthropic\Messages\MessageParam;
 
 try {
-    $Messages = $client->messages->create(
-      [
-        "maxTokens" => 1024,
-        "messages" => [
-          MessageParam::new(role: "user", content: "Hello, Claude")
-        ],
-        "model" => "claude-sonnet-4-20250514",
-      ],
+    $params = MessageCreateParams::new(
+      maxTokens: 1024,
+      messages: [MessageParam::new(role: "user", content: "Hello, Claude")],
+      model: "claude-sonnet-4-20250514",
     );
+    $Messages = $client->messages->create($params);
 } catch (APIConnectionError $e) {
     echo "The server could not be reached", PHP_EOL;
     var_dump($e->getPrevious());
@@ -113,20 +111,20 @@ You can use the `max_retries` option to configure or disable this:
 <?php
 
 use Anthropic\Client;
+use Anthropic\RequestOptions;
+use Anthropic\Messages\MessageCreateParams;
 use Anthropic\Messages\MessageParam;
 
 // Configure the default for all requests:
 $client = new Client(maxRetries: 0);
+$params = MessageCreateParams::new(
+  maxTokens: 1024,
+  messages: [MessageParam::new(role: "user", content: "Hello, Claude")],
+  model: "claude-sonnet-4-20250514",
+);
 
 // Or, configure per-request:
-$client->messages->create(
-  [
-    "maxTokens" => 1024,
-    "messages" => [MessageParam::new(role: "user", content: "Hello, Claude")],
-    "model" => "claude-sonnet-4-20250514",
-  ],
-  requestOptions: ["maxRetries" => 5],
-);
+$result = $client->messages->create($params, new RequestOptions(maxRetries: 5));
 ```
 
 ## Advanced concepts
@@ -142,19 +140,24 @@ Note: the `extra_` parameters of the same name overrides the documented paramete
 ```php
 <?php
 
+use Anthropic\RequestOptions;
+use Anthropic\Messages\MessageCreateParams;
 use Anthropic\Messages\MessageParam;
 
-$message = $client->messages->create(
-  [
-    "maxTokens" => 1024,
-    "messages" => [MessageParam::new(role: "user", content: "Hello, Claude")],
-    "model" => "claude-sonnet-4-20250514",
-  ],
-  requestOptions: [
-    "extraQueryParams" => ["my_query_parameter" => "value"],
-    "extraBodyParams" => ["my_body_parameter" => "value"],
-    "extraHeaders" => ["my-header" => "value"],
-  ],
+$params = MessageCreateParams::new(
+  maxTokens: 1024,
+  messages: [MessageParam::new(role: "user", content: "Hello, Claude")],
+  model: "claude-sonnet-4-20250514",
+);
+$message = $client
+  ->messages
+  ->create(
+  $params,
+  new RequestOptions(
+    extraQueryParams: ["my_query_parameter" => "value"],
+    extraBodyParams: ["my_body_parameter" => "value"],
+    extraHeaders: ["my-header" => "value"],
+  ),
 );
 
 var_dump($message["my_undocumented_property"]);
