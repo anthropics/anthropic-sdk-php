@@ -55,7 +55,7 @@ final class BetaRequestDocumentBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(
+    public static function from(
         BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source,
         ?BetaCacheControlEphemeral $cacheControl = null,
         ?BetaCitationsConfigParam $citations = null,

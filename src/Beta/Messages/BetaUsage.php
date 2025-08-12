@@ -81,7 +81,7 @@ final class BetaUsage implements BaseModel
      *
      * @param null|ServiceTier::* $serviceTier
      */
-    public static function new(
+    public static function from(
         BetaCacheCreation $cacheCreation,
         ?int $cacheCreationInputTokens,
         ?int $cacheReadInputTokens,

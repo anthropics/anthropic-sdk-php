@@ -40,7 +40,7 @@ final class DeletedMessageBatch implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(string $id): self
+    public static function from(string $id): self
     {
         $obj = new self;
 

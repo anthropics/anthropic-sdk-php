@@ -47,7 +47,7 @@ final class Delta implements BaseModel
      *
      * @param BetaStopReason::* $stopReason
      */
-    public static function new(
+    public static function from(
         BetaContainer $container,
         string $stopReason,
         ?string $stopSequence

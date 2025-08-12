@@ -56,7 +56,7 @@ final class BetaTextBlockParam implements BaseModel
      *
      * @param null|list<BetaCitationCharLocationParam|BetaCitationContentBlockLocationParam|BetaCitationPageLocationParam|BetaCitationSearchResultLocationParam|BetaCitationWebSearchResultLocationParam> $citations
      */
-    public static function new(
+    public static function from(
         string $text,
         ?BetaCacheControlEphemeral $cacheControl = null,
         ?array $citations = null,

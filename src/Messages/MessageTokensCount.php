@@ -32,7 +32,7 @@ final class MessageTokensCount implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(int $inputTokens): self
+    public static function from(int $inputTokens): self
     {
         $obj = new self;
 

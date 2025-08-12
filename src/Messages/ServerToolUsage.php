@@ -32,7 +32,7 @@ final class ServerToolUsage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(int $webSearchRequests = 0): self
+    public static function from(int $webSearchRequests = 0): self
     {
         $obj = new self;
 

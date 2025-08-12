@@ -34,7 +34,7 @@ final class BetaInvalidRequestError implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(string $message = 'Invalid request'): self
+    public static function from(string $message = 'Invalid request'): self
     {
         $obj = new self;
 

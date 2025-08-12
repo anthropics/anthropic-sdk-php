@@ -30,7 +30,7 @@ final class CompletionsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = CompletionCreateParams::new(
+        $params = CompletionCreateParams::from(
             maxTokensToSample: 256,
             model: 'claude-3-7-sonnet-latest',
             prompt: "\n\nHuman: Hello, world!\n\nAssistant:",
@@ -43,7 +43,7 @@ final class CompletionsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = CompletionCreateParams::new(
+        $params = CompletionCreateParams::from(
             maxTokensToSample: 256,
             model: 'claude-3-7-sonnet-latest',
             prompt: "\n\nHuman: Hello, world!\n\nAssistant:",

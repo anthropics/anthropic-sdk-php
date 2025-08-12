@@ -48,14 +48,14 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = BatchCreateParams::new(
+        $params = BatchCreateParams::from(
             requests: [
-                Request::new(
+                Request::from(
                     customID: 'my-custom-id-1',
-                    params: Params::new(
+                    params: Params::from(
                         maxTokens: 1024,
                         messages: [
-                            BetaMessageParam::new(content: 'Hello, world', role: 'user'),
+                            BetaMessageParam::from(content: 'Hello, world', role: 'user'),
                         ],
                         model: 'claude-sonnet-4-20250514',
                     ),
@@ -70,21 +70,21 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = BatchCreateParams::new(
+        $params = BatchCreateParams::from(
             requests: [
-                Request::new(
+                Request::from(
                     customID: 'my-custom-id-1',
-                    params: Params::new(
+                    params: Params::from(
                         maxTokens: 1024,
                         messages: [
-                            BetaMessageParam::new(content: 'Hello, world', role: 'user'),
+                            BetaMessageParam::from(content: 'Hello, world', role: 'user'),
                         ],
                         model: 'claude-sonnet-4-20250514',
                     )
                         ->setContainer('container')
                         ->setMCPServers(
                             [
-                                BetaRequestMCPServerURLDefinition::new(name: 'name', url: 'url')
+                                BetaRequestMCPServerURLDefinition::from(name: 'name', url: 'url')
                                     ->setAuthorizationToken('authorization_token')
                                     ->setToolConfiguration(
                                         (new BetaRequestMCPServerToolConfiguration)
@@ -102,11 +102,11 @@ final class BatchesTest extends TestCase
                         ->setStream(true)
                         ->setSystem(
                             [
-                                BetaTextBlockParam::new(text: "Today's date is 2024-06-01.")
+                                BetaTextBlockParam::from(text: "Today's date is 2024-06-01.")
                                     ->setCacheControl((new BetaCacheControlEphemeral)->setTTL('5m'))
                                     ->setCitations(
                                         [
-                                            BetaCitationCharLocationParam::new(
+                                            BetaCitationCharLocationParam::from(
                                                 citedText: 'cited_text',
                                                 documentIndex: 0,
                                                 documentTitle: 'x',
@@ -118,13 +118,13 @@ final class BatchesTest extends TestCase
                             ],
                         )
                         ->setTemperature(1)
-                        ->setThinking(BetaThinkingConfigEnabled::new(budgetTokens: 1024))
+                        ->setThinking(BetaThinkingConfigEnabled::from(budgetTokens: 1024))
                         ->setToolChoice(
                             (new BetaToolChoiceAuto)->setDisableParallelToolUse(true)
                         )
                         ->setTools(
                             [
-                                BetaTool::new(
+                                BetaTool::from(
                                     inputSchema: (new InputSchema)
                                         ->setProperties((object) [])
                                         ->setRequired(['location']),

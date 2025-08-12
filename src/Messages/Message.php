@@ -145,7 +145,7 @@ final class Message implements BaseModel
      * @param string|UnionMember0::* $model
      * @param StopReason::* $stopReason
      */
-    public static function new(
+    public static function from(
         string $id,
         array $content,
         string $model,

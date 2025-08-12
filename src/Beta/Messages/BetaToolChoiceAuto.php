@@ -41,7 +41,7 @@ final class BetaToolChoiceAuto implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(?bool $disableParallelToolUse = null): self
+    public static function from(?bool $disableParallelToolUse = null): self
     {
         $obj = new self;
 

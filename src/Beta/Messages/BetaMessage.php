@@ -153,7 +153,7 @@ final class BetaMessage implements BaseModel
      * @param string|UnionMember0::* $model
      * @param BetaStopReason::* $stopReason
      */
-    public static function new(
+    public static function from(
         string $id,
         BetaContainer $container,
         array $content,

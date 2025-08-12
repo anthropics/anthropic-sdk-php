@@ -44,7 +44,7 @@ final class BetaServerToolUseBlock implements BaseModel
      *
      * @param Name::* $name
      */
-    public static function new(string $id, mixed $input, string $name): self
+    public static function from(string $id, mixed $input, string $name): self
     {
         $obj = new self;
 

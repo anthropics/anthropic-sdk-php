@@ -38,7 +38,7 @@ final class WebSearchToolResultError implements BaseModel
      *
      * @param ErrorCode::* $errorCode
      */
-    public static function new(string $errorCode): self
+    public static function from(string $errorCode): self
     {
         $obj = new self;
 

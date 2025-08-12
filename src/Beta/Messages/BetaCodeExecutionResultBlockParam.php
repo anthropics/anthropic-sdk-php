@@ -51,7 +51,7 @@ final class BetaCodeExecutionResultBlockParam implements BaseModel
      *
      * @param list<BetaCodeExecutionOutputBlockParam> $content
      */
-    public static function new(
+    public static function from(
         array $content,
         int $returnCode,
         string $stderr,

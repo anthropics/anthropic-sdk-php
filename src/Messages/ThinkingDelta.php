@@ -32,7 +32,7 @@ final class ThinkingDelta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(string $thinking): self
+    public static function from(string $thinking): self
     {
         $obj = new self;
 

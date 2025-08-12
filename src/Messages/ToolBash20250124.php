@@ -45,8 +45,9 @@ final class ToolBash20250124 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(?CacheControlEphemeral $cacheControl = null): self
-    {
+    public static function from(
+        ?CacheControlEphemeral $cacheControl = null
+    ): self {
         $obj = new self;
 
         null !== $cacheControl && $obj->cacheControl = $cacheControl;

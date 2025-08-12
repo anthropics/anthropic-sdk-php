@@ -70,7 +70,7 @@ final class ModelListParams implements BaseModel
      *
      * @param null|list<string|UnionMember1::*> $anthropicBeta
      */
-    public static function new(
+    public static function from(
         ?string $afterID = null,
         ?string $beforeID = null,
         ?int $limit = null,
@@ -84,5 +84,49 @@ final class ModelListParams implements BaseModel
         null !== $anthropicBeta && $obj->anthropicBeta = $anthropicBeta;
 
         return $obj;
+    }
+
+    /**
+     * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
+     */
+    public function setAfterID(string $afterID): self
+    {
+        $this->afterID = $afterID;
+
+        return $this;
+    }
+
+    /**
+     * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
+     */
+    public function setBeforeID(string $beforeID): self
+    {
+        $this->beforeID = $beforeID;
+
+        return $this;
+    }
+
+    /**
+     * Number of items to return per page.
+     *
+     * Defaults to `20`. Ranges from `1` to `1000`.
+     */
+    public function setLimit(int $limit): self
+    {
+        $this->limit = $limit;
+
+        return $this;
+    }
+
+    /**
+     * Optional header to specify the beta version(s) you want to use.
+     *
+     * @param list<string|UnionMember1::*> $betas
+     */
+    public function setBetas(array $betas): self
+    {
+        $this->anthropicBeta = $betas;
+
+        return $this;
     }
 }

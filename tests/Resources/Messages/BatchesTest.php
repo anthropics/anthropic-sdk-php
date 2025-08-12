@@ -42,14 +42,14 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = BatchCreateParams::new(
+        $params = BatchCreateParams::from(
             requests: [
-                Request::new(
+                Request::from(
                     customID: 'my-custom-id-1',
-                    params: Params::new(
+                    params: Params::from(
                         maxTokens: 1024,
                         messages: [
-                            MessageParam::new(content: 'Hello, world', role: 'user'),
+                            MessageParam::from(content: 'Hello, world', role: 'user'),
                         ],
                         model: 'claude-sonnet-4-20250514',
                     ),
@@ -64,14 +64,14 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = BatchCreateParams::new(
+        $params = BatchCreateParams::from(
             requests: [
-                Request::new(
+                Request::from(
                     customID: 'my-custom-id-1',
-                    params: Params::new(
+                    params: Params::from(
                         maxTokens: 1024,
                         messages: [
-                            MessageParam::new(content: 'Hello, world', role: 'user'),
+                            MessageParam::from(content: 'Hello, world', role: 'user'),
                         ],
                         model: 'claude-sonnet-4-20250514',
                     )
@@ -83,11 +83,11 @@ final class BatchesTest extends TestCase
                         ->setStream(true)
                         ->setSystem(
                             [
-                                TextBlockParam::new(text: "Today's date is 2024-06-01.")
+                                TextBlockParam::from(text: "Today's date is 2024-06-01.")
                                     ->setCacheControl(new CacheControlEphemeral)
                                     ->setCitations(
                                         [
-                                            CitationCharLocationParam::new(
+                                            CitationCharLocationParam::from(
                                                 citedText: 'cited_text',
                                                 documentIndex: 0,
                                                 documentTitle: 'x',
@@ -99,13 +99,13 @@ final class BatchesTest extends TestCase
                             ],
                         )
                         ->setTemperature(1)
-                        ->setThinking(ThinkingConfigEnabled::new(budgetTokens: 1024))
+                        ->setThinking(ThinkingConfigEnabled::from(budgetTokens: 1024))
                         ->setToolChoice(
                             (new ToolChoiceAuto)->setDisableParallelToolUse(true)
                         )
                         ->setTools(
                             [
-                                Tool::new(
+                                Tool::from(
                                     inputSchema: (new InputSchema)
                                         ->setProperties((object) [])
                                         ->setRequired(['location']),

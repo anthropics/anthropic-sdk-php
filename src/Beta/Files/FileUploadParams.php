@@ -51,8 +51,10 @@ final class FileUploadParams implements BaseModel
      *
      * @param null|list<string|UnionMember1::*> $anthropicBeta
      */
-    public static function new(string $file, ?array $anthropicBeta = null): self
-    {
+    public static function from(
+        string $file,
+        ?array $anthropicBeta = null
+    ): self {
         $obj = new self;
 
         $obj->file = $file;
@@ -60,5 +62,27 @@ final class FileUploadParams implements BaseModel
         null !== $anthropicBeta && $obj->anthropicBeta = $anthropicBeta;
 
         return $obj;
+    }
+
+    /**
+     * The file to upload.
+     */
+    public function setFile(string $file): self
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    /**
+     * Optional header to specify the beta version(s) you want to use.
+     *
+     * @param list<string|UnionMember1::*> $betas
+     */
+    public function setBetas(array $betas): self
+    {
+        $this->anthropicBeta = $betas;
+
+        return $this;
     }
 }

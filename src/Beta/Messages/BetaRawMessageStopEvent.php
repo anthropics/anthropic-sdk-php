@@ -29,7 +29,7 @@ final class BetaRawMessageStopEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(): self
+    public static function from(): self
     {
         return new self;
     }

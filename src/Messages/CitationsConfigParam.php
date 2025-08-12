@@ -29,7 +29,7 @@ final class CitationsConfigParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(?bool $enabled = null): self
+    public static function from(?bool $enabled = null): self
     {
         $obj = new self;
 

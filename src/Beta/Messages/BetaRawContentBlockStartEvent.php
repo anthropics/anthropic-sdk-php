@@ -43,7 +43,7 @@ final class BetaRawContentBlockStartEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(
+    public static function from(
         BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock $contentBlock,
         int $index,
     ): self {

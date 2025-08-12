@@ -36,7 +36,7 @@ final class CitationsDelta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(
+    public static function from(
         CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsSearchResultLocation|CitationsWebSearchResultLocation $citation,
     ): self {
         $obj = new self;

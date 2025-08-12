@@ -353,7 +353,7 @@ final class Params implements BaseModel
      * @param null|list<BetaTextBlockParam>|string $system
      * @param null|list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
      */
-    public static function new(
+    public static function from(
         int $maxTokens,
         array $messages,
         string $model,

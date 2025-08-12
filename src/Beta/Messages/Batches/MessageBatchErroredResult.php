@@ -35,7 +35,7 @@ final class MessageBatchErroredResult implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(BetaErrorResponse $error): self
+    public static function from(BetaErrorResponse $error): self
     {
         $obj = new self;
 

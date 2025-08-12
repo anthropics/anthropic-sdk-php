@@ -58,7 +58,7 @@ final class BetaSearchResultBlockParam implements BaseModel
      *
      * @param list<BetaTextBlockParam> $content
      */
-    public static function new(
+    public static function from(
         array $content,
         string $source,
         string $title,

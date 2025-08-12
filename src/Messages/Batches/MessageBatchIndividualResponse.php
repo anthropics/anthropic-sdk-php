@@ -47,7 +47,7 @@ final class MessageBatchIndividualResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(
+    public static function from(
         string $customID,
         MessageBatchCanceledResult|MessageBatchErroredResult|MessageBatchExpiredResult|MessageBatchSucceededResult $result,
     ): self {

@@ -46,12 +46,24 @@ final class BatchCreateParams implements BaseModel
      *
      * @param list<Request> $requests
      */
-    public static function new(array $requests): self
+    public static function from(array $requests): self
     {
         $obj = new self;
 
         $obj->requests = $requests;
 
         return $obj;
+    }
+
+    /**
+     * List of requests for prompt completion. Each is an individual request to create a Message.
+     *
+     * @param list<Request> $requests
+     */
+    public function setRequests(array $requests): self
+    {
+        $this->requests = $requests;
+
+        return $this;
     }
 }

@@ -35,7 +35,7 @@ final class BetaErrorResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(
+    public static function from(
         BetaAPIError|BetaAuthenticationError|BetaBillingError|BetaGatewayTimeoutError|BetaInvalidRequestError|BetaNotFoundError|BetaOverloadedError|BetaPermissionError|BetaRateLimitError $error,
     ): self {
         $obj = new self;

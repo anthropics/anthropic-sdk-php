@@ -43,7 +43,7 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
      *
      * @param null|list<string> $allowedTools
      */
-    public static function new(
+    public static function from(
         ?array $allowedTools = null,
         ?bool $enabled = null
     ): self {

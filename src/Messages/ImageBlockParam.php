@@ -43,7 +43,7 @@ final class ImageBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(
+    public static function from(
         Base64ImageSource|URLImageSource $source,
         ?CacheControlEphemeral $cacheControl = null,
     ): self {

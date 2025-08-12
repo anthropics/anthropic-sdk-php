@@ -43,7 +43,7 @@ final class BetaContainerUploadBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(
+    public static function from(
         string $fileID,
         ?BetaCacheControlEphemeral $cacheControl = null
     ): self {

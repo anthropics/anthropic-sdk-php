@@ -39,7 +39,7 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(
+    public static function from(
         BetaCitationsDelta|BetaInputJSONDelta|BetaSignatureDelta|BetaTextDelta|BetaThinkingDelta $delta,
         int $index,
     ): self {

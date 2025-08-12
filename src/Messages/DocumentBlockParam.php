@@ -55,7 +55,7 @@ final class DocumentBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(
+    public static function from(
         Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source,
         ?CacheControlEphemeral $cacheControl = null,
         ?CitationsConfigParam $citations = null,

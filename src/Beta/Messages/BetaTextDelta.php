@@ -32,7 +32,7 @@ final class BetaTextDelta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(string $text): self
+    public static function from(string $text): self
     {
         $obj = new self;
 

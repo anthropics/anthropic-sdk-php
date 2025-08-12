@@ -40,7 +40,7 @@ final class BetaCacheCreation implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(
+    public static function from(
         int $ephemeral1hInputTokens = 0,
         int $ephemeral5mInputTokens = 0
     ): self {

@@ -54,7 +54,7 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
      *
      * @param null|list<BetaTextBlockParam>|string $content
      */
-    public static function new(
+    public static function from(
         string $toolUseID,
         ?BetaCacheControlEphemeral $cacheControl = null,
         null|array|string $content = null,

@@ -32,7 +32,7 @@ final class SignatureDelta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(string $signature): self
+    public static function from(string $signature): self
     {
         $obj = new self;
 

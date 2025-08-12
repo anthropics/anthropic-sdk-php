@@ -45,7 +45,7 @@ final class DeletedFile implements BaseModel
      *
      * @param null|Type::* $type
      */
-    public static function new(string $id, ?string $type = null): self
+    public static function from(string $id, ?string $type = null): self
     {
         $obj = new self;
 

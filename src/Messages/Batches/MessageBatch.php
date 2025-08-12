@@ -112,7 +112,7 @@ final class MessageBatch implements BaseModel
      *
      * @param ProcessingStatus::* $processingStatus
      */
-    public static function new(
+    public static function from(
         string $id,
         ?\DateTimeInterface $archivedAt,
         ?\DateTimeInterface $cancelInitiatedAt,

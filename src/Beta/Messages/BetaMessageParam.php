@@ -44,7 +44,7 @@ final class BetaMessageParam implements BaseModel
      * @param list<BetaCodeExecutionToolResultBlockParam|BetaContainerUploadBlockParam|BetaImageBlockParam|BetaMCPToolUseBlockParam|BetaRedactedThinkingBlockParam|BetaRequestDocumentBlock|BetaRequestMCPToolResultBlockParam|BetaSearchResultBlockParam|BetaServerToolUseBlockParam|BetaTextBlockParam|BetaThinkingBlockParam|BetaToolResultBlockParam|BetaToolUseBlockParam|BetaWebSearchToolResultBlockParam>|string $content
      * @param Role::* $role
      */
-    public static function new(array|string $content, string $role): self
+    public static function from(array|string $content, string $role): self
     {
         $obj = new self;
 

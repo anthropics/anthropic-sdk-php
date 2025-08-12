@@ -326,7 +326,7 @@ final class Params implements BaseModel
      * @param null|list<TextBlockParam>|string $system
      * @param null|list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
      */
-    public static function new(
+    public static function from(
         int $maxTokens,
         array $messages,
         string $model,

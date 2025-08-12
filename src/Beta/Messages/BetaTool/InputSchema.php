@@ -45,7 +45,7 @@ final class InputSchema implements BaseModel
      *
      * @param null|list<string> $required
      */
-    public static function new(
+    public static function from(
         mixed $properties = null,
         ?array $required = null
     ): self {

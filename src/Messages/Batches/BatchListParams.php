@@ -54,7 +54,7 @@ final class BatchListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(
+    public static function from(
         ?string $afterID = null,
         ?string $beforeID = null,
         ?int $limit = null
@@ -66,5 +66,37 @@ final class BatchListParams implements BaseModel
         null !== $limit && $obj->limit = $limit;
 
         return $obj;
+    }
+
+    /**
+     * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
+     */
+    public function setAfterID(string $afterID): self
+    {
+        $this->afterID = $afterID;
+
+        return $this;
+    }
+
+    /**
+     * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
+     */
+    public function setBeforeID(string $beforeID): self
+    {
+        $this->beforeID = $beforeID;
+
+        return $this;
+    }
+
+    /**
+     * Number of items to return per page.
+     *
+     * Defaults to `20`. Ranges from `1` to `1000`.
+     */
+    public function setLimit(int $limit): self
+    {
+        $this->limit = $limit;
+
+        return $this;
     }
 }

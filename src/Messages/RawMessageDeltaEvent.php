@@ -49,7 +49,7 @@ final class RawMessageDeltaEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(Delta $delta, MessageDeltaUsage $usage): self
+    public static function from(Delta $delta, MessageDeltaUsage $usage): self
     {
         $obj = new self;
 

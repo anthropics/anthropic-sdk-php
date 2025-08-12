@@ -59,7 +59,7 @@ final class BatchCreateParams implements BaseModel
      * @param list<Request> $requests
      * @param null|list<string|UnionMember1::*> $anthropicBeta
      */
-    public static function new(
+    public static function from(
         array $requests,
         ?array $anthropicBeta = null
     ): self {
@@ -70,5 +70,29 @@ final class BatchCreateParams implements BaseModel
         null !== $anthropicBeta && $obj->anthropicBeta = $anthropicBeta;
 
         return $obj;
+    }
+
+    /**
+     * List of requests for prompt completion. Each is an individual request to create a Message.
+     *
+     * @param list<Request> $requests
+     */
+    public function setRequests(array $requests): self
+    {
+        $this->requests = $requests;
+
+        return $this;
+    }
+
+    /**
+     * Optional header to specify the beta version(s) you want to use.
+     *
+     * @param list<string|UnionMember1::*> $betas
+     */
+    public function setBetas(array $betas): self
+    {
+        $this->anthropicBeta = $betas;
+
+        return $this;
     }
 }

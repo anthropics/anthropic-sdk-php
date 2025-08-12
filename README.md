@@ -44,9 +44,9 @@ $client = new Client(
   apiKey: getenv("ANTHROPIC_API_KEY") ?: "my-anthropic-api-key"
 );
 
-$params = MessageCreateParams::new(
+$params = MessageCreateParams::from(
   maxTokens: 1024,
-  messages: [MessageParam::new(role: "user", content: "Hello, Claude")],
+  messages: [MessageParam::from(role: "user", content: "Hello, Claude")],
   model: "claude-sonnet-4-20250514",
 );
 $message = $client->messages->create($params);
@@ -66,9 +66,9 @@ use Anthropic\Messages\MessageCreateParams;
 use Anthropic\Messages\MessageParam;
 
 try {
-    $params = MessageCreateParams::new(
+    $params = MessageCreateParams::from(
       maxTokens: 1024,
-      messages: [MessageParam::new(role: "user", content: "Hello, Claude")],
+      messages: [MessageParam::from(role: "user", content: "Hello, Claude")],
       model: "claude-sonnet-4-20250514",
     );
     $Messages = $client->messages->create($params);
@@ -117,9 +117,9 @@ use Anthropic\Messages\MessageParam;
 
 // Configure the default for all requests:
 $client = new Client(maxRetries: 0);
-$params = MessageCreateParams::new(
+$params = MessageCreateParams::from(
   maxTokens: 1024,
-  messages: [MessageParam::new(role: "user", content: "Hello, Claude")],
+  messages: [MessageParam::from(role: "user", content: "Hello, Claude")],
   model: "claude-sonnet-4-20250514",
 );
 
@@ -144,9 +144,9 @@ use Anthropic\RequestOptions;
 use Anthropic\Messages\MessageCreateParams;
 use Anthropic\Messages\MessageParam;
 
-$params = MessageCreateParams::new(
+$params = MessageCreateParams::from(
   maxTokens: 1024,
-  messages: [MessageParam::new(role: "user", content: "Hello, Claude")],
+  messages: [MessageParam::from(role: "user", content: "Hello, Claude")],
   model: "claude-sonnet-4-20250514",
 );
 $message = $client

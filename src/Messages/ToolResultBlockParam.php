@@ -56,7 +56,7 @@ final class ToolResultBlockParam implements BaseModel
      *
      * @param null|list<ImageBlockParam|SearchResultBlockParam|TextBlockParam>|string $content
      */
-    public static function new(
+    public static function from(
         string $toolUseID,
         ?CacheControlEphemeral $cacheControl = null,
         null|array|string $content = null,

@@ -34,7 +34,7 @@ final class BetaAuthenticationError implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(string $message = 'Authentication error'): self
+    public static function from(string $message = 'Authentication error'): self
     {
         $obj = new self;
 

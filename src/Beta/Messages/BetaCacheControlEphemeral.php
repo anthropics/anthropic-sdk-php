@@ -48,7 +48,7 @@ final class BetaCacheControlEphemeral implements BaseModel
      *
      * @param null|TTL::* $ttl
      */
-    public static function new(?string $ttl = null): self
+    public static function from(?string $ttl = null): self
     {
         $obj = new self;
 

@@ -47,7 +47,7 @@ final class BetaMCPToolResultBlock implements BaseModel
      *
      * @param list<BetaTextBlock>|string $content
      */
-    public static function new(
+    public static function from(
         array|string $content,
         string $toolUseID,
         bool $isError = false

@@ -46,7 +46,7 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(
+    public static function from(
         BetaCodeExecutionResultBlockParam|BetaCodeExecutionToolResultErrorParam $content,
         string $toolUseID,
         ?BetaCacheControlEphemeral $cacheControl = null,

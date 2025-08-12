@@ -49,7 +49,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
      *
      * @param list<WebSearchResultBlockParam>|WebSearchToolRequestError $content
      */
-    public static function new(
+    public static function from(
         array|WebSearchToolRequestError $content,
         string $toolUseID,
         ?CacheControlEphemeral $cacheControl = null,

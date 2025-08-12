@@ -94,7 +94,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
      * @param null|list<string> $allowedDomains
      * @param null|list<string> $blockedDomains
      */
-    public static function new(
+    public static function from(
         ?array $allowedDomains = null,
         ?array $blockedDomains = null,
         ?BetaCacheControlEphemeral $cacheControl = null,

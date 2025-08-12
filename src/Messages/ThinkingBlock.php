@@ -37,7 +37,7 @@ final class ThinkingBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(string $signature, string $thinking): self
+    public static function from(string $signature, string $thinking): self
     {
         $obj = new self;
 

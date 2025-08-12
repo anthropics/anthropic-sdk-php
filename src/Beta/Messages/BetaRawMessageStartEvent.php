@@ -34,7 +34,7 @@ final class BetaRawMessageStartEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(BetaMessage $message): self
+    public static function from(BetaMessage $message): self
     {
         $obj = new self;
 

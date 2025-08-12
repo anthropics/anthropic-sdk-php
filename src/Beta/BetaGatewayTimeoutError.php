@@ -34,7 +34,7 @@ final class BetaGatewayTimeoutError implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(string $message = 'Request timeout'): self
+    public static function from(string $message = 'Request timeout'): self
     {
         $obj = new self;
 

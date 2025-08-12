@@ -56,7 +56,7 @@ final class TextBlockParam implements BaseModel
      *
      * @param null|list<CitationCharLocationParam|CitationContentBlockLocationParam|CitationPageLocationParam|CitationSearchResultLocationParam|CitationWebSearchResultLocationParam> $citations
      */
-    public static function new(
+    public static function from(
         string $text,
         ?CacheControlEphemeral $cacheControl = null,
         ?array $citations = null,

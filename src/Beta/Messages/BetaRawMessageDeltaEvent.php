@@ -49,8 +49,10 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(Delta $delta, BetaMessageDeltaUsage $usage): self
-    {
+    public static function from(
+        Delta $delta,
+        BetaMessageDeltaUsage $usage
+    ): self {
         $obj = new self;
 
         $obj->delta = $delta;

@@ -38,7 +38,7 @@ final class BetaContentBlockSource implements BaseModel
      *
      * @param list<BetaImageBlockParam|BetaTextBlockParam>|string $content
      */
-    public static function new(array|string $content): self
+    public static function from(array|string $content): self
     {
         $obj = new self;
 

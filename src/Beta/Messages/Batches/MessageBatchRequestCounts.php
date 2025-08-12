@@ -66,7 +66,7 @@ final class MessageBatchRequestCounts implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(
+    public static function from(
         int $canceled = 0,
         int $errored = 0,
         int $expired = 0,

@@ -41,7 +41,7 @@ final class Base64ImageSource implements BaseModel
      *
      * @param MediaType::* $mediaType
      */
-    public static function new(string $data, string $mediaType): self
+    public static function from(string $data, string $mediaType): self
     {
         $obj = new self;
 

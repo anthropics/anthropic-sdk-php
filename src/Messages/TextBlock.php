@@ -49,7 +49,7 @@ final class TextBlock implements BaseModel
      *
      * @param null|list<CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsSearchResultLocation|CitationsWebSearchResultLocation> $citations
      */
-    public static function new(?array $citations, string $text): self
+    public static function from(?array $citations, string $text): self
     {
         $obj = new self;
 

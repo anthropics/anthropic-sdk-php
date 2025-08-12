@@ -44,7 +44,7 @@ final class MessageParam implements BaseModel
      * @param list<DocumentBlockParam|ImageBlockParam|RedactedThinkingBlockParam|SearchResultBlockParam|ServerToolUseBlockParam|TextBlockParam|ThinkingBlockParam|ToolResultBlockParam|ToolUseBlockParam|WebSearchToolResultBlockParam>|string $content
      * @param Role::* $role
      */
-    public static function new(array|string $content, string $role): self
+    public static function from(array|string $content, string $role): self
     {
         $obj = new self;
 

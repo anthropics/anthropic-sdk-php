@@ -42,7 +42,7 @@ final class BetaContainer implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(string $id, \DateTimeInterface $expiresAt): self
+    public static function from(string $id, \DateTimeInterface $expiresAt): self
     {
         $obj = new self;
 

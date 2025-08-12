@@ -43,7 +43,7 @@ final class Request implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(string $customID, Params $params): self
+    public static function from(string $customID, Params $params): self
     {
         $obj = new self;
 

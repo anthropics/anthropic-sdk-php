@@ -34,7 +34,7 @@ final class RawMessageStartEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(Message $message): self
+    public static function from(Message $message): self
     {
         $obj = new self;
 

@@ -61,7 +61,7 @@ final class UserLocation implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(
+    public static function from(
         ?string $city = null,
         ?string $country = null,
         ?string $region = null,

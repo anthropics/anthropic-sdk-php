@@ -70,7 +70,7 @@ final class Tool implements BaseModel
      *
      * @param null|Type::* $type
      */
-    public static function new(
+    public static function from(
         InputSchema $inputSchema,
         string $name,
         ?CacheControlEphemeral $cacheControl = null,

@@ -41,9 +41,9 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = MessageCreateParams::new(
+        $params = MessageCreateParams::from(
             maxTokens: 1024,
-            messages: [BetaMessageParam::new(content: 'Hello, world', role: 'user')],
+            messages: [BetaMessageParam::from(content: 'Hello, world', role: 'user')],
             model: 'claude-sonnet-4-20250514',
         );
         $result = $this->client->beta->messages->create($params);
@@ -54,13 +54,13 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = MessageCreateParams::new(
+        $params = MessageCreateParams::from(
             maxTokens: 1024,
-            messages: [BetaMessageParam::new(content: 'Hello, world', role: 'user')],
+            messages: [BetaMessageParam::from(content: 'Hello, world', role: 'user')],
             model: 'claude-sonnet-4-20250514',
             container: 'container',
             mcpServers: [
-                BetaRequestMCPServerURLDefinition::new(name: 'name', url: 'url')
+                BetaRequestMCPServerURLDefinition::from(name: 'name', url: 'url')
                     ->setAuthorizationToken('authorization_token')
                     ->setToolConfiguration(
                         (new BetaRequestMCPServerToolConfiguration)
@@ -73,11 +73,11 @@ final class MessagesTest extends TestCase
             serviceTier: 'auto',
             stopSequences: ['string'],
             system: [
-                BetaTextBlockParam::new(text: "Today's date is 2024-06-01.")
+                BetaTextBlockParam::from(text: "Today's date is 2024-06-01.")
                     ->setCacheControl((new BetaCacheControlEphemeral)->setTTL('5m'))
                     ->setCitations(
                         [
-                            BetaCitationCharLocationParam::new(
+                            BetaCitationCharLocationParam::from(
                                 citedText: 'cited_text',
                                 documentIndex: 0,
                                 documentTitle: 'x',
@@ -88,10 +88,10 @@ final class MessagesTest extends TestCase
                     ),
             ],
             temperature: 1,
-            thinking: BetaThinkingConfigEnabled::new(budgetTokens: 1024),
+            thinking: BetaThinkingConfigEnabled::from(budgetTokens: 1024),
             toolChoice: (new BetaToolChoiceAuto)->setDisableParallelToolUse(true),
             tools: [
-                BetaTool::new(
+                BetaTool::from(
                     inputSchema: (new InputSchema)
                         ->setProperties((object) [])
                         ->setRequired(['location']),
@@ -113,8 +113,8 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCountTokens(): void
     {
-        $params = MessageCountTokensParams::new(
-            messages: [BetaMessageParam::new(content: 'string', role: 'user')],
+        $params = MessageCountTokensParams::from(
+            messages: [BetaMessageParam::from(content: 'string', role: 'user')],
             model: 'claude-3-7-sonnet-latest',
         );
         $result = $this->client->beta->messages->countTokens($params);
@@ -125,11 +125,11 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCountTokensWithOptionalParams(): void
     {
-        $params = MessageCountTokensParams::new(
-            messages: [BetaMessageParam::new(content: 'string', role: 'user')],
+        $params = MessageCountTokensParams::from(
+            messages: [BetaMessageParam::from(content: 'string', role: 'user')],
             model: 'claude-3-7-sonnet-latest',
             mcpServers: [
-                BetaRequestMCPServerURLDefinition::new(name: 'name', url: 'url')
+                BetaRequestMCPServerURLDefinition::from(name: 'name', url: 'url')
                     ->setAuthorizationToken('authorization_token')
                     ->setToolConfiguration(
                         (new BetaRequestMCPServerToolConfiguration)
@@ -138,11 +138,11 @@ final class MessagesTest extends TestCase
                     ),
             ],
             system: [
-                BetaTextBlockParam::new(text: "Today's date is 2024-06-01.")
+                BetaTextBlockParam::from(text: "Today's date is 2024-06-01.")
                     ->setCacheControl((new BetaCacheControlEphemeral)->setTTL('5m'))
                     ->setCitations(
                         [
-                            BetaCitationCharLocationParam::new(
+                            BetaCitationCharLocationParam::from(
                                 citedText: 'cited_text',
                                 documentIndex: 0,
                                 documentTitle: 'x',
@@ -152,10 +152,10 @@ final class MessagesTest extends TestCase
                         ],
                     ),
             ],
-            thinking: BetaThinkingConfigEnabled::new(budgetTokens: 1024),
+            thinking: BetaThinkingConfigEnabled::from(budgetTokens: 1024),
             toolChoice: (new BetaToolChoiceAuto)->setDisableParallelToolUse(true),
             tools: [
-                BetaTool::new(
+                BetaTool::from(
                     inputSchema: (new InputSchema)
                         ->setProperties((object) [])
                         ->setRequired(['location']),

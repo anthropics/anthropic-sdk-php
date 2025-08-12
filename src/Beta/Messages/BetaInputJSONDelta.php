@@ -34,7 +34,7 @@ final class BetaInputJSONDelta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(string $partialJSON): self
+    public static function from(string $partialJSON): self
     {
         $obj = new self;
 

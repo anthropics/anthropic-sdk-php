@@ -43,7 +43,7 @@ final class BetaImageBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(
+    public static function from(
         BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source,
         ?BetaCacheControlEphemeral $cacheControl = null,
     ): self {

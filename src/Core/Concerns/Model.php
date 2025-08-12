@@ -200,7 +200,7 @@ trait Model
     /**
      * @internal
      */
-    public static function from(mixed $data): self
+    public static function fromArray(mixed $data): self
     {
         return self::converter()->from($data); // @phpstan-ignore-line
     }

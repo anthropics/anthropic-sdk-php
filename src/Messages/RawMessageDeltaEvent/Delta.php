@@ -38,7 +38,7 @@ final class Delta implements BaseModel
      *
      * @param StopReason::* $stopReason
      */
-    public static function new(string $stopReason, ?string $stopSequence): self
+    public static function from(string $stopReason, ?string $stopSequence): self
     {
         $obj = new self;
 

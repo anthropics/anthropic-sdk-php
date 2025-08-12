@@ -39,9 +39,9 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = MessageCreateParams::new(
+        $params = MessageCreateParams::from(
             maxTokens: 1024,
-            messages: [MessageParam::new(content: 'Hello, world', role: 'user')],
+            messages: [MessageParam::from(content: 'Hello, world', role: 'user')],
             model: 'claude-sonnet-4-20250514',
         );
         $result = $this->client->messages->create($params);
@@ -52,20 +52,20 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = MessageCreateParams::new(
+        $params = MessageCreateParams::from(
             maxTokens: 1024,
-            messages: [MessageParam::new(content: 'Hello, world', role: 'user')],
+            messages: [MessageParam::from(content: 'Hello, world', role: 'user')],
             model: 'claude-sonnet-4-20250514',
             metadata: (new Metadata)
                 ->setUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
             serviceTier: 'auto',
             stopSequences: ['string'],
             system: [
-                TextBlockParam::new(text: "Today's date is 2024-06-01.")
+                TextBlockParam::from(text: "Today's date is 2024-06-01.")
                     ->setCacheControl(new CacheControlEphemeral)
                     ->setCitations(
                         [
-                            CitationCharLocationParam::new(
+                            CitationCharLocationParam::from(
                                 citedText: 'cited_text',
                                 documentIndex: 0,
                                 documentTitle: 'x',
@@ -76,10 +76,10 @@ final class MessagesTest extends TestCase
                     ),
             ],
             temperature: 1,
-            thinking: ThinkingConfigEnabled::new(budgetTokens: 1024),
+            thinking: ThinkingConfigEnabled::from(budgetTokens: 1024),
             toolChoice: (new ToolChoiceAuto)->setDisableParallelToolUse(true),
             tools: [
-                Tool::new(
+                Tool::from(
                     inputSchema: (new InputSchema)
                         ->setProperties((object) [])
                         ->setRequired(['location']),
@@ -100,8 +100,8 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCountTokens(): void
     {
-        $params = MessageCountTokensParams::new(
-            messages: [MessageParam::new(content: 'string', role: 'user')],
+        $params = MessageCountTokensParams::from(
+            messages: [MessageParam::from(content: 'string', role: 'user')],
             model: 'claude-3-7-sonnet-latest',
         );
         $result = $this->client->messages->countTokens($params);
@@ -112,15 +112,15 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCountTokensWithOptionalParams(): void
     {
-        $params = MessageCountTokensParams::new(
-            messages: [MessageParam::new(content: 'string', role: 'user')],
+        $params = MessageCountTokensParams::from(
+            messages: [MessageParam::from(content: 'string', role: 'user')],
             model: 'claude-3-7-sonnet-latest',
             system: [
-                TextBlockParam::new(text: "Today's date is 2024-06-01.")
+                TextBlockParam::from(text: "Today's date is 2024-06-01.")
                     ->setCacheControl(new CacheControlEphemeral)
                     ->setCitations(
                         [
-                            CitationCharLocationParam::new(
+                            CitationCharLocationParam::from(
                                 citedText: 'cited_text',
                                 documentIndex: 0,
                                 documentTitle: 'x',
@@ -130,10 +130,10 @@ final class MessagesTest extends TestCase
                         ],
                     ),
             ],
-            thinking: ThinkingConfigEnabled::new(budgetTokens: 1024),
+            thinking: ThinkingConfigEnabled::from(budgetTokens: 1024),
             toolChoice: (new ToolChoiceAuto)->setDisableParallelToolUse(true),
             tools: [
-                Tool::new(
+                Tool::from(
                     inputSchema: (new InputSchema)
                         ->setProperties((object) [])
                         ->setRequired(['location']),

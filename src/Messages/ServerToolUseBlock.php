@@ -40,7 +40,7 @@ final class ServerToolUseBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(string $id, mixed $input): self
+    public static function from(string $id, mixed $input): self
     {
         $obj = new self;
 

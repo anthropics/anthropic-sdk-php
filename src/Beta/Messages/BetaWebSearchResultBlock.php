@@ -47,7 +47,7 @@ final class BetaWebSearchResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(
+    public static function from(
         string $encryptedContent,
         ?string $pageAge,
         string $title,

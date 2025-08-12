@@ -74,7 +74,7 @@ final class Usage implements BaseModel
      *
      * @param null|ServiceTier::* $serviceTier
      */
-    public static function new(
+    public static function from(
         ?int $cacheCreationInputTokens,
         ?int $cacheReadInputTokens,
         int $inputTokens,

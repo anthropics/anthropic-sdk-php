@@ -76,7 +76,7 @@ final class Completion implements BaseModel
      *
      * @param string|UnionMember0::* $model
      */
-    public static function new(
+    public static function from(
         string $id,
         string $completion,
         string $model,

@@ -42,7 +42,7 @@ final class WebSearchToolResultBlock implements BaseModel
      *
      * @param list<WebSearchResultBlock>|WebSearchToolResultError $content
      */
-    public static function new(
+    public static function from(
         array|WebSearchToolResultError $content,
         string $toolUseID
     ): self {

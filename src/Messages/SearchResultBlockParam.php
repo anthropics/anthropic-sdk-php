@@ -58,7 +58,7 @@ final class SearchResultBlockParam implements BaseModel
      *
      * @param list<TextBlockParam> $content
      */
-    public static function new(
+    public static function from(
         array $content,
         string $source,
         string $title,

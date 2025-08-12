@@ -49,7 +49,7 @@ final class BetaTextBlock implements BaseModel
      *
      * @param null|list<BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationSearchResultLocation|BetaCitationsWebSearchResultLocation> $citations
      */
-    public static function new(?array $citations, string $text): self
+    public static function from(?array $citations, string $text): self
     {
         $obj = new self;
 

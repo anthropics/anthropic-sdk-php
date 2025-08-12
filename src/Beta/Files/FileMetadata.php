@@ -80,7 +80,7 @@ final class FileMetadata implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(
+    public static function from(
         string $id,
         \DateTimeInterface $createdAt,
         string $filename,

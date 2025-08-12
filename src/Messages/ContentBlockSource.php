@@ -38,7 +38,7 @@ final class ContentBlockSource implements BaseModel
      *
      * @param list<ImageBlockParam|TextBlockParam>|string $content
      */
-    public static function new(array|string $content): self
+    public static function from(array|string $content): self
     {
         $obj = new self;
 

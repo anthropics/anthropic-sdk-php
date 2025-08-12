@@ -45,7 +45,7 @@ final class BetaToolTextEditor20250429 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(
+    public static function from(
         ?BetaCacheControlEphemeral $cacheControl = null
     ): self {
         $obj = new self;

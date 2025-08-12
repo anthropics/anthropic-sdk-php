@@ -37,7 +37,7 @@ final class BetaPlainTextSource implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(string $data): self
+    public static function from(string $data): self
     {
         $obj = new self;
 

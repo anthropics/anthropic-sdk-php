@@ -45,12 +45,24 @@ final class FileRetrieveMetadataParams implements BaseModel
      *
      * @param null|list<string|UnionMember1::*> $anthropicBeta
      */
-    public static function new(?array $anthropicBeta = null): self
+    public static function from(?array $anthropicBeta = null): self
     {
         $obj = new self;
 
         null !== $anthropicBeta && $obj->anthropicBeta = $anthropicBeta;
 
         return $obj;
+    }
+
+    /**
+     * Optional header to specify the beta version(s) you want to use.
+     *
+     * @param list<string|UnionMember1::*> $betas
+     */
+    public function setBetas(array $betas): self
+    {
+        $this->anthropicBeta = $betas;
+
+        return $this;
     }
 }

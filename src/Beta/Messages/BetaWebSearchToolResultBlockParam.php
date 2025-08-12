@@ -51,7 +51,7 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
      *
      * @param BetaWebSearchToolRequestError|list<BetaWebSearchResultBlockParam> $content
      */
-    public static function new(
+    public static function from(
         array|BetaWebSearchToolRequestError $content,
         string $toolUseID,
         ?BetaCacheControlEphemeral $cacheControl = null,

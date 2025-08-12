@@ -32,7 +32,7 @@ final class BillingError implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(string $message = 'Billing error'): self
+    public static function from(string $message = 'Billing error'): self
     {
         $obj = new self;
 

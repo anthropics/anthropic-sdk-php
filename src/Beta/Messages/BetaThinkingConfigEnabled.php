@@ -41,7 +41,7 @@ final class BetaThinkingConfigEnabled implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function new(int $budgetTokens): self
+    public static function from(int $budgetTokens): self
     {
         $obj = new self;
 

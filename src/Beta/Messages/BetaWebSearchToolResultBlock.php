@@ -42,7 +42,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
      *
      * @param BetaWebSearchToolResultError|list<BetaWebSearchResultBlock> $content
      */
-    public static function new(
+    public static function from(
         array|BetaWebSearchToolResultError $content,
         string $toolUseID
     ): self {
