@@ -41,4 +41,6 @@ final class UnionMember1 implements ConverterSource
     public const CODE_EXECUTION_2025_05_22 = 'code-execution-2025-05-22';
 
     public const EXTENDED_CACHE_TTL_2025_04_11 = 'extended-cache-ttl-2025-04-11';
+
+    public const CONTEXT_1M_2025_08_07 = 'context-1m-2025-08-07';
 }
