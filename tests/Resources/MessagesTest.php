@@ -62,7 +62,7 @@ final class MessagesTest extends TestCase
             stopSequences: ['string'],
             system: [
                 TextBlockParam::from(text: "Today's date is 2024-06-01.")
-                    ->setCacheControl(new CacheControlEphemeral)
+                    ->setCacheControl((new CacheControlEphemeral)->setTTL('5m'))
                     ->setCitations(
                         [
                             CitationCharLocationParam::from(
@@ -85,7 +85,7 @@ final class MessagesTest extends TestCase
                         ->setRequired(['location']),
                     name: 'name',
                 )
-                    ->setCacheControl(new CacheControlEphemeral)
+                    ->setCacheControl((new CacheControlEphemeral)->setTTL('5m'))
                     ->setDescription('Get the current weather in a given location')
                     ->setType('custom'),
             ],
@@ -117,7 +117,7 @@ final class MessagesTest extends TestCase
             model: 'claude-3-7-sonnet-latest',
             system: [
                 TextBlockParam::from(text: "Today's date is 2024-06-01.")
-                    ->setCacheControl(new CacheControlEphemeral)
+                    ->setCacheControl((new CacheControlEphemeral)->setTTL('5m'))
                     ->setCitations(
                         [
                             CitationCharLocationParam::from(
@@ -139,7 +139,7 @@ final class MessagesTest extends TestCase
                         ->setRequired(['location']),
                     name: 'name',
                 )
-                    ->setCacheControl(new CacheControlEphemeral)
+                    ->setCacheControl((new CacheControlEphemeral)->setTTL('5m'))
                     ->setDescription('Get the current weather in a given location')
                     ->setType('custom'),
             ],

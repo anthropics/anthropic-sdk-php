@@ -84,7 +84,7 @@ final class BatchesTest extends TestCase
                         ->setSystem(
                             [
                                 TextBlockParam::from(text: "Today's date is 2024-06-01.")
-                                    ->setCacheControl(new CacheControlEphemeral)
+                                    ->setCacheControl((new CacheControlEphemeral)->setTTL('5m'))
                                     ->setCitations(
                                         [
                                             CitationCharLocationParam::from(
@@ -111,7 +111,7 @@ final class BatchesTest extends TestCase
                                         ->setRequired(['location']),
                                     name: 'name',
                                 )
-                                    ->setCacheControl(new CacheControlEphemeral)
+                                    ->setCacheControl((new CacheControlEphemeral)->setTTL('5m'))
                                     ->setDescription('Get the current weather in a given location')
                                     ->setType('custom'),
                             ],

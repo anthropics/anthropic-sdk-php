@@ -7,9 +7,10 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model as ModelTrait;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\CacheControlEphemeral\TTL;
 
 /**
- * @phpstan-type cache_control_ephemeral_alias = array{type: string}
+ * @phpstan-type cache_control_ephemeral_alias = array{type: string, ttl?: TTL::*}
  */
 final class CacheControlEphemeral implements BaseModel
 {
@@ -17,6 +18,20 @@ final class CacheControlEphemeral implements BaseModel
 
     #[Api]
     public string $type = 'ephemeral';
+
+    /**
+     * The time-to-live for the cache control breakpoint.
+     *
+     * This may be one the following values:
+     * - `5m`: 5 minutes
+     * - `1h`: 1 hour
+     *
+     * Defaults to `5m`.
+     *
+     * @var null|TTL::* $ttl
+     */
+    #[Api(enum: TTL::class, optional: true)]
+    public ?string $ttl;
 
     public function __construct()
     {
@@ -28,9 +43,33 @@ final class CacheControlEphemeral implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param null|TTL::* $ttl
      */
-    public static function from(): self
+    public static function from(?string $ttl = null): self
     {
-        return new self;
+        $obj = new self;
+
+        null !== $ttl && $obj->ttl = $ttl;
+
+        return $obj;
+    }
+
+    /**
+     * The time-to-live for the cache control breakpoint.
+     *
+     * This may be one the following values:
+     * - `5m`: 5 minutes
+     * - `1h`: 1 hour
+     *
+     * Defaults to `5m`.
+     *
+     * @param TTL::* $ttl
+     */
+    public function setTTL(string $ttl): self
+    {
+        $this->ttl = $ttl;
+
+        return $this;
     }
 }

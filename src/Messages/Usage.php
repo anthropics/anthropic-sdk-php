@@ -11,6 +11,7 @@ use Anthropic\Messages\Usage\ServiceTier;
 
 /**
  * @phpstan-type usage_alias = array{
+ *   cacheCreation: CacheCreation,
  *   cacheCreationInputTokens: int|null,
  *   cacheReadInputTokens: int|null,
  *   inputTokens: int,
@@ -22,6 +23,12 @@ use Anthropic\Messages\Usage\ServiceTier;
 final class Usage implements BaseModel
 {
     use ModelTrait;
+
+    /**
+     * Breakdown of cached tokens by TTL.
+     */
+    #[Api('cache_creation')]
+    public CacheCreation $cacheCreation;
 
     /**
      * The number of input tokens used to create the cache entry.
@@ -75,6 +82,7 @@ final class Usage implements BaseModel
      * @param null|ServiceTier::* $serviceTier
      */
     public static function from(
+        CacheCreation $cacheCreation,
         ?int $cacheCreationInputTokens,
         ?int $cacheReadInputTokens,
         int $inputTokens,
@@ -84,6 +92,7 @@ final class Usage implements BaseModel
     ): self {
         $obj = new self;
 
+        $obj->cacheCreation = $cacheCreation;
         $obj->cacheCreationInputTokens = $cacheCreationInputTokens;
         $obj->cacheReadInputTokens = $cacheReadInputTokens;
         $obj->inputTokens = $inputTokens;
@@ -92,6 +101,16 @@ final class Usage implements BaseModel
         $obj->serviceTier = $serviceTier;
 
         return $obj;
+    }
+
+    /**
+     * Breakdown of cached tokens by TTL.
+     */
+    public function setCacheCreation(CacheCreation $cacheCreation): self
+    {
+        $this->cacheCreation = $cacheCreation;
+
+        return $this;
     }
 
     /**
