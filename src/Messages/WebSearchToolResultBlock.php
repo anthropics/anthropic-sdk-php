@@ -29,6 +29,20 @@ final class WebSearchToolResultBlock implements BaseModel
     #[Api('tool_use_id')]
     public string $toolUseID;
 
+    /**
+     * `new WebSearchToolResultBlock()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * WebSearchToolResultBlock::with(content: ..., toolUseID: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new WebSearchToolResultBlock)->withContent(...)->withToolUseID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -42,7 +56,7 @@ final class WebSearchToolResultBlock implements BaseModel
      *
      * @param list<WebSearchResultBlock>|WebSearchToolResultError $content
      */
-    public static function from(
+    public static function with(
         array|WebSearchToolResultError $content,
         string $toolUseID
     ): self {
@@ -57,17 +71,19 @@ final class WebSearchToolResultBlock implements BaseModel
     /**
      * @param list<WebSearchResultBlock>|WebSearchToolResultError $content
      */
-    public function setContent(array|WebSearchToolResultError $content): self
+    public function withContent(array|WebSearchToolResultError $content): self
     {
-        $this->content = $content;
+        $obj = clone $this;
+        $obj->content = $content;
 
-        return $this;
+        return $obj;
     }
 
-    public function setToolUseID(string $toolUseID): self
+    public function withToolUseID(string $toolUseID): self
     {
-        $this->toolUseID = $toolUseID;
+        $obj = clone $this;
+        $obj->toolUseID = $toolUseID;
 
-        return $this;
+        return $obj;
     }
 }

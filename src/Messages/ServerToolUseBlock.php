@@ -29,6 +29,20 @@ final class ServerToolUseBlock implements BaseModel
     #[Api]
     public mixed $input;
 
+    /**
+     * `new ServerToolUseBlock()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * ServerToolUseBlock::with(id: ..., input: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new ServerToolUseBlock)->withID(...)->withInput(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -40,7 +54,7 @@ final class ServerToolUseBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $id, mixed $input): self
+    public static function with(string $id, mixed $input): self
     {
         $obj = new self;
 
@@ -50,17 +64,19 @@ final class ServerToolUseBlock implements BaseModel
         return $obj;
     }
 
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
-    public function setInput(mixed $input): self
+    public function withInput(mixed $input): self
     {
-        $this->input = $input;
+        $obj = clone $this;
+        $obj->input = $input;
 
-        return $this;
+        return $obj;
     }
 }

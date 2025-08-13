@@ -123,6 +123,23 @@ final class CompletionCreateParams implements BaseModel
     #[Api(type: new ListOf(union: AnthropicBeta::class), optional: true)]
     public ?array $anthropicBeta;
 
+    /**
+     * `new CompletionCreateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * CompletionCreateParams::with(maxTokensToSample: ..., model: ..., prompt: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new CompletionCreateParams)
+     *   ->withMaxTokensToSample(...)
+     *   ->withModel(...)
+     *   ->withPrompt(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -138,7 +155,7 @@ final class CompletionCreateParams implements BaseModel
      * @param null|list<string> $stopSequences
      * @param null|list<string|UnionMember1::*> $anthropicBeta
      */
-    public static function from(
+    public static function with(
         int $maxTokensToSample,
         string $model,
         string $prompt,
@@ -170,11 +187,12 @@ final class CompletionCreateParams implements BaseModel
      *
      * Note that our models may stop _before_ reaching this maximum. This parameter only specifies the absolute maximum number of tokens to generate.
      */
-    public function setMaxTokensToSample(int $maxTokensToSample): self
+    public function withMaxTokensToSample(int $maxTokensToSample): self
     {
-        $this->maxTokensToSample = $maxTokensToSample;
+        $obj = clone $this;
+        $obj->maxTokensToSample = $maxTokensToSample;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -182,11 +200,12 @@ final class CompletionCreateParams implements BaseModel
      *
      * @param string|UnionMember0::* $model
      */
-    public function setModel(string $model): self
+    public function withModel(string $model): self
     {
-        $this->model = $model;
+        $obj = clone $this;
+        $obj->model = $model;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -200,21 +219,23 @@ final class CompletionCreateParams implements BaseModel
      *
      * See [prompt validation](https://docs.anthropic.com/en/api/prompt-validation) and our guide to [prompt design](https://docs.anthropic.com/en/docs/intro-to-prompting) for more details.
      */
-    public function setPrompt(string $prompt): self
+    public function withPrompt(string $prompt): self
     {
-        $this->prompt = $prompt;
+        $obj = clone $this;
+        $obj->prompt = $prompt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * An object describing metadata about the request.
      */
-    public function setMetadata(Metadata $metadata): self
+    public function withMetadata(Metadata $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -224,11 +245,12 @@ final class CompletionCreateParams implements BaseModel
      *
      * @param list<string> $stopSequences
      */
-    public function setStopSequences(array $stopSequences): self
+    public function withStopSequences(array $stopSequences): self
     {
-        $this->stopSequences = $stopSequences;
+        $obj = clone $this;
+        $obj->stopSequences = $stopSequences;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -238,11 +260,12 @@ final class CompletionCreateParams implements BaseModel
      *
      * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
      */
-    public function setTemperature(float $temperature): self
+    public function withTemperature(float $temperature): self
     {
-        $this->temperature = $temperature;
+        $obj = clone $this;
+        $obj->temperature = $temperature;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -252,11 +275,12 @@ final class CompletionCreateParams implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    public function setTopK(int $topK): self
+    public function withTopK(int $topK): self
     {
-        $this->topK = $topK;
+        $obj = clone $this;
+        $obj->topK = $topK;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -266,11 +290,12 @@ final class CompletionCreateParams implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    public function setTopP(float $topP): self
+    public function withTopP(float $topP): self
     {
-        $this->topP = $topP;
+        $obj = clone $this;
+        $obj->topP = $topP;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -278,10 +303,11 @@ final class CompletionCreateParams implements BaseModel
      *
      * @param list<string|UnionMember1::*> $betas
      */
-    public function setBetas(array $betas): self
+    public function withBetas(array $betas): self
     {
-        $this->anthropicBeta = $betas;
+        $obj = clone $this;
+        $obj->anthropicBeta = $betas;
 
-        return $this;
+        return $obj;
     }
 }

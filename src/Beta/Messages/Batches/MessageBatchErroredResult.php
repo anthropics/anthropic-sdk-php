@@ -24,6 +24,20 @@ final class MessageBatchErroredResult implements BaseModel
     #[Api]
     public BetaErrorResponse $error;
 
+    /**
+     * `new MessageBatchErroredResult()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * MessageBatchErroredResult::with(error: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new MessageBatchErroredResult)->withError(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -35,7 +49,7 @@ final class MessageBatchErroredResult implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(BetaErrorResponse $error): self
+    public static function with(BetaErrorResponse $error): self
     {
         $obj = new self;
 
@@ -44,10 +58,11 @@ final class MessageBatchErroredResult implements BaseModel
         return $obj;
     }
 
-    public function setError(BetaErrorResponse $error): self
+    public function withError(BetaErrorResponse $error): self
     {
-        $this->error = $error;
+        $obj = clone $this;
+        $obj->error = $error;
 
-        return $this;
+        return $obj;
     }
 }

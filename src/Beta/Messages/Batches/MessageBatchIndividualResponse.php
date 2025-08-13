@@ -36,6 +36,20 @@ final class MessageBatchIndividualResponse implements BaseModel
     #[Api(union: MessageBatchResult::class)]
     public MessageBatchCanceledResult|MessageBatchErroredResult|MessageBatchExpiredResult|MessageBatchSucceededResult $result;
 
+    /**
+     * `new MessageBatchIndividualResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * MessageBatchIndividualResponse::with(customID: ..., result: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new MessageBatchIndividualResponse)->withCustomID(...)->withResult(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -47,7 +61,7 @@ final class MessageBatchIndividualResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $customID,
         MessageBatchCanceledResult|MessageBatchErroredResult|MessageBatchExpiredResult|MessageBatchSucceededResult $result,
     ): self {
@@ -64,11 +78,12 @@ final class MessageBatchIndividualResponse implements BaseModel
      *
      * Must be unique for each request within the Message Batch.
      */
-    public function setCustomID(string $customID): self
+    public function withCustomID(string $customID): self
     {
-        $this->customID = $customID;
+        $obj = clone $this;
+        $obj->customID = $customID;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -76,11 +91,12 @@ final class MessageBatchIndividualResponse implements BaseModel
      *
      * Contains a Message output if processing was successful, an error response if processing failed, or the reason why processing was not attempted, such as cancellation or expiration.
      */
-    public function setResult(
+    public function withResult(
         MessageBatchCanceledResult|MessageBatchErroredResult|MessageBatchExpiredResult|MessageBatchSucceededResult $result,
     ): self {
-        $this->result = $result;
+        $obj = clone $this;
+        $obj->result = $result;
 
-        return $this;
+        return $obj;
     }
 }

@@ -23,6 +23,20 @@ final class BetaSignatureDelta implements BaseModel
     #[Api]
     public string $signature;
 
+    /**
+     * `new BetaSignatureDelta()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaSignatureDelta::with(signature: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaSignatureDelta)->withSignature(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -34,7 +48,7 @@ final class BetaSignatureDelta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $signature): self
+    public static function with(string $signature): self
     {
         $obj = new self;
 
@@ -43,10 +57,11 @@ final class BetaSignatureDelta implements BaseModel
         return $obj;
     }
 
-    public function setSignature(string $signature): self
+    public function withSignature(string $signature): self
     {
-        $this->signature = $signature;
+        $obj = clone $this;
+        $obj->signature = $signature;
 
-        return $this;
+        return $obj;
     }
 }

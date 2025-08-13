@@ -36,6 +36,20 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
     #[Api('tool_configuration', optional: true)]
     public ?BetaRequestMCPServerToolConfiguration $toolConfiguration;
 
+    /**
+     * `new BetaRequestMCPServerURLDefinition()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaRequestMCPServerURLDefinition::with(name: ..., url: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaRequestMCPServerURLDefinition)->withName(...)->withURL(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -47,7 +61,7 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $name,
         string $url,
         ?string $authorizationToken = null,
@@ -64,32 +78,36 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
         return $obj;
     }
 
-    public function setName(string $name): self
+    public function withName(string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
-    public function setURL(string $url): self
+    public function withURL(string $url): self
     {
-        $this->url = $url;
+        $obj = clone $this;
+        $obj->url = $url;
 
-        return $this;
+        return $obj;
     }
 
-    public function setAuthorizationToken(?string $authorizationToken): self
+    public function withAuthorizationToken(?string $authorizationToken): self
     {
-        $this->authorizationToken = $authorizationToken;
+        $obj = clone $this;
+        $obj->authorizationToken = $authorizationToken;
 
-        return $this;
+        return $obj;
     }
 
-    public function setToolConfiguration(
+    public function withToolConfiguration(
         BetaRequestMCPServerToolConfiguration $toolConfiguration
     ): self {
-        $this->toolConfiguration = $toolConfiguration;
+        $obj = clone $this;
+        $obj->toolConfiguration = $toolConfiguration;
 
-        return $this;
+        return $obj;
     }
 }

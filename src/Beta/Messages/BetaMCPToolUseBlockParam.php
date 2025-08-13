@@ -46,6 +46,24 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
+    /**
+     * `new BetaMCPToolUseBlockParam()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaMCPToolUseBlockParam::with(id: ..., input: ..., name: ..., serverName: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaMCPToolUseBlockParam)
+     *   ->withID(...)
+     *   ->withInput(...)
+     *   ->withName(...)
+     *   ->withServerName(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -57,7 +75,7 @@ final class BetaMCPToolUseBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $id,
         mixed $input,
         string $name,
@@ -76,45 +94,50 @@ final class BetaMCPToolUseBlockParam implements BaseModel
         return $obj;
     }
 
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
-    public function setInput(mixed $input): self
+    public function withInput(mixed $input): self
     {
-        $this->input = $input;
+        $obj = clone $this;
+        $obj->input = $input;
 
-        return $this;
+        return $obj;
     }
 
-    public function setName(string $name): self
+    public function withName(string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The name of the MCP server.
      */
-    public function setServerName(string $serverName): self
+    public function withServerName(string $serverName): self
     {
-        $this->serverName = $serverName;
+        $obj = clone $this;
+        $obj->serverName = $serverName;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function setCacheControl(
+    public function withCacheControl(
         BetaCacheControlEphemeral $cacheControl
     ): self {
-        $this->cacheControl = $cacheControl;
+        $obj = clone $this;
+        $obj->cacheControl = $cacheControl;
 
-        return $this;
+        return $obj;
     }
 }

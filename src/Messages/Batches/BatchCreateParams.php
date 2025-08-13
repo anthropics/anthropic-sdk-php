@@ -33,6 +33,20 @@ final class BatchCreateParams implements BaseModel
     #[Api(type: new ListOf(Request::class))]
     public array $requests;
 
+    /**
+     * `new BatchCreateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BatchCreateParams::with(requests: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BatchCreateParams)->withRequests(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -46,7 +60,7 @@ final class BatchCreateParams implements BaseModel
      *
      * @param list<Request> $requests
      */
-    public static function from(array $requests): self
+    public static function with(array $requests): self
     {
         $obj = new self;
 
@@ -60,10 +74,11 @@ final class BatchCreateParams implements BaseModel
      *
      * @param list<Request> $requests
      */
-    public function setRequests(array $requests): self
+    public function withRequests(array $requests): self
     {
-        $this->requests = $requests;
+        $obj = clone $this;
+        $obj->requests = $requests;
 
-        return $this;
+        return $obj;
     }
 }

@@ -30,6 +30,20 @@ final class BetaMessageParam implements BaseModel
     #[Api(enum: Role::class)]
     public string $role;
 
+    /**
+     * `new BetaMessageParam()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaMessageParam::with(content: ..., role: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaMessageParam)->withContent(...)->withRole(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -44,7 +58,7 @@ final class BetaMessageParam implements BaseModel
      * @param list<BetaCodeExecutionToolResultBlockParam|BetaContainerUploadBlockParam|BetaImageBlockParam|BetaMCPToolUseBlockParam|BetaRedactedThinkingBlockParam|BetaRequestDocumentBlock|BetaRequestMCPToolResultBlockParam|BetaSearchResultBlockParam|BetaServerToolUseBlockParam|BetaTextBlockParam|BetaThinkingBlockParam|BetaToolResultBlockParam|BetaToolUseBlockParam|BetaWebSearchToolResultBlockParam>|string $content
      * @param Role::* $role
      */
-    public static function from(array|string $content, string $role): self
+    public static function with(array|string $content, string $role): self
     {
         $obj = new self;
 
@@ -57,20 +71,22 @@ final class BetaMessageParam implements BaseModel
     /**
      * @param list<BetaCodeExecutionToolResultBlockParam|BetaContainerUploadBlockParam|BetaImageBlockParam|BetaMCPToolUseBlockParam|BetaRedactedThinkingBlockParam|BetaRequestDocumentBlock|BetaRequestMCPToolResultBlockParam|BetaSearchResultBlockParam|BetaServerToolUseBlockParam|BetaTextBlockParam|BetaThinkingBlockParam|BetaToolResultBlockParam|BetaToolUseBlockParam|BetaWebSearchToolResultBlockParam>|string $content
      */
-    public function setContent(array|string $content): self
+    public function withContent(array|string $content): self
     {
-        $this->content = $content;
+        $obj = clone $this;
+        $obj->content = $content;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param Role::* $role
      */
-    public function setRole(string $role): self
+    public function withRole(string $role): self
     {
-        $this->role = $role;
+        $obj = clone $this;
+        $obj->role = $role;
 
-        return $this;
+        return $obj;
     }
 }

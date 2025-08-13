@@ -57,6 +57,22 @@ final class BetaToolComputerUse20250124 implements BaseModel
     #[Api('display_number', optional: true)]
     public ?int $displayNumber;
 
+    /**
+     * `new BetaToolComputerUse20250124()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaToolComputerUse20250124::with(displayHeightPx: ..., displayWidthPx: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaToolComputerUse20250124)
+     *   ->withDisplayHeightPx(...)
+     *   ->withDisplayWidthPx(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -68,7 +84,7 @@ final class BetaToolComputerUse20250124 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         int $displayHeightPx,
         int $displayWidthPx,
         ?BetaCacheControlEphemeral $cacheControl = null,
@@ -88,41 +104,45 @@ final class BetaToolComputerUse20250124 implements BaseModel
     /**
      * The height of the display in pixels.
      */
-    public function setDisplayHeightPx(int $displayHeightPx): self
+    public function withDisplayHeightPx(int $displayHeightPx): self
     {
-        $this->displayHeightPx = $displayHeightPx;
+        $obj = clone $this;
+        $obj->displayHeightPx = $displayHeightPx;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The width of the display in pixels.
      */
-    public function setDisplayWidthPx(int $displayWidthPx): self
+    public function withDisplayWidthPx(int $displayWidthPx): self
     {
-        $this->displayWidthPx = $displayWidthPx;
+        $obj = clone $this;
+        $obj->displayWidthPx = $displayWidthPx;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function setCacheControl(
+    public function withCacheControl(
         BetaCacheControlEphemeral $cacheControl
     ): self {
-        $this->cacheControl = $cacheControl;
+        $obj = clone $this;
+        $obj->cacheControl = $cacheControl;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The X11 display number (e.g. 0, 1) for the display.
      */
-    public function setDisplayNumber(?int $displayNumber): self
+    public function withDisplayNumber(?int $displayNumber): self
     {
-        $this->displayNumber = $displayNumber;
+        $obj = clone $this;
+        $obj->displayNumber = $displayNumber;
 
-        return $this;
+        return $obj;
     }
 }

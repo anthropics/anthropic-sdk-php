@@ -40,6 +40,31 @@ final class CitationPageLocationParam implements BaseModel
     #[Api('start_page_number')]
     public int $startPageNumber;
 
+    /**
+     * `new CitationPageLocationParam()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * CitationPageLocationParam::with(
+     *   citedText: ...,
+     *   documentIndex: ...,
+     *   documentTitle: ...,
+     *   endPageNumber: ...,
+     *   startPageNumber: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new CitationPageLocationParam)
+     *   ->withCitedText(...)
+     *   ->withDocumentIndex(...)
+     *   ->withDocumentTitle(...)
+     *   ->withEndPageNumber(...)
+     *   ->withStartPageNumber(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -51,7 +76,7 @@ final class CitationPageLocationParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $citedText,
         int $documentIndex,
         ?string $documentTitle,
@@ -69,38 +94,43 @@ final class CitationPageLocationParam implements BaseModel
         return $obj;
     }
 
-    public function setCitedText(string $citedText): self
+    public function withCitedText(string $citedText): self
     {
-        $this->citedText = $citedText;
+        $obj = clone $this;
+        $obj->citedText = $citedText;
 
-        return $this;
+        return $obj;
     }
 
-    public function setDocumentIndex(int $documentIndex): self
+    public function withDocumentIndex(int $documentIndex): self
     {
-        $this->documentIndex = $documentIndex;
+        $obj = clone $this;
+        $obj->documentIndex = $documentIndex;
 
-        return $this;
+        return $obj;
     }
 
-    public function setDocumentTitle(?string $documentTitle): self
+    public function withDocumentTitle(?string $documentTitle): self
     {
-        $this->documentTitle = $documentTitle;
+        $obj = clone $this;
+        $obj->documentTitle = $documentTitle;
 
-        return $this;
+        return $obj;
     }
 
-    public function setEndPageNumber(int $endPageNumber): self
+    public function withEndPageNumber(int $endPageNumber): self
     {
-        $this->endPageNumber = $endPageNumber;
+        $obj = clone $this;
+        $obj->endPageNumber = $endPageNumber;
 
-        return $this;
+        return $obj;
     }
 
-    public function setStartPageNumber(int $startPageNumber): self
+    public function withStartPageNumber(int $startPageNumber): self
     {
-        $this->startPageNumber = $startPageNumber;
+        $obj = clone $this;
+        $obj->startPageNumber = $startPageNumber;
 
-        return $this;
+        return $obj;
     }
 }

@@ -21,6 +21,20 @@ final class TextDelta implements BaseModel
     #[Api]
     public string $text;
 
+    /**
+     * `new TextDelta()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * TextDelta::with(text: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new TextDelta)->withText(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -32,7 +46,7 @@ final class TextDelta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $text): self
+    public static function with(string $text): self
     {
         $obj = new self;
 
@@ -41,10 +55,11 @@ final class TextDelta implements BaseModel
         return $obj;
     }
 
-    public function setText(string $text): self
+    public function withText(string $text): self
     {
-        $this->text = $text;
+        $obj = clone $this;
+        $obj->text = $text;
 
-        return $this;
+        return $obj;
     }
 }

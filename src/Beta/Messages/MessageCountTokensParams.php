@@ -234,6 +234,20 @@ final class MessageCountTokensParams implements BaseModel
     #[Api(type: new ListOf(union: AnthropicBeta::class), optional: true)]
     public ?array $anthropicBeta;
 
+    /**
+     * `new MessageCountTokensParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * MessageCountTokensParams::with(messages: ..., model: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new MessageCountTokensParams)->withMessages(...)->withModel(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -252,7 +266,7 @@ final class MessageCountTokensParams implements BaseModel
      * @param null|list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
      * @param null|list<string|UnionMember1::*> $anthropicBeta
      */
-    public static function from(
+    public static function with(
         array $messages,
         string $model,
         ?array $mcpServers = null,
@@ -347,11 +361,12 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param list<BetaMessageParam> $messages
      */
-    public function setMessages(array $messages): self
+    public function withMessages(array $messages): self
     {
-        $this->messages = $messages;
+        $obj = clone $this;
+        $obj->messages = $messages;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -359,11 +374,12 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param string|UnionMember0::* $model
      */
-    public function setModel(string $model): self
+    public function withModel(string $model): self
     {
-        $this->model = $model;
+        $obj = clone $this;
+        $obj->model = $model;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -371,11 +387,12 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param list<BetaRequestMCPServerURLDefinition> $mcpServers
      */
-    public function setMCPServers(array $mcpServers): self
+    public function withMCPServers(array $mcpServers): self
     {
-        $this->mcpServers = $mcpServers;
+        $obj = clone $this;
+        $obj->mcpServers = $mcpServers;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -385,11 +402,12 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param list<BetaTextBlockParam>|string $system
      */
-    public function setSystem(array|string $system): self
+    public function withSystem(array|string $system): self
     {
-        $this->system = $system;
+        $obj = clone $this;
+        $obj->system = $system;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -399,23 +417,25 @@ final class MessageCountTokensParams implements BaseModel
      *
      * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
      */
-    public function setThinking(
+    public function withThinking(
         BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking
     ): self {
-        $this->thinking = $thinking;
+        $obj = clone $this;
+        $obj->thinking = $thinking;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
-    public function setToolChoice(
+    public function withToolChoice(
         BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice,
     ): self {
-        $this->toolChoice = $toolChoice;
+        $obj = clone $this;
+        $obj->toolChoice = $toolChoice;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -483,11 +503,12 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
      */
-    public function setTools(array $tools): self
+    public function withTools(array $tools): self
     {
-        $this->tools = $tools;
+        $obj = clone $this;
+        $obj->tools = $tools;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -495,10 +516,11 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param list<string|UnionMember1::*> $betas
      */
-    public function setBetas(array $betas): self
+    public function withBetas(array $betas): self
     {
-        $this->anthropicBeta = $betas;
+        $obj = clone $this;
+        $obj->anthropicBeta = $betas;
 
-        return $this;
+        return $obj;
     }
 }

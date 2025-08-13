@@ -21,6 +21,20 @@ final class RedactedThinkingBlock implements BaseModel
     #[Api]
     public string $data;
 
+    /**
+     * `new RedactedThinkingBlock()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * RedactedThinkingBlock::with(data: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new RedactedThinkingBlock)->withData(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -32,7 +46,7 @@ final class RedactedThinkingBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $data): self
+    public static function with(string $data): self
     {
         $obj = new self;
 
@@ -41,10 +55,11 @@ final class RedactedThinkingBlock implements BaseModel
         return $obj;
     }
 
-    public function setData(string $data): self
+    public function withData(string $data): self
     {
-        $this->data = $data;
+        $obj = clone $this;
+        $obj->data = $data;
 
-        return $this;
+        return $obj;
     }
 }

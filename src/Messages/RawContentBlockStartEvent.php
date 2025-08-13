@@ -29,6 +29,20 @@ final class RawContentBlockStartEvent implements BaseModel
     #[Api]
     public int $index;
 
+    /**
+     * `new RawContentBlockStartEvent()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * RawContentBlockStartEvent::with(contentBlock: ..., index: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new RawContentBlockStartEvent)->withContentBlock(...)->withIndex(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -40,7 +54,7 @@ final class RawContentBlockStartEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock $contentBlock,
         int $index,
     ): self {
@@ -52,18 +66,20 @@ final class RawContentBlockStartEvent implements BaseModel
         return $obj;
     }
 
-    public function setContentBlock(
+    public function withContentBlock(
         RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock $contentBlock,
     ): self {
-        $this->contentBlock = $contentBlock;
+        $obj = clone $this;
+        $obj->contentBlock = $contentBlock;
 
-        return $this;
+        return $obj;
     }
 
-    public function setIndex(int $index): self
+    public function withIndex(int $index): self
     {
-        $this->index = $index;
+        $obj = clone $this;
+        $obj->index = $index;
 
-        return $this;
+        return $obj;
     }
 }

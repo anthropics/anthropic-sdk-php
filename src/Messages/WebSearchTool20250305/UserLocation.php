@@ -61,7 +61,7 @@ final class UserLocation implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         ?string $city = null,
         ?string $country = null,
         ?string $region = null,
@@ -80,40 +80,44 @@ final class UserLocation implements BaseModel
     /**
      * The city of the user.
      */
-    public function setCity(?string $city): self
+    public function withCity(?string $city): self
     {
-        $this->city = $city;
+        $obj = clone $this;
+        $obj->city = $city;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The two letter [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the user.
      */
-    public function setCountry(?string $country): self
+    public function withCountry(?string $country): self
     {
-        $this->country = $country;
+        $obj = clone $this;
+        $obj->country = $country;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The region of the user.
      */
-    public function setRegion(?string $region): self
+    public function withRegion(?string $region): self
     {
-        $this->region = $region;
+        $obj = clone $this;
+        $obj->region = $region;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The [IANA timezone](https://nodatime.org/TimeZones) of the user.
      */
-    public function setTimezone(?string $timezone): self
+    public function withTimezone(?string $timezone): self
     {
-        $this->timezone = $timezone;
+        $obj = clone $this;
+        $obj->timezone = $timezone;
 
-        return $this;
+        return $obj;
     }
 }

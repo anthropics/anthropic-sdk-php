@@ -32,6 +32,20 @@ final class Request implements BaseModel
     #[Api]
     public Params $params;
 
+    /**
+     * `new Request()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Request::with(customID: ..., params: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Request)->withCustomID(...)->withParams(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -43,7 +57,7 @@ final class Request implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $customID, Params $params): self
+    public static function with(string $customID, Params $params): self
     {
         $obj = new self;
 
@@ -58,11 +72,12 @@ final class Request implements BaseModel
      *
      * Must be unique for each request within the Message Batch.
      */
-    public function setCustomID(string $customID): self
+    public function withCustomID(string $customID): self
     {
-        $this->customID = $customID;
+        $obj = clone $this;
+        $obj->customID = $customID;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -70,10 +85,11 @@ final class Request implements BaseModel
      *
      * See the [Messages API reference](/en/api/messages) for full documentation on available parameters.
      */
-    public function setParams(Params $params): self
+    public function withParams(Params $params): self
     {
-        $this->params = $params;
+        $obj = clone $this;
+        $obj->params = $params;
 
-        return $this;
+        return $obj;
     }
 }

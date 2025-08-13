@@ -94,7 +94,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
      * @param null|list<string> $allowedDomains
      * @param null|list<string> $blockedDomains
      */
-    public static function from(
+    public static function with(
         ?array $allowedDomains = null,
         ?array $blockedDomains = null,
         ?BetaCacheControlEphemeral $cacheControl = null,
@@ -117,11 +117,12 @@ final class BetaWebSearchTool20250305 implements BaseModel
      *
      * @param null|list<string> $allowedDomains
      */
-    public function setAllowedDomains(?array $allowedDomains): self
+    public function withAllowedDomains(?array $allowedDomains): self
     {
-        $this->allowedDomains = $allowedDomains;
+        $obj = clone $this;
+        $obj->allowedDomains = $allowedDomains;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -129,41 +130,45 @@ final class BetaWebSearchTool20250305 implements BaseModel
      *
      * @param null|list<string> $blockedDomains
      */
-    public function setBlockedDomains(?array $blockedDomains): self
+    public function withBlockedDomains(?array $blockedDomains): self
     {
-        $this->blockedDomains = $blockedDomains;
+        $obj = clone $this;
+        $obj->blockedDomains = $blockedDomains;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function setCacheControl(
+    public function withCacheControl(
         BetaCacheControlEphemeral $cacheControl
     ): self {
-        $this->cacheControl = $cacheControl;
+        $obj = clone $this;
+        $obj->cacheControl = $cacheControl;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Maximum number of times the tool can be used in the API request.
      */
-    public function setMaxUses(?int $maxUses): self
+    public function withMaxUses(?int $maxUses): self
     {
-        $this->maxUses = $maxUses;
+        $obj = clone $this;
+        $obj->maxUses = $maxUses;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Parameters for the user's location. Used to provide more relevant search results.
      */
-    public function setUserLocation(?UserLocation $userLocation): self
+    public function withUserLocation(?UserLocation $userLocation): self
     {
-        $this->userLocation = $userLocation;
+        $obj = clone $this;
+        $obj->userLocation = $userLocation;
 
-        return $this;
+        return $obj;
     }
 }

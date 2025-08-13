@@ -31,7 +31,7 @@ final class BetaToolChoiceNone implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(): self
+    public static function with(): self
     {
         return new self;
     }

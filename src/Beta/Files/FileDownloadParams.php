@@ -45,7 +45,7 @@ final class FileDownloadParams implements BaseModel
      *
      * @param null|list<string|UnionMember1::*> $anthropicBeta
      */
-    public static function from(?array $anthropicBeta = null): self
+    public static function with(?array $anthropicBeta = null): self
     {
         $obj = new self;
 
@@ -59,10 +59,11 @@ final class FileDownloadParams implements BaseModel
      *
      * @param list<string|UnionMember1::*> $betas
      */
-    public function setBetas(array $betas): self
+    public function withBetas(array $betas): self
     {
-        $this->anthropicBeta = $betas;
+        $obj = clone $this;
+        $obj->anthropicBeta = $betas;
 
-        return $this;
+        return $obj;
     }
 }

@@ -68,6 +68,35 @@ final class Usage implements BaseModel
     #[Api('service_tier', enum: ServiceTier::class, nullable: true)]
     public ?string $serviceTier;
 
+    /**
+     * `new Usage()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Usage::with(
+     *   cacheCreation: ...,
+     *   cacheCreationInputTokens: ...,
+     *   cacheReadInputTokens: ...,
+     *   inputTokens: ...,
+     *   outputTokens: ...,
+     *   serverToolUse: ...,
+     *   serviceTier: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Usage)
+     *   ->withCacheCreation(...)
+     *   ->withCacheCreationInputTokens(...)
+     *   ->withCacheReadInputTokens(...)
+     *   ->withInputTokens(...)
+     *   ->withOutputTokens(...)
+     *   ->withServerToolUse(...)
+     *   ->withServiceTier(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -81,7 +110,7 @@ final class Usage implements BaseModel
      *
      * @param null|ServiceTier::* $serviceTier
      */
-    public static function from(
+    public static function with(
         CacheCreation $cacheCreation,
         ?int $cacheCreationInputTokens,
         ?int $cacheReadInputTokens,
@@ -106,62 +135,68 @@ final class Usage implements BaseModel
     /**
      * Breakdown of cached tokens by TTL.
      */
-    public function setCacheCreation(CacheCreation $cacheCreation): self
+    public function withCacheCreation(CacheCreation $cacheCreation): self
     {
-        $this->cacheCreation = $cacheCreation;
+        $obj = clone $this;
+        $obj->cacheCreation = $cacheCreation;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The number of input tokens used to create the cache entry.
      */
-    public function setCacheCreationInputTokens(
+    public function withCacheCreationInputTokens(
         ?int $cacheCreationInputTokens
     ): self {
-        $this->cacheCreationInputTokens = $cacheCreationInputTokens;
+        $obj = clone $this;
+        $obj->cacheCreationInputTokens = $cacheCreationInputTokens;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The number of input tokens read from the cache.
      */
-    public function setCacheReadInputTokens(?int $cacheReadInputTokens): self
+    public function withCacheReadInputTokens(?int $cacheReadInputTokens): self
     {
-        $this->cacheReadInputTokens = $cacheReadInputTokens;
+        $obj = clone $this;
+        $obj->cacheReadInputTokens = $cacheReadInputTokens;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The number of input tokens which were used.
      */
-    public function setInputTokens(int $inputTokens): self
+    public function withInputTokens(int $inputTokens): self
     {
-        $this->inputTokens = $inputTokens;
+        $obj = clone $this;
+        $obj->inputTokens = $inputTokens;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The number of output tokens which were used.
      */
-    public function setOutputTokens(int $outputTokens): self
+    public function withOutputTokens(int $outputTokens): self
     {
-        $this->outputTokens = $outputTokens;
+        $obj = clone $this;
+        $obj->outputTokens = $outputTokens;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The number of server tool requests.
      */
-    public function setServerToolUse(ServerToolUsage $serverToolUse): self
+    public function withServerToolUse(ServerToolUsage $serverToolUse): self
     {
-        $this->serverToolUse = $serverToolUse;
+        $obj = clone $this;
+        $obj->serverToolUse = $serverToolUse;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -169,10 +204,11 @@ final class Usage implements BaseModel
      *
      * @param null|ServiceTier::* $serviceTier
      */
-    public function setServiceTier(?string $serviceTier): self
+    public function withServiceTier(?string $serviceTier): self
     {
-        $this->serviceTier = $serviceTier;
+        $obj = clone $this;
+        $obj->serviceTier = $serviceTier;
 
-        return $this;
+        return $obj;
     }
 }

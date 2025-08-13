@@ -43,6 +43,20 @@ final class BetaTextBlockParam implements BaseModel
     )]
     public ?array $citations;
 
+    /**
+     * `new BetaTextBlockParam()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaTextBlockParam::with(text: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaTextBlockParam)->withText(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -56,7 +70,7 @@ final class BetaTextBlockParam implements BaseModel
      *
      * @param null|list<BetaCitationCharLocationParam|BetaCitationContentBlockLocationParam|BetaCitationPageLocationParam|BetaCitationSearchResultLocationParam|BetaCitationWebSearchResultLocationParam> $citations
      */
-    public static function from(
+    public static function with(
         string $text,
         ?BetaCacheControlEphemeral $cacheControl = null,
         ?array $citations = null,
@@ -71,31 +85,34 @@ final class BetaTextBlockParam implements BaseModel
         return $obj;
     }
 
-    public function setText(string $text): self
+    public function withText(string $text): self
     {
-        $this->text = $text;
+        $obj = clone $this;
+        $obj->text = $text;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function setCacheControl(
+    public function withCacheControl(
         BetaCacheControlEphemeral $cacheControl
     ): self {
-        $this->cacheControl = $cacheControl;
+        $obj = clone $this;
+        $obj->cacheControl = $cacheControl;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param null|list<BetaCitationCharLocationParam|BetaCitationContentBlockLocationParam|BetaCitationPageLocationParam|BetaCitationSearchResultLocationParam|BetaCitationWebSearchResultLocationParam> $citations
      */
-    public function setCitations(?array $citations): self
+    public function withCitations(?array $citations): self
     {
-        $this->citations = $citations;
+        $obj = clone $this;
+        $obj->citations = $citations;
 
-        return $this;
+        return $obj;
     }
 }

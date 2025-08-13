@@ -44,6 +44,20 @@ final class DocumentBlockParam implements BaseModel
     #[Api(optional: true)]
     public ?string $title;
 
+    /**
+     * `new DocumentBlockParam()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * DocumentBlockParam::with(source: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new DocumentBlockParam)->withSource(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -55,7 +69,7 @@ final class DocumentBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source,
         ?CacheControlEphemeral $cacheControl = null,
         ?CitationsConfigParam $citations = null,
@@ -74,42 +88,47 @@ final class DocumentBlockParam implements BaseModel
         return $obj;
     }
 
-    public function setSource(
+    public function withSource(
         Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source
     ): self {
-        $this->source = $source;
+        $obj = clone $this;
+        $obj->source = $source;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function setCacheControl(CacheControlEphemeral $cacheControl): self
+    public function withCacheControl(CacheControlEphemeral $cacheControl): self
     {
-        $this->cacheControl = $cacheControl;
+        $obj = clone $this;
+        $obj->cacheControl = $cacheControl;
 
-        return $this;
+        return $obj;
     }
 
-    public function setCitations(CitationsConfigParam $citations): self
+    public function withCitations(CitationsConfigParam $citations): self
     {
-        $this->citations = $citations;
+        $obj = clone $this;
+        $obj->citations = $citations;
 
-        return $this;
+        return $obj;
     }
 
-    public function setContext(?string $context): self
+    public function withContext(?string $context): self
     {
-        $this->context = $context;
+        $obj = clone $this;
+        $obj->context = $context;
 
-        return $this;
+        return $obj;
     }
 
-    public function setTitle(?string $title): self
+    public function withTitle(?string $title): self
     {
-        $this->title = $title;
+        $obj = clone $this;
+        $obj->title = $title;
 
-        return $this;
+        return $obj;
     }
 }

@@ -36,6 +36,26 @@ final class BetaCitationWebSearchResultLocationParam implements BaseModel
     #[Api]
     public string $url;
 
+    /**
+     * `new BetaCitationWebSearchResultLocationParam()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaCitationWebSearchResultLocationParam::with(
+     *   citedText: ..., encryptedIndex: ..., title: ..., url: ...
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaCitationWebSearchResultLocationParam)
+     *   ->withCitedText(...)
+     *   ->withEncryptedIndex(...)
+     *   ->withTitle(...)
+     *   ->withURL(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -47,7 +67,7 @@ final class BetaCitationWebSearchResultLocationParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $citedText,
         string $encryptedIndex,
         ?string $title,
@@ -63,31 +83,35 @@ final class BetaCitationWebSearchResultLocationParam implements BaseModel
         return $obj;
     }
 
-    public function setCitedText(string $citedText): self
+    public function withCitedText(string $citedText): self
     {
-        $this->citedText = $citedText;
+        $obj = clone $this;
+        $obj->citedText = $citedText;
 
-        return $this;
+        return $obj;
     }
 
-    public function setEncryptedIndex(string $encryptedIndex): self
+    public function withEncryptedIndex(string $encryptedIndex): self
     {
-        $this->encryptedIndex = $encryptedIndex;
+        $obj = clone $this;
+        $obj->encryptedIndex = $encryptedIndex;
 
-        return $this;
+        return $obj;
     }
 
-    public function setTitle(?string $title): self
+    public function withTitle(?string $title): self
     {
-        $this->title = $title;
+        $obj = clone $this;
+        $obj->title = $title;
 
-        return $this;
+        return $obj;
     }
 
-    public function setURL(string $url): self
+    public function withURL(string $url): self
     {
-        $this->url = $url;
+        $obj = clone $this;
+        $obj->url = $url;
 
-        return $this;
+        return $obj;
     }
 }

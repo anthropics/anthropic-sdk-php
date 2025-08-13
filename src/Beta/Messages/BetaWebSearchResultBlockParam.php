@@ -36,6 +36,23 @@ final class BetaWebSearchResultBlockParam implements BaseModel
     #[Api('page_age', optional: true)]
     public ?string $pageAge;
 
+    /**
+     * `new BetaWebSearchResultBlockParam()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaWebSearchResultBlockParam::with(encryptedContent: ..., title: ..., url: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaWebSearchResultBlockParam)
+     *   ->withEncryptedContent(...)
+     *   ->withTitle(...)
+     *   ->withURL(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -47,7 +64,7 @@ final class BetaWebSearchResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $encryptedContent,
         string $title,
         string $url,
@@ -64,31 +81,35 @@ final class BetaWebSearchResultBlockParam implements BaseModel
         return $obj;
     }
 
-    public function setEncryptedContent(string $encryptedContent): self
+    public function withEncryptedContent(string $encryptedContent): self
     {
-        $this->encryptedContent = $encryptedContent;
+        $obj = clone $this;
+        $obj->encryptedContent = $encryptedContent;
 
-        return $this;
+        return $obj;
     }
 
-    public function setTitle(string $title): self
+    public function withTitle(string $title): self
     {
-        $this->title = $title;
+        $obj = clone $this;
+        $obj->title = $title;
 
-        return $this;
+        return $obj;
     }
 
-    public function setURL(string $url): self
+    public function withURL(string $url): self
     {
-        $this->url = $url;
+        $obj = clone $this;
+        $obj->url = $url;
 
-        return $this;
+        return $obj;
     }
 
-    public function setPageAge(?string $pageAge): self
+    public function withPageAge(?string $pageAge): self
     {
-        $this->pageAge = $pageAge;
+        $obj = clone $this;
+        $obj->pageAge = $pageAge;
 
-        return $this;
+        return $obj;
     }
 }

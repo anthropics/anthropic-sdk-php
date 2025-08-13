@@ -21,6 +21,20 @@ final class BetaRateLimitError implements BaseModel
     #[Api]
     public string $message;
 
+    /**
+     * `new BetaRateLimitError()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaRateLimitError::with(message: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaRateLimitError)->withMessage(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -32,7 +46,7 @@ final class BetaRateLimitError implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $message = 'Rate limited'): self
+    public static function with(string $message = 'Rate limited'): self
     {
         $obj = new self;
 
@@ -41,10 +55,11 @@ final class BetaRateLimitError implements BaseModel
         return $obj;
     }
 
-    public function setMessage(string $message): self
+    public function withMessage(string $message): self
     {
-        $this->message = $message;
+        $obj = clone $this;
+        $obj->message = $message;
 
-        return $this;
+        return $obj;
     }
 }

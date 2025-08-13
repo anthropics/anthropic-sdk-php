@@ -21,6 +21,20 @@ final class OverloadedError implements BaseModel
     #[Api]
     public string $message;
 
+    /**
+     * `new OverloadedError()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * OverloadedError::with(message: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new OverloadedError)->withMessage(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -32,7 +46,7 @@ final class OverloadedError implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $message = 'Overloaded'): self
+    public static function with(string $message = 'Overloaded'): self
     {
         $obj = new self;
 
@@ -41,10 +55,11 @@ final class OverloadedError implements BaseModel
         return $obj;
     }
 
-    public function setMessage(string $message): self
+    public function withMessage(string $message): self
     {
-        $this->message = $message;
+        $obj = clone $this;
+        $obj->message = $message;
 
-        return $this;
+        return $obj;
     }
 }

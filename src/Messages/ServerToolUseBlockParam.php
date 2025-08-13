@@ -39,6 +39,20 @@ final class ServerToolUseBlockParam implements BaseModel
     #[Api('cache_control', optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 
+    /**
+     * `new ServerToolUseBlockParam()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * ServerToolUseBlockParam::with(id: ..., input: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new ServerToolUseBlockParam)->withID(...)->withInput(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -50,7 +64,7 @@ final class ServerToolUseBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $id,
         mixed $input,
         ?CacheControlEphemeral $cacheControl = null
@@ -65,27 +79,30 @@ final class ServerToolUseBlockParam implements BaseModel
         return $obj;
     }
 
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
-    public function setInput(mixed $input): self
+    public function withInput(mixed $input): self
     {
-        $this->input = $input;
+        $obj = clone $this;
+        $obj->input = $input;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function setCacheControl(CacheControlEphemeral $cacheControl): self
+    public function withCacheControl(CacheControlEphemeral $cacheControl): self
     {
-        $this->cacheControl = $cacheControl;
+        $obj = clone $this;
+        $obj->cacheControl = $cacheControl;
 
-        return $this;
+        return $obj;
     }
 }

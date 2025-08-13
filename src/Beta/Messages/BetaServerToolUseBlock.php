@@ -31,6 +31,20 @@ final class BetaServerToolUseBlock implements BaseModel
     #[Api(enum: Name::class)]
     public string $name;
 
+    /**
+     * `new BetaServerToolUseBlock()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaServerToolUseBlock::with(id: ..., input: ..., name: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaServerToolUseBlock)->withID(...)->withInput(...)->withName(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -44,7 +58,7 @@ final class BetaServerToolUseBlock implements BaseModel
      *
      * @param Name::* $name
      */
-    public static function from(string $id, mixed $input, string $name): self
+    public static function with(string $id, mixed $input, string $name): self
     {
         $obj = new self;
 
@@ -55,27 +69,30 @@ final class BetaServerToolUseBlock implements BaseModel
         return $obj;
     }
 
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
-    public function setInput(mixed $input): self
+    public function withInput(mixed $input): self
     {
-        $this->input = $input;
+        $obj = clone $this;
+        $obj->input = $input;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param Name::* $name
      */
-    public function setName(string $name): self
+    public function withName(string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 }

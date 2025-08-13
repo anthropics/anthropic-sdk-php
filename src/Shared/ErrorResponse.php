@@ -24,6 +24,20 @@ final class ErrorResponse implements BaseModel
     #[Api(union: ErrorObject::class)]
     public APIErrorObject|AuthenticationError|BillingError|GatewayTimeoutError|InvalidRequestError|NotFoundError|OverloadedError|PermissionError|RateLimitError $error;
 
+    /**
+     * `new ErrorResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * ErrorResponse::with(error: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new ErrorResponse)->withError(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -35,7 +49,7 @@ final class ErrorResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         APIErrorObject|AuthenticationError|BillingError|GatewayTimeoutError|InvalidRequestError|NotFoundError|OverloadedError|PermissionError|RateLimitError $error,
     ): self {
         $obj = new self;
@@ -45,11 +59,12 @@ final class ErrorResponse implements BaseModel
         return $obj;
     }
 
-    public function setError(
+    public function withError(
         APIErrorObject|AuthenticationError|BillingError|GatewayTimeoutError|InvalidRequestError|NotFoundError|OverloadedError|PermissionError|RateLimitError $error,
     ): self {
-        $this->error = $error;
+        $obj = clone $this;
+        $obj->error = $error;
 
-        return $this;
+        return $obj;
     }
 }

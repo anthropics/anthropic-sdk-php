@@ -45,7 +45,7 @@ final class InputSchema implements BaseModel
      *
      * @param null|list<string> $required
      */
-    public static function from(
+    public static function with(
         mixed $properties = null,
         ?array $required = null
     ): self {
@@ -57,20 +57,22 @@ final class InputSchema implements BaseModel
         return $obj;
     }
 
-    public function setProperties(mixed $properties): self
+    public function withProperties(mixed $properties): self
     {
-        $this->properties = $properties;
+        $obj = clone $this;
+        $obj->properties = $properties;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param null|list<string> $required
      */
-    public function setRequired(?array $required): self
+    public function withRequired(?array $required): self
     {
-        $this->required = $required;
+        $obj = clone $this;
+        $obj->required = $required;
 
-        return $this;
+        return $obj;
     }
 }

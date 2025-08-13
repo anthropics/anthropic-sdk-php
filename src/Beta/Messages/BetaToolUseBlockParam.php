@@ -39,6 +39,20 @@ final class BetaToolUseBlockParam implements BaseModel
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
+    /**
+     * `new BetaToolUseBlockParam()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaToolUseBlockParam::with(id: ..., input: ..., name: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaToolUseBlockParam)->withID(...)->withInput(...)->withName(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -50,7 +64,7 @@ final class BetaToolUseBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $id,
         mixed $input,
         string $name,
@@ -67,35 +81,39 @@ final class BetaToolUseBlockParam implements BaseModel
         return $obj;
     }
 
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
-    public function setInput(mixed $input): self
+    public function withInput(mixed $input): self
     {
-        $this->input = $input;
+        $obj = clone $this;
+        $obj->input = $input;
 
-        return $this;
+        return $obj;
     }
 
-    public function setName(string $name): self
+    public function withName(string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function setCacheControl(
+    public function withCacheControl(
         BetaCacheControlEphemeral $cacheControl
     ): self {
-        $this->cacheControl = $cacheControl;
+        $obj = clone $this;
+        $obj->cacheControl = $cacheControl;
 
-        return $this;
+        return $obj;
     }
 }

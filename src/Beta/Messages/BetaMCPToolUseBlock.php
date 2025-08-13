@@ -38,6 +38,24 @@ final class BetaMCPToolUseBlock implements BaseModel
     #[Api('server_name')]
     public string $serverName;
 
+    /**
+     * `new BetaMCPToolUseBlock()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaMCPToolUseBlock::with(id: ..., input: ..., name: ..., serverName: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaMCPToolUseBlock)
+     *   ->withID(...)
+     *   ->withInput(...)
+     *   ->withName(...)
+     *   ->withServerName(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -49,7 +67,7 @@ final class BetaMCPToolUseBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $id,
         mixed $input,
         string $name,
@@ -65,37 +83,41 @@ final class BetaMCPToolUseBlock implements BaseModel
         return $obj;
     }
 
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
-    public function setInput(mixed $input): self
+    public function withInput(mixed $input): self
     {
-        $this->input = $input;
+        $obj = clone $this;
+        $obj->input = $input;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The name of the MCP tool.
      */
-    public function setName(string $name): self
+    public function withName(string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The name of the MCP server.
      */
-    public function setServerName(string $serverName): self
+    public function withServerName(string $serverName): self
     {
-        $this->serverName = $serverName;
+        $obj = clone $this;
+        $obj->serverName = $serverName;
 
-        return $this;
+        return $obj;
     }
 }

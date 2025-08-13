@@ -28,6 +28,20 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
     #[Api('tool_use_id')]
     public string $toolUseID;
 
+    /**
+     * `new BetaCodeExecutionToolResultBlock()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaCodeExecutionToolResultBlock::with(content: ..., toolUseID: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaCodeExecutionToolResultBlock)->withContent(...)->withToolUseID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -39,7 +53,7 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         BetaCodeExecutionResultBlock|BetaCodeExecutionToolResultError $content,
         string $toolUseID,
     ): self {
@@ -51,18 +65,20 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
         return $obj;
     }
 
-    public function setContent(
+    public function withContent(
         BetaCodeExecutionResultBlock|BetaCodeExecutionToolResultError $content
     ): self {
-        $this->content = $content;
+        $obj = clone $this;
+        $obj->content = $content;
 
-        return $this;
+        return $obj;
     }
 
-    public function setToolUseID(string $toolUseID): self
+    public function withToolUseID(string $toolUseID): self
     {
-        $this->toolUseID = $toolUseID;
+        $obj = clone $this;
+        $obj->toolUseID = $toolUseID;
 
-        return $this;
+        return $obj;
     }
 }

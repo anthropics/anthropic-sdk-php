@@ -308,6 +308,20 @@ final class Params implements BaseModel
     #[Api('top_p', optional: true)]
     public ?float $topP;
 
+    /**
+     * `new Params()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Params::with(maxTokens: ..., messages: ..., model: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Params)->withMaxTokens(...)->withMessages(...)->withModel(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -326,7 +340,7 @@ final class Params implements BaseModel
      * @param null|list<TextBlockParam>|string $system
      * @param null|list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
      */
-    public static function from(
+    public static function with(
         int $maxTokens,
         array $messages,
         string $model,
@@ -370,11 +384,12 @@ final class Params implements BaseModel
      *
      * Different models have different maximum values for this parameter.  See [models](https://docs.anthropic.com/en/docs/models-overview) for details.
      */
-    public function setMaxTokens(int $maxTokens): self
+    public function withMaxTokens(int $maxTokens): self
     {
-        $this->maxTokens = $maxTokens;
+        $obj = clone $this;
+        $obj->maxTokens = $maxTokens;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -447,11 +462,12 @@ final class Params implements BaseModel
      *
      * @param list<MessageParam> $messages
      */
-    public function setMessages(array $messages): self
+    public function withMessages(array $messages): self
     {
-        $this->messages = $messages;
+        $obj = clone $this;
+        $obj->messages = $messages;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -459,21 +475,23 @@ final class Params implements BaseModel
      *
      * @param string|UnionMember0::* $model
      */
-    public function setModel(string $model): self
+    public function withModel(string $model): self
     {
-        $this->model = $model;
+        $obj = clone $this;
+        $obj->model = $model;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * An object describing metadata about the request.
      */
-    public function setMetadata(Metadata $metadata): self
+    public function withMetadata(Metadata $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -483,11 +501,12 @@ final class Params implements BaseModel
      *
      * @param ServiceTier::* $serviceTier
      */
-    public function setServiceTier(string $serviceTier): self
+    public function withServiceTier(string $serviceTier): self
     {
-        $this->serviceTier = $serviceTier;
+        $obj = clone $this;
+        $obj->serviceTier = $serviceTier;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -499,11 +518,12 @@ final class Params implements BaseModel
      *
      * @param list<string> $stopSequences
      */
-    public function setStopSequences(array $stopSequences): self
+    public function withStopSequences(array $stopSequences): self
     {
-        $this->stopSequences = $stopSequences;
+        $obj = clone $this;
+        $obj->stopSequences = $stopSequences;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -511,11 +531,12 @@ final class Params implements BaseModel
      *
      * See [streaming](https://docs.anthropic.com/en/api/messages-streaming) for details.
      */
-    public function setStream(bool $stream): self
+    public function withStream(bool $stream): self
     {
-        $this->stream = $stream;
+        $obj = clone $this;
+        $obj->stream = $stream;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -525,11 +546,12 @@ final class Params implements BaseModel
      *
      * @param list<TextBlockParam>|string $system
      */
-    public function setSystem(array|string $system): self
+    public function withSystem(array|string $system): self
     {
-        $this->system = $system;
+        $obj = clone $this;
+        $obj->system = $system;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -539,11 +561,12 @@ final class Params implements BaseModel
      *
      * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
      */
-    public function setTemperature(float $temperature): self
+    public function withTemperature(float $temperature): self
     {
-        $this->temperature = $temperature;
+        $obj = clone $this;
+        $obj->temperature = $temperature;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -553,23 +576,25 @@ final class Params implements BaseModel
      *
      * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
      */
-    public function setThinking(
+    public function withThinking(
         ThinkingConfigDisabled|ThinkingConfigEnabled $thinking
     ): self {
-        $this->thinking = $thinking;
+        $obj = clone $this;
+        $obj->thinking = $thinking;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
-    public function setToolChoice(
+    public function withToolChoice(
         ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice
     ): self {
-        $this->toolChoice = $toolChoice;
+        $obj = clone $this;
+        $obj->toolChoice = $toolChoice;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -637,11 +662,12 @@ final class Params implements BaseModel
      *
      * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
      */
-    public function setTools(array $tools): self
+    public function withTools(array $tools): self
     {
-        $this->tools = $tools;
+        $obj = clone $this;
+        $obj->tools = $tools;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -651,11 +677,12 @@ final class Params implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    public function setTopK(int $topK): self
+    public function withTopK(int $topK): self
     {
-        $this->topK = $topK;
+        $obj = clone $this;
+        $obj->topK = $topK;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -665,10 +692,11 @@ final class Params implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    public function setTopP(float $topP): self
+    public function withTopP(float $topP): self
     {
-        $this->topP = $topP;
+        $obj = clone $this;
+        $obj->topP = $topP;
 
-        return $this;
+        return $obj;
     }
 }

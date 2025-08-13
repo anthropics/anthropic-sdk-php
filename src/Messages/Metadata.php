@@ -34,7 +34,7 @@ final class Metadata implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(?string $userID = null): self
+    public static function with(?string $userID = null): self
     {
         $obj = new self;
 
@@ -48,10 +48,11 @@ final class Metadata implements BaseModel
      *
      * This should be a uuid, hash value, or other opaque identifier. Anthropic may use this id to help detect abuse. Do not include any identifying information such as name, email address, or phone number.
      */
-    public function setUserID(?string $userID): self
+    public function withUserID(?string $userID): self
     {
-        $this->userID = $userID;
+        $obj = clone $this;
+        $obj->userID = $userID;
 
-        return $this;
+        return $obj;
     }
 }

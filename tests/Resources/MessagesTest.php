@@ -39,9 +39,9 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = MessageCreateParams::from(
+        $params = MessageCreateParams::with(
             maxTokens: 1024,
-            messages: [MessageParam::from(content: 'Hello, world', role: 'user')],
+            messages: [MessageParam::with(content: 'Hello, world', role: 'user')],
             model: 'claude-sonnet-4-20250514',
         );
         $result = $this->client->messages->create($params);
@@ -52,20 +52,20 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = MessageCreateParams::from(
+        $params = MessageCreateParams::with(
             maxTokens: 1024,
-            messages: [MessageParam::from(content: 'Hello, world', role: 'user')],
+            messages: [MessageParam::with(content: 'Hello, world', role: 'user')],
             model: 'claude-sonnet-4-20250514',
             metadata: (new Metadata)
-                ->setUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
+                ->withUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
             serviceTier: 'auto',
             stopSequences: ['string'],
             system: [
-                TextBlockParam::from(text: "Today's date is 2024-06-01.")
-                    ->setCacheControl((new CacheControlEphemeral)->setTTL('5m'))
-                    ->setCitations(
+                TextBlockParam::with(text: "Today's date is 2024-06-01.")
+                    ->withCacheControl((new CacheControlEphemeral)->withTTL('5m'))
+                    ->withCitations(
                         [
-                            CitationCharLocationParam::from(
+                            CitationCharLocationParam::with(
                                 citedText: 'cited_text',
                                 documentIndex: 0,
                                 documentTitle: 'x',
@@ -76,18 +76,18 @@ final class MessagesTest extends TestCase
                     ),
             ],
             temperature: 1,
-            thinking: ThinkingConfigEnabled::from(budgetTokens: 1024),
-            toolChoice: (new ToolChoiceAuto)->setDisableParallelToolUse(true),
+            thinking: ThinkingConfigEnabled::with(budgetTokens: 1024),
+            toolChoice: (new ToolChoiceAuto)->withDisableParallelToolUse(true),
             tools: [
-                Tool::from(
+                Tool::with(
                     inputSchema: (new InputSchema)
-                        ->setProperties((object) [])
-                        ->setRequired(['location']),
+                        ->withProperties((object) [])
+                        ->withRequired(['location']),
                     name: 'name',
                 )
-                    ->setCacheControl((new CacheControlEphemeral)->setTTL('5m'))
-                    ->setDescription('Get the current weather in a given location')
-                    ->setType('custom'),
+                    ->withCacheControl((new CacheControlEphemeral)->withTTL('5m'))
+                    ->withDescription('Get the current weather in a given location')
+                    ->withType('custom'),
             ],
             topK: 5,
             topP: 0.7,
@@ -100,8 +100,8 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCountTokens(): void
     {
-        $params = MessageCountTokensParams::from(
-            messages: [MessageParam::from(content: 'string', role: 'user')],
+        $params = MessageCountTokensParams::with(
+            messages: [MessageParam::with(content: 'string', role: 'user')],
             model: 'claude-3-7-sonnet-latest',
         );
         $result = $this->client->messages->countTokens($params);
@@ -112,15 +112,15 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCountTokensWithOptionalParams(): void
     {
-        $params = MessageCountTokensParams::from(
-            messages: [MessageParam::from(content: 'string', role: 'user')],
+        $params = MessageCountTokensParams::with(
+            messages: [MessageParam::with(content: 'string', role: 'user')],
             model: 'claude-3-7-sonnet-latest',
             system: [
-                TextBlockParam::from(text: "Today's date is 2024-06-01.")
-                    ->setCacheControl((new CacheControlEphemeral)->setTTL('5m'))
-                    ->setCitations(
+                TextBlockParam::with(text: "Today's date is 2024-06-01.")
+                    ->withCacheControl((new CacheControlEphemeral)->withTTL('5m'))
+                    ->withCitations(
                         [
-                            CitationCharLocationParam::from(
+                            CitationCharLocationParam::with(
                                 citedText: 'cited_text',
                                 documentIndex: 0,
                                 documentTitle: 'x',
@@ -130,18 +130,18 @@ final class MessagesTest extends TestCase
                         ],
                     ),
             ],
-            thinking: ThinkingConfigEnabled::from(budgetTokens: 1024),
-            toolChoice: (new ToolChoiceAuto)->setDisableParallelToolUse(true),
+            thinking: ThinkingConfigEnabled::with(budgetTokens: 1024),
+            toolChoice: (new ToolChoiceAuto)->withDisableParallelToolUse(true),
             tools: [
-                Tool::from(
+                Tool::with(
                     inputSchema: (new InputSchema)
-                        ->setProperties((object) [])
-                        ->setRequired(['location']),
+                        ->withProperties((object) [])
+                        ->withRequired(['location']),
                     name: 'name',
                 )
-                    ->setCacheControl((new CacheControlEphemeral)->setTTL('5m'))
-                    ->setDescription('Get the current weather in a given location')
-                    ->setType('custom'),
+                    ->withCacheControl((new CacheControlEphemeral)->withTTL('5m'))
+                    ->withDescription('Get the current weather in a given location')
+                    ->withType('custom'),
             ],
         );
         $result = $this->client->messages->countTokens($params);

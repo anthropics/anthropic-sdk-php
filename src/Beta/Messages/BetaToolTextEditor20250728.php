@@ -54,7 +54,7 @@ final class BetaToolTextEditor20250728 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         ?BetaCacheControlEphemeral $cacheControl = null,
         ?int $maxCharacters = null
     ): self {
@@ -69,21 +69,23 @@ final class BetaToolTextEditor20250728 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function setCacheControl(
+    public function withCacheControl(
         BetaCacheControlEphemeral $cacheControl
     ): self {
-        $this->cacheControl = $cacheControl;
+        $obj = clone $this;
+        $obj->cacheControl = $cacheControl;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Maximum number of characters to display when viewing a file. If not specified, defaults to displaying the full file.
      */
-    public function setMaxCharacters(?int $maxCharacters): self
+    public function withMaxCharacters(?int $maxCharacters): self
     {
-        $this->maxCharacters = $maxCharacters;
+        $obj = clone $this;
+        $obj->maxCharacters = $maxCharacters;
 
-        return $this;
+        return $obj;
     }
 }

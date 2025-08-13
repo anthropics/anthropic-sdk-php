@@ -24,6 +24,20 @@ final class BetaErrorResponse implements BaseModel
     #[Api(union: BetaError::class)]
     public BetaAPIError|BetaAuthenticationError|BetaBillingError|BetaGatewayTimeoutError|BetaInvalidRequestError|BetaNotFoundError|BetaOverloadedError|BetaPermissionError|BetaRateLimitError $error;
 
+    /**
+     * `new BetaErrorResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaErrorResponse::with(error: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaErrorResponse)->withError(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -35,7 +49,7 @@ final class BetaErrorResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         BetaAPIError|BetaAuthenticationError|BetaBillingError|BetaGatewayTimeoutError|BetaInvalidRequestError|BetaNotFoundError|BetaOverloadedError|BetaPermissionError|BetaRateLimitError $error,
     ): self {
         $obj = new self;
@@ -45,11 +59,12 @@ final class BetaErrorResponse implements BaseModel
         return $obj;
     }
 
-    public function setError(
+    public function withError(
         BetaAPIError|BetaAuthenticationError|BetaBillingError|BetaGatewayTimeoutError|BetaInvalidRequestError|BetaNotFoundError|BetaOverloadedError|BetaPermissionError|BetaRateLimitError $error,
     ): self {
-        $this->error = $error;
+        $obj = clone $this;
+        $obj->error = $error;
 
-        return $this;
+        return $obj;
     }
 }

@@ -69,6 +69,27 @@ final class FileMetadata implements BaseModel
     #[Api(optional: true)]
     public ?bool $downloadable;
 
+    /**
+     * `new FileMetadata()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * FileMetadata::with(
+     *   id: ..., createdAt: ..., filename: ..., mimeType: ..., sizeBytes: ...
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new FileMetadata)
+     *   ->withID(...)
+     *   ->withCreatedAt(...)
+     *   ->withFilename(...)
+     *   ->withMimeType(...)
+     *   ->withSizeBytes(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -80,7 +101,7 @@ final class FileMetadata implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $id,
         \DateTimeInterface $createdAt,
         string $filename,
@@ -106,60 +127,66 @@ final class FileMetadata implements BaseModel
      *
      * The format and length of IDs may change over time.
      */
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * RFC 3339 datetime string representing when the file was created.
      */
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->createdAt = $createdAt;
+        $obj = clone $this;
+        $obj->createdAt = $createdAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Original filename of the uploaded file.
      */
-    public function setFilename(string $filename): self
+    public function withFilename(string $filename): self
     {
-        $this->filename = $filename;
+        $obj = clone $this;
+        $obj->filename = $filename;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * MIME type of the file.
      */
-    public function setMimeType(string $mimeType): self
+    public function withMimeType(string $mimeType): self
     {
-        $this->mimeType = $mimeType;
+        $obj = clone $this;
+        $obj->mimeType = $mimeType;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Size of the file in bytes.
      */
-    public function setSizeBytes(int $sizeBytes): self
+    public function withSizeBytes(int $sizeBytes): self
     {
-        $this->sizeBytes = $sizeBytes;
+        $obj = clone $this;
+        $obj->sizeBytes = $sizeBytes;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Whether the file can be downloaded.
      */
-    public function setDownloadable(bool $downloadable): self
+    public function withDownloadable(bool $downloadable): self
     {
-        $this->downloadable = $downloadable;
+        $obj = clone $this;
+        $obj->downloadable = $downloadable;
 
-        return $this;
+        return $obj;
     }
 }

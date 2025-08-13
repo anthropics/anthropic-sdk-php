@@ -41,7 +41,7 @@ final class BetaToolChoiceAuto implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(?bool $disableParallelToolUse = null): self
+    public static function with(?bool $disableParallelToolUse = null): self
     {
         $obj = new self;
 
@@ -55,11 +55,12 @@ final class BetaToolChoiceAuto implements BaseModel
      *
      * Defaults to `false`. If set to `true`, the model will output at most one tool use.
      */
-    public function setDisableParallelToolUse(
+    public function withDisableParallelToolUse(
         bool $disableParallelToolUse
     ): self {
-        $this->disableParallelToolUse = $disableParallelToolUse;
+        $obj = clone $this;
+        $obj->disableParallelToolUse = $disableParallelToolUse;
 
-        return $this;
+        return $obj;
     }
 }

@@ -29,6 +29,22 @@ final class CacheCreation implements BaseModel
     #[Api('ephemeral_5m_input_tokens')]
     public int $ephemeral5mInputTokens;
 
+    /**
+     * `new CacheCreation()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * CacheCreation::with(ephemeral1hInputTokens: ..., ephemeral5mInputTokens: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new CacheCreation)
+     *   ->withEphemeral1hInputTokens(...)
+     *   ->withEphemeral5mInputTokens(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -40,7 +56,7 @@ final class CacheCreation implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         int $ephemeral1hInputTokens = 0,
         int $ephemeral5mInputTokens = 0
     ): self {
@@ -55,20 +71,24 @@ final class CacheCreation implements BaseModel
     /**
      * The number of input tokens used to create the 1 hour cache entry.
      */
-    public function setEphemeral1hInputTokens(int $ephemeral1hInputTokens): self
-    {
-        $this->ephemeral1hInputTokens = $ephemeral1hInputTokens;
+    public function withEphemeral1hInputTokens(
+        int $ephemeral1hInputTokens
+    ): self {
+        $obj = clone $this;
+        $obj->ephemeral1hInputTokens = $ephemeral1hInputTokens;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The number of input tokens used to create the 5 minute cache entry.
      */
-    public function setEphemeral5mInputTokens(int $ephemeral5mInputTokens): self
-    {
-        $this->ephemeral5mInputTokens = $ephemeral5mInputTokens;
+    public function withEphemeral5mInputTokens(
+        int $ephemeral5mInputTokens
+    ): self {
+        $obj = clone $this;
+        $obj->ephemeral5mInputTokens = $ephemeral5mInputTokens;
 
-        return $this;
+        return $obj;
     }
 }

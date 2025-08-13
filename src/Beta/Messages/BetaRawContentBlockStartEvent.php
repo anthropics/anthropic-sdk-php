@@ -32,6 +32,20 @@ final class BetaRawContentBlockStartEvent implements BaseModel
     #[Api]
     public int $index;
 
+    /**
+     * `new BetaRawContentBlockStartEvent()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaRawContentBlockStartEvent::with(contentBlock: ..., index: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaRawContentBlockStartEvent)->withContentBlock(...)->withIndex(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -43,7 +57,7 @@ final class BetaRawContentBlockStartEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock $contentBlock,
         int $index,
     ): self {
@@ -58,18 +72,20 @@ final class BetaRawContentBlockStartEvent implements BaseModel
     /**
      * Response model for a file uploaded to the container.
      */
-    public function setContentBlock(
+    public function withContentBlock(
         BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock $contentBlock,
     ): self {
-        $this->contentBlock = $contentBlock;
+        $obj = clone $this;
+        $obj->contentBlock = $contentBlock;
 
-        return $this;
+        return $obj;
     }
 
-    public function setIndex(int $index): self
+    public function withIndex(int $index): self
     {
-        $this->index = $index;
+        $obj = clone $this;
+        $obj->index = $index;
 
-        return $this;
+        return $obj;
     }
 }

@@ -29,6 +29,20 @@ final class DeletedMessageBatch implements BaseModel
     #[Api]
     public string $id;
 
+    /**
+     * `new DeletedMessageBatch()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * DeletedMessageBatch::with(id: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new DeletedMessageBatch)->withID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -40,7 +54,7 @@ final class DeletedMessageBatch implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $id): self
+    public static function with(string $id): self
     {
         $obj = new self;
 
@@ -52,10 +66,11 @@ final class DeletedMessageBatch implements BaseModel
     /**
      * ID of the Message Batch.
      */
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 }

@@ -45,7 +45,7 @@ final class ToolTextEditor20250124 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         ?CacheControlEphemeral $cacheControl = null
     ): self {
         $obj = new self;
@@ -58,10 +58,11 @@ final class ToolTextEditor20250124 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function setCacheControl(CacheControlEphemeral $cacheControl): self
+    public function withCacheControl(CacheControlEphemeral $cacheControl): self
     {
-        $this->cacheControl = $cacheControl;
+        $obj = clone $this;
+        $obj->cacheControl = $cacheControl;
 
-        return $this;
+        return $obj;
     }
 }

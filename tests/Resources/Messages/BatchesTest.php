@@ -42,14 +42,14 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = BatchCreateParams::from(
+        $params = BatchCreateParams::with(
             requests: [
-                Request::from(
+                Request::with(
                     customID: 'my-custom-id-1',
-                    params: Params::from(
+                    params: Params::with(
                         maxTokens: 1024,
                         messages: [
-                            MessageParam::from(content: 'Hello, world', role: 'user'),
+                            MessageParam::with(content: 'Hello, world', role: 'user'),
                         ],
                         model: 'claude-sonnet-4-20250514',
                     ),
@@ -64,30 +64,30 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = BatchCreateParams::from(
+        $params = BatchCreateParams::with(
             requests: [
-                Request::from(
+                Request::with(
                     customID: 'my-custom-id-1',
-                    params: Params::from(
+                    params: Params::with(
                         maxTokens: 1024,
                         messages: [
-                            MessageParam::from(content: 'Hello, world', role: 'user'),
+                            MessageParam::with(content: 'Hello, world', role: 'user'),
                         ],
                         model: 'claude-sonnet-4-20250514',
                     )
-                        ->setMetadata(
-                            (new Metadata)->setUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b')
+                        ->withMetadata(
+                            (new Metadata)->withUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b')
                         )
-                        ->setServiceTier('auto')
-                        ->setStopSequences(['string'])
-                        ->setStream(true)
-                        ->setSystem(
+                        ->withServiceTier('auto')
+                        ->withStopSequences(['string'])
+                        ->withStream(true)
+                        ->withSystem(
                             [
-                                TextBlockParam::from(text: "Today's date is 2024-06-01.")
-                                    ->setCacheControl((new CacheControlEphemeral)->setTTL('5m'))
-                                    ->setCitations(
+                                TextBlockParam::with(text: "Today's date is 2024-06-01.")
+                                    ->withCacheControl((new CacheControlEphemeral)->withTTL('5m'))
+                                    ->withCitations(
                                         [
-                                            CitationCharLocationParam::from(
+                                            CitationCharLocationParam::with(
                                                 citedText: 'cited_text',
                                                 documentIndex: 0,
                                                 documentTitle: 'x',
@@ -98,26 +98,26 @@ final class BatchesTest extends TestCase
                                     ),
                             ],
                         )
-                        ->setTemperature(1)
-                        ->setThinking(ThinkingConfigEnabled::from(budgetTokens: 1024))
-                        ->setToolChoice(
-                            (new ToolChoiceAuto)->setDisableParallelToolUse(true)
+                        ->withTemperature(1)
+                        ->withThinking(ThinkingConfigEnabled::with(budgetTokens: 1024))
+                        ->withToolChoice(
+                            (new ToolChoiceAuto)->withDisableParallelToolUse(true)
                         )
-                        ->setTools(
+                        ->withTools(
                             [
-                                Tool::from(
+                                Tool::with(
                                     inputSchema: (new InputSchema)
-                                        ->setProperties((object) [])
-                                        ->setRequired(['location']),
+                                        ->withProperties((object) [])
+                                        ->withRequired(['location']),
                                     name: 'name',
                                 )
-                                    ->setCacheControl((new CacheControlEphemeral)->setTTL('5m'))
-                                    ->setDescription('Get the current weather in a given location')
-                                    ->setType('custom'),
+                                    ->withCacheControl((new CacheControlEphemeral)->withTTL('5m'))
+                                    ->withDescription('Get the current weather in a given location')
+                                    ->withType('custom'),
                             ],
                         )
-                        ->setTopK(5)
-                        ->setTopP(0.7),
+                        ->withTopK(5)
+                        ->withTopP(0.7),
                 ),
             ],
         );

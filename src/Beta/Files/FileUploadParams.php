@@ -38,6 +38,20 @@ final class FileUploadParams implements BaseModel
     #[Api(type: new ListOf(union: AnthropicBeta::class), optional: true)]
     public ?array $anthropicBeta;
 
+    /**
+     * `new FileUploadParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * FileUploadParams::with(file: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new FileUploadParams)->withFile(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -51,7 +65,7 @@ final class FileUploadParams implements BaseModel
      *
      * @param null|list<string|UnionMember1::*> $anthropicBeta
      */
-    public static function from(
+    public static function with(
         string $file,
         ?array $anthropicBeta = null
     ): self {
@@ -67,11 +81,12 @@ final class FileUploadParams implements BaseModel
     /**
      * The file to upload.
      */
-    public function setFile(string $file): self
+    public function withFile(string $file): self
     {
-        $this->file = $file;
+        $obj = clone $this;
+        $obj->file = $file;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -79,10 +94,11 @@ final class FileUploadParams implements BaseModel
      *
      * @param list<string|UnionMember1::*> $betas
      */
-    public function setBetas(array $betas): self
+    public function withBetas(array $betas): self
     {
-        $this->anthropicBeta = $betas;
+        $obj = clone $this;
+        $obj->anthropicBeta = $betas;
 
-        return $this;
+        return $obj;
     }
 }

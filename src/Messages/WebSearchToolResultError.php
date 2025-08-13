@@ -25,6 +25,20 @@ final class WebSearchToolResultError implements BaseModel
     #[Api('error_code', enum: ErrorCode::class)]
     public string $errorCode;
 
+    /**
+     * `new WebSearchToolResultError()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * WebSearchToolResultError::with(errorCode: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new WebSearchToolResultError)->withErrorCode(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -38,7 +52,7 @@ final class WebSearchToolResultError implements BaseModel
      *
      * @param ErrorCode::* $errorCode
      */
-    public static function from(string $errorCode): self
+    public static function with(string $errorCode): self
     {
         $obj = new self;
 
@@ -50,10 +64,11 @@ final class WebSearchToolResultError implements BaseModel
     /**
      * @param ErrorCode::* $errorCode
      */
-    public function setErrorCode(string $errorCode): self
+    public function withErrorCode(string $errorCode): self
     {
-        $this->errorCode = $errorCode;
+        $obj = clone $this;
+        $obj->errorCode = $errorCode;
 
-        return $this;
+        return $obj;
     }
 }

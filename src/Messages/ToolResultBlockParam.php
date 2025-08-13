@@ -43,6 +43,20 @@ final class ToolResultBlockParam implements BaseModel
     #[Api('is_error', optional: true)]
     public ?bool $isError;
 
+    /**
+     * `new ToolResultBlockParam()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * ToolResultBlockParam::with(toolUseID: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new ToolResultBlockParam)->withToolUseID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -56,7 +70,7 @@ final class ToolResultBlockParam implements BaseModel
      *
      * @param null|list<ImageBlockParam|SearchResultBlockParam|TextBlockParam>|string $content
      */
-    public static function from(
+    public static function with(
         string $toolUseID,
         ?CacheControlEphemeral $cacheControl = null,
         null|array|string $content = null,
@@ -73,37 +87,41 @@ final class ToolResultBlockParam implements BaseModel
         return $obj;
     }
 
-    public function setToolUseID(string $toolUseID): self
+    public function withToolUseID(string $toolUseID): self
     {
-        $this->toolUseID = $toolUseID;
+        $obj = clone $this;
+        $obj->toolUseID = $toolUseID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function setCacheControl(CacheControlEphemeral $cacheControl): self
+    public function withCacheControl(CacheControlEphemeral $cacheControl): self
     {
-        $this->cacheControl = $cacheControl;
+        $obj = clone $this;
+        $obj->cacheControl = $cacheControl;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param list<ImageBlockParam|SearchResultBlockParam|TextBlockParam>|string $content
      */
-    public function setContent(array|string $content): self
+    public function withContent(array|string $content): self
     {
-        $this->content = $content;
+        $obj = clone $this;
+        $obj->content = $content;
 
-        return $this;
+        return $obj;
     }
 
-    public function setIsError(bool $isError): self
+    public function withIsError(bool $isError): self
     {
-        $this->isError = $isError;
+        $obj = clone $this;
+        $obj->isError = $isError;
 
-        return $this;
+        return $obj;
     }
 }

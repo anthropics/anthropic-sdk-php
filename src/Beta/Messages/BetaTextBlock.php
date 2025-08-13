@@ -36,6 +36,20 @@ final class BetaTextBlock implements BaseModel
     #[Api]
     public string $text;
 
+    /**
+     * `new BetaTextBlock()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaTextBlock::with(citations: ..., text: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaTextBlock)->withCitations(...)->withText(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -49,7 +63,7 @@ final class BetaTextBlock implements BaseModel
      *
      * @param null|list<BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationSearchResultLocation|BetaCitationsWebSearchResultLocation> $citations
      */
-    public static function from(?array $citations, string $text): self
+    public static function with(?array $citations, string $text): self
     {
         $obj = new self;
 
@@ -66,17 +80,19 @@ final class BetaTextBlock implements BaseModel
      *
      * @param null|list<BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationSearchResultLocation|BetaCitationsWebSearchResultLocation> $citations
      */
-    public function setCitations(?array $citations): self
+    public function withCitations(?array $citations): self
     {
-        $this->citations = $citations;
+        $obj = clone $this;
+        $obj->citations = $citations;
 
-        return $this;
+        return $obj;
     }
 
-    public function setText(string $text): self
+    public function withText(string $text): self
     {
-        $this->text = $text;
+        $obj = clone $this;
+        $obj->text = $text;
 
-        return $this;
+        return $obj;
     }
 }

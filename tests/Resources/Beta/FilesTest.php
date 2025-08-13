@@ -78,7 +78,7 @@ final class FilesTest extends TestCase
     #[Test]
     public function testUpload(): void
     {
-        $params = FileUploadParams::from(file: 'file');
+        $params = FileUploadParams::with(file: 'file');
         $result = $this->client->beta->files->upload($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -87,7 +87,7 @@ final class FilesTest extends TestCase
     #[Test]
     public function testUploadWithOptionalParams(): void
     {
-        $params = FileUploadParams::from(file: 'file', anthropicBeta: ['string']);
+        $params = FileUploadParams::with(file: 'file', anthropicBeta: ['string']);
         $result = $this->client->beta->files->upload($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line

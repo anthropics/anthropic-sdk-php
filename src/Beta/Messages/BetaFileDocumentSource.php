@@ -23,6 +23,20 @@ final class BetaFileDocumentSource implements BaseModel
     #[Api('file_id')]
     public string $fileID;
 
+    /**
+     * `new BetaFileDocumentSource()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaFileDocumentSource::with(fileID: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaFileDocumentSource)->withFileID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -34,7 +48,7 @@ final class BetaFileDocumentSource implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $fileID): self
+    public static function with(string $fileID): self
     {
         $obj = new self;
 
@@ -43,10 +57,11 @@ final class BetaFileDocumentSource implements BaseModel
         return $obj;
     }
 
-    public function setFileID(string $fileID): self
+    public function withFileID(string $fileID): self
     {
-        $this->fileID = $fileID;
+        $obj = clone $this;
+        $obj->fileID = $fileID;
 
-        return $this;
+        return $obj;
     }
 }

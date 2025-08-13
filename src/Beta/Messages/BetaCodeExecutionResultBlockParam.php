@@ -38,6 +38,26 @@ final class BetaCodeExecutionResultBlockParam implements BaseModel
     #[Api]
     public string $stdout;
 
+    /**
+     * `new BetaCodeExecutionResultBlockParam()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaCodeExecutionResultBlockParam::with(
+     *   content: ..., returnCode: ..., stderr: ..., stdout: ...
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaCodeExecutionResultBlockParam)
+     *   ->withContent(...)
+     *   ->withReturnCode(...)
+     *   ->withStderr(...)
+     *   ->withStdout(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -51,7 +71,7 @@ final class BetaCodeExecutionResultBlockParam implements BaseModel
      *
      * @param list<BetaCodeExecutionOutputBlockParam> $content
      */
-    public static function from(
+    public static function with(
         array $content,
         int $returnCode,
         string $stderr,
@@ -70,31 +90,35 @@ final class BetaCodeExecutionResultBlockParam implements BaseModel
     /**
      * @param list<BetaCodeExecutionOutputBlockParam> $content
      */
-    public function setContent(array $content): self
+    public function withContent(array $content): self
     {
-        $this->content = $content;
+        $obj = clone $this;
+        $obj->content = $content;
 
-        return $this;
+        return $obj;
     }
 
-    public function setReturnCode(int $returnCode): self
+    public function withReturnCode(int $returnCode): self
     {
-        $this->returnCode = $returnCode;
+        $obj = clone $this;
+        $obj->returnCode = $returnCode;
 
-        return $this;
+        return $obj;
     }
 
-    public function setStderr(string $stderr): self
+    public function withStderr(string $stderr): self
     {
-        $this->stderr = $stderr;
+        $obj = clone $this;
+        $obj->stderr = $stderr;
 
-        return $this;
+        return $obj;
     }
 
-    public function setStdout(string $stdout): self
+    public function withStdout(string $stdout): self
     {
-        $this->stdout = $stdout;
+        $obj = clone $this;
+        $obj->stdout = $stdout;
 
-        return $this;
+        return $obj;
     }
 }

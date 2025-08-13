@@ -130,6 +130,33 @@ final class Message implements BaseModel
     #[Api]
     public Usage $usage;
 
+    /**
+     * `new Message()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Message::with(
+     *   id: ...,
+     *   content: ...,
+     *   model: ...,
+     *   stopReason: ...,
+     *   stopSequence: ...,
+     *   usage: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Message)
+     *   ->withID(...)
+     *   ->withContent(...)
+     *   ->withModel(...)
+     *   ->withStopReason(...)
+     *   ->withStopSequence(...)
+     *   ->withUsage(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -145,7 +172,7 @@ final class Message implements BaseModel
      * @param string|UnionMember0::* $model
      * @param StopReason::* $stopReason
      */
-    public static function from(
+    public static function with(
         string $id,
         array $content,
         string $model,
@@ -170,11 +197,12 @@ final class Message implements BaseModel
      *
      * The format and length of IDs may change over time.
      */
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -206,11 +234,12 @@ final class Message implements BaseModel
      *
      * @param list<RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock> $content
      */
-    public function setContent(array $content): self
+    public function withContent(array $content): self
     {
-        $this->content = $content;
+        $obj = clone $this;
+        $obj->content = $content;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -218,11 +247,12 @@ final class Message implements BaseModel
      *
      * @param string|UnionMember0::* $model
      */
-    public function setModel(string $model): self
+    public function withModel(string $model): self
     {
-        $this->model = $model;
+        $obj = clone $this;
+        $obj->model = $model;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -240,11 +270,12 @@ final class Message implements BaseModel
      *
      * @param StopReason::* $stopReason
      */
-    public function setStopReason(string $stopReason): self
+    public function withStopReason(string $stopReason): self
     {
-        $this->stopReason = $stopReason;
+        $obj = clone $this;
+        $obj->stopReason = $stopReason;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -252,11 +283,12 @@ final class Message implements BaseModel
      *
      * This value will be a non-null string if one of your custom stop sequences was generated.
      */
-    public function setStopSequence(?string $stopSequence): self
+    public function withStopSequence(?string $stopSequence): self
     {
-        $this->stopSequence = $stopSequence;
+        $obj = clone $this;
+        $obj->stopSequence = $stopSequence;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -270,10 +302,11 @@ final class Message implements BaseModel
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      */
-    public function setUsage(Usage $usage): self
+    public function withUsage(Usage $usage): self
     {
-        $this->usage = $usage;
+        $obj = clone $this;
+        $obj->usage = $usage;
 
-        return $this;
+        return $obj;
     }
 }

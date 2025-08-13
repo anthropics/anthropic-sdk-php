@@ -21,6 +21,20 @@ final class BetaFileImageSource implements BaseModel
     #[Api('file_id')]
     public string $fileID;
 
+    /**
+     * `new BetaFileImageSource()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaFileImageSource::with(fileID: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaFileImageSource)->withFileID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -32,7 +46,7 @@ final class BetaFileImageSource implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $fileID): self
+    public static function with(string $fileID): self
     {
         $obj = new self;
 
@@ -41,10 +55,11 @@ final class BetaFileImageSource implements BaseModel
         return $obj;
     }
 
-    public function setFileID(string $fileID): self
+    public function withFileID(string $fileID): self
     {
-        $this->fileID = $fileID;
+        $obj = clone $this;
+        $obj->fileID = $fileID;
 
-        return $this;
+        return $obj;
     }
 }

@@ -24,6 +24,20 @@ final class BetaCodeExecutionToolResultError implements BaseModel
     #[Api('error_code', enum: BetaCodeExecutionToolResultErrorCode::class)]
     public string $errorCode;
 
+    /**
+     * `new BetaCodeExecutionToolResultError()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaCodeExecutionToolResultError::with(errorCode: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaCodeExecutionToolResultError)->withErrorCode(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -37,7 +51,7 @@ final class BetaCodeExecutionToolResultError implements BaseModel
      *
      * @param BetaCodeExecutionToolResultErrorCode::* $errorCode
      */
-    public static function from(string $errorCode): self
+    public static function with(string $errorCode): self
     {
         $obj = new self;
 
@@ -49,10 +63,11 @@ final class BetaCodeExecutionToolResultError implements BaseModel
     /**
      * @param BetaCodeExecutionToolResultErrorCode::* $errorCode
      */
-    public function setErrorCode(string $errorCode): self
+    public function withErrorCode(string $errorCode): self
     {
-        $this->errorCode = $errorCode;
+        $obj = clone $this;
+        $obj->errorCode = $errorCode;
 
-        return $this;
+        return $obj;
     }
 }

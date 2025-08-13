@@ -46,7 +46,7 @@ final class CacheControlEphemeral implements BaseModel
      *
      * @param null|TTL::* $ttl
      */
-    public static function from(?string $ttl = null): self
+    public static function with(?string $ttl = null): self
     {
         $obj = new self;
 
@@ -66,10 +66,11 @@ final class CacheControlEphemeral implements BaseModel
      *
      * @param TTL::* $ttl
      */
-    public function setTTL(string $ttl): self
+    public function withTTL(string $ttl): self
     {
-        $this->ttl = $ttl;
+        $obj = clone $this;
+        $obj->ttl = $ttl;
 
-        return $this;
+        return $obj;
     }
 }

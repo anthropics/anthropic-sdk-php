@@ -28,6 +28,20 @@ final class Base64ImageSource implements BaseModel
     #[Api('media_type', enum: MediaType::class)]
     public string $mediaType;
 
+    /**
+     * `new Base64ImageSource()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Base64ImageSource::with(data: ..., mediaType: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Base64ImageSource)->withData(...)->withMediaType(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -41,7 +55,7 @@ final class Base64ImageSource implements BaseModel
      *
      * @param MediaType::* $mediaType
      */
-    public static function from(string $data, string $mediaType): self
+    public static function with(string $data, string $mediaType): self
     {
         $obj = new self;
 
@@ -51,20 +65,22 @@ final class Base64ImageSource implements BaseModel
         return $obj;
     }
 
-    public function setData(string $data): self
+    public function withData(string $data): self
     {
-        $this->data = $data;
+        $obj = clone $this;
+        $obj->data = $data;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param MediaType::* $mediaType
      */
-    public function setMediaType(string $mediaType): self
+    public function withMediaType(string $mediaType): self
     {
-        $this->mediaType = $mediaType;
+        $obj = clone $this;
+        $obj->mediaType = $mediaType;
 
-        return $this;
+        return $obj;
     }
 }

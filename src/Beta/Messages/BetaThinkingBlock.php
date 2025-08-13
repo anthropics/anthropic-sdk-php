@@ -26,6 +26,20 @@ final class BetaThinkingBlock implements BaseModel
     #[Api]
     public string $thinking;
 
+    /**
+     * `new BetaThinkingBlock()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaThinkingBlock::with(signature: ..., thinking: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaThinkingBlock)->withSignature(...)->withThinking(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -37,7 +51,7 @@ final class BetaThinkingBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $signature, string $thinking): self
+    public static function with(string $signature, string $thinking): self
     {
         $obj = new self;
 
@@ -47,17 +61,19 @@ final class BetaThinkingBlock implements BaseModel
         return $obj;
     }
 
-    public function setSignature(string $signature): self
+    public function withSignature(string $signature): self
     {
-        $this->signature = $signature;
+        $obj = clone $this;
+        $obj->signature = $signature;
 
-        return $this;
+        return $obj;
     }
 
-    public function setThinking(string $thinking): self
+    public function withThinking(string $thinking): self
     {
-        $this->thinking = $thinking;
+        $obj = clone $this;
+        $obj->thinking = $thinking;
 
-        return $this;
+        return $obj;
     }
 }

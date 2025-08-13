@@ -32,6 +32,20 @@ final class BetaImageBlockParam implements BaseModel
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
+    /**
+     * `new BetaImageBlockParam()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaImageBlockParam::with(source: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaImageBlockParam)->withSource(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -43,7 +57,7 @@ final class BetaImageBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source,
         ?BetaCacheControlEphemeral $cacheControl = null,
     ): self {
@@ -56,22 +70,24 @@ final class BetaImageBlockParam implements BaseModel
         return $obj;
     }
 
-    public function setSource(
+    public function withSource(
         BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source
     ): self {
-        $this->source = $source;
+        $obj = clone $this;
+        $obj->source = $source;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function setCacheControl(
+    public function withCacheControl(
         BetaCacheControlEphemeral $cacheControl
     ): self {
-        $this->cacheControl = $cacheControl;
+        $obj = clone $this;
+        $obj->cacheControl = $cacheControl;
 
-        return $this;
+        return $obj;
     }
 }

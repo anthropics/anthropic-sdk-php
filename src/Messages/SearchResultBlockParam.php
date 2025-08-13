@@ -45,6 +45,20 @@ final class SearchResultBlockParam implements BaseModel
     #[Api(optional: true)]
     public ?CitationsConfigParam $citations;
 
+    /**
+     * `new SearchResultBlockParam()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * SearchResultBlockParam::with(content: ..., source: ..., title: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new SearchResultBlockParam)->withContent(...)->withSource(...)->withTitle(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -58,7 +72,7 @@ final class SearchResultBlockParam implements BaseModel
      *
      * @param list<TextBlockParam> $content
      */
-    public static function from(
+    public static function with(
         array $content,
         string $source,
         string $title,
@@ -80,41 +94,46 @@ final class SearchResultBlockParam implements BaseModel
     /**
      * @param list<TextBlockParam> $content
      */
-    public function setContent(array $content): self
+    public function withContent(array $content): self
     {
-        $this->content = $content;
+        $obj = clone $this;
+        $obj->content = $content;
 
-        return $this;
+        return $obj;
     }
 
-    public function setSource(string $source): self
+    public function withSource(string $source): self
     {
-        $this->source = $source;
+        $obj = clone $this;
+        $obj->source = $source;
 
-        return $this;
+        return $obj;
     }
 
-    public function setTitle(string $title): self
+    public function withTitle(string $title): self
     {
-        $this->title = $title;
+        $obj = clone $this;
+        $obj->title = $title;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function setCacheControl(CacheControlEphemeral $cacheControl): self
+    public function withCacheControl(CacheControlEphemeral $cacheControl): self
     {
-        $this->cacheControl = $cacheControl;
+        $obj = clone $this;
+        $obj->cacheControl = $cacheControl;
 
-        return $this;
+        return $obj;
     }
 
-    public function setCitations(CitationsConfigParam $citations): self
+    public function withCitations(CitationsConfigParam $citations): self
     {
-        $this->citations = $citations;
+        $obj = clone $this;
+        $obj->citations = $citations;
 
-        return $this;
+        return $obj;
     }
 }

@@ -316,6 +316,20 @@ final class MessageCreateParams implements BaseModel
     #[Api(type: new ListOf(union: AnthropicBeta::class), optional: true)]
     public ?array $anthropicBeta;
 
+    /**
+     * `new MessageCreateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * MessageCreateParams::with(maxTokens: ..., messages: ..., model: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new MessageCreateParams)->withMaxTokens(...)->withMessages(...)->withModel(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -336,7 +350,7 @@ final class MessageCreateParams implements BaseModel
      * @param null|list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
      * @param null|list<string|UnionMember1::*> $anthropicBeta
      */
-    public static function from(
+    public static function with(
         int $maxTokens,
         array $messages,
         string $model,
@@ -384,11 +398,12 @@ final class MessageCreateParams implements BaseModel
      *
      * Different models have different maximum values for this parameter.  See [models](https://docs.anthropic.com/en/docs/models-overview) for details.
      */
-    public function setMaxTokens(int $maxTokens): self
+    public function withMaxTokens(int $maxTokens): self
     {
-        $this->maxTokens = $maxTokens;
+        $obj = clone $this;
+        $obj->maxTokens = $maxTokens;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -461,11 +476,12 @@ final class MessageCreateParams implements BaseModel
      *
      * @param list<BetaMessageParam> $messages
      */
-    public function setMessages(array $messages): self
+    public function withMessages(array $messages): self
     {
-        $this->messages = $messages;
+        $obj = clone $this;
+        $obj->messages = $messages;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -473,21 +489,23 @@ final class MessageCreateParams implements BaseModel
      *
      * @param string|UnionMember0::* $model
      */
-    public function setModel(string $model): self
+    public function withModel(string $model): self
     {
-        $this->model = $model;
+        $obj = clone $this;
+        $obj->model = $model;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Container identifier for reuse across requests.
      */
-    public function setContainer(?string $container): self
+    public function withContainer(?string $container): self
     {
-        $this->container = $container;
+        $obj = clone $this;
+        $obj->container = $container;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -495,21 +513,23 @@ final class MessageCreateParams implements BaseModel
      *
      * @param list<BetaRequestMCPServerURLDefinition> $mcpServers
      */
-    public function setMCPServers(array $mcpServers): self
+    public function withMCPServers(array $mcpServers): self
     {
-        $this->mcpServers = $mcpServers;
+        $obj = clone $this;
+        $obj->mcpServers = $mcpServers;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * An object describing metadata about the request.
      */
-    public function setMetadata(BetaMetadata $metadata): self
+    public function withMetadata(BetaMetadata $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -519,11 +539,12 @@ final class MessageCreateParams implements BaseModel
      *
      * @param ServiceTier::* $serviceTier
      */
-    public function setServiceTier(string $serviceTier): self
+    public function withServiceTier(string $serviceTier): self
     {
-        $this->serviceTier = $serviceTier;
+        $obj = clone $this;
+        $obj->serviceTier = $serviceTier;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -535,11 +556,12 @@ final class MessageCreateParams implements BaseModel
      *
      * @param list<string> $stopSequences
      */
-    public function setStopSequences(array $stopSequences): self
+    public function withStopSequences(array $stopSequences): self
     {
-        $this->stopSequences = $stopSequences;
+        $obj = clone $this;
+        $obj->stopSequences = $stopSequences;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -549,11 +571,12 @@ final class MessageCreateParams implements BaseModel
      *
      * @param list<BetaTextBlockParam>|string $system
      */
-    public function setSystem(array|string $system): self
+    public function withSystem(array|string $system): self
     {
-        $this->system = $system;
+        $obj = clone $this;
+        $obj->system = $system;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -563,11 +586,12 @@ final class MessageCreateParams implements BaseModel
      *
      * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
      */
-    public function setTemperature(float $temperature): self
+    public function withTemperature(float $temperature): self
     {
-        $this->temperature = $temperature;
+        $obj = clone $this;
+        $obj->temperature = $temperature;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -577,23 +601,25 @@ final class MessageCreateParams implements BaseModel
      *
      * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
      */
-    public function setThinking(
+    public function withThinking(
         BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking
     ): self {
-        $this->thinking = $thinking;
+        $obj = clone $this;
+        $obj->thinking = $thinking;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
-    public function setToolChoice(
+    public function withToolChoice(
         BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice,
     ): self {
-        $this->toolChoice = $toolChoice;
+        $obj = clone $this;
+        $obj->toolChoice = $toolChoice;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -661,11 +687,12 @@ final class MessageCreateParams implements BaseModel
      *
      * @param list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
      */
-    public function setTools(array $tools): self
+    public function withTools(array $tools): self
     {
-        $this->tools = $tools;
+        $obj = clone $this;
+        $obj->tools = $tools;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -675,11 +702,12 @@ final class MessageCreateParams implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    public function setTopK(int $topK): self
+    public function withTopK(int $topK): self
     {
-        $this->topK = $topK;
+        $obj = clone $this;
+        $obj->topK = $topK;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -689,11 +717,12 @@ final class MessageCreateParams implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    public function setTopP(float $topP): self
+    public function withTopP(float $topP): self
     {
-        $this->topP = $topP;
+        $obj = clone $this;
+        $obj->topP = $topP;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -701,10 +730,11 @@ final class MessageCreateParams implements BaseModel
      *
      * @param list<string|UnionMember1::*> $betas
      */
-    public function setBetas(array $betas): self
+    public function withBetas(array $betas): self
     {
-        $this->anthropicBeta = $betas;
+        $obj = clone $this;
+        $obj->anthropicBeta = $betas;
 
-        return $this;
+        return $obj;
     }
 }

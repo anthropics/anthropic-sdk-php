@@ -21,6 +21,20 @@ final class InputJSONDelta implements BaseModel
     #[Api('partial_json')]
     public string $partialJSON;
 
+    /**
+     * `new InputJSONDelta()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * InputJSONDelta::with(partialJSON: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new InputJSONDelta)->withPartialJSON(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -32,7 +46,7 @@ final class InputJSONDelta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $partialJSON): self
+    public static function with(string $partialJSON): self
     {
         $obj = new self;
 
@@ -41,10 +55,11 @@ final class InputJSONDelta implements BaseModel
         return $obj;
     }
 
-    public function setPartialJSON(string $partialJSON): self
+    public function withPartialJSON(string $partialJSON): self
     {
-        $this->partialJSON = $partialJSON;
+        $obj = clone $this;
+        $obj->partialJSON = $partialJSON;
 
-        return $this;
+        return $obj;
     }
 }

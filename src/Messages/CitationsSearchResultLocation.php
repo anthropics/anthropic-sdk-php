@@ -44,6 +44,33 @@ final class CitationsSearchResultLocation implements BaseModel
     #[Api]
     public ?string $title;
 
+    /**
+     * `new CitationsSearchResultLocation()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * CitationsSearchResultLocation::with(
+     *   citedText: ...,
+     *   endBlockIndex: ...,
+     *   searchResultIndex: ...,
+     *   source: ...,
+     *   startBlockIndex: ...,
+     *   title: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new CitationsSearchResultLocation)
+     *   ->withCitedText(...)
+     *   ->withEndBlockIndex(...)
+     *   ->withSearchResultIndex(...)
+     *   ->withSource(...)
+     *   ->withStartBlockIndex(...)
+     *   ->withTitle(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -55,7 +82,7 @@ final class CitationsSearchResultLocation implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $citedText,
         int $endBlockIndex,
         int $searchResultIndex,
@@ -75,45 +102,51 @@ final class CitationsSearchResultLocation implements BaseModel
         return $obj;
     }
 
-    public function setCitedText(string $citedText): self
+    public function withCitedText(string $citedText): self
     {
-        $this->citedText = $citedText;
+        $obj = clone $this;
+        $obj->citedText = $citedText;
 
-        return $this;
+        return $obj;
     }
 
-    public function setEndBlockIndex(int $endBlockIndex): self
+    public function withEndBlockIndex(int $endBlockIndex): self
     {
-        $this->endBlockIndex = $endBlockIndex;
+        $obj = clone $this;
+        $obj->endBlockIndex = $endBlockIndex;
 
-        return $this;
+        return $obj;
     }
 
-    public function setSearchResultIndex(int $searchResultIndex): self
+    public function withSearchResultIndex(int $searchResultIndex): self
     {
-        $this->searchResultIndex = $searchResultIndex;
+        $obj = clone $this;
+        $obj->searchResultIndex = $searchResultIndex;
 
-        return $this;
+        return $obj;
     }
 
-    public function setSource(string $source): self
+    public function withSource(string $source): self
     {
-        $this->source = $source;
+        $obj = clone $this;
+        $obj->source = $source;
 
-        return $this;
+        return $obj;
     }
 
-    public function setStartBlockIndex(int $startBlockIndex): self
+    public function withStartBlockIndex(int $startBlockIndex): self
     {
-        $this->startBlockIndex = $startBlockIndex;
+        $obj = clone $this;
+        $obj->startBlockIndex = $startBlockIndex;
 
-        return $this;
+        return $obj;
     }
 
-    public function setTitle(?string $title): self
+    public function withTitle(?string $title): self
     {
-        $this->title = $title;
+        $obj = clone $this;
+        $obj->title = $title;
 
-        return $this;
+        return $obj;
     }
 }

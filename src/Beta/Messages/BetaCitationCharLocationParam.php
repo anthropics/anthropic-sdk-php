@@ -40,6 +40,31 @@ final class BetaCitationCharLocationParam implements BaseModel
     #[Api('start_char_index')]
     public int $startCharIndex;
 
+    /**
+     * `new BetaCitationCharLocationParam()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaCitationCharLocationParam::with(
+     *   citedText: ...,
+     *   documentIndex: ...,
+     *   documentTitle: ...,
+     *   endCharIndex: ...,
+     *   startCharIndex: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaCitationCharLocationParam)
+     *   ->withCitedText(...)
+     *   ->withDocumentIndex(...)
+     *   ->withDocumentTitle(...)
+     *   ->withEndCharIndex(...)
+     *   ->withStartCharIndex(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -51,7 +76,7 @@ final class BetaCitationCharLocationParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $citedText,
         int $documentIndex,
         ?string $documentTitle,
@@ -69,38 +94,43 @@ final class BetaCitationCharLocationParam implements BaseModel
         return $obj;
     }
 
-    public function setCitedText(string $citedText): self
+    public function withCitedText(string $citedText): self
     {
-        $this->citedText = $citedText;
+        $obj = clone $this;
+        $obj->citedText = $citedText;
 
-        return $this;
+        return $obj;
     }
 
-    public function setDocumentIndex(int $documentIndex): self
+    public function withDocumentIndex(int $documentIndex): self
     {
-        $this->documentIndex = $documentIndex;
+        $obj = clone $this;
+        $obj->documentIndex = $documentIndex;
 
-        return $this;
+        return $obj;
     }
 
-    public function setDocumentTitle(?string $documentTitle): self
+    public function withDocumentTitle(?string $documentTitle): self
     {
-        $this->documentTitle = $documentTitle;
+        $obj = clone $this;
+        $obj->documentTitle = $documentTitle;
 
-        return $this;
+        return $obj;
     }
 
-    public function setEndCharIndex(int $endCharIndex): self
+    public function withEndCharIndex(int $endCharIndex): self
     {
-        $this->endCharIndex = $endCharIndex;
+        $obj = clone $this;
+        $obj->endCharIndex = $endCharIndex;
 
-        return $this;
+        return $obj;
     }
 
-    public function setStartCharIndex(int $startCharIndex): self
+    public function withStartCharIndex(int $startCharIndex): self
     {
-        $this->startCharIndex = $startCharIndex;
+        $obj = clone $this;
+        $obj->startCharIndex = $startCharIndex;
 
-        return $this;
+        return $obj;
     }
 }

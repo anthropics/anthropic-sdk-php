@@ -36,6 +36,20 @@ final class BetaToolChoiceTool implements BaseModel
     #[Api('disable_parallel_tool_use', optional: true)]
     public ?bool $disableParallelToolUse;
 
+    /**
+     * `new BetaToolChoiceTool()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaToolChoiceTool::with(name: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaToolChoiceTool)->withName(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -47,7 +61,7 @@ final class BetaToolChoiceTool implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $name,
         ?bool $disableParallelToolUse = null
     ): self {
@@ -63,11 +77,12 @@ final class BetaToolChoiceTool implements BaseModel
     /**
      * The name of the tool to use.
      */
-    public function setName(string $name): self
+    public function withName(string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -75,11 +90,12 @@ final class BetaToolChoiceTool implements BaseModel
      *
      * Defaults to `false`. If set to `true`, the model will output exactly one tool use.
      */
-    public function setDisableParallelToolUse(
+    public function withDisableParallelToolUse(
         bool $disableParallelToolUse
     ): self {
-        $this->disableParallelToolUse = $disableParallelToolUse;
+        $obj = clone $this;
+        $obj->disableParallelToolUse = $disableParallelToolUse;
 
-        return $this;
+        return $obj;
     }
 }

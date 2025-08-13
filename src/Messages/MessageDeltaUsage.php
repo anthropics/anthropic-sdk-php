@@ -51,6 +51,31 @@ final class MessageDeltaUsage implements BaseModel
     #[Api('server_tool_use')]
     public ServerToolUsage $serverToolUse;
 
+    /**
+     * `new MessageDeltaUsage()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * MessageDeltaUsage::with(
+     *   cacheCreationInputTokens: ...,
+     *   cacheReadInputTokens: ...,
+     *   inputTokens: ...,
+     *   outputTokens: ...,
+     *   serverToolUse: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new MessageDeltaUsage)
+     *   ->withCacheCreationInputTokens(...)
+     *   ->withCacheReadInputTokens(...)
+     *   ->withInputTokens(...)
+     *   ->withOutputTokens(...)
+     *   ->withServerToolUse(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -62,7 +87,7 @@ final class MessageDeltaUsage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         ?int $cacheCreationInputTokens,
         ?int $cacheReadInputTokens,
         ?int $inputTokens,
@@ -83,51 +108,56 @@ final class MessageDeltaUsage implements BaseModel
     /**
      * The cumulative number of input tokens used to create the cache entry.
      */
-    public function setCacheCreationInputTokens(
+    public function withCacheCreationInputTokens(
         ?int $cacheCreationInputTokens
     ): self {
-        $this->cacheCreationInputTokens = $cacheCreationInputTokens;
+        $obj = clone $this;
+        $obj->cacheCreationInputTokens = $cacheCreationInputTokens;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The cumulative number of input tokens read from the cache.
      */
-    public function setCacheReadInputTokens(?int $cacheReadInputTokens): self
+    public function withCacheReadInputTokens(?int $cacheReadInputTokens): self
     {
-        $this->cacheReadInputTokens = $cacheReadInputTokens;
+        $obj = clone $this;
+        $obj->cacheReadInputTokens = $cacheReadInputTokens;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The cumulative number of input tokens which were used.
      */
-    public function setInputTokens(?int $inputTokens): self
+    public function withInputTokens(?int $inputTokens): self
     {
-        $this->inputTokens = $inputTokens;
+        $obj = clone $this;
+        $obj->inputTokens = $inputTokens;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The cumulative number of output tokens which were used.
      */
-    public function setOutputTokens(int $outputTokens): self
+    public function withOutputTokens(int $outputTokens): self
     {
-        $this->outputTokens = $outputTokens;
+        $obj = clone $this;
+        $obj->outputTokens = $outputTokens;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The number of server tool requests.
      */
-    public function setServerToolUse(ServerToolUsage $serverToolUse): self
+    public function withServerToolUse(ServerToolUsage $serverToolUse): self
     {
-        $this->serverToolUse = $serverToolUse;
+        $obj = clone $this;
+        $obj->serverToolUse = $serverToolUse;
 
-        return $this;
+        return $obj;
     }
 }

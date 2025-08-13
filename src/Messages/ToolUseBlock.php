@@ -29,6 +29,20 @@ final class ToolUseBlock implements BaseModel
     #[Api]
     public string $name;
 
+    /**
+     * `new ToolUseBlock()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * ToolUseBlock::with(id: ..., input: ..., name: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new ToolUseBlock)->withID(...)->withInput(...)->withName(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -40,7 +54,7 @@ final class ToolUseBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $id, mixed $input, string $name): self
+    public static function with(string $id, mixed $input, string $name): self
     {
         $obj = new self;
 
@@ -51,24 +65,27 @@ final class ToolUseBlock implements BaseModel
         return $obj;
     }
 
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
-    public function setInput(mixed $input): self
+    public function withInput(mixed $input): self
     {
-        $this->input = $input;
+        $obj = clone $this;
+        $obj->input = $input;
 
-        return $this;
+        return $obj;
     }
 
-    public function setName(string $name): self
+    public function withName(string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 }

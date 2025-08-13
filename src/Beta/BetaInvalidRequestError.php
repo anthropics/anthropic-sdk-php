@@ -23,6 +23,20 @@ final class BetaInvalidRequestError implements BaseModel
     #[Api]
     public string $message;
 
+    /**
+     * `new BetaInvalidRequestError()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaInvalidRequestError::with(message: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaInvalidRequestError)->withMessage(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -34,7 +48,7 @@ final class BetaInvalidRequestError implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $message = 'Invalid request'): self
+    public static function with(string $message = 'Invalid request'): self
     {
         $obj = new self;
 
@@ -43,10 +57,11 @@ final class BetaInvalidRequestError implements BaseModel
         return $obj;
     }
 
-    public function setMessage(string $message): self
+    public function withMessage(string $message): self
     {
-        $this->message = $message;
+        $obj = clone $this;
+        $obj->message = $message;
 
-        return $this;
+        return $obj;
     }
 }

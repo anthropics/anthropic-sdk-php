@@ -23,6 +23,20 @@ final class RawMessageStartEvent implements BaseModel
     #[Api]
     public Message $message;
 
+    /**
+     * `new RawMessageStartEvent()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * RawMessageStartEvent::with(message: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new RawMessageStartEvent)->withMessage(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -34,7 +48,7 @@ final class RawMessageStartEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(Message $message): self
+    public static function with(Message $message): self
     {
         $obj = new self;
 
@@ -43,10 +57,11 @@ final class RawMessageStartEvent implements BaseModel
         return $obj;
     }
 
-    public function setMessage(Message $message): self
+    public function withMessage(Message $message): self
     {
-        $this->message = $message;
+        $obj = clone $this;
+        $obj->message = $message;
 
-        return $this;
+        return $obj;
     }
 }

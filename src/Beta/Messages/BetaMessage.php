@@ -138,6 +138,35 @@ final class BetaMessage implements BaseModel
     #[Api]
     public BetaUsage $usage;
 
+    /**
+     * `new BetaMessage()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaMessage::with(
+     *   id: ...,
+     *   container: ...,
+     *   content: ...,
+     *   model: ...,
+     *   stopReason: ...,
+     *   stopSequence: ...,
+     *   usage: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaMessage)
+     *   ->withID(...)
+     *   ->withContainer(...)
+     *   ->withContent(...)
+     *   ->withModel(...)
+     *   ->withStopReason(...)
+     *   ->withStopSequence(...)
+     *   ->withUsage(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -153,7 +182,7 @@ final class BetaMessage implements BaseModel
      * @param string|UnionMember0::* $model
      * @param BetaStopReason::* $stopReason
      */
-    public static function from(
+    public static function with(
         string $id,
         BetaContainer $container,
         array $content,
@@ -180,21 +209,23 @@ final class BetaMessage implements BaseModel
      *
      * The format and length of IDs may change over time.
      */
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Information about the container used in the request (for the code execution tool).
      */
-    public function setContainer(BetaContainer $container): self
+    public function withContainer(BetaContainer $container): self
     {
-        $this->container = $container;
+        $obj = clone $this;
+        $obj->container = $container;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -226,11 +257,12 @@ final class BetaMessage implements BaseModel
      *
      * @param list<BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock> $content
      */
-    public function setContent(array $content): self
+    public function withContent(array $content): self
     {
-        $this->content = $content;
+        $obj = clone $this;
+        $obj->content = $content;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -238,11 +270,12 @@ final class BetaMessage implements BaseModel
      *
      * @param string|UnionMember0::* $model
      */
-    public function setModel(string $model): self
+    public function withModel(string $model): self
     {
-        $this->model = $model;
+        $obj = clone $this;
+        $obj->model = $model;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -260,11 +293,12 @@ final class BetaMessage implements BaseModel
      *
      * @param BetaStopReason::* $stopReason
      */
-    public function setStopReason(string $stopReason): self
+    public function withStopReason(string $stopReason): self
     {
-        $this->stopReason = $stopReason;
+        $obj = clone $this;
+        $obj->stopReason = $stopReason;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -272,11 +306,12 @@ final class BetaMessage implements BaseModel
      *
      * This value will be a non-null string if one of your custom stop sequences was generated.
      */
-    public function setStopSequence(?string $stopSequence): self
+    public function withStopSequence(?string $stopSequence): self
     {
-        $this->stopSequence = $stopSequence;
+        $obj = clone $this;
+        $obj->stopSequence = $stopSequence;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -290,10 +325,11 @@ final class BetaMessage implements BaseModel
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      */
-    public function setUsage(BetaUsage $usage): self
+    public function withUsage(BetaUsage $usage): self
     {
-        $this->usage = $usage;
+        $obj = clone $this;
+        $obj->usage = $usage;
 
-        return $this;
+        return $obj;
     }
 }

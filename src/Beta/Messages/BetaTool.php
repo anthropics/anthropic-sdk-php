@@ -57,6 +57,20 @@ final class BetaTool implements BaseModel
     #[Api(enum: Type::class, nullable: true, optional: true)]
     public ?string $type;
 
+    /**
+     * `new BetaTool()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaTool::with(inputSchema: ..., name: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaTool)->withInputSchema(...)->withName(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -70,7 +84,7 @@ final class BetaTool implements BaseModel
      *
      * @param null|Type::* $type
      */
-    public static function from(
+    public static function with(
         InputSchema $inputSchema,
         string $name,
         ?BetaCacheControlEphemeral $cacheControl = null,
@@ -94,11 +108,12 @@ final class BetaTool implements BaseModel
      *
      * This defines the shape of the `input` that your tool accepts and that the model will produce.
      */
-    public function setInputSchema(InputSchema $inputSchema): self
+    public function withInputSchema(InputSchema $inputSchema): self
     {
-        $this->inputSchema = $inputSchema;
+        $obj = clone $this;
+        $obj->inputSchema = $inputSchema;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -106,22 +121,24 @@ final class BetaTool implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      */
-    public function setName(string $name): self
+    public function withName(string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function setCacheControl(
+    public function withCacheControl(
         BetaCacheControlEphemeral $cacheControl
     ): self {
-        $this->cacheControl = $cacheControl;
+        $obj = clone $this;
+        $obj->cacheControl = $cacheControl;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -129,20 +146,22 @@ final class BetaTool implements BaseModel
      *
      * Tool descriptions should be as detailed as possible. The more information that the model has about what the tool is and how to use it, the better it will perform. You can use natural language descriptions to reinforce important aspects of the tool input JSON schema.
      */
-    public function setDescription(string $description): self
+    public function withDescription(string $description): self
     {
-        $this->description = $description;
+        $obj = clone $this;
+        $obj->description = $description;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param null|Type::* $type
      */
-    public function setType(?string $type): self
+    public function withType(?string $type): self
     {
-        $this->type = $type;
+        $obj = clone $this;
+        $obj->type = $type;
 
-        return $this;
+        return $obj;
     }
 }

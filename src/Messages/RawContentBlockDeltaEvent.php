@@ -28,6 +28,20 @@ final class RawContentBlockDeltaEvent implements BaseModel
     #[Api]
     public int $index;
 
+    /**
+     * `new RawContentBlockDeltaEvent()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * RawContentBlockDeltaEvent::with(delta: ..., index: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new RawContentBlockDeltaEvent)->withDelta(...)->withIndex(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -39,7 +53,7 @@ final class RawContentBlockDeltaEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         CitationsDelta|InputJSONDelta|SignatureDelta|TextDelta|ThinkingDelta $delta,
         int $index,
     ): self {
@@ -51,18 +65,20 @@ final class RawContentBlockDeltaEvent implements BaseModel
         return $obj;
     }
 
-    public function setDelta(
+    public function withDelta(
         CitationsDelta|InputJSONDelta|SignatureDelta|TextDelta|ThinkingDelta $delta
     ): self {
-        $this->delta = $delta;
+        $obj = clone $this;
+        $obj->delta = $delta;
 
-        return $this;
+        return $obj;
     }
 
-    public function setIndex(int $index): self
+    public function withIndex(int $index): self
     {
-        $this->index = $index;
+        $obj = clone $this;
+        $obj->index = $index;
 
-        return $this;
+        return $obj;
     }
 }

@@ -44,9 +44,9 @@ $client = new Client(
   apiKey: getenv("ANTHROPIC_API_KEY") ?: "my-anthropic-api-key"
 );
 
-$params = MessageCreateParams::from(
+$params = MessageCreateParams::with(
   maxTokens: 1024,
-  messages: [MessageParam::from(role: "user", content: "Hello, Claude")],
+  messages: [MessageParam::with(role: "user", content: "Hello, Claude")],
   model: "claude-sonnet-4-20250514",
 );
 $message = $client->messages->create($params);
@@ -65,13 +65,13 @@ use Anthropic\Errors\APIConnectionError;
 use Anthropic\Messages\MessageCreateParams;
 use Anthropic\Messages\MessageParam;
 
+$params = MessageCreateParams::with(
+  maxTokens: 1024,
+  messages: [MessageParam::with(role: "user", content: "Hello, Claude")],
+  model: "claude-sonnet-4-20250514",
+);
 try {
-    $params = MessageCreateParams::from(
-      maxTokens: 1024,
-      messages: [MessageParam::from(role: "user", content: "Hello, Claude")],
-      model: "claude-sonnet-4-20250514",
-    );
-    $Messages = $client->messages->create($params);
+  $Messages = $client->messages->create($params);
 } catch (APIConnectionError $e) {
     echo "The server could not be reached", PHP_EOL;
     var_dump($e->getPrevious());
@@ -117,14 +117,15 @@ use Anthropic\Messages\MessageParam;
 
 // Configure the default for all requests:
 $client = new Client(maxRetries: 0);
-$params = MessageCreateParams::from(
+$params = MessageCreateParams::with(
   maxTokens: 1024,
-  messages: [MessageParam::from(role: "user", content: "Hello, Claude")],
+  messages: [MessageParam::with(role: "user", content: "Hello, Claude")],
   model: "claude-sonnet-4-20250514",
 );
 
-// Or, configure per-request:
-$result = $client->messages->create($params, new RequestOptions(maxRetries: 5));
+// Or, configure per-request:$result = $client
+  ->messages
+  ->create($params, new RequestOptions(maxRetries: 5));
 ```
 
 ## Advanced concepts
@@ -144,9 +145,9 @@ use Anthropic\RequestOptions;
 use Anthropic\Messages\MessageCreateParams;
 use Anthropic\Messages\MessageParam;
 
-$params = MessageCreateParams::from(
+$params = MessageCreateParams::with(
   maxTokens: 1024,
-  messages: [MessageParam::from(role: "user", content: "Hello, Claude")],
+  messages: [MessageParam::with(role: "user", content: "Hello, Claude")],
   model: "claude-sonnet-4-20250514",
 );
 $message = $client

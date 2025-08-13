@@ -34,6 +34,23 @@ final class BetaMCPToolResultBlock implements BaseModel
     #[Api('tool_use_id')]
     public string $toolUseID;
 
+    /**
+     * `new BetaMCPToolResultBlock()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaMCPToolResultBlock::with(content: ..., isError: ..., toolUseID: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaMCPToolResultBlock)
+     *   ->withContent(...)
+     *   ->withIsError(...)
+     *   ->withToolUseID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -47,7 +64,7 @@ final class BetaMCPToolResultBlock implements BaseModel
      *
      * @param list<BetaTextBlock>|string $content
      */
-    public static function from(
+    public static function with(
         array|string $content,
         string $toolUseID,
         bool $isError = false
@@ -64,24 +81,27 @@ final class BetaMCPToolResultBlock implements BaseModel
     /**
      * @param list<BetaTextBlock>|string $content
      */
-    public function setContent(array|string $content): self
+    public function withContent(array|string $content): self
     {
-        $this->content = $content;
+        $obj = clone $this;
+        $obj->content = $content;
 
-        return $this;
+        return $obj;
     }
 
-    public function setIsError(bool $isError): self
+    public function withIsError(bool $isError): self
     {
-        $this->isError = $isError;
+        $obj = clone $this;
+        $obj->isError = $isError;
 
-        return $this;
+        return $obj;
     }
 
-    public function setToolUseID(string $toolUseID): self
+    public function withToolUseID(string $toolUseID): self
     {
-        $this->toolUseID = $toolUseID;
+        $obj = clone $this;
+        $obj->toolUseID = $toolUseID;
 
-        return $this;
+        return $obj;
     }
 }

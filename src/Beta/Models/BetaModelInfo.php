@@ -43,6 +43,20 @@ final class BetaModelInfo implements BaseModel
     #[Api('display_name')]
     public string $displayName;
 
+    /**
+     * `new BetaModelInfo()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaModelInfo::with(id: ..., createdAt: ..., displayName: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaModelInfo)->withID(...)->withCreatedAt(...)->withDisplayName(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -54,7 +68,7 @@ final class BetaModelInfo implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $id,
         \DateTimeInterface $createdAt,
         string $displayName
@@ -71,30 +85,33 @@ final class BetaModelInfo implements BaseModel
     /**
      * Unique model identifier.
      */
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * RFC 3339 datetime string representing the time at which the model was released. May be set to an epoch value if the release date is unknown.
      */
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->createdAt = $createdAt;
+        $obj = clone $this;
+        $obj->createdAt = $createdAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * A human-readable name for the model.
      */
-    public function setDisplayName(string $displayName): self
+    public function withDisplayName(string $displayName): self
     {
-        $this->displayName = $displayName;
+        $obj = clone $this;
+        $obj->displayName = $displayName;
 
-        return $this;
+        return $obj;
     }
 }

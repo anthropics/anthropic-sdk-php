@@ -29,6 +29,20 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     #[Api('tool_use_id')]
     public string $toolUseID;
 
+    /**
+     * `new BetaWebSearchToolResultBlock()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaWebSearchToolResultBlock::with(content: ..., toolUseID: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaWebSearchToolResultBlock)->withContent(...)->withToolUseID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -42,7 +56,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
      *
      * @param BetaWebSearchToolResultError|list<BetaWebSearchResultBlock> $content
      */
-    public static function from(
+    public static function with(
         array|BetaWebSearchToolResultError $content,
         string $toolUseID
     ): self {
@@ -57,18 +71,20 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     /**
      * @param BetaWebSearchToolResultError|list<BetaWebSearchResultBlock> $content
      */
-    public function setContent(
+    public function withContent(
         array|BetaWebSearchToolResultError $content
     ): self {
-        $this->content = $content;
+        $obj = clone $this;
+        $obj->content = $content;
 
-        return $this;
+        return $obj;
     }
 
-    public function setToolUseID(string $toolUseID): self
+    public function withToolUseID(string $toolUseID): self
     {
-        $this->toolUseID = $toolUseID;
+        $obj = clone $this;
+        $obj->toolUseID = $toolUseID;
 
-        return $this;
+        return $obj;
     }
 }

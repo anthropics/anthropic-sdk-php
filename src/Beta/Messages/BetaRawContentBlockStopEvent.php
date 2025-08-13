@@ -23,6 +23,20 @@ final class BetaRawContentBlockStopEvent implements BaseModel
     #[Api]
     public int $index;
 
+    /**
+     * `new BetaRawContentBlockStopEvent()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaRawContentBlockStopEvent::with(index: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaRawContentBlockStopEvent)->withIndex(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -34,7 +48,7 @@ final class BetaRawContentBlockStopEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(int $index): self
+    public static function with(int $index): self
     {
         $obj = new self;
 
@@ -43,10 +57,11 @@ final class BetaRawContentBlockStopEvent implements BaseModel
         return $obj;
     }
 
-    public function setIndex(int $index): self
+    public function withIndex(int $index): self
     {
-        $this->index = $index;
+        $obj = clone $this;
+        $obj->index = $index;
 
-        return $this;
+        return $obj;
     }
 }

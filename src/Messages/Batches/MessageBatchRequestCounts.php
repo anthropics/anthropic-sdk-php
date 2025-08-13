@@ -55,6 +55,27 @@ final class MessageBatchRequestCounts implements BaseModel
     #[Api]
     public int $succeeded;
 
+    /**
+     * `new MessageBatchRequestCounts()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * MessageBatchRequestCounts::with(
+     *   canceled: ..., errored: ..., expired: ..., processing: ..., succeeded: ...
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new MessageBatchRequestCounts)
+     *   ->withCanceled(...)
+     *   ->withErrored(...)
+     *   ->withExpired(...)
+     *   ->withProcessing(...)
+     *   ->withSucceeded(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -66,7 +87,7 @@ final class MessageBatchRequestCounts implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         int $canceled = 0,
         int $errored = 0,
         int $expired = 0,
@@ -89,11 +110,12 @@ final class MessageBatchRequestCounts implements BaseModel
      *
      * This is zero until processing of the entire Message Batch has ended.
      */
-    public function setCanceled(int $canceled): self
+    public function withCanceled(int $canceled): self
     {
-        $this->canceled = $canceled;
+        $obj = clone $this;
+        $obj->canceled = $canceled;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -101,11 +123,12 @@ final class MessageBatchRequestCounts implements BaseModel
      *
      * This is zero until processing of the entire Message Batch has ended.
      */
-    public function setErrored(int $errored): self
+    public function withErrored(int $errored): self
     {
-        $this->errored = $errored;
+        $obj = clone $this;
+        $obj->errored = $errored;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -113,21 +136,23 @@ final class MessageBatchRequestCounts implements BaseModel
      *
      * This is zero until processing of the entire Message Batch has ended.
      */
-    public function setExpired(int $expired): self
+    public function withExpired(int $expired): self
     {
-        $this->expired = $expired;
+        $obj = clone $this;
+        $obj->expired = $expired;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Number of requests in the Message Batch that are processing.
      */
-    public function setProcessing(int $processing): self
+    public function withProcessing(int $processing): self
     {
-        $this->processing = $processing;
+        $obj = clone $this;
+        $obj->processing = $processing;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -135,10 +160,11 @@ final class MessageBatchRequestCounts implements BaseModel
      *
      * This is zero until processing of the entire Message Batch has ended.
      */
-    public function setSucceeded(int $succeeded): self
+    public function withSucceeded(int $succeeded): self
     {
-        $this->succeeded = $succeeded;
+        $obj = clone $this;
+        $obj->succeeded = $succeeded;
 
-        return $this;
+        return $obj;
     }
 }

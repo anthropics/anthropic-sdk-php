@@ -38,6 +38,20 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
+    /**
+     * `new BetaWebSearchToolResultBlockParam()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaWebSearchToolResultBlockParam::with(content: ..., toolUseID: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaWebSearchToolResultBlockParam)->withContent(...)->withToolUseID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -51,7 +65,7 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
      *
      * @param BetaWebSearchToolRequestError|list<BetaWebSearchResultBlockParam> $content
      */
-    public static function from(
+    public static function with(
         array|BetaWebSearchToolRequestError $content,
         string $toolUseID,
         ?BetaCacheControlEphemeral $cacheControl = null,
@@ -69,29 +83,32 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
     /**
      * @param BetaWebSearchToolRequestError|list<BetaWebSearchResultBlockParam> $content
      */
-    public function setContent(
+    public function withContent(
         array|BetaWebSearchToolRequestError $content
     ): self {
-        $this->content = $content;
+        $obj = clone $this;
+        $obj->content = $content;
 
-        return $this;
+        return $obj;
     }
 
-    public function setToolUseID(string $toolUseID): self
+    public function withToolUseID(string $toolUseID): self
     {
-        $this->toolUseID = $toolUseID;
+        $obj = clone $this;
+        $obj->toolUseID = $toolUseID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function setCacheControl(
+    public function withCacheControl(
         BetaCacheControlEphemeral $cacheControl
     ): self {
-        $this->cacheControl = $cacheControl;
+        $obj = clone $this;
+        $obj->cacheControl = $cacheControl;
 
-        return $this;
+        return $obj;
     }
 }

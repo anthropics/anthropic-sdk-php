@@ -208,6 +208,20 @@ final class MessageCountTokensParams implements BaseModel
     #[Api(type: new ListOf(union: MessageCountTokensTool::class), optional: true)]
     public ?array $tools;
 
+    /**
+     * `new MessageCountTokensParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * MessageCountTokensParams::with(messages: ..., model: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new MessageCountTokensParams)->withMessages(...)->withModel(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -224,7 +238,7 @@ final class MessageCountTokensParams implements BaseModel
      * @param null|list<TextBlockParam>|string $system
      * @param null|list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
      */
-    public static function from(
+    public static function with(
         array $messages,
         string $model,
         null|array|string $system = null,
@@ -315,11 +329,12 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param list<MessageParam> $messages
      */
-    public function setMessages(array $messages): self
+    public function withMessages(array $messages): self
     {
-        $this->messages = $messages;
+        $obj = clone $this;
+        $obj->messages = $messages;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -327,11 +342,12 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param string|UnionMember0::* $model
      */
-    public function setModel(string $model): self
+    public function withModel(string $model): self
     {
-        $this->model = $model;
+        $obj = clone $this;
+        $obj->model = $model;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -341,11 +357,12 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param list<TextBlockParam>|string $system
      */
-    public function setSystem(array|string $system): self
+    public function withSystem(array|string $system): self
     {
-        $this->system = $system;
+        $obj = clone $this;
+        $obj->system = $system;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -355,23 +372,25 @@ final class MessageCountTokensParams implements BaseModel
      *
      * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
      */
-    public function setThinking(
+    public function withThinking(
         ThinkingConfigDisabled|ThinkingConfigEnabled $thinking
     ): self {
-        $this->thinking = $thinking;
+        $obj = clone $this;
+        $obj->thinking = $thinking;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
-    public function setToolChoice(
+    public function withToolChoice(
         ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice
     ): self {
-        $this->toolChoice = $toolChoice;
+        $obj = clone $this;
+        $obj->toolChoice = $toolChoice;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -439,10 +458,11 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
      */
-    public function setTools(array $tools): self
+    public function withTools(array $tools): self
     {
-        $this->tools = $tools;
+        $obj = clone $this;
+        $obj->tools = $tools;
 
-        return $this;
+        return $obj;
     }
 }

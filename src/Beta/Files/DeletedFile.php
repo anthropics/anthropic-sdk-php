@@ -32,6 +32,20 @@ final class DeletedFile implements BaseModel
     #[Api(enum: Type::class, optional: true)]
     public ?string $type;
 
+    /**
+     * `new DeletedFile()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * DeletedFile::with(id: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new DeletedFile)->withID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -45,7 +59,7 @@ final class DeletedFile implements BaseModel
      *
      * @param null|Type::* $type
      */
-    public static function from(string $id, ?string $type = null): self
+    public static function with(string $id, ?string $type = null): self
     {
         $obj = new self;
 
@@ -59,11 +73,12 @@ final class DeletedFile implements BaseModel
     /**
      * ID of the deleted file.
      */
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -73,10 +88,11 @@ final class DeletedFile implements BaseModel
      *
      * @param Type::* $type
      */
-    public function setType(string $type): self
+    public function withType(string $type): self
     {
-        $this->type = $type;
+        $obj = clone $this;
+        $obj->type = $type;
 
-        return $this;
+        return $obj;
     }
 }

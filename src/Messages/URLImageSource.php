@@ -21,6 +21,20 @@ final class URLImageSource implements BaseModel
     #[Api]
     public string $url;
 
+    /**
+     * `new URLImageSource()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * URLImageSource::with(url: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new URLImageSource)->withURL(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -32,7 +46,7 @@ final class URLImageSource implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $url): self
+    public static function with(string $url): self
     {
         $obj = new self;
 
@@ -41,10 +55,11 @@ final class URLImageSource implements BaseModel
         return $obj;
     }
 
-    public function setURL(string $url): self
+    public function withURL(string $url): self
     {
-        $this->url = $url;
+        $obj = clone $this;
+        $obj->url = $url;
 
-        return $this;
+        return $obj;
     }
 }

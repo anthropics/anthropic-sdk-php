@@ -43,7 +43,7 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
      *
      * @param null|list<string> $allowedTools
      */
-    public static function from(
+    public static function with(
         ?array $allowedTools = null,
         ?bool $enabled = null
     ): self {
@@ -58,17 +58,19 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
     /**
      * @param null|list<string> $allowedTools
      */
-    public function setAllowedTools(?array $allowedTools): self
+    public function withAllowedTools(?array $allowedTools): self
     {
-        $this->allowedTools = $allowedTools;
+        $obj = clone $this;
+        $obj->allowedTools = $allowedTools;
 
-        return $this;
+        return $obj;
     }
 
-    public function setEnabled(?bool $enabled): self
+    public function withEnabled(?bool $enabled): self
     {
-        $this->enabled = $enabled;
+        $obj = clone $this;
+        $obj->enabled = $enabled;
 
-        return $this;
+        return $obj;
     }
 }

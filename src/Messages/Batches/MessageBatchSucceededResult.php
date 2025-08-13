@@ -24,6 +24,20 @@ final class MessageBatchSucceededResult implements BaseModel
     #[Api]
     public Message $message;
 
+    /**
+     * `new MessageBatchSucceededResult()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * MessageBatchSucceededResult::with(message: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new MessageBatchSucceededResult)->withMessage(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -35,7 +49,7 @@ final class MessageBatchSucceededResult implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(Message $message): self
+    public static function with(Message $message): self
     {
         $obj = new self;
 
@@ -44,10 +58,11 @@ final class MessageBatchSucceededResult implements BaseModel
         return $obj;
     }
 
-    public function setMessage(Message $message): self
+    public function withMessage(Message $message): self
     {
-        $this->message = $message;
+        $obj = clone $this;
+        $obj->message = $message;
 
-        return $this;
+        return $obj;
     }
 }

@@ -63,6 +63,24 @@ final class Completion implements BaseModel
     #[Api('stop_reason')]
     public ?string $stopReason;
 
+    /**
+     * `new Completion()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Completion::with(id: ..., completion: ..., model: ..., stopReason: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Completion)
+     *   ->withID(...)
+     *   ->withCompletion(...)
+     *   ->withModel(...)
+     *   ->withStopReason(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -76,7 +94,7 @@ final class Completion implements BaseModel
      *
      * @param string|UnionMember0::* $model
      */
-    public static function from(
+    public static function with(
         string $id,
         string $completion,
         string $model,
@@ -97,21 +115,23 @@ final class Completion implements BaseModel
      *
      * The format and length of IDs may change over time.
      */
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The resulting completion up to and excluding the stop sequences.
      */
-    public function setCompletion(string $completion): self
+    public function withCompletion(string $completion): self
     {
-        $this->completion = $completion;
+        $obj = clone $this;
+        $obj->completion = $completion;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -119,11 +139,12 @@ final class Completion implements BaseModel
      *
      * @param string|UnionMember0::* $model
      */
-    public function setModel(string $model): self
+    public function withModel(string $model): self
     {
-        $this->model = $model;
+        $obj = clone $this;
+        $obj->model = $model;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -133,10 +154,11 @@ final class Completion implements BaseModel
      * * `"stop_sequence"`: we reached a stop sequence — either provided by you via the `stop_sequences` parameter, or a stop sequence built into the model
      * * `"max_tokens"`: we exceeded `max_tokens_to_sample` or the model's maximum
      */
-    public function setStopReason(?string $stopReason): self
+    public function withStopReason(?string $stopReason): self
     {
-        $this->stopReason = $stopReason;
+        $obj = clone $this;
+        $obj->stopReason = $stopReason;
 
-        return $this;
+        return $obj;
     }
 }

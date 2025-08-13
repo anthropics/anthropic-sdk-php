@@ -25,6 +25,20 @@ final class Delta implements BaseModel
     #[Api('stop_sequence')]
     public ?string $stopSequence;
 
+    /**
+     * `new Delta()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Delta::with(stopReason: ..., stopSequence: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Delta)->withStopReason(...)->withStopSequence(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -38,7 +52,7 @@ final class Delta implements BaseModel
      *
      * @param StopReason::* $stopReason
      */
-    public static function from(string $stopReason, ?string $stopSequence): self
+    public static function with(string $stopReason, ?string $stopSequence): self
     {
         $obj = new self;
 
@@ -51,17 +65,19 @@ final class Delta implements BaseModel
     /**
      * @param StopReason::* $stopReason
      */
-    public function setStopReason(string $stopReason): self
+    public function withStopReason(string $stopReason): self
     {
-        $this->stopReason = $stopReason;
+        $obj = clone $this;
+        $obj->stopReason = $stopReason;
 
-        return $this;
+        return $obj;
     }
 
-    public function setStopSequence(?string $stopSequence): self
+    public function withStopSequence(?string $stopSequence): self
     {
-        $this->stopSequence = $stopSequence;
+        $obj = clone $this;
+        $obj->stopSequence = $stopSequence;
 
-        return $this;
+        return $obj;
     }
 }

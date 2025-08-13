@@ -25,6 +25,20 @@ final class BetaCitationsDelta implements BaseModel
     #[Api(union: Citation::class)]
     public BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationSearchResultLocation|BetaCitationsWebSearchResultLocation $citation;
 
+    /**
+     * `new BetaCitationsDelta()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaCitationsDelta::with(citation: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaCitationsDelta)->withCitation(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -36,7 +50,7 @@ final class BetaCitationsDelta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationSearchResultLocation|BetaCitationsWebSearchResultLocation $citation,
     ): self {
         $obj = new self;
@@ -46,11 +60,12 @@ final class BetaCitationsDelta implements BaseModel
         return $obj;
     }
 
-    public function setCitation(
+    public function withCitation(
         BetaCitationCharLocation|BetaCitationContentBlockLocation|BetaCitationPageLocation|BetaCitationSearchResultLocation|BetaCitationsWebSearchResultLocation $citation,
     ): self {
-        $this->citation = $citation;
+        $obj = clone $this;
+        $obj->citation = $citation;
 
-        return $this;
+        return $obj;
     }
 }

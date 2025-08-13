@@ -21,6 +21,20 @@ final class BetaServerToolUsage implements BaseModel
     #[Api('web_search_requests')]
     public int $webSearchRequests;
 
+    /**
+     * `new BetaServerToolUsage()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaServerToolUsage::with(webSearchRequests: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaServerToolUsage)->withWebSearchRequests(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -32,7 +46,7 @@ final class BetaServerToolUsage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(int $webSearchRequests = 0): self
+    public static function with(int $webSearchRequests = 0): self
     {
         $obj = new self;
 
@@ -44,10 +58,11 @@ final class BetaServerToolUsage implements BaseModel
     /**
      * The number of web search tool requests.
      */
-    public function setWebSearchRequests(int $webSearchRequests): self
+    public function withWebSearchRequests(int $webSearchRequests): self
     {
-        $this->webSearchRequests = $webSearchRequests;
+        $obj = clone $this;
+        $obj->webSearchRequests = $webSearchRequests;
 
-        return $this;
+        return $obj;
     }
 }

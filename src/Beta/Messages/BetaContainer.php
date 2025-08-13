@@ -31,6 +31,20 @@ final class BetaContainer implements BaseModel
     #[Api('expires_at')]
     public \DateTimeInterface $expiresAt;
 
+    /**
+     * `new BetaContainer()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaContainer::with(id: ..., expiresAt: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaContainer)->withID(...)->withExpiresAt(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -42,7 +56,7 @@ final class BetaContainer implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $id, \DateTimeInterface $expiresAt): self
+    public static function with(string $id, \DateTimeInterface $expiresAt): self
     {
         $obj = new self;
 
@@ -55,20 +69,22 @@ final class BetaContainer implements BaseModel
     /**
      * Identifier for the container used in this request.
      */
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The time at which the container will expire.
      */
-    public function setExpiresAt(\DateTimeInterface $expiresAt): self
+    public function withExpiresAt(\DateTimeInterface $expiresAt): self
     {
-        $this->expiresAt = $expiresAt;
+        $obj = clone $this;
+        $obj->expiresAt = $expiresAt;
 
-        return $this;
+        return $obj;
     }
 }

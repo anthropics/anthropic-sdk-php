@@ -45,7 +45,7 @@ final class BetaToolBash20241022 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         ?BetaCacheControlEphemeral $cacheControl = null
     ): self {
         $obj = new self;
@@ -58,11 +58,12 @@ final class BetaToolBash20241022 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function setCacheControl(
+    public function withCacheControl(
         BetaCacheControlEphemeral $cacheControl
     ): self {
-        $this->cacheControl = $cacheControl;
+        $obj = clone $this;
+        $obj->cacheControl = $cacheControl;
 
-        return $this;
+        return $obj;
     }
 }

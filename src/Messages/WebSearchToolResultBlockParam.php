@@ -36,6 +36,20 @@ final class WebSearchToolResultBlockParam implements BaseModel
     #[Api('cache_control', optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 
+    /**
+     * `new WebSearchToolResultBlockParam()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * WebSearchToolResultBlockParam::with(content: ..., toolUseID: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new WebSearchToolResultBlockParam)->withContent(...)->withToolUseID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -49,7 +63,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
      *
      * @param list<WebSearchResultBlockParam>|WebSearchToolRequestError $content
      */
-    public static function from(
+    public static function with(
         array|WebSearchToolRequestError $content,
         string $toolUseID,
         ?CacheControlEphemeral $cacheControl = null,
@@ -67,27 +81,30 @@ final class WebSearchToolResultBlockParam implements BaseModel
     /**
      * @param list<WebSearchResultBlockParam>|WebSearchToolRequestError $content
      */
-    public function setContent(array|WebSearchToolRequestError $content): self
+    public function withContent(array|WebSearchToolRequestError $content): self
     {
-        $this->content = $content;
+        $obj = clone $this;
+        $obj->content = $content;
 
-        return $this;
+        return $obj;
     }
 
-    public function setToolUseID(string $toolUseID): self
+    public function withToolUseID(string $toolUseID): self
     {
-        $this->toolUseID = $toolUseID;
+        $obj = clone $this;
+        $obj->toolUseID = $toolUseID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function setCacheControl(CacheControlEphemeral $cacheControl): self
+    public function withCacheControl(CacheControlEphemeral $cacheControl): self
     {
-        $this->cacheControl = $cacheControl;
+        $obj = clone $this;
+        $obj->cacheControl = $cacheControl;
 
-        return $this;
+        return $obj;
     }
 }

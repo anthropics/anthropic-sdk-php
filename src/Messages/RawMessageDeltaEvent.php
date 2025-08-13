@@ -38,6 +38,20 @@ final class RawMessageDeltaEvent implements BaseModel
     #[Api]
     public MessageDeltaUsage $usage;
 
+    /**
+     * `new RawMessageDeltaEvent()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * RawMessageDeltaEvent::with(delta: ..., usage: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new RawMessageDeltaEvent)->withDelta(...)->withUsage(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -49,7 +63,7 @@ final class RawMessageDeltaEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(Delta $delta, MessageDeltaUsage $usage): self
+    public static function with(Delta $delta, MessageDeltaUsage $usage): self
     {
         $obj = new self;
 
@@ -59,11 +73,12 @@ final class RawMessageDeltaEvent implements BaseModel
         return $obj;
     }
 
-    public function setDelta(Delta $delta): self
+    public function withDelta(Delta $delta): self
     {
-        $this->delta = $delta;
+        $obj = clone $this;
+        $obj->delta = $delta;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -77,10 +92,11 @@ final class RawMessageDeltaEvent implements BaseModel
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      */
-    public function setUsage(MessageDeltaUsage $usage): self
+    public function withUsage(MessageDeltaUsage $usage): self
     {
-        $this->usage = $usage;
+        $obj = clone $this;
+        $obj->usage = $usage;
 
-        return $this;
+        return $obj;
     }
 }

@@ -21,6 +21,20 @@ final class BetaThinkingDelta implements BaseModel
     #[Api]
     public string $thinking;
 
+    /**
+     * `new BetaThinkingDelta()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaThinkingDelta::with(thinking: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaThinkingDelta)->withThinking(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -32,7 +46,7 @@ final class BetaThinkingDelta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $thinking): self
+    public static function with(string $thinking): self
     {
         $obj = new self;
 
@@ -41,10 +55,11 @@ final class BetaThinkingDelta implements BaseModel
         return $obj;
     }
 
-    public function setThinking(string $thinking): self
+    public function withThinking(string $thinking): self
     {
-        $this->thinking = $thinking;
+        $obj = clone $this;
+        $obj->thinking = $thinking;
 
-        return $this;
+        return $obj;
     }
 }

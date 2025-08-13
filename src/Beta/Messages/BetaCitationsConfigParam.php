@@ -29,7 +29,7 @@ final class BetaCitationsConfigParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(?bool $enabled = null): self
+    public static function with(?bool $enabled = null): self
     {
         $obj = new self;
 
@@ -38,10 +38,11 @@ final class BetaCitationsConfigParam implements BaseModel
         return $obj;
     }
 
-    public function setEnabled(bool $enabled): self
+    public function withEnabled(bool $enabled): self
     {
-        $this->enabled = $enabled;
+        $obj = clone $this;
+        $obj->enabled = $enabled;
 
-        return $this;
+        return $obj;
     }
 }

@@ -25,6 +25,20 @@ final class BetaContentBlockSource implements BaseModel
     #[Api(union: Content::class)]
     public array|string $content;
 
+    /**
+     * `new BetaContentBlockSource()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaContentBlockSource::with(content: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaContentBlockSource)->withContent(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -38,7 +52,7 @@ final class BetaContentBlockSource implements BaseModel
      *
      * @param list<BetaImageBlockParam|BetaTextBlockParam>|string $content
      */
-    public static function from(array|string $content): self
+    public static function with(array|string $content): self
     {
         $obj = new self;
 
@@ -50,10 +64,11 @@ final class BetaContentBlockSource implements BaseModel
     /**
      * @param list<BetaImageBlockParam|BetaTextBlockParam>|string $content
      */
-    public function setContent(array|string $content): self
+    public function withContent(array|string $content): self
     {
-        $this->content = $content;
+        $obj = clone $this;
+        $obj->content = $content;
 
-        return $this;
+        return $obj;
     }
 }

@@ -30,6 +30,20 @@ final class MessageParam implements BaseModel
     #[Api(enum: Role::class)]
     public string $role;
 
+    /**
+     * `new MessageParam()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * MessageParam::with(content: ..., role: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new MessageParam)->withContent(...)->withRole(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -44,7 +58,7 @@ final class MessageParam implements BaseModel
      * @param list<DocumentBlockParam|ImageBlockParam|RedactedThinkingBlockParam|SearchResultBlockParam|ServerToolUseBlockParam|TextBlockParam|ThinkingBlockParam|ToolResultBlockParam|ToolUseBlockParam|WebSearchToolResultBlockParam>|string $content
      * @param Role::* $role
      */
-    public static function from(array|string $content, string $role): self
+    public static function with(array|string $content, string $role): self
     {
         $obj = new self;
 
@@ -57,20 +71,22 @@ final class MessageParam implements BaseModel
     /**
      * @param list<DocumentBlockParam|ImageBlockParam|RedactedThinkingBlockParam|SearchResultBlockParam|ServerToolUseBlockParam|TextBlockParam|ThinkingBlockParam|ToolResultBlockParam|ToolUseBlockParam|WebSearchToolResultBlockParam>|string $content
      */
-    public function setContent(array|string $content): self
+    public function withContent(array|string $content): self
     {
-        $this->content = $content;
+        $obj = clone $this;
+        $obj->content = $content;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param Role::* $role
      */
-    public function setRole(string $role): self
+    public function withRole(string $role): self
     {
-        $this->role = $role;
+        $obj = clone $this;
+        $obj->role = $role;
 
-        return $this;
+        return $obj;
     }
 }

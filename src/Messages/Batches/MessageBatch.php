@@ -99,6 +99,39 @@ final class MessageBatch implements BaseModel
     #[Api('results_url')]
     public ?string $resultsURL;
 
+    /**
+     * `new MessageBatch()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * MessageBatch::with(
+     *   id: ...,
+     *   archivedAt: ...,
+     *   cancelInitiatedAt: ...,
+     *   createdAt: ...,
+     *   endedAt: ...,
+     *   expiresAt: ...,
+     *   processingStatus: ...,
+     *   requestCounts: ...,
+     *   resultsURL: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new MessageBatch)
+     *   ->withID(...)
+     *   ->withArchivedAt(...)
+     *   ->withCancelInitiatedAt(...)
+     *   ->withCreatedAt(...)
+     *   ->withEndedAt(...)
+     *   ->withExpiresAt(...)
+     *   ->withProcessingStatus(...)
+     *   ->withRequestCounts(...)
+     *   ->withResultsURL(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -112,7 +145,7 @@ final class MessageBatch implements BaseModel
      *
      * @param ProcessingStatus::* $processingStatus
      */
-    public static function from(
+    public static function with(
         string $id,
         ?\DateTimeInterface $archivedAt,
         ?\DateTimeInterface $cancelInitiatedAt,
@@ -143,42 +176,46 @@ final class MessageBatch implements BaseModel
      *
      * The format and length of IDs may change over time.
      */
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * RFC 3339 datetime string representing the time at which the Message Batch was archived and its results became unavailable.
      */
-    public function setArchivedAt(?\DateTimeInterface $archivedAt): self
+    public function withArchivedAt(?\DateTimeInterface $archivedAt): self
     {
-        $this->archivedAt = $archivedAt;
+        $obj = clone $this;
+        $obj->archivedAt = $archivedAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * RFC 3339 datetime string representing the time at which cancellation was initiated for the Message Batch. Specified only if cancellation was initiated.
      */
-    public function setCancelInitiatedAt(
+    public function withCancelInitiatedAt(
         ?\DateTimeInterface $cancelInitiatedAt
     ): self {
-        $this->cancelInitiatedAt = $cancelInitiatedAt;
+        $obj = clone $this;
+        $obj->cancelInitiatedAt = $cancelInitiatedAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * RFC 3339 datetime string representing the time at which the Message Batch was created.
      */
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->createdAt = $createdAt;
+        $obj = clone $this;
+        $obj->createdAt = $createdAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -186,21 +223,23 @@ final class MessageBatch implements BaseModel
      *
      * Processing ends when every request in a Message Batch has either succeeded, errored, canceled, or expired.
      */
-    public function setEndedAt(?\DateTimeInterface $endedAt): self
+    public function withEndedAt(?\DateTimeInterface $endedAt): self
     {
-        $this->endedAt = $endedAt;
+        $obj = clone $this;
+        $obj->endedAt = $endedAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * RFC 3339 datetime string representing the time at which the Message Batch will expire and end processing, which is 24 hours after creation.
      */
-    public function setExpiresAt(\DateTimeInterface $expiresAt): self
+    public function withExpiresAt(\DateTimeInterface $expiresAt): self
     {
-        $this->expiresAt = $expiresAt;
+        $obj = clone $this;
+        $obj->expiresAt = $expiresAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -208,11 +247,12 @@ final class MessageBatch implements BaseModel
      *
      * @param ProcessingStatus::* $processingStatus
      */
-    public function setProcessingStatus(string $processingStatus): self
+    public function withProcessingStatus(string $processingStatus): self
     {
-        $this->processingStatus = $processingStatus;
+        $obj = clone $this;
+        $obj->processingStatus = $processingStatus;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -220,12 +260,13 @@ final class MessageBatch implements BaseModel
      *
      * Requests start as `processing` and move to one of the other statuses only once processing of the entire batch ends. The sum of all values always matches the total number of requests in the batch.
      */
-    public function setRequestCounts(
+    public function withRequestCounts(
         MessageBatchRequestCounts $requestCounts
     ): self {
-        $this->requestCounts = $requestCounts;
+        $obj = clone $this;
+        $obj->requestCounts = $requestCounts;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -233,10 +274,11 @@ final class MessageBatch implements BaseModel
      *
      * Results in the file are not guaranteed to be in the same order as requests. Use the `custom_id` field to match results to requests.
      */
-    public function setResultsURL(?string $resultsURL): self
+    public function withResultsURL(?string $resultsURL): self
     {
-        $this->resultsURL = $resultsURL;
+        $obj = clone $this;
+        $obj->resultsURL = $resultsURL;
 
-        return $this;
+        return $obj;
     }
 }

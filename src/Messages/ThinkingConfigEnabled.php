@@ -30,6 +30,20 @@ final class ThinkingConfigEnabled implements BaseModel
     #[Api('budget_tokens')]
     public int $budgetTokens;
 
+    /**
+     * `new ThinkingConfigEnabled()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * ThinkingConfigEnabled::with(budgetTokens: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new ThinkingConfigEnabled)->withBudgetTokens(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -41,7 +55,7 @@ final class ThinkingConfigEnabled implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(int $budgetTokens): self
+    public static function with(int $budgetTokens): self
     {
         $obj = new self;
 
@@ -57,10 +71,11 @@ final class ThinkingConfigEnabled implements BaseModel
      *
      * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
      */
-    public function setBudgetTokens(int $budgetTokens): self
+    public function withBudgetTokens(int $budgetTokens): self
     {
-        $this->budgetTokens = $budgetTokens;
+        $obj = clone $this;
+        $obj->budgetTokens = $budgetTokens;
 
-        return $this;
+        return $obj;
     }
 }
