@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Messages;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model as ModelTrait;
+use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class MessageTokensCount implements BaseModel
 {
-    use ModelTrait;
+    use Model;
 
     /**
      * The total number of tokens across the provided list of messages, system prompt, and tools.

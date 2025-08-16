@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Messages;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model as ModelTrait;
+use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Tool\InputSchema;
 use Anthropic\Messages\Tool\Type;
@@ -21,7 +21,7 @@ use Anthropic\Messages\Tool\Type;
  */
 final class Tool implements BaseModel
 {
-    use ModelTrait;
+    use Model;
 
     /**
      * [JSON schema](https://json-schema.org/draft/2020-12) for this tool's input.

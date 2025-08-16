@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Messages;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model as ModelTrait;
+use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class PlainTextSource implements BaseModel
 {
-    use ModelTrait;
+    use Model;
 
     #[Api('media_type')]
     public string $mediaType = 'text/plain';

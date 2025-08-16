@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Messages;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model as ModelTrait;
+use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Messages\Model\UnionMember0;
@@ -24,7 +24,7 @@ use Anthropic\Messages\Model\UnionMember0;
  */
 final class Message implements BaseModel
 {
-    use ModelTrait;
+    use Model;
 
     /**
      * Conversational role of the generated message.

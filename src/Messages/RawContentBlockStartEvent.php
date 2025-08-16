@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Anthropic\Messages;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model as ModelTrait;
+use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\RawContentBlockStartEvent\ContentBlock as ContentBlock1;
+use Anthropic\Messages\RawContentBlockStartEvent\ContentBlock;
 
 /**
  * @phpstan-type raw_content_block_start_event_alias = array{
@@ -18,12 +18,12 @@ use Anthropic\Messages\RawContentBlockStartEvent\ContentBlock as ContentBlock1;
  */
 final class RawContentBlockStartEvent implements BaseModel
 {
-    use ModelTrait;
+    use Model;
 
     #[Api]
     public string $type = 'content_block_start';
 
-    #[Api('content_block', union: ContentBlock1::class)]
+    #[Api('content_block', union: ContentBlock::class)]
     public RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock $contentBlock;
 
     #[Api]

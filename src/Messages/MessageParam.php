@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Messages;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model as ModelTrait;
+use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\MessageParam\Content;
 use Anthropic\Messages\MessageParam\Role;
@@ -18,7 +18,7 @@ use Anthropic\Messages\MessageParam\Role;
  */
 final class MessageParam implements BaseModel
 {
-    use ModelTrait;
+    use Model;
 
     /**
      * @var list<DocumentBlockParam|ImageBlockParam|RedactedThinkingBlockParam|SearchResultBlockParam|ServerToolUseBlockParam|TextBlockParam|ThinkingBlockParam|ToolResultBlockParam|ToolUseBlockParam|WebSearchToolResultBlockParam>|string $content

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Messages;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model as ModelTrait;
+use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Messages\WebSearchTool20250305\UserLocation;
@@ -23,7 +23,7 @@ use Anthropic\Messages\WebSearchTool20250305\UserLocation;
  */
 final class WebSearchTool20250305 implements BaseModel
 {
-    use ModelTrait;
+    use Model;
 
     /**
      * Name of the tool.
