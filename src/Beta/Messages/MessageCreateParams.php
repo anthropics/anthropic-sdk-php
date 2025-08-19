@@ -38,7 +38,7 @@ use Anthropic\Messages\Model as Model1;
  *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>,
  *   topK?: int,
  *   topP?: float,
- *   anthropicBeta?: list<AnthropicBeta::*|string>,
+ *   betas?: list<AnthropicBeta::*|string>,
  * }
  */
 final class MessageCreateParams implements BaseModel
@@ -310,13 +310,13 @@ final class MessageCreateParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var null|list<AnthropicBeta::*|string> $anthropicBeta
+     * @var null|list<AnthropicBeta::*|string> $betas
      */
     #[Api(
         type: new ListOf(union: new UnionOf([AnthropicBeta::class, 'string'])),
         optional: true,
     )]
-    public ?array $anthropicBeta;
+    public ?array $betas;
 
     /**
      * `new MessageCreateParams()` is missing required properties by the API.
@@ -350,7 +350,7 @@ final class MessageCreateParams implements BaseModel
      * @param null|list<string> $stopSequences
      * @param null|list<BetaTextBlockParam>|string $system
      * @param null|list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
-     * @param null|list<AnthropicBeta::*|string> $anthropicBeta
+     * @param null|list<AnthropicBeta::*|string> $betas
      */
     public static function with(
         int $maxTokens,
@@ -368,7 +368,7 @@ final class MessageCreateParams implements BaseModel
         ?array $tools = null,
         ?int $topK = null,
         ?float $topP = null,
-        ?array $anthropicBeta = null,
+        ?array $betas = null,
     ): self {
         $obj = new self;
 
@@ -388,7 +388,7 @@ final class MessageCreateParams implements BaseModel
         null !== $tools && $obj->tools = $tools;
         null !== $topK && $obj->topK = $topK;
         null !== $topP && $obj->topP = $topP;
-        null !== $anthropicBeta && $obj->anthropicBeta = $anthropicBeta;
+        null !== $betas && $obj->betas = $betas;
 
         return $obj;
     }
@@ -735,7 +735,7 @@ final class MessageCreateParams implements BaseModel
     public function withBetas(array $betas): self
     {
         $obj = clone $this;
-        $obj->anthropicBeta = $betas;
+        $obj->betas = $betas;
 
         return $obj;
     }

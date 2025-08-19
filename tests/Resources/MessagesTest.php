@@ -5,8 +5,6 @@ namespace Tests\Resources;
 use Anthropic\Client;
 use Anthropic\Messages\CacheControlEphemeral;
 use Anthropic\Messages\CitationCharLocationParam;
-use Anthropic\Messages\MessageCountTokensParams;
-use Anthropic\Messages\MessageCreateParams;
 use Anthropic\Messages\MessageParam;
 use Anthropic\Messages\Metadata;
 use Anthropic\Messages\TextBlockParam;
@@ -39,12 +37,11 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = MessageCreateParams::with(
+        $result = $this->client->messages->create(
             maxTokens: 1024,
             messages: [MessageParam::with(content: 'Hello, world', role: 'user')],
             model: 'claude-sonnet-4-20250514',
         );
-        $result = $this->client->messages->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -52,7 +49,7 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = MessageCreateParams::with(
+        $result = $this->client->messages->create(
             maxTokens: 1024,
             messages: [MessageParam::with(content: 'Hello, world', role: 'user')],
             model: 'claude-sonnet-4-20250514',
@@ -103,7 +100,6 @@ final class MessagesTest extends TestCase
             topK: 5,
             topP: 0.7,
         );
-        $result = $this->client->messages->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -111,11 +107,10 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCountTokens(): void
     {
-        $params = MessageCountTokensParams::with(
+        $result = $this->client->messages->countTokens(
             messages: [MessageParam::with(content: 'string', role: 'user')],
             model: 'claude-3-7-sonnet-latest',
         );
-        $result = $this->client->messages->countTokens($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -123,7 +118,7 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCountTokensWithOptionalParams(): void
     {
-        $params = MessageCountTokensParams::with(
+        $result = $this->client->messages->countTokens(
             messages: [MessageParam::with(content: 'string', role: 'user')],
             model: 'claude-3-7-sonnet-latest',
             system: [
@@ -166,7 +161,6 @@ final class MessagesTest extends TestCase
                     ->withType('custom'),
             ],
         );
-        $result = $this->client->messages->countTokens($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

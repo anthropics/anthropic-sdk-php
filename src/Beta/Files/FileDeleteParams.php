@@ -15,9 +15,7 @@ use Anthropic\Core\Conversion\UnionOf;
 /**
  * Delete File.
  *
- * @phpstan-type delete_params = array{
- *   anthropicBeta?: list<AnthropicBeta::*|string>
- * }
+ * @phpstan-type delete_params = array{betas?: list<AnthropicBeta::*|string>}
  */
 final class FileDeleteParams implements BaseModel
 {
@@ -27,13 +25,13 @@ final class FileDeleteParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var null|list<AnthropicBeta::*|string> $anthropicBeta
+     * @var null|list<AnthropicBeta::*|string> $betas
      */
     #[Api(
         type: new ListOf(union: new UnionOf([AnthropicBeta::class, 'string'])),
         optional: true,
     )]
-    public ?array $anthropicBeta;
+    public ?array $betas;
 
     public function __construct()
     {
@@ -46,13 +44,13 @@ final class FileDeleteParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<AnthropicBeta::*|string> $anthropicBeta
+     * @param null|list<AnthropicBeta::*|string> $betas
      */
-    public static function with(?array $anthropicBeta = null): self
+    public static function with(?array $betas = null): self
     {
         $obj = new self;
 
-        null !== $anthropicBeta && $obj->anthropicBeta = $anthropicBeta;
+        null !== $betas && $obj->betas = $betas;
 
         return $obj;
     }
@@ -65,7 +63,7 @@ final class FileDeleteParams implements BaseModel
     public function withBetas(array $betas): self
     {
         $obj = clone $this;
-        $obj->anthropicBeta = $betas;
+        $obj->betas = $betas;
 
         return $obj;
     }

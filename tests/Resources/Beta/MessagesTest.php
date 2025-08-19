@@ -13,8 +13,6 @@ use Anthropic\Beta\Messages\BetaThinkingConfigEnabled;
 use Anthropic\Beta\Messages\BetaTool;
 use Anthropic\Beta\Messages\BetaTool\InputSchema;
 use Anthropic\Beta\Messages\BetaToolChoiceAuto;
-use Anthropic\Beta\Messages\MessageCountTokensParams;
-use Anthropic\Beta\Messages\MessageCreateParams;
 use Anthropic\Client;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -41,12 +39,11 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = MessageCreateParams::with(
+        $result = $this->client->beta->messages->create(
             maxTokens: 1024,
             messages: [BetaMessageParam::with(content: 'Hello, world', role: 'user')],
             model: 'claude-sonnet-4-20250514',
         );
-        $result = $this->client->beta->messages->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -54,7 +51,7 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = MessageCreateParams::with(
+        $result = $this->client->beta->messages->create(
             maxTokens: 1024,
             messages: [BetaMessageParam::with(content: 'Hello, world', role: 'user')],
             model: 'claude-sonnet-4-20250514',
@@ -114,9 +111,8 @@ final class MessagesTest extends TestCase
             ],
             topK: 5,
             topP: 0.7,
-            anthropicBeta: ['string'],
+            betas: ['string'],
         );
-        $result = $this->client->beta->messages->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -124,11 +120,10 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCountTokens(): void
     {
-        $params = MessageCountTokensParams::with(
+        $result = $this->client->beta->messages->countTokens(
             messages: [BetaMessageParam::with(content: 'string', role: 'user')],
             model: 'claude-3-7-sonnet-latest',
         );
-        $result = $this->client->beta->messages->countTokens($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -136,7 +131,7 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCountTokensWithOptionalParams(): void
     {
-        $params = MessageCountTokensParams::with(
+        $result = $this->client->beta->messages->countTokens(
             messages: [BetaMessageParam::with(content: 'string', role: 'user')],
             model: 'claude-3-7-sonnet-latest',
             mcpServers: [
@@ -187,9 +182,8 @@ final class MessagesTest extends TestCase
                     ->withDescription('Get the current weather in a given location')
                     ->withType('custom'),
             ],
-            anthropicBeta: ['string'],
+            betas: ['string'],
         );
-        $result = $this->client->beta->messages->countTokens($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

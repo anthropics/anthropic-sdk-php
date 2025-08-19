@@ -18,20 +18,28 @@ final class FilesService implements FilesContract
     /**
      * List Files.
      *
-     * @param array{
-     *   afterID?: string,
-     *   beforeID?: string,
-     *   limit?: int,
-     *   anthropicBeta?: list<AnthropicBeta::*|string>,
-     * }|FileListParams $params
+     * @param string $afterID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
+     * @param string $beforeID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
+     * @param int $limit Number of items to return per page.
+     *
+     * Defaults to `20`. Ranges from `1` to `1000`.
+     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function list(
-        array|FileListParams $params,
-        ?RequestOptions $requestOptions = null
+        $afterID = null,
+        $beforeID = null,
+        $limit = null,
+        $betas = null,
+        ?RequestOptions $requestOptions = null,
     ): FileMetadata {
         [$parsed, $options] = FileListParams::parseRequest(
-            $params,
-            $requestOptions
+            [
+                'afterID' => $afterID,
+                'beforeID' => $beforeID,
+                'limit' => $limit,
+                'betas' => $betas,
+            ],
+            $requestOptions,
         );
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
 
@@ -58,17 +66,15 @@ final class FilesService implements FilesContract
     /**
      * Delete File.
      *
-     * @param array{
-     *   anthropicBeta?: list<AnthropicBeta::*|string>
-     * }|FileDeleteParams $params
+     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function delete(
         string $fileID,
-        array|FileDeleteParams $params,
-        ?RequestOptions $requestOptions = null,
+        $betas = null,
+        ?RequestOptions $requestOptions = null
     ): DeletedFile {
         [$parsed, $options] = FileDeleteParams::parseRequest(
-            $params,
+            ['betas' => $betas],
             $requestOptions
         );
         $resp = $this->client->request(
@@ -91,17 +97,15 @@ final class FilesService implements FilesContract
     /**
      * Get File Metadata.
      *
-     * @param array{
-     *   anthropicBeta?: list<AnthropicBeta::*|string>
-     * }|FileRetrieveMetadataParams $params
+     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function retrieveMetadata(
         string $fileID,
-        array|FileRetrieveMetadataParams $params,
-        ?RequestOptions $requestOptions = null,
+        $betas = null,
+        ?RequestOptions $requestOptions = null
     ): FileMetadata {
         [$parsed, $options] = FileRetrieveMetadataParams::parseRequest(
-            $params,
+            ['betas' => $betas],
             $requestOptions
         );
         $resp = $this->client->request(

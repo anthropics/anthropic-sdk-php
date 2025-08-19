@@ -30,7 +30,7 @@ use Anthropic\Messages\Model as Model1;
  *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
  *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
  *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>,
- *   anthropicBeta?: list<AnthropicBeta::*|string>,
+ *   betas?: list<AnthropicBeta::*|string>,
  * }
  */
 final class MessageCountTokensParams implements BaseModel
@@ -228,13 +228,13 @@ final class MessageCountTokensParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var null|list<AnthropicBeta::*|string> $anthropicBeta
+     * @var null|list<AnthropicBeta::*|string> $betas
      */
     #[Api(
         type: new ListOf(union: new UnionOf([AnthropicBeta::class, 'string'])),
         optional: true,
     )]
-    public ?array $anthropicBeta;
+    public ?array $betas;
 
     /**
      * `new MessageCountTokensParams()` is missing required properties by the API.
@@ -266,7 +266,7 @@ final class MessageCountTokensParams implements BaseModel
      * @param null|list<BetaRequestMCPServerURLDefinition> $mcpServers
      * @param null|list<BetaTextBlockParam>|string $system
      * @param null|list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
-     * @param null|list<AnthropicBeta::*|string> $anthropicBeta
+     * @param null|list<AnthropicBeta::*|string> $betas
      */
     public static function with(
         array $messages,
@@ -276,7 +276,7 @@ final class MessageCountTokensParams implements BaseModel
         null|BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking = null,
         null|BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice = null,
         ?array $tools = null,
-        ?array $anthropicBeta = null,
+        ?array $betas = null,
     ): self {
         $obj = new self;
 
@@ -288,7 +288,7 @@ final class MessageCountTokensParams implements BaseModel
         null !== $thinking && $obj->thinking = $thinking;
         null !== $toolChoice && $obj->toolChoice = $toolChoice;
         null !== $tools && $obj->tools = $tools;
-        null !== $anthropicBeta && $obj->anthropicBeta = $anthropicBeta;
+        null !== $betas && $obj->betas = $betas;
 
         return $obj;
     }
@@ -521,7 +521,7 @@ final class MessageCountTokensParams implements BaseModel
     public function withBetas(array $betas): self
     {
         $obj = clone $this;
-        $obj->anthropicBeta = $betas;
+        $obj->betas = $betas;
 
         return $obj;
     }

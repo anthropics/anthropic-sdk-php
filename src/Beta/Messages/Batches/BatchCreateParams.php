@@ -21,7 +21,7 @@ use Anthropic\Core\Conversion\UnionOf;
  * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
  *
  * @phpstan-type create_params = array{
- *   requests: list<Request>, anthropicBeta?: list<AnthropicBeta::*|string>
+ *   requests: list<Request>, betas?: list<AnthropicBeta::*|string>
  * }
  */
 final class BatchCreateParams implements BaseModel
@@ -40,13 +40,13 @@ final class BatchCreateParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var null|list<AnthropicBeta::*|string> $anthropicBeta
+     * @var null|list<AnthropicBeta::*|string> $betas
      */
     #[Api(
         type: new ListOf(union: new UnionOf([AnthropicBeta::class, 'string'])),
         optional: true,
     )]
-    public ?array $anthropicBeta;
+    public ?array $betas;
 
     /**
      * `new BatchCreateParams()` is missing required properties by the API.
@@ -74,17 +74,15 @@ final class BatchCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<Request> $requests
-     * @param null|list<AnthropicBeta::*|string> $anthropicBeta
+     * @param null|list<AnthropicBeta::*|string> $betas
      */
-    public static function with(
-        array $requests,
-        ?array $anthropicBeta = null
-    ): self {
+    public static function with(array $requests, ?array $betas = null): self
+    {
         $obj = new self;
 
         $obj->requests = $requests;
 
-        null !== $anthropicBeta && $obj->anthropicBeta = $anthropicBeta;
+        null !== $betas && $obj->betas = $betas;
 
         return $obj;
     }
@@ -110,7 +108,7 @@ final class BatchCreateParams implements BaseModel
     public function withBetas(array $betas): self
     {
         $obj = clone $this;
-        $obj->anthropicBeta = $betas;
+        $obj->betas = $betas;
 
         return $obj;
     }

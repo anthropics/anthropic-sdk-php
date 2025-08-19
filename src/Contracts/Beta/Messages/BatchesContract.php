@@ -5,13 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Contracts\Beta\Messages;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Beta\Messages\Batches\BatchCancelParams;
-use Anthropic\Beta\Messages\Batches\BatchCreateParams;
 use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request;
-use Anthropic\Beta\Messages\Batches\BatchDeleteParams;
-use Anthropic\Beta\Messages\Batches\BatchListParams;
-use Anthropic\Beta\Messages\Batches\BatchResultsParams;
-use Anthropic\Beta\Messages\Batches\BatchRetrieveParams;
 use Anthropic\Beta\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
@@ -21,82 +15,75 @@ use Anthropic\RequestOptions;
 interface BatchesContract
 {
     /**
-     * @param array{
-     *   requests: list<Request>, anthropicBeta?: list<AnthropicBeta::*|string>
-     * }|BatchCreateParams $params
+     * @param list<Request> $requests List of requests for prompt completion. Each is an individual request to create a Message.
+     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function create(
-        array|BatchCreateParams $params,
+        $requests,
+        $betas = null,
         ?RequestOptions $requestOptions = null
     ): MessageBatch;
 
     /**
-     * @param array{
-     *   anthropicBeta?: list<AnthropicBeta::*|string>
-     * }|BatchRetrieveParams $params
+     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function retrieve(
         string $messageBatchID,
-        array|BatchRetrieveParams $params,
+        $betas = null,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch;
 
     /**
-     * @param array{
-     *   afterID?: string,
-     *   beforeID?: string,
-     *   limit?: int,
-     *   anthropicBeta?: list<AnthropicBeta::*|string>,
-     * }|BatchListParams $params
+     * @param string $afterID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
+     * @param string $beforeID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
+     * @param int $limit Number of items to return per page.
+     *
+     * Defaults to `20`. Ranges from `1` to `1000`.
+     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function list(
-        array|BatchListParams $params,
-        ?RequestOptions $requestOptions = null
+        $afterID = null,
+        $beforeID = null,
+        $limit = null,
+        $betas = null,
+        ?RequestOptions $requestOptions = null,
     ): MessageBatch;
 
     /**
-     * @param array{
-     *   anthropicBeta?: list<AnthropicBeta::*|string>
-     * }|BatchDeleteParams $params
+     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function delete(
         string $messageBatchID,
-        array|BatchDeleteParams $params,
+        $betas = null,
         ?RequestOptions $requestOptions = null,
     ): DeletedMessageBatch;
 
     /**
-     * @param array{
-     *   anthropicBeta?: list<AnthropicBeta::*|string>
-     * }|BatchCancelParams $params
+     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function cancel(
         string $messageBatchID,
-        array|BatchCancelParams $params,
+        $betas = null,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch;
 
     /**
-     * @param array{
-     *   anthropicBeta?: list<AnthropicBeta::*|string>
-     * }|BatchResultsParams $params
+     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function results(
         string $messageBatchID,
-        array|BatchResultsParams $params,
+        $betas = null,
         ?RequestOptions $requestOptions = null,
     ): MessageBatchIndividualResponse;
 
     /**
-     * @param array{
-     *   anthropicBeta?: list<AnthropicBeta::*|string>
-     * }|BatchResultsParams $params
+     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      *
      * @return CloseableStream<MessageBatchIndividualResponse>
      */
     public function resultsStream(
         string $messageBatchID,
-        array|BatchResultsParams $params,
+        $betas = null,
         ?RequestOptions $requestOptions = null,
     ): CloseableStream;
 }

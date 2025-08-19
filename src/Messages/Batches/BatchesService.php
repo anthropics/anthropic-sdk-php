@@ -23,14 +23,14 @@ final class BatchesService implements BatchesContract
      *
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
-     * @param array{requests: list<Request>}|BatchCreateParams $params
+     * @param list<Request> $requests List of requests for prompt completion. Each is an individual request to create a Message.
      */
     public function create(
-        array|BatchCreateParams $params,
+        $requests,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
         [$parsed, $options] = BatchCreateParams::parseRequest(
-            $params,
+            ['requests' => $requests],
             $requestOptions
         );
         $resp = $this->client->request(
@@ -68,17 +68,21 @@ final class BatchesService implements BatchesContract
      *
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
-     * @param array{
-     *   afterID?: string, beforeID?: string, limit?: int
-     * }|BatchListParams $params
+     * @param string $afterID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
+     * @param string $beforeID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
+     * @param int $limit Number of items to return per page.
+     *
+     * Defaults to `20`. Ranges from `1` to `1000`.
      */
     public function list(
-        array|BatchListParams $params,
-        ?RequestOptions $requestOptions = null
+        $afterID = null,
+        $beforeID = null,
+        $limit = null,
+        ?RequestOptions $requestOptions = null,
     ): MessageBatch {
         [$parsed, $options] = BatchListParams::parseRequest(
-            $params,
-            $requestOptions
+            ['afterID' => $afterID, 'beforeID' => $beforeID, 'limit' => $limit],
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'get',

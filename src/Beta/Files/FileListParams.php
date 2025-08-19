@@ -19,7 +19,7 @@ use Anthropic\Core\Conversion\UnionOf;
  *   afterID?: string,
  *   beforeID?: string,
  *   limit?: int,
- *   anthropicBeta?: list<AnthropicBeta::*|string>,
+ *   betas?: list<AnthropicBeta::*|string>,
  * }
  */
 final class FileListParams implements BaseModel
@@ -50,13 +50,13 @@ final class FileListParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var null|list<AnthropicBeta::*|string> $anthropicBeta
+     * @var null|list<AnthropicBeta::*|string> $betas
      */
     #[Api(
         type: new ListOf(union: new UnionOf([AnthropicBeta::class, 'string'])),
         optional: true,
     )]
-    public ?array $anthropicBeta;
+    public ?array $betas;
 
     public function __construct()
     {
@@ -69,20 +69,20 @@ final class FileListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<AnthropicBeta::*|string> $anthropicBeta
+     * @param null|list<AnthropicBeta::*|string> $betas
      */
     public static function with(
         ?string $afterID = null,
         ?string $beforeID = null,
         ?int $limit = null,
-        ?array $anthropicBeta = null,
+        ?array $betas = null,
     ): self {
         $obj = new self;
 
         null !== $afterID && $obj->afterID = $afterID;
         null !== $beforeID && $obj->beforeID = $beforeID;
         null !== $limit && $obj->limit = $limit;
-        null !== $anthropicBeta && $obj->anthropicBeta = $anthropicBeta;
+        null !== $betas && $obj->betas = $betas;
 
         return $obj;
     }
@@ -130,7 +130,7 @@ final class FileListParams implements BaseModel
     public function withBetas(array $betas): self
     {
         $obj = clone $this;
-        $obj->anthropicBeta = $betas;
+        $obj->betas = $betas;
 
         return $obj;
     }

@@ -20,17 +20,15 @@ final class ModelsService implements ModelsContract
      *
      * The Models API response can be used to determine information about a specific model or resolve a model alias to a model ID.
      *
-     * @param array{
-     *   anthropicBeta?: list<AnthropicBeta::*|string>
-     * }|ModelRetrieveParams $params
+     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function retrieve(
         string $modelID,
-        array|ModelRetrieveParams $params,
-        ?RequestOptions $requestOptions = null,
+        $betas = null,
+        ?RequestOptions $requestOptions = null
     ): ModelInfo {
         [$parsed, $options] = ModelRetrieveParams::parseRequest(
-            $params,
+            ['betas' => $betas],
             $requestOptions
         );
         $resp = $this->client->request(
@@ -52,20 +50,28 @@ final class ModelsService implements ModelsContract
      *
      * The Models API response can be used to determine which models are available for use in the API. More recently released models are listed first.
      *
-     * @param array{
-     *   afterID?: string,
-     *   beforeID?: string,
-     *   limit?: int,
-     *   anthropicBeta?: list<AnthropicBeta::*|string>,
-     * }|ModelListParams $params
+     * @param string $afterID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
+     * @param string $beforeID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
+     * @param int $limit Number of items to return per page.
+     *
+     * Defaults to `20`. Ranges from `1` to `1000`.
+     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function list(
-        array|ModelListParams $params,
-        ?RequestOptions $requestOptions = null
+        $afterID = null,
+        $beforeID = null,
+        $limit = null,
+        $betas = null,
+        ?RequestOptions $requestOptions = null,
     ): ModelInfo {
         [$parsed, $options] = ModelListParams::parseRequest(
-            $params,
-            $requestOptions
+            [
+                'afterID' => $afterID,
+                'beforeID' => $beforeID,
+                'limit' => $limit,
+                'betas' => $betas,
+            ],
+            $requestOptions,
         );
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
 

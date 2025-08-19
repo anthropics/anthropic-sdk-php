@@ -33,26 +33,34 @@ To use this package, install via Composer by adding the following to your applic
 
 ## Usage
 
+This library uses named parameters to specify optional arguments.
+Parameters with a default value must be set by name.
+
 ```php
 <?php
 
 use Anthropic\Client;
-use Anthropic\Messages\MessageCreateParams;
 use Anthropic\Messages\MessageParam;
 
 $client = new Client(
   apiKey: getenv("ANTHROPIC_API_KEY") ?: "my-anthropic-api-key"
 );
 
-$params = MessageCreateParams::with(
+$message = $client->messages->create(
   maxTokens: 1024,
   messages: [MessageParam::with(role: "user", content: "Hello, Claude")],
   model: "claude-sonnet-4-20250514",
 );
 
-$message = $client->messages->create($params);
 var_dump($message->content);
 ```
+
+## Value Objects
+
+It is recommended to use the `with` constructor `Dog::with(name: "Joey")`
+and named parameters to initialize value objects.
+
+However builders are provided as well `(new Dog)->withName("Joey")`.
 
 ### Handling errors
 
@@ -62,24 +70,22 @@ When the library is unable to connect to the API, or if the API returns a non-su
 <?php
 
 use Anthropic\Errors\APIConnectionError;
-use Anthropic\Messages\MessageCreateParams;
 use Anthropic\Messages\MessageParam;
 
-$params = MessageCreateParams::with(
-  maxTokens: 1024,
-  messages: [MessageParam::with(role: "user", content: "Hello, Claude")],
-  model: "claude-sonnet-4-20250514",
-);
 try {
-  $Messages = $client->messages->create($params);
+  $message = $client->messages->create(
+    maxTokens: 1024,
+    messages: [MessageParam::with(role: "user", content: "Hello, Claude")],
+    model: "claude-sonnet-4-20250514",
+  );
 } catch (APIConnectionError $e) {
-    echo "The server could not be reached", PHP_EOL;
-    var_dump($e->getPrevious());
+  echo "The server could not be reached", PHP_EOL;
+  var_dump($e->getPrevious());
 } catch (RateLimitError $_) {
-    echo "A 429 status code was received; we should back off a bit.", PHP_EOL;
+  echo "A 429 status code was received; we should back off a bit.", PHP_EOL;
 } catch (APIStatusError $e) {
-    echo "Another non-200-range status code was received", PHP_EOL;
-    echo $e->getMessage();
+  echo "Another non-200-range status code was received", PHP_EOL;
+  echo $e->getMessage();
 }
 ```
 
@@ -112,20 +118,18 @@ You can use the `max_retries` option to configure or disable this:
 
 use Anthropic\Client;
 use Anthropic\RequestOptions;
-use Anthropic\Messages\MessageCreateParams;
 use Anthropic\Messages\MessageParam;
 
 // Configure the default for all requests:
 $client = new Client(maxRetries: 0);
-$params = MessageCreateParams::with(
+
+// Or, configure per-request:
+$result = $client->messages->create(
   maxTokens: 1024,
   messages: [MessageParam::with(role: "user", content: "Hello, Claude")],
   model: "claude-sonnet-4-20250514",
+  new RequestOptions(maxRetries: 5),
 );
-
-// Or, configure per-request:$result = $client
-  ->messages
-  ->create($params, new RequestOptions(maxRetries: 5));
 ```
 
 ## Advanced concepts
@@ -142,18 +146,12 @@ Note: the `extra_` parameters of the same name overrides the documented paramete
 <?php
 
 use Anthropic\RequestOptions;
-use Anthropic\Messages\MessageCreateParams;
 use Anthropic\Messages\MessageParam;
 
-$params = MessageCreateParams::with(
+$message = $client->messages->create(
   maxTokens: 1024,
   messages: [MessageParam::with(role: "user", content: "Hello, Claude")],
   model: "claude-sonnet-4-20250514",
-);
-$message = $client
-  ->messages
-  ->create(
-  $params,
   new RequestOptions(
     extraQueryParams: ["my_query_parameter" => "value"],
     extraBodyParams: ["my_body_parameter" => "value"],

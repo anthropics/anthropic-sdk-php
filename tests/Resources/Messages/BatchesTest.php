@@ -3,10 +3,8 @@
 namespace Tests\Resources\Messages;
 
 use Anthropic\Client;
-use Anthropic\Messages\Batches\BatchCreateParams;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\Messages\Batches\BatchCreateParams\Request\Params;
-use Anthropic\Messages\Batches\BatchListParams;
 use Anthropic\Messages\CacheControlEphemeral;
 use Anthropic\Messages\CitationCharLocationParam;
 use Anthropic\Messages\MessageParam;
@@ -42,8 +40,8 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = BatchCreateParams::with(
-            requests: [
+        $result = $this->client->messages->batches->create(
+            [
                 Request::with(
                     customID: 'my-custom-id-1',
                     params: Params::with(
@@ -56,7 +54,6 @@ final class BatchesTest extends TestCase
                 ),
             ],
         );
-        $result = $this->client->messages->batches->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -64,8 +61,8 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = BatchCreateParams::with(
-            requests: [
+        $result = $this->client->messages->batches->create(
+            [
                 Request::with(
                     customID: 'my-custom-id-1',
                     params: Params::with(
@@ -132,7 +129,6 @@ final class BatchesTest extends TestCase
                 ),
             ],
         );
-        $result = $this->client->messages->batches->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -152,8 +148,7 @@ final class BatchesTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $params = (new BatchListParams);
-        $result = $this->client->messages->batches->list($params);
+        $result = $this->client->messages->batches->list();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

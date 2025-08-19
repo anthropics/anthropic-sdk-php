@@ -2,14 +2,8 @@
 
 namespace Tests\Resources\Beta\Messages;
 
-use Anthropic\Beta\Messages\Batches\BatchCancelParams;
-use Anthropic\Beta\Messages\Batches\BatchCreateParams;
 use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params;
-use Anthropic\Beta\Messages\Batches\BatchDeleteParams;
-use Anthropic\Beta\Messages\Batches\BatchListParams;
-use Anthropic\Beta\Messages\Batches\BatchResultsParams;
-use Anthropic\Beta\Messages\Batches\BatchRetrieveParams;
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral;
 use Anthropic\Beta\Messages\BetaCitationCharLocationParam;
 use Anthropic\Beta\Messages\BetaMessageParam;
@@ -48,7 +42,7 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = BatchCreateParams::with(
+        $result = $this->client->beta->messages->batches->create(
             requests: [
                 Request::with(
                     customID: 'my-custom-id-1',
@@ -62,7 +56,6 @@ final class BatchesTest extends TestCase
                 ),
             ],
         );
-        $result = $this->client->beta->messages->batches->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -70,7 +63,7 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = BatchCreateParams::with(
+        $result = $this->client->beta->messages->batches->create(
             requests: [
                 Request::with(
                     customID: 'my-custom-id-1',
@@ -154,9 +147,8 @@ final class BatchesTest extends TestCase
                         ->withTopP(0.7),
                 ),
             ],
-            anthropicBeta: ['string'],
+            betas: ['string'],
         );
-        $result = $this->client->beta->messages->batches->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -164,14 +156,9 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $params = (new BatchRetrieveParams);
-        $result = $this
-            ->client
-            ->beta
-            ->messages
-            ->batches
-            ->retrieve('message_batch_id', $params)
-        ;
+        $result = $this->client->beta->messages->batches->retrieve(
+            'message_batch_id'
+        );
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -183,8 +170,7 @@ final class BatchesTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $params = (new BatchListParams);
-        $result = $this->client->beta->messages->batches->list($params);
+        $result = $this->client->beta->messages->batches->list();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -192,14 +178,9 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $params = (new BatchDeleteParams);
-        $result = $this
-            ->client
-            ->beta
-            ->messages
-            ->batches
-            ->delete('message_batch_id', $params)
-        ;
+        $result = $this->client->beta->messages->batches->delete(
+            'message_batch_id'
+        );
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -207,14 +188,9 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCancel(): void
     {
-        $params = (new BatchCancelParams);
-        $result = $this
-            ->client
-            ->beta
-            ->messages
-            ->batches
-            ->cancel('message_batch_id', $params)
-        ;
+        $result = $this->client->beta->messages->batches->cancel(
+            'message_batch_id'
+        );
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -226,14 +202,9 @@ final class BatchesTest extends TestCase
             $this->markTestSkipped("Prism doesn't support application/x-jsonl responses");
         }
 
-        $params = (new BatchResultsParams);
-        $result = $this
-            ->client
-            ->beta
-            ->messages
-            ->batches
-            ->results('message_batch_id', $params)
-        ;
+        $result = $this->client->beta->messages->batches->results(
+            'message_batch_id'
+        );
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

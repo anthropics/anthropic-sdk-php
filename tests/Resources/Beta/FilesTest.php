@@ -2,9 +2,6 @@
 
 namespace Tests\Resources\Beta;
 
-use Anthropic\Beta\Files\FileDeleteParams;
-use Anthropic\Beta\Files\FileListParams;
-use Anthropic\Beta\Files\FileRetrieveMetadataParams;
 use Anthropic\Client;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -36,8 +33,7 @@ final class FilesTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $params = (new FileListParams);
-        $result = $this->client->beta->files->list($params);
+        $result = $this->client->beta->files->list();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -45,8 +41,7 @@ final class FilesTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $params = (new FileDeleteParams);
-        $result = $this->client->beta->files->delete('file_id', $params);
+        $result = $this->client->beta->files->delete('file_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -54,8 +49,7 @@ final class FilesTest extends TestCase
     #[Test]
     public function testRetrieveMetadata(): void
     {
-        $params = (new FileRetrieveMetadataParams);
-        $result = $this->client->beta->files->retrieveMetadata('file_id', $params);
+        $result = $this->client->beta->files->retrieveMetadata('file_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
