@@ -89,39 +89,6 @@ final class FilesService implements FilesContract
     }
 
     /**
-     * Download File.
-     *
-     * @param array{
-     *   anthropicBeta?: list<AnthropicBeta::*|string>
-     * }|FileDownloadParams $params
-     */
-    public function download(
-        string $fileID,
-        array|FileDownloadParams $params,
-        ?RequestOptions $requestOptions = null,
-    ): string {
-        [$parsed, $options] = FileDownloadParams::parseRequest(
-            $params,
-            $requestOptions
-        );
-        $resp = $this->client->request(
-            method: 'get',
-            path: ['v1/files/%1$s/content?beta=true', $fileID],
-            headers: Util::array_transform_keys(
-                ['Accept' => 'application/binary', ...$parsed],
-                ['betas' => 'anthropic-beta'],
-            ),
-            options: array_merge(
-                ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
-                $options,
-            ),
-        );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce('string', value: $resp);
-    }
-
-    /**
      * Get File Metadata.
      *
      * @param array{
@@ -144,43 +111,6 @@ final class FilesService implements FilesContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: array_merge(
-                ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
-                $options,
-            ),
-        );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(FileMetadata::class, value: $resp);
-    }
-
-    /**
-     * Upload File.
-     *
-     * @param array{
-     *   file: string, anthropicBeta?: list<AnthropicBeta::*|string>
-     * }|FileUploadParams $params
-     */
-    public function upload(
-        array|FileUploadParams $params,
-        ?RequestOptions $requestOptions = null
-    ): FileMetadata {
-        [$parsed, $options] = FileUploadParams::parseRequest(
-            $params,
-            $requestOptions
-        );
-        $header_params = ['betas' => 'anthropic-beta'];
-        $resp = $this->client->request(
-            method: 'post',
-            path: 'v1/files?beta=true',
-            headers: Util::array_transform_keys(
-                [
-                    'Content-Type' => 'multipart/form-data',
-                    ...array_intersect_key($parsed, array_keys($header_params)),
-                ],
-                $header_params,
-            ),
-            body: (object) array_diff_key($parsed, array_keys($header_params)),
             options: array_merge(
                 ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
                 $options,

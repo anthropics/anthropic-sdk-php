@@ -3,10 +3,8 @@
 namespace Tests\Resources\Beta;
 
 use Anthropic\Beta\Files\FileDeleteParams;
-use Anthropic\Beta\Files\FileDownloadParams;
 use Anthropic\Beta\Files\FileListParams;
 use Anthropic\Beta\Files\FileRetrieveMetadataParams;
-use Anthropic\Beta\Files\FileUploadParams;
 use Anthropic\Client;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -54,41 +52,10 @@ final class FilesTest extends TestCase
     }
 
     #[Test]
-    public function testDownload(): void
-    {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped("Prism doesn't support application/binary responses");
-        }
-
-        $params = (new FileDownloadParams);
-        $result = $this->client->beta->files->download('file_id', $params);
-
-        $this->assertTrue(true); // @phpstan-ignore-line
-    }
-
-    #[Test]
     public function testRetrieveMetadata(): void
     {
         $params = (new FileRetrieveMetadataParams);
         $result = $this->client->beta->files->retrieveMetadata('file_id', $params);
-
-        $this->assertTrue(true); // @phpstan-ignore-line
-    }
-
-    #[Test]
-    public function testUpload(): void
-    {
-        $params = FileUploadParams::with(file: 'file');
-        $result = $this->client->beta->files->upload($params);
-
-        $this->assertTrue(true); // @phpstan-ignore-line
-    }
-
-    #[Test]
-    public function testUploadWithOptionalParams(): void
-    {
-        $params = FileUploadParams::with(file: 'file', anthropicBeta: ['string']);
-        $result = $this->client->beta->files->upload($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

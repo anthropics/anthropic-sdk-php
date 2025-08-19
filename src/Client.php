@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Anthropic;
 
 use Anthropic\Beta\BetaService;
-use Anthropic\Completions\CompletionsService;
 use Anthropic\Core\BaseClient;
 use Anthropic\Messages\MessagesService;
 use Anthropic\Models\ModelsService;
@@ -15,8 +14,6 @@ class Client extends BaseClient
     public string $apiKey;
 
     public string $authToken;
-
-    public CompletionsService $completions;
 
     public MessagesService $messages;
 
@@ -46,7 +43,6 @@ class Client extends BaseClient
             options: new RequestOptions,
         );
 
-        $this->completions = new CompletionsService($this);
         $this->messages = new MessagesService($this);
         $this->models = new ModelsService($this);
         $this->beta = new BetaService($this);
