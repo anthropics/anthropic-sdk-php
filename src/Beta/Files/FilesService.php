@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Files;
 
-use Anthropic\Beta\AnthropicBeta\UnionMember1;
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
 use Anthropic\Contracts\Beta\FilesContract;
 use Anthropic\Core\Conversion;
@@ -22,7 +22,7 @@ final class FilesService implements FilesContract
      *   afterID?: string,
      *   beforeID?: string,
      *   limit?: int,
-     *   anthropicBeta?: list<string|UnionMember1::*>,
+     *   anthropicBeta?: list<AnthropicBeta::*|string>,
      * }|FileListParams $params
      */
     public function list(
@@ -59,7 +59,7 @@ final class FilesService implements FilesContract
      * Delete File.
      *
      * @param array{
-     *   anthropicBeta?: list<string|UnionMember1::*>
+     *   anthropicBeta?: list<AnthropicBeta::*|string>
      * }|FileDeleteParams $params
      */
     public function delete(
@@ -92,7 +92,7 @@ final class FilesService implements FilesContract
      * Download File.
      *
      * @param array{
-     *   anthropicBeta?: list<string|UnionMember1::*>
+     *   anthropicBeta?: list<AnthropicBeta::*|string>
      * }|FileDownloadParams $params
      */
     public function download(
@@ -125,7 +125,7 @@ final class FilesService implements FilesContract
      * Get File Metadata.
      *
      * @param array{
-     *   anthropicBeta?: list<string|UnionMember1::*>
+     *   anthropicBeta?: list<AnthropicBeta::*|string>
      * }|FileRetrieveMetadataParams $params
      */
     public function retrieveMetadata(
@@ -158,7 +158,7 @@ final class FilesService implements FilesContract
      * Upload File.
      *
      * @param array{
-     *   file: string, anthropicBeta?: list<string|UnionMember1::*>
+     *   file: string, anthropicBeta?: list<AnthropicBeta::*|string>
      * }|FileUploadParams $params
      */
     public function upload(

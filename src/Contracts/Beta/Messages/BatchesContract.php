@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts\Beta\Messages;
 
-use Anthropic\Beta\AnthropicBeta\UnionMember1;
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\Batches\BatchCancelParams;
 use Anthropic\Beta\Messages\Batches\BatchCreateParams;
 use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request;
@@ -21,7 +21,7 @@ interface BatchesContract
 {
     /**
      * @param array{
-     *   requests: list<Request>, anthropicBeta?: list<string|UnionMember1::*>
+     *   requests: list<Request>, anthropicBeta?: list<AnthropicBeta::*|string>
      * }|BatchCreateParams $params
      */
     public function create(
@@ -31,7 +31,7 @@ interface BatchesContract
 
     /**
      * @param array{
-     *   anthropicBeta?: list<string|UnionMember1::*>
+     *   anthropicBeta?: list<AnthropicBeta::*|string>
      * }|BatchRetrieveParams $params
      */
     public function retrieve(
@@ -45,7 +45,7 @@ interface BatchesContract
      *   afterID?: string,
      *   beforeID?: string,
      *   limit?: int,
-     *   anthropicBeta?: list<string|UnionMember1::*>,
+     *   anthropicBeta?: list<AnthropicBeta::*|string>,
      * }|BatchListParams $params
      */
     public function list(
@@ -55,7 +55,7 @@ interface BatchesContract
 
     /**
      * @param array{
-     *   anthropicBeta?: list<string|UnionMember1::*>
+     *   anthropicBeta?: list<AnthropicBeta::*|string>
      * }|BatchDeleteParams $params
      */
     public function delete(
@@ -66,7 +66,7 @@ interface BatchesContract
 
     /**
      * @param array{
-     *   anthropicBeta?: list<string|UnionMember1::*>
+     *   anthropicBeta?: list<AnthropicBeta::*|string>
      * }|BatchCancelParams $params
      */
     public function cancel(
@@ -77,7 +77,7 @@ interface BatchesContract
 
     /**
      * @param array{
-     *   anthropicBeta?: list<string|UnionMember1::*>
+     *   anthropicBeta?: list<AnthropicBeta::*|string>
      * }|BatchResultsParams $params
      */
     public function results(

@@ -9,7 +9,6 @@ use Anthropic\Contracts\MessagesContract;
 use Anthropic\Core\Conversion;
 use Anthropic\Messages\Batches\BatchesService;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
-use Anthropic\Messages\Model\UnionMember0;
 use Anthropic\RequestOptions;
 
 final class MessagesService implements MessagesContract
@@ -31,7 +30,7 @@ final class MessagesService implements MessagesContract
      * @param array{
      *   maxTokens: int,
      *   messages: list<MessageParam>,
-     *   model: string|UnionMember0::*,
+     *   model: Model::*|string,
      *   metadata?: Metadata,
      *   serviceTier?: ServiceTier::*,
      *   stopSequences?: list<string>,
@@ -72,7 +71,7 @@ final class MessagesService implements MessagesContract
      *
      * @param array{
      *   messages: list<MessageParam>,
-     *   model: string|UnionMember0::*,
+     *   model: Model::*|string,
      *   system?: list<TextBlockParam>|string,
      *   thinking?: ThinkingConfigDisabled|ThinkingConfigEnabled,
      *   toolChoice?: ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool,

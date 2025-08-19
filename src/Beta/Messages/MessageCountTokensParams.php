@@ -5,16 +5,15 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Beta\AnthropicBeta\UnionMember1;
 use Anthropic\Beta\Messages\MessageCountTokensParams\System;
 use Anthropic\Beta\Messages\MessageCountTokensParams\Tool;
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model as ModelTrait;
+use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Messages\Model;
-use Anthropic\Messages\Model\UnionMember0;
+use Anthropic\Core\Conversion\UnionOf;
+use Anthropic\Messages\Model as Model1;
 
 /**
  * Count the number of tokens in a Message.
@@ -25,18 +24,18 @@ use Anthropic\Messages\Model\UnionMember0;
  *
  * @phpstan-type count_tokens_params = array{
  *   messages: list<BetaMessageParam>,
- *   model: UnionMember0::*|string,
+ *   model: Model1::*|string,
  *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
  *   system?: string|list<BetaTextBlockParam>,
  *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
  *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
  *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>,
- *   anthropicBeta?: list<string|UnionMember1::*>,
+ *   anthropicBeta?: list<AnthropicBeta::*|string>,
  * }
  */
 final class MessageCountTokensParams implements BaseModel
 {
-    use ModelTrait;
+    use Model;
     use Params;
 
     /**
@@ -115,9 +114,9 @@ final class MessageCountTokensParams implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var string|UnionMember0::* $model
+     * @var Model1::*|string $model
      */
-    #[Api(union: Model::class)]
+    #[Api(union: new UnionOf([Model1::class, 'string']))]
     public string $model;
 
     /**
@@ -229,9 +228,12 @@ final class MessageCountTokensParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var null|list<string|UnionMember1::*> $anthropicBeta
+     * @var null|list<AnthropicBeta::*|string> $anthropicBeta
      */
-    #[Api(type: new ListOf(union: AnthropicBeta::class), optional: true)]
+    #[Api(
+        type: new ListOf(union: new UnionOf([AnthropicBeta::class, 'string'])),
+        optional: true,
+    )]
     public ?array $anthropicBeta;
 
     /**
@@ -260,11 +262,11 @@ final class MessageCountTokensParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaMessageParam> $messages
-     * @param string|UnionMember0::* $model
+     * @param Model1::*|string $model
      * @param null|list<BetaRequestMCPServerURLDefinition> $mcpServers
      * @param null|list<BetaTextBlockParam>|string $system
      * @param null|list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
-     * @param null|list<string|UnionMember1::*> $anthropicBeta
+     * @param null|list<AnthropicBeta::*|string> $anthropicBeta
      */
     public static function with(
         array $messages,
@@ -372,7 +374,7 @@ final class MessageCountTokensParams implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @param string|UnionMember0::* $model
+     * @param Model1::*|string $model
      */
     public function withModel(string $model): self
     {
@@ -514,7 +516,7 @@ final class MessageCountTokensParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @param list<string|UnionMember1::*> $betas
+     * @param list<AnthropicBeta::*|string> $betas
      */
     public function withBetas(array $betas): self
     {

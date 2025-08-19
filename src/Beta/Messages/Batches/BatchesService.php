@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\Batches;
 
-use Anthropic\Beta\AnthropicBeta\UnionMember1;
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\Client;
 use Anthropic\Contracts\Beta\Messages\BatchesContract;
@@ -24,7 +24,7 @@ final class BatchesService implements BatchesContract
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
      * @param array{
-     *   requests: list<Request>, anthropicBeta?: list<string|UnionMember1::*>
+     *   requests: list<Request>, anthropicBeta?: list<AnthropicBeta::*|string>
      * }|BatchCreateParams $params
      */
     public function create(
@@ -60,7 +60,7 @@ final class BatchesService implements BatchesContract
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
      * @param array{
-     *   anthropicBeta?: list<string|UnionMember1::*>
+     *   anthropicBeta?: list<AnthropicBeta::*|string>
      * }|BatchRetrieveParams $params
      */
     public function retrieve(
@@ -98,7 +98,7 @@ final class BatchesService implements BatchesContract
      *   afterID?: string,
      *   beforeID?: string,
      *   limit?: int,
-     *   anthropicBeta?: list<string|UnionMember1::*>,
+     *   anthropicBeta?: list<AnthropicBeta::*|string>,
      * }|BatchListParams $params
      */
     public function list(
@@ -139,7 +139,7 @@ final class BatchesService implements BatchesContract
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
      * @param array{
-     *   anthropicBeta?: list<string|UnionMember1::*>
+     *   anthropicBeta?: list<AnthropicBeta::*|string>
      * }|BatchDeleteParams $params
      */
     public function delete(
@@ -176,7 +176,7 @@ final class BatchesService implements BatchesContract
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
      * @param array{
-     *   anthropicBeta?: list<string|UnionMember1::*>
+     *   anthropicBeta?: list<AnthropicBeta::*|string>
      * }|BatchCancelParams $params
      */
     public function cancel(
@@ -213,7 +213,7 @@ final class BatchesService implements BatchesContract
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
      * @param array{
-     *   anthropicBeta?: list<string|UnionMember1::*>
+     *   anthropicBeta?: list<AnthropicBeta::*|string>
      * }|BatchResultsParams $params
      */
     public function results(

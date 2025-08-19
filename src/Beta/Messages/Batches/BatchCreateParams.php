@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages\Batches;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Beta\AnthropicBeta\UnionMember1;
 use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
+use Anthropic\Core\Conversion\UnionOf;
 
 /**
  * Send a batch of Message creation requests.
@@ -21,7 +21,7 @@ use Anthropic\Core\Conversion\ListOf;
  * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
  *
  * @phpstan-type create_params = array{
- *   requests: list<Request>, anthropicBeta?: list<string|UnionMember1::*>
+ *   requests: list<Request>, anthropicBeta?: list<AnthropicBeta::*|string>
  * }
  */
 final class BatchCreateParams implements BaseModel
@@ -40,9 +40,12 @@ final class BatchCreateParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var null|list<string|UnionMember1::*> $anthropicBeta
+     * @var null|list<AnthropicBeta::*|string> $anthropicBeta
      */
-    #[Api(type: new ListOf(union: AnthropicBeta::class), optional: true)]
+    #[Api(
+        type: new ListOf(union: new UnionOf([AnthropicBeta::class, 'string'])),
+        optional: true,
+    )]
     public ?array $anthropicBeta;
 
     /**
@@ -71,7 +74,7 @@ final class BatchCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<Request> $requests
-     * @param null|list<string|UnionMember1::*> $anthropicBeta
+     * @param null|list<AnthropicBeta::*|string> $anthropicBeta
      */
     public static function with(
         array $requests,
@@ -102,7 +105,7 @@ final class BatchCreateParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @param list<string|UnionMember1::*> $betas
+     * @param list<AnthropicBeta::*|string> $betas
      */
     public function withBetas(array $betas): self
     {

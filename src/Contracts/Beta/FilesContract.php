@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts\Beta;
 
-use Anthropic\Beta\AnthropicBeta\UnionMember1;
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Files\DeletedFile;
 use Anthropic\Beta\Files\FileDeleteParams;
 use Anthropic\Beta\Files\FileDownloadParams;
@@ -21,7 +21,7 @@ interface FilesContract
      *   afterID?: string,
      *   beforeID?: string,
      *   limit?: int,
-     *   anthropicBeta?: list<string|UnionMember1::*>,
+     *   anthropicBeta?: list<AnthropicBeta::*|string>,
      * }|FileListParams $params
      */
     public function list(
@@ -31,7 +31,7 @@ interface FilesContract
 
     /**
      * @param array{
-     *   anthropicBeta?: list<string|UnionMember1::*>
+     *   anthropicBeta?: list<AnthropicBeta::*|string>
      * }|FileDeleteParams $params
      */
     public function delete(
@@ -42,7 +42,7 @@ interface FilesContract
 
     /**
      * @param array{
-     *   anthropicBeta?: list<string|UnionMember1::*>
+     *   anthropicBeta?: list<AnthropicBeta::*|string>
      * }|FileDownloadParams $params
      */
     public function download(
@@ -53,7 +53,7 @@ interface FilesContract
 
     /**
      * @param array{
-     *   anthropicBeta?: list<string|UnionMember1::*>
+     *   anthropicBeta?: list<AnthropicBeta::*|string>
      * }|FileRetrieveMetadataParams $params
      */
     public function retrieveMetadata(
@@ -64,7 +64,7 @@ interface FilesContract
 
     /**
      * @param array{
-     *   file: string, anthropicBeta?: list<string|UnionMember1::*>
+     *   file: string, anthropicBeta?: list<AnthropicBeta::*|string>
      * }|FileUploadParams $params
      */
     public function upload(

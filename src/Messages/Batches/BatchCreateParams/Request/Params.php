@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Anthropic\Messages\Batches\BatchCreateParams\Request;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model as ModelTrait;
+use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
+use Anthropic\Core\Conversion\UnionOf;
 use Anthropic\Messages\Batches\BatchCreateParams\Request\Params\ServiceTier;
 use Anthropic\Messages\Batches\BatchCreateParams\Request\Params\System;
 use Anthropic\Messages\MessageParam;
 use Anthropic\Messages\Metadata;
-use Anthropic\Messages\Model;
-use Anthropic\Messages\Model\UnionMember0;
+use Anthropic\Messages\Model as Model1;
 use Anthropic\Messages\TextBlockParam;
 use Anthropic\Messages\ThinkingConfigDisabled;
 use Anthropic\Messages\ThinkingConfigEnabled;
@@ -39,7 +39,7 @@ use Anthropic\Messages\WebSearchTool20250305;
  * @phpstan-type params_alias = array{
  *   maxTokens: int,
  *   messages: list<MessageParam>,
- *   model: UnionMember0::*|string,
+ *   model: Model1::*|string,
  *   metadata?: Metadata,
  *   serviceTier?: ServiceTier::*,
  *   stopSequences?: list<string>,
@@ -55,7 +55,7 @@ use Anthropic\Messages\WebSearchTool20250305;
  */
 final class Params implements BaseModel
 {
-    use ModelTrait;
+    use Model;
 
     /**
      * The maximum number of tokens to generate before stopping.
@@ -143,9 +143,9 @@ final class Params implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var string|UnionMember0::* $model
+     * @var Model1::*|string $model
      */
-    #[Api(union: Model::class)]
+    #[Api(union: new UnionOf([Model1::class, 'string']))]
     public string $model;
 
     /**
@@ -334,7 +334,7 @@ final class Params implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<MessageParam> $messages
-     * @param string|UnionMember0::* $model
+     * @param Model1::*|string $model
      * @param null|ServiceTier::* $serviceTier
      * @param null|list<string> $stopSequences
      * @param null|list<TextBlockParam>|string $system
@@ -473,7 +473,7 @@ final class Params implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @param string|UnionMember0::* $model
+     * @param Model1::*|string $model
      */
     public function withModel(string $model): self
     {

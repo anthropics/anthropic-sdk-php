@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts\Beta;
 
-use Anthropic\Beta\AnthropicBeta\UnionMember1;
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\BetaCodeExecutionTool20250522;
 use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Beta\Messages\BetaMessageParam;
@@ -31,7 +31,7 @@ use Anthropic\Beta\Messages\BetaWebSearchTool20250305;
 use Anthropic\Beta\Messages\MessageCountTokensParams;
 use Anthropic\Beta\Messages\MessageCreateParams;
 use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
-use Anthropic\Messages\Model\UnionMember0;
+use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
 
 interface MessagesContract
@@ -40,7 +40,7 @@ interface MessagesContract
      * @param array{
      *   maxTokens: int,
      *   messages: list<BetaMessageParam>,
-     *   model: string|UnionMember0::*,
+     *   model: Model::*|string,
      *   container?: null|string,
      *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
      *   metadata?: BetaMetadata,
@@ -53,7 +53,7 @@ interface MessagesContract
      *   tools?: list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>,
      *   topK?: int,
      *   topP?: float,
-     *   anthropicBeta?: list<string|UnionMember1::*>,
+     *   anthropicBeta?: list<AnthropicBeta::*|string>,
      * }|MessageCreateParams $params
      */
     public function create(
@@ -64,13 +64,13 @@ interface MessagesContract
     /**
      * @param array{
      *   messages: list<BetaMessageParam>,
-     *   model: string|UnionMember0::*,
+     *   model: Model::*|string,
      *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
      *   system?: list<BetaTextBlockParam>|string,
      *   thinking?: BetaThinkingConfigDisabled|BetaThinkingConfigEnabled,
      *   toolChoice?: BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool,
      *   tools?: list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>,
-     *   anthropicBeta?: list<string|UnionMember1::*>,
+     *   anthropicBeta?: list<AnthropicBeta::*|string>,
      * }|MessageCountTokensParams $params
      */
     public function countTokens(

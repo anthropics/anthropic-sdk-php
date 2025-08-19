@@ -9,8 +9,8 @@ use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
+use Anthropic\Core\Conversion\UnionOf;
 use Anthropic\Messages\MessageCountTokensParams\System;
-use Anthropic\Messages\Model\UnionMember0;
 
 /**
  * Count the number of tokens in a Message.
@@ -21,7 +21,7 @@ use Anthropic\Messages\Model\UnionMember0;
  *
  * @phpstan-type count_tokens_params = array{
  *   messages: list<MessageParam>,
- *   model: UnionMember0::*|string,
+ *   model: Model::*|string,
  *   system?: string|list<TextBlockParam>,
  *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
  *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
@@ -109,9 +109,9 @@ final class MessageCountTokensParams implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var string|UnionMember0::* $model
+     * @var Model::*|string $model
      */
-    #[Api(union: Model::class)]
+    #[Api(union: new UnionOf([Model::class, 'string']))]
     public string $model;
 
     /**
@@ -234,7 +234,7 @@ final class MessageCountTokensParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<MessageParam> $messages
-     * @param string|UnionMember0::* $model
+     * @param Model::*|string $model
      * @param null|list<TextBlockParam>|string $system
      * @param null|list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
      */
@@ -340,7 +340,7 @@ final class MessageCountTokensParams implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @param string|UnionMember0::* $model
+     * @param Model::*|string $model
      */
     public function withModel(string $model): self
     {

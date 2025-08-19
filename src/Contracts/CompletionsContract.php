@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts;
 
-use Anthropic\Beta\AnthropicBeta\UnionMember1;
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Completions\Completion;
 use Anthropic\Completions\CompletionCreateParams;
 use Anthropic\Messages\Metadata;
-use Anthropic\Messages\Model\UnionMember0;
+use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
 
 interface CompletionsContract
@@ -16,14 +16,14 @@ interface CompletionsContract
     /**
      * @param array{
      *   maxTokensToSample: int,
-     *   model: string|UnionMember0::*,
+     *   model: Model::*|string,
      *   prompt: string,
      *   metadata?: Metadata,
      *   stopSequences?: list<string>,
      *   temperature?: float,
      *   topK?: int,
      *   topP?: float,
-     *   anthropicBeta?: list<string|UnionMember1::*>,
+     *   anthropicBeta?: list<AnthropicBeta::*|string>,
      * }|CompletionCreateParams $params
      */
     public function create(

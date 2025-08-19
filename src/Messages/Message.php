@@ -8,13 +8,13 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Messages\Model\UnionMember0;
+use Anthropic\Core\Conversion\UnionOf;
 
 /**
  * @phpstan-type message_alias = array{
  *   id: string,
  *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
- *   model: UnionMember0::*|string,
+ *   model: Model::*|string,
  *   role: string,
  *   stopReason: StopReason::*,
  *   stopSequence: string|null,
@@ -85,9 +85,9 @@ final class Message implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var string|UnionMember0::* $model
+     * @var Model::*|string $model
      */
-    #[Api(union: Model::class)]
+    #[Api(union: new UnionOf([Model::class, 'string']))]
     public string $model;
 
     /**
@@ -169,7 +169,7 @@ final class Message implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock> $content
-     * @param string|UnionMember0::* $model
+     * @param Model::*|string $model
      * @param StopReason::* $stopReason
      */
     public static function with(
@@ -245,7 +245,7 @@ final class Message implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @param string|UnionMember0::* $model
+     * @param Model::*|string $model
      */
     public function withModel(string $model): self
     {

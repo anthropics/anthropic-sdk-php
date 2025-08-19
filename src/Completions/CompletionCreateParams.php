@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace Anthropic\Completions;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Beta\AnthropicBeta\UnionMember1;
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model as ModelTrait;
+use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Concerns\Params;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
+use Anthropic\Core\Conversion\UnionOf;
 use Anthropic\Messages\Metadata;
-use Anthropic\Messages\Model;
-use Anthropic\Messages\Model\UnionMember0;
+use Anthropic\Messages\Model as Model1;
 
 /**
  * [Legacy] Create a Text Completion.
@@ -24,19 +23,19 @@ use Anthropic\Messages\Model\UnionMember0;
  *
  * @phpstan-type create_params = array{
  *   maxTokensToSample: int,
- *   model: UnionMember0::*|string,
+ *   model: Model1::*|string,
  *   prompt: string,
  *   metadata?: Metadata,
  *   stopSequences?: list<string>,
  *   temperature?: float,
  *   topK?: int,
  *   topP?: float,
- *   anthropicBeta?: list<string|UnionMember1::*>,
+ *   anthropicBeta?: list<AnthropicBeta::*|string>,
  * }
  */
 final class CompletionCreateParams implements BaseModel
 {
-    use ModelTrait;
+    use Model;
     use Params;
 
     /**
@@ -50,9 +49,9 @@ final class CompletionCreateParams implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var string|UnionMember0::* $model
+     * @var Model1::*|string $model
      */
-    #[Api(union: Model::class)]
+    #[Api(union: new UnionOf([Model1::class, 'string']))]
     public string $model;
 
     /**
@@ -118,9 +117,12 @@ final class CompletionCreateParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var null|list<string|UnionMember1::*> $anthropicBeta
+     * @var null|list<AnthropicBeta::*|string> $anthropicBeta
      */
-    #[Api(type: new ListOf(union: AnthropicBeta::class), optional: true)]
+    #[Api(
+        type: new ListOf(union: new UnionOf([AnthropicBeta::class, 'string'])),
+        optional: true,
+    )]
     public ?array $anthropicBeta;
 
     /**
@@ -151,9 +153,9 @@ final class CompletionCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|UnionMember0::* $model
+     * @param Model1::*|string $model
      * @param null|list<string> $stopSequences
-     * @param null|list<string|UnionMember1::*> $anthropicBeta
+     * @param null|list<AnthropicBeta::*|string> $anthropicBeta
      */
     public static function with(
         int $maxTokensToSample,
@@ -198,7 +200,7 @@ final class CompletionCreateParams implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @param string|UnionMember0::* $model
+     * @param Model1::*|string $model
      */
     public function withModel(string $model): self
     {
@@ -301,7 +303,7 @@ final class CompletionCreateParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @param list<string|UnionMember1::*> $betas
+     * @param list<AnthropicBeta::*|string> $betas
      */
     public function withBetas(array $betas): self
     {

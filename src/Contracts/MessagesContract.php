@@ -11,7 +11,7 @@ use Anthropic\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Messages\MessageParam;
 use Anthropic\Messages\MessageTokensCount;
 use Anthropic\Messages\Metadata;
-use Anthropic\Messages\Model\UnionMember0;
+use Anthropic\Messages\Model;
 use Anthropic\Messages\TextBlockParam;
 use Anthropic\Messages\ThinkingConfigDisabled;
 use Anthropic\Messages\ThinkingConfigEnabled;
@@ -33,7 +33,7 @@ interface MessagesContract
      * @param array{
      *   maxTokens: int,
      *   messages: list<MessageParam>,
-     *   model: string|UnionMember0::*,
+     *   model: Model::*|string,
      *   metadata?: Metadata,
      *   serviceTier?: ServiceTier::*,
      *   stopSequences?: list<string>,
@@ -54,7 +54,7 @@ interface MessagesContract
     /**
      * @param array{
      *   messages: list<MessageParam>,
-     *   model: string|UnionMember0::*,
+     *   model: Model::*|string,
      *   system?: list<TextBlockParam>|string,
      *   thinking?: ThinkingConfigDisabled|ThinkingConfigEnabled,
      *   toolChoice?: ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool,

@@ -5,23 +5,23 @@ declare(strict_types=1);
 namespace Anthropic\Completions;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model as ModelTrait;
+use Anthropic\Core\Concerns\Model;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\Model;
-use Anthropic\Messages\Model\UnionMember0;
+use Anthropic\Core\Conversion\UnionOf;
+use Anthropic\Messages\Model as Model1;
 
 /**
  * @phpstan-type completion_alias = array{
  *   id: string,
  *   completion: string,
- *   model: UnionMember0::*|string,
+ *   model: Model1::*|string,
  *   stopReason: string|null,
  *   type: string,
  * }
  */
 final class Completion implements BaseModel
 {
-    use ModelTrait;
+    use Model;
 
     /**
      * Object type.
@@ -48,9 +48,9 @@ final class Completion implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var string|UnionMember0::* $model
+     * @var Model1::*|string $model
      */
-    #[Api(union: Model::class)]
+    #[Api(union: new UnionOf([Model1::class, 'string']))]
     public string $model;
 
     /**
@@ -92,7 +92,7 @@ final class Completion implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|UnionMember0::* $model
+     * @param Model1::*|string $model
      */
     public static function with(
         string $id,
@@ -137,7 +137,7 @@ final class Completion implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @param string|UnionMember0::* $model
+     * @param Model1::*|string $model
      */
     public function withModel(string $model): self
     {

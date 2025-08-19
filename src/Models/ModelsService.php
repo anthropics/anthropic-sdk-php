@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-use Anthropic\Beta\AnthropicBeta\UnionMember1;
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
 use Anthropic\Contracts\ModelsContract;
 use Anthropic\Core\Conversion;
@@ -21,7 +21,7 @@ final class ModelsService implements ModelsContract
      * The Models API response can be used to determine information about a specific model or resolve a model alias to a model ID.
      *
      * @param array{
-     *   anthropicBeta?: list<string|UnionMember1::*>
+     *   anthropicBeta?: list<AnthropicBeta::*|string>
      * }|ModelRetrieveParams $params
      */
     public function retrieve(
@@ -56,7 +56,7 @@ final class ModelsService implements ModelsContract
      *   afterID?: string,
      *   beforeID?: string,
      *   limit?: int,
-     *   anthropicBeta?: list<string|UnionMember1::*>,
+     *   anthropicBeta?: list<AnthropicBeta::*|string>,
      * }|ModelListParams $params
      */
     public function list(
