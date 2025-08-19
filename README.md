@@ -49,8 +49,8 @@ $params = MessageCreateParams::with(
   messages: [MessageParam::with(role: "user", content: "Hello, Claude")],
   model: "claude-sonnet-4-20250514",
 );
-$message = $client->messages->create($params);
 
+$message = $client->messages->create($params);
 var_dump($message->content);
 ```
 
@@ -79,7 +79,7 @@ try {
     echo "A 429 status code was received; we should back off a bit.", PHP_EOL;
 } catch (APIStatusError $e) {
     echo "Another non-200-range status code was received", PHP_EOL;
-    var_dump($e->status);
+    echo $e->getMessage();
 }
 ```
 

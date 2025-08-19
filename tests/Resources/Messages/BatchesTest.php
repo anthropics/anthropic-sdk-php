@@ -107,7 +107,18 @@ final class BatchesTest extends TestCase
                             [
                                 Tool::with(
                                     inputSchema: (new InputSchema)
-                                        ->withProperties((object) [])
+                                        ->withProperties(
+                                            [
+                                                'location' => [
+                                                    'description' => 'The city and state, e.g. San Francisco, CA',
+                                                    'type' => 'string',
+                                                ],
+                                                'unit' => [
+                                                    'description' => 'Unit for the output - one of (celsius, fahrenheit)',
+                                                    'type' => 'string',
+                                                ],
+                                            ],
+                                        )
                                         ->withRequired(['location']),
                                     name: 'name',
                                 )

@@ -26,7 +26,7 @@ class BaseClient
 
     protected RequestFactoryInterface $requestFactory;
 
-    protected ClientInterface $requester;
+    protected ClientInterface $transporter;
 
     /**
      * @param array<string, null|int|list<int|string>|string> $headers
@@ -41,7 +41,7 @@ class BaseClient
         $this->requestFactory = Psr17FactoryDiscovery::findRequestFactory();
 
         $this->baseUrl = $this->uriFactory->createUri($baseUrl);
-        $this->requester = Psr18ClientDiscovery::find();
+        $this->transporter = Psr18ClientDiscovery::find();
     }
 
     /**
@@ -158,7 +158,7 @@ class BaseClient
         int $redirectCount,
     ): ResponseInterface {
         $req = Util::withSetBody($this->streamFactory, req: $req, body: $data);
-        $rsp = $this->requester->sendRequest($req);
+        $rsp = $this->transporter->sendRequest($req);
         $code = $rsp->getStatusCode();
 
         if ($code >= 300 && $code < 400) {
@@ -172,7 +172,7 @@ class BaseClient
         }
 
         if ($code >= 400 && $code < 500) {
-            throw APIStatusError::from(null, request: $req, response: $rsp);
+            throw APIStatusError::from(request: $req, response: $rsp);
         }
 
         if ($code >= 500 && $retryCount < $opts->maxRetries) {

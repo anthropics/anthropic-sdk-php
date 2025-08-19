@@ -9,6 +9,6 @@ class Error extends \Exception
 
     public function __construct(string $message, int $code = 0, ?\Throwable $previous = null)
     {
-        parent::__construct($this::DESC.' '.$message, $code, $previous);
+        parent::__construct($this::DESC.PHP_EOL.$message, $code, $previous);
     }
 }
