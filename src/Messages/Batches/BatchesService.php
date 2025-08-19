@@ -6,7 +6,9 @@ namespace Anthropic\Messages\Batches;
 
 use Anthropic\Client;
 use Anthropic\Contracts\Messages\BatchesContract;
+use Anthropic\Core\Contracts\CloseableStream;
 use Anthropic\Core\Conversion;
+use Anthropic\Core\Streaming\SSEStream;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\RequestOptions;
 
@@ -154,5 +156,23 @@ final class BatchesService implements BatchesContract
             MessageBatchIndividualResponse::class,
             value: $resp
         );
+    }
+
+    /**
+     * @return CloseableStream<MessageBatchIndividualResponse>
+     */
+    public function resultsStream(
+        string $messageBatchID,
+        ?RequestOptions $requestOptions = null
+    ): CloseableStream {
+        $resp = $this->client->request(
+            method: 'get',
+            path: ['v1/messages/batches/%1$s/results', $messageBatchID],
+            headers: ['Accept' => 'application/x-jsonl'],
+            options: $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line;
+        return new SSEStream(MessageBatchIndividualResponse::class, $resp);
     }
 }

@@ -7,6 +7,7 @@ namespace Anthropic\Contracts;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Completions\Completion;
 use Anthropic\Completions\CompletionCreateParams;
+use Anthropic\Core\Contracts\CloseableStream;
 use Anthropic\Messages\Metadata;
 use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
@@ -30,4 +31,24 @@ interface CompletionsContract
         array|CompletionCreateParams $params,
         ?RequestOptions $requestOptions = null,
     ): Completion;
+
+    /**
+     * @param array{
+     *   maxTokensToSample: int,
+     *   model: Model::*|string,
+     *   prompt: string,
+     *   metadata?: Metadata,
+     *   stopSequences?: list<string>,
+     *   temperature?: float,
+     *   topK?: int,
+     *   topP?: float,
+     *   anthropicBeta?: list<AnthropicBeta::*|string>,
+     * }|CompletionCreateParams $params
+     *
+     * @return CloseableStream<Completion>
+     */
+    public function createStream(
+        array|CompletionCreateParams $params,
+        ?RequestOptions $requestOptions = null,
+    ): CloseableStream;
 }

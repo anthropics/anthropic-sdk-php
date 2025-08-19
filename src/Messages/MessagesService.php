@@ -6,7 +6,9 @@ namespace Anthropic\Messages;
 
 use Anthropic\Client;
 use Anthropic\Contracts\MessagesContract;
+use Anthropic\Core\Contracts\CloseableStream;
 use Anthropic\Core\Conversion;
+use Anthropic\Core\Streaming\SSEStream;
 use Anthropic\Messages\Batches\BatchesService;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\RequestOptions;
@@ -60,6 +62,47 @@ final class MessagesService implements MessagesContract
 
         // @phpstan-ignore-next-line;
         return Conversion::coerce(Message::class, value: $resp);
+    }
+
+    /**
+     * @param array{
+     *   maxTokens: int,
+     *   messages: list<MessageParam>,
+     *   model: Model::*|string,
+     *   metadata?: Metadata,
+     *   serviceTier?: ServiceTier::*,
+     *   stopSequences?: list<string>,
+     *   system?: list<TextBlockParam>|string,
+     *   temperature?: float,
+     *   thinking?: ThinkingConfigDisabled|ThinkingConfigEnabled,
+     *   toolChoice?: ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool,
+     *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>,
+     *   topK?: int,
+     *   topP?: float,
+     * }|MessageCreateParams $params
+     *
+     * @return CloseableStream<
+     *   RawContentBlockDeltaEvent|RawContentBlockStartEvent|RawContentBlockStopEvent|RawMessageDeltaEvent|RawMessageStartEvent|RawMessageStopEvent,
+     * >
+     */
+    public function createStream(
+        array|MessageCreateParams $params,
+        ?RequestOptions $requestOptions = null
+    ): CloseableStream {
+        [$parsed, $options] = MessageCreateParams::parseRequest(
+            $params,
+            $requestOptions
+        );
+        $parsed['stream'] = true;
+        $resp = $this->client->request(
+            method: 'post',
+            path: 'v1/messages',
+            body: (object) $parsed,
+            options: array_merge(['timeout' => 600], $options),
+        );
+
+        // @phpstan-ignore-next-line;
+        return new SSEStream(RawMessageStreamEvent::class, $resp);
     }
 
     /**

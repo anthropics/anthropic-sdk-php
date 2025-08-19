@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts;
 
+use Anthropic\Core\Contracts\CloseableStream;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCountTokensParams;
 use Anthropic\Messages\MessageCreateParams;
@@ -12,6 +13,12 @@ use Anthropic\Messages\MessageParam;
 use Anthropic\Messages\MessageTokensCount;
 use Anthropic\Messages\Metadata;
 use Anthropic\Messages\Model;
+use Anthropic\Messages\RawContentBlockDeltaEvent;
+use Anthropic\Messages\RawContentBlockStartEvent;
+use Anthropic\Messages\RawContentBlockStopEvent;
+use Anthropic\Messages\RawMessageDeltaEvent;
+use Anthropic\Messages\RawMessageStartEvent;
+use Anthropic\Messages\RawMessageStopEvent;
 use Anthropic\Messages\TextBlockParam;
 use Anthropic\Messages\ThinkingConfigDisabled;
 use Anthropic\Messages\ThinkingConfigEnabled;
@@ -50,6 +57,32 @@ interface MessagesContract
         array|MessageCreateParams $params,
         ?RequestOptions $requestOptions = null,
     ): Message;
+
+    /**
+     * @param array{
+     *   maxTokens: int,
+     *   messages: list<MessageParam>,
+     *   model: Model::*|string,
+     *   metadata?: Metadata,
+     *   serviceTier?: ServiceTier::*,
+     *   stopSequences?: list<string>,
+     *   system?: list<TextBlockParam>|string,
+     *   temperature?: float,
+     *   thinking?: ThinkingConfigDisabled|ThinkingConfigEnabled,
+     *   toolChoice?: ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool,
+     *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>,
+     *   topK?: int,
+     *   topP?: float,
+     * }|MessageCreateParams $params
+     *
+     * @return CloseableStream<
+     *   RawContentBlockDeltaEvent|RawContentBlockStartEvent|RawContentBlockStopEvent|RawMessageDeltaEvent|RawMessageStartEvent|RawMessageStopEvent,
+     * >
+     */
+    public function createStream(
+        array|MessageCreateParams $params,
+        ?RequestOptions $requestOptions = null,
+    ): CloseableStream;
 
     /**
      * @param array{

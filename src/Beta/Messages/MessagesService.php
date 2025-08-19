@@ -9,7 +9,9 @@ use Anthropic\Beta\Messages\Batches\BatchesService;
 use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Client;
 use Anthropic\Contracts\Beta\MessagesContract;
+use Anthropic\Core\Contracts\CloseableStream;
 use Anthropic\Core\Conversion;
+use Anthropic\Core\Streaming\SSEStream;
 use Anthropic\Core\Util;
 use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
@@ -71,6 +73,55 @@ final class MessagesService implements MessagesContract
 
         // @phpstan-ignore-next-line;
         return Conversion::coerce(BetaMessage::class, value: $resp);
+    }
+
+    /**
+     * @param array{
+     *   maxTokens: int,
+     *   messages: list<BetaMessageParam>,
+     *   model: Model::*|string,
+     *   container?: null|string,
+     *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
+     *   metadata?: BetaMetadata,
+     *   serviceTier?: ServiceTier::*,
+     *   stopSequences?: list<string>,
+     *   system?: list<BetaTextBlockParam>|string,
+     *   temperature?: float,
+     *   thinking?: BetaThinkingConfigDisabled|BetaThinkingConfigEnabled,
+     *   toolChoice?: BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool,
+     *   tools?: list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>,
+     *   topK?: int,
+     *   topP?: float,
+     *   anthropicBeta?: list<AnthropicBeta::*|string>,
+     * }|MessageCreateParams $params
+     *
+     * @return CloseableStream<
+     *   BetaRawContentBlockDeltaEvent|BetaRawContentBlockStartEvent|BetaRawContentBlockStopEvent|BetaRawMessageDeltaEvent|BetaRawMessageStartEvent|BetaRawMessageStopEvent,
+     * >
+     */
+    public function createStream(
+        array|MessageCreateParams $params,
+        ?RequestOptions $requestOptions = null
+    ): CloseableStream {
+        [$parsed, $options] = MessageCreateParams::parseRequest(
+            $params,
+            $requestOptions
+        );
+        $parsed['stream'] = true;
+        $header_params = ['betas' => 'anthropic-beta'];
+        $resp = $this->client->request(
+            method: 'post',
+            path: 'v1/messages?beta=true',
+            headers: Util::array_transform_keys(
+                array_intersect_key($parsed, array_keys($header_params)),
+                $header_params
+            ),
+            body: (object) array_diff_key($parsed, array_keys($header_params)),
+            options: array_merge(['timeout' => 600], $options),
+        );
+
+        // @phpstan-ignore-next-line;
+        return new SSEStream(BetaRawMessageStreamEvent::class, $resp);
     }
 
     /**

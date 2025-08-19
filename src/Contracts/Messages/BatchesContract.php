@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts\Messages;
 
+use Anthropic\Core\Contracts\CloseableStream;
 use Anthropic\Messages\Batches\BatchCreateParams;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\Messages\Batches\BatchListParams;
@@ -51,4 +52,12 @@ interface BatchesContract
         string $messageBatchID,
         ?RequestOptions $requestOptions = null
     ): MessageBatchIndividualResponse;
+
+    /**
+     * @return CloseableStream<MessageBatchIndividualResponse>
+     */
+    public function resultsStream(
+        string $messageBatchID,
+        ?RequestOptions $requestOptions = null
+    ): CloseableStream;
 }

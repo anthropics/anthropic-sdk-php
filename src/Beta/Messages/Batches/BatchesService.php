@@ -8,7 +8,9 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\Client;
 use Anthropic\Contracts\Beta\Messages\BatchesContract;
+use Anthropic\Core\Contracts\CloseableStream;
 use Anthropic\Core\Conversion;
+use Anthropic\Core\Streaming\SSEStream;
 use Anthropic\Core\Util;
 use Anthropic\RequestOptions;
 
@@ -243,5 +245,38 @@ final class BatchesService implements BatchesContract
             MessageBatchIndividualResponse::class,
             value: $resp
         );
+    }
+
+    /**
+     * @param array{
+     *   anthropicBeta?: list<AnthropicBeta::*|string>
+     * }|BatchResultsParams $params
+     *
+     * @return CloseableStream<MessageBatchIndividualResponse>
+     */
+    public function resultsStream(
+        string $messageBatchID,
+        array|BatchResultsParams $params,
+        ?RequestOptions $requestOptions = null,
+    ): CloseableStream {
+        [$parsed, $options] = BatchResultsParams::parseRequest(
+            $params,
+            $requestOptions
+        );
+        $resp = $this->client->request(
+            method: 'get',
+            path: ['v1/messages/batches/%1$s/results?beta=true', $messageBatchID],
+            headers: Util::array_transform_keys(
+                ['Accept' => 'application/x-jsonl', ...$parsed],
+                ['betas' => 'anthropic-beta'],
+            ),
+            options: array_merge(
+                ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
+                $options,
+            ),
+        );
+
+        // @phpstan-ignore-next-line;
+        return new SSEStream(MessageBatchIndividualResponse::class, $resp);
     }
 }

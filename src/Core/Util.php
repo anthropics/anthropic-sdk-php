@@ -265,13 +265,13 @@ final class Util
     /**
      * @param \Iterator<string> $lines
      *
-     * @return \Iterator<
+     * @return \Generator<
      *   array{
      *     event?: null|string, data?: null|string, id?: null|string, retry?: null|int
      *   },
      * >
      */
-    public static function decodeSSE(\Iterator $lines): \Iterator
+    public static function decodeSSE(\Iterator $lines): \Generator
     {
         $blank = ['event' => null, 'data' => null, 'id' => null, 'retry' => null];
         $acc = [];

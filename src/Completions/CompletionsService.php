@@ -7,7 +7,9 @@ namespace Anthropic\Completions;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
 use Anthropic\Contracts\CompletionsContract;
+use Anthropic\Core\Contracts\CloseableStream;
 use Anthropic\Core\Conversion;
+use Anthropic\Core\Streaming\SSEStream;
 use Anthropic\Core\Util;
 use Anthropic\Messages\Metadata;
 use Anthropic\Messages\Model;
@@ -58,5 +60,45 @@ final class CompletionsService implements CompletionsContract
 
         // @phpstan-ignore-next-line;
         return Conversion::coerce(Completion::class, value: $resp);
+    }
+
+    /**
+     * @param array{
+     *   maxTokensToSample: int,
+     *   model: Model::*|string,
+     *   prompt: string,
+     *   metadata?: Metadata,
+     *   stopSequences?: list<string>,
+     *   temperature?: float,
+     *   topK?: int,
+     *   topP?: float,
+     *   anthropicBeta?: list<AnthropicBeta::*|string>,
+     * }|CompletionCreateParams $params
+     *
+     * @return CloseableStream<Completion>
+     */
+    public function createStream(
+        array|CompletionCreateParams $params,
+        ?RequestOptions $requestOptions = null
+    ): CloseableStream {
+        [$parsed, $options] = CompletionCreateParams::parseRequest(
+            $params,
+            $requestOptions
+        );
+        $parsed['stream'] = true;
+        $header_params = ['betas' => 'anthropic-beta'];
+        $resp = $this->client->request(
+            method: 'post',
+            path: 'v1/complete',
+            headers: Util::array_transform_keys(
+                array_intersect_key($parsed, array_keys($header_params)),
+                $header_params
+            ),
+            body: (object) array_diff_key($parsed, array_keys($header_params)),
+            options: array_merge(['timeout' => 600], $options),
+        );
+
+        // @phpstan-ignore-next-line;
+        return new SSEStream(Completion::class, $resp);
     }
 }

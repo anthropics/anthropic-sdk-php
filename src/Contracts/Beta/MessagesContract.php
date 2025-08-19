@@ -10,6 +10,12 @@ use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Beta\Messages\BetaMessageParam;
 use Anthropic\Beta\Messages\BetaMessageTokensCount;
 use Anthropic\Beta\Messages\BetaMetadata;
+use Anthropic\Beta\Messages\BetaRawContentBlockDeltaEvent;
+use Anthropic\Beta\Messages\BetaRawContentBlockStartEvent;
+use Anthropic\Beta\Messages\BetaRawContentBlockStopEvent;
+use Anthropic\Beta\Messages\BetaRawMessageDeltaEvent;
+use Anthropic\Beta\Messages\BetaRawMessageStartEvent;
+use Anthropic\Beta\Messages\BetaRawMessageStopEvent;
 use Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition;
 use Anthropic\Beta\Messages\BetaTextBlockParam;
 use Anthropic\Beta\Messages\BetaThinkingConfigDisabled;
@@ -31,6 +37,7 @@ use Anthropic\Beta\Messages\BetaWebSearchTool20250305;
 use Anthropic\Beta\Messages\MessageCountTokensParams;
 use Anthropic\Beta\Messages\MessageCreateParams;
 use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
+use Anthropic\Core\Contracts\CloseableStream;
 use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
 
@@ -60,6 +67,35 @@ interface MessagesContract
         array|MessageCreateParams $params,
         ?RequestOptions $requestOptions = null,
     ): BetaMessage;
+
+    /**
+     * @param array{
+     *   maxTokens: int,
+     *   messages: list<BetaMessageParam>,
+     *   model: Model::*|string,
+     *   container?: null|string,
+     *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
+     *   metadata?: BetaMetadata,
+     *   serviceTier?: ServiceTier::*,
+     *   stopSequences?: list<string>,
+     *   system?: list<BetaTextBlockParam>|string,
+     *   temperature?: float,
+     *   thinking?: BetaThinkingConfigDisabled|BetaThinkingConfigEnabled,
+     *   toolChoice?: BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool,
+     *   tools?: list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>,
+     *   topK?: int,
+     *   topP?: float,
+     *   anthropicBeta?: list<AnthropicBeta::*|string>,
+     * }|MessageCreateParams $params
+     *
+     * @return CloseableStream<
+     *   BetaRawContentBlockDeltaEvent|BetaRawContentBlockStartEvent|BetaRawContentBlockStopEvent|BetaRawMessageDeltaEvent|BetaRawMessageStartEvent|BetaRawMessageStopEvent,
+     * >
+     */
+    public function createStream(
+        array|MessageCreateParams $params,
+        ?RequestOptions $requestOptions = null,
+    ): CloseableStream;
 
     /**
      * @param array{

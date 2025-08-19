@@ -15,6 +15,7 @@ use Anthropic\Beta\Messages\Batches\BatchRetrieveParams;
 use Anthropic\Beta\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
+use Anthropic\Core\Contracts\CloseableStream;
 use Anthropic\RequestOptions;
 
 interface BatchesContract
@@ -85,4 +86,17 @@ interface BatchesContract
         array|BatchResultsParams $params,
         ?RequestOptions $requestOptions = null,
     ): MessageBatchIndividualResponse;
+
+    /**
+     * @param array{
+     *   anthropicBeta?: list<AnthropicBeta::*|string>
+     * }|BatchResultsParams $params
+     *
+     * @return CloseableStream<MessageBatchIndividualResponse>
+     */
+    public function resultsStream(
+        string $messageBatchID,
+        array|BatchResultsParams $params,
+        ?RequestOptions $requestOptions = null,
+    ): CloseableStream;
 }
