@@ -25,8 +25,8 @@ final class Page extends AbstractPage
      * @param array{
      *   data?: list<TItem>,
      *   hasMore?: bool,
-     *   firstID?: null|string,
-     *   lastID?: null|string,
+     *   firstID?: string|null,
+     *   lastID?: string|null,
      * } $body
      */
     public function __construct(

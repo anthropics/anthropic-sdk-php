@@ -35,10 +35,10 @@ final class BetaToolResultBlockParam implements BaseModel
     public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * @var null|list<BetaImageBlockParam|BetaSearchResultBlockParam|BetaTextBlockParam>|string $content
+     * @var string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam>|null $content
      */
     #[Api(union: Content::class, optional: true)]
-    public null|array|string $content;
+    public string|array|null $content;
 
     #[Api('is_error', optional: true)]
     public ?bool $isError;
@@ -68,12 +68,12 @@ final class BetaToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<BetaImageBlockParam|BetaSearchResultBlockParam|BetaTextBlockParam>|string $content
+     * @param string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam>|null $content
      */
     public static function with(
         string $toolUseID,
         ?BetaCacheControlEphemeral $cacheControl = null,
-        null|array|string $content = null,
+        string|array|null $content = null,
         ?bool $isError = null,
     ): self {
         $obj = new self;
@@ -108,9 +108,9 @@ final class BetaToolResultBlockParam implements BaseModel
     }
 
     /**
-     * @param list<BetaImageBlockParam|BetaSearchResultBlockParam|BetaTextBlockParam>|string $content
+     * @param string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam> $content
      */
-    public function withContent(array|string $content): self
+    public function withContent(string|array $content): self
     {
         $obj = clone $this;
         $obj->content = $content;

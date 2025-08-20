@@ -28,7 +28,7 @@ final class InputSchema implements BaseModel
     #[Api(optional: true)]
     public mixed $properties;
 
-    /** @var null|list<string> $required */
+    /** @var list<string>|null $required */
     #[Api(type: new ListOf('string'), nullable: true, optional: true)]
     public ?array $required;
 
@@ -43,7 +43,7 @@ final class InputSchema implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<string> $required
+     * @param list<string>|null $required
      */
     public static function with(
         mixed $properties = null,
@@ -66,7 +66,7 @@ final class InputSchema implements BaseModel
     }
 
     /**
-     * @param null|list<string> $required
+     * @param list<string>|null $required
      */
     public function withRequired(?array $required): self
     {

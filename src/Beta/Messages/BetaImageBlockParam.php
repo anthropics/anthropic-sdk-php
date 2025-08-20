@@ -24,7 +24,7 @@ final class BetaImageBlockParam implements BaseModel
     public string $type = 'image';
 
     #[Api(union: Source::class)]
-    public BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source;
+    public BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource $source;
 
     /**
      * Create a cache control breakpoint at this content block.
@@ -58,7 +58,7 @@ final class BetaImageBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source,
+        BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource $source,
         ?BetaCacheControlEphemeral $cacheControl = null,
     ): self {
         $obj = new self;
@@ -71,7 +71,7 @@ final class BetaImageBlockParam implements BaseModel
     }
 
     public function withSource(
-        BetaBase64ImageSource|BetaFileImageSource|BetaURLImageSource $source
+        BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource $source
     ): self {
         $obj = clone $this;
         $obj->source = $source;

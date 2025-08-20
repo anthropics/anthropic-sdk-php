@@ -28,7 +28,7 @@ final class TextBlock implements BaseModel
      *
      * The type of citation returned will depend on the type of document being cited. Citing a PDF results in `page_location`, plain text results in `char_location`, and content document results in `content_block_location`.
      *
-     * @var null|list<CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsSearchResultLocation|CitationsWebSearchResultLocation> $citations
+     * @var list<CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation>|null $citations
      */
     #[Api(type: new ListOf(union: TextCitation::class), nullable: true)]
     public ?array $citations;
@@ -61,7 +61,7 @@ final class TextBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsSearchResultLocation|CitationsWebSearchResultLocation> $citations
+     * @param list<CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation>|null $citations
      */
     public static function with(?array $citations, string $text): self
     {
@@ -78,7 +78,7 @@ final class TextBlock implements BaseModel
      *
      * The type of citation returned will depend on the type of document being cited. Citing a PDF results in `page_location`, plain text results in `char_location`, and content document results in `content_block_location`.
      *
-     * @param null|list<CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsSearchResultLocation|CitationsWebSearchResultLocation> $citations
+     * @param list<CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation>|null $citations
      */
     public function withCitations(?array $citations): self
     {

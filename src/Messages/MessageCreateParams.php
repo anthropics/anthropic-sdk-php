@@ -143,7 +143,7 @@ final class MessageCreateParams implements BaseModel
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.anthropic.com/en/api/service-tiers) for details.
      *
-     * @var null|ServiceTier::* $serviceTier
+     * @var ServiceTier::*|null $serviceTier
      */
     #[Api('service_tier', enum: ServiceTier::class, optional: true)]
     public ?string $serviceTier;
@@ -155,7 +155,7 @@ final class MessageCreateParams implements BaseModel
      *
      * If you want the model to stop generating when it encounters custom strings of text, you can use the `stop_sequences` parameter. If the model encounters one of the custom sequences, the response `stop_reason` value will be `"stop_sequence"` and the response `stop_sequence` value will contain the matched stop sequence.
      *
-     * @var null|list<string> $stopSequences
+     * @var list<string>|null $stopSequences
      */
     #[Api('stop_sequences', type: new ListOf('string'), optional: true)]
     public ?array $stopSequences;
@@ -165,10 +165,10 @@ final class MessageCreateParams implements BaseModel
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.anthropic.com/en/docs/system-prompts).
      *
-     * @var null|list<TextBlockParam>|string $system
+     * @var string|list<TextBlockParam>|null $system
      */
     #[Api(union: System::class, optional: true)]
-    public null|array|string $system;
+    public string|array|null $system;
 
     /**
      * Amount of randomness injected into the response.
@@ -188,13 +188,13 @@ final class MessageCreateParams implements BaseModel
      * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
      */
     #[Api(union: ThinkingConfigParam::class, optional: true)]
-    public null|ThinkingConfigDisabled|ThinkingConfigEnabled $thinking;
+    public ThinkingConfigEnabled|ThinkingConfigDisabled|null $thinking;
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
     #[Api('tool_choice', union: ToolChoice::class, optional: true)]
-    public null|ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice;
+    public ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice;
 
     /**
      * Definitions of tools that the model may use.
@@ -259,7 +259,7 @@ final class MessageCreateParams implements BaseModel
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
-     * @var null|list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
+     * @var list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null $tools
      */
     #[Api(type: new ListOf(union: ToolUnion::class), optional: true)]
     public ?array $tools;
@@ -311,10 +311,10 @@ final class MessageCreateParams implements BaseModel
      *
      * @param list<MessageParam> $messages
      * @param Model::*|string $model
-     * @param null|ServiceTier::* $serviceTier
-     * @param null|list<string> $stopSequences
-     * @param null|list<TextBlockParam>|string $system
-     * @param null|list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
+     * @param ServiceTier::*|null $serviceTier
+     * @param list<string>|null $stopSequences
+     * @param string|list<TextBlockParam>|null $system
+     * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null $tools
      */
     public static function with(
         int $maxTokens,
@@ -323,10 +323,10 @@ final class MessageCreateParams implements BaseModel
         ?Metadata $metadata = null,
         ?string $serviceTier = null,
         ?array $stopSequences = null,
-        null|array|string $system = null,
+        string|array|null $system = null,
         ?float $temperature = null,
-        null|ThinkingConfigDisabled|ThinkingConfigEnabled $thinking = null,
-        null|ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice = null,
+        ThinkingConfigEnabled|ThinkingConfigDisabled|null $thinking = null,
+        ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?int $topK = null,
         ?float $topP = null,
@@ -505,9 +505,9 @@ final class MessageCreateParams implements BaseModel
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.anthropic.com/en/docs/system-prompts).
      *
-     * @param list<TextBlockParam>|string $system
+     * @param string|list<TextBlockParam> $system
      */
-    public function withSystem(array|string $system): self
+    public function withSystem(string|array $system): self
     {
         $obj = clone $this;
         $obj->system = $system;
@@ -538,7 +538,7 @@ final class MessageCreateParams implements BaseModel
      * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
      */
     public function withThinking(
-        ThinkingConfigDisabled|ThinkingConfigEnabled $thinking
+        ThinkingConfigEnabled|ThinkingConfigDisabled $thinking
     ): self {
         $obj = clone $this;
         $obj->thinking = $thinking;
@@ -550,7 +550,7 @@ final class MessageCreateParams implements BaseModel
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
     public function withToolChoice(
-        ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice
+        ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone $toolChoice
     ): self {
         $obj = clone $this;
         $obj->toolChoice = $toolChoice;

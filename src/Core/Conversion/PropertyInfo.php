@@ -46,9 +46,9 @@ final class PropertyInfo
     }
 
     /**
-     * @param null|array<int|string,string>|Converter|ConverterSource|\ReflectionType|string $type
+     * @param array<int|string,string>|Converter|ConverterSource|\ReflectionType|string|null $type
      */
-    private static function parse(null|array|Converter|ConverterSource|\ReflectionType|string $type): Converter|ConverterSource|string
+    private static function parse(array|Converter|ConverterSource|\ReflectionType|string|null $type): Converter|ConverterSource|string
     {
         if (is_string($type) || $type instanceof Converter) {
             return $type;

@@ -28,8 +28,8 @@ final class Content implements ConverterSource
     use SdkUnion;
 
     /**
-     * @return array<string,
-     * Converter|ConverterSource|string,>|list<Converter|ConverterSource|string>
+     * @return list<string|Converter|ConverterSource>|array<string,
+     * string|Converter|ConverterSource,>
      */
     public static function variants(): array
     {

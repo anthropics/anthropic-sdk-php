@@ -119,10 +119,10 @@ final class MessageCountTokensParams implements BaseModel
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.anthropic.com/en/docs/system-prompts).
      *
-     * @var null|list<TextBlockParam>|string $system
+     * @var string|list<TextBlockParam>|null $system
      */
     #[Api(union: System::class, optional: true)]
-    public null|array|string $system;
+    public string|array|null $system;
 
     /**
      * Configuration for enabling Claude's extended thinking.
@@ -132,13 +132,13 @@ final class MessageCountTokensParams implements BaseModel
      * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
      */
     #[Api(union: ThinkingConfigParam::class, optional: true)]
-    public null|ThinkingConfigDisabled|ThinkingConfigEnabled $thinking;
+    public ThinkingConfigEnabled|ThinkingConfigDisabled|null $thinking;
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
     #[Api('tool_choice', union: ToolChoice::class, optional: true)]
-    public null|ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice;
+    public ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice;
 
     /**
      * Definitions of tools that the model may use.
@@ -203,7 +203,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
-     * @var null|list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
+     * @var list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null $tools
      */
     #[Api(type: new ListOf(union: MessageCountTokensTool::class), optional: true)]
     public ?array $tools;
@@ -235,15 +235,15 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param list<MessageParam> $messages
      * @param Model::*|string $model
-     * @param null|list<TextBlockParam>|string $system
-     * @param null|list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
+     * @param string|list<TextBlockParam>|null $system
+     * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null $tools
      */
     public static function with(
         array $messages,
         string $model,
-        null|array|string $system = null,
-        null|ThinkingConfigDisabled|ThinkingConfigEnabled $thinking = null,
-        null|ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice = null,
+        string|array|null $system = null,
+        ThinkingConfigEnabled|ThinkingConfigDisabled|null $thinking = null,
+        ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
     ): self {
         $obj = new self;
@@ -355,9 +355,9 @@ final class MessageCountTokensParams implements BaseModel
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.anthropic.com/en/docs/system-prompts).
      *
-     * @param list<TextBlockParam>|string $system
+     * @param string|list<TextBlockParam> $system
      */
-    public function withSystem(array|string $system): self
+    public function withSystem(string|array $system): self
     {
         $obj = clone $this;
         $obj->system = $system;
@@ -373,7 +373,7 @@ final class MessageCountTokensParams implements BaseModel
      * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
      */
     public function withThinking(
-        ThinkingConfigDisabled|ThinkingConfigEnabled $thinking
+        ThinkingConfigEnabled|ThinkingConfigDisabled $thinking
     ): self {
         $obj = clone $this;
         $obj->thinking = $thinking;
@@ -385,7 +385,7 @@ final class MessageCountTokensParams implements BaseModel
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
     public function withToolChoice(
-        ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice
+        ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone $toolChoice
     ): self {
         $obj = clone $this;
         $obj->toolChoice = $toolChoice;

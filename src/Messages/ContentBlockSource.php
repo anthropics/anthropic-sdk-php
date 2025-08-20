@@ -21,9 +21,9 @@ final class ContentBlockSource implements BaseModel
     #[Api]
     public string $type = 'content';
 
-    /** @var list<ImageBlockParam|TextBlockParam>|string $content */
+    /** @var string|list<TextBlockParam|ImageBlockParam> $content */
     #[Api(union: Content::class)]
-    public array|string $content;
+    public string|array $content;
 
     /**
      * `new ContentBlockSource()` is missing required properties by the API.
@@ -50,9 +50,9 @@ final class ContentBlockSource implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<ImageBlockParam|TextBlockParam>|string $content
+     * @param string|list<TextBlockParam|ImageBlockParam> $content
      */
-    public static function with(array|string $content): self
+    public static function with(string|array $content): self
     {
         $obj = new self;
 
@@ -62,9 +62,9 @@ final class ContentBlockSource implements BaseModel
     }
 
     /**
-     * @param list<ImageBlockParam|TextBlockParam>|string $content
+     * @param string|list<TextBlockParam|ImageBlockParam> $content
      */
-    public function withContent(array|string $content): self
+    public function withContent(string|array $content): self
     {
         $obj = clone $this;
         $obj->content = $content;

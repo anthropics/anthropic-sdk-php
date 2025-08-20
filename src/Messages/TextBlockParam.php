@@ -34,7 +34,7 @@ final class TextBlockParam implements BaseModel
     public ?CacheControlEphemeral $cacheControl;
 
     /**
-     * @var null|list<CitationCharLocationParam|CitationContentBlockLocationParam|CitationPageLocationParam|CitationSearchResultLocationParam|CitationWebSearchResultLocationParam> $citations
+     * @var list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null $citations
      */
     #[Api(
         type: new ListOf(union: TextCitationParam::class),
@@ -68,7 +68,7 @@ final class TextBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<CitationCharLocationParam|CitationContentBlockLocationParam|CitationPageLocationParam|CitationSearchResultLocationParam|CitationWebSearchResultLocationParam> $citations
+     * @param list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null $citations
      */
     public static function with(
         string $text,
@@ -105,7 +105,7 @@ final class TextBlockParam implements BaseModel
     }
 
     /**
-     * @param null|list<CitationCharLocationParam|CitationContentBlockLocationParam|CitationPageLocationParam|CitationSearchResultLocationParam|CitationWebSearchResultLocationParam> $citations
+     * @param list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null $citations
      */
     public function withCitations(?array $citations): self
     {

@@ -34,9 +34,9 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
     #[Api('cache_control', optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
-    /** @var null|list<BetaTextBlockParam>|string $content */
+    /** @var string|list<BetaTextBlockParam>|null $content */
     #[Api(union: Content::class, optional: true)]
-    public null|array|string $content;
+    public string|array|null $content;
 
     #[Api('is_error', optional: true)]
     public ?bool $isError;
@@ -66,12 +66,12 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<BetaTextBlockParam>|string $content
+     * @param string|list<BetaTextBlockParam>|null $content
      */
     public static function with(
         string $toolUseID,
         ?BetaCacheControlEphemeral $cacheControl = null,
-        null|array|string $content = null,
+        string|array|null $content = null,
         ?bool $isError = null,
     ): self {
         $obj = new self;
@@ -106,9 +106,9 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
     }
 
     /**
-     * @param list<BetaTextBlockParam>|string $content
+     * @param string|list<BetaTextBlockParam> $content
      */
-    public function withContent(array|string $content): self
+    public function withContent(string|array $content): self
     {
         $obj = clone $this;
         $obj->content = $content;

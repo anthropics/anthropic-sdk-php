@@ -77,7 +77,7 @@ final class Message implements BaseModel
      * [{"type": "text", "text": "B)"}]
      * ```
      *
-     * @var list<RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock> $content
+     * @var list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock> $content
      */
     #[Api(type: new ListOf(union: ContentBlock::class))]
     public array $content;
@@ -168,7 +168,7 @@ final class Message implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock> $content
+     * @param list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock> $content
      * @param Model::*|string $model
      * @param StopReason::* $stopReason
      */
@@ -232,7 +232,7 @@ final class Message implements BaseModel
      * [{"type": "text", "text": "B)"}]
      * ```
      *
-     * @param list<RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock> $content
+     * @param list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock> $content
      */
     public function withContent(array $content): self
     {

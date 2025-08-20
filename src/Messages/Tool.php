@@ -53,7 +53,7 @@ final class Tool implements BaseModel
     #[Api(optional: true)]
     public ?string $description;
 
-    /** @var null|Type::* $type */
+    /** @var Type::*|null $type */
     #[Api(enum: Type::class, nullable: true, optional: true)]
     public ?string $type;
 
@@ -82,7 +82,7 @@ final class Tool implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|Type::* $type
+     * @param Type::*|null $type
      */
     public static function with(
         InputSchema $inputSchema,
@@ -154,7 +154,7 @@ final class Tool implements BaseModel
     }
 
     /**
-     * @param null|Type::* $type
+     * @param Type::*|null $type
      */
     public function withType(?string $type): self
     {

@@ -45,11 +45,11 @@ final class Util
     }
 
     /**
-     * @param callable|int|list<int|string>|string $key
+     * @param string|int|list<string|int>|callable $key
      */
     public static function dig(
         mixed $array,
-        array|callable|int|string $key
+        string|int|array|callable $key
     ): mixed {
         if (is_callable($key)) {
             return $key($array);
@@ -71,9 +71,9 @@ final class Util
     }
 
     /**
-     * @param list<string>|string $path
+     * @param string|list<string> $path
      */
-    public static function parsePath(array|string $path): string
+    public static function parsePath(string|array $path): string
     {
         if (is_string($path)) {
             return $path;
@@ -124,7 +124,7 @@ final class Util
     }
 
     /**
-     * @param array<string, null|int|list<int|string>|string> $headers
+     * @param array<string, string|int|list<string|int>|null> $headers
      */
     public static function withSetHeaders(
         RequestInterface $req,
@@ -165,9 +165,9 @@ final class Util
     }
 
     /**
-     * @param null|array<string, mixed>|bool|float|int|resource|string|\Traversable<
+     * @param bool|int|float|string|array<string, mixed>|resource|\Traversable<
      *   mixed
-     * > $body
+     * >|null $body
      *
      * @return array{string, \Generator<string>}
      */
@@ -202,9 +202,9 @@ final class Util
     }
 
     /**
-     * @param null|array<string, mixed>|bool|float|int|resource|string|\Traversable<
+     * @param bool|int|float|string|array<string, mixed>|resource|\Traversable<
      *   mixed
-     * > $body
+     * >|null $body
      */
     public static function withSetBody(
         StreamFactoryInterface $factory,
@@ -267,7 +267,7 @@ final class Util
      *
      * @return \Generator<
      *   array{
-     *     event?: null|string, data?: null|string, id?: null|string, retry?: null|int
+     *     event?: string|null, data?: string|null, id?: string|null, retry?: int|null
      *   },
      * >
      */

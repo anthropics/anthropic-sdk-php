@@ -27,7 +27,7 @@ final class BetaRequestDocumentBlock implements BaseModel
     public string $type = 'document';
 
     #[Api(union: Source::class)]
-    public BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source;
+    public BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource $source;
 
     /**
      * Create a cache control breakpoint at this content block.
@@ -70,7 +70,7 @@ final class BetaRequestDocumentBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source,
+        BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource $source,
         ?BetaCacheControlEphemeral $cacheControl = null,
         ?BetaCitationsConfigParam $citations = null,
         ?string $context = null,
@@ -89,7 +89,7 @@ final class BetaRequestDocumentBlock implements BaseModel
     }
 
     public function withSource(
-        BetaBase64PDFSource|BetaContentBlockSource|BetaFileDocumentSource|BetaPlainTextSource|BetaURLPDFSource $source,
+        BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource $source,
     ): self {
         $obj = clone $this;
         $obj->source = $source;

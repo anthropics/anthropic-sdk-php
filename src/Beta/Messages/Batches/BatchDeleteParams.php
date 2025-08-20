@@ -29,7 +29,7 @@ final class BatchDeleteParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var null|list<AnthropicBeta::*|string> $betas
+     * @var list<AnthropicBeta::*|string>|null $betas
      */
     #[Api(
         type: new ListOf(union: new UnionOf([AnthropicBeta::class, 'string'])),
@@ -48,7 +48,7 @@ final class BatchDeleteParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<AnthropicBeta::*|string> $betas
+     * @param list<AnthropicBeta::*|string>|null $betas
      */
     public static function with(?array $betas = null): self
     {

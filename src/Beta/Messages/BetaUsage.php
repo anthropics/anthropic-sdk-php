@@ -63,7 +63,7 @@ final class BetaUsage implements BaseModel
     /**
      * If the request used the priority, standard, or batch tier.
      *
-     * @var null|ServiceTier::* $serviceTier
+     * @var ServiceTier::*|null $serviceTier
      */
     #[Api('service_tier', enum: ServiceTier::class, nullable: true)]
     public ?string $serviceTier;
@@ -108,7 +108,7 @@ final class BetaUsage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|ServiceTier::* $serviceTier
+     * @param ServiceTier::*|null $serviceTier
      */
     public static function with(
         BetaCacheCreation $cacheCreation,
@@ -202,7 +202,7 @@ final class BetaUsage implements BaseModel
     /**
      * If the request used the priority, standard, or batch tier.
      *
-     * @param null|ServiceTier::* $serviceTier
+     * @param ServiceTier::*|null $serviceTier
      */
     public function withServiceTier(?string $serviceTier): self
     {

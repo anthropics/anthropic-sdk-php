@@ -27,7 +27,7 @@ final class DeletedFile implements BaseModel
      *
      * For file deletion, this is always `"file_deleted"`.
      *
-     * @var null|Type::* $type
+     * @var Type::*|null $type
      */
     #[Api(enum: Type::class, optional: true)]
     public ?string $type;
@@ -57,7 +57,7 @@ final class DeletedFile implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|Type::* $type
+     * @param Type::*|null $type
      */
     public static function with(string $id, ?string $type = null): self
     {

@@ -55,13 +55,13 @@ class RequestOptions
 
     /**
      * @param array{
-     *   timeout?: null|float,
-     *   maxRetries?: null|int,
-     *   initialRetryDelay?: null|float,
-     *   maxRetryDelay?: null|float,
-     *   extraHeaders?: null|list<string>,
-     *   extraQueryParams?: null|list<string>,
-     *   extraBodyParams?: null|list<string>,
+     *   timeout?: float|null,
+     *   maxRetries?: int|null,
+     *   initialRetryDelay?: float|null,
+     *   maxRetryDelay?: float|null,
+     *   extraHeaders?: list<string>|null,
+     *   extraQueryParams?: list<string>|null,
+     *   extraBodyParams?: list<string>|null,
      * } $data
      */
     public function __unserialize(array $data): void
@@ -88,17 +88,17 @@ class RequestOptions
     }
 
     /**
-     * @param null|array{
-     *   timeout?: null|float,
-     *   maxRetries?: null|int,
-     *   initialRetryDelay?: null|float,
-     *   maxRetryDelay?: null|float,
-     *   extraHeaders?: null|list<string>,
-     *   extraQueryParams?: null|list<string>,
-     *   extraBodyParams?: null|list<string>,
-     * }|RequestOptions $options
+     * @param array{
+     *   timeout?: float|null,
+     *   maxRetries?: int|null,
+     *   initialRetryDelay?: float|null,
+     *   maxRetryDelay?: float|null,
+     *   extraHeaders?: list<string>|null,
+     *   extraQueryParams?: list<string>|null,
+     *   extraBodyParams?: list<string>|null,
+     * }|RequestOptions|null $options
      */
-    public static function parse(null|array|RequestOptions $options): self
+    public static function parse(array|RequestOptions|null $options): self
     {
         if (is_null($options)) {
             return new self;

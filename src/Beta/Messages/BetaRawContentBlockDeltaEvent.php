@@ -23,7 +23,7 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
     public string $type = 'content_block_delta';
 
     #[Api(union: BetaRawContentBlockDelta::class)]
-    public BetaCitationsDelta|BetaInputJSONDelta|BetaSignatureDelta|BetaTextDelta|BetaThinkingDelta $delta;
+    public BetaTextDelta|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta $delta;
 
     #[Api]
     public int $index;
@@ -54,7 +54,7 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        BetaCitationsDelta|BetaInputJSONDelta|BetaSignatureDelta|BetaTextDelta|BetaThinkingDelta $delta,
+        BetaTextDelta|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta $delta,
         int $index,
     ): self {
         $obj = new self;
@@ -66,7 +66,7 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
     }
 
     public function withDelta(
-        BetaCitationsDelta|BetaInputJSONDelta|BetaSignatureDelta|BetaTextDelta|BetaThinkingDelta $delta,
+        BetaTextDelta|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta $delta,
     ): self {
         $obj = clone $this;
         $obj->delta = $delta;

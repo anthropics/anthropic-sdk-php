@@ -39,7 +39,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
     /**
      * If provided, only these domains will be included in results. Cannot be used alongside `blocked_domains`.
      *
-     * @var null|list<string> $allowedDomains
+     * @var list<string>|null $allowedDomains
      */
     #[Api(
         'allowed_domains',
@@ -52,7 +52,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
     /**
      * If provided, these domains will never appear in results. Cannot be used alongside `allowed_domains`.
      *
-     * @var null|list<string> $blockedDomains
+     * @var list<string>|null $blockedDomains
      */
     #[Api(
         'blocked_domains',
@@ -91,8 +91,8 @@ final class BetaWebSearchTool20250305 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<string> $allowedDomains
-     * @param null|list<string> $blockedDomains
+     * @param list<string>|null $allowedDomains
+     * @param list<string>|null $blockedDomains
      */
     public static function with(
         ?array $allowedDomains = null,
@@ -115,7 +115,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
     /**
      * If provided, only these domains will be included in results. Cannot be used alongside `blocked_domains`.
      *
-     * @param null|list<string> $allowedDomains
+     * @param list<string>|null $allowedDomains
      */
     public function withAllowedDomains(?array $allowedDomains): self
     {
@@ -128,7 +128,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
     /**
      * If provided, these domains will never appear in results. Cannot be used alongside `allowed_domains`.
      *
-     * @param null|list<string> $blockedDomains
+     * @param list<string>|null $blockedDomains
      */
     public function withBlockedDomains(?array $blockedDomains): self
     {

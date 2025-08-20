@@ -15,7 +15,7 @@ final class EnumOf implements Converter
     private readonly string $type;
 
     /**
-     * @param list<null|bool|float|int|string> $members
+     * @param list<bool|float|int|string|null> $members
      */
     public function __construct(private readonly array $members)
     {

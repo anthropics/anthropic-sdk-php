@@ -9,7 +9,7 @@ use Anthropic\Core\Conversion;
  *
  * @extends BaseStream<
  *   array{
- *     event?: null|string, data?: null|string, id?: null|string, retry?: null|int
+ *     event?: string|null, data?: string|null, id?: string|null, retry?: int|null
  *   },
  *   TItem,
  * >

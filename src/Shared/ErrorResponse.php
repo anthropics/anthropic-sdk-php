@@ -22,7 +22,7 @@ final class ErrorResponse implements BaseModel
     public string $type = 'error';
 
     #[Api(union: ErrorObject::class)]
-    public APIErrorObject|AuthenticationError|BillingError|GatewayTimeoutError|InvalidRequestError|NotFoundError|OverloadedError|PermissionError|RateLimitError $error;
+    public InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error;
 
     /**
      * `new ErrorResponse()` is missing required properties by the API.
@@ -50,7 +50,7 @@ final class ErrorResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        APIErrorObject|AuthenticationError|BillingError|GatewayTimeoutError|InvalidRequestError|NotFoundError|OverloadedError|PermissionError|RateLimitError $error,
+        InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error,
     ): self {
         $obj = new self;
 
@@ -60,7 +60,7 @@ final class ErrorResponse implements BaseModel
     }
 
     public function withError(
-        APIErrorObject|AuthenticationError|BillingError|GatewayTimeoutError|InvalidRequestError|NotFoundError|OverloadedError|PermissionError|RateLimitError $error,
+        InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error,
     ): self {
         $obj = clone $this;
         $obj->error = $error;

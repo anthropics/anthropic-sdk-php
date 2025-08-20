@@ -24,9 +24,9 @@ final class BetaMCPToolResultBlock implements BaseModel
     #[Api]
     public string $type = 'mcp_tool_result';
 
-    /** @var list<BetaTextBlock>|string $content */
+    /** @var string|list<BetaTextBlock> $content */
     #[Api(union: Content::class)]
-    public array|string $content;
+    public string|array $content;
 
     #[Api('is_error')]
     public bool $isError;
@@ -62,10 +62,10 @@ final class BetaMCPToolResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaTextBlock>|string $content
+     * @param string|list<BetaTextBlock> $content
      */
     public static function with(
-        array|string $content,
+        string|array $content,
         string $toolUseID,
         bool $isError = false
     ): self {
@@ -79,9 +79,9 @@ final class BetaMCPToolResultBlock implements BaseModel
     }
 
     /**
-     * @param list<BetaTextBlock>|string $content
+     * @param string|list<BetaTextBlock> $content
      */
-    public function withContent(array|string $content): self
+    public function withContent(string|array $content): self
     {
         $obj = clone $this;
         $obj->content = $content;

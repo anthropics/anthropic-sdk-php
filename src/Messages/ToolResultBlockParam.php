@@ -35,10 +35,10 @@ final class ToolResultBlockParam implements BaseModel
     public ?CacheControlEphemeral $cacheControl;
 
     /**
-     * @var null|list<ImageBlockParam|SearchResultBlockParam|TextBlockParam>|string $content
+     * @var string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam>|null $content
      */
     #[Api(union: Content::class, optional: true)]
-    public null|array|string $content;
+    public string|array|null $content;
 
     #[Api('is_error', optional: true)]
     public ?bool $isError;
@@ -68,12 +68,12 @@ final class ToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<ImageBlockParam|SearchResultBlockParam|TextBlockParam>|string $content
+     * @param string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam>|null $content
      */
     public static function with(
         string $toolUseID,
         ?CacheControlEphemeral $cacheControl = null,
-        null|array|string $content = null,
+        string|array|null $content = null,
         ?bool $isError = null,
     ): self {
         $obj = new self;
@@ -107,9 +107,9 @@ final class ToolResultBlockParam implements BaseModel
     }
 
     /**
-     * @param list<ImageBlockParam|SearchResultBlockParam|TextBlockParam>|string $content
+     * @param string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam> $content
      */
-    public function withContent(array|string $content): self
+    public function withContent(string|array $content): self
     {
         $obj = clone $this;
         $obj->content = $content;

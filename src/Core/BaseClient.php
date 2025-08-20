@@ -29,7 +29,7 @@ class BaseClient
     protected ClientInterface $transporter;
 
     /**
-     * @param array<string, null|int|list<int|string>|string> $headers
+     * @param array<string, string|int|list<string|int>|null> $headers
      */
     public function __construct(
         protected array $headers,
@@ -45,13 +45,13 @@ class BaseClient
     }
 
     /**
-     * @param list<mixed>|string $path
+     * @param string|list<mixed> $path
      * @param array<string, mixed> $query
      * @param array<string, mixed> $headers
      */
     public function request(
         string $method,
-        array|string $path,
+        string|array $path,
         array $query = [],
         array $headers = [],
         mixed $body = null,
@@ -88,27 +88,27 @@ class BaseClient
     }
 
     /**
-     * @param list<string>|string $path
+     * @param string|list<string> $path
      * @param array<string, mixed> $query
-     * @param array<string, null|int|list<int|string>|string> $headers
-     * @param null|array{
-     *   timeout?: null|float,
-     *   maxRetries?: null|int,
-     *   initialRetryDelay?: null|float,
-     *   maxRetryDelay?: null|float,
-     *   extraHeaders?: null|list<string>,
-     *   extraQueryParams?: null|list<string>,
-     *   extraBodyParams?: null|list<string>,
-     * }|RequestOptions $opts
+     * @param array<string, string|int|list<string|int>|null> $headers
+     * @param array{
+     *   timeout?: float|null,
+     *   maxRetries?: int|null,
+     *   initialRetryDelay?: float|null,
+     *   maxRetryDelay?: float|null,
+     *   extraHeaders?: list<string>|null,
+     *   extraQueryParams?: list<string>|null,
+     *   extraBodyParams?: list<string>|null,
+     * }|RequestOptions|null $opts
      *
      * @return array{RequestInterface, RequestOptions}
      */
     protected function buildRequest(
         string $method,
-        array|string $path,
+        string|array $path,
         array $query,
         array $headers,
-        null|array|RequestOptions $opts,
+        array|RequestOptions|null $opts,
     ): array {
         $opts = [...$this->options->__serialize(), ...RequestOptions::parse($opts)->__serialize()];
         $options = new RequestOptions(...$opts);
@@ -119,7 +119,7 @@ class BaseClient
         $mergedQuery = array_merge_recursive($query, $options->extraQueryParams);
         $uri = Util::joinUri($this->baseUrl, path: $parsedPath, query: $mergedQuery);
 
-        /** @var array<string, list<string>|string> $mergedHeaders */
+        /** @var array<string, string | list<string>> $mergedHeaders */
         $mergedHeaders = [...$this->headers,
             ...$this->authHeaders(),
             ...$headers,
@@ -146,9 +146,9 @@ class BaseClient
     }
 
     /**
-     * @param null|array<string, mixed>|bool|float|int|resource|string|\Traversable<
+     * @param bool|int|float|string|array<string, mixed>|resource|\Traversable<
      *   mixed
-     * > $data
+     * >|null $data
      */
     protected function sendRequest(
         RequestInterface $req,

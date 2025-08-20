@@ -165,7 +165,7 @@ final class Params implements BaseModel
     /**
      * MCP servers to be utilized in this request.
      *
-     * @var null|list<BetaRequestMCPServerURLDefinition> $mcpServers
+     * @var list<BetaRequestMCPServerURLDefinition>|null $mcpServers
      */
     #[Api(
         'mcp_servers',
@@ -185,7 +185,7 @@ final class Params implements BaseModel
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.anthropic.com/en/api/service-tiers) for details.
      *
-     * @var null|ServiceTier::* $serviceTier
+     * @var ServiceTier::*|null $serviceTier
      */
     #[Api('service_tier', enum: ServiceTier::class, optional: true)]
     public ?string $serviceTier;
@@ -197,7 +197,7 @@ final class Params implements BaseModel
      *
      * If you want the model to stop generating when it encounters custom strings of text, you can use the `stop_sequences` parameter. If the model encounters one of the custom sequences, the response `stop_reason` value will be `"stop_sequence"` and the response `stop_sequence` value will contain the matched stop sequence.
      *
-     * @var null|list<string> $stopSequences
+     * @var list<string>|null $stopSequences
      */
     #[Api('stop_sequences', type: new ListOf('string'), optional: true)]
     public ?array $stopSequences;
@@ -215,10 +215,10 @@ final class Params implements BaseModel
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.anthropic.com/en/docs/system-prompts).
      *
-     * @var null|list<BetaTextBlockParam>|string $system
+     * @var string|list<BetaTextBlockParam>|null $system
      */
     #[Api(union: System::class, optional: true)]
-    public null|array|string $system;
+    public string|array|null $system;
 
     /**
      * Amount of randomness injected into the response.
@@ -238,13 +238,13 @@ final class Params implements BaseModel
      * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
      */
     #[Api(union: BetaThinkingConfigParam::class, optional: true)]
-    public null|BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking;
+    public BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null $thinking;
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
     #[Api('tool_choice', union: BetaToolChoice::class, optional: true)]
-    public null|BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice;
+    public BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice;
 
     /**
      * Definitions of tools that the model may use.
@@ -309,7 +309,7 @@ final class Params implements BaseModel
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
-     * @var null|list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
+     * @var list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>|null $tools
      */
     #[Api(type: new ListOf(union: BetaToolUnion::class), optional: true)]
     public ?array $tools;
@@ -361,11 +361,11 @@ final class Params implements BaseModel
      *
      * @param list<BetaMessageParam> $messages
      * @param Model::*|string $model
-     * @param null|list<BetaRequestMCPServerURLDefinition> $mcpServers
-     * @param null|ServiceTier::* $serviceTier
-     * @param null|list<string> $stopSequences
-     * @param null|list<BetaTextBlockParam>|string $system
-     * @param null|list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
+     * @param list<BetaRequestMCPServerURLDefinition>|null $mcpServers
+     * @param ServiceTier::*|null $serviceTier
+     * @param list<string>|null $stopSequences
+     * @param string|list<BetaTextBlockParam>|null $system
+     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>|null $tools
      */
     public static function with(
         int $maxTokens,
@@ -377,10 +377,10 @@ final class Params implements BaseModel
         ?string $serviceTier = null,
         ?array $stopSequences = null,
         ?bool $stream = null,
-        null|array|string $system = null,
+        string|array|null $system = null,
         ?float $temperature = null,
-        null|BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking = null,
-        null|BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice = null,
+        BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null $thinking = null,
+        BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?int $topK = null,
         ?float $topP = null,
@@ -599,9 +599,9 @@ final class Params implements BaseModel
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.anthropic.com/en/docs/system-prompts).
      *
-     * @param list<BetaTextBlockParam>|string $system
+     * @param string|list<BetaTextBlockParam> $system
      */
-    public function withSystem(array|string $system): self
+    public function withSystem(string|array $system): self
     {
         $obj = clone $this;
         $obj->system = $system;
@@ -632,7 +632,7 @@ final class Params implements BaseModel
      * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
      */
     public function withThinking(
-        BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking
+        BetaThinkingConfigEnabled|BetaThinkingConfigDisabled $thinking
     ): self {
         $obj = clone $this;
         $obj->thinking = $thinking;
@@ -644,7 +644,7 @@ final class Params implements BaseModel
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
     public function withToolChoice(
-        BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice,
+        BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone $toolChoice,
     ): self {
         $obj = clone $this;
         $obj->toolChoice = $toolChoice;
@@ -715,7 +715,7 @@ final class Params implements BaseModel
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
-     * @param list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
+     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
      */
     public function withTools(array $tools): self
     {

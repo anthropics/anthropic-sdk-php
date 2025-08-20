@@ -77,7 +77,7 @@ final class UnionOf implements Converter
 
     private function resolveVariant(
         mixed $value,
-    ): null|Converter|ConverterSource|string {
+    ): Converter|ConverterSource|string|null {
         if ($value instanceof BaseModel) {
             return $value::class;
         }

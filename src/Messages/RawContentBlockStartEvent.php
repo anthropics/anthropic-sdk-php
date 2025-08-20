@@ -24,7 +24,7 @@ final class RawContentBlockStartEvent implements BaseModel
     public string $type = 'content_block_start';
 
     #[Api('content_block', union: ContentBlock::class)]
-    public RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock $contentBlock;
+    public TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $contentBlock;
 
     #[Api]
     public int $index;
@@ -55,7 +55,7 @@ final class RawContentBlockStartEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock $contentBlock,
+        TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $contentBlock,
         int $index,
     ): self {
         $obj = new self;
@@ -67,7 +67,7 @@ final class RawContentBlockStartEvent implements BaseModel
     }
 
     public function withContentBlock(
-        RedactedThinkingBlock|ServerToolUseBlock|TextBlock|ThinkingBlock|ToolUseBlock|WebSearchToolResultBlock $contentBlock,
+        TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $contentBlock,
     ): self {
         $obj = clone $this;
         $obj->contentBlock = $contentBlock;

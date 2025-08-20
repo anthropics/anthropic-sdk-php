@@ -34,7 +34,7 @@ final class MessageBatchIndividualResponse implements BaseModel
      * Contains a Message output if processing was successful, an error response if processing failed, or the reason why processing was not attempted, such as cancellation or expiration.
      */
     #[Api(union: MessageBatchResult::class)]
-    public MessageBatchCanceledResult|MessageBatchErroredResult|MessageBatchExpiredResult|MessageBatchSucceededResult $result;
+    public MessageBatchSucceededResult|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult $result;
 
     /**
      * `new MessageBatchIndividualResponse()` is missing required properties by the API.
@@ -63,7 +63,7 @@ final class MessageBatchIndividualResponse implements BaseModel
      */
     public static function with(
         string $customID,
-        MessageBatchCanceledResult|MessageBatchErroredResult|MessageBatchExpiredResult|MessageBatchSucceededResult $result,
+        MessageBatchSucceededResult|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult $result,
     ): self {
         $obj = new self;
 
@@ -92,7 +92,7 @@ final class MessageBatchIndividualResponse implements BaseModel
      * Contains a Message output if processing was successful, an error response if processing failed, or the reason why processing was not attempted, such as cancellation or expiration.
      */
     public function withResult(
-        MessageBatchCanceledResult|MessageBatchErroredResult|MessageBatchExpiredResult|MessageBatchSucceededResult $result,
+        MessageBatchSucceededResult|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult $result,
     ): self {
         $obj = clone $this;
         $obj->result = $result;

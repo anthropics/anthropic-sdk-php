@@ -28,7 +28,7 @@ final class CacheControlEphemeral implements BaseModel
      *
      * Defaults to `5m`.
      *
-     * @var null|TTL::* $ttl
+     * @var TTL::*|null $ttl
      */
     #[Api(enum: TTL::class, optional: true)]
     public ?string $ttl;
@@ -44,7 +44,7 @@ final class CacheControlEphemeral implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|TTL::* $ttl
+     * @param TTL::*|null $ttl
      */
     public static function with(?string $ttl = null): self
     {

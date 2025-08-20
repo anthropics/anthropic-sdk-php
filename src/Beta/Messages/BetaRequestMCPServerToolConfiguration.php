@@ -18,7 +18,7 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
 {
     use SdkModel;
 
-    /** @var null|list<string> $allowedTools */
+    /** @var list<string>|null $allowedTools */
     #[Api(
         'allowed_tools',
         type: new ListOf('string'),
@@ -41,7 +41,7 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<string> $allowedTools
+     * @param list<string>|null $allowedTools
      */
     public static function with(
         ?array $allowedTools = null,
@@ -56,7 +56,7 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
     }
 
     /**
-     * @param null|list<string> $allowedTools
+     * @param list<string>|null $allowedTools
      */
     public function withAllowedTools(?array $allowedTools): self
     {

@@ -24,7 +24,7 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
     public string $type = 'web_search_tool_result';
 
     /**
-     * @var BetaWebSearchToolRequestError|list<BetaWebSearchResultBlockParam> $content
+     * @var list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError $content
      */
     #[Api(union: BetaWebSearchToolResultBlockParamContent::class)]
     public array|BetaWebSearchToolRequestError $content;
@@ -63,7 +63,7 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaWebSearchToolRequestError|list<BetaWebSearchResultBlockParam> $content
+     * @param list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError $content
      */
     public static function with(
         array|BetaWebSearchToolRequestError $content,
@@ -81,7 +81,7 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
     }
 
     /**
-     * @param BetaWebSearchToolRequestError|list<BetaWebSearchResultBlockParam> $content
+     * @param list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError $content
      */
     public function withContent(
         array|BetaWebSearchToolRequestError $content

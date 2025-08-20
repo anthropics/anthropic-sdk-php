@@ -23,7 +23,7 @@ final class CitationsDelta implements BaseModel
     public string $type = 'citations_delta';
 
     #[Api(union: Citation::class)]
-    public CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsSearchResultLocation|CitationsWebSearchResultLocation $citation;
+    public CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation $citation;
 
     /**
      * `new CitationsDelta()` is missing required properties by the API.
@@ -51,7 +51,7 @@ final class CitationsDelta implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsSearchResultLocation|CitationsWebSearchResultLocation $citation,
+        CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation $citation,
     ): self {
         $obj = new self;
 
@@ -61,7 +61,7 @@ final class CitationsDelta implements BaseModel
     }
 
     public function withCitation(
-        CitationCharLocation|CitationContentBlockLocation|CitationPageLocation|CitationsSearchResultLocation|CitationsWebSearchResultLocation $citation,
+        CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation $citation,
     ): self {
         $obj = clone $this;
         $obj->citation = $citation;

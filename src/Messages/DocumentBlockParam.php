@@ -27,7 +27,7 @@ final class DocumentBlockParam implements BaseModel
     public string $type = 'document';
 
     #[Api(union: Source::class)]
-    public Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source;
+    public Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource $source;
 
     /**
      * Create a cache control breakpoint at this content block.
@@ -70,7 +70,7 @@ final class DocumentBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source,
+        Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource $source,
         ?CacheControlEphemeral $cacheControl = null,
         ?CitationsConfigParam $citations = null,
         ?string $context = null,
@@ -89,7 +89,7 @@ final class DocumentBlockParam implements BaseModel
     }
 
     public function withSource(
-        Base64PDFSource|ContentBlockSource|PlainTextSource|URLPDFSource $source
+        Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource $source
     ): self {
         $obj = clone $this;
         $obj->source = $source;

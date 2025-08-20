@@ -14,8 +14,8 @@ use Anthropic\RequestOptions;
 trait SdkParams
 {
     /**
-     * @param null|array<string, mixed>|self           $params
-     * @param null|array<string, mixed>|RequestOptions $options
+     * @param array<string, mixed>|self|null           $params
+     * @param array<string, mixed>|RequestOptions|null $options
      *
      * @return array{array<string, mixed>, array{
      *     timeout: float,
@@ -27,7 +27,7 @@ trait SdkParams
      *     extraBodyParams: list<string>,
      * }}
      */
-    public static function parseRequest(null|array|self $params, null|array|RequestOptions $options): array
+    public static function parseRequest(array|self|null $params, array|RequestOptions|null $options): array
     {
         $converter = self::converter();
         $state = new DumpState;

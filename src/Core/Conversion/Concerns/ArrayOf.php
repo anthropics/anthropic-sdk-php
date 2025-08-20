@@ -15,12 +15,12 @@ use Anthropic\Core\Conversion\DumpState;
  */
 trait ArrayOf
 {
-    private readonly null|Converter|ConverterSource|string $type;
+    private readonly Converter|ConverterSource|string|null $type;
 
     public function __construct(
-        null|Converter|ConverterSource|string $type = null,
-        null|Converter|ConverterSource|string $enum = null,
-        null|Converter|ConverterSource|string $union = null,
+        Converter|ConverterSource|string|null $type = null,
+        Converter|ConverterSource|string|null $enum = null,
+        Converter|ConverterSource|string|null $union = null,
         private readonly bool $nullable = false,
     ) {
         $this->type = $type ?? $enum ?? $union;

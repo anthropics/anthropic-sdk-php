@@ -19,7 +19,7 @@ class TestModel implements BaseModel
     #[Api('age_years')]
     public int $ageYears;
 
-    /** @var null|list<string> */
+    /** @var list<string>|null */
     #[Api(optional: true)]
     public ?array $friends;
 
@@ -27,7 +27,7 @@ class TestModel implements BaseModel
     public ?string $owner;
 
     /**
-     * @param null|list<string> $friends
+     * @param list<string>|null $friends
      */
     public function __construct(
         string $name,

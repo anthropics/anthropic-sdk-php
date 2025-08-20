@@ -21,10 +21,10 @@ final class MessageParam implements BaseModel
     use SdkModel;
 
     /**
-     * @var list<DocumentBlockParam|ImageBlockParam|RedactedThinkingBlockParam|SearchResultBlockParam|ServerToolUseBlockParam|TextBlockParam|ThinkingBlockParam|ToolResultBlockParam|ToolUseBlockParam|WebSearchToolResultBlockParam>|string $content
+     * @var string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam> $content
      */
     #[Api(union: Content::class)]
-    public array|string $content;
+    public string|array $content;
 
     /** @var Role::* $role */
     #[Api(enum: Role::class)]
@@ -55,10 +55,10 @@ final class MessageParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DocumentBlockParam|ImageBlockParam|RedactedThinkingBlockParam|SearchResultBlockParam|ServerToolUseBlockParam|TextBlockParam|ThinkingBlockParam|ToolResultBlockParam|ToolUseBlockParam|WebSearchToolResultBlockParam>|string $content
+     * @param string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam> $content
      * @param Role::* $role
      */
-    public static function with(array|string $content, string $role): self
+    public static function with(string|array $content, string $role): self
     {
         $obj = new self;
 
@@ -69,9 +69,9 @@ final class MessageParam implements BaseModel
     }
 
     /**
-     * @param list<DocumentBlockParam|ImageBlockParam|RedactedThinkingBlockParam|SearchResultBlockParam|ServerToolUseBlockParam|TextBlockParam|ThinkingBlockParam|ToolResultBlockParam|ToolUseBlockParam|WebSearchToolResultBlockParam>|string $content
+     * @param string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam> $content
      */
-    public function withContent(array|string $content): self
+    public function withContent(string|array $content): self
     {
         $obj = clone $this;
         $obj->content = $content;

@@ -23,7 +23,7 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
     public string $type = 'code_execution_tool_result';
 
     #[Api]
-    public BetaCodeExecutionResultBlock|BetaCodeExecutionToolResultError $content;
+    public BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock $content;
 
     #[Api('tool_use_id')]
     public string $toolUseID;
@@ -54,7 +54,7 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        BetaCodeExecutionResultBlock|BetaCodeExecutionToolResultError $content,
+        BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock $content,
         string $toolUseID,
     ): self {
         $obj = new self;
@@ -66,7 +66,7 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
     }
 
     public function withContent(
-        BetaCodeExecutionResultBlock|BetaCodeExecutionToolResultError $content
+        BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock $content
     ): self {
         $obj = clone $this;
         $obj->content = $content;
