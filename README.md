@@ -57,10 +57,10 @@ var_dump($message->content);
 
 ## Value Objects
 
-It is recommended to use the `with` constructor `Dog::with(name: "Joey")`
+It is recommended to use the static `with` constructor `Base64ImageSource::with(data: "U3RhaW5sZXNzIHJvY2tz", ...)`
 and named parameters to initialize value objects.
 
-However builders are provided as well `(new Dog)->withName("Joey")`.
+However, builders are also provided `(new Base64ImageSource)->withData("U3RhaW5sZXNzIHJvY2tz")`.
 
 ### Handling errors
 
