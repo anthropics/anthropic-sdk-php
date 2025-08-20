@@ -6,7 +6,7 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaRawContentBlockStartEvent\ContentBlock;
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -18,7 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaRawContentBlockStartEvent implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api]
     public string $type = 'content_block_start';

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 
@@ -16,7 +16,7 @@ use Anthropic\Core\Conversion\ListOf;
  */
 final class BetaRequestMCPServerToolConfiguration implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /** @var null|list<string> $allowedTools */
     #[Api(

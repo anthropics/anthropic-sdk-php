@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Messages\Batches;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Message;
 
@@ -16,7 +16,7 @@ use Anthropic\Messages\Message;
  */
 final class MessageBatchSucceededResult implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api]
     public string $type = 'succeeded';

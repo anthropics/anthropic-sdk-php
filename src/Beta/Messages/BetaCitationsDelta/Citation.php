@@ -9,7 +9,7 @@ use Anthropic\Beta\Messages\BetaCitationContentBlockLocation;
 use Anthropic\Beta\Messages\BetaCitationPageLocation;
 use Anthropic\Beta\Messages\BetaCitationSearchResultLocation;
 use Anthropic\Beta\Messages\BetaCitationsWebSearchResultLocation;
-use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
@@ -18,7 +18,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  */
 final class Citation implements ConverterSource
 {
-    use Union;
+    use SdkUnion;
 
     public static function discriminator(): string
     {

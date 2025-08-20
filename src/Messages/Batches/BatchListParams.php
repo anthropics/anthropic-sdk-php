@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Messages\Batches;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
-use Anthropic\Core\Concerns\Params;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -20,8 +20,8 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BatchListParams implements BaseModel
 {
-    use Model;
-    use Params;
+    use SdkModel;
+    use SdkParams;
 
     /**
      * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.

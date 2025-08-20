@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Messages;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
-use Anthropic\Core\Concerns\Params;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Core\Conversion\UnionOf;
@@ -30,8 +30,8 @@ use Anthropic\Messages\MessageCountTokensParams\System;
  */
 final class MessageCountTokensParams implements BaseModel
 {
-    use Model;
-    use Params;
+    use SdkModel;
+    use SdkParams;
 
     /**
      * Input messages.

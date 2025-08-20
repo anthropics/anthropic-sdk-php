@@ -31,11 +31,11 @@ use Anthropic\Beta\Messages\BetaToolTextEditor20250728;
 use Anthropic\Beta\Messages\BetaToolUnion;
 use Anthropic\Beta\Messages\BetaWebSearchTool20250305;
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Core\Conversion\UnionOf;
-use Anthropic\Messages\Model as Model1;
+use Anthropic\Messages\Model;
 
 /**
  * Messages API creation parameters for the individual request.
@@ -45,7 +45,7 @@ use Anthropic\Messages\Model as Model1;
  * @phpstan-type params_alias = array{
  *   maxTokens: int,
  *   messages: list<BetaMessageParam>,
- *   model: Model1::*|string,
+ *   model: Model::*|string,
  *   container?: string|null,
  *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
  *   metadata?: BetaMetadata,
@@ -63,7 +63,7 @@ use Anthropic\Messages\Model as Model1;
  */
 final class Params implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * The maximum number of tokens to generate before stopping.
@@ -151,9 +151,9 @@ final class Params implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var Model1::*|string $model
+     * @var Model::*|string $model
      */
-    #[Api(union: new UnionOf([Model1::class, 'string']))]
+    #[Api(union: new UnionOf([Model::class, 'string']))]
     public string $model;
 
     /**
@@ -360,7 +360,7 @@ final class Params implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaMessageParam> $messages
-     * @param Model1::*|string $model
+     * @param Model::*|string $model
      * @param null|list<BetaRequestMCPServerURLDefinition> $mcpServers
      * @param null|ServiceTier::* $serviceTier
      * @param null|list<string> $stopSequences
@@ -504,7 +504,7 @@ final class Params implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @param Model1::*|string $model
+     * @param Model::*|string $model
      */
     public function withModel(string $model): self
     {

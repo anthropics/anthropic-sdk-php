@@ -8,12 +8,12 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Beta\Messages\MessageCreateParams\System;
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
-use Anthropic\Core\Concerns\Params;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Core\Conversion\UnionOf;
-use Anthropic\Messages\Model as Model1;
+use Anthropic\Messages\Model;
 
 /**
  * Send a structured list of input messages with text and/or image content, and the model will generate the next message in the conversation.
@@ -25,7 +25,7 @@ use Anthropic\Messages\Model as Model1;
  * @phpstan-type create_params = array{
  *   maxTokens: int,
  *   messages: list<BetaMessageParam>,
- *   model: Model1::*|string,
+ *   model: Model::*|string,
  *   container?: string|null,
  *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
  *   metadata?: BetaMetadata,
@@ -43,8 +43,8 @@ use Anthropic\Messages\Model as Model1;
  */
 final class MessageCreateParams implements BaseModel
 {
-    use Model;
-    use Params;
+    use SdkModel;
+    use SdkParams;
 
     /**
      * The maximum number of tokens to generate before stopping.
@@ -132,9 +132,9 @@ final class MessageCreateParams implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var Model1::*|string $model
+     * @var Model::*|string $model
      */
-    #[Api(union: new UnionOf([Model1::class, 'string']))]
+    #[Api(union: new UnionOf([Model::class, 'string']))]
     public string $model;
 
     /**
@@ -344,7 +344,7 @@ final class MessageCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaMessageParam> $messages
-     * @param Model1::*|string $model
+     * @param Model::*|string $model
      * @param null|list<BetaRequestMCPServerURLDefinition> $mcpServers
      * @param null|ServiceTier::* $serviceTier
      * @param null|list<string> $stopSequences
@@ -489,7 +489,7 @@ final class MessageCreateParams implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @param Model1::*|string $model
+     * @param Model::*|string $model
      */
     public function withModel(string $model): self
     {

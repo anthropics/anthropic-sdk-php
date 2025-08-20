@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
@@ -13,7 +13,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  */
 final class ToolUnion implements ConverterSource
 {
-    use Union;
+    use SdkUnion;
 
     /**
      * @return array<string,

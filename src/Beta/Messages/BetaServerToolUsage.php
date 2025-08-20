@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaServerToolUsage implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * The number of web search tool requests.

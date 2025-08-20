@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Shared;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class ErrorResponse implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api]
     public string $type = 'error';

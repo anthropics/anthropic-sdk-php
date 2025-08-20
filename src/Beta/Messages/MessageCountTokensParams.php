@@ -8,12 +8,12 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\MessageCountTokensParams\System;
 use Anthropic\Beta\Messages\MessageCountTokensParams\Tool;
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
-use Anthropic\Core\Concerns\Params;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Core\Conversion\UnionOf;
-use Anthropic\Messages\Model as Model1;
+use Anthropic\Messages\Model;
 
 /**
  * Count the number of tokens in a Message.
@@ -24,7 +24,7 @@ use Anthropic\Messages\Model as Model1;
  *
  * @phpstan-type count_tokens_params = array{
  *   messages: list<BetaMessageParam>,
- *   model: Model1::*|string,
+ *   model: Model::*|string,
  *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
  *   system?: string|list<BetaTextBlockParam>,
  *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
@@ -35,8 +35,8 @@ use Anthropic\Messages\Model as Model1;
  */
 final class MessageCountTokensParams implements BaseModel
 {
-    use Model;
-    use Params;
+    use SdkModel;
+    use SdkParams;
 
     /**
      * Input messages.
@@ -114,9 +114,9 @@ final class MessageCountTokensParams implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var Model1::*|string $model
+     * @var Model::*|string $model
      */
-    #[Api(union: new UnionOf([Model1::class, 'string']))]
+    #[Api(union: new UnionOf([Model::class, 'string']))]
     public string $model;
 
     /**
@@ -262,7 +262,7 @@ final class MessageCountTokensParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaMessageParam> $messages
-     * @param Model1::*|string $model
+     * @param Model::*|string $model
      * @param null|list<BetaRequestMCPServerURLDefinition> $mcpServers
      * @param null|list<BetaTextBlockParam>|string $system
      * @param null|list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
@@ -374,7 +374,7 @@ final class MessageCountTokensParams implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @param Model1::*|string $model
+     * @param Model::*|string $model
      */
     public function withModel(string $model): self
     {

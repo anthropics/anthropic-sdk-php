@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Files\DeletedFile;
 
-use Anthropic\Core\Concerns\Enum;
+use Anthropic\Core\Concerns\SdkEnum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
@@ -16,7 +16,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  */
 final class Type implements ConverterSource
 {
-    use Enum;
+    use SdkEnum;
 
     public const FILE_DELETED = 'file_deleted';
 }

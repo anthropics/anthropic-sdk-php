@@ -6,8 +6,8 @@ namespace Anthropic\Beta\Files;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
-use Anthropic\Core\Concerns\Params;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Core\Conversion\UnionOf;
@@ -24,8 +24,8 @@ use Anthropic\Core\Conversion\UnionOf;
  */
 final class FileListParams implements BaseModel
 {
-    use Model;
-    use Params;
+    use SdkModel;
+    use SdkParams;
 
     /**
      * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.

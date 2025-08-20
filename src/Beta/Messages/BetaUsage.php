@@ -6,7 +6,7 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaUsage\ServiceTier;
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -22,7 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaUsage implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * Breakdown of cached tokens by TTL.

@@ -6,7 +6,7 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaRequestMCPToolResultBlockParam\Content;
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaRequestMCPToolResultBlockParam implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api]
     public string $type = 'mcp_tool_result';

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\ToolResultBlockParam;
 
-use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
@@ -18,7 +18,7 @@ use Anthropic\Messages\ToolResultBlockParam\Content\UnionMember1;
  */
 final class Content implements ConverterSource
 {
-    use Union;
+    use SdkUnion;
 
     /**
      * @return array<string,

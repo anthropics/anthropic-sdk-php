@@ -7,7 +7,7 @@ namespace Anthropic\Beta\Messages\BetaImageBlockParam;
 use Anthropic\Beta\Messages\BetaBase64ImageSource;
 use Anthropic\Beta\Messages\BetaFileImageSource;
 use Anthropic\Beta\Messages\BetaURLImageSource;
-use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
@@ -16,7 +16,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  */
 final class Source implements ConverterSource
 {
-    use Union;
+    use SdkUnion;
 
     public static function discriminator(): string
     {

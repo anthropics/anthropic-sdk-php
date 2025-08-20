@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaOverloadedError implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api]
     public string $type = 'overloaded_error';

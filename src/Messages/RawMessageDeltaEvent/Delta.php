@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Messages\RawMessageDeltaEvent;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\StopReason;
 
@@ -16,7 +16,7 @@ use Anthropic\Messages\StopReason;
  */
 final class Delta implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /** @var StopReason::* $stopReason */
     #[Api('stop_reason', enum: StopReason::class)]

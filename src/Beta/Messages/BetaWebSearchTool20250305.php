@@ -6,7 +6,7 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaWebSearchTool20250305\UserLocation;
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 
@@ -23,7 +23,7 @@ use Anthropic\Core\Conversion\ListOf;
  */
 final class BetaWebSearchTool20250305 implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * Name of the tool.

@@ -7,7 +7,10 @@ namespace Anthropic\Core\Concerns;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\EnumOf;
 
-trait Enum
+/**
+ * @internal
+ */
+trait SdkEnum
 {
     private static Converter $converter;
 

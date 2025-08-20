@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages\MessageCountTokensParams;
 
 use Anthropic\Beta\Messages\BetaTextBlockParam;
-use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
@@ -19,7 +19,7 @@ use Anthropic\Core\Conversion\ListOf;
  */
 final class System implements ConverterSource
 {
-    use Union;
+    use SdkUnion;
 
     /**
      * @return array<string,

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Shared;
 
-use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
@@ -13,7 +13,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  */
 final class ErrorObject implements ConverterSource
 {
-    use Union;
+    use SdkUnion;
 
     public static function discriminator(): string
     {

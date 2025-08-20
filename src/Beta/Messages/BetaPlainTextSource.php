@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaPlainTextSource implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api('media_type')]
     public string $mediaType = 'text/plain';

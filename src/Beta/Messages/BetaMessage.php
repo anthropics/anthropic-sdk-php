@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Core\Conversion\UnionOf;
-use Anthropic\Messages\Model as Model1;
+use Anthropic\Messages\Model;
 
 /**
  * @phpstan-type beta_message_alias = array{
  *   id: string,
  *   container: BetaContainer,
  *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
- *   model: Model1::*|string,
+ *   model: Model::*|string,
  *   role: string,
  *   stopReason: BetaStopReason::*,
  *   stopSequence: string|null,
@@ -26,7 +26,7 @@ use Anthropic\Messages\Model as Model1;
  */
 final class BetaMessage implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * Conversational role of the generated message.
@@ -93,9 +93,9 @@ final class BetaMessage implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var Model1::*|string $model
+     * @var Model::*|string $model
      */
-    #[Api(union: new UnionOf([Model1::class, 'string']))]
+    #[Api(union: new UnionOf([Model::class, 'string']))]
     public string $model;
 
     /**
@@ -179,7 +179,7 @@ final class BetaMessage implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaCodeExecutionToolResultBlock|BetaContainerUploadBlock|BetaMCPToolResultBlock|BetaMCPToolUseBlock|BetaRedactedThinkingBlock|BetaServerToolUseBlock|BetaTextBlock|BetaThinkingBlock|BetaToolUseBlock|BetaWebSearchToolResultBlock> $content
-     * @param Model1::*|string $model
+     * @param Model::*|string $model
      * @param BetaStopReason::* $stopReason
      */
     public static function with(
@@ -268,7 +268,7 @@ final class BetaMessage implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @param Model1::*|string $model
+     * @param Model::*|string $model
      */
     public function withModel(string $model): self
     {

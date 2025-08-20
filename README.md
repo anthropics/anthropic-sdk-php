@@ -55,7 +55,7 @@ $message = $client->messages->create(
 var_dump($message->content);
 ```
 
-## Value Objects
+### Value Objects
 
 It is recommended to use the static `with` constructor `Base64ImageSource::with(data: "U3RhaW5sZXNzIHJvY2tz", ...)`
 and named parameters to initialize value objects.

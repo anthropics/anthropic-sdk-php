@@ -6,7 +6,7 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaServerToolUseBlockParam\Name;
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaServerToolUseBlockParam implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api]
     public string $type = 'server_tool_use';

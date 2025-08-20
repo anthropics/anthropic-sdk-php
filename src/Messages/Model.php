@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Concerns\Enum;
+use Anthropic\Core\Concerns\SdkEnum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
@@ -14,7 +14,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  */
 final class Model implements ConverterSource
 {
-    use Enum;
+    use SdkEnum;
 
     public const CLAUDE_3_7_SONNET_LATEST = 'claude-3-7-sonnet-latest';
 

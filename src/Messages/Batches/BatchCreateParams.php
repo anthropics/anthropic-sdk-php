@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Messages\Batches;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
-use Anthropic\Core\Concerns\Params;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
@@ -22,8 +22,8 @@ use Anthropic\Messages\Batches\BatchCreateParams\Request;
  */
 final class BatchCreateParams implements BaseModel
 {
-    use Model;
-    use Params;
+    use SdkModel;
+    use SdkParams;
 
     /**
      * List of requests for prompt completion. Each is an individual request to create a Message.

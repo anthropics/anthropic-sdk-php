@@ -7,7 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Beta\Messages\BetaTool\InputSchema;
 use Anthropic\Beta\Messages\BetaTool\Type;
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -21,7 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaTool implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * [JSON schema](https://json-schema.org/draft/2020-12) for this tool's input.

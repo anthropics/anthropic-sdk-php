@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Batches\BatchCreateParams\Request\Params;
 
-use Anthropic\Core\Concerns\Enum;
+use Anthropic\Core\Concerns\SdkEnum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
@@ -16,7 +16,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  */
 final class ServiceTier implements ConverterSource
 {
-    use Enum;
+    use SdkEnum;
 
     public const AUTO = 'auto';
 

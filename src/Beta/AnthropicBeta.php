@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta;
 
-use Anthropic\Core\Concerns\Enum;
+use Anthropic\Core\Concerns\SdkEnum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
@@ -12,7 +12,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  */
 final class AnthropicBeta implements ConverterSource
 {
-    use Enum;
+    use SdkEnum;
 
     public const MESSAGE_BATCHES_2024_09_24 = 'message-batches-2024-09-24';
 

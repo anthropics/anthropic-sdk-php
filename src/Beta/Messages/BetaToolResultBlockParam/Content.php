@@ -8,7 +8,7 @@ use Anthropic\Beta\Messages\BetaImageBlockParam;
 use Anthropic\Beta\Messages\BetaSearchResultBlockParam;
 use Anthropic\Beta\Messages\BetaTextBlockParam;
 use Anthropic\Beta\Messages\BetaToolResultBlockParam\Content\UnionMember1;
-use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
@@ -18,7 +18,7 @@ use Anthropic\Core\Conversion\ListOf;
  */
 final class Content implements ConverterSource
 {
-    use Union;
+    use SdkUnion;
 
     /**
      * @return array<string,

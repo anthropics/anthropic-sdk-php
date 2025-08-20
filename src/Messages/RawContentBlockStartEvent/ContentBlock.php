@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\RawContentBlockStartEvent;
 
-use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Messages\RedactedThinkingBlock;
@@ -19,7 +19,7 @@ use Anthropic\Messages\WebSearchToolResultBlock;
  */
 final class ContentBlock implements ConverterSource
 {
-    use Union;
+    use SdkUnion;
 
     public static function discriminator(): string
     {

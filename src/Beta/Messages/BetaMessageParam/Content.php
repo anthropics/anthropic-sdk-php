@@ -19,7 +19,7 @@ use Anthropic\Beta\Messages\BetaThinkingBlockParam;
 use Anthropic\Beta\Messages\BetaToolResultBlockParam;
 use Anthropic\Beta\Messages\BetaToolUseBlockParam;
 use Anthropic\Beta\Messages\BetaWebSearchToolResultBlockParam;
-use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
@@ -29,7 +29,7 @@ use Anthropic\Core\Conversion\ListOf;
  */
 final class Content implements ConverterSource
 {
-    use Union;
+    use SdkUnion;
 
     /**
      * @return array<string,

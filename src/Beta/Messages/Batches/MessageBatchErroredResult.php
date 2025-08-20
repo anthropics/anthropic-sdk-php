@@ -6,7 +6,7 @@ namespace Anthropic\Beta\Messages\Batches;
 
 use Anthropic\Beta\BetaErrorResponse;
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class MessageBatchErroredResult implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api]
     public string $type = 'errored';

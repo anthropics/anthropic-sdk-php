@@ -15,7 +15,7 @@ use Anthropic\Beta\Messages\BetaToolTextEditor20250124;
 use Anthropic\Beta\Messages\BetaToolTextEditor20250429;
 use Anthropic\Beta\Messages\BetaToolTextEditor20250728;
 use Anthropic\Beta\Messages\BetaWebSearchTool20250305;
-use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
@@ -24,7 +24,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  */
 final class Tool implements ConverterSource
 {
-    use Union;
+    use SdkUnion;
 
     /**
      * @return array<string,

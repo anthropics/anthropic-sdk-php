@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\DocumentBlockParam;
 
-use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Messages\Base64PDFSource;
@@ -17,7 +17,7 @@ use Anthropic\Messages\URLPDFSource;
  */
 final class Source implements ConverterSource
 {
-    use Union;
+    use SdkUnion;
 
     public static function discriminator(): string
     {

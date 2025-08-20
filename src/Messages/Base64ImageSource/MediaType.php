@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Base64ImageSource;
 
-use Anthropic\Core\Concerns\Enum;
+use Anthropic\Core\Concerns\SdkEnum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
@@ -12,7 +12,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  */
 final class MediaType implements ConverterSource
 {
-    use Enum;
+    use SdkEnum;
 
     public const IMAGE_JPEG = 'image/jpeg';
 

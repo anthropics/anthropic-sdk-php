@@ -6,7 +6,7 @@ namespace Anthropic\Beta\Messages\Batches\BatchCreateParams;
 
 use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params;
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class Request implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * Developer-provided ID created for each request in a Message Batch. Useful for matching results to requests, as results may be given out of request order.

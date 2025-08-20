@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Messages\Batches;
 
 use Anthropic\Core\Attributes\Api;
-use Anthropic\Core\Concerns\Model;
+use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
@@ -18,7 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class MessageBatchIndividualResponse implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * Developer-provided ID created for each request in a Message Batch. Useful for matching results to requests, as results may be given out of request order.

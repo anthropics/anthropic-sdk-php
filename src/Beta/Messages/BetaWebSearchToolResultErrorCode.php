@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Concerns\Enum;
+use Anthropic\Core\Concerns\SdkEnum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
@@ -12,7 +12,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  */
 final class BetaWebSearchToolResultErrorCode implements ConverterSource
 {
-    use Enum;
+    use SdkEnum;
 
     public const INVALID_TOOL_INPUT = 'invalid_tool_input';
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Core\Pagination;
 
 use Anthropic\Core\BaseClient;
-use Anthropic\Core\Concerns\Page;
+use Anthropic\Core\Contracts\BasePage;
 use Anthropic\Errors\Error;
 use Psr\Http\Message\ResponseInterface;
 
@@ -16,7 +16,7 @@ use Psr\Http\Message\ResponseInterface;
  *
  * @implements \IteratorAggregate<Item>
  */
-abstract class AbstractPage implements \IteratorAggregate, Page
+abstract class AbstractPage implements \IteratorAggregate, BasePage
 {
     public function __construct(
         protected BaseClient $client,

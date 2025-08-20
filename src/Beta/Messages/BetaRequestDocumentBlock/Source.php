@@ -9,7 +9,7 @@ use Anthropic\Beta\Messages\BetaContentBlockSource;
 use Anthropic\Beta\Messages\BetaFileDocumentSource;
 use Anthropic\Beta\Messages\BetaPlainTextSource;
 use Anthropic\Beta\Messages\BetaURLPDFSource;
-use Anthropic\Core\Concerns\Union;
+use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
@@ -18,7 +18,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  */
 final class Source implements ConverterSource
 {
-    use Union;
+    use SdkUnion;
 
     public static function discriminator(): string
     {
