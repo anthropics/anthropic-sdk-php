@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic;
 
-use Anthropic\Beta\BetaService;
 use Anthropic\Core\BaseClient;
-use Anthropic\Messages\MessagesService;
-use Anthropic\Models\ModelsService;
+use Anthropic\Services\BetaService;
+use Anthropic\Services\MessagesService;
+use Anthropic\Services\ModelsService;
 
 class Client extends BaseClient
 {

@@ -2,10 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Messages\Batches;
+namespace Anthropic\Services\Beta\Messages;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Messages\Batches\BatchCancelParams;
+use Anthropic\Beta\Messages\Batches\BatchCreateParams;
 use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request;
+use Anthropic\Beta\Messages\Batches\BatchDeleteParams;
+use Anthropic\Beta\Messages\Batches\BatchListParams;
+use Anthropic\Beta\Messages\Batches\BatchResultsParams;
+use Anthropic\Beta\Messages\Batches\BatchRetrieveParams;
+use Anthropic\Beta\Messages\Batches\DeletedMessageBatch;
+use Anthropic\Beta\Messages\Batches\MessageBatch;
+use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Client;
 use Anthropic\Contracts\Beta\Messages\BatchesContract;
 use Anthropic\Core\Contracts\CloseableStream;
@@ -33,8 +42,10 @@ final class BatchesService implements BatchesContract
         $betas = null,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
+        $args = ['requests' => $requests, 'betas' => $betas];
+        $args = Util::array_filter_null($args, ['betas']);
         [$parsed, $options] = BatchCreateParams::parseRequest(
-            ['requests' => $requests, 'betas' => $betas],
+            $args,
             $requestOptions
         );
         $header_params = ['betas' => 'anthropic-beta'];
@@ -68,8 +79,10 @@ final class BatchesService implements BatchesContract
         $betas = null,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch {
+        $args = ['betas' => $betas];
+        $args = Util::array_filter_null($args, ['betas']);
         [$parsed, $options] = BatchRetrieveParams::parseRequest(
-            ['betas' => $betas],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(
@@ -108,15 +121,17 @@ final class BatchesService implements BatchesContract
         $betas = null,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch {
-        [$parsed, $options] = BatchListParams::parseRequest(
-            [
-                'afterID' => $afterID,
-                'beforeID' => $beforeID,
-                'limit' => $limit,
-                'betas' => $betas,
-            ],
-            $requestOptions,
+        $args = [
+            'afterID' => $afterID,
+            'beforeID' => $beforeID,
+            'limit' => $limit,
+            'betas' => $betas,
+        ];
+        $args = Util::array_filter_null(
+            $args,
+            ['afterID', 'beforeID', 'limit', 'betas']
         );
+        [$parsed, $options] = BatchListParams::parseRequest($args, $requestOptions);
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
 
         /** @var array<string, string> */
@@ -153,8 +168,10 @@ final class BatchesService implements BatchesContract
         $betas = null,
         ?RequestOptions $requestOptions = null,
     ): DeletedMessageBatch {
+        $args = ['betas' => $betas];
+        $args = Util::array_filter_null($args, ['betas']);
         [$parsed, $options] = BatchDeleteParams::parseRequest(
-            ['betas' => $betas],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(
@@ -188,8 +205,10 @@ final class BatchesService implements BatchesContract
         $betas = null,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch {
+        $args = ['betas' => $betas];
+        $args = Util::array_filter_null($args, ['betas']);
         [$parsed, $options] = BatchCancelParams::parseRequest(
-            ['betas' => $betas],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(
@@ -223,8 +242,10 @@ final class BatchesService implements BatchesContract
         $betas = null,
         ?RequestOptions $requestOptions = null,
     ): MessageBatchIndividualResponse {
+        $args = ['betas' => $betas];
+        $args = Util::array_filter_null($args, ['betas']);
         [$parsed, $options] = BatchResultsParams::parseRequest(
-            ['betas' => $betas],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(
@@ -257,8 +278,10 @@ final class BatchesService implements BatchesContract
         $betas = null,
         ?RequestOptions $requestOptions = null,
     ): CloseableStream {
+        $args = ['betas' => $betas];
+        $args = Util::array_filter_null($args, ['betas']);
         [$parsed, $options] = BatchResultsParams::parseRequest(
-            ['betas' => $betas],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(

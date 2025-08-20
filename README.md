@@ -51,7 +51,6 @@ $message = $client->messages->create(
   messages: [MessageParam::with(role: "user", content: "Hello, Claude")],
   model: "claude-sonnet-4-20250514",
 );
-
 var_dump($message->content);
 ```
 

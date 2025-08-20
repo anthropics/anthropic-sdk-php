@@ -2,13 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Models;
+namespace Anthropic\Services;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
-use Anthropic\Contracts\Beta\ModelsContract;
+use Anthropic\Contracts\ModelsContract;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Util;
+use Anthropic\Models\ModelInfo;
+use Anthropic\Models\ModelListParams;
+use Anthropic\Models\ModelRetrieveParams;
 use Anthropic\RequestOptions;
 
 final class ModelsService implements ModelsContract
@@ -26,14 +29,16 @@ final class ModelsService implements ModelsContract
         string $modelID,
         $betas = null,
         ?RequestOptions $requestOptions = null
-    ): BetaModelInfo {
+    ): ModelInfo {
+        $args = ['betas' => $betas];
+        $args = Util::array_filter_null($args, ['betas']);
         [$parsed, $options] = ModelRetrieveParams::parseRequest(
-            ['betas' => $betas],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(
             method: 'get',
-            path: ['v1/models/%1$s?beta=true', $modelID],
+            path: ['v1/models/%1$s', $modelID],
             headers: Util::array_transform_keys(
                 $parsed,
                 ['betas' => 'anthropic-beta']
@@ -42,7 +47,7 @@ final class ModelsService implements ModelsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Conversion::coerce(BetaModelInfo::class, value: $resp);
+        return Conversion::coerce(ModelInfo::class, value: $resp);
     }
 
     /**
@@ -63,23 +68,25 @@ final class ModelsService implements ModelsContract
         $limit = null,
         $betas = null,
         ?RequestOptions $requestOptions = null,
-    ): BetaModelInfo {
-        [$parsed, $options] = ModelListParams::parseRequest(
-            [
-                'afterID' => $afterID,
-                'beforeID' => $beforeID,
-                'limit' => $limit,
-                'betas' => $betas,
-            ],
-            $requestOptions,
+    ): ModelInfo {
+        $args = [
+            'afterID' => $afterID,
+            'beforeID' => $beforeID,
+            'limit' => $limit,
+            'betas' => $betas,
+        ];
+        $args = Util::array_filter_null(
+            $args,
+            ['afterID', 'beforeID', 'limit', 'betas']
         );
+        [$parsed, $options] = ModelListParams::parseRequest($args, $requestOptions);
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
 
         /** @var array<string, string> */
         $header_params = array_diff_key($parsed, $query_params);
         $resp = $this->client->request(
             method: 'get',
-            path: 'v1/models?beta=true',
+            path: 'v1/models',
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -89,6 +96,6 @@ final class ModelsService implements ModelsContract
         );
 
         // @phpstan-ignore-next-line;
-        return Conversion::coerce(BetaModelInfo::class, value: $resp);
+        return Conversion::coerce(ModelInfo::class, value: $resp);
     }
 }

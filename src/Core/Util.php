@@ -350,6 +350,23 @@ final class Util
     }
 
     /**
+     * @param array<string, mixed> $arr
+     * @param list<string> $keys
+     *
+     * @return array<string, mixed>
+     */
+    public static function array_filter_null(array $arr, array $keys): array
+    {
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $arr) && is_null($arr[$key])) {
+                unset($arr[$key]);
+            }
+        }
+
+        return $arr;
+    }
+
+    /**
      * @param list<callable> $closing
      *
      * @return \Generator<string>

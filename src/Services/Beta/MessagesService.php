@@ -2,16 +2,51 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Messages;
+namespace Anthropic\Services\Beta;
 
+use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Messages\BetaCodeExecutionTool20250522;
+use Anthropic\Beta\Messages\BetaMessage;
+use Anthropic\Beta\Messages\BetaMessageParam;
+use Anthropic\Beta\Messages\BetaMessageTokensCount;
+use Anthropic\Beta\Messages\BetaMetadata;
+use Anthropic\Beta\Messages\BetaRawContentBlockDeltaEvent;
+use Anthropic\Beta\Messages\BetaRawContentBlockStartEvent;
+use Anthropic\Beta\Messages\BetaRawContentBlockStopEvent;
+use Anthropic\Beta\Messages\BetaRawMessageDeltaEvent;
+use Anthropic\Beta\Messages\BetaRawMessageStartEvent;
+use Anthropic\Beta\Messages\BetaRawMessageStopEvent;
+use Anthropic\Beta\Messages\BetaRawMessageStreamEvent;
+use Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition;
+use Anthropic\Beta\Messages\BetaTextBlockParam;
+use Anthropic\Beta\Messages\BetaThinkingConfigDisabled;
+use Anthropic\Beta\Messages\BetaThinkingConfigEnabled;
+use Anthropic\Beta\Messages\BetaTool;
+use Anthropic\Beta\Messages\BetaToolBash20241022;
+use Anthropic\Beta\Messages\BetaToolBash20250124;
+use Anthropic\Beta\Messages\BetaToolChoiceAny;
+use Anthropic\Beta\Messages\BetaToolChoiceAuto;
+use Anthropic\Beta\Messages\BetaToolChoiceNone;
+use Anthropic\Beta\Messages\BetaToolChoiceTool;
+use Anthropic\Beta\Messages\BetaToolComputerUse20241022;
+use Anthropic\Beta\Messages\BetaToolComputerUse20250124;
+use Anthropic\Beta\Messages\BetaToolTextEditor20241022;
+use Anthropic\Beta\Messages\BetaToolTextEditor20250124;
+use Anthropic\Beta\Messages\BetaToolTextEditor20250429;
+use Anthropic\Beta\Messages\BetaToolTextEditor20250728;
+use Anthropic\Beta\Messages\BetaWebSearchTool20250305;
+use Anthropic\Beta\Messages\MessageCountTokensParams;
+use Anthropic\Beta\Messages\MessageCreateParams;
+use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Client;
-use Anthropic\Contracts\MessagesContract;
+use Anthropic\Contracts\Beta\MessagesContract;
 use Anthropic\Core\Contracts\CloseableStream;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Streaming\SSEStream;
-use Anthropic\Messages\Batches\BatchesService;
-use Anthropic\Messages\MessageCreateParams\ServiceTier;
+use Anthropic\Core\Util;
+use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
+use Anthropic\Services\Beta\Messages\BatchesService;
 
 final class MessagesService implements MessagesContract
 {
@@ -34,7 +69,7 @@ final class MessagesService implements MessagesContract
      * Note that our models may stop _before_ reaching this maximum. This parameter only specifies the absolute maximum number of tokens to generate.
      *
      * Different models have different maximum values for this parameter.  See [models](https://docs.anthropic.com/en/docs/models-overview) for details.
-     * @param list<MessageParam> $messages Input messages.
+     * @param list<BetaMessageParam> $messages Input messages.
      *
      * Our models are trained to operate on alternating `user` and `assistant` conversational turns. When creating a new `Message`, you specify the prior conversational turns with the `messages` parameter, and the model then generates the next `Message` in the conversation. Consecutive `user` or `assistant` turns in your request will be combined into a single turn.
      *
@@ -101,7 +136,9 @@ final class MessagesService implements MessagesContract
      *
      * There is a limit of 100,000 messages in a single request.
      * @param Model::*|string $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
-     * @param Metadata $metadata an object describing metadata about the request
+     * @param null|string $container container identifier for reuse across requests
+     * @param list<BetaRequestMCPServerURLDefinition> $mcpServers MCP servers to be utilized in this request
+     * @param BetaMetadata $metadata an object describing metadata about the request
      * @param ServiceTier::* $serviceTier Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.anthropic.com/en/api/service-tiers) for details.
@@ -110,7 +147,7 @@ final class MessagesService implements MessagesContract
      * Our models will normally stop when they have naturally completed their turn, which will result in a response `stop_reason` of `"end_turn"`.
      *
      * If you want the model to stop generating when it encounters custom strings of text, you can use the `stop_sequences` parameter. If the model encounters one of the custom sequences, the response `stop_reason` value will be `"stop_sequence"` and the response `stop_sequence` value will contain the matched stop sequence.
-     * @param list<TextBlockParam>|string $system System prompt.
+     * @param list<BetaTextBlockParam>|string $system System prompt.
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.anthropic.com/en/docs/system-prompts).
      * @param float $temperature Amount of randomness injected into the response.
@@ -118,13 +155,13 @@ final class MessagesService implements MessagesContract
      * Defaults to `1.0`. Ranges from `0.0` to `1.0`. Use `temperature` closer to `0.0` for analytical / multiple choice, and closer to `1.0` for creative and generative tasks.
      *
      * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
-     * @param ThinkingConfigDisabled|ThinkingConfigEnabled $thinking Configuration for enabling Claude's extended thinking.
+     * @param BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking Configuration for enabling Claude's extended thinking.
      *
      * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
      *
      * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
-     * @param ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
-     * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools Definitions of tools that the model may use.
+     * @param BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
+     * @param list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools Definitions of tools that the model may use.
      *
      * If you include `tools` in your API request, the model may return `tool_use` content blocks that represent the model's use of those tools. You can then run those tools using the tool input generated by the model and then optionally return results back to the model using `tool_result` content blocks.
      *
@@ -195,11 +232,14 @@ final class MessagesService implements MessagesContract
      * In nucleus sampling, we compute the cumulative distribution over all the options for each subsequent token in decreasing probability order and cut it off once it reaches a particular probability specified by `top_p`. You should either alter `temperature` or `top_p`, but not both.
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
+     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function create(
         $maxTokens,
         $messages,
         $model,
+        $container = null,
+        $mcpServers = null,
         $metadata = null,
         $serviceTier = null,
         $stopSequences = null,
@@ -210,35 +250,63 @@ final class MessagesService implements MessagesContract
         $tools = null,
         $topK = null,
         $topP = null,
+        $betas = null,
         ?RequestOptions $requestOptions = null,
-    ): Message {
-        [$parsed, $options] = MessageCreateParams::parseRequest(
+    ): BetaMessage {
+        $args = [
+            'maxTokens' => $maxTokens,
+            'messages' => $messages,
+            'model' => $model,
+            'container' => $container,
+            'mcpServers' => $mcpServers,
+            'metadata' => $metadata,
+            'serviceTier' => $serviceTier,
+            'stopSequences' => $stopSequences,
+            'system' => $system,
+            'temperature' => $temperature,
+            'thinking' => $thinking,
+            'toolChoice' => $toolChoice,
+            'tools' => $tools,
+            'topK' => $topK,
+            'topP' => $topP,
+            'betas' => $betas,
+        ];
+        $args = Util::array_filter_null(
+            $args,
             [
-                'maxTokens' => $maxTokens,
-                'messages' => $messages,
-                'model' => $model,
-                'metadata' => $metadata,
-                'serviceTier' => $serviceTier,
-                'stopSequences' => $stopSequences,
-                'system' => $system,
-                'temperature' => $temperature,
-                'thinking' => $thinking,
-                'toolChoice' => $toolChoice,
-                'tools' => $tools,
-                'topK' => $topK,
-                'topP' => $topP,
+                'container',
+                'mcpServers',
+                'metadata',
+                'serviceTier',
+                'stopSequences',
+                'system',
+                'temperature',
+                'thinking',
+                'toolChoice',
+                'tools',
+                'topK',
+                'topP',
+                'betas',
             ],
-            $requestOptions,
         );
+        [$parsed, $options] = MessageCreateParams::parseRequest(
+            $args,
+            $requestOptions
+        );
+        $header_params = ['betas' => 'anthropic-beta'];
         $resp = $this->client->request(
             method: 'post',
-            path: 'v1/messages',
-            body: (object) $parsed,
+            path: 'v1/messages?beta=true',
+            headers: Util::array_transform_keys(
+                array_intersect_key($parsed, array_keys($header_params)),
+                $header_params
+            ),
+            body: (object) array_diff_key($parsed, array_keys($header_params)),
             options: array_merge(['timeout' => 600], $options),
         );
 
         // @phpstan-ignore-next-line;
-        return Conversion::coerce(Message::class, value: $resp);
+        return Conversion::coerce(BetaMessage::class, value: $resp);
     }
 
     /**
@@ -247,7 +315,7 @@ final class MessagesService implements MessagesContract
      * Note that our models may stop _before_ reaching this maximum. This parameter only specifies the absolute maximum number of tokens to generate.
      *
      * Different models have different maximum values for this parameter.  See [models](https://docs.anthropic.com/en/docs/models-overview) for details.
-     * @param list<MessageParam> $messages Input messages.
+     * @param list<BetaMessageParam> $messages Input messages.
      *
      * Our models are trained to operate on alternating `user` and `assistant` conversational turns. When creating a new `Message`, you specify the prior conversational turns with the `messages` parameter, and the model then generates the next `Message` in the conversation. Consecutive `user` or `assistant` turns in your request will be combined into a single turn.
      *
@@ -314,7 +382,9 @@ final class MessagesService implements MessagesContract
      *
      * There is a limit of 100,000 messages in a single request.
      * @param Model::*|string $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
-     * @param Metadata $metadata an object describing metadata about the request
+     * @param null|string $container container identifier for reuse across requests
+     * @param list<BetaRequestMCPServerURLDefinition> $mcpServers MCP servers to be utilized in this request
+     * @param BetaMetadata $metadata an object describing metadata about the request
      * @param ServiceTier::* $serviceTier Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.anthropic.com/en/api/service-tiers) for details.
@@ -323,7 +393,7 @@ final class MessagesService implements MessagesContract
      * Our models will normally stop when they have naturally completed their turn, which will result in a response `stop_reason` of `"end_turn"`.
      *
      * If you want the model to stop generating when it encounters custom strings of text, you can use the `stop_sequences` parameter. If the model encounters one of the custom sequences, the response `stop_reason` value will be `"stop_sequence"` and the response `stop_sequence` value will contain the matched stop sequence.
-     * @param list<TextBlockParam>|string $system System prompt.
+     * @param list<BetaTextBlockParam>|string $system System prompt.
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.anthropic.com/en/docs/system-prompts).
      * @param float $temperature Amount of randomness injected into the response.
@@ -331,13 +401,13 @@ final class MessagesService implements MessagesContract
      * Defaults to `1.0`. Ranges from `0.0` to `1.0`. Use `temperature` closer to `0.0` for analytical / multiple choice, and closer to `1.0` for creative and generative tasks.
      *
      * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
-     * @param ThinkingConfigDisabled|ThinkingConfigEnabled $thinking Configuration for enabling Claude's extended thinking.
+     * @param BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking Configuration for enabling Claude's extended thinking.
      *
      * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
      *
      * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
-     * @param ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
-     * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools Definitions of tools that the model may use.
+     * @param BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
+     * @param list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools Definitions of tools that the model may use.
      *
      * If you include `tools` in your API request, the model may return `tool_use` content blocks that represent the model's use of those tools. You can then run those tools using the tool input generated by the model and then optionally return results back to the model using `tool_result` content blocks.
      *
@@ -408,15 +478,18 @@ final class MessagesService implements MessagesContract
      * In nucleus sampling, we compute the cumulative distribution over all the options for each subsequent token in decreasing probability order and cut it off once it reaches a particular probability specified by `top_p`. You should either alter `temperature` or `top_p`, but not both.
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
+     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      *
      * @return CloseableStream<
-     *   RawContentBlockDeltaEvent|RawContentBlockStartEvent|RawContentBlockStopEvent|RawMessageDeltaEvent|RawMessageStartEvent|RawMessageStopEvent,
+     *   BetaRawContentBlockDeltaEvent|BetaRawContentBlockStartEvent|BetaRawContentBlockStopEvent|BetaRawMessageDeltaEvent|BetaRawMessageStartEvent|BetaRawMessageStopEvent,
      * >
      */
     public function createStream(
         $maxTokens,
         $messages,
         $model,
+        $container = null,
+        $mcpServers = null,
         $metadata = null,
         $serviceTier = null,
         $stopSequences = null,
@@ -427,36 +500,64 @@ final class MessagesService implements MessagesContract
         $tools = null,
         $topK = null,
         $topP = null,
+        $betas = null,
         ?RequestOptions $requestOptions = null,
     ): CloseableStream {
-        [$parsed, $options] = MessageCreateParams::parseRequest(
+        $args = [
+            'maxTokens' => $maxTokens,
+            'messages' => $messages,
+            'model' => $model,
+            'container' => $container,
+            'mcpServers' => $mcpServers,
+            'metadata' => $metadata,
+            'serviceTier' => $serviceTier,
+            'stopSequences' => $stopSequences,
+            'system' => $system,
+            'temperature' => $temperature,
+            'thinking' => $thinking,
+            'toolChoice' => $toolChoice,
+            'tools' => $tools,
+            'topK' => $topK,
+            'topP' => $topP,
+            'betas' => $betas,
+        ];
+        $args = Util::array_filter_null(
+            $args,
             [
-                'maxTokens' => $maxTokens,
-                'messages' => $messages,
-                'model' => $model,
-                'metadata' => $metadata,
-                'serviceTier' => $serviceTier,
-                'stopSequences' => $stopSequences,
-                'system' => $system,
-                'temperature' => $temperature,
-                'thinking' => $thinking,
-                'toolChoice' => $toolChoice,
-                'tools' => $tools,
-                'topK' => $topK,
-                'topP' => $topP,
+                'container',
+                'mcpServers',
+                'metadata',
+                'serviceTier',
+                'stopSequences',
+                'system',
+                'temperature',
+                'thinking',
+                'toolChoice',
+                'tools',
+                'topK',
+                'topP',
+                'betas',
             ],
-            $requestOptions,
+        );
+        [$parsed, $options] = MessageCreateParams::parseRequest(
+            $args,
+            $requestOptions
         );
         $parsed['stream'] = true;
+        $header_params = ['betas' => 'anthropic-beta'];
         $resp = $this->client->request(
             method: 'post',
-            path: 'v1/messages',
-            body: (object) $parsed,
+            path: 'v1/messages?beta=true',
+            headers: Util::array_transform_keys(
+                array_intersect_key($parsed, array_keys($header_params)),
+                $header_params
+            ),
+            body: (object) array_diff_key($parsed, array_keys($header_params)),
             options: array_merge(['timeout' => 600], $options),
         );
 
         // @phpstan-ignore-next-line;
-        return new SSEStream(RawMessageStreamEvent::class, $resp);
+        return new SSEStream(BetaRawMessageStreamEvent::class, $resp);
     }
 
     /**
@@ -466,7 +567,7 @@ final class MessagesService implements MessagesContract
      *
      * Learn more about token counting in our [user guide](/en/docs/build-with-claude/token-counting)
      *
-     * @param list<MessageParam> $messages Input messages.
+     * @param list<BetaMessageParam> $messages Input messages.
      *
      * Our models are trained to operate on alternating `user` and `assistant` conversational turns. When creating a new `Message`, you specify the prior conversational turns with the `messages` parameter, and the model then generates the next `Message` in the conversation. Consecutive `user` or `assistant` turns in your request will be combined into a single turn.
      *
@@ -533,16 +634,17 @@ final class MessagesService implements MessagesContract
      *
      * There is a limit of 100,000 messages in a single request.
      * @param Model::*|string $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
-     * @param list<TextBlockParam>|string $system System prompt.
+     * @param list<BetaRequestMCPServerURLDefinition> $mcpServers MCP servers to be utilized in this request
+     * @param list<BetaTextBlockParam>|string $system System prompt.
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.anthropic.com/en/docs/system-prompts).
-     * @param ThinkingConfigDisabled|ThinkingConfigEnabled $thinking Configuration for enabling Claude's extended thinking.
+     * @param BetaThinkingConfigDisabled|BetaThinkingConfigEnabled $thinking Configuration for enabling Claude's extended thinking.
      *
      * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
      *
      * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
-     * @param ToolChoiceAny|ToolChoiceAuto|ToolChoiceNone|ToolChoiceTool $toolChoice How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
-     * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools Definitions of tools that the model may use.
+     * @param BetaToolChoiceAny|BetaToolChoiceAuto|BetaToolChoiceNone|BetaToolChoiceTool $toolChoice How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
+     * @param list<BetaCodeExecutionTool20250522|BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools Definitions of tools that the model may use.
      *
      * If you include `tools` in your API request, the model may return `tool_use` content blocks that represent the model's use of those tools. You can then run those tools using the tool input generated by the model and then optionally return results back to the model using `tool_result` content blocks.
      *
@@ -603,35 +705,50 @@ final class MessagesService implements MessagesContract
      * Tools can be used for workflows that include running client-side tools and functions, or more generally whenever you want the model to produce a particular JSON structure of output.
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
+     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function countTokens(
         $messages,
         $model,
+        $mcpServers = null,
         $system = null,
         $thinking = null,
         $toolChoice = null,
         $tools = null,
+        $betas = null,
         ?RequestOptions $requestOptions = null,
-    ): MessageTokensCount {
-        [$parsed, $options] = MessageCountTokensParams::parseRequest(
-            [
-                'messages' => $messages,
-                'model' => $model,
-                'system' => $system,
-                'thinking' => $thinking,
-                'toolChoice' => $toolChoice,
-                'tools' => $tools,
-            ],
-            $requestOptions,
+    ): BetaMessageTokensCount {
+        $args = [
+            'messages' => $messages,
+            'model' => $model,
+            'mcpServers' => $mcpServers,
+            'system' => $system,
+            'thinking' => $thinking,
+            'toolChoice' => $toolChoice,
+            'tools' => $tools,
+            'betas' => $betas,
+        ];
+        $args = Util::array_filter_null(
+            $args,
+            ['mcpServers', 'system', 'thinking', 'toolChoice', 'tools', 'betas'],
         );
+        [$parsed, $options] = MessageCountTokensParams::parseRequest(
+            $args,
+            $requestOptions
+        );
+        $header_params = ['betas' => 'anthropic-beta'];
         $resp = $this->client->request(
             method: 'post',
-            path: 'v1/messages/count_tokens',
-            body: (object) $parsed,
+            path: 'v1/messages/count_tokens?beta=true',
+            headers: Util::array_transform_keys(
+                array_intersect_key($parsed, array_keys($header_params)),
+                $header_params
+            ),
+            body: (object) array_diff_key($parsed, array_keys($header_params)),
             options: $options,
         );
 
         // @phpstan-ignore-next-line;
-        return Conversion::coerce(MessageTokensCount::class, value: $resp);
+        return Conversion::coerce(BetaMessageTokensCount::class, value: $resp);
     }
 }

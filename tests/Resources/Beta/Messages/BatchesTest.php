@@ -147,7 +147,6 @@ final class BatchesTest extends TestCase
                         ->withTopP(0.7),
                 ),
             ],
-            betas: ['string'],
         );
 
         $this->assertTrue(true); // @phpstan-ignore-line

@@ -2,9 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Files;
+namespace Anthropic\Services\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Files\DeletedFile;
+use Anthropic\Beta\Files\FileDeleteParams;
+use Anthropic\Beta\Files\FileListParams;
+use Anthropic\Beta\Files\FileMetadata;
+use Anthropic\Beta\Files\FileRetrieveMetadataParams;
 use Anthropic\Client;
 use Anthropic\Contracts\Beta\FilesContract;
 use Anthropic\Core\Conversion;
@@ -32,15 +37,17 @@ final class FilesService implements FilesContract
         $betas = null,
         ?RequestOptions $requestOptions = null,
     ): FileMetadata {
-        [$parsed, $options] = FileListParams::parseRequest(
-            [
-                'afterID' => $afterID,
-                'beforeID' => $beforeID,
-                'limit' => $limit,
-                'betas' => $betas,
-            ],
-            $requestOptions,
+        $args = [
+            'afterID' => $afterID,
+            'beforeID' => $beforeID,
+            'limit' => $limit,
+            'betas' => $betas,
+        ];
+        $args = Util::array_filter_null(
+            $args,
+            ['afterID', 'beforeID', 'limit', 'betas']
         );
+        [$parsed, $options] = FileListParams::parseRequest($args, $requestOptions);
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
 
         /** @var array<string, string> */
@@ -73,8 +80,10 @@ final class FilesService implements FilesContract
         $betas = null,
         ?RequestOptions $requestOptions = null
     ): DeletedFile {
+        $args = ['betas' => $betas];
+        $args = Util::array_filter_null($args, ['betas']);
         [$parsed, $options] = FileDeleteParams::parseRequest(
-            ['betas' => $betas],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(
@@ -104,8 +113,10 @@ final class FilesService implements FilesContract
         $betas = null,
         ?RequestOptions $requestOptions = null
     ): FileMetadata {
+        $args = ['betas' => $betas];
+        $args = Util::array_filter_null($args, ['betas']);
         [$parsed, $options] = FileRetrieveMetadataParams::parseRequest(
-            ['betas' => $betas],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(

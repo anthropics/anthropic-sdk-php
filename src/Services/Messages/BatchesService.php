@@ -2,14 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Messages\Batches;
+namespace Anthropic\Services\Messages;
 
 use Anthropic\Client;
 use Anthropic\Contracts\Messages\BatchesContract;
 use Anthropic\Core\Contracts\CloseableStream;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Streaming\SSEStream;
+use Anthropic\Core\Util;
+use Anthropic\Messages\Batches\BatchCreateParams;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
+use Anthropic\Messages\Batches\BatchListParams;
+use Anthropic\Messages\Batches\DeletedMessageBatch;
+use Anthropic\Messages\Batches\MessageBatch;
+use Anthropic\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\RequestOptions;
 
 final class BatchesService implements BatchesContract
@@ -29,8 +35,9 @@ final class BatchesService implements BatchesContract
         $requests,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
+        $args = ['requests' => $requests];
         [$parsed, $options] = BatchCreateParams::parseRequest(
-            ['requests' => $requests],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(
@@ -80,10 +87,9 @@ final class BatchesService implements BatchesContract
         $limit = null,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch {
-        [$parsed, $options] = BatchListParams::parseRequest(
-            ['afterID' => $afterID, 'beforeID' => $beforeID, 'limit' => $limit],
-            $requestOptions,
-        );
+        $args = ['afterID' => $afterID, 'beforeID' => $beforeID, 'limit' => $limit];
+        $args = Util::array_filter_null($args, ['afterID', 'beforeID', 'limit']);
+        [$parsed, $options] = BatchListParams::parseRequest($args, $requestOptions);
         $resp = $this->client->request(
             method: 'get',
             path: 'v1/messages/batches',
