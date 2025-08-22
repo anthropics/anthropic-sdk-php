@@ -16,13 +16,6 @@ use Anthropic\Core\Conversion\UnionOf;
  * List all Message Batches within a Workspace. Most recently created batches are returned first.
  *
  * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
- *
- * @phpstan-type list_params = array{
- *   afterID?: string,
- *   beforeID?: string,
- *   limit?: int,
- *   betas?: list<AnthropicBeta::*|string>,
- * }
  */
 final class BatchListParams implements BaseModel
 {

@@ -8,17 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type citation_page_location_alias = array{
- *   citedText: string,
- *   documentIndex: int,
- *   documentTitle: string|null,
- *   endPageNumber: int,
- *   fileID: string|null,
- *   startPageNumber: int,
- *   type: string,
- * }
- */
 final class CitationPageLocation implements BaseModel
 {
     use SdkModel;

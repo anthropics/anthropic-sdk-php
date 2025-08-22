@@ -8,17 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type citation_content_block_location_alias = array{
- *   citedText: string,
- *   documentIndex: int,
- *   documentTitle: string|null,
- *   endBlockIndex: int,
- *   fileID: string|null,
- *   startBlockIndex: int,
- *   type: string,
- * }
- */
 final class CitationContentBlockLocation implements BaseModel
 {
     use SdkModel;

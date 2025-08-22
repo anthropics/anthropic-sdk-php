@@ -19,10 +19,6 @@ use Anthropic\Core\Conversion\UnionOf;
  * The Message Batches API can be used to process multiple Messages API requests at once. Once a Message Batch is created, it begins processing immediately. Batches can take up to 24 hours to complete.
  *
  * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
- *
- * @phpstan-type create_params = array{
- *   requests: list<Request>, betas?: list<AnthropicBeta::*|string>
- * }
  */
 final class BatchCreateParams implements BaseModel
 {

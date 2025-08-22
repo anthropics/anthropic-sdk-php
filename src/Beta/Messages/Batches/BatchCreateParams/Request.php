@@ -9,9 +9,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type request_alias = array{customID: string, params: Params}
- */
 final class Request implements BaseModel
 {
     use SdkModel;

@@ -9,16 +9,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type beta_request_document_block_alias = array{
- *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource,
- *   type: string,
- *   cacheControl?: BetaCacheControlEphemeral,
- *   citations?: BetaCitationsConfigParam,
- *   context?: string|null,
- *   title?: string|null,
- * }
- */
 final class BetaRequestDocumentBlock implements BaseModel
 {
     use SdkModel;

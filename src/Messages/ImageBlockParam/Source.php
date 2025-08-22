@@ -10,9 +10,6 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Messages\Base64ImageSource;
 use Anthropic\Messages\URLImageSource;
 
-/**
- * @phpstan-type source_alias = Base64ImageSource|URLImageSource
- */
 final class Source implements ConverterSource
 {
     use SdkUnion;

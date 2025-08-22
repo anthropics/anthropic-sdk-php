@@ -9,11 +9,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type beta_cache_control_ephemeral_alias = array{
- *   type: string, ttl?: TTL::*
- * }
- */
 final class BetaCacheControlEphemeral implements BaseModel
 {
     use SdkModel;

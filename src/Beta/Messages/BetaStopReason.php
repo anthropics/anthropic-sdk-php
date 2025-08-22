@@ -7,9 +7,6 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Concerns\SdkEnum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type beta_stop_reason_alias = BetaStopReason::*
- */
 final class BetaStopReason implements ConverterSource
 {
     use SdkEnum;

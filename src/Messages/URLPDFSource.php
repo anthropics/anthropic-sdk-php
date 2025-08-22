@@ -8,9 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type urlpdf_source_alias = array{type: string, url: string}
- */
 final class URLPDFSource implements BaseModel
 {
     use SdkModel;

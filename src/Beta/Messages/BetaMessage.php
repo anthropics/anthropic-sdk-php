@@ -11,19 +11,6 @@ use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Core\Conversion\UnionOf;
 use Anthropic\Messages\Model;
 
-/**
- * @phpstan-type beta_message_alias = array{
- *   id: string,
- *   container: BetaContainer,
- *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
- *   model: Model::*|string,
- *   role: string,
- *   stopReason: BetaStopReason::*,
- *   stopSequence: string|null,
- *   type: string,
- *   usage: BetaUsage,
- * }
- */
 final class BetaMessage implements BaseModel
 {
     use SdkModel;

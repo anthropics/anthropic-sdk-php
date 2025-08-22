@@ -9,8 +9,6 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * If the request used the priority, standard, or batch tier.
- *
- * @phpstan-type service_tier_alias = ServiceTier::*|null
  */
 final class ServiceTier implements ConverterSource
 {

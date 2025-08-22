@@ -8,15 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type web_search_result_block_alias = array{
- *   encryptedContent: string,
- *   pageAge: string|null,
- *   title: string,
- *   type: string,
- *   url: string,
- * }
- */
 final class WebSearchResultBlock implements BaseModel
 {
     use SdkModel;

@@ -14,13 +14,6 @@ use Anthropic\Core\Conversion\UnionOf;
 
 /**
  * List Files.
- *
- * @phpstan-type list_params = array{
- *   afterID?: string,
- *   beforeID?: string,
- *   limit?: int,
- *   betas?: list<AnthropicBeta::*|string>,
- * }
  */
 final class FileListParams implements BaseModel
 {

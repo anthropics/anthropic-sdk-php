@@ -7,9 +7,6 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Concerns\SdkEnum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type beta_code_execution_tool_result_error_code_alias = BetaCodeExecutionToolResultErrorCode::*
- */
 final class BetaCodeExecutionToolResultErrorCode implements ConverterSource
 {
     use SdkEnum;

@@ -8,15 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type message_delta_usage_alias = array{
- *   cacheCreationInputTokens: int|null,
- *   cacheReadInputTokens: int|null,
- *   inputTokens: int|null,
- *   outputTokens: int,
- *   serverToolUse: ServerToolUsage,
- * }
- */
 final class MessageDeltaUsage implements BaseModel
 {
     use SdkModel;

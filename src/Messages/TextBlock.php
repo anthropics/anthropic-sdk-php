@@ -9,13 +9,6 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 
-/**
- * @phpstan-type text_block_alias = array{
- *   citations: list<CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation>|null,
- *   text: string,
- *   type: string,
- * }
- */
 final class TextBlock implements BaseModel
 {
     use SdkModel;

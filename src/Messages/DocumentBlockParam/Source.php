@@ -12,9 +12,6 @@ use Anthropic\Messages\ContentBlockSource;
 use Anthropic\Messages\PlainTextSource;
 use Anthropic\Messages\URLPDFSource;
 
-/**
- * @phpstan-type source_alias = Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource
- */
 final class Source implements ConverterSource
 {
     use SdkUnion;

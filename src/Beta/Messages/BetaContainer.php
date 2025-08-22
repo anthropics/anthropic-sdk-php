@@ -10,10 +10,6 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * Information about the container used in the request (for the code execution tool).
- *
- * @phpstan-type beta_container_alias = array{
- *   id: string, expiresAt: \DateTimeInterface
- * }
  */
 final class BetaContainer implements BaseModel
 {

@@ -9,11 +9,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type beta_content_block_source_alias = array{
- *   content: string|list<BetaTextBlockParam|BetaImageBlockParam>, type: string
- * }
- */
 final class BetaContentBlockSource implements BaseModel
 {
     use SdkModel;

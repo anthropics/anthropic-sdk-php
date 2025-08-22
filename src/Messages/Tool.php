@@ -10,15 +10,6 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Tool\InputSchema;
 use Anthropic\Messages\Tool\Type;
 
-/**
- * @phpstan-type tool_alias = array{
- *   inputSchema: InputSchema,
- *   name: string,
- *   cacheControl?: CacheControlEphemeral,
- *   description?: string,
- *   type?: Type::*|null,
- * }
- */
 final class Tool implements BaseModel
 {
     use SdkModel;

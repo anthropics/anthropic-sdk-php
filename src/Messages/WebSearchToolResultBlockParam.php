@@ -8,14 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type web_search_tool_result_block_param_alias = array{
- *   content: list<WebSearchResultBlockParam>|WebSearchToolRequestError,
- *   toolUseID: string,
- *   type: string,
- *   cacheControl?: CacheControlEphemeral,
- * }
- */
 final class WebSearchToolResultBlockParam implements BaseModel
 {
     use SdkModel;

@@ -8,9 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type beta_citations_config_param_alias = array{enabled?: bool}
- */
 final class BetaCitationsConfigParam implements BaseModel
 {
     use SdkModel;

@@ -14,8 +14,6 @@ use Anthropic\Core\Conversion\ListOf;
  * System prompt.
  *
  * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.anthropic.com/en/docs/system-prompts).
- *
- * @phpstan-type system_alias = string|list<BetaTextBlockParam>
  */
 final class System implements ConverterSource
 {

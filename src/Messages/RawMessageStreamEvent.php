@@ -8,9 +8,6 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type raw_message_stream_event_alias = RawMessageStartEvent|RawMessageDeltaEvent|RawMessageStopEvent|RawContentBlockStartEvent|RawContentBlockDeltaEvent|RawContentBlockStopEvent
- */
 final class RawMessageStreamEvent implements ConverterSource
 {
     use SdkUnion;

@@ -8,9 +8,6 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type text_citation_param_alias = CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam
- */
 final class TextCitationParam implements ConverterSource
 {
     use SdkUnion;

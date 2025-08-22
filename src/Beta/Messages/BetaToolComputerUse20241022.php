@@ -8,16 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type beta_tool_computer_use20241022_alias = array{
- *   displayHeightPx: int,
- *   displayWidthPx: int,
- *   name: string,
- *   type: string,
- *   cacheControl?: BetaCacheControlEphemeral,
- *   displayNumber?: int|null,
- * }
- */
 final class BetaToolComputerUse20241022 implements BaseModel
 {
     use SdkModel;

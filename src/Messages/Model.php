@@ -9,8 +9,6 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
- *
- * @phpstan-type model_alias = Model::*
  */
 final class Model implements ConverterSource
 {

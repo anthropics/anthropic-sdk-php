@@ -7,9 +7,6 @@ namespace Anthropic\Beta;
 use Anthropic\Core\Concerns\SdkEnum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type anthropic_beta_alias = AnthropicBeta::*
- */
 final class AnthropicBeta implements ConverterSource
 {
     use SdkEnum;

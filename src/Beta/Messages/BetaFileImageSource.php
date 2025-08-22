@@ -8,9 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type beta_file_image_source_alias = array{fileID: string, type: string}
- */
 final class BetaFileImageSource implements BaseModel
 {
     use SdkModel;

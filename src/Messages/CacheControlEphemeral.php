@@ -9,9 +9,6 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\CacheControlEphemeral\TTL;
 
-/**
- * @phpstan-type cache_control_ephemeral_alias = array{type: string, ttl?: TTL::*}
- */
 final class CacheControlEphemeral implements BaseModel
 {
     use SdkModel;

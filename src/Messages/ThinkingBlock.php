@@ -8,11 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type thinking_block_alias = array{
- *   signature: string, thinking: string, type: string
- * }
- */
 final class ThinkingBlock implements BaseModel
 {
     use SdkModel;

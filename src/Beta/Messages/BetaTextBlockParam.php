@@ -9,14 +9,6 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 
-/**
- * @phpstan-type beta_text_block_param_alias = array{
- *   text: string,
- *   type: string,
- *   cacheControl?: BetaCacheControlEphemeral,
- *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
- * }
- */
 final class BetaTextBlockParam implements BaseModel
 {
     use SdkModel;

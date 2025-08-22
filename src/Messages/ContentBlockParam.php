@@ -10,8 +10,6 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * Regular text content.
- *
- * @phpstan-type content_block_param_alias = TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam
  */
 final class ContentBlockParam implements ConverterSource
 {

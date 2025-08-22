@@ -11,8 +11,6 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * Deleted object type.
  *
  * For file deletion, this is always `"file_deleted"`.
- *
- * @phpstan-type type_alias = Type::*
  */
 final class Type implements ConverterSource
 {

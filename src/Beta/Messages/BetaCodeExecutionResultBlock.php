@@ -9,15 +9,6 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 
-/**
- * @phpstan-type beta_code_execution_result_block_alias = array{
- *   content: list<BetaCodeExecutionOutputBlock>,
- *   returnCode: int,
- *   stderr: string,
- *   stdout: string,
- *   type: string,
- * }
- */
 final class BetaCodeExecutionResultBlock implements BaseModel
 {
     use SdkModel;

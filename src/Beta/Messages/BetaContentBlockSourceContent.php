@@ -8,9 +8,6 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type beta_content_block_source_content_alias = BetaTextBlockParam|BetaImageBlockParam
- */
 final class BetaContentBlockSourceContent implements ConverterSource
 {
     use SdkUnion;

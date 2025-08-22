@@ -14,8 +14,6 @@ use Anthropic\Core\Conversion\UnionOf;
 
 /**
  * Delete File.
- *
- * @phpstan-type delete_params = array{betas?: list<AnthropicBeta::*|string>}
  */
 final class FileDeleteParams implements BaseModel
 {

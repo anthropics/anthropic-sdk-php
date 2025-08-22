@@ -8,11 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type tool_text_editor20250124_alias = array{
- *   name: string, type: string, cacheControl?: CacheControlEphemeral
- * }
- */
 final class ToolTextEditor20250124 implements BaseModel
 {
     use SdkModel;

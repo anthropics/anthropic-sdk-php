@@ -9,15 +9,6 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\ToolResultBlockParam\Content;
 
-/**
- * @phpstan-type tool_result_block_param_alias = array{
- *   toolUseID: string,
- *   type: string,
- *   cacheControl?: CacheControlEphemeral,
- *   content?: string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam>,
- *   isError?: bool,
- * }
- */
 final class ToolResultBlockParam implements BaseModel
 {
     use SdkModel;

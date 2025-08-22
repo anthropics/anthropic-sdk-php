@@ -10,10 +10,6 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * The model will use any available tools.
- *
- * @phpstan-type tool_choice_any_alias = array{
- *   type: string, disableParallelToolUse?: bool
- * }
  */
 final class ToolChoiceAny implements BaseModel
 {

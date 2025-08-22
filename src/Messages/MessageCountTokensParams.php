@@ -18,15 +18,6 @@ use Anthropic\Messages\MessageCountTokensParams\System;
  * The Token Count API can be used to count the number of tokens in a Message, including tools, images, and documents, without creating it.
  *
  * Learn more about token counting in our [user guide](/en/docs/build-with-claude/token-counting)
- *
- * @phpstan-type count_tokens_params = array{
- *   messages: list<MessageParam>,
- *   model: Model::*|string,
- *   system?: string|list<TextBlockParam>,
- *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
- *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
- *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>,
- * }
  */
 final class MessageCountTokensParams implements BaseModel
 {

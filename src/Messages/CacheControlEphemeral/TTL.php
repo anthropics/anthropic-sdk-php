@@ -15,8 +15,6 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * - `1h`: 1 hour
  *
  * Defaults to `5m`.
- *
- * @phpstan-type ttl_alias = TTL::*
  */
 final class TTL implements ConverterSource
 {

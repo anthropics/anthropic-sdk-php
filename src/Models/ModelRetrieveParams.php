@@ -16,8 +16,6 @@ use Anthropic\Core\Conversion\UnionOf;
  * Get a specific model.
  *
  * The Models API response can be used to determine information about a specific model or resolve a model alias to a model ID.
- *
- * @phpstan-type retrieve_params = array{betas?: list<AnthropicBeta::*|string>}
  */
 final class ModelRetrieveParams implements BaseModel
 {

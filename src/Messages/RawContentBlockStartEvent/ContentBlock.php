@@ -14,9 +14,6 @@ use Anthropic\Messages\ThinkingBlock;
 use Anthropic\Messages\ToolUseBlock;
 use Anthropic\Messages\WebSearchToolResultBlock;
 
-/**
- * @phpstan-type content_block_alias = TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock
- */
 final class ContentBlock implements ConverterSource
 {
     use SdkUnion;

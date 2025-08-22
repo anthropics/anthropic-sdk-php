@@ -20,8 +20,6 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * Response model for a file uploaded to the container.
- *
- * @phpstan-type content_block_alias = BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock
  */
 final class ContentBlock implements ConverterSource
 {

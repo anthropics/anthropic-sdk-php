@@ -8,9 +8,6 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type content_block_source_content_alias = TextBlockParam|ImageBlockParam
- */
 final class ContentBlockSourceContent implements ConverterSource
 {
     use SdkUnion;

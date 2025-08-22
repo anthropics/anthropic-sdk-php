@@ -9,11 +9,6 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 
-/**
- * @phpstan-type beta_request_mcp_server_tool_configuration_alias = array{
- *   allowedTools?: list<string>|null, enabled?: bool|null
- * }
- */
 final class BetaRequestMCPServerToolConfiguration implements BaseModel
 {
     use SdkModel;

@@ -8,11 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type cache_creation_alias = array{
- *   ephemeral1hInputTokens: int, ephemeral5mInputTokens: int
- * }
- */
 final class CacheCreation implements BaseModel
 {
     use SdkModel;

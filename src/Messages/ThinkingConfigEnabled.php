@@ -8,11 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type thinking_config_enabled_alias = array{
- *   budgetTokens: int, type: string
- * }
- */
 final class ThinkingConfigEnabled implements BaseModel
 {
     use SdkModel;

@@ -11,9 +11,6 @@ use Anthropic\Messages\ImageBlockParam;
 use Anthropic\Messages\SearchResultBlockParam;
 use Anthropic\Messages\TextBlockParam;
 
-/**
- * @phpstan-type union_member1_alias = TextBlockParam|ImageBlockParam|SearchResultBlockParam
- */
 final class UnionMember1 implements ConverterSource
 {
     use SdkUnion;

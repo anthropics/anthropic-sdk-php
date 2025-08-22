@@ -18,8 +18,6 @@ use Anthropic\Core\Conversion\UnionOf;
  * Message Batches can only be deleted once they've finished processing. If you'd like to delete an in-progress batch, you must first cancel it.
  *
  * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
- *
- * @phpstan-type delete_params = array{betas?: list<AnthropicBeta::*|string>}
  */
 final class BatchDeleteParams implements BaseModel
 {

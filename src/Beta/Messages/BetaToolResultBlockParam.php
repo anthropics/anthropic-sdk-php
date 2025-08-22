@@ -9,15 +9,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type beta_tool_result_block_param_alias = array{
- *   toolUseID: string,
- *   type: string,
- *   cacheControl?: BetaCacheControlEphemeral,
- *   content?: string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam>,
- *   isError?: bool,
- * }
- */
 final class BetaToolResultBlockParam implements BaseModel
 {
     use SdkModel;

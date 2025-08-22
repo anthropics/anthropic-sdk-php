@@ -9,17 +9,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type beta_usage_alias = array{
- *   cacheCreation: BetaCacheCreation,
- *   cacheCreationInputTokens: int|null,
- *   cacheReadInputTokens: int|null,
- *   inputTokens: int,
- *   outputTokens: int,
- *   serverToolUse: BetaServerToolUsage,
- *   serviceTier: ServiceTier::*|null,
- * }
- */
 final class BetaUsage implements BaseModel
 {
     use SdkModel;

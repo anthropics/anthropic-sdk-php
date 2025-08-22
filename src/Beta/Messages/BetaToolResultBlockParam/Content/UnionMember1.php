@@ -11,9 +11,6 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type union_member1_alias = BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam
- */
 final class UnionMember1 implements ConverterSource
 {
     use SdkUnion;

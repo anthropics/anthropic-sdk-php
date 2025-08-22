@@ -10,18 +10,6 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Core\Conversion\UnionOf;
 
-/**
- * @phpstan-type message_alias = array{
- *   id: string,
- *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
- *   model: Model::*|string,
- *   role: string,
- *   stopReason: StopReason::*,
- *   stopSequence: string|null,
- *   type: string,
- *   usage: Usage,
- * }
- */
 final class Message implements BaseModel
 {
     use SdkModel;

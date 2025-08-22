@@ -8,11 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type beta_mcp_tool_use_block_alias = array{
- *   id: string, input: mixed, name: string, serverName: string, type: string
- * }
- */
 final class BetaMCPToolUseBlock implements BaseModel
 {
     use SdkModel;

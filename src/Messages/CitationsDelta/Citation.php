@@ -13,9 +13,6 @@ use Anthropic\Messages\CitationPageLocation;
 use Anthropic\Messages\CitationsSearchResultLocation;
 use Anthropic\Messages\CitationsWebSearchResultLocation;
 
-/**
- * @phpstan-type citation_alias = CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation
- */
 final class Citation implements ConverterSource
 {
     use SdkUnion;

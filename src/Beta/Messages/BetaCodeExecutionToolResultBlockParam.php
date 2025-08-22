@@ -8,14 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type beta_code_execution_tool_result_block_param_alias = array{
- *   content: BetaCodeExecutionToolResultErrorParam|BetaCodeExecutionResultBlockParam,
- *   toolUseID: string,
- *   type: string,
- *   cacheControl?: BetaCacheControlEphemeral,
- * }
- */
 final class BetaCodeExecutionToolResultBlockParam implements BaseModel
 {
     use SdkModel;

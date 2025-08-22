@@ -8,9 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type beta_metadata_alias = array{userID?: string|null}
- */
 final class BetaMetadata implements BaseModel
 {
     use SdkModel;

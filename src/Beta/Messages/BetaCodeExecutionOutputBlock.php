@@ -8,11 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type beta_code_execution_output_block_alias = array{
- *   fileID: string, type: string
- * }
- */
 final class BetaCodeExecutionOutputBlock implements BaseModel
 {
     use SdkModel;

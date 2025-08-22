@@ -8,15 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type beta_message_delta_usage_alias = array{
- *   cacheCreationInputTokens: int|null,
- *   cacheReadInputTokens: int|null,
- *   inputTokens: int|null,
- *   outputTokens: int,
- *   serverToolUse: BetaServerToolUsage,
- * }
- */
 final class BetaMessageDeltaUsage implements BaseModel
 {
     use SdkModel;

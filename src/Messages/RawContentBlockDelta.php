@@ -8,9 +8,6 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type raw_content_block_delta_alias = TextDelta|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta
- */
 final class RawContentBlockDelta implements ConverterSource
 {
     use SdkUnion;

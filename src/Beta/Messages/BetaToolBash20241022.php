@@ -8,11 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type beta_tool_bash20241022_alias = array{
- *   name: string, type: string, cacheControl?: BetaCacheControlEphemeral
- * }
- */
 final class BetaToolBash20241022 implements BaseModel
 {
     use SdkModel;

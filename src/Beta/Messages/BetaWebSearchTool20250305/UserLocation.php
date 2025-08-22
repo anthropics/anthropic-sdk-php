@@ -10,14 +10,6 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * Parameters for the user's location. Used to provide more relevant search results.
- *
- * @phpstan-type user_location_alias = array{
- *   type: string,
- *   city?: string|null,
- *   country?: string|null,
- *   region?: string|null,
- *   timezone?: string|null,
- * }
  */
 final class UserLocation implements BaseModel
 {

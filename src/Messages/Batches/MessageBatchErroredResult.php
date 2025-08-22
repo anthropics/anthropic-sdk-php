@@ -9,11 +9,6 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Shared\ErrorResponse;
 
-/**
- * @phpstan-type message_batch_errored_result_alias = array{
- *   error: ErrorResponse, type: string
- * }
- */
 final class MessageBatchErroredResult implements BaseModel
 {
     use SdkModel;

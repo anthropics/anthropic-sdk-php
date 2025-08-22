@@ -7,9 +7,6 @@ namespace Anthropic\Beta\Messages\BetaBase64ImageSource;
 use Anthropic\Core\Concerns\SdkEnum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type media_type_alias = MediaType::*
- */
 final class MediaType implements ConverterSource
 {
     use SdkEnum;

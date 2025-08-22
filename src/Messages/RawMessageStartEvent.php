@@ -8,11 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type raw_message_start_event_alias = array{
- *   message: Message, type: string
- * }
- */
 final class RawMessageStartEvent implements BaseModel
 {
     use SdkModel;

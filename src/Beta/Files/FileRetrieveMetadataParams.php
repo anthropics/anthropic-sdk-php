@@ -14,10 +14,6 @@ use Anthropic\Core\Conversion\UnionOf;
 
 /**
  * Get File Metadata.
- *
- * @phpstan-type retrieve_metadata_params = array{
- *   betas?: list<AnthropicBeta::*|string>
- * }
  */
 final class FileRetrieveMetadataParams implements BaseModel
 {

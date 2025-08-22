@@ -10,10 +10,6 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * The model will automatically decide whether to use tools.
- *
- * @phpstan-type tool_choice_auto_alias = array{
- *   type: string, disableParallelToolUse?: bool
- * }
  */
 final class ToolChoiceAuto implements BaseModel
 {

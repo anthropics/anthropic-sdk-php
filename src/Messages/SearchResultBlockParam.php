@@ -9,16 +9,6 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ListOf;
 
-/**
- * @phpstan-type search_result_block_param_alias = array{
- *   content: list<TextBlockParam>,
- *   source: string,
- *   title: string,
- *   type: string,
- *   cacheControl?: CacheControlEphemeral,
- *   citations?: CitationsConfigParam,
- * }
- */
 final class SearchResultBlockParam implements BaseModel
 {
     use SdkModel;

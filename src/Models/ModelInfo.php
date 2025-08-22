@@ -8,11 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type model_info_alias = array{
- *   id: string, createdAt: \DateTimeInterface, displayName: string, type: string
- * }
- */
 final class ModelInfo implements BaseModel
 {
     use SdkModel;

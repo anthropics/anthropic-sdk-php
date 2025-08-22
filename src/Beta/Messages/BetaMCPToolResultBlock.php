@@ -9,14 +9,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type beta_mcp_tool_result_block_alias = array{
- *   content: string|list<BetaTextBlock>,
- *   isError: bool,
- *   toolUseID: string,
- *   type: string,
- * }
- */
 final class BetaMCPToolResultBlock implements BaseModel
 {
     use SdkModel;

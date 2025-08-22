@@ -8,9 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type message_batch_canceled_result_alias = array{type: string}
- */
 final class MessageBatchCanceledResult implements BaseModel
 {
     use SdkModel;

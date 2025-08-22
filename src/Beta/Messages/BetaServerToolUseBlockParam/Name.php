@@ -7,9 +7,6 @@ namespace Anthropic\Beta\Messages\BetaServerToolUseBlockParam;
 use Anthropic\Core\Concerns\SdkEnum;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type name_alias = Name::*
- */
 final class Name implements ConverterSource
 {
     use SdkEnum;

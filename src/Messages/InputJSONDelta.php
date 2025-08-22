@@ -8,9 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type input_json_delta_alias = array{partialJSON: string, type: string}
- */
 final class InputJSONDelta implements BaseModel
 {
     use SdkModel;

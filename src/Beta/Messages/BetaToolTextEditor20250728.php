@@ -8,14 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type beta_tool_text_editor20250728_alias = array{
- *   name: string,
- *   type: string,
- *   cacheControl?: BetaCacheControlEphemeral,
- *   maxCharacters?: int|null,
- * }
- */
 final class BetaToolTextEditor20250728 implements BaseModel
 {
     use SdkModel;

@@ -8,9 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type beta_thinking_config_disabled_alias = array{type: string}
- */
 final class BetaThinkingConfigDisabled implements BaseModel
 {
     use SdkModel;
