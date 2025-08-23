@@ -7,22 +7,16 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
 
 final class BetaRequestMCPServerToolConfiguration implements BaseModel
 {
     use SdkModel;
 
     /** @var list<string>|null $allowedTools */
-    #[Api(
-        'allowed_tools',
-        type: new ListOf('string'),
-        nullable: true,
-        optional: true
-    )]
+    #[Api('allowed_tools', list: 'string', nullable: true, optional: true)]
     public ?array $allowedTools;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?bool $enabled;
 
     public function __construct()

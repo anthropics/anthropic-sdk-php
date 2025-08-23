@@ -8,8 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
 use Anthropic\Messages\MessageCountTokensParams\System;
 
 /**
@@ -94,7 +92,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @var list<MessageParam> $messages
      */
-    #[Api(type: new ListOf(MessageParam::class))]
+    #[Api(list: MessageParam::class)]
     public array $messages;
 
     /**
@@ -102,7 +100,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @var Model::*|string $model
      */
-    #[Api(union: new UnionOf([Model::class, 'string']))]
+    #[Api(union: Model::class)]
     public string $model;
 
     /**
@@ -196,7 +194,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @var list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null $tools
      */
-    #[Api(type: new ListOf(union: MessageCountTokensTool::class), optional: true)]
+    #[Api(list: MessageCountTokensTool::class, optional: true)]
     public ?array $tools;
 
     /**
@@ -226,8 +224,8 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param list<MessageParam> $messages
      * @param Model::*|string $model
-     * @param string|list<TextBlockParam>|null $system
-     * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null $tools
+     * @param string|list<TextBlockParam> $system
+     * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
      */
     public static function with(
         array $messages,

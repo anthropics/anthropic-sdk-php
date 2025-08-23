@@ -26,7 +26,7 @@ final class ToolTextEditor20250124 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', optional: true)]
+    #[Api('cache_control', nullable: true, optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 
     public function __construct()

@@ -22,7 +22,7 @@ final class BetaToolResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', optional: true)]
+    #[Api('cache_control', nullable: true, optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
@@ -59,7 +59,7 @@ final class BetaToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam>|null $content
+     * @param string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam> $content
      */
     public static function with(
         string $toolUseID,

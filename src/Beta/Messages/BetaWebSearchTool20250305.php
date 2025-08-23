@@ -8,7 +8,6 @@ use Anthropic\Beta\Messages\BetaWebSearchTool20250305\UserLocation;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
 
 final class BetaWebSearchTool20250305 implements BaseModel
 {
@@ -30,12 +29,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
      *
      * @var list<string>|null $allowedDomains
      */
-    #[Api(
-        'allowed_domains',
-        type: new ListOf('string'),
-        nullable: true,
-        optional: true,
-    )]
+    #[Api('allowed_domains', list: 'string', nullable: true, optional: true)]
     public ?array $allowedDomains;
 
     /**
@@ -43,30 +37,25 @@ final class BetaWebSearchTool20250305 implements BaseModel
      *
      * @var list<string>|null $blockedDomains
      */
-    #[Api(
-        'blocked_domains',
-        type: new ListOf('string'),
-        nullable: true,
-        optional: true,
-    )]
+    #[Api('blocked_domains', list: 'string', nullable: true, optional: true)]
     public ?array $blockedDomains;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', optional: true)]
+    #[Api('cache_control', nullable: true, optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * Maximum number of times the tool can be used in the API request.
      */
-    #[Api('max_uses', optional: true)]
+    #[Api('max_uses', nullable: true, optional: true)]
     public ?int $maxUses;
 
     /**
      * Parameters for the user's location. Used to provide more relevant search results.
      */
-    #[Api('user_location', optional: true)]
+    #[Api('user_location', nullable: true, optional: true)]
     public ?UserLocation $userLocation;
 
     public function __construct()

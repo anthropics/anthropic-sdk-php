@@ -7,7 +7,6 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
 
 final class BetaTextBlockParam implements BaseModel
 {
@@ -22,17 +21,13 @@ final class BetaTextBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', optional: true)]
+    #[Api('cache_control', nullable: true, optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * @var list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null $citations
      */
-    #[Api(
-        type: new ListOf(union: BetaTextCitationParam::class),
-        nullable: true,
-        optional: true,
-    )]
+    #[Api(list: BetaTextCitationParam::class, nullable: true, optional: true)]
     public ?array $citations;
 
     /**

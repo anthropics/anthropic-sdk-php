@@ -54,7 +54,7 @@ final class BetaUsage implements BaseModel
      *
      * @var ServiceTier::*|null $serviceTier
      */
-    #[Api('service_tier', enum: ServiceTier::class, nullable: true)]
+    #[Api('service_tier', enum: ServiceTier::class)]
     public ?string $serviceTier;
 
     /**

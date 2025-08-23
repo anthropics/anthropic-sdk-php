@@ -38,13 +38,13 @@ final class BetaToolComputerUse20250124 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', optional: true)]
+    #[Api('cache_control', nullable: true, optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * The X11 display number (e.g. 0, 1) for the display.
      */
-    #[Api('display_number', optional: true)]
+    #[Api('display_number', nullable: true, optional: true)]
     public ?int $displayNumber;
 
     /**

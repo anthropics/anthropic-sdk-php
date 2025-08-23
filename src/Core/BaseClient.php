@@ -146,9 +146,8 @@ class BaseClient
     }
 
     /**
-     * @param bool|int|float|string|array<string, mixed>|resource|\Traversable<
-     *   mixed
-     * >|null $data
+     * @param bool|int|float|string|resource|\Traversable<mixed>|array<string,
+     * mixed,>|null $data
      */
     protected function sendRequest(
         RequestInterface $req,

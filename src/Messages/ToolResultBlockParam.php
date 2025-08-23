@@ -22,7 +22,7 @@ final class ToolResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', optional: true)]
+    #[Api('cache_control', nullable: true, optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 
     /**
@@ -59,7 +59,7 @@ final class ToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam>|null $content
+     * @param string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam> $content
      */
     public static function with(
         string $toolUseID,

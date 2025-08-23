@@ -21,10 +21,10 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
     #[Api]
     public string $url;
 
-    #[Api('authorization_token', optional: true)]
+    #[Api('authorization_token', nullable: true, optional: true)]
     public ?string $authorizationToken;
 
-    #[Api('tool_configuration', optional: true)]
+    #[Api('tool_configuration', nullable: true, optional: true)]
     public ?BetaRequestMCPServerToolConfiguration $toolConfiguration;
 
     /**

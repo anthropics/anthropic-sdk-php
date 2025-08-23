@@ -7,7 +7,6 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
 
 final class BetaTextBlock implements BaseModel
 {
@@ -23,7 +22,7 @@ final class BetaTextBlock implements BaseModel
      *
      * @var list<BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation>|null $citations
      */
-    #[Api(type: new ListOf(union: BetaTextCitation::class), nullable: true)]
+    #[Api(list: BetaTextCitation::class)]
     public ?array $citations;
 
     #[Api]

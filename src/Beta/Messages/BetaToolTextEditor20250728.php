@@ -26,13 +26,13 @@ final class BetaToolTextEditor20250728 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', optional: true)]
+    #[Api('cache_control', nullable: true, optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * Maximum number of characters to display when viewing a file. If not specified, defaults to displaying the full file.
      */
-    #[Api('max_characters', optional: true)]
+    #[Api('max_characters', nullable: true, optional: true)]
     public ?int $maxCharacters;
 
     public function __construct()

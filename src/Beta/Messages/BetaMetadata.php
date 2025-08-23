@@ -17,7 +17,7 @@ final class BetaMetadata implements BaseModel
      *
      * This should be a uuid, hash value, or other opaque identifier. Anthropic may use this id to help detect abuse. Do not include any identifying information such as name, email address, or phone number.
      */
-    #[Api('user_id', optional: true)]
+    #[Api('user_id', nullable: true, optional: true)]
     public ?string $userID;
 
     public function __construct()

@@ -7,7 +7,6 @@ namespace Anthropic\Messages\Tool;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
 
 /**
  * [JSON schema](https://json-schema.org/draft/2020-12) for this tool's input.
@@ -21,11 +20,11 @@ final class InputSchema implements BaseModel
     #[Api]
     public string $type = 'object';
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public mixed $properties;
 
     /** @var list<string>|null $required */
-    #[Api(type: new ListOf('string'), nullable: true, optional: true)]
+    #[Api(list: 'string', nullable: true, optional: true)]
     public ?array $required;
 
     public function __construct()

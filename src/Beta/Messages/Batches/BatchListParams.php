@@ -9,8 +9,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
 
 /**
  * List all Message Batches within a Workspace. Most recently created batches are returned first.
@@ -47,10 +45,7 @@ final class BatchListParams implements BaseModel
      *
      * @var list<AnthropicBeta::*|string>|null $betas
      */
-    #[Api(
-        type: new ListOf(union: new UnionOf([AnthropicBeta::class, 'string'])),
-        optional: true,
-    )]
+    #[Api(list: AnthropicBeta::class, optional: true)]
     public ?array $betas;
 
     public function __construct()
@@ -64,7 +59,7 @@ final class BatchListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AnthropicBeta::*|string>|null $betas
+     * @param list<AnthropicBeta::*|string> $betas
      */
     public static function with(
         ?string $afterID = null,

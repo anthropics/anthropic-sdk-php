@@ -41,7 +41,7 @@ final class BetaCacheControlEphemeral implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param TTL::*|null $ttl
+     * @param TTL::* $ttl
      */
     public static function with(?string $ttl = null): self
     {

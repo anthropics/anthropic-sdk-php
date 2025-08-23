@@ -10,8 +10,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
 
 /**
  * Send a batch of Message creation requests.
@@ -30,7 +28,7 @@ final class BatchCreateParams implements BaseModel
      *
      * @var list<Request> $requests
      */
-    #[Api(type: new ListOf(Request::class))]
+    #[Api(list: Request::class)]
     public array $requests;
 
     /**
@@ -38,10 +36,7 @@ final class BatchCreateParams implements BaseModel
      *
      * @var list<AnthropicBeta::*|string>|null $betas
      */
-    #[Api(
-        type: new ListOf(union: new UnionOf([AnthropicBeta::class, 'string'])),
-        optional: true,
-    )]
+    #[Api(list: AnthropicBeta::class, optional: true)]
     public ?array $betas;
 
     /**
@@ -70,7 +65,7 @@ final class BatchCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<Request> $requests
-     * @param list<AnthropicBeta::*|string>|null $betas
+     * @param list<AnthropicBeta::*|string> $betas
      */
     public static function with(array $requests, ?array $betas = null): self
     {

@@ -7,7 +7,6 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
 
 final class BetaSearchResultBlockParam implements BaseModel
 {
@@ -17,7 +16,7 @@ final class BetaSearchResultBlockParam implements BaseModel
     public string $type = 'search_result';
 
     /** @var list<BetaTextBlockParam> $content */
-    #[Api(type: new ListOf(BetaTextBlockParam::class))]
+    #[Api(list: BetaTextBlockParam::class)]
     public array $content;
 
     #[Api]
@@ -29,7 +28,7 @@ final class BetaSearchResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', optional: true)]
+    #[Api('cache_control', nullable: true, optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
     #[Api(optional: true)]

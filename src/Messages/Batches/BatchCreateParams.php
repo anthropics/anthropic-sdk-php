@@ -8,7 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
 
 /**
@@ -28,7 +27,7 @@ final class BatchCreateParams implements BaseModel
      *
      * @var list<Request> $requests
      */
-    #[Api(type: new ListOf(Request::class))]
+    #[Api(list: Request::class)]
     public array $requests;
 
     /**

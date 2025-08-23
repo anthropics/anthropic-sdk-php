@@ -7,7 +7,6 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
 
 final class BetaCodeExecutionResultBlockParam implements BaseModel
 {
@@ -17,7 +16,7 @@ final class BetaCodeExecutionResultBlockParam implements BaseModel
     public string $type = 'code_execution_result';
 
     /** @var list<BetaCodeExecutionOutputBlockParam> $content */
-    #[Api(type: new ListOf(BetaCodeExecutionOutputBlockParam::class))]
+    #[Api(list: BetaCodeExecutionOutputBlockParam::class)]
     public array $content;
 
     #[Api('return_code')]

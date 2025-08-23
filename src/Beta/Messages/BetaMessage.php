@@ -7,8 +7,6 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
 use Anthropic\Messages\Model;
 
 final class BetaMessage implements BaseModel
@@ -74,7 +72,7 @@ final class BetaMessage implements BaseModel
      *
      * @var list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock> $content
      */
-    #[Api(type: new ListOf(union: BetaContentBlock::class))]
+    #[Api(list: BetaContentBlock::class)]
     public array $content;
 
     /**
@@ -82,7 +80,7 @@ final class BetaMessage implements BaseModel
      *
      * @var Model::*|string $model
      */
-    #[Api(union: new UnionOf([Model::class, 'string']))]
+    #[Api(union: Model::class)]
     public string $model;
 
     /**

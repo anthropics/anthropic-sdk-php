@@ -7,7 +7,6 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
 
 final class TextBlock implements BaseModel
 {
@@ -23,7 +22,7 @@ final class TextBlock implements BaseModel
      *
      * @var list<CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation>|null $citations
      */
-    #[Api(type: new ListOf(union: TextCitation::class), nullable: true)]
+    #[Api(list: TextCitation::class)]
     public ?array $citations;
 
     #[Api]

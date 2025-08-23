@@ -22,16 +22,16 @@ final class DocumentBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', optional: true)]
+    #[Api('cache_control', nullable: true, optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 
     #[Api(optional: true)]
     public ?CitationsConfigParam $citations;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $context;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $title;
 
     /**

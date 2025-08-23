@@ -9,8 +9,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
 
 /**
  * This endpoint is idempotent and can be used to poll for Message Batch completion. To access the results of a Message Batch, make a request to the `results_url` field in the response.
@@ -27,10 +25,7 @@ final class BatchRetrieveParams implements BaseModel
      *
      * @var list<AnthropicBeta::*|string>|null $betas
      */
-    #[Api(
-        type: new ListOf(union: new UnionOf([AnthropicBeta::class, 'string'])),
-        optional: true,
-    )]
+    #[Api(list: AnthropicBeta::class, optional: true)]
     public ?array $betas;
 
     public function __construct()
@@ -44,7 +39,7 @@ final class BatchRetrieveParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AnthropicBeta::*|string>|null $betas
+     * @param list<AnthropicBeta::*|string> $betas
      */
     public static function with(?array $betas = null): self
     {

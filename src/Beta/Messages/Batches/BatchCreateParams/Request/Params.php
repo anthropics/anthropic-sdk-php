@@ -33,8 +33,6 @@ use Anthropic\Beta\Messages\BetaWebSearchTool20250305;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
 use Anthropic\Messages\Model;
 
 /**
@@ -126,7 +124,7 @@ final class Params implements BaseModel
      *
      * @var list<BetaMessageParam> $messages
      */
-    #[Api(type: new ListOf(BetaMessageParam::class))]
+    #[Api(list: BetaMessageParam::class)]
     public array $messages;
 
     /**
@@ -134,13 +132,13 @@ final class Params implements BaseModel
      *
      * @var Model::*|string $model
      */
-    #[Api(union: new UnionOf([Model::class, 'string']))]
+    #[Api(union: Model::class)]
     public string $model;
 
     /**
      * Container identifier for reuse across requests.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $container;
 
     /**
@@ -150,7 +148,7 @@ final class Params implements BaseModel
      */
     #[Api(
         'mcp_servers',
-        type: new ListOf(BetaRequestMCPServerURLDefinition::class),
+        list: BetaRequestMCPServerURLDefinition::class,
         optional: true,
     )]
     public ?array $mcpServers;
@@ -180,7 +178,7 @@ final class Params implements BaseModel
      *
      * @var list<string>|null $stopSequences
      */
-    #[Api('stop_sequences', type: new ListOf('string'), optional: true)]
+    #[Api('stop_sequences', list: 'string', optional: true)]
     public ?array $stopSequences;
 
     /**
@@ -292,7 +290,7 @@ final class Params implements BaseModel
      *
      * @var list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>|null $tools
      */
-    #[Api(type: new ListOf(union: BetaToolUnion::class), optional: true)]
+    #[Api(list: BetaToolUnion::class, optional: true)]
     public ?array $tools;
 
     /**
@@ -342,11 +340,11 @@ final class Params implements BaseModel
      *
      * @param list<BetaMessageParam> $messages
      * @param Model::*|string $model
-     * @param list<BetaRequestMCPServerURLDefinition>|null $mcpServers
-     * @param ServiceTier::*|null $serviceTier
-     * @param list<string>|null $stopSequences
-     * @param string|list<BetaTextBlockParam>|null $system
-     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>|null $tools
+     * @param list<BetaRequestMCPServerURLDefinition> $mcpServers
+     * @param ServiceTier::* $serviceTier
+     * @param list<string> $stopSequences
+     * @param string|list<BetaTextBlockParam> $system
+     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
      */
     public static function with(
         int $maxTokens,

@@ -21,25 +21,25 @@ final class UserLocation implements BaseModel
     /**
      * The city of the user.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $city;
 
     /**
      * The two letter [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the user.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $country;
 
     /**
      * The region of the user.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $region;
 
     /**
      * The [IANA timezone](https://nodatime.org/TimeZones) of the user.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $timezone;
 
     public function __construct()

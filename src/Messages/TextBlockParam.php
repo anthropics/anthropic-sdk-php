@@ -7,7 +7,6 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
 
 final class TextBlockParam implements BaseModel
 {
@@ -22,17 +21,13 @@ final class TextBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', optional: true)]
+    #[Api('cache_control', nullable: true, optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 
     /**
      * @var list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null $citations
      */
-    #[Api(
-        type: new ListOf(union: TextCitationParam::class),
-        nullable: true,
-        optional: true,
-    )]
+    #[Api(list: TextCitationParam::class, nullable: true, optional: true)]
     public ?array $citations;
 
     /**

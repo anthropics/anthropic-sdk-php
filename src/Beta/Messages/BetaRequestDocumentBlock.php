@@ -22,16 +22,16 @@ final class BetaRequestDocumentBlock implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', optional: true)]
+    #[Api('cache_control', nullable: true, optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
     #[Api(optional: true)]
     public ?BetaCitationsConfigParam $citations;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $context;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $title;
 
     /**

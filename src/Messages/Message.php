@@ -7,8 +7,6 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
 
 final class Message implements BaseModel
 {
@@ -67,7 +65,7 @@ final class Message implements BaseModel
      *
      * @var list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock> $content
      */
-    #[Api(type: new ListOf(union: ContentBlock::class))]
+    #[Api(list: ContentBlock::class)]
     public array $content;
 
     /**
@@ -75,7 +73,7 @@ final class Message implements BaseModel
      *
      * @var Model::*|string $model
      */
-    #[Api(union: new UnionOf([Model::class, 'string']))]
+    #[Api(union: Model::class)]
     public string $model;
 
     /**

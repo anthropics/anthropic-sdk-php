@@ -8,8 +8,6 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Conversion\UnionOf;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Messages\MessageCreateParams\System;
 
@@ -105,7 +103,7 @@ final class MessageCreateParams implements BaseModel
      *
      * @var list<MessageParam> $messages
      */
-    #[Api(type: new ListOf(MessageParam::class))]
+    #[Api(list: MessageParam::class)]
     public array $messages;
 
     /**
@@ -113,7 +111,7 @@ final class MessageCreateParams implements BaseModel
      *
      * @var Model::*|string $model
      */
-    #[Api(union: new UnionOf([Model::class, 'string']))]
+    #[Api(union: Model::class)]
     public string $model;
 
     /**
@@ -141,7 +139,7 @@ final class MessageCreateParams implements BaseModel
      *
      * @var list<string>|null $stopSequences
      */
-    #[Api('stop_sequences', type: new ListOf('string'), optional: true)]
+    #[Api('stop_sequences', list: 'string', optional: true)]
     public ?array $stopSequences;
 
     /**
@@ -245,7 +243,7 @@ final class MessageCreateParams implements BaseModel
      *
      * @var list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null $tools
      */
-    #[Api(type: new ListOf(union: ToolUnion::class), optional: true)]
+    #[Api(list: ToolUnion::class, optional: true)]
     public ?array $tools;
 
     /**
@@ -295,10 +293,10 @@ final class MessageCreateParams implements BaseModel
      *
      * @param list<MessageParam> $messages
      * @param Model::*|string $model
-     * @param ServiceTier::*|null $serviceTier
-     * @param list<string>|null $stopSequences
-     * @param string|list<TextBlockParam>|null $system
-     * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null $tools
+     * @param ServiceTier::* $serviceTier
+     * @param list<string> $stopSequences
+     * @param string|list<TextBlockParam> $system
+     * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
      */
     public static function with(
         int $maxTokens,

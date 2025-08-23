@@ -24,7 +24,7 @@ final class WebSearchResultBlockParam implements BaseModel
     #[Api]
     public string $url;
 
-    #[Api('page_age', optional: true)]
+    #[Api('page_age', nullable: true, optional: true)]
     public ?string $pageAge;
 
     /**
