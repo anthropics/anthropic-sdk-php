@@ -1,8 +1,8 @@
 <?php
 
-namespace Anthropic\Errors;
+namespace Anthropic\Core\Errors;
 
-class Error extends \Exception
+class AnthropicError extends \Exception
 {
     /** @var string */
     protected const DESC = 'Anthropic Error';

@@ -255,7 +255,7 @@ final class MessagesService implements MessagesContract
         $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): BetaMessage {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = MessageCreateParams::parseRequest(
             [
                 'maxTokens' => $maxTokens,
                 'messages' => $messages,
@@ -274,10 +274,7 @@ final class MessagesService implements MessagesContract
                 'topP' => $topP,
                 'betas' => $betas,
             ],
-        );
-        [$parsed, $options] = MessageCreateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $header_params = ['betas' => 'anthropic-beta'];
         $resp = $this->client->request(
@@ -489,7 +486,7 @@ final class MessagesService implements MessagesContract
         $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): BaseStream {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = MessageCreateParams::parseRequest(
             [
                 'maxTokens' => $maxTokens,
                 'messages' => $messages,
@@ -508,10 +505,7 @@ final class MessagesService implements MessagesContract
                 'topP' => $topP,
                 'betas' => $betas,
             ],
-        );
-        [$parsed, $options] = MessageCreateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $parsed['stream'] = true;
         $header_params = ['betas' => 'anthropic-beta'];
@@ -688,7 +682,7 @@ final class MessagesService implements MessagesContract
         $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): BetaMessageTokensCount {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = MessageCountTokensParams::parseRequest(
             [
                 'messages' => $messages,
                 'model' => $model,
@@ -699,10 +693,7 @@ final class MessagesService implements MessagesContract
                 'tools' => $tools,
                 'betas' => $betas,
             ],
-        );
-        [$parsed, $options] = MessageCountTokensParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $header_params = ['betas' => 'anthropic-beta'];
         $resp = $this->client->request(

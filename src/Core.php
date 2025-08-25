@@ -11,3 +11,5 @@ enum Omittable
 {
     case OMIT;
 }
+
+const OMIT = Omittable::OMIT;

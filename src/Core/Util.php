@@ -167,42 +167,6 @@ final class Util
     /**
      * @param bool|int|float|string|resource|\Traversable<mixed>|array<string,
      * mixed,>|null $body
-     *
-     * @return array{string, \Generator<string>}
-     */
-    public static function encodeMultipartStreaming(mixed $body): array
-    {
-        $boundary = rtrim(strtr(base64_encode(random_bytes(60)), '+/', '-_'), '=');
-        $gen = (function () use ($boundary, $body) {
-            $closing = [];
-
-            try {
-                if (is_array($body) || is_object($body)) {
-                    foreach ((array) $body as $key => $val) {
-                        foreach (static::writeMultipartChunk(boundary: $boundary, key: $key, val: $val, closing: $closing) as $chunk) {
-                            yield $chunk;
-                        }
-                    }
-                } else {
-                    foreach (static::writeMultipartChunk(boundary: $boundary, key: null, val: $body, closing: $closing) as $chunk) {
-                        yield $chunk;
-                    }
-                }
-
-                yield "--{$boundary}--\r\n";
-            } finally {
-                foreach ($closing as $c) {
-                    $c();
-                }
-            }
-        })();
-
-        return [$boundary, $gen];
-    }
-
-    /**
-     * @param bool|int|float|string|resource|\Traversable<mixed>|array<string,
-     * mixed,>|null $body
      */
     public static function withSetBody(
         StreamFactoryInterface $factory,
@@ -414,5 +378,41 @@ final class Util
         foreach (self::writeMultipartContent($val, closing: $closing) as $chunk) {
             yield $chunk;
         }
+    }
+
+    /**
+     * @param bool|int|float|string|resource|\Traversable<mixed>|array<string,
+     * mixed,>|null $body
+     *
+     * @return array{string, \Generator<string>}
+     */
+    private static function encodeMultipartStreaming(mixed $body): array
+    {
+        $boundary = rtrim(strtr(base64_encode(random_bytes(60)), '+/', '-_'), '=');
+        $gen = (function () use ($boundary, $body) {
+            $closing = [];
+
+            try {
+                if (is_array($body) || is_object($body)) {
+                    foreach ((array) $body as $key => $val) {
+                        foreach (static::writeMultipartChunk(boundary: $boundary, key: $key, val: $val, closing: $closing) as $chunk) {
+                            yield $chunk;
+                        }
+                    }
+                } else {
+                    foreach (static::writeMultipartChunk(boundary: $boundary, key: null, val: $body, closing: $closing) as $chunk) {
+                        yield $chunk;
+                    }
+                }
+
+                yield "--{$boundary}--\r\n";
+            } finally {
+                foreach ($closing as $c) {
+                    $c();
+                }
+            }
+        })();
+
+        return [$boundary, $gen];
     }
 }

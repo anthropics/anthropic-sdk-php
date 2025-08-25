@@ -2,7 +2,7 @@
   "$schema": "https://getcomposer.org/schema.json",
   "autoload": {
     "files": [
-      "src/Core/Omit.php",
+      "src/Core.php",
       "src/Client.php"
     ],
     "psr-4": {

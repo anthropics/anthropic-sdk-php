@@ -9,7 +9,6 @@ use Anthropic\Contracts\Messages\BatchesContract;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Streaming\SSEStream;
-use Anthropic\Core\Util;
 use Anthropic\Messages\Batches\BatchCreateParams;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\Messages\Batches\BatchListParams;
@@ -37,9 +36,8 @@ final class BatchesService implements BatchesContract
         $requests,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
-        $args = ['requests' => $requests];
         [$parsed, $options] = BatchCreateParams::parseRequest(
-            $args,
+            ['requests' => $requests],
             $requestOptions
         );
         $resp = $this->client->request(
@@ -89,10 +87,10 @@ final class BatchesService implements BatchesContract
         $limit = omit,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch {
-        $args = Util::array_filter_omit(
-            ['afterID' => $afterID, 'beforeID' => $beforeID, 'limit' => $limit]
+        [$parsed, $options] = BatchListParams::parseRequest(
+            ['afterID' => $afterID, 'beforeID' => $beforeID, 'limit' => $limit],
+            $requestOptions,
         );
-        [$parsed, $options] = BatchListParams::parseRequest($args, $requestOptions);
         $resp = $this->client->request(
             method: 'get',
             path: 'v1/messages/batches',

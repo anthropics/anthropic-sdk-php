@@ -32,9 +32,8 @@ final class ModelsService implements ModelsContract
         $betas = omit,
         ?RequestOptions $requestOptions = null
     ): BetaModelInfo {
-        $args = Util::array_filter_omit(['betas' => $betas]);
         [$parsed, $options] = ModelRetrieveParams::parseRequest(
-            $args,
+            ['betas' => $betas],
             $requestOptions
         );
         $resp = $this->client->request(
@@ -70,15 +69,15 @@ final class ModelsService implements ModelsContract
         $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): BetaModelInfo {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = ModelListParams::parseRequest(
             [
                 'afterID' => $afterID,
                 'beforeID' => $beforeID,
                 'limit' => $limit,
                 'betas' => $betas,
             ],
+            $requestOptions,
         );
-        [$parsed, $options] = ModelListParams::parseRequest($args, $requestOptions);
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
 
         /** @var array<string, string> */

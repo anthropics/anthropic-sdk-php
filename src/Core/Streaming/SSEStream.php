@@ -18,6 +18,9 @@ final class SSEStream extends AbstractStream
 {
     protected function parsedGenerator(): \Generator
     {
+        if (!$this->stream->valid()) {
+            return;
+        }
         foreach ($this->stream as $chunk) {
             switch ($chunk['event'] ?? '') {
                 case 'completion':
@@ -28,16 +31,23 @@ final class SSEStream extends AbstractStream
                 case 'content_block_delta':
                 case 'content_block_stop':
                     if (isset($chunk['data'])) {
-                        $parsed = json_decode($chunk['data'], true);
+                        $decoded = json_decode($chunk['data'], associative: true, flags: JSON_THROW_ON_ERROR);
 
-                        yield Conversion::coerce($this->decodeTarget, $parsed);
+                        yield Conversion::coerce($this->decodeTarget, value: $decoded);
                     }
 
                     break;
 
                 case 'ping': break;
 
-                case 'error': throw new \Exception; // TODO improve this error
+                case 'error':
+                    if (isset($chunk['data'])) {
+                        $message = json_encode(json_decode($chunk['data']), JSON_PRETTY_PRINT) ?: '';
+
+                        throw new \RuntimeException($message);
+                    }
+
+                    break;
             }
         }
     }

@@ -39,15 +39,15 @@ final class FilesService implements FilesContract
         $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): FileMetadata {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = FileListParams::parseRequest(
             [
                 'afterID' => $afterID,
                 'beforeID' => $beforeID,
                 'limit' => $limit,
                 'betas' => $betas,
             ],
+            $requestOptions,
         );
-        [$parsed, $options] = FileListParams::parseRequest($args, $requestOptions);
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
 
         /** @var array<string, string> */
@@ -80,9 +80,8 @@ final class FilesService implements FilesContract
         $betas = omit,
         ?RequestOptions $requestOptions = null
     ): DeletedFile {
-        $args = Util::array_filter_omit(['betas' => $betas]);
         [$parsed, $options] = FileDeleteParams::parseRequest(
-            $args,
+            ['betas' => $betas],
             $requestOptions
         );
         $resp = $this->client->request(
@@ -112,9 +111,8 @@ final class FilesService implements FilesContract
         $betas = omit,
         ?RequestOptions $requestOptions = null
     ): FileMetadata {
-        $args = Util::array_filter_omit(['betas' => $betas]);
         [$parsed, $options] = FileRetrieveMetadataParams::parseRequest(
-            $args,
+            ['betas' => $betas],
             $requestOptions
         );
         $resp = $this->client->request(

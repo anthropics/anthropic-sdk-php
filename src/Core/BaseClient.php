@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Core;
 
-use Anthropic\Errors\APIStatusError;
+use Anthropic\Core\Errors\APIStatusError;
 use Anthropic\RequestOptions;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;

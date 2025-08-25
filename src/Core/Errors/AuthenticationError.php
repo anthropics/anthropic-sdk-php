@@ -1,6 +1,6 @@
 <?php
 
-namespace Anthropic\Errors;
+namespace Anthropic\Core\Errors;
 
 class AuthenticationError extends APIStatusError
 {

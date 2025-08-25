@@ -9,7 +9,6 @@ use Anthropic\Contracts\MessagesContract;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Streaming\SSEStream;
-use Anthropic\Core\Util;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCountTokensParams;
 use Anthropic\Messages\MessageCreateParams;
@@ -242,7 +241,7 @@ final class MessagesService implements MessagesContract
         $topP = omit,
         ?RequestOptions $requestOptions = null,
     ): Message {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = MessageCreateParams::parseRequest(
             [
                 'maxTokens' => $maxTokens,
                 'messages' => $messages,
@@ -258,10 +257,7 @@ final class MessagesService implements MessagesContract
                 'topK' => $topK,
                 'topP' => $topP,
             ],
-        );
-        [$parsed, $options] = MessageCreateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',
@@ -462,7 +458,7 @@ final class MessagesService implements MessagesContract
         $topP = omit,
         ?RequestOptions $requestOptions = null,
     ): BaseStream {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = MessageCreateParams::parseRequest(
             [
                 'maxTokens' => $maxTokens,
                 'messages' => $messages,
@@ -478,10 +474,7 @@ final class MessagesService implements MessagesContract
                 'topK' => $topK,
                 'topP' => $topP,
             ],
-        );
-        [$parsed, $options] = MessageCreateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $parsed['stream'] = true;
         $resp = $this->client->request(
@@ -649,7 +642,7 @@ final class MessagesService implements MessagesContract
         $tools = omit,
         ?RequestOptions $requestOptions = null,
     ): MessageTokensCount {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = MessageCountTokensParams::parseRequest(
             [
                 'messages' => $messages,
                 'model' => $model,
@@ -658,10 +651,7 @@ final class MessagesService implements MessagesContract
                 'toolChoice' => $toolChoice,
                 'tools' => $tools,
             ],
-        );
-        [$parsed, $options] = MessageCountTokensParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',

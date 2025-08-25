@@ -6,7 +6,7 @@ namespace Anthropic\Core\Pagination;
 
 use Anthropic\Core\BaseClient;
 use Anthropic\Core\Contracts\BasePage;
-use Anthropic\Errors\Error;
+use Anthropic\Core\Errors\APIStatusError;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -14,9 +14,9 @@ use Psr\Http\Message\ResponseInterface;
  *
  * @template Item
  *
- * @implements \IteratorAggregate<Item>
+ * @implements BasePage<Item>
  */
-abstract class AbstractPage implements \IteratorAggregate, BasePage
+abstract class AbstractPage implements BasePage
 {
     public function __construct(
         protected BaseClient $client,
@@ -24,8 +24,6 @@ abstract class AbstractPage implements \IteratorAggregate, BasePage
         protected ResponseInterface $response,
         protected mixed $body,
     ) {}
-
-    abstract public function nextPageRequestOptions(): ?PageRequestOptions;
 
     /**
      * @return list<Item>
@@ -49,13 +47,13 @@ abstract class AbstractPage implements \IteratorAggregate, BasePage
      *
      * @return static of AbstractPage<Item>
      *
-     * @throws Error
+     * @throws APIStatusError
      */
     public function getNextPage(): static
     {
         $nextOptions = $this->nextPageRequestOptions();
         if (!$nextOptions) {
-            throw new Error(
+            throw new \RuntimeException(
                 'No next page expected; please check `.hasNextPage()` before calling `.getNextPage()`.'
             );
         }
@@ -78,7 +76,7 @@ abstract class AbstractPage implements \IteratorAggregate, BasePage
      *
      * @return \Generator<static>
      */
-    public function iterPages(): \Generator
+    public function getIterator(): \Generator
     {
         $page = $this;
 
@@ -95,12 +93,14 @@ abstract class AbstractPage implements \IteratorAggregate, BasePage
      *
      * @return \Generator<Item>
      */
-    public function getIterator(): \Generator
+    public function pagingEachItem(): \Generator
     {
-        foreach ($this->iterPages() as $page) {
+        foreach ($this as $page) {
             foreach ($page->getPaginatedItems() as $item) {
                 yield $item;
             }
         }
     }
+
+    abstract protected function nextPageRequestOptions(): ?PageRequestOptions;
 }
