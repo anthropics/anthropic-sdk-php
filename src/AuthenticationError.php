@@ -2,35 +2,34 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Messages\Batches;
+namespace Anthropic;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\ErrorResponse;
 
-final class MessageBatchErroredResult implements BaseModel
+final class AuthenticationError implements BaseModel
 {
     use SdkModel;
 
     #[Api]
-    public string $type = 'errored';
+    public string $type = 'authentication_error';
 
     #[Api]
-    public ErrorResponse $error;
+    public string $message;
 
     /**
-     * `new MessageBatchErroredResult()` is missing required properties by the API.
+     * `new AuthenticationError()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * MessageBatchErroredResult::with(error: ...)
+     * AuthenticationError::with(message: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MessageBatchErroredResult)->withError(...)
+     * (new AuthenticationError)->withMessage(...)
      * ```
      */
     public function __construct()
@@ -44,19 +43,19 @@ final class MessageBatchErroredResult implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(ErrorResponse $error): self
+    public static function with(string $message = 'Authentication error'): self
     {
         $obj = new self;
 
-        $obj->error = $error;
+        $obj->message = $message;
 
         return $obj;
     }
 
-    public function withError(ErrorResponse $error): self
+    public function withMessage(string $message): self
     {
         $obj = clone $this;
-        $obj->error = $error;
+        $obj->message = $message;
 
         return $obj;
     }

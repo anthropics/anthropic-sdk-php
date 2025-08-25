@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Anthropic;
 
 use Anthropic\Core\BaseClient;
-use Anthropic\Services\BetaService;
-use Anthropic\Services\MessagesService;
-use Anthropic\Services\ModelsService;
+use Anthropic\Core\Services\BetaService;
+use Anthropic\Core\Services\MessagesService;
+use Anthropic\Core\Services\ModelsService;
 
 class Client extends BaseClient
 {
