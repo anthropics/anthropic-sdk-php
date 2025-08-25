@@ -9,6 +9,8 @@ use Anthropic\Beta\Files\DeletedFile;
 use Anthropic\Beta\Files\FileMetadata;
 use Anthropic\RequestOptions;
 
+use const Anthropic\Core\OMIT as omit;
+
 interface FilesContract
 {
     /**
@@ -20,10 +22,10 @@ interface FilesContract
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function list(
-        $afterID = null,
-        $beforeID = null,
-        $limit = null,
-        $betas = null,
+        $afterID = omit,
+        $beforeID = omit,
+        $limit = omit,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): FileMetadata;
 
@@ -32,7 +34,7 @@ interface FilesContract
      */
     public function delete(
         string $fileID,
-        $betas = null,
+        $betas = omit,
         ?RequestOptions $requestOptions = null
     ): DeletedFile;
 
@@ -41,7 +43,7 @@ interface FilesContract
      */
     public function retrieveMetadata(
         string $fileID,
-        $betas = null,
+        $betas = omit,
         ?RequestOptions $requestOptions = null
     ): FileMetadata;
 }

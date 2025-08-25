@@ -14,6 +14,8 @@ use Anthropic\Models\ModelListParams;
 use Anthropic\Models\ModelRetrieveParams;
 use Anthropic\RequestOptions;
 
+use const Anthropic\Core\OMIT as omit;
+
 final class ModelsService implements ModelsContract
 {
     public function __construct(private Client $client) {}
@@ -27,11 +29,10 @@ final class ModelsService implements ModelsContract
      */
     public function retrieve(
         string $modelID,
-        $betas = null,
+        $betas = omit,
         ?RequestOptions $requestOptions = null
     ): ModelInfo {
-        $args = ['betas' => $betas];
-        $args = Util::array_filter_null($args, ['betas']);
+        $args = Util::array_filter_omit(['betas' => $betas]);
         [$parsed, $options] = ModelRetrieveParams::parseRequest(
             $args,
             $requestOptions
@@ -63,21 +64,19 @@ final class ModelsService implements ModelsContract
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function list(
-        $afterID = null,
-        $beforeID = null,
-        $limit = null,
-        $betas = null,
+        $afterID = omit,
+        $beforeID = omit,
+        $limit = omit,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): ModelInfo {
-        $args = [
-            'afterID' => $afterID,
-            'beforeID' => $beforeID,
-            'limit' => $limit,
-            'betas' => $betas,
-        ];
-        $args = Util::array_filter_null(
-            $args,
-            ['afterID', 'beforeID', 'limit', 'betas']
+        $args = Util::array_filter_omit(
+            [
+                'afterID' => $afterID,
+                'beforeID' => $beforeID,
+                'limit' => $limit,
+                'betas' => $betas,
+            ],
         );
         [$parsed, $options] = ModelListParams::parseRequest($args, $requestOptions);
         $query_params = array_flip(['after_id', 'before_id', 'limit']);

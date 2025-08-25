@@ -12,6 +12,8 @@ use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Core\Contracts\CloseableStream;
 use Anthropic\RequestOptions;
 
+use const Anthropic\Core\OMIT as omit;
+
 interface BatchesContract
 {
     /**
@@ -20,7 +22,7 @@ interface BatchesContract
      */
     public function create(
         $requests,
-        $betas = null,
+        $betas = omit,
         ?RequestOptions $requestOptions = null
     ): MessageBatch;
 
@@ -29,7 +31,7 @@ interface BatchesContract
      */
     public function retrieve(
         string $messageBatchID,
-        $betas = null,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch;
 
@@ -42,10 +44,10 @@ interface BatchesContract
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function list(
-        $afterID = null,
-        $beforeID = null,
-        $limit = null,
-        $betas = null,
+        $afterID = omit,
+        $beforeID = omit,
+        $limit = omit,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch;
 
@@ -54,7 +56,7 @@ interface BatchesContract
      */
     public function delete(
         string $messageBatchID,
-        $betas = null,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): DeletedMessageBatch;
 
@@ -63,7 +65,7 @@ interface BatchesContract
      */
     public function cancel(
         string $messageBatchID,
-        $betas = null,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch;
 
@@ -72,7 +74,7 @@ interface BatchesContract
      */
     public function results(
         string $messageBatchID,
-        $betas = null,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): MessageBatchIndividualResponse;
 
@@ -83,7 +85,7 @@ interface BatchesContract
      */
     public function resultsStream(
         string $messageBatchID,
-        $betas = null,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): CloseableStream;
 }

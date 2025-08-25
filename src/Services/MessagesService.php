@@ -41,6 +41,8 @@ use Anthropic\Messages\WebSearchTool20250305;
 use Anthropic\RequestOptions;
 use Anthropic\Services\Messages\BatchesService;
 
+use const Anthropic\Core\OMIT as omit;
+
 final class MessagesService implements MessagesContract
 {
     public BatchesService $batches;
@@ -228,46 +230,33 @@ final class MessagesService implements MessagesContract
         $maxTokens,
         $messages,
         $model,
-        $metadata = null,
-        $serviceTier = null,
-        $stopSequences = null,
-        $system = null,
-        $temperature = null,
-        $thinking = null,
-        $toolChoice = null,
-        $tools = null,
-        $topK = null,
-        $topP = null,
+        $metadata = omit,
+        $serviceTier = omit,
+        $stopSequences = omit,
+        $system = omit,
+        $temperature = omit,
+        $thinking = omit,
+        $toolChoice = omit,
+        $tools = omit,
+        $topK = omit,
+        $topP = omit,
         ?RequestOptions $requestOptions = null,
     ): Message {
-        $args = [
-            'maxTokens' => $maxTokens,
-            'messages' => $messages,
-            'model' => $model,
-            'metadata' => $metadata,
-            'serviceTier' => $serviceTier,
-            'stopSequences' => $stopSequences,
-            'system' => $system,
-            'temperature' => $temperature,
-            'thinking' => $thinking,
-            'toolChoice' => $toolChoice,
-            'tools' => $tools,
-            'topK' => $topK,
-            'topP' => $topP,
-        ];
-        $args = Util::array_filter_null(
-            $args,
+        $args = Util::array_filter_omit(
             [
-                'metadata',
-                'serviceTier',
-                'stopSequences',
-                'system',
-                'temperature',
-                'thinking',
-                'toolChoice',
-                'tools',
-                'topK',
-                'topP',
+                'maxTokens' => $maxTokens,
+                'messages' => $messages,
+                'model' => $model,
+                'metadata' => $metadata,
+                'serviceTier' => $serviceTier,
+                'stopSequences' => $stopSequences,
+                'system' => $system,
+                'temperature' => $temperature,
+                'thinking' => $thinking,
+                'toolChoice' => $toolChoice,
+                'tools' => $tools,
+                'topK' => $topK,
+                'topP' => $topP,
             ],
         );
         [$parsed, $options] = MessageCreateParams::parseRequest(
@@ -461,46 +450,33 @@ final class MessagesService implements MessagesContract
         $maxTokens,
         $messages,
         $model,
-        $metadata = null,
-        $serviceTier = null,
-        $stopSequences = null,
-        $system = null,
-        $temperature = null,
-        $thinking = null,
-        $toolChoice = null,
-        $tools = null,
-        $topK = null,
-        $topP = null,
+        $metadata = omit,
+        $serviceTier = omit,
+        $stopSequences = omit,
+        $system = omit,
+        $temperature = omit,
+        $thinking = omit,
+        $toolChoice = omit,
+        $tools = omit,
+        $topK = omit,
+        $topP = omit,
         ?RequestOptions $requestOptions = null,
     ): CloseableStream {
-        $args = [
-            'maxTokens' => $maxTokens,
-            'messages' => $messages,
-            'model' => $model,
-            'metadata' => $metadata,
-            'serviceTier' => $serviceTier,
-            'stopSequences' => $stopSequences,
-            'system' => $system,
-            'temperature' => $temperature,
-            'thinking' => $thinking,
-            'toolChoice' => $toolChoice,
-            'tools' => $tools,
-            'topK' => $topK,
-            'topP' => $topP,
-        ];
-        $args = Util::array_filter_null(
-            $args,
+        $args = Util::array_filter_omit(
             [
-                'metadata',
-                'serviceTier',
-                'stopSequences',
-                'system',
-                'temperature',
-                'thinking',
-                'toolChoice',
-                'tools',
-                'topK',
-                'topP',
+                'maxTokens' => $maxTokens,
+                'messages' => $messages,
+                'model' => $model,
+                'metadata' => $metadata,
+                'serviceTier' => $serviceTier,
+                'stopSequences' => $stopSequences,
+                'system' => $system,
+                'temperature' => $temperature,
+                'thinking' => $thinking,
+                'toolChoice' => $toolChoice,
+                'tools' => $tools,
+                'topK' => $topK,
+                'topP' => $topP,
             ],
         );
         [$parsed, $options] = MessageCreateParams::parseRequest(
@@ -667,23 +643,21 @@ final class MessagesService implements MessagesContract
     public function countTokens(
         $messages,
         $model,
-        $system = null,
-        $thinking = null,
-        $toolChoice = null,
-        $tools = null,
+        $system = omit,
+        $thinking = omit,
+        $toolChoice = omit,
+        $tools = omit,
         ?RequestOptions $requestOptions = null,
     ): MessageTokensCount {
-        $args = [
-            'messages' => $messages,
-            'model' => $model,
-            'system' => $system,
-            'thinking' => $thinking,
-            'toolChoice' => $toolChoice,
-            'tools' => $tools,
-        ];
-        $args = Util::array_filter_null(
-            $args,
-            ['system', 'thinking', 'toolChoice', 'tools']
+        $args = Util::array_filter_omit(
+            [
+                'messages' => $messages,
+                'model' => $model,
+                'system' => $system,
+                'thinking' => $thinking,
+                'toolChoice' => $toolChoice,
+                'tools' => $tools,
+            ],
         );
         [$parsed, $options] = MessageCountTokensParams::parseRequest(
             $args,

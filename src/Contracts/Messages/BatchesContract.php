@@ -11,6 +11,8 @@ use Anthropic\Messages\Batches\MessageBatch;
 use Anthropic\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\RequestOptions;
 
+use const Anthropic\Core\OMIT as omit;
+
 interface BatchesContract
 {
     /**
@@ -34,9 +36,9 @@ interface BatchesContract
      * Defaults to `20`. Ranges from `1` to `1000`.
      */
     public function list(
-        $afterID = null,
-        $beforeID = null,
-        $limit = null,
+        $afterID = omit,
+        $beforeID = omit,
+        $limit = omit,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch;
 

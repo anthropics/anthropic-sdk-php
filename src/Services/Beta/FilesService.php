@@ -16,6 +16,8 @@ use Anthropic\Core\Conversion;
 use Anthropic\Core\Util;
 use Anthropic\RequestOptions;
 
+use const Anthropic\Core\OMIT as omit;
+
 final class FilesService implements FilesContract
 {
     public function __construct(private Client $client) {}
@@ -31,21 +33,19 @@ final class FilesService implements FilesContract
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function list(
-        $afterID = null,
-        $beforeID = null,
-        $limit = null,
-        $betas = null,
+        $afterID = omit,
+        $beforeID = omit,
+        $limit = omit,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): FileMetadata {
-        $args = [
-            'afterID' => $afterID,
-            'beforeID' => $beforeID,
-            'limit' => $limit,
-            'betas' => $betas,
-        ];
-        $args = Util::array_filter_null(
-            $args,
-            ['afterID', 'beforeID', 'limit', 'betas']
+        $args = Util::array_filter_omit(
+            [
+                'afterID' => $afterID,
+                'beforeID' => $beforeID,
+                'limit' => $limit,
+                'betas' => $betas,
+            ],
         );
         [$parsed, $options] = FileListParams::parseRequest($args, $requestOptions);
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
@@ -77,11 +77,10 @@ final class FilesService implements FilesContract
      */
     public function delete(
         string $fileID,
-        $betas = null,
+        $betas = omit,
         ?RequestOptions $requestOptions = null
     ): DeletedFile {
-        $args = ['betas' => $betas];
-        $args = Util::array_filter_null($args, ['betas']);
+        $args = Util::array_filter_omit(['betas' => $betas]);
         [$parsed, $options] = FileDeleteParams::parseRequest(
             $args,
             $requestOptions
@@ -110,11 +109,10 @@ final class FilesService implements FilesContract
      */
     public function retrieveMetadata(
         string $fileID,
-        $betas = null,
+        $betas = omit,
         ?RequestOptions $requestOptions = null
     ): FileMetadata {
-        $args = ['betas' => $betas];
-        $args = Util::array_filter_null($args, ['betas']);
+        $args = Util::array_filter_omit(['betas' => $betas]);
         [$parsed, $options] = FileRetrieveMetadataParams::parseRequest(
             $args,
             $requestOptions

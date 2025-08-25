@@ -18,6 +18,8 @@ use Anthropic\Messages\Batches\MessageBatch;
 use Anthropic\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\RequestOptions;
 
+use const Anthropic\Core\OMIT as omit;
+
 final class BatchesService implements BatchesContract
 {
     public function __construct(private Client $client) {}
@@ -82,13 +84,14 @@ final class BatchesService implements BatchesContract
      * Defaults to `20`. Ranges from `1` to `1000`.
      */
     public function list(
-        $afterID = null,
-        $beforeID = null,
-        $limit = null,
+        $afterID = omit,
+        $beforeID = omit,
+        $limit = omit,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch {
-        $args = ['afterID' => $afterID, 'beforeID' => $beforeID, 'limit' => $limit];
-        $args = Util::array_filter_null($args, ['afterID', 'beforeID', 'limit']);
+        $args = Util::array_filter_omit(
+            ['afterID' => $afterID, 'beforeID' => $beforeID, 'limit' => $limit]
+        );
         [$parsed, $options] = BatchListParams::parseRequest($args, $requestOptions);
         $resp = $this->client->request(
             method: 'get',

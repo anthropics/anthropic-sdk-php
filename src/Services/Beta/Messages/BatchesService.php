@@ -23,6 +23,8 @@ use Anthropic\Core\Streaming\SSEStream;
 use Anthropic\Core\Util;
 use Anthropic\RequestOptions;
 
+use const Anthropic\Core\OMIT as omit;
+
 final class BatchesService implements BatchesContract
 {
     public function __construct(private Client $client) {}
@@ -39,11 +41,12 @@ final class BatchesService implements BatchesContract
      */
     public function create(
         $requests,
-        $betas = null,
+        $betas = omit,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
-        $args = ['requests' => $requests, 'betas' => $betas];
-        $args = Util::array_filter_null($args, ['betas']);
+        $args = Util::array_filter_omit(
+            ['requests' => $requests, 'betas' => $betas]
+        );
         [$parsed, $options] = BatchCreateParams::parseRequest(
             $args,
             $requestOptions
@@ -76,11 +79,10 @@ final class BatchesService implements BatchesContract
      */
     public function retrieve(
         string $messageBatchID,
-        $betas = null,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch {
-        $args = ['betas' => $betas];
-        $args = Util::array_filter_null($args, ['betas']);
+        $args = Util::array_filter_omit(['betas' => $betas]);
         [$parsed, $options] = BatchRetrieveParams::parseRequest(
             $args,
             $requestOptions
@@ -115,21 +117,19 @@ final class BatchesService implements BatchesContract
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function list(
-        $afterID = null,
-        $beforeID = null,
-        $limit = null,
-        $betas = null,
+        $afterID = omit,
+        $beforeID = omit,
+        $limit = omit,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch {
-        $args = [
-            'afterID' => $afterID,
-            'beforeID' => $beforeID,
-            'limit' => $limit,
-            'betas' => $betas,
-        ];
-        $args = Util::array_filter_null(
-            $args,
-            ['afterID', 'beforeID', 'limit', 'betas']
+        $args = Util::array_filter_omit(
+            [
+                'afterID' => $afterID,
+                'beforeID' => $beforeID,
+                'limit' => $limit,
+                'betas' => $betas,
+            ],
         );
         [$parsed, $options] = BatchListParams::parseRequest($args, $requestOptions);
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
@@ -165,11 +165,10 @@ final class BatchesService implements BatchesContract
      */
     public function delete(
         string $messageBatchID,
-        $betas = null,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): DeletedMessageBatch {
-        $args = ['betas' => $betas];
-        $args = Util::array_filter_null($args, ['betas']);
+        $args = Util::array_filter_omit(['betas' => $betas]);
         [$parsed, $options] = BatchDeleteParams::parseRequest(
             $args,
             $requestOptions
@@ -202,11 +201,10 @@ final class BatchesService implements BatchesContract
      */
     public function cancel(
         string $messageBatchID,
-        $betas = null,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch {
-        $args = ['betas' => $betas];
-        $args = Util::array_filter_null($args, ['betas']);
+        $args = Util::array_filter_omit(['betas' => $betas]);
         [$parsed, $options] = BatchCancelParams::parseRequest(
             $args,
             $requestOptions
@@ -239,11 +237,10 @@ final class BatchesService implements BatchesContract
      */
     public function results(
         string $messageBatchID,
-        $betas = null,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): MessageBatchIndividualResponse {
-        $args = ['betas' => $betas];
-        $args = Util::array_filter_null($args, ['betas']);
+        $args = Util::array_filter_omit(['betas' => $betas]);
         [$parsed, $options] = BatchResultsParams::parseRequest(
             $args,
             $requestOptions
@@ -275,11 +272,10 @@ final class BatchesService implements BatchesContract
      */
     public function resultsStream(
         string $messageBatchID,
-        $betas = null,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): CloseableStream {
-        $args = ['betas' => $betas];
-        $args = Util::array_filter_null($args, ['betas']);
+        $args = Util::array_filter_omit(['betas' => $betas]);
         [$parsed, $options] = BatchResultsParams::parseRequest(
             $args,
             $requestOptions

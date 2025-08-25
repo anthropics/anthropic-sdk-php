@@ -32,6 +32,8 @@ use Anthropic\Messages\ToolTextEditor20250728;
 use Anthropic\Messages\WebSearchTool20250305;
 use Anthropic\RequestOptions;
 
+use const Anthropic\Core\OMIT as omit;
+
 interface MessagesContract
 {
     /**
@@ -206,16 +208,16 @@ interface MessagesContract
         $maxTokens,
         $messages,
         $model,
-        $metadata = null,
-        $serviceTier = null,
-        $stopSequences = null,
-        $system = null,
-        $temperature = null,
-        $thinking = null,
-        $toolChoice = null,
-        $tools = null,
-        $topK = null,
-        $topP = null,
+        $metadata = omit,
+        $serviceTier = omit,
+        $stopSequences = omit,
+        $system = omit,
+        $temperature = omit,
+        $thinking = omit,
+        $toolChoice = omit,
+        $tools = omit,
+        $topK = omit,
+        $topP = omit,
         ?RequestOptions $requestOptions = null,
     ): Message;
 
@@ -395,16 +397,16 @@ interface MessagesContract
         $maxTokens,
         $messages,
         $model,
-        $metadata = null,
-        $serviceTier = null,
-        $stopSequences = null,
-        $system = null,
-        $temperature = null,
-        $thinking = null,
-        $toolChoice = null,
-        $tools = null,
-        $topK = null,
-        $topP = null,
+        $metadata = omit,
+        $serviceTier = omit,
+        $stopSequences = omit,
+        $system = omit,
+        $temperature = omit,
+        $thinking = omit,
+        $toolChoice = omit,
+        $tools = omit,
+        $topK = omit,
+        $topP = omit,
         ?RequestOptions $requestOptions = null,
     ): CloseableStream;
 
@@ -550,10 +552,10 @@ interface MessagesContract
     public function countTokens(
         $messages,
         $model,
-        $system = null,
-        $thinking = null,
-        $toolChoice = null,
-        $tools = null,
+        $system = omit,
+        $thinking = omit,
+        $toolChoice = omit,
+        $tools = omit,
         ?RequestOptions $requestOptions = null,
     ): MessageTokensCount;
 }

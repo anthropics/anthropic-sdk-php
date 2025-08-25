@@ -8,6 +8,8 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Models\ModelInfo;
 use Anthropic\RequestOptions;
 
+use const Anthropic\Core\OMIT as omit;
+
 interface ModelsContract
 {
     /**
@@ -15,7 +17,7 @@ interface ModelsContract
      */
     public function retrieve(
         string $modelID,
-        $betas = null,
+        $betas = omit,
         ?RequestOptions $requestOptions = null
     ): ModelInfo;
 
@@ -28,10 +30,10 @@ interface ModelsContract
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function list(
-        $afterID = null,
-        $beforeID = null,
-        $limit = null,
-        $betas = null,
+        $afterID = omit,
+        $beforeID = omit,
+        $limit = omit,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): ModelInfo;
 }

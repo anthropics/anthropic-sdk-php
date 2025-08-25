@@ -39,6 +39,8 @@ use Anthropic\Core\Contracts\CloseableStream;
 use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
 
+use const Anthropic\Core\OMIT as omit;
+
 interface MessagesContract
 {
     /**
@@ -216,19 +218,19 @@ interface MessagesContract
         $maxTokens,
         $messages,
         $model,
-        $container = null,
-        $mcpServers = null,
-        $metadata = null,
-        $serviceTier = null,
-        $stopSequences = null,
-        $system = null,
-        $temperature = null,
-        $thinking = null,
-        $toolChoice = null,
-        $tools = null,
-        $topK = null,
-        $topP = null,
-        $betas = null,
+        $container = omit,
+        $mcpServers = omit,
+        $metadata = omit,
+        $serviceTier = omit,
+        $stopSequences = omit,
+        $system = omit,
+        $temperature = omit,
+        $thinking = omit,
+        $toolChoice = omit,
+        $tools = omit,
+        $topK = omit,
+        $topP = omit,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): BetaMessage;
 
@@ -411,19 +413,19 @@ interface MessagesContract
         $maxTokens,
         $messages,
         $model,
-        $container = null,
-        $mcpServers = null,
-        $metadata = null,
-        $serviceTier = null,
-        $stopSequences = null,
-        $system = null,
-        $temperature = null,
-        $thinking = null,
-        $toolChoice = null,
-        $tools = null,
-        $topK = null,
-        $topP = null,
-        $betas = null,
+        $container = omit,
+        $mcpServers = omit,
+        $metadata = omit,
+        $serviceTier = omit,
+        $stopSequences = omit,
+        $system = omit,
+        $temperature = omit,
+        $thinking = omit,
+        $toolChoice = omit,
+        $tools = omit,
+        $topK = omit,
+        $topP = omit,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): CloseableStream;
 
@@ -571,12 +573,12 @@ interface MessagesContract
     public function countTokens(
         $messages,
         $model,
-        $mcpServers = null,
-        $system = null,
-        $thinking = null,
-        $toolChoice = null,
-        $tools = null,
-        $betas = null,
+        $mcpServers = omit,
+        $system = omit,
+        $thinking = omit,
+        $toolChoice = omit,
+        $tools = omit,
+        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): BetaMessageTokensCount;
 }

@@ -349,19 +349,12 @@ final class Util
 
     /**
      * @param array<string, mixed> $arr
-     * @param list<string> $keys
      *
      * @return array<string, mixed>
      */
-    public static function array_filter_null(array $arr, array $keys): array
+    public static function array_filter_omit(array $arr): array
     {
-        foreach ($keys as $key) {
-            if (array_key_exists($key, $arr) && is_null($arr[$key])) {
-                unset($arr[$key]);
-            }
-        }
-
-        return $arr;
+        return array_filter($arr, fn ($v, $_) => OMIT !== $v, ARRAY_FILTER_USE_BOTH);
     }
 
     /**
