@@ -7,9 +7,9 @@ namespace Anthropic\Core\Contracts;
 /**
  * @template TInner
  *
- * @extends \IteratorAggregate<int,TInner>
+ * @extends \IteratorAggregate<int, TInner>
  */
-interface CloseableStream extends \IteratorAggregate
+interface BaseStream extends \IteratorAggregate
 {
     /**
      * Manually force the stream to close early.

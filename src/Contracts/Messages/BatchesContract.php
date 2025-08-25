@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts\Messages;
 
-use Anthropic\Core\Contracts\CloseableStream;
+use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Messages\Batches\MessageBatch;
@@ -58,10 +58,10 @@ interface BatchesContract
     ): MessageBatchIndividualResponse;
 
     /**
-     * @return CloseableStream<MessageBatchIndividualResponse>
+     * @return BaseStream<MessageBatchIndividualResponse>
      */
     public function resultsStream(
         string $messageBatchID,
         ?RequestOptions $requestOptions = null
-    ): CloseableStream;
+    ): BaseStream;
 }

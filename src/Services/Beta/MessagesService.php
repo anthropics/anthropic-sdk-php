@@ -40,7 +40,7 @@ use Anthropic\Beta\Messages\MessageCreateParams;
 use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Client;
 use Anthropic\Contracts\Beta\MessagesContract;
-use Anthropic\Core\Contracts\CloseableStream;
+use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Streaming\SSEStream;
 use Anthropic\Core\Util;
@@ -466,7 +466,7 @@ final class MessagesService implements MessagesContract
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return CloseableStream<
+     * @return BaseStream<
      *   BetaRawMessageStartEvent|BetaRawMessageDeltaEvent|BetaRawMessageStopEvent|BetaRawContentBlockStartEvent|BetaRawContentBlockDeltaEvent|BetaRawContentBlockStopEvent,
      * >
      */
@@ -488,7 +488,7 @@ final class MessagesService implements MessagesContract
         $topP = omit,
         $betas = omit,
         ?RequestOptions $requestOptions = null,
-    ): CloseableStream {
+    ): BaseStream {
         $args = Util::array_filter_omit(
             [
                 'maxTokens' => $maxTokens,
@@ -527,7 +527,7 @@ final class MessagesService implements MessagesContract
         );
 
         // @phpstan-ignore-next-line;
-        return new SSEStream(BetaRawMessageStreamEvent::class, $resp);
+        return new SSEStream(BetaRawMessageStreamEvent::class, stream: $resp);
     }
 
     /**

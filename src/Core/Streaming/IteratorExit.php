@@ -2,4 +2,4 @@
 
 namespace Anthropic\Core\Streaming;
 
-class IteratorExit extends \Exception {}
+class IteratorExit extends \Error {}

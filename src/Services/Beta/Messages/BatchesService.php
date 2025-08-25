@@ -17,7 +17,7 @@ use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Client;
 use Anthropic\Contracts\Beta\Messages\BatchesContract;
-use Anthropic\Core\Contracts\CloseableStream;
+use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Streaming\SSEStream;
 use Anthropic\Core\Util;
@@ -268,13 +268,13 @@ final class BatchesService implements BatchesContract
     /**
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return CloseableStream<MessageBatchIndividualResponse>
+     * @return BaseStream<MessageBatchIndividualResponse>
      */
     public function resultsStream(
         string $messageBatchID,
         $betas = omit,
         ?RequestOptions $requestOptions = null,
-    ): CloseableStream {
+    ): BaseStream {
         $args = Util::array_filter_omit(['betas' => $betas]);
         [$parsed, $options] = BatchResultsParams::parseRequest(
             $args,
@@ -294,6 +294,6 @@ final class BatchesService implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return new SSEStream(MessageBatchIndividualResponse::class, $resp);
+        return new SSEStream(MessageBatchIndividualResponse::class, stream: $resp);
     }
 }

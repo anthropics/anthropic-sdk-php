@@ -6,7 +6,7 @@ namespace Anthropic\Services\Messages;
 
 use Anthropic\Client;
 use Anthropic\Contracts\Messages\BatchesContract;
-use Anthropic\Core\Contracts\CloseableStream;
+use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Streaming\SSEStream;
 use Anthropic\Core\Util;
@@ -172,12 +172,12 @@ final class BatchesService implements BatchesContract
     }
 
     /**
-     * @return CloseableStream<MessageBatchIndividualResponse>
+     * @return BaseStream<MessageBatchIndividualResponse>
      */
     public function resultsStream(
         string $messageBatchID,
         ?RequestOptions $requestOptions = null
-    ): CloseableStream {
+    ): BaseStream {
         $resp = $this->client->request(
             method: 'get',
             path: ['v1/messages/batches/%1$s/results', $messageBatchID],
@@ -186,6 +186,6 @@ final class BatchesService implements BatchesContract
         );
 
         // @phpstan-ignore-next-line;
-        return new SSEStream(MessageBatchIndividualResponse::class, $resp);
+        return new SSEStream(MessageBatchIndividualResponse::class, stream: $resp);
     }
 }

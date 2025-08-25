@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Contracts;
 
-use Anthropic\Core\Contracts\CloseableStream;
+use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Messages\MessageParam;
@@ -389,7 +389,7 @@ interface MessagesContract
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      *
-     * @return CloseableStream<
+     * @return BaseStream<
      *   RawMessageStartEvent|RawMessageDeltaEvent|RawMessageStopEvent|RawContentBlockStartEvent|RawContentBlockDeltaEvent|RawContentBlockStopEvent,
      * >
      */
@@ -408,7 +408,7 @@ interface MessagesContract
         $topK = omit,
         $topP = omit,
         ?RequestOptions $requestOptions = null,
-    ): CloseableStream;
+    ): BaseStream;
 
     /**
      * @param list<MessageParam> $messages Input messages.

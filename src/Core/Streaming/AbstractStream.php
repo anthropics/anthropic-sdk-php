@@ -2,29 +2,31 @@
 
 namespace Anthropic\Core\Streaming;
 
+use Anthropic\Core\Contracts\BaseStream;
+
 /**
  * @internal
  *
  * @template TRaw mixed
  * @template TEvent
  *
- * @implements \IteratorAggregate<int,  TEvent>
+ * @implements BaseStream<TEvent>
  */
-abstract class BaseStream implements \IteratorAggregate
+abstract class AbstractStream implements BaseStream
 {
     /**
-     * @param \Generator< TEvent> $generator
+     * @param \Generator<TEvent> $generator
      */
     private \Generator $generator;
 
     /**
-     * @param \Generator<TRaw> $rawStream
+     * @param \Generator<TRaw> $stream
      */
     public function __construct(
         protected string $decodeTarget,
-        \Generator $rawStream,
+        protected \Generator $stream,
     ) {
-        $this->generator = $this->parsedGenerator($rawStream);
+        $this->generator = $this->parsedGenerator();
     }
 
     /**
@@ -38,15 +40,12 @@ abstract class BaseStream implements \IteratorAggregate
     public function close(): void
     {
         try {
-            $this->generator->throw(new IteratorExit);
+            $this->stream->throw(new IteratorExit);
         } catch (IteratorExit $_) {
             // IteratorExit shouldn't be noticed.
             return;
         }
     }
 
-    /**
-     * @param \Generator<TRaw> $rawStream
-     */
-    abstract public function parsedGenerator(\Generator $rawStream): \Generator;
+    abstract protected function parsedGenerator(): \Generator;
 }

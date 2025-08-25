@@ -7,18 +7,18 @@ use Anthropic\Core\Conversion;
 /**
  * @template TItem
  *
- * @extends BaseStream<
+ * @extends AbstractStream<
  *   array{
  *     event?: string|null, data?: string|null, id?: string|null, retry?: int|null
  *   },
  *   TItem,
  * >
  */
-final class SSEStream extends BaseStream
+final class SSEStream extends AbstractStream
 {
-    public function parsedGenerator(\Generator $rawStream): \Generator
+    protected function parsedGenerator(): \Generator
     {
-        foreach ($rawStream as $chunk) {
+        foreach ($this->stream as $chunk) {
             switch ($chunk['event'] ?? '') {
                 case 'completion':
                 case 'message_start':

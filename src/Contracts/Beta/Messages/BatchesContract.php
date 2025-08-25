@@ -9,7 +9,7 @@ use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\Beta\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
-use Anthropic\Core\Contracts\CloseableStream;
+use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\RequestOptions;
 
 use const Anthropic\Core\OMIT as omit;
@@ -81,11 +81,11 @@ interface BatchesContract
     /**
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return CloseableStream<MessageBatchIndividualResponse>
+     * @return BaseStream<MessageBatchIndividualResponse>
      */
     public function resultsStream(
         string $messageBatchID,
         $betas = omit,
         ?RequestOptions $requestOptions = null,
-    ): CloseableStream;
+    ): BaseStream;
 }

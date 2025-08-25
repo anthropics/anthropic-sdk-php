@@ -35,7 +35,7 @@ use Anthropic\Beta\Messages\BetaToolTextEditor20250429;
 use Anthropic\Beta\Messages\BetaToolTextEditor20250728;
 use Anthropic\Beta\Messages\BetaWebSearchTool20250305;
 use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
-use Anthropic\Core\Contracts\CloseableStream;
+use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
 
@@ -405,7 +405,7 @@ interface MessagesContract
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return CloseableStream<
+     * @return BaseStream<
      *   BetaRawMessageStartEvent|BetaRawMessageDeltaEvent|BetaRawMessageStopEvent|BetaRawContentBlockStartEvent|BetaRawContentBlockDeltaEvent|BetaRawContentBlockStopEvent,
      * >
      */
@@ -427,7 +427,7 @@ interface MessagesContract
         $topP = omit,
         $betas = omit,
         ?RequestOptions $requestOptions = null,
-    ): CloseableStream;
+    ): BaseStream;
 
     /**
      * @param list<BetaMessageParam> $messages Input messages.
