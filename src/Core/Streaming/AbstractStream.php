@@ -3,6 +3,10 @@
 namespace Anthropic\Core\Streaming;
 
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Conversion\Contracts\Converter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @internal
@@ -23,7 +27,9 @@ abstract class AbstractStream implements BaseStream
      * @param \Generator<TRaw> $stream
      */
     public function __construct(
-        protected string $decodeTarget,
+        protected string|Converter|ConverterSource $convert,
+        protected RequestInterface $request,
+        protected ResponseInterface $response,
         protected \Generator $stream,
     ) {
         $this->generator = $this->parsedGenerator();

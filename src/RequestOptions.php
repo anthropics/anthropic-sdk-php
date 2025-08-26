@@ -88,7 +88,7 @@ class RequestOptions
     }
 
     /**
-     * @param array{
+     * @param RequestOptions|array{
      *   timeout?: float|null,
      *   maxRetries?: int|null,
      *   initialRetryDelay?: float|null,
@@ -96,9 +96,9 @@ class RequestOptions
      *   extraHeaders?: list<string>|null,
      *   extraQueryParams?: list<string>|null,
      *   extraBodyParams?: list<string>|null,
-     * }|RequestOptions|null $options
+     * }|null $options
      */
-    public static function parse(array|RequestOptions|null $options): self
+    public static function parse(RequestOptions|array|null $options): self
     {
         if (is_null($options)) {
             return new self;

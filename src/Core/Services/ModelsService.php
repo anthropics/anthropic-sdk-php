@@ -6,7 +6,7 @@ namespace Anthropic\Core\Services;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
-use Anthropic\Core\Conversion;
+use Anthropic\Core\Pagination\Page;
 use Anthropic\Core\ServiceContracts\ModelsContract;
 use Anthropic\Core\Util;
 use Anthropic\Models\ModelInfo;
@@ -36,7 +36,9 @@ final class ModelsService implements ModelsContract
             ['betas' => $betas],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['v1/models/%1$s', $modelID],
             headers: Util::array_transform_keys(
@@ -44,10 +46,8 @@ final class ModelsService implements ModelsContract
                 ['betas' => 'anthropic-beta']
             ),
             options: $options,
+            convert: ModelInfo::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(ModelInfo::class, value: $resp);
     }
 
     /**
@@ -82,7 +82,9 @@ final class ModelsService implements ModelsContract
 
         /** @var array<string, string> */
         $header_params = array_diff_key($parsed, $query_params);
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'v1/models',
             query: array_intersect_key($parsed, $query_params),
@@ -91,9 +93,8 @@ final class ModelsService implements ModelsContract
                 ['betas' => 'anthropic-beta']
             ),
             options: $options,
+            convert: ModelInfo::class,
+            page: Page::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(ModelInfo::class, value: $resp);
     }
 }

@@ -17,7 +17,7 @@ use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
-use Anthropic\Core\Conversion;
+use Anthropic\Core\Pagination\Page;
 use Anthropic\Core\ServiceContracts\Beta\Messages\BatchesContract;
 use Anthropic\Core\Streaming\SSEStream;
 use Anthropic\Core\Util;
@@ -49,7 +49,9 @@ final class BatchesService implements BatchesContract
             $requestOptions
         );
         $header_params = ['betas' => 'anthropic-beta'];
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'v1/messages/batches?beta=true',
             headers: Util::array_transform_keys(
@@ -61,10 +63,8 @@ final class BatchesService implements BatchesContract
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
+            convert: MessageBatch::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(MessageBatch::class, value: $resp);
     }
 
     /**
@@ -83,7 +83,9 @@ final class BatchesService implements BatchesContract
             ['betas' => $betas],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['v1/messages/batches/%1$s?beta=true', $messageBatchID],
             headers: Util::array_transform_keys(
@@ -94,10 +96,8 @@ final class BatchesService implements BatchesContract
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
+            convert: MessageBatch::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(MessageBatch::class, value: $resp);
     }
 
     /**
@@ -132,7 +132,9 @@ final class BatchesService implements BatchesContract
 
         /** @var array<string, string> */
         $header_params = array_diff_key($parsed, $query_params);
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'v1/messages/batches?beta=true',
             query: array_intersect_key($parsed, $query_params),
@@ -144,10 +146,9 @@ final class BatchesService implements BatchesContract
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
+            convert: MessageBatch::class,
+            page: Page::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(MessageBatch::class, value: $resp);
     }
 
     /**
@@ -168,7 +169,9 @@ final class BatchesService implements BatchesContract
             ['betas' => $betas],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'delete',
             path: ['v1/messages/batches/%1$s?beta=true', $messageBatchID],
             headers: Util::array_transform_keys(
@@ -179,10 +182,8 @@ final class BatchesService implements BatchesContract
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
+            convert: DeletedMessageBatch::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(DeletedMessageBatch::class, value: $resp);
     }
 
     /**
@@ -203,7 +204,9 @@ final class BatchesService implements BatchesContract
             ['betas' => $betas],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: ['v1/messages/batches/%1$s/cancel?beta=true', $messageBatchID],
             headers: Util::array_transform_keys(
@@ -214,10 +217,8 @@ final class BatchesService implements BatchesContract
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
+            convert: MessageBatch::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(MessageBatch::class, value: $resp);
     }
 
     /**
@@ -238,7 +239,9 @@ final class BatchesService implements BatchesContract
             ['betas' => $betas],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['v1/messages/batches/%1$s/results?beta=true', $messageBatchID],
             headers: Util::array_transform_keys(
@@ -249,12 +252,7 @@ final class BatchesService implements BatchesContract
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
-        );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(
-            MessageBatchIndividualResponse::class,
-            value: $resp
+            convert: MessageBatchIndividualResponse::class,
         );
     }
 
@@ -272,7 +270,9 @@ final class BatchesService implements BatchesContract
             ['betas' => $betas],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['v1/messages/batches/%1$s/results?beta=true', $messageBatchID],
             headers: Util::array_transform_keys(
@@ -283,9 +283,8 @@ final class BatchesService implements BatchesContract
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
+            convert: MessageBatchIndividualResponse::class,
+            stream: SSEStream::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return new SSEStream(MessageBatchIndividualResponse::class, stream: $resp);
     }
 }

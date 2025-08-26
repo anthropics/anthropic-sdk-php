@@ -15,9 +15,9 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     #[Api]
     public string $type = 'web_search_tool_result';
 
-    /** @var list<BetaWebSearchResultBlock>|BetaWebSearchToolResultError $content */
+    /** @var BetaWebSearchToolResultError|list<BetaWebSearchResultBlock> $content */
     #[Api(union: BetaWebSearchToolResultBlockContent::class)]
-    public array|BetaWebSearchToolResultError $content;
+    public BetaWebSearchToolResultError|array $content;
 
     #[Api('tool_use_id')]
     public string $toolUseID;
@@ -47,10 +47,10 @@ final class BetaWebSearchToolResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaWebSearchResultBlock>|BetaWebSearchToolResultError $content
+     * @param BetaWebSearchToolResultError|list<BetaWebSearchResultBlock> $content
      */
     public static function with(
-        array|BetaWebSearchToolResultError $content,
+        BetaWebSearchToolResultError|array $content,
         string $toolUseID
     ): self {
         $obj = new self;
@@ -62,10 +62,10 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     }
 
     /**
-     * @param list<BetaWebSearchResultBlock>|BetaWebSearchToolResultError $content
+     * @param BetaWebSearchToolResultError|list<BetaWebSearchResultBlock> $content
      */
     public function withContent(
-        array|BetaWebSearchToolResultError $content
+        BetaWebSearchToolResultError|array $content
     ): self {
         $obj = clone $this;
         $obj->content = $content;

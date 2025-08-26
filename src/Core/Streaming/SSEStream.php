@@ -3,6 +3,8 @@
 namespace Anthropic\Core\Streaming;
 
 use Anthropic\Core\Conversion;
+use Anthropic\Core\Errors\APIStatusError;
+use Anthropic\Core\Util;
 
 /**
  * @template TItem
@@ -31,9 +33,9 @@ final class SSEStream extends AbstractStream
                 case 'content_block_delta':
                 case 'content_block_stop':
                     if (isset($chunk['data'])) {
-                        $decoded = json_decode($chunk['data'], associative: true, flags: JSON_THROW_ON_ERROR);
+                        $decoded = Util::decodeJson($chunk['data']);
 
-                        yield Conversion::coerce($this->decodeTarget, value: $decoded);
+                        yield Conversion::coerce($this->convert, value: $decoded);
                     }
 
                     break;
@@ -42,9 +44,16 @@ final class SSEStream extends AbstractStream
 
                 case 'error':
                     if (isset($chunk['data'])) {
-                        $message = json_encode(json_decode($chunk['data']), JSON_PRETTY_PRINT) ?: '';
+                        $json = Util::decodeJson($chunk['data']);
+                        $message = Util::prettyEncodeJson($json);
 
-                        throw new \RuntimeException($message);
+                        $exn = APIStatusError::from(
+                            request: $this->request,
+                            response: $this->response,
+                            message: $message,
+                        );
+
+                        throw $exn;
                     }
 
                     break;

@@ -41,7 +41,7 @@ final class Page extends AbstractPage
         $this->lastID = $body['lastID'] ?? '';
     }
 
-    public function nextPageRequestOptions(): ?PageRequestOptions
+    public function nextRequest(): ?PageRequestOptions
     {
         $next = $this->lastID ?? null;
         if (!$next) {

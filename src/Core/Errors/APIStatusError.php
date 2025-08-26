@@ -2,9 +2,9 @@
 
 namespace Anthropic\Core\Errors;
 
+use Anthropic\Core\Util;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
 
 class APIStatusError extends APIError
 {
@@ -23,8 +23,8 @@ class APIStatusError extends APIError
         $this->status = $response->getStatusCode();
 
         $summary = 'Status: '.$this->status.PHP_EOL
-            .'Response Body: '.self::fmtBody($response->getBody()).PHP_EOL
-            .'Request Body: '.self::fmtBody($request->getBody()).PHP_EOL;
+            .'Response Body: '.Util::prettyEncodeJson(Util::decodeJson($response->getBody())).PHP_EOL
+            .'Request Body: '.Util::prettyEncodeJson(Util::decodeJson($request->getBody())).PHP_EOL;
 
         if ('' != $message) {
             $summary .= $message.PHP_EOL.$summary;
@@ -35,7 +35,8 @@ class APIStatusError extends APIError
 
     public static function from(
         RequestInterface $request,
-        ResponseInterface $response
+        ResponseInterface $response,
+        string $message = ''
     ): self {
         $status = $response->getStatusCode();
 
@@ -51,11 +52,6 @@ class APIStatusError extends APIError
             default => APIStatusError::class
         };
 
-        return new $cls(request: $request, response: $response);
-    }
-
-    private static function fmtBody(StreamInterface $body): string
-    {
-        return json_encode(json_decode($body->__toString() ?: ''), JSON_PRETTY_PRINT) ?: '';
+        return new $cls(request: $request, response: $response, message: $message);
     }
 }

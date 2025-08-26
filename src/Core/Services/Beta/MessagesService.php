@@ -40,7 +40,6 @@ use Anthropic\Beta\Messages\MessageCreateParams;
 use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
-use Anthropic\Core\Conversion;
 use Anthropic\Core\ServiceContracts\Beta\MessagesContract;
 use Anthropic\Core\Services\Beta\Messages\BatchesService;
 use Anthropic\Core\Streaming\SSEStream;
@@ -277,7 +276,9 @@ final class MessagesService implements MessagesContract
             $requestOptions,
         );
         $header_params = ['betas' => 'anthropic-beta'];
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'v1/messages?beta=true',
             headers: Util::array_transform_keys(
@@ -286,10 +287,8 @@ final class MessagesService implements MessagesContract
             ),
             body: (object) array_diff_key($parsed, array_keys($header_params)),
             options: array_merge(['timeout' => 600], $options),
+            convert: BetaMessage::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(BetaMessage::class, value: $resp);
     }
 
     /**
@@ -509,7 +508,9 @@ final class MessagesService implements MessagesContract
         );
         $parsed['stream'] = true;
         $header_params = ['betas' => 'anthropic-beta'];
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'v1/messages?beta=true',
             headers: Util::array_transform_keys(
@@ -518,10 +519,9 @@ final class MessagesService implements MessagesContract
             ),
             body: (object) array_diff_key($parsed, array_keys($header_params)),
             options: array_merge(['timeout' => 600], $options),
+            convert: BetaRawMessageStreamEvent::class,
+            stream: SSEStream::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return new SSEStream(BetaRawMessageStreamEvent::class, stream: $resp);
     }
 
     /**
@@ -696,7 +696,9 @@ final class MessagesService implements MessagesContract
             $requestOptions,
         );
         $header_params = ['betas' => 'anthropic-beta'];
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'v1/messages/count_tokens?beta=true',
             headers: Util::array_transform_keys(
@@ -705,9 +707,7 @@ final class MessagesService implements MessagesContract
             ),
             body: (object) array_diff_key($parsed, array_keys($header_params)),
             options: $options,
+            convert: BetaMessageTokensCount::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(BetaMessageTokensCount::class, value: $resp);
     }
 }

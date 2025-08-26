@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Core;
 
-use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
@@ -16,7 +16,9 @@ final class Util
 
     public const JSON_ENCODE_FLAGS = JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
 
-    public const JSON_CONTENT_TYPE = '/application\/json/';
+    public const JSON_CONTENT_TYPE = '/^application\/(?:vnd(?:.[^.]+)*+)?json(?!l)/';
+
+    public const JSONL_CONTENT_TYPE = '/^application\/(:?x-(?:n|l)djson)|(:?(?:x-)?jsonl)/';
 
     /**
      * @return array<string, mixed>
@@ -42,6 +44,16 @@ final class Util
         }
 
         return $acc;
+    }
+
+    /**
+     * @param array<string, mixed> $arr
+     *
+     * @return array<string, mixed>
+     */
+    public static function array_filter_omit(array $arr): array
+    {
+        return array_filter($arr, fn ($v, $_) => OMIT !== $v, mode: ARRAY_FILTER_USE_BOTH);
     }
 
     /**
@@ -85,7 +97,7 @@ final class Util
 
         [$template] = $path;
 
-        return sprintf($template, ...array_map('rawurlencode', array_slice($path, 1)));
+        return sprintf($template, ...array_map('rawurlencode', array: array_slice($path, 1)));
     }
 
     /**
@@ -290,18 +302,38 @@ final class Util
         }
     }
 
-    public static function decodeContent(MessageInterface $rsp): mixed
+    public static function decodeJson(string $json): mixed
     {
+        return json_decode($json, associative: true, flags: JSON_THROW_ON_ERROR);
+    }
+
+    public static function decodeContent(ResponseInterface $rsp): mixed
+    {
+        if (204 == $rsp->getStatusCode()) {
+            return null;
+        }
+
         $content_type = $rsp->getHeaderLine('Content-Type');
         $body = $rsp->getBody();
 
-        if (preg_match(self::JSON_CONTENT_TYPE, $content_type)) {
+        if (preg_match(self::JSON_CONTENT_TYPE, subject: $content_type)) {
             $json = $body->getContents();
 
-            return json_decode($json, associative: true, flags: JSON_THROW_ON_ERROR);
+            return self::decodeJson($json);
         }
 
-        if (str_contains($content_type, 'text/event-stream')) {
+        if (preg_match(self::JSONL_CONTENT_TYPE, subject: $content_type)) {
+            $it = self::streamIterator($body);
+            $lines = self::decodeLines($it);
+
+            return (function () use ($lines) {
+                foreach ($lines as $line) {
+                    yield static::decodeJson($line);
+                }
+            })();
+        }
+
+        if (str_contains($content_type, needle: 'text/event-stream')) {
             $it = self::streamIterator($body);
             $lines = self::decodeLines($it);
 
@@ -311,14 +343,9 @@ final class Util
         return self::streamIterator($body);
     }
 
-    /**
-     * @param array<string, mixed> $arr
-     *
-     * @return array<string, mixed>
-     */
-    public static function array_filter_omit(array $arr): array
+    public static function prettyEncodeJson(mixed $obj): string
     {
-        return array_filter($arr, fn ($v, $_) => OMIT !== $v, ARRAY_FILTER_USE_BOTH);
+        return json_encode($obj, flags: JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
     }
 
     /**

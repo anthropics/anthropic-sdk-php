@@ -60,7 +60,7 @@ trait SdkModel
      */
     public function __toString(): string
     {
-        return json_encode($this->__debugInfo(), flags: JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
+        return Util::prettyEncodeJson($this->__debugInfo());
     }
 
     /**

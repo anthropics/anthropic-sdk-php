@@ -11,7 +11,7 @@ use Anthropic\Beta\Files\FileListParams;
 use Anthropic\Beta\Files\FileMetadata;
 use Anthropic\Beta\Files\FileRetrieveMetadataParams;
 use Anthropic\Client;
-use Anthropic\Core\Conversion;
+use Anthropic\Core\Pagination\Page;
 use Anthropic\Core\ServiceContracts\Beta\FilesContract;
 use Anthropic\Core\Util;
 use Anthropic\RequestOptions;
@@ -52,7 +52,9 @@ final class FilesService implements FilesContract
 
         /** @var array<string, string> */
         $header_params = array_diff_key($parsed, $query_params);
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'v1/files?beta=true',
             query: array_intersect_key($parsed, $query_params),
@@ -64,10 +66,9 @@ final class FilesService implements FilesContract
                 ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
                 $options,
             ),
+            convert: FileMetadata::class,
+            page: Page::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(FileMetadata::class, value: $resp);
     }
 
     /**
@@ -84,7 +85,9 @@ final class FilesService implements FilesContract
             ['betas' => $betas],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'delete',
             path: ['v1/files/%1$s?beta=true', $fileID],
             headers: Util::array_transform_keys(
@@ -95,10 +98,8 @@ final class FilesService implements FilesContract
                 ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
                 $options,
             ),
+            convert: DeletedFile::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(DeletedFile::class, value: $resp);
     }
 
     /**
@@ -115,7 +116,9 @@ final class FilesService implements FilesContract
             ['betas' => $betas],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['v1/files/%1$s?beta=true', $fileID],
             headers: Util::array_transform_keys(
@@ -126,9 +129,7 @@ final class FilesService implements FilesContract
                 ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
                 $options,
             ),
+            convert: FileMetadata::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(FileMetadata::class, value: $resp);
     }
 }

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Anthropic\Core\Pagination;
 
-use Anthropic\Core\BaseClient;
+use Anthropic\Client;
 use Anthropic\Core\Contracts\BasePage;
+use Anthropic\Core\Conversion\Contracts\Converter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Errors\APIStatusError;
-use Psr\Http\Message\ResponseInterface;
+use Anthropic\RequestOptions;
 
 /**
  * @internal
@@ -15,14 +17,17 @@ use Psr\Http\Message\ResponseInterface;
  * @template Item
  *
  * @implements BasePage<Item>
+ *
+ * @phpstan-import-type normalized_request from \Anthropic\Core\BaseClient
  */
 abstract class AbstractPage implements BasePage
 {
     public function __construct(
-        protected BaseClient $client,
-        protected PageRequestOptions $options,
-        protected ResponseInterface $response,
-        protected mixed $body,
+        protected Converter|ConverterSource|string $convert,
+        protected Client $client,
+        protected array $request,
+        protected RequestOptions $options,
+        protected mixed $data,
     ) {}
 
     /**
@@ -37,7 +42,7 @@ abstract class AbstractPage implements BasePage
             return false;
         }
 
-        return null != $this->nextPageRequestOptions();
+        return null != $this->nextRequest();
     }
 
     /**
@@ -51,24 +56,17 @@ abstract class AbstractPage implements BasePage
      */
     public function getNextPage(): static
     {
-        $nextOptions = $this->nextPageRequestOptions();
-        if (!$nextOptions) {
+        $next = $this->nextRequest();
+        if (!$next) {
             throw new \RuntimeException(
                 'No next page expected; please check `.hasNextPage()` before calling `.getNextPage()`.'
             );
         }
 
-        $response = $this->client->requestApiList($this, $nextOptions);
+        [$req, $opts] = $next;
 
-        /** @var static of AbstractPage<Item> $nextPage */
-        $nextPage = new static(
-            client: $this->client,
-            options: $nextOptions,
-            response: $response,
-            body: $response->getBody()
-        );
-
-        return $nextPage;
+        // @phpstan-ignore-next-line
+        return $this->client->request(...$req, convert: $this->convert, page: $this, options: $opts);
     }
 
     /**
@@ -102,5 +100,8 @@ abstract class AbstractPage implements BasePage
         }
     }
 
-    abstract protected function nextPageRequestOptions(): ?PageRequestOptions;
+    /**
+     * @return array{normalized_request, RequestOptions}
+     */
+    abstract protected function nextRequest(): ?array;
 }

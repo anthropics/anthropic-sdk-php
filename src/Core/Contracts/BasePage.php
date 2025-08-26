@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Core\Contracts;
 
-use Anthropic\Core\BaseClient;
-use Anthropic\Core\Pagination\PageRequestOptions;
-use Psr\Http\Message\ResponseInterface;
+use Anthropic\Client;
+use Anthropic\Core\Conversion\Contracts\Converter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
+use Anthropic\RequestOptions;
 
 /**
  * @template Item
@@ -17,12 +18,15 @@ interface BasePage extends \IteratorAggregate
 {
     /**
      * @internal
+     *
+     * @param array<string, mixed> $request
      */
     public function __construct(
-        BaseClient $client,
-        PageRequestOptions $options,
-        ResponseInterface $response,
-        mixed $body,
+        Converter|ConverterSource|string $convert,
+        Client $client,
+        array $request,
+        RequestOptions $options,
+        mixed $data,
     );
 
     public function hasNextPage(): bool;

@@ -6,7 +6,6 @@ namespace Anthropic\Core\Services;
 
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
-use Anthropic\Core\Conversion;
 use Anthropic\Core\ServiceContracts\MessagesContract;
 use Anthropic\Core\Services\Messages\BatchesService;
 use Anthropic\Core\Streaming\SSEStream;
@@ -259,15 +258,15 @@ final class MessagesService implements MessagesContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'v1/messages',
             body: (object) $parsed,
             options: array_merge(['timeout' => 600], $options),
+            convert: Message::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(Message::class, value: $resp);
     }
 
     /**
@@ -477,15 +476,16 @@ final class MessagesService implements MessagesContract
             $requestOptions,
         );
         $parsed['stream'] = true;
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'v1/messages',
             body: (object) $parsed,
             options: array_merge(['timeout' => 600], $options),
+            convert: RawMessageStreamEvent::class,
+            stream: SSEStream::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return new SSEStream(RawMessageStreamEvent::class, stream: $resp);
     }
 
     /**
@@ -653,14 +653,14 @@ final class MessagesService implements MessagesContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'v1/messages/count_tokens',
             body: (object) $parsed,
             options: $options,
+            convert: MessageTokensCount::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(MessageTokensCount::class, value: $resp);
     }
 }
