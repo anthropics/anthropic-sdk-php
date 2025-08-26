@@ -8,8 +8,16 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_web_search_tool_result_block = array{
+ *   content: BetaWebSearchToolResultError|list<BetaWebSearchResultBlock>,
+ *   toolUseID: string,
+ *   type: string,
+ * }
+ */
 final class BetaWebSearchToolResultBlock implements BaseModel
 {
+    /** @use SdkModel<beta_web_search_tool_result_block> */
     use SdkModel;
 
     #[Api]

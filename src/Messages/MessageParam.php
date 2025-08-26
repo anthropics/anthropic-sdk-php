@@ -10,8 +10,15 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\MessageParam\Content;
 use Anthropic\Messages\MessageParam\Role;
 
+/**
+ * @phpstan-type message_param = array{
+ *   content: string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam>,
+ *   role: Role::*,
+ * }
+ */
 final class MessageParam implements BaseModel
 {
+    /** @use SdkModel<message_param> */
     use SdkModel;
 
     /**

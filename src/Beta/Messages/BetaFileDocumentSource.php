@@ -8,8 +8,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_file_document_source = array{fileID: string, type: string}
+ */
 final class BetaFileDocumentSource implements BaseModel
 {
+    /** @use SdkModel<beta_file_document_source> */
     use SdkModel;
 
     #[Api]

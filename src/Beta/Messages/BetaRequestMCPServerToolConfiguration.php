@@ -8,8 +8,14 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_request_mcp_server_tool_configuration = array{
+ *   allowedTools?: list<string>|null, enabled?: bool|null
+ * }
+ */
 final class BetaRequestMCPServerToolConfiguration implements BaseModel
 {
+    /** @use SdkModel<beta_request_mcp_server_tool_configuration> */
     use SdkModel;
 
     /** @var list<string>|null $allowedTools */

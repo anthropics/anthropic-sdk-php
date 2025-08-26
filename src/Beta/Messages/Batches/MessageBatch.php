@@ -9,8 +9,23 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type message_batch = array{
+ *   id: string,
+ *   archivedAt: \DateTimeInterface|null,
+ *   cancelInitiatedAt: \DateTimeInterface|null,
+ *   createdAt: \DateTimeInterface,
+ *   endedAt: \DateTimeInterface|null,
+ *   expiresAt: \DateTimeInterface,
+ *   processingStatus: ProcessingStatus::*,
+ *   requestCounts: MessageBatchRequestCounts,
+ *   resultsURL: string|null,
+ *   type: string,
+ * }
+ */
 final class MessageBatch implements BaseModel
 {
+    /** @use SdkModel<message_batch> */
     use SdkModel;
 
     /**

@@ -12,9 +12,14 @@ use Anthropic\Core\Contracts\BaseModel;
  * [JSON schema](https://json-schema.org/draft/2020-12) for this tool's input.
  *
  * This defines the shape of the `input` that your tool accepts and that the model will produce.
+ *
+ * @phpstan-type input_schema = array{
+ *   type: string, properties?: mixed, required?: list<string>|null
+ * }
  */
 final class InputSchema implements BaseModel
 {
+    /** @use SdkModel<input_schema> */
     use SdkModel;
 
     #[Api]

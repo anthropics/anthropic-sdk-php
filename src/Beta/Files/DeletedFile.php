@@ -9,8 +9,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type deleted_file = array{id: string, type?: Type::*|null}
+ */
 final class DeletedFile implements BaseModel
 {
+    /** @use SdkModel<deleted_file> */
     use SdkModel;
 
     /**

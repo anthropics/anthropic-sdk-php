@@ -8,8 +8,20 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_citation_page_location = array{
+ *   citedText: string,
+ *   documentIndex: int,
+ *   documentTitle: string|null,
+ *   endPageNumber: int,
+ *   fileID: string|null,
+ *   startPageNumber: int,
+ *   type: string,
+ * }
+ */
 final class BetaCitationPageLocation implements BaseModel
 {
+    /** @use SdkModel<beta_citation_page_location> */
     use SdkModel;
 
     #[Api]

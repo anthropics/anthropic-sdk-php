@@ -33,9 +33,27 @@ use Anthropic\Messages\WebSearchTool20250305;
  * Messages API creation parameters for the individual request.
  *
  * See the [Messages API reference](/en/api/messages) for full documentation on available parameters.
+ *
+ * @phpstan-type params_alias = array{
+ *   maxTokens: int,
+ *   messages: list<MessageParam>,
+ *   model: Model::*|string,
+ *   metadata?: Metadata|null,
+ *   serviceTier?: ServiceTier::*|null,
+ *   stopSequences?: list<string>|null,
+ *   stream?: bool|null,
+ *   system?: string|null|list<TextBlockParam>,
+ *   temperature?: float|null,
+ *   thinking?: null|ThinkingConfigEnabled|ThinkingConfigDisabled,
+ *   toolChoice?: null|ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
+ *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null,
+ *   topK?: int|null,
+ *   topP?: float|null,
+ * }
  */
 final class Params implements BaseModel
 {
+    /** @use SdkModel<params_alias> */
     use SdkModel;
 
     /**

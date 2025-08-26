@@ -8,8 +8,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type deleted_message_batch = array{id: string, type: string}
+ */
 final class DeletedMessageBatch implements BaseModel
 {
+    /** @use SdkModel<deleted_message_batch> */
     use SdkModel;
 
     /**

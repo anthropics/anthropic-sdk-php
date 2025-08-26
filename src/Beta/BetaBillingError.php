@@ -8,8 +8,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_billing_error = array{message: string, type: string}
+ */
 final class BetaBillingError implements BaseModel
 {
+    /** @use SdkModel<beta_billing_error> */
     use SdkModel;
 
     #[Api]

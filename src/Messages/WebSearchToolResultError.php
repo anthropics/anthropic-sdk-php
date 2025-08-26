@@ -9,8 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\WebSearchToolResultError\ErrorCode;
 
+/**
+ * @phpstan-type web_search_tool_result_error = array{
+ *   errorCode: ErrorCode::*, type: string
+ * }
+ */
 final class WebSearchToolResultError implements BaseModel
 {
+    /** @use SdkModel<web_search_tool_result_error> */
     use SdkModel;
 
     #[Api]

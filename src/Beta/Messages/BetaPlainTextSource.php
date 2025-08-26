@@ -8,8 +8,14 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_plain_text_source = array{
+ *   data: string, mediaType: string, type: string
+ * }
+ */
 final class BetaPlainTextSource implements BaseModel
 {
+    /** @use SdkModel<beta_plain_text_source> */
     use SdkModel;
 
     #[Api('media_type')]

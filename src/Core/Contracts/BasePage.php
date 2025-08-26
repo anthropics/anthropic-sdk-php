@@ -33,9 +33,11 @@ interface BasePage extends \ArrayAccess, \JsonSerializable, \Stringable, \Iterat
     );
 
     /**
+     * @param array<string, mixed> $data
+     *
      * @return static<Item>
      */
-    public static function fromArray(mixed $data): self;
+    public static function fromArray(array $data): self;
 
     /** @return array<string, mixed> */
     public function toArray(): array;

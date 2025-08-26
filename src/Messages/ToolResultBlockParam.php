@@ -9,8 +9,18 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\ToolResultBlockParam\Content;
 
+/**
+ * @phpstan-type tool_result_block_param = array{
+ *   toolUseID: string,
+ *   type: string,
+ *   cacheControl?: CacheControlEphemeral|null,
+ *   content?: string|null|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam>,
+ *   isError?: bool|null,
+ * }
+ */
 final class ToolResultBlockParam implements BaseModel
 {
+    /** @use SdkModel<tool_result_block_param> */
     use SdkModel;
 
     #[Api]

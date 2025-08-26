@@ -8,8 +8,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type url_image_source = array{type: string, url: string}
+ */
 final class URLImageSource implements BaseModel
 {
+    /** @use SdkModel<url_image_source> */
     use SdkModel;
 
     #[Api]

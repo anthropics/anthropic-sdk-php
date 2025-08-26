@@ -16,9 +16,12 @@ use Anthropic\Core\Contracts\BaseModel;
  * The number of canceled requests is specified in `request_counts`. To determine which requests were canceled, check the individual results within the batch. Note that cancellation may not result in any canceled requests if they were non-interruptible.
  *
  * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
+ *
+ * @phpstan-type batch_cancel_params = array{betas?: list<AnthropicBeta::*|string>}
  */
 final class BatchCancelParams implements BaseModel
 {
+    /** @use SdkModel<batch_cancel_params> */
     use SdkModel;
     use SdkParams;
 

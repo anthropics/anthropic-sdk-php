@@ -8,8 +8,21 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type message_alias = array{
+ *   id: string,
+ *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
+ *   model: Model::*|string,
+ *   role: string,
+ *   stopReason: StopReason::*,
+ *   stopSequence: string|null,
+ *   type: string,
+ *   usage: Usage,
+ * }
+ */
 final class Message implements BaseModel
 {
+    /** @use SdkModel<message_alias> */
     use SdkModel;
 
     /**

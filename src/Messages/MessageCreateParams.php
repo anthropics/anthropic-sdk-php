@@ -17,9 +17,26 @@ use Anthropic\Messages\MessageCreateParams\System;
  * The Messages API can be used for either single queries or stateless multi-turn conversations.
  *
  * Learn more about the Messages API in our [user guide](/en/docs/initial-setup)
+ *
+ * @phpstan-type message_create_params = array{
+ *   maxTokens: int,
+ *   messages: list<MessageParam>,
+ *   model: Model::*|string,
+ *   metadata?: Metadata,
+ *   serviceTier?: ServiceTier::*,
+ *   stopSequences?: list<string>,
+ *   system?: string|list<TextBlockParam>,
+ *   temperature?: float,
+ *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
+ *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
+ *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>,
+ *   topK?: int,
+ *   topP?: float,
+ * }
  */
 final class MessageCreateParams implements BaseModel
 {
+    /** @use SdkModel<message_create_params> */
     use SdkModel;
     use SdkParams;
 
