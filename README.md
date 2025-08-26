@@ -5,7 +5,7 @@
 >
 > This library has not yet been exhaustively tested in production environments and may be missing some features you'd expect in a stable release. As we continue development, there may be breaking changes that require updates to your code.
 >
-> **We'd love your feedback!** Please share any suggestions, bug reports, feature requests, or general thoughts by [filing an issue](https://www.github.com/stainless-sdks/anthropic-php/issues/new).
+> **We'd love your feedback!** Please share any suggestions, bug reports, feature requests, or general thoughts by [filing an issue](https://www.github.com/anthropics/anthropic-sdk-php/issues/new).
 
 The Anthropic PHP library provides convenient access to the Anthropic REST API from any PHP 8.1.0+ application.
 
@@ -15,9 +15,13 @@ The REST API documentation can be found on [docs.anthropic.com](https://docs.ant
 
 ## Installation
 
+<!-- x-release-please-start-version -->
+
 ```
 composer require "anthropic-ai/sdk 0.0.1"
 ```
+
+<!-- x-release-please-end -->
 
 ## Usage
 
@@ -181,4 +185,4 @@ PHP 8.1.0 or higher.
 
 ## Contributing
 
-See [the contributing documentation](https://github.com/stainless-sdks/anthropic-php/tree/main/CONTRIBUTING.md).
+See [the contributing documentation](https://github.com/anthropics/anthropic-sdk-php/tree/main/CONTRIBUTING.md).
