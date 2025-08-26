@@ -45,7 +45,7 @@ interface BasePage extends \ArrayAccess, \JsonSerializable, \Stringable, \Iterat
     /**
      * @return list<Item>
      */
-    public function getPaginatedItems(): array;
+    public function getItems(): array;
 
     /**
      * @return static<Item>

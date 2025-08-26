@@ -33,11 +33,11 @@ trait SdkPage
     /**
      * @return list<Item>
      */
-    abstract public function getPaginatedItems(): array;
+    abstract public function getItems(): array;
 
     public function hasNextPage(): bool
     {
-        $items = $this->getPaginatedItems();
+        $items = $this->getItems();
         if (empty($items)) {
             return false;
         }
@@ -66,7 +66,7 @@ trait SdkPage
         [$req, $opts] = $next;
 
         // @phpstan-ignore-next-line
-        return $this->client->request(...$req, convert: $this->convert, page: $this, options: $opts);
+        return $this->client->request(...$req, convert: $this->convert, page: $this::class, options: $opts);
     }
 
     /**
@@ -94,7 +94,7 @@ trait SdkPage
     public function pagingEachItem(): \Generator
     {
         foreach ($this as $page) {
-            foreach ($page->getPaginatedItems() as $item) {
+            foreach ($page->getItems() as $item) {
                 yield $item;
             }
         }

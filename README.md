@@ -43,6 +43,7 @@ $message = $client->messages->create(
   messages: [MessageParam::with(role: "user", content: "Hello, Claude")],
   model: "claude-sonnet-4-20250514",
 );
+
 var_dump($message->content);
 ```
 
@@ -52,6 +53,60 @@ It is recommended to use the static `with` constructor `Base64ImageSource::with(
 and named parameters to initialize value objects.
 
 However, builders are also provided `(new Base64ImageSource)->withData("U3RhaW5sZXNzIHJvY2tz")`.
+
+### Streaming
+
+We provide support for streaming responses using Server-Sent Events (SSE).
+
+```php
+<?php
+
+use Anthropic\Client;
+use Anthropic\Messages\MessageParam;
+
+$client = new Client(
+  apiKey: getenv("ANTHROPIC_API_KEY") ?: "my-anthropic-api-key"
+);
+
+$stream = $client->messages->createStream(
+  maxTokens: 1024,
+  messages: [MessageParam::with(role: "user", content: "Hello, Claude")],
+  model: "claude-sonnet-4-20250514",
+);
+
+foreach ($stream as $message) {
+  var_dump($message);
+}
+```
+
+### Pagination
+
+List methods in the Anthropic API are paginated.
+
+This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
+
+```php
+<?php
+
+use Anthropic\Client;
+
+$client = new Client(
+  apiKey: getenv("ANTHROPIC_API_KEY") ?: "my-anthropic-api-key"
+);
+
+$page = $client->beta->messages->batches->list();
+
+var_dump($page);
+
+// fetch items from the current page
+foreach ($page->getItems() as $item) {
+  var_dump($item->id);
+}
+// make additional network requests to fetch items from all pages, including and after the current page
+foreach ($page->pagingEachItem() as $item) {
+  var_dump($item->id);
+}
+```
 
 ### Handling errors
 
@@ -115,6 +170,7 @@ use Anthropic\Messages\MessageParam;
 $client = new Client(maxRetries: 0);
 
 // Or, configure per-request:
+
 $result = $client->messages->create(
   maxTokens: 1024,
   messages: [MessageParam::with(role: "user", content: "Hello, Claude")],
