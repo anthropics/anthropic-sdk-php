@@ -8,8 +8,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type message_tokens_count = array{inputTokens: int}
+ */
 final class MessageTokensCount implements BaseModel
 {
+    /** @use SdkModel<message_tokens_count> */
     use SdkModel;
 
     /**

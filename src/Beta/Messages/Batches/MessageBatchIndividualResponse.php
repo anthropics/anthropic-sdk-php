@@ -10,9 +10,15 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * This is a single line in the response `.jsonl` file and does not represent the response as a whole.
+ *
+ * @phpstan-type message_batch_individual_response = array{
+ *   customID: string,
+ *   result: MessageBatchSucceededResult|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult,
+ * }
  */
 final class MessageBatchIndividualResponse implements BaseModel
 {
+    /** @use SdkModel<message_batch_individual_response> */
     use SdkModel;
 
     /**

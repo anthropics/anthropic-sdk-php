@@ -8,8 +8,17 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type text_block_param = array{
+ *   text: string,
+ *   type: string,
+ *   cacheControl?: CacheControlEphemeral|null,
+ *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
+ * }
+ */
 final class TextBlockParam implements BaseModel
 {
+    /** @use SdkModel<text_block_param> */
     use SdkModel;
 
     #[Api]

@@ -9,8 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\StopReason;
 
+/**
+ * @phpstan-type delta_alias = array{
+ *   stopReason: StopReason::*, stopSequence: string|null
+ * }
+ */
 final class Delta implements BaseModel
 {
+    /** @use SdkModel<delta_alias> */
     use SdkModel;
 
     /** @var StopReason::* $stopReason */

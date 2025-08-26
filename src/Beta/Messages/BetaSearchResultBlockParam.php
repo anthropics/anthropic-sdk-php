@@ -8,8 +8,19 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_search_result_block_param = array{
+ *   content: list<BetaTextBlockParam>,
+ *   source: string,
+ *   title: string,
+ *   type: string,
+ *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   citations?: BetaCitationsConfigParam|null,
+ * }
+ */
 final class BetaSearchResultBlockParam implements BaseModel
 {
+    /** @use SdkModel<beta_search_result_block_param> */
     use SdkModel;
 
     #[Api]

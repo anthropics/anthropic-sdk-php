@@ -8,8 +8,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_input_json_delta = array{partialJSON: string, type: string}
+ */
 final class BetaInputJSONDelta implements BaseModel
 {
+    /** @use SdkModel<beta_input_json_delta> */
     use SdkModel;
 
     #[Api]

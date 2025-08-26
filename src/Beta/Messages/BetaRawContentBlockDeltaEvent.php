@@ -8,8 +8,16 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_raw_content_block_delta_event = array{
+ *   delta: BetaTextDelta|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta,
+ *   index: int,
+ *   type: string,
+ * }
+ */
 final class BetaRawContentBlockDeltaEvent implements BaseModel
 {
+    /** @use SdkModel<beta_raw_content_block_delta_event> */
     use SdkModel;
 
     #[Api]

@@ -8,8 +8,14 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_raw_message_start_event = array{
+ *   message: BetaMessage, type: string
+ * }
+ */
 final class BetaRawMessageStartEvent implements BaseModel
 {
+    /** @use SdkModel<beta_raw_message_start_event> */
     use SdkModel;
 
     #[Api]

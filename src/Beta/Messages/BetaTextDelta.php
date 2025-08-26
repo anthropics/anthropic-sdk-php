@@ -8,8 +8,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_text_delta = array{text: string, type: string}
+ */
 final class BetaTextDelta implements BaseModel
 {
+    /** @use SdkModel<beta_text_delta> */
     use SdkModel;
 
     #[Api]

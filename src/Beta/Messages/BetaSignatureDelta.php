@@ -8,8 +8,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_signature_delta = array{signature: string, type: string}
+ */
 final class BetaSignatureDelta implements BaseModel
 {
+    /** @use SdkModel<beta_signature_delta> */
     use SdkModel;
 
     #[Api]

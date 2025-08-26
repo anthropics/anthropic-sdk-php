@@ -8,8 +8,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type server_tool_usage = array{webSearchRequests: int}
+ */
 final class ServerToolUsage implements BaseModel
 {
+    /** @use SdkModel<server_tool_usage> */
     use SdkModel;
 
     /**

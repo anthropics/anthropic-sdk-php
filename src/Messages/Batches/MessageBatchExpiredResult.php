@@ -8,8 +8,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type message_batch_expired_result = array{type: string}
+ */
 final class MessageBatchExpiredResult implements BaseModel
 {
+    /** @use SdkModel<message_batch_expired_result> */
     use SdkModel;
 
     #[Api]

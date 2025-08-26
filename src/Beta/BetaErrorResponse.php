@@ -8,8 +8,15 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_error_response = array{
+ *   error: BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError,
+ *   type: string,
+ * }
+ */
 final class BetaErrorResponse implements BaseModel
 {
+    /** @use SdkModel<beta_error_response> */
     use SdkModel;
 
     #[Api]

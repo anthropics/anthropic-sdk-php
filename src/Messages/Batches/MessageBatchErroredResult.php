@@ -9,8 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\ErrorResponse;
 
+/**
+ * @phpstan-type message_batch_errored_result = array{
+ *   error: ErrorResponse, type: string
+ * }
+ */
 final class MessageBatchErroredResult implements BaseModel
 {
+    /** @use SdkModel<message_batch_errored_result> */
     use SdkModel;
 
     #[Api]

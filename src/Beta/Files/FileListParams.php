@@ -12,9 +12,17 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * List Files.
+ *
+ * @phpstan-type file_list_params = array{
+ *   afterID?: string,
+ *   beforeID?: string,
+ *   limit?: int,
+ *   betas?: list<AnthropicBeta::*|string>,
+ * }
  */
 final class FileListParams implements BaseModel
 {
+    /** @use SdkModel<file_list_params> */
     use SdkModel;
     use SdkParams;
 

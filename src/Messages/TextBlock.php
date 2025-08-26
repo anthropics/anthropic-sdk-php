@@ -8,8 +8,16 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type text_block = array{
+ *   citations: list<CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation>|null,
+ *   text: string,
+ *   type: string,
+ * }
+ */
 final class TextBlock implements BaseModel
 {
+    /** @use SdkModel<text_block> */
     use SdkModel;
 
     #[Api]

@@ -14,6 +14,8 @@ use Anthropic\Core\Util;
 
 /**
  * @internal
+ *
+ * @template-covariant Data of array<string, mixed>
  */
 trait SdkModel
 {
@@ -65,13 +67,13 @@ trait SdkModel
     }
 
     /**
+     * @internal
+     *
      * Magic get is intended to occur when we have manually unset
      * a native class property, indicating an omitted value,
-     * or a property overridden with an incongruent type.
+     * or a property overridden with an incongruent type
      *
      * @throws \Exception
-     *
-     * @internal
      */
     public function __get(string $key): mixed
     {
@@ -92,10 +94,12 @@ trait SdkModel
         return null;
     }
 
-    /** @return array<string, mixed> */
+    /**
+     * @return Data
+     */
     public function toArray(): array
     {
-        return $this->__serialize();
+        return $this->__serialize(); // @phpstan-ignore-line
     }
 
     /**
@@ -200,8 +204,10 @@ trait SdkModel
 
     /**
      * @internal
+     *
+     * @param array<string, mixed> $data
      */
-    public static function fromArray(mixed $data): self
+    public static function fromArray(array $data): self
     {
         return self::converter()->from($data); // @phpstan-ignore-line
     }

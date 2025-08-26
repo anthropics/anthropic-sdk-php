@@ -13,12 +13,20 @@ use Anthropic\Core\Conversion\ListOf;
 use Anthropic\RequestOptions;
 
 /**
+ * @phpstan-type page_alias = array{
+ *   data?: list<mixed>|null,
+ *   hasMore?: bool|null,
+ *   firstID?: string|null,
+ *   lastID?: string|null,
+ * }
+ *
  * @template TItem
  *
  * @implements BasePage<TItem>
  */
 final class Page implements BasePage
 {
+    /** @use SdkModel<page_alias> */
     use SdkModel;
 
     /** @use SdkPage<TItem> */

@@ -9,8 +9,19 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\DocumentBlockParam\Source;
 
+/**
+ * @phpstan-type document_block_param = array{
+ *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
+ *   type: string,
+ *   cacheControl?: CacheControlEphemeral|null,
+ *   citations?: CitationsConfigParam|null,
+ *   context?: string|null,
+ *   title?: string|null,
+ * }
+ */
 final class DocumentBlockParam implements BaseModel
 {
+    /** @use SdkModel<document_block_param> */
     use SdkModel;
 
     #[Api]

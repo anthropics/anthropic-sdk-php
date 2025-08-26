@@ -8,8 +8,18 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_web_search_result_block = array{
+ *   encryptedContent: string,
+ *   pageAge: string|null,
+ *   title: string,
+ *   type: string,
+ *   url: string,
+ * }
+ */
 final class BetaWebSearchResultBlock implements BaseModel
 {
+    /** @use SdkModel<beta_web_search_result_block> */
     use SdkModel;
 
     #[Api]

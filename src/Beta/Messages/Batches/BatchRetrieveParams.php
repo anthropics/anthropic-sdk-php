@@ -14,9 +14,14 @@ use Anthropic\Core\Contracts\BaseModel;
  * This endpoint is idempotent and can be used to poll for Message Batch completion. To access the results of a Message Batch, make a request to the `results_url` field in the response.
  *
  * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
+ *
+ * @phpstan-type batch_retrieve_params = array{
+ *   betas?: list<AnthropicBeta::*|string>
+ * }
  */
 final class BatchRetrieveParams implements BaseModel
 {
+    /** @use SdkModel<batch_retrieve_params> */
     use SdkModel;
     use SdkParams;
 

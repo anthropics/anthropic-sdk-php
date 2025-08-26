@@ -9,8 +9,15 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\CitationsDelta\Citation;
 
+/**
+ * @phpstan-type citations_delta = array{
+ *   citation: CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation,
+ *   type: string,
+ * }
+ */
 final class CitationsDelta implements BaseModel
 {
+    /** @use SdkModel<citations_delta> */
     use SdkModel;
 
     #[Api]

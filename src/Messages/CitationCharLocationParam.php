@@ -8,8 +8,19 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type citation_char_location_param = array{
+ *   citedText: string,
+ *   documentIndex: int,
+ *   documentTitle: string|null,
+ *   endCharIndex: int,
+ *   startCharIndex: int,
+ *   type: string,
+ * }
+ */
 final class CitationCharLocationParam implements BaseModel
 {
+    /** @use SdkModel<citation_char_location_param> */
     use SdkModel;
 
     #[Api]

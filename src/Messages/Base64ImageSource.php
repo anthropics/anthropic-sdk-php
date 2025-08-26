@@ -9,8 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Base64ImageSource\MediaType;
 
+/**
+ * @phpstan-type base64_image_source = array{
+ *   data: string, mediaType: MediaType::*, type: string
+ * }
+ */
 final class Base64ImageSource implements BaseModel
 {
+    /** @use SdkModel<base64_image_source> */
     use SdkModel;
 
     #[Api]

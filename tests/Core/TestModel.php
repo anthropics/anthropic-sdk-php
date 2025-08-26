@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class TestModel implements BaseModel
 {
+    /** @use SdkModel<array<string, mixed>> */
     use SdkModel;
 
     #[Api]

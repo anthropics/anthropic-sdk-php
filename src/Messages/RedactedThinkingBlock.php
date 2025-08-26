@@ -8,8 +8,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type redacted_thinking_block = array{data: string, type: string}
+ */
 final class RedactedThinkingBlock implements BaseModel
 {
+    /** @use SdkModel<redacted_thinking_block> */
     use SdkModel;
 
     #[Api]

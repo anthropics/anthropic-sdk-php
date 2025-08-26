@@ -8,8 +8,18 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type citations_web_search_result_location = array{
+ *   citedText: string,
+ *   encryptedIndex: string,
+ *   title: string|null,
+ *   type: string,
+ *   url: string,
+ * }
+ */
 final class CitationsWebSearchResultLocation implements BaseModel
 {
+    /** @use SdkModel<citations_web_search_result_location> */
     use SdkModel;
 
     #[Api]
