@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -e
+
+cd -- "$(dirname -- "$0")/.."
+
+echo "==> Running PHPStan"
+exec -- ./vendor/bin/phpstan analyse --memory-limit=1G
