@@ -9,6 +9,7 @@ use Anthropic\Core\Concerns\SdkPage;
 use Anthropic\Core\Contracts\BasePage;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
+use Anthropic\Core\Conversion\ListOf;
 use Anthropic\RequestOptions;
 
 /**
@@ -61,7 +62,10 @@ final class Page implements BasePage
         self::__unserialize($data);
 
         if ($this->offsetExists('data')) {
-            $acc = Conversion::coerce($convert, value: $this->offsetGet('data'));
+            $acc = Conversion::coerce(
+                new ListOf($convert),
+                value: $this->offsetGet('data')
+            );
             $this->offsetSet('data', $acc);
         }
     }

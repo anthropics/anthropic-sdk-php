@@ -22,9 +22,7 @@ class APIStatusError extends APIError
         $this->response = $response;
         $this->status = $response->getStatusCode();
 
-        $summary = 'Status: '.$this->status.PHP_EOL
-            .'Response Body: '.Util::prettyEncodeJson(Util::decodeJson($response->getBody())).PHP_EOL
-            .'Request Body: '.Util::prettyEncodeJson(Util::decodeJson($request->getBody())).PHP_EOL;
+        $summary = Util::prettyEncodeJson(['status' => $this->status, 'body' => Util::decodeJson($response->getBody())]);
 
         if ('' != $message) {
             $summary .= $message.PHP_EOL.$summary;
