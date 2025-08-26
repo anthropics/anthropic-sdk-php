@@ -8,8 +8,19 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_citation_content_block_location_param = array{
+ *   citedText: string,
+ *   documentIndex: int,
+ *   documentTitle: string|null,
+ *   endBlockIndex: int,
+ *   startBlockIndex: int,
+ *   type: string,
+ * }
+ */
 final class BetaCitationContentBlockLocationParam implements BaseModel
 {
+    /** @use SdkModel<beta_citation_content_block_location_param> */
     use SdkModel;
 
     #[Api]

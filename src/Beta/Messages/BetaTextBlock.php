@@ -8,8 +8,16 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_text_block = array{
+ *   citations: list<BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation>|null,
+ *   text: string,
+ *   type: string,
+ * }
+ */
 final class BetaTextBlock implements BaseModel
 {
+    /** @use SdkModel<beta_text_block> */
     use SdkModel;
 
     #[Api]

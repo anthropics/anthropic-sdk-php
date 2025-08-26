@@ -8,8 +8,14 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_model_info = array{
+ *   id: string, createdAt: \DateTimeInterface, displayName: string, type: string
+ * }
+ */
 final class BetaModelInfo implements BaseModel
 {
+    /** @use SdkModel<beta_model_info> */
     use SdkModel;
 
     /**

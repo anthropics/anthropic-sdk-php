@@ -8,8 +8,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type thinking_delta = array{thinking: string, type: string}
+ */
 final class ThinkingDelta implements BaseModel
 {
+    /** @use SdkModel<thinking_delta> */
     use SdkModel;
 
     #[Api]

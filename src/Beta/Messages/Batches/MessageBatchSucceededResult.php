@@ -9,8 +9,14 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type message_batch_succeeded_result = array{
+ *   message: BetaMessage, type: string
+ * }
+ */
 final class MessageBatchSucceededResult implements BaseModel
 {
+    /** @use SdkModel<message_batch_succeeded_result> */
     use SdkModel;
 
     #[Api]

@@ -19,9 +19,29 @@ use Anthropic\Messages\Model;
  * The Messages API can be used for either single queries or stateless multi-turn conversations.
  *
  * Learn more about the Messages API in our [user guide](/en/docs/initial-setup)
+ *
+ * @phpstan-type message_create_params = array{
+ *   maxTokens: int,
+ *   messages: list<BetaMessageParam>,
+ *   model: Model::*|string,
+ *   container?: string|null,
+ *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
+ *   metadata?: BetaMetadata,
+ *   serviceTier?: ServiceTier::*,
+ *   stopSequences?: list<string>,
+ *   system?: string|list<BetaTextBlockParam>,
+ *   temperature?: float,
+ *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
+ *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
+ *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>,
+ *   topK?: int,
+ *   topP?: float,
+ *   betas?: list<AnthropicBeta::*|string>,
+ * }
  */
 final class MessageCreateParams implements BaseModel
 {
+    /** @use SdkModel<message_create_params> */
     use SdkModel;
     use SdkParams;
 

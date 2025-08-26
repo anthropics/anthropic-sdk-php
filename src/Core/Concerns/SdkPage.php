@@ -50,7 +50,7 @@ trait SdkPage
      * Before calling this method, you must check if there is a next page
      * using {@link hasNextPage()}.
      *
-     * @return static of AbstractPage<Item>
+     * @return static of static<Item>
      *
      * @throws APIStatusError
      */

@@ -10,9 +10,12 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * Response model for a file uploaded to the container.
+ *
+ * @phpstan-type beta_container_upload_block = array{fileID: string, type: string}
  */
 final class BetaContainerUploadBlock implements BaseModel
 {
+    /** @use SdkModel<beta_container_upload_block> */
     use SdkModel;
 
     #[Api]

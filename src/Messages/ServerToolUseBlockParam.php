@@ -8,8 +8,18 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type server_tool_use_block_param = array{
+ *   id: string,
+ *   input: mixed,
+ *   name: string,
+ *   type: string,
+ *   cacheControl?: CacheControlEphemeral|null,
+ * }
+ */
 final class ServerToolUseBlockParam implements BaseModel
 {
+    /** @use SdkModel<server_tool_use_block_param> */
     use SdkModel;
 
     #[Api]

@@ -13,9 +13,14 @@ use Anthropic\Core\Contracts\BaseModel;
  * List all Message Batches within a Workspace. Most recently created batches are returned first.
  *
  * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
+ *
+ * @phpstan-type batch_list_params = array{
+ *   afterID?: string, beforeID?: string, limit?: int
+ * }
  */
 final class BatchListParams implements BaseModel
 {
+    /** @use SdkModel<batch_list_params> */
     use SdkModel;
     use SdkParams;
 

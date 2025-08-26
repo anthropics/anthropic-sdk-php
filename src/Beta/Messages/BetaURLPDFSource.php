@@ -8,8 +8,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_urlpdf_source = array{type: string, url: string}
+ */
 final class BetaURLPDFSource implements BaseModel
 {
+    /** @use SdkModel<beta_urlpdf_source> */
     use SdkModel;
 
     #[Api]

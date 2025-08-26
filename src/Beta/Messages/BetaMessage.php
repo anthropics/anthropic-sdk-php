@@ -9,8 +9,22 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Model;
 
+/**
+ * @phpstan-type beta_message = array{
+ *   id: string,
+ *   container: BetaContainer,
+ *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
+ *   model: Model::*|string,
+ *   role: string,
+ *   stopReason: BetaStopReason::*,
+ *   stopSequence: string|null,
+ *   type: string,
+ *   usage: BetaUsage,
+ * }
+ */
 final class BetaMessage implements BaseModel
 {
+    /** @use SdkModel<beta_message> */
     use SdkModel;
 
     /**

@@ -14,9 +14,14 @@ use Anthropic\Core\Contracts\BaseModel;
  * Get a specific model.
  *
  * The Models API response can be used to determine information about a specific model or resolve a model alias to a model ID.
+ *
+ * @phpstan-type model_retrieve_params = array{
+ *   betas?: list<AnthropicBeta::*|string>
+ * }
  */
 final class ModelRetrieveParams implements BaseModel
 {
+    /** @use SdkModel<model_retrieve_params> */
     use SdkModel;
     use SdkParams;
 

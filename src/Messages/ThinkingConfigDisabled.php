@@ -8,8 +8,12 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type thinking_config_disabled = array{type: string}
+ */
 final class ThinkingConfigDisabled implements BaseModel
 {
+    /** @use SdkModel<thinking_config_disabled> */
     use SdkModel;
 
     #[Api]

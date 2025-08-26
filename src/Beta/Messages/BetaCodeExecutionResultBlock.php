@@ -8,8 +8,18 @@ use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type beta_code_execution_result_block = array{
+ *   content: list<BetaCodeExecutionOutputBlock>,
+ *   returnCode: int,
+ *   stderr: string,
+ *   stdout: string,
+ *   type: string,
+ * }
+ */
 final class BetaCodeExecutionResultBlock implements BaseModel
 {
+    /** @use SdkModel<beta_code_execution_result_block> */
     use SdkModel;
 
     #[Api]
