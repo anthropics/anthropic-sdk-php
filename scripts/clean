@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -e
+
+cd -- "$(dirname -- "$0")/.."
+
+echo "==> Cleaning up..."
+exec -- rm -fr -- ./vendor/ ./.php-cs-fixer.cache
