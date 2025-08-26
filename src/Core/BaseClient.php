@@ -79,18 +79,18 @@ class BaseClient
         [$req, $opts] = $this->buildRequest(method: $method, path: $path, query: $query, headers: $headers, body: $body, opts: $options);
         ['method' => $method, 'path' => $uri, 'headers' => $headers] = $req;
 
-        $req = $this->requestFactory->createRequest($method, uri: $uri);
-        $req = Util::withSetHeaders($req, headers: $headers);
+        $request = $this->requestFactory->createRequest($method, uri: $uri);
+        $request = Util::withSetHeaders($request, headers: $headers);
 
         // @phpstan-ignore-next-line
-        $rsp = $this->sendRequest($req, data: $body, opts: $opts, redirectCount: 0, retryCount: 0);
+        $rsp = $this->sendRequest($request, data: $body, opts: $opts, redirectCount: 0, retryCount: 0);
 
         $decoded = Util::decodeContent($rsp);
 
         if (!is_null($stream)) {
             return new $stream(
                 convert: $convert,
-                request: $req,
+                request: $request,
                 response: $rsp,
                 stream: $decoded
             );

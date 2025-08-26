@@ -42,7 +42,7 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\ServiceContracts\Beta\MessagesContract;
 use Anthropic\Core\Services\Beta\Messages\BatchesService;
-use Anthropic\Core\Streaming\SSEStream;
+use Anthropic\Core\SSEStream;
 use Anthropic\Core\Util;
 use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;

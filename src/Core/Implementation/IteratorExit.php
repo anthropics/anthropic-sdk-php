@@ -1,5 +1,5 @@
 <?php
 
-namespace Anthropic\Core\Streaming;
+namespace Anthropic\Core\Implementation;
 
 class IteratorExit extends \Error {}

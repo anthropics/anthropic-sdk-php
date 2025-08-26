@@ -8,7 +8,7 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\ServiceContracts\MessagesContract;
 use Anthropic\Core\Services\Messages\BatchesService;
-use Anthropic\Core\Streaming\SSEStream;
+use Anthropic\Core\SSEStream;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCountTokensParams;
 use Anthropic\Messages\MessageCreateParams;

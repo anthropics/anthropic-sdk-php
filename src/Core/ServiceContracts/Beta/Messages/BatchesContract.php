@@ -10,6 +10,7 @@ use Anthropic\Beta\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Page;
 use Anthropic\RequestOptions;
 
 use const Anthropic\Core\OMIT as omit;
@@ -42,6 +43,8 @@ interface BatchesContract
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return Page<MessageBatch>
      */
     public function list(
         $afterID = omit,
@@ -49,7 +52,7 @@ interface BatchesContract
         $limit = omit,
         $betas = omit,
         ?RequestOptions $requestOptions = null,
-    ): MessageBatch;
+    ): Page;
 
     /**
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use

@@ -17,9 +17,9 @@ use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
-use Anthropic\Core\Pagination\Page;
+use Anthropic\Core\Page;
 use Anthropic\Core\ServiceContracts\Beta\Messages\BatchesContract;
-use Anthropic\Core\Streaming\SSEStream;
+use Anthropic\Core\SSEStream;
 use Anthropic\Core\Util;
 use Anthropic\RequestOptions;
 
@@ -111,6 +111,8 @@ final class BatchesService implements BatchesContract
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return Page<MessageBatch>
      */
     public function list(
         $afterID = omit,
@@ -118,7 +120,7 @@ final class BatchesService implements BatchesContract
         $limit = omit,
         $betas = omit,
         ?RequestOptions $requestOptions = null,
-    ): MessageBatch {
+    ): Page {
         [$parsed, $options] = BatchListParams::parseRequest(
             [
                 'afterID' => $afterID,

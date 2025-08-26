@@ -1,28 +1,34 @@
 <?php
 
-namespace Anthropic\Core\Streaming;
+namespace Anthropic\Core;
 
-use Anthropic\Core\Conversion;
+use Anthropic\Core\Concerns\SdkStream;
+use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Errors\APIStatusError;
-use Anthropic\Core\Util;
 
 /**
  * @template TItem
  *
- * @extends AbstractStream<
- *   array{
- *     event?: string|null, data?: string|null, id?: string|null, retry?: int|null
- *   },
- *   TItem,
- * >
+ * @implements BaseStream<TItem>
  */
-final class SSEStream extends AbstractStream
+final class SSEStream implements BaseStream
 {
-    protected function parsedGenerator(): \Generator
+    /**
+     * @use SdkStream<
+     *   array{
+     *     event?: string|null, data?: string|null, id?: string|null, retry?: int|null
+     *   },
+     *   TItem,
+     * >
+     */
+    use SdkStream;
+
+    private function parsedGenerator(): \Generator
     {
         if (!$this->stream->valid()) {
             return;
         }
+
         foreach ($this->stream as $chunk) {
             switch ($chunk['event'] ?? '') {
                 case 'completion':

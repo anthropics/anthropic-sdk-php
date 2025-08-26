@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Core\Concerns;
 
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Contracts\BasePage;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Conversion\CoerceState;
 use Anthropic\Core\Conversion\Contracts\Converter;
@@ -244,7 +245,7 @@ trait SdkModel
      */
     private static function serialize(mixed $value): mixed
     {
-        if ($value instanceof BaseModel) {
+        if ($value instanceof BaseModel || $value instanceof BasePage) {
             return $value->toArray();
         }
 

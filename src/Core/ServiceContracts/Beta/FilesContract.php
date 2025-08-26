@@ -7,6 +7,7 @@ namespace Anthropic\Core\ServiceContracts\Beta;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Files\DeletedFile;
 use Anthropic\Beta\Files\FileMetadata;
+use Anthropic\Core\Page;
 use Anthropic\RequestOptions;
 
 use const Anthropic\Core\OMIT as omit;
@@ -20,6 +21,8 @@ interface FilesContract
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return Page<FileMetadata>
      */
     public function list(
         $afterID = omit,
@@ -27,7 +30,7 @@ interface FilesContract
         $limit = omit,
         $betas = omit,
         ?RequestOptions $requestOptions = null,
-    ): FileMetadata;
+    ): Page;
 
     /**
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use

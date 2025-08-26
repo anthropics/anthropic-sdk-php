@@ -10,11 +10,14 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\RequestOptions;
 
 /**
+ * @internal
+ *
  * @template Item
  *
+ * @extends \ArrayAccess<string, mixed>
  * @extends \IteratorAggregate<int, static>
  */
-interface BasePage extends \IteratorAggregate
+interface BasePage extends \ArrayAccess, \JsonSerializable, \Stringable, \IteratorAggregate
 {
     /**
      * @internal
@@ -29,6 +32,14 @@ interface BasePage extends \IteratorAggregate
         mixed $data,
     );
 
+    /**
+     * @return static<Item>
+     */
+    public static function fromArray(mixed $data): self;
+
+    /** @return array<string, mixed> */
+    public function toArray(): array;
+
     public function hasNextPage(): bool;
 
     /**
@@ -40,4 +51,9 @@ interface BasePage extends \IteratorAggregate
      * @return static<Item>
      */
     public function getNextPage(): static;
+
+    /**
+     * @return \Generator<Item>
+     */
+    public function pagingEachItem(): \Generator;
 }

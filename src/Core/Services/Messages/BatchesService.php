@@ -6,9 +6,9 @@ namespace Anthropic\Core\Services\Messages;
 
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
-use Anthropic\Core\Pagination\Page;
+use Anthropic\Core\Page;
 use Anthropic\Core\ServiceContracts\Messages\BatchesContract;
-use Anthropic\Core\Streaming\SSEStream;
+use Anthropic\Core\SSEStream;
 use Anthropic\Messages\Batches\BatchCreateParams;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\Messages\Batches\BatchListParams;
@@ -79,13 +79,15 @@ final class BatchesService implements BatchesContract
      * @param int $limit Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
+     *
+     * @return Page<MessageBatch>
      */
     public function list(
         $afterID = omit,
         $beforeID = omit,
         $limit = omit,
         ?RequestOptions $requestOptions = null,
-    ): MessageBatch {
+    ): Page {
         [$parsed, $options] = BatchListParams::parseRequest(
             ['afterID' => $afterID, 'beforeID' => $beforeID, 'limit' => $limit],
             $requestOptions,

@@ -11,7 +11,7 @@ use Anthropic\Beta\Files\FileListParams;
 use Anthropic\Beta\Files\FileMetadata;
 use Anthropic\Beta\Files\FileRetrieveMetadataParams;
 use Anthropic\Client;
-use Anthropic\Core\Pagination\Page;
+use Anthropic\Core\Page;
 use Anthropic\Core\ServiceContracts\Beta\FilesContract;
 use Anthropic\Core\Util;
 use Anthropic\RequestOptions;
@@ -31,6 +31,8 @@ final class FilesService implements FilesContract
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return Page<FileMetadata>
      */
     public function list(
         $afterID = omit,
@@ -38,7 +40,7 @@ final class FilesService implements FilesContract
         $limit = omit,
         $betas = omit,
         ?RequestOptions $requestOptions = null,
-    ): FileMetadata {
+    ): Page {
         [$parsed, $options] = FileListParams::parseRequest(
             [
                 'afterID' => $afterID,

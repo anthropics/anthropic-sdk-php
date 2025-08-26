@@ -1,10 +1,11 @@
 <?php
 
-namespace Anthropic\Core\Streaming;
+namespace Anthropic\Core\Concerns;
 
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
+use Anthropic\Core\Implementation\IteratorExit;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -16,7 +17,7 @@ use Psr\Http\Message\ResponseInterface;
  *
  * @implements BaseStream<TEvent>
  */
-abstract class AbstractStream implements BaseStream
+trait SdkStream
 {
     /**
      * @param \Generator<TEvent> $generator
@@ -53,5 +54,8 @@ abstract class AbstractStream implements BaseStream
         }
     }
 
-    abstract protected function parsedGenerator(): \Generator;
+    /**
+     * @return \Generator<TEvent> $stream
+     */
+    abstract private function parsedGenerator(): \Generator;
 }

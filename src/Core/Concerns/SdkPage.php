@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Core\Pagination;
+namespace Anthropic\Core\Concerns;
 
 use Anthropic\Client;
-use Anthropic\Core\Contracts\BasePage;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Errors\APIStatusError;
@@ -16,19 +15,20 @@ use Anthropic\RequestOptions;
  *
  * @template Item
  *
- * @implements BasePage<Item>
- *
  * @phpstan-import-type normalized_request from \Anthropic\Core\BaseClient
  */
-abstract class AbstractPage implements BasePage
+trait SdkPage
 {
-    public function __construct(
-        protected Converter|ConverterSource|string $convert,
-        protected Client $client,
-        protected array $request,
-        protected RequestOptions $options,
-        protected mixed $data,
-    ) {}
+    private Converter|ConverterSource|string $convert;
+
+    private Client $client;
+
+    /**
+     * normalized_request $request.
+     */
+    private array $request;
+
+    private RequestOptions $options;
 
     /**
      * @return list<Item>

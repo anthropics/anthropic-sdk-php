@@ -6,7 +6,7 @@ namespace Anthropic\Core\Services;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
-use Anthropic\Core\Pagination\Page;
+use Anthropic\Core\Page;
 use Anthropic\Core\ServiceContracts\ModelsContract;
 use Anthropic\Core\Util;
 use Anthropic\Models\ModelInfo;
@@ -61,6 +61,8 @@ final class ModelsService implements ModelsContract
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return Page<ModelInfo>
      */
     public function list(
         $afterID = omit,
@@ -68,7 +70,7 @@ final class ModelsService implements ModelsContract
         $limit = omit,
         $betas = omit,
         ?RequestOptions $requestOptions = null,
-    ): ModelInfo {
+    ): Page {
         [$parsed, $options] = ModelListParams::parseRequest(
             [
                 'afterID' => $afterID,

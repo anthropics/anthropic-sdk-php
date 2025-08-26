@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Core\ServiceContracts;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Core\Page;
 use Anthropic\Models\ModelInfo;
 use Anthropic\RequestOptions;
 
@@ -28,6 +29,8 @@ interface ModelsContract
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return Page<ModelInfo>
      */
     public function list(
         $afterID = omit,
@@ -35,5 +38,5 @@ interface ModelsContract
         $limit = omit,
         $betas = omit,
         ?RequestOptions $requestOptions = null,
-    ): ModelInfo;
+    ): Page;
 }
