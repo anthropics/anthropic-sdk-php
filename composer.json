@@ -28,7 +28,7 @@
   },
   "license": "APACHE-2.0",
   "description": "Anthropic PHP SDK",
-  "name": "placeholder/placeholder",
+  "name": "anthropic-ai/sdk",
   "require": {
     "php": "^8.1",
     "php-http/discovery": "^1",

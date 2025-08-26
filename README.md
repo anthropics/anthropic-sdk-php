@@ -15,20 +15,8 @@ The REST API documentation can be found on [docs.anthropic.com](https://docs.ant
 
 ## Installation
 
-To use this package, install via Composer by adding the following to your application's `composer.json`:
-
-```json
-{
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "git@github.com:stainless-sdks/anthropic-php.git"
-    }
-  ],
-  "require": {
-    "placeholder/placeholder": "dev-main"
-  }
-}
+```
+composer require "anthropic-ai/sdk 0.0.1"
 ```
 
 ## Usage
