@@ -11,9 +11,9 @@ use Anthropic\Beta\Files\FileListParams;
 use Anthropic\Beta\Files\FileMetadata;
 use Anthropic\Beta\Files\FileRetrieveMetadataParams;
 use Anthropic\Client;
-use Anthropic\Core\Page;
 use Anthropic\Core\ServiceContracts\Beta\FilesContract;
 use Anthropic\Core\Util;
+use Anthropic\Page;
 use Anthropic\RequestOptions;
 
 use const Anthropic\Core\OMIT as omit;
