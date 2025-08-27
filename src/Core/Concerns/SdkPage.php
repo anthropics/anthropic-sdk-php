@@ -101,6 +101,13 @@ trait SdkPage
     }
 
     /**
+     * @param array<string, mixed> $data
+     *
+     * @return static<Item>
+     */
+    abstract public static function fromArray(array $data): static;
+
+    /**
      * @return array{normalized_request, RequestOptions}
      */
     abstract protected function nextRequest(): ?array;
