@@ -14,10 +14,9 @@ use Anthropic\RequestOptions;
  *
  * @template Item
  *
- * @extends \ArrayAccess<string, mixed>
  * @extends \IteratorAggregate<int, static>
  */
-interface BasePage extends \ArrayAccess, \JsonSerializable, \Stringable, \IteratorAggregate
+interface BasePage extends \IteratorAggregate
 {
     /**
      * @internal
@@ -31,16 +30,6 @@ interface BasePage extends \ArrayAccess, \JsonSerializable, \Stringable, \Iterat
         RequestOptions $options,
         mixed $data,
     );
-
-    /**
-     * @param array<string, mixed> $data
-     *
-     * @return static<Item>
-     */
-    public static function fromArray(array $data): self;
-
-    /** @return array<string, mixed> */
-    public function toArray(): array;
 
     public function hasNextPage(): bool;
 
