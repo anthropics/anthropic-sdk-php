@@ -8,7 +8,7 @@ use Anthropic\Core\Contracts\BasePage;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
-use Anthropic\Core\Errors\APIStatusError;
+use Anthropic\Core\Exceptions\APIStatusException;
 use Anthropic\RequestOptions;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
@@ -203,7 +203,7 @@ class BaseClient
         }
 
         if ($code >= 400 && $code < 500) {
-            throw APIStatusError::from(request: $req, response: $rsp);
+            throw APIStatusException::from(request: $req, response: $rsp);
         }
 
         if ($code >= 500 && $retryCount < $opts->maxRetries) {

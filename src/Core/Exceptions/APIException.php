@@ -1,11 +1,11 @@
 <?php
 
-namespace Anthropic\Core\Errors;
+namespace Anthropic\Core\Exceptions;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class APIError extends AnthropicError
+class APIException extends AnthropicException
 {
     public ?int $status = null;
 
