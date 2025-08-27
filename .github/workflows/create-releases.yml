@@ -1,0 +1,31 @@
+name: Create releases
+on:
+  schedule:
+    - cron: '0 5 * * *' # every day at 5am UTC
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: release
+    if: github.ref == 'refs/heads/main' && github.repository == 'anthropics/anthropic-sdk-php'
+    runs-on: ubuntu-latest
+    environment: production-release
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: stainless-api/trigger-release-please@v1
+        id: release
+        with:
+          repo: ${{ github.event.repository.full_name }}
+          stainless-api-key: ${{ secrets.STAINLESS_API_KEY }}
+
+      - name: Publish to Packagist
+        if: ${{ steps.release.outputs.releases_created }}
+        run: |-
+          curl --fail-with-body -X POST -H 'Content-Type: application/json' "https://packagist.org/api/update-package?username=${PACKAGIST_USERNAME}&apiToken=${PACKAGIST_SAFE_KEY}" -d '{"repository":"https://www.github.com/anthropics/anthropic-sdk-php"}'
+        env:
+          PACKAGIST_USERNAME: ${{ secrets.ANTHROPIC_PACKAGIST_USERNAME || secrets.PACKAGIST_USERNAME }}
+          PACKAGIST_SAFE_KEY: ${{ secrets.ANTHROPIC_PACKAGIST_SAFE_KEY || secrets.PACKAGIST_SAFE_KEY }}
