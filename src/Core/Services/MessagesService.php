@@ -8,7 +8,6 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\ServiceContracts\MessagesContract;
 use Anthropic\Core\Services\Messages\BatchesService;
-use Anthropic\Core\SSEStream;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCountTokensParams;
 use Anthropic\Messages\MessageCreateParams;
@@ -38,6 +37,7 @@ use Anthropic\Messages\ToolTextEditor20250429;
 use Anthropic\Messages\ToolTextEditor20250728;
 use Anthropic\Messages\WebSearchTool20250305;
 use Anthropic\RequestOptions;
+use Anthropic\SSEStream;
 
 use const Anthropic\Core\OMIT as omit;
 

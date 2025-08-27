@@ -1,16 +1,15 @@
 <?php
 
-namespace Anthropic\Core;
+namespace Anthropic;
 
-use Anthropic\Client;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkPage;
 use Anthropic\Core\Contracts\BasePage;
+use Anthropic\Core\Conversion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
-use Anthropic\RequestOptions;
 
 /**
  * @phpstan-type page_alias = array{

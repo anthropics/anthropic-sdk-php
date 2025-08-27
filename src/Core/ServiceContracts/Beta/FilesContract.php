@@ -7,7 +7,7 @@ namespace Anthropic\Core\ServiceContracts\Beta;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Files\DeletedFile;
 use Anthropic\Beta\Files\FileMetadata;
-use Anthropic\Core\Page;
+use Anthropic\Page;
 use Anthropic\RequestOptions;
 
 use const Anthropic\Core\OMIT as omit;

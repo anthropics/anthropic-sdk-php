@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Core\ServiceContracts;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Core\Page;
 use Anthropic\Models\ModelInfo;
+use Anthropic\Page;
 use Anthropic\RequestOptions;
 
 use const Anthropic\Core\OMIT as omit;

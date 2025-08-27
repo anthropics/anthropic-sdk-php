@@ -6,16 +6,16 @@ namespace Anthropic\Core\Services\Messages;
 
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
-use Anthropic\Core\Page;
 use Anthropic\Core\ServiceContracts\Messages\BatchesContract;
-use Anthropic\Core\SSEStream;
 use Anthropic\Messages\Batches\BatchCreateParams;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\Messages\Batches\BatchListParams;
 use Anthropic\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Messages\Batches\MessageBatch;
 use Anthropic\Messages\Batches\MessageBatchIndividualResponse;
+use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SSEStream;
 
 use const Anthropic\Core\OMIT as omit;
 
