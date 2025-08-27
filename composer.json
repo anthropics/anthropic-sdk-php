@@ -1,10 +1,7 @@
 {
   "$schema": "https://getcomposer.org/schema.json",
   "autoload": {
-    "files": [
-      "src/Core.php",
-      "src/Client.php"
-    ],
+    "files": ["src/Core.php", "src/Client.php"],
     "psr-4": {
       "Anthropic\\": "src/"
     }
@@ -26,13 +23,12 @@
     "preferred-install": "dist",
     "sort-packages": true
   },
-  "license": "APACHE-2.0",
   "description": "Anthropic PHP SDK",
+  "license": "APACHE-2.0",
   "name": "anthropic-ai/sdk",
   "require": {
     "php": "^8.1",
     "php-http/discovery": "^1",
-    "php-http/multipart-stream-builder": "^1",
     "psr/http-client": "^1",
     "psr/http-client-implementation": "^1",
     "psr/http-factory-implementation": "^1",
