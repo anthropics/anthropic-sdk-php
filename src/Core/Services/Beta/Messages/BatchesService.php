@@ -17,11 +17,11 @@ use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
-use Anthropic\Core\Page;
 use Anthropic\Core\ServiceContracts\Beta\Messages\BatchesContract;
-use Anthropic\Core\SSEStream;
 use Anthropic\Core\Util;
+use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SSEStream;
 
 use const Anthropic\Core\OMIT as omit;
 

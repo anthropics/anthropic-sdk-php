@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Anthropic\Core\ServiceContracts\Messages;
 
 use Anthropic\Core\Contracts\BaseStream;
-use Anthropic\Core\Page;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Messages\Batches\MessageBatch;
 use Anthropic\Messages\Batches\MessageBatchIndividualResponse;
+use Anthropic\Page;
 use Anthropic\RequestOptions;
 
 use const Anthropic\Core\OMIT as omit;

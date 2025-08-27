@@ -6,12 +6,12 @@ namespace Anthropic\Core\Services;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
-use Anthropic\Core\Page;
 use Anthropic\Core\ServiceContracts\ModelsContract;
 use Anthropic\Core\Util;
 use Anthropic\Models\ModelInfo;
 use Anthropic\Models\ModelListParams;
 use Anthropic\Models\ModelRetrieveParams;
+use Anthropic\Page;
 use Anthropic\RequestOptions;
 
 use const Anthropic\Core\OMIT as omit;

@@ -9,9 +9,9 @@ use Anthropic\Beta\Models\BetaModelInfo;
 use Anthropic\Beta\Models\ModelListParams;
 use Anthropic\Beta\Models\ModelRetrieveParams;
 use Anthropic\Client;
-use Anthropic\Core\Page;
 use Anthropic\Core\ServiceContracts\Beta\ModelsContract;
 use Anthropic\Core\Util;
+use Anthropic\Page;
 use Anthropic\RequestOptions;
 
 use const Anthropic\Core\OMIT as omit;
