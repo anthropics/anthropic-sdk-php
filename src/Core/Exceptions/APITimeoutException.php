@@ -1,13 +1,13 @@
 <?php
 
-namespace Anthropic\Core\Errors;
+namespace Anthropic\Core\Exceptions;
 
 use Psr\Http\Message\RequestInterface;
 
-class APITimeoutError extends APIConnectionError
+class APITimeoutException extends APIConnectionException
 {
     /** @var string */
-    protected const DESC = 'Anthropic API Timeout Error';
+    protected const DESC = 'Anthropic API Timeout Exception';
 
     public function __construct(
         public RequestInterface $request,

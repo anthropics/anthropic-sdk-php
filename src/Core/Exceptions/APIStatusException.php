@@ -1,12 +1,12 @@
 <?php
 
-namespace Anthropic\Core\Errors;
+namespace Anthropic\Core\Exceptions;
 
 use Anthropic\Core\Util;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class APIStatusError extends APIError
+class APIStatusException extends APIException
 {
     /** @var string */
     protected const DESC = 'Anthropic API Status Error';
@@ -39,15 +39,15 @@ class APIStatusError extends APIError
         $status = $response->getStatusCode();
 
         $cls = match (true) {
-            400 === $status => BadRequestError::class,
-            401 === $status => AuthenticationError::class,
-            403 === $status => PermissionDeniedError::class,
-            404 === $status => NotFoundError::class,
-            409 === $status => ConflictError::class,
-            422 === $status => UnprocessableEntityError::class,
-            429 === $status => RateLimitError::class,
-            $status >= 500 => InternalServerError::class,
-            default => APIStatusError::class
+            400 === $status => BadRequestException::class,
+            401 === $status => AuthenticationException::class,
+            403 === $status => PermissionDeniedException::class,
+            404 === $status => NotFoundException::class,
+            409 === $status => ConflictException::class,
+            422 === $status => UnprocessableEntityException::class,
+            429 === $status => RateLimitException::class,
+            $status >= 500 => InternalServerException::class,
+            default => APIStatusException::class
         };
 
         return new $cls(request: $request, response: $response, message: $message);

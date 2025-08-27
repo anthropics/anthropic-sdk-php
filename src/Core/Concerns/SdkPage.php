@@ -7,7 +7,7 @@ namespace Anthropic\Core\Concerns;
 use Anthropic\Client;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
-use Anthropic\Core\Errors\APIStatusError;
+use Anthropic\Core\Exceptions\APIStatusException;
 use Anthropic\RequestOptions;
 
 /**
@@ -52,7 +52,7 @@ trait SdkPage
      *
      * @return static of static<Item>
      *
-     * @throws APIStatusError
+     * @throws APIStatusException
      */
     public function getNextPage(): static
     {

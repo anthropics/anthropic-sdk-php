@@ -4,7 +4,7 @@ namespace Anthropic\Core;
 
 use Anthropic\Core\Concerns\SdkStream;
 use Anthropic\Core\Contracts\BaseStream;
-use Anthropic\Core\Errors\APIStatusError;
+use Anthropic\Core\Exceptions\APIStatusException;
 
 /**
  * @template TItem
@@ -53,7 +53,7 @@ final class SSEStream implements BaseStream
                         $json = Util::decodeJson($chunk['data']);
                         $message = Util::prettyEncodeJson($json);
 
-                        $exn = APIStatusError::from(
+                        $exn = APIStatusException::from(
                             request: $this->request,
                             response: $this->response,
                             message: $message,
