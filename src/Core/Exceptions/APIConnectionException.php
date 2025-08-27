@@ -1,8 +1,8 @@
 <?php
 
-namespace Anthropic\Core\Errors;
+namespace Anthropic\Core\Exceptions;
 
-class APIConnectionError extends APIError
+class APIConnectionException extends APIException
 {
     /** @var string */
     protected const DESC = 'Anthropic API Connection Error';
