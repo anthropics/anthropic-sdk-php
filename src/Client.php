@@ -15,10 +15,19 @@ class Client extends BaseClient
 
     public string $authToken;
 
+    /**
+     * @api
+     */
     public MessagesService $messages;
 
+    /**
+     * @api
+     */
     public ModelsService $models;
 
+    /**
+     * @api
+     */
     public BetaService $beta;
 
     public function __construct(
