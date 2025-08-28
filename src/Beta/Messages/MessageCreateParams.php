@@ -20,6 +20,8 @@ use Anthropic\Messages\Model;
  *
  * Learn more about the Messages API in our [user guide](/en/docs/initial-setup)
  *
+ * @see Anthropic\Beta\Messages->create
+ *
  * @phpstan-type message_create_params = array{
  *   maxTokens: int,
  *   messages: list<BetaMessageParam>,

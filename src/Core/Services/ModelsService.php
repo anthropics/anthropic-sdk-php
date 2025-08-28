@@ -21,6 +21,8 @@ final class ModelsService implements ModelsContract
     public function __construct(private Client $client) {}
 
     /**
+     * @api
+     *
      * Get a specific model.
      *
      * The Models API response can be used to determine information about a specific model or resolve a model alias to a model ID.
@@ -51,6 +53,8 @@ final class ModelsService implements ModelsContract
     }
 
     /**
+     * @api
+     *
      * List available models.
      *
      * The Models API response can be used to determine which models are available for use in the API. More recently released models are listed first.

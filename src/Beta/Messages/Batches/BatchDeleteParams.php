@@ -17,6 +17,8 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
  *
+ * @see Anthropic\Beta\Messages\Batches->delete
+ *
  * @phpstan-type batch_delete_params = array{betas?: list<AnthropicBeta::*|string>}
  */
 final class BatchDeleteParams implements BaseModel

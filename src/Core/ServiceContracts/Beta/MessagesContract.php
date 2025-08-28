@@ -44,6 +44,8 @@ use const Anthropic\Core\OMIT as omit;
 interface MessagesContract
 {
     /**
+     * @api
+     *
      * @param int $maxTokens The maximum number of tokens to generate before stopping.
      *
      * Note that our models may stop _before_ reaching this maximum. This parameter only specifies the absolute maximum number of tokens to generate.
@@ -430,6 +432,8 @@ interface MessagesContract
     ): BaseStream;
 
     /**
+     * @api
+     *
      * @param list<BetaMessageParam> $messages Input messages.
      *
      * Our models are trained to operate on alternating `user` and `assistant` conversational turns. When creating a new `Message`, you specify the prior conversational turns with the `messages` parameter, and the model then generates the next `Message` in the conversation. Consecutive `user` or `assistant` turns in your request will be combined into a single turn.
