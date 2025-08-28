@@ -43,6 +43,9 @@ use const Anthropic\Core\OMIT as omit;
 
 final class MessagesService implements MessagesContract
 {
+    /**
+     * @@api
+     */
     public BatchesService $batches;
 
     public function __construct(private Client $client)
@@ -51,6 +54,8 @@ final class MessagesService implements MessagesContract
     }
 
     /**
+     * @api
+     *
      * Send a structured list of input messages with text and/or image content, and the model will generate the next message in the conversation.
      *
      * The Messages API can be used for either single queries or stateless multi-turn conversations.
@@ -489,6 +494,8 @@ final class MessagesService implements MessagesContract
     }
 
     /**
+     * @api
+     *
      * Count the number of tokens in a Message.
      *
      * The Token Count API can be used to count the number of tokens in a Message, including tools, images, and documents, without creating it.

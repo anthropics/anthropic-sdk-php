@@ -18,6 +18,8 @@ use const Anthropic\Core\OMIT as omit;
 interface BatchesContract
 {
     /**
+     * @api
+     *
      * @param list<Request> $requests List of requests for prompt completion. Each is an individual request to create a Message.
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
@@ -28,6 +30,8 @@ interface BatchesContract
     ): MessageBatch;
 
     /**
+     * @api
+     *
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function retrieve(
@@ -37,6 +41,8 @@ interface BatchesContract
     ): MessageBatch;
 
     /**
+     * @api
+     *
      * @param string $afterID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
      * @param string $beforeID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
      * @param int $limit Number of items to return per page.
@@ -55,6 +61,8 @@ interface BatchesContract
     ): Page;
 
     /**
+     * @api
+     *
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function delete(
@@ -64,6 +72,8 @@ interface BatchesContract
     ): DeletedMessageBatch;
 
     /**
+     * @api
+     *
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function cancel(
@@ -73,6 +83,8 @@ interface BatchesContract
     ): MessageBatch;
 
     /**
+     * @api
+     *
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function results(

@@ -14,6 +14,8 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
  *
+ * @see Anthropic\Messages\Batches->list
+ *
  * @phpstan-type batch_list_params = array{
  *   afterID?: string, beforeID?: string, limit?: int
  * }

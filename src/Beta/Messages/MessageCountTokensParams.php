@@ -20,6 +20,8 @@ use Anthropic\Messages\Model;
  *
  * Learn more about token counting in our [user guide](/en/docs/build-with-claude/token-counting)
  *
+ * @see Anthropic\Beta\Messages->countTokens
+ *
  * @phpstan-type message_count_tokens_params = array{
  *   messages: list<BetaMessageParam>,
  *   model: Model::*|string,
