@@ -294,7 +294,7 @@ final class MessagesService implements MessagesContract
                 $header_params
             ),
             body: (object) array_diff_key($parsed, array_keys($header_params)),
-            options: array_merge(['timeout' => 600], $options),
+            options: $options,
             convert: BetaMessage::class,
         );
     }
@@ -526,7 +526,7 @@ final class MessagesService implements MessagesContract
                 $header_params
             ),
             body: (object) array_diff_key($parsed, array_keys($header_params)),
-            options: array_merge(['timeout' => 600], $options),
+            options: $options,
             convert: BetaRawMessageStreamEvent::class,
             stream: SSEStream::class,
         );

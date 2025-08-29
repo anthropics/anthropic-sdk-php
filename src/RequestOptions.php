@@ -7,7 +7,7 @@ namespace Anthropic;
 use Anthropic\Core\Attributes\Api as Property;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Implementation\Omittable;
+use Anthropic\Core\Implementation\Omit;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -48,15 +48,15 @@ final class RequestOptions implements BaseModel
     #[Property]
     public float $maxRetryDelay = 8.0;
 
-    /** @var array<string, string|int|list<string|int>|null> $extraHeaders */
-    #[Property]
-    public array $extraHeaders = [];
+    /** @var array<string, string|int|list<string|int>|null>|null $extraHeaders */
+    #[Property(optional: true)]
+    public ?array $extraHeaders;
 
-    /** @var array<string, mixed> $extraQueryParams */
-    #[Property]
-    public array $extraQueryParams = [];
+    /** @var array<string, mixed>|null $extraQueryParams */
+    #[Property(optional: true)]
+    public ?array $extraQueryParams;
 
-    #[Property]
+    #[Property(optional: true)]
     public mixed $extraBodyParams;
 
     #[Property(optional: true)]
@@ -71,12 +71,27 @@ final class RequestOptions implements BaseModel
     #[Property(optional: true)]
     public ?RequestFactoryInterface $requestFactory;
 
+    public function __construct()
+    {
+        $this->initialize();
+    }
+
+    /**
+     * @param request_opts|null $options
+     */
+    public static function parse(RequestOptions|array|null ...$options): self
+    {
+        $parsed = array_map(static fn ($o) => $o instanceof self ? $o->toArray() : $o ?? [], array: $options);
+
+        return self::with(...array_merge(...$parsed)); // @phpstan-ignore-line
+    }
+
     /**
      * @param array<string, string|int|list<string|int>|null>|null $extraHeaders
      * @param array<string, mixed>|null $extraQueryParams
-     * @param mixed|Omittable $extraBodyParams
+     * @param mixed|Omit $extraBodyParams
      */
-    public function __construct(
+    public static function with(
         ?float $timeout = null,
         ?int $maxRetries = null,
         ?float $initialRetryDelay = null,
@@ -88,40 +103,117 @@ final class RequestOptions implements BaseModel
         ?UriFactoryInterface $uriFactory = null,
         ?StreamFactoryInterface $streamFactory = null,
         ?RequestFactoryInterface $requestFactory = null,
-    ) {
-        $this->initialize();
+    ): self {
+        $obj = new self;
 
-        null !== $timeout && $this->timeout = $timeout;
-        null !== $maxRetries && $this->maxRetries = $maxRetries;
-        null !== $initialRetryDelay && $this
-            ->initialRetryDelay = $initialRetryDelay
-        ;
-        null !== $maxRetryDelay && $this->maxRetryDelay = $maxRetryDelay;
-        null !== $extraHeaders && $this->extraHeaders = $extraHeaders;
-        null !== $extraQueryParams && $this->extraQueryParams = $extraQueryParams;
-        omit !== $extraBodyParams && $this->extraBodyParams = $extraBodyParams;
-        null !== $transporter && $this->transporter = $transporter;
-        null !== $uriFactory && $this->uriFactory = $uriFactory;
-        null !== $streamFactory && $this->streamFactory = $streamFactory;
-        null !== $requestFactory && $this->requestFactory = $requestFactory;
+        null !== $timeout && $obj->timeout = $timeout;
+        null !== $maxRetries && $obj->maxRetries = $maxRetries;
+        null !== $initialRetryDelay && $obj->initialRetryDelay = $initialRetryDelay;
+        null !== $maxRetryDelay && $obj->maxRetryDelay = $maxRetryDelay;
+        null !== $extraHeaders && $obj->extraHeaders = $extraHeaders;
+        null !== $extraQueryParams && $obj->extraQueryParams = $extraQueryParams;
+        omit !== $extraBodyParams && $obj->extraBodyParams = $extraBodyParams;
+        null !== $transporter && $obj->transporter = $transporter;
+        null !== $uriFactory && $obj->uriFactory = $uriFactory;
+        null !== $streamFactory && $obj->streamFactory = $streamFactory;
+        null !== $requestFactory && $obj->requestFactory = $requestFactory;
+
+        return $obj;
+    }
+
+    public function withTimeout(float $timeout): self
+    {
+        $obj = clone $this;
+        $obj->timeout = $timeout;
+
+        return $obj;
+    }
+
+    public function withMaxRetries(int $maxRetries): self
+    {
+        $obj = clone $this;
+        $obj->maxRetries = $maxRetries;
+
+        return $obj;
+    }
+
+    public function withInitialRetryDelay(float $initialRetryDelay): self
+    {
+        $obj = clone $this;
+        $obj->initialRetryDelay = $initialRetryDelay;
+
+        return $obj;
+    }
+
+    public function withMaxRetryDelay(float $maxRetryDelay): self
+    {
+        $obj = clone $this;
+        $obj->maxRetryDelay = $maxRetryDelay;
+
+        return $obj;
     }
 
     /**
-     * @param request_opts|null $options
+     * @param array<string, string|int|list<string|int>|null> $extraHeaders
      */
-    public static function parse(RequestOptions|array|null $options): self
+    public function withExtraHeaders(array $extraHeaders): self
     {
-        if (is_null($options)) {
-            return new self;
-        }
+        $obj = clone $this;
+        $obj->extraHeaders = $extraHeaders;
 
-        if ($options instanceof self) {
-            return $options;
-        }
+        return $obj;
+    }
 
-        $opts = new self;
-        $opts->__unserialize($options);
+    /**
+     * @param array<string, mixed> $extraQueryParams
+     */
+    public function withExtraQueryParams(array $extraQueryParams): self
+    {
+        $obj = clone $this;
+        $obj->extraQueryParams = $extraQueryParams;
 
-        return $opts;
+        return $obj;
+    }
+
+    public function withExtraBodyParams(mixed $extraBodyParams): self
+    {
+        $obj = clone $this;
+        $obj->extraBodyParams = $extraBodyParams;
+
+        return $obj;
+    }
+
+    public function withTransporter(ClientInterface $transporter): self
+    {
+        $obj = clone $this;
+        $obj->transporter = $transporter;
+
+        return $obj;
+    }
+
+    public function withUriFactory(UriFactoryInterface $uriFactory): self
+    {
+        $obj = clone $this;
+        $obj->uriFactory = $uriFactory;
+
+        return $obj;
+    }
+
+    public function withStreamFactory(
+        StreamFactoryInterface $streamFactory
+    ): self {
+        $obj = clone $this;
+        $obj->streamFactory = $streamFactory;
+
+        return $obj;
+    }
+
+    public function withRequestFactory(
+        RequestFactoryInterface $requestFactory
+    ): self {
+        $obj = clone $this;
+        $obj->requestFactory = $requestFactory;
+
+        return $obj;
     }
 }

@@ -44,7 +44,7 @@ class Client extends BaseClient
             'ANTHROPIC_BASE_URL'
         ) ?: 'https://api.anthropic.com';
 
-        $options = new RequestOptions(
+        $options = RequestOptions::with(
             uriFactory: Psr17FactoryDiscovery::findUriFactory(),
             streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
             requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
