@@ -69,7 +69,7 @@ final class FilesService implements FilesContract
                 $header_params,
                 ['betas' => 'anthropic-beta']
             ),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
                 $options,
             ),
@@ -103,7 +103,7 @@ final class FilesService implements FilesContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
                 $options,
             ),
@@ -136,7 +136,7 @@ final class FilesService implements FilesContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
                 $options,
             ),

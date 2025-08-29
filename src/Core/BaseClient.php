@@ -32,6 +32,8 @@ class BaseClient
     protected UriInterface $baseUrl;
 
     /**
+     * @internal
+     *
      * @param array<string, string|int|list<string|int>|null> $headers
      */
     public function __construct(
@@ -108,6 +110,8 @@ class BaseClient
     }
 
     /**
+     * @internal
+     *
      * @param string|list<string> $path
      * @param array<string, mixed> $query
      * @param array<string, string|int|list<string|int>|null> $headers
@@ -135,26 +139,31 @@ class BaseClient
         mixed $body,
         RequestOptions|array|null $opts,
     ): array {
-        $opts = array_merge($this->options->toArray(), RequestOptions::parse($opts)->toArray());
-        $options = new RequestOptions(...$opts);
+        $options = RequestOptions::parse($this->options, $opts);
 
         $parsedPath = Util::parsePath($path);
 
         /** @var array<string, mixed> $mergedQuery */
-        $mergedQuery = array_merge_recursive($query, $options->extraQueryParams);
+        $mergedQuery = array_merge_recursive(
+            $query,
+            $options->extraQueryParams ?? [],
+        );
         $uri = Util::joinUri($this->baseUrl, path: $parsedPath, query: $mergedQuery)->__toString();
 
         /** @var array<string, string|list<string>|null> $mergedHeaders */
         $mergedHeaders = [...$this->headers,
             ...$this->authHeaders(),
             ...$headers,
-            ...$options->extraHeaders, ];
+            ...($options->extraHeaders ?? []), ];
 
         $req = ['method' => strtoupper($method), 'path' => $uri, 'query' => $mergedQuery, 'headers' => $mergedHeaders, 'body' => $body];
 
         return [$req, $options];
     }
 
+    /**
+     * @internal
+     */
     protected function followRedirect(
         ResponseInterface $rsp,
         RequestInterface $req
@@ -170,6 +179,8 @@ class BaseClient
     }
 
     /**
+     * @internal
+     *
      * @param bool|int|float|string|resource|\Traversable<mixed>|array<string,
      * mixed,>|null $data
      */

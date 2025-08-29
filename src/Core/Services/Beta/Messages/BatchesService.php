@@ -64,7 +64,7 @@ final class BatchesService implements BatchesContract
                 $header_params
             ),
             body: (object) array_diff_key($parsed, array_keys($header_params)),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
@@ -99,7 +99,7 @@ final class BatchesService implements BatchesContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
@@ -153,7 +153,7 @@ final class BatchesService implements BatchesContract
                 $header_params,
                 ['betas' => 'anthropic-beta']
             ),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
@@ -191,7 +191,7 @@ final class BatchesService implements BatchesContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
@@ -228,7 +228,7 @@ final class BatchesService implements BatchesContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
@@ -265,7 +265,7 @@ final class BatchesService implements BatchesContract
                 ['Accept' => 'application/x-jsonl', ...$parsed],
                 ['betas' => 'anthropic-beta'],
             ),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
@@ -296,7 +296,7 @@ final class BatchesService implements BatchesContract
                 ['Accept' => 'application/x-jsonl', ...$parsed],
                 ['betas' => 'anthropic-beta'],
             ),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
