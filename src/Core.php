@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Core;
 
-use Anthropic\Core\Implementation\Omittable;
+use Anthropic\Core\Implementation\Omit;
 
-const OMIT = Omittable::OMIT;
+const OMIT = Omit::omit;

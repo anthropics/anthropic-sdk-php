@@ -272,7 +272,7 @@ final class MessagesService implements MessagesContract
             method: 'post',
             path: 'v1/messages',
             body: (object) $parsed,
-            options: array_merge(['timeout' => 600], $options),
+            options: $options,
             convert: Message::class,
         );
     }
@@ -490,7 +490,7 @@ final class MessagesService implements MessagesContract
             method: 'post',
             path: 'v1/messages',
             body: (object) $parsed,
-            options: array_merge(['timeout' => 600], $options),
+            options: $options,
             convert: RawMessageStreamEvent::class,
             stream: SSEStream::class,
         );
