@@ -18,6 +18,9 @@ use const Anthropic\Core\OMIT as omit;
 
 final class ModelsService implements ModelsContract
 {
+    /**
+     * @internal
+     */
     public function __construct(private Client $client) {}
 
     /**

@@ -50,6 +50,8 @@ trait SdkModel
     }
 
     /**
+     * @internal
+     *
      * @return array<string, mixed>
      */
     public function __debugInfo(): array
@@ -135,8 +137,6 @@ trait SdkModel
      * @internal
      *
      * @param key-of<Shape> $offset
-     *
-     * @return value-of<Shape>
      */
     public function &offsetGet(mixed $offset): mixed
     {
@@ -205,6 +205,8 @@ trait SdkModel
     }
 
     /**
+     * @internal
+     *
      * @return array<string, mixed>
      */
     public function jsonSerialize(): array
@@ -238,16 +240,10 @@ trait SdkModel
     /**
      * @internal
      */
-    public static function introspect(): void
+    private function initialize(): void
     {
         static::converter();
-    }
 
-    /**
-     * @internal
-     */
-    private function unsetOptionalProperties(): void
-    {
         foreach (self::$converter->properties as $name => $info) {
             if ($info->optional) {
                 unset($this->{$name});

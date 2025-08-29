@@ -37,8 +37,7 @@ final class BetaToolBash20241022 implements BaseModel
 
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**

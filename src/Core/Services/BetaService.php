@@ -27,6 +27,9 @@ final class BetaService implements BetaContract
      */
     public FilesService $files;
 
+    /**
+     * @internal
+     */
     public function __construct(private Client $client)
     {
         $this->models = new ModelsService($this->client);
