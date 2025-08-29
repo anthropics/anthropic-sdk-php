@@ -13,6 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * List Files.
  *
+ * @see Anthropic\Beta\Files->list
+ *
  * @phpstan-type file_list_params = array{
  *   afterID?: string,
  *   beforeID?: string,
@@ -56,8 +58,7 @@ final class FileListParams implements BaseModel
 
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**

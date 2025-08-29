@@ -12,17 +12,18 @@ use Anthropic\RequestOptions;
 /**
  * @internal
  *
+ * @phpstan-import-type normalized_request from \Anthropic\Core\BaseClient
+ *
  * @template Item
  *
- * @extends \ArrayAccess<string, mixed>
  * @extends \IteratorAggregate<int, static>
  */
-interface BasePage extends \ArrayAccess, \JsonSerializable, \Stringable, \IteratorAggregate
+interface BasePage extends \IteratorAggregate
 {
     /**
      * @internal
      *
-     * @param array<string, mixed> $request
+     * @param normalized_request $request
      */
     public function __construct(
         Converter|ConverterSource|string $convert,
@@ -31,16 +32,6 @@ interface BasePage extends \ArrayAccess, \JsonSerializable, \Stringable, \Iterat
         RequestOptions $options,
         mixed $data,
     );
-
-    /**
-     * @param array<string, mixed> $data
-     *
-     * @return static<Item>
-     */
-    public static function fromArray(array $data): self;
-
-    /** @return array<string, mixed> */
-    public function toArray(): array;
 
     public function hasNextPage(): bool;
 

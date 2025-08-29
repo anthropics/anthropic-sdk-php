@@ -11,19 +11,24 @@ use Anthropic\Beta\Files\FileListParams;
 use Anthropic\Beta\Files\FileMetadata;
 use Anthropic\Beta\Files\FileRetrieveMetadataParams;
 use Anthropic\Client;
-use Anthropic\Core\Page;
 use Anthropic\Core\ServiceContracts\Beta\FilesContract;
 use Anthropic\Core\Util;
+use Anthropic\Page;
 use Anthropic\RequestOptions;
 
 use const Anthropic\Core\OMIT as omit;
 
 final class FilesService implements FilesContract
 {
+    /**
+     * @internal
+     */
     public function __construct(private Client $client) {}
 
     /**
-     * List Files.
+     * @api
+     *
+     * List Files
      *
      * @param string $afterID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
      * @param string $beforeID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
@@ -64,7 +69,7 @@ final class FilesService implements FilesContract
                 $header_params,
                 ['betas' => 'anthropic-beta']
             ),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
                 $options,
             ),
@@ -74,7 +79,9 @@ final class FilesService implements FilesContract
     }
 
     /**
-     * Delete File.
+     * @api
+     *
+     * Delete File
      *
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
@@ -96,7 +103,7 @@ final class FilesService implements FilesContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
                 $options,
             ),
@@ -105,7 +112,9 @@ final class FilesService implements FilesContract
     }
 
     /**
-     * Get File Metadata.
+     * @api
+     *
+     * Get File Metadata
      *
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
@@ -127,7 +136,7 @@ final class FilesService implements FilesContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
                 $options,
             ),

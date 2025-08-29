@@ -15,6 +15,8 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * The Models API response can be used to determine which models are available for use in the API. More recently released models are listed first.
  *
+ * @see Anthropic\Models->list
+ *
  * @phpstan-type model_list_params = array{
  *   afterID?: string,
  *   beforeID?: string,
@@ -58,8 +60,7 @@ final class ModelListParams implements BaseModel
 
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**

@@ -8,6 +8,8 @@ use Anthropic\Core\BaseClient;
 use Anthropic\Core\Services\BetaService;
 use Anthropic\Core\Services\MessagesService;
 use Anthropic\Core\Services\ModelsService;
+use Http\Discovery\Psr17FactoryDiscovery;
+use Http\Discovery\Psr18ClientDiscovery;
 
 class Client extends BaseClient
 {
@@ -15,10 +17,19 @@ class Client extends BaseClient
 
     public string $authToken;
 
+    /**
+     * @api
+     */
     public MessagesService $messages;
 
+    /**
+     * @api
+     */
     public ModelsService $models;
 
+    /**
+     * @api
+     */
     public BetaService $beta;
 
     public function __construct(
@@ -33,6 +44,13 @@ class Client extends BaseClient
             'ANTHROPIC_BASE_URL'
         ) ?: 'https://api.anthropic.com';
 
+        $options = RequestOptions::with(
+            uriFactory: Psr17FactoryDiscovery::findUriFactory(),
+            streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
+            requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
+            transporter: Psr18ClientDiscovery::find(),
+        );
+
         parent::__construct(
             headers: [
                 'anthropic-version' => '2023-06-01',
@@ -40,7 +58,7 @@ class Client extends BaseClient
                 'Accept' => 'application/json',
             ],
             baseUrl: $base,
-            options: new RequestOptions,
+            options: $options,
         );
 
         $this->messages = new MessagesService($this);

@@ -1,10 +1,12 @@
 <?php
 
-namespace Anthropic\Core;
+namespace Anthropic;
 
 use Anthropic\Core\Concerns\SdkStream;
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Conversion;
 use Anthropic\Core\Exceptions\APIStatusException;
+use Anthropic\Core\Util;
 
 /**
  * @template TItem

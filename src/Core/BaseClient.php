@@ -10,8 +10,6 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Exceptions\APIStatusException;
 use Anthropic\RequestOptions;
-use Http\Discovery\Psr17FactoryDiscovery;
-use Http\Discovery\Psr18ClientDiscovery;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -33,15 +31,9 @@ class BaseClient
 {
     protected UriInterface $baseUrl;
 
-    protected UriFactoryInterface $uriFactory;
-
-    protected StreamFactoryInterface $streamFactory;
-
-    protected RequestFactoryInterface $requestFactory;
-
-    protected ClientInterface $transporter;
-
     /**
+     * @internal
+     *
      * @param array<string, string|int|list<string|int>|null> $headers
      */
     public function __construct(
@@ -49,12 +41,8 @@ class BaseClient
         string $baseUrl,
         protected RequestOptions $options = new RequestOptions,
     ) {
-        $this->uriFactory = Psr17FactoryDiscovery::findUriFactory();
-        $this->streamFactory = Psr17FactoryDiscovery::findStreamFactory();
-        $this->requestFactory = Psr17FactoryDiscovery::findRequestFactory();
-
-        $this->baseUrl = $this->uriFactory->createUri($baseUrl);
-        $this->transporter = Psr18ClientDiscovery::find();
+        assert(null !== $this->options->uriFactory);
+        $this->baseUrl = $this->options->uriFactory->createUri($baseUrl);
     }
 
     /**
@@ -63,6 +51,7 @@ class BaseClient
      * @param array<string, mixed> $headers
      * @param class-string<BasePage<mixed>> $page
      * @param class-string<BaseStream<mixed>> $stream
+     * @param RequestOptions|array<string, mixed>|null $options
      */
     public function request(
         string $method,
@@ -73,17 +62,18 @@ class BaseClient
         string|Converter|ConverterSource|null $convert = null,
         ?string $page = null,
         ?string $stream = null,
-        mixed $options = [],
+        RequestOptions|array|null $options = [],
     ): mixed {
         // @phpstan-ignore-next-line
         [$req, $opts] = $this->buildRequest(method: $method, path: $path, query: $query, headers: $headers, body: $body, opts: $options);
         ['method' => $method, 'path' => $uri, 'headers' => $headers] = $req;
+        assert(null !== $opts->requestFactory);
 
-        $request = $this->requestFactory->createRequest($method, uri: $uri);
+        $request = $opts->requestFactory->createRequest($method, uri: $uri);
         $request = Util::withSetHeaders($request, headers: $headers);
 
         // @phpstan-ignore-next-line
-        $rsp = $this->sendRequest($request, data: $body, opts: $opts, redirectCount: 0, retryCount: 0);
+        $rsp = $this->sendRequest($opts, req: $request, data: $body, redirectCount: 0, retryCount: 0);
 
         $decoded = Util::decodeContent($rsp);
 
@@ -120,17 +110,23 @@ class BaseClient
     }
 
     /**
+     * @internal
+     *
      * @param string|list<string> $path
      * @param array<string, mixed> $query
      * @param array<string, string|int|list<string|int>|null> $headers
-     * @param RequestOptions|array{
+     * @param array{
      *   timeout?: float|null,
      *   maxRetries?: int|null,
      *   initialRetryDelay?: float|null,
      *   maxRetryDelay?: float|null,
-     *   extraHeaders?: list<string>|null,
-     *   extraQueryParams?: list<string>|null,
-     *   extraBodyParams?: list<string>|null,
+     *   extraHeaders?: array<string, string|int|list<string|int>|null>|null,
+     *   extraQueryParams?: array<string, mixed>|null,
+     *   extraBodyParams?: mixed,
+     *   transporter?: ClientInterface|null,
+     *   uriFactory?: UriFactoryInterface|null,
+     *   streamFactory?: StreamFactoryInterface|null,
+     *   requestFactory?: RequestFactoryInterface|null,
      * }|null $opts
      *
      * @return array{normalized_request, RequestOptions}
@@ -143,26 +139,31 @@ class BaseClient
         mixed $body,
         RequestOptions|array|null $opts,
     ): array {
-        $opts = [...$this->options->__serialize(), ...RequestOptions::parse($opts)->__serialize()];
-        $options = new RequestOptions(...$opts);
+        $options = RequestOptions::parse($this->options, $opts);
 
         $parsedPath = Util::parsePath($path);
 
         /** @var array<string, mixed> $mergedQuery */
-        $mergedQuery = array_merge_recursive($query, $options->extraQueryParams);
+        $mergedQuery = array_merge_recursive(
+            $query,
+            $options->extraQueryParams ?? [],
+        );
         $uri = Util::joinUri($this->baseUrl, path: $parsedPath, query: $mergedQuery)->__toString();
 
         /** @var array<string, string|list<string>|null> $mergedHeaders */
         $mergedHeaders = [...$this->headers,
             ...$this->authHeaders(),
             ...$headers,
-            ...$options->extraHeaders, ];
+            ...($options->extraHeaders ?? []), ];
 
         $req = ['method' => strtoupper($method), 'path' => $uri, 'query' => $mergedQuery, 'headers' => $mergedHeaders, 'body' => $body];
 
         return [$req, $options];
     }
 
+    /**
+     * @internal
+     */
     protected function followRedirect(
         ResponseInterface $rsp,
         RequestInterface $req
@@ -178,18 +179,22 @@ class BaseClient
     }
 
     /**
+     * @internal
+     *
      * @param bool|int|float|string|resource|\Traversable<mixed>|array<string,
      * mixed,>|null $data
      */
     protected function sendRequest(
+        RequestOptions $opts,
         RequestInterface $req,
         mixed $data,
-        RequestOptions $opts,
         int $retryCount,
         int $redirectCount,
     ): ResponseInterface {
-        $req = Util::withSetBody($this->streamFactory, req: $req, body: $data);
-        $rsp = $this->transporter->sendRequest($req);
+        assert(null !== $opts->streamFactory && null !== $opts->transporter);
+
+        $req = Util::withSetBody($opts->streamFactory, req: $req, body: $data);
+        $rsp = $opts->transporter->sendRequest($req);
         $code = $rsp->getStatusCode();
 
         if ($code >= 300 && $code < 400) {
@@ -199,7 +204,7 @@ class BaseClient
 
             $req = $this->followRedirect($rsp, req: $req);
 
-            return $this->sendRequest($req, data: $data, opts: $opts, retryCount: $retryCount, redirectCount: ++$redirectCount);
+            return $this->sendRequest($opts, req: $req, data: $data, retryCount: $retryCount, redirectCount: ++$redirectCount);
         }
 
         if ($code >= 400 && $code < 500) {
@@ -209,7 +214,7 @@ class BaseClient
         if ($code >= 500 && $retryCount < $opts->maxRetries) {
             usleep((int) $opts->initialRetryDelay);
 
-            return $this->sendRequest($req, data: $data, opts: $opts, retryCount: ++$retryCount, redirectCount: $redirectCount);
+            return $this->sendRequest($opts, req: $req, data: $data, retryCount: ++$retryCount, redirectCount: $redirectCount);
         }
 
         return $rsp;

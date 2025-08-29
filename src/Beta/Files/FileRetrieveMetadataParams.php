@@ -13,6 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Get File Metadata.
  *
+ * @see Anthropic\Beta\Files->retrieveMetadata
+ *
  * @phpstan-type file_retrieve_metadata_params = array{
  *   betas?: list<AnthropicBeta::*|string>
  * }
@@ -33,8 +35,7 @@ final class FileRetrieveMetadataParams implements BaseModel
 
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**

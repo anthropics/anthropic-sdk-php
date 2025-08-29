@@ -36,12 +36,11 @@ class TestModel implements BaseModel
         ?string $owner,
         ?array $friends = null,
     ) {
+        $this->initialize();
+
         $this->name = $name;
         $this->ageYears = $ageYears;
         $this->owner = $owner;
-
-        self::introspect();
-        $this->unsetOptionalProperties();
 
         null != $friends && $this->friends = $friends;
     }

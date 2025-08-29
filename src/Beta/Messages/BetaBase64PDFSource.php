@@ -43,8 +43,7 @@ final class BetaBase64PDFSource implements BaseModel
      */
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**

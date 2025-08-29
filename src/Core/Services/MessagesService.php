@@ -8,7 +8,6 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\ServiceContracts\MessagesContract;
 use Anthropic\Core\Services\Messages\BatchesService;
-use Anthropic\Core\SSEStream;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCountTokensParams;
 use Anthropic\Messages\MessageCreateParams;
@@ -38,19 +37,28 @@ use Anthropic\Messages\ToolTextEditor20250429;
 use Anthropic\Messages\ToolTextEditor20250728;
 use Anthropic\Messages\WebSearchTool20250305;
 use Anthropic\RequestOptions;
+use Anthropic\SSEStream;
 
 use const Anthropic\Core\OMIT as omit;
 
 final class MessagesService implements MessagesContract
 {
+    /**
+     * @@api
+     */
     public BatchesService $batches;
 
+    /**
+     * @internal
+     */
     public function __construct(private Client $client)
     {
         $this->batches = new BatchesService($this->client);
     }
 
     /**
+     * @api
+     *
      * Send a structured list of input messages with text and/or image content, and the model will generate the next message in the conversation.
      *
      * The Messages API can be used for either single queries or stateless multi-turn conversations.
@@ -264,7 +272,7 @@ final class MessagesService implements MessagesContract
             method: 'post',
             path: 'v1/messages',
             body: (object) $parsed,
-            options: array_merge(['timeout' => 600], $options),
+            options: $options,
             convert: Message::class,
         );
     }
@@ -482,13 +490,15 @@ final class MessagesService implements MessagesContract
             method: 'post',
             path: 'v1/messages',
             body: (object) $parsed,
-            options: array_merge(['timeout' => 600], $options),
+            options: $options,
             convert: RawMessageStreamEvent::class,
             stream: SSEStream::class,
         );
     }
 
     /**
+     * @api
+     *
      * Count the number of tokens in a Message.
      *
      * The Token Count API can be used to count the number of tokens in a Message, including tools, images, and documents, without creating it.

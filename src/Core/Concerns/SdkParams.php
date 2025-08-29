@@ -18,15 +18,7 @@ trait SdkParams
      * @param array<string, mixed>|self|null           $params
      * @param array<string, mixed>|RequestOptions|null $options
      *
-     * @return array{array<string, mixed>, array{
-     *     timeout: float,
-     *     maxRetries: int,
-     *     initialRetryDelay: float,
-     *     maxRetryDelay: float,
-     *     extraHeaders: list<string>,
-     *     extraQueryParams: list<string>,
-     *     extraBodyParams: list<string>,
-     * }}
+     * @return array{array<string, mixed>, RequestOptions}
      */
     public static function parseRequest(array|self|null $params, array|RequestOptions|null $options): array
     {
@@ -40,17 +32,6 @@ trait SdkParams
             $opts->maxRetries = 0;
         }
 
-        $opt = $opts->__serialize();
-        if (empty($opt['extraHeaders'])) {
-            unset($opt['extraHeaders']);
-        }
-        if (empty($opt['extraQueryParams'])) {
-            unset($opt['extraQueryParams']);
-        }
-        if (empty($opt['extraBodyParams'])) {
-            unset($opt['extraBodyParams']);
-        }
-
-        return [$dumped, $opt]; // @phpstan-ignore-line
+        return [$dumped, $opts]; // @phpstan-ignore-line
     }
 }

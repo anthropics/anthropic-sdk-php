@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Core\ServiceContracts;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Core\Page;
 use Anthropic\Models\ModelInfo;
+use Anthropic\Page;
 use Anthropic\RequestOptions;
 
 use const Anthropic\Core\OMIT as omit;
@@ -14,6 +14,8 @@ use const Anthropic\Core\OMIT as omit;
 interface ModelsContract
 {
     /**
+     * @api
+     *
      * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function retrieve(
@@ -23,6 +25,8 @@ interface ModelsContract
     ): ModelInfo;
 
     /**
+     * @api
+     *
      * @param string $afterID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
      * @param string $beforeID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
      * @param int $limit Number of items to return per page.

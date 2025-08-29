@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Anthropic\Core\Concerns;
 
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Contracts\BasePage;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Conversion\CoerceState;
 use Anthropic\Core\Conversion\Contracts\Converter;
@@ -15,7 +14,7 @@ use Anthropic\Core\Util;
 /**
  * @internal
  *
- * @template-covariant Data of array<string, mixed>
+ * @template-covariant Shape of array<string, mixed>
  */
 trait SdkModel
 {
@@ -41,16 +40,18 @@ trait SdkModel
     /**
      * @internal
      *
-     * @param array<mixed> $data
+     * @param array<string, mixed> $data
      */
     public function __unserialize(array $data): void
     {
         foreach ($data as $key => $value) {
-            $this->offsetSet($key, value: $value);
+            $this->offsetSet($key, value: $value); // @phpstan-ignore-line
         }
     }
 
     /**
+     * @internal
+     *
      * @return array<string, mixed>
      */
     public function __debugInfo(): array
@@ -73,12 +74,14 @@ trait SdkModel
      * a native class property, indicating an omitted value,
      * or a property overridden with an incongruent type
      *
+     * @return value-of<Shape>
+     *
      * @throws \Exception
      */
     public function __get(string $key): mixed
     {
         if (!array_key_exists($key, array: self::$converter->properties)) {
-            throw new \Exception("Property '{$key}' does not exist in {$this}::class");
+            throw new \RuntimeException("Property '{$key}' does not exist in {$this}::class");
         }
 
         // The unset property was overridden by a value with an incongruent type.
@@ -91,11 +94,11 @@ trait SdkModel
 
         // An optional property which was unset to be omitted from serialized is being accessed.
         // Return null to match user's expectations.
-        return null;
+        return null; // @phpstan-ignore-line
     }
 
     /**
-     * @return Data
+     * @return Shape
      */
     public function toArray(): array
     {
@@ -104,6 +107,8 @@ trait SdkModel
 
     /**
      * @internal
+     *
+     * @param key-of<Shape> $offset
      */
     public function offsetExists(mixed $offset): bool
     {
@@ -130,6 +135,8 @@ trait SdkModel
 
     /**
      * @internal
+     *
+     * @param key-of<Shape> $offset
      */
     public function &offsetGet(mixed $offset): mixed
     {
@@ -137,19 +144,21 @@ trait SdkModel
             throw new \InvalidArgumentException;
         }
 
-        if (!$this->offsetExists($offset)) {
-            return null;
+        if (!$this->offsetExists($offset)) { // @phpstan-ignore-line
+            return null; // @phpstan-ignore-line
         }
 
         if (array_key_exists($offset, array: $this->_data)) {
-            return $this->_data[$offset];
+            return $this->_data[$offset]; // @phpstan-ignore-line
         }
 
-        return $this->{$offset};
+        return $this->{$offset}; // @phpstan-ignore-line
     }
 
     /**
      * @internal
+     *
+     * @param key-of<Shape> $offset
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
@@ -163,9 +172,9 @@ trait SdkModel
 
         $coerced = Conversion::coerce($type, value: $value, state: new CoerceState(translateNames: false));
 
-        if (property_exists($this, property: $offset)) {
+        if (property_exists($this, property: $offset)) { // @phpstan-ignore-line
             try {
-                $this->{$offset} = $coerced;
+                $this->{$offset} = $coerced; // @phpstan-ignore-line
                 unset($this->_data[$offset]);
 
                 return;
@@ -179,6 +188,8 @@ trait SdkModel
 
     /**
      * @internal
+     *
+     * @param key-of<Shape> $offset
      */
     public function offsetUnset(mixed $offset): void
     {
@@ -186,7 +197,7 @@ trait SdkModel
             throw new \InvalidArgumentException;
         }
 
-        if (property_exists($this, property: $offset)) {
+        if (property_exists($this, property: $offset)) { // @phpstan-ignore-line
             unset($this->{$offset});
         }
 
@@ -194,6 +205,8 @@ trait SdkModel
     }
 
     /**
+     * @internal
+     *
      * @return array<string, mixed>
      */
     public function jsonSerialize(): array
@@ -203,11 +216,9 @@ trait SdkModel
     }
 
     /**
-     * @internal
-     *
      * @param array<string, mixed> $data
      */
-    public static function fromArray(array $data): self
+    public static function fromArray(array $data): static
     {
         return self::converter()->from($data); // @phpstan-ignore-line
     }
@@ -229,16 +240,10 @@ trait SdkModel
     /**
      * @internal
      */
-    public static function introspect(): void
+    private function initialize(): void
     {
         static::converter();
-    }
 
-    /**
-     * @internal
-     */
-    private function unsetOptionalProperties(): void
-    {
         foreach (self::$converter->properties as $name => $info) {
             if ($info->optional) {
                 unset($this->{$name});
@@ -251,7 +256,7 @@ trait SdkModel
      */
     private static function serialize(mixed $value): mixed
     {
-        if ($value instanceof BaseModel || $value instanceof BasePage) {
+        if ($value instanceof BaseModel) {
             return $value->toArray();
         }
 

@@ -10,6 +10,8 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
+ * @internal
+ *
  * @template TInner
  *
  * @extends \IteratorAggregate<int, TInner>

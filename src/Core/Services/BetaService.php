@@ -12,12 +12,24 @@ use Anthropic\Core\Services\Beta\ModelsService;
 
 final class BetaService implements BetaContract
 {
+    /**
+     * @@api
+     */
     public ModelsService $models;
 
+    /**
+     * @@api
+     */
     public MessagesService $messages;
 
+    /**
+     * @@api
+     */
     public FilesService $files;
 
+    /**
+     * @internal
+     */
     public function __construct(private Client $client)
     {
         $this->models = new ModelsService($this->client);

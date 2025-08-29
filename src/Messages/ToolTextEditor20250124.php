@@ -37,8 +37,7 @@ final class ToolTextEditor20250124 implements BaseModel
 
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**

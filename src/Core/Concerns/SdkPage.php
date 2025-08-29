@@ -70,7 +70,7 @@ trait SdkPage
     }
 
     /**
-     * Generator yielding each page (instance of static).
+     * Iterator yielding each page (instance of static).
      *
      * @return \Generator<static>
      */
@@ -87,7 +87,7 @@ trait SdkPage
     }
 
     /**
-     * Generator yielding each item across all pages.
+     * Iterator yielding each item across all pages.
      *
      * @return \Generator<Item>
      */
@@ -101,6 +101,17 @@ trait SdkPage
     }
 
     /**
+     * @internal
+     *
+     * @param array<string, mixed> $data
+     *
+     * @return static<Item>
+     */
+    abstract public static function fromArray(array $data): static;
+
+    /**
+     * @internal
+     *
      * @return array{normalized_request, RequestOptions}
      */
     abstract protected function nextRequest(): ?array;

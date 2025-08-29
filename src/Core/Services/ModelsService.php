@@ -6,21 +6,26 @@ namespace Anthropic\Core\Services;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
-use Anthropic\Core\Page;
 use Anthropic\Core\ServiceContracts\ModelsContract;
 use Anthropic\Core\Util;
 use Anthropic\Models\ModelInfo;
 use Anthropic\Models\ModelListParams;
 use Anthropic\Models\ModelRetrieveParams;
+use Anthropic\Page;
 use Anthropic\RequestOptions;
 
 use const Anthropic\Core\OMIT as omit;
 
 final class ModelsService implements ModelsContract
 {
+    /**
+     * @internal
+     */
     public function __construct(private Client $client) {}
 
     /**
+     * @api
+     *
      * Get a specific model.
      *
      * The Models API response can be used to determine information about a specific model or resolve a model alias to a model ID.
@@ -51,6 +56,8 @@ final class ModelsService implements ModelsContract
     }
 
     /**
+     * @api
+     *
      * List available models.
      *
      * The Models API response can be used to determine which models are available for use in the API. More recently released models are listed first.

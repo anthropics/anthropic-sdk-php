@@ -13,6 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Delete File.
  *
+ * @see Anthropic\Beta\Files->delete
+ *
  * @phpstan-type file_delete_params = array{betas?: list<AnthropicBeta::*|string>}
  */
 final class FileDeleteParams implements BaseModel
@@ -31,8 +33,7 @@ final class FileDeleteParams implements BaseModel
 
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**

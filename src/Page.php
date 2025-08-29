@@ -1,16 +1,16 @@
 <?php
 
-namespace Anthropic\Core;
+namespace Anthropic;
 
-use Anthropic\Client;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkPage;
+use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Contracts\BasePage;
+use Anthropic\Core\Conversion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
-use Anthropic\RequestOptions;
 
 /**
  * @phpstan-type page_alias = array{
@@ -24,7 +24,7 @@ use Anthropic\RequestOptions;
  *
  * @implements BasePage<TItem>
  */
-final class Page implements BasePage
+final class Page implements BaseModel, BasePage
 {
     /** @use SdkModel<page_alias> */
     use SdkModel;
@@ -46,6 +46,8 @@ final class Page implements BasePage
     public ?string $lastID;
 
     /**
+     * @internal
+     *
      * @param array{
      *   method: string,
      *   path: string,
@@ -61,12 +63,13 @@ final class Page implements BasePage
         private RequestOptions $options,
         mixed $data,
     ) {
-        self::introspect();
+        $this->initialize();
 
         if (!is_array($data)) {
             return;
         }
 
+        // @phpstan-ignore-next-line
         self::__unserialize($data);
 
         if ($this->offsetExists('data')) {
@@ -74,6 +77,7 @@ final class Page implements BasePage
                 new ListOf($convert),
                 value: $this->offsetGet('data')
             );
+            // @phpstan-ignore-next-line
             $this->offsetSet('data', $acc);
         }
     }
@@ -86,6 +90,8 @@ final class Page implements BasePage
     }
 
     /**
+     * @internal
+     *
      * @return array{
      *   array{
      *     method: string,

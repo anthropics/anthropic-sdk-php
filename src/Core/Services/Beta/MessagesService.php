@@ -42,23 +42,31 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\ServiceContracts\Beta\MessagesContract;
 use Anthropic\Core\Services\Beta\Messages\BatchesService;
-use Anthropic\Core\SSEStream;
 use Anthropic\Core\Util;
 use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
+use Anthropic\SSEStream;
 
 use const Anthropic\Core\OMIT as omit;
 
 final class MessagesService implements MessagesContract
 {
+    /**
+     * @@api
+     */
     public BatchesService $batches;
 
+    /**
+     * @internal
+     */
     public function __construct(private Client $client)
     {
         $this->batches = new BatchesService($this->client);
     }
 
     /**
+     * @api
+     *
      * Send a structured list of input messages with text and/or image content, and the model will generate the next message in the conversation.
      *
      * The Messages API can be used for either single queries or stateless multi-turn conversations.
@@ -286,7 +294,7 @@ final class MessagesService implements MessagesContract
                 $header_params
             ),
             body: (object) array_diff_key($parsed, array_keys($header_params)),
-            options: array_merge(['timeout' => 600], $options),
+            options: $options,
             convert: BetaMessage::class,
         );
     }
@@ -518,13 +526,15 @@ final class MessagesService implements MessagesContract
                 $header_params
             ),
             body: (object) array_diff_key($parsed, array_keys($header_params)),
-            options: array_merge(['timeout' => 600], $options),
+            options: $options,
             convert: BetaRawMessageStreamEvent::class,
             stream: SSEStream::class,
         );
     }
 
     /**
+     * @api
+     *
      * Count the number of tokens in a Message.
      *
      * The Token Count API can be used to count the number of tokens in a Message, including tools, images, and documents, without creating it.

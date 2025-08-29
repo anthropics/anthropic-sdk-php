@@ -17,19 +17,24 @@ use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
-use Anthropic\Core\Page;
 use Anthropic\Core\ServiceContracts\Beta\Messages\BatchesContract;
-use Anthropic\Core\SSEStream;
 use Anthropic\Core\Util;
+use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SSEStream;
 
 use const Anthropic\Core\OMIT as omit;
 
 final class BatchesService implements BatchesContract
 {
+    /**
+     * @internal
+     */
     public function __construct(private Client $client) {}
 
     /**
+     * @api
+     *
      * Send a batch of Message creation requests.
      *
      * The Message Batches API can be used to process multiple Messages API requests at once. Once a Message Batch is created, it begins processing immediately. Batches can take up to 24 hours to complete.
@@ -59,7 +64,7 @@ final class BatchesService implements BatchesContract
                 $header_params
             ),
             body: (object) array_diff_key($parsed, array_keys($header_params)),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
@@ -68,6 +73,8 @@ final class BatchesService implements BatchesContract
     }
 
     /**
+     * @api
+     *
      * This endpoint is idempotent and can be used to poll for Message Batch completion. To access the results of a Message Batch, make a request to the `results_url` field in the response.
      *
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
@@ -92,7 +99,7 @@ final class BatchesService implements BatchesContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
@@ -101,6 +108,8 @@ final class BatchesService implements BatchesContract
     }
 
     /**
+     * @api
+     *
      * List all Message Batches within a Workspace. Most recently created batches are returned first.
      *
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
@@ -144,7 +153,7 @@ final class BatchesService implements BatchesContract
                 $header_params,
                 ['betas' => 'anthropic-beta']
             ),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
@@ -154,6 +163,8 @@ final class BatchesService implements BatchesContract
     }
 
     /**
+     * @api
+     *
      * Delete a Message Batch.
      *
      * Message Batches can only be deleted once they've finished processing. If you'd like to delete an in-progress batch, you must first cancel it.
@@ -180,7 +191,7 @@ final class BatchesService implements BatchesContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
@@ -189,6 +200,8 @@ final class BatchesService implements BatchesContract
     }
 
     /**
+     * @api
+     *
      * Batches may be canceled any time before processing ends. Once cancellation is initiated, the batch enters a `canceling` state, at which time the system may complete any in-progress, non-interruptible requests before finalizing cancellation.
      *
      * The number of canceled requests is specified in `request_counts`. To determine which requests were canceled, check the individual results within the batch. Note that cancellation may not result in any canceled requests if they were non-interruptible.
@@ -215,7 +228,7 @@ final class BatchesService implements BatchesContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
@@ -224,6 +237,8 @@ final class BatchesService implements BatchesContract
     }
 
     /**
+     * @api
+     *
      * Streams the results of a Message Batch as a `.jsonl` file.
      *
      * Each line in the file is a JSON object containing the result of a single request in the Message Batch. Results are not guaranteed to be in the same order as requests. Use the `custom_id` field to match results to requests.
@@ -250,7 +265,7 @@ final class BatchesService implements BatchesContract
                 ['Accept' => 'application/x-jsonl', ...$parsed],
                 ['betas' => 'anthropic-beta'],
             ),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
@@ -281,7 +296,7 @@ final class BatchesService implements BatchesContract
                 ['Accept' => 'application/x-jsonl', ...$parsed],
                 ['betas' => 'anthropic-beta'],
             ),
-            options: array_merge(
+            options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
             ),
