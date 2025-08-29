@@ -38,8 +38,7 @@ final class RawContentBlockStopEvent implements BaseModel
      */
     public function __construct()
     {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
     }
 
     /**

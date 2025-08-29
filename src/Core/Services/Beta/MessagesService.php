@@ -56,6 +56,9 @@ final class MessagesService implements MessagesContract
      */
     public BatchesService $batches;
 
+    /**
+     * @internal
+     */
     public function __construct(private Client $client)
     {
         $this->batches = new BatchesService($this->client);
