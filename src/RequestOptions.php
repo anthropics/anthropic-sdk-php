@@ -4,99 +4,111 @@ declare(strict_types=1);
 
 namespace Anthropic;
 
-class RequestOptions
+use Anthropic\Core\Attributes\Api as Property;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Implementation\Omittable;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\UriFactoryInterface;
+
+use const Anthropic\Core\OMIT as omit;
+
+/**
+ * @phpstan-type request_options = array{
+ *   timeout?: float|null,
+ *   maxRetries?: int|null,
+ *   initialRetryDelay?: float|null,
+ *   maxRetryDelay?: float|null,
+ *   extraHeaders?: array<string, string|int|null|list<string|int>>|null,
+ *   extraQueryParams?: array<string, mixed>|null,
+ *   extraBodyParams?: mixed,
+ *   transporter?: ClientInterface|null,
+ *   uriFactory?: UriFactoryInterface|null,
+ *   streamFactory?: StreamFactoryInterface|null,
+ *   requestFactory?: RequestFactoryInterface|null,
+ * }
+ * @phpstan-type request_opts = null|RequestOptions|request_options
+ */
+final class RequestOptions implements BaseModel
 {
-    public const DEFAULT_TIMEOUT = 600;
+    /** @use SdkModel<request_options> */
+    use SdkModel;
 
-    public const DEFAULT_MAX_RETRIES = 2;
+    #[Property]
+    public float $timeout = 600;
 
-    public const DEFAULT_INITIAL_RETRYDELAY = 0.5;
+    #[Property]
+    public int $maxRetries = 2;
 
-    public const DEFAULT_MAX_RETRY_DELAY = 8.0;
+    #[Property]
+    public float $initialRetryDelay = 0.5;
+
+    #[Property]
+    public float $maxRetryDelay = 8.0;
+
+    /** @var array<string, string|int|list<string|int>|null> $extraHeaders */
+    #[Property]
+    public array $extraHeaders = [];
+
+    /** @var array<string, mixed> $extraQueryParams */
+    #[Property]
+    public array $extraQueryParams = [];
+
+    #[Property]
+    public mixed $extraBodyParams;
+
+    #[Property(optional: true)]
+    public ?ClientInterface $transporter;
+
+    #[Property(optional: true)]
+    public ?UriFactoryInterface $uriFactory;
+
+    #[Property(optional: true)]
+    public ?StreamFactoryInterface $streamFactory;
+
+    #[Property(optional: true)]
+    public ?RequestFactoryInterface $requestFactory;
 
     /**
-     * @param list<string> $extraHeaders
-     * @param list<string> $extraQueryParams
-     * @param list<string> $extraBodyParams
+     * @param array<string, string|int|list<string|int>|null>|null $extraHeaders
+     * @param array<string, mixed>|null $extraQueryParams
+     * @param mixed|Omittable $extraBodyParams
      */
     public function __construct(
-        public float $timeout = self::DEFAULT_TIMEOUT,
-        public int $maxRetries = self::DEFAULT_MAX_RETRIES,
-        public float $initialRetryDelay = self::DEFAULT_INITIAL_RETRYDELAY,
-        public float $maxRetryDelay = self::DEFAULT_MAX_RETRY_DELAY,
-        public array $extraHeaders = [],
-        public array $extraQueryParams = [],
-        public array $extraBodyParams = [],
-    ) {}
+        ?float $timeout = null,
+        ?int $maxRetries = null,
+        ?float $initialRetryDelay = null,
+        ?float $maxRetryDelay = null,
+        ?array $extraHeaders = null,
+        ?array $extraQueryParams = null,
+        mixed $extraBodyParams = omit,
+        ?ClientInterface $transporter = null,
+        ?UriFactoryInterface $uriFactory = null,
+        ?StreamFactoryInterface $streamFactory = null,
+        ?RequestFactoryInterface $requestFactory = null,
+    ) {
+        self::introspect();
+        $this->unsetOptionalProperties();
 
-    /**
-     * @return array{
-     *   timeout: float,
-     *   maxRetries: int,
-     *   initialRetryDelay: float,
-     *   maxRetryDelay: float,
-     *   extraHeaders: list<string>,
-     *   extraQueryParams: list<string>,
-     *   extraBodyParams: list<string>,
-     * }
-     */
-    public function __serialize(): array
-    {
-        return [
-            'timeout' => $this->timeout,
-            'maxRetries' => $this->maxRetries,
-            'initialRetryDelay' => $this->initialRetryDelay,
-            'maxRetryDelay' => $this->maxRetryDelay,
-            'extraHeaders' => $this->extraHeaders,
-            'extraQueryParams' => $this->extraQueryParams,
-            'extraBodyParams' => $this->extraBodyParams,
-        ];
+        null !== $timeout && $this->timeout = $timeout;
+        null !== $maxRetries && $this->maxRetries = $maxRetries;
+        null !== $initialRetryDelay && $this
+            ->initialRetryDelay = $initialRetryDelay
+        ;
+        null !== $maxRetryDelay && $this->maxRetryDelay = $maxRetryDelay;
+        null !== $extraHeaders && $this->extraHeaders = $extraHeaders;
+        null !== $extraQueryParams && $this->extraQueryParams = $extraQueryParams;
+        omit !== $extraBodyParams && $this->extraBodyParams = $extraBodyParams;
+        null !== $transporter && $this->transporter = $transporter;
+        null !== $uriFactory && $this->uriFactory = $uriFactory;
+        null !== $streamFactory && $this->streamFactory = $streamFactory;
+        null !== $requestFactory && $this->requestFactory = $requestFactory;
     }
 
     /**
-     * @param array{
-     *   timeout?: float|null,
-     *   maxRetries?: int|null,
-     *   initialRetryDelay?: float|null,
-     *   maxRetryDelay?: float|null,
-     *   extraHeaders?: list<string>|null,
-     *   extraQueryParams?: list<string>|null,
-     *   extraBodyParams?: list<string>|null,
-     * } $data
-     */
-    public function __unserialize(array $data): void
-    {
-        $this->timeout = $data['timeout'] ?? self::DEFAULT_TIMEOUT;
-        $this
-            ->maxRetries = $data['maxRetries'] ?? self::DEFAULT_MAX_RETRIES
-        ;
-        $this
-            ->initialRetryDelay = $data[
-          'initialRetryDelay'
-        ] ?? self::DEFAULT_INITIAL_RETRYDELAY
-        ;
-        $this->maxRetryDelay = $data[
-          'maxRetryDelay'
-        ] ?? self::DEFAULT_MAX_RETRY_DELAY;
-        $this->extraHeaders = $data[
-          'extraHeaders'
-        ] ?? [];
-        $this->extraQueryParams = $data['extraQueryParams'] ?? [];
-        $this
-            ->extraBodyParams = $data['extraBodyParams'] ?? []
-        ;
-    }
-
-    /**
-     * @param RequestOptions|array{
-     *   timeout?: float|null,
-     *   maxRetries?: int|null,
-     *   initialRetryDelay?: float|null,
-     *   maxRetryDelay?: float|null,
-     *   extraHeaders?: list<string>|null,
-     *   extraQueryParams?: list<string>|null,
-     *   extraBodyParams?: list<string>|null,
-     * }|null $options
+     * @param request_opts|null $options
      */
     public static function parse(RequestOptions|array|null $options): self
     {
