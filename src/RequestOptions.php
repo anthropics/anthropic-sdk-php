@@ -89,8 +89,7 @@ final class RequestOptions implements BaseModel
         ?StreamFactoryInterface $streamFactory = null,
         ?RequestFactoryInterface $requestFactory = null,
     ) {
-        self::introspect();
-        $this->unsetOptionalProperties();
+        $this->initialize();
 
         null !== $timeout && $this->timeout = $timeout;
         null !== $maxRetries && $this->maxRetries = $maxRetries;

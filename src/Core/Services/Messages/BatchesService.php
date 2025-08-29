@@ -21,6 +21,9 @@ use const Anthropic\Core\OMIT as omit;
 
 final class BatchesService implements BatchesContract
 {
+    /**
+     * @internal
+     */
     public function __construct(private Client $client) {}
 
     /**
