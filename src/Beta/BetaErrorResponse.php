@@ -11,6 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type beta_error_response = array{
  *   error: BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError,
+ *   requestID: string|null,
  *   type: string,
  * }
  */
@@ -25,18 +26,21 @@ final class BetaErrorResponse implements BaseModel
     #[Api(union: BetaError::class)]
     public BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error;
 
+    #[Api('request_id')]
+    public ?string $requestID;
+
     /**
      * `new BetaErrorResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaErrorResponse::with(error: ...)
+     * BetaErrorResponse::with(error: ..., requestID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaErrorResponse)->withError(...)
+     * (new BetaErrorResponse)->withError(...)->withRequestID(...)
      * ```
      */
     public function __construct()
@@ -51,10 +55,12 @@ final class BetaErrorResponse implements BaseModel
      */
     public static function with(
         BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error,
+        ?string $requestID,
     ): self {
         $obj = new self;
 
         $obj->error = $error;
+        $obj->requestID = $requestID;
 
         return $obj;
     }
@@ -64,6 +70,14 @@ final class BetaErrorResponse implements BaseModel
     ): self {
         $obj = clone $this;
         $obj->error = $error;
+
+        return $obj;
+    }
+
+    public function withRequestID(?string $requestID): self
+    {
+        $obj = clone $this;
+        $obj->requestID = $requestID;
 
         return $obj;
     }

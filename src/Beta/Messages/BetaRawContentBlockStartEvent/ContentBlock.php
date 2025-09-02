@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\BetaRawContentBlockStartEvent;
 
+use Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultBlock;
 use Anthropic\Beta\Messages\BetaCodeExecutionToolResultBlock;
 use Anthropic\Beta\Messages\BetaContainerUploadBlock;
 use Anthropic\Beta\Messages\BetaMCPToolResultBlock;
@@ -11,6 +12,7 @@ use Anthropic\Beta\Messages\BetaMCPToolUseBlock;
 use Anthropic\Beta\Messages\BetaRedactedThinkingBlock;
 use Anthropic\Beta\Messages\BetaServerToolUseBlock;
 use Anthropic\Beta\Messages\BetaTextBlock;
+use Anthropic\Beta\Messages\BetaTextEditorCodeExecutionToolResultBlock;
 use Anthropic\Beta\Messages\BetaThinkingBlock;
 use Anthropic\Beta\Messages\BetaToolUseBlock;
 use Anthropic\Beta\Messages\BetaWebSearchToolResultBlock;
@@ -44,6 +46,8 @@ final class ContentBlock implements ConverterSource
             'server_tool_use' => BetaServerToolUseBlock::class,
             'web_search_tool_result' => BetaWebSearchToolResultBlock::class,
             'code_execution_tool_result' => BetaCodeExecutionToolResultBlock::class,
+            'bash_code_execution_tool_result' => BetaBashCodeExecutionToolResultBlock::class,
+            'text_editor_code_execution_tool_result' => BetaTextEditorCodeExecutionToolResultBlock::class,
             'mcp_tool_use' => BetaMCPToolUseBlock::class,
             'mcp_tool_result' => BetaMCPToolResultBlock::class,
             'container_upload' => BetaContainerUploadBlock::class,

@@ -29,7 +29,7 @@ use Anthropic\Messages\Model;
  *   system?: string|list<BetaTextBlockParam>,
  *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
  *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
- *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>,
+ *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>,
  *   betas?: list<AnthropicBeta::*|string>,
  * }
  */
@@ -83,25 +83,7 @@ final class MessageCountTokensParams implements BaseModel
      * {"role": "user", "content": [{"type": "text", "text": "Hello, Claude"}]}
      * ```
      *
-     * Starting with Claude 3 models, you can also send image content blocks:
-     *
-     * ```json
-     * {"role": "user", "content": [
-     *   {
-     *     "type": "image",
-     *     "source": {
-     *       "type": "base64",
-     *       "media_type": "image/jpeg",
-     *       "data": "/9j/4AAQSkZJRg...",
-     *     }
-     *   },
-     *   {"type": "text", "text": "What is in this image?"}
-     * ]}
-     * ```
-     *
-     * We currently support the `base64` source type for images, and the `image/jpeg`, `image/png`, `image/gif`, and `image/webp` media types.
-     *
-     * See [examples](https://docs.anthropic.com/en/api/messages-examples#vision) for more input examples.
+     * See [input examples](https://docs.anthropic.com/en/api/messages-examples).
      *
      * Note that if you want to include a [system prompt](https://docs.anthropic.com/en/docs/system-prompts), you can use the top-level `system` parameter — there is no `"system"` role for input messages in the Messages API.
      *
@@ -221,7 +203,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
-     * @var list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>|null $tools
+     * @var list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305>|null $tools
      */
     #[Api(list: Tool::class, optional: true)]
     public ?array $tools;
@@ -262,7 +244,7 @@ final class MessageCountTokensParams implements BaseModel
      * @param Model::*|string $model
      * @param list<BetaRequestMCPServerURLDefinition> $mcpServers
      * @param string|list<BetaTextBlockParam> $system
-     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
+     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
      * @param list<AnthropicBeta::*|string> $betas
      */
     public static function with(
@@ -334,25 +316,7 @@ final class MessageCountTokensParams implements BaseModel
      * {"role": "user", "content": [{"type": "text", "text": "Hello, Claude"}]}
      * ```
      *
-     * Starting with Claude 3 models, you can also send image content blocks:
-     *
-     * ```json
-     * {"role": "user", "content": [
-     *   {
-     *     "type": "image",
-     *     "source": {
-     *       "type": "base64",
-     *       "media_type": "image/jpeg",
-     *       "data": "/9j/4AAQSkZJRg...",
-     *     }
-     *   },
-     *   {"type": "text", "text": "What is in this image?"}
-     * ]}
-     * ```
-     *
-     * We currently support the `base64` source type for images, and the `image/jpeg`, `image/png`, `image/gif`, and `image/webp` media types.
-     *
-     * See [examples](https://docs.anthropic.com/en/api/messages-examples#vision) for more input examples.
+     * See [input examples](https://docs.anthropic.com/en/api/messages-examples).
      *
      * Note that if you want to include a [system prompt](https://docs.anthropic.com/en/docs/system-prompts), you can use the top-level `system` parameter — there is no `"system"` role for input messages in the Messages API.
      *
@@ -500,7 +464,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
-     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
+     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305> $tools
      */
     public function withTools(array $tools): self
     {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages\MessageCountTokensParams;
 
 use Anthropic\Beta\Messages\BetaCodeExecutionTool20250522;
+use Anthropic\Beta\Messages\BetaCodeExecutionTool20250825;
 use Anthropic\Beta\Messages\BetaTool;
 use Anthropic\Beta\Messages\BetaToolBash20241022;
 use Anthropic\Beta\Messages\BetaToolBash20250124;
@@ -34,6 +35,7 @@ final class Tool implements ConverterSource
             BetaToolBash20241022::class,
             BetaToolBash20250124::class,
             BetaCodeExecutionTool20250522::class,
+            BetaCodeExecutionTool20250825::class,
             BetaToolComputerUse20241022::class,
             BetaToolComputerUse20250124::class,
             BetaToolTextEditor20241022::class,
