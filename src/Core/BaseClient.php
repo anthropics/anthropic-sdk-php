@@ -8,8 +8,10 @@ use Anthropic\Core\Contracts\BasePage;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
+use Anthropic\Core\Exceptions\APIConnectionException;
 use Anthropic\Core\Exceptions\APIStatusException;
 use Anthropic\RequestOptions;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -41,7 +43,7 @@ class BaseClient
         string $baseUrl,
         protected RequestOptions $options = new RequestOptions,
     ) {
-        assert(null !== $this->options->uriFactory);
+        assert(!is_null($this->options->uriFactory));
         $this->baseUrl = $this->options->uriFactory->createUri($baseUrl);
     }
 
@@ -67,7 +69,7 @@ class BaseClient
         // @phpstan-ignore-next-line
         [$req, $opts] = $this->buildRequest(method: $method, path: $path, query: $query, headers: $headers, body: $body, opts: $options);
         ['method' => $method, 'path' => $uri, 'headers' => $headers] = $req;
-        assert(null !== $opts->requestFactory);
+        assert(!is_null($opts->requestFactory));
 
         $request = $opts->requestFactory->createRequest($method, uri: $uri);
         $request = Util::withSetHeaders($request, headers: $headers);
@@ -170,12 +172,61 @@ class BaseClient
     ): RequestInterface {
         $location = $rsp->getHeaderLine('Location');
         if (!$location) {
-            throw new \RuntimeException('Redirection without Location header');
+            throw new APIConnectionException($req, message: 'Redirection without Location header');
         }
 
         $uri = Util::joinUri($req->getUri(), path: $location);
 
         return $req->withUri($uri);
+    }
+
+    /**
+     * @internal
+     */
+    protected function shouldRetry(
+        RequestOptions $opts,
+        int $retryCount,
+        ?ResponseInterface $rsp
+    ): bool {
+        if ($retryCount >= $opts->maxRetries) {
+            return false;
+        }
+
+        $code = $rsp?->getStatusCode();
+        if (408 == $code || 409 == $code || 429 == $code || $code >= 500) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @internal
+     */
+    protected function retryDelay(
+        RequestOptions $opts,
+        int $retryCount,
+        ?ResponseInterface $rsp
+    ): float {
+        if (!empty($header = $rsp?->getHeaderLine('retry-after'))) {
+            if (is_numeric($header)) {
+                return floatval($header);
+            }
+
+            try {
+                $date = new \DateTimeImmutable($header);
+                $span = time() - $date->getTimestamp();
+
+                return max(0.0, $span);
+            } catch (\DateMalformedStringException) {
+            }
+        }
+
+        $scale = $retryCount ** 2;
+        $jitter = 1 - (0.25 * mt_rand() / mt_getrandmax());
+        $naive = $opts->initialRetryDelay * $scale * $jitter;
+
+        return max(0.0, min($naive, $opts->maxRetryDelay));
     }
 
     /**
@@ -194,12 +245,23 @@ class BaseClient
         assert(null !== $opts->streamFactory && null !== $opts->transporter);
 
         $req = Util::withSetBody($opts->streamFactory, req: $req, body: $data);
-        $rsp = $opts->transporter->sendRequest($req);
-        $code = $rsp->getStatusCode();
+
+        $rsp = null;
+        $err = null;
+
+        try {
+            $rsp = $opts->transporter->sendRequest($req);
+        } catch (ClientExceptionInterface $e) {
+            $err = $e;
+        }
+
+        $code = $rsp?->getStatusCode();
 
         if ($code >= 300 && $code < 400) {
+            assert(!is_null($rsp));
+
             if ($redirectCount >= 20) {
-                throw new \RuntimeException('Maximum redirects exceeded');
+                throw new APIConnectionException($req, message: 'Maximum redirects exceeded');
             }
 
             $req = $this->followRedirect($rsp, req: $req);
@@ -207,12 +269,16 @@ class BaseClient
             return $this->sendRequest($opts, req: $req, data: $data, retryCount: $retryCount, redirectCount: ++$redirectCount);
         }
 
-        if ($code >= 400 && $code < 500) {
-            throw APIStatusException::from(request: $req, response: $rsp);
-        }
+        if ($code >= 400 || is_null($rsp)) {
+            if ($this->shouldRetry($opts, retryCount: $retryCount, rsp: $rsp)) {
+                $exn = is_null($rsp) ? new APIConnectionException($req, previous: $err) : APIStatusException::from(request: $req, response: $rsp);
 
-        if ($code >= 500 && $retryCount < $opts->maxRetries) {
-            usleep((int) $opts->initialRetryDelay);
+                throw $exn;
+            }
+
+            $seconds = $this->retryDelay($opts, retryCount: $redirectCount, rsp: $rsp);
+            $floor = floor($seconds);
+            time_nanosleep((int) $floor, nanoseconds: (int) ($seconds - $floor) * 10 ** 9);
 
             return $this->sendRequest($opts, req: $req, data: $data, retryCount: ++$retryCount, redirectCount: $redirectCount);
         }
