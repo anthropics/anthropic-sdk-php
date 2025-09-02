@@ -23,6 +23,7 @@ final class BetaToolUnion implements ConverterSource
             BetaToolBash20241022::class,
             BetaToolBash20250124::class,
             BetaCodeExecutionTool20250522::class,
+            BetaCodeExecutionTool20250825::class,
             BetaToolComputerUse20241022::class,
             BetaToolComputerUse20250124::class,
             BetaToolTextEditor20241022::class,
