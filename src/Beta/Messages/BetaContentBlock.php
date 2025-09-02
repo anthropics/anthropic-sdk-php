@@ -34,6 +34,8 @@ final class BetaContentBlock implements ConverterSource
             'server_tool_use' => BetaServerToolUseBlock::class,
             'web_search_tool_result' => BetaWebSearchToolResultBlock::class,
             'code_execution_tool_result' => BetaCodeExecutionToolResultBlock::class,
+            'bash_code_execution_tool_result' => BetaBashCodeExecutionToolResultBlock::class,
+            'text_editor_code_execution_tool_result' => BetaTextEditorCodeExecutionToolResultBlock::class,
             'mcp_tool_use' => BetaMCPToolUseBlock::class,
             'mcp_tool_result' => BetaMCPToolResultBlock::class,
             'container_upload' => BetaContainerUploadBlock::class,
