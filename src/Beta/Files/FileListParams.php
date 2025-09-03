@@ -11,7 +11,18 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new FileListParams); // set properties as needed
+ * $client->beta.files->list(...$params->toArray());
+ * ```
  * List Files.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->beta.files->list(...$params->toArray());`
  *
  * @see Anthropic\Beta\Files->list
  *
