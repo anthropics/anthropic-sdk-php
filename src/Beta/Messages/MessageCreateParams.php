@@ -14,11 +14,22 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Model;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new MessageCreateParams); // set properties as needed
+ * $client->beta.messages->create(...$params->toArray());
+ * ```
  * Send a structured list of input messages with text and/or image content, and the model will generate the next message in the conversation.
  *
  * The Messages API can be used for either single queries or stateless multi-turn conversations.
  *
  * Learn more about the Messages API in our [user guide](/en/docs/initial-setup)
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->beta.messages->create(...$params->toArray());`
  *
  * @see Anthropic\Beta\Messages->create
  *
