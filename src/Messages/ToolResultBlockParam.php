@@ -14,7 +14,7 @@ use Anthropic\Messages\ToolResultBlockParam\Content;
  *   toolUseID: string,
  *   type: string,
  *   cacheControl?: CacheControlEphemeral|null,
- *   content?: string|null|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam>,
+ *   content?: string|null|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam>,
  *   isError?: bool|null,
  * }
  */
@@ -36,7 +36,7 @@ final class ToolResultBlockParam implements BaseModel
     public ?CacheControlEphemeral $cacheControl;
 
     /**
-     * @var string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam>|null $content
+     * @var string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam>|null $content
      */
     #[Api(union: Content::class, optional: true)]
     public string|array|null $content;
@@ -68,7 +68,7 @@ final class ToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam> $content
+     * @param string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam> $content
      */
     public static function with(
         string $toolUseID,
@@ -107,7 +107,7 @@ final class ToolResultBlockParam implements BaseModel
     }
 
     /**
-     * @param string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam> $content
+     * @param string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam> $content
      */
     public function withContent(string|array $content): self
     {
