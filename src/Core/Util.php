@@ -10,6 +10,11 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 
+/**
+ * @phpstan-type SSEvent = array{
+ *   event?: string|null, data?: string|null, id?: string|null, retry?: int|null
+ * }
+ */
 final class Util
 {
     public const BUF_SIZE = 8192;
@@ -239,11 +244,7 @@ final class Util
     /**
      * @param \Iterator<string> $lines
      *
-     * @return \Generator<
-     *   array{
-     *     event?: string|null, data?: string|null, id?: string|null, retry?: int|null
-     *   },
-     * >
+     * @return \Generator<SSEvent>
      */
     public static function decodeSSE(\Iterator $lines): \Generator
     {
