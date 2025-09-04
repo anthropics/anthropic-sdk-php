@@ -40,8 +40,8 @@ final class SSEStream implements BaseStream
                 case 'content_block_start':
                 case 'content_block_delta':
                 case 'content_block_stop':
-                    if (isset($chunk['data'])) {
-                        $decoded = Util::decodeJson($chunk['data']);
+                    if ($data = $chunk['data'] ?? '') {
+                        $decoded = Util::decodeJson($data);
 
                         yield Conversion::coerce($this->convert, value: $decoded);
                     }
@@ -51,8 +51,8 @@ final class SSEStream implements BaseStream
                 case 'ping': break;
 
                 case 'error':
-                    if (isset($chunk['data'])) {
-                        $json = Util::decodeJson($chunk['data']);
+                    if ($data = $chunk['data'] ?? '') {
+                        $json = Util::decodeJson($data);
                         $message = Util::prettyEncodeJson($json);
 
                         $exn = APIStatusException::from(
