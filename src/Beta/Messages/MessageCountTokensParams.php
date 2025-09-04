@@ -110,7 +110,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @var Model::*|string $model
      */
-    #[Api(union: Model::class)]
+    #[Api(enum: Model::class)]
     public string $model;
 
     /**
