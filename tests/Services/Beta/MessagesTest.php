@@ -35,7 +35,7 @@ final class MessagesTest extends TestCase
             model: 'claude-sonnet-4-20250514',
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -47,7 +47,7 @@ final class MessagesTest extends TestCase
             model: 'claude-sonnet-4-20250514',
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -58,7 +58,7 @@ final class MessagesTest extends TestCase
             model: 'claude-3-7-sonnet-latest',
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -69,6 +69,6 @@ final class MessagesTest extends TestCase
             model: 'claude-3-7-sonnet-latest',
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }
