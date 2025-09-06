@@ -35,7 +35,7 @@ final class FilesTest extends TestCase
 
         $result = $this->client->beta->files->list();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -43,7 +43,7 @@ final class FilesTest extends TestCase
     {
         $result = $this->client->beta->files->delete('file_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -51,6 +51,6 @@ final class FilesTest extends TestCase
     {
         $result = $this->client->beta->files->retrieveMetadata('file_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

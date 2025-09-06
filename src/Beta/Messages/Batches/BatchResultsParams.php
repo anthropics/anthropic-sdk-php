@@ -11,11 +11,22 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new BatchResultsParams); // set properties as needed
+ * $client->beta.messages.batches->results(...$params->toArray());
+ * ```
  * Streams the results of a Message Batch as a `.jsonl` file.
  *
  * Each line in the file is a JSON object containing the result of a single request in the Message Batch. Results are not guaranteed to be in the same order as requests. Use the `custom_id` field to match results to requests.
  *
  * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->beta.messages.batches->results(...$params->toArray());`
  *
  * @see Anthropic\Beta\Messages\Batches->results
  *

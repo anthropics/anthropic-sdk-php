@@ -11,9 +11,20 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new ModelListParams); // set properties as needed
+ * $client->models->list(...$params->toArray());
+ * ```
  * List available models.
  *
  * The Models API response can be used to determine which models are available for use in the API. More recently released models are listed first.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->models->list(...$params->toArray());`
  *
  * @see Anthropic\Models->list
  *

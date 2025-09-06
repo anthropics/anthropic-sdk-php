@@ -10,9 +10,20 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new BatchListParams); // set properties as needed
+ * $client->messages.batches->list(...$params->toArray());
+ * ```
  * List all Message Batches within a Workspace. Most recently created batches are returned first.
  *
  * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->messages.batches->list(...$params->toArray());`
  *
  * @see Anthropic\Messages\Batches->list
  *

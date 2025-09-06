@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.4.0 (2025-09-06)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* **api:** adds support for Documents in tool results ([f98a2d4](https://github.com/anthropics/anthropic-sdk-php/commit/f98a2d467e0b9731239def1e4ee6a1fc2ee68a25))
+
+
+### Bug Fixes
+
+* decorate with enum label for all enum classes ([e3c3890](https://github.com/anthropics/anthropic-sdk-php/commit/e3c38903f79d55f4a0e7b24d73f2146537de2041))
+
+
+### Chores
+
+* cleanup streaming ([26d89eb](https://github.com/anthropics/anthropic-sdk-php/commit/26d89eb8519d1ca47118be6f596af79525e3ff3f))
+* document parameter object usage ([47d4c9b](https://github.com/anthropics/anthropic-sdk-php/commit/47d4c9bf07ecb32b92264ec686e9ada5dc0ce3bc))
+* **internal:** refactor base client internals ([08252f7](https://github.com/anthropics/anthropic-sdk-php/commit/08252f7b4e38c04a9bd6f420ef57a4e539aa3126))
+* make more targeted phpstan ignores ([00a1680](https://github.com/anthropics/anthropic-sdk-php/commit/00a168044830aa2295921c15eff3d26b5c621b29))
+
 ## 0.3.0 (2025-09-02)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.2.0...v0.3.0)

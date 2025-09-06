@@ -11,9 +11,20 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new BatchRetrieveParams); // set properties as needed
+ * $client->beta.messages.batches->retrieve(...$params->toArray());
+ * ```
  * This endpoint is idempotent and can be used to poll for Message Batch completion. To access the results of a Message Batch, make a request to the `results_url` field in the response.
  *
  * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->beta.messages.batches->retrieve(...$params->toArray());`
  *
  * @see Anthropic\Beta\Messages\Batches->retrieve
  *

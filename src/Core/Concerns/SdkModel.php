@@ -125,7 +125,7 @@ trait SdkModel
                 return true;
             }
 
-            $property = self::$converter->properties[$offset]->property ?? new \ReflectionProperty($this, property: $offset);
+            $property = self::$converter->properties[$offset]->property;
 
             return $property->isInitialized($this);
         }

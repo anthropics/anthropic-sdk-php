@@ -31,7 +31,7 @@ final class ModelsTest extends TestCase
     {
         $result = $this->client->beta->models->retrieve('model_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -43,6 +43,6 @@ final class ModelsTest extends TestCase
 
         $result = $this->client->beta->models->list();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

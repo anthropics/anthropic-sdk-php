@@ -11,11 +11,22 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new BatchCreateParams); // set properties as needed
+ * $client->messages.batches->create(...$params->toArray());
+ * ```
  * Send a batch of Message creation requests.
  *
  * The Message Batches API can be used to process multiple Messages API requests at once. Once a Message Batch is created, it begins processing immediately. Batches can take up to 24 hours to complete.
  *
  * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->messages.batches->create(...$params->toArray());`
  *
  * @see Anthropic\Messages\Batches->create
  *

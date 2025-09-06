@@ -57,7 +57,7 @@ final class BatchesTest extends TestCase
             ],
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -149,7 +149,7 @@ final class BatchesTest extends TestCase
             ],
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -159,7 +159,7 @@ final class BatchesTest extends TestCase
             'message_batch_id'
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -171,7 +171,7 @@ final class BatchesTest extends TestCase
 
         $result = $this->client->beta->messages->batches->list();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -181,7 +181,7 @@ final class BatchesTest extends TestCase
             'message_batch_id'
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -191,7 +191,7 @@ final class BatchesTest extends TestCase
             'message_batch_id'
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -205,6 +205,6 @@ final class BatchesTest extends TestCase
             'message_batch_id'
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }
