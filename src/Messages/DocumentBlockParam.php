@@ -36,7 +36,7 @@ final class DocumentBlockParam implements BaseModel
     #[Api('cache_control', nullable: true, optional: true)]
     public ?CacheControlEphemeral $cacheControl;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?CitationsConfigParam $citations;
 
     #[Api(nullable: true, optional: true)]

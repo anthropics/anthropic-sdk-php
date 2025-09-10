@@ -13,6 +13,8 @@ final class Name implements ConverterSource
 
     public const WEB_SEARCH = 'web_search';
 
+    public const WEB_FETCH = 'web_fetch';
+
     public const CODE_EXECUTION = 'code_execution';
 
     public const BASH_CODE_EXECUTION = 'bash_code_execution';
