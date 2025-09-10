@@ -15,6 +15,7 @@ use Anthropic\Beta\Messages\BetaToolTextEditor20241022;
 use Anthropic\Beta\Messages\BetaToolTextEditor20250124;
 use Anthropic\Beta\Messages\BetaToolTextEditor20250429;
 use Anthropic\Beta\Messages\BetaToolTextEditor20250728;
+use Anthropic\Beta\Messages\BetaWebFetchTool20250910;
 use Anthropic\Beta\Messages\BetaWebSearchTool20250305;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
@@ -43,6 +44,7 @@ final class Tool implements ConverterSource
             BetaToolTextEditor20250429::class,
             BetaToolTextEditor20250728::class,
             BetaWebSearchTool20250305::class,
+            BetaWebFetchTool20250910::class,
         ];
     }
 }

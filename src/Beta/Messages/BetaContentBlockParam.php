@@ -37,6 +37,7 @@ final class BetaContentBlockParam implements ConverterSource
             'tool_result' => BetaToolResultBlockParam::class,
             'server_tool_use' => BetaServerToolUseBlockParam::class,
             'web_search_tool_result' => BetaWebSearchToolResultBlockParam::class,
+            'web_fetch_tool_result' => BetaWebFetchToolResultBlockParam::class,
             'code_execution_tool_result' => BetaCodeExecutionToolResultBlockParam::class,
             'bash_code_execution_tool_result' => BetaBashCodeExecutionToolResultBlockParam::class,
             'text_editor_code_execution_tool_result' => BetaTextEditorCodeExecutionToolResultBlockParam::class,

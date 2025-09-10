@@ -36,7 +36,7 @@ final class BetaRequestDocumentBlock implements BaseModel
     #[Api('cache_control', nullable: true, optional: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?BetaCitationsConfigParam $citations;
 
     #[Api(nullable: true, optional: true)]
