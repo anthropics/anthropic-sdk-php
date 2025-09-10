@@ -1,0 +1,111 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\Beta\Messages;
+
+use Anthropic\Beta\Messages\BetaDocumentBlock\Source;
+use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Contracts\BaseModel;
+
+/**
+ * @phpstan-type beta_document_block = array{
+ *   citations: BetaCitationConfig,
+ *   source: BetaBase64PDFSource|BetaPlainTextSource,
+ *   title: string|null,
+ *   type: string,
+ * }
+ */
+final class BetaDocumentBlock implements BaseModel
+{
+    /** @use SdkModel<beta_document_block> */
+    use SdkModel;
+
+    #[Api]
+    public string $type = 'document';
+
+    /**
+     * Citation configuration for the document.
+     */
+    #[Api]
+    public BetaCitationConfig $citations;
+
+    #[Api(union: Source::class)]
+    public BetaBase64PDFSource|BetaPlainTextSource $source;
+
+    /**
+     * The title of the document.
+     */
+    #[Api]
+    public ?string $title;
+
+    /**
+     * `new BetaDocumentBlock()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaDocumentBlock::with(citations: ..., source: ..., title: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaDocumentBlock)->withCitations(...)->withSource(...)->withTitle(...)
+     * ```
+     */
+    public function __construct()
+    {
+        $this->initialize();
+    }
+
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function with(
+        BetaCitationConfig $citations,
+        BetaBase64PDFSource|BetaPlainTextSource $source,
+        ?string $title,
+    ): self {
+        $obj = new self;
+
+        $obj->citations = $citations;
+        $obj->source = $source;
+        $obj->title = $title;
+
+        return $obj;
+    }
+
+    /**
+     * Citation configuration for the document.
+     */
+    public function withCitations(BetaCitationConfig $citations): self
+    {
+        $obj = clone $this;
+        $obj->citations = $citations;
+
+        return $obj;
+    }
+
+    public function withSource(
+        BetaBase64PDFSource|BetaPlainTextSource $source
+    ): self {
+        $obj = clone $this;
+        $obj->source = $source;
+
+        return $obj;
+    }
+
+    /**
+     * The title of the document.
+     */
+    public function withTitle(?string $title): self
+    {
+        $obj = clone $this;
+        $obj->title = $title;
+
+        return $obj;
+    }
+}

@@ -15,6 +15,7 @@ use Anthropic\Beta\Messages\BetaTextBlock;
 use Anthropic\Beta\Messages\BetaTextEditorCodeExecutionToolResultBlock;
 use Anthropic\Beta\Messages\BetaThinkingBlock;
 use Anthropic\Beta\Messages\BetaToolUseBlock;
+use Anthropic\Beta\Messages\BetaWebFetchToolResultBlock;
 use Anthropic\Beta\Messages\BetaWebSearchToolResultBlock;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
@@ -45,6 +46,7 @@ final class ContentBlock implements ConverterSource
             'tool_use' => BetaToolUseBlock::class,
             'server_tool_use' => BetaServerToolUseBlock::class,
             'web_search_tool_result' => BetaWebSearchToolResultBlock::class,
+            'web_fetch_tool_result' => BetaWebFetchToolResultBlock::class,
             'code_execution_tool_result' => BetaCodeExecutionToolResultBlock::class,
             'bash_code_execution_tool_result' => BetaBashCodeExecutionToolResultBlock::class,
             'text_editor_code_execution_tool_result' => BetaTextEditorCodeExecutionToolResultBlock::class,

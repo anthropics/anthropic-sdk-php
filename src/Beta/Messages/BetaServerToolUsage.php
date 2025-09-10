@@ -9,12 +9,20 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_server_tool_usage = array{webSearchRequests: int}
+ * @phpstan-type beta_server_tool_usage = array{
+ *   webFetchRequests: int, webSearchRequests: int
+ * }
  */
 final class BetaServerToolUsage implements BaseModel
 {
     /** @use SdkModel<beta_server_tool_usage> */
     use SdkModel;
+
+    /**
+     * The number of web fetch tool requests.
+     */
+    #[Api('web_fetch_requests')]
+    public int $webFetchRequests;
 
     /**
      * The number of web search tool requests.
@@ -27,13 +35,13 @@ final class BetaServerToolUsage implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaServerToolUsage::with(webSearchRequests: ...)
+     * BetaServerToolUsage::with(webFetchRequests: ..., webSearchRequests: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaServerToolUsage)->withWebSearchRequests(...)
+     * (new BetaServerToolUsage)->withWebFetchRequests(...)->withWebSearchRequests(...)
      * ```
      */
     public function __construct()
@@ -46,11 +54,25 @@ final class BetaServerToolUsage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(int $webSearchRequests = 0): self
-    {
+    public static function with(
+        int $webFetchRequests = 0,
+        int $webSearchRequests = 0
+    ): self {
         $obj = new self;
 
+        $obj->webFetchRequests = $webFetchRequests;
         $obj->webSearchRequests = $webSearchRequests;
+
+        return $obj;
+    }
+
+    /**
+     * The number of web fetch tool requests.
+     */
+    public function withWebFetchRequests(int $webFetchRequests): self
+    {
+        $obj = clone $this;
+        $obj->webFetchRequests = $webFetchRequests;
 
         return $obj;
     }

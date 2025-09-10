@@ -31,6 +31,7 @@ final class BetaToolUnion implements ConverterSource
             BetaToolTextEditor20250429::class,
             BetaToolTextEditor20250728::class,
             BetaWebSearchTool20250305::class,
+            BetaWebFetchTool20250910::class,
         ];
     }
 }
