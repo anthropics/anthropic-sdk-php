@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type beta_web_search_tool_request_error = array{
- *   errorCode: BetaWebSearchToolResultErrorCode::*, type: string
+ *   errorCode: value-of<BetaWebSearchToolResultErrorCode>, type: string
  * }
  */
 final class BetaWebSearchToolRequestError implements BaseModel
@@ -21,7 +21,7 @@ final class BetaWebSearchToolRequestError implements BaseModel
     #[Api]
     public string $type = 'web_search_tool_result_error';
 
-    /** @var BetaWebSearchToolResultErrorCode::* $errorCode */
+    /** @var value-of<BetaWebSearchToolResultErrorCode> $errorCode */
     #[Api('error_code', enum: BetaWebSearchToolResultErrorCode::class)]
     public string $errorCode;
 
@@ -49,24 +49,26 @@ final class BetaWebSearchToolRequestError implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaWebSearchToolResultErrorCode::* $errorCode
+     * @param BetaWebSearchToolResultErrorCode|value-of<BetaWebSearchToolResultErrorCode> $errorCode
      */
-    public static function with(string $errorCode): self
-    {
+    public static function with(
+        BetaWebSearchToolResultErrorCode|string $errorCode
+    ): self {
         $obj = new self;
 
-        $obj->errorCode = $errorCode;
+        $obj->errorCode = $errorCode instanceof BetaWebSearchToolResultErrorCode ? $errorCode->value : $errorCode;
 
         return $obj;
     }
 
     /**
-     * @param BetaWebSearchToolResultErrorCode::* $errorCode
+     * @param BetaWebSearchToolResultErrorCode|value-of<BetaWebSearchToolResultErrorCode> $errorCode
      */
-    public function withErrorCode(string $errorCode): self
-    {
+    public function withErrorCode(
+        BetaWebSearchToolResultErrorCode|string $errorCode
+    ): self {
         $obj = clone $this;
-        $obj->errorCode = $errorCode;
+        $obj->errorCode = $errorCode instanceof BetaWebSearchToolResultErrorCode ? $errorCode->value : $errorCode;
 
         return $obj;
     }

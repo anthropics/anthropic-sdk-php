@@ -4,26 +4,21 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Concerns\SdkEnum;
-use Anthropic\Core\Conversion\Contracts\ConverterSource;
-
-final class BetaWebFetchToolResultErrorCode implements ConverterSource
+enum BetaWebFetchToolResultErrorCode: string
 {
-    use SdkEnum;
+    case INVALID_TOOL_INPUT = 'invalid_tool_input';
 
-    public const INVALID_TOOL_INPUT = 'invalid_tool_input';
+    case URL_TOO_LONG = 'url_too_long';
 
-    public const URL_TOO_LONG = 'url_too_long';
+    case URL_NOT_ALLOWED = 'url_not_allowed';
 
-    public const URL_NOT_ALLOWED = 'url_not_allowed';
+    case URL_NOT_ACCESSIBLE = 'url_not_accessible';
 
-    public const URL_NOT_ACCESSIBLE = 'url_not_accessible';
+    case UNSUPPORTED_CONTENT_TYPE = 'unsupported_content_type';
 
-    public const UNSUPPORTED_CONTENT_TYPE = 'unsupported_content_type';
+    case TOO_MANY_REQUESTS = 'too_many_requests';
 
-    public const TOO_MANY_REQUESTS = 'too_many_requests';
+    case MAX_USES_EXCEEDED = 'max_uses_exceeded';
 
-    public const MAX_USES_EXCEEDED = 'max_uses_exceeded';
-
-    public const UNAVAILABLE = 'unavailable';
+    case UNAVAILABLE = 'unavailable';
 }

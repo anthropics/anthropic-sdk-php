@@ -16,7 +16,7 @@ use Anthropic\Messages\Tool\Type;
  *   name: string,
  *   cacheControl?: CacheControlEphemeral|null,
  *   description?: string|null,
- *   type?: Type::*|null,
+ *   type?: value-of<Type>|null,
  * }
  */
 final class Tool implements BaseModel
@@ -54,7 +54,7 @@ final class Tool implements BaseModel
     #[Api(optional: true)]
     public ?string $description;
 
-    /** @var Type::*|null $type */
+    /** @var value-of<Type>|null $type */
     #[Api(enum: Type::class, nullable: true, optional: true)]
     public ?string $type;
 
@@ -82,14 +82,14 @@ final class Tool implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type::*|null $type
+     * @param Type|value-of<Type>|null $type
      */
     public static function with(
         InputSchema $inputSchema,
         string $name,
         ?CacheControlEphemeral $cacheControl = null,
         ?string $description = null,
-        ?string $type = null,
+        Type|string|null $type = null,
     ): self {
         $obj = new self;
 
@@ -98,7 +98,7 @@ final class Tool implements BaseModel
 
         null !== $cacheControl && $obj->cacheControl = $cacheControl;
         null !== $description && $obj->description = $description;
-        null !== $type && $obj->type = $type;
+        null !== $type && $obj->type = $type instanceof Type ? $type->value : $type;
 
         return $obj;
     }
@@ -132,7 +132,7 @@ final class Tool implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function withCacheControl(CacheControlEphemeral $cacheControl): self
+    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
     {
         $obj = clone $this;
         $obj->cacheControl = $cacheControl;
@@ -154,12 +154,12 @@ final class Tool implements BaseModel
     }
 
     /**
-     * @param Type::*|null $type
+     * @param Type|value-of<Type>|null $type
      */
-    public function withType(?string $type): self
+    public function withType(Type|string|null $type): self
     {
         $obj = clone $this;
-        $obj->type = $type;
+        $obj->type = $type instanceof Type ? $type->value : $type;
 
         return $obj;
     }

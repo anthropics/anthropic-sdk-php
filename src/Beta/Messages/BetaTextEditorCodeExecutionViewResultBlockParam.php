@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type beta_text_editor_code_execution_view_result_block_param = array{
  *   content: string,
- *   fileType: FileType::*,
+ *   fileType: value-of<FileType>,
  *   type: string,
  *   numLines?: int|null,
  *   startLine?: int|null,
@@ -30,7 +30,7 @@ final class BetaTextEditorCodeExecutionViewResultBlockParam implements BaseModel
     #[Api]
     public string $content;
 
-    /** @var FileType::* $fileType */
+    /** @var value-of<FileType> $fileType */
     #[Api('file_type', enum: FileType::class)]
     public string $fileType;
 
@@ -71,11 +71,11 @@ final class BetaTextEditorCodeExecutionViewResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param FileType::* $fileType
+     * @param FileType|value-of<FileType> $fileType
      */
     public static function with(
         string $content,
-        string $fileType,
+        FileType|string $fileType,
         ?int $numLines = null,
         ?int $startLine = null,
         ?int $totalLines = null,
@@ -83,7 +83,7 @@ final class BetaTextEditorCodeExecutionViewResultBlockParam implements BaseModel
         $obj = new self;
 
         $obj->content = $content;
-        $obj->fileType = $fileType;
+        $obj->fileType = $fileType instanceof FileType ? $fileType->value : $fileType;
 
         null !== $numLines && $obj->numLines = $numLines;
         null !== $startLine && $obj->startLine = $startLine;
@@ -101,12 +101,12 @@ final class BetaTextEditorCodeExecutionViewResultBlockParam implements BaseModel
     }
 
     /**
-     * @param FileType::* $fileType
+     * @param FileType|value-of<FileType> $fileType
      */
-    public function withFileType(string $fileType): self
+    public function withFileType(FileType|string $fileType): self
     {
         $obj = clone $this;
-        $obj->fileType = $fileType;
+        $obj->fileType = $fileType instanceof FileType ? $fileType->value : $fileType;
 
         return $obj;
     }

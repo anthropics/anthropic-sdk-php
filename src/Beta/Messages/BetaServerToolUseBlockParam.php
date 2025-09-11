@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type beta_server_tool_use_block_param = array{
  *   id: string,
  *   input: mixed,
- *   name: Name::*,
+ *   name: value-of<Name>,
  *   type: string,
  *   cacheControl?: BetaCacheControlEphemeral|null,
  * }
@@ -32,7 +32,7 @@ final class BetaServerToolUseBlockParam implements BaseModel
     #[Api]
     public mixed $input;
 
-    /** @var Name::* $name */
+    /** @var value-of<Name> $name */
     #[Api(enum: Name::class)]
     public string $name;
 
@@ -66,19 +66,19 @@ final class BetaServerToolUseBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Name::* $name
+     * @param Name|value-of<Name> $name
      */
     public static function with(
         string $id,
         mixed $input,
-        string $name,
+        Name|string $name,
         ?BetaCacheControlEphemeral $cacheControl = null,
     ): self {
         $obj = new self;
 
         $obj->id = $id;
         $obj->input = $input;
-        $obj->name = $name;
+        $obj->name = $name instanceof Name ? $name->value : $name;
 
         null !== $cacheControl && $obj->cacheControl = $cacheControl;
 
@@ -102,12 +102,12 @@ final class BetaServerToolUseBlockParam implements BaseModel
     }
 
     /**
-     * @param Name::* $name
+     * @param Name|value-of<Name> $name
      */
-    public function withName(string $name): self
+    public function withName(Name|string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj->name = $name instanceof Name ? $name->value : $name;
 
         return $obj;
     }
@@ -116,7 +116,7 @@ final class BetaServerToolUseBlockParam implements BaseModel
      * Create a cache control breakpoint at this content block.
      */
     public function withCacheControl(
-        BetaCacheControlEphemeral $cacheControl
+        ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
         $obj->cacheControl = $cacheControl;

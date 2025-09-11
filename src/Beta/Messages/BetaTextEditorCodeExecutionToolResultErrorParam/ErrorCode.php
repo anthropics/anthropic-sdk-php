@@ -4,20 +4,15 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\BetaTextEditorCodeExecutionToolResultErrorParam;
 
-use Anthropic\Core\Concerns\SdkEnum;
-use Anthropic\Core\Conversion\Contracts\ConverterSource;
-
-final class ErrorCode implements ConverterSource
+enum ErrorCode: string
 {
-    use SdkEnum;
+    case INVALID_TOOL_INPUT = 'invalid_tool_input';
 
-    public const INVALID_TOOL_INPUT = 'invalid_tool_input';
+    case UNAVAILABLE = 'unavailable';
 
-    public const UNAVAILABLE = 'unavailable';
+    case TOO_MANY_REQUESTS = 'too_many_requests';
 
-    public const TOO_MANY_REQUESTS = 'too_many_requests';
+    case EXECUTION_TIME_EXCEEDED = 'execution_time_exceeded';
 
-    public const EXECUTION_TIME_EXCEEDED = 'execution_time_exceeded';
-
-    public const FILE_NOT_FOUND = 'file_not_found';
+    case FILE_NOT_FOUND = 'file_not_found';
 }

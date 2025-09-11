@@ -22,7 +22,7 @@ interface FilesContract
      * @param int $limit Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return Page<FileMetadata>
      */
@@ -37,7 +37,7 @@ interface FilesContract
     /**
      * @api
      *
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      */
     public function delete(
         string $fileID,
@@ -48,7 +48,7 @@ interface FilesContract
     /**
      * @api
      *
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      */
     public function retrieveMetadata(
         string $fileID,

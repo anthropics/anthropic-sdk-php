@@ -11,13 +11,13 @@ use Anthropic\Messages\Usage\ServiceTier;
 
 /**
  * @phpstan-type usage_alias = array{
- *   cacheCreation: CacheCreation,
+ *   cacheCreation: CacheCreation|null,
  *   cacheCreationInputTokens: int|null,
  *   cacheReadInputTokens: int|null,
  *   inputTokens: int,
  *   outputTokens: int,
- *   serverToolUse: ServerToolUsage,
- *   serviceTier: ServiceTier::*|null,
+ *   serverToolUse: ServerToolUsage|null,
+ *   serviceTier: value-of<ServiceTier>|null,
  * }
  */
 final class Usage implements BaseModel
@@ -29,7 +29,7 @@ final class Usage implements BaseModel
      * Breakdown of cached tokens by TTL.
      */
     #[Api('cache_creation')]
-    public CacheCreation $cacheCreation;
+    public ?CacheCreation $cacheCreation;
 
     /**
      * The number of input tokens used to create the cache entry.
@@ -59,12 +59,12 @@ final class Usage implements BaseModel
      * The number of server tool requests.
      */
     #[Api('server_tool_use')]
-    public ServerToolUsage $serverToolUse;
+    public ?ServerToolUsage $serverToolUse;
 
     /**
      * If the request used the priority, standard, or batch tier.
      *
-     * @var ServiceTier::*|null $serviceTier
+     * @var value-of<ServiceTier>|null $serviceTier
      */
     #[Api('service_tier', enum: ServiceTier::class)]
     public ?string $serviceTier;
@@ -108,16 +108,16 @@ final class Usage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ServiceTier::*|null $serviceTier
+     * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
      */
     public static function with(
-        CacheCreation $cacheCreation,
+        ?CacheCreation $cacheCreation,
         ?int $cacheCreationInputTokens,
         ?int $cacheReadInputTokens,
         int $inputTokens,
         int $outputTokens,
-        ServerToolUsage $serverToolUse,
-        ?string $serviceTier,
+        ?ServerToolUsage $serverToolUse,
+        ServiceTier|string|null $serviceTier,
     ): self {
         $obj = new self;
 
@@ -127,7 +127,7 @@ final class Usage implements BaseModel
         $obj->inputTokens = $inputTokens;
         $obj->outputTokens = $outputTokens;
         $obj->serverToolUse = $serverToolUse;
-        $obj->serviceTier = $serviceTier;
+        $obj->serviceTier = $serviceTier instanceof ServiceTier ? $serviceTier->value : $serviceTier;
 
         return $obj;
     }
@@ -135,7 +135,7 @@ final class Usage implements BaseModel
     /**
      * Breakdown of cached tokens by TTL.
      */
-    public function withCacheCreation(CacheCreation $cacheCreation): self
+    public function withCacheCreation(?CacheCreation $cacheCreation): self
     {
         $obj = clone $this;
         $obj->cacheCreation = $cacheCreation;
@@ -191,7 +191,7 @@ final class Usage implements BaseModel
     /**
      * The number of server tool requests.
      */
-    public function withServerToolUse(ServerToolUsage $serverToolUse): self
+    public function withServerToolUse(?ServerToolUsage $serverToolUse): self
     {
         $obj = clone $this;
         $obj->serverToolUse = $serverToolUse;
@@ -202,12 +202,12 @@ final class Usage implements BaseModel
     /**
      * If the request used the priority, standard, or batch tier.
      *
-     * @param ServiceTier::*|null $serviceTier
+     * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
      */
-    public function withServiceTier(?string $serviceTier): self
+    public function withServiceTier(ServiceTier|string|null $serviceTier): self
     {
         $obj = clone $this;
-        $obj->serviceTier = $serviceTier;
+        $obj->serviceTier = $serviceTier instanceof ServiceTier ? $serviceTier->value : $serviceTier;
 
         return $obj;
     }

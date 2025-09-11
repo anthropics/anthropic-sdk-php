@@ -36,11 +36,11 @@ use Anthropic\Messages\Model;
  * @phpstan-type message_create_params = array{
  *   maxTokens: int,
  *   messages: list<BetaMessageParam>,
- *   model: Model::*|string,
+ *   model: string|Model,
  *   container?: string|null,
  *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
  *   metadata?: BetaMetadata,
- *   serviceTier?: ServiceTier::*,
+ *   serviceTier?: ServiceTier|value-of<ServiceTier>,
  *   stopSequences?: list<string>,
  *   system?: string|list<BetaTextBlockParam>,
  *   temperature?: float,
@@ -49,7 +49,7 @@ use Anthropic\Messages\Model;
  *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910>,
  *   topK?: int,
  *   topP?: float,
- *   betas?: list<AnthropicBeta::*|string>,
+ *   betas?: list<string|AnthropicBeta>,
  * }
  */
 final class MessageCreateParams implements BaseModel
@@ -126,7 +126,7 @@ final class MessageCreateParams implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var Model::*|string $model
+     * @var string|value-of<Model> $model
      */
     #[Api(enum: Model::class)]
     public string $model;
@@ -160,7 +160,7 @@ final class MessageCreateParams implements BaseModel
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.anthropic.com/en/api/service-tiers) for details.
      *
-     * @var ServiceTier::*|null $serviceTier
+     * @var value-of<ServiceTier>|null $serviceTier
      */
     #[Api('service_tier', enum: ServiceTier::class, optional: true)]
     public ?string $serviceTier;
@@ -304,7 +304,7 @@ final class MessageCreateParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var list<AnthropicBeta::*|string>|null $betas
+     * @var list<string|value-of<AnthropicBeta>>|null $betas
      */
     #[Api(list: AnthropicBeta::class, optional: true)]
     public ?array $betas;
@@ -334,22 +334,21 @@ final class MessageCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaMessageParam> $messages
-     * @param Model::*|string $model
      * @param list<BetaRequestMCPServerURLDefinition> $mcpServers
-     * @param ServiceTier::* $serviceTier
+     * @param ServiceTier|value-of<ServiceTier> $serviceTier
      * @param list<string> $stopSequences
      * @param string|list<BetaTextBlockParam> $system
      * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910> $tools
-     * @param list<AnthropicBeta::*|string> $betas
+     * @param list<string|AnthropicBeta> $betas
      */
     public static function with(
         int $maxTokens,
         array $messages,
-        string $model,
+        string|Model $model,
         ?string $container = null,
         ?array $mcpServers = null,
         ?BetaMetadata $metadata = null,
-        ?string $serviceTier = null,
+        ServiceTier|string|null $serviceTier = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
@@ -364,12 +363,12 @@ final class MessageCreateParams implements BaseModel
 
         $obj->maxTokens = $maxTokens;
         $obj->messages = $messages;
-        $obj->model = $model;
+        $obj->model = $model instanceof Model ? $model->value : $model;
 
         null !== $container && $obj->container = $container;
         null !== $mcpServers && $obj->mcpServers = $mcpServers;
         null !== $metadata && $obj->metadata = $metadata;
-        null !== $serviceTier && $obj->serviceTier = $serviceTier;
+        null !== $serviceTier && $obj->serviceTier = $serviceTier instanceof ServiceTier ? $serviceTier->value : $serviceTier;
         null !== $stopSequences && $obj->stopSequences = $stopSequences;
         null !== $system && $obj->system = $system;
         null !== $temperature && $obj->temperature = $temperature;
@@ -378,7 +377,7 @@ final class MessageCreateParams implements BaseModel
         null !== $tools && $obj->tools = $tools;
         null !== $topK && $obj->topK = $topK;
         null !== $topP && $obj->topP = $topP;
-        null !== $betas && $obj->betas = $betas;
+        null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
 
         return $obj;
     }
@@ -460,13 +459,11 @@ final class MessageCreateParams implements BaseModel
 
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
-     *
-     * @param Model::*|string $model
      */
-    public function withModel(string $model): self
+    public function withModel(string|Model $model): self
     {
         $obj = clone $this;
-        $obj->model = $model;
+        $obj->model = $model instanceof Model ? $model->value : $model;
 
         return $obj;
     }
@@ -511,12 +508,12 @@ final class MessageCreateParams implements BaseModel
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.anthropic.com/en/api/service-tiers) for details.
      *
-     * @param ServiceTier::* $serviceTier
+     * @param ServiceTier|value-of<ServiceTier> $serviceTier
      */
-    public function withServiceTier(string $serviceTier): self
+    public function withServiceTier(ServiceTier|string $serviceTier): self
     {
         $obj = clone $this;
-        $obj->serviceTier = $serviceTier;
+        $obj->serviceTier = $serviceTier instanceof ServiceTier ? $serviceTier->value : $serviceTier;
 
         return $obj;
     }
@@ -702,12 +699,12 @@ final class MessageCreateParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @param list<AnthropicBeta::*|string> $betas
+     * @param list<string|AnthropicBeta> $betas
      */
     public function withBetas(array $betas): self
     {
         $obj = clone $this;
-        $obj->betas = $betas;
+        $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
 
         return $obj;
     }

@@ -4,20 +4,15 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\WebSearchToolResultError;
 
-use Anthropic\Core\Concerns\SdkEnum;
-use Anthropic\Core\Conversion\Contracts\ConverterSource;
-
-final class ErrorCode implements ConverterSource
+enum ErrorCode: string
 {
-    use SdkEnum;
+    case INVALID_TOOL_INPUT = 'invalid_tool_input';
 
-    public const INVALID_TOOL_INPUT = 'invalid_tool_input';
+    case UNAVAILABLE = 'unavailable';
 
-    public const UNAVAILABLE = 'unavailable';
+    case MAX_USES_EXCEEDED = 'max_uses_exceeded';
 
-    public const MAX_USES_EXCEEDED = 'max_uses_exceeded';
+    case TOO_MANY_REQUESTS = 'too_many_requests';
 
-    public const TOO_MANY_REQUESTS = 'too_many_requests';
-
-    public const QUERY_TOO_LONG = 'query_too_long';
+    case QUERY_TOO_LONG = 'query_too_long';
 }

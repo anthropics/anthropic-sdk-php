@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type beta_code_execution_tool_result_error_param = array{
- *   errorCode: BetaCodeExecutionToolResultErrorCode::*, type: string
+ *   errorCode: value-of<BetaCodeExecutionToolResultErrorCode>, type: string
  * }
  */
 final class BetaCodeExecutionToolResultErrorParam implements BaseModel
@@ -21,7 +21,7 @@ final class BetaCodeExecutionToolResultErrorParam implements BaseModel
     #[Api]
     public string $type = 'code_execution_tool_result_error';
 
-    /** @var BetaCodeExecutionToolResultErrorCode::* $errorCode */
+    /** @var value-of<BetaCodeExecutionToolResultErrorCode> $errorCode */
     #[Api('error_code', enum: BetaCodeExecutionToolResultErrorCode::class)]
     public string $errorCode;
 
@@ -49,24 +49,26 @@ final class BetaCodeExecutionToolResultErrorParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaCodeExecutionToolResultErrorCode::* $errorCode
+     * @param BetaCodeExecutionToolResultErrorCode|value-of<BetaCodeExecutionToolResultErrorCode> $errorCode
      */
-    public static function with(string $errorCode): self
-    {
+    public static function with(
+        BetaCodeExecutionToolResultErrorCode|string $errorCode
+    ): self {
         $obj = new self;
 
-        $obj->errorCode = $errorCode;
+        $obj->errorCode = $errorCode instanceof BetaCodeExecutionToolResultErrorCode ? $errorCode->value : $errorCode;
 
         return $obj;
     }
 
     /**
-     * @param BetaCodeExecutionToolResultErrorCode::* $errorCode
+     * @param BetaCodeExecutionToolResultErrorCode|value-of<BetaCodeExecutionToolResultErrorCode> $errorCode
      */
-    public function withErrorCode(string $errorCode): self
-    {
+    public function withErrorCode(
+        BetaCodeExecutionToolResultErrorCode|string $errorCode
+    ): self {
         $obj = clone $this;
-        $obj->errorCode = $errorCode;
+        $obj->errorCode = $errorCode instanceof BetaCodeExecutionToolResultErrorCode ? $errorCode->value : $errorCode;
 
         return $obj;
     }

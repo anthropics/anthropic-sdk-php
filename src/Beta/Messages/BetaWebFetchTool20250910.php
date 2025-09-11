@@ -139,7 +139,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
      * Create a cache control breakpoint at this content block.
      */
     public function withCacheControl(
-        BetaCacheControlEphemeral $cacheControl
+        ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
         $obj->cacheControl = $cacheControl;
@@ -150,7 +150,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     /**
      * Citations configuration for fetched documents. Citations are disabled by default.
      */
-    public function withCitations(BetaCitationsConfigParam $citations): self
+    public function withCitations(?BetaCitationsConfigParam $citations): self
     {
         $obj = clone $this;
         $obj->citations = $citations;

@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type beta_cache_control_ephemeral = array{
- *   type: string, ttl?: TTL::*|null
+ *   type: string, ttl?: value-of<TTL>|null
  * }
  */
 final class BetaCacheControlEphemeral implements BaseModel
@@ -31,7 +31,7 @@ final class BetaCacheControlEphemeral implements BaseModel
      *
      * Defaults to `5m`.
      *
-     * @var TTL::*|null $ttl
+     * @var value-of<TTL>|null $ttl
      */
     #[Api(enum: TTL::class, optional: true)]
     public ?string $ttl;
@@ -46,13 +46,13 @@ final class BetaCacheControlEphemeral implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param TTL::* $ttl
+     * @param TTL|value-of<TTL> $ttl
      */
-    public static function with(?string $ttl = null): self
+    public static function with(TTL|string|null $ttl = null): self
     {
         $obj = new self;
 
-        null !== $ttl && $obj->ttl = $ttl;
+        null !== $ttl && $obj->ttl = $ttl instanceof TTL ? $ttl->value : $ttl;
 
         return $obj;
     }
@@ -66,12 +66,12 @@ final class BetaCacheControlEphemeral implements BaseModel
      *
      * Defaults to `5m`.
      *
-     * @param TTL::* $ttl
+     * @param TTL|value-of<TTL> $ttl
      */
-    public function withTTL(string $ttl): self
+    public function withTTL(TTL|string $ttl): self
     {
         $obj = clone $this;
-        $obj->ttl = $ttl;
+        $obj->ttl = $ttl instanceof TTL ? $ttl->value : $ttl;
 
         return $obj;
     }

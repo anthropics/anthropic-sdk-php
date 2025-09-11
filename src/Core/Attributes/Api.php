@@ -6,6 +6,7 @@ namespace Anthropic\Core\Attributes;
 
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
+use Anthropic\Core\Conversion\EnumOf;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Core\Conversion\MapOf;
 
@@ -15,14 +16,15 @@ use Anthropic\Core\Conversion\MapOf;
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
 final class Api
 {
-    /**
-     * @var class-string<ConverterSource>|Converter|string|null
-     */
+    /** @var class-string<ConverterSource>|Converter|string|null */
     public readonly Converter|string|null $type;
+
+    /** @var array<string,Converter> */
+    private static array $enumConverters = [];
 
     /**
      * @param class-string<ConverterSource>|Converter|string|null $type
-     * @param class-string<ConverterSource>|Converter|null        $enum
+     * @param class-string<\BackedEnum>|Converter|null            $enum
      * @param class-string<ConverterSource>|Converter|null        $union
      * @param class-string<ConverterSource>|Converter|string|null $list
      * @param class-string<ConverterSource>|Converter|string|null $map
@@ -37,6 +39,28 @@ final class Api
         public readonly bool $nullable = false,
         public readonly bool $optional = false,
     ) {
-        $this->type = $type ?? $enum ?? $union ?? ($list ? new ListOf($list) : ($map ? new MapOf($map) : null));
+        $type ??= $union;
+        if (null !== $list) {
+            $type ??= new ListOf($list);
+        }
+        if (null !== $map) {
+            $type ??= new MapOf($map);
+        }
+        if (null !== $enum) {
+            $type ??= $enum instanceof Converter ? $enum : $this->getEnumConverter($enum);
+        }
+
+        $this->type = $type;
+    }
+
+    /** @property class-string<\BackedEnum> $enum */
+    private function getEnumConverter(string $enum): Converter
+    {
+        if (!isset(self::$enumConverters[$enum])) {
+            $converter = new EnumOf(array_column($enum::cases(), 'value')); // @phpstan-ignore-line
+            self::$enumConverters[$enum] = $converter;
+        }
+
+        return self::$enumConverters[$enum];
     }
 }

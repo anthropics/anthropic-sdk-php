@@ -103,7 +103,7 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
     }
 
     public function withToolConfiguration(
-        BetaRequestMCPServerToolConfiguration $toolConfiguration
+        ?BetaRequestMCPServerToolConfiguration $toolConfiguration
     ): self {
         $obj = clone $this;
         $obj->toolConfiguration = $toolConfiguration;

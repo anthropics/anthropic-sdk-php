@@ -12,9 +12,9 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type message_alias = array{
  *   id: string,
  *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
- *   model: Model::*|string,
+ *   model: string|value-of<Model>,
  *   role: string,
- *   stopReason: StopReason::*,
+ *   stopReason: value-of<StopReason>|null,
  *   stopSequence: string|null,
  *   type: string,
  *   usage: Usage,
@@ -84,7 +84,7 @@ final class Message implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var Model::*|string $model
+     * @var string|value-of<Model> $model
      */
     #[Api(enum: Model::class)]
     public string $model;
@@ -102,10 +102,10 @@ final class Message implements BaseModel
      *
      * In non-streaming mode this value is always non-null. In streaming mode, it is null in the `message_start` event and non-null otherwise.
      *
-     * @var StopReason::* $stopReason
+     * @var value-of<StopReason>|null $stopReason
      */
     #[Api('stop_reason', enum: StopReason::class)]
-    public string $stopReason;
+    public ?string $stopReason;
 
     /**
      * Which custom stop sequence was generated, if any.
@@ -167,14 +167,13 @@ final class Message implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock> $content
-     * @param Model::*|string $model
-     * @param StopReason::* $stopReason
+     * @param StopReason|value-of<StopReason>|null $stopReason
      */
     public static function with(
         string $id,
         array $content,
-        string $model,
-        string $stopReason,
+        string|Model $model,
+        StopReason|string|null $stopReason,
         ?string $stopSequence,
         Usage $usage,
     ): self {
@@ -182,8 +181,8 @@ final class Message implements BaseModel
 
         $obj->id = $id;
         $obj->content = $content;
-        $obj->model = $model;
-        $obj->stopReason = $stopReason;
+        $obj->model = $model instanceof Model ? $model->value : $model;
+        $obj->stopReason = $stopReason instanceof StopReason ? $stopReason->value : $stopReason;
         $obj->stopSequence = $stopSequence;
         $obj->usage = $usage;
 
@@ -242,13 +241,11 @@ final class Message implements BaseModel
 
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
-     *
-     * @param Model::*|string $model
      */
-    public function withModel(string $model): self
+    public function withModel(string|Model $model): self
     {
         $obj = clone $this;
-        $obj->model = $model;
+        $obj->model = $model instanceof Model ? $model->value : $model;
 
         return $obj;
     }
@@ -266,12 +263,12 @@ final class Message implements BaseModel
      *
      * In non-streaming mode this value is always non-null. In streaming mode, it is null in the `message_start` event and non-null otherwise.
      *
-     * @param StopReason::* $stopReason
+     * @param StopReason|value-of<StopReason>|null $stopReason
      */
-    public function withStopReason(string $stopReason): self
+    public function withStopReason(StopReason|string|null $stopReason): self
     {
         $obj = clone $this;
-        $obj->stopReason = $stopReason;
+        $obj->stopReason = $stopReason instanceof StopReason ? $stopReason->value : $stopReason;
 
         return $obj;
     }

@@ -4,20 +4,15 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\BetaServerToolUseBlockParam;
 
-use Anthropic\Core\Concerns\SdkEnum;
-use Anthropic\Core\Conversion\Contracts\ConverterSource;
-
-final class Name implements ConverterSource
+enum Name: string
 {
-    use SdkEnum;
+    case WEB_SEARCH = 'web_search';
 
-    public const WEB_SEARCH = 'web_search';
+    case WEB_FETCH = 'web_fetch';
 
-    public const WEB_FETCH = 'web_fetch';
+    case CODE_EXECUTION = 'code_execution';
 
-    public const CODE_EXECUTION = 'code_execution';
+    case BASH_CODE_EXECUTION = 'bash_code_execution';
 
-    public const BASH_CODE_EXECUTION = 'bash_code_execution';
-
-    public const TEXT_EDITOR_CODE_EXECUTION = 'text_editor_code_execution';
+    case TEXT_EDITOR_CODE_EXECUTION = 'text_editor_code_execution';
 }

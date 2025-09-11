@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type deleted_file = array{id: string, type?: Type::*|null}
+ * @phpstan-type deleted_file = array{id: string, type?: value-of<Type>|null}
  */
 final class DeletedFile implements BaseModel
 {
@@ -28,7 +28,7 @@ final class DeletedFile implements BaseModel
      *
      * For file deletion, this is always `"file_deleted"`.
      *
-     * @var Type::*|null $type
+     * @var value-of<Type>|null $type
      */
     #[Api(enum: Type::class, optional: true)]
     public ?string $type;
@@ -57,15 +57,15 @@ final class DeletedFile implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type::* $type
+     * @param Type|value-of<Type> $type
      */
-    public static function with(string $id, ?string $type = null): self
+    public static function with(string $id, Type|string|null $type = null): self
     {
         $obj = new self;
 
         $obj->id = $id;
 
-        null !== $type && $obj->type = $type;
+        null !== $type && $obj->type = $type instanceof Type ? $type->value : $type;
 
         return $obj;
     }
@@ -86,12 +86,12 @@ final class DeletedFile implements BaseModel
      *
      * For file deletion, this is always `"file_deleted"`.
      *
-     * @param Type::* $type
+     * @param Type|value-of<Type> $type
      */
-    public function withType(string $type): self
+    public function withType(Type|string $type): self
     {
         $obj = clone $this;
-        $obj->type = $type;
+        $obj->type = $type instanceof Type ? $type->value : $type;
 
         return $obj;
     }

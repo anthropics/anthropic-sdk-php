@@ -128,11 +128,11 @@ final class MessagesService implements MessagesContract
      * Note that if you want to include a [system prompt](https://docs.anthropic.com/en/docs/system-prompts), you can use the top-level `system` parameter — there is no `"system"` role for input messages in the Messages API.
      *
      * There is a limit of 100,000 messages in a single request.
-     * @param Model::*|string $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * @param string|Model $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param string|null $container container identifier for reuse across requests
      * @param list<BetaRequestMCPServerURLDefinition> $mcpServers MCP servers to be utilized in this request
      * @param BetaMetadata $metadata an object describing metadata about the request
-     * @param ServiceTier::* $serviceTier Determines whether to use priority capacity (if available) or standard capacity for this request.
+     * @param ServiceTier|value-of<ServiceTier> $serviceTier Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.anthropic.com/en/api/service-tiers) for details.
      * @param list<string> $stopSequences Custom text sequences that will cause the model to stop generating.
@@ -225,7 +225,7 @@ final class MessagesService implements MessagesContract
      * In nucleus sampling, we compute the cumulative distribution over all the options for each subsequent token in decreasing probability order and cut it off once it reaches a particular probability specified by `top_p`. You should either alter `temperature` or `top_p`, but not both.
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      */
     public function create(
         $maxTokens,
@@ -337,11 +337,11 @@ final class MessagesService implements MessagesContract
      * Note that if you want to include a [system prompt](https://docs.anthropic.com/en/docs/system-prompts), you can use the top-level `system` parameter — there is no `"system"` role for input messages in the Messages API.
      *
      * There is a limit of 100,000 messages in a single request.
-     * @param Model::*|string $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * @param string|Model $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param string|null $container container identifier for reuse across requests
      * @param list<BetaRequestMCPServerURLDefinition> $mcpServers MCP servers to be utilized in this request
      * @param BetaMetadata $metadata an object describing metadata about the request
-     * @param ServiceTier::* $serviceTier Determines whether to use priority capacity (if available) or standard capacity for this request.
+     * @param ServiceTier|value-of<ServiceTier> $serviceTier Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.anthropic.com/en/api/service-tiers) for details.
      * @param list<string> $stopSequences Custom text sequences that will cause the model to stop generating.
@@ -434,7 +434,7 @@ final class MessagesService implements MessagesContract
      * In nucleus sampling, we compute the cumulative distribution over all the options for each subsequent token in decreasing probability order and cut it off once it reaches a particular probability specified by `top_p`. You should either alter `temperature` or `top_p`, but not both.
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return BaseStream<
      *   BetaRawMessageStartEvent|BetaRawMessageDeltaEvent|BetaRawMessageStopEvent|BetaRawContentBlockStartEvent|BetaRawContentBlockDeltaEvent|BetaRawContentBlockStopEvent,
@@ -555,7 +555,7 @@ final class MessagesService implements MessagesContract
      * Note that if you want to include a [system prompt](https://docs.anthropic.com/en/docs/system-prompts), you can use the top-level `system` parameter — there is no `"system"` role for input messages in the Messages API.
      *
      * There is a limit of 100,000 messages in a single request.
-     * @param Model::*|string $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * @param string|Model $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param list<BetaRequestMCPServerURLDefinition> $mcpServers MCP servers to be utilized in this request
      * @param string|list<BetaTextBlockParam> $system System prompt.
      *
@@ -627,7 +627,7 @@ final class MessagesService implements MessagesContract
      * Tools can be used for workflows that include running client-side tools and functions, or more generally whenever you want the model to produce a particular JSON structure of output.
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      */
     public function countTokens(
         $messages,

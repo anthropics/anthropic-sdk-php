@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type beta_text_editor_code_execution_view_result_block = array{
  *   content: string,
- *   fileType: FileType::*,
+ *   fileType: value-of<FileType>,
  *   numLines: int|null,
  *   startLine: int|null,
  *   totalLines: int|null,
@@ -30,7 +30,7 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
     #[Api]
     public string $content;
 
-    /** @var FileType::* $fileType */
+    /** @var value-of<FileType> $fileType */
     #[Api('file_type', enum: FileType::class)]
     public string $fileType;
 
@@ -74,11 +74,11 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param FileType::* $fileType
+     * @param FileType|value-of<FileType> $fileType
      */
     public static function with(
         string $content,
-        string $fileType,
+        FileType|string $fileType,
         ?int $numLines,
         ?int $startLine,
         ?int $totalLines,
@@ -86,7 +86,7 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
         $obj = new self;
 
         $obj->content = $content;
-        $obj->fileType = $fileType;
+        $obj->fileType = $fileType instanceof FileType ? $fileType->value : $fileType;
         $obj->numLines = $numLines;
         $obj->startLine = $startLine;
         $obj->totalLines = $totalLines;
@@ -103,12 +103,12 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
     }
 
     /**
-     * @param FileType::* $fileType
+     * @param FileType|value-of<FileType> $fileType
      */
-    public function withFileType(string $fileType): self
+    public function withFileType(FileType|string $fileType): self
     {
         $obj = clone $this;
-        $obj->fileType = $fileType;
+        $obj->fileType = $fileType instanceof FileType ? $fileType->value : $fileType;
 
         return $obj;
     }
