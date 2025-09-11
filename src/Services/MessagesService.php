@@ -118,9 +118,9 @@ final class MessagesService implements MessagesContract
      * Note that if you want to include a [system prompt](https://docs.anthropic.com/en/docs/system-prompts), you can use the top-level `system` parameter — there is no `"system"` role for input messages in the Messages API.
      *
      * There is a limit of 100,000 messages in a single request.
-     * @param Model::*|string $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * @param string|Model $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param Metadata $metadata an object describing metadata about the request
-     * @param ServiceTier::* $serviceTier Determines whether to use priority capacity (if available) or standard capacity for this request.
+     * @param ServiceTier|value-of<ServiceTier> $serviceTier Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.anthropic.com/en/api/service-tiers) for details.
      * @param list<string> $stopSequences Custom text sequences that will cause the model to stop generating.
@@ -313,9 +313,9 @@ final class MessagesService implements MessagesContract
      * Note that if you want to include a [system prompt](https://docs.anthropic.com/en/docs/system-prompts), you can use the top-level `system` parameter — there is no `"system"` role for input messages in the Messages API.
      *
      * There is a limit of 100,000 messages in a single request.
-     * @param Model::*|string $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * @param string|Model $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param Metadata $metadata an object describing metadata about the request
-     * @param ServiceTier::* $serviceTier Determines whether to use priority capacity (if available) or standard capacity for this request.
+     * @param ServiceTier|value-of<ServiceTier> $serviceTier Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.anthropic.com/en/api/service-tiers) for details.
      * @param list<string> $stopSequences Custom text sequences that will cause the model to stop generating.
@@ -517,7 +517,7 @@ final class MessagesService implements MessagesContract
      * Note that if you want to include a [system prompt](https://docs.anthropic.com/en/docs/system-prompts), you can use the top-level `system` parameter — there is no `"system"` role for input messages in the Messages API.
      *
      * There is a limit of 100,000 messages in a single request.
-     * @param Model::*|string $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * @param string|Model $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param string|list<TextBlockParam> $system System prompt.
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.anthropic.com/en/docs/system-prompts).

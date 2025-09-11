@@ -4,14 +4,9 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\MessageParam;
 
-use Anthropic\Core\Concerns\SdkEnum;
-use Anthropic\Core\Conversion\Contracts\ConverterSource;
-
-final class Role implements ConverterSource
+enum Role: string
 {
-    use SdkEnum;
+    case USER = 'user';
 
-    public const USER = 'user';
-
-    public const ASSISTANT = 'assistant';
+    case ASSISTANT = 'assistant';
 }

@@ -13,7 +13,7 @@ use Anthropic\Messages\MessageParam\Role;
 /**
  * @phpstan-type message_param = array{
  *   content: string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam>,
- *   role: Role::*,
+ *   role: value-of<Role>,
  * }
  */
 final class MessageParam implements BaseModel
@@ -27,7 +27,7 @@ final class MessageParam implements BaseModel
     #[Api(union: Content::class)]
     public string|array $content;
 
-    /** @var Role::* $role */
+    /** @var value-of<Role> $role */
     #[Api(enum: Role::class)]
     public string $role;
 
@@ -56,14 +56,14 @@ final class MessageParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam> $content
-     * @param Role::* $role
+     * @param Role|value-of<Role> $role
      */
-    public static function with(string|array $content, string $role): self
+    public static function with(string|array $content, Role|string $role): self
     {
         $obj = new self;
 
         $obj->content = $content;
-        $obj->role = $role;
+        $obj->role = $role instanceof Role ? $role->value : $role;
 
         return $obj;
     }
@@ -80,12 +80,12 @@ final class MessageParam implements BaseModel
     }
 
     /**
-     * @param Role::* $role
+     * @param Role|value-of<Role> $role
      */
-    public function withRole(string $role): self
+    public function withRole(Role|string $role): self
     {
         $obj = clone $this;
-        $obj->role = $role;
+        $obj->role = $role instanceof Role ? $role->value : $role;
 
         return $obj;
     }

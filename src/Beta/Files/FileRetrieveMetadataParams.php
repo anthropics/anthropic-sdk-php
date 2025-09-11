@@ -27,7 +27,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Beta\Files->retrieveMetadata
  *
  * @phpstan-type file_retrieve_metadata_params = array{
- *   betas?: list<AnthropicBeta::*|string>
+ *   betas?: list<string|AnthropicBeta>
  * }
  */
 final class FileRetrieveMetadataParams implements BaseModel
@@ -39,7 +39,7 @@ final class FileRetrieveMetadataParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var list<AnthropicBeta::*|string>|null $betas
+     * @var list<string|value-of<AnthropicBeta>>|null $betas
      */
     #[Api(list: AnthropicBeta::class, optional: true)]
     public ?array $betas;
@@ -54,13 +54,13 @@ final class FileRetrieveMetadataParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AnthropicBeta::*|string> $betas
+     * @param list<string|AnthropicBeta> $betas
      */
     public static function with(?array $betas = null): self
     {
         $obj = new self;
 
-        null !== $betas && $obj->betas = $betas;
+        null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
 
         return $obj;
     }
@@ -68,12 +68,12 @@ final class FileRetrieveMetadataParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @param list<AnthropicBeta::*|string> $betas
+     * @param list<string|AnthropicBeta> $betas
      */
     public function withBetas(array $betas): self
     {
         $obj = clone $this;
-        $obj->betas = $betas;
+        $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
 
         return $obj;
     }

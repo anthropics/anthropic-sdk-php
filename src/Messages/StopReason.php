@@ -4,22 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Concerns\SdkEnum;
-use Anthropic\Core\Conversion\Contracts\ConverterSource;
-
-final class StopReason implements ConverterSource
+enum StopReason: string
 {
-    use SdkEnum;
+    case END_TURN = 'end_turn';
 
-    public const END_TURN = 'end_turn';
+    case MAX_TOKENS = 'max_tokens';
 
-    public const MAX_TOKENS = 'max_tokens';
+    case STOP_SEQUENCE = 'stop_sequence';
 
-    public const STOP_SEQUENCE = 'stop_sequence';
+    case TOOL_USE = 'tool_use';
 
-    public const TOOL_USE = 'tool_use';
+    case PAUSE_TURN = 'pause_turn';
 
-    public const PAUSE_TURN = 'pause_turn';
-
-    public const REFUSAL = 'refusal';
+    case REFUSAL = 'refusal';
 }

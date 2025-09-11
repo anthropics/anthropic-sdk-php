@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   cacheReadInputTokens: int|null,
  *   inputTokens: int|null,
  *   outputTokens: int,
- *   serverToolUse: ServerToolUsage,
+ *   serverToolUse: ServerToolUsage|null,
  * }
  */
 final class MessageDeltaUsage implements BaseModel
@@ -50,7 +50,7 @@ final class MessageDeltaUsage implements BaseModel
      * The number of server tool requests.
      */
     #[Api('server_tool_use')]
-    public ServerToolUsage $serverToolUse;
+    public ?ServerToolUsage $serverToolUse;
 
     /**
      * `new MessageDeltaUsage()` is missing required properties by the API.
@@ -92,7 +92,7 @@ final class MessageDeltaUsage implements BaseModel
         ?int $cacheReadInputTokens,
         ?int $inputTokens,
         int $outputTokens,
-        ServerToolUsage $serverToolUse,
+        ?ServerToolUsage $serverToolUse,
     ): self {
         $obj = new self;
 
@@ -153,7 +153,7 @@ final class MessageDeltaUsage implements BaseModel
     /**
      * The number of server tool requests.
      */
-    public function withServerToolUse(ServerToolUsage $serverToolUse): self
+    public function withServerToolUse(?ServerToolUsage $serverToolUse): self
     {
         $obj = clone $this;
         $obj->serverToolUse = $serverToolUse;

@@ -30,7 +30,7 @@ final class ModelsService implements ModelsContract
      *
      * The Models API response can be used to determine information about a specific model or resolve a model alias to a model ID.
      *
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      */
     public function retrieve(
         string $modelID,
@@ -67,7 +67,7 @@ final class ModelsService implements ModelsContract
      * @param int $limit Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return Page<ModelInfo>
      */

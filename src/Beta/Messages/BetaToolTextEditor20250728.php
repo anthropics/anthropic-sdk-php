@@ -70,7 +70,7 @@ final class BetaToolTextEditor20250728 implements BaseModel
      * Create a cache control breakpoint at this content block.
      */
     public function withCacheControl(
-        BetaCacheControlEphemeral $cacheControl
+        ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
         $obj->cacheControl = $cacheControl;

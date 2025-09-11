@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\BetaTool;
 
-use Anthropic\Core\Concerns\SdkEnum;
-use Anthropic\Core\Conversion\Contracts\ConverterSource;
-
-final class Type implements ConverterSource
+enum Type: string
 {
-    use SdkEnum;
-
-    public const CUSTOM = 'custom';
+    case CUSTOM = 'custom';
 }

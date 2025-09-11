@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\BetaTextEditorCodeExecutionViewResultBlock;
 
-use Anthropic\Core\Concerns\SdkEnum;
-use Anthropic\Core\Conversion\Contracts\ConverterSource;
-
-final class FileType implements ConverterSource
+enum FileType: string
 {
-    use SdkEnum;
+    case TEXT = 'text';
 
-    public const TEXT = 'text';
+    case IMAGE = 'image';
 
-    public const IMAGE = 'image';
-
-    public const PDF = 'pdf';
+    case PDF = 'pdf';
 }

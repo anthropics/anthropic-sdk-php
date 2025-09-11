@@ -32,7 +32,7 @@ use Anthropic\Messages\MessageCountTokensParams\System;
  *
  * @phpstan-type message_count_tokens_params = array{
  *   messages: list<MessageParam>,
- *   model: Model::*|string,
+ *   model: string|Model,
  *   system?: string|list<TextBlockParam>,
  *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
  *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
@@ -103,7 +103,7 @@ final class MessageCountTokensParams implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var Model::*|string $model
+     * @var string|value-of<Model> $model
      */
     #[Api(enum: Model::class)]
     public string $model;
@@ -227,13 +227,12 @@ final class MessageCountTokensParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<MessageParam> $messages
-     * @param Model::*|string $model
      * @param string|list<TextBlockParam> $system
      * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
      */
     public static function with(
         array $messages,
-        string $model,
+        string|Model $model,
         string|array|null $system = null,
         ThinkingConfigEnabled|ThinkingConfigDisabled|null $thinking = null,
         ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
@@ -242,7 +241,7 @@ final class MessageCountTokensParams implements BaseModel
         $obj = new self;
 
         $obj->messages = $messages;
-        $obj->model = $model;
+        $obj->model = $model instanceof Model ? $model->value : $model;
 
         null !== $system && $obj->system = $system;
         null !== $thinking && $obj->thinking = $thinking;
@@ -314,13 +313,11 @@ final class MessageCountTokensParams implements BaseModel
 
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
-     *
-     * @param Model::*|string $model
      */
-    public function withModel(string $model): self
+    public function withModel(string|Model $model): self
     {
         $obj = clone $this;
-        $obj->model = $model;
+        $obj->model = $model instanceof Model ? $model->value : $model;
 
         return $obj;
     }

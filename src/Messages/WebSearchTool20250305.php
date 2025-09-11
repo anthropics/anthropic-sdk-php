@@ -130,7 +130,7 @@ final class WebSearchTool20250305 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function withCacheControl(CacheControlEphemeral $cacheControl): self
+    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
     {
         $obj = clone $this;
         $obj->cacheControl = $cacheControl;

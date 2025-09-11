@@ -69,7 +69,7 @@ final class ToolTextEditor20250728 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    public function withCacheControl(CacheControlEphemeral $cacheControl): self
+    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
     {
         $obj = clone $this;
         $obj->cacheControl = $cacheControl;

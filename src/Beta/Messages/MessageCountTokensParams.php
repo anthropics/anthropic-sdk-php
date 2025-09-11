@@ -35,13 +35,13 @@ use Anthropic\Messages\Model;
  *
  * @phpstan-type message_count_tokens_params = array{
  *   messages: list<BetaMessageParam>,
- *   model: Model::*|string,
+ *   model: string|Model,
  *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
  *   system?: string|list<BetaTextBlockParam>,
  *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
  *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
  *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910>,
- *   betas?: list<AnthropicBeta::*|string>,
+ *   betas?: list<string|AnthropicBeta>,
  * }
  */
 final class MessageCountTokensParams implements BaseModel
@@ -108,7 +108,7 @@ final class MessageCountTokensParams implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var Model::*|string $model
+     * @var string|value-of<Model> $model
      */
     #[Api(enum: Model::class)]
     public string $model;
@@ -222,7 +222,7 @@ final class MessageCountTokensParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var list<AnthropicBeta::*|string>|null $betas
+     * @var list<string|value-of<AnthropicBeta>>|null $betas
      */
     #[Api(list: AnthropicBeta::class, optional: true)]
     public ?array $betas;
@@ -252,15 +252,14 @@ final class MessageCountTokensParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaMessageParam> $messages
-     * @param Model::*|string $model
      * @param list<BetaRequestMCPServerURLDefinition> $mcpServers
      * @param string|list<BetaTextBlockParam> $system
      * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910> $tools
-     * @param list<AnthropicBeta::*|string> $betas
+     * @param list<string|AnthropicBeta> $betas
      */
     public static function with(
         array $messages,
-        string $model,
+        string|Model $model,
         ?array $mcpServers = null,
         string|array|null $system = null,
         BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null $thinking = null,
@@ -271,14 +270,14 @@ final class MessageCountTokensParams implements BaseModel
         $obj = new self;
 
         $obj->messages = $messages;
-        $obj->model = $model;
+        $obj->model = $model instanceof Model ? $model->value : $model;
 
         null !== $mcpServers && $obj->mcpServers = $mcpServers;
         null !== $system && $obj->system = $system;
         null !== $thinking && $obj->thinking = $thinking;
         null !== $toolChoice && $obj->toolChoice = $toolChoice;
         null !== $tools && $obj->tools = $tools;
-        null !== $betas && $obj->betas = $betas;
+        null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
 
         return $obj;
     }
@@ -345,13 +344,11 @@ final class MessageCountTokensParams implements BaseModel
 
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
-     *
-     * @param Model::*|string $model
      */
-    public function withModel(string $model): self
+    public function withModel(string|Model $model): self
     {
         $obj = clone $this;
-        $obj->model = $model;
+        $obj->model = $model instanceof Model ? $model->value : $model;
 
         return $obj;
     }
@@ -488,12 +485,12 @@ final class MessageCountTokensParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @param list<AnthropicBeta::*|string> $betas
+     * @param list<string|AnthropicBeta> $betas
      */
     public function withBetas(array $betas): self
     {
         $obj = clone $this;
-        $obj->betas = $betas;
+        $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
 
         return $obj;
     }

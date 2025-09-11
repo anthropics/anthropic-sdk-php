@@ -4,18 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Concerns\SdkEnum;
-use Anthropic\Core\Conversion\Contracts\ConverterSource;
-
-final class BetaCodeExecutionToolResultErrorCode implements ConverterSource
+enum BetaCodeExecutionToolResultErrorCode: string
 {
-    use SdkEnum;
+    case INVALID_TOOL_INPUT = 'invalid_tool_input';
 
-    public const INVALID_TOOL_INPUT = 'invalid_tool_input';
+    case UNAVAILABLE = 'unavailable';
 
-    public const UNAVAILABLE = 'unavailable';
+    case TOO_MANY_REQUESTS = 'too_many_requests';
 
-    public const TOO_MANY_REQUESTS = 'too_many_requests';
-
-    public const EXECUTION_TIME_EXCEEDED = 'execution_time_exceeded';
+    case EXECUTION_TIME_EXCEEDED = 'execution_time_exceeded';
 }

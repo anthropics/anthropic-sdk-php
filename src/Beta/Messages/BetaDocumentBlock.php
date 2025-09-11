@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type beta_document_block = array{
- *   citations: BetaCitationConfig,
+ *   citations: BetaCitationConfig|null,
  *   source: BetaBase64PDFSource|BetaPlainTextSource,
  *   title: string|null,
  *   type: string,
@@ -29,7 +29,7 @@ final class BetaDocumentBlock implements BaseModel
      * Citation configuration for the document.
      */
     #[Api]
-    public BetaCitationConfig $citations;
+    public ?BetaCitationConfig $citations;
 
     #[Api(union: Source::class)]
     public BetaBase64PDFSource|BetaPlainTextSource $source;
@@ -65,7 +65,7 @@ final class BetaDocumentBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        BetaCitationConfig $citations,
+        ?BetaCitationConfig $citations,
         BetaBase64PDFSource|BetaPlainTextSource $source,
         ?string $title,
     ): self {
@@ -81,7 +81,7 @@ final class BetaDocumentBlock implements BaseModel
     /**
      * Citation configuration for the document.
      */
-    public function withCitations(BetaCitationConfig $citations): self
+    public function withCitations(?BetaCitationConfig $citations): self
     {
         $obj = clone $this;
         $obj->citations = $citations;
