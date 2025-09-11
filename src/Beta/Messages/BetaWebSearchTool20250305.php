@@ -131,7 +131,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
      * Create a cache control breakpoint at this content block.
      */
     public function withCacheControl(
-        BetaCacheControlEphemeral $cacheControl
+        ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
         $obj->cacheControl = $cacheControl;

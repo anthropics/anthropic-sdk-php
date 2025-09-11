@@ -4,19 +4,14 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Usage;
 
-use Anthropic\Core\Concerns\SdkEnum;
-use Anthropic\Core\Conversion\Contracts\ConverterSource;
-
 /**
  * If the request used the priority, standard, or batch tier.
  */
-final class ServiceTier implements ConverterSource
+enum ServiceTier: string
 {
-    use SdkEnum;
+    case STANDARD = 'standard';
 
-    public const STANDARD = 'standard';
+    case PRIORITY = 'priority';
 
-    public const PRIORITY = 'priority';
-
-    public const BATCH = 'batch';
+    case BATCH = 'batch';
 }

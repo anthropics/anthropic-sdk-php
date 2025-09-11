@@ -21,7 +21,7 @@ interface BatchesContract
      * @api
      *
      * @param list<Request> $requests List of requests for prompt completion. Each is an individual request to create a Message.
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      */
     public function create(
         $requests,
@@ -32,7 +32,7 @@ interface BatchesContract
     /**
      * @api
      *
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      */
     public function retrieve(
         string $messageBatchID,
@@ -48,7 +48,7 @@ interface BatchesContract
      * @param int $limit Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return Page<MessageBatch>
      */
@@ -63,7 +63,7 @@ interface BatchesContract
     /**
      * @api
      *
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      */
     public function delete(
         string $messageBatchID,
@@ -74,7 +74,7 @@ interface BatchesContract
     /**
      * @api
      *
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      */
     public function cancel(
         string $messageBatchID,
@@ -85,7 +85,7 @@ interface BatchesContract
     /**
      * @api
      *
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      */
     public function results(
         string $messageBatchID,
@@ -94,7 +94,7 @@ interface BatchesContract
     ): MessageBatchIndividualResponse;
 
     /**
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return BaseStream<MessageBatchIndividualResponse>
      */

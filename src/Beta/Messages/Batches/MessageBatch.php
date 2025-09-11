@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   createdAt: \DateTimeInterface,
  *   endedAt: \DateTimeInterface|null,
  *   expiresAt: \DateTimeInterface,
- *   processingStatus: ProcessingStatus::*,
+ *   processingStatus: value-of<ProcessingStatus>,
  *   requestCounts: MessageBatchRequestCounts,
  *   resultsURL: string|null,
  *   type: string,
@@ -79,7 +79,7 @@ final class MessageBatch implements BaseModel
     /**
      * Processing status of the Message Batch.
      *
-     * @var ProcessingStatus::* $processingStatus
+     * @var value-of<ProcessingStatus> $processingStatus
      */
     #[Api('processing_status', enum: ProcessingStatus::class)]
     public string $processingStatus;
@@ -143,7 +143,7 @@ final class MessageBatch implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ProcessingStatus::* $processingStatus
+     * @param ProcessingStatus|value-of<ProcessingStatus> $processingStatus
      */
     public static function with(
         string $id,
@@ -152,7 +152,7 @@ final class MessageBatch implements BaseModel
         \DateTimeInterface $createdAt,
         ?\DateTimeInterface $endedAt,
         \DateTimeInterface $expiresAt,
-        string $processingStatus,
+        ProcessingStatus|string $processingStatus,
         MessageBatchRequestCounts $requestCounts,
         ?string $resultsURL,
     ): self {
@@ -164,7 +164,7 @@ final class MessageBatch implements BaseModel
         $obj->createdAt = $createdAt;
         $obj->endedAt = $endedAt;
         $obj->expiresAt = $expiresAt;
-        $obj->processingStatus = $processingStatus;
+        $obj->processingStatus = $processingStatus instanceof ProcessingStatus ? $processingStatus->value : $processingStatus;
         $obj->requestCounts = $requestCounts;
         $obj->resultsURL = $resultsURL;
 
@@ -245,12 +245,13 @@ final class MessageBatch implements BaseModel
     /**
      * Processing status of the Message Batch.
      *
-     * @param ProcessingStatus::* $processingStatus
+     * @param ProcessingStatus|value-of<ProcessingStatus> $processingStatus
      */
-    public function withProcessingStatus(string $processingStatus): self
-    {
+    public function withProcessingStatus(
+        ProcessingStatus|string $processingStatus
+    ): self {
         $obj = clone $this;
-        $obj->processingStatus = $processingStatus;
+        $obj->processingStatus = $processingStatus instanceof ProcessingStatus ? $processingStatus->value : $processingStatus;
 
         return $obj;
     }

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\CacheControlEphemeral;
 
-use Anthropic\Core\Concerns\SdkEnum;
-use Anthropic\Core\Conversion\Contracts\ConverterSource;
-
 /**
  * The time-to-live for the cache control breakpoint.
  *
@@ -16,11 +13,9 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  *
  * Defaults to `5m`.
  */
-final class TTL implements ConverterSource
+enum TTL: string
 {
-    use SdkEnum;
+    case TTL_5M = '5m';
 
-    public const TTL_5M = '5m';
-
-    public const TTL_1H = '1h';
+    case TTL_1H = '1h';
 }

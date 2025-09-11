@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type beta_base64_image_source = array{
- *   data: string, mediaType: MediaType::*, type: string
+ *   data: string, mediaType: value-of<MediaType>, type: string
  * }
  */
 final class BetaBase64ImageSource implements BaseModel
@@ -25,7 +25,7 @@ final class BetaBase64ImageSource implements BaseModel
     #[Api]
     public string $data;
 
-    /** @var MediaType::* $mediaType */
+    /** @var value-of<MediaType> $mediaType */
     #[Api('media_type', enum: MediaType::class)]
     public string $mediaType;
 
@@ -53,14 +53,14 @@ final class BetaBase64ImageSource implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param MediaType::* $mediaType
+     * @param MediaType|value-of<MediaType> $mediaType
      */
-    public static function with(string $data, string $mediaType): self
+    public static function with(string $data, MediaType|string $mediaType): self
     {
         $obj = new self;
 
         $obj->data = $data;
-        $obj->mediaType = $mediaType;
+        $obj->mediaType = $mediaType instanceof MediaType ? $mediaType->value : $mediaType;
 
         return $obj;
     }
@@ -74,12 +74,12 @@ final class BetaBase64ImageSource implements BaseModel
     }
 
     /**
-     * @param MediaType::* $mediaType
+     * @param MediaType|value-of<MediaType> $mediaType
      */
-    public function withMediaType(string $mediaType): self
+    public function withMediaType(MediaType|string $mediaType): self
     {
         $obj = clone $this;
-        $obj->mediaType = $mediaType;
+        $obj->mediaType = $mediaType instanceof MediaType ? $mediaType->value : $mediaType;
 
         return $obj;
     }

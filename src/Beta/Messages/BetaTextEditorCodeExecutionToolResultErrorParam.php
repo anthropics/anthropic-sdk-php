@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type beta_text_editor_code_execution_tool_result_error_param = array{
- *   errorCode: ErrorCode::*, type: string, errorMessage?: string|null
+ *   errorCode: value-of<ErrorCode>, type: string, errorMessage?: string|null
  * }
  */
 final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
@@ -22,7 +22,7 @@ final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
     #[Api]
     public string $type = 'text_editor_code_execution_tool_result_error';
 
-    /** @var ErrorCode::* $errorCode */
+    /** @var value-of<ErrorCode> $errorCode */
     #[Api('error_code', enum: ErrorCode::class)]
     public string $errorCode;
 
@@ -53,15 +53,15 @@ final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ErrorCode::* $errorCode
+     * @param ErrorCode|value-of<ErrorCode> $errorCode
      */
     public static function with(
-        string $errorCode,
+        ErrorCode|string $errorCode,
         ?string $errorMessage = null
     ): self {
         $obj = new self;
 
-        $obj->errorCode = $errorCode;
+        $obj->errorCode = $errorCode instanceof ErrorCode ? $errorCode->value : $errorCode;
 
         null !== $errorMessage && $obj->errorMessage = $errorMessage;
 
@@ -69,12 +69,12 @@ final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
     }
 
     /**
-     * @param ErrorCode::* $errorCode
+     * @param ErrorCode|value-of<ErrorCode> $errorCode
      */
-    public function withErrorCode(string $errorCode): self
+    public function withErrorCode(ErrorCode|string $errorCode): self
     {
         $obj = clone $this;
-        $obj->errorCode = $errorCode;
+        $obj->errorCode = $errorCode instanceof ErrorCode ? $errorCode->value : $errorCode;
 
         return $obj;
     }

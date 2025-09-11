@@ -37,9 +37,9 @@ use Anthropic\Messages\WebSearchTool20250305;
  * @phpstan-type params_alias = array{
  *   maxTokens: int,
  *   messages: list<MessageParam>,
- *   model: Model::*|string,
+ *   model: string|value-of<Model>,
  *   metadata?: Metadata|null,
- *   serviceTier?: ServiceTier::*|null,
+ *   serviceTier?: value-of<ServiceTier>|null,
  *   stopSequences?: list<string>|null,
  *   stream?: bool|null,
  *   system?: string|null|list<TextBlockParam>,
@@ -124,7 +124,7 @@ final class Params implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var Model::*|string $model
+     * @var string|value-of<Model> $model
      */
     #[Api(enum: Model::class)]
     public string $model;
@@ -140,7 +140,7 @@ final class Params implements BaseModel
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.anthropic.com/en/api/service-tiers) for details.
      *
-     * @var ServiceTier::*|null $serviceTier
+     * @var value-of<ServiceTier>|null $serviceTier
      */
     #[Api('service_tier', enum: ServiceTier::class, optional: true)]
     public ?string $serviceTier;
@@ -314,8 +314,7 @@ final class Params implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<MessageParam> $messages
-     * @param Model::*|string $model
-     * @param ServiceTier::* $serviceTier
+     * @param ServiceTier|value-of<ServiceTier> $serviceTier
      * @param list<string> $stopSequences
      * @param string|list<TextBlockParam> $system
      * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
@@ -323,9 +322,9 @@ final class Params implements BaseModel
     public static function with(
         int $maxTokens,
         array $messages,
-        string $model,
+        string|Model $model,
         ?Metadata $metadata = null,
-        ?string $serviceTier = null,
+        ServiceTier|string|null $serviceTier = null,
         ?array $stopSequences = null,
         ?bool $stream = null,
         string|array|null $system = null,
@@ -340,10 +339,10 @@ final class Params implements BaseModel
 
         $obj->maxTokens = $maxTokens;
         $obj->messages = $messages;
-        $obj->model = $model;
+        $obj->model = $model instanceof Model ? $model->value : $model;
 
         null !== $metadata && $obj->metadata = $metadata;
-        null !== $serviceTier && $obj->serviceTier = $serviceTier;
+        null !== $serviceTier && $obj->serviceTier = $serviceTier instanceof ServiceTier ? $serviceTier->value : $serviceTier;
         null !== $stopSequences && $obj->stopSequences = $stopSequences;
         null !== $stream && $obj->stream = $stream;
         null !== $system && $obj->system = $system;
@@ -434,13 +433,11 @@ final class Params implements BaseModel
 
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
-     *
-     * @param Model::*|string $model
      */
-    public function withModel(string $model): self
+    public function withModel(string|Model $model): self
     {
         $obj = clone $this;
-        $obj->model = $model;
+        $obj->model = $model instanceof Model ? $model->value : $model;
 
         return $obj;
     }
@@ -461,12 +458,12 @@ final class Params implements BaseModel
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.anthropic.com/en/api/service-tiers) for details.
      *
-     * @param ServiceTier::* $serviceTier
+     * @param ServiceTier|value-of<ServiceTier> $serviceTier
      */
-    public function withServiceTier(string $serviceTier): self
+    public function withServiceTier(ServiceTier|string $serviceTier): self
     {
         $obj = clone $this;
-        $obj->serviceTier = $serviceTier;
+        $obj->serviceTier = $serviceTier instanceof ServiceTier ? $serviceTier->value : $serviceTier;
 
         return $obj;
     }

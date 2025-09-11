@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type beta_bash_code_execution_tool_result_error = array{
- *   errorCode: ErrorCode::*, type: string
+ *   errorCode: value-of<ErrorCode>, type: string
  * }
  */
 final class BetaBashCodeExecutionToolResultError implements BaseModel
@@ -22,7 +22,7 @@ final class BetaBashCodeExecutionToolResultError implements BaseModel
     #[Api]
     public string $type = 'bash_code_execution_tool_result_error';
 
-    /** @var ErrorCode::* $errorCode */
+    /** @var value-of<ErrorCode> $errorCode */
     #[Api('error_code', enum: ErrorCode::class)]
     public string $errorCode;
 
@@ -50,24 +50,24 @@ final class BetaBashCodeExecutionToolResultError implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ErrorCode::* $errorCode
+     * @param ErrorCode|value-of<ErrorCode> $errorCode
      */
-    public static function with(string $errorCode): self
+    public static function with(ErrorCode|string $errorCode): self
     {
         $obj = new self;
 
-        $obj->errorCode = $errorCode;
+        $obj->errorCode = $errorCode instanceof ErrorCode ? $errorCode->value : $errorCode;
 
         return $obj;
     }
 
     /**
-     * @param ErrorCode::* $errorCode
+     * @param ErrorCode|value-of<ErrorCode> $errorCode
      */
-    public function withErrorCode(string $errorCode): self
+    public function withErrorCode(ErrorCode|string $errorCode): self
     {
         $obj = clone $this;
-        $obj->errorCode = $errorCode;
+        $obj->errorCode = $errorCode instanceof ErrorCode ? $errorCode->value : $errorCode;
 
         return $obj;
     }

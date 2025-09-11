@@ -11,7 +11,7 @@ use Anthropic\Messages\StopReason;
 
 /**
  * @phpstan-type delta_alias = array{
- *   stopReason: StopReason::*, stopSequence: string|null
+ *   stopReason: value-of<StopReason>|null, stopSequence: string|null
  * }
  */
 final class Delta implements BaseModel
@@ -19,9 +19,9 @@ final class Delta implements BaseModel
     /** @use SdkModel<delta_alias> */
     use SdkModel;
 
-    /** @var StopReason::* $stopReason */
+    /** @var value-of<StopReason>|null $stopReason */
     #[Api('stop_reason', enum: StopReason::class)]
-    public string $stopReason;
+    public ?string $stopReason;
 
     #[Api('stop_sequence')]
     public ?string $stopSequence;
@@ -50,25 +50,27 @@ final class Delta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param StopReason::* $stopReason
+     * @param StopReason|value-of<StopReason>|null $stopReason
      */
-    public static function with(string $stopReason, ?string $stopSequence): self
-    {
+    public static function with(
+        StopReason|string|null $stopReason,
+        ?string $stopSequence
+    ): self {
         $obj = new self;
 
-        $obj->stopReason = $stopReason;
+        $obj->stopReason = $stopReason instanceof StopReason ? $stopReason->value : $stopReason;
         $obj->stopSequence = $stopSequence;
 
         return $obj;
     }
 
     /**
-     * @param StopReason::* $stopReason
+     * @param StopReason|value-of<StopReason>|null $stopReason
      */
-    public function withStopReason(string $stopReason): self
+    public function withStopReason(StopReason|string|null $stopReason): self
     {
         $obj = clone $this;
-        $obj->stopReason = $stopReason;
+        $obj->stopReason = $stopReason instanceof StopReason ? $stopReason->value : $stopReason;
 
         return $obj;
     }

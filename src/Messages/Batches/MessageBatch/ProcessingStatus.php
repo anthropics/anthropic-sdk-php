@@ -4,19 +4,14 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Batches\MessageBatch;
 
-use Anthropic\Core\Concerns\SdkEnum;
-use Anthropic\Core\Conversion\Contracts\ConverterSource;
-
 /**
  * Processing status of the Message Batch.
  */
-final class ProcessingStatus implements ConverterSource
+enum ProcessingStatus: string
 {
-    use SdkEnum;
+    case IN_PROGRESS = 'in_progress';
 
-    public const IN_PROGRESS = 'in_progress';
+    case CANCELING = 'canceling';
 
-    public const CANCELING = 'canceling';
-
-    public const ENDED = 'ended';
+    case ENDED = 'ended';
 }
