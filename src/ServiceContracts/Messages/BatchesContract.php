@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Core\ServiceContracts\Beta\Messages;
+namespace Anthropic\ServiceContracts\Messages;
 
-use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request;
-use Anthropic\Beta\Messages\Batches\DeletedMessageBatch;
-use Anthropic\Beta\Messages\Batches\MessageBatch;
-use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Messages\Batches\BatchCreateParams\Request;
+use Anthropic\Messages\Batches\DeletedMessageBatch;
+use Anthropic\Messages\Batches\MessageBatch;
+use Anthropic\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 
@@ -21,23 +20,18 @@ interface BatchesContract
      * @api
      *
      * @param list<Request> $requests List of requests for prompt completion. Each is an individual request to create a Message.
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function create(
         $requests,
-        $betas = omit,
         ?RequestOptions $requestOptions = null
     ): MessageBatch;
 
     /**
      * @api
-     *
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function retrieve(
         string $messageBatchID,
-        $betas = omit,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): MessageBatch;
 
     /**
@@ -48,7 +42,6 @@ interface BatchesContract
      * @param int $limit Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      *
      * @return Page<MessageBatch>
      */
@@ -56,51 +49,38 @@ interface BatchesContract
         $afterID = omit,
         $beforeID = omit,
         $limit = omit,
-        $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): Page;
 
     /**
      * @api
-     *
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function delete(
         string $messageBatchID,
-        $betas = omit,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): DeletedMessageBatch;
 
     /**
      * @api
-     *
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function cancel(
         string $messageBatchID,
-        $betas = omit,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): MessageBatch;
 
     /**
      * @api
-     *
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
      */
     public function results(
         string $messageBatchID,
-        $betas = omit,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): MessageBatchIndividualResponse;
 
     /**
-     * @param list<AnthropicBeta::*|string> $betas optional header to specify the beta version(s) you want to use
-     *
      * @return BaseStream<MessageBatchIndividualResponse>
      */
     public function resultsStream(
         string $messageBatchID,
-        $betas = omit,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): BaseStream;
 }

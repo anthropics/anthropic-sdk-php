@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Core\Services\Beta;
+namespace Anthropic\Services\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\BetaCodeExecutionTool20250522;
@@ -42,11 +42,11 @@ use Anthropic\Beta\Messages\MessageCreateParams;
 use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
-use Anthropic\Core\ServiceContracts\Beta\MessagesContract;
-use Anthropic\Core\Services\Beta\Messages\BatchesService;
 use Anthropic\Core\Util;
 use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
+use Anthropic\ServiceContracts\Beta\MessagesContract;
+use Anthropic\Services\Beta\Messages\BatchesService;
 use Anthropic\SSEStream;
 
 use const Anthropic\Core\OMIT as omit;

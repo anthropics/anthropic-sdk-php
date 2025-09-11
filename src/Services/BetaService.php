@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Core\Services;
+namespace Anthropic\Services;
 
 use Anthropic\Client;
-use Anthropic\Core\ServiceContracts\BetaContract;
-use Anthropic\Core\Services\Beta\FilesService;
-use Anthropic\Core\Services\Beta\MessagesService;
-use Anthropic\Core\Services\Beta\ModelsService;
+use Anthropic\ServiceContracts\BetaContract;
+use Anthropic\Services\Beta\FilesService;
+use Anthropic\Services\Beta\MessagesService;
+use Anthropic\Services\Beta\ModelsService;
 
 final class BetaService implements BetaContract
 {

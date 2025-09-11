@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Core\ServiceContracts;
+namespace Anthropic\ServiceContracts;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Models\ModelInfo;

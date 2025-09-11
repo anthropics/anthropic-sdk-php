@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Core\Services\Beta\Messages;
+namespace Anthropic\Services\Beta\Messages;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\Batches\BatchCancelParams;
@@ -17,10 +17,10 @@ use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
-use Anthropic\Core\ServiceContracts\Beta\Messages\BatchesContract;
 use Anthropic\Core\Util;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\ServiceContracts\Beta\Messages\BatchesContract;
 use Anthropic\SSEStream;
 
 use const Anthropic\Core\OMIT as omit;
