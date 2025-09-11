@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Core\Services;
+namespace Anthropic\Services;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
-use Anthropic\Core\ServiceContracts\ModelsContract;
 use Anthropic\Core\Util;
 use Anthropic\Models\ModelInfo;
 use Anthropic\Models\ModelListParams;
 use Anthropic\Models\ModelRetrieveParams;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\ServiceContracts\ModelsContract;
 
 use const Anthropic\Core\OMIT as omit;
 
