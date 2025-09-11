@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Core\ServiceContracts;
+namespace Anthropic\Services;
 
+use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Messages\Message;
+use Anthropic\Messages\MessageCountTokensParams;
+use Anthropic\Messages\MessageCreateParams;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Messages\MessageParam;
 use Anthropic\Messages\MessageTokensCount;
@@ -17,6 +20,7 @@ use Anthropic\Messages\RawContentBlockStopEvent;
 use Anthropic\Messages\RawMessageDeltaEvent;
 use Anthropic\Messages\RawMessageStartEvent;
 use Anthropic\Messages\RawMessageStopEvent;
+use Anthropic\Messages\RawMessageStreamEvent;
 use Anthropic\Messages\TextBlockParam;
 use Anthropic\Messages\ThinkingConfigDisabled;
 use Anthropic\Messages\ThinkingConfigEnabled;
@@ -31,13 +35,35 @@ use Anthropic\Messages\ToolTextEditor20250429;
 use Anthropic\Messages\ToolTextEditor20250728;
 use Anthropic\Messages\WebSearchTool20250305;
 use Anthropic\RequestOptions;
+use Anthropic\ServiceContracts\MessagesContract;
+use Anthropic\Services\Messages\BatchesService;
+use Anthropic\SSEStream;
 
 use const Anthropic\Core\OMIT as omit;
 
-interface MessagesContract
+final class MessagesService implements MessagesContract
 {
     /**
+     * @@api
+     */
+    public BatchesService $batches;
+
+    /**
+     * @internal
+     */
+    public function __construct(private Client $client)
+    {
+        $this->batches = new BatchesService($this->client);
+    }
+
+    /**
      * @api
+     *
+     * Send a structured list of input messages with text and/or image content, and the model will generate the next message in the conversation.
+     *
+     * The Messages API can be used for either single queries or stateless multi-turn conversations.
+     *
+     * Learn more about the Messages API in our [user guide](/en/docs/initial-setup)
      *
      * @param int $maxTokens The maximum number of tokens to generate before stopping.
      *
@@ -203,7 +229,35 @@ interface MessagesContract
         $topK = omit,
         $topP = omit,
         ?RequestOptions $requestOptions = null,
-    ): Message;
+    ): Message {
+        [$parsed, $options] = MessageCreateParams::parseRequest(
+            [
+                'maxTokens' => $maxTokens,
+                'messages' => $messages,
+                'model' => $model,
+                'metadata' => $metadata,
+                'serviceTier' => $serviceTier,
+                'stopSequences' => $stopSequences,
+                'system' => $system,
+                'temperature' => $temperature,
+                'thinking' => $thinking,
+                'toolChoice' => $toolChoice,
+                'tools' => $tools,
+                'topK' => $topK,
+                'topP' => $topP,
+            ],
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
+            method: 'post',
+            path: 'v1/messages',
+            body: (object) $parsed,
+            options: $options,
+            convert: Message::class,
+        );
+    }
 
     /**
      * @param int $maxTokens The maximum number of tokens to generate before stopping.
@@ -374,10 +428,46 @@ interface MessagesContract
         $topK = omit,
         $topP = omit,
         ?RequestOptions $requestOptions = null,
-    ): BaseStream;
+    ): BaseStream {
+        [$parsed, $options] = MessageCreateParams::parseRequest(
+            [
+                'maxTokens' => $maxTokens,
+                'messages' => $messages,
+                'model' => $model,
+                'metadata' => $metadata,
+                'serviceTier' => $serviceTier,
+                'stopSequences' => $stopSequences,
+                'system' => $system,
+                'temperature' => $temperature,
+                'thinking' => $thinking,
+                'toolChoice' => $toolChoice,
+                'tools' => $tools,
+                'topK' => $topK,
+                'topP' => $topP,
+            ],
+            $requestOptions,
+        );
+        $parsed['stream'] = true;
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
+            method: 'post',
+            path: 'v1/messages',
+            body: (object) $parsed,
+            options: $options,
+            convert: RawMessageStreamEvent::class,
+            stream: SSEStream::class,
+        );
+    }
 
     /**
      * @api
+     *
+     * Count the number of tokens in a Message.
+     *
+     * The Token Count API can be used to count the number of tokens in a Message, including tools, images, and documents, without creating it.
+     *
+     * Learn more about token counting in our [user guide](/en/docs/build-with-claude/token-counting)
      *
      * @param list<MessageParam> $messages Input messages.
      *
@@ -507,5 +597,26 @@ interface MessagesContract
         $toolChoice = omit,
         $tools = omit,
         ?RequestOptions $requestOptions = null,
-    ): MessageTokensCount;
+    ): MessageTokensCount {
+        [$parsed, $options] = MessageCountTokensParams::parseRequest(
+            [
+                'messages' => $messages,
+                'model' => $model,
+                'system' => $system,
+                'thinking' => $thinking,
+                'toolChoice' => $toolChoice,
+                'tools' => $tools,
+            ],
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
+            method: 'post',
+            path: 'v1/messages/count_tokens',
+            body: (object) $parsed,
+            options: $options,
+            convert: MessageTokensCount::class,
+        );
+    }
 }
