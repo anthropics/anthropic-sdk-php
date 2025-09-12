@@ -42,6 +42,7 @@ use Anthropic\Beta\Messages\MessageCreateParams;
 use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Core\Util;
 use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
@@ -63,7 +64,7 @@ final class MessagesService implements MessagesContract
      */
     public function __construct(private Client $client)
     {
-        $this->batches = new BatchesService($this->client);
+        $this->batches = new BatchesService($client);
     }
 
     /**
@@ -226,6 +227,8 @@ final class MessagesService implements MessagesContract
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return BetaMessage<HasRawResponse>
      */
     public function create(
         $maxTokens,
@@ -628,6 +631,8 @@ final class MessagesService implements MessagesContract
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return BetaMessageTokensCount<HasRawResponse>
      */
     public function countTokens(
         $messages,

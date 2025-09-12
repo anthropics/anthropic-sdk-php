@@ -15,7 +15,7 @@ use Anthropic\Messages\Tool\Type;
  *   inputSchema: InputSchema,
  *   name: string,
  *   cacheControl?: CacheControlEphemeral|null,
- *   description?: string|null,
+ *   description?: string,
  *   type?: value-of<Type>|null,
  * }
  */

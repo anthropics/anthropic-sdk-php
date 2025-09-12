@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * The model will use the specified tool with `tool_choice.name`.
  *
  * @phpstan-type tool_choice_tool = array{
- *   name: string, type: string, disableParallelToolUse?: bool|null
+ *   name: string, type: string, disableParallelToolUse?: bool
  * }
  */
 final class ToolChoiceTool implements BaseModel

@@ -10,9 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\CacheControlEphemeral\TTL;
 
 /**
- * @phpstan-type cache_control_ephemeral = array{
- *   type: string, ttl?: value-of<TTL>|null
- * }
+ * @phpstan-type cache_control_ephemeral = array{type: string, ttl?: value-of<TTL>}
  */
 final class CacheControlEphemeral implements BaseModel
 {

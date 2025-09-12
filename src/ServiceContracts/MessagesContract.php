@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\ServiceContracts;
 
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Messages\MessageParam;
@@ -187,6 +188,8 @@ interface MessagesContract
      * In nucleus sampling, we compute the cumulative distribution over all the options for each subsequent token in decreasing probability order and cut it off once it reaches a particular probability specified by `top_p`. You should either alter `temperature` or `top_p`, but not both.
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
+     *
+     * @return Message<HasRawResponse>
      */
     public function create(
         $maxTokens,
@@ -498,6 +501,8 @@ interface MessagesContract
      * Tools can be used for workflows that include running client-side tools and functions, or more generally whenever you want the model to produce a particular JSON structure of output.
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
+     *
+     * @return MessageTokensCount<HasRawResponse>
      */
     public function countTokens(
         $messages,

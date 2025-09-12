@@ -14,8 +14,8 @@ use Anthropic\Core\Contracts\BaseModel;
  *   toolUseID: string,
  *   type: string,
  *   cacheControl?: BetaCacheControlEphemeral|null,
- *   content?: string|null|list<BetaTextBlockParam>,
- *   isError?: bool|null,
+ *   content?: string|list<BetaTextBlockParam>,
+ *   isError?: bool,
  * }
  */
 final class BetaRequestMCPToolResultBlockParam implements BaseModel

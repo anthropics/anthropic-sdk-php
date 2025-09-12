@@ -32,8 +32,8 @@ final class BetaService implements BetaContract
      */
     public function __construct(private Client $client)
     {
-        $this->models = new ModelsService($this->client);
-        $this->messages = new MessagesService($this->client);
-        $this->files = new FilesService($this->client);
+        $this->models = new ModelsService($client);
+        $this->messages = new MessagesService($client);
+        $this->files = new FilesService($client);
     }
 }

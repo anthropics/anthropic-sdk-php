@@ -7,6 +7,7 @@ namespace Anthropic\ServiceContracts\Beta;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Files\DeletedFile;
 use Anthropic\Beta\Files\FileMetadata;
+use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 
@@ -38,6 +39,8 @@ interface FilesContract
      * @api
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return DeletedFile<HasRawResponse>
      */
     public function delete(
         string $fileID,
@@ -49,6 +52,8 @@ interface FilesContract
      * @api
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return FileMetadata<HasRawResponse>
      */
     public function retrieveMetadata(
         string $fileID,
