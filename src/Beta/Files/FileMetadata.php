@@ -16,8 +16,12 @@ use Anthropic\Core\Contracts\BaseModel;
  *   mimeType: string,
  *   sizeBytes: int,
  *   type: string,
- *   downloadable?: bool|null,
+ *   downloadable?: bool,
  * }
+ * When used in a response, this type parameter can be used to define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class FileMetadata implements BaseModel
 {

@@ -38,6 +38,7 @@ use Anthropic\Beta\Messages\BetaWebFetchTool20250910;
 use Anthropic\Beta\Messages\BetaWebSearchTool20250305;
 use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
 
@@ -199,6 +200,8 @@ interface MessagesContract
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return BetaMessage<HasRawResponse>
      */
     public function create(
         $maxTokens,
@@ -521,6 +524,8 @@ interface MessagesContract
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return BetaMessageTokensCount<HasRawResponse>
      */
     public function countTokens(
         $messages,

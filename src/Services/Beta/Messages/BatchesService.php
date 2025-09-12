@@ -17,6 +17,7 @@ use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Core\Util;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
@@ -43,6 +44,8 @@ final class BatchesService implements BatchesContract
      *
      * @param list<Request> $requests List of requests for prompt completion. Each is an individual request to create a Message.
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return MessageBatch<HasRawResponse>
      */
     public function create(
         $requests,
@@ -80,6 +83,8 @@ final class BatchesService implements BatchesContract
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return MessageBatch<HasRawResponse>
      */
     public function retrieve(
         string $messageBatchID,
@@ -172,6 +177,8 @@ final class BatchesService implements BatchesContract
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return DeletedMessageBatch<HasRawResponse>
      */
     public function delete(
         string $messageBatchID,
@@ -209,6 +216,8 @@ final class BatchesService implements BatchesContract
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return MessageBatch<HasRawResponse>
      */
     public function cancel(
         string $messageBatchID,
@@ -246,6 +255,8 @@ final class BatchesService implements BatchesContract
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return MessageBatchIndividualResponse<HasRawResponse>
      */
     public function results(
         string $messageBatchID,

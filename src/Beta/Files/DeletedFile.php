@@ -10,7 +10,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type deleted_file = array{id: string, type?: value-of<Type>|null}
+ * @phpstan-type deleted_file = array{id: string, type?: value-of<Type>}
+ * When used in a response, this type parameter can be used to define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class DeletedFile implements BaseModel
 {
