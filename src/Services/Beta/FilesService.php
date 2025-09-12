@@ -11,6 +11,7 @@ use Anthropic\Beta\Files\FileListParams;
 use Anthropic\Beta\Files\FileMetadata;
 use Anthropic\Beta\Files\FileRetrieveMetadataParams;
 use Anthropic\Client;
+use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Core\Util;
 use Anthropic\Page;
@@ -39,6 +40,8 @@ final class FilesService implements FilesContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return Page<FileMetadata>
+     *
+     * @throws APIException
      */
     public function list(
         $afterID = omit,
@@ -47,14 +50,32 @@ final class FilesService implements FilesContract
         $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): Page {
+        $params = [
+            'afterID' => $afterID,
+            'beforeID' => $beforeID,
+            'limit' => $limit,
+            'betas' => $betas,
+        ];
+
+        return $this->listRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return Page<FileMetadata>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Page {
         [$parsed, $options] = FileListParams::parseRequest(
-            [
-                'afterID' => $afterID,
-                'beforeID' => $beforeID,
-                'limit' => $limit,
-                'betas' => $betas,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
 
@@ -87,14 +108,35 @@ final class FilesService implements FilesContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return DeletedFile<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function delete(
         string $fileID,
         $betas = omit,
         ?RequestOptions $requestOptions = null
     ): DeletedFile {
+        $params = ['betas' => $betas];
+
+        return $this->deleteRaw($fileID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DeletedFile<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function deleteRaw(
+        string $fileID,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DeletedFile {
         [$parsed, $options] = FileDeleteParams::parseRequest(
-            ['betas' => $betas],
+            $params,
             $requestOptions
         );
 
@@ -122,14 +164,35 @@ final class FilesService implements FilesContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return FileMetadata<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieveMetadata(
         string $fileID,
         $betas = omit,
         ?RequestOptions $requestOptions = null
     ): FileMetadata {
+        $params = ['betas' => $betas];
+
+        return $this->retrieveMetadataRaw($fileID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return FileMetadata<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveMetadataRaw(
+        string $fileID,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): FileMetadata {
         [$parsed, $options] = FileRetrieveMetadataParams::parseRequest(
-            ['betas' => $betas],
+            $params,
             $requestOptions
         );
 
