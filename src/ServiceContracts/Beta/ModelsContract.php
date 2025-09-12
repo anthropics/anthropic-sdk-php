@@ -6,6 +6,7 @@ namespace Anthropic\ServiceContracts\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Models\BetaModelInfo;
+use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 
@@ -17,6 +18,8 @@ interface ModelsContract
      * @api
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return BetaModelInfo<HasRawResponse>
      */
     public function retrieve(
         string $modelID,

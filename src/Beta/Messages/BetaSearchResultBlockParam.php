@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   title: string,
  *   type: string,
  *   cacheControl?: BetaCacheControlEphemeral|null,
- *   citations?: BetaCitationsConfigParam|null,
+ *   citations?: BetaCitationsConfigParam,
  * }
  */
 final class BetaSearchResultBlockParam implements BaseModel

@@ -10,6 +10,10 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type beta_message_tokens_count = array{inputTokens: int}
+ * When used in a response, this type parameter can be used to define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class BetaMessageTokensCount implements BaseModel
 {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\ServiceContracts\Messages;
 
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Messages\Batches\MessageBatch;
@@ -20,6 +21,8 @@ interface BatchesContract
      * @api
      *
      * @param list<Request> $requests List of requests for prompt completion. Each is an individual request to create a Message.
+     *
+     * @return MessageBatch<HasRawResponse>
      */
     public function create(
         $requests,
@@ -28,6 +31,8 @@ interface BatchesContract
 
     /**
      * @api
+     *
+     * @return MessageBatch<HasRawResponse>
      */
     public function retrieve(
         string $messageBatchID,
@@ -54,6 +59,8 @@ interface BatchesContract
 
     /**
      * @api
+     *
+     * @return DeletedMessageBatch<HasRawResponse>
      */
     public function delete(
         string $messageBatchID,
@@ -62,6 +69,8 @@ interface BatchesContract
 
     /**
      * @api
+     *
+     * @return MessageBatch<HasRawResponse>
      */
     public function cancel(
         string $messageBatchID,
@@ -70,6 +79,8 @@ interface BatchesContract
 
     /**
      * @api
+     *
+     * @return MessageBatchIndividualResponse<HasRawResponse>
      */
     public function results(
         string $messageBatchID,

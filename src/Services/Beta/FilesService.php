@@ -11,6 +11,7 @@ use Anthropic\Beta\Files\FileListParams;
 use Anthropic\Beta\Files\FileMetadata;
 use Anthropic\Beta\Files\FileRetrieveMetadataParams;
 use Anthropic\Client;
+use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Core\Util;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
@@ -84,6 +85,8 @@ final class FilesService implements FilesContract
      * Delete File
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return DeletedFile<HasRawResponse>
      */
     public function delete(
         string $fileID,
@@ -117,6 +120,8 @@ final class FilesService implements FilesContract
      * Get File Metadata
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return FileMetadata<HasRawResponse>
      */
     public function retrieveMetadata(
         string $fileID,

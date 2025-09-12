@@ -14,8 +14,8 @@ use Anthropic\Messages\ToolResultBlockParam\Content;
  *   toolUseID: string,
  *   type: string,
  *   cacheControl?: CacheControlEphemeral|null,
- *   content?: string|null|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam>,
- *   isError?: bool|null,
+ *   content?: string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam>,
+ *   isError?: bool,
  * }
  */
 final class ToolResultBlockParam implements BaseModel

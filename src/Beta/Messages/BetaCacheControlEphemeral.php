@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type beta_cache_control_ephemeral = array{
- *   type: string, ttl?: value-of<TTL>|null
+ *   type: string, ttl?: value-of<TTL>
  * }
  */
 final class BetaCacheControlEphemeral implements BaseModel

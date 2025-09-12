@@ -6,6 +6,7 @@ namespace Anthropic\Services\Messages;
 
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Messages\Batches\BatchCreateParams;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\Messages\Batches\BatchListParams;
@@ -36,6 +37,8 @@ final class BatchesService implements BatchesContract
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
      * @param list<Request> $requests List of requests for prompt completion. Each is an individual request to create a Message.
+     *
+     * @return MessageBatch<HasRawResponse>
      */
     public function create(
         $requests,
@@ -62,6 +65,8 @@ final class BatchesService implements BatchesContract
      * This endpoint is idempotent and can be used to poll for Message Batch completion. To access the results of a Message Batch, make a request to the `results_url` field in the response.
      *
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
+     *
+     * @return MessageBatch<HasRawResponse>
      */
     public function retrieve(
         string $messageBatchID,
@@ -121,6 +126,8 @@ final class BatchesService implements BatchesContract
      * Message Batches can only be deleted once they've finished processing. If you'd like to delete an in-progress batch, you must first cancel it.
      *
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
+     *
+     * @return DeletedMessageBatch<HasRawResponse>
      */
     public function delete(
         string $messageBatchID,
@@ -143,6 +150,8 @@ final class BatchesService implements BatchesContract
      * The number of canceled requests is specified in `request_counts`. To determine which requests were canceled, check the individual results within the batch. Note that cancellation may not result in any canceled requests if they were non-interruptible.
      *
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
+     *
+     * @return MessageBatch<HasRawResponse>
      */
     public function cancel(
         string $messageBatchID,
@@ -165,6 +174,8 @@ final class BatchesService implements BatchesContract
      * Each line in the file is a JSON object containing the result of a single request in the Message Batch. Results are not guaranteed to be in the same order as requests. Use the `custom_id` field to match results to requests.
      *
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
+     *
+     * @return MessageBatchIndividualResponse<HasRawResponse>
      */
     public function results(
         string $messageBatchID,

@@ -10,6 +10,10 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type deleted_message_batch = array{id: string, type: string}
+ * When used in a response, this type parameter can be used to define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class DeletedMessageBatch implements BaseModel
 {

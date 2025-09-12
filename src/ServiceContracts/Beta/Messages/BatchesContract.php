@@ -10,6 +10,7 @@ use Anthropic\Beta\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 
@@ -22,6 +23,8 @@ interface BatchesContract
      *
      * @param list<Request> $requests List of requests for prompt completion. Each is an individual request to create a Message.
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return MessageBatch<HasRawResponse>
      */
     public function create(
         $requests,
@@ -33,6 +36,8 @@ interface BatchesContract
      * @api
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return MessageBatch<HasRawResponse>
      */
     public function retrieve(
         string $messageBatchID,
@@ -64,6 +69,8 @@ interface BatchesContract
      * @api
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return DeletedMessageBatch<HasRawResponse>
      */
     public function delete(
         string $messageBatchID,
@@ -75,6 +82,8 @@ interface BatchesContract
      * @api
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return MessageBatch<HasRawResponse>
      */
     public function cancel(
         string $messageBatchID,
@@ -86,6 +95,8 @@ interface BatchesContract
      * @api
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     *
+     * @return MessageBatchIndividualResponse<HasRawResponse>
      */
     public function results(
         string $messageBatchID,

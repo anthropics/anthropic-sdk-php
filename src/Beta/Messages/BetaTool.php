@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   inputSchema: InputSchema,
  *   name: string,
  *   cacheControl?: BetaCacheControlEphemeral|null,
- *   description?: string|null,
+ *   description?: string,
  *   type?: value-of<Type>|null,
  * }
  */
