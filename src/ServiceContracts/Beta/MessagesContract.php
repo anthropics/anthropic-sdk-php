@@ -38,6 +38,7 @@ use Anthropic\Beta\Messages\BetaWebFetchTool20250910;
 use Anthropic\Beta\Messages\BetaWebSearchTool20250305;
 use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
@@ -202,6 +203,8 @@ interface MessagesContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return BetaMessage<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $maxTokens,
@@ -224,6 +227,22 @@ interface MessagesContract
     ): BetaMessage;
 
     /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return BetaMessage<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): BetaMessage;
+
+    /**
+     * @api
+     *
      * @param int $maxTokens The maximum number of tokens to generate before stopping.
      *
      * Note that our models may stop _before_ reaching this maximum. This parameter only specifies the absolute maximum number of tokens to generate.
@@ -379,6 +398,8 @@ interface MessagesContract
      * @return BaseStream<
      *   BetaRawMessageStartEvent|BetaRawMessageDeltaEvent|BetaRawMessageStopEvent|BetaRawContentBlockStartEvent|BetaRawContentBlockDeltaEvent|BetaRawContentBlockStopEvent,
      * >
+     *
+     * @throws APIException
      */
     public function createStream(
         $maxTokens,
@@ -398,6 +419,22 @@ interface MessagesContract
         $topP = omit,
         $betas = omit,
         ?RequestOptions $requestOptions = null,
+    ): BaseStream;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return BaseStream<
+     *   BetaRawMessageStartEvent|BetaRawMessageDeltaEvent|BetaRawMessageStopEvent|BetaRawContentBlockStartEvent|BetaRawContentBlockDeltaEvent|BetaRawContentBlockStopEvent,
+     * >
+     *
+     * @throws APIException
+     */
+    public function createStreamRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
     ): BaseStream;
 
     /**
@@ -526,6 +563,8 @@ interface MessagesContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return BetaMessageTokensCount<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function countTokens(
         $messages,
@@ -537,5 +576,19 @@ interface MessagesContract
         $tools = omit,
         $betas = omit,
         ?RequestOptions $requestOptions = null,
+    ): BetaMessageTokensCount;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return BetaMessageTokensCount<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function countTokensRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
     ): BetaMessageTokensCount;
 }

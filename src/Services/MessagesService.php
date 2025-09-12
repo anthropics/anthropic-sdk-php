@@ -6,6 +6,7 @@ namespace Anthropic\Services;
 
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCountTokensParams;
@@ -216,6 +217,8 @@ final class MessagesService implements MessagesContract
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      *
      * @return Message<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $maxTokens,
@@ -233,23 +236,41 @@ final class MessagesService implements MessagesContract
         $topP = omit,
         ?RequestOptions $requestOptions = null,
     ): Message {
+        $params = [
+            'maxTokens' => $maxTokens,
+            'messages' => $messages,
+            'model' => $model,
+            'metadata' => $metadata,
+            'serviceTier' => $serviceTier,
+            'stopSequences' => $stopSequences,
+            'system' => $system,
+            'temperature' => $temperature,
+            'thinking' => $thinking,
+            'toolChoice' => $toolChoice,
+            'tools' => $tools,
+            'topK' => $topK,
+            'topP' => $topP,
+        ];
+
+        return $this->createRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return Message<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Message {
         [$parsed, $options] = MessageCreateParams::parseRequest(
-            [
-                'maxTokens' => $maxTokens,
-                'messages' => $messages,
-                'model' => $model,
-                'metadata' => $metadata,
-                'serviceTier' => $serviceTier,
-                'stopSequences' => $stopSequences,
-                'system' => $system,
-                'temperature' => $temperature,
-                'thinking' => $thinking,
-                'toolChoice' => $toolChoice,
-                'tools' => $tools,
-                'topK' => $topK,
-                'topP' => $topP,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -263,6 +284,8 @@ final class MessagesService implements MessagesContract
     }
 
     /**
+     * @api
+     *
      * @param int $maxTokens The maximum number of tokens to generate before stopping.
      *
      * Note that our models may stop _before_ reaching this maximum. This parameter only specifies the absolute maximum number of tokens to generate.
@@ -415,6 +438,8 @@ final class MessagesService implements MessagesContract
      * @return BaseStream<
      *   RawMessageStartEvent|RawMessageDeltaEvent|RawMessageStopEvent|RawContentBlockStartEvent|RawContentBlockDeltaEvent|RawContentBlockStopEvent,
      * >
+     *
+     * @throws APIException
      */
     public function createStream(
         $maxTokens,
@@ -432,23 +457,43 @@ final class MessagesService implements MessagesContract
         $topP = omit,
         ?RequestOptions $requestOptions = null,
     ): BaseStream {
+        $params = [
+            'maxTokens' => $maxTokens,
+            'messages' => $messages,
+            'model' => $model,
+            'metadata' => $metadata,
+            'serviceTier' => $serviceTier,
+            'stopSequences' => $stopSequences,
+            'system' => $system,
+            'temperature' => $temperature,
+            'thinking' => $thinking,
+            'toolChoice' => $toolChoice,
+            'tools' => $tools,
+            'topK' => $topK,
+            'topP' => $topP,
+        ];
+
+        return $this->createStreamRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return BaseStream<
+     *   RawMessageStartEvent|RawMessageDeltaEvent|RawMessageStopEvent|RawContentBlockStartEvent|RawContentBlockDeltaEvent|RawContentBlockStopEvent,
+     * >
+     *
+     * @throws APIException
+     */
+    public function createStreamRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): BaseStream {
         [$parsed, $options] = MessageCreateParams::parseRequest(
-            [
-                'maxTokens' => $maxTokens,
-                'messages' => $messages,
-                'model' => $model,
-                'metadata' => $metadata,
-                'serviceTier' => $serviceTier,
-                'stopSequences' => $stopSequences,
-                'system' => $system,
-                'temperature' => $temperature,
-                'thinking' => $thinking,
-                'toolChoice' => $toolChoice,
-                'tools' => $tools,
-                'topK' => $topK,
-                'topP' => $topP,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
         $parsed['stream'] = true;
 
@@ -456,6 +501,7 @@ final class MessagesService implements MessagesContract
         return $this->client->request(
             method: 'post',
             path: 'v1/messages',
+            headers: ['Accept' => 'text/event-stream'],
             body: (object) $parsed,
             options: $options,
             convert: RawMessageStreamEvent::class,
@@ -593,6 +639,8 @@ final class MessagesService implements MessagesContract
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
      * @return MessageTokensCount<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function countTokens(
         $messages,
@@ -603,16 +651,34 @@ final class MessagesService implements MessagesContract
         $tools = omit,
         ?RequestOptions $requestOptions = null,
     ): MessageTokensCount {
+        $params = [
+            'messages' => $messages,
+            'model' => $model,
+            'system' => $system,
+            'thinking' => $thinking,
+            'toolChoice' => $toolChoice,
+            'tools' => $tools,
+        ];
+
+        return $this->countTokensRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return MessageTokensCount<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function countTokensRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): MessageTokensCount {
         [$parsed, $options] = MessageCountTokensParams::parseRequest(
-            [
-                'messages' => $messages,
-                'model' => $model,
-                'system' => $system,
-                'thinking' => $thinking,
-                'toolChoice' => $toolChoice,
-                'tools' => $tools,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;

@@ -10,6 +10,7 @@ use Anthropic\Beta\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
@@ -25,6 +26,8 @@ interface BatchesContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $requests,
@@ -35,13 +38,44 @@ interface BatchesContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): MessageBatch;
+
+    /**
+     * @api
+     *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $messageBatchID,
         $betas = omit,
+        ?RequestOptions $requestOptions = null,
+    ): MessageBatch;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $messageBatchID,
+        array $params,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch;
 
@@ -56,6 +90,8 @@ interface BatchesContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return Page<MessageBatch>
+     *
+     * @throws APIException
      */
     public function list(
         $afterID = omit,
@@ -68,9 +104,25 @@ interface BatchesContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return Page<MessageBatch>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Page;
+
+    /**
+     * @api
+     *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return DeletedMessageBatch<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function delete(
         string $messageBatchID,
@@ -81,9 +133,26 @@ interface BatchesContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return DeletedMessageBatch<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function deleteRaw(
+        string $messageBatchID,
+        array $params,
+        ?RequestOptions $requestOptions = null,
+    ): DeletedMessageBatch;
+
+    /**
+     * @api
+     *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function cancel(
         string $messageBatchID,
@@ -94,9 +163,26 @@ interface BatchesContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function cancelRaw(
+        string $messageBatchID,
+        array $params,
+        ?RequestOptions $requestOptions = null,
+    ): MessageBatch;
+
+    /**
+     * @api
+     *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return MessageBatchIndividualResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function results(
         string $messageBatchID,
@@ -105,13 +191,47 @@ interface BatchesContract
     ): MessageBatchIndividualResponse;
 
     /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return MessageBatchIndividualResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function resultsRaw(
+        string $messageBatchID,
+        array $params,
+        ?RequestOptions $requestOptions = null,
+    ): MessageBatchIndividualResponse;
+
+    /**
+     * @api
+     *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return BaseStream<MessageBatchIndividualResponse>
+     *
+     * @throws APIException
      */
     public function resultsStream(
         string $messageBatchID,
         $betas = omit,
+        ?RequestOptions $requestOptions = null,
+    ): BaseStream;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return BaseStream<MessageBatchIndividualResponse>
+     *
+     * @throws APIException
+     */
+    public function resultsStreamRaw(
+        string $messageBatchID,
+        array $params,
         ?RequestOptions $requestOptions = null,
     ): BaseStream;
 }

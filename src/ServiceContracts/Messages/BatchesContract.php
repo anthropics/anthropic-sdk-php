@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\ServiceContracts\Messages;
 
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\Messages\Batches\DeletedMessageBatch;
@@ -23,6 +24,8 @@ interface BatchesContract
      * @param list<Request> $requests List of requests for prompt completion. Each is an individual request to create a Message.
      *
      * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $requests,
@@ -32,11 +35,40 @@ interface BatchesContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
      * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): MessageBatch;
+
+    /**
+     * @api
+     *
+     * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $messageBatchID,
         ?RequestOptions $requestOptions = null
+    ): MessageBatch;
+
+    /**
+     * @api
+     *
+     * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $messageBatchID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
     ): MessageBatch;
 
     /**
@@ -49,6 +81,8 @@ interface BatchesContract
      * Defaults to `20`. Ranges from `1` to `1000`.
      *
      * @return Page<MessageBatch>
+     *
+     * @throws APIException
      */
     public function list(
         $afterID = omit,
@@ -60,7 +94,23 @@ interface BatchesContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return Page<MessageBatch>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Page;
+
+    /**
+     * @api
+     *
      * @return DeletedMessageBatch<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function delete(
         string $messageBatchID,
@@ -70,7 +120,22 @@ interface BatchesContract
     /**
      * @api
      *
+     * @return DeletedMessageBatch<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function deleteRaw(
+        string $messageBatchID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
+    ): DeletedMessageBatch;
+
+    /**
+     * @api
+     *
      * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function cancel(
         string $messageBatchID,
@@ -80,7 +145,22 @@ interface BatchesContract
     /**
      * @api
      *
+     * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function cancelRaw(
+        string $messageBatchID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
+    ): MessageBatch;
+
+    /**
+     * @api
+     *
      * @return MessageBatchIndividualResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function results(
         string $messageBatchID,
@@ -88,10 +168,40 @@ interface BatchesContract
     ): MessageBatchIndividualResponse;
 
     /**
+     * @api
+     *
+     * @return MessageBatchIndividualResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function resultsRaw(
+        string $messageBatchID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
+    ): MessageBatchIndividualResponse;
+
+    /**
+     * @api
+     *
      * @return BaseStream<MessageBatchIndividualResponse>
+     *
+     * @throws APIException
      */
     public function resultsStream(
         string $messageBatchID,
         ?RequestOptions $requestOptions = null
+    ): BaseStream;
+
+    /**
+     * @api
+     *
+     * @return BaseStream<MessageBatchIndividualResponse>
+     *
+     * @throws APIException
+     */
+    public function resultsStreamRaw(
+        string $messageBatchID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
     ): BaseStream;
 }

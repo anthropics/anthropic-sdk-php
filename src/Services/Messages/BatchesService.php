@@ -6,6 +6,7 @@ namespace Anthropic\Services\Messages;
 
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Messages\Batches\BatchCreateParams;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
@@ -39,13 +40,33 @@ final class BatchesService implements BatchesContract
      * @param list<Request> $requests List of requests for prompt completion. Each is an individual request to create a Message.
      *
      * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $requests,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
+        $params = ['requests' => $requests];
+
+        return $this->createRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): MessageBatch {
         [$parsed, $options] = BatchCreateParams::parseRequest(
-            ['requests' => $requests],
+            $params,
             $requestOptions
         );
 
@@ -67,10 +88,29 @@ final class BatchesService implements BatchesContract
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
      * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $messageBatchID,
         ?RequestOptions $requestOptions = null
+    ): MessageBatch {
+        $params = [];
+
+        return $this->retrieveRaw($messageBatchID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $messageBatchID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
     ): MessageBatch {
         // @phpstan-ignore-next-line;
         return $this->client->request(
@@ -95,6 +135,8 @@ final class BatchesService implements BatchesContract
      * Defaults to `20`. Ranges from `1` to `1000`.
      *
      * @return Page<MessageBatch>
+     *
+     * @throws APIException
      */
     public function list(
         $afterID = omit,
@@ -102,9 +144,29 @@ final class BatchesService implements BatchesContract
         $limit = omit,
         ?RequestOptions $requestOptions = null,
     ): Page {
+        $params = [
+            'afterID' => $afterID, 'beforeID' => $beforeID, 'limit' => $limit,
+        ];
+
+        return $this->listRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return Page<MessageBatch>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Page {
         [$parsed, $options] = BatchListParams::parseRequest(
-            ['afterID' => $afterID, 'beforeID' => $beforeID, 'limit' => $limit],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -128,10 +190,29 @@ final class BatchesService implements BatchesContract
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
      * @return DeletedMessageBatch<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function delete(
         string $messageBatchID,
         ?RequestOptions $requestOptions = null
+    ): DeletedMessageBatch {
+        $params = [];
+
+        return $this->deleteRaw($messageBatchID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return DeletedMessageBatch<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function deleteRaw(
+        string $messageBatchID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
     ): DeletedMessageBatch {
         // @phpstan-ignore-next-line;
         return $this->client->request(
@@ -152,10 +233,29 @@ final class BatchesService implements BatchesContract
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
      * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function cancel(
         string $messageBatchID,
         ?RequestOptions $requestOptions = null
+    ): MessageBatch {
+        $params = [];
+
+        return $this->cancelRaw($messageBatchID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function cancelRaw(
+        string $messageBatchID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
     ): MessageBatch {
         // @phpstan-ignore-next-line;
         return $this->client->request(
@@ -176,10 +276,29 @@ final class BatchesService implements BatchesContract
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
      * @return MessageBatchIndividualResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function results(
         string $messageBatchID,
         ?RequestOptions $requestOptions = null
+    ): MessageBatchIndividualResponse {
+        $params = [];
+
+        return $this->resultsRaw($messageBatchID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return MessageBatchIndividualResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function resultsRaw(
+        string $messageBatchID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
     ): MessageBatchIndividualResponse {
         // @phpstan-ignore-next-line;
         return $this->client->request(
@@ -192,11 +311,32 @@ final class BatchesService implements BatchesContract
     }
 
     /**
+     * @api
+     *
      * @return BaseStream<MessageBatchIndividualResponse>
+     *
+     * @throws APIException
      */
     public function resultsStream(
         string $messageBatchID,
         ?RequestOptions $requestOptions = null
+    ): BaseStream {
+        $params = [];
+
+        return $this->resultsStreamRaw($messageBatchID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return BaseStream<MessageBatchIndividualResponse>
+     *
+     * @throws APIException
+     */
+    public function resultsStreamRaw(
+        string $messageBatchID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
     ): BaseStream {
         // @phpstan-ignore-next-line;
         return $this->client->request(

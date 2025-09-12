@@ -42,6 +42,7 @@ use Anthropic\Beta\Messages\MessageCreateParams;
 use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Core\Util;
 use Anthropic\Messages\Model;
@@ -229,6 +230,8 @@ final class MessagesService implements MessagesContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return BetaMessage<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $maxTokens,
@@ -249,26 +252,44 @@ final class MessagesService implements MessagesContract
         $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): BetaMessage {
+        $params = [
+            'maxTokens' => $maxTokens,
+            'messages' => $messages,
+            'model' => $model,
+            'container' => $container,
+            'mcpServers' => $mcpServers,
+            'metadata' => $metadata,
+            'serviceTier' => $serviceTier,
+            'stopSequences' => $stopSequences,
+            'system' => $system,
+            'temperature' => $temperature,
+            'thinking' => $thinking,
+            'toolChoice' => $toolChoice,
+            'tools' => $tools,
+            'topK' => $topK,
+            'topP' => $topP,
+            'betas' => $betas,
+        ];
+
+        return $this->createRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return BetaMessage<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): BetaMessage {
         [$parsed, $options] = MessageCreateParams::parseRequest(
-            [
-                'maxTokens' => $maxTokens,
-                'messages' => $messages,
-                'model' => $model,
-                'container' => $container,
-                'mcpServers' => $mcpServers,
-                'metadata' => $metadata,
-                'serviceTier' => $serviceTier,
-                'stopSequences' => $stopSequences,
-                'system' => $system,
-                'temperature' => $temperature,
-                'thinking' => $thinking,
-                'toolChoice' => $toolChoice,
-                'tools' => $tools,
-                'topK' => $topK,
-                'topP' => $topP,
-                'betas' => $betas,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
         $header_params = ['betas' => 'anthropic-beta'];
 
@@ -287,6 +308,8 @@ final class MessagesService implements MessagesContract
     }
 
     /**
+     * @api
+     *
      * @param int $maxTokens The maximum number of tokens to generate before stopping.
      *
      * Note that our models may stop _before_ reaching this maximum. This parameter only specifies the absolute maximum number of tokens to generate.
@@ -442,6 +465,8 @@ final class MessagesService implements MessagesContract
      * @return BaseStream<
      *   BetaRawMessageStartEvent|BetaRawMessageDeltaEvent|BetaRawMessageStopEvent|BetaRawContentBlockStartEvent|BetaRawContentBlockDeltaEvent|BetaRawContentBlockStopEvent,
      * >
+     *
+     * @throws APIException
      */
     public function createStream(
         $maxTokens,
@@ -462,26 +487,46 @@ final class MessagesService implements MessagesContract
         $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): BaseStream {
+        $params = [
+            'maxTokens' => $maxTokens,
+            'messages' => $messages,
+            'model' => $model,
+            'container' => $container,
+            'mcpServers' => $mcpServers,
+            'metadata' => $metadata,
+            'serviceTier' => $serviceTier,
+            'stopSequences' => $stopSequences,
+            'system' => $system,
+            'temperature' => $temperature,
+            'thinking' => $thinking,
+            'toolChoice' => $toolChoice,
+            'tools' => $tools,
+            'topK' => $topK,
+            'topP' => $topP,
+            'betas' => $betas,
+        ];
+
+        return $this->createStreamRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return BaseStream<
+     *   BetaRawMessageStartEvent|BetaRawMessageDeltaEvent|BetaRawMessageStopEvent|BetaRawContentBlockStartEvent|BetaRawContentBlockDeltaEvent|BetaRawContentBlockStopEvent,
+     * >
+     *
+     * @throws APIException
+     */
+    public function createStreamRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): BaseStream {
         [$parsed, $options] = MessageCreateParams::parseRequest(
-            [
-                'maxTokens' => $maxTokens,
-                'messages' => $messages,
-                'model' => $model,
-                'container' => $container,
-                'mcpServers' => $mcpServers,
-                'metadata' => $metadata,
-                'serviceTier' => $serviceTier,
-                'stopSequences' => $stopSequences,
-                'system' => $system,
-                'temperature' => $temperature,
-                'thinking' => $thinking,
-                'toolChoice' => $toolChoice,
-                'tools' => $tools,
-                'topK' => $topK,
-                'topP' => $topP,
-                'betas' => $betas,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
         $parsed['stream'] = true;
         $header_params = ['betas' => 'anthropic-beta'];
@@ -491,8 +536,11 @@ final class MessagesService implements MessagesContract
             method: 'post',
             path: 'v1/messages?beta=true',
             headers: Util::array_transform_keys(
-                array_intersect_key($parsed, array_keys($header_params)),
-                $header_params
+                [
+                    'Accept' => 'text/event-stream',
+                    ...array_intersect_key($parsed, array_keys($header_params)),
+                ],
+                $header_params,
             ),
             body: (object) array_diff_key($parsed, array_keys($header_params)),
             options: $options,
@@ -633,6 +681,8 @@ final class MessagesService implements MessagesContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return BetaMessageTokensCount<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function countTokens(
         $messages,
@@ -645,18 +695,36 @@ final class MessagesService implements MessagesContract
         $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): BetaMessageTokensCount {
+        $params = [
+            'messages' => $messages,
+            'model' => $model,
+            'mcpServers' => $mcpServers,
+            'system' => $system,
+            'thinking' => $thinking,
+            'toolChoice' => $toolChoice,
+            'tools' => $tools,
+            'betas' => $betas,
+        ];
+
+        return $this->countTokensRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return BetaMessageTokensCount<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function countTokensRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): BetaMessageTokensCount {
         [$parsed, $options] = MessageCountTokensParams::parseRequest(
-            [
-                'messages' => $messages,
-                'model' => $model,
-                'mcpServers' => $mcpServers,
-                'system' => $system,
-                'thinking' => $thinking,
-                'toolChoice' => $toolChoice,
-                'tools' => $tools,
-                'betas' => $betas,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
         $header_params = ['betas' => 'anthropic-beta'];
 
