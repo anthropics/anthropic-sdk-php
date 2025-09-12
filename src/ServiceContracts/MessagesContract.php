@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\ServiceContracts;
 
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
@@ -190,6 +191,8 @@ interface MessagesContract
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      *
      * @return Message<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $maxTokens,
@@ -209,6 +212,22 @@ interface MessagesContract
     ): Message;
 
     /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return Message<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Message;
+
+    /**
+     * @api
+     *
      * @param int $maxTokens The maximum number of tokens to generate before stopping.
      *
      * Note that our models may stop _before_ reaching this maximum. This parameter only specifies the absolute maximum number of tokens to generate.
@@ -361,6 +380,8 @@ interface MessagesContract
      * @return BaseStream<
      *   RawMessageStartEvent|RawMessageDeltaEvent|RawMessageStopEvent|RawContentBlockStartEvent|RawContentBlockDeltaEvent|RawContentBlockStopEvent,
      * >
+     *
+     * @throws APIException
      */
     public function createStream(
         $maxTokens,
@@ -377,6 +398,22 @@ interface MessagesContract
         $topK = omit,
         $topP = omit,
         ?RequestOptions $requestOptions = null,
+    ): BaseStream;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return BaseStream<
+     *   RawMessageStartEvent|RawMessageDeltaEvent|RawMessageStopEvent|RawContentBlockStartEvent|RawContentBlockDeltaEvent|RawContentBlockStopEvent,
+     * >
+     *
+     * @throws APIException
+     */
+    public function createStreamRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
     ): BaseStream;
 
     /**
@@ -503,6 +540,8 @@ interface MessagesContract
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
      * @return MessageTokensCount<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function countTokens(
         $messages,
@@ -512,5 +551,19 @@ interface MessagesContract
         $toolChoice = omit,
         $tools = omit,
         ?RequestOptions $requestOptions = null,
+    ): MessageTokensCount;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return MessageTokensCount<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function countTokensRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
     ): MessageTokensCount;
 }

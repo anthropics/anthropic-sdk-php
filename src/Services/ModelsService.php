@@ -6,6 +6,7 @@ namespace Anthropic\Services;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
+use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Core\Util;
 use Anthropic\Models\ModelInfo;
@@ -34,14 +35,35 @@ final class ModelsService implements ModelsContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return ModelInfo<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $modelID,
         $betas = omit,
         ?RequestOptions $requestOptions = null
     ): ModelInfo {
+        $params = ['betas' => $betas];
+
+        return $this->retrieveRaw($modelID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return ModelInfo<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $modelID,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): ModelInfo {
         [$parsed, $options] = ModelRetrieveParams::parseRequest(
-            ['betas' => $betas],
+            $params,
             $requestOptions
         );
 
@@ -73,6 +95,8 @@ final class ModelsService implements ModelsContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return Page<ModelInfo>
+     *
+     * @throws APIException
      */
     public function list(
         $afterID = omit,
@@ -81,14 +105,32 @@ final class ModelsService implements ModelsContract
         $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): Page {
+        $params = [
+            'afterID' => $afterID,
+            'beforeID' => $beforeID,
+            'limit' => $limit,
+            'betas' => $betas,
+        ];
+
+        return $this->listRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return Page<ModelInfo>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Page {
         [$parsed, $options] = ModelListParams::parseRequest(
-            [
-                'afterID' => $afterID,
-                'beforeID' => $beforeID,
-                'limit' => $limit,
-                'betas' => $betas,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
 

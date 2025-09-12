@@ -6,6 +6,7 @@ namespace Anthropic\ServiceContracts\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Models\BetaModelInfo;
+use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
@@ -20,10 +21,27 @@ interface ModelsContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return BetaModelInfo<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $modelID,
         $betas = omit,
+        ?RequestOptions $requestOptions = null
+    ): BetaModelInfo;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return BetaModelInfo<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $modelID,
+        array $params,
         ?RequestOptions $requestOptions = null
     ): BetaModelInfo;
 
@@ -38,6 +56,8 @@ interface ModelsContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return Page<BetaModelInfo>
+     *
+     * @throws APIException
      */
     public function list(
         $afterID = omit,
@@ -45,5 +65,19 @@ interface ModelsContract
         $limit = omit,
         $betas = omit,
         ?RequestOptions $requestOptions = null,
+    ): Page;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return Page<BetaModelInfo>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
     ): Page;
 }

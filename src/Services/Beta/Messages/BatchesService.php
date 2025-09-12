@@ -17,6 +17,7 @@ use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Core\Util;
 use Anthropic\Page;
@@ -46,14 +47,34 @@ final class BatchesService implements BatchesContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $requests,
         $betas = omit,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
+        $params = ['requests' => $requests, 'betas' => $betas];
+
+        return $this->createRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): MessageBatch {
         [$parsed, $options] = BatchCreateParams::parseRequest(
-            ['requests' => $requests, 'betas' => $betas],
+            $params,
             $requestOptions
         );
         $header_params = ['betas' => 'anthropic-beta'];
@@ -85,14 +106,35 @@ final class BatchesService implements BatchesContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $messageBatchID,
         $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch {
+        $params = ['betas' => $betas];
+
+        return $this->retrieveRaw($messageBatchID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $messageBatchID,
+        array $params,
+        ?RequestOptions $requestOptions = null,
+    ): MessageBatch {
         [$parsed, $options] = BatchRetrieveParams::parseRequest(
-            ['betas' => $betas],
+            $params,
             $requestOptions
         );
 
@@ -127,6 +169,8 @@ final class BatchesService implements BatchesContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return Page<MessageBatch>
+     *
+     * @throws APIException
      */
     public function list(
         $afterID = omit,
@@ -135,14 +179,32 @@ final class BatchesService implements BatchesContract
         $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): Page {
+        $params = [
+            'afterID' => $afterID,
+            'beforeID' => $beforeID,
+            'limit' => $limit,
+            'betas' => $betas,
+        ];
+
+        return $this->listRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return Page<MessageBatch>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Page {
         [$parsed, $options] = BatchListParams::parseRequest(
-            [
-                'afterID' => $afterID,
-                'beforeID' => $beforeID,
-                'limit' => $limit,
-                'betas' => $betas,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
         $query_params = array_flip(['after_id', 'before_id', 'limit']);
 
@@ -179,14 +241,35 @@ final class BatchesService implements BatchesContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return DeletedMessageBatch<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function delete(
         string $messageBatchID,
         $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): DeletedMessageBatch {
+        $params = ['betas' => $betas];
+
+        return $this->deleteRaw($messageBatchID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DeletedMessageBatch<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function deleteRaw(
+        string $messageBatchID,
+        array $params,
+        ?RequestOptions $requestOptions = null,
+    ): DeletedMessageBatch {
         [$parsed, $options] = BatchDeleteParams::parseRequest(
-            ['betas' => $betas],
+            $params,
             $requestOptions
         );
 
@@ -218,14 +301,35 @@ final class BatchesService implements BatchesContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function cancel(
         string $messageBatchID,
         $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch {
+        $params = ['betas' => $betas];
+
+        return $this->cancelRaw($messageBatchID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return MessageBatch<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function cancelRaw(
+        string $messageBatchID,
+        array $params,
+        ?RequestOptions $requestOptions = null,
+    ): MessageBatch {
         [$parsed, $options] = BatchCancelParams::parseRequest(
-            ['betas' => $betas],
+            $params,
             $requestOptions
         );
 
@@ -257,14 +361,35 @@ final class BatchesService implements BatchesContract
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return MessageBatchIndividualResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function results(
         string $messageBatchID,
         $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): MessageBatchIndividualResponse {
+        $params = ['betas' => $betas];
+
+        return $this->resultsRaw($messageBatchID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return MessageBatchIndividualResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function resultsRaw(
+        string $messageBatchID,
+        array $params,
+        ?RequestOptions $requestOptions = null,
+    ): MessageBatchIndividualResponse {
         [$parsed, $options] = BatchResultsParams::parseRequest(
-            ['betas' => $betas],
+            $params,
             $requestOptions
         );
 
@@ -285,17 +410,40 @@ final class BatchesService implements BatchesContract
     }
 
     /**
+     * @api
+     *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return BaseStream<MessageBatchIndividualResponse>
+     *
+     * @throws APIException
      */
     public function resultsStream(
         string $messageBatchID,
         $betas = omit,
         ?RequestOptions $requestOptions = null,
     ): BaseStream {
+        $params = ['betas' => $betas];
+
+        return $this->resultsStreamRaw($messageBatchID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return BaseStream<MessageBatchIndividualResponse>
+     *
+     * @throws APIException
+     */
+    public function resultsStreamRaw(
+        string $messageBatchID,
+        array $params,
+        ?RequestOptions $requestOptions = null,
+    ): BaseStream {
         [$parsed, $options] = BatchResultsParams::parseRequest(
-            ['betas' => $betas],
+            $params,
             $requestOptions
         );
 
