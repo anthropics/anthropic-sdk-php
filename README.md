@@ -170,7 +170,6 @@ use Anthropic\Messages\MessageParam;
 $client = new Client(maxRetries: 0);
 
 // Or, configure per-request:
-
 $result = $client->messages->create(
   maxTokens: 1024,
   messages: [MessageParam::with(role: "user", content: "Hello, Claude")],
