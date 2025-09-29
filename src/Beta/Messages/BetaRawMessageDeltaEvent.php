@@ -11,7 +11,10 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type beta_raw_message_delta_event = array{
- *   delta: Delta, type: string, usage: BetaMessageDeltaUsage
+ *   contextManagement: BetaContextManagementResponse|null,
+ *   delta: Delta,
+ *   type: string,
+ *   usage: BetaMessageDeltaUsage,
  * }
  */
 final class BetaRawMessageDeltaEvent implements BaseModel
@@ -21,6 +24,12 @@ final class BetaRawMessageDeltaEvent implements BaseModel
 
     #[Api]
     public string $type = 'message_delta';
+
+    /**
+     * Information about context management operations applied during the request.
+     */
+    #[Api('context_management')]
+    public ?BetaContextManagementResponse $contextManagement;
 
     #[Api]
     public Delta $delta;
@@ -44,13 +53,16 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaRawMessageDeltaEvent::with(delta: ..., usage: ...)
+     * BetaRawMessageDeltaEvent::with(contextManagement: ..., delta: ..., usage: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRawMessageDeltaEvent)->withDelta(...)->withUsage(...)
+     * (new BetaRawMessageDeltaEvent)
+     *   ->withContextManagement(...)
+     *   ->withDelta(...)
+     *   ->withUsage(...)
      * ```
      */
     public function __construct()
@@ -64,13 +76,27 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
+        ?BetaContextManagementResponse $contextManagement,
         Delta $delta,
-        BetaMessageDeltaUsage $usage
+        BetaMessageDeltaUsage $usage,
     ): self {
         $obj = new self;
 
+        $obj->contextManagement = $contextManagement;
         $obj->delta = $delta;
         $obj->usage = $usage;
+
+        return $obj;
+    }
+
+    /**
+     * Information about context management operations applied during the request.
+     */
+    public function withContextManagement(
+        ?BetaContextManagementResponse $contextManagement
+    ): self {
+        $obj = clone $this;
+        $obj->contextManagement = $contextManagement;
 
         return $obj;
     }

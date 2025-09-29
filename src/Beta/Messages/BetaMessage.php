@@ -14,6 +14,7 @@ use Anthropic\Messages\Model;
  *   id: string,
  *   container: BetaContainer|null,
  *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
+ *   contextManagement: BetaContextManagementResponse|null,
  *   model: string|value-of<Model>,
  *   role: string,
  *   stopReason: value-of<BetaStopReason>|null,
@@ -94,6 +95,12 @@ final class BetaMessage implements BaseModel
     public array $content;
 
     /**
+     * Information about context management operations applied during the request.
+     */
+    #[Api('context_management')]
+    public ?BetaContextManagementResponse $contextManagement;
+
+    /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
      * @var string|value-of<Model> $model
@@ -150,6 +157,7 @@ final class BetaMessage implements BaseModel
      *   id: ...,
      *   container: ...,
      *   content: ...,
+     *   contextManagement: ...,
      *   model: ...,
      *   stopReason: ...,
      *   stopSequence: ...,
@@ -164,6 +172,7 @@ final class BetaMessage implements BaseModel
      *   ->withID(...)
      *   ->withContainer(...)
      *   ->withContent(...)
+     *   ->withContextManagement(...)
      *   ->withModel(...)
      *   ->withStopReason(...)
      *   ->withStopSequence(...)
@@ -187,6 +196,7 @@ final class BetaMessage implements BaseModel
         string $id,
         ?BetaContainer $container,
         array $content,
+        ?BetaContextManagementResponse $contextManagement,
         string|Model $model,
         BetaStopReason|string|null $stopReason,
         ?string $stopSequence,
@@ -197,6 +207,7 @@ final class BetaMessage implements BaseModel
         $obj->id = $id;
         $obj->container = $container;
         $obj->content = $content;
+        $obj->contextManagement = $contextManagement;
         $obj->model = $model instanceof Model ? $model->value : $model;
         $obj->stopReason = $stopReason instanceof BetaStopReason ? $stopReason->value : $stopReason;
         $obj->stopSequence = $stopSequence;
@@ -262,6 +273,18 @@ final class BetaMessage implements BaseModel
     {
         $obj = clone $this;
         $obj->content = $content;
+
+        return $obj;
+    }
+
+    /**
+     * Information about context management operations applied during the request.
+     */
+    public function withContextManagement(
+        ?BetaContextManagementResponse $contextManagement
+    ): self {
+        $obj = clone $this;
+        $obj->contextManagement = $contextManagement;
 
         return $obj;
     }
