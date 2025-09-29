@@ -35,4 +35,6 @@ enum AnthropicBeta: string
     case EXTENDED_CACHE_TTL_2025_04_11 = 'extended-cache-ttl-2025-04-11';
 
     case CONTEXT_1M_2025_08_07 = 'context-1m-2025-08-07';
+
+    case CONTEXT_MANAGEMENT_2025_06_27 = 'context-management-2025-06-27';
 }
