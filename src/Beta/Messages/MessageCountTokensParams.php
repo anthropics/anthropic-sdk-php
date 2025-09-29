@@ -36,11 +36,12 @@ use Anthropic\Messages\Model;
  * @phpstan-type message_count_tokens_params = array{
  *   messages: list<BetaMessageParam>,
  *   model: string|Model,
+ *   contextManagement?: BetaContextManagementConfig|null,
  *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
  *   system?: string|list<BetaTextBlockParam>,
  *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
  *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
- *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910>,
+ *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910>,
  *   betas?: list<string|AnthropicBeta>,
  * }
  */
@@ -112,6 +113,12 @@ final class MessageCountTokensParams implements BaseModel
      */
     #[Api(enum: Model::class)]
     public string $model;
+
+    /**
+     * Configuration for context management operations.
+     */
+    #[Api('context_management', nullable: true, optional: true)]
+    public ?BetaContextManagementConfig $contextManagement;
 
     /**
      * MCP servers to be utilized in this request.
@@ -214,7 +221,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
-     * @var list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910>|null $tools
+     * @var list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910>|null $tools
      */
     #[Api(list: Tool::class, optional: true)]
     public ?array $tools;
@@ -254,12 +261,13 @@ final class MessageCountTokensParams implements BaseModel
      * @param list<BetaMessageParam> $messages
      * @param list<BetaRequestMCPServerURLDefinition> $mcpServers
      * @param string|list<BetaTextBlockParam> $system
-     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910> $tools
+     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910> $tools
      * @param list<string|AnthropicBeta> $betas
      */
     public static function with(
         array $messages,
         string|Model $model,
+        ?BetaContextManagementConfig $contextManagement = null,
         ?array $mcpServers = null,
         string|array|null $system = null,
         BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null $thinking = null,
@@ -272,6 +280,7 @@ final class MessageCountTokensParams implements BaseModel
         $obj->messages = $messages;
         $obj->model = $model instanceof Model ? $model->value : $model;
 
+        null !== $contextManagement && $obj->contextManagement = $contextManagement;
         null !== $mcpServers && $obj->mcpServers = $mcpServers;
         null !== $system && $obj->system = $system;
         null !== $thinking && $obj->thinking = $thinking;
@@ -349,6 +358,18 @@ final class MessageCountTokensParams implements BaseModel
     {
         $obj = clone $this;
         $obj->model = $model instanceof Model ? $model->value : $model;
+
+        return $obj;
+    }
+
+    /**
+     * Configuration for context management operations.
+     */
+    public function withContextManagement(
+        ?BetaContextManagementConfig $contextManagement
+    ): self {
+        $obj = clone $this;
+        $obj->contextManagement = $contextManagement;
 
         return $obj;
     }
@@ -472,7 +493,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
-     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910> $tools
+     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910> $tools
      */
     public function withTools(array $tools): self
     {

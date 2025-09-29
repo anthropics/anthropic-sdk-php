@@ -38,6 +38,7 @@ use Anthropic\Messages\Model;
  *   messages: list<BetaMessageParam>,
  *   model: string|Model,
  *   container?: string|null,
+ *   contextManagement?: BetaContextManagementConfig|null,
  *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
  *   metadata?: BetaMetadata,
  *   serviceTier?: ServiceTier|value-of<ServiceTier>,
@@ -46,7 +47,7 @@ use Anthropic\Messages\Model;
  *   temperature?: float,
  *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
  *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
- *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910>,
+ *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910>,
  *   topK?: int,
  *   topP?: float,
  *   betas?: list<string|AnthropicBeta>,
@@ -136,6 +137,12 @@ final class MessageCreateParams implements BaseModel
      */
     #[Api(nullable: true, optional: true)]
     public ?string $container;
+
+    /**
+     * Configuration for context management operations.
+     */
+    #[Api('context_management', nullable: true, optional: true)]
+    public ?BetaContextManagementConfig $contextManagement;
 
     /**
      * MCP servers to be utilized in this request.
@@ -276,7 +283,7 @@ final class MessageCreateParams implements BaseModel
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
-     * @var list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910>|null $tools
+     * @var list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910>|null $tools
      */
     #[Api(list: BetaToolUnion::class, optional: true)]
     public ?array $tools;
@@ -338,7 +345,7 @@ final class MessageCreateParams implements BaseModel
      * @param ServiceTier|value-of<ServiceTier> $serviceTier
      * @param list<string> $stopSequences
      * @param string|list<BetaTextBlockParam> $system
-     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910> $tools
+     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910> $tools
      * @param list<string|AnthropicBeta> $betas
      */
     public static function with(
@@ -346,6 +353,7 @@ final class MessageCreateParams implements BaseModel
         array $messages,
         string|Model $model,
         ?string $container = null,
+        ?BetaContextManagementConfig $contextManagement = null,
         ?array $mcpServers = null,
         ?BetaMetadata $metadata = null,
         ServiceTier|string|null $serviceTier = null,
@@ -366,6 +374,7 @@ final class MessageCreateParams implements BaseModel
         $obj->model = $model instanceof Model ? $model->value : $model;
 
         null !== $container && $obj->container = $container;
+        null !== $contextManagement && $obj->contextManagement = $contextManagement;
         null !== $mcpServers && $obj->mcpServers = $mcpServers;
         null !== $metadata && $obj->metadata = $metadata;
         null !== $serviceTier && $obj->serviceTier = $serviceTier instanceof ServiceTier ? $serviceTier->value : $serviceTier;
@@ -475,6 +484,18 @@ final class MessageCreateParams implements BaseModel
     {
         $obj = clone $this;
         $obj->container = $container;
+
+        return $obj;
+    }
+
+    /**
+     * Configuration for context management operations.
+     */
+    public function withContextManagement(
+        ?BetaContextManagementConfig $contextManagement
+    ): self {
+        $obj = clone $this;
+        $obj->contextManagement = $contextManagement;
 
         return $obj;
     }
@@ -656,7 +677,7 @@ final class MessageCreateParams implements BaseModel
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
-     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910> $tools
+     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910> $tools
      */
     public function withTools(array $tools): self
     {

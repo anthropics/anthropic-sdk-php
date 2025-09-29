@@ -25,6 +25,7 @@ final class BetaToolUnion implements ConverterSource
             BetaCodeExecutionTool20250522::class,
             BetaCodeExecutionTool20250825::class,
             BetaToolComputerUse20241022::class,
+            BetaMemoryTool20250818::class,
             BetaToolComputerUse20250124::class,
             BetaToolTextEditor20241022::class,
             BetaToolTextEditor20250124::class,

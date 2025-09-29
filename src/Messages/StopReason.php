@@ -17,4 +17,6 @@ enum StopReason: string
     case PAUSE_TURN = 'pause_turn';
 
     case REFUSAL = 'refusal';
+
+    case MODEL_CONTEXT_WINDOW_EXCEEDED = 'model_context_window_exceeded';
 }
