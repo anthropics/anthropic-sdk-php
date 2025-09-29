@@ -6,6 +6,10 @@ use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params;
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral;
 use Anthropic\Beta\Messages\BetaCitationCharLocationParam;
+use Anthropic\Beta\Messages\BetaClearToolUses20250919Edit;
+use Anthropic\Beta\Messages\BetaContextManagementConfig;
+use Anthropic\Beta\Messages\BetaInputTokensClearAtLeast;
+use Anthropic\Beta\Messages\BetaInputTokensTrigger;
 use Anthropic\Beta\Messages\BetaMessageParam;
 use Anthropic\Beta\Messages\BetaMetadata;
 use Anthropic\Beta\Messages\BetaRequestMCPServerToolConfiguration;
@@ -15,6 +19,7 @@ use Anthropic\Beta\Messages\BetaThinkingConfigEnabled;
 use Anthropic\Beta\Messages\BetaTool;
 use Anthropic\Beta\Messages\BetaTool\InputSchema;
 use Anthropic\Beta\Messages\BetaToolChoiceAuto;
+use Anthropic\Beta\Messages\BetaToolUsesKeep;
 use Anthropic\Client;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -83,6 +88,23 @@ final class BatchesTest extends TestCase
                         model: 'claude-sonnet-4-20250514',
                     )
                         ->withContainer('container')
+                        ->withContextManagement(
+                            (new BetaContextManagementConfig)
+                                ->withEdits(
+                                    [
+                                        (new BetaClearToolUses20250919Edit)
+                                            ->STAINLESS_FIXME_withClearAtLeast(
+                                                BetaInputTokensClearAtLeast::with(value: 0)
+                                            )
+                                            ->STAINLESS_FIXME_withClearToolInputs(true)
+                                            ->STAINLESS_FIXME_withExcludeTools(['string'])
+                                            ->STAINLESS_FIXME_withKeep(BetaToolUsesKeep::with(value: 0))
+                                            ->STAINLESS_FIXME_withTrigger(
+                                                BetaInputTokensTrigger::with(value: 1)
+                                            ),
+                                    ],
+                                ),
+                        )
                         ->withMCPServers(
                             [
                                 BetaRequestMCPServerURLDefinition::with(name: 'name', url: 'url')

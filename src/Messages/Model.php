@@ -23,6 +23,10 @@ enum Model: string
 
     case CLAUDE_4_SONNET_20250514 = 'claude-4-sonnet-20250514';
 
+    case CLAUDE_SONNET_4_5 = 'claude-sonnet-4-5';
+
+    case CLAUDE_SONNET_4_5_20250929 = 'claude-sonnet-4-5-20250929';
+
     case CLAUDE_3_5_SONNET_LATEST = 'claude-3-5-sonnet-latest';
 
     case CLAUDE_3_5_SONNET_20241022 = 'claude-3-5-sonnet-20241022';

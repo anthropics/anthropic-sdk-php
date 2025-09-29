@@ -1,0 +1,78 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\Beta\Messages;
+
+use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Contracts\BaseModel;
+
+/**
+ * Information about context management operations applied during the request.
+ *
+ * @phpstan-type beta_context_management_response = array{
+ *   appliedEdits: list<BetaClearToolUses20250919EditResponse>
+ * }
+ */
+final class BetaContextManagementResponse implements BaseModel
+{
+    /** @use SdkModel<beta_context_management_response> */
+    use SdkModel;
+
+    /**
+     * List of context management edits that were applied.
+     *
+     * @var list<BetaClearToolUses20250919EditResponse> $appliedEdits
+     */
+    #[Api('applied_edits', list: BetaClearToolUses20250919EditResponse::class)]
+    public array $appliedEdits;
+
+    /**
+     * `new BetaContextManagementResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaContextManagementResponse::with(appliedEdits: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaContextManagementResponse)->withAppliedEdits(...)
+     * ```
+     */
+    public function __construct()
+    {
+        $this->initialize();
+    }
+
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param list<BetaClearToolUses20250919EditResponse> $appliedEdits
+     */
+    public static function with(array $appliedEdits): self
+    {
+        $obj = new self;
+
+        $obj->appliedEdits = $appliedEdits;
+
+        return $obj;
+    }
+
+    /**
+     * List of context management edits that were applied.
+     *
+     * @param list<BetaClearToolUses20250919EditResponse> $appliedEdits
+     */
+    public function withAppliedEdits(array $appliedEdits): self
+    {
+        $obj = clone $this;
+        $obj->appliedEdits = $appliedEdits;
+
+        return $obj;
+    }
+}

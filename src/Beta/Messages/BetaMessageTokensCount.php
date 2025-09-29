@@ -9,7 +9,10 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_message_tokens_count = array{inputTokens: int}
+ * @phpstan-type beta_message_tokens_count = array{
+ *   contextManagement: BetaCountTokensContextManagementResponse|null,
+ *   inputTokens: int,
+ * }
  * When used in a response, this type parameter can define a $rawResponse property.
  * @template TRawResponse of object = object{}
  *
@@ -19,6 +22,12 @@ final class BetaMessageTokensCount implements BaseModel
 {
     /** @use SdkModel<beta_message_tokens_count> */
     use SdkModel;
+
+    /**
+     * Information about context management applied to the message.
+     */
+    #[Api('context_management')]
+    public ?BetaCountTokensContextManagementResponse $contextManagement;
 
     /**
      * The total number of tokens across the provided list of messages, system prompt, and tools.
@@ -31,13 +40,13 @@ final class BetaMessageTokensCount implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaMessageTokensCount::with(inputTokens: ...)
+     * BetaMessageTokensCount::with(contextManagement: ..., inputTokens: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMessageTokensCount)->withInputTokens(...)
+     * (new BetaMessageTokensCount)->withContextManagement(...)->withInputTokens(...)
      * ```
      */
     public function __construct()
@@ -50,11 +59,26 @@ final class BetaMessageTokensCount implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(int $inputTokens): self
-    {
+    public static function with(
+        ?BetaCountTokensContextManagementResponse $contextManagement,
+        int $inputTokens,
+    ): self {
         $obj = new self;
 
+        $obj->contextManagement = $contextManagement;
         $obj->inputTokens = $inputTokens;
+
+        return $obj;
+    }
+
+    /**
+     * Information about context management applied to the message.
+     */
+    public function withContextManagement(
+        ?BetaCountTokensContextManagementResponse $contextManagement
+    ): self {
+        $obj = clone $this;
+        $obj->contextManagement = $contextManagement;
 
         return $obj;
     }
