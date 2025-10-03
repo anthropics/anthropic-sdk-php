@@ -56,7 +56,7 @@ final class BetaWebFetchToolResultErrorBlock implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->errorCode = $errorCode instanceof BetaWebFetchToolResultErrorCode ? $errorCode->value : $errorCode;
+        $obj['errorCode'] = $errorCode;
 
         return $obj;
     }
@@ -68,7 +68,7 @@ final class BetaWebFetchToolResultErrorBlock implements BaseModel
         BetaWebFetchToolResultErrorCode|string $errorCode
     ): self {
         $obj = clone $this;
-        $obj->errorCode = $errorCode instanceof BetaWebFetchToolResultErrorCode ? $errorCode->value : $errorCode;
+        $obj['errorCode'] = $errorCode;
 
         return $obj;
     }

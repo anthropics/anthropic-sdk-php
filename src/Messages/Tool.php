@@ -98,7 +98,7 @@ final class Tool implements BaseModel
 
         null !== $cacheControl && $obj->cacheControl = $cacheControl;
         null !== $description && $obj->description = $description;
-        null !== $type && $obj->type = $type instanceof Type ? $type->value : $type;
+        null !== $type && $obj['type'] = $type;
 
         return $obj;
     }
@@ -159,7 +159,7 @@ final class Tool implements BaseModel
     public function withType(Type|string|null $type): self
     {
         $obj = clone $this;
-        $obj->type = $type instanceof Type ? $type->value : $type;
+        $obj['type'] = $type;
 
         return $obj;
     }

@@ -45,7 +45,6 @@ use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
-use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Core\Util;
 use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
@@ -232,8 +231,6 @@ final class MessagesService implements MessagesContract
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return BetaMessage<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -283,8 +280,6 @@ final class MessagesService implements MessagesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return BetaMessage<HasRawResponse>
      *
      * @throws APIException
      */
@@ -689,8 +684,6 @@ final class MessagesService implements MessagesContract
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return BetaMessageTokensCount<HasRawResponse>
-     *
      * @throws APIException
      */
     public function countTokens(
@@ -724,8 +717,6 @@ final class MessagesService implements MessagesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return BetaMessageTokensCount<HasRawResponse>
      *
      * @throws APIException
      */

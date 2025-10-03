@@ -7,7 +7,6 @@ namespace Anthropic\Services;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
-use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Core\Util;
 use Anthropic\Models\ModelInfo;
 use Anthropic\Models\ModelListParams;
@@ -34,8 +33,6 @@ final class ModelsService implements ModelsContract
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return ModelInfo<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
@@ -52,8 +49,6 @@ final class ModelsService implements ModelsContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return ModelInfo<HasRawResponse>
      *
      * @throws APIException
      */

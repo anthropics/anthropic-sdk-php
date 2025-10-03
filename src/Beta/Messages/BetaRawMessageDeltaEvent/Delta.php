@@ -69,7 +69,7 @@ final class Delta implements BaseModel
         $obj = new self;
 
         $obj->container = $container;
-        $obj->stopReason = $stopReason instanceof BetaStopReason ? $stopReason->value : $stopReason;
+        $obj['stopReason'] = $stopReason;
         $obj->stopSequence = $stopSequence;
 
         return $obj;
@@ -92,7 +92,7 @@ final class Delta implements BaseModel
     public function withStopReason(BetaStopReason|string|null $stopReason): self
     {
         $obj = clone $this;
-        $obj->stopReason = $stopReason instanceof BetaStopReason ? $stopReason->value : $stopReason;
+        $obj['stopReason'] = $stopReason;
 
         return $obj;
     }

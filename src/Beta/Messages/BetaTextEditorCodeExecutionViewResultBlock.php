@@ -86,7 +86,7 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
         $obj = new self;
 
         $obj->content = $content;
-        $obj->fileType = $fileType instanceof FileType ? $fileType->value : $fileType;
+        $obj['fileType'] = $fileType;
         $obj->numLines = $numLines;
         $obj->startLine = $startLine;
         $obj->totalLines = $totalLines;
@@ -108,7 +108,7 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
     public function withFileType(FileType|string $fileType): self
     {
         $obj = clone $this;
-        $obj->fileType = $fileType instanceof FileType ? $fileType->value : $fileType;
+        $obj['fileType'] = $fileType;
 
         return $obj;
     }

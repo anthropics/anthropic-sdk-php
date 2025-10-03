@@ -18,7 +18,6 @@ use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
-use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Core\Util;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
@@ -46,8 +45,6 @@ final class BatchesService implements BatchesContract
      * @param list<Request> $requests List of requests for prompt completion. Each is an individual request to create a Message.
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return MessageBatch<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -64,8 +61,6 @@ final class BatchesService implements BatchesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return MessageBatch<HasRawResponse>
      *
      * @throws APIException
      */
@@ -105,8 +100,6 @@ final class BatchesService implements BatchesContract
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return MessageBatch<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
@@ -123,8 +116,6 @@ final class BatchesService implements BatchesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return MessageBatch<HasRawResponse>
      *
      * @throws APIException
      */
@@ -240,8 +231,6 @@ final class BatchesService implements BatchesContract
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return DeletedMessageBatch<HasRawResponse>
-     *
      * @throws APIException
      */
     public function delete(
@@ -258,8 +247,6 @@ final class BatchesService implements BatchesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return DeletedMessageBatch<HasRawResponse>
      *
      * @throws APIException
      */
@@ -300,8 +287,6 @@ final class BatchesService implements BatchesContract
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return MessageBatch<HasRawResponse>
-     *
      * @throws APIException
      */
     public function cancel(
@@ -318,8 +303,6 @@ final class BatchesService implements BatchesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return MessageBatch<HasRawResponse>
      *
      * @throws APIException
      */
@@ -360,8 +343,6 @@ final class BatchesService implements BatchesContract
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return MessageBatchIndividualResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function results(
@@ -378,8 +359,6 @@ final class BatchesService implements BatchesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return MessageBatchIndividualResponse<HasRawResponse>
      *
      * @throws APIException
      */

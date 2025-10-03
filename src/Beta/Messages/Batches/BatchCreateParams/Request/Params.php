@@ -386,7 +386,7 @@ final class Params implements BaseModel
         null !== $contextManagement && $obj->contextManagement = $contextManagement;
         null !== $mcpServers && $obj->mcpServers = $mcpServers;
         null !== $metadata && $obj->metadata = $metadata;
-        null !== $serviceTier && $obj->serviceTier = $serviceTier instanceof ServiceTier ? $serviceTier->value : $serviceTier;
+        null !== $serviceTier && $obj['serviceTier'] = $serviceTier;
         null !== $stopSequences && $obj->stopSequences = $stopSequences;
         null !== $stream && $obj->stream = $stream;
         null !== $system && $obj->system = $system;
@@ -543,7 +543,7 @@ final class Params implements BaseModel
     public function withServiceTier(ServiceTier|string $serviceTier): self
     {
         $obj = clone $this;
-        $obj->serviceTier = $serviceTier instanceof ServiceTier ? $serviceTier->value : $serviceTier;
+        $obj['serviceTier'] = $serviceTier;
 
         return $obj;
     }

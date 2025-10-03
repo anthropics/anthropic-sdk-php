@@ -56,7 +56,7 @@ final class BetaCodeExecutionToolResultError implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->errorCode = $errorCode instanceof BetaCodeExecutionToolResultErrorCode ? $errorCode->value : $errorCode;
+        $obj['errorCode'] = $errorCode;
 
         return $obj;
     }
@@ -68,7 +68,7 @@ final class BetaCodeExecutionToolResultError implements BaseModel
         BetaCodeExecutionToolResultErrorCode|string $errorCode
     ): self {
         $obj = clone $this;
-        $obj->errorCode = $errorCode instanceof BetaCodeExecutionToolResultErrorCode ? $errorCode->value : $errorCode;
+        $obj['errorCode'] = $errorCode;
 
         return $obj;
     }

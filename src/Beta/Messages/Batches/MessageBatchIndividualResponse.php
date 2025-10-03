@@ -6,7 +6,9 @@ namespace Anthropic\Beta\Messages\Batches;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * This is a single line in the response `.jsonl` file and does not represent the response as a whole.
@@ -15,15 +17,13 @@ use Anthropic\Core\Contracts\BaseModel;
  *   customID: string,
  *   result: MessageBatchSucceededResult|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class MessageBatchIndividualResponse implements BaseModel
+final class MessageBatchIndividualResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<message_batch_individual_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * Developer-provided ID created for each request in a Message Batch. Useful for matching results to requests, as results may be given out of request order.

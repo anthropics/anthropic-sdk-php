@@ -67,7 +67,7 @@ final class BetaServerToolUseBlock implements BaseModel
 
         $obj->id = $id;
         $obj->input = $input;
-        $obj->name = $name instanceof Name ? $name->value : $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -94,7 +94,7 @@ final class BetaServerToolUseBlock implements BaseModel
     public function withName(Name|string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name instanceof Name ? $name->value : $name;
+        $obj['name'] = $name;
 
         return $obj;
     }

@@ -7,19 +7,19 @@ namespace Anthropic\Beta\Files;
 use Anthropic\Beta\Files\DeletedFile\Type;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type deleted_file = array{id: string, type?: value-of<Type>}
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class DeletedFile implements BaseModel
+final class DeletedFile implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<deleted_file> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * ID of the deleted file.
@@ -69,7 +69,7 @@ final class DeletedFile implements BaseModel
 
         $obj->id = $id;
 
-        null !== $type && $obj->type = $type instanceof Type ? $type->value : $type;
+        null !== $type && $obj['type'] = $type;
 
         return $obj;
     }
@@ -95,7 +95,7 @@ final class DeletedFile implements BaseModel
     public function withType(Type|string $type): self
     {
         $obj = clone $this;
-        $obj->type = $type instanceof Type ? $type->value : $type;
+        $obj['type'] = $type;
 
         return $obj;
     }

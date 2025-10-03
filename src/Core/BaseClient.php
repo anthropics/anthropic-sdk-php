@@ -29,7 +29,7 @@ use Psr\Http\Message\UriInterface;
  *   body: mixed,
  * }
  */
-class BaseClient
+abstract class BaseClient
 {
     protected UriInterface $baseUrl;
 
@@ -77,14 +77,11 @@ class BaseClient
         // @phpstan-ignore-next-line
         $rsp = $this->sendRequest($opts, req: $request, data: $body, redirectCount: 0, retryCount: 0);
 
-        $decoded = Util::decodeContent($rsp);
-
         if (!is_null($stream)) {
             return new $stream(
                 convert: $convert,
                 request: $request,
-                response: $rsp,
-                stream: $decoded
+                response: $rsp
             );
         }
 
@@ -93,23 +90,29 @@ class BaseClient
                 convert: $convert,
                 client: $this,
                 request: $req,
+                response: $rsp,
                 options: $opts,
-                data: $decoded,
             );
         }
 
         if (!is_null($convert)) {
-            return Conversion::coerce($convert, value: $decoded);
+            return Conversion::coerceResponse($convert, response: $rsp);
         }
 
-        return $decoded;
+        return Util::decodeContent($rsp);
     }
 
     /** @return array<string, string> */
     protected function authHeaders(): array
     {
-        return [];
+        return [...$this->apiKeyAuth(), ...$this->bearerAuth()];
     }
+
+    /** @return array<string, string> */
+    abstract protected function apiKeyAuth(): array;
+
+    /** @return array<string, string> */
+    abstract protected function bearerAuth(): array;
 
     /**
      * @internal
