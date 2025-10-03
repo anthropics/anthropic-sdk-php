@@ -6,7 +6,9 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 use Anthropic\Messages\Model;
 
 /**
@@ -22,15 +24,13 @@ use Anthropic\Messages\Model;
  *   type: string,
  *   usage: BetaUsage,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class BetaMessage implements BaseModel
+final class BetaMessage implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<beta_message> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * Conversational role of the generated message.
@@ -209,7 +209,7 @@ final class BetaMessage implements BaseModel
         $obj->content = $content;
         $obj->contextManagement = $contextManagement;
         $obj->model = $model instanceof Model ? $model->value : $model;
-        $obj->stopReason = $stopReason instanceof BetaStopReason ? $stopReason->value : $stopReason;
+        $obj['stopReason'] = $stopReason;
         $obj->stopSequence = $stopSequence;
         $obj->usage = $usage;
 
@@ -318,7 +318,7 @@ final class BetaMessage implements BaseModel
     public function withStopReason(BetaStopReason|string|null $stopReason): self
     {
         $obj = clone $this;
-        $obj->stopReason = $stopReason instanceof BetaStopReason ? $stopReason->value : $stopReason;
+        $obj['stopReason'] = $stopReason;
 
         return $obj;
     }

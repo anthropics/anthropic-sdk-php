@@ -40,9 +40,7 @@ class Client extends BaseClient
         $this->apiKey = (string) ($apiKey ?? getenv('ANTHROPIC_API_KEY'));
         $this->authToken = (string) ($authToken ?? getenv('ANTHROPIC_AUTH_TOKEN'));
 
-        $base = $baseUrl ?? getenv(
-            'ANTHROPIC_BASE_URL'
-        ) ?: 'https://api.anthropic.com';
+        $baseUrl ??= getenv('ANTHROPIC_BASE_URL') ?: 'https://api.anthropic.com';
 
         $options = RequestOptions::with(
             uriFactory: Psr17FactoryDiscovery::findUriFactory(),
@@ -57,19 +55,13 @@ class Client extends BaseClient
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ],
-            baseUrl: $base,
+            baseUrl: $baseUrl,
             options: $options,
         );
 
         $this->messages = new MessagesService($this);
         $this->models = new ModelsService($this);
         $this->beta = new BetaService($this);
-    }
-
-    /** @return array<string, string> */
-    protected function authHeaders(): array
-    {
-        return [...$this->apiKeyAuth(), ...$this->bearerAuth()];
     }
 
     /** @return array<string, string> */

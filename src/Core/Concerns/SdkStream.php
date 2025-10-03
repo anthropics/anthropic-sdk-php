@@ -6,6 +6,7 @@ use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Implementation\IteratorExit;
+use Anthropic\Core\Util;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -19,26 +20,22 @@ use Psr\Http\Message\ResponseInterface;
  */
 trait SdkStream
 {
-    /**
-     * @param \Generator<TEvent> $generator
-     */
+    /** @var \Generator<TRaw> */
+    protected \Generator $stream;
+
+    /** @var \Generator<TEvent> */
     private \Generator $generator;
 
-    /**
-     * @param \Generator<TRaw> $stream
-     */
     public function __construct(
         protected string|Converter|ConverterSource $convert,
         protected RequestInterface $request,
         protected ResponseInterface $response,
-        protected \Generator $stream,
     ) {
+        $this->stream = Util::decodeContent($response); // @phpstan-ignore-line
         $this->generator = $this->parsedGenerator();
     }
 
-    /**
-     * @return \Iterator<TEvent>
-     */
+    /** @return \Iterator<TEvent> */
     public function getIterator(): \Iterator
     {
         return $this->generator;
@@ -54,8 +51,6 @@ trait SdkStream
         }
     }
 
-    /**
-     * @return \Generator<TEvent> $stream
-     */
+    /** @return \Generator<TEvent> $stream */
     abstract private function parsedGenerator(): \Generator;
 }

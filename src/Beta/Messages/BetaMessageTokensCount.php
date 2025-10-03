@@ -6,22 +6,22 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type beta_message_tokens_count = array{
  *   contextManagement: BetaCountTokensContextManagementResponse|null,
  *   inputTokens: int,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class BetaMessageTokensCount implements BaseModel
+final class BetaMessageTokensCount implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<beta_message_tokens_count> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * Information about context management applied to the message.

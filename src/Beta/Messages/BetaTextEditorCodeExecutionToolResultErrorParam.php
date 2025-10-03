@@ -61,7 +61,7 @@ final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->errorCode = $errorCode instanceof ErrorCode ? $errorCode->value : $errorCode;
+        $obj['errorCode'] = $errorCode;
 
         null !== $errorMessage && $obj->errorMessage = $errorMessage;
 
@@ -74,7 +74,7 @@ final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
     public function withErrorCode(ErrorCode|string $errorCode): self
     {
         $obj = clone $this;
-        $obj->errorCode = $errorCode instanceof ErrorCode ? $errorCode->value : $errorCode;
+        $obj['errorCode'] = $errorCode;
 
         return $obj;
     }

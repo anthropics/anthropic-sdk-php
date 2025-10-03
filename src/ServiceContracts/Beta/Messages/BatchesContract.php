@@ -11,7 +11,6 @@ use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
-use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 
@@ -24,8 +23,6 @@ interface BatchesContract
      *
      * @param list<Request> $requests List of requests for prompt completion. Each is an individual request to create a Message.
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
-     *
-     * @return MessageBatch<HasRawResponse>
      *
      * @throws APIException
      */
@@ -40,8 +37,6 @@ interface BatchesContract
      *
      * @param array<string, mixed> $params
      *
-     * @return MessageBatch<HasRawResponse>
-     *
      * @throws APIException
      */
     public function createRaw(
@@ -53,8 +48,6 @@ interface BatchesContract
      * @api
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
-     *
-     * @return MessageBatch<HasRawResponse>
      *
      * @throws APIException
      */
@@ -68,8 +61,6 @@ interface BatchesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return MessageBatch<HasRawResponse>
      *
      * @throws APIException
      */
@@ -120,8 +111,6 @@ interface BatchesContract
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return DeletedMessageBatch<HasRawResponse>
-     *
      * @throws APIException
      */
     public function delete(
@@ -134,8 +123,6 @@ interface BatchesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return DeletedMessageBatch<HasRawResponse>
      *
      * @throws APIException
      */
@@ -150,8 +137,6 @@ interface BatchesContract
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return MessageBatch<HasRawResponse>
-     *
      * @throws APIException
      */
     public function cancel(
@@ -164,8 +149,6 @@ interface BatchesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return MessageBatch<HasRawResponse>
      *
      * @throws APIException
      */
@@ -180,8 +163,6 @@ interface BatchesContract
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return MessageBatchIndividualResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function results(
@@ -194,8 +175,6 @@ interface BatchesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return MessageBatchIndividualResponse<HasRawResponse>
      *
      * @throws APIException
      */
