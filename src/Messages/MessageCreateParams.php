@@ -330,7 +330,7 @@ final class MessageCreateParams implements BaseModel
         $obj->model = $model instanceof Model ? $model->value : $model;
 
         null !== $metadata && $obj->metadata = $metadata;
-        null !== $serviceTier && $obj->serviceTier = $serviceTier instanceof ServiceTier ? $serviceTier->value : $serviceTier;
+        null !== $serviceTier && $obj['serviceTier'] = $serviceTier;
         null !== $stopSequences && $obj->stopSequences = $stopSequences;
         null !== $system && $obj->system = $system;
         null !== $temperature && $obj->temperature = $temperature;
@@ -450,7 +450,7 @@ final class MessageCreateParams implements BaseModel
     public function withServiceTier(ServiceTier|string $serviceTier): self
     {
         $obj = clone $this;
-        $obj->serviceTier = $serviceTier instanceof ServiceTier ? $serviceTier->value : $serviceTier;
+        $obj['serviceTier'] = $serviceTier;
 
         return $obj;
     }

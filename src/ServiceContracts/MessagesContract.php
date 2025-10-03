@@ -6,7 +6,6 @@ namespace Anthropic\ServiceContracts;
 
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
-use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Messages\MessageParam;
@@ -190,8 +189,6 @@ interface MessagesContract
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      *
-     * @return Message<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -215,8 +212,6 @@ interface MessagesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return Message<HasRawResponse>
      *
      * @throws APIException
      */
@@ -539,8 +534,6 @@ interface MessagesContract
      *
      * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
      *
-     * @return MessageTokensCount<HasRawResponse>
-     *
      * @throws APIException
      */
     public function countTokens(
@@ -557,8 +550,6 @@ interface MessagesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return MessageTokensCount<HasRawResponse>
      *
      * @throws APIException
      */

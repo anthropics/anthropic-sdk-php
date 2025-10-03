@@ -52,7 +52,7 @@ final class BetaCacheControlEphemeral implements BaseModel
     {
         $obj = new self;
 
-        null !== $ttl && $obj->ttl = $ttl instanceof TTL ? $ttl->value : $ttl;
+        null !== $ttl && $obj['ttl'] = $ttl;
 
         return $obj;
     }
@@ -71,7 +71,7 @@ final class BetaCacheControlEphemeral implements BaseModel
     public function withTTL(TTL|string $ttl): self
     {
         $obj = clone $this;
-        $obj->ttl = $ttl instanceof TTL ? $ttl->value : $ttl;
+        $obj['ttl'] = $ttl;
 
         return $obj;
     }

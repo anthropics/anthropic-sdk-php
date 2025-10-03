@@ -11,6 +11,8 @@ use Anthropic\Core\Conversion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
+use Anthropic\Core\Util;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @phpstan-type page_alias = array{
@@ -61,9 +63,11 @@ final class Page implements BaseModel, BasePage
         private Client $client,
         private array $request,
         private RequestOptions $options,
-        mixed $data,
+        ResponseInterface $response,
     ) {
         $this->initialize();
+
+        $data = Util::decodeContent($response);
 
         if (!is_array($data)) {
             return;

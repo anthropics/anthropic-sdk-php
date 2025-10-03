@@ -127,7 +127,7 @@ final class Usage implements BaseModel
         $obj->inputTokens = $inputTokens;
         $obj->outputTokens = $outputTokens;
         $obj->serverToolUse = $serverToolUse;
-        $obj->serviceTier = $serviceTier instanceof ServiceTier ? $serviceTier->value : $serviceTier;
+        $obj['serviceTier'] = $serviceTier;
 
         return $obj;
     }
@@ -207,7 +207,7 @@ final class Usage implements BaseModel
     public function withServiceTier(ServiceTier|string|null $serviceTier): self
     {
         $obj = clone $this;
-        $obj->serviceTier = $serviceTier instanceof ServiceTier ? $serviceTier->value : $serviceTier;
+        $obj['serviceTier'] = $serviceTier;
 
         return $obj;
     }

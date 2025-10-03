@@ -6,21 +6,21 @@ namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type model_info = array{
  *   id: string, createdAt: \DateTimeInterface, displayName: string, type: string
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class ModelInfo implements BaseModel
+final class ModelInfo implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<model_info> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * Object type.

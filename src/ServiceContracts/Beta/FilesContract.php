@@ -8,7 +8,6 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Files\DeletedFile;
 use Anthropic\Beta\Files\FileMetadata;
 use Anthropic\Core\Exceptions\APIException;
-use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 
@@ -57,8 +56,6 @@ interface FilesContract
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return DeletedFile<HasRawResponse>
-     *
      * @throws APIException
      */
     public function delete(
@@ -71,8 +68,6 @@ interface FilesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return DeletedFile<HasRawResponse>
      *
      * @throws APIException
      */
@@ -87,8 +82,6 @@ interface FilesContract
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return FileMetadata<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieveMetadata(
@@ -101,8 +94,6 @@ interface FilesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return FileMetadata<HasRawResponse>
      *
      * @throws APIException
      */

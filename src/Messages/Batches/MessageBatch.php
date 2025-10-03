@@ -6,7 +6,9 @@ namespace Anthropic\Messages\Batches;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 use Anthropic\Messages\Batches\MessageBatch\ProcessingStatus;
 
 /**
@@ -22,15 +24,13 @@ use Anthropic\Messages\Batches\MessageBatch\ProcessingStatus;
  *   resultsURL: string|null,
  *   type: string,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class MessageBatch implements BaseModel
+final class MessageBatch implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<message_batch> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * Object type.
@@ -168,7 +168,7 @@ final class MessageBatch implements BaseModel
         $obj->createdAt = $createdAt;
         $obj->endedAt = $endedAt;
         $obj->expiresAt = $expiresAt;
-        $obj->processingStatus = $processingStatus instanceof ProcessingStatus ? $processingStatus->value : $processingStatus;
+        $obj['processingStatus'] = $processingStatus;
         $obj->requestCounts = $requestCounts;
         $obj->resultsURL = $resultsURL;
 
@@ -255,7 +255,7 @@ final class MessageBatch implements BaseModel
         ProcessingStatus|string $processingStatus
     ): self {
         $obj = clone $this;
-        $obj->processingStatus = $processingStatus instanceof ProcessingStatus ? $processingStatus->value : $processingStatus;
+        $obj['processingStatus'] = $processingStatus;
 
         return $obj;
     }

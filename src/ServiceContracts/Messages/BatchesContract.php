@@ -6,7 +6,6 @@ namespace Anthropic\ServiceContracts\Messages;
 
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
-use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Messages\Batches\MessageBatch;
@@ -23,8 +22,6 @@ interface BatchesContract
      *
      * @param list<Request> $requests List of requests for prompt completion. Each is an individual request to create a Message.
      *
-     * @return MessageBatch<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -37,8 +34,6 @@ interface BatchesContract
      *
      * @param array<string, mixed> $params
      *
-     * @return MessageBatch<HasRawResponse>
-     *
      * @throws APIException
      */
     public function createRaw(
@@ -49,26 +44,11 @@ interface BatchesContract
     /**
      * @api
      *
-     * @return MessageBatch<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $messageBatchID,
         ?RequestOptions $requestOptions = null
-    ): MessageBatch;
-
-    /**
-     * @api
-     *
-     * @return MessageBatch<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $messageBatchID,
-        mixed $params,
-        ?RequestOptions $requestOptions = null,
     ): MessageBatch;
 
     /**
@@ -108,8 +88,6 @@ interface BatchesContract
     /**
      * @api
      *
-     * @return DeletedMessageBatch<HasRawResponse>
-     *
      * @throws APIException
      */
     public function delete(
@@ -119,21 +97,6 @@ interface BatchesContract
 
     /**
      * @api
-     *
-     * @return DeletedMessageBatch<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function deleteRaw(
-        string $messageBatchID,
-        mixed $params,
-        ?RequestOptions $requestOptions = null,
-    ): DeletedMessageBatch;
-
-    /**
-     * @api
-     *
-     * @return MessageBatch<HasRawResponse>
      *
      * @throws APIException
      */
@@ -145,39 +108,11 @@ interface BatchesContract
     /**
      * @api
      *
-     * @return MessageBatch<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function cancelRaw(
-        string $messageBatchID,
-        mixed $params,
-        ?RequestOptions $requestOptions = null,
-    ): MessageBatch;
-
-    /**
-     * @api
-     *
-     * @return MessageBatchIndividualResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function results(
         string $messageBatchID,
         ?RequestOptions $requestOptions = null
-    ): MessageBatchIndividualResponse;
-
-    /**
-     * @api
-     *
-     * @return MessageBatchIndividualResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function resultsRaw(
-        string $messageBatchID,
-        mixed $params,
-        ?RequestOptions $requestOptions = null,
     ): MessageBatchIndividualResponse;
 
     /**
@@ -190,18 +125,5 @@ interface BatchesContract
     public function resultsStream(
         string $messageBatchID,
         ?RequestOptions $requestOptions = null
-    ): BaseStream;
-
-    /**
-     * @api
-     *
-     * @return BaseStream<MessageBatchIndividualResponse>
-     *
-     * @throws APIException
-     */
-    public function resultsStreamRaw(
-        string $messageBatchID,
-        mixed $params,
-        ?RequestOptions $requestOptions = null,
     ): BaseStream;
 }

@@ -56,7 +56,7 @@ final class BetaWebSearchToolResultError implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->errorCode = $errorCode instanceof BetaWebSearchToolResultErrorCode ? $errorCode->value : $errorCode;
+        $obj['errorCode'] = $errorCode;
 
         return $obj;
     }
@@ -68,7 +68,7 @@ final class BetaWebSearchToolResultError implements BaseModel
         BetaWebSearchToolResultErrorCode|string $errorCode
     ): self {
         $obj = clone $this;
-        $obj->errorCode = $errorCode instanceof BetaWebSearchToolResultErrorCode ? $errorCode->value : $errorCode;
+        $obj['errorCode'] = $errorCode;
 
         return $obj;
     }

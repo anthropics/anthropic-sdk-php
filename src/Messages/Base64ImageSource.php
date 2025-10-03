@@ -60,7 +60,7 @@ final class Base64ImageSource implements BaseModel
         $obj = new self;
 
         $obj->data = $data;
-        $obj->mediaType = $mediaType instanceof MediaType ? $mediaType->value : $mediaType;
+        $obj['mediaType'] = $mediaType;
 
         return $obj;
     }
@@ -79,7 +79,7 @@ final class Base64ImageSource implements BaseModel
     public function withMediaType(MediaType|string $mediaType): self
     {
         $obj = clone $this;
-        $obj->mediaType = $mediaType instanceof MediaType ? $mediaType->value : $mediaType;
+        $obj['mediaType'] = $mediaType;
 
         return $obj;
     }

@@ -6,19 +6,19 @@ namespace Anthropic\Messages\Batches;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type deleted_message_batch = array{id: string, type: string}
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class DeletedMessageBatch implements BaseModel
+final class DeletedMessageBatch implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<deleted_message_batch> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * Deleted object type.

@@ -18,14 +18,10 @@ use Psr\Http\Message\ResponseInterface;
  */
 interface BaseStream extends \IteratorAggregate
 {
-    /**
-     * @param \Generator<TInner> $stream
-     */
     public function __construct(
         Converter|ConverterSource|string $convert,
         RequestInterface $request,
         ResponseInterface $response,
-        \Generator $stream,
     );
 
     /**

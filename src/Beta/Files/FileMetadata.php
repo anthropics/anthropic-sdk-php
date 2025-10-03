@@ -6,7 +6,9 @@ namespace Anthropic\Beta\Files;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type file_metadata = array{
@@ -18,15 +20,13 @@ use Anthropic\Core\Contracts\BaseModel;
  *   type: string,
  *   downloadable?: bool,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class FileMetadata implements BaseModel
+final class FileMetadata implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<file_metadata> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * Object type.

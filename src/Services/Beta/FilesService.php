@@ -12,7 +12,6 @@ use Anthropic\Beta\Files\FileMetadata;
 use Anthropic\Beta\Files\FileRetrieveMetadataParams;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
-use Anthropic\Core\Implementation\HasRawResponse;
 use Anthropic\Core\Util;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
@@ -107,8 +106,6 @@ final class FilesService implements FilesContract
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return DeletedFile<HasRawResponse>
-     *
      * @throws APIException
      */
     public function delete(
@@ -125,8 +122,6 @@ final class FilesService implements FilesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return DeletedFile<HasRawResponse>
      *
      * @throws APIException
      */
@@ -163,8 +158,6 @@ final class FilesService implements FilesContract
      *
      * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
-     * @return FileMetadata<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieveMetadata(
@@ -181,8 +174,6 @@ final class FilesService implements FilesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return FileMetadata<HasRawResponse>
      *
      * @throws APIException
      */

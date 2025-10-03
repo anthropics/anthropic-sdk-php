@@ -6,7 +6,9 @@ namespace Anthropic\Messages;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type message_alias = array{
@@ -19,15 +21,13 @@ use Anthropic\Core\Contracts\BaseModel;
  *   type: string,
  *   usage: Usage,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class Message implements BaseModel
+final class Message implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<message_alias> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * Conversational role of the generated message.
@@ -186,7 +186,7 @@ final class Message implements BaseModel
         $obj->id = $id;
         $obj->content = $content;
         $obj->model = $model instanceof Model ? $model->value : $model;
-        $obj->stopReason = $stopReason instanceof StopReason ? $stopReason->value : $stopReason;
+        $obj['stopReason'] = $stopReason;
         $obj->stopSequence = $stopSequence;
         $obj->usage = $usage;
 
@@ -272,7 +272,7 @@ final class Message implements BaseModel
     public function withStopReason(StopReason|string|null $stopReason): self
     {
         $obj = clone $this;
-        $obj->stopReason = $stopReason instanceof StopReason ? $stopReason->value : $stopReason;
+        $obj['stopReason'] = $stopReason;
 
         return $obj;
     }
