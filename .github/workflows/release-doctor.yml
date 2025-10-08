@@ -20,3 +20,5 @@ jobs:
           bash ./bin/check-release-environment
         env:
           STAINLESS_API_KEY: ${{ secrets.STAINLESS_API_KEY }}
+          PACKAGIST_USERNAME: ${{ secrets.ANTHROPIC_PACKAGIST_USERNAME || secrets.PACKAGIST_USERNAME }}
+          PACKAGIST_SAFE_KEY: ${{ secrets.ANTHROPIC_PACKAGIST_SAFE_KEY || secrets.PACKAGIST_SAFE_KEY }}
