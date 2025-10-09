@@ -93,15 +93,13 @@ final class BatchesTest extends TestCase
                                 ->withEdits(
                                     [
                                         (new BetaClearToolUses20250919Edit)
-                                            ->STAINLESS_FIXME_withClearAtLeast(
+                                            ->withClearAtLeast(
                                                 BetaInputTokensClearAtLeast::with(value: 0)
                                             )
-                                            ->STAINLESS_FIXME_withClearToolInputs(true)
-                                            ->STAINLESS_FIXME_withExcludeTools(['string'])
-                                            ->STAINLESS_FIXME_withKeep(BetaToolUsesKeep::with(value: 0))
-                                            ->STAINLESS_FIXME_withTrigger(
-                                                BetaInputTokensTrigger::with(value: 1)
-                                            ),
+                                            ->withClearToolInputs(true)
+                                            ->withExcludeTools(['string'])
+                                            ->withKeep(BetaToolUsesKeep::with(value: 0))
+                                            ->withTrigger(BetaInputTokensTrigger::with(value: 1)),
                                     ],
                                 ),
                         )
