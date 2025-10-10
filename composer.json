@@ -1,7 +1,11 @@
 {
   "$schema": "https://getcomposer.org/schema.json",
+  "license": "MIT",
   "autoload": {
-    "files": ["src/Core.php", "src/Client.php"],
+    "files": [
+      "src/Core.php",
+      "src/Client.php"
+    ],
     "psr-4": {
       "Anthropic\\": "src/"
     }
