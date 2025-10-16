@@ -11,7 +11,9 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Information about the container used in the request (for the code execution tool).
  *
- * @phpstan-type beta_container = array{id: string, expiresAt: \DateTimeInterface}
+ * @phpstan-type beta_container = array{
+ *   id: string, expiresAt: \DateTimeInterface, skills: list<BetaSkill>|null
+ * }
  */
 final class BetaContainer implements BaseModel
 {
@@ -31,17 +33,25 @@ final class BetaContainer implements BaseModel
     public \DateTimeInterface $expiresAt;
 
     /**
+     * Skills loaded in the container.
+     *
+     * @var list<BetaSkill>|null $skills
+     */
+    #[Api(list: BetaSkill::class)]
+    public ?array $skills;
+
+    /**
      * `new BetaContainer()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaContainer::with(id: ..., expiresAt: ...)
+     * BetaContainer::with(id: ..., expiresAt: ..., skills: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaContainer)->withID(...)->withExpiresAt(...)
+     * (new BetaContainer)->withID(...)->withExpiresAt(...)->withSkills(...)
      * ```
      */
     public function __construct()
@@ -53,13 +63,19 @@ final class BetaContainer implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param list<BetaSkill>|null $skills
      */
-    public static function with(string $id, \DateTimeInterface $expiresAt): self
-    {
+    public static function with(
+        string $id,
+        \DateTimeInterface $expiresAt,
+        ?array $skills
+    ): self {
         $obj = new self;
 
         $obj->id = $id;
         $obj->expiresAt = $expiresAt;
+        $obj->skills = $skills;
 
         return $obj;
     }
@@ -82,6 +98,19 @@ final class BetaContainer implements BaseModel
     {
         $obj = clone $this;
         $obj->expiresAt = $expiresAt;
+
+        return $obj;
+    }
+
+    /**
+     * Skills loaded in the container.
+     *
+     * @param list<BetaSkill>|null $skills
+     */
+    public function withSkills(?array $skills): self
+    {
+        $obj = clone $this;
+        $obj->skills = $skills;
 
         return $obj;
     }

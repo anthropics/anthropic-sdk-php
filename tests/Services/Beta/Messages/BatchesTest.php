@@ -7,6 +7,7 @@ use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params;
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral;
 use Anthropic\Beta\Messages\BetaCitationCharLocationParam;
 use Anthropic\Beta\Messages\BetaClearToolUses20250919Edit;
+use Anthropic\Beta\Messages\BetaContainerParams;
 use Anthropic\Beta\Messages\BetaContextManagementConfig;
 use Anthropic\Beta\Messages\BetaInputTokensClearAtLeast;
 use Anthropic\Beta\Messages\BetaInputTokensTrigger;
@@ -14,6 +15,7 @@ use Anthropic\Beta\Messages\BetaMessageParam;
 use Anthropic\Beta\Messages\BetaMetadata;
 use Anthropic\Beta\Messages\BetaRequestMCPServerToolConfiguration;
 use Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition;
+use Anthropic\Beta\Messages\BetaSkillParams;
 use Anthropic\Beta\Messages\BetaTextBlockParam;
 use Anthropic\Beta\Messages\BetaThinkingConfigEnabled;
 use Anthropic\Beta\Messages\BetaTool;
@@ -60,7 +62,7 @@ final class BatchesTest extends TestCase
                         messages: [
                             BetaMessageParam::with(content: 'Hello, world', role: 'user'),
                         ],
-                        model: 'claude-sonnet-4-20250514',
+                        model: 'claude-sonnet-4-5-20250929',
                     ),
                 ),
             ],
@@ -85,9 +87,18 @@ final class BatchesTest extends TestCase
                         messages: [
                             BetaMessageParam::with(content: 'Hello, world', role: 'user'),
                         ],
-                        model: 'claude-sonnet-4-20250514',
+                        model: 'claude-sonnet-4-5-20250929',
                     )
-                        ->withContainer('container')
+                        ->withContainer(
+                            (new BetaContainerParams)
+                                ->withID('id')
+                                ->withSkills(
+                                    [
+                                        BetaSkillParams::with(skillID: 'x', type: 'anthropic')
+                                            ->withVersion('x'),
+                                    ],
+                                ),
+                        )
                         ->withContextManagement(
                             (new BetaContextManagementConfig)
                                 ->withEdits(

@@ -9,8 +9,6 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Results for clear_tool_uses_20250919 edit.
- *
  * @phpstan-type beta_clear_tool_uses20250919_edit_response = array{
  *   clearedInputTokens: int, clearedToolUses: int, type: string
  * }

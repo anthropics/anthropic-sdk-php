@@ -32,7 +32,7 @@ final class MessagesTest extends TestCase
         $result = $this->client->messages->create(
             maxTokens: 1024,
             messages: [MessageParam::with(content: 'Hello, world', role: 'user')],
-            model: 'claude-sonnet-4-20250514',
+            model: 'claude-sonnet-4-5-20250929',
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -44,7 +44,7 @@ final class MessagesTest extends TestCase
         $result = $this->client->messages->create(
             maxTokens: 1024,
             messages: [MessageParam::with(content: 'Hello, world', role: 'user')],
-            model: 'claude-sonnet-4-20250514',
+            model: 'claude-sonnet-4-5-20250929',
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
