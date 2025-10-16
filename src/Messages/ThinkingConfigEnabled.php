@@ -24,7 +24,7 @@ final class ThinkingConfigEnabled implements BaseModel
      *
      * Must be ≥1024 and less than `max_tokens`.
      *
-     * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
+     * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      */
     #[Api('budget_tokens')]
     public int $budgetTokens;
@@ -67,7 +67,7 @@ final class ThinkingConfigEnabled implements BaseModel
      *
      * Must be ≥1024 and less than `max_tokens`.
      *
-     * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
+     * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      */
     public function withBudgetTokens(int $budgetTokens): self
     {

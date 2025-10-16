@@ -39,4 +39,6 @@ enum AnthropicBeta: string
     case CONTEXT_MANAGEMENT_2025_06_27 = 'context-management-2025-06-27';
 
     case MODEL_CONTEXT_WINDOW_EXCEEDED_2025_08_26 = 'model-context-window-exceeded-2025-08-26';
+
+    case SKILLS_2025_10_02 = 'skills-2025-10-02';
 }

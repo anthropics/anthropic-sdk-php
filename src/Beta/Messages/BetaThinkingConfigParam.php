@@ -13,7 +13,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  *
  * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
  *
- * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
+ * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
  */
 final class BetaThinkingConfigParam implements ConverterSource
 {

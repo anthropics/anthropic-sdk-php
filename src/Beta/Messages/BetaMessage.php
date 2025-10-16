@@ -95,7 +95,9 @@ final class BetaMessage implements BaseModel, ResponseConverter
     public array $content;
 
     /**
-     * Information about context management operations applied during the request.
+     * Context management response.
+     *
+     * Information about context management strategies applied during the request.
      */
     #[Api('context_management')]
     public ?BetaContextManagementResponse $contextManagement;
@@ -278,7 +280,9 @@ final class BetaMessage implements BaseModel, ResponseConverter
     }
 
     /**
-     * Information about context management operations applied during the request.
+     * Context management response.
+     *
+     * Information about context management strategies applied during the request.
      */
     public function withContextManagement(
         ?BetaContextManagementResponse $contextManagement

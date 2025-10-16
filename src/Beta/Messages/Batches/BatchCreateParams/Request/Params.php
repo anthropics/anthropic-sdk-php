@@ -8,6 +8,7 @@ use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\ServiceTier
 use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\System;
 use Anthropic\Beta\Messages\BetaCodeExecutionTool20250522;
 use Anthropic\Beta\Messages\BetaCodeExecutionTool20250825;
+use Anthropic\Beta\Messages\BetaContainerParams;
 use Anthropic\Beta\Messages\BetaContextManagementConfig;
 use Anthropic\Beta\Messages\BetaMemoryTool20250818;
 use Anthropic\Beta\Messages\BetaMessageParam;
@@ -48,7 +49,7 @@ use Anthropic\Messages\Model;
  *   maxTokens: int,
  *   messages: list<BetaMessageParam>,
  *   model: string|value-of<Model>,
- *   container?: string|null,
+ *   container?: string|null|BetaContainerParams,
  *   contextManagement?: BetaContextManagementConfig|null,
  *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
  *   metadata?: BetaMetadata,
@@ -74,7 +75,7 @@ final class Params implements BaseModel
      *
      * Note that our models may stop _before_ reaching this maximum. This parameter only specifies the absolute maximum number of tokens to generate.
      *
-     * Different models have different maximum values for this parameter.  See [models](https://docs.anthropic.com/en/docs/models-overview) for details.
+     * Different models have different maximum values for this parameter.  See [models](https://docs.claude.com/en/docs/models-overview) for details.
      */
     #[Api('max_tokens')]
     public int $maxTokens;
@@ -123,9 +124,9 @@ final class Params implements BaseModel
      * {"role": "user", "content": [{"type": "text", "text": "Hello, Claude"}]}
      * ```
      *
-     * See [input examples](https://docs.anthropic.com/en/api/messages-examples).
+     * See [input examples](https://docs.claude.com/en/api/messages-examples).
      *
-     * Note that if you want to include a [system prompt](https://docs.anthropic.com/en/docs/system-prompts), you can use the top-level `system` parameter — there is no `"system"` role for input messages in the Messages API.
+     * Note that if you want to include a [system prompt](https://docs.claude.com/en/docs/system-prompts), you can use the top-level `system` parameter — there is no `"system"` role for input messages in the Messages API.
      *
      * There is a limit of 100,000 messages in a single request.
      *
@@ -146,10 +147,12 @@ final class Params implements BaseModel
      * Container identifier for reuse across requests.
      */
     #[Api(nullable: true, optional: true)]
-    public ?string $container;
+    public string|BetaContainerParams|null $container;
 
     /**
-     * Configuration for context management operations.
+     * Context management configuration.
+     *
+     * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
      */
     #[Api('context_management', nullable: true, optional: true)]
     public ?BetaContextManagementConfig $contextManagement;
@@ -175,7 +178,7 @@ final class Params implements BaseModel
     /**
      * Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
-     * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.anthropic.com/en/api/service-tiers) for details.
+     * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.claude.com/en/api/service-tiers) for details.
      *
      * @var value-of<ServiceTier>|null $serviceTier
      */
@@ -197,7 +200,7 @@ final class Params implements BaseModel
     /**
      * Whether to incrementally stream the response using server-sent events.
      *
-     * See [streaming](https://docs.anthropic.com/en/api/messages-streaming) for details.
+     * See [streaming](https://docs.claude.com/en/api/messages-streaming) for details.
      */
     #[Api(optional: true)]
     public ?bool $stream;
@@ -205,7 +208,7 @@ final class Params implements BaseModel
     /**
      * System prompt.
      *
-     * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.anthropic.com/en/docs/system-prompts).
+     * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.claude.com/en/docs/system-prompts).
      *
      * @var string|list<BetaTextBlockParam>|null $system
      */
@@ -227,7 +230,7 @@ final class Params implements BaseModel
      *
      * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
      *
-     * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
+     * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      */
     #[Api(union: BetaThinkingConfigParam::class, optional: true)]
     public BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null $thinking;
@@ -243,7 +246,7 @@ final class Params implements BaseModel
      *
      * If you include `tools` in your API request, the model may return `tool_use` content blocks that represent the model's use of those tools. You can then run those tools using the tool input generated by the model and then optionally return results back to the model using `tool_result` content blocks.
      *
-     * There are two types of tools: **client tools** and **server tools**. The behavior described below applies to client tools. For [server tools](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview\#server-tools), see their individual documentation as each has its own behavior (e.g., the [web search tool](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/web-search-tool)).
+     * There are two types of tools: **client tools** and **server tools**. The behavior described below applies to client tools. For [server tools](https://docs.claude.com/en/docs/agents-and-tools/tool-use/overview\#server-tools), see their individual documentation as each has its own behavior (e.g., the [web search tool](https://docs.claude.com/en/docs/agents-and-tools/tool-use/web-search-tool)).
      *
      * Each tool definition includes:
      *
@@ -299,7 +302,7 @@ final class Params implements BaseModel
      *
      * Tools can be used for workflows that include running client-side tools and functions, or more generally whenever you want the model to produce a particular JSON structure of output.
      *
-     * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
+     * See our [guide](https://docs.claude.com/en/docs/tool-use) for more details.
      *
      * @var list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910>|null $tools
      */
@@ -361,7 +364,7 @@ final class Params implements BaseModel
         int $maxTokens,
         array $messages,
         string|Model $model,
-        ?string $container = null,
+        string|BetaContainerParams|null $container = null,
         ?BetaContextManagementConfig $contextManagement = null,
         ?array $mcpServers = null,
         ?BetaMetadata $metadata = null,
@@ -405,7 +408,7 @@ final class Params implements BaseModel
      *
      * Note that our models may stop _before_ reaching this maximum. This parameter only specifies the absolute maximum number of tokens to generate.
      *
-     * Different models have different maximum values for this parameter.  See [models](https://docs.anthropic.com/en/docs/models-overview) for details.
+     * Different models have different maximum values for this parameter.  See [models](https://docs.claude.com/en/docs/models-overview) for details.
      */
     public function withMaxTokens(int $maxTokens): self
     {
@@ -459,9 +462,9 @@ final class Params implements BaseModel
      * {"role": "user", "content": [{"type": "text", "text": "Hello, Claude"}]}
      * ```
      *
-     * See [input examples](https://docs.anthropic.com/en/api/messages-examples).
+     * See [input examples](https://docs.claude.com/en/api/messages-examples).
      *
-     * Note that if you want to include a [system prompt](https://docs.anthropic.com/en/docs/system-prompts), you can use the top-level `system` parameter — there is no `"system"` role for input messages in the Messages API.
+     * Note that if you want to include a [system prompt](https://docs.claude.com/en/docs/system-prompts), you can use the top-level `system` parameter — there is no `"system"` role for input messages in the Messages API.
      *
      * There is a limit of 100,000 messages in a single request.
      *
@@ -489,8 +492,9 @@ final class Params implements BaseModel
     /**
      * Container identifier for reuse across requests.
      */
-    public function withContainer(?string $container): self
-    {
+    public function withContainer(
+        string|BetaContainerParams|null $container
+    ): self {
         $obj = clone $this;
         $obj->container = $container;
 
@@ -498,7 +502,9 @@ final class Params implements BaseModel
     }
 
     /**
-     * Configuration for context management operations.
+     * Context management configuration.
+     *
+     * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
      */
     public function withContextManagement(
         ?BetaContextManagementConfig $contextManagement
@@ -536,7 +542,7 @@ final class Params implements BaseModel
     /**
      * Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
-     * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.anthropic.com/en/api/service-tiers) for details.
+     * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.claude.com/en/api/service-tiers) for details.
      *
      * @param ServiceTier|value-of<ServiceTier> $serviceTier
      */
@@ -568,7 +574,7 @@ final class Params implements BaseModel
     /**
      * Whether to incrementally stream the response using server-sent events.
      *
-     * See [streaming](https://docs.anthropic.com/en/api/messages-streaming) for details.
+     * See [streaming](https://docs.claude.com/en/api/messages-streaming) for details.
      */
     public function withStream(bool $stream): self
     {
@@ -581,7 +587,7 @@ final class Params implements BaseModel
     /**
      * System prompt.
      *
-     * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.anthropic.com/en/docs/system-prompts).
+     * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.claude.com/en/docs/system-prompts).
      *
      * @param string|list<BetaTextBlockParam> $system
      */
@@ -613,7 +619,7 @@ final class Params implements BaseModel
      *
      * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
      *
-     * See [extended thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking) for details.
+     * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      */
     public function withThinking(
         BetaThinkingConfigEnabled|BetaThinkingConfigDisabled $thinking
@@ -641,7 +647,7 @@ final class Params implements BaseModel
      *
      * If you include `tools` in your API request, the model may return `tool_use` content blocks that represent the model's use of those tools. You can then run those tools using the tool input generated by the model and then optionally return results back to the model using `tool_result` content blocks.
      *
-     * There are two types of tools: **client tools** and **server tools**. The behavior described below applies to client tools. For [server tools](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview\#server-tools), see their individual documentation as each has its own behavior (e.g., the [web search tool](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/web-search-tool)).
+     * There are two types of tools: **client tools** and **server tools**. The behavior described below applies to client tools. For [server tools](https://docs.claude.com/en/docs/agents-and-tools/tool-use/overview\#server-tools), see their individual documentation as each has its own behavior (e.g., the [web search tool](https://docs.claude.com/en/docs/agents-and-tools/tool-use/web-search-tool)).
      *
      * Each tool definition includes:
      *
@@ -697,7 +703,7 @@ final class Params implements BaseModel
      *
      * Tools can be used for workflows that include running client-side tools and functions, or more generally whenever you want the model to produce a particular JSON structure of output.
      *
-     * See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
+     * See our [guide](https://docs.claude.com/en/docs/tool-use) for more details.
      *
      * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910> $tools
      */

@@ -9,8 +9,6 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Configuration for context management operations.
- *
  * @phpstan-type beta_context_management_config = array{
  *   edits?: list<BetaClearToolUses20250919Edit>
  * }
