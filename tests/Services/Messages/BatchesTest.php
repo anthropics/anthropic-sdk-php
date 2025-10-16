@@ -49,7 +49,7 @@ final class BatchesTest extends TestCase
                         messages: [
                             MessageParam::with(content: 'Hello, world', role: 'user'),
                         ],
-                        model: 'claude-sonnet-4-20250514',
+                        model: 'claude-sonnet-4-5-20250929',
                     ),
                 ),
             ],
@@ -70,7 +70,7 @@ final class BatchesTest extends TestCase
                         messages: [
                             MessageParam::with(content: 'Hello, world', role: 'user'),
                         ],
-                        model: 'claude-sonnet-4-20250514',
+                        model: 'claude-sonnet-4-5-20250929',
                     )
                         ->withMetadata(
                             (new Metadata)->withUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b')
