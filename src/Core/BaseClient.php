@@ -273,7 +273,7 @@ abstract class BaseClient
         }
 
         if ($code >= 400 || is_null($rsp)) {
-            if ($this->shouldRetry($opts, retryCount: $retryCount, rsp: $rsp)) {
+            if (!$this->shouldRetry($opts, retryCount: $retryCount, rsp: $rsp)) {
                 $exn = is_null($rsp) ? new APIConnectionException($req, previous: $err) : APIStatusException::from(request: $req, response: $rsp);
 
                 throw $exn;
