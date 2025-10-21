@@ -11,18 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new SkillListParams); // set properties as needed
- * $client->beta.skills->list(...$params->toArray());
- * ```
  * List Skills.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->beta.skills->list(...$params->toArray());`
  *
  * @see Anthropic\Beta\Skills->list
  *

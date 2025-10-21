@@ -32,9 +32,9 @@ trait SdkModel
      */
     public function __serialize(): array
     {
-        $rows = [...Util::get_object_vars($this), ...$this->_data]; // @phpstan-ignore-line
+        $properties = $this->toProperties(); // @phpstan-ignore-line
 
-        return array_map(static fn ($v) => self::serialize($v), array: $rows);
+        return array_map(static fn ($v) => self::serialize($v), array: $properties);
     }
 
     /**
@@ -98,11 +98,13 @@ trait SdkModel
     }
 
     /**
+     * @internal
+     *
      * @return Shape
      */
-    public function toArray(): array
+    public function toProperties(): array
     {
-        return $this->__serialize(); // @phpstan-ignore-line
+        return [...Util::get_object_vars($this), ...$this->_data]; // @phpstan-ignore-line
     }
 
     /**
@@ -257,7 +259,7 @@ trait SdkModel
     private static function serialize(mixed $value): mixed
     {
         if ($value instanceof BaseModel) {
-            return $value->toArray();
+            return $value->toProperties();
         }
 
         if (is_array($value)) {

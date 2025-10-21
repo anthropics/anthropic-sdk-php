@@ -11,18 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new VersionRetrieveParams); // set properties as needed
- * $client->beta.skills.versions->retrieve(...$params->toArray());
- * ```
  * Get Skill Version.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->beta.skills.versions->retrieve(...$params->toArray());`
  *
  * @see Anthropic\Beta\Skills\Versions->retrieve
  *

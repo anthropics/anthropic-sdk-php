@@ -11,22 +11,11 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new BatchDeleteParams); // set properties as needed
- * $client->beta.messages.batches->delete(...$params->toArray());
- * ```
  * Delete a Message Batch.
  *
  * Message Batches can only be deleted once they've finished processing. If you'd like to delete an in-progress batch, you must first cancel it.
  *
  * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->beta.messages.batches->delete(...$params->toArray());`
  *
  * @see Anthropic\Beta\Messages\Batches->delete
  *

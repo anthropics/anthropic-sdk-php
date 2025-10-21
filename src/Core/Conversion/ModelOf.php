@@ -105,7 +105,7 @@ final class ModelOf implements Converter
     public function dump(mixed $value, DumpState $state): mixed
     {
         if ($value instanceof BaseModel) {
-            $value = $value->toArray();
+            $value = $value->toProperties();
         }
 
         if (is_array($value)) {
