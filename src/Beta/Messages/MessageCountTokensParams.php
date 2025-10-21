@@ -14,22 +14,11 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Model;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new MessageCountTokensParams); // set properties as needed
- * $client->beta.messages->countTokens(...$params->toArray());
- * ```
  * Count the number of tokens in a Message.
  *
  * The Token Count API can be used to count the number of tokens in a Message, including tools, images, and documents, without creating it.
  *
  * Learn more about token counting in our [user guide](/en/docs/build-with-claude/token-counting)
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->beta.messages->countTokens(...$params->toArray());`
  *
  * @see Anthropic\Beta\Messages->countTokens
  *
