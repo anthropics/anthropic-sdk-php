@@ -14,5 +14,5 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 interface BaseModel extends \ArrayAccess, \JsonSerializable, \Stringable, ConverterSource
 {
     /** @return array<string, mixed> */
-    public function toArray(): array;
+    public function toProperties(): array;
 }

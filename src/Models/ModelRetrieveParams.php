@@ -11,20 +11,9 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new ModelRetrieveParams); // set properties as needed
- * $client->models->retrieve(...$params->toArray());
- * ```
  * Get a specific model.
  *
  * The Models API response can be used to determine information about a specific model or resolve a model alias to a model ID.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->models->retrieve(...$params->toArray());`
  *
  * @see Anthropic\Models->retrieve
  *
