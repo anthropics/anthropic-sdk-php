@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type server_tool_use_block_param = array{
  *   id: string,
- *   input: mixed,
+ *   input: array<string, mixed>,
  *   name: string,
  *   type: string,
  *   cacheControl?: CacheControlEphemeral|null,
@@ -31,8 +31,9 @@ final class ServerToolUseBlockParam implements BaseModel
     #[Api]
     public string $id;
 
-    #[Api]
-    public mixed $input;
+    /** @var array<string, mixed> $input */
+    #[Api(map: 'mixed')]
+    public array $input;
 
     /**
      * Create a cache control breakpoint at this content block.
@@ -63,10 +64,12 @@ final class ServerToolUseBlockParam implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param array<string, mixed> $input
      */
     public static function with(
         string $id,
-        mixed $input,
+        array $input,
         ?CacheControlEphemeral $cacheControl = null
     ): self {
         $obj = new self;
@@ -87,7 +90,10 @@ final class ServerToolUseBlockParam implements BaseModel
         return $obj;
     }
 
-    public function withInput(mixed $input): self
+    /**
+     * @param array<string, mixed> $input
+     */
+    public function withInput(array $input): self
     {
         $obj = clone $this;
         $obj->input = $input;
