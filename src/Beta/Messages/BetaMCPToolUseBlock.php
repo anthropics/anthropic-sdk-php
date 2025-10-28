@@ -10,7 +10,11 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type beta_mcp_tool_use_block = array{
- *   id: string, input: mixed, name: string, serverName: string, type: string
+ *   id: string,
+ *   input: array<string, mixed>,
+ *   name: string,
+ *   serverName: string,
+ *   type: string,
  * }
  */
 final class BetaMCPToolUseBlock implements BaseModel
@@ -24,8 +28,9 @@ final class BetaMCPToolUseBlock implements BaseModel
     #[Api]
     public string $id;
 
-    #[Api]
-    public mixed $input;
+    /** @var array<string, mixed> $input */
+    #[Api(map: 'mixed')]
+    public array $input;
 
     /**
      * The name of the MCP tool.
@@ -66,10 +71,12 @@ final class BetaMCPToolUseBlock implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param array<string, mixed> $input
      */
     public static function with(
         string $id,
-        mixed $input,
+        array $input,
         string $name,
         string $serverName
     ): self {
@@ -91,7 +98,10 @@ final class BetaMCPToolUseBlock implements BaseModel
         return $obj;
     }
 
-    public function withInput(mixed $input): self
+    /**
+     * @param array<string, mixed> $input
+     */
+    public function withInput(array $input): self
     {
         $obj = clone $this;
         $obj->input = $input;

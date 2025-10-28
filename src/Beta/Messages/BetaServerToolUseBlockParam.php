@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type beta_server_tool_use_block_param = array{
  *   id: string,
- *   input: mixed,
+ *   input: array<string, mixed>,
  *   name: value-of<Name>,
  *   type: string,
  *   cacheControl?: BetaCacheControlEphemeral|null,
@@ -29,8 +29,9 @@ final class BetaServerToolUseBlockParam implements BaseModel
     #[Api]
     public string $id;
 
-    #[Api]
-    public mixed $input;
+    /** @var array<string, mixed> $input */
+    #[Api(map: 'mixed')]
+    public array $input;
 
     /** @var value-of<Name> $name */
     #[Api(enum: Name::class)]
@@ -66,11 +67,12 @@ final class BetaServerToolUseBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param array<string, mixed> $input
      * @param Name|value-of<Name> $name
      */
     public static function with(
         string $id,
-        mixed $input,
+        array $input,
         Name|string $name,
         ?BetaCacheControlEphemeral $cacheControl = null,
     ): self {
@@ -93,7 +95,10 @@ final class BetaServerToolUseBlockParam implements BaseModel
         return $obj;
     }
 
-    public function withInput(mixed $input): self
+    /**
+     * @param array<string, mixed> $input
+     */
+    public function withInput(array $input): self
     {
         $obj = clone $this;
         $obj->input = $input;
