@@ -160,18 +160,7 @@ final class BatchesTest extends TestCase
                             [
                                 BetaTool::with(
                                     inputSchema: (new InputSchema)
-                                        ->withProperties(
-                                            [
-                                                'location' => [
-                                                    'description' => 'The city and state, e.g. San Francisco, CA',
-                                                    'type' => 'string',
-                                                ],
-                                                'unit' => [
-                                                    'description' => 'Unit for the output - one of (celsius, fahrenheit)',
-                                                    'type' => 'string',
-                                                ],
-                                            ],
-                                        )
+                                        ->withProperties(['location' => 'bar', 'unit' => 'bar'])
                                         ->withRequired(['location']),
                                     name: 'name',
                                 )

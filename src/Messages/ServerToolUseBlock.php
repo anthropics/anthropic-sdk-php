@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type server_tool_use_block = array{
- *   id: string, input: mixed, name: string, type: string
+ *   id: string, input: array<string, mixed>, name: string, type: string
  * }
  */
 final class ServerToolUseBlock implements BaseModel
@@ -27,8 +27,9 @@ final class ServerToolUseBlock implements BaseModel
     #[Api]
     public string $id;
 
-    #[Api]
-    public mixed $input;
+    /** @var array<string, mixed> $input */
+    #[Api(map: 'mixed')]
+    public array $input;
 
     /**
      * `new ServerToolUseBlock()` is missing required properties by the API.
@@ -53,8 +54,10 @@ final class ServerToolUseBlock implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param array<string, mixed> $input
      */
-    public static function with(string $id, mixed $input): self
+    public static function with(string $id, array $input): self
     {
         $obj = new self;
 
@@ -72,7 +75,10 @@ final class ServerToolUseBlock implements BaseModel
         return $obj;
     }
 
-    public function withInput(mixed $input): self
+    /**
+     * @param array<string, mixed> $input
+     */
+    public function withInput(array $input): self
     {
         $obj = clone $this;
         $obj->input = $input;

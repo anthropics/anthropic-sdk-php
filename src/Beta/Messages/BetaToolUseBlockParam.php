@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type beta_tool_use_block_param = array{
  *   id: string,
- *   input: mixed,
+ *   input: array<string, mixed>,
  *   name: string,
  *   type: string,
  *   cacheControl?: BetaCacheControlEphemeral|null,
@@ -28,8 +28,9 @@ final class BetaToolUseBlockParam implements BaseModel
     #[Api]
     public string $id;
 
-    #[Api]
-    public mixed $input;
+    /** @var array<string, mixed> $input */
+    #[Api(map: 'mixed')]
+    public array $input;
 
     #[Api]
     public string $name;
@@ -63,10 +64,12 @@ final class BetaToolUseBlockParam implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param array<string, mixed> $input
      */
     public static function with(
         string $id,
-        mixed $input,
+        array $input,
         string $name,
         ?BetaCacheControlEphemeral $cacheControl = null,
     ): self {
@@ -89,7 +92,10 @@ final class BetaToolUseBlockParam implements BaseModel
         return $obj;
     }
 
-    public function withInput(mixed $input): self
+    /**
+     * @param array<string, mixed> $input
+     */
+    public function withInput(array $input): self
     {
         $obj = clone $this;
         $obj->input = $input;

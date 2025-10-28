@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaContextManagementConfig\Edit;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type beta_context_management_config = array{
- *   edits?: list<BetaClearToolUses20250919Edit>
+ *   edits?: list<BetaClearToolUses20250919Edit|BetaClearThinking20251015Edit>
  * }
  */
 final class BetaContextManagementConfig implements BaseModel
@@ -21,9 +22,9 @@ final class BetaContextManagementConfig implements BaseModel
     /**
      * List of context management edits to apply.
      *
-     * @var list<BetaClearToolUses20250919Edit>|null $edits
+     * @var list<BetaClearToolUses20250919Edit|BetaClearThinking20251015Edit>|null $edits
      */
-    #[Api(list: BetaClearToolUses20250919Edit::class, optional: true)]
+    #[Api(list: Edit::class, optional: true)]
     public ?array $edits;
 
     public function __construct()
@@ -36,7 +37,7 @@ final class BetaContextManagementConfig implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaClearToolUses20250919Edit> $edits
+     * @param list<BetaClearToolUses20250919Edit|BetaClearThinking20251015Edit> $edits
      */
     public static function with(?array $edits = null): self
     {
@@ -50,7 +51,7 @@ final class BetaContextManagementConfig implements BaseModel
     /**
      * List of context management edits to apply.
      *
-     * @param list<BetaClearToolUses20250919Edit> $edits
+     * @param list<BetaClearToolUses20250919Edit|BetaClearThinking20251015Edit> $edits
      */
     public function withEdits(array $edits): self
     {
