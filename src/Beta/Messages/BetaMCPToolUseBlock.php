@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_mcp_tool_use_block = array{
+ * @phpstan-type BetaMCPToolUseBlockShape = array{
  *   id: string,
  *   input: array<string, mixed>,
  *   name: string,
@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaMCPToolUseBlock implements BaseModel
 {
-    /** @use SdkModel<beta_mcp_tool_use_block> */
+    /** @use SdkModel<BetaMCPToolUseBlockShape> */
     use SdkModel;
 
     #[Api]

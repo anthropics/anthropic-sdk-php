@@ -10,13 +10,13 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\ContentBlockSource\Content;
 
 /**
- * @phpstan-type content_block_source = array{
+ * @phpstan-type ContentBlockSourceShape = array{
  *   content: string|list<TextBlockParam|ImageBlockParam>, type: string
  * }
  */
 final class ContentBlockSource implements BaseModel
 {
-    /** @use SdkModel<content_block_source> */
+    /** @use SdkModel<ContentBlockSourceShape> */
     use SdkModel;
 
     #[Api]

@@ -19,11 +19,11 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Beta\Messages\Batches->cancel
  *
- * @phpstan-type batch_cancel_params = array{betas?: list<string|AnthropicBeta>}
+ * @phpstan-type BatchCancelParamsShape = array{betas?: list<string|AnthropicBeta>}
  */
 final class BatchCancelParams implements BaseModel
 {
-    /** @use SdkModel<batch_cancel_params> */
+    /** @use SdkModel<BatchCancelParamsShape> */
     use SdkModel;
     use SdkParams;
 

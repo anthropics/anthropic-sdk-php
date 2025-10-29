@@ -11,11 +11,11 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type message_tokens_count = array{inputTokens: int}
+ * @phpstan-type MessageTokensCountShape = array{inputTokens: int}
  */
 final class MessageTokensCount implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<message_tokens_count> */
+    /** @use SdkModel<MessageTokensCountShape> */
     use SdkModel;
 
     use SdkResponse;

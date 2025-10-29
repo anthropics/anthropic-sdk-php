@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_clear_tool_uses20250919_edit_response = array{
+ * @phpstan-type BetaClearToolUses20250919EditResponseShape = array{
  *   clearedInputTokens: int, clearedToolUses: int, type: string
  * }
  */
 final class BetaClearToolUses20250919EditResponse implements BaseModel
 {
-    /** @use SdkModel<beta_clear_tool_uses20250919_edit_response> */
+    /** @use SdkModel<BetaClearToolUses20250919EditResponseShape> */
     use SdkModel;
 
     /**

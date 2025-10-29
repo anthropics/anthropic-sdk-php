@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Beta\Skills->create
  *
- * @phpstan-type skill_create_params = array{
+ * @phpstan-type SkillCreateParamsShape = array{
  *   displayTitle?: string|null,
  *   files?: list<string>|null,
  *   betas?: list<string|AnthropicBeta>,
@@ -23,7 +23,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class SkillCreateParams implements BaseModel
 {
-    /** @use SdkModel<skill_create_params> */
+    /** @use SdkModel<SkillCreateParamsShape> */
     use SdkModel;
     use SdkParams;
 

@@ -9,11 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type redacted_thinking_block_param = array{data: string, type: string}
+ * @phpstan-type RedactedThinkingBlockParamShape = array{
+ *   data: string, type: string
+ * }
  */
 final class RedactedThinkingBlockParam implements BaseModel
 {
-    /** @use SdkModel<redacted_thinking_block_param> */
+    /** @use SdkModel<RedactedThinkingBlockParamShape> */
     use SdkModel;
 
     #[Api]

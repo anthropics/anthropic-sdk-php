@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type error_response = array{
+ * @phpstan-type ErrorResponseShape = array{
  *   error: InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError,
  *   requestID: string|null,
  *   type: string,
@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class ErrorResponse implements BaseModel
 {
-    /** @use SdkModel<error_response> */
+    /** @use SdkModel<ErrorResponseShape> */
     use SdkModel;
 
     #[Api]

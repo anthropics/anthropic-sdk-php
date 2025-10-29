@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_web_search_tool_result_block_param = array{
+ * @phpstan-type BetaWebSearchToolResultBlockParamShape = array{
  *   content: list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError,
  *   toolUseID: string,
  *   type: string,
@@ -18,7 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaWebSearchToolResultBlockParam implements BaseModel
 {
-    /** @use SdkModel<beta_web_search_tool_result_block_param> */
+    /** @use SdkModel<BetaWebSearchToolResultBlockParamShape> */
     use SdkModel;
 
     #[Api]

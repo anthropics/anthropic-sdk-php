@@ -10,13 +10,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_content_block_source = array{
+ * @phpstan-type BetaContentBlockSourceShape = array{
  *   content: string|list<BetaTextBlockParam|BetaImageBlockParam>, type: string
  * }
  */
 final class BetaContentBlockSource implements BaseModel
 {
-    /** @use SdkModel<beta_content_block_source> */
+    /** @use SdkModel<BetaContentBlockSourceShape> */
     use SdkModel;
 
     #[Api]

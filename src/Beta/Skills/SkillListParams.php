@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Beta\Skills->list
  *
- * @phpstan-type skill_list_params = array{
+ * @phpstan-type SkillListParamsShape = array{
  *   limit?: int,
  *   page?: string|null,
  *   source?: string|null,
@@ -24,7 +24,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class SkillListParams implements BaseModel
 {
-    /** @use SdkModel<skill_list_params> */
+    /** @use SdkModel<SkillListParamsShape> */
     use SdkModel;
     use SdkParams;
 

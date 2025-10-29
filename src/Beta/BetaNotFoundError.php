@@ -9,11 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_not_found_error = array{message: string, type: string}
+ * @phpstan-type BetaNotFoundErrorShape = array{message: string, type: string}
  */
 final class BetaNotFoundError implements BaseModel
 {
-    /** @use SdkModel<beta_not_found_error> */
+    /** @use SdkModel<BetaNotFoundErrorShape> */
     use SdkModel;
 
     #[Api]

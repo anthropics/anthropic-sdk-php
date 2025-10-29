@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Usage\ServiceTier;
 
 /**
- * @phpstan-type usage_alias = array{
+ * @phpstan-type UsageShape = array{
  *   cacheCreation: CacheCreation|null,
  *   cacheCreationInputTokens: int|null,
  *   cacheReadInputTokens: int|null,
@@ -22,7 +22,7 @@ use Anthropic\Messages\Usage\ServiceTier;
  */
 final class Usage implements BaseModel
 {
-    /** @use SdkModel<usage_alias> */
+    /** @use SdkModel<UsageShape> */
     use SdkModel;
 
     /**

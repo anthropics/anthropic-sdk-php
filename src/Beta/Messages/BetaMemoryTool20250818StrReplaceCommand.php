@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_memory_tool20250818_str_replace_command = array{
+ * @phpstan-type BetaMemoryTool20250818StrReplaceCommandShape = array{
  *   command: string, newStr: string, oldStr: string, path: string
  * }
  */
 final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
 {
-    /** @use SdkModel<beta_memory_tool20250818_str_replace_command> */
+    /** @use SdkModel<BetaMemoryTool20250818StrReplaceCommandShape> */
     use SdkModel;
 
     /**

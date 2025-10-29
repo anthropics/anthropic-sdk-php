@@ -17,11 +17,13 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Beta\Models->retrieve
  *
- * @phpstan-type model_retrieve_params = array{betas?: list<string|AnthropicBeta>}
+ * @phpstan-type ModelRetrieveParamsShape = array{
+ *   betas?: list<string|AnthropicBeta>
+ * }
  */
 final class ModelRetrieveParams implements BaseModel
 {
-    /** @use SdkModel<model_retrieve_params> */
+    /** @use SdkModel<ModelRetrieveParamsShape> */
     use SdkModel;
     use SdkParams;
 

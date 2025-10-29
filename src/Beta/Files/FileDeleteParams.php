@@ -15,11 +15,11 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Beta\Files->delete
  *
- * @phpstan-type file_delete_params = array{betas?: list<string|AnthropicBeta>}
+ * @phpstan-type FileDeleteParamsShape = array{betas?: list<string|AnthropicBeta>}
  */
 final class FileDeleteParams implements BaseModel
 {
-    /** @use SdkModel<file_delete_params> */
+    /** @use SdkModel<FileDeleteParamsShape> */
     use SdkModel;
     use SdkParams;
 

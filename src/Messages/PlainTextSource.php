@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type plain_text_source = array{
+ * @phpstan-type PlainTextSourceShape = array{
  *   data: string, mediaType: string, type: string
  * }
  */
 final class PlainTextSource implements BaseModel
 {
-    /** @use SdkModel<plain_text_source> */
+    /** @use SdkModel<PlainTextSourceShape> */
     use SdkModel;
 
     #[Api('media_type')]

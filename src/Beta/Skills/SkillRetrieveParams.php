@@ -15,11 +15,13 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Beta\Skills->retrieve
  *
- * @phpstan-type skill_retrieve_params = array{betas?: list<string|AnthropicBeta>}
+ * @phpstan-type SkillRetrieveParamsShape = array{
+ *   betas?: list<string|AnthropicBeta>
+ * }
  */
 final class SkillRetrieveParams implements BaseModel
 {
-    /** @use SdkModel<skill_retrieve_params> */
+    /** @use SdkModel<SkillRetrieveParamsShape> */
     use SdkModel;
     use SdkParams;
 

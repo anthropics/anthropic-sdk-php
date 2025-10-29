@@ -19,11 +19,13 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Beta\Messages\Batches->results
  *
- * @phpstan-type batch_results_params = array{betas?: list<string|AnthropicBeta>}
+ * @phpstan-type BatchResultsParamsShape = array{
+ *   betas?: list<string|AnthropicBeta>
+ * }
  */
 final class BatchResultsParams implements BaseModel
 {
-    /** @use SdkModel<batch_results_params> */
+    /** @use SdkModel<BatchResultsParamsShape> */
     use SdkModel;
     use SdkParams;
 

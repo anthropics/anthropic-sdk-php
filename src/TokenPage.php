@@ -15,7 +15,7 @@ use Anthropic\Core\Util;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * @phpstan-type token_page = array{
+ * @phpstan-type TokenPageShape = array{
  *   data?: list<mixed>|null, hasMore?: bool|null, nextPage?: string|null
  * }
  *
@@ -25,7 +25,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 final class TokenPage implements BaseModel, BasePage
 {
-    /** @use SdkModel<token_page> */
+    /** @use SdkModel<TokenPageShape> */
     use SdkModel;
 
     /** @use SdkPage<TItem> */

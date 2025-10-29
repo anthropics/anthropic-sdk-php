@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\ToolResultBlockParam\Content;
 
 /**
- * @phpstan-type tool_result_block_param = array{
+ * @phpstan-type ToolResultBlockParamShape = array{
  *   toolUseID: string,
  *   type: string,
  *   cacheControl?: CacheControlEphemeral|null,
@@ -20,7 +20,7 @@ use Anthropic\Messages\ToolResultBlockParam\Content;
  */
 final class ToolResultBlockParam implements BaseModel
 {
-    /** @use SdkModel<tool_result_block_param> */
+    /** @use SdkModel<ToolResultBlockParamShape> */
     use SdkModel;
 
     #[Api]

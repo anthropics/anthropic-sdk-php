@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_tool_use_block = array{
+ * @phpstan-type BetaToolUseBlockShape = array{
  *   id: string, input: array<string, mixed>, name: string, type: string
  * }
  */
 final class BetaToolUseBlock implements BaseModel
 {
-    /** @use SdkModel<beta_tool_use_block> */
+    /** @use SdkModel<BetaToolUseBlockShape> */
     use SdkModel;
 
     #[Api]

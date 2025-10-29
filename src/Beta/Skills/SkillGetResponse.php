@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type skill_get_response = array{
+ * @phpstan-type SkillGetResponseShape = array{
  *   id: string,
  *   createdAt: string,
  *   displayTitle: string|null,
@@ -23,7 +23,7 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  */
 final class SkillGetResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<skill_get_response> */
+    /** @use SdkModel<SkillGetResponseShape> */
     use SdkModel;
 
     use SdkResponse;

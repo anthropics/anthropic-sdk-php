@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_text_editor_code_execution_create_result_block_param = array{
+ * @phpstan-type BetaTextEditorCodeExecutionCreateResultBlockParamShape = array{
  *   isFileUpdate: bool, type: string
  * }
  */
 final class BetaTextEditorCodeExecutionCreateResultBlockParam implements BaseModel
 {
-    /** @use SdkModel<beta_text_editor_code_execution_create_result_block_param> */
+    /** @use SdkModel<BetaTextEditorCodeExecutionCreateResultBlockParamShape> */
     use SdkModel;
 
     #[Api]

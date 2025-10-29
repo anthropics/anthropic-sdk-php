@@ -15,13 +15,13 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Beta\Files->retrieveMetadata
  *
- * @phpstan-type file_retrieve_metadata_params = array{
+ * @phpstan-type FileRetrieveMetadataParamsShape = array{
  *   betas?: list<string|AnthropicBeta>
  * }
  */
 final class FileRetrieveMetadataParams implements BaseModel
 {
-    /** @use SdkModel<file_retrieve_metadata_params> */
+    /** @use SdkModel<FileRetrieveMetadataParamsShape> */
     use SdkModel;
     use SdkParams;
 

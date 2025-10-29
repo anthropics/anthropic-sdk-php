@@ -12,13 +12,13 @@ use Anthropic\Core\Contracts\BaseModel;
  * A content block that represents a file to be uploaded to the container
  * Files uploaded via this block will be available in the container's input directory.
  *
- * @phpstan-type beta_container_upload_block_param = array{
+ * @phpstan-type BetaContainerUploadBlockParamShape = array{
  *   fileID: string, type: string, cacheControl?: BetaCacheControlEphemeral|null
  * }
  */
 final class BetaContainerUploadBlockParam implements BaseModel
 {
-    /** @use SdkModel<beta_container_upload_block_param> */
+    /** @use SdkModel<BetaContainerUploadBlockParamShape> */
     use SdkModel;
 
     #[Api]

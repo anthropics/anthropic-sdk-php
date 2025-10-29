@@ -10,13 +10,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_base64_image_source = array{
+ * @phpstan-type BetaBase64ImageSourceShape = array{
  *   data: string, mediaType: value-of<MediaType>, type: string
  * }
  */
 final class BetaBase64ImageSource implements BaseModel
 {
-    /** @use SdkModel<beta_base64_image_source> */
+    /** @use SdkModel<BetaBase64ImageSourceShape> */
     use SdkModel;
 
     #[Api]

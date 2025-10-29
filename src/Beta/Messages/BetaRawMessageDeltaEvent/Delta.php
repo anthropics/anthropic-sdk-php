@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type delta_alias = array{
+ * @phpstan-type DeltaShape = array{
  *   container: BetaContainer|null,
  *   stopReason: value-of<BetaStopReason>|null,
  *   stopSequence: string|null,
@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class Delta implements BaseModel
 {
-    /** @use SdkModel<delta_alias> */
+    /** @use SdkModel<DeltaShape> */
     use SdkModel;
 
     /**

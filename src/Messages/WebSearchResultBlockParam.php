@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type web_search_result_block_param = array{
+ * @phpstan-type WebSearchResultBlockParamShape = array{
  *   encryptedContent: string,
  *   title: string,
  *   type: string,
@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class WebSearchResultBlockParam implements BaseModel
 {
-    /** @use SdkModel<web_search_result_block_param> */
+    /** @use SdkModel<WebSearchResultBlockParamShape> */
     use SdkModel;
 
     #[Api]

@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_web_fetch_tool20250910 = array{
+ * @phpstan-type BetaWebFetchTool20250910Shape = array{
  *   name: string,
  *   type: string,
  *   allowedDomains?: list<string>|null,
@@ -22,7 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaWebFetchTool20250910 implements BaseModel
 {
-    /** @use SdkModel<beta_web_fetch_tool20250910> */
+    /** @use SdkModel<BetaWebFetchTool20250910Shape> */
     use SdkModel;
 
     /**

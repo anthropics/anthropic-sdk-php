@@ -16,13 +16,13 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Messages\Batches->list
  *
- * @phpstan-type batch_list_params = array{
+ * @phpstan-type BatchListParamsShape = array{
  *   afterID?: string, beforeID?: string, limit?: int
  * }
  */
 final class BatchListParams implements BaseModel
 {
-    /** @use SdkModel<batch_list_params> */
+    /** @use SdkModel<BatchListParamsShape> */
     use SdkModel;
     use SdkParams;
 

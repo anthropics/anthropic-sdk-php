@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_count_tokens_context_management_response = array{
+ * @phpstan-type BetaCountTokensContextManagementResponseShape = array{
  *   originalInputTokens: int
  * }
  */
 final class BetaCountTokensContextManagementResponse implements BaseModel
 {
-    /** @use SdkModel<beta_count_tokens_context_management_response> */
+    /** @use SdkModel<BetaCountTokensContextManagementResponseShape> */
     use SdkModel;
 
     /**

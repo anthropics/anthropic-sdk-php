@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type thinking_block = array{
+ * @phpstan-type ThinkingBlockShape = array{
  *   signature: string, thinking: string, type: string
  * }
  */
 final class ThinkingBlock implements BaseModel
 {
-    /** @use SdkModel<thinking_block> */
+    /** @use SdkModel<ThinkingBlockShape> */
     use SdkModel;
 
     #[Api]

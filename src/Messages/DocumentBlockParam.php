@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\DocumentBlockParam\Source;
 
 /**
- * @phpstan-type document_block_param = array{
+ * @phpstan-type DocumentBlockParamShape = array{
  *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
  *   type: string,
  *   cacheControl?: CacheControlEphemeral|null,
@@ -21,7 +21,7 @@ use Anthropic\Messages\DocumentBlockParam\Source;
  */
 final class DocumentBlockParam implements BaseModel
 {
-    /** @use SdkModel<document_block_param> */
+    /** @use SdkModel<DocumentBlockParamShape> */
     use SdkModel;
 
     #[Api]

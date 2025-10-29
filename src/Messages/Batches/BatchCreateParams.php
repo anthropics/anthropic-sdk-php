@@ -19,11 +19,11 @@ use Anthropic\Messages\Batches\BatchCreateParams\Request;
  *
  * @see Anthropic\Messages\Batches->create
  *
- * @phpstan-type batch_create_params = array{requests: list<Request>}
+ * @phpstan-type BatchCreateParamsShape = array{requests: list<Request>}
  */
 final class BatchCreateParams implements BaseModel
 {
-    /** @use SdkModel<batch_create_params> */
+    /** @use SdkModel<BatchCreateParamsShape> */
     use SdkModel;
     use SdkParams;
 

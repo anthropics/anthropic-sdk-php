@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Beta\Messages\Batches->list
  *
- * @phpstan-type batch_list_params = array{
+ * @phpstan-type BatchListParamsShape = array{
  *   afterID?: string,
  *   beforeID?: string,
  *   limit?: int,
@@ -26,7 +26,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BatchListParams implements BaseModel
 {
-    /** @use SdkModel<batch_list_params> */
+    /** @use SdkModel<BatchListParamsShape> */
     use SdkModel;
     use SdkParams;
 

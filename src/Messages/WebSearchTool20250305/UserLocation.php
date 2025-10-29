@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Parameters for the user's location. Used to provide more relevant search results.
  *
- * @phpstan-type user_location = array{
+ * @phpstan-type UserLocationShape = array{
  *   type: string,
  *   city?: string|null,
  *   country?: string|null,
@@ -21,7 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class UserLocation implements BaseModel
 {
-    /** @use SdkModel<user_location> */
+    /** @use SdkModel<UserLocationShape> */
     use SdkModel;
 
     #[Api]

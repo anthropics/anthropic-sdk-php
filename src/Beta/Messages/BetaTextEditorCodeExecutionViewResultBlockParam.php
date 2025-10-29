@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_text_editor_code_execution_view_result_block_param = array{
+ * @phpstan-type BetaTextEditorCodeExecutionViewResultBlockParamShape = array{
  *   content: string,
  *   fileType: value-of<FileType>,
  *   type: string,
@@ -21,7 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaTextEditorCodeExecutionViewResultBlockParam implements BaseModel
 {
-    /** @use SdkModel<beta_text_editor_code_execution_view_result_block_param> */
+    /** @use SdkModel<BetaTextEditorCodeExecutionViewResultBlockParamShape> */
     use SdkModel;
 
     #[Api]

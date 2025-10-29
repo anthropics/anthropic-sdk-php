@@ -9,11 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type billing_error = array{message: string, type: string}
+ * @phpstan-type BillingErrorShape = array{message: string, type: string}
  */
 final class BillingError implements BaseModel
 {
-    /** @use SdkModel<billing_error> */
+    /** @use SdkModel<BillingErrorShape> */
     use SdkModel;
 
     #[Api]

@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type text_block_param = array{
+ * @phpstan-type TextBlockParamShape = array{
  *   text: string,
  *   type: string,
  *   cacheControl?: CacheControlEphemeral|null,
@@ -18,7 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class TextBlockParam implements BaseModel
 {
-    /** @use SdkModel<text_block_param> */
+    /** @use SdkModel<TextBlockParamShape> */
     use SdkModel;
 
     #[Api]

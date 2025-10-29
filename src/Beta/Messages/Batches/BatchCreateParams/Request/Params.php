@@ -45,7 +45,7 @@ use Anthropic\Messages\Model;
  *
  * See the [Messages API reference](/en/api/messages) for full documentation on available parameters.
  *
- * @phpstan-type params_alias = array{
+ * @phpstan-type ParamsShape = array{
  *   maxTokens: int,
  *   messages: list<BetaMessageParam>,
  *   model: string|value-of<Model>,
@@ -67,7 +67,7 @@ use Anthropic\Messages\Model;
  */
 final class Params implements BaseModel
 {
-    /** @use SdkModel<params_alias> */
+    /** @use SdkModel<ParamsShape> */
     use SdkModel;
 
     /**

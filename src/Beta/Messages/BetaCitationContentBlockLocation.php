@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_citation_content_block_location = array{
+ * @phpstan-type BetaCitationContentBlockLocationShape = array{
  *   citedText: string,
  *   documentIndex: int,
  *   documentTitle: string|null,
@@ -21,7 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaCitationContentBlockLocation implements BaseModel
 {
-    /** @use SdkModel<beta_citation_content_block_location> */
+    /** @use SdkModel<BetaCitationContentBlockLocationShape> */
     use SdkModel;
 
     #[Api]
