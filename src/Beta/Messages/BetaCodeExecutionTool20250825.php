@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_code_execution_tool20250825 = array{
+ * @phpstan-type BetaCodeExecutionTool20250825Shape = array{
  *   name: string, type: string, cacheControl?: BetaCacheControlEphemeral|null
  * }
  */
 final class BetaCodeExecutionTool20250825 implements BaseModel
 {
-    /** @use SdkModel<beta_code_execution_tool20250825> */
+    /** @use SdkModel<BetaCodeExecutionTool20250825Shape> */
     use SdkModel;
 
     /**

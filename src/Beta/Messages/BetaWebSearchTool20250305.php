@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_web_search_tool20250305 = array{
+ * @phpstan-type BetaWebSearchTool20250305Shape = array{
  *   name: string,
  *   type: string,
  *   allowedDomains?: list<string>|null,
@@ -22,7 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaWebSearchTool20250305 implements BaseModel
 {
-    /** @use SdkModel<beta_web_search_tool20250305> */
+    /** @use SdkModel<BetaWebSearchTool20250305Shape> */
     use SdkModel;
 
     /**

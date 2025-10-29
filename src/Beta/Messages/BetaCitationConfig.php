@@ -9,11 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_citation_config = array{enabled: bool}
+ * @phpstan-type BetaCitationConfigShape = array{enabled: bool}
  */
 final class BetaCitationConfig implements BaseModel
 {
-    /** @use SdkModel<beta_citation_config> */
+    /** @use SdkModel<BetaCitationConfigShape> */
     use SdkModel;
 
     #[Api]

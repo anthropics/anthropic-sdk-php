@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_tool_computer_use20250124 = array{
+ * @phpstan-type BetaToolComputerUse20250124Shape = array{
  *   displayHeightPx: int,
  *   displayWidthPx: int,
  *   name: string,
@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaToolComputerUse20250124 implements BaseModel
 {
-    /** @use SdkModel<beta_tool_computer_use20250124> */
+    /** @use SdkModel<BetaToolComputerUse20250124Shape> */
     use SdkModel;
 
     /**

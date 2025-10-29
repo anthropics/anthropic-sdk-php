@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Beta\Models->list
  *
- * @phpstan-type model_list_params = array{
+ * @phpstan-type ModelListParamsShape = array{
  *   afterID?: string,
  *   beforeID?: string,
  *   limit?: int,
@@ -26,7 +26,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class ModelListParams implements BaseModel
 {
-    /** @use SdkModel<model_list_params> */
+    /** @use SdkModel<ModelListParamsShape> */
     use SdkModel;
     use SdkParams;
 

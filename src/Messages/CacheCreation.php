@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type cache_creation = array{
+ * @phpstan-type CacheCreationShape = array{
  *   ephemeral1hInputTokens: int, ephemeral5mInputTokens: int
  * }
  */
 final class CacheCreation implements BaseModel
 {
-    /** @use SdkModel<cache_creation> */
+    /** @use SdkModel<CacheCreationShape> */
     use SdkModel;
 
     /**

@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * This defines the shape of the `input` that your tool accepts and that the model will produce.
  *
- * @phpstan-type input_schema = array{
+ * @phpstan-type InputSchemaShape = array{
  *   type: string,
  *   properties?: array<string, mixed>|null,
  *   required?: list<string>|null,
@@ -21,7 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class InputSchema implements BaseModel
 {
-    /** @use SdkModel<input_schema> */
+    /** @use SdkModel<InputSchemaShape> */
     use SdkModel;
 
     #[Api]

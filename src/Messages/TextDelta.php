@@ -9,11 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type text_delta = array{text: string, type: string}
+ * @phpstan-type TextDeltaShape = array{text: string, type: string}
  */
 final class TextDelta implements BaseModel
 {
-    /** @use SdkModel<text_delta> */
+    /** @use SdkModel<TextDeltaShape> */
     use SdkModel;
 
     #[Api]

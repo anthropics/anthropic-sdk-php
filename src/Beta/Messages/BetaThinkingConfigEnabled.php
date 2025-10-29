@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_thinking_config_enabled = array{
+ * @phpstan-type BetaThinkingConfigEnabledShape = array{
  *   budgetTokens: int, type: string
  * }
  */
 final class BetaThinkingConfigEnabled implements BaseModel
 {
-    /** @use SdkModel<beta_thinking_config_enabled> */
+    /** @use SdkModel<BetaThinkingConfigEnabledShape> */
     use SdkModel;
 
     #[Api]

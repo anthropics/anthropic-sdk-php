@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_web_fetch_tool_result_error_block = array{
+ * @phpstan-type BetaWebFetchToolResultErrorBlockShape = array{
  *   errorCode: value-of<BetaWebFetchToolResultErrorCode>, type: string
  * }
  */
 final class BetaWebFetchToolResultErrorBlock implements BaseModel
 {
-    /** @use SdkModel<beta_web_fetch_tool_result_error_block> */
+    /** @use SdkModel<BetaWebFetchToolResultErrorBlockShape> */
     use SdkModel;
 
     #[Api]

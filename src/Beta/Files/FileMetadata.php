@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type file_metadata = array{
+ * @phpstan-type FileMetadataShape = array{
  *   id: string,
  *   createdAt: \DateTimeInterface,
  *   filename: string,
@@ -23,7 +23,7 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  */
 final class FileMetadata implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<file_metadata> */
+    /** @use SdkModel<FileMetadataShape> */
     use SdkModel;
 
     use SdkResponse;

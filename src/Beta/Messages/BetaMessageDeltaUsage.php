@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_message_delta_usage = array{
+ * @phpstan-type BetaMessageDeltaUsageShape = array{
  *   cacheCreationInputTokens: int|null,
  *   cacheReadInputTokens: int|null,
  *   inputTokens: int|null,
@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaMessageDeltaUsage implements BaseModel
 {
-    /** @use SdkModel<beta_message_delta_usage> */
+    /** @use SdkModel<BetaMessageDeltaUsageShape> */
     use SdkModel;
 
     /**

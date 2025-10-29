@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_clear_thinking20251015_edit = array{
+ * @phpstan-type BetaClearThinking20251015EditShape = array{
  *   type: string, keep?: string|BetaThinkingTurns|BetaAllThinkingTurns
  * }
  */
 final class BetaClearThinking20251015Edit implements BaseModel
 {
-    /** @use SdkModel<beta_clear_thinking20251015_edit> */
+    /** @use SdkModel<BetaClearThinking20251015EditShape> */
     use SdkModel;
 
     #[Api]

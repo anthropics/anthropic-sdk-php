@@ -10,13 +10,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type message_batch_errored_result = array{
+ * @phpstan-type MessageBatchErroredResultShape = array{
  *   error: BetaErrorResponse, type: string
  * }
  */
 final class MessageBatchErroredResult implements BaseModel
 {
-    /** @use SdkModel<message_batch_errored_result> */
+    /** @use SdkModel<MessageBatchErroredResultShape> */
     use SdkModel;
 
     #[Api]

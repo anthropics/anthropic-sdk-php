@@ -9,11 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_permission_error = array{message: string, type: string}
+ * @phpstan-type BetaPermissionErrorShape = array{message: string, type: string}
  */
 final class BetaPermissionError implements BaseModel
 {
-    /** @use SdkModel<beta_permission_error> */
+    /** @use SdkModel<BetaPermissionErrorShape> */
     use SdkModel;
 
     #[Api]

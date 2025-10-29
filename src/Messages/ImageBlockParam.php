@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\ImageBlockParam\Source;
 
 /**
- * @phpstan-type image_block_param = array{
+ * @phpstan-type ImageBlockParamShape = array{
  *   source: Base64ImageSource|URLImageSource,
  *   type: string,
  *   cacheControl?: CacheControlEphemeral|null,
@@ -18,7 +18,7 @@ use Anthropic\Messages\ImageBlockParam\Source;
  */
 final class ImageBlockParam implements BaseModel
 {
-    /** @use SdkModel<image_block_param> */
+    /** @use SdkModel<ImageBlockParamShape> */
     use SdkModel;
 
     #[Api]

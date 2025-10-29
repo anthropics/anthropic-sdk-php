@@ -10,13 +10,13 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\StopReason;
 
 /**
- * @phpstan-type delta_alias = array{
+ * @phpstan-type DeltaShape = array{
  *   stopReason: value-of<StopReason>|null, stopSequence: string|null
  * }
  */
 final class Delta implements BaseModel
 {
-    /** @use SdkModel<delta_alias> */
+    /** @use SdkModel<DeltaShape> */
     use SdkModel;
 
     /** @var value-of<StopReason>|null $stopReason */

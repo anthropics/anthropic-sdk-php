@@ -11,13 +11,13 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * The model will use any available tools.
  *
- * @phpstan-type beta_tool_choice_any = array{
+ * @phpstan-type BetaToolChoiceAnyShape = array{
  *   type: string, disableParallelToolUse?: bool
  * }
  */
 final class BetaToolChoiceAny implements BaseModel
 {
-    /** @use SdkModel<beta_tool_choice_any> */
+    /** @use SdkModel<BetaToolChoiceAnyShape> */
     use SdkModel;
 
     #[Api]

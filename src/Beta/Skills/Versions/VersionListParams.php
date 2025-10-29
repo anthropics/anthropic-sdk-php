@@ -15,13 +15,13 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Beta\Skills\Versions->list
  *
- * @phpstan-type version_list_params = array{
+ * @phpstan-type VersionListParamsShape = array{
  *   limit?: int|null, page?: string|null, betas?: list<string|AnthropicBeta>
  * }
  */
 final class VersionListParams implements BaseModel
 {
-    /** @use SdkModel<version_list_params> */
+    /** @use SdkModel<VersionListParamsShape> */
     use SdkModel;
     use SdkParams;
 

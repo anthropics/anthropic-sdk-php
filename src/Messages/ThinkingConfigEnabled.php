@@ -9,11 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type thinking_config_enabled = array{budgetTokens: int, type: string}
+ * @phpstan-type ThinkingConfigEnabledShape = array{
+ *   budgetTokens: int, type: string
+ * }
  */
 final class ThinkingConfigEnabled implements BaseModel
 {
-    /** @use SdkModel<thinking_config_enabled> */
+    /** @use SdkModel<ThinkingConfigEnabledShape> */
     use SdkModel;
 
     #[Api]

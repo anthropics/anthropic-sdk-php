@@ -11,13 +11,13 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type model_info = array{
+ * @phpstan-type ModelInfoShape = array{
  *   id: string, createdAt: \DateTimeInterface, displayName: string, type: string
  * }
  */
 final class ModelInfo implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<model_info> */
+    /** @use SdkModel<ModelInfoShape> */
     use SdkModel;
 
     use SdkResponse;

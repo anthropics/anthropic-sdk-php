@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_tool_result_block_param = array{
+ * @phpstan-type BetaToolResultBlockParamShape = array{
  *   toolUseID: string,
  *   type: string,
  *   cacheControl?: BetaCacheControlEphemeral|null,
@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaToolResultBlockParam implements BaseModel
 {
-    /** @use SdkModel<beta_tool_result_block_param> */
+    /** @use SdkModel<BetaToolResultBlockParamShape> */
     use SdkModel;
 
     #[Api]

@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_usage = array{
+ * @phpstan-type BetaUsageShape = array{
  *   cacheCreation: BetaCacheCreation|null,
  *   cacheCreationInputTokens: int|null,
  *   cacheReadInputTokens: int|null,
@@ -22,7 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaUsage implements BaseModel
 {
-    /** @use SdkModel<beta_usage> */
+    /** @use SdkModel<BetaUsageShape> */
     use SdkModel;
 
     /**

@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type message_batch_request_counts = array{
+ * @phpstan-type MessageBatchRequestCountsShape = array{
  *   canceled: int, errored: int, expired: int, processing: int, succeeded: int
  * }
  */
 final class MessageBatchRequestCounts implements BaseModel
 {
-    /** @use SdkModel<message_batch_request_counts> */
+    /** @use SdkModel<MessageBatchRequestCountsShape> */
     use SdkModel;
 
     /**

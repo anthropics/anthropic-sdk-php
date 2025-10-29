@@ -11,11 +11,11 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type skill_delete_response = array{id: string, type: string}
+ * @phpstan-type SkillDeleteResponseShape = array{id: string, type: string}
  */
 final class SkillDeleteResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<skill_delete_response> */
+    /** @use SdkModel<SkillDeleteResponseShape> */
     use SdkModel;
 
     use SdkResponse;

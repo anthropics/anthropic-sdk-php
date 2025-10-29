@@ -9,11 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type not_found_error = array{message: string, type: string}
+ * @phpstan-type NotFoundErrorShape = array{message: string, type: string}
  */
 final class NotFoundError implements BaseModel
 {
-    /** @use SdkModel<not_found_error> */
+    /** @use SdkModel<NotFoundErrorShape> */
     use SdkModel;
 
     #[Api]

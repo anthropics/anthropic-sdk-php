@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type tool_text_editor20250124 = array{
+ * @phpstan-type ToolTextEditor20250124Shape = array{
  *   name: string, type: string, cacheControl?: CacheControlEphemeral|null
  * }
  */
 final class ToolTextEditor20250124 implements BaseModel
 {
-    /** @use SdkModel<tool_text_editor20250124> */
+    /** @use SdkModel<ToolTextEditor20250124Shape> */
     use SdkModel;
 
     /**

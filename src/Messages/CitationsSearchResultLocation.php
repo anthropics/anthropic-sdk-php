@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type citations_search_result_location = array{
+ * @phpstan-type CitationsSearchResultLocationShape = array{
  *   citedText: string,
  *   endBlockIndex: int,
  *   searchResultIndex: int,
@@ -21,7 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class CitationsSearchResultLocation implements BaseModel
 {
-    /** @use SdkModel<citations_search_result_location> */
+    /** @use SdkModel<CitationsSearchResultLocationShape> */
     use SdkModel;
 
     #[Api]

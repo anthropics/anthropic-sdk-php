@@ -10,13 +10,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_context_management_config = array{
+ * @phpstan-type BetaContextManagementConfigShape = array{
  *   edits?: list<BetaClearToolUses20250919Edit|BetaClearThinking20251015Edit>
  * }
  */
 final class BetaContextManagementConfig implements BaseModel
 {
-    /** @use SdkModel<beta_context_management_config> */
+    /** @use SdkModel<BetaContextManagementConfigShape> */
     use SdkModel;
 
     /**

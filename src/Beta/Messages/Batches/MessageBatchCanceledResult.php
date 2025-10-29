@@ -9,11 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type message_batch_canceled_result = array{type: string}
+ * @phpstan-type MessageBatchCanceledResultShape = array{type: string}
  */
 final class MessageBatchCanceledResult implements BaseModel
 {
-    /** @use SdkModel<message_batch_canceled_result> */
+    /** @use SdkModel<MessageBatchCanceledResultShape> */
     use SdkModel;
 
     #[Api]

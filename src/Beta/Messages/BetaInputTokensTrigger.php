@@ -9,11 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_input_tokens_trigger = array{type: string, value: int}
+ * @phpstan-type BetaInputTokensTriggerShape = array{type: string, value: int}
  */
 final class BetaInputTokensTrigger implements BaseModel
 {
-    /** @use SdkModel<beta_input_tokens_trigger> */
+    /** @use SdkModel<BetaInputTokensTriggerShape> */
     use SdkModel;
 
     #[Api]

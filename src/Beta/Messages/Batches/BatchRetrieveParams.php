@@ -17,11 +17,13 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Beta\Messages\Batches->retrieve
  *
- * @phpstan-type batch_retrieve_params = array{betas?: list<string|AnthropicBeta>}
+ * @phpstan-type BatchRetrieveParamsShape = array{
+ *   betas?: list<string|AnthropicBeta>
+ * }
  */
 final class BatchRetrieveParams implements BaseModel
 {
-    /** @use SdkModel<batch_retrieve_params> */
+    /** @use SdkModel<BatchRetrieveParamsShape> */
     use SdkModel;
     use SdkParams;
 

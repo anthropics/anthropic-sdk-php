@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_memory_tool20250818_delete_command = array{
+ * @phpstan-type BetaMemoryTool20250818DeleteCommandShape = array{
  *   command: string, path: string
  * }
  */
 final class BetaMemoryTool20250818DeleteCommand implements BaseModel
 {
-    /** @use SdkModel<beta_memory_tool20250818_delete_command> */
+    /** @use SdkModel<BetaMemoryTool20250818DeleteCommandShape> */
     use SdkModel;
 
     /**

@@ -12,13 +12,13 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * A skill that was loaded in a container (response model).
  *
- * @phpstan-type beta_skill = array{
+ * @phpstan-type BetaSkillShape = array{
  *   skillID: string, type: value-of<Type>, version: string
  * }
  */
 final class BetaSkill implements BaseModel
 {
-    /** @use SdkModel<beta_skill> */
+    /** @use SdkModel<BetaSkillShape> */
     use SdkModel;
 
     /**

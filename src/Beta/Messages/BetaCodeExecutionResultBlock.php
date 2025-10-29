@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_code_execution_result_block = array{
+ * @phpstan-type BetaCodeExecutionResultBlockShape = array{
  *   content: list<BetaCodeExecutionOutputBlock>,
  *   returnCode: int,
  *   stderr: string,
@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaCodeExecutionResultBlock implements BaseModel
 {
-    /** @use SdkModel<beta_code_execution_result_block> */
+    /** @use SdkModel<BetaCodeExecutionResultBlockShape> */
     use SdkModel;
 
     #[Api]

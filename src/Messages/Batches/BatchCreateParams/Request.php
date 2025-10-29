@@ -10,11 +10,11 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Batches\BatchCreateParams\Request\Params;
 
 /**
- * @phpstan-type request_alias = array{customID: string, params: Params}
+ * @phpstan-type RequestShape = array{customID: string, params: Params}
  */
 final class Request implements BaseModel
 {
-    /** @use SdkModel<request_alias> */
+    /** @use SdkModel<RequestShape> */
     use SdkModel;
 
     /**

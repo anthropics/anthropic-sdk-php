@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_citations_web_search_result_location = array{
+ * @phpstan-type BetaCitationsWebSearchResultLocationShape = array{
  *   citedText: string,
  *   encryptedIndex: string,
  *   title: string|null,
@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaCitationsWebSearchResultLocation implements BaseModel
 {
-    /** @use SdkModel<beta_citations_web_search_result_location> */
+    /** @use SdkModel<BetaCitationsWebSearchResultLocationShape> */
     use SdkModel;
 
     #[Api]

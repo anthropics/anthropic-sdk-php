@@ -11,7 +11,7 @@ use Anthropic\Messages\Tool\InputSchema;
 use Anthropic\Messages\Tool\Type;
 
 /**
- * @phpstan-type tool_alias = array{
+ * @phpstan-type ToolShape = array{
  *   inputSchema: InputSchema,
  *   name: string,
  *   cacheControl?: CacheControlEphemeral|null,
@@ -21,7 +21,7 @@ use Anthropic\Messages\Tool\Type;
  */
 final class Tool implements BaseModel
 {
-    /** @use SdkModel<tool_alias> */
+    /** @use SdkModel<ToolShape> */
     use SdkModel;
 
     /**

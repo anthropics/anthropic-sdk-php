@@ -11,14 +11,14 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type beta_message_tokens_count = array{
+ * @phpstan-type BetaMessageTokensCountShape = array{
  *   contextManagement: BetaCountTokensContextManagementResponse|null,
  *   inputTokens: int,
  * }
  */
 final class BetaMessageTokensCount implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<beta_message_tokens_count> */
+    /** @use SdkModel<BetaMessageTokensCountShape> */
     use SdkModel;
 
     use SdkResponse;

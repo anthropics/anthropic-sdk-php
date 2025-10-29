@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type search_result_block_param = array{
+ * @phpstan-type SearchResultBlockParamShape = array{
  *   content: list<TextBlockParam>,
  *   source: string,
  *   title: string,
@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class SearchResultBlockParam implements BaseModel
 {
-    /** @use SdkModel<search_result_block_param> */
+    /** @use SdkModel<SearchResultBlockParamShape> */
     use SdkModel;
 
     #[Api]

@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_request_mcp_server_url_definition = array{
+ * @phpstan-type BetaRequestMCPServerURLDefinitionShape = array{
  *   name: string,
  *   type: string,
  *   url: string,
@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaRequestMCPServerURLDefinition implements BaseModel
 {
-    /** @use SdkModel<beta_request_mcp_server_url_definition> */
+    /** @use SdkModel<BetaRequestMCPServerURLDefinitionShape> */
     use SdkModel;
 
     #[Api]

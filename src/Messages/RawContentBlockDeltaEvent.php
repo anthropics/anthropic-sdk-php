@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type raw_content_block_delta_event = array{
+ * @phpstan-type RawContentBlockDeltaEventShape = array{
  *   delta: TextDelta|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta,
  *   index: int,
  *   type: string,
@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class RawContentBlockDeltaEvent implements BaseModel
 {
-    /** @use SdkModel<raw_content_block_delta_event> */
+    /** @use SdkModel<RawContentBlockDeltaEventShape> */
     use SdkModel;
 
     #[Api]

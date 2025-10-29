@@ -9,11 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type raw_content_block_stop_event = array{index: int, type: string}
+ * @phpstan-type RawContentBlockStopEventShape = array{index: int, type: string}
  */
 final class RawContentBlockStopEvent implements BaseModel
 {
-    /** @use SdkModel<raw_content_block_stop_event> */
+    /** @use SdkModel<RawContentBlockStopEventShape> */
     use SdkModel;
 
     #[Api]
