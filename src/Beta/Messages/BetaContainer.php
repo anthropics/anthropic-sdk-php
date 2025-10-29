@@ -11,13 +11,13 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Information about the container used in the request (for the code execution tool).
  *
- * @phpstan-type beta_container = array{
+ * @phpstan-type BetaContainerShape = array{
  *   id: string, expiresAt: \DateTimeInterface, skills: list<BetaSkill>|null
  * }
  */
 final class BetaContainer implements BaseModel
 {
-    /** @use SdkModel<beta_container> */
+    /** @use SdkModel<BetaContainerShape> */
     use SdkModel;
 
     /**

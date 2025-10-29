@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type message_batch = array{
+ * @phpstan-type MessageBatchShape = array{
  *   id: string,
  *   archivedAt: \DateTimeInterface|null,
  *   cancelInitiatedAt: \DateTimeInterface|null,
@@ -27,7 +27,7 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  */
 final class MessageBatch implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<message_batch> */
+    /** @use SdkModel<MessageBatchShape> */
     use SdkModel;
 
     use SdkResponse;

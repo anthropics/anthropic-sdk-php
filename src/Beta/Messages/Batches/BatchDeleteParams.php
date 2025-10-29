@@ -19,11 +19,11 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Beta\Messages\Batches->delete
  *
- * @phpstan-type batch_delete_params = array{betas?: list<string|AnthropicBeta>}
+ * @phpstan-type BatchDeleteParamsShape = array{betas?: list<string|AnthropicBeta>}
  */
 final class BatchDeleteParams implements BaseModel
 {
-    /** @use SdkModel<batch_delete_params> */
+    /** @use SdkModel<BatchDeleteParamsShape> */
     use SdkModel;
     use SdkParams;
 

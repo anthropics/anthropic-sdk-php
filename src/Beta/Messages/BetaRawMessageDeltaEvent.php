@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_raw_message_delta_event = array{
+ * @phpstan-type BetaRawMessageDeltaEventShape = array{
  *   contextManagement: BetaContextManagementResponse|null,
  *   delta: Delta,
  *   type: string,
@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaRawMessageDeltaEvent implements BaseModel
 {
-    /** @use SdkModel<beta_raw_message_delta_event> */
+    /** @use SdkModel<BetaRawMessageDeltaEventShape> */
     use SdkModel;
 
     #[Api]

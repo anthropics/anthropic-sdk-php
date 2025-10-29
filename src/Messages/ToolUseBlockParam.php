@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type tool_use_block_param = array{
+ * @phpstan-type ToolUseBlockParamShape = array{
  *   id: string,
  *   input: array<string, mixed>,
  *   name: string,
@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class ToolUseBlockParam implements BaseModel
 {
-    /** @use SdkModel<tool_use_block_param> */
+    /** @use SdkModel<ToolUseBlockParamShape> */
     use SdkModel;
 
     #[Api]

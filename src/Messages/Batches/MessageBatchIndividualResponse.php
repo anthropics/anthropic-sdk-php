@@ -13,14 +13,14 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 /**
  * This is a single line in the response `.jsonl` file and does not represent the response as a whole.
  *
- * @phpstan-type message_batch_individual_response = array{
+ * @phpstan-type MessageBatchIndividualResponseShape = array{
  *   customID: string,
  *   result: MessageBatchSucceededResult|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult,
  * }
  */
 final class MessageBatchIndividualResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<message_batch_individual_response> */
+    /** @use SdkModel<MessageBatchIndividualResponseShape> */
     use SdkModel;
 
     use SdkResponse;

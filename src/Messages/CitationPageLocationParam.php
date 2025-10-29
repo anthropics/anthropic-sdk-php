@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type citation_page_location_param = array{
+ * @phpstan-type CitationPageLocationParamShape = array{
  *   citedText: string,
  *   documentIndex: int,
  *   documentTitle: string|null,
@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class CitationPageLocationParam implements BaseModel
 {
-    /** @use SdkModel<citation_page_location_param> */
+    /** @use SdkModel<CitationPageLocationParamShape> */
     use SdkModel;
 
     #[Api]

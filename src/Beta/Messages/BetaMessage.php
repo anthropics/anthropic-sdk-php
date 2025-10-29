@@ -12,7 +12,7 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 use Anthropic\Messages\Model;
 
 /**
- * @phpstan-type beta_message = array{
+ * @phpstan-type BetaMessageShape = array{
  *   id: string,
  *   container: BetaContainer|null,
  *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
@@ -27,7 +27,7 @@ use Anthropic\Messages\Model;
  */
 final class BetaMessage implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<beta_message> */
+    /** @use SdkModel<BetaMessageShape> */
     use SdkModel;
 
     use SdkResponse;

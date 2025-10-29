@@ -10,13 +10,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_text_editor_code_execution_tool_result_error_param = array{
+ * @phpstan-type BetaTextEditorCodeExecutionToolResultErrorParamShape = array{
  *   errorCode: value-of<ErrorCode>, type: string, errorMessage?: string|null
  * }
  */
 final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
 {
-    /** @use SdkModel<beta_text_editor_code_execution_tool_result_error_param> */
+    /** @use SdkModel<BetaTextEditorCodeExecutionToolResultErrorParamShape> */
     use SdkModel;
 
     #[Api]

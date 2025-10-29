@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type base64_pdf_source = array{
+ * @phpstan-type Base64PDFSourceShape = array{
  *   data: string, mediaType: string, type: string
  * }
  */
 final class Base64PDFSource implements BaseModel
 {
-    /** @use SdkModel<base64_pdf_source> */
+    /** @use SdkModel<Base64PDFSourceShape> */
     use SdkModel;
 
     #[Api('media_type')]

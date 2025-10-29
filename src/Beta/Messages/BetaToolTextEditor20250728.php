@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_tool_text_editor20250728 = array{
+ * @phpstan-type BetaToolTextEditor20250728Shape = array{
  *   name: string,
  *   type: string,
  *   cacheControl?: BetaCacheControlEphemeral|null,
@@ -18,7 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaToolTextEditor20250728 implements BaseModel
 {
-    /** @use SdkModel<beta_tool_text_editor20250728> */
+    /** @use SdkModel<BetaToolTextEditor20250728Shape> */
     use SdkModel;
 
     /**

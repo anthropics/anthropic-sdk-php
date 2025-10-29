@@ -9,11 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type invalid_request_error = array{message: string, type: string}
+ * @phpstan-type InvalidRequestErrorShape = array{message: string, type: string}
  */
 final class InvalidRequestError implements BaseModel
 {
-    /** @use SdkModel<invalid_request_error> */
+    /** @use SdkModel<InvalidRequestErrorShape> */
     use SdkModel;
 
     #[Api]

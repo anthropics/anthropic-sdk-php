@@ -9,11 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_input_tokens_clear_at_least = array{type: string, value: int}
+ * @phpstan-type BetaInputTokensClearAtLeastShape = array{type: string, value: int}
  */
 final class BetaInputTokensClearAtLeast implements BaseModel
 {
-    /** @use SdkModel<beta_input_tokens_clear_at_least> */
+    /** @use SdkModel<BetaInputTokensClearAtLeastShape> */
     use SdkModel;
 
     #[Api]

@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_memory_tool20250818_insert_command = array{
+ * @phpstan-type BetaMemoryTool20250818InsertCommandShape = array{
  *   command: string, insertLine: int, insertText: string, path: string
  * }
  */
 final class BetaMemoryTool20250818InsertCommand implements BaseModel
 {
-    /** @use SdkModel<beta_memory_tool20250818_insert_command> */
+    /** @use SdkModel<BetaMemoryTool20250818InsertCommandShape> */
     use SdkModel;
 
     /**

@@ -9,11 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type urlpdf_source = array{type: string, url: string}
+ * @phpstan-type UrlpdfSourceShape = array{type: string, url: string}
  */
 final class URLPDFSource implements BaseModel
 {
-    /** @use SdkModel<urlpdf_source> */
+    /** @use SdkModel<UrlpdfSourceShape> */
     use SdkModel;
 
     #[Api]

@@ -9,11 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type rate_limit_error = array{message: string, type: string}
+ * @phpstan-type RateLimitErrorShape = array{message: string, type: string}
  */
 final class RateLimitError implements BaseModel
 {
-    /** @use SdkModel<rate_limit_error> */
+    /** @use SdkModel<RateLimitErrorShape> */
     use SdkModel;
 
     #[Api]

@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_web_fetch_tool_result_block = array{
+ * @phpstan-type BetaWebFetchToolResultBlockShape = array{
  *   content: BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock,
  *   toolUseID: string,
  *   type: string,
@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaWebFetchToolResultBlock implements BaseModel
 {
-    /** @use SdkModel<beta_web_fetch_tool_result_block> */
+    /** @use SdkModel<BetaWebFetchToolResultBlockShape> */
     use SdkModel;
 
     #[Api]

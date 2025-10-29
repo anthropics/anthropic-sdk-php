@@ -11,11 +11,11 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type deleted_message_batch = array{id: string, type: string}
+ * @phpstan-type DeletedMessageBatchShape = array{id: string, type: string}
  */
 final class DeletedMessageBatch implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<deleted_message_batch> */
+    /** @use SdkModel<DeletedMessageBatchShape> */
     use SdkModel;
 
     use SdkResponse;

@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\WebSearchTool20250305\UserLocation;
 
 /**
- * @phpstan-type web_search_tool20250305 = array{
+ * @phpstan-type WebSearchTool20250305Shape = array{
  *   name: string,
  *   type: string,
  *   allowedDomains?: list<string>|null,
@@ -22,7 +22,7 @@ use Anthropic\Messages\WebSearchTool20250305\UserLocation;
  */
 final class WebSearchTool20250305 implements BaseModel
 {
-    /** @use SdkModel<web_search_tool20250305> */
+    /** @use SdkModel<WebSearchTool20250305Shape> */
     use SdkModel;
 
     /**

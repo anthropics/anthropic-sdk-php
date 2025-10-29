@@ -20,13 +20,13 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Beta\Messages\Batches->create
  *
- * @phpstan-type batch_create_params = array{
+ * @phpstan-type BatchCreateParamsShape = array{
  *   requests: list<Request>, betas?: list<string|AnthropicBeta>
  * }
  */
 final class BatchCreateParams implements BaseModel
 {
-    /** @use SdkModel<batch_create_params> */
+    /** @use SdkModel<BatchCreateParamsShape> */
     use SdkModel;
     use SdkParams;
 

@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type version_new_response = array{
+ * @phpstan-type VersionNewResponseShape = array{
  *   id: string,
  *   createdAt: string,
  *   description: string,
@@ -24,7 +24,7 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  */
 final class VersionNewResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<version_new_response> */
+    /** @use SdkModel<VersionNewResponseShape> */
     use SdkModel;
 
     use SdkResponse;

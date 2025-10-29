@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_citation_char_location_param = array{
+ * @phpstan-type BetaCitationCharLocationParamShape = array{
  *   citedText: string,
  *   documentIndex: int,
  *   documentTitle: string|null,
@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaCitationCharLocationParam implements BaseModel
 {
-    /** @use SdkModel<beta_citation_char_location_param> */
+    /** @use SdkModel<BetaCitationCharLocationParamShape> */
     use SdkModel;
 
     #[Api]

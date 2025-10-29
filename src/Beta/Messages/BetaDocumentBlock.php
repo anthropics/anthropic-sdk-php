@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_document_block = array{
+ * @phpstan-type BetaDocumentBlockShape = array{
  *   citations: BetaCitationConfig|null,
  *   source: BetaBase64PDFSource|BetaPlainTextSource,
  *   title: string|null,
@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaDocumentBlock implements BaseModel
 {
-    /** @use SdkModel<beta_document_block> */
+    /** @use SdkModel<BetaDocumentBlockShape> */
     use SdkModel;
 
     #[Api]

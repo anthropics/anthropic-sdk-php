@@ -9,11 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type overloaded_error = array{message: string, type: string}
+ * @phpstan-type OverloadedErrorShape = array{message: string, type: string}
  */
 final class OverloadedError implements BaseModel
 {
-    /** @use SdkModel<overloaded_error> */
+    /** @use SdkModel<OverloadedErrorShape> */
     use SdkModel;
 
     #[Api]

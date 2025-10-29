@@ -12,11 +12,11 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type deleted_file = array{id: string, type?: value-of<Type>}
+ * @phpstan-type DeletedFileShape = array{id: string, type?: value-of<Type>}
  */
 final class DeletedFile implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<deleted_file> */
+    /** @use SdkModel<DeletedFileShape> */
     use SdkModel;
 
     use SdkResponse;

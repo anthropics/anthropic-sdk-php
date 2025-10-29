@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_bash_code_execution_output_block_param = array{
+ * @phpstan-type BetaBashCodeExecutionOutputBlockParamShape = array{
  *   fileID: string, type: string
  * }
  */
 final class BetaBashCodeExecutionOutputBlockParam implements BaseModel
 {
-    /** @use SdkModel<beta_bash_code_execution_output_block_param> */
+    /** @use SdkModel<BetaBashCodeExecutionOutputBlockParamShape> */
     use SdkModel;
 
     #[Api]

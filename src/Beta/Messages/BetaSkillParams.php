@@ -12,13 +12,13 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Specification for a skill to be loaded in a container (request model).
  *
- * @phpstan-type beta_skill_params = array{
+ * @phpstan-type BetaSkillParamsShape = array{
  *   skillID: string, type: value-of<Type>, version?: string
  * }
  */
 final class BetaSkillParams implements BaseModel
 {
-    /** @use SdkModel<beta_skill_params> */
+    /** @use SdkModel<BetaSkillParamsShape> */
     use SdkModel;
 
     /**

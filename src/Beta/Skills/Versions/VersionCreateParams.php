@@ -15,13 +15,13 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Beta\Skills\Versions->create
  *
- * @phpstan-type version_create_params = array{
+ * @phpstan-type VersionCreateParamsShape = array{
  *   files?: list<string>|null, betas?: list<string|AnthropicBeta>
  * }
  */
 final class VersionCreateParams implements BaseModel
 {
-    /** @use SdkModel<version_create_params> */
+    /** @use SdkModel<VersionCreateParamsShape> */
     use SdkModel;
     use SdkParams;
 

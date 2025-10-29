@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type message_alias = array{
+ * @phpstan-type MessageShape = array{
  *   id: string,
  *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
  *   model: string|value-of<Model>,
@@ -24,7 +24,7 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  */
 final class Message implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<message_alias> */
+    /** @use SdkModel<MessageShape> */
     use SdkModel;
 
     use SdkResponse;

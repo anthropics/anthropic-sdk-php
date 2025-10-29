@@ -34,7 +34,7 @@ use Anthropic\Messages\WebSearchTool20250305;
  *
  * See the [Messages API reference](/en/api/messages) for full documentation on available parameters.
  *
- * @phpstan-type params_alias = array{
+ * @phpstan-type ParamsShape = array{
  *   maxTokens: int,
  *   messages: list<MessageParam>,
  *   model: string|value-of<Model>,
@@ -53,7 +53,7 @@ use Anthropic\Messages\WebSearchTool20250305;
  */
 final class Params implements BaseModel
 {
-    /** @use SdkModel<params_alias> */
+    /** @use SdkModel<ParamsShape> */
     use SdkModel;
 
     /**

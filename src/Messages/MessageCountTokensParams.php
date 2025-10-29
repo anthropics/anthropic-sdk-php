@@ -19,7 +19,7 @@ use Anthropic\Messages\MessageCountTokensParams\System;
  *
  * @see Anthropic\Messages->countTokens
  *
- * @phpstan-type message_count_tokens_params = array{
+ * @phpstan-type MessageCountTokensParamsShape = array{
  *   messages: list<MessageParam>,
  *   model: string|Model,
  *   system?: string|list<TextBlockParam>,
@@ -30,7 +30,7 @@ use Anthropic\Messages\MessageCountTokensParams\System;
  */
 final class MessageCountTokensParams implements BaseModel
 {
-    /** @use SdkModel<message_count_tokens_params> */
+    /** @use SdkModel<MessageCountTokensParamsShape> */
     use SdkModel;
     use SdkParams;
 

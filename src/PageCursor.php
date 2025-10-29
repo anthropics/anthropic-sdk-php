@@ -15,7 +15,7 @@ use Anthropic\Core\Util;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * @phpstan-type page_cursor = array{
+ * @phpstan-type PageCursorShape = array{
  *   data?: list<mixed>|null, hasMore?: bool|null, nextPage?: string|null
  * }
  *
@@ -25,7 +25,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 final class PageCursor implements BaseModel, BasePage
 {
-    /** @use SdkModel<page_cursor> */
+    /** @use SdkModel<PageCursorShape> */
     use SdkModel;
 
     /** @use SdkPage<TItem> */

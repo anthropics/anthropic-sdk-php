@@ -9,11 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type metadata_alias = array{userID?: string|null}
+ * @phpstan-type MetadataShape = array{userID?: string|null}
  */
 final class Metadata implements BaseModel
 {
-    /** @use SdkModel<metadata_alias> */
+    /** @use SdkModel<MetadataShape> */
     use SdkModel;
 
     /**

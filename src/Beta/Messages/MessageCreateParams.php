@@ -22,7 +22,7 @@ use Anthropic\Messages\Model;
  *
  * @see Anthropic\Beta\Messages->create
  *
- * @phpstan-type message_create_params = array{
+ * @phpstan-type MessageCreateParamsShape = array{
  *   maxTokens: int,
  *   messages: list<BetaMessageParam>,
  *   model: string|Model,
@@ -44,7 +44,7 @@ use Anthropic\Messages\Model;
  */
 final class MessageCreateParams implements BaseModel
 {
-    /** @use SdkModel<message_create_params> */
+    /** @use SdkModel<MessageCreateParamsShape> */
     use SdkModel;
     use SdkParams;
 

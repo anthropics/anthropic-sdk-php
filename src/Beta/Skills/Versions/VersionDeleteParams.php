@@ -15,13 +15,13 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Beta\Skills\Versions->delete
  *
- * @phpstan-type version_delete_params = array{
+ * @phpstan-type VersionDeleteParamsShape = array{
  *   skillID: string, betas?: list<string|AnthropicBeta>
  * }
  */
 final class VersionDeleteParams implements BaseModel
 {
-    /** @use SdkModel<version_delete_params> */
+    /** @use SdkModel<VersionDeleteParamsShape> */
     use SdkModel;
     use SdkParams;
 

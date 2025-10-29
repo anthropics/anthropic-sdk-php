@@ -11,13 +11,13 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type beta_model_info = array{
+ * @phpstan-type BetaModelInfoShape = array{
  *   id: string, createdAt: \DateTimeInterface, displayName: string, type: string
  * }
  */
 final class BetaModelInfo implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<beta_model_info> */
+    /** @use SdkModel<BetaModelInfoShape> */
     use SdkModel;
 
     use SdkResponse;

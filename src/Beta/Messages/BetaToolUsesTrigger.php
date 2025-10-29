@@ -9,11 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_tool_uses_trigger = array{type: string, value: int}
+ * @phpstan-type BetaToolUsesTriggerShape = array{type: string, value: int}
  */
 final class BetaToolUsesTrigger implements BaseModel
 {
-    /** @use SdkModel<beta_tool_uses_trigger> */
+    /** @use SdkModel<BetaToolUsesTriggerShape> */
     use SdkModel;
 
     #[Api]

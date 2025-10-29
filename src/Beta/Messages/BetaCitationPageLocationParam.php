@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_citation_page_location_param = array{
+ * @phpstan-type BetaCitationPageLocationParamShape = array{
  *   citedText: string,
  *   documentIndex: int,
  *   documentTitle: string|null,
@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaCitationPageLocationParam implements BaseModel
 {
-    /** @use SdkModel<beta_citation_page_location_param> */
+    /** @use SdkModel<BetaCitationPageLocationParamShape> */
     use SdkModel;
 
     #[Api]

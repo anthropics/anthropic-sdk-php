@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_raw_content_block_start_event = array{
+ * @phpstan-type BetaRawContentBlockStartEventShape = array{
  *   contentBlock: BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock,
  *   index: int,
  *   type: string,
@@ -18,7 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaRawContentBlockStartEvent implements BaseModel
 {
-    /** @use SdkModel<beta_raw_content_block_start_event> */
+    /** @use SdkModel<BetaRawContentBlockStartEventShape> */
     use SdkModel;
 
     #[Api]

@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_text_editor_code_execution_str_replace_result_block = array{
+ * @phpstan-type BetaTextEditorCodeExecutionStrReplaceResultBlockShape = array{
  *   lines: list<string>|null,
  *   newLines: int|null,
  *   newStart: int|null,
@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseModel
 {
-    /** @use SdkModel<beta_text_editor_code_execution_str_replace_result_block> */
+    /** @use SdkModel<BetaTextEditorCodeExecutionStrReplaceResultBlockShape> */
     use SdkModel;
 
     #[Api]

@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_server_tool_use_block_param = array{
+ * @phpstan-type BetaServerToolUseBlockParamShape = array{
  *   id: string,
  *   input: array<string, mixed>,
  *   name: value-of<Name>,
@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaServerToolUseBlockParam implements BaseModel
 {
-    /** @use SdkModel<beta_server_tool_use_block_param> */
+    /** @use SdkModel<BetaServerToolUseBlockParamShape> */
     use SdkModel;
 
     #[Api]

@@ -11,13 +11,13 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * The model will use any available tools.
  *
- * @phpstan-type tool_choice_any = array{
+ * @phpstan-type ToolChoiceAnyShape = array{
  *   type: string, disableParallelToolUse?: bool
  * }
  */
 final class ToolChoiceAny implements BaseModel
 {
-    /** @use SdkModel<tool_choice_any> */
+    /** @use SdkModel<ToolChoiceAnyShape> */
     use SdkModel;
 
     #[Api]

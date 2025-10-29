@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_text_block_param = array{
+ * @phpstan-type BetaTextBlockParamShape = array{
  *   text: string,
  *   type: string,
  *   cacheControl?: BetaCacheControlEphemeral|null,
@@ -18,7 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaTextBlockParam implements BaseModel
 {
-    /** @use SdkModel<beta_text_block_param> */
+    /** @use SdkModel<BetaTextBlockParamShape> */
     use SdkModel;
 
     #[Api]

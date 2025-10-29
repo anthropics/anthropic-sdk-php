@@ -15,13 +15,13 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Beta\Skills\Versions->retrieve
  *
- * @phpstan-type version_retrieve_params = array{
+ * @phpstan-type VersionRetrieveParamsShape = array{
  *   skillID: string, betas?: list<string|AnthropicBeta>
  * }
  */
 final class VersionRetrieveParams implements BaseModel
 {
-    /** @use SdkModel<version_retrieve_params> */
+    /** @use SdkModel<VersionRetrieveParamsShape> */
     use SdkModel;
     use SdkParams;
 

@@ -15,7 +15,7 @@ use Anthropic\Core\Util;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * @phpstan-type page_alias = array{
+ * @phpstan-type PageShape = array{
  *   data?: list<mixed>|null,
  *   hasMore?: bool|null,
  *   firstID?: string|null,
@@ -28,7 +28,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 final class Page implements BaseModel, BasePage
 {
-    /** @use SdkModel<page_alias> */
+    /** @use SdkModel<PageShape> */
     use SdkModel;
 
     /** @use SdkPage<TItem> */

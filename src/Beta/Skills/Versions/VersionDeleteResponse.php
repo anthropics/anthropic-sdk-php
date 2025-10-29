@@ -11,11 +11,11 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type version_delete_response = array{id: string, type: string}
+ * @phpstan-type VersionDeleteResponseShape = array{id: string, type: string}
  */
 final class VersionDeleteResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<version_delete_response> */
+    /** @use SdkModel<VersionDeleteResponseShape> */
     use SdkModel;
 
     use SdkResponse;

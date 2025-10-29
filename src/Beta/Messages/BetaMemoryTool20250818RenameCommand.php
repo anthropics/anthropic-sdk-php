@@ -9,13 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_memory_tool20250818_rename_command = array{
+ * @phpstan-type BetaMemoryTool20250818RenameCommandShape = array{
  *   command: string, newPath: string, oldPath: string
  * }
  */
 final class BetaMemoryTool20250818RenameCommand implements BaseModel
 {
-    /** @use SdkModel<beta_memory_tool20250818_rename_command> */
+    /** @use SdkModel<BetaMemoryTool20250818RenameCommandShape> */
     use SdkModel;
 
     /**

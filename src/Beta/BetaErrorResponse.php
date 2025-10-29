@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_error_response = array{
+ * @phpstan-type BetaErrorResponseShape = array{
  *   error: BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError,
  *   requestID: string|null,
  *   type: string,
@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaErrorResponse implements BaseModel
 {
-    /** @use SdkModel<beta_error_response> */
+    /** @use SdkModel<BetaErrorResponseShape> */
     use SdkModel;
 
     #[Api]

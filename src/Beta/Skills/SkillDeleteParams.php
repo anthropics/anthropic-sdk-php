@@ -15,11 +15,11 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Beta\Skills->delete
  *
- * @phpstan-type skill_delete_params = array{betas?: list<string|AnthropicBeta>}
+ * @phpstan-type SkillDeleteParamsShape = array{betas?: list<string|AnthropicBeta>}
  */
 final class SkillDeleteParams implements BaseModel
 {
-    /** @use SdkModel<skill_delete_params> */
+    /** @use SdkModel<SkillDeleteParamsShape> */
     use SdkModel;
     use SdkParams;
 

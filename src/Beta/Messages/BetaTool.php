@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type beta_tool = array{
+ * @phpstan-type BetaToolShape = array{
  *   inputSchema: InputSchema,
  *   name: string,
  *   cacheControl?: BetaCacheControlEphemeral|null,
@@ -21,7 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  */
 final class BetaTool implements BaseModel
 {
-    /** @use SdkModel<beta_tool> */
+    /** @use SdkModel<BetaToolShape> */
     use SdkModel;
 
     /**
