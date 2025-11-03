@@ -114,6 +114,56 @@ abstract class BaseClient
     /** @return array<string, string> */
     abstract protected function bearerAuth(): array;
 
+    protected function getNormalizedOS(): string
+    {
+        $os = strtolower(PHP_OS_FAMILY);
+
+        switch ($os) {
+            case 'windows':
+                return 'Windows';
+
+            case 'darwin':
+                return 'MacOS';
+
+            case 'linux':
+                return 'Linux';
+
+            case 'bsd':
+            case 'freebsd':
+            case 'openbsd':
+                return 'BSD';
+
+            case 'solaris':
+                return 'Solaris';
+
+            case 'unix':
+            case 'unknown':
+                return 'Unknown';
+
+            default:
+                return 'Other:'.$os;
+        }
+    }
+
+    protected function getNormalizedArchitecture(): string
+    {
+        $arch = php_uname('m');
+        if (false !== strpos($arch, 'x86_64') || false !== strpos($arch, 'amd64')) {
+            return 'x64';
+        }
+        if (false !== strpos($arch, 'i386') || false !== strpos($arch, 'i686')) {
+            return 'x32';
+        }
+        if (false !== strpos($arch, 'aarch64') || false !== strpos($arch, 'arm64')) {
+            return 'arm64';
+        }
+        if (false !== strpos($arch, 'arm')) {
+            return 'arm';
+        }
+
+        return 'unknown';
+    }
+
     /**
      * @internal
      *
@@ -246,6 +296,8 @@ abstract class BaseClient
         int $redirectCount,
     ): ResponseInterface {
         assert(null !== $opts->streamFactory && null !== $opts->transporter);
+
+        $req = $req->withHeader('X-Stainless-Retry-Count', strval($retryCount));
 
         $req = Util::withSetBody($opts->streamFactory, req: $req, body: $data);
 

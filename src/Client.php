@@ -50,11 +50,20 @@ class Client extends BaseClient
         );
 
         parent::__construct(
+            // x-release-please-start-version
             headers: [
                 'anthropic-version' => '2023-06-01',
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
+                'User-Agent' => sprintf('anthropic/PHP %s', '0.0.1'),
+                'X-Stainless-Lang' => 'php',
+                'X-Stainless-Package-Version' => '0.0.1',
+                'X-Stainless-OS' => $this->getNormalizedOS(),
+                'X-Stainless-Arch' => $this->getNormalizedArchitecture(),
+                'X-Stainless-Runtime' => 'php',
+                'X-Stainless-Runtime-Version' => phpversion(),
             ],
+            // x-release-please-end
             baseUrl: $baseUrl,
             options: $options,
         );
