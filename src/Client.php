@@ -76,16 +76,14 @@ class Client extends BaseClient
     /** @return array<string, string> */
     protected function apiKeyAuth(): array
     {
-        return ['X-Api-Key' => $this->apiKey];
+        return $this->apiKey ? ['X-Api-Key' => $this->apiKey] : [];
     }
 
     /** @return array<string, string> */
     protected function bearerAuth(): array
     {
-        if (!$this->authToken) {
-            return [];
-        }
-
-        return ['Authorization' => "Bearer {$this->authToken}"];
+        return $this->authToken ? [
+            'Authorization' => "Bearer {$this->authToken}",
+        ] : [];
     }
 }
