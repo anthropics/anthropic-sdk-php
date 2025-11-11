@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaTextBlockShape = array{
  *   citations: list<BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation>|null,
  *   text: string,
- *   type: string,
+ *   type: "text",
  * }
  */
 final class BetaTextBlock implements BaseModel
@@ -20,6 +20,7 @@ final class BetaTextBlock implements BaseModel
     /** @use SdkModel<BetaTextBlockShape> */
     use SdkModel;
 
+    /** @var "text" $type */
     #[Api]
     public string $type = 'text';
 

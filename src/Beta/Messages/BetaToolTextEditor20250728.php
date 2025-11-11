@@ -10,10 +10,10 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaToolTextEditor20250728Shape = array{
- *   name: string,
- *   type: string,
- *   cacheControl?: BetaCacheControlEphemeral|null,
- *   maxCharacters?: int|null,
+ *   name: "str_replace_based_edit_tool",
+ *   type: "text_editor_20250728",
+ *   cache_control?: BetaCacheControlEphemeral|null,
+ *   max_characters?: int|null,
  * }
  */
 final class BetaToolTextEditor20250728 implements BaseModel
@@ -25,24 +25,27 @@ final class BetaToolTextEditor20250728 implements BaseModel
      * Name of the tool.
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
+     *
+     * @var "str_replace_based_edit_tool" $name
      */
     #[Api]
     public string $name = 'str_replace_based_edit_tool';
 
+    /** @var "text_editor_20250728" $type */
     #[Api]
     public string $type = 'text_editor_20250728';
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaCacheControlEphemeral $cache_control;
 
     /**
      * Maximum number of characters to display when viewing a file. If not specified, defaults to displaying the full file.
      */
-    #[Api('max_characters', nullable: true, optional: true)]
-    public ?int $maxCharacters;
+    #[Api(nullable: true, optional: true)]
+    public ?int $max_characters;
 
     public function __construct()
     {
@@ -55,13 +58,13 @@ final class BetaToolTextEditor20250728 implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?BetaCacheControlEphemeral $cacheControl = null,
-        ?int $maxCharacters = null
+        ?BetaCacheControlEphemeral $cache_control = null,
+        ?int $max_characters = null,
     ): self {
         $obj = new self;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
-        null !== $maxCharacters && $obj->maxCharacters = $maxCharacters;
+        null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $max_characters && $obj->max_characters = $max_characters;
 
         return $obj;
     }
@@ -73,7 +76,7 @@ final class BetaToolTextEditor20250728 implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }
@@ -84,7 +87,7 @@ final class BetaToolTextEditor20250728 implements BaseModel
     public function withMaxCharacters(?int $maxCharacters): self
     {
         $obj = clone $this;
-        $obj->maxCharacters = $maxCharacters;
+        $obj->max_characters = $maxCharacters;
 
         return $obj;
     }

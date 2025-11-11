@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaBashCodeExecutionOutputBlockParamShape = array{
- *   fileID: string, type: string
+ *   file_id: string, type: "bash_code_execution_output"
  * }
  */
 final class BetaBashCodeExecutionOutputBlockParam implements BaseModel
@@ -18,18 +18,19 @@ final class BetaBashCodeExecutionOutputBlockParam implements BaseModel
     /** @use SdkModel<BetaBashCodeExecutionOutputBlockParamShape> */
     use SdkModel;
 
+    /** @var "bash_code_execution_output" $type */
     #[Api]
     public string $type = 'bash_code_execution_output';
 
-    #[Api('file_id')]
-    public string $fileID;
+    #[Api]
+    public string $file_id;
 
     /**
      * `new BetaBashCodeExecutionOutputBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaBashCodeExecutionOutputBlockParam::with(fileID: ...)
+     * BetaBashCodeExecutionOutputBlockParam::with(file_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -48,11 +49,11 @@ final class BetaBashCodeExecutionOutputBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $fileID): self
+    public static function with(string $file_id): self
     {
         $obj = new self;
 
-        $obj->fileID = $fileID;
+        $obj->file_id = $file_id;
 
         return $obj;
     }
@@ -60,7 +61,7 @@ final class BetaBashCodeExecutionOutputBlockParam implements BaseModel
     public function withFileID(string $fileID): self
     {
         $obj = clone $this;
-        $obj->fileID = $fileID;
+        $obj->file_id = $fileID;
 
         return $obj;
     }

@@ -11,8 +11,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaTextEditorCodeExecutionToolResultBlockShape = array{
  *   content: BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock,
- *   toolUseID: string,
- *   type: string,
+ *   tool_use_id: string,
+ *   type: "text_editor_code_execution_tool_result",
  * }
  */
 final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
@@ -20,21 +20,22 @@ final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
     /** @use SdkModel<BetaTextEditorCodeExecutionToolResultBlockShape> */
     use SdkModel;
 
+    /** @var "text_editor_code_execution_tool_result" $type */
     #[Api]
     public string $type = 'text_editor_code_execution_tool_result';
 
     #[Api]
     public BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock $content;
 
-    #[Api('tool_use_id')]
-    public string $toolUseID;
+    #[Api]
+    public string $tool_use_id;
 
     /**
      * `new BetaTextEditorCodeExecutionToolResultBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaTextEditorCodeExecutionToolResultBlock::with(content: ..., toolUseID: ...)
+     * BetaTextEditorCodeExecutionToolResultBlock::with(content: ..., tool_use_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -57,12 +58,12 @@ final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
      */
     public static function with(
         BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock $content,
-        string $toolUseID,
+        string $tool_use_id,
     ): self {
         $obj = new self;
 
         $obj->content = $content;
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $tool_use_id;
 
         return $obj;
     }
@@ -79,7 +80,7 @@ final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $toolUseID;
 
         return $obj;
     }

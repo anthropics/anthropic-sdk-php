@@ -8,17 +8,15 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Messages\Batches\BatchCreateParams;
-use Anthropic\Messages\Batches\BatchCreateParams\Request;
 use Anthropic\Messages\Batches\BatchListParams;
 use Anthropic\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Messages\Batches\MessageBatch;
 use Anthropic\Messages\Batches\MessageBatchIndividualResponse;
+use Anthropic\Messages\Model;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Messages\BatchesContract;
 use Anthropic\SSEStream;
-
-use const Anthropic\Core\OMIT as omit;
 
 final class BatchesService implements BatchesContract
 {
@@ -36,33 +34,37 @@ final class BatchesService implements BatchesContract
      *
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
-     * @param list<Request> $requests List of requests for prompt completion. Each is an individual request to create a Message.
+     * @param array{
+     *   requests: list<array{
+     *     custom_id: string,
+     *     params: array{
+     *       max_tokens: int,
+     *       messages: list<array<mixed>>,
+     *       model: string|Model,
+     *       metadata?: array<mixed>,
+     *       service_tier?: "auto"|"standard_only",
+     *       stop_sequences?: list<string>,
+     *       stream?: bool,
+     *       system?: string|list<array<mixed>>,
+     *       temperature?: float,
+     *       thinking?: array<string,mixed>,
+     *       tool_choice?: array<string,mixed>,
+     *       tools?: list<array<string,mixed>>,
+     *       top_k?: int,
+     *       top_p?: float,
+     *     },
+     *   }>,
+     * }|BatchCreateParams $params
      *
      * @throws APIException
      */
     public function create(
-        $requests,
-        ?RequestOptions $requestOptions = null
-    ): MessageBatch {
-        $params = ['requests' => $requests];
-
-        return $this->createRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function createRaw(
-        array $params,
+        array|BatchCreateParams $params,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
         [$parsed, $options] = BatchCreateParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;
@@ -104,45 +106,21 @@ final class BatchesService implements BatchesContract
      *
      * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
      *
-     * @param string $afterID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
-     * @param string $beforeID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
-     * @param int $limit Number of items to return per page.
-     *
-     * Defaults to `20`. Ranges from `1` to `1000`.
+     * @param array{
+     *   after_id?: string, before_id?: string, limit?: int
+     * }|BatchListParams $params
      *
      * @return Page<MessageBatch>
      *
      * @throws APIException
      */
     public function list(
-        $afterID = omit,
-        $beforeID = omit,
-        $limit = omit,
-        ?RequestOptions $requestOptions = null,
-    ): Page {
-        $params = [
-            'afterID' => $afterID, 'beforeID' => $beforeID, 'limit' => $limit,
-        ];
-
-        return $this->listRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return Page<MessageBatch>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        array $params,
+        array|BatchListParams $params,
         ?RequestOptions $requestOptions = null
     ): Page {
         [$parsed, $options] = BatchListParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

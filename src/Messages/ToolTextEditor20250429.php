@@ -10,7 +10,9 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type ToolTextEditor20250429Shape = array{
- *   name: string, type: string, cacheControl?: CacheControlEphemeral|null
+ *   name: "str_replace_based_edit_tool",
+ *   type: "text_editor_20250429",
+ *   cache_control?: CacheControlEphemeral|null,
  * }
  */
 final class ToolTextEditor20250429 implements BaseModel
@@ -22,18 +24,21 @@ final class ToolTextEditor20250429 implements BaseModel
      * Name of the tool.
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
+     *
+     * @var "str_replace_based_edit_tool" $name
      */
     #[Api]
     public string $name = 'str_replace_based_edit_tool';
 
+    /** @var "text_editor_20250429" $type */
     #[Api]
     public string $type = 'text_editor_20250429';
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?CacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?CacheControlEphemeral $cache_control;
 
     public function __construct()
     {
@@ -46,11 +51,11 @@ final class ToolTextEditor20250429 implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?CacheControlEphemeral $cacheControl = null
+        ?CacheControlEphemeral $cache_control = null
     ): self {
         $obj = new self;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
 
         return $obj;
     }
@@ -61,7 +66,7 @@ final class ToolTextEditor20250429 implements BaseModel
     public function withCacheControl(?CacheControlEphemeral $cacheControl): self
     {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }

@@ -25,11 +25,11 @@ use Anthropic\Messages\Model;
  * @phpstan-type MessageCountTokensParamsShape = array{
  *   messages: list<BetaMessageParam>,
  *   model: string|Model,
- *   contextManagement?: BetaContextManagementConfig|null,
- *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
+ *   context_management?: BetaContextManagementConfig|null,
+ *   mcp_servers?: list<BetaRequestMCPServerURLDefinition>,
  *   system?: string|list<BetaTextBlockParam>,
  *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
- *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
+ *   tool_choice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
  *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910>,
  *   betas?: list<string|AnthropicBeta>,
  * }
@@ -108,20 +108,16 @@ final class MessageCountTokensParams implements BaseModel
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
      */
-    #[Api('context_management', nullable: true, optional: true)]
-    public ?BetaContextManagementConfig $contextManagement;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaContextManagementConfig $context_management;
 
     /**
      * MCP servers to be utilized in this request.
      *
-     * @var list<BetaRequestMCPServerURLDefinition>|null $mcpServers
+     * @var list<BetaRequestMCPServerURLDefinition>|null $mcp_servers
      */
-    #[Api(
-        'mcp_servers',
-        list: BetaRequestMCPServerURLDefinition::class,
-        optional: true,
-    )]
-    public ?array $mcpServers;
+    #[Api(list: BetaRequestMCPServerURLDefinition::class, optional: true)]
+    public ?array $mcp_servers;
 
     /**
      * System prompt.
@@ -146,8 +142,8 @@ final class MessageCountTokensParams implements BaseModel
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
-    #[Api('tool_choice', union: BetaToolChoice::class, optional: true)]
-    public BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice;
+    #[Api(union: BetaToolChoice::class, optional: true)]
+    public BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $tool_choice;
 
     /**
      * Definitions of tools that the model may use.
@@ -250,7 +246,7 @@ final class MessageCountTokensParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaMessageParam> $messages
-     * @param list<BetaRequestMCPServerURLDefinition> $mcpServers
+     * @param list<BetaRequestMCPServerURLDefinition> $mcp_servers
      * @param string|list<BetaTextBlockParam> $system
      * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910> $tools
      * @param list<string|AnthropicBeta> $betas
@@ -258,11 +254,11 @@ final class MessageCountTokensParams implements BaseModel
     public static function with(
         array $messages,
         string|Model $model,
-        ?BetaContextManagementConfig $contextManagement = null,
-        ?array $mcpServers = null,
+        ?BetaContextManagementConfig $context_management = null,
+        ?array $mcp_servers = null,
         string|array|null $system = null,
         BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null $thinking = null,
-        BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
+        BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $tool_choice = null,
         ?array $tools = null,
         ?array $betas = null,
     ): self {
@@ -271,11 +267,11 @@ final class MessageCountTokensParams implements BaseModel
         $obj->messages = $messages;
         $obj->model = $model instanceof Model ? $model->value : $model;
 
-        null !== $contextManagement && $obj->contextManagement = $contextManagement;
-        null !== $mcpServers && $obj->mcpServers = $mcpServers;
+        null !== $context_management && $obj->context_management = $context_management;
+        null !== $mcp_servers && $obj->mcp_servers = $mcp_servers;
         null !== $system && $obj->system = $system;
         null !== $thinking && $obj->thinking = $thinking;
-        null !== $toolChoice && $obj->toolChoice = $toolChoice;
+        null !== $tool_choice && $obj->tool_choice = $tool_choice;
         null !== $tools && $obj->tools = $tools;
         null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
 
@@ -362,7 +358,7 @@ final class MessageCountTokensParams implements BaseModel
         ?BetaContextManagementConfig $contextManagement
     ): self {
         $obj = clone $this;
-        $obj->contextManagement = $contextManagement;
+        $obj->context_management = $contextManagement;
 
         return $obj;
     }
@@ -375,7 +371,7 @@ final class MessageCountTokensParams implements BaseModel
     public function withMCPServers(array $mcpServers): self
     {
         $obj = clone $this;
-        $obj->mcpServers = $mcpServers;
+        $obj->mcp_servers = $mcpServers;
 
         return $obj;
     }
@@ -418,7 +414,7 @@ final class MessageCountTokensParams implements BaseModel
         BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone $toolChoice,
     ): self {
         $obj = clone $this;
-        $obj->toolChoice = $toolChoice;
+        $obj->tool_choice = $toolChoice;
 
         return $obj;
     }

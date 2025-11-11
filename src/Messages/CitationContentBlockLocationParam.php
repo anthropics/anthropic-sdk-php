@@ -10,12 +10,12 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type CitationContentBlockLocationParamShape = array{
- *   citedText: string,
- *   documentIndex: int,
- *   documentTitle: string|null,
- *   endBlockIndex: int,
- *   startBlockIndex: int,
- *   type: string,
+ *   cited_text: string,
+ *   document_index: int,
+ *   document_title: string|null,
+ *   end_block_index: int,
+ *   start_block_index: int,
+ *   type: "content_block_location",
  * }
  */
 final class CitationContentBlockLocationParam implements BaseModel
@@ -23,23 +23,24 @@ final class CitationContentBlockLocationParam implements BaseModel
     /** @use SdkModel<CitationContentBlockLocationParamShape> */
     use SdkModel;
 
+    /** @var "content_block_location" $type */
     #[Api]
     public string $type = 'content_block_location';
 
-    #[Api('cited_text')]
-    public string $citedText;
+    #[Api]
+    public string $cited_text;
 
-    #[Api('document_index')]
-    public int $documentIndex;
+    #[Api]
+    public int $document_index;
 
-    #[Api('document_title')]
-    public ?string $documentTitle;
+    #[Api]
+    public ?string $document_title;
 
-    #[Api('end_block_index')]
-    public int $endBlockIndex;
+    #[Api]
+    public int $end_block_index;
 
-    #[Api('start_block_index')]
-    public int $startBlockIndex;
+    #[Api]
+    public int $start_block_index;
 
     /**
      * `new CitationContentBlockLocationParam()` is missing required properties by the API.
@@ -47,11 +48,11 @@ final class CitationContentBlockLocationParam implements BaseModel
      * To enforce required parameters use
      * ```
      * CitationContentBlockLocationParam::with(
-     *   citedText: ...,
-     *   documentIndex: ...,
-     *   documentTitle: ...,
-     *   endBlockIndex: ...,
-     *   startBlockIndex: ...,
+     *   cited_text: ...,
+     *   document_index: ...,
+     *   document_title: ...,
+     *   end_block_index: ...,
+     *   start_block_index: ...,
      * )
      * ```
      *
@@ -77,19 +78,19 @@ final class CitationContentBlockLocationParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $citedText,
-        int $documentIndex,
-        ?string $documentTitle,
-        int $endBlockIndex,
-        int $startBlockIndex,
+        string $cited_text,
+        int $document_index,
+        ?string $document_title,
+        int $end_block_index,
+        int $start_block_index,
     ): self {
         $obj = new self;
 
-        $obj->citedText = $citedText;
-        $obj->documentIndex = $documentIndex;
-        $obj->documentTitle = $documentTitle;
-        $obj->endBlockIndex = $endBlockIndex;
-        $obj->startBlockIndex = $startBlockIndex;
+        $obj->cited_text = $cited_text;
+        $obj->document_index = $document_index;
+        $obj->document_title = $document_title;
+        $obj->end_block_index = $end_block_index;
+        $obj->start_block_index = $start_block_index;
 
         return $obj;
     }
@@ -97,7 +98,7 @@ final class CitationContentBlockLocationParam implements BaseModel
     public function withCitedText(string $citedText): self
     {
         $obj = clone $this;
-        $obj->citedText = $citedText;
+        $obj->cited_text = $citedText;
 
         return $obj;
     }
@@ -105,7 +106,7 @@ final class CitationContentBlockLocationParam implements BaseModel
     public function withDocumentIndex(int $documentIndex): self
     {
         $obj = clone $this;
-        $obj->documentIndex = $documentIndex;
+        $obj->document_index = $documentIndex;
 
         return $obj;
     }
@@ -113,7 +114,7 @@ final class CitationContentBlockLocationParam implements BaseModel
     public function withDocumentTitle(?string $documentTitle): self
     {
         $obj = clone $this;
-        $obj->documentTitle = $documentTitle;
+        $obj->document_title = $documentTitle;
 
         return $obj;
     }
@@ -121,7 +122,7 @@ final class CitationContentBlockLocationParam implements BaseModel
     public function withEndBlockIndex(int $endBlockIndex): self
     {
         $obj = clone $this;
-        $obj->endBlockIndex = $endBlockIndex;
+        $obj->end_block_index = $endBlockIndex;
 
         return $obj;
     }
@@ -129,7 +130,7 @@ final class CitationContentBlockLocationParam implements BaseModel
     public function withStartBlockIndex(int $startBlockIndex): self
     {
         $obj = clone $this;
-        $obj->startBlockIndex = $startBlockIndex;
+        $obj->start_block_index = $startBlockIndex;
 
         return $obj;
     }

@@ -10,12 +10,12 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type CitationPageLocationParamShape = array{
- *   citedText: string,
- *   documentIndex: int,
- *   documentTitle: string|null,
- *   endPageNumber: int,
- *   startPageNumber: int,
- *   type: string,
+ *   cited_text: string,
+ *   document_index: int,
+ *   document_title: string|null,
+ *   end_page_number: int,
+ *   start_page_number: int,
+ *   type: "page_location",
  * }
  */
 final class CitationPageLocationParam implements BaseModel
@@ -23,23 +23,24 @@ final class CitationPageLocationParam implements BaseModel
     /** @use SdkModel<CitationPageLocationParamShape> */
     use SdkModel;
 
+    /** @var "page_location" $type */
     #[Api]
     public string $type = 'page_location';
 
-    #[Api('cited_text')]
-    public string $citedText;
+    #[Api]
+    public string $cited_text;
 
-    #[Api('document_index')]
-    public int $documentIndex;
+    #[Api]
+    public int $document_index;
 
-    #[Api('document_title')]
-    public ?string $documentTitle;
+    #[Api]
+    public ?string $document_title;
 
-    #[Api('end_page_number')]
-    public int $endPageNumber;
+    #[Api]
+    public int $end_page_number;
 
-    #[Api('start_page_number')]
-    public int $startPageNumber;
+    #[Api]
+    public int $start_page_number;
 
     /**
      * `new CitationPageLocationParam()` is missing required properties by the API.
@@ -47,11 +48,11 @@ final class CitationPageLocationParam implements BaseModel
      * To enforce required parameters use
      * ```
      * CitationPageLocationParam::with(
-     *   citedText: ...,
-     *   documentIndex: ...,
-     *   documentTitle: ...,
-     *   endPageNumber: ...,
-     *   startPageNumber: ...,
+     *   cited_text: ...,
+     *   document_index: ...,
+     *   document_title: ...,
+     *   end_page_number: ...,
+     *   start_page_number: ...,
      * )
      * ```
      *
@@ -77,19 +78,19 @@ final class CitationPageLocationParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $citedText,
-        int $documentIndex,
-        ?string $documentTitle,
-        int $endPageNumber,
-        int $startPageNumber,
+        string $cited_text,
+        int $document_index,
+        ?string $document_title,
+        int $end_page_number,
+        int $start_page_number,
     ): self {
         $obj = new self;
 
-        $obj->citedText = $citedText;
-        $obj->documentIndex = $documentIndex;
-        $obj->documentTitle = $documentTitle;
-        $obj->endPageNumber = $endPageNumber;
-        $obj->startPageNumber = $startPageNumber;
+        $obj->cited_text = $cited_text;
+        $obj->document_index = $document_index;
+        $obj->document_title = $document_title;
+        $obj->end_page_number = $end_page_number;
+        $obj->start_page_number = $start_page_number;
 
         return $obj;
     }
@@ -97,7 +98,7 @@ final class CitationPageLocationParam implements BaseModel
     public function withCitedText(string $citedText): self
     {
         $obj = clone $this;
-        $obj->citedText = $citedText;
+        $obj->cited_text = $citedText;
 
         return $obj;
     }
@@ -105,7 +106,7 @@ final class CitationPageLocationParam implements BaseModel
     public function withDocumentIndex(int $documentIndex): self
     {
         $obj = clone $this;
-        $obj->documentIndex = $documentIndex;
+        $obj->document_index = $documentIndex;
 
         return $obj;
     }
@@ -113,7 +114,7 @@ final class CitationPageLocationParam implements BaseModel
     public function withDocumentTitle(?string $documentTitle): self
     {
         $obj = clone $this;
-        $obj->documentTitle = $documentTitle;
+        $obj->document_title = $documentTitle;
 
         return $obj;
     }
@@ -121,7 +122,7 @@ final class CitationPageLocationParam implements BaseModel
     public function withEndPageNumber(int $endPageNumber): self
     {
         $obj = clone $this;
-        $obj->endPageNumber = $endPageNumber;
+        $obj->end_page_number = $endPageNumber;
 
         return $obj;
     }
@@ -129,7 +130,7 @@ final class CitationPageLocationParam implements BaseModel
     public function withStartPageNumber(int $startPageNumber): self
     {
         $obj = clone $this;
-        $obj->startPageNumber = $startPageNumber;
+        $obj->start_page_number = $startPageNumber;
 
         return $obj;
     }

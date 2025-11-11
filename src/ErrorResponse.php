@@ -11,8 +11,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type ErrorResponseShape = array{
  *   error: InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError,
- *   requestID: string|null,
- *   type: string,
+ *   request_id: string|null,
+ *   type: "error",
  * }
  */
 final class ErrorResponse implements BaseModel
@@ -20,21 +20,22 @@ final class ErrorResponse implements BaseModel
     /** @use SdkModel<ErrorResponseShape> */
     use SdkModel;
 
+    /** @var "error" $type */
     #[Api]
     public string $type = 'error';
 
     #[Api(union: ErrorObject::class)]
     public InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error;
 
-    #[Api('request_id')]
-    public ?string $requestID;
+    #[Api]
+    public ?string $request_id;
 
     /**
      * `new ErrorResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ErrorResponse::with(error: ..., requestID: ...)
+     * ErrorResponse::with(error: ..., request_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -55,12 +56,12 @@ final class ErrorResponse implements BaseModel
      */
     public static function with(
         InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error,
-        ?string $requestID,
+        ?string $request_id,
     ): self {
         $obj = new self;
 
         $obj->error = $error;
-        $obj->requestID = $requestID;
+        $obj->request_id = $request_id;
 
         return $obj;
     }
@@ -77,7 +78,7 @@ final class ErrorResponse implements BaseModel
     public function withRequestID(?string $requestID): self
     {
         $obj = clone $this;
-        $obj->requestID = $requestID;
+        $obj->request_id = $requestID;
 
         return $obj;
     }

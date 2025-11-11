@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * Information about the container used in the request (for the code execution tool).
  *
  * @phpstan-type BetaContainerShape = array{
- *   id: string, expiresAt: \DateTimeInterface, skills: list<BetaSkill>|null
+ *   id: string, expires_at: \DateTimeInterface, skills: list<BetaSkill>|null
  * }
  */
 final class BetaContainer implements BaseModel
@@ -29,8 +29,8 @@ final class BetaContainer implements BaseModel
     /**
      * The time at which the container will expire.
      */
-    #[Api('expires_at')]
-    public \DateTimeInterface $expiresAt;
+    #[Api]
+    public \DateTimeInterface $expires_at;
 
     /**
      * Skills loaded in the container.
@@ -45,7 +45,7 @@ final class BetaContainer implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaContainer::with(id: ..., expiresAt: ..., skills: ...)
+     * BetaContainer::with(id: ..., expires_at: ..., skills: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -68,13 +68,13 @@ final class BetaContainer implements BaseModel
      */
     public static function with(
         string $id,
-        \DateTimeInterface $expiresAt,
+        \DateTimeInterface $expires_at,
         ?array $skills
     ): self {
         $obj = new self;
 
         $obj->id = $id;
-        $obj->expiresAt = $expiresAt;
+        $obj->expires_at = $expires_at;
         $obj->skills = $skills;
 
         return $obj;
@@ -97,7 +97,7 @@ final class BetaContainer implements BaseModel
     public function withExpiresAt(\DateTimeInterface $expiresAt): self
     {
         $obj = clone $this;
-        $obj->expiresAt = $expiresAt;
+        $obj->expires_at = $expiresAt;
 
         return $obj;
     }

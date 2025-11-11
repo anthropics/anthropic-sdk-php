@@ -9,13 +9,16 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type GatewayTimeoutErrorShape = array{message: string, type: string}
+ * @phpstan-type GatewayTimeoutErrorShape = array{
+ *   message: string, type: "timeout_error"
+ * }
  */
 final class GatewayTimeoutError implements BaseModel
 {
     /** @use SdkModel<GatewayTimeoutErrorShape> */
     use SdkModel;
 
+    /** @var "timeout_error" $type */
     #[Api]
     public string $type = 'timeout_error';
 

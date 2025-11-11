@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaToolUseBlockShape = array{
- *   id: string, input: array<string, mixed>, name: string, type: string
+ *   id: string, input: array<string,mixed>, name: string, type: "tool_use"
  * }
  */
 final class BetaToolUseBlock implements BaseModel
@@ -18,13 +18,14 @@ final class BetaToolUseBlock implements BaseModel
     /** @use SdkModel<BetaToolUseBlockShape> */
     use SdkModel;
 
+    /** @var "tool_use" $type */
     #[Api]
     public string $type = 'tool_use';
 
     #[Api]
     public string $id;
 
-    /** @var array<string, mixed> $input */
+    /** @var array<string,mixed> $input */
     #[Api(map: 'mixed')]
     public array $input;
 
@@ -55,7 +56,7 @@ final class BetaToolUseBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, mixed> $input
+     * @param array<string,mixed> $input
      */
     public static function with(string $id, array $input, string $name): self
     {
@@ -77,7 +78,7 @@ final class BetaToolUseBlock implements BaseModel
     }
 
     /**
-     * @param array<string, mixed> $input
+     * @param array<string,mixed> $input
      */
     public function withInput(array $input): self
     {

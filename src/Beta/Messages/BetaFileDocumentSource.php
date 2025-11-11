@@ -9,25 +9,26 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaFileDocumentSourceShape = array{fileID: string, type: string}
+ * @phpstan-type BetaFileDocumentSourceShape = array{file_id: string, type: "file"}
  */
 final class BetaFileDocumentSource implements BaseModel
 {
     /** @use SdkModel<BetaFileDocumentSourceShape> */
     use SdkModel;
 
+    /** @var "file" $type */
     #[Api]
     public string $type = 'file';
 
-    #[Api('file_id')]
-    public string $fileID;
+    #[Api]
+    public string $file_id;
 
     /**
      * `new BetaFileDocumentSource()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaFileDocumentSource::with(fileID: ...)
+     * BetaFileDocumentSource::with(file_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -46,11 +47,11 @@ final class BetaFileDocumentSource implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $fileID): self
+    public static function with(string $file_id): self
     {
         $obj = new self;
 
-        $obj->fileID = $fileID;
+        $obj->file_id = $file_id;
 
         return $obj;
     }
@@ -58,7 +59,7 @@ final class BetaFileDocumentSource implements BaseModel
     public function withFileID(string $fileID): self
     {
         $obj = clone $this;
-        $obj->fileID = $fileID;
+        $obj->file_id = $fileID;
 
         return $obj;
     }

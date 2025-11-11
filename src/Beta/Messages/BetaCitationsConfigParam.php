@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaCitationsConfigParamShape = array{enabled?: bool}
+ * @phpstan-type BetaCitationsConfigParamShape = array{enabled?: bool|null}
  */
 final class BetaCitationsConfigParam implements BaseModel
 {

@@ -10,13 +10,13 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCitationSearchResultLocationParamShape = array{
- *   citedText: string,
- *   endBlockIndex: int,
- *   searchResultIndex: int,
+ *   cited_text: string,
+ *   end_block_index: int,
+ *   search_result_index: int,
  *   source: string,
- *   startBlockIndex: int,
+ *   start_block_index: int,
  *   title: string|null,
- *   type: string,
+ *   type: "search_result_location",
  * }
  */
 final class BetaCitationSearchResultLocationParam implements BaseModel
@@ -24,23 +24,24 @@ final class BetaCitationSearchResultLocationParam implements BaseModel
     /** @use SdkModel<BetaCitationSearchResultLocationParamShape> */
     use SdkModel;
 
+    /** @var "search_result_location" $type */
     #[Api]
     public string $type = 'search_result_location';
 
-    #[Api('cited_text')]
-    public string $citedText;
+    #[Api]
+    public string $cited_text;
 
-    #[Api('end_block_index')]
-    public int $endBlockIndex;
+    #[Api]
+    public int $end_block_index;
 
-    #[Api('search_result_index')]
-    public int $searchResultIndex;
+    #[Api]
+    public int $search_result_index;
 
     #[Api]
     public string $source;
 
-    #[Api('start_block_index')]
-    public int $startBlockIndex;
+    #[Api]
+    public int $start_block_index;
 
     #[Api]
     public ?string $title;
@@ -51,11 +52,11 @@ final class BetaCitationSearchResultLocationParam implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaCitationSearchResultLocationParam::with(
-     *   citedText: ...,
-     *   endBlockIndex: ...,
-     *   searchResultIndex: ...,
+     *   cited_text: ...,
+     *   end_block_index: ...,
+     *   search_result_index: ...,
      *   source: ...,
-     *   startBlockIndex: ...,
+     *   start_block_index: ...,
      *   title: ...,
      * )
      * ```
@@ -83,20 +84,20 @@ final class BetaCitationSearchResultLocationParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $citedText,
-        int $endBlockIndex,
-        int $searchResultIndex,
+        string $cited_text,
+        int $end_block_index,
+        int $search_result_index,
         string $source,
-        int $startBlockIndex,
+        int $start_block_index,
         ?string $title,
     ): self {
         $obj = new self;
 
-        $obj->citedText = $citedText;
-        $obj->endBlockIndex = $endBlockIndex;
-        $obj->searchResultIndex = $searchResultIndex;
+        $obj->cited_text = $cited_text;
+        $obj->end_block_index = $end_block_index;
+        $obj->search_result_index = $search_result_index;
         $obj->source = $source;
-        $obj->startBlockIndex = $startBlockIndex;
+        $obj->start_block_index = $start_block_index;
         $obj->title = $title;
 
         return $obj;
@@ -105,7 +106,7 @@ final class BetaCitationSearchResultLocationParam implements BaseModel
     public function withCitedText(string $citedText): self
     {
         $obj = clone $this;
-        $obj->citedText = $citedText;
+        $obj->cited_text = $citedText;
 
         return $obj;
     }
@@ -113,7 +114,7 @@ final class BetaCitationSearchResultLocationParam implements BaseModel
     public function withEndBlockIndex(int $endBlockIndex): self
     {
         $obj = clone $this;
-        $obj->endBlockIndex = $endBlockIndex;
+        $obj->end_block_index = $endBlockIndex;
 
         return $obj;
     }
@@ -121,7 +122,7 @@ final class BetaCitationSearchResultLocationParam implements BaseModel
     public function withSearchResultIndex(int $searchResultIndex): self
     {
         $obj = clone $this;
-        $obj->searchResultIndex = $searchResultIndex;
+        $obj->search_result_index = $searchResultIndex;
 
         return $obj;
     }
@@ -137,7 +138,7 @@ final class BetaCitationSearchResultLocationParam implements BaseModel
     public function withStartBlockIndex(int $startBlockIndex): self
     {
         $obj = clone $this;
-        $obj->startBlockIndex = $startBlockIndex;
+        $obj->start_block_index = $startBlockIndex;
 
         return $obj;
     }

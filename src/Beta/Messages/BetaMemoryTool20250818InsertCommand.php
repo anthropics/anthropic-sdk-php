@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818InsertCommandShape = array{
- *   command: string, insertLine: int, insertText: string, path: string
+ *   command: "insert", insert_line: int, insert_text: string, path: string
  * }
  */
 final class BetaMemoryTool20250818InsertCommand implements BaseModel
@@ -20,6 +20,8 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
 
     /**
      * Command type identifier.
+     *
+     * @var "insert" $command
      */
     #[Api]
     public string $command = 'insert';
@@ -27,14 +29,14 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
     /**
      * Line number where text should be inserted.
      */
-    #[Api('insert_line')]
-    public int $insertLine;
+    #[Api]
+    public int $insert_line;
 
     /**
      * Text to insert at the specified line.
      */
-    #[Api('insert_text')]
-    public string $insertText;
+    #[Api]
+    public string $insert_text;
 
     /**
      * Path to the file where text should be inserted.
@@ -48,7 +50,7 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaMemoryTool20250818InsertCommand::with(
-     *   insertLine: ..., insertText: ..., path: ...
+     *   insert_line: ..., insert_text: ..., path: ...
      * )
      * ```
      *
@@ -72,14 +74,14 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        int $insertLine,
-        string $insertText,
+        int $insert_line,
+        string $insert_text,
         string $path
     ): self {
         $obj = new self;
 
-        $obj->insertLine = $insertLine;
-        $obj->insertText = $insertText;
+        $obj->insert_line = $insert_line;
+        $obj->insert_text = $insert_text;
         $obj->path = $path;
 
         return $obj;
@@ -91,7 +93,7 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
     public function withInsertLine(int $insertLine): self
     {
         $obj = clone $this;
-        $obj->insertLine = $insertLine;
+        $obj->insert_line = $insertLine;
 
         return $obj;
     }
@@ -102,7 +104,7 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
     public function withInsertText(string $insertText): self
     {
         $obj = clone $this;
-        $obj->insertText = $insertText;
+        $obj->insert_text = $insertText;
 
         return $obj;
     }

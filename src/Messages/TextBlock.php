@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type TextBlockShape = array{
  *   citations: list<CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation>|null,
  *   text: string,
- *   type: string,
+ *   type: "text",
  * }
  */
 final class TextBlock implements BaseModel
@@ -20,6 +20,7 @@ final class TextBlock implements BaseModel
     /** @use SdkModel<TextBlockShape> */
     use SdkModel;
 
+    /** @var "text" $type */
     #[Api]
     public string $type = 'text';
 

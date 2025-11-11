@@ -13,11 +13,11 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 /**
  * @phpstan-type VersionGetResponseShape = array{
  *   id: string,
- *   createdAt: string,
+ *   created_at: string,
  *   description: string,
  *   directory: string,
  *   name: string,
- *   skillID: string,
+ *   skill_id: string,
  *   type: string,
  *   version: string,
  * }
@@ -40,8 +40,8 @@ final class VersionGetResponse implements BaseModel, ResponseConverter
     /**
      * ISO 8601 timestamp of when the skill version was created.
      */
-    #[Api('created_at')]
-    public string $createdAt;
+    #[Api]
+    public string $created_at;
 
     /**
      * Description of the skill version.
@@ -70,8 +70,8 @@ final class VersionGetResponse implements BaseModel, ResponseConverter
     /**
      * Identifier for the skill that this version belongs to.
      */
-    #[Api('skill_id')]
-    public string $skillID;
+    #[Api]
+    public string $skill_id;
 
     /**
      * Object type.
@@ -96,11 +96,11 @@ final class VersionGetResponse implements BaseModel, ResponseConverter
      * ```
      * VersionGetResponse::with(
      *   id: ...,
-     *   createdAt: ...,
+     *   created_at: ...,
      *   description: ...,
      *   directory: ...,
      *   name: ...,
-     *   skillID: ...,
+     *   skill_id: ...,
      *   type: ...,
      *   version: ...,
      * )
@@ -132,22 +132,22 @@ final class VersionGetResponse implements BaseModel, ResponseConverter
      */
     public static function with(
         string $id,
-        string $createdAt,
+        string $created_at,
         string $description,
         string $directory,
         string $name,
-        string $skillID,
+        string $skill_id,
         string $version,
         string $type = 'skill_version',
     ): self {
         $obj = new self;
 
         $obj->id = $id;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $created_at;
         $obj->description = $description;
         $obj->directory = $directory;
         $obj->name = $name;
-        $obj->skillID = $skillID;
+        $obj->skill_id = $skill_id;
         $obj->type = $type;
         $obj->version = $version;
 
@@ -173,7 +173,7 @@ final class VersionGetResponse implements BaseModel, ResponseConverter
     public function withCreatedAt(string $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -223,7 +223,7 @@ final class VersionGetResponse implements BaseModel, ResponseConverter
     public function withSkillID(string $skillID): self
     {
         $obj = clone $this;
-        $obj->skillID = $skillID;
+        $obj->skill_id = $skillID;
 
         return $obj;
     }

@@ -11,10 +11,10 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaBashCodeExecutionResultBlockShape = array{
  *   content: list<BetaBashCodeExecutionOutputBlock>,
- *   returnCode: int,
+ *   return_code: int,
  *   stderr: string,
  *   stdout: string,
- *   type: string,
+ *   type: "bash_code_execution_result",
  * }
  */
 final class BetaBashCodeExecutionResultBlock implements BaseModel
@@ -22,6 +22,7 @@ final class BetaBashCodeExecutionResultBlock implements BaseModel
     /** @use SdkModel<BetaBashCodeExecutionResultBlockShape> */
     use SdkModel;
 
+    /** @var "bash_code_execution_result" $type */
     #[Api]
     public string $type = 'bash_code_execution_result';
 
@@ -29,8 +30,8 @@ final class BetaBashCodeExecutionResultBlock implements BaseModel
     #[Api(list: BetaBashCodeExecutionOutputBlock::class)]
     public array $content;
 
-    #[Api('return_code')]
-    public int $returnCode;
+    #[Api]
+    public int $return_code;
 
     #[Api]
     public string $stderr;
@@ -44,7 +45,7 @@ final class BetaBashCodeExecutionResultBlock implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaBashCodeExecutionResultBlock::with(
-     *   content: ..., returnCode: ..., stderr: ..., stdout: ...
+     *   content: ..., return_code: ..., stderr: ..., stdout: ...
      * )
      * ```
      *
@@ -72,14 +73,14 @@ final class BetaBashCodeExecutionResultBlock implements BaseModel
      */
     public static function with(
         array $content,
-        int $returnCode,
+        int $return_code,
         string $stderr,
         string $stdout
     ): self {
         $obj = new self;
 
         $obj->content = $content;
-        $obj->returnCode = $returnCode;
+        $obj->return_code = $return_code;
         $obj->stderr = $stderr;
         $obj->stdout = $stdout;
 
@@ -100,7 +101,7 @@ final class BetaBashCodeExecutionResultBlock implements BaseModel
     public function withReturnCode(int $returnCode): self
     {
         $obj = clone $this;
-        $obj->returnCode = $returnCode;
+        $obj->return_code = $returnCode;
 
         return $obj;
     }

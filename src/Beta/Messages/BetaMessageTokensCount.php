@@ -12,8 +12,8 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type BetaMessageTokensCountShape = array{
- *   contextManagement: BetaCountTokensContextManagementResponse|null,
- *   inputTokens: int,
+ *   context_management: BetaCountTokensContextManagementResponse|null,
+ *   input_tokens: int,
  * }
  */
 final class BetaMessageTokensCount implements BaseModel, ResponseConverter
@@ -26,21 +26,21 @@ final class BetaMessageTokensCount implements BaseModel, ResponseConverter
     /**
      * Information about context management applied to the message.
      */
-    #[Api('context_management')]
-    public ?BetaCountTokensContextManagementResponse $contextManagement;
+    #[Api]
+    public ?BetaCountTokensContextManagementResponse $context_management;
 
     /**
      * The total number of tokens across the provided list of messages, system prompt, and tools.
      */
-    #[Api('input_tokens')]
-    public int $inputTokens;
+    #[Api]
+    public int $input_tokens;
 
     /**
      * `new BetaMessageTokensCount()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaMessageTokensCount::with(contextManagement: ..., inputTokens: ...)
+     * BetaMessageTokensCount::with(context_management: ..., input_tokens: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -60,13 +60,13 @@ final class BetaMessageTokensCount implements BaseModel, ResponseConverter
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?BetaCountTokensContextManagementResponse $contextManagement,
-        int $inputTokens,
+        ?BetaCountTokensContextManagementResponse $context_management,
+        int $input_tokens,
     ): self {
         $obj = new self;
 
-        $obj->contextManagement = $contextManagement;
-        $obj->inputTokens = $inputTokens;
+        $obj->context_management = $context_management;
+        $obj->input_tokens = $input_tokens;
 
         return $obj;
     }
@@ -78,7 +78,7 @@ final class BetaMessageTokensCount implements BaseModel, ResponseConverter
         ?BetaCountTokensContextManagementResponse $contextManagement
     ): self {
         $obj = clone $this;
-        $obj->contextManagement = $contextManagement;
+        $obj->context_management = $contextManagement;
 
         return $obj;
     }
@@ -89,7 +89,7 @@ final class BetaMessageTokensCount implements BaseModel, ResponseConverter
     public function withInputTokens(int $inputTokens): self
     {
         $obj = clone $this;
-        $obj->inputTokens = $inputTokens;
+        $obj->input_tokens = $inputTokens;
 
         return $obj;
     }

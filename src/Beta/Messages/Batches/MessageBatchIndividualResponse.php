@@ -14,7 +14,7 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  * This is a single line in the response `.jsonl` file and does not represent the response as a whole.
  *
  * @phpstan-type MessageBatchIndividualResponseShape = array{
- *   customID: string,
+ *   custom_id: string,
  *   result: MessageBatchSucceededResult|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult,
  * }
  */
@@ -30,8 +30,8 @@ final class MessageBatchIndividualResponse implements BaseModel, ResponseConvert
      *
      * Must be unique for each request within the Message Batch.
      */
-    #[Api('custom_id')]
-    public string $customID;
+    #[Api]
+    public string $custom_id;
 
     /**
      * Processing result for this request.
@@ -46,7 +46,7 @@ final class MessageBatchIndividualResponse implements BaseModel, ResponseConvert
      *
      * To enforce required parameters use
      * ```
-     * MessageBatchIndividualResponse::with(customID: ..., result: ...)
+     * MessageBatchIndividualResponse::with(custom_id: ..., result: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -66,12 +66,12 @@ final class MessageBatchIndividualResponse implements BaseModel, ResponseConvert
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $customID,
+        string $custom_id,
         MessageBatchSucceededResult|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult $result,
     ): self {
         $obj = new self;
 
-        $obj->customID = $customID;
+        $obj->custom_id = $custom_id;
         $obj->result = $result;
 
         return $obj;
@@ -85,7 +85,7 @@ final class MessageBatchIndividualResponse implements BaseModel, ResponseConvert
     public function withCustomID(string $customID): self
     {
         $obj = clone $this;
-        $obj->customID = $customID;
+        $obj->custom_id = $customID;
 
         return $obj;
     }

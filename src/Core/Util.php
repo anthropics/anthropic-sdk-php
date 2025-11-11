@@ -26,7 +26,7 @@ final class Util
     public const JSONL_CONTENT_TYPE = '/^application\/(:?x-(?:n|l)djson)|(:?(?:x-)?jsonl)/';
 
     /**
-     * @return array<string, mixed>
+     * @return array<string,mixed>
      */
     public static function get_object_vars(object $object1): array
     {
@@ -36,10 +36,10 @@ final class Util
     /**
      * @template T
      *
-     * @param array<string, T> $array
-     * @param array<string, string> $map
+     * @param array<string,T> $array
+     * @param array<string,string> $map
      *
-     * @return array<string, T>
+     * @return array<string,T>
      */
     public static function array_transform_keys(array $array, array $map): array
     {
@@ -52,9 +52,9 @@ final class Util
     }
 
     /**
-     * @param array<string, mixed> $arr
+     * @param array<string,mixed> $arr
      *
-     * @return array<string, mixed>
+     * @return array<string,mixed>
      */
     public static function array_filter_omit(array $arr): array
     {
@@ -106,7 +106,7 @@ final class Util
     }
 
     /**
-     * @param array<string, mixed> $query
+     * @param array<string,mixed> $query
      */
     public static function joinUri(
         UriInterface $base,
@@ -141,7 +141,7 @@ final class Util
     }
 
     /**
-     * @param array<string, string|int|list<string|int>|null> $headers
+     * @param array<string,string|int|list<string|int>|null> $headers
      */
     public static function withSetHeaders(
         RequestInterface $req,
@@ -182,8 +182,7 @@ final class Util
     }
 
     /**
-     * @param bool|int|float|string|resource|\Traversable<mixed>|array<string,
-     * mixed,>|null $body
+     * @param bool|int|float|string|resource|\Traversable<mixed,>|array<string,mixed>|null $body
      */
     public static function withSetBody(
         StreamFactoryInterface $factory,
@@ -409,8 +408,7 @@ final class Util
     }
 
     /**
-     * @param bool|int|float|string|resource|\Traversable<mixed>|array<string,
-     * mixed,>|null $body
+     * @param bool|int|float|string|resource|\Traversable<mixed,>|array<string,mixed>|null $body
      *
      * @return array{string, \Generator<string>}
      */

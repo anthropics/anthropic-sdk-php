@@ -10,7 +10,9 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaClearThinking20251015EditResponseShape = array{
- *   clearedInputTokens: int, clearedThinkingTurns: int, type: string
+ *   cleared_input_tokens: int,
+ *   cleared_thinking_turns: int,
+ *   type: "clear_thinking_20251015",
  * }
  */
 final class BetaClearThinking20251015EditResponse implements BaseModel
@@ -20,6 +22,8 @@ final class BetaClearThinking20251015EditResponse implements BaseModel
 
     /**
      * The type of context management edit applied.
+     *
+     * @var "clear_thinking_20251015" $type
      */
     #[Api]
     public string $type = 'clear_thinking_20251015';
@@ -27,14 +31,14 @@ final class BetaClearThinking20251015EditResponse implements BaseModel
     /**
      * Number of input tokens cleared by this edit.
      */
-    #[Api('cleared_input_tokens')]
-    public int $clearedInputTokens;
+    #[Api]
+    public int $cleared_input_tokens;
 
     /**
      * Number of thinking turns that were cleared.
      */
-    #[Api('cleared_thinking_turns')]
-    public int $clearedThinkingTurns;
+    #[Api]
+    public int $cleared_thinking_turns;
 
     /**
      * `new BetaClearThinking20251015EditResponse()` is missing required properties by the API.
@@ -42,7 +46,7 @@ final class BetaClearThinking20251015EditResponse implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaClearThinking20251015EditResponse::with(
-     *   clearedInputTokens: ..., clearedThinkingTurns: ...
+     *   cleared_input_tokens: ..., cleared_thinking_turns: ...
      * )
      * ```
      *
@@ -65,13 +69,13 @@ final class BetaClearThinking20251015EditResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        int $clearedInputTokens,
-        int $clearedThinkingTurns
+        int $cleared_input_tokens,
+        int $cleared_thinking_turns
     ): self {
         $obj = new self;
 
-        $obj->clearedInputTokens = $clearedInputTokens;
-        $obj->clearedThinkingTurns = $clearedThinkingTurns;
+        $obj->cleared_input_tokens = $cleared_input_tokens;
+        $obj->cleared_thinking_turns = $cleared_thinking_turns;
 
         return $obj;
     }
@@ -82,7 +86,7 @@ final class BetaClearThinking20251015EditResponse implements BaseModel
     public function withClearedInputTokens(int $clearedInputTokens): self
     {
         $obj = clone $this;
-        $obj->clearedInputTokens = $clearedInputTokens;
+        $obj->cleared_input_tokens = $clearedInputTokens;
 
         return $obj;
     }
@@ -93,7 +97,7 @@ final class BetaClearThinking20251015EditResponse implements BaseModel
     public function withClearedThinkingTurns(int $clearedThinkingTurns): self
     {
         $obj = clone $this;
-        $obj->clearedThinkingTurns = $clearedThinkingTurns;
+        $obj->cleared_thinking_turns = $clearedThinkingTurns;
 
         return $obj;
     }

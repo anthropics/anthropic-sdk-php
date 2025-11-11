@@ -11,11 +11,11 @@ use Anthropic\Messages\ToolResultBlockParam\Content;
 
 /**
  * @phpstan-type ToolResultBlockParamShape = array{
- *   toolUseID: string,
- *   type: string,
- *   cacheControl?: CacheControlEphemeral|null,
- *   content?: string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam>,
- *   isError?: bool,
+ *   tool_use_id: string,
+ *   type: "tool_result",
+ *   cache_control?: CacheControlEphemeral|null,
+ *   content?: string|null|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam>,
+ *   is_error?: bool|null,
  * }
  */
 final class ToolResultBlockParam implements BaseModel
@@ -23,17 +23,18 @@ final class ToolResultBlockParam implements BaseModel
     /** @use SdkModel<ToolResultBlockParamShape> */
     use SdkModel;
 
+    /** @var "tool_result" $type */
     #[Api]
     public string $type = 'tool_result';
 
-    #[Api('tool_use_id')]
-    public string $toolUseID;
+    #[Api]
+    public string $tool_use_id;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?CacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?CacheControlEphemeral $cache_control;
 
     /**
      * @var string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam>|null $content
@@ -41,15 +42,15 @@ final class ToolResultBlockParam implements BaseModel
     #[Api(union: Content::class, optional: true)]
     public string|array|null $content;
 
-    #[Api('is_error', optional: true)]
-    public ?bool $isError;
+    #[Api(optional: true)]
+    public ?bool $is_error;
 
     /**
      * `new ToolResultBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ToolResultBlockParam::with(toolUseID: ...)
+     * ToolResultBlockParam::with(tool_use_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -71,18 +72,18 @@ final class ToolResultBlockParam implements BaseModel
      * @param string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam> $content
      */
     public static function with(
-        string $toolUseID,
-        ?CacheControlEphemeral $cacheControl = null,
+        string $tool_use_id,
+        ?CacheControlEphemeral $cache_control = null,
         string|array|null $content = null,
-        ?bool $isError = null,
+        ?bool $is_error = null,
     ): self {
         $obj = new self;
 
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $tool_use_id;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
         null !== $content && $obj->content = $content;
-        null !== $isError && $obj->isError = $isError;
+        null !== $is_error && $obj->is_error = $is_error;
 
         return $obj;
     }
@@ -90,7 +91,7 @@ final class ToolResultBlockParam implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $toolUseID;
 
         return $obj;
     }
@@ -101,7 +102,7 @@ final class ToolResultBlockParam implements BaseModel
     public function withCacheControl(?CacheControlEphemeral $cacheControl): self
     {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }
@@ -120,7 +121,7 @@ final class ToolResultBlockParam implements BaseModel
     public function withIsError(bool $isError): self
     {
         $obj = clone $this;
-        $obj->isError = $isError;
+        $obj->is_error = $isError;
 
         return $obj;
     }

@@ -10,10 +10,10 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCitationsWebSearchResultLocationShape = array{
- *   citedText: string,
- *   encryptedIndex: string,
+ *   cited_text: string,
+ *   encrypted_index: string,
  *   title: string|null,
- *   type: string,
+ *   type: "web_search_result_location",
  *   url: string,
  * }
  */
@@ -22,14 +22,15 @@ final class BetaCitationsWebSearchResultLocation implements BaseModel
     /** @use SdkModel<BetaCitationsWebSearchResultLocationShape> */
     use SdkModel;
 
+    /** @var "web_search_result_location" $type */
     #[Api]
     public string $type = 'web_search_result_location';
 
-    #[Api('cited_text')]
-    public string $citedText;
+    #[Api]
+    public string $cited_text;
 
-    #[Api('encrypted_index')]
-    public string $encryptedIndex;
+    #[Api]
+    public string $encrypted_index;
 
     #[Api]
     public ?string $title;
@@ -43,7 +44,7 @@ final class BetaCitationsWebSearchResultLocation implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaCitationsWebSearchResultLocation::with(
-     *   citedText: ..., encryptedIndex: ..., title: ..., url: ...
+     *   cited_text: ..., encrypted_index: ..., title: ..., url: ...
      * )
      * ```
      *
@@ -68,15 +69,15 @@ final class BetaCitationsWebSearchResultLocation implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $citedText,
-        string $encryptedIndex,
+        string $cited_text,
+        string $encrypted_index,
         ?string $title,
         string $url
     ): self {
         $obj = new self;
 
-        $obj->citedText = $citedText;
-        $obj->encryptedIndex = $encryptedIndex;
+        $obj->cited_text = $cited_text;
+        $obj->encrypted_index = $encrypted_index;
         $obj->title = $title;
         $obj->url = $url;
 
@@ -86,7 +87,7 @@ final class BetaCitationsWebSearchResultLocation implements BaseModel
     public function withCitedText(string $citedText): self
     {
         $obj = clone $this;
-        $obj->citedText = $citedText;
+        $obj->cited_text = $citedText;
 
         return $obj;
     }
@@ -94,7 +95,7 @@ final class BetaCitationsWebSearchResultLocation implements BaseModel
     public function withEncryptedIndex(string $encryptedIndex): self
     {
         $obj = clone $this;
-        $obj->encryptedIndex = $encryptedIndex;
+        $obj->encrypted_index = $encryptedIndex;
 
         return $obj;
     }

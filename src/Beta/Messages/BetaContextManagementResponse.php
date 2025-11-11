@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaContextManagementResponseShape = array{
- *   appliedEdits: list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse>,
+ *   applied_edits: list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse>,
  * }
  */
 final class BetaContextManagementResponse implements BaseModel
@@ -22,17 +22,17 @@ final class BetaContextManagementResponse implements BaseModel
     /**
      * List of context management edits that were applied.
      *
-     * @var list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse> $appliedEdits
+     * @var list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse> $applied_edits
      */
-    #[Api('applied_edits', list: AppliedEdit::class)]
-    public array $appliedEdits;
+    #[Api(list: AppliedEdit::class)]
+    public array $applied_edits;
 
     /**
      * `new BetaContextManagementResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaContextManagementResponse::with(appliedEdits: ...)
+     * BetaContextManagementResponse::with(applied_edits: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -51,13 +51,13 @@ final class BetaContextManagementResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse> $appliedEdits
+     * @param list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse> $applied_edits
      */
-    public static function with(array $appliedEdits): self
+    public static function with(array $applied_edits): self
     {
         $obj = new self;
 
-        $obj->appliedEdits = $appliedEdits;
+        $obj->applied_edits = $applied_edits;
 
         return $obj;
     }
@@ -70,7 +70,7 @@ final class BetaContextManagementResponse implements BaseModel
     public function withAppliedEdits(array $appliedEdits): self
     {
         $obj = clone $this;
-        $obj->appliedEdits = $appliedEdits;
+        $obj->applied_edits = $appliedEdits;
 
         return $obj;
     }

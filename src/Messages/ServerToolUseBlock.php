@@ -10,7 +10,10 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type ServerToolUseBlockShape = array{
- *   id: string, input: array<string, mixed>, name: string, type: string
+ *   id: string,
+ *   input: array<string,mixed>,
+ *   name: "web_search",
+ *   type: "server_tool_use",
  * }
  */
 final class ServerToolUseBlock implements BaseModel
@@ -18,16 +21,18 @@ final class ServerToolUseBlock implements BaseModel
     /** @use SdkModel<ServerToolUseBlockShape> */
     use SdkModel;
 
+    /** @var "web_search" $name */
     #[Api]
     public string $name = 'web_search';
 
+    /** @var "server_tool_use" $type */
     #[Api]
     public string $type = 'server_tool_use';
 
     #[Api]
     public string $id;
 
-    /** @var array<string, mixed> $input */
+    /** @var array<string,mixed> $input */
     #[Api(map: 'mixed')]
     public array $input;
 
@@ -55,7 +60,7 @@ final class ServerToolUseBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, mixed> $input
+     * @param array<string,mixed> $input
      */
     public static function with(string $id, array $input): self
     {
@@ -76,7 +81,7 @@ final class ServerToolUseBlock implements BaseModel
     }
 
     /**
-     * @param array<string, mixed> $input
+     * @param array<string,mixed> $input
      */
     public function withInput(array $input): self
     {

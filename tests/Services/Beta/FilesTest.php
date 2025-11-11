@@ -33,7 +33,7 @@ final class FilesTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->beta->files->list();
+        $result = $this->client->beta->files->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -41,7 +41,7 @@ final class FilesTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $result = $this->client->beta->files->delete('file_id');
+        $result = $this->client->beta->files->delete('file_id', []);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -49,7 +49,7 @@ final class FilesTest extends TestCase
     #[Test]
     public function testRetrieveMetadata(): void
     {
-        $result = $this->client->beta->files->retrieveMetadata('file_id');
+        $result = $this->client->beta->files->retrieveMetadata('file_id', []);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

@@ -17,9 +17,9 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @phpstan-type PageShape = array{
  *   data?: list<mixed>|null,
- *   hasMore?: bool|null,
- *   firstID?: string|null,
- *   lastID?: string|null,
+ *   has_more?: bool|null,
+ *   first_id?: string|null,
+ *   last_id?: string|null,
  * }
  *
  * @template TItem
@@ -38,14 +38,14 @@ final class Page implements BaseModel, BasePage
     #[Api(list: 'mixed', optional: true)]
     public ?array $data;
 
-    #[Api('has_more', optional: true)]
-    public ?bool $hasMore;
+    #[Api(optional: true)]
+    public ?bool $has_more;
 
-    #[Api('first_id', nullable: true, optional: true)]
-    public ?string $firstID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $first_id;
 
-    #[Api('last_id', nullable: true, optional: true)]
-    public ?string $lastID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $last_id;
 
     /**
      * @internal
@@ -53,8 +53,8 @@ final class Page implements BaseModel, BasePage
      * @param array{
      *   method: string,
      *   path: string,
-     *   query: array<string, mixed>,
-     *   headers: array<string, string|list<string>|null>,
+     *   query: array<string,mixed>,
+     *   headers: array<string,string|list<string>|null>,
      *   body: mixed,
      * } $request
      */
@@ -100,8 +100,8 @@ final class Page implements BaseModel, BasePage
      *   array{
      *     method: string,
      *     path: string,
-     *     query: array<string, mixed>,
-     *     headers: array<string, string|list<string>|null>,
+     *     query: array<string,mixed>,
+     *     headers: array<string,string|list<string>|null>,
      *     body: mixed,
      *   },
      *   RequestOptions,
@@ -109,7 +109,7 @@ final class Page implements BaseModel, BasePage
      */
     public function nextRequest(): ?array
     {
-        $next = $this->lastID ?? null;
+        $next = $this->last_id ?? null;
         if (!$next) {
             return null;
         }

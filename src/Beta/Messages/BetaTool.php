@@ -12,10 +12,10 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaToolShape = array{
- *   inputSchema: InputSchema,
+ *   input_schema: InputSchema,
  *   name: string,
- *   cacheControl?: BetaCacheControlEphemeral|null,
- *   description?: string,
+ *   cache_control?: BetaCacheControlEphemeral|null,
+ *   description?: string|null,
  *   type?: value-of<Type>|null,
  * }
  */
@@ -29,8 +29,8 @@ final class BetaTool implements BaseModel
      *
      * This defines the shape of the `input` that your tool accepts and that the model will produce.
      */
-    #[Api('input_schema')]
-    public InputSchema $inputSchema;
+    #[Api]
+    public InputSchema $input_schema;
 
     /**
      * Name of the tool.
@@ -43,8 +43,8 @@ final class BetaTool implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaCacheControlEphemeral $cache_control;
 
     /**
      * Description of what this tool does.
@@ -63,7 +63,7 @@ final class BetaTool implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaTool::with(inputSchema: ..., name: ...)
+     * BetaTool::with(input_schema: ..., name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -85,18 +85,18 @@ final class BetaTool implements BaseModel
      * @param Type|value-of<Type>|null $type
      */
     public static function with(
-        InputSchema $inputSchema,
+        InputSchema $input_schema,
         string $name,
-        ?BetaCacheControlEphemeral $cacheControl = null,
+        ?BetaCacheControlEphemeral $cache_control = null,
         ?string $description = null,
         Type|string|null $type = null,
     ): self {
         $obj = new self;
 
-        $obj->inputSchema = $inputSchema;
+        $obj->input_schema = $input_schema;
         $obj->name = $name;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
         null !== $description && $obj->description = $description;
         null !== $type && $obj['type'] = $type;
 
@@ -111,7 +111,7 @@ final class BetaTool implements BaseModel
     public function withInputSchema(InputSchema $inputSchema): self
     {
         $obj = clone $this;
-        $obj->inputSchema = $inputSchema;
+        $obj->input_schema = $inputSchema;
 
         return $obj;
     }
@@ -136,7 +136,7 @@ final class BetaTool implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }

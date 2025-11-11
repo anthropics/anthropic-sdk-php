@@ -11,9 +11,9 @@ use Anthropic\Messages\RawContentBlockStartEvent\ContentBlock;
 
 /**
  * @phpstan-type RawContentBlockStartEventShape = array{
- *   contentBlock: TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock,
+ *   content_block: TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock,
  *   index: int,
- *   type: string,
+ *   type: "content_block_start",
  * }
  */
 final class RawContentBlockStartEvent implements BaseModel
@@ -21,11 +21,12 @@ final class RawContentBlockStartEvent implements BaseModel
     /** @use SdkModel<RawContentBlockStartEventShape> */
     use SdkModel;
 
+    /** @var "content_block_start" $type */
     #[Api]
     public string $type = 'content_block_start';
 
-    #[Api('content_block', union: ContentBlock::class)]
-    public TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $contentBlock;
+    #[Api(union: ContentBlock::class)]
+    public TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $content_block;
 
     #[Api]
     public int $index;
@@ -35,7 +36,7 @@ final class RawContentBlockStartEvent implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * RawContentBlockStartEvent::with(contentBlock: ..., index: ...)
+     * RawContentBlockStartEvent::with(content_block: ..., index: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -55,12 +56,12 @@ final class RawContentBlockStartEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $contentBlock,
+        TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $content_block,
         int $index,
     ): self {
         $obj = new self;
 
-        $obj->contentBlock = $contentBlock;
+        $obj->content_block = $content_block;
         $obj->index = $index;
 
         return $obj;
@@ -70,7 +71,7 @@ final class RawContentBlockStartEvent implements BaseModel
         TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $contentBlock,
     ): self {
         $obj = clone $this;
-        $obj->contentBlock = $contentBlock;
+        $obj->content_block = $contentBlock;
 
         return $obj;
     }

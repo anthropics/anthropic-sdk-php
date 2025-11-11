@@ -10,7 +10,9 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCodeExecutionTool20250522Shape = array{
- *   name: string, type: string, cacheControl?: BetaCacheControlEphemeral|null
+ *   name: "code_execution",
+ *   type: "code_execution_20250522",
+ *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
 final class BetaCodeExecutionTool20250522 implements BaseModel
@@ -22,18 +24,21 @@ final class BetaCodeExecutionTool20250522 implements BaseModel
      * Name of the tool.
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
+     *
+     * @var "code_execution" $name
      */
     #[Api]
     public string $name = 'code_execution';
 
+    /** @var "code_execution_20250522" $type */
     #[Api]
     public string $type = 'code_execution_20250522';
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaCacheControlEphemeral $cache_control;
 
     public function __construct()
     {
@@ -46,11 +51,11 @@ final class BetaCodeExecutionTool20250522 implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?BetaCacheControlEphemeral $cacheControl = null
+        ?BetaCacheControlEphemeral $cache_control = null
     ): self {
         $obj = new self;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
 
         return $obj;
     }
@@ -62,7 +67,7 @@ final class BetaCodeExecutionTool20250522 implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }

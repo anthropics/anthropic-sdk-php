@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaRawMessageStartEventShape = array{
- *   message: BetaMessage, type: string
+ *   message: BetaMessage, type: "message_start"
  * }
  */
 final class BetaRawMessageStartEvent implements BaseModel
@@ -18,6 +18,7 @@ final class BetaRawMessageStartEvent implements BaseModel
     /** @use SdkModel<BetaRawMessageStartEventShape> */
     use SdkModel;
 
+    /** @var "message_start" $type */
     #[Api]
     public string $type = 'message_start';
 

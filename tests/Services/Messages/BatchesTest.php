@@ -3,17 +3,6 @@
 namespace Tests\Services\Messages;
 
 use Anthropic\Client;
-use Anthropic\Messages\Batches\BatchCreateParams\Request;
-use Anthropic\Messages\Batches\BatchCreateParams\Request\Params;
-use Anthropic\Messages\CacheControlEphemeral;
-use Anthropic\Messages\CitationCharLocationParam;
-use Anthropic\Messages\MessageParam;
-use Anthropic\Messages\Metadata;
-use Anthropic\Messages\TextBlockParam;
-use Anthropic\Messages\ThinkingConfigEnabled;
-use Anthropic\Messages\Tool;
-use Anthropic\Messages\Tool\InputSchema;
-use Anthropic\Messages\ToolChoiceAuto;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -40,20 +29,18 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->messages->batches->create(
-            [
-                Request::with(
-                    customID: 'my-custom-id-1',
-                    params: Params::with(
-                        maxTokens: 1024,
-                        messages: [
-                            MessageParam::with(content: 'Hello, world', role: 'user'),
-                        ],
-                        model: 'claude-sonnet-4-5-20250929',
-                    ),
-                ),
+        $result = $this->client->messages->batches->create([
+            'requests' => [
+                [
+                    'custom_id' => 'my-custom-id-1',
+                    'params' => [
+                        'max_tokens' => 1024,
+                        'messages' => [['content' => 'Hello, world', 'role' => 'user']],
+                        'model' => 'claude-sonnet-4-5-20250929',
+                    ],
+                ],
             ],
-        );
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -61,63 +48,59 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->messages->batches->create(
-            [
-                Request::with(
-                    customID: 'my-custom-id-1',
-                    params: Params::with(
-                        maxTokens: 1024,
-                        messages: [
-                            MessageParam::with(content: 'Hello, world', role: 'user'),
+        $result = $this->client->messages->batches->create([
+            'requests' => [
+                [
+                    'custom_id' => 'my-custom-id-1',
+                    'params' => [
+                        'max_tokens' => 1024,
+                        'messages' => [['content' => 'Hello, world', 'role' => 'user']],
+                        'model' => 'claude-sonnet-4-5-20250929',
+                        'metadata' => ['user_id' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
+                        'service_tier' => 'auto',
+                        'stop_sequences' => ['string'],
+                        'stream' => true,
+                        'system' => [
+                            [
+                                'text' => "Today's date is 2024-06-01.",
+                                'type' => 'text',
+                                'cache_control' => ['type' => 'ephemeral', 'ttl' => '5m'],
+                                'citations' => [
+                                    [
+                                        'cited_text' => 'cited_text',
+                                        'document_index' => 0,
+                                        'document_title' => 'x',
+                                        'end_char_index' => 0,
+                                        'start_char_index' => 0,
+                                        'type' => 'char_location',
+                                    ],
+                                ],
+                            ],
                         ],
-                        model: 'claude-sonnet-4-5-20250929',
-                    )
-                        ->withMetadata(
-                            (new Metadata)->withUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b')
-                        )
-                        ->withServiceTier('auto')
-                        ->withStopSequences(['string'])
-                        ->withStream(true)
-                        ->withSystem(
+                        'temperature' => 1,
+                        'thinking' => ['budget_tokens' => 1024, 'type' => 'enabled'],
+                        'tool_choice' => [
+                            'type' => 'auto', 'disable_parallel_tool_use' => true,
+                        ],
+                        'tools' => [
                             [
-                                TextBlockParam::with(text: "Today's date is 2024-06-01.")
-                                    ->withCacheControl((new CacheControlEphemeral)->withTTL('5m'))
-                                    ->withCitations(
-                                        [
-                                            CitationCharLocationParam::with(
-                                                citedText: 'cited_text',
-                                                documentIndex: 0,
-                                                documentTitle: 'x',
-                                                endCharIndex: 0,
-                                                startCharIndex: 0,
-                                            ),
-                                        ],
-                                    ),
+                                'input_schema' => [
+                                    'type' => 'object',
+                                    'properties' => ['location' => 'bar', 'unit' => 'bar'],
+                                    'required' => ['location'],
+                                ],
+                                'name' => 'name',
+                                'cache_control' => ['type' => 'ephemeral', 'ttl' => '5m'],
+                                'description' => 'Get the current weather in a given location',
+                                'type' => 'custom',
                             ],
-                        )
-                        ->withTemperature(1)
-                        ->withThinking(ThinkingConfigEnabled::with(budgetTokens: 1024))
-                        ->withToolChoice(
-                            (new ToolChoiceAuto)->withDisableParallelToolUse(true)
-                        )
-                        ->withTools(
-                            [
-                                Tool::with(
-                                    inputSchema: (new InputSchema)
-                                        ->withProperties(['location' => 'bar', 'unit' => 'bar'])
-                                        ->withRequired(['location']),
-                                    name: 'name',
-                                )
-                                    ->withCacheControl((new CacheControlEphemeral)->withTTL('5m'))
-                                    ->withDescription('Get the current weather in a given location')
-                                    ->withType('custom'),
-                            ],
-                        )
-                        ->withTopK(5)
-                        ->withTopP(0.7),
-                ),
+                        ],
+                        'top_k' => 5,
+                        'top_p' => 0.7,
+                    ],
+                ],
             ],
-        );
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -137,7 +120,7 @@ final class BatchesTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->messages->batches->list();
+        $result = $this->client->messages->batches->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

@@ -11,8 +11,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaBashCodeExecutionToolResultBlockShape = array{
  *   content: BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock,
- *   toolUseID: string,
- *   type: string,
+ *   tool_use_id: string,
+ *   type: "bash_code_execution_tool_result",
  * }
  */
 final class BetaBashCodeExecutionToolResultBlock implements BaseModel
@@ -20,21 +20,22 @@ final class BetaBashCodeExecutionToolResultBlock implements BaseModel
     /** @use SdkModel<BetaBashCodeExecutionToolResultBlockShape> */
     use SdkModel;
 
+    /** @var "bash_code_execution_tool_result" $type */
     #[Api]
     public string $type = 'bash_code_execution_tool_result';
 
     #[Api]
     public BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock $content;
 
-    #[Api('tool_use_id')]
-    public string $toolUseID;
+    #[Api]
+    public string $tool_use_id;
 
     /**
      * `new BetaBashCodeExecutionToolResultBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaBashCodeExecutionToolResultBlock::with(content: ..., toolUseID: ...)
+     * BetaBashCodeExecutionToolResultBlock::with(content: ..., tool_use_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -55,12 +56,12 @@ final class BetaBashCodeExecutionToolResultBlock implements BaseModel
      */
     public static function with(
         BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock $content,
-        string $toolUseID,
+        string $tool_use_id,
     ): self {
         $obj = new self;
 
         $obj->content = $content;
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $tool_use_id;
 
         return $obj;
     }
@@ -77,7 +78,7 @@ final class BetaBashCodeExecutionToolResultBlock implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $toolUseID;
 
         return $obj;
     }

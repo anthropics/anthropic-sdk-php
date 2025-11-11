@@ -10,14 +10,14 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaWebFetchTool20250910Shape = array{
- *   name: string,
- *   type: string,
- *   allowedDomains?: list<string>|null,
- *   blockedDomains?: list<string>|null,
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   name: "web_fetch",
+ *   type: "web_fetch_20250910",
+ *   allowed_domains?: list<string>|null,
+ *   blocked_domains?: list<string>|null,
+ *   cache_control?: BetaCacheControlEphemeral|null,
  *   citations?: BetaCitationsConfigParam|null,
- *   maxContentTokens?: int|null,
- *   maxUses?: int|null,
+ *   max_content_tokens?: int|null,
+ *   max_uses?: int|null,
  * }
  */
 final class BetaWebFetchTool20250910 implements BaseModel
@@ -29,34 +29,37 @@ final class BetaWebFetchTool20250910 implements BaseModel
      * Name of the tool.
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
+     *
+     * @var "web_fetch" $name
      */
     #[Api]
     public string $name = 'web_fetch';
 
+    /** @var "web_fetch_20250910" $type */
     #[Api]
     public string $type = 'web_fetch_20250910';
 
     /**
      * List of domains to allow fetching from.
      *
-     * @var list<string>|null $allowedDomains
+     * @var list<string>|null $allowed_domains
      */
-    #[Api('allowed_domains', list: 'string', nullable: true, optional: true)]
-    public ?array $allowedDomains;
+    #[Api(list: 'string', nullable: true, optional: true)]
+    public ?array $allowed_domains;
 
     /**
      * List of domains to block fetching from.
      *
-     * @var list<string>|null $blockedDomains
+     * @var list<string>|null $blocked_domains
      */
-    #[Api('blocked_domains', list: 'string', nullable: true, optional: true)]
-    public ?array $blockedDomains;
+    #[Api(list: 'string', nullable: true, optional: true)]
+    public ?array $blocked_domains;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaCacheControlEphemeral $cache_control;
 
     /**
      * Citations configuration for fetched documents. Citations are disabled by default.
@@ -67,14 +70,14 @@ final class BetaWebFetchTool20250910 implements BaseModel
     /**
      * Maximum number of tokens used by including web page text content in the context. The limit is approximate and does not apply to binary content such as PDFs.
      */
-    #[Api('max_content_tokens', nullable: true, optional: true)]
-    public ?int $maxContentTokens;
+    #[Api(nullable: true, optional: true)]
+    public ?int $max_content_tokens;
 
     /**
      * Maximum number of times the tool can be used in the API request.
      */
-    #[Api('max_uses', nullable: true, optional: true)]
-    public ?int $maxUses;
+    #[Api(nullable: true, optional: true)]
+    public ?int $max_uses;
 
     public function __construct()
     {
@@ -86,25 +89,25 @@ final class BetaWebFetchTool20250910 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string>|null $allowedDomains
-     * @param list<string>|null $blockedDomains
+     * @param list<string>|null $allowed_domains
+     * @param list<string>|null $blocked_domains
      */
     public static function with(
-        ?array $allowedDomains = null,
-        ?array $blockedDomains = null,
-        ?BetaCacheControlEphemeral $cacheControl = null,
+        ?array $allowed_domains = null,
+        ?array $blocked_domains = null,
+        ?BetaCacheControlEphemeral $cache_control = null,
         ?BetaCitationsConfigParam $citations = null,
-        ?int $maxContentTokens = null,
-        ?int $maxUses = null,
+        ?int $max_content_tokens = null,
+        ?int $max_uses = null,
     ): self {
         $obj = new self;
 
-        null !== $allowedDomains && $obj->allowedDomains = $allowedDomains;
-        null !== $blockedDomains && $obj->blockedDomains = $blockedDomains;
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $allowed_domains && $obj->allowed_domains = $allowed_domains;
+        null !== $blocked_domains && $obj->blocked_domains = $blocked_domains;
+        null !== $cache_control && $obj->cache_control = $cache_control;
         null !== $citations && $obj->citations = $citations;
-        null !== $maxContentTokens && $obj->maxContentTokens = $maxContentTokens;
-        null !== $maxUses && $obj->maxUses = $maxUses;
+        null !== $max_content_tokens && $obj->max_content_tokens = $max_content_tokens;
+        null !== $max_uses && $obj->max_uses = $max_uses;
 
         return $obj;
     }
@@ -117,7 +120,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     public function withAllowedDomains(?array $allowedDomains): self
     {
         $obj = clone $this;
-        $obj->allowedDomains = $allowedDomains;
+        $obj->allowed_domains = $allowedDomains;
 
         return $obj;
     }
@@ -130,7 +133,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     public function withBlockedDomains(?array $blockedDomains): self
     {
         $obj = clone $this;
-        $obj->blockedDomains = $blockedDomains;
+        $obj->blocked_domains = $blockedDomains;
 
         return $obj;
     }
@@ -142,7 +145,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }
@@ -164,7 +167,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     public function withMaxContentTokens(?int $maxContentTokens): self
     {
         $obj = clone $this;
-        $obj->maxContentTokens = $maxContentTokens;
+        $obj->max_content_tokens = $maxContentTokens;
 
         return $obj;
     }
@@ -175,7 +178,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     public function withMaxUses(?int $maxUses): self
     {
         $obj = clone $this;
-        $obj->maxUses = $maxUses;
+        $obj->max_uses = $maxUses;
 
         return $obj;
     }

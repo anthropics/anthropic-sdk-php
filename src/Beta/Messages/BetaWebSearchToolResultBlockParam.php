@@ -11,9 +11,9 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaWebSearchToolResultBlockParamShape = array{
  *   content: list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError,
- *   toolUseID: string,
- *   type: string,
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   tool_use_id: string,
+ *   type: "web_search_tool_result",
+ *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
 final class BetaWebSearchToolResultBlockParam implements BaseModel
@@ -21,6 +21,7 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
     /** @use SdkModel<BetaWebSearchToolResultBlockParamShape> */
     use SdkModel;
 
+    /** @var "web_search_tool_result" $type */
     #[Api]
     public string $type = 'web_search_tool_result';
 
@@ -30,21 +31,21 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
     #[Api(union: BetaWebSearchToolResultBlockParamContent::class)]
     public array|BetaWebSearchToolRequestError $content;
 
-    #[Api('tool_use_id')]
-    public string $toolUseID;
+    #[Api]
+    public string $tool_use_id;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaCacheControlEphemeral $cache_control;
 
     /**
      * `new BetaWebSearchToolResultBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaWebSearchToolResultBlockParam::with(content: ..., toolUseID: ...)
+     * BetaWebSearchToolResultBlockParam::with(content: ..., tool_use_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -67,15 +68,15 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
      */
     public static function with(
         array|BetaWebSearchToolRequestError $content,
-        string $toolUseID,
-        ?BetaCacheControlEphemeral $cacheControl = null,
+        string $tool_use_id,
+        ?BetaCacheControlEphemeral $cache_control = null,
     ): self {
         $obj = new self;
 
         $obj->content = $content;
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $tool_use_id;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
 
         return $obj;
     }
@@ -95,7 +96,7 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $toolUseID;
 
         return $obj;
     }
@@ -107,7 +108,7 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }

@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCacheControlEphemeralShape = array{
- *   type: string, ttl?: value-of<TTL>
+ *   type: "ephemeral", ttl?: value-of<TTL>|null
  * }
  */
 final class BetaCacheControlEphemeral implements BaseModel
@@ -19,6 +19,7 @@ final class BetaCacheControlEphemeral implements BaseModel
     /** @use SdkModel<BetaCacheControlEphemeralShape> */
     use SdkModel;
 
+    /** @var "ephemeral" $type */
     #[Api]
     public string $type = 'ephemeral';
 

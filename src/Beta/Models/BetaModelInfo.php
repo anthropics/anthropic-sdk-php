@@ -12,7 +12,10 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type BetaModelInfoShape = array{
- *   id: string, createdAt: \DateTimeInterface, displayName: string, type: string
+ *   id: string,
+ *   created_at: \DateTimeInterface,
+ *   display_name: string,
+ *   type: "model",
  * }
  */
 final class BetaModelInfo implements BaseModel, ResponseConverter
@@ -26,6 +29,8 @@ final class BetaModelInfo implements BaseModel, ResponseConverter
      * Object type.
      *
      * For Models, this is always `"model"`.
+     *
+     * @var "model" $type
      */
     #[Api]
     public string $type = 'model';
@@ -39,21 +44,21 @@ final class BetaModelInfo implements BaseModel, ResponseConverter
     /**
      * RFC 3339 datetime string representing the time at which the model was released. May be set to an epoch value if the release date is unknown.
      */
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
     /**
      * A human-readable name for the model.
      */
-    #[Api('display_name')]
-    public string $displayName;
+    #[Api]
+    public string $display_name;
 
     /**
      * `new BetaModelInfo()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaModelInfo::with(id: ..., createdAt: ..., displayName: ...)
+     * BetaModelInfo::with(id: ..., created_at: ..., display_name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -74,14 +79,14 @@ final class BetaModelInfo implements BaseModel, ResponseConverter
      */
     public static function with(
         string $id,
-        \DateTimeInterface $createdAt,
-        string $displayName
+        \DateTimeInterface $created_at,
+        string $display_name
     ): self {
         $obj = new self;
 
         $obj->id = $id;
-        $obj->createdAt = $createdAt;
-        $obj->displayName = $displayName;
+        $obj->created_at = $created_at;
+        $obj->display_name = $display_name;
 
         return $obj;
     }
@@ -103,7 +108,7 @@ final class BetaModelInfo implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -114,7 +119,7 @@ final class BetaModelInfo implements BaseModel, ResponseConverter
     public function withDisplayName(string $displayName): self
     {
         $obj = clone $this;
-        $obj->displayName = $displayName;
+        $obj->display_name = $displayName;
 
         return $obj;
     }

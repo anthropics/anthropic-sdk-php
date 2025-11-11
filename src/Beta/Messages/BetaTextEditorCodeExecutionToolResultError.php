@@ -11,7 +11,9 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaTextEditorCodeExecutionToolResultErrorShape = array{
- *   errorCode: value-of<ErrorCode>, errorMessage: string|null, type: string
+ *   error_code: value-of<ErrorCode>,
+ *   error_message: string|null,
+ *   type: "text_editor_code_execution_tool_result_error",
  * }
  */
 final class BetaTextEditorCodeExecutionToolResultError implements BaseModel
@@ -19,15 +21,16 @@ final class BetaTextEditorCodeExecutionToolResultError implements BaseModel
     /** @use SdkModel<BetaTextEditorCodeExecutionToolResultErrorShape> */
     use SdkModel;
 
+    /** @var "text_editor_code_execution_tool_result_error" $type */
     #[Api]
     public string $type = 'text_editor_code_execution_tool_result_error';
 
-    /** @var value-of<ErrorCode> $errorCode */
-    #[Api('error_code', enum: ErrorCode::class)]
-    public string $errorCode;
+    /** @var value-of<ErrorCode> $error_code */
+    #[Api(enum: ErrorCode::class)]
+    public string $error_code;
 
-    #[Api('error_message')]
-    public ?string $errorMessage;
+    #[Api]
+    public ?string $error_message;
 
     /**
      * `new BetaTextEditorCodeExecutionToolResultError()` is missing required properties by the API.
@@ -35,7 +38,7 @@ final class BetaTextEditorCodeExecutionToolResultError implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaTextEditorCodeExecutionToolResultError::with(
-     *   errorCode: ..., errorMessage: ...
+     *   error_code: ..., error_message: ...
      * )
      * ```
      *
@@ -57,16 +60,16 @@ final class BetaTextEditorCodeExecutionToolResultError implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ErrorCode|value-of<ErrorCode> $errorCode
+     * @param ErrorCode|value-of<ErrorCode> $error_code
      */
     public static function with(
-        ErrorCode|string $errorCode,
-        ?string $errorMessage
+        ErrorCode|string $error_code,
+        ?string $error_message
     ): self {
         $obj = new self;
 
-        $obj['errorCode'] = $errorCode;
-        $obj->errorMessage = $errorMessage;
+        $obj['error_code'] = $error_code;
+        $obj->error_message = $error_message;
 
         return $obj;
     }
@@ -77,7 +80,7 @@ final class BetaTextEditorCodeExecutionToolResultError implements BaseModel
     public function withErrorCode(ErrorCode|string $errorCode): self
     {
         $obj = clone $this;
-        $obj['errorCode'] = $errorCode;
+        $obj['error_code'] = $errorCode;
 
         return $obj;
     }
@@ -85,7 +88,7 @@ final class BetaTextEditorCodeExecutionToolResultError implements BaseModel
     public function withErrorMessage(?string $errorMessage): self
     {
         $obj = clone $this;
-        $obj->errorMessage = $errorMessage;
+        $obj->error_message = $errorMessage;
 
         return $obj;
     }

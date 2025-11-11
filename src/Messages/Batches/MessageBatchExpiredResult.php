@@ -9,13 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type MessageBatchExpiredResultShape = array{type: string}
+ * @phpstan-type MessageBatchExpiredResultShape = array{type: "expired"}
  */
 final class MessageBatchExpiredResult implements BaseModel
 {
     /** @use SdkModel<MessageBatchExpiredResultShape> */
     use SdkModel;
 
+    /** @var "expired" $type */
     #[Api]
     public string $type = 'expired';
 

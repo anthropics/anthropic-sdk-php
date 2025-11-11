@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type ThinkingConfigEnabledShape = array{
- *   budgetTokens: int, type: string
+ *   budget_tokens: int, type: "enabled"
  * }
  */
 final class ThinkingConfigEnabled implements BaseModel
@@ -18,6 +18,7 @@ final class ThinkingConfigEnabled implements BaseModel
     /** @use SdkModel<ThinkingConfigEnabledShape> */
     use SdkModel;
 
+    /** @var "enabled" $type */
     #[Api]
     public string $type = 'enabled';
 
@@ -28,15 +29,15 @@ final class ThinkingConfigEnabled implements BaseModel
      *
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      */
-    #[Api('budget_tokens')]
-    public int $budgetTokens;
+    #[Api]
+    public int $budget_tokens;
 
     /**
      * `new ThinkingConfigEnabled()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ThinkingConfigEnabled::with(budgetTokens: ...)
+     * ThinkingConfigEnabled::with(budget_tokens: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -55,11 +56,11 @@ final class ThinkingConfigEnabled implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(int $budgetTokens): self
+    public static function with(int $budget_tokens): self
     {
         $obj = new self;
 
-        $obj->budgetTokens = $budgetTokens;
+        $obj->budget_tokens = $budget_tokens;
 
         return $obj;
     }
@@ -74,7 +75,7 @@ final class ThinkingConfigEnabled implements BaseModel
     public function withBudgetTokens(int $budgetTokens): self
     {
         $obj = clone $this;
-        $obj->budgetTokens = $budgetTokens;
+        $obj->budget_tokens = $budgetTokens;
 
         return $obj;
     }

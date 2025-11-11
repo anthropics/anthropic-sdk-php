@@ -23,22 +23,22 @@ use Anthropic\Messages\Model;
  * @see Anthropic\Beta\Messages->create
  *
  * @phpstan-type MessageCreateParamsShape = array{
- *   maxTokens: int,
+ *   max_tokens: int,
  *   messages: list<BetaMessageParam>,
  *   model: string|Model,
  *   container?: string|null|BetaContainerParams,
- *   contextManagement?: BetaContextManagementConfig|null,
- *   mcpServers?: list<BetaRequestMCPServerURLDefinition>,
+ *   context_management?: BetaContextManagementConfig|null,
+ *   mcp_servers?: list<BetaRequestMCPServerURLDefinition>,
  *   metadata?: BetaMetadata,
- *   serviceTier?: ServiceTier|value-of<ServiceTier>,
- *   stopSequences?: list<string>,
+ *   service_tier?: ServiceTier|value-of<ServiceTier>,
+ *   stop_sequences?: list<string>,
  *   system?: string|list<BetaTextBlockParam>,
  *   temperature?: float,
  *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
- *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
+ *   tool_choice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
  *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910>,
- *   topK?: int,
- *   topP?: float,
+ *   top_k?: int,
+ *   top_p?: float,
  *   betas?: list<string|AnthropicBeta>,
  * }
  */
@@ -55,8 +55,8 @@ final class MessageCreateParams implements BaseModel
      *
      * Different models have different maximum values for this parameter.  See [models](https://docs.claude.com/en/docs/models-overview) for details.
      */
-    #[Api('max_tokens')]
-    public int $maxTokens;
+    #[Api]
+    public int $max_tokens;
 
     /**
      * Input messages.
@@ -132,20 +132,16 @@ final class MessageCreateParams implements BaseModel
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
      */
-    #[Api('context_management', nullable: true, optional: true)]
-    public ?BetaContextManagementConfig $contextManagement;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaContextManagementConfig $context_management;
 
     /**
      * MCP servers to be utilized in this request.
      *
-     * @var list<BetaRequestMCPServerURLDefinition>|null $mcpServers
+     * @var list<BetaRequestMCPServerURLDefinition>|null $mcp_servers
      */
-    #[Api(
-        'mcp_servers',
-        list: BetaRequestMCPServerURLDefinition::class,
-        optional: true,
-    )]
-    public ?array $mcpServers;
+    #[Api(list: BetaRequestMCPServerURLDefinition::class, optional: true)]
+    public ?array $mcp_servers;
 
     /**
      * An object describing metadata about the request.
@@ -158,10 +154,10 @@ final class MessageCreateParams implements BaseModel
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.claude.com/en/api/service-tiers) for details.
      *
-     * @var value-of<ServiceTier>|null $serviceTier
+     * @var value-of<ServiceTier>|null $service_tier
      */
-    #[Api('service_tier', enum: ServiceTier::class, optional: true)]
-    public ?string $serviceTier;
+    #[Api(enum: ServiceTier::class, optional: true)]
+    public ?string $service_tier;
 
     /**
      * Custom text sequences that will cause the model to stop generating.
@@ -170,10 +166,10 @@ final class MessageCreateParams implements BaseModel
      *
      * If you want the model to stop generating when it encounters custom strings of text, you can use the `stop_sequences` parameter. If the model encounters one of the custom sequences, the response `stop_reason` value will be `"stop_sequence"` and the response `stop_sequence` value will contain the matched stop sequence.
      *
-     * @var list<string>|null $stopSequences
+     * @var list<string>|null $stop_sequences
      */
-    #[Api('stop_sequences', list: 'string', optional: true)]
-    public ?array $stopSequences;
+    #[Api(list: 'string', optional: true)]
+    public ?array $stop_sequences;
 
     /**
      * System prompt.
@@ -208,8 +204,8 @@ final class MessageCreateParams implements BaseModel
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
-    #[Api('tool_choice', union: BetaToolChoice::class, optional: true)]
-    public BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice;
+    #[Api(union: BetaToolChoice::class, optional: true)]
+    public BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $tool_choice;
 
     /**
      * Definitions of tools that the model may use.
@@ -286,8 +282,8 @@ final class MessageCreateParams implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    #[Api('top_k', optional: true)]
-    public ?int $topK;
+    #[Api(optional: true)]
+    public ?int $top_k;
 
     /**
      * Use nucleus sampling.
@@ -296,8 +292,8 @@ final class MessageCreateParams implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    #[Api('top_p', optional: true)]
-    public ?float $topP;
+    #[Api(optional: true)]
+    public ?float $top_p;
 
     /**
      * Optional header to specify the beta version(s) you want to use.
@@ -312,7 +308,7 @@ final class MessageCreateParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * MessageCreateParams::with(maxTokens: ..., messages: ..., model: ...)
+     * MessageCreateParams::with(max_tokens: ..., messages: ..., model: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -332,51 +328,51 @@ final class MessageCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaMessageParam> $messages
-     * @param list<BetaRequestMCPServerURLDefinition> $mcpServers
-     * @param ServiceTier|value-of<ServiceTier> $serviceTier
-     * @param list<string> $stopSequences
+     * @param list<BetaRequestMCPServerURLDefinition> $mcp_servers
+     * @param ServiceTier|value-of<ServiceTier> $service_tier
+     * @param list<string> $stop_sequences
      * @param string|list<BetaTextBlockParam> $system
      * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910> $tools
      * @param list<string|AnthropicBeta> $betas
      */
     public static function with(
-        int $maxTokens,
+        int $max_tokens,
         array $messages,
         string|Model $model,
         string|BetaContainerParams|null $container = null,
-        ?BetaContextManagementConfig $contextManagement = null,
-        ?array $mcpServers = null,
+        ?BetaContextManagementConfig $context_management = null,
+        ?array $mcp_servers = null,
         ?BetaMetadata $metadata = null,
-        ServiceTier|string|null $serviceTier = null,
-        ?array $stopSequences = null,
+        ServiceTier|string|null $service_tier = null,
+        ?array $stop_sequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
         BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null $thinking = null,
-        BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
+        BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $tool_choice = null,
         ?array $tools = null,
-        ?int $topK = null,
-        ?float $topP = null,
+        ?int $top_k = null,
+        ?float $top_p = null,
         ?array $betas = null,
     ): self {
         $obj = new self;
 
-        $obj->maxTokens = $maxTokens;
+        $obj->max_tokens = $max_tokens;
         $obj->messages = $messages;
         $obj->model = $model instanceof Model ? $model->value : $model;
 
         null !== $container && $obj->container = $container;
-        null !== $contextManagement && $obj->contextManagement = $contextManagement;
-        null !== $mcpServers && $obj->mcpServers = $mcpServers;
+        null !== $context_management && $obj->context_management = $context_management;
+        null !== $mcp_servers && $obj->mcp_servers = $mcp_servers;
         null !== $metadata && $obj->metadata = $metadata;
-        null !== $serviceTier && $obj['serviceTier'] = $serviceTier;
-        null !== $stopSequences && $obj->stopSequences = $stopSequences;
+        null !== $service_tier && $obj['service_tier'] = $service_tier;
+        null !== $stop_sequences && $obj->stop_sequences = $stop_sequences;
         null !== $system && $obj->system = $system;
         null !== $temperature && $obj->temperature = $temperature;
         null !== $thinking && $obj->thinking = $thinking;
-        null !== $toolChoice && $obj->toolChoice = $toolChoice;
+        null !== $tool_choice && $obj->tool_choice = $tool_choice;
         null !== $tools && $obj->tools = $tools;
-        null !== $topK && $obj->topK = $topK;
-        null !== $topP && $obj->topP = $topP;
+        null !== $top_k && $obj->top_k = $top_k;
+        null !== $top_p && $obj->top_p = $top_p;
         null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
 
         return $obj;
@@ -392,7 +388,7 @@ final class MessageCreateParams implements BaseModel
     public function withMaxTokens(int $maxTokens): self
     {
         $obj = clone $this;
-        $obj->maxTokens = $maxTokens;
+        $obj->max_tokens = $maxTokens;
 
         return $obj;
     }
@@ -489,7 +485,7 @@ final class MessageCreateParams implements BaseModel
         ?BetaContextManagementConfig $contextManagement
     ): self {
         $obj = clone $this;
-        $obj->contextManagement = $contextManagement;
+        $obj->context_management = $contextManagement;
 
         return $obj;
     }
@@ -502,7 +498,7 @@ final class MessageCreateParams implements BaseModel
     public function withMCPServers(array $mcpServers): self
     {
         $obj = clone $this;
-        $obj->mcpServers = $mcpServers;
+        $obj->mcp_servers = $mcpServers;
 
         return $obj;
     }
@@ -528,7 +524,7 @@ final class MessageCreateParams implements BaseModel
     public function withServiceTier(ServiceTier|string $serviceTier): self
     {
         $obj = clone $this;
-        $obj['serviceTier'] = $serviceTier;
+        $obj['service_tier'] = $serviceTier;
 
         return $obj;
     }
@@ -545,7 +541,7 @@ final class MessageCreateParams implements BaseModel
     public function withStopSequences(array $stopSequences): self
     {
         $obj = clone $this;
-        $obj->stopSequences = $stopSequences;
+        $obj->stop_sequences = $stopSequences;
 
         return $obj;
     }
@@ -603,7 +599,7 @@ final class MessageCreateParams implements BaseModel
         BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone $toolChoice,
     ): self {
         $obj = clone $this;
-        $obj->toolChoice = $toolChoice;
+        $obj->tool_choice = $toolChoice;
 
         return $obj;
     }
@@ -691,7 +687,7 @@ final class MessageCreateParams implements BaseModel
     public function withTopK(int $topK): self
     {
         $obj = clone $this;
-        $obj->topK = $topK;
+        $obj->top_k = $topK;
 
         return $obj;
     }
@@ -706,7 +702,7 @@ final class MessageCreateParams implements BaseModel
     public function withTopP(float $topP): self
     {
         $obj = clone $this;
-        $obj->topP = $topP;
+        $obj->top_p = $topP;
 
         return $obj;
     }

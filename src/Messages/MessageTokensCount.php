@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type MessageTokensCountShape = array{inputTokens: int}
+ * @phpstan-type MessageTokensCountShape = array{input_tokens: int}
  */
 final class MessageTokensCount implements BaseModel, ResponseConverter
 {
@@ -23,15 +23,15 @@ final class MessageTokensCount implements BaseModel, ResponseConverter
     /**
      * The total number of tokens across the provided list of messages, system prompt, and tools.
      */
-    #[Api('input_tokens')]
-    public int $inputTokens;
+    #[Api]
+    public int $input_tokens;
 
     /**
      * `new MessageTokensCount()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * MessageTokensCount::with(inputTokens: ...)
+     * MessageTokensCount::with(input_tokens: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -50,11 +50,11 @@ final class MessageTokensCount implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(int $inputTokens): self
+    public static function with(int $input_tokens): self
     {
         $obj = new self;
 
-        $obj->inputTokens = $inputTokens;
+        $obj->input_tokens = $input_tokens;
 
         return $obj;
     }
@@ -65,7 +65,7 @@ final class MessageTokensCount implements BaseModel, ResponseConverter
     public function withInputTokens(int $inputTokens): self
     {
         $obj = clone $this;
-        $obj->inputTokens = $inputTokens;
+        $obj->input_tokens = $inputTokens;
 
         return $obj;
     }

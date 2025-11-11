@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaCitationsDeltaShape = array{
  *   citation: BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation,
- *   type: string,
+ *   type: "citations_delta",
  * }
  */
 final class BetaCitationsDelta implements BaseModel
@@ -20,6 +20,7 @@ final class BetaCitationsDelta implements BaseModel
     /** @use SdkModel<BetaCitationsDeltaShape> */
     use SdkModel;
 
+    /** @var "citations_delta" $type */
     #[Api]
     public string $type = 'citations_delta';
 

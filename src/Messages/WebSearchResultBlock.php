@@ -10,10 +10,10 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type WebSearchResultBlockShape = array{
- *   encryptedContent: string,
- *   pageAge: string|null,
+ *   encrypted_content: string,
+ *   page_age: string|null,
  *   title: string,
- *   type: string,
+ *   type: "web_search_result",
  *   url: string,
  * }
  */
@@ -22,14 +22,15 @@ final class WebSearchResultBlock implements BaseModel
     /** @use SdkModel<WebSearchResultBlockShape> */
     use SdkModel;
 
+    /** @var "web_search_result" $type */
     #[Api]
     public string $type = 'web_search_result';
 
-    #[Api('encrypted_content')]
-    public string $encryptedContent;
+    #[Api]
+    public string $encrypted_content;
 
-    #[Api('page_age')]
-    public ?string $pageAge;
+    #[Api]
+    public ?string $page_age;
 
     #[Api]
     public string $title;
@@ -43,7 +44,7 @@ final class WebSearchResultBlock implements BaseModel
      * To enforce required parameters use
      * ```
      * WebSearchResultBlock::with(
-     *   encryptedContent: ..., pageAge: ..., title: ..., url: ...
+     *   encrypted_content: ..., page_age: ..., title: ..., url: ...
      * )
      * ```
      *
@@ -68,15 +69,15 @@ final class WebSearchResultBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $encryptedContent,
-        ?string $pageAge,
+        string $encrypted_content,
+        ?string $page_age,
         string $title,
         string $url
     ): self {
         $obj = new self;
 
-        $obj->encryptedContent = $encryptedContent;
-        $obj->pageAge = $pageAge;
+        $obj->encrypted_content = $encrypted_content;
+        $obj->page_age = $page_age;
         $obj->title = $title;
         $obj->url = $url;
 
@@ -86,7 +87,7 @@ final class WebSearchResultBlock implements BaseModel
     public function withEncryptedContent(string $encryptedContent): self
     {
         $obj = clone $this;
-        $obj->encryptedContent = $encryptedContent;
+        $obj->encrypted_content = $encryptedContent;
 
         return $obj;
     }
@@ -94,7 +95,7 @@ final class WebSearchResultBlock implements BaseModel
     public function withPageAge(?string $pageAge): self
     {
         $obj = clone $this;
-        $obj->pageAge = $pageAge;
+        $obj->page_age = $pageAge;
 
         return $obj;
     }

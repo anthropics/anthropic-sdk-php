@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type CitationsConfigParamShape = array{enabled?: bool}
+ * @phpstan-type CitationsConfigParamShape = array{enabled?: bool|null}
  */
 final class CitationsConfigParam implements BaseModel
 {

@@ -11,9 +11,9 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaTextEditorCodeExecutionToolResultBlockParamShape = array{
  *   content: BetaTextEditorCodeExecutionToolResultErrorParam|BetaTextEditorCodeExecutionViewResultBlockParam|BetaTextEditorCodeExecutionCreateResultBlockParam|BetaTextEditorCodeExecutionStrReplaceResultBlockParam,
- *   toolUseID: string,
- *   type: string,
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   tool_use_id: string,
+ *   type: "text_editor_code_execution_tool_result",
+ *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
 final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
@@ -21,20 +21,21 @@ final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
     /** @use SdkModel<BetaTextEditorCodeExecutionToolResultBlockParamShape> */
     use SdkModel;
 
+    /** @var "text_editor_code_execution_tool_result" $type */
     #[Api]
     public string $type = 'text_editor_code_execution_tool_result';
 
     #[Api]
     public BetaTextEditorCodeExecutionToolResultErrorParam|BetaTextEditorCodeExecutionViewResultBlockParam|BetaTextEditorCodeExecutionCreateResultBlockParam|BetaTextEditorCodeExecutionStrReplaceResultBlockParam $content;
 
-    #[Api('tool_use_id')]
-    public string $toolUseID;
+    #[Api]
+    public string $tool_use_id;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaCacheControlEphemeral $cache_control;
 
     /**
      * `new BetaTextEditorCodeExecutionToolResultBlockParam()` is missing required properties by the API.
@@ -42,7 +43,7 @@ final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaTextEditorCodeExecutionToolResultBlockParam::with(
-     *   content: ..., toolUseID: ...
+     *   content: ..., tool_use_id: ...
      * )
      * ```
      *
@@ -66,15 +67,15 @@ final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
      */
     public static function with(
         BetaTextEditorCodeExecutionToolResultErrorParam|BetaTextEditorCodeExecutionViewResultBlockParam|BetaTextEditorCodeExecutionCreateResultBlockParam|BetaTextEditorCodeExecutionStrReplaceResultBlockParam $content,
-        string $toolUseID,
-        ?BetaCacheControlEphemeral $cacheControl = null,
+        string $tool_use_id,
+        ?BetaCacheControlEphemeral $cache_control = null,
     ): self {
         $obj = new self;
 
         $obj->content = $content;
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $tool_use_id;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
 
         return $obj;
     }
@@ -91,7 +92,7 @@ final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $toolUseID;
 
         return $obj;
     }
@@ -103,7 +104,7 @@ final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }

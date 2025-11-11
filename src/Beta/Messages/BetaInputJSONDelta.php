@@ -9,25 +9,28 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaInputJSONDeltaShape = array{partialJSON: string, type: string}
+ * @phpstan-type BetaInputJSONDeltaShape = array{
+ *   partial_json: string, type: "input_json_delta"
+ * }
  */
 final class BetaInputJSONDelta implements BaseModel
 {
     /** @use SdkModel<BetaInputJSONDeltaShape> */
     use SdkModel;
 
+    /** @var "input_json_delta" $type */
     #[Api]
     public string $type = 'input_json_delta';
 
-    #[Api('partial_json')]
-    public string $partialJSON;
+    #[Api]
+    public string $partial_json;
 
     /**
      * `new BetaInputJSONDelta()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaInputJSONDelta::with(partialJSON: ...)
+     * BetaInputJSONDelta::with(partial_json: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -46,11 +49,11 @@ final class BetaInputJSONDelta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $partialJSON): self
+    public static function with(string $partial_json): self
     {
         $obj = new self;
 
-        $obj->partialJSON = $partialJSON;
+        $obj->partial_json = $partial_json;
 
         return $obj;
     }
@@ -58,7 +61,7 @@ final class BetaInputJSONDelta implements BaseModel
     public function withPartialJSON(string $partialJSON): self
     {
         $obj = clone $this;
-        $obj->partialJSON = $partialJSON;
+        $obj->partial_json = $partialJSON;
 
         return $obj;
     }

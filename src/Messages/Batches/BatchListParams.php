@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Messages\Batches->list
  *
  * @phpstan-type BatchListParamsShape = array{
- *   afterID?: string, beforeID?: string, limit?: int
+ *   after_id?: string, before_id?: string, limit?: int
  * }
  */
 final class BatchListParams implements BaseModel
@@ -30,13 +30,13 @@ final class BatchListParams implements BaseModel
      * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
      */
     #[Api(optional: true)]
-    public ?string $afterID;
+    public ?string $after_id;
 
     /**
      * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
      */
     #[Api(optional: true)]
-    public ?string $beforeID;
+    public ?string $before_id;
 
     /**
      * Number of items to return per page.
@@ -57,14 +57,14 @@ final class BatchListParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?string $afterID = null,
-        ?string $beforeID = null,
+        ?string $after_id = null,
+        ?string $before_id = null,
         ?int $limit = null
     ): self {
         $obj = new self;
 
-        null !== $afterID && $obj->afterID = $afterID;
-        null !== $beforeID && $obj->beforeID = $beforeID;
+        null !== $after_id && $obj->after_id = $after_id;
+        null !== $before_id && $obj->before_id = $before_id;
         null !== $limit && $obj->limit = $limit;
 
         return $obj;
@@ -76,7 +76,7 @@ final class BatchListParams implements BaseModel
     public function withAfterID(string $afterID): self
     {
         $obj = clone $this;
-        $obj->afterID = $afterID;
+        $obj->after_id = $afterID;
 
         return $obj;
     }
@@ -87,7 +87,7 @@ final class BatchListParams implements BaseModel
     public function withBeforeID(string $beforeID): self
     {
         $obj = clone $this;
-        $obj->beforeID = $beforeID;
+        $obj->before_id = $beforeID;
 
         return $obj;
     }

@@ -2,7 +2,6 @@
 
 namespace Tests\Services\Beta;
 
-use Anthropic\Beta\Messages\BetaMessageParam;
 use Anthropic\Client;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -34,11 +33,11 @@ final class MessagesTest extends TestCase
             $this->markTestSkipped('prism validates based on the non-beta endpoint');
         }
 
-        $result = $this->client->beta->messages->create(
-            maxTokens: 1024,
-            messages: [BetaMessageParam::with(content: 'Hello, world', role: 'user')],
-            model: 'claude-sonnet-4-5-20250929',
-        );
+        $result = $this->client->beta->messages->create([
+            'max_tokens' => 1024,
+            'messages' => [['content' => 'Hello, world', 'role' => 'user']],
+            'model' => 'claude-sonnet-4-5-20250929',
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -50,11 +49,11 @@ final class MessagesTest extends TestCase
             $this->markTestSkipped('prism validates based on the non-beta endpoint');
         }
 
-        $result = $this->client->beta->messages->create(
-            maxTokens: 1024,
-            messages: [BetaMessageParam::with(content: 'Hello, world', role: 'user')],
-            model: 'claude-sonnet-4-5-20250929',
-        );
+        $result = $this->client->beta->messages->create([
+            'max_tokens' => 1024,
+            'messages' => [['content' => 'Hello, world', 'role' => 'user']],
+            'model' => 'claude-sonnet-4-5-20250929',
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -66,10 +65,10 @@ final class MessagesTest extends TestCase
             $this->markTestSkipped('prism validates based on the non-beta endpoint');
         }
 
-        $result = $this->client->beta->messages->countTokens(
-            messages: [BetaMessageParam::with(content: 'string', role: 'user')],
-            model: 'claude-3-7-sonnet-latest',
-        );
+        $result = $this->client->beta->messages->countTokens([
+            'messages' => [['content' => 'string', 'role' => 'user']],
+            'model' => 'claude-3-7-sonnet-latest',
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -81,10 +80,10 @@ final class MessagesTest extends TestCase
             $this->markTestSkipped('prism validates based on the non-beta endpoint');
         }
 
-        $result = $this->client->beta->messages->countTokens(
-            messages: [BetaMessageParam::with(content: 'string', role: 'user')],
-            model: 'claude-3-7-sonnet-latest',
-        );
+        $result = $this->client->beta->messages->countTokens([
+            'messages' => [['content' => 'string', 'role' => 'user']],
+            'model' => 'claude-3-7-sonnet-latest',
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

@@ -9,13 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type RawMessageStopEventShape = array{type: string}
+ * @phpstan-type RawMessageStopEventShape = array{type: "message_stop"}
  */
 final class RawMessageStopEvent implements BaseModel
 {
     /** @use SdkModel<RawMessageStopEventShape> */
     use SdkModel;
 
+    /** @var "message_stop" $type */
     #[Api]
     public string $type = 'message_stop';
 

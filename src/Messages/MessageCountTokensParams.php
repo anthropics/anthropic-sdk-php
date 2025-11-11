@@ -24,7 +24,7 @@ use Anthropic\Messages\MessageCountTokensParams\System;
  *   model: string|Model,
  *   system?: string|list<TextBlockParam>,
  *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
- *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
+ *   tool_choice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
  *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>,
  * }
  */
@@ -120,8 +120,8 @@ final class MessageCountTokensParams implements BaseModel
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
-    #[Api('tool_choice', union: ToolChoice::class, optional: true)]
-    public ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice;
+    #[Api(union: ToolChoice::class, optional: true)]
+    public ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $tool_choice;
 
     /**
      * Definitions of tools that the model may use.
@@ -224,7 +224,7 @@ final class MessageCountTokensParams implements BaseModel
         string|Model $model,
         string|array|null $system = null,
         ThinkingConfigEnabled|ThinkingConfigDisabled|null $thinking = null,
-        ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
+        ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $tool_choice = null,
         ?array $tools = null,
     ): self {
         $obj = new self;
@@ -234,7 +234,7 @@ final class MessageCountTokensParams implements BaseModel
 
         null !== $system && $obj->system = $system;
         null !== $thinking && $obj->thinking = $thinking;
-        null !== $toolChoice && $obj->toolChoice = $toolChoice;
+        null !== $tool_choice && $obj->tool_choice = $tool_choice;
         null !== $tools && $obj->tools = $tools;
 
         return $obj;
@@ -349,7 +349,7 @@ final class MessageCountTokensParams implements BaseModel
         ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone $toolChoice
     ): self {
         $obj = clone $this;
-        $obj->toolChoice = $toolChoice;
+        $obj->tool_choice = $toolChoice;
 
         return $obj;
     }

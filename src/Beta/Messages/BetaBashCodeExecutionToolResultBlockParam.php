@@ -11,9 +11,9 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaBashCodeExecutionToolResultBlockParamShape = array{
  *   content: BetaBashCodeExecutionToolResultErrorParam|BetaBashCodeExecutionResultBlockParam,
- *   toolUseID: string,
- *   type: string,
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   tool_use_id: string,
+ *   type: "bash_code_execution_tool_result",
+ *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
 final class BetaBashCodeExecutionToolResultBlockParam implements BaseModel
@@ -21,27 +21,28 @@ final class BetaBashCodeExecutionToolResultBlockParam implements BaseModel
     /** @use SdkModel<BetaBashCodeExecutionToolResultBlockParamShape> */
     use SdkModel;
 
+    /** @var "bash_code_execution_tool_result" $type */
     #[Api]
     public string $type = 'bash_code_execution_tool_result';
 
     #[Api]
     public BetaBashCodeExecutionToolResultErrorParam|BetaBashCodeExecutionResultBlockParam $content;
 
-    #[Api('tool_use_id')]
-    public string $toolUseID;
+    #[Api]
+    public string $tool_use_id;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaCacheControlEphemeral $cache_control;
 
     /**
      * `new BetaBashCodeExecutionToolResultBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaBashCodeExecutionToolResultBlockParam::with(content: ..., toolUseID: ...)
+     * BetaBashCodeExecutionToolResultBlockParam::with(content: ..., tool_use_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -64,15 +65,15 @@ final class BetaBashCodeExecutionToolResultBlockParam implements BaseModel
      */
     public static function with(
         BetaBashCodeExecutionToolResultErrorParam|BetaBashCodeExecutionResultBlockParam $content,
-        string $toolUseID,
-        ?BetaCacheControlEphemeral $cacheControl = null,
+        string $tool_use_id,
+        ?BetaCacheControlEphemeral $cache_control = null,
     ): self {
         $obj = new self;
 
         $obj->content = $content;
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $tool_use_id;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
 
         return $obj;
     }
@@ -89,7 +90,7 @@ final class BetaBashCodeExecutionToolResultBlockParam implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $toolUseID;
 
         return $obj;
     }
@@ -101,7 +102,7 @@ final class BetaBashCodeExecutionToolResultBlockParam implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }

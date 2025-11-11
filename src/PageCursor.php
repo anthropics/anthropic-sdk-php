@@ -16,7 +16,7 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * @phpstan-type PageCursorShape = array{
- *   data?: list<mixed>|null, hasMore?: bool|null, nextPage?: string|null
+ *   data?: list<mixed>|null, has_more?: bool|null, next_page?: string|null
  * }
  *
  * @template TItem
@@ -35,11 +35,11 @@ final class PageCursor implements BaseModel, BasePage
     #[Api(list: 'mixed', optional: true)]
     public ?array $data;
 
-    #[Api('has_more', optional: true)]
-    public ?bool $hasMore;
+    #[Api(optional: true)]
+    public ?bool $has_more;
 
-    #[Api('next_page', nullable: true, optional: true)]
-    public ?string $nextPage;
+    #[Api(nullable: true, optional: true)]
+    public ?string $next_page;
 
     /**
      * @internal
@@ -47,8 +47,8 @@ final class PageCursor implements BaseModel, BasePage
      * @param array{
      *   method: string,
      *   path: string,
-     *   query: array<string, mixed>,
-     *   headers: array<string, string|list<string>|null>,
+     *   query: array<string,mixed>,
+     *   headers: array<string,string|list<string>|null>,
      *   body: mixed,
      * } $request
      */
@@ -94,8 +94,8 @@ final class PageCursor implements BaseModel, BasePage
      *   array{
      *     method: string,
      *     path: string,
-     *     query: array<string, mixed>,
-     *     headers: array<string, string|list<string>|null>,
+     *     query: array<string,mixed>,
+     *     headers: array<string,string|list<string>|null>,
      *     body: mixed,
      *   },
      *   RequestOptions,
@@ -103,7 +103,7 @@ final class PageCursor implements BaseModel, BasePage
      */
     public function nextRequest(): ?array
     {
-        $next = $this->nextPage ?? null;
+        $next = $this->next_page ?? null;
         if (!$next) {
             return null;
         }

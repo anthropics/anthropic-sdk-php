@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type DeletedFileShape = array{id: string, type?: value-of<Type>}
+ * @phpstan-type DeletedFileShape = array{id: string, type?: value-of<Type>|null}
  */
 final class DeletedFile implements BaseModel, ResponseConverter
 {

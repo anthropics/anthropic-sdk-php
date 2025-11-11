@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Services\Beta;
 
-use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Skills\SkillCreateParams;
 use Anthropic\Beta\Skills\SkillDeleteParams;
 use Anthropic\Beta\Skills\SkillDeleteResponse;
@@ -21,12 +20,10 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\SkillsContract;
 use Anthropic\Services\Beta\Skills\VersionsService;
 
-use const Anthropic\Core\OMIT as omit;
-
 final class SkillsService implements SkillsContract
 {
     /**
-     * @@api
+     * @api
      */
     public VersionsService $versions;
 
@@ -43,43 +40,19 @@ final class SkillsService implements SkillsContract
      *
      * Create Skill
      *
-     * @param string|null $displayTitle Display title for the skill.
-     *
-     * This is a human-readable label that is not included in the prompt sent to the model.
-     * @param list<string>|null $files Files to upload for the skill.
-     *
-     * All files must be in the same top-level directory and must include a SKILL.md file at the root of that directory.
-     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     * @param array{
+     *   display_title?: string|null, files?: list<string>|null, betas?: list<string>
+     * }|SkillCreateParams $params
      *
      * @throws APIException
      */
     public function create(
-        $displayTitle = omit,
-        $files = omit,
-        $betas = omit,
-        ?RequestOptions $requestOptions = null,
-    ): SkillNewResponse {
-        $params = [
-            'displayTitle' => $displayTitle, 'files' => $files, 'betas' => $betas,
-        ];
-
-        return $this->createRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function createRaw(
-        array $params,
+        array|SkillCreateParams $params,
         ?RequestOptions $requestOptions = null
     ): SkillNewResponse {
         [$parsed, $options] = SkillCreateParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
         $header_params = ['betas' => 'anthropic-beta'];
 
@@ -108,35 +81,18 @@ final class SkillsService implements SkillsContract
      *
      * Get Skill
      *
-     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     * @param array{betas?: list<string>}|SkillRetrieveParams $params
      *
      * @throws APIException
      */
     public function retrieve(
         string $skillID,
-        $betas = omit,
-        ?RequestOptions $requestOptions = null
-    ): SkillGetResponse {
-        $params = ['betas' => $betas];
-
-        return $this->retrieveRaw($skillID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $skillID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|SkillRetrieveParams $params,
+        ?RequestOptions $requestOptions = null,
     ): SkillGetResponse {
         [$parsed, $options] = SkillRetrieveParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;
@@ -160,57 +116,25 @@ final class SkillsService implements SkillsContract
      *
      * List Skills
      *
-     * @param int $limit Number of results to return per page.
-     *
-     * Maximum value is 100. Defaults to 20.
-     * @param string|null $page Pagination token for fetching a specific page of results.
-     *
-     * Pass the value from a previous response's `next_page` field to get the next page of results.
-     * @param string|null $source Filter skills by source.
-     *
-     * If provided, only skills from the specified source will be returned:
-     * * `"custom"`: only return user-created skills
-     * * `"anthropic"`: only return Anthropic-created skills
-     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     * @param array{
+     *   limit?: int, page?: string|null, source?: string|null, betas?: list<string>
+     * }|SkillListParams $params
      *
      * @return PageCursor<SkillListResponse>
      *
      * @throws APIException
      */
     public function list(
-        $limit = omit,
-        $page = omit,
-        $source = omit,
-        $betas = omit,
-        ?RequestOptions $requestOptions = null,
-    ): PageCursor {
-        $params = [
-            'limit' => $limit, 'page' => $page, 'source' => $source, 'betas' => $betas,
-        ];
-
-        return $this->listRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return PageCursor<SkillListResponse>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        array $params,
+        array|SkillListParams $params,
         ?RequestOptions $requestOptions = null
     ): PageCursor {
         [$parsed, $options] = SkillListParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
         $query_params = array_flip(['limit', 'page', 'source']);
 
-        /** @var array<string, string> */
+        /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);
 
         // @phpstan-ignore-next-line;
@@ -236,35 +160,18 @@ final class SkillsService implements SkillsContract
      *
      * Delete Skill
      *
-     * @param list<string|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
+     * @param array{betas?: list<string>}|SkillDeleteParams $params
      *
      * @throws APIException
      */
     public function delete(
         string $skillID,
-        $betas = omit,
-        ?RequestOptions $requestOptions = null
-    ): SkillDeleteResponse {
-        $params = ['betas' => $betas];
-
-        return $this->deleteRaw($skillID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function deleteRaw(
-        string $skillID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|SkillDeleteParams $params,
+        ?RequestOptions $requestOptions = null,
     ): SkillDeleteResponse {
         [$parsed, $options] = SkillDeleteParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

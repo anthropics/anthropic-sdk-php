@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * A skill that was loaded in a container (response model).
  *
  * @phpstan-type BetaSkillShape = array{
- *   skillID: string, type: value-of<Type>, version: string
+ *   skill_id: string, type: value-of<Type>, version: string
  * }
  */
 final class BetaSkill implements BaseModel
@@ -24,8 +24,8 @@ final class BetaSkill implements BaseModel
     /**
      * Skill ID.
      */
-    #[Api('skill_id')]
-    public string $skillID;
+    #[Api]
+    public string $skill_id;
 
     /**
      * Type of skill - either 'anthropic' (built-in) or 'custom' (user-defined).
@@ -46,7 +46,7 @@ final class BetaSkill implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaSkill::with(skillID: ..., type: ..., version: ...)
+     * BetaSkill::with(skill_id: ..., type: ..., version: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -68,13 +68,13 @@ final class BetaSkill implements BaseModel
      * @param Type|value-of<Type> $type
      */
     public static function with(
-        string $skillID,
+        string $skill_id,
         Type|string $type,
         string $version
     ): self {
         $obj = new self;
 
-        $obj->skillID = $skillID;
+        $obj->skill_id = $skill_id;
         $obj['type'] = $type;
         $obj->version = $version;
 
@@ -87,7 +87,7 @@ final class BetaSkill implements BaseModel
     public function withSkillID(string $skillID): self
     {
         $obj = clone $this;
-        $obj->skillID = $skillID;
+        $obj->skill_id = $skillID;
 
         return $obj;
     }

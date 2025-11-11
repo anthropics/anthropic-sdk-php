@@ -10,12 +10,12 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaToolComputerUse20250124Shape = array{
- *   displayHeightPx: int,
- *   displayWidthPx: int,
- *   name: string,
- *   type: string,
- *   cacheControl?: BetaCacheControlEphemeral|null,
- *   displayNumber?: int|null,
+ *   display_height_px: int,
+ *   display_width_px: int,
+ *   name: "computer",
+ *   type: "computer_20250124",
+ *   cache_control?: BetaCacheControlEphemeral|null,
+ *   display_number?: int|null,
  * }
  */
 final class BetaToolComputerUse20250124 implements BaseModel
@@ -27,43 +27,46 @@ final class BetaToolComputerUse20250124 implements BaseModel
      * Name of the tool.
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
+     *
+     * @var "computer" $name
      */
     #[Api]
     public string $name = 'computer';
 
+    /** @var "computer_20250124" $type */
     #[Api]
     public string $type = 'computer_20250124';
 
     /**
      * The height of the display in pixels.
      */
-    #[Api('display_height_px')]
-    public int $displayHeightPx;
+    #[Api]
+    public int $display_height_px;
 
     /**
      * The width of the display in pixels.
      */
-    #[Api('display_width_px')]
-    public int $displayWidthPx;
+    #[Api]
+    public int $display_width_px;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaCacheControlEphemeral $cache_control;
 
     /**
      * The X11 display number (e.g. 0, 1) for the display.
      */
-    #[Api('display_number', nullable: true, optional: true)]
-    public ?int $displayNumber;
+    #[Api(nullable: true, optional: true)]
+    public ?int $display_number;
 
     /**
      * `new BetaToolComputerUse20250124()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaToolComputerUse20250124::with(displayHeightPx: ..., displayWidthPx: ...)
+     * BetaToolComputerUse20250124::with(display_height_px: ..., display_width_px: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -85,18 +88,18 @@ final class BetaToolComputerUse20250124 implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        int $displayHeightPx,
-        int $displayWidthPx,
-        ?BetaCacheControlEphemeral $cacheControl = null,
-        ?int $displayNumber = null,
+        int $display_height_px,
+        int $display_width_px,
+        ?BetaCacheControlEphemeral $cache_control = null,
+        ?int $display_number = null,
     ): self {
         $obj = new self;
 
-        $obj->displayHeightPx = $displayHeightPx;
-        $obj->displayWidthPx = $displayWidthPx;
+        $obj->display_height_px = $display_height_px;
+        $obj->display_width_px = $display_width_px;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
-        null !== $displayNumber && $obj->displayNumber = $displayNumber;
+        null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $display_number && $obj->display_number = $display_number;
 
         return $obj;
     }
@@ -107,7 +110,7 @@ final class BetaToolComputerUse20250124 implements BaseModel
     public function withDisplayHeightPx(int $displayHeightPx): self
     {
         $obj = clone $this;
-        $obj->displayHeightPx = $displayHeightPx;
+        $obj->display_height_px = $displayHeightPx;
 
         return $obj;
     }
@@ -118,7 +121,7 @@ final class BetaToolComputerUse20250124 implements BaseModel
     public function withDisplayWidthPx(int $displayWidthPx): self
     {
         $obj = clone $this;
-        $obj->displayWidthPx = $displayWidthPx;
+        $obj->display_width_px = $displayWidthPx;
 
         return $obj;
     }
@@ -130,7 +133,7 @@ final class BetaToolComputerUse20250124 implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }
@@ -141,7 +144,7 @@ final class BetaToolComputerUse20250124 implements BaseModel
     public function withDisplayNumber(?int $displayNumber): self
     {
         $obj = clone $this;
-        $obj->displayNumber = $displayNumber;
+        $obj->display_number = $displayNumber;
 
         return $obj;
     }

@@ -9,13 +9,16 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type RawMessageStartEventShape = array{message: Message, type: string}
+ * @phpstan-type RawMessageStartEventShape = array{
+ *   message: Message, type: "message_start"
+ * }
  */
 final class RawMessageStartEvent implements BaseModel
 {
     /** @use SdkModel<RawMessageStartEventShape> */
     use SdkModel;
 
+    /** @var "message_start" $type */
     #[Api]
     public string $type = 'message_start';
 

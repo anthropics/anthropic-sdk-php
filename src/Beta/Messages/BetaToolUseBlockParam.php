@@ -11,10 +11,10 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaToolUseBlockParamShape = array{
  *   id: string,
- *   input: array<string, mixed>,
+ *   input: array<string,mixed>,
  *   name: string,
- *   type: string,
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   type: "tool_use",
+ *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
 final class BetaToolUseBlockParam implements BaseModel
@@ -22,13 +22,14 @@ final class BetaToolUseBlockParam implements BaseModel
     /** @use SdkModel<BetaToolUseBlockParamShape> */
     use SdkModel;
 
+    /** @var "tool_use" $type */
     #[Api]
     public string $type = 'tool_use';
 
     #[Api]
     public string $id;
 
-    /** @var array<string, mixed> $input */
+    /** @var array<string,mixed> $input */
     #[Api(map: 'mixed')]
     public array $input;
 
@@ -38,8 +39,8 @@ final class BetaToolUseBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaCacheControlEphemeral $cache_control;
 
     /**
      * `new BetaToolUseBlockParam()` is missing required properties by the API.
@@ -65,13 +66,13 @@ final class BetaToolUseBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, mixed> $input
+     * @param array<string,mixed> $input
      */
     public static function with(
         string $id,
         array $input,
         string $name,
-        ?BetaCacheControlEphemeral $cacheControl = null,
+        ?BetaCacheControlEphemeral $cache_control = null,
     ): self {
         $obj = new self;
 
@@ -79,7 +80,7 @@ final class BetaToolUseBlockParam implements BaseModel
         $obj->input = $input;
         $obj->name = $name;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
 
         return $obj;
     }
@@ -93,7 +94,7 @@ final class BetaToolUseBlockParam implements BaseModel
     }
 
     /**
-     * @param array<string, mixed> $input
+     * @param array<string,mixed> $input
      */
     public function withInput(array $input): self
     {
@@ -118,7 +119,7 @@ final class BetaToolUseBlockParam implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }

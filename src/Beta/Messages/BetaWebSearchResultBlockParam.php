@@ -10,11 +10,11 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaWebSearchResultBlockParamShape = array{
- *   encryptedContent: string,
+ *   encrypted_content: string,
  *   title: string,
- *   type: string,
+ *   type: "web_search_result",
  *   url: string,
- *   pageAge?: string|null,
+ *   page_age?: string|null,
  * }
  */
 final class BetaWebSearchResultBlockParam implements BaseModel
@@ -22,11 +22,12 @@ final class BetaWebSearchResultBlockParam implements BaseModel
     /** @use SdkModel<BetaWebSearchResultBlockParamShape> */
     use SdkModel;
 
+    /** @var "web_search_result" $type */
     #[Api]
     public string $type = 'web_search_result';
 
-    #[Api('encrypted_content')]
-    public string $encryptedContent;
+    #[Api]
+    public string $encrypted_content;
 
     #[Api]
     public string $title;
@@ -34,15 +35,17 @@ final class BetaWebSearchResultBlockParam implements BaseModel
     #[Api]
     public string $url;
 
-    #[Api('page_age', nullable: true, optional: true)]
-    public ?string $pageAge;
+    #[Api(nullable: true, optional: true)]
+    public ?string $page_age;
 
     /**
      * `new BetaWebSearchResultBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaWebSearchResultBlockParam::with(encryptedContent: ..., title: ..., url: ...)
+     * BetaWebSearchResultBlockParam::with(
+     *   encrypted_content: ..., title: ..., url: ...
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -65,18 +68,18 @@ final class BetaWebSearchResultBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $encryptedContent,
+        string $encrypted_content,
         string $title,
         string $url,
-        ?string $pageAge = null,
+        ?string $page_age = null,
     ): self {
         $obj = new self;
 
-        $obj->encryptedContent = $encryptedContent;
+        $obj->encrypted_content = $encrypted_content;
         $obj->title = $title;
         $obj->url = $url;
 
-        null !== $pageAge && $obj->pageAge = $pageAge;
+        null !== $page_age && $obj->page_age = $page_age;
 
         return $obj;
     }
@@ -84,7 +87,7 @@ final class BetaWebSearchResultBlockParam implements BaseModel
     public function withEncryptedContent(string $encryptedContent): self
     {
         $obj = clone $this;
-        $obj->encryptedContent = $encryptedContent;
+        $obj->encrypted_content = $encryptedContent;
 
         return $obj;
     }
@@ -108,7 +111,7 @@ final class BetaWebSearchResultBlockParam implements BaseModel
     public function withPageAge(?string $pageAge): self
     {
         $obj = clone $this;
-        $obj->pageAge = $pageAge;
+        $obj->page_age = $pageAge;
 
         return $obj;
     }

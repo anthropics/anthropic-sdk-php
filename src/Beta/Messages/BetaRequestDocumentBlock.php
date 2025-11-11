@@ -12,8 +12,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaRequestDocumentBlockShape = array{
  *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource,
- *   type: string,
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   type: "document",
+ *   cache_control?: BetaCacheControlEphemeral|null,
  *   citations?: BetaCitationsConfigParam|null,
  *   context?: string|null,
  *   title?: string|null,
@@ -24,6 +24,7 @@ final class BetaRequestDocumentBlock implements BaseModel
     /** @use SdkModel<BetaRequestDocumentBlockShape> */
     use SdkModel;
 
+    /** @var "document" $type */
     #[Api]
     public string $type = 'document';
 
@@ -33,8 +34,8 @@ final class BetaRequestDocumentBlock implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaCacheControlEphemeral $cache_control;
 
     #[Api(nullable: true, optional: true)]
     public ?BetaCitationsConfigParam $citations;
@@ -71,7 +72,7 @@ final class BetaRequestDocumentBlock implements BaseModel
      */
     public static function with(
         BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource $source,
-        ?BetaCacheControlEphemeral $cacheControl = null,
+        ?BetaCacheControlEphemeral $cache_control = null,
         ?BetaCitationsConfigParam $citations = null,
         ?string $context = null,
         ?string $title = null,
@@ -80,7 +81,7 @@ final class BetaRequestDocumentBlock implements BaseModel
 
         $obj->source = $source;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
         null !== $citations && $obj->citations = $citations;
         null !== $context && $obj->context = $context;
         null !== $title && $obj->title = $title;
@@ -104,7 +105,7 @@ final class BetaRequestDocumentBlock implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }

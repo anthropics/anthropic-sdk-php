@@ -10,13 +10,13 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCitationPageLocationShape = array{
- *   citedText: string,
- *   documentIndex: int,
- *   documentTitle: string|null,
- *   endPageNumber: int,
- *   fileID: string|null,
- *   startPageNumber: int,
- *   type: string,
+ *   cited_text: string,
+ *   document_index: int,
+ *   document_title: string|null,
+ *   end_page_number: int,
+ *   file_id: string|null,
+ *   start_page_number: int,
+ *   type: "page_location",
  * }
  */
 final class BetaCitationPageLocation implements BaseModel
@@ -24,26 +24,27 @@ final class BetaCitationPageLocation implements BaseModel
     /** @use SdkModel<BetaCitationPageLocationShape> */
     use SdkModel;
 
+    /** @var "page_location" $type */
     #[Api]
     public string $type = 'page_location';
 
-    #[Api('cited_text')]
-    public string $citedText;
+    #[Api]
+    public string $cited_text;
 
-    #[Api('document_index')]
-    public int $documentIndex;
+    #[Api]
+    public int $document_index;
 
-    #[Api('document_title')]
-    public ?string $documentTitle;
+    #[Api]
+    public ?string $document_title;
 
-    #[Api('end_page_number')]
-    public int $endPageNumber;
+    #[Api]
+    public int $end_page_number;
 
-    #[Api('file_id')]
-    public ?string $fileID;
+    #[Api]
+    public ?string $file_id;
 
-    #[Api('start_page_number')]
-    public int $startPageNumber;
+    #[Api]
+    public int $start_page_number;
 
     /**
      * `new BetaCitationPageLocation()` is missing required properties by the API.
@@ -51,12 +52,12 @@ final class BetaCitationPageLocation implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaCitationPageLocation::with(
-     *   citedText: ...,
-     *   documentIndex: ...,
-     *   documentTitle: ...,
-     *   endPageNumber: ...,
-     *   fileID: ...,
-     *   startPageNumber: ...,
+     *   cited_text: ...,
+     *   document_index: ...,
+     *   document_title: ...,
+     *   end_page_number: ...,
+     *   file_id: ...,
+     *   start_page_number: ...,
      * )
      * ```
      *
@@ -83,21 +84,21 @@ final class BetaCitationPageLocation implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $citedText,
-        int $documentIndex,
-        ?string $documentTitle,
-        int $endPageNumber,
-        ?string $fileID,
-        int $startPageNumber,
+        string $cited_text,
+        int $document_index,
+        ?string $document_title,
+        int $end_page_number,
+        ?string $file_id,
+        int $start_page_number,
     ): self {
         $obj = new self;
 
-        $obj->citedText = $citedText;
-        $obj->documentIndex = $documentIndex;
-        $obj->documentTitle = $documentTitle;
-        $obj->endPageNumber = $endPageNumber;
-        $obj->fileID = $fileID;
-        $obj->startPageNumber = $startPageNumber;
+        $obj->cited_text = $cited_text;
+        $obj->document_index = $document_index;
+        $obj->document_title = $document_title;
+        $obj->end_page_number = $end_page_number;
+        $obj->file_id = $file_id;
+        $obj->start_page_number = $start_page_number;
 
         return $obj;
     }
@@ -105,7 +106,7 @@ final class BetaCitationPageLocation implements BaseModel
     public function withCitedText(string $citedText): self
     {
         $obj = clone $this;
-        $obj->citedText = $citedText;
+        $obj->cited_text = $citedText;
 
         return $obj;
     }
@@ -113,7 +114,7 @@ final class BetaCitationPageLocation implements BaseModel
     public function withDocumentIndex(int $documentIndex): self
     {
         $obj = clone $this;
-        $obj->documentIndex = $documentIndex;
+        $obj->document_index = $documentIndex;
 
         return $obj;
     }
@@ -121,7 +122,7 @@ final class BetaCitationPageLocation implements BaseModel
     public function withDocumentTitle(?string $documentTitle): self
     {
         $obj = clone $this;
-        $obj->documentTitle = $documentTitle;
+        $obj->document_title = $documentTitle;
 
         return $obj;
     }
@@ -129,7 +130,7 @@ final class BetaCitationPageLocation implements BaseModel
     public function withEndPageNumber(int $endPageNumber): self
     {
         $obj = clone $this;
-        $obj->endPageNumber = $endPageNumber;
+        $obj->end_page_number = $endPageNumber;
 
         return $obj;
     }
@@ -137,7 +138,7 @@ final class BetaCitationPageLocation implements BaseModel
     public function withFileID(?string $fileID): self
     {
         $obj = clone $this;
-        $obj->fileID = $fileID;
+        $obj->file_id = $fileID;
 
         return $obj;
     }
@@ -145,7 +146,7 @@ final class BetaCitationPageLocation implements BaseModel
     public function withStartPageNumber(int $startPageNumber): self
     {
         $obj = clone $this;
-        $obj->startPageNumber = $startPageNumber;
+        $obj->start_page_number = $startPageNumber;
 
         return $obj;
     }

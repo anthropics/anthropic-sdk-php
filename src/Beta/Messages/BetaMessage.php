@@ -16,12 +16,12 @@ use Anthropic\Messages\Model;
  *   id: string,
  *   container: BetaContainer|null,
  *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
- *   contextManagement: BetaContextManagementResponse|null,
+ *   context_management: BetaContextManagementResponse|null,
  *   model: string|value-of<Model>,
- *   role: string,
- *   stopReason: value-of<BetaStopReason>|null,
- *   stopSequence: string|null,
- *   type: string,
+ *   role: "assistant",
+ *   stop_reason: value-of<BetaStopReason>|null,
+ *   stop_sequence: string|null,
+ *   type: "message",
  *   usage: BetaUsage,
  * }
  */
@@ -36,6 +36,8 @@ final class BetaMessage implements BaseModel, ResponseConverter
      * Conversational role of the generated message.
      *
      * This will always be `"assistant"`.
+     *
+     * @var "assistant" $role
      */
     #[Api]
     public string $role = 'assistant';
@@ -44,6 +46,8 @@ final class BetaMessage implements BaseModel, ResponseConverter
      * Object type.
      *
      * For Messages, this is always `"message"`.
+     *
+     * @var "message" $type
      */
     #[Api]
     public string $type = 'message';
@@ -99,8 +103,8 @@ final class BetaMessage implements BaseModel, ResponseConverter
      *
      * Information about context management strategies applied during the request.
      */
-    #[Api('context_management')]
-    public ?BetaContextManagementResponse $contextManagement;
+    #[Api]
+    public ?BetaContextManagementResponse $context_management;
 
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
@@ -123,18 +127,18 @@ final class BetaMessage implements BaseModel, ResponseConverter
      *
      * In non-streaming mode this value is always non-null. In streaming mode, it is null in the `message_start` event and non-null otherwise.
      *
-     * @var value-of<BetaStopReason>|null $stopReason
+     * @var value-of<BetaStopReason>|null $stop_reason
      */
-    #[Api('stop_reason', enum: BetaStopReason::class)]
-    public ?string $stopReason;
+    #[Api(enum: BetaStopReason::class)]
+    public ?string $stop_reason;
 
     /**
      * Which custom stop sequence was generated, if any.
      *
      * This value will be a non-null string if one of your custom stop sequences was generated.
      */
-    #[Api('stop_sequence')]
-    public ?string $stopSequence;
+    #[Api]
+    public ?string $stop_sequence;
 
     /**
      * Billing and rate-limit usage.
@@ -159,10 +163,10 @@ final class BetaMessage implements BaseModel, ResponseConverter
      *   id: ...,
      *   container: ...,
      *   content: ...,
-     *   contextManagement: ...,
+     *   context_management: ...,
      *   model: ...,
-     *   stopReason: ...,
-     *   stopSequence: ...,
+     *   stop_reason: ...,
+     *   stop_sequence: ...,
      *   usage: ...,
      * )
      * ```
@@ -192,16 +196,16 @@ final class BetaMessage implements BaseModel, ResponseConverter
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock> $content
-     * @param BetaStopReason|value-of<BetaStopReason>|null $stopReason
+     * @param BetaStopReason|value-of<BetaStopReason>|null $stop_reason
      */
     public static function with(
         string $id,
         ?BetaContainer $container,
         array $content,
-        ?BetaContextManagementResponse $contextManagement,
+        ?BetaContextManagementResponse $context_management,
         string|Model $model,
-        BetaStopReason|string|null $stopReason,
-        ?string $stopSequence,
+        BetaStopReason|string|null $stop_reason,
+        ?string $stop_sequence,
         BetaUsage $usage,
     ): self {
         $obj = new self;
@@ -209,10 +213,10 @@ final class BetaMessage implements BaseModel, ResponseConverter
         $obj->id = $id;
         $obj->container = $container;
         $obj->content = $content;
-        $obj->contextManagement = $contextManagement;
+        $obj->context_management = $context_management;
         $obj->model = $model instanceof Model ? $model->value : $model;
-        $obj['stopReason'] = $stopReason;
-        $obj->stopSequence = $stopSequence;
+        $obj['stop_reason'] = $stop_reason;
+        $obj->stop_sequence = $stop_sequence;
         $obj->usage = $usage;
 
         return $obj;
@@ -288,7 +292,7 @@ final class BetaMessage implements BaseModel, ResponseConverter
         ?BetaContextManagementResponse $contextManagement
     ): self {
         $obj = clone $this;
-        $obj->contextManagement = $contextManagement;
+        $obj->context_management = $contextManagement;
 
         return $obj;
     }
@@ -322,7 +326,7 @@ final class BetaMessage implements BaseModel, ResponseConverter
     public function withStopReason(BetaStopReason|string|null $stopReason): self
     {
         $obj = clone $this;
-        $obj['stopReason'] = $stopReason;
+        $obj['stop_reason'] = $stopReason;
 
         return $obj;
     }
@@ -335,7 +339,7 @@ final class BetaMessage implements BaseModel, ResponseConverter
     public function withStopSequence(?string $stopSequence): self
     {
         $obj = clone $this;
-        $obj->stopSequence = $stopSequence;
+        $obj->stop_sequence = $stopSequence;
 
         return $obj;
     }
