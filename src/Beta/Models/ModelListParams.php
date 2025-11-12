@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * The Models API response can be used to determine which models are available for use in the API. More recently released models are listed first.
  *
- * @see Anthropic\Beta\Models->list
+ * @see Anthropic\STAINLESS_FIXME_Beta\ModelsService::list()
  *
  * @phpstan-type ModelListParamsShape = array{
  *   after_id?: string,

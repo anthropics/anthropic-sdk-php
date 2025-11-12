@@ -18,7 +18,7 @@ use Anthropic\Messages\MessageCreateParams\System;
  *
  * Learn more about the Messages API in our [user guide](/en/docs/initial-setup)
  *
- * @see Anthropic\Messages->create
+ * @see Anthropic\MessagesService::create()
  *
  * @phpstan-type MessageCreateParamsShape = array{
  *   max_tokens: int,

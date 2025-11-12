@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
  *
- * @see Anthropic\Beta\Messages\Batches->delete
+ * @see Anthropic\STAINLESS_FIXME_Beta\STAINLESS_FIXME_Messages\BatchesService::delete()
  *
  * @phpstan-type BatchDeleteParamsShape = array{betas?: list<string|AnthropicBeta>}
  */

@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Create Skill.
  *
- * @see Anthropic\Beta\Skills->create
+ * @see Anthropic\STAINLESS_FIXME_Beta\SkillsService::create()
  *
  * @phpstan-type SkillCreateParamsShape = array{
  *   display_title?: string|null,

@@ -17,7 +17,7 @@ use Anthropic\Messages\MessageCountTokensParams\System;
  *
  * Learn more about token counting in our [user guide](/en/docs/build-with-claude/token-counting)
  *
- * @see Anthropic\Messages->countTokens
+ * @see Anthropic\MessagesService::countTokens()
  *
  * @phpstan-type MessageCountTokensParamsShape = array{
  *   messages: list<MessageParam>,

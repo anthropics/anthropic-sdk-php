@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * List Skills.
  *
- * @see Anthropic\Beta\Skills->list
+ * @see Anthropic\STAINLESS_FIXME_Beta\SkillsService::list()
  *
  * @phpstan-type SkillListParamsShape = array{
  *   limit?: int,
