@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * List Skill Versions.
  *
- * @see Anthropic\STAINLESS_FIXME_Beta\STAINLESS_FIXME_Skills\VersionsService::list()
+ * @see Anthropic\Services\Beta\Skills\VersionsService::list()
  *
  * @phpstan-type VersionListParamsShape = array{
  *   limit?: int|null, page?: string|null, betas?: list<string|AnthropicBeta>

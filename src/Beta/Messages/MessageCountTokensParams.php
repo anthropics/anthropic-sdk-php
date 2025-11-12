@@ -20,7 +20,7 @@ use Anthropic\Messages\Model;
  *
  * Learn more about token counting in our [user guide](/en/docs/build-with-claude/token-counting)
  *
- * @see Anthropic\STAINLESS_FIXME_Beta\MessagesService::countTokens()
+ * @see Anthropic\Services\Beta\MessagesService::countTokens()
  *
  * @phpstan-type MessageCountTokensParamsShape = array{
  *   messages: list<BetaMessageParam>,

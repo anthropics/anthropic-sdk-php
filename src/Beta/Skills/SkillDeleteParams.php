@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Delete Skill.
  *
- * @see Anthropic\STAINLESS_FIXME_Beta\SkillsService::delete()
+ * @see Anthropic\Services\Beta\SkillsService::delete()
  *
  * @phpstan-type SkillDeleteParamsShape = array{betas?: list<string|AnthropicBeta>}
  */

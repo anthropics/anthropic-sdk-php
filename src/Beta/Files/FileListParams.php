@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * List Files.
  *
- * @see Anthropic\STAINLESS_FIXME_Beta\FilesService::list()
+ * @see Anthropic\Services\Beta\FilesService::list()
  *
  * @phpstan-type FileListParamsShape = array{
  *   after_id?: string,

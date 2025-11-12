@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Delete File.
  *
- * @see Anthropic\STAINLESS_FIXME_Beta\FilesService::delete()
+ * @see Anthropic\Services\Beta\FilesService::delete()
  *
  * @phpstan-type FileDeleteParamsShape = array{betas?: list<string|AnthropicBeta>}
  */

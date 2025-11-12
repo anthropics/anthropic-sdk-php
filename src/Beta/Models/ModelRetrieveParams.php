@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * The Models API response can be used to determine information about a specific model or resolve a model alias to a model ID.
  *
- * @see Anthropic\STAINLESS_FIXME_Beta\ModelsService::retrieve()
+ * @see Anthropic\Services\Beta\ModelsService::retrieve()
  *
  * @phpstan-type ModelRetrieveParamsShape = array{
  *   betas?: list<string|AnthropicBeta>

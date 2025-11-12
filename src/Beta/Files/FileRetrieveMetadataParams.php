@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Get File Metadata.
  *
- * @see Anthropic\STAINLESS_FIXME_Beta\FilesService::retrieveMetadata()
+ * @see Anthropic\Services\Beta\FilesService::retrieveMetadata()
  *
  * @phpstan-type FileRetrieveMetadataParamsShape = array{
  *   betas?: list<string|AnthropicBeta>

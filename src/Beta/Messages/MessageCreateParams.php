@@ -20,7 +20,7 @@ use Anthropic\Messages\Model;
  *
  * Learn more about the Messages API in our [user guide](/en/docs/initial-setup)
  *
- * @see Anthropic\STAINLESS_FIXME_Beta\MessagesService::create()
+ * @see Anthropic\Services\Beta\MessagesService::create()
  *
  * @phpstan-type MessageCreateParamsShape = array{
  *   max_tokens: int,

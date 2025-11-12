@@ -18,7 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
  *
- * @see Anthropic\STAINLESS_FIXME_Beta\STAINLESS_FIXME_Messages\BatchesService::create()
+ * @see Anthropic\Services\Beta\Messages\BatchesService::create()
  *
  * @phpstan-type BatchCreateParamsShape = array{
  *   requests: list<Request>, betas?: list<string|AnthropicBeta>
