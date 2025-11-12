@@ -28,9 +28,9 @@ final class Util
     /**
      * @return array<string,mixed>
      */
-    public static function get_object_vars(object $object1): array
+    public static function get_object_vars(object $object): array
     {
-        return get_object_vars($object1);
+        return get_object_vars($object);
     }
 
     /**
