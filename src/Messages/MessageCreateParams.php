@@ -16,7 +16,7 @@ use Anthropic\Messages\MessageCreateParams\System;
  *
  * The Messages API can be used for either single queries or stateless multi-turn conversations.
  *
- * Learn more about the Messages API in our [user guide](/en/docs/initial-setup)
+ * Learn more about the Messages API in our [user guide](https://docs.claude.com/en/docs/initial-setup)
  *
  * @see Anthropic\Services\MessagesService::create()
  *

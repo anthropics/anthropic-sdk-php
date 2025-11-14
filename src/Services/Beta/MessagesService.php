@@ -47,7 +47,7 @@ final class MessagesService implements MessagesContract
      *
      * The Messages API can be used for either single queries or stateless multi-turn conversations.
      *
-     * Learn more about the Messages API in our [user guide](/en/docs/initial-setup)
+     * Learn more about the Messages API in our [user guide](https://docs.claude.com/en/docs/initial-setup)
      *
      * @param array{
      *   max_tokens: int,
@@ -69,6 +69,7 @@ final class MessagesService implements MessagesContract
      *     }|null,
      *   }>,
      *   metadata?: array{user_id?: string|null},
+     *   output_format?: array{schema: array<string,mixed>, type: "json_schema"}|null,
      *   service_tier?: "auto"|"standard_only",
      *   stop_sequences?: list<string>,
      *   system?: string|list<array{
@@ -135,6 +136,7 @@ final class MessagesService implements MessagesContract
      *     }|null,
      *   }>,
      *   metadata?: array{user_id?: string|null},
+     *   output_format?: array{schema: array<string,mixed>, type: "json_schema"}|null,
      *   service_tier?: "auto"|"standard_only",
      *   stop_sequences?: list<string>,
      *   system?: string|list<array{
@@ -192,7 +194,7 @@ final class MessagesService implements MessagesContract
      *
      * The Token Count API can be used to count the number of tokens in a Message, including tools, images, and documents, without creating it.
      *
-     * Learn more about token counting in our [user guide](/en/docs/build-with-claude/token-counting)
+     * Learn more about token counting in our [user guide](https://docs.claude.com/en/docs/build-with-claude/token-counting)
      *
      * @param array{
      *   messages: list<array{
@@ -209,6 +211,7 @@ final class MessagesService implements MessagesContract
      *       allowed_tools?: list<string>|null, enabled?: bool|null
      *     }|null,
      *   }>,
+     *   output_format?: array{schema: array<string,mixed>, type: "json_schema"}|null,
      *   system?: string|list<array{
      *     text: string,
      *     type: "text",

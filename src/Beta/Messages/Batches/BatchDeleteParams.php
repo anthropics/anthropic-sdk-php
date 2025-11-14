@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * Message Batches can only be deleted once they've finished processing. If you'd like to delete an in-progress batch, you must first cancel it.
  *
- * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
+ * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
  *
  * @see Anthropic\Services\Beta\Messages\BatchesService::delete()
  *

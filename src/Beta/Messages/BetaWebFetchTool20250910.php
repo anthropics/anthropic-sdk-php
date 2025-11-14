@@ -18,6 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   citations?: BetaCitationsConfigParam|null,
  *   max_content_tokens?: int|null,
  *   max_uses?: int|null,
+ *   strict?: bool|null,
  * }
  */
 final class BetaWebFetchTool20250910 implements BaseModel
@@ -79,6 +80,9 @@ final class BetaWebFetchTool20250910 implements BaseModel
     #[Api(nullable: true, optional: true)]
     public ?int $max_uses;
 
+    #[Api(optional: true)]
+    public ?bool $strict;
+
     public function __construct()
     {
         $this->initialize();
@@ -99,6 +103,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
         ?BetaCitationsConfigParam $citations = null,
         ?int $max_content_tokens = null,
         ?int $max_uses = null,
+        ?bool $strict = null,
     ): self {
         $obj = new self;
 
@@ -108,6 +113,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
         null !== $citations && $obj->citations = $citations;
         null !== $max_content_tokens && $obj->max_content_tokens = $max_content_tokens;
         null !== $max_uses && $obj->max_uses = $max_uses;
+        null !== $strict && $obj->strict = $strict;
 
         return $obj;
     }
@@ -179,6 +185,14 @@ final class BetaWebFetchTool20250910 implements BaseModel
     {
         $obj = clone $this;
         $obj->max_uses = $maxUses;
+
+        return $obj;
+    }
+
+    public function withStrict(bool $strict): self
+    {
+        $obj = clone $this;
+        $obj->strict = $strict;
 
         return $obj;
     }

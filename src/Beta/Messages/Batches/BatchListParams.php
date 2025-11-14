@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * List all Message Batches within a Workspace. Most recently created batches are returned first.
  *
- * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
+ * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
  *
  * @see Anthropic\Services\Beta\Messages\BatchesService::list()
  *

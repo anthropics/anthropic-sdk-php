@@ -17,6 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   blocked_domains?: list<string>|null,
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   max_uses?: int|null,
+ *   strict?: bool|null,
  *   user_location?: UserLocation|null,
  * }
  */
@@ -67,6 +68,9 @@ final class BetaWebSearchTool20250305 implements BaseModel
     #[Api(nullable: true, optional: true)]
     public ?int $max_uses;
 
+    #[Api(optional: true)]
+    public ?bool $strict;
+
     /**
      * Parameters for the user's location. Used to provide more relevant search results.
      */
@@ -91,6 +95,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
         ?array $blocked_domains = null,
         ?BetaCacheControlEphemeral $cache_control = null,
         ?int $max_uses = null,
+        ?bool $strict = null,
         ?UserLocation $user_location = null,
     ): self {
         $obj = new self;
@@ -99,6 +104,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
         null !== $blocked_domains && $obj->blocked_domains = $blocked_domains;
         null !== $cache_control && $obj->cache_control = $cache_control;
         null !== $max_uses && $obj->max_uses = $max_uses;
+        null !== $strict && $obj->strict = $strict;
         null !== $user_location && $obj->user_location = $user_location;
 
         return $obj;
@@ -149,6 +155,14 @@ final class BetaWebSearchTool20250305 implements BaseModel
     {
         $obj = clone $this;
         $obj->max_uses = $maxUses;
+
+        return $obj;
+    }
+
+    public function withStrict(bool $strict): self
+    {
+        $obj = clone $this;
+        $obj->strict = $strict;
 
         return $obj;
     }

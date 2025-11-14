@@ -10,6 +10,7 @@ use Anthropic\Beta\Messages\BetaCodeExecutionTool20250522;
 use Anthropic\Beta\Messages\BetaCodeExecutionTool20250825;
 use Anthropic\Beta\Messages\BetaContainerParams;
 use Anthropic\Beta\Messages\BetaContextManagementConfig;
+use Anthropic\Beta\Messages\BetaJSONOutputFormat;
 use Anthropic\Beta\Messages\BetaMemoryTool20250818;
 use Anthropic\Beta\Messages\BetaMessageParam;
 use Anthropic\Beta\Messages\BetaMetadata;
@@ -53,6 +54,7 @@ use Anthropic\Messages\Model;
  *   context_management?: BetaContextManagementConfig|null,
  *   mcp_servers?: list<BetaRequestMCPServerURLDefinition>|null,
  *   metadata?: BetaMetadata|null,
+ *   output_format?: BetaJSONOutputFormat|null,
  *   service_tier?: value-of<ServiceTier>|null,
  *   stop_sequences?: list<string>|null,
  *   stream?: bool|null,
@@ -170,6 +172,12 @@ final class Params implements BaseModel
      */
     #[Api(optional: true)]
     public ?BetaMetadata $metadata;
+
+    /**
+     * A schema to specify Claude's output format in responses.
+     */
+    #[Api(nullable: true, optional: true)]
+    public ?BetaJSONOutputFormat $output_format;
 
     /**
      * Determines whether to use priority capacity (if available) or standard capacity for this request.
@@ -364,6 +372,7 @@ final class Params implements BaseModel
         ?BetaContextManagementConfig $context_management = null,
         ?array $mcp_servers = null,
         ?BetaMetadata $metadata = null,
+        ?BetaJSONOutputFormat $output_format = null,
         ServiceTier|string|null $service_tier = null,
         ?array $stop_sequences = null,
         ?bool $stream = null,
@@ -385,6 +394,7 @@ final class Params implements BaseModel
         null !== $context_management && $obj->context_management = $context_management;
         null !== $mcp_servers && $obj->mcp_servers = $mcp_servers;
         null !== $metadata && $obj->metadata = $metadata;
+        null !== $output_format && $obj->output_format = $output_format;
         null !== $service_tier && $obj['service_tier'] = $service_tier;
         null !== $stop_sequences && $obj->stop_sequences = $stop_sequences;
         null !== $stream && $obj->stream = $stream;
@@ -531,6 +541,17 @@ final class Params implements BaseModel
     {
         $obj = clone $this;
         $obj->metadata = $metadata;
+
+        return $obj;
+    }
+
+    /**
+     * A schema to specify Claude's output format in responses.
+     */
+    public function withOutputFormat(?BetaJSONOutputFormat $outputFormat): self
+    {
+        $obj = clone $this;
+        $obj->output_format = $outputFormat;
 
         return $obj;
     }

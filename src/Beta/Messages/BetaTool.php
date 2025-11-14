@@ -16,6 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   name: string,
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   description?: string|null,
+ *   strict?: bool|null,
  *   type?: value-of<Type>|null,
  * }
  */
@@ -54,6 +55,9 @@ final class BetaTool implements BaseModel
     #[Api(optional: true)]
     public ?string $description;
 
+    #[Api(optional: true)]
+    public ?bool $strict;
+
     /** @var value-of<Type>|null $type */
     #[Api(enum: Type::class, nullable: true, optional: true)]
     public ?string $type;
@@ -89,6 +93,7 @@ final class BetaTool implements BaseModel
         string $name,
         ?BetaCacheControlEphemeral $cache_control = null,
         ?string $description = null,
+        ?bool $strict = null,
         Type|string|null $type = null,
     ): self {
         $obj = new self;
@@ -98,6 +103,7 @@ final class BetaTool implements BaseModel
 
         null !== $cache_control && $obj->cache_control = $cache_control;
         null !== $description && $obj->description = $description;
+        null !== $strict && $obj->strict = $strict;
         null !== $type && $obj['type'] = $type;
 
         return $obj;
@@ -150,6 +156,14 @@ final class BetaTool implements BaseModel
     {
         $obj = clone $this;
         $obj->description = $description;
+
+        return $obj;
+    }
+
+    public function withStrict(bool $strict): self
+    {
+        $obj = clone $this;
+        $obj->strict = $strict;
 
         return $obj;
     }

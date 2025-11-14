@@ -18,7 +18,7 @@ use Anthropic\Messages\Model;
  *
  * The Token Count API can be used to count the number of tokens in a Message, including tools, images, and documents, without creating it.
  *
- * Learn more about token counting in our [user guide](/en/docs/build-with-claude/token-counting)
+ * Learn more about token counting in our [user guide](https://docs.claude.com/en/docs/build-with-claude/token-counting)
  *
  * @see Anthropic\Services\Beta\MessagesService::countTokens()
  *
@@ -27,6 +27,7 @@ use Anthropic\Messages\Model;
  *   model: string|Model,
  *   context_management?: BetaContextManagementConfig|null,
  *   mcp_servers?: list<BetaRequestMCPServerURLDefinition>,
+ *   output_format?: BetaJSONOutputFormat|null,
  *   system?: string|list<BetaTextBlockParam>,
  *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
  *   tool_choice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
@@ -118,6 +119,12 @@ final class MessageCountTokensParams implements BaseModel
      */
     #[Api(list: BetaRequestMCPServerURLDefinition::class, optional: true)]
     public ?array $mcp_servers;
+
+    /**
+     * A schema to specify Claude's output format in responses.
+     */
+    #[Api(nullable: true, optional: true)]
+    public ?BetaJSONOutputFormat $output_format;
 
     /**
      * System prompt.
@@ -256,6 +263,7 @@ final class MessageCountTokensParams implements BaseModel
         string|Model $model,
         ?BetaContextManagementConfig $context_management = null,
         ?array $mcp_servers = null,
+        ?BetaJSONOutputFormat $output_format = null,
         string|array|null $system = null,
         BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null $thinking = null,
         BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $tool_choice = null,
@@ -269,6 +277,7 @@ final class MessageCountTokensParams implements BaseModel
 
         null !== $context_management && $obj->context_management = $context_management;
         null !== $mcp_servers && $obj->mcp_servers = $mcp_servers;
+        null !== $output_format && $obj->output_format = $output_format;
         null !== $system && $obj->system = $system;
         null !== $thinking && $obj->thinking = $thinking;
         null !== $tool_choice && $obj->tool_choice = $tool_choice;
@@ -372,6 +381,17 @@ final class MessageCountTokensParams implements BaseModel
     {
         $obj = clone $this;
         $obj->mcp_servers = $mcpServers;
+
+        return $obj;
+    }
+
+    /**
+     * A schema to specify Claude's output format in responses.
+     */
+    public function withOutputFormat(?BetaJSONOutputFormat $outputFormat): self
+    {
+        $obj = clone $this;
+        $obj->output_format = $outputFormat;
 
         return $obj;
     }

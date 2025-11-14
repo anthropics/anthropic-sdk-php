@@ -18,7 +18,7 @@ use Anthropic\Messages\Model;
  *
  * The Messages API can be used for either single queries or stateless multi-turn conversations.
  *
- * Learn more about the Messages API in our [user guide](/en/docs/initial-setup)
+ * Learn more about the Messages API in our [user guide](https://docs.claude.com/en/docs/initial-setup)
  *
  * @see Anthropic\Services\Beta\MessagesService::create()
  *
@@ -30,6 +30,7 @@ use Anthropic\Messages\Model;
  *   context_management?: BetaContextManagementConfig|null,
  *   mcp_servers?: list<BetaRequestMCPServerURLDefinition>,
  *   metadata?: BetaMetadata,
+ *   output_format?: BetaJSONOutputFormat|null,
  *   service_tier?: ServiceTier|value-of<ServiceTier>,
  *   stop_sequences?: list<string>,
  *   system?: string|list<BetaTextBlockParam>,
@@ -148,6 +149,12 @@ final class MessageCreateParams implements BaseModel
      */
     #[Api(optional: true)]
     public ?BetaMetadata $metadata;
+
+    /**
+     * A schema to specify Claude's output format in responses.
+     */
+    #[Api(nullable: true, optional: true)]
+    public ?BetaJSONOutputFormat $output_format;
 
     /**
      * Determines whether to use priority capacity (if available) or standard capacity for this request.
@@ -343,6 +350,7 @@ final class MessageCreateParams implements BaseModel
         ?BetaContextManagementConfig $context_management = null,
         ?array $mcp_servers = null,
         ?BetaMetadata $metadata = null,
+        ?BetaJSONOutputFormat $output_format = null,
         ServiceTier|string|null $service_tier = null,
         ?array $stop_sequences = null,
         string|array|null $system = null,
@@ -364,6 +372,7 @@ final class MessageCreateParams implements BaseModel
         null !== $context_management && $obj->context_management = $context_management;
         null !== $mcp_servers && $obj->mcp_servers = $mcp_servers;
         null !== $metadata && $obj->metadata = $metadata;
+        null !== $output_format && $obj->output_format = $output_format;
         null !== $service_tier && $obj['service_tier'] = $service_tier;
         null !== $stop_sequences && $obj->stop_sequences = $stop_sequences;
         null !== $system && $obj->system = $system;
@@ -510,6 +519,17 @@ final class MessageCreateParams implements BaseModel
     {
         $obj = clone $this;
         $obj->metadata = $metadata;
+
+        return $obj;
+    }
+
+    /**
+     * A schema to specify Claude's output format in responses.
+     */
+    public function withOutputFormat(?BetaJSONOutputFormat $outputFormat): self
+    {
+        $obj = clone $this;
+        $obj->output_format = $outputFormat;
 
         return $obj;
     }

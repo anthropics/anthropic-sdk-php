@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * This endpoint is idempotent and can be used to poll for Message Batch completion. To access the results of a Message Batch, make a request to the `results_url` field in the response.
  *
- * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
+ * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
  *
  * @see Anthropic\Services\Beta\Messages\BatchesService::retrieve()
  *

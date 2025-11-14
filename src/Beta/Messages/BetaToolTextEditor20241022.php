@@ -13,6 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   name: "str_replace_editor",
  *   type: "text_editor_20241022",
  *   cache_control?: BetaCacheControlEphemeral|null,
+ *   strict?: bool|null,
  * }
  */
 final class BetaToolTextEditor20241022 implements BaseModel
@@ -40,6 +41,9 @@ final class BetaToolTextEditor20241022 implements BaseModel
     #[Api(nullable: true, optional: true)]
     public ?BetaCacheControlEphemeral $cache_control;
 
+    #[Api(optional: true)]
+    public ?bool $strict;
+
     public function __construct()
     {
         $this->initialize();
@@ -51,11 +55,13 @@ final class BetaToolTextEditor20241022 implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?BetaCacheControlEphemeral $cache_control = null
+        ?BetaCacheControlEphemeral $cache_control = null,
+        ?bool $strict = null
     ): self {
         $obj = new self;
 
         null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $strict && $obj->strict = $strict;
 
         return $obj;
     }
@@ -68,6 +74,14 @@ final class BetaToolTextEditor20241022 implements BaseModel
     ): self {
         $obj = clone $this;
         $obj->cache_control = $cacheControl;
+
+        return $obj;
+    }
+
+    public function withStrict(bool $strict): self
+    {
+        $obj = clone $this;
+        $obj->strict = $strict;
 
         return $obj;
     }

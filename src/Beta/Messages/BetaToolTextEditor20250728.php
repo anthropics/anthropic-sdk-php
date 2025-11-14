@@ -14,6 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   type: "text_editor_20250728",
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   max_characters?: int|null,
+ *   strict?: bool|null,
  * }
  */
 final class BetaToolTextEditor20250728 implements BaseModel
@@ -47,6 +48,9 @@ final class BetaToolTextEditor20250728 implements BaseModel
     #[Api(nullable: true, optional: true)]
     public ?int $max_characters;
 
+    #[Api(optional: true)]
+    public ?bool $strict;
+
     public function __construct()
     {
         $this->initialize();
@@ -60,11 +64,13 @@ final class BetaToolTextEditor20250728 implements BaseModel
     public static function with(
         ?BetaCacheControlEphemeral $cache_control = null,
         ?int $max_characters = null,
+        ?bool $strict = null,
     ): self {
         $obj = new self;
 
         null !== $cache_control && $obj->cache_control = $cache_control;
         null !== $max_characters && $obj->max_characters = $max_characters;
+        null !== $strict && $obj->strict = $strict;
 
         return $obj;
     }
@@ -88,6 +94,14 @@ final class BetaToolTextEditor20250728 implements BaseModel
     {
         $obj = clone $this;
         $obj->max_characters = $maxCharacters;
+
+        return $obj;
+    }
+
+    public function withStrict(bool $strict): self
+    {
+        $obj = clone $this;
+        $obj->strict = $strict;
 
         return $obj;
     }

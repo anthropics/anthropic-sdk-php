@@ -16,6 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   type: "computer_20250124",
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   display_number?: int|null,
+ *   strict?: bool|null,
  * }
  */
 final class BetaToolComputerUse20250124 implements BaseModel
@@ -61,6 +62,9 @@ final class BetaToolComputerUse20250124 implements BaseModel
     #[Api(nullable: true, optional: true)]
     public ?int $display_number;
 
+    #[Api(optional: true)]
+    public ?bool $strict;
+
     /**
      * `new BetaToolComputerUse20250124()` is missing required properties by the API.
      *
@@ -92,6 +96,7 @@ final class BetaToolComputerUse20250124 implements BaseModel
         int $display_width_px,
         ?BetaCacheControlEphemeral $cache_control = null,
         ?int $display_number = null,
+        ?bool $strict = null,
     ): self {
         $obj = new self;
 
@@ -100,6 +105,7 @@ final class BetaToolComputerUse20250124 implements BaseModel
 
         null !== $cache_control && $obj->cache_control = $cache_control;
         null !== $display_number && $obj->display_number = $display_number;
+        null !== $strict && $obj->strict = $strict;
 
         return $obj;
     }
@@ -145,6 +151,14 @@ final class BetaToolComputerUse20250124 implements BaseModel
     {
         $obj = clone $this;
         $obj->display_number = $displayNumber;
+
+        return $obj;
+    }
+
+    public function withStrict(bool $strict): self
+    {
+        $obj = clone $this;
+        $obj->strict = $strict;
 
         return $obj;
     }
