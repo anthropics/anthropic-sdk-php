@@ -209,6 +209,14 @@ final class BetaTool implements BaseModel
         return $obj;
     }
 
+    public function withStrict(bool $strict): self
+    {
+        $obj = clone $this;
+        $obj->strict = $strict;
+
+        return $obj;
+    }
+
     /**
      * @param list<array<string,mixed>> $inputExamples
      */
