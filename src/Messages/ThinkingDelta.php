@@ -9,13 +9,16 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type ThinkingDeltaShape = array{thinking: string, type: string}
+ * @phpstan-type ThinkingDeltaShape = array{
+ *   thinking: string, type: "thinking_delta"
+ * }
  */
 final class ThinkingDelta implements BaseModel
 {
     /** @use SdkModel<ThinkingDeltaShape> */
     use SdkModel;
 
+    /** @var "thinking_delta" $type */
     #[Api]
     public string $type = 'thinking_delta';
 

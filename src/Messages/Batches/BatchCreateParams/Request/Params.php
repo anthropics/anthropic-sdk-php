@@ -32,23 +32,23 @@ use Anthropic\Messages\WebSearchTool20250305;
 /**
  * Messages API creation parameters for the individual request.
  *
- * See the [Messages API reference](/en/api/messages) for full documentation on available parameters.
+ * See the [Messages API reference](https://docs.claude.com/en/api/messages) for full documentation on available parameters.
  *
  * @phpstan-type ParamsShape = array{
- *   maxTokens: int,
+ *   max_tokens: int,
  *   messages: list<MessageParam>,
  *   model: string|value-of<Model>,
- *   metadata?: Metadata,
- *   serviceTier?: value-of<ServiceTier>,
- *   stopSequences?: list<string>,
- *   stream?: bool,
- *   system?: string|list<TextBlockParam>,
- *   temperature?: float,
- *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
- *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
- *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>,
- *   topK?: int,
- *   topP?: float,
+ *   metadata?: Metadata|null,
+ *   service_tier?: value-of<ServiceTier>|null,
+ *   stop_sequences?: list<string>|null,
+ *   stream?: bool|null,
+ *   system?: string|null|list<TextBlockParam>,
+ *   temperature?: float|null,
+ *   thinking?: null|ThinkingConfigEnabled|ThinkingConfigDisabled,
+ *   tool_choice?: null|ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
+ *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null,
+ *   top_k?: int|null,
+ *   top_p?: float|null,
  * }
  */
 final class Params implements BaseModel
@@ -63,8 +63,8 @@ final class Params implements BaseModel
      *
      * Different models have different maximum values for this parameter.  See [models](https://docs.claude.com/en/docs/models-overview) for details.
      */
-    #[Api('max_tokens')]
-    public int $maxTokens;
+    #[Api]
+    public int $max_tokens;
 
     /**
      * Input messages.
@@ -140,10 +140,10 @@ final class Params implements BaseModel
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.claude.com/en/api/service-tiers) for details.
      *
-     * @var value-of<ServiceTier>|null $serviceTier
+     * @var value-of<ServiceTier>|null $service_tier
      */
-    #[Api('service_tier', enum: ServiceTier::class, optional: true)]
-    public ?string $serviceTier;
+    #[Api(enum: ServiceTier::class, optional: true)]
+    public ?string $service_tier;
 
     /**
      * Custom text sequences that will cause the model to stop generating.
@@ -152,10 +152,10 @@ final class Params implements BaseModel
      *
      * If you want the model to stop generating when it encounters custom strings of text, you can use the `stop_sequences` parameter. If the model encounters one of the custom sequences, the response `stop_reason` value will be `"stop_sequence"` and the response `stop_sequence` value will contain the matched stop sequence.
      *
-     * @var list<string>|null $stopSequences
+     * @var list<string>|null $stop_sequences
      */
-    #[Api('stop_sequences', list: 'string', optional: true)]
-    public ?array $stopSequences;
+    #[Api(list: 'string', optional: true)]
+    public ?array $stop_sequences;
 
     /**
      * Whether to incrementally stream the response using server-sent events.
@@ -198,8 +198,8 @@ final class Params implements BaseModel
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
-    #[Api('tool_choice', union: ToolChoice::class, optional: true)]
-    public ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice;
+    #[Api(union: ToolChoice::class, optional: true)]
+    public ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $tool_choice;
 
     /**
      * Definitions of tools that the model may use.
@@ -276,8 +276,8 @@ final class Params implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    #[Api('top_k', optional: true)]
-    public ?int $topK;
+    #[Api(optional: true)]
+    public ?int $top_k;
 
     /**
      * Use nucleus sampling.
@@ -286,15 +286,15 @@ final class Params implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    #[Api('top_p', optional: true)]
-    public ?float $topP;
+    #[Api(optional: true)]
+    public ?float $top_p;
 
     /**
      * `new Params()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Params::with(maxTokens: ..., messages: ..., model: ...)
+     * Params::with(max_tokens: ..., messages: ..., model: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -314,44 +314,44 @@ final class Params implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<MessageParam> $messages
-     * @param ServiceTier|value-of<ServiceTier> $serviceTier
-     * @param list<string> $stopSequences
+     * @param ServiceTier|value-of<ServiceTier> $service_tier
+     * @param list<string> $stop_sequences
      * @param string|list<TextBlockParam> $system
      * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
      */
     public static function with(
-        int $maxTokens,
+        int $max_tokens,
         array $messages,
         string|Model $model,
         ?Metadata $metadata = null,
-        ServiceTier|string|null $serviceTier = null,
-        ?array $stopSequences = null,
+        ServiceTier|string|null $service_tier = null,
+        ?array $stop_sequences = null,
         ?bool $stream = null,
         string|array|null $system = null,
         ?float $temperature = null,
         ThinkingConfigEnabled|ThinkingConfigDisabled|null $thinking = null,
-        ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
+        ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $tool_choice = null,
         ?array $tools = null,
-        ?int $topK = null,
-        ?float $topP = null,
+        ?int $top_k = null,
+        ?float $top_p = null,
     ): self {
         $obj = new self;
 
-        $obj->maxTokens = $maxTokens;
+        $obj->max_tokens = $max_tokens;
         $obj->messages = $messages;
         $obj->model = $model instanceof Model ? $model->value : $model;
 
         null !== $metadata && $obj->metadata = $metadata;
-        null !== $serviceTier && $obj['serviceTier'] = $serviceTier;
-        null !== $stopSequences && $obj->stopSequences = $stopSequences;
+        null !== $service_tier && $obj['service_tier'] = $service_tier;
+        null !== $stop_sequences && $obj->stop_sequences = $stop_sequences;
         null !== $stream && $obj->stream = $stream;
         null !== $system && $obj->system = $system;
         null !== $temperature && $obj->temperature = $temperature;
         null !== $thinking && $obj->thinking = $thinking;
-        null !== $toolChoice && $obj->toolChoice = $toolChoice;
+        null !== $tool_choice && $obj->tool_choice = $tool_choice;
         null !== $tools && $obj->tools = $tools;
-        null !== $topK && $obj->topK = $topK;
-        null !== $topP && $obj->topP = $topP;
+        null !== $top_k && $obj->top_k = $top_k;
+        null !== $top_p && $obj->top_p = $top_p;
 
         return $obj;
     }
@@ -366,7 +366,7 @@ final class Params implements BaseModel
     public function withMaxTokens(int $maxTokens): self
     {
         $obj = clone $this;
-        $obj->maxTokens = $maxTokens;
+        $obj->max_tokens = $maxTokens;
 
         return $obj;
     }
@@ -463,7 +463,7 @@ final class Params implements BaseModel
     public function withServiceTier(ServiceTier|string $serviceTier): self
     {
         $obj = clone $this;
-        $obj['serviceTier'] = $serviceTier;
+        $obj['service_tier'] = $serviceTier;
 
         return $obj;
     }
@@ -480,7 +480,7 @@ final class Params implements BaseModel
     public function withStopSequences(array $stopSequences): self
     {
         $obj = clone $this;
-        $obj->stopSequences = $stopSequences;
+        $obj->stop_sequences = $stopSequences;
 
         return $obj;
     }
@@ -551,7 +551,7 @@ final class Params implements BaseModel
         ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone $toolChoice
     ): self {
         $obj = clone $this;
-        $obj->toolChoice = $toolChoice;
+        $obj->tool_choice = $toolChoice;
 
         return $obj;
     }
@@ -639,7 +639,7 @@ final class Params implements BaseModel
     public function withTopK(int $topK): self
     {
         $obj = clone $this;
-        $obj->topK = $topK;
+        $obj->top_k = $topK;
 
         return $obj;
     }
@@ -654,7 +654,7 @@ final class Params implements BaseModel
     public function withTopP(float $topP): self
     {
         $obj = clone $this;
-        $obj->topP = $topP;
+        $obj->top_p = $topP;
 
         return $obj;
     }

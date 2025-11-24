@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type RawContentBlockDeltaEventShape = array{
  *   delta: TextDelta|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta,
  *   index: int,
- *   type: string,
+ *   type: "content_block_delta",
  * }
  */
 final class RawContentBlockDeltaEvent implements BaseModel
@@ -20,6 +20,7 @@ final class RawContentBlockDeltaEvent implements BaseModel
     /** @use SdkModel<RawContentBlockDeltaEventShape> */
     use SdkModel;
 
+    /** @var "content_block_delta" $type */
     #[Api]
     public string $type = 'content_block_delta';
 

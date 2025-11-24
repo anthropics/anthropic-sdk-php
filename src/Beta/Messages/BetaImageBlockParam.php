@@ -12,8 +12,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaImageBlockParamShape = array{
  *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource,
- *   type: string,
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   type: "image",
+ *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
 final class BetaImageBlockParam implements BaseModel
@@ -21,6 +21,7 @@ final class BetaImageBlockParam implements BaseModel
     /** @use SdkModel<BetaImageBlockParamShape> */
     use SdkModel;
 
+    /** @var "image" $type */
     #[Api]
     public string $type = 'image';
 
@@ -30,8 +31,8 @@ final class BetaImageBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaCacheControlEphemeral $cache_control;
 
     /**
      * `new BetaImageBlockParam()` is missing required properties by the API.
@@ -59,13 +60,13 @@ final class BetaImageBlockParam implements BaseModel
      */
     public static function with(
         BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource $source,
-        ?BetaCacheControlEphemeral $cacheControl = null,
+        ?BetaCacheControlEphemeral $cache_control = null,
     ): self {
         $obj = new self;
 
         $obj->source = $source;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
 
         return $obj;
     }
@@ -86,7 +87,7 @@ final class BetaImageBlockParam implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }

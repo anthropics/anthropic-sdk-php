@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaServerToolUsageShape = array{
- *   webFetchRequests: int, webSearchRequests: int
+ *   web_fetch_requests: int, web_search_requests: int
  * }
  */
 final class BetaServerToolUsage implements BaseModel
@@ -21,21 +21,21 @@ final class BetaServerToolUsage implements BaseModel
     /**
      * The number of web fetch tool requests.
      */
-    #[Api('web_fetch_requests')]
-    public int $webFetchRequests;
+    #[Api]
+    public int $web_fetch_requests;
 
     /**
      * The number of web search tool requests.
      */
-    #[Api('web_search_requests')]
-    public int $webSearchRequests;
+    #[Api]
+    public int $web_search_requests;
 
     /**
      * `new BetaServerToolUsage()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaServerToolUsage::with(webFetchRequests: ..., webSearchRequests: ...)
+     * BetaServerToolUsage::with(web_fetch_requests: ..., web_search_requests: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -55,13 +55,13 @@ final class BetaServerToolUsage implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        int $webFetchRequests = 0,
-        int $webSearchRequests = 0
+        int $web_fetch_requests = 0,
+        int $web_search_requests = 0
     ): self {
         $obj = new self;
 
-        $obj->webFetchRequests = $webFetchRequests;
-        $obj->webSearchRequests = $webSearchRequests;
+        $obj->web_fetch_requests = $web_fetch_requests;
+        $obj->web_search_requests = $web_search_requests;
 
         return $obj;
     }
@@ -72,7 +72,7 @@ final class BetaServerToolUsage implements BaseModel
     public function withWebFetchRequests(int $webFetchRequests): self
     {
         $obj = clone $this;
-        $obj->webFetchRequests = $webFetchRequests;
+        $obj->web_fetch_requests = $webFetchRequests;
 
         return $obj;
     }
@@ -83,7 +83,7 @@ final class BetaServerToolUsage implements BaseModel
     public function withWebSearchRequests(int $webSearchRequests): self
     {
         $obj = clone $this;
-        $obj->webSearchRequests = $webSearchRequests;
+        $obj->web_search_requests = $webSearchRequests;
 
         return $obj;
     }

@@ -11,8 +11,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaWebSearchToolResultBlockShape = array{
  *   content: BetaWebSearchToolResultError|list<BetaWebSearchResultBlock>,
- *   toolUseID: string,
- *   type: string,
+ *   tool_use_id: string,
+ *   type: "web_search_tool_result",
  * }
  */
 final class BetaWebSearchToolResultBlock implements BaseModel
@@ -20,6 +20,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     /** @use SdkModel<BetaWebSearchToolResultBlockShape> */
     use SdkModel;
 
+    /** @var "web_search_tool_result" $type */
     #[Api]
     public string $type = 'web_search_tool_result';
 
@@ -27,15 +28,15 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     #[Api(union: BetaWebSearchToolResultBlockContent::class)]
     public BetaWebSearchToolResultError|array $content;
 
-    #[Api('tool_use_id')]
-    public string $toolUseID;
+    #[Api]
+    public string $tool_use_id;
 
     /**
      * `new BetaWebSearchToolResultBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaWebSearchToolResultBlock::with(content: ..., toolUseID: ...)
+     * BetaWebSearchToolResultBlock::with(content: ..., tool_use_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -58,12 +59,12 @@ final class BetaWebSearchToolResultBlock implements BaseModel
      */
     public static function with(
         BetaWebSearchToolResultError|array $content,
-        string $toolUseID
+        string $tool_use_id
     ): self {
         $obj = new self;
 
         $obj->content = $content;
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $tool_use_id;
 
         return $obj;
     }
@@ -83,7 +84,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $toolUseID;
 
         return $obj;
     }

@@ -11,8 +11,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaErrorResponseShape = array{
  *   error: BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError,
- *   requestID: string|null,
- *   type: string,
+ *   request_id: string|null,
+ *   type: "error",
  * }
  */
 final class BetaErrorResponse implements BaseModel
@@ -20,21 +20,22 @@ final class BetaErrorResponse implements BaseModel
     /** @use SdkModel<BetaErrorResponseShape> */
     use SdkModel;
 
+    /** @var "error" $type */
     #[Api]
     public string $type = 'error';
 
     #[Api(union: BetaError::class)]
     public BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error;
 
-    #[Api('request_id')]
-    public ?string $requestID;
+    #[Api]
+    public ?string $request_id;
 
     /**
      * `new BetaErrorResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaErrorResponse::with(error: ..., requestID: ...)
+     * BetaErrorResponse::with(error: ..., request_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -55,12 +56,12 @@ final class BetaErrorResponse implements BaseModel
      */
     public static function with(
         BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error,
-        ?string $requestID,
+        ?string $request_id,
     ): self {
         $obj = new self;
 
         $obj->error = $error;
-        $obj->requestID = $requestID;
+        $obj->request_id = $request_id;
 
         return $obj;
     }
@@ -77,7 +78,7 @@ final class BetaErrorResponse implements BaseModel
     public function withRequestID(?string $requestID): self
     {
         $obj = clone $this;
-        $obj->requestID = $requestID;
+        $obj->request_id = $requestID;
 
         return $obj;
     }

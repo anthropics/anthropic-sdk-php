@@ -1,0 +1,75 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\Beta\Messages;
+
+use Anthropic\Beta\Messages\BetaToolSearchToolResultErrorParam\ErrorCode;
+use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Contracts\BaseModel;
+
+/**
+ * @phpstan-type BetaToolSearchToolResultErrorParamShape = array{
+ *   error_code: value-of<ErrorCode>, type: "tool_search_tool_result_error"
+ * }
+ */
+final class BetaToolSearchToolResultErrorParam implements BaseModel
+{
+    /** @use SdkModel<BetaToolSearchToolResultErrorParamShape> */
+    use SdkModel;
+
+    /** @var "tool_search_tool_result_error" $type */
+    #[Api]
+    public string $type = 'tool_search_tool_result_error';
+
+    /** @var value-of<ErrorCode> $error_code */
+    #[Api(enum: ErrorCode::class)]
+    public string $error_code;
+
+    /**
+     * `new BetaToolSearchToolResultErrorParam()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaToolSearchToolResultErrorParam::with(error_code: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaToolSearchToolResultErrorParam)->withErrorCode(...)
+     * ```
+     */
+    public function __construct()
+    {
+        $this->initialize();
+    }
+
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param ErrorCode|value-of<ErrorCode> $error_code
+     */
+    public static function with(ErrorCode|string $error_code): self
+    {
+        $obj = new self;
+
+        $obj['error_code'] = $error_code;
+
+        return $obj;
+    }
+
+    /**
+     * @param ErrorCode|value-of<ErrorCode> $errorCode
+     */
+    public function withErrorCode(ErrorCode|string $errorCode): self
+    {
+        $obj = clone $this;
+        $obj['error_code'] = $errorCode;
+
+        return $obj;
+    }
+}

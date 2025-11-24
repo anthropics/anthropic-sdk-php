@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaInvalidRequestErrorShape = array{
- *   message: string, type: string
+ *   message: string, type: "invalid_request_error"
  * }
  */
 final class BetaInvalidRequestError implements BaseModel
@@ -18,6 +18,7 @@ final class BetaInvalidRequestError implements BaseModel
     /** @use SdkModel<BetaInvalidRequestErrorShape> */
     use SdkModel;
 
+    /** @var "invalid_request_error" $type */
     #[Api]
     public string $type = 'invalid_request_error';
 

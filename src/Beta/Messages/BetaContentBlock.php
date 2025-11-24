@@ -21,8 +21,7 @@ final class BetaContentBlock implements ConverterSource
     }
 
     /**
-     * @return list<string|Converter|ConverterSource>|array<string,
-     * string|Converter|ConverterSource,>
+     * @return list<string|Converter|ConverterSource>|array<string,string|Converter|ConverterSource>
      */
     public static function variants(): array
     {
@@ -37,6 +36,7 @@ final class BetaContentBlock implements ConverterSource
             'code_execution_tool_result' => BetaCodeExecutionToolResultBlock::class,
             'bash_code_execution_tool_result' => BetaBashCodeExecutionToolResultBlock::class,
             'text_editor_code_execution_tool_result' => BetaTextEditorCodeExecutionToolResultBlock::class,
+            'tool_search_tool_result' => BetaToolSearchToolResultBlock::class,
             'mcp_tool_use' => BetaMCPToolUseBlock::class,
             'mcp_tool_result' => BetaMCPToolResultBlock::class,
             'container_upload' => BetaContainerUploadBlock::class,

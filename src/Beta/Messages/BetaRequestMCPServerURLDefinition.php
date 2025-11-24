@@ -11,10 +11,10 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaRequestMCPServerURLDefinitionShape = array{
  *   name: string,
- *   type: string,
+ *   type: "url",
  *   url: string,
- *   authorizationToken?: string|null,
- *   toolConfiguration?: BetaRequestMCPServerToolConfiguration|null,
+ *   authorization_token?: string|null,
+ *   tool_configuration?: BetaRequestMCPServerToolConfiguration|null,
  * }
  */
 final class BetaRequestMCPServerURLDefinition implements BaseModel
@@ -22,6 +22,7 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
     /** @use SdkModel<BetaRequestMCPServerURLDefinitionShape> */
     use SdkModel;
 
+    /** @var "url" $type */
     #[Api]
     public string $type = 'url';
 
@@ -31,11 +32,11 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
     #[Api]
     public string $url;
 
-    #[Api('authorization_token', nullable: true, optional: true)]
-    public ?string $authorizationToken;
+    #[Api(nullable: true, optional: true)]
+    public ?string $authorization_token;
 
-    #[Api('tool_configuration', nullable: true, optional: true)]
-    public ?BetaRequestMCPServerToolConfiguration $toolConfiguration;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaRequestMCPServerToolConfiguration $tool_configuration;
 
     /**
      * `new BetaRequestMCPServerURLDefinition()` is missing required properties by the API.
@@ -64,16 +65,16 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
     public static function with(
         string $name,
         string $url,
-        ?string $authorizationToken = null,
-        ?BetaRequestMCPServerToolConfiguration $toolConfiguration = null,
+        ?string $authorization_token = null,
+        ?BetaRequestMCPServerToolConfiguration $tool_configuration = null,
     ): self {
         $obj = new self;
 
         $obj->name = $name;
         $obj->url = $url;
 
-        null !== $authorizationToken && $obj->authorizationToken = $authorizationToken;
-        null !== $toolConfiguration && $obj->toolConfiguration = $toolConfiguration;
+        null !== $authorization_token && $obj->authorization_token = $authorization_token;
+        null !== $tool_configuration && $obj->tool_configuration = $tool_configuration;
 
         return $obj;
     }
@@ -97,7 +98,7 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
     public function withAuthorizationToken(?string $authorizationToken): self
     {
         $obj = clone $this;
-        $obj->authorizationToken = $authorizationToken;
+        $obj->authorization_token = $authorizationToken;
 
         return $obj;
     }
@@ -106,7 +107,7 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
         ?BetaRequestMCPServerToolConfiguration $toolConfiguration
     ): self {
         $obj = clone $this;
-        $obj->toolConfiguration = $toolConfiguration;
+        $obj->tool_configuration = $toolConfiguration;
 
         return $obj;
     }

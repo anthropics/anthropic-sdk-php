@@ -33,7 +33,7 @@ final class SkillsTest extends TestCase
             $this->markTestSkipped('prism binary unsupported');
         }
 
-        $result = $this->client->beta->skills->create();
+        $result = $this->client->beta->skills->create([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -41,7 +41,7 @@ final class SkillsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->beta->skills->retrieve('skill_id');
+        $result = $this->client->beta->skills->retrieve('skill_id', []);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -53,7 +53,7 @@ final class SkillsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->beta->skills->list();
+        $result = $this->client->beta->skills->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -61,7 +61,7 @@ final class SkillsTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $result = $this->client->beta->skills->delete('skill_id');
+        $result = $this->client->beta->skills->delete('skill_id', []);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

@@ -11,13 +11,13 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaUsageShape = array{
- *   cacheCreation: BetaCacheCreation|null,
- *   cacheCreationInputTokens: int|null,
- *   cacheReadInputTokens: int|null,
- *   inputTokens: int,
- *   outputTokens: int,
- *   serverToolUse: BetaServerToolUsage|null,
- *   serviceTier: value-of<ServiceTier>|null,
+ *   cache_creation: BetaCacheCreation|null,
+ *   cache_creation_input_tokens: int|null,
+ *   cache_read_input_tokens: int|null,
+ *   input_tokens: int,
+ *   output_tokens: int,
+ *   server_tool_use: BetaServerToolUsage|null,
+ *   service_tier: value-of<ServiceTier>|null,
  * }
  */
 final class BetaUsage implements BaseModel
@@ -28,46 +28,46 @@ final class BetaUsage implements BaseModel
     /**
      * Breakdown of cached tokens by TTL.
      */
-    #[Api('cache_creation')]
-    public ?BetaCacheCreation $cacheCreation;
+    #[Api]
+    public ?BetaCacheCreation $cache_creation;
 
     /**
      * The number of input tokens used to create the cache entry.
      */
-    #[Api('cache_creation_input_tokens')]
-    public ?int $cacheCreationInputTokens;
+    #[Api]
+    public ?int $cache_creation_input_tokens;
 
     /**
      * The number of input tokens read from the cache.
      */
-    #[Api('cache_read_input_tokens')]
-    public ?int $cacheReadInputTokens;
+    #[Api]
+    public ?int $cache_read_input_tokens;
 
     /**
      * The number of input tokens which were used.
      */
-    #[Api('input_tokens')]
-    public int $inputTokens;
+    #[Api]
+    public int $input_tokens;
 
     /**
      * The number of output tokens which were used.
      */
-    #[Api('output_tokens')]
-    public int $outputTokens;
+    #[Api]
+    public int $output_tokens;
 
     /**
      * The number of server tool requests.
      */
-    #[Api('server_tool_use')]
-    public ?BetaServerToolUsage $serverToolUse;
+    #[Api]
+    public ?BetaServerToolUsage $server_tool_use;
 
     /**
      * If the request used the priority, standard, or batch tier.
      *
-     * @var value-of<ServiceTier>|null $serviceTier
+     * @var value-of<ServiceTier>|null $service_tier
      */
-    #[Api('service_tier', enum: ServiceTier::class)]
-    public ?string $serviceTier;
+    #[Api(enum: ServiceTier::class)]
+    public ?string $service_tier;
 
     /**
      * `new BetaUsage()` is missing required properties by the API.
@@ -75,13 +75,13 @@ final class BetaUsage implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaUsage::with(
-     *   cacheCreation: ...,
-     *   cacheCreationInputTokens: ...,
-     *   cacheReadInputTokens: ...,
-     *   inputTokens: ...,
-     *   outputTokens: ...,
-     *   serverToolUse: ...,
-     *   serviceTier: ...,
+     *   cache_creation: ...,
+     *   cache_creation_input_tokens: ...,
+     *   cache_read_input_tokens: ...,
+     *   input_tokens: ...,
+     *   output_tokens: ...,
+     *   server_tool_use: ...,
+     *   service_tier: ...,
      * )
      * ```
      *
@@ -108,26 +108,26 @@ final class BetaUsage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
+     * @param ServiceTier|value-of<ServiceTier>|null $service_tier
      */
     public static function with(
-        ?BetaCacheCreation $cacheCreation,
-        ?int $cacheCreationInputTokens,
-        ?int $cacheReadInputTokens,
-        int $inputTokens,
-        int $outputTokens,
-        ?BetaServerToolUsage $serverToolUse,
-        ServiceTier|string|null $serviceTier,
+        ?BetaCacheCreation $cache_creation,
+        ?int $cache_creation_input_tokens,
+        ?int $cache_read_input_tokens,
+        int $input_tokens,
+        int $output_tokens,
+        ?BetaServerToolUsage $server_tool_use,
+        ServiceTier|string|null $service_tier,
     ): self {
         $obj = new self;
 
-        $obj->cacheCreation = $cacheCreation;
-        $obj->cacheCreationInputTokens = $cacheCreationInputTokens;
-        $obj->cacheReadInputTokens = $cacheReadInputTokens;
-        $obj->inputTokens = $inputTokens;
-        $obj->outputTokens = $outputTokens;
-        $obj->serverToolUse = $serverToolUse;
-        $obj['serviceTier'] = $serviceTier;
+        $obj->cache_creation = $cache_creation;
+        $obj->cache_creation_input_tokens = $cache_creation_input_tokens;
+        $obj->cache_read_input_tokens = $cache_read_input_tokens;
+        $obj->input_tokens = $input_tokens;
+        $obj->output_tokens = $output_tokens;
+        $obj->server_tool_use = $server_tool_use;
+        $obj['service_tier'] = $service_tier;
 
         return $obj;
     }
@@ -138,7 +138,7 @@ final class BetaUsage implements BaseModel
     public function withCacheCreation(?BetaCacheCreation $cacheCreation): self
     {
         $obj = clone $this;
-        $obj->cacheCreation = $cacheCreation;
+        $obj->cache_creation = $cacheCreation;
 
         return $obj;
     }
@@ -150,7 +150,7 @@ final class BetaUsage implements BaseModel
         ?int $cacheCreationInputTokens
     ): self {
         $obj = clone $this;
-        $obj->cacheCreationInputTokens = $cacheCreationInputTokens;
+        $obj->cache_creation_input_tokens = $cacheCreationInputTokens;
 
         return $obj;
     }
@@ -161,7 +161,7 @@ final class BetaUsage implements BaseModel
     public function withCacheReadInputTokens(?int $cacheReadInputTokens): self
     {
         $obj = clone $this;
-        $obj->cacheReadInputTokens = $cacheReadInputTokens;
+        $obj->cache_read_input_tokens = $cacheReadInputTokens;
 
         return $obj;
     }
@@ -172,7 +172,7 @@ final class BetaUsage implements BaseModel
     public function withInputTokens(int $inputTokens): self
     {
         $obj = clone $this;
-        $obj->inputTokens = $inputTokens;
+        $obj->input_tokens = $inputTokens;
 
         return $obj;
     }
@@ -183,7 +183,7 @@ final class BetaUsage implements BaseModel
     public function withOutputTokens(int $outputTokens): self
     {
         $obj = clone $this;
-        $obj->outputTokens = $outputTokens;
+        $obj->output_tokens = $outputTokens;
 
         return $obj;
     }
@@ -194,7 +194,7 @@ final class BetaUsage implements BaseModel
     public function withServerToolUse(?BetaServerToolUsage $serverToolUse): self
     {
         $obj = clone $this;
-        $obj->serverToolUse = $serverToolUse;
+        $obj->server_tool_use = $serverToolUse;
 
         return $obj;
     }
@@ -207,7 +207,7 @@ final class BetaUsage implements BaseModel
     public function withServiceTier(ServiceTier|string|null $serviceTier): self
     {
         $obj = clone $this;
-        $obj['serviceTier'] = $serviceTier;
+        $obj['service_tier'] = $serviceTier;
 
         return $obj;
     }

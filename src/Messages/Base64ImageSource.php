@@ -11,7 +11,7 @@ use Anthropic\Messages\Base64ImageSource\MediaType;
 
 /**
  * @phpstan-type Base64ImageSourceShape = array{
- *   data: string, mediaType: value-of<MediaType>, type: string
+ *   data: string, media_type: value-of<MediaType>, type: "base64"
  * }
  */
 final class Base64ImageSource implements BaseModel
@@ -19,22 +19,23 @@ final class Base64ImageSource implements BaseModel
     /** @use SdkModel<Base64ImageSourceShape> */
     use SdkModel;
 
+    /** @var "base64" $type */
     #[Api]
     public string $type = 'base64';
 
     #[Api]
     public string $data;
 
-    /** @var value-of<MediaType> $mediaType */
-    #[Api('media_type', enum: MediaType::class)]
-    public string $mediaType;
+    /** @var value-of<MediaType> $media_type */
+    #[Api(enum: MediaType::class)]
+    public string $media_type;
 
     /**
      * `new Base64ImageSource()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Base64ImageSource::with(data: ..., mediaType: ...)
+     * Base64ImageSource::with(data: ..., media_type: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -53,14 +54,16 @@ final class Base64ImageSource implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param MediaType|value-of<MediaType> $mediaType
+     * @param MediaType|value-of<MediaType> $media_type
      */
-    public static function with(string $data, MediaType|string $mediaType): self
-    {
+    public static function with(
+        string $data,
+        MediaType|string $media_type
+    ): self {
         $obj = new self;
 
         $obj->data = $data;
-        $obj['mediaType'] = $mediaType;
+        $obj['media_type'] = $media_type;
 
         return $obj;
     }
@@ -79,7 +82,7 @@ final class Base64ImageSource implements BaseModel
     public function withMediaType(MediaType|string $mediaType): self
     {
         $obj = clone $this;
-        $obj['mediaType'] = $mediaType;
+        $obj['media_type'] = $mediaType;
 
         return $obj;
     }

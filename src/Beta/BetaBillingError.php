@@ -9,13 +9,16 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaBillingErrorShape = array{message: string, type: string}
+ * @phpstan-type BetaBillingErrorShape = array{
+ *   message: string, type: "billing_error"
+ * }
  */
 final class BetaBillingError implements BaseModel
 {
     /** @use SdkModel<BetaBillingErrorShape> */
     use SdkModel;
 
+    /** @var "billing_error" $type */
     #[Api]
     public string $type = 'billing_error';
 

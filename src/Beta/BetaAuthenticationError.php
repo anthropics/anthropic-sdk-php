@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaAuthenticationErrorShape = array{
- *   message: string, type: string
+ *   message: string, type: "authentication_error"
  * }
  */
 final class BetaAuthenticationError implements BaseModel
@@ -18,6 +18,7 @@ final class BetaAuthenticationError implements BaseModel
     /** @use SdkModel<BetaAuthenticationErrorShape> */
     use SdkModel;
 
+    /** @var "authentication_error" $type */
     #[Api]
     public string $type = 'authentication_error';
 

@@ -10,7 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaWebSearchToolResultErrorShape = array{
- *   errorCode: value-of<BetaWebSearchToolResultErrorCode>, type: string
+ *   error_code: value-of<BetaWebSearchToolResultErrorCode>,
+ *   type: "web_search_tool_result_error",
  * }
  */
 final class BetaWebSearchToolResultError implements BaseModel
@@ -18,19 +19,20 @@ final class BetaWebSearchToolResultError implements BaseModel
     /** @use SdkModel<BetaWebSearchToolResultErrorShape> */
     use SdkModel;
 
+    /** @var "web_search_tool_result_error" $type */
     #[Api]
     public string $type = 'web_search_tool_result_error';
 
-    /** @var value-of<BetaWebSearchToolResultErrorCode> $errorCode */
-    #[Api('error_code', enum: BetaWebSearchToolResultErrorCode::class)]
-    public string $errorCode;
+    /** @var value-of<BetaWebSearchToolResultErrorCode> $error_code */
+    #[Api(enum: BetaWebSearchToolResultErrorCode::class)]
+    public string $error_code;
 
     /**
      * `new BetaWebSearchToolResultError()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaWebSearchToolResultError::with(errorCode: ...)
+     * BetaWebSearchToolResultError::with(error_code: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -49,14 +51,14 @@ final class BetaWebSearchToolResultError implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaWebSearchToolResultErrorCode|value-of<BetaWebSearchToolResultErrorCode> $errorCode
+     * @param BetaWebSearchToolResultErrorCode|value-of<BetaWebSearchToolResultErrorCode> $error_code
      */
     public static function with(
-        BetaWebSearchToolResultErrorCode|string $errorCode
+        BetaWebSearchToolResultErrorCode|string $error_code
     ): self {
         $obj = new self;
 
-        $obj['errorCode'] = $errorCode;
+        $obj['error_code'] = $error_code;
 
         return $obj;
     }
@@ -68,7 +70,7 @@ final class BetaWebSearchToolResultError implements BaseModel
         BetaWebSearchToolResultErrorCode|string $errorCode
     ): self {
         $obj = clone $this;
-        $obj['errorCode'] = $errorCode;
+        $obj['error_code'] = $errorCode;
 
         return $obj;
     }

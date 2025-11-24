@@ -9,13 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaAllThinkingTurnsShape = array{type: string}
+ * @phpstan-type BetaAllThinkingTurnsShape = array{type: "all"}
  */
 final class BetaAllThinkingTurns implements BaseModel
 {
     /** @use SdkModel<BetaAllThinkingTurnsShape> */
     use SdkModel;
 
+    /** @var "all" $type */
     #[Api]
     public string $type = 'all';
 

@@ -13,12 +13,12 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 /**
  * @phpstan-type FileMetadataShape = array{
  *   id: string,
- *   createdAt: \DateTimeInterface,
+ *   created_at: \DateTimeInterface,
  *   filename: string,
- *   mimeType: string,
- *   sizeBytes: int,
- *   type: string,
- *   downloadable?: bool,
+ *   mime_type: string,
+ *   size_bytes: int,
+ *   type: "file",
+ *   downloadable?: bool|null,
  * }
  */
 final class FileMetadata implements BaseModel, ResponseConverter
@@ -32,6 +32,8 @@ final class FileMetadata implements BaseModel, ResponseConverter
      * Object type.
      *
      * For files, this is always `"file"`.
+     *
+     * @var "file" $type
      */
     #[Api]
     public string $type = 'file';
@@ -47,8 +49,8 @@ final class FileMetadata implements BaseModel, ResponseConverter
     /**
      * RFC 3339 datetime string representing when the file was created.
      */
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
     /**
      * Original filename of the uploaded file.
@@ -59,14 +61,14 @@ final class FileMetadata implements BaseModel, ResponseConverter
     /**
      * MIME type of the file.
      */
-    #[Api('mime_type')]
-    public string $mimeType;
+    #[Api]
+    public string $mime_type;
 
     /**
      * Size of the file in bytes.
      */
-    #[Api('size_bytes')]
-    public int $sizeBytes;
+    #[Api]
+    public int $size_bytes;
 
     /**
      * Whether the file can be downloaded.
@@ -80,7 +82,7 @@ final class FileMetadata implements BaseModel, ResponseConverter
      * To enforce required parameters use
      * ```
      * FileMetadata::with(
-     *   id: ..., createdAt: ..., filename: ..., mimeType: ..., sizeBytes: ...
+     *   id: ..., created_at: ..., filename: ..., mime_type: ..., size_bytes: ...
      * )
      * ```
      *
@@ -107,19 +109,19 @@ final class FileMetadata implements BaseModel, ResponseConverter
      */
     public static function with(
         string $id,
-        \DateTimeInterface $createdAt,
+        \DateTimeInterface $created_at,
         string $filename,
-        string $mimeType,
-        int $sizeBytes,
+        string $mime_type,
+        int $size_bytes,
         ?bool $downloadable = null,
     ): self {
         $obj = new self;
 
         $obj->id = $id;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $created_at;
         $obj->filename = $filename;
-        $obj->mimeType = $mimeType;
-        $obj->sizeBytes = $sizeBytes;
+        $obj->mime_type = $mime_type;
+        $obj->size_bytes = $size_bytes;
 
         null !== $downloadable && $obj->downloadable = $downloadable;
 
@@ -145,7 +147,7 @@ final class FileMetadata implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -167,7 +169,7 @@ final class FileMetadata implements BaseModel, ResponseConverter
     public function withMimeType(string $mimeType): self
     {
         $obj = clone $this;
-        $obj->mimeType = $mimeType;
+        $obj->mime_type = $mimeType;
 
         return $obj;
     }
@@ -178,7 +180,7 @@ final class FileMetadata implements BaseModel, ResponseConverter
     public function withSizeBytes(int $sizeBytes): self
     {
         $obj = clone $this;
-        $obj->sizeBytes = $sizeBytes;
+        $obj->size_bytes = $sizeBytes;
 
         return $obj;
     }

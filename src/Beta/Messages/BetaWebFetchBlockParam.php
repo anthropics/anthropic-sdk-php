@@ -11,9 +11,9 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaWebFetchBlockParamShape = array{
  *   content: BetaRequestDocumentBlock,
- *   type: string,
+ *   type: "web_fetch_result",
  *   url: string,
- *   retrievedAt?: string|null,
+ *   retrieved_at?: string|null,
  * }
  */
 final class BetaWebFetchBlockParam implements BaseModel
@@ -21,6 +21,7 @@ final class BetaWebFetchBlockParam implements BaseModel
     /** @use SdkModel<BetaWebFetchBlockParamShape> */
     use SdkModel;
 
+    /** @var "web_fetch_result" $type */
     #[Api]
     public string $type = 'web_fetch_result';
 
@@ -36,8 +37,8 @@ final class BetaWebFetchBlockParam implements BaseModel
     /**
      * ISO 8601 timestamp when the content was retrieved.
      */
-    #[Api('retrieved_at', nullable: true, optional: true)]
-    public ?string $retrievedAt;
+    #[Api(nullable: true, optional: true)]
+    public ?string $retrieved_at;
 
     /**
      * `new BetaWebFetchBlockParam()` is missing required properties by the API.
@@ -66,14 +67,14 @@ final class BetaWebFetchBlockParam implements BaseModel
     public static function with(
         BetaRequestDocumentBlock $content,
         string $url,
-        ?string $retrievedAt = null
+        ?string $retrieved_at = null
     ): self {
         $obj = new self;
 
         $obj->content = $content;
         $obj->url = $url;
 
-        null !== $retrievedAt && $obj->retrievedAt = $retrievedAt;
+        null !== $retrieved_at && $obj->retrieved_at = $retrieved_at;
 
         return $obj;
     }
@@ -103,7 +104,7 @@ final class BetaWebFetchBlockParam implements BaseModel
     public function withRetrievedAt(?string $retrievedAt): self
     {
         $obj = clone $this;
-        $obj->retrievedAt = $retrievedAt;
+        $obj->retrieved_at = $retrievedAt;
 
         return $obj;
     }

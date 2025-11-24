@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Create Skill Version.
  *
- * @see Anthropic\Beta\Skills\Versions->create
+ * @see Anthropic\Services\Beta\Skills\VersionsService::create()
  *
  * @phpstan-type VersionCreateParamsShape = array{
  *   files?: list<string>|null, betas?: list<string|AnthropicBeta>

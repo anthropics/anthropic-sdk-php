@@ -9,13 +9,16 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type SignatureDeltaShape = array{signature: string, type: string}
+ * @phpstan-type SignatureDeltaShape = array{
+ *   signature: string, type: "signature_delta"
+ * }
  */
 final class SignatureDelta implements BaseModel
 {
     /** @use SdkModel<SignatureDeltaShape> */
     use SdkModel;
 
+    /** @var "signature_delta" $type */
     #[Api]
     public string $type = 'signature_delta';
 

@@ -9,13 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type APIErrorObjectShape = array{message: string, type: string}
+ * @phpstan-type APIErrorObjectShape = array{message: string, type: "api_error"}
  */
 final class APIErrorObject implements BaseModel
 {
     /** @use SdkModel<APIErrorObjectShape> */
     use SdkModel;
 
+    /** @var "api_error" $type */
     #[Api]
     public string $type = 'api_error';
 

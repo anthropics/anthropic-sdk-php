@@ -13,7 +13,9 @@ use Anthropic\Core\Contracts\BaseModel;
  * Files uploaded via this block will be available in the container's input directory.
  *
  * @phpstan-type BetaContainerUploadBlockParamShape = array{
- *   fileID: string, type: string, cacheControl?: BetaCacheControlEphemeral|null
+ *   file_id: string,
+ *   type: "container_upload",
+ *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
 final class BetaContainerUploadBlockParam implements BaseModel
@@ -21,24 +23,25 @@ final class BetaContainerUploadBlockParam implements BaseModel
     /** @use SdkModel<BetaContainerUploadBlockParamShape> */
     use SdkModel;
 
+    /** @var "container_upload" $type */
     #[Api]
     public string $type = 'container_upload';
 
-    #[Api('file_id')]
-    public string $fileID;
+    #[Api]
+    public string $file_id;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaCacheControlEphemeral $cache_control;
 
     /**
      * `new BetaContainerUploadBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaContainerUploadBlockParam::with(fileID: ...)
+     * BetaContainerUploadBlockParam::with(file_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -58,14 +61,14 @@ final class BetaContainerUploadBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $fileID,
-        ?BetaCacheControlEphemeral $cacheControl = null
+        string $file_id,
+        ?BetaCacheControlEphemeral $cache_control = null
     ): self {
         $obj = new self;
 
-        $obj->fileID = $fileID;
+        $obj->file_id = $file_id;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
 
         return $obj;
     }
@@ -73,7 +76,7 @@ final class BetaContainerUploadBlockParam implements BaseModel
     public function withFileID(string $fileID): self
     {
         $obj = clone $this;
-        $obj->fileID = $fileID;
+        $obj->file_id = $fileID;
 
         return $obj;
     }
@@ -85,7 +88,7 @@ final class BetaContainerUploadBlockParam implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }

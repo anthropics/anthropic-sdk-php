@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Batches\BatchCreateParams\Request\Params;
 
 /**
- * @phpstan-type RequestShape = array{customID: string, params: Params}
+ * @phpstan-type RequestShape = array{custom_id: string, params: Params}
  */
 final class Request implements BaseModel
 {
@@ -22,13 +22,13 @@ final class Request implements BaseModel
      *
      * Must be unique for each request within the Message Batch.
      */
-    #[Api('custom_id')]
-    public string $customID;
+    #[Api]
+    public string $custom_id;
 
     /**
      * Messages API creation parameters for the individual request.
      *
-     * See the [Messages API reference](/en/api/messages) for full documentation on available parameters.
+     * See the [Messages API reference](https://docs.claude.com/en/api/messages) for full documentation on available parameters.
      */
     #[Api]
     public Params $params;
@@ -38,7 +38,7 @@ final class Request implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Request::with(customID: ..., params: ...)
+     * Request::with(custom_id: ..., params: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -57,11 +57,11 @@ final class Request implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $customID, Params $params): self
+    public static function with(string $custom_id, Params $params): self
     {
         $obj = new self;
 
-        $obj->customID = $customID;
+        $obj->custom_id = $custom_id;
         $obj->params = $params;
 
         return $obj;
@@ -75,7 +75,7 @@ final class Request implements BaseModel
     public function withCustomID(string $customID): self
     {
         $obj = clone $this;
-        $obj->customID = $customID;
+        $obj->custom_id = $customID;
 
         return $obj;
     }
@@ -83,7 +83,7 @@ final class Request implements BaseModel
     /**
      * Messages API creation parameters for the individual request.
      *
-     * See the [Messages API reference](/en/api/messages) for full documentation on available parameters.
+     * See the [Messages API reference](https://docs.claude.com/en/api/messages) for full documentation on available parameters.
      */
     public function withParams(Params $params): self
     {

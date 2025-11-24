@@ -12,8 +12,8 @@ use Anthropic\Messages\ImageBlockParam\Source;
 /**
  * @phpstan-type ImageBlockParamShape = array{
  *   source: Base64ImageSource|URLImageSource,
- *   type: string,
- *   cacheControl?: CacheControlEphemeral|null,
+ *   type: "image",
+ *   cache_control?: CacheControlEphemeral|null,
  * }
  */
 final class ImageBlockParam implements BaseModel
@@ -21,6 +21,7 @@ final class ImageBlockParam implements BaseModel
     /** @use SdkModel<ImageBlockParamShape> */
     use SdkModel;
 
+    /** @var "image" $type */
     #[Api]
     public string $type = 'image';
 
@@ -30,8 +31,8 @@ final class ImageBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?CacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?CacheControlEphemeral $cache_control;
 
     /**
      * `new ImageBlockParam()` is missing required properties by the API.
@@ -59,13 +60,13 @@ final class ImageBlockParam implements BaseModel
      */
     public static function with(
         Base64ImageSource|URLImageSource $source,
-        ?CacheControlEphemeral $cacheControl = null,
+        ?CacheControlEphemeral $cache_control = null,
     ): self {
         $obj = new self;
 
         $obj->source = $source;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
 
         return $obj;
     }
@@ -84,7 +85,7 @@ final class ImageBlockParam implements BaseModel
     public function withCacheControl(?CacheControlEphemeral $cacheControl): self
     {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }

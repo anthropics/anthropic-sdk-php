@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaServerToolUseBlock\Caller;
 use Anthropic\Beta\Messages\BetaServerToolUseBlock\Name;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
@@ -11,7 +12,11 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaServerToolUseBlockShape = array{
- *   id: string, input: array<string, mixed>, name: value-of<Name>, type: string
+ *   id: string,
+ *   caller: BetaDirectCaller|BetaServerToolCaller,
+ *   input: array<string,mixed>,
+ *   name: value-of<Name>,
+ *   type: "server_tool_use",
  * }
  */
 final class BetaServerToolUseBlock implements BaseModel
@@ -19,13 +24,20 @@ final class BetaServerToolUseBlock implements BaseModel
     /** @use SdkModel<BetaServerToolUseBlockShape> */
     use SdkModel;
 
+    /** @var "server_tool_use" $type */
     #[Api]
     public string $type = 'server_tool_use';
 
     #[Api]
     public string $id;
 
-    /** @var array<string, mixed> $input */
+    /**
+     * Tool invocation directly from the model.
+     */
+    #[Api(union: Caller::class)]
+    public BetaDirectCaller|BetaServerToolCaller $caller;
+
+    /** @var array<string,mixed> $input */
     #[Api(map: 'mixed')]
     public array $input;
 
@@ -38,13 +50,17 @@ final class BetaServerToolUseBlock implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaServerToolUseBlock::with(id: ..., input: ..., name: ...)
+     * BetaServerToolUseBlock::with(id: ..., caller: ..., input: ..., name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaServerToolUseBlock)->withID(...)->withInput(...)->withName(...)
+     * (new BetaServerToolUseBlock)
+     *   ->withID(...)
+     *   ->withCaller(...)
+     *   ->withInput(...)
+     *   ->withName(...)
      * ```
      */
     public function __construct()
@@ -57,17 +73,19 @@ final class BetaServerToolUseBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, mixed> $input
+     * @param array<string,mixed> $input
      * @param Name|value-of<Name> $name
      */
     public static function with(
         string $id,
         array $input,
-        Name|string $name
+        Name|string $name,
+        BetaDirectCaller|BetaServerToolCaller $caller = ['type' => 'direct'],
     ): self {
         $obj = new self;
 
         $obj->id = $id;
+        $obj->caller = $caller;
         $obj->input = $input;
         $obj['name'] = $name;
 
@@ -83,7 +101,19 @@ final class BetaServerToolUseBlock implements BaseModel
     }
 
     /**
-     * @param array<string, mixed> $input
+     * Tool invocation directly from the model.
+     */
+    public function withCaller(
+        BetaDirectCaller|BetaServerToolCaller $caller
+    ): self {
+        $obj = clone $this;
+        $obj->caller = $caller;
+
+        return $obj;
+    }
+
+    /**
+     * @param array<string,mixed> $input
      */
     public function withInput(array $input): self
     {

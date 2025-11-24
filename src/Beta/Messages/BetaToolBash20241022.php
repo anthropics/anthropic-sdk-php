@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaToolBash20241022\AllowedCaller;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\MapOf;
 
 /**
  * @phpstan-type BetaToolBash20241022Shape = array{
- *   name: string, type: string, cacheControl?: BetaCacheControlEphemeral|null
+ *   name: "bash",
+ *   type: "bash_20241022",
+ *   allowed_callers?: list<value-of<AllowedCaller>>|null,
+ *   cache_control?: BetaCacheControlEphemeral|null,
+ *   defer_loading?: bool|null,
+ *   input_examples?: list<array<string,mixed>>|null,
+ *   strict?: bool|null,
  * }
  */
 final class BetaToolBash20241022 implements BaseModel
@@ -22,18 +30,38 @@ final class BetaToolBash20241022 implements BaseModel
      * Name of the tool.
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
+     *
+     * @var "bash" $name
      */
     #[Api]
     public string $name = 'bash';
 
+    /** @var "bash_20241022" $type */
     #[Api]
     public string $type = 'bash_20241022';
+
+    /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
+    #[Api(list: AllowedCaller::class, optional: true)]
+    public ?array $allowed_callers;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaCacheControlEphemeral $cache_control;
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    #[Api(optional: true)]
+    public ?bool $defer_loading;
+
+    /** @var list<array<string,mixed>>|null $input_examples */
+    #[Api(list: new MapOf('mixed'), optional: true)]
+    public ?array $input_examples;
+
+    #[Api(optional: true)]
+    public ?bool $strict;
 
     public function __construct()
     {
@@ -44,13 +72,35 @@ final class BetaToolBash20241022 implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
+     * @param list<array<string,mixed>> $input_examples
      */
     public static function with(
-        ?BetaCacheControlEphemeral $cacheControl = null
+        ?array $allowed_callers = null,
+        ?BetaCacheControlEphemeral $cache_control = null,
+        ?bool $defer_loading = null,
+        ?array $input_examples = null,
+        ?bool $strict = null,
     ): self {
         $obj = new self;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $allowed_callers && $obj['allowed_callers'] = $allowed_callers;
+        null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $defer_loading && $obj->defer_loading = $defer_loading;
+        null !== $input_examples && $obj->input_examples = $input_examples;
+        null !== $strict && $obj->strict = $strict;
+
+        return $obj;
+    }
+
+    /**
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
+     */
+    public function withAllowedCallers(array $allowedCallers): self
+    {
+        $obj = clone $this;
+        $obj['allowed_callers'] = $allowedCallers;
 
         return $obj;
     }
@@ -62,7 +112,37 @@ final class BetaToolBash20241022 implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
+
+        return $obj;
+    }
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    public function withDeferLoading(bool $deferLoading): self
+    {
+        $obj = clone $this;
+        $obj->defer_loading = $deferLoading;
+
+        return $obj;
+    }
+
+    /**
+     * @param list<array<string,mixed>> $inputExamples
+     */
+    public function withInputExamples(array $inputExamples): self
+    {
+        $obj = clone $this;
+        $obj->input_examples = $inputExamples;
+
+        return $obj;
+    }
+
+    public function withStrict(bool $strict): self
+    {
+        $obj = clone $this;
+        $obj->strict = $strict;
 
         return $obj;
     }

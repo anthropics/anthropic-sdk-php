@@ -26,20 +26,20 @@ final class Util
     public const JSONL_CONTENT_TYPE = '/^application\/(:?x-(?:n|l)djson)|(:?(?:x-)?jsonl)/';
 
     /**
-     * @return array<string, mixed>
+     * @return array<string,mixed>
      */
-    public static function get_object_vars(object $object1): array
+    public static function get_object_vars(object $object): array
     {
-        return get_object_vars($object1);
+        return get_object_vars($object);
     }
 
     /**
      * @template T
      *
-     * @param array<string, T> $array
-     * @param array<string, string> $map
+     * @param array<string,T> $array
+     * @param array<string,string> $map
      *
-     * @return array<string, T>
+     * @return array<string,T>
      */
     public static function array_transform_keys(array $array, array $map): array
     {
@@ -52,9 +52,9 @@ final class Util
     }
 
     /**
-     * @param array<string, mixed> $arr
+     * @param array<mixed,mixed> $arr
      *
-     * @return array<string, mixed>
+     * @return array<mixed,mixed>
      */
     public static function array_filter_omit(array $arr): array
     {
@@ -106,7 +106,7 @@ final class Util
     }
 
     /**
-     * @param array<string, mixed> $query
+     * @param array<string,mixed> $query
      */
     public static function joinUri(
         UriInterface $base,
@@ -141,7 +141,7 @@ final class Util
     }
 
     /**
-     * @param array<string, string|int|list<string|int>|null> $headers
+     * @param array<string,string|int|list<string|int>|null> $headers
      */
     public static function withSetHeaders(
         RequestInterface $req,
@@ -149,6 +149,7 @@ final class Util
     ): RequestInterface {
         foreach ($headers as $name => $value) {
             if (is_null($value)) {
+                /** @var RequestInterface */
                 $req = $req->withoutHeader($name);
             } else {
                 $value = is_int($value)
@@ -156,6 +157,8 @@ final class Util
                             : (is_array($value)
                             ? array_map(static fn ($v) => (string) $v, array: $value)
                             : $value);
+
+                /** @var RequestInterface */
                 $req = $req->withHeader($name, $value);
             }
         }
@@ -182,8 +185,7 @@ final class Util
     }
 
     /**
-     * @param bool|int|float|string|resource|\Traversable<mixed>|array<string,
-     * mixed,>|null $body
+     * @param bool|int|float|string|resource|\Traversable<mixed,>|array<string,mixed>|null $body
      */
     public static function withSetBody(
         StreamFactoryInterface $factory,
@@ -191,6 +193,7 @@ final class Util
         mixed $body
     ): RequestInterface {
         if ($body instanceof StreamInterface) {
+            // @var RequestInterface
             return $req->withBody($body);
         }
 
@@ -200,6 +203,7 @@ final class Util
                 $encoded = json_encode($body, flags: self::JSON_ENCODE_FLAGS);
                 $stream = $factory->createStream($encoded);
 
+                // @var RequestInterface
                 return $req->withBody($stream);
             }
         }
@@ -209,12 +213,14 @@ final class Util
             $encoded = implode('', iterator_to_array($gen));
             $stream = $factory->createStream($encoded);
 
+            // @var RequestInterface
             return $req->withHeader('Content-Type', "{$contentType}; boundary={$boundary}")->withBody($stream);
         }
 
         if (is_resource($body)) {
             $stream = $factory->createStreamFromResource($body);
 
+            // @var RequestInterface
             return $req->withBody($stream);
         }
 
@@ -409,8 +415,7 @@ final class Util
     }
 
     /**
-     * @param bool|int|float|string|resource|\Traversable<mixed>|array<string,
-     * mixed,>|null $body
+     * @param bool|int|float|string|resource|\Traversable<mixed,>|array<string,mixed>|null $body
      *
      * @return array{string, \Generator<string>}
      */

@@ -11,10 +11,10 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type ToolUseBlockParamShape = array{
  *   id: string,
- *   input: array<string, mixed>,
+ *   input: array<string,mixed>,
  *   name: string,
- *   type: string,
- *   cacheControl?: CacheControlEphemeral|null,
+ *   type: "tool_use",
+ *   cache_control?: CacheControlEphemeral|null,
  * }
  */
 final class ToolUseBlockParam implements BaseModel
@@ -22,13 +22,14 @@ final class ToolUseBlockParam implements BaseModel
     /** @use SdkModel<ToolUseBlockParamShape> */
     use SdkModel;
 
+    /** @var "tool_use" $type */
     #[Api]
     public string $type = 'tool_use';
 
     #[Api]
     public string $id;
 
-    /** @var array<string, mixed> $input */
+    /** @var array<string,mixed> $input */
     #[Api(map: 'mixed')]
     public array $input;
 
@@ -38,8 +39,8 @@ final class ToolUseBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?CacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?CacheControlEphemeral $cache_control;
 
     /**
      * `new ToolUseBlockParam()` is missing required properties by the API.
@@ -65,13 +66,13 @@ final class ToolUseBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, mixed> $input
+     * @param array<string,mixed> $input
      */
     public static function with(
         string $id,
         array $input,
         string $name,
-        ?CacheControlEphemeral $cacheControl = null,
+        ?CacheControlEphemeral $cache_control = null,
     ): self {
         $obj = new self;
 
@@ -79,7 +80,7 @@ final class ToolUseBlockParam implements BaseModel
         $obj->input = $input;
         $obj->name = $name;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
 
         return $obj;
     }
@@ -93,7 +94,7 @@ final class ToolUseBlockParam implements BaseModel
     }
 
     /**
-     * @param array<string, mixed> $input
+     * @param array<string,mixed> $input
      */
     public function withInput(array $input): self
     {
@@ -117,7 +118,7 @@ final class ToolUseBlockParam implements BaseModel
     public function withCacheControl(?CacheControlEphemeral $cacheControl): self
     {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }
