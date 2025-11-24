@@ -229,25 +229,6 @@ final class BetaTool implements BaseModel
     }
 
     /**
-     * @param list<array<string,mixed>> $inputExamples
-     */
-    public function withInputExamples(array $inputExamples): self
-    {
-        $obj = clone $this;
-        $obj->input_examples = $inputExamples;
-
-        return $obj;
-    }
-
-    public function withStrict(bool $strict): self
-    {
-        $obj = clone $this;
-        $obj->strict = $strict;
-
-        return $obj;
-    }
-
-    /**
      * @param Type|value-of<Type>|null $type
      */
     public function withType(Type|string|null $type): self
