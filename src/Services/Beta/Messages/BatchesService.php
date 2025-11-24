@@ -50,6 +50,7 @@ final class BatchesService implements BatchesContract
      *       context_management?: array<mixed>|null,
      *       mcp_servers?: list<array<mixed>>,
      *       metadata?: array<mixed>,
+     *       output_config?: array<mixed>,
      *       output_format?: array<mixed>|null,
      *       service_tier?: "auto"|"standard_only",
      *       stop_sequences?: list<string>,

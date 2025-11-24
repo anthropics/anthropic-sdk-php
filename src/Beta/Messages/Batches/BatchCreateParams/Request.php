@@ -28,7 +28,7 @@ final class Request implements BaseModel
     /**
      * Messages API creation parameters for the individual request.
      *
-     * See the [Messages API reference](/en/api/messages) for full documentation on available parameters.
+     * See the [Messages API reference](https://docs.claude.com/en/api/messages) for full documentation on available parameters.
      */
     #[Api]
     public Params $params;
@@ -83,7 +83,7 @@ final class Request implements BaseModel
     /**
      * Messages API creation parameters for the individual request.
      *
-     * See the [Messages API reference](/en/api/messages) for full documentation on available parameters.
+     * See the [Messages API reference](https://docs.claude.com/en/api/messages) for full documentation on available parameters.
      */
     public function withParams(Params $params): self
     {

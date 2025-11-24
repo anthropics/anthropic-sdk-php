@@ -4,18 +4,23 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaTool\AllowedCaller;
 use Anthropic\Beta\Messages\BetaTool\InputSchema;
 use Anthropic\Beta\Messages\BetaTool\Type;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\MapOf;
 
 /**
  * @phpstan-type BetaToolShape = array{
  *   input_schema: InputSchema,
  *   name: string,
+ *   allowed_callers?: list<value-of<AllowedCaller>>|null,
  *   cache_control?: BetaCacheControlEphemeral|null,
+ *   defer_loading?: bool|null,
  *   description?: string|null,
+ *   input_examples?: list<array<string,mixed>>|null,
  *   strict?: bool|null,
  *   type?: value-of<Type>|null,
  * }
@@ -41,11 +46,21 @@ final class BetaTool implements BaseModel
     #[Api]
     public string $name;
 
+    /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
+    #[Api(list: AllowedCaller::class, optional: true)]
+    public ?array $allowed_callers;
+
     /**
      * Create a cache control breakpoint at this content block.
      */
     #[Api(nullable: true, optional: true)]
     public ?BetaCacheControlEphemeral $cache_control;
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    #[Api(optional: true)]
+    public ?bool $defer_loading;
 
     /**
      * Description of what this tool does.
@@ -54,6 +69,10 @@ final class BetaTool implements BaseModel
      */
     #[Api(optional: true)]
     public ?string $description;
+
+    /** @var list<array<string,mixed>>|null $input_examples */
+    #[Api(list: new MapOf('mixed'), optional: true)]
+    public ?array $input_examples;
 
     #[Api(optional: true)]
     public ?bool $strict;
@@ -86,13 +105,18 @@ final class BetaTool implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
+     * @param list<array<string,mixed>> $input_examples
      * @param Type|value-of<Type>|null $type
      */
     public static function with(
         InputSchema $input_schema,
         string $name,
+        ?array $allowed_callers = null,
         ?BetaCacheControlEphemeral $cache_control = null,
+        ?bool $defer_loading = null,
         ?string $description = null,
+        ?array $input_examples = null,
         ?bool $strict = null,
         Type|string|null $type = null,
     ): self {
@@ -101,8 +125,11 @@ final class BetaTool implements BaseModel
         $obj->input_schema = $input_schema;
         $obj->name = $name;
 
+        null !== $allowed_callers && $obj['allowed_callers'] = $allowed_callers;
         null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $defer_loading && $obj->defer_loading = $defer_loading;
         null !== $description && $obj->description = $description;
+        null !== $input_examples && $obj->input_examples = $input_examples;
         null !== $strict && $obj->strict = $strict;
         null !== $type && $obj['type'] = $type;
 
@@ -136,6 +163,17 @@ final class BetaTool implements BaseModel
     }
 
     /**
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
+     */
+    public function withAllowedCallers(array $allowedCallers): self
+    {
+        $obj = clone $this;
+        $obj['allowed_callers'] = $allowedCallers;
+
+        return $obj;
+    }
+
+    /**
      * Create a cache control breakpoint at this content block.
      */
     public function withCacheControl(
@@ -143,6 +181,17 @@ final class BetaTool implements BaseModel
     ): self {
         $obj = clone $this;
         $obj->cache_control = $cacheControl;
+
+        return $obj;
+    }
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    public function withDeferLoading(bool $deferLoading): self
+    {
+        $obj = clone $this;
+        $obj->defer_loading = $deferLoading;
 
         return $obj;
     }
@@ -156,6 +205,17 @@ final class BetaTool implements BaseModel
     {
         $obj = clone $this;
         $obj->description = $description;
+
+        return $obj;
+    }
+
+    /**
+     * @param list<array<string,mixed>> $inputExamples
+     */
+    public function withInputExamples(array $inputExamples): self
+    {
+        $obj = clone $this;
+        $obj->input_examples = $inputExamples;
 
         return $obj;
     }

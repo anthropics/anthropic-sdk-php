@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaWebFetchTool20250910\AllowedCaller;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -12,10 +13,12 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaWebFetchTool20250910Shape = array{
  *   name: "web_fetch",
  *   type: "web_fetch_20250910",
+ *   allowed_callers?: list<value-of<AllowedCaller>>|null,
  *   allowed_domains?: list<string>|null,
  *   blocked_domains?: list<string>|null,
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   citations?: BetaCitationsConfigParam|null,
+ *   defer_loading?: bool|null,
  *   max_content_tokens?: int|null,
  *   max_uses?: int|null,
  *   strict?: bool|null,
@@ -39,6 +42,10 @@ final class BetaWebFetchTool20250910 implements BaseModel
     /** @var "web_fetch_20250910" $type */
     #[Api]
     public string $type = 'web_fetch_20250910';
+
+    /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
+    #[Api(list: AllowedCaller::class, optional: true)]
+    public ?array $allowed_callers;
 
     /**
      * List of domains to allow fetching from.
@@ -69,6 +76,12 @@ final class BetaWebFetchTool20250910 implements BaseModel
     public ?BetaCitationsConfigParam $citations;
 
     /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    #[Api(optional: true)]
+    public ?bool $defer_loading;
+
+    /**
      * Maximum number of tokens used by including web page text content in the context. The limit is approximate and does not apply to binary content such as PDFs.
      */
     #[Api(nullable: true, optional: true)]
@@ -93,27 +106,43 @@ final class BetaWebFetchTool20250910 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
      * @param list<string>|null $allowed_domains
      * @param list<string>|null $blocked_domains
      */
     public static function with(
+        ?array $allowed_callers = null,
         ?array $allowed_domains = null,
         ?array $blocked_domains = null,
         ?BetaCacheControlEphemeral $cache_control = null,
         ?BetaCitationsConfigParam $citations = null,
+        ?bool $defer_loading = null,
         ?int $max_content_tokens = null,
         ?int $max_uses = null,
         ?bool $strict = null,
     ): self {
         $obj = new self;
 
+        null !== $allowed_callers && $obj['allowed_callers'] = $allowed_callers;
         null !== $allowed_domains && $obj->allowed_domains = $allowed_domains;
         null !== $blocked_domains && $obj->blocked_domains = $blocked_domains;
         null !== $cache_control && $obj->cache_control = $cache_control;
         null !== $citations && $obj->citations = $citations;
+        null !== $defer_loading && $obj->defer_loading = $defer_loading;
         null !== $max_content_tokens && $obj->max_content_tokens = $max_content_tokens;
         null !== $max_uses && $obj->max_uses = $max_uses;
         null !== $strict && $obj->strict = $strict;
+
+        return $obj;
+    }
+
+    /**
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
+     */
+    public function withAllowedCallers(array $allowedCallers): self
+    {
+        $obj = clone $this;
+        $obj['allowed_callers'] = $allowedCallers;
 
         return $obj;
     }
@@ -163,6 +192,17 @@ final class BetaWebFetchTool20250910 implements BaseModel
     {
         $obj = clone $this;
         $obj->citations = $citations;
+
+        return $obj;
+    }
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    public function withDeferLoading(bool $deferLoading): self
+    {
+        $obj = clone $this;
+        $obj->defer_loading = $deferLoading;
 
         return $obj;
     }

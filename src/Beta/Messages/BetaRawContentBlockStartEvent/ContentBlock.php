@@ -14,6 +14,7 @@ use Anthropic\Beta\Messages\BetaServerToolUseBlock;
 use Anthropic\Beta\Messages\BetaTextBlock;
 use Anthropic\Beta\Messages\BetaTextEditorCodeExecutionToolResultBlock;
 use Anthropic\Beta\Messages\BetaThinkingBlock;
+use Anthropic\Beta\Messages\BetaToolSearchToolResultBlock;
 use Anthropic\Beta\Messages\BetaToolUseBlock;
 use Anthropic\Beta\Messages\BetaWebFetchToolResultBlock;
 use Anthropic\Beta\Messages\BetaWebSearchToolResultBlock;
@@ -49,6 +50,7 @@ final class ContentBlock implements ConverterSource
             'code_execution_tool_result' => BetaCodeExecutionToolResultBlock::class,
             'bash_code_execution_tool_result' => BetaBashCodeExecutionToolResultBlock::class,
             'text_editor_code_execution_tool_result' => BetaTextEditorCodeExecutionToolResultBlock::class,
+            'tool_search_tool_result' => BetaToolSearchToolResultBlock::class,
             'mcp_tool_use' => BetaMCPToolUseBlock::class,
             'mcp_tool_result' => BetaMCPToolResultBlock::class,
             'container_upload' => BetaContainerUploadBlock::class,

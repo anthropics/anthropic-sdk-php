@@ -27,11 +27,12 @@ use Anthropic\Messages\Model;
  *   model: string|Model,
  *   context_management?: BetaContextManagementConfig|null,
  *   mcp_servers?: list<BetaRequestMCPServerURLDefinition>,
+ *   output_config?: BetaOutputConfig,
  *   output_format?: BetaJSONOutputFormat|null,
  *   system?: string|list<BetaTextBlockParam>,
  *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
  *   tool_choice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
- *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910>,
+ *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset>,
  *   betas?: list<string|AnthropicBeta>,
  * }
  */
@@ -119,6 +120,12 @@ final class MessageCountTokensParams implements BaseModel
      */
     #[Api(list: BetaRequestMCPServerURLDefinition::class, optional: true)]
     public ?array $mcp_servers;
+
+    /**
+     * Configuration options for the model's output. Controls aspects like how much effort the model puts into its response.
+     */
+    #[Api(optional: true)]
+    public ?BetaOutputConfig $output_config;
 
     /**
      * A schema to specify Claude's output format in responses.
@@ -215,7 +222,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * See our [guide](https://docs.claude.com/en/docs/tool-use) for more details.
      *
-     * @var list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910>|null $tools
+     * @var list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset>|null $tools
      */
     #[Api(list: Tool::class, optional: true)]
     public ?array $tools;
@@ -255,7 +262,7 @@ final class MessageCountTokensParams implements BaseModel
      * @param list<BetaMessageParam> $messages
      * @param list<BetaRequestMCPServerURLDefinition> $mcp_servers
      * @param string|list<BetaTextBlockParam> $system
-     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910> $tools
+     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset> $tools
      * @param list<string|AnthropicBeta> $betas
      */
     public static function with(
@@ -263,6 +270,7 @@ final class MessageCountTokensParams implements BaseModel
         string|Model $model,
         ?BetaContextManagementConfig $context_management = null,
         ?array $mcp_servers = null,
+        ?BetaOutputConfig $output_config = null,
         ?BetaJSONOutputFormat $output_format = null,
         string|array|null $system = null,
         BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null $thinking = null,
@@ -277,6 +285,7 @@ final class MessageCountTokensParams implements BaseModel
 
         null !== $context_management && $obj->context_management = $context_management;
         null !== $mcp_servers && $obj->mcp_servers = $mcp_servers;
+        null !== $output_config && $obj->output_config = $output_config;
         null !== $output_format && $obj->output_format = $output_format;
         null !== $system && $obj->system = $system;
         null !== $thinking && $obj->thinking = $thinking;
@@ -381,6 +390,17 @@ final class MessageCountTokensParams implements BaseModel
     {
         $obj = clone $this;
         $obj->mcp_servers = $mcpServers;
+
+        return $obj;
+    }
+
+    /**
+     * Configuration options for the model's output. Controls aspects like how much effort the model puts into its response.
+     */
+    public function withOutputConfig(BetaOutputConfig $outputConfig): self
+    {
+        $obj = clone $this;
+        $obj->output_config = $outputConfig;
 
         return $obj;
     }
@@ -502,7 +522,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * See our [guide](https://docs.claude.com/en/docs/tool-use) for more details.
      *
-     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910> $tools
+     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset> $tools
      */
     public function withTools(array $tools): self
     {

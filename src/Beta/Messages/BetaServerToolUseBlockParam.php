@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaServerToolUseBlockParam\Caller;
 use Anthropic\Beta\Messages\BetaServerToolUseBlockParam\Name;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
@@ -16,6 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   name: value-of<Name>,
  *   type: "server_tool_use",
  *   cache_control?: BetaCacheControlEphemeral|null,
+ *   caller?: null|BetaDirectCaller|BetaServerToolCaller,
  * }
  */
 final class BetaServerToolUseBlockParam implements BaseModel
@@ -43,6 +45,12 @@ final class BetaServerToolUseBlockParam implements BaseModel
      */
     #[Api(nullable: true, optional: true)]
     public ?BetaCacheControlEphemeral $cache_control;
+
+    /**
+     * Tool invocation directly from the model.
+     */
+    #[Api(union: Caller::class, optional: true)]
+    public BetaDirectCaller|BetaServerToolCaller|null $caller;
 
     /**
      * `new BetaServerToolUseBlockParam()` is missing required properties by the API.
@@ -76,6 +84,7 @@ final class BetaServerToolUseBlockParam implements BaseModel
         array $input,
         Name|string $name,
         ?BetaCacheControlEphemeral $cache_control = null,
+        BetaDirectCaller|BetaServerToolCaller|null $caller = null,
     ): self {
         $obj = new self;
 
@@ -84,6 +93,7 @@ final class BetaServerToolUseBlockParam implements BaseModel
         $obj['name'] = $name;
 
         null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $caller && $obj->caller = $caller;
 
         return $obj;
     }
@@ -126,6 +136,18 @@ final class BetaServerToolUseBlockParam implements BaseModel
     ): self {
         $obj = clone $this;
         $obj->cache_control = $cacheControl;
+
+        return $obj;
+    }
+
+    /**
+     * Tool invocation directly from the model.
+     */
+    public function withCaller(
+        BetaDirectCaller|BetaServerToolCaller $caller
+    ): self {
+        $obj = clone $this;
+        $obj->caller = $caller;
 
         return $obj;
     }

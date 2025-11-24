@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaServerToolUseBlock\Caller;
 use Anthropic\Beta\Messages\BetaServerToolUseBlock\Name;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
@@ -12,6 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaServerToolUseBlockShape = array{
  *   id: string,
+ *   caller: BetaDirectCaller|BetaServerToolCaller,
  *   input: array<string,mixed>,
  *   name: value-of<Name>,
  *   type: "server_tool_use",
@@ -29,6 +31,12 @@ final class BetaServerToolUseBlock implements BaseModel
     #[Api]
     public string $id;
 
+    /**
+     * Tool invocation directly from the model.
+     */
+    #[Api(union: Caller::class)]
+    public BetaDirectCaller|BetaServerToolCaller $caller;
+
     /** @var array<string,mixed> $input */
     #[Api(map: 'mixed')]
     public array $input;
@@ -42,13 +50,17 @@ final class BetaServerToolUseBlock implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaServerToolUseBlock::with(id: ..., input: ..., name: ...)
+     * BetaServerToolUseBlock::with(id: ..., caller: ..., input: ..., name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaServerToolUseBlock)->withID(...)->withInput(...)->withName(...)
+     * (new BetaServerToolUseBlock)
+     *   ->withID(...)
+     *   ->withCaller(...)
+     *   ->withInput(...)
+     *   ->withName(...)
      * ```
      */
     public function __construct()
@@ -67,11 +79,13 @@ final class BetaServerToolUseBlock implements BaseModel
     public static function with(
         string $id,
         array $input,
-        Name|string $name
+        Name|string $name,
+        BetaDirectCaller|BetaServerToolCaller $caller = ['type' => 'direct'],
     ): self {
         $obj = new self;
 
         $obj->id = $id;
+        $obj->caller = $caller;
         $obj->input = $input;
         $obj['name'] = $name;
 
@@ -82,6 +96,18 @@ final class BetaServerToolUseBlock implements BaseModel
     {
         $obj = clone $this;
         $obj->id = $id;
+
+        return $obj;
+    }
+
+    /**
+     * Tool invocation directly from the model.
+     */
+    public function withCaller(
+        BetaDirectCaller|BetaServerToolCaller $caller
+    ): self {
+        $obj = clone $this;
+        $obj->caller = $caller;
 
         return $obj;
     }

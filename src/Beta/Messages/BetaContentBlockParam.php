@@ -40,6 +40,7 @@ final class BetaContentBlockParam implements ConverterSource
             'code_execution_tool_result' => BetaCodeExecutionToolResultBlockParam::class,
             'bash_code_execution_tool_result' => BetaBashCodeExecutionToolResultBlockParam::class,
             'text_editor_code_execution_tool_result' => BetaTextEditorCodeExecutionToolResultBlockParam::class,
+            'tool_search_tool_result' => BetaToolSearchToolResultBlockParam::class,
             'mcp_tool_use' => BetaMCPToolUseBlockParam::class,
             'mcp_tool_result' => BetaRequestMCPToolResultBlockParam::class,
             'container_upload' => BetaContainerUploadBlockParam::class,

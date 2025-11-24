@@ -4,15 +4,20 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaToolTextEditor20250728\AllowedCaller;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\MapOf;
 
 /**
  * @phpstan-type BetaToolTextEditor20250728Shape = array{
  *   name: "str_replace_based_edit_tool",
  *   type: "text_editor_20250728",
+ *   allowed_callers?: list<value-of<AllowedCaller>>|null,
  *   cache_control?: BetaCacheControlEphemeral|null,
+ *   defer_loading?: bool|null,
+ *   input_examples?: list<array<string,mixed>>|null,
  *   max_characters?: int|null,
  *   strict?: bool|null,
  * }
@@ -36,11 +41,25 @@ final class BetaToolTextEditor20250728 implements BaseModel
     #[Api]
     public string $type = 'text_editor_20250728';
 
+    /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
+    #[Api(list: AllowedCaller::class, optional: true)]
+    public ?array $allowed_callers;
+
     /**
      * Create a cache control breakpoint at this content block.
      */
     #[Api(nullable: true, optional: true)]
     public ?BetaCacheControlEphemeral $cache_control;
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    #[Api(optional: true)]
+    public ?bool $defer_loading;
+
+    /** @var list<array<string,mixed>>|null $input_examples */
+    #[Api(list: new MapOf('mixed'), optional: true)]
+    public ?array $input_examples;
 
     /**
      * Maximum number of characters to display when viewing a file. If not specified, defaults to displaying the full file.
@@ -60,17 +79,37 @@ final class BetaToolTextEditor20250728 implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
+     * @param list<array<string,mixed>> $input_examples
      */
     public static function with(
+        ?array $allowed_callers = null,
         ?BetaCacheControlEphemeral $cache_control = null,
+        ?bool $defer_loading = null,
+        ?array $input_examples = null,
         ?int $max_characters = null,
         ?bool $strict = null,
     ): self {
         $obj = new self;
 
+        null !== $allowed_callers && $obj['allowed_callers'] = $allowed_callers;
         null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $defer_loading && $obj->defer_loading = $defer_loading;
+        null !== $input_examples && $obj->input_examples = $input_examples;
         null !== $max_characters && $obj->max_characters = $max_characters;
         null !== $strict && $obj->strict = $strict;
+
+        return $obj;
+    }
+
+    /**
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
+     */
+    public function withAllowedCallers(array $allowedCallers): self
+    {
+        $obj = clone $this;
+        $obj['allowed_callers'] = $allowedCallers;
 
         return $obj;
     }
@@ -83,6 +122,28 @@ final class BetaToolTextEditor20250728 implements BaseModel
     ): self {
         $obj = clone $this;
         $obj->cache_control = $cacheControl;
+
+        return $obj;
+    }
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    public function withDeferLoading(bool $deferLoading): self
+    {
+        $obj = clone $this;
+        $obj->defer_loading = $deferLoading;
+
+        return $obj;
+    }
+
+    /**
+     * @param list<array<string,mixed>> $inputExamples
+     */
+    public function withInputExamples(array $inputExamples): self
+    {
+        $obj = clone $this;
+        $obj->input_examples = $inputExamples;
 
         return $obj;
     }

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaToolComputerUse20250124\AllowedCaller;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\MapOf;
 
 /**
  * @phpstan-type BetaToolComputerUse20250124Shape = array{
@@ -14,8 +16,11 @@ use Anthropic\Core\Contracts\BaseModel;
  *   display_width_px: int,
  *   name: "computer",
  *   type: "computer_20250124",
+ *   allowed_callers?: list<value-of<AllowedCaller>>|null,
  *   cache_control?: BetaCacheControlEphemeral|null,
+ *   defer_loading?: bool|null,
  *   display_number?: int|null,
+ *   input_examples?: list<array<string,mixed>>|null,
  *   strict?: bool|null,
  * }
  */
@@ -50,6 +55,10 @@ final class BetaToolComputerUse20250124 implements BaseModel
     #[Api]
     public int $display_width_px;
 
+    /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
+    #[Api(list: AllowedCaller::class, optional: true)]
+    public ?array $allowed_callers;
+
     /**
      * Create a cache control breakpoint at this content block.
      */
@@ -57,10 +66,20 @@ final class BetaToolComputerUse20250124 implements BaseModel
     public ?BetaCacheControlEphemeral $cache_control;
 
     /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    #[Api(optional: true)]
+    public ?bool $defer_loading;
+
+    /**
      * The X11 display number (e.g. 0, 1) for the display.
      */
     #[Api(nullable: true, optional: true)]
     public ?int $display_number;
+
+    /** @var list<array<string,mixed>>|null $input_examples */
+    #[Api(list: new MapOf('mixed'), optional: true)]
+    public ?array $input_examples;
 
     #[Api(optional: true)]
     public ?bool $strict;
@@ -90,12 +109,18 @@ final class BetaToolComputerUse20250124 implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
+     * @param list<array<string,mixed>> $input_examples
      */
     public static function with(
         int $display_height_px,
         int $display_width_px,
+        ?array $allowed_callers = null,
         ?BetaCacheControlEphemeral $cache_control = null,
+        ?bool $defer_loading = null,
         ?int $display_number = null,
+        ?array $input_examples = null,
         ?bool $strict = null,
     ): self {
         $obj = new self;
@@ -103,8 +128,11 @@ final class BetaToolComputerUse20250124 implements BaseModel
         $obj->display_height_px = $display_height_px;
         $obj->display_width_px = $display_width_px;
 
+        null !== $allowed_callers && $obj['allowed_callers'] = $allowed_callers;
         null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $defer_loading && $obj->defer_loading = $defer_loading;
         null !== $display_number && $obj->display_number = $display_number;
+        null !== $input_examples && $obj->input_examples = $input_examples;
         null !== $strict && $obj->strict = $strict;
 
         return $obj;
@@ -133,6 +161,17 @@ final class BetaToolComputerUse20250124 implements BaseModel
     }
 
     /**
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
+     */
+    public function withAllowedCallers(array $allowedCallers): self
+    {
+        $obj = clone $this;
+        $obj['allowed_callers'] = $allowedCallers;
+
+        return $obj;
+    }
+
+    /**
      * Create a cache control breakpoint at this content block.
      */
     public function withCacheControl(
@@ -145,12 +184,34 @@ final class BetaToolComputerUse20250124 implements BaseModel
     }
 
     /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    public function withDeferLoading(bool $deferLoading): self
+    {
+        $obj = clone $this;
+        $obj->defer_loading = $deferLoading;
+
+        return $obj;
+    }
+
+    /**
      * The X11 display number (e.g. 0, 1) for the display.
      */
     public function withDisplayNumber(?int $displayNumber): self
     {
         $obj = clone $this;
         $obj->display_number = $displayNumber;
+
+        return $obj;
+    }
+
+    /**
+     * @param list<array<string,mixed>> $inputExamples
+     */
+    public function withInputExamples(array $inputExamples): self
+    {
+        $obj = clone $this;
+        $obj->input_examples = $inputExamples;
 
         return $obj;
     }

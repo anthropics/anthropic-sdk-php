@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaCodeExecutionTool20250522\AllowedCaller;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -12,7 +13,9 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaCodeExecutionTool20250522Shape = array{
  *   name: "code_execution",
  *   type: "code_execution_20250522",
+ *   allowed_callers?: list<value-of<AllowedCaller>>|null,
  *   cache_control?: BetaCacheControlEphemeral|null,
+ *   defer_loading?: bool|null,
  *   strict?: bool|null,
  * }
  */
@@ -35,11 +38,21 @@ final class BetaCodeExecutionTool20250522 implements BaseModel
     #[Api]
     public string $type = 'code_execution_20250522';
 
+    /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
+    #[Api(list: AllowedCaller::class, optional: true)]
+    public ?array $allowed_callers;
+
     /**
      * Create a cache control breakpoint at this content block.
      */
     #[Api(nullable: true, optional: true)]
     public ?BetaCacheControlEphemeral $cache_control;
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    #[Api(optional: true)]
+    public ?bool $defer_loading;
 
     #[Api(optional: true)]
     public ?bool $strict;
@@ -53,15 +66,32 @@ final class BetaCodeExecutionTool20250522 implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
      */
     public static function with(
+        ?array $allowed_callers = null,
         ?BetaCacheControlEphemeral $cache_control = null,
-        ?bool $strict = null
+        ?bool $defer_loading = null,
+        ?bool $strict = null,
     ): self {
         $obj = new self;
 
+        null !== $allowed_callers && $obj['allowed_callers'] = $allowed_callers;
         null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $defer_loading && $obj->defer_loading = $defer_loading;
         null !== $strict && $obj->strict = $strict;
+
+        return $obj;
+    }
+
+    /**
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
+     */
+    public function withAllowedCallers(array $allowedCallers): self
+    {
+        $obj = clone $this;
+        $obj['allowed_callers'] = $allowedCallers;
 
         return $obj;
     }
@@ -74,6 +104,17 @@ final class BetaCodeExecutionTool20250522 implements BaseModel
     ): self {
         $obj = clone $this;
         $obj->cache_control = $cacheControl;
+
+        return $obj;
+    }
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    public function withDeferLoading(bool $deferLoading): self
+    {
+        $obj = clone $this;
+        $obj->defer_loading = $deferLoading;
 
         return $obj;
     }

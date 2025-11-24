@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaToolUseBlock\Caller;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaToolUseBlockShape = array{
- *   id: string, input: array<string,mixed>, name: string, type: "tool_use"
+ *   id: string,
+ *   input: array<string,mixed>,
+ *   name: string,
+ *   type: "tool_use",
+ *   caller?: null|BetaDirectCaller|BetaServerToolCaller,
  * }
  */
 final class BetaToolUseBlock implements BaseModel
@@ -31,6 +36,12 @@ final class BetaToolUseBlock implements BaseModel
 
     #[Api]
     public string $name;
+
+    /**
+     * Tool invocation directly from the model.
+     */
+    #[Api(union: Caller::class, optional: true)]
+    public BetaDirectCaller|BetaServerToolCaller|null $caller;
 
     /**
      * `new BetaToolUseBlock()` is missing required properties by the API.
@@ -58,13 +69,19 @@ final class BetaToolUseBlock implements BaseModel
      *
      * @param array<string,mixed> $input
      */
-    public static function with(string $id, array $input, string $name): self
-    {
+    public static function with(
+        string $id,
+        array $input,
+        string $name,
+        BetaDirectCaller|BetaServerToolCaller|null $caller = null,
+    ): self {
         $obj = new self;
 
         $obj->id = $id;
         $obj->input = $input;
         $obj->name = $name;
+
+        null !== $caller && $obj->caller = $caller;
 
         return $obj;
     }
@@ -92,6 +109,18 @@ final class BetaToolUseBlock implements BaseModel
     {
         $obj = clone $this;
         $obj->name = $name;
+
+        return $obj;
+    }
+
+    /**
+     * Tool invocation directly from the model.
+     */
+    public function withCaller(
+        BetaDirectCaller|BetaServerToolCaller $caller
+    ): self {
+        $obj = clone $this;
+        $obj->caller = $caller;
 
         return $obj;
     }

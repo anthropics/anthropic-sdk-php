@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   tool_use_id: string,
  *   type: "tool_result",
  *   cache_control?: BetaCacheControlEphemeral|null,
- *   content?: string|null|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock>,
+ *   content?: string|null|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock|BetaToolReferenceBlockParam>,
  *   is_error?: bool|null,
  * }
  */
@@ -37,7 +37,7 @@ final class BetaToolResultBlockParam implements BaseModel
     public ?BetaCacheControlEphemeral $cache_control;
 
     /**
-     * @var string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock>|null $content
+     * @var string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock|BetaToolReferenceBlockParam>|null $content
      */
     #[Api(union: Content::class, optional: true)]
     public string|array|null $content;
@@ -69,7 +69,7 @@ final class BetaToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock> $content
+     * @param string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock|BetaToolReferenceBlockParam> $content
      */
     public static function with(
         string $tool_use_id,
@@ -109,7 +109,7 @@ final class BetaToolResultBlockParam implements BaseModel
     }
 
     /**
-     * @param string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock> $content
+     * @param string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock|BetaToolReferenceBlockParam> $content
      */
     public function withContent(string|array $content): self
     {

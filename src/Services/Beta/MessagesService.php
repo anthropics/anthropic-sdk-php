@@ -69,6 +69,7 @@ final class MessagesService implements MessagesContract
      *     }|null,
      *   }>,
      *   metadata?: array{user_id?: string|null},
+     *   output_config?: array{effort?: "low"|"medium"|"high"|null},
      *   output_format?: array{schema: array<string,mixed>, type: "json_schema"}|null,
      *   service_tier?: "auto"|"standard_only",
      *   stop_sequences?: list<string>,
@@ -136,6 +137,7 @@ final class MessagesService implements MessagesContract
      *     }|null,
      *   }>,
      *   metadata?: array{user_id?: string|null},
+     *   output_config?: array{effort?: "low"|"medium"|"high"|null},
      *   output_format?: array{schema: array<string,mixed>, type: "json_schema"}|null,
      *   service_tier?: "auto"|"standard_only",
      *   stop_sequences?: list<string>,
@@ -211,6 +213,7 @@ final class MessagesService implements MessagesContract
      *       allowed_tools?: list<string>|null, enabled?: bool|null
      *     }|null,
      *   }>,
+     *   output_config?: array{effort?: "low"|"medium"|"high"|null},
      *   output_format?: array{schema: array<string,mixed>, type: "json_schema"}|null,
      *   system?: string|list<array{
      *     text: string,
