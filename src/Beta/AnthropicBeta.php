@@ -26,6 +26,8 @@ enum AnthropicBeta: string
 
     case MCP_CLIENT_2025_04_04 = 'mcp-client-2025-04-04';
 
+    case MCP_CLIENT_2025_11_20 = 'mcp-client-2025-11-20';
+
     case DEV_FULL_THINKING_2025_05_14 = 'dev-full-thinking-2025-05-14';
 
     case INTERLEAVED_THINKING_2025_05_14 = 'interleaved-thinking-2025-05-14';

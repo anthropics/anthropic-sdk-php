@@ -15,10 +15,10 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  *   id: string,
  *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
  *   model: string|value-of<Model>,
- *   role: string,
- *   stopReason: value-of<StopReason>|null,
- *   stopSequence: string|null,
- *   type: string,
+ *   role: "assistant",
+ *   stop_reason: value-of<StopReason>|null,
+ *   stop_sequence: string|null,
+ *   type: "message",
  *   usage: Usage,
  * }
  */
@@ -33,6 +33,8 @@ final class Message implements BaseModel, ResponseConverter
      * Conversational role of the generated message.
      *
      * This will always be `"assistant"`.
+     *
+     * @var "assistant" $role
      */
     #[Api]
     public string $role = 'assistant';
@@ -41,6 +43,8 @@ final class Message implements BaseModel, ResponseConverter
      * Object type.
      *
      * For Messages, this is always `"message"`.
+     *
+     * @var "message" $type
      */
     #[Api]
     public string $type = 'message';
@@ -106,18 +110,18 @@ final class Message implements BaseModel, ResponseConverter
      *
      * In non-streaming mode this value is always non-null. In streaming mode, it is null in the `message_start` event and non-null otherwise.
      *
-     * @var value-of<StopReason>|null $stopReason
+     * @var value-of<StopReason>|null $stop_reason
      */
-    #[Api('stop_reason', enum: StopReason::class)]
-    public ?string $stopReason;
+    #[Api(enum: StopReason::class)]
+    public ?string $stop_reason;
 
     /**
      * Which custom stop sequence was generated, if any.
      *
      * This value will be a non-null string if one of your custom stop sequences was generated.
      */
-    #[Api('stop_sequence')]
-    public ?string $stopSequence;
+    #[Api]
+    public ?string $stop_sequence;
 
     /**
      * Billing and rate-limit usage.
@@ -142,8 +146,8 @@ final class Message implements BaseModel, ResponseConverter
      *   id: ...,
      *   content: ...,
      *   model: ...,
-     *   stopReason: ...,
-     *   stopSequence: ...,
+     *   stop_reason: ...,
+     *   stop_sequence: ...,
      *   usage: ...,
      * )
      * ```
@@ -171,14 +175,14 @@ final class Message implements BaseModel, ResponseConverter
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock> $content
-     * @param StopReason|value-of<StopReason>|null $stopReason
+     * @param StopReason|value-of<StopReason>|null $stop_reason
      */
     public static function with(
         string $id,
         array $content,
         string|Model $model,
-        StopReason|string|null $stopReason,
-        ?string $stopSequence,
+        StopReason|string|null $stop_reason,
+        ?string $stop_sequence,
         Usage $usage,
     ): self {
         $obj = new self;
@@ -186,8 +190,8 @@ final class Message implements BaseModel, ResponseConverter
         $obj->id = $id;
         $obj->content = $content;
         $obj->model = $model instanceof Model ? $model->value : $model;
-        $obj['stopReason'] = $stopReason;
-        $obj->stopSequence = $stopSequence;
+        $obj['stop_reason'] = $stop_reason;
+        $obj->stop_sequence = $stop_sequence;
         $obj->usage = $usage;
 
         return $obj;
@@ -272,7 +276,7 @@ final class Message implements BaseModel, ResponseConverter
     public function withStopReason(StopReason|string|null $stopReason): self
     {
         $obj = clone $this;
-        $obj['stopReason'] = $stopReason;
+        $obj['stop_reason'] = $stopReason;
 
         return $obj;
     }
@@ -285,7 +289,7 @@ final class Message implements BaseModel, ResponseConverter
     public function withStopSequence(?string $stopSequence): self
     {
         $obj = clone $this;
-        $obj->stopSequence = $stopSequence;
+        $obj->stop_sequence = $stopSequence;
 
         return $obj;
     }

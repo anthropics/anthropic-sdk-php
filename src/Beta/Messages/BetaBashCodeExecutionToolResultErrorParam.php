@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaBashCodeExecutionToolResultErrorParamShape = array{
- *   errorCode: value-of<ErrorCode>, type: string
+ *   error_code: value-of<ErrorCode>, type: "bash_code_execution_tool_result_error"
  * }
  */
 final class BetaBashCodeExecutionToolResultErrorParam implements BaseModel
@@ -19,19 +19,20 @@ final class BetaBashCodeExecutionToolResultErrorParam implements BaseModel
     /** @use SdkModel<BetaBashCodeExecutionToolResultErrorParamShape> */
     use SdkModel;
 
+    /** @var "bash_code_execution_tool_result_error" $type */
     #[Api]
     public string $type = 'bash_code_execution_tool_result_error';
 
-    /** @var value-of<ErrorCode> $errorCode */
-    #[Api('error_code', enum: ErrorCode::class)]
-    public string $errorCode;
+    /** @var value-of<ErrorCode> $error_code */
+    #[Api(enum: ErrorCode::class)]
+    public string $error_code;
 
     /**
      * `new BetaBashCodeExecutionToolResultErrorParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaBashCodeExecutionToolResultErrorParam::with(errorCode: ...)
+     * BetaBashCodeExecutionToolResultErrorParam::with(error_code: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -50,13 +51,13 @@ final class BetaBashCodeExecutionToolResultErrorParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ErrorCode|value-of<ErrorCode> $errorCode
+     * @param ErrorCode|value-of<ErrorCode> $error_code
      */
-    public static function with(ErrorCode|string $errorCode): self
+    public static function with(ErrorCode|string $error_code): self
     {
         $obj = new self;
 
-        $obj['errorCode'] = $errorCode;
+        $obj['error_code'] = $error_code;
 
         return $obj;
     }
@@ -67,7 +68,7 @@ final class BetaBashCodeExecutionToolResultErrorParam implements BaseModel
     public function withErrorCode(ErrorCode|string $errorCode): self
     {
         $obj = clone $this;
-        $obj['errorCode'] = $errorCode;
+        $obj['error_code'] = $errorCode;
 
         return $obj;
     }

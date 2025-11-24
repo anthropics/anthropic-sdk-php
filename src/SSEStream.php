@@ -16,12 +16,10 @@ use Anthropic\Core\Util;
 final class SSEStream implements BaseStream
 {
     /**
-     * @use SdkStream<
-     *   array{
-     *     event?: string|null, data?: string|null, id?: string|null, retry?: int|null
-     *   },
-     *   TItem,
-     * >
+     * @use SdkStream<array{
+     *   event?: string|null, data?: string|null, id?: string|null, retry?: int|null
+     * },
+     * TItem,>
      */
     use SdkStream;
 

@@ -9,13 +9,16 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaOverloadedErrorShape = array{message: string, type: string}
+ * @phpstan-type BetaOverloadedErrorShape = array{
+ *   message: string, type: "overloaded_error"
+ * }
  */
 final class BetaOverloadedError implements BaseModel
 {
     /** @use SdkModel<BetaOverloadedErrorShape> */
     use SdkModel;
 
+    /** @var "overloaded_error" $type */
     #[Api]
     public string $type = 'overloaded_error';
 

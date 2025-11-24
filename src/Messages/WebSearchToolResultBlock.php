@@ -11,8 +11,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type WebSearchToolResultBlockShape = array{
  *   content: WebSearchToolResultError|list<WebSearchResultBlock>,
- *   toolUseID: string,
- *   type: string,
+ *   tool_use_id: string,
+ *   type: "web_search_tool_result",
  * }
  */
 final class WebSearchToolResultBlock implements BaseModel
@@ -20,6 +20,7 @@ final class WebSearchToolResultBlock implements BaseModel
     /** @use SdkModel<WebSearchToolResultBlockShape> */
     use SdkModel;
 
+    /** @var "web_search_tool_result" $type */
     #[Api]
     public string $type = 'web_search_tool_result';
 
@@ -27,15 +28,15 @@ final class WebSearchToolResultBlock implements BaseModel
     #[Api(union: WebSearchToolResultBlockContent::class)]
     public WebSearchToolResultError|array $content;
 
-    #[Api('tool_use_id')]
-    public string $toolUseID;
+    #[Api]
+    public string $tool_use_id;
 
     /**
      * `new WebSearchToolResultBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * WebSearchToolResultBlock::with(content: ..., toolUseID: ...)
+     * WebSearchToolResultBlock::with(content: ..., tool_use_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -58,12 +59,12 @@ final class WebSearchToolResultBlock implements BaseModel
      */
     public static function with(
         WebSearchToolResultError|array $content,
-        string $toolUseID
+        string $tool_use_id
     ): self {
         $obj = new self;
 
         $obj->content = $content;
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $tool_use_id;
 
         return $obj;
     }
@@ -82,7 +83,7 @@ final class WebSearchToolResultBlock implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $toolUseID;
 
         return $obj;
     }

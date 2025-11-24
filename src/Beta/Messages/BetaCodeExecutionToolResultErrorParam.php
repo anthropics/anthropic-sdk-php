@@ -10,7 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCodeExecutionToolResultErrorParamShape = array{
- *   errorCode: value-of<BetaCodeExecutionToolResultErrorCode>, type: string
+ *   error_code: value-of<BetaCodeExecutionToolResultErrorCode>,
+ *   type: "code_execution_tool_result_error",
  * }
  */
 final class BetaCodeExecutionToolResultErrorParam implements BaseModel
@@ -18,19 +19,20 @@ final class BetaCodeExecutionToolResultErrorParam implements BaseModel
     /** @use SdkModel<BetaCodeExecutionToolResultErrorParamShape> */
     use SdkModel;
 
+    /** @var "code_execution_tool_result_error" $type */
     #[Api]
     public string $type = 'code_execution_tool_result_error';
 
-    /** @var value-of<BetaCodeExecutionToolResultErrorCode> $errorCode */
-    #[Api('error_code', enum: BetaCodeExecutionToolResultErrorCode::class)]
-    public string $errorCode;
+    /** @var value-of<BetaCodeExecutionToolResultErrorCode> $error_code */
+    #[Api(enum: BetaCodeExecutionToolResultErrorCode::class)]
+    public string $error_code;
 
     /**
      * `new BetaCodeExecutionToolResultErrorParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaCodeExecutionToolResultErrorParam::with(errorCode: ...)
+     * BetaCodeExecutionToolResultErrorParam::with(error_code: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -49,14 +51,14 @@ final class BetaCodeExecutionToolResultErrorParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaCodeExecutionToolResultErrorCode|value-of<BetaCodeExecutionToolResultErrorCode> $errorCode
+     * @param BetaCodeExecutionToolResultErrorCode|value-of<BetaCodeExecutionToolResultErrorCode> $error_code
      */
     public static function with(
-        BetaCodeExecutionToolResultErrorCode|string $errorCode
+        BetaCodeExecutionToolResultErrorCode|string $error_code
     ): self {
         $obj = new self;
 
-        $obj['errorCode'] = $errorCode;
+        $obj['error_code'] = $error_code;
 
         return $obj;
     }
@@ -68,7 +70,7 @@ final class BetaCodeExecutionToolResultErrorParam implements BaseModel
         BetaCodeExecutionToolResultErrorCode|string $errorCode
     ): self {
         $obj = clone $this;
-        $obj['errorCode'] = $errorCode;
+        $obj['error_code'] = $errorCode;
 
         return $obj;
     }

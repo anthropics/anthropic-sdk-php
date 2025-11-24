@@ -73,13 +73,13 @@ class Client extends BaseClient
         $this->beta = new BetaService($this);
     }
 
-    /** @return array<string, string> */
+    /** @return array<string,string> */
     protected function apiKeyAuth(): array
     {
         return $this->apiKey ? ['X-Api-Key' => $this->apiKey] : [];
     }
 
-    /** @return array<string, string> */
+    /** @return array<string,string> */
     protected function bearerAuth(): array
     {
         return $this->authToken ? [

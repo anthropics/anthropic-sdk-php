@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaWebSearchTool20250305\AllowedCaller;
 use Anthropic\Beta\Messages\BetaWebSearchTool20250305\UserLocation;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
@@ -11,13 +12,16 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaWebSearchTool20250305Shape = array{
- *   name: string,
- *   type: string,
- *   allowedDomains?: list<string>|null,
- *   blockedDomains?: list<string>|null,
- *   cacheControl?: BetaCacheControlEphemeral|null,
- *   maxUses?: int|null,
- *   userLocation?: UserLocation|null,
+ *   name: "web_search",
+ *   type: "web_search_20250305",
+ *   allowed_callers?: list<value-of<AllowedCaller>>|null,
+ *   allowed_domains?: list<string>|null,
+ *   blocked_domains?: list<string>|null,
+ *   cache_control?: BetaCacheControlEphemeral|null,
+ *   defer_loading?: bool|null,
+ *   max_uses?: int|null,
+ *   strict?: bool|null,
+ *   user_location?: UserLocation|null,
  * }
  */
 final class BetaWebSearchTool20250305 implements BaseModel
@@ -29,46 +33,62 @@ final class BetaWebSearchTool20250305 implements BaseModel
      * Name of the tool.
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
+     *
+     * @var "web_search" $name
      */
     #[Api]
     public string $name = 'web_search';
 
+    /** @var "web_search_20250305" $type */
     #[Api]
     public string $type = 'web_search_20250305';
+
+    /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
+    #[Api(list: AllowedCaller::class, optional: true)]
+    public ?array $allowed_callers;
 
     /**
      * If provided, only these domains will be included in results. Cannot be used alongside `blocked_domains`.
      *
-     * @var list<string>|null $allowedDomains
+     * @var list<string>|null $allowed_domains
      */
-    #[Api('allowed_domains', list: 'string', nullable: true, optional: true)]
-    public ?array $allowedDomains;
+    #[Api(list: 'string', nullable: true, optional: true)]
+    public ?array $allowed_domains;
 
     /**
      * If provided, these domains will never appear in results. Cannot be used alongside `allowed_domains`.
      *
-     * @var list<string>|null $blockedDomains
+     * @var list<string>|null $blocked_domains
      */
-    #[Api('blocked_domains', list: 'string', nullable: true, optional: true)]
-    public ?array $blockedDomains;
+    #[Api(list: 'string', nullable: true, optional: true)]
+    public ?array $blocked_domains;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaCacheControlEphemeral $cache_control;
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    #[Api(optional: true)]
+    public ?bool $defer_loading;
 
     /**
      * Maximum number of times the tool can be used in the API request.
      */
-    #[Api('max_uses', nullable: true, optional: true)]
-    public ?int $maxUses;
+    #[Api(nullable: true, optional: true)]
+    public ?int $max_uses;
+
+    #[Api(optional: true)]
+    public ?bool $strict;
 
     /**
      * Parameters for the user's location. Used to provide more relevant search results.
      */
-    #[Api('user_location', nullable: true, optional: true)]
-    public ?UserLocation $userLocation;
+    #[Api(nullable: true, optional: true)]
+    public ?UserLocation $user_location;
 
     public function __construct()
     {
@@ -80,23 +100,41 @@ final class BetaWebSearchTool20250305 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string>|null $allowedDomains
-     * @param list<string>|null $blockedDomains
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
+     * @param list<string>|null $allowed_domains
+     * @param list<string>|null $blocked_domains
      */
     public static function with(
-        ?array $allowedDomains = null,
-        ?array $blockedDomains = null,
-        ?BetaCacheControlEphemeral $cacheControl = null,
-        ?int $maxUses = null,
-        ?UserLocation $userLocation = null,
+        ?array $allowed_callers = null,
+        ?array $allowed_domains = null,
+        ?array $blocked_domains = null,
+        ?BetaCacheControlEphemeral $cache_control = null,
+        ?bool $defer_loading = null,
+        ?int $max_uses = null,
+        ?bool $strict = null,
+        ?UserLocation $user_location = null,
     ): self {
         $obj = new self;
 
-        null !== $allowedDomains && $obj->allowedDomains = $allowedDomains;
-        null !== $blockedDomains && $obj->blockedDomains = $blockedDomains;
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
-        null !== $maxUses && $obj->maxUses = $maxUses;
-        null !== $userLocation && $obj->userLocation = $userLocation;
+        null !== $allowed_callers && $obj['allowed_callers'] = $allowed_callers;
+        null !== $allowed_domains && $obj->allowed_domains = $allowed_domains;
+        null !== $blocked_domains && $obj->blocked_domains = $blocked_domains;
+        null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $defer_loading && $obj->defer_loading = $defer_loading;
+        null !== $max_uses && $obj->max_uses = $max_uses;
+        null !== $strict && $obj->strict = $strict;
+        null !== $user_location && $obj->user_location = $user_location;
+
+        return $obj;
+    }
+
+    /**
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
+     */
+    public function withAllowedCallers(array $allowedCallers): self
+    {
+        $obj = clone $this;
+        $obj['allowed_callers'] = $allowedCallers;
 
         return $obj;
     }
@@ -109,7 +147,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
     public function withAllowedDomains(?array $allowedDomains): self
     {
         $obj = clone $this;
-        $obj->allowedDomains = $allowedDomains;
+        $obj->allowed_domains = $allowedDomains;
 
         return $obj;
     }
@@ -122,7 +160,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
     public function withBlockedDomains(?array $blockedDomains): self
     {
         $obj = clone $this;
-        $obj->blockedDomains = $blockedDomains;
+        $obj->blocked_domains = $blockedDomains;
 
         return $obj;
     }
@@ -134,7 +172,18 @@ final class BetaWebSearchTool20250305 implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
+
+        return $obj;
+    }
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    public function withDeferLoading(bool $deferLoading): self
+    {
+        $obj = clone $this;
+        $obj->defer_loading = $deferLoading;
 
         return $obj;
     }
@@ -145,7 +194,15 @@ final class BetaWebSearchTool20250305 implements BaseModel
     public function withMaxUses(?int $maxUses): self
     {
         $obj = clone $this;
-        $obj->maxUses = $maxUses;
+        $obj->max_uses = $maxUses;
+
+        return $obj;
+    }
+
+    public function withStrict(bool $strict): self
+    {
+        $obj = clone $this;
+        $obj->strict = $strict;
 
         return $obj;
     }
@@ -156,7 +213,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
     public function withUserLocation(?UserLocation $userLocation): self
     {
         $obj = clone $this;
-        $obj->userLocation = $userLocation;
+        $obj->user_location = $userLocation;
 
         return $obj;
     }

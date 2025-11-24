@@ -11,11 +11,11 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaMCPToolUseBlockParamShape = array{
  *   id: string,
- *   input: array<string, mixed>,
+ *   input: array<string,mixed>,
  *   name: string,
- *   serverName: string,
- *   type: string,
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   server_name: string,
+ *   type: "mcp_tool_use",
+ *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
 final class BetaMCPToolUseBlockParam implements BaseModel
@@ -23,13 +23,14 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     /** @use SdkModel<BetaMCPToolUseBlockParamShape> */
     use SdkModel;
 
+    /** @var "mcp_tool_use" $type */
     #[Api]
     public string $type = 'mcp_tool_use';
 
     #[Api]
     public string $id;
 
-    /** @var array<string, mixed> $input */
+    /** @var array<string,mixed> $input */
     #[Api(map: 'mixed')]
     public array $input;
 
@@ -39,21 +40,21 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     /**
      * The name of the MCP server.
      */
-    #[Api('server_name')]
-    public string $serverName;
+    #[Api]
+    public string $server_name;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaCacheControlEphemeral $cache_control;
 
     /**
      * `new BetaMCPToolUseBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaMCPToolUseBlockParam::with(id: ..., input: ..., name: ..., serverName: ...)
+     * BetaMCPToolUseBlockParam::with(id: ..., input: ..., name: ..., server_name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -76,23 +77,23 @@ final class BetaMCPToolUseBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, mixed> $input
+     * @param array<string,mixed> $input
      */
     public static function with(
         string $id,
         array $input,
         string $name,
-        string $serverName,
-        ?BetaCacheControlEphemeral $cacheControl = null,
+        string $server_name,
+        ?BetaCacheControlEphemeral $cache_control = null,
     ): self {
         $obj = new self;
 
         $obj->id = $id;
         $obj->input = $input;
         $obj->name = $name;
-        $obj->serverName = $serverName;
+        $obj->server_name = $server_name;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
 
         return $obj;
     }
@@ -106,7 +107,7 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     }
 
     /**
-     * @param array<string, mixed> $input
+     * @param array<string,mixed> $input
      */
     public function withInput(array $input): self
     {
@@ -130,7 +131,7 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     public function withServerName(string $serverName): self
     {
         $obj = clone $this;
-        $obj->serverName = $serverName;
+        $obj->server_name = $serverName;
 
         return $obj;
     }
@@ -142,7 +143,7 @@ final class BetaMCPToolUseBlockParam implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }

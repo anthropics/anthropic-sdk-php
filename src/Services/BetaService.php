@@ -14,22 +14,22 @@ use Anthropic\Services\Beta\SkillsService;
 final class BetaService implements BetaContract
 {
     /**
-     * @@api
+     * @api
      */
     public ModelsService $models;
 
     /**
-     * @@api
+     * @api
      */
     public MessagesService $messages;
 
     /**
-     * @@api
+     * @api
      */
     public FilesService $files;
 
     /**
-     * @@api
+     * @api
      */
     public SkillsService $skills;
 

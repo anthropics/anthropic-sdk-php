@@ -10,12 +10,12 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaTextEditorCodeExecutionStrReplaceResultBlockParamShape = array{
- *   type: string,
+ *   type: "text_editor_code_execution_str_replace_result",
  *   lines?: list<string>|null,
- *   newLines?: int|null,
- *   newStart?: int|null,
- *   oldLines?: int|null,
- *   oldStart?: int|null,
+ *   new_lines?: int|null,
+ *   new_start?: int|null,
+ *   old_lines?: int|null,
+ *   old_start?: int|null,
  * }
  */
 final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements BaseModel
@@ -23,6 +23,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
     /** @use SdkModel<BetaTextEditorCodeExecutionStrReplaceResultBlockParamShape> */
     use SdkModel;
 
+    /** @var "text_editor_code_execution_str_replace_result" $type */
     #[Api]
     public string $type = 'text_editor_code_execution_str_replace_result';
 
@@ -30,17 +31,17 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
     #[Api(list: 'string', nullable: true, optional: true)]
     public ?array $lines;
 
-    #[Api('new_lines', nullable: true, optional: true)]
-    public ?int $newLines;
+    #[Api(nullable: true, optional: true)]
+    public ?int $new_lines;
 
-    #[Api('new_start', nullable: true, optional: true)]
-    public ?int $newStart;
+    #[Api(nullable: true, optional: true)]
+    public ?int $new_start;
 
-    #[Api('old_lines', nullable: true, optional: true)]
-    public ?int $oldLines;
+    #[Api(nullable: true, optional: true)]
+    public ?int $old_lines;
 
-    #[Api('old_start', nullable: true, optional: true)]
-    public ?int $oldStart;
+    #[Api(nullable: true, optional: true)]
+    public ?int $old_start;
 
     public function __construct()
     {
@@ -56,18 +57,18 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
      */
     public static function with(
         ?array $lines = null,
-        ?int $newLines = null,
-        ?int $newStart = null,
-        ?int $oldLines = null,
-        ?int $oldStart = null,
+        ?int $new_lines = null,
+        ?int $new_start = null,
+        ?int $old_lines = null,
+        ?int $old_start = null,
     ): self {
         $obj = new self;
 
         null !== $lines && $obj->lines = $lines;
-        null !== $newLines && $obj->newLines = $newLines;
-        null !== $newStart && $obj->newStart = $newStart;
-        null !== $oldLines && $obj->oldLines = $oldLines;
-        null !== $oldStart && $obj->oldStart = $oldStart;
+        null !== $new_lines && $obj->new_lines = $new_lines;
+        null !== $new_start && $obj->new_start = $new_start;
+        null !== $old_lines && $obj->old_lines = $old_lines;
+        null !== $old_start && $obj->old_start = $old_start;
 
         return $obj;
     }
@@ -86,7 +87,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
     public function withNewLines(?int $newLines): self
     {
         $obj = clone $this;
-        $obj->newLines = $newLines;
+        $obj->new_lines = $newLines;
 
         return $obj;
     }
@@ -94,7 +95,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
     public function withNewStart(?int $newStart): self
     {
         $obj = clone $this;
-        $obj->newStart = $newStart;
+        $obj->new_start = $newStart;
 
         return $obj;
     }
@@ -102,7 +103,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
     public function withOldLines(?int $oldLines): self
     {
         $obj = clone $this;
-        $obj->oldLines = $oldLines;
+        $obj->old_lines = $oldLines;
 
         return $obj;
     }
@@ -110,7 +111,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
     public function withOldStart(?int $oldStart): self
     {
         $obj = clone $this;
-        $obj->oldStart = $oldStart;
+        $obj->old_start = $oldStart;
 
         return $obj;
     }

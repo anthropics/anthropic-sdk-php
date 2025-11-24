@@ -11,10 +11,10 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaMCPToolUseBlockShape = array{
  *   id: string,
- *   input: array<string, mixed>,
+ *   input: array<string,mixed>,
  *   name: string,
- *   serverName: string,
- *   type: string,
+ *   server_name: string,
+ *   type: "mcp_tool_use",
  * }
  */
 final class BetaMCPToolUseBlock implements BaseModel
@@ -22,13 +22,14 @@ final class BetaMCPToolUseBlock implements BaseModel
     /** @use SdkModel<BetaMCPToolUseBlockShape> */
     use SdkModel;
 
+    /** @var "mcp_tool_use" $type */
     #[Api]
     public string $type = 'mcp_tool_use';
 
     #[Api]
     public string $id;
 
-    /** @var array<string, mixed> $input */
+    /** @var array<string,mixed> $input */
     #[Api(map: 'mixed')]
     public array $input;
 
@@ -41,15 +42,15 @@ final class BetaMCPToolUseBlock implements BaseModel
     /**
      * The name of the MCP server.
      */
-    #[Api('server_name')]
-    public string $serverName;
+    #[Api]
+    public string $server_name;
 
     /**
      * `new BetaMCPToolUseBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaMCPToolUseBlock::with(id: ..., input: ..., name: ..., serverName: ...)
+     * BetaMCPToolUseBlock::with(id: ..., input: ..., name: ..., server_name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -72,20 +73,20 @@ final class BetaMCPToolUseBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, mixed> $input
+     * @param array<string,mixed> $input
      */
     public static function with(
         string $id,
         array $input,
         string $name,
-        string $serverName
+        string $server_name
     ): self {
         $obj = new self;
 
         $obj->id = $id;
         $obj->input = $input;
         $obj->name = $name;
-        $obj->serverName = $serverName;
+        $obj->server_name = $server_name;
 
         return $obj;
     }
@@ -99,7 +100,7 @@ final class BetaMCPToolUseBlock implements BaseModel
     }
 
     /**
-     * @param array<string, mixed> $input
+     * @param array<string,mixed> $input
      */
     public function withInput(array $input): self
     {
@@ -126,7 +127,7 @@ final class BetaMCPToolUseBlock implements BaseModel
     public function withServerName(string $serverName): self
     {
         $obj = clone $this;
-        $obj->serverName = $serverName;
+        $obj->server_name = $serverName;
 
         return $obj;
     }

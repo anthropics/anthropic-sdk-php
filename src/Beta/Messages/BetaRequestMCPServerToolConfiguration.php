@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaRequestMCPServerToolConfigurationShape = array{
- *   allowedTools?: list<string>|null, enabled?: bool|null
+ *   allowed_tools?: list<string>|null, enabled?: bool|null
  * }
  */
 final class BetaRequestMCPServerToolConfiguration implements BaseModel
@@ -18,9 +18,9 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
     /** @use SdkModel<BetaRequestMCPServerToolConfigurationShape> */
     use SdkModel;
 
-    /** @var list<string>|null $allowedTools */
-    #[Api('allowed_tools', list: 'string', nullable: true, optional: true)]
-    public ?array $allowedTools;
+    /** @var list<string>|null $allowed_tools */
+    #[Api(list: 'string', nullable: true, optional: true)]
+    public ?array $allowed_tools;
 
     #[Api(nullable: true, optional: true)]
     public ?bool $enabled;
@@ -35,15 +35,15 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string>|null $allowedTools
+     * @param list<string>|null $allowed_tools
      */
     public static function with(
-        ?array $allowedTools = null,
+        ?array $allowed_tools = null,
         ?bool $enabled = null
     ): self {
         $obj = new self;
 
-        null !== $allowedTools && $obj->allowedTools = $allowedTools;
+        null !== $allowed_tools && $obj->allowed_tools = $allowed_tools;
         null !== $enabled && $obj->enabled = $enabled;
 
         return $obj;
@@ -55,7 +55,7 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
     public function withAllowedTools(?array $allowedTools): self
     {
         $obj = clone $this;
-        $obj->allowedTools = $allowedTools;
+        $obj->allowed_tools = $allowedTools;
 
         return $obj;
     }

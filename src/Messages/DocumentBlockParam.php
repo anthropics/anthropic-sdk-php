@@ -12,8 +12,8 @@ use Anthropic\Messages\DocumentBlockParam\Source;
 /**
  * @phpstan-type DocumentBlockParamShape = array{
  *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
- *   type: string,
- *   cacheControl?: CacheControlEphemeral|null,
+ *   type: "document",
+ *   cache_control?: CacheControlEphemeral|null,
  *   citations?: CitationsConfigParam|null,
  *   context?: string|null,
  *   title?: string|null,
@@ -24,6 +24,7 @@ final class DocumentBlockParam implements BaseModel
     /** @use SdkModel<DocumentBlockParamShape> */
     use SdkModel;
 
+    /** @var "document" $type */
     #[Api]
     public string $type = 'document';
 
@@ -33,8 +34,8 @@ final class DocumentBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?CacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?CacheControlEphemeral $cache_control;
 
     #[Api(nullable: true, optional: true)]
     public ?CitationsConfigParam $citations;
@@ -71,7 +72,7 @@ final class DocumentBlockParam implements BaseModel
      */
     public static function with(
         Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource $source,
-        ?CacheControlEphemeral $cacheControl = null,
+        ?CacheControlEphemeral $cache_control = null,
         ?CitationsConfigParam $citations = null,
         ?string $context = null,
         ?string $title = null,
@@ -80,7 +81,7 @@ final class DocumentBlockParam implements BaseModel
 
         $obj->source = $source;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
         null !== $citations && $obj->citations = $citations;
         null !== $context && $obj->context = $context;
         null !== $title && $obj->title = $title;
@@ -103,7 +104,7 @@ final class DocumentBlockParam implements BaseModel
     public function withCacheControl(?CacheControlEphemeral $cacheControl): self
     {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }

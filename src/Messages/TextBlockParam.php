@@ -11,8 +11,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type TextBlockParamShape = array{
  *   text: string,
- *   type: string,
- *   cacheControl?: CacheControlEphemeral|null,
+ *   type: "text",
+ *   cache_control?: CacheControlEphemeral|null,
  *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
  * }
  */
@@ -21,6 +21,7 @@ final class TextBlockParam implements BaseModel
     /** @use SdkModel<TextBlockParamShape> */
     use SdkModel;
 
+    /** @var "text" $type */
     #[Api]
     public string $type = 'text';
 
@@ -30,8 +31,8 @@ final class TextBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?CacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?CacheControlEphemeral $cache_control;
 
     /**
      * @var list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null $citations
@@ -67,14 +68,14 @@ final class TextBlockParam implements BaseModel
      */
     public static function with(
         string $text,
-        ?CacheControlEphemeral $cacheControl = null,
+        ?CacheControlEphemeral $cache_control = null,
         ?array $citations = null,
     ): self {
         $obj = new self;
 
         $obj->text = $text;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
         null !== $citations && $obj->citations = $citations;
 
         return $obj;
@@ -94,7 +95,7 @@ final class TextBlockParam implements BaseModel
     public function withCacheControl(?CacheControlEphemeral $cacheControl): self
     {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }

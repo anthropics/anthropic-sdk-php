@@ -29,7 +29,7 @@ final class ModelsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->beta->models->retrieve('model_id');
+        $result = $this->client->beta->models->retrieve('model_id', []);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -41,7 +41,7 @@ final class ModelsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->beta->models->list();
+        $result = $this->client->beta->models->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

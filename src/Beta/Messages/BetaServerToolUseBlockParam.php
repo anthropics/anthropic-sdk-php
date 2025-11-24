@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaServerToolUseBlockParam\Caller;
 use Anthropic\Beta\Messages\BetaServerToolUseBlockParam\Name;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
@@ -12,10 +13,11 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaServerToolUseBlockParamShape = array{
  *   id: string,
- *   input: array<string, mixed>,
+ *   input: array<string,mixed>,
  *   name: value-of<Name>,
- *   type: string,
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   type: "server_tool_use",
+ *   cache_control?: BetaCacheControlEphemeral|null,
+ *   caller?: null|BetaDirectCaller|BetaServerToolCaller,
  * }
  */
 final class BetaServerToolUseBlockParam implements BaseModel
@@ -23,13 +25,14 @@ final class BetaServerToolUseBlockParam implements BaseModel
     /** @use SdkModel<BetaServerToolUseBlockParamShape> */
     use SdkModel;
 
+    /** @var "server_tool_use" $type */
     #[Api]
     public string $type = 'server_tool_use';
 
     #[Api]
     public string $id;
 
-    /** @var array<string, mixed> $input */
+    /** @var array<string,mixed> $input */
     #[Api(map: 'mixed')]
     public array $input;
 
@@ -40,8 +43,14 @@ final class BetaServerToolUseBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaCacheControlEphemeral $cache_control;
+
+    /**
+     * Tool invocation directly from the model.
+     */
+    #[Api(union: Caller::class, optional: true)]
+    public BetaDirectCaller|BetaServerToolCaller|null $caller;
 
     /**
      * `new BetaServerToolUseBlockParam()` is missing required properties by the API.
@@ -67,14 +76,15 @@ final class BetaServerToolUseBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, mixed> $input
+     * @param array<string,mixed> $input
      * @param Name|value-of<Name> $name
      */
     public static function with(
         string $id,
         array $input,
         Name|string $name,
-        ?BetaCacheControlEphemeral $cacheControl = null,
+        ?BetaCacheControlEphemeral $cache_control = null,
+        BetaDirectCaller|BetaServerToolCaller|null $caller = null,
     ): self {
         $obj = new self;
 
@@ -82,7 +92,8 @@ final class BetaServerToolUseBlockParam implements BaseModel
         $obj->input = $input;
         $obj['name'] = $name;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $caller && $obj->caller = $caller;
 
         return $obj;
     }
@@ -96,7 +107,7 @@ final class BetaServerToolUseBlockParam implements BaseModel
     }
 
     /**
-     * @param array<string, mixed> $input
+     * @param array<string,mixed> $input
      */
     public function withInput(array $input): self
     {
@@ -124,7 +135,19 @@ final class BetaServerToolUseBlockParam implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
+
+        return $obj;
+    }
+
+    /**
+     * Tool invocation directly from the model.
+     */
+    public function withCaller(
+        BetaDirectCaller|BetaServerToolCaller $caller
+    ): self {
+        $obj = clone $this;
+        $obj->caller = $caller;
 
         return $obj;
     }

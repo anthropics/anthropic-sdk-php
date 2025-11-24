@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   citations: BetaCitationConfig|null,
  *   source: BetaBase64PDFSource|BetaPlainTextSource,
  *   title: string|null,
- *   type: string,
+ *   type: "document",
  * }
  */
 final class BetaDocumentBlock implements BaseModel
@@ -22,6 +22,7 @@ final class BetaDocumentBlock implements BaseModel
     /** @use SdkModel<BetaDocumentBlockShape> */
     use SdkModel;
 
+    /** @var "document" $type */
     #[Api]
     public string $type = 'document';
 

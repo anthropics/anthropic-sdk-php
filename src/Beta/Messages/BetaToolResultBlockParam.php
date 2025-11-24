@@ -11,11 +11,11 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaToolResultBlockParamShape = array{
- *   toolUseID: string,
- *   type: string,
- *   cacheControl?: BetaCacheControlEphemeral|null,
- *   content?: string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock>,
- *   isError?: bool,
+ *   tool_use_id: string,
+ *   type: "tool_result",
+ *   cache_control?: BetaCacheControlEphemeral|null,
+ *   content?: string|null|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock|BetaToolReferenceBlockParam>,
+ *   is_error?: bool|null,
  * }
  */
 final class BetaToolResultBlockParam implements BaseModel
@@ -23,33 +23,34 @@ final class BetaToolResultBlockParam implements BaseModel
     /** @use SdkModel<BetaToolResultBlockParamShape> */
     use SdkModel;
 
+    /** @var "tool_result" $type */
     #[Api]
     public string $type = 'tool_result';
 
-    #[Api('tool_use_id')]
-    public string $toolUseID;
+    #[Api]
+    public string $tool_use_id;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaCacheControlEphemeral $cache_control;
 
     /**
-     * @var string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock>|null $content
+     * @var string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock|BetaToolReferenceBlockParam>|null $content
      */
     #[Api(union: Content::class, optional: true)]
     public string|array|null $content;
 
-    #[Api('is_error', optional: true)]
-    public ?bool $isError;
+    #[Api(optional: true)]
+    public ?bool $is_error;
 
     /**
      * `new BetaToolResultBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaToolResultBlockParam::with(toolUseID: ...)
+     * BetaToolResultBlockParam::with(tool_use_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -68,21 +69,21 @@ final class BetaToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock> $content
+     * @param string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock|BetaToolReferenceBlockParam> $content
      */
     public static function with(
-        string $toolUseID,
-        ?BetaCacheControlEphemeral $cacheControl = null,
+        string $tool_use_id,
+        ?BetaCacheControlEphemeral $cache_control = null,
         string|array|null $content = null,
-        ?bool $isError = null,
+        ?bool $is_error = null,
     ): self {
         $obj = new self;
 
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $tool_use_id;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
         null !== $content && $obj->content = $content;
-        null !== $isError && $obj->isError = $isError;
+        null !== $is_error && $obj->is_error = $is_error;
 
         return $obj;
     }
@@ -90,7 +91,7 @@ final class BetaToolResultBlockParam implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $toolUseID;
 
         return $obj;
     }
@@ -102,13 +103,13 @@ final class BetaToolResultBlockParam implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }
 
     /**
-     * @param string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock> $content
+     * @param string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock|BetaToolReferenceBlockParam> $content
      */
     public function withContent(string|array $content): self
     {
@@ -121,7 +122,7 @@ final class BetaToolResultBlockParam implements BaseModel
     public function withIsError(bool $isError): self
     {
         $obj = clone $this;
-        $obj->isError = $isError;
+        $obj->is_error = $isError;
 
         return $obj;
     }

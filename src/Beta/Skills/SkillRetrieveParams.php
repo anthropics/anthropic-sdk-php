@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Get Skill.
  *
- * @see Anthropic\Beta\Skills->retrieve
+ * @see Anthropic\Services\Beta\SkillsService::retrieve()
  *
  * @phpstan-type SkillRetrieveParamsShape = array{
  *   betas?: list<string|AnthropicBeta>

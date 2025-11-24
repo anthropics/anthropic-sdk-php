@@ -2,26 +2,6 @@
 
 namespace Tests\Services\Beta\Messages;
 
-use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request;
-use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params;
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral;
-use Anthropic\Beta\Messages\BetaCitationCharLocationParam;
-use Anthropic\Beta\Messages\BetaClearToolUses20250919Edit;
-use Anthropic\Beta\Messages\BetaContainerParams;
-use Anthropic\Beta\Messages\BetaContextManagementConfig;
-use Anthropic\Beta\Messages\BetaInputTokensClearAtLeast;
-use Anthropic\Beta\Messages\BetaInputTokensTrigger;
-use Anthropic\Beta\Messages\BetaMessageParam;
-use Anthropic\Beta\Messages\BetaMetadata;
-use Anthropic\Beta\Messages\BetaRequestMCPServerToolConfiguration;
-use Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition;
-use Anthropic\Beta\Messages\BetaSkillParams;
-use Anthropic\Beta\Messages\BetaTextBlockParam;
-use Anthropic\Beta\Messages\BetaThinkingConfigEnabled;
-use Anthropic\Beta\Messages\BetaTool;
-use Anthropic\Beta\Messages\BetaTool\InputSchema;
-use Anthropic\Beta\Messages\BetaToolChoiceAuto;
-use Anthropic\Beta\Messages\BetaToolUsesKeep;
 use Anthropic\Client;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -53,20 +33,18 @@ final class BatchesTest extends TestCase
             $this->markTestSkipped('prism validates based on the non-beta endpoint');
         }
 
-        $result = $this->client->beta->messages->batches->create(
-            requests: [
-                Request::with(
-                    customID: 'my-custom-id-1',
-                    params: Params::with(
-                        maxTokens: 1024,
-                        messages: [
-                            BetaMessageParam::with(content: 'Hello, world', role: 'user'),
-                        ],
-                        model: 'claude-sonnet-4-5-20250929',
-                    ),
-                ),
+        $result = $this->client->beta->messages->batches->create([
+            'requests' => [
+                [
+                    'custom_id' => 'my-custom-id-1',
+                    'params' => [
+                        'max_tokens' => 1024,
+                        'messages' => [['content' => 'Hello, world', 'role' => 'user']],
+                        'model' => 'claude-sonnet-4-5-20250929',
+                    ],
+                ],
             ],
-        );
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -78,104 +56,96 @@ final class BatchesTest extends TestCase
             $this->markTestSkipped('prism validates based on the non-beta endpoint');
         }
 
-        $result = $this->client->beta->messages->batches->create(
-            requests: [
-                Request::with(
-                    customID: 'my-custom-id-1',
-                    params: Params::with(
-                        maxTokens: 1024,
-                        messages: [
-                            BetaMessageParam::with(content: 'Hello, world', role: 'user'),
+        $result = $this->client->beta->messages->batches->create([
+            'requests' => [
+                [
+                    'custom_id' => 'my-custom-id-1',
+                    'params' => [
+                        'max_tokens' => 1024,
+                        'messages' => [['content' => 'Hello, world', 'role' => 'user']],
+                        'model' => 'claude-sonnet-4-5-20250929',
+                        'container' => [
+                            'id' => 'id',
+                            'skills' => [
+                                ['skill_id' => 'x', 'type' => 'anthropic', 'version' => 'x'],
+                            ],
                         ],
-                        model: 'claude-sonnet-4-5-20250929',
-                    )
-                        ->withContainer(
-                            (new BetaContainerParams)
-                                ->withID('id')
-                                ->withSkills(
+                        'context_management' => [
+                            'edits' => [
+                                [
+                                    'type' => 'clear_tool_uses_20250919',
+                                    'clear_at_least' => ['type' => 'input_tokens', 'value' => 0],
+                                    'clear_tool_inputs' => true,
+                                    'exclude_tools' => ['string'],
+                                    'keep' => ['type' => 'tool_uses', 'value' => 0],
+                                    'trigger' => ['type' => 'input_tokens', 'value' => 1],
+                                ],
+                            ],
+                        ],
+                        'mcp_servers' => [
+                            [
+                                'name' => 'name',
+                                'type' => 'url',
+                                'url' => 'url',
+                                'authorization_token' => 'authorization_token',
+                                'tool_configuration' => [
+                                    'allowed_tools' => ['string'], 'enabled' => true,
+                                ],
+                            ],
+                        ],
+                        'metadata' => ['user_id' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
+                        'output_config' => ['effort' => 'low'],
+                        'output_format' => [
+                            'schema' => ['foo' => 'bar'], 'type' => 'json_schema',
+                        ],
+                        'service_tier' => 'auto',
+                        'stop_sequences' => ['string'],
+                        'stream' => true,
+                        'system' => [
+                            [
+                                'text' => "Today's date is 2024-06-01.",
+                                'type' => 'text',
+                                'cache_control' => ['type' => 'ephemeral', 'ttl' => '5m'],
+                                'citations' => [
                                     [
-                                        BetaSkillParams::with(skillID: 'x', type: 'anthropic')
-                                            ->withVersion('x'),
+                                        'cited_text' => 'cited_text',
+                                        'document_index' => 0,
+                                        'document_title' => 'x',
+                                        'end_char_index' => 0,
+                                        'start_char_index' => 0,
+                                        'type' => 'char_location',
                                     ],
-                                ),
-                        )
-                        ->withContextManagement(
-                            (new BetaContextManagementConfig)
-                                ->withEdits(
-                                    [
-                                        (new BetaClearToolUses20250919Edit)
-                                            ->withClearAtLeast(
-                                                BetaInputTokensClearAtLeast::with(value: 0)
-                                            )
-                                            ->withClearToolInputs(true)
-                                            ->withExcludeTools(['string'])
-                                            ->withKeep(BetaToolUsesKeep::with(value: 0))
-                                            ->withTrigger(BetaInputTokensTrigger::with(value: 1)),
-                                    ],
-                                ),
-                        )
-                        ->withMCPServers(
-                            [
-                                BetaRequestMCPServerURLDefinition::with(name: 'name', url: 'url')
-                                    ->withAuthorizationToken('authorization_token')
-                                    ->withToolConfiguration(
-                                        (new BetaRequestMCPServerToolConfiguration)
-                                            ->withAllowedTools(['string'])
-                                            ->withEnabled(true),
-                                    ),
+                                ],
                             ],
-                        )
-                        ->withMetadata(
-                            (new BetaMetadata)
-                                ->withUserID('13803d75-b4b5-4c3e-b2a2-6f21399b021b'),
-                        )
-                        ->withServiceTier('auto')
-                        ->withStopSequences(['string'])
-                        ->withStream(true)
-                        ->withSystem(
+                        ],
+                        'temperature' => 1,
+                        'thinking' => ['budget_tokens' => 1024, 'type' => 'enabled'],
+                        'tool_choice' => [
+                            'type' => 'auto', 'disable_parallel_tool_use' => true,
+                        ],
+                        'tools' => [
                             [
-                                BetaTextBlockParam::with(text: "Today's date is 2024-06-01.")
-                                    ->withCacheControl(
-                                        (new BetaCacheControlEphemeral)->withTTL('5m')
-                                    )
-                                    ->withCitations(
-                                        [
-                                            BetaCitationCharLocationParam::with(
-                                                citedText: 'cited_text',
-                                                documentIndex: 0,
-                                                documentTitle: 'x',
-                                                endCharIndex: 0,
-                                                startCharIndex: 0,
-                                            ),
-                                        ],
-                                    ),
+                                'input_schema' => [
+                                    'type' => 'object',
+                                    'properties' => ['location' => 'bar', 'unit' => 'bar'],
+                                    'required' => ['location'],
+                                ],
+                                'name' => 'name',
+                                'allowed_callers' => ['direct'],
+                                'cache_control' => ['type' => 'ephemeral', 'ttl' => '5m'],
+                                'defer_loading' => true,
+                                'description' => 'Get the current weather in a given location',
+                                'input_examples' => [['foo' => 'bar']],
+                                'strict' => true,
+                                'type' => 'custom',
                             ],
-                        )
-                        ->withTemperature(1)
-                        ->withThinking(BetaThinkingConfigEnabled::with(budgetTokens: 1024))
-                        ->withToolChoice(
-                            (new BetaToolChoiceAuto)->withDisableParallelToolUse(true)
-                        )
-                        ->withTools(
-                            [
-                                BetaTool::with(
-                                    inputSchema: (new InputSchema)
-                                        ->withProperties(['location' => 'bar', 'unit' => 'bar'])
-                                        ->withRequired(['location']),
-                                    name: 'name',
-                                )
-                                    ->withCacheControl(
-                                        (new BetaCacheControlEphemeral)->withTTL('5m')
-                                    )
-                                    ->withDescription('Get the current weather in a given location')
-                                    ->withType('custom'),
-                            ],
-                        )
-                        ->withTopK(5)
-                        ->withTopP(0.7),
-                ),
+                        ],
+                        'top_k' => 5,
+                        'top_p' => 0.7,
+                    ],
+                ],
             ],
-        );
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -184,7 +154,8 @@ final class BatchesTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->messages->batches->retrieve(
-            'message_batch_id'
+            'message_batch_id',
+            []
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -197,7 +168,7 @@ final class BatchesTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->beta->messages->batches->list();
+        $result = $this->client->beta->messages->batches->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -206,7 +177,8 @@ final class BatchesTest extends TestCase
     public function testDelete(): void
     {
         $result = $this->client->beta->messages->batches->delete(
-            'message_batch_id'
+            'message_batch_id',
+            []
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -216,7 +188,8 @@ final class BatchesTest extends TestCase
     public function testCancel(): void
     {
         $result = $this->client->beta->messages->batches->cancel(
-            'message_batch_id'
+            'message_batch_id',
+            []
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -230,7 +203,8 @@ final class BatchesTest extends TestCase
         }
 
         $result = $this->client->beta->messages->batches->results(
-            'message_batch_id'
+            'message_batch_id',
+            []
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType

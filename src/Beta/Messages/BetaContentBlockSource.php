@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaContentBlockSourceShape = array{
- *   content: string|list<BetaTextBlockParam|BetaImageBlockParam>, type: string
+ *   content: string|list<BetaTextBlockParam|BetaImageBlockParam>, type: "content"
  * }
  */
 final class BetaContentBlockSource implements BaseModel
@@ -19,6 +19,7 @@ final class BetaContentBlockSource implements BaseModel
     /** @use SdkModel<BetaContentBlockSourceShape> */
     use SdkModel;
 
+    /** @var "content" $type */
     #[Api]
     public string $type = 'content';
 

@@ -10,7 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaWebFetchToolResultErrorBlockShape = array{
- *   errorCode: value-of<BetaWebFetchToolResultErrorCode>, type: string
+ *   error_code: value-of<BetaWebFetchToolResultErrorCode>,
+ *   type: "web_fetch_tool_result_error",
  * }
  */
 final class BetaWebFetchToolResultErrorBlock implements BaseModel
@@ -18,19 +19,20 @@ final class BetaWebFetchToolResultErrorBlock implements BaseModel
     /** @use SdkModel<BetaWebFetchToolResultErrorBlockShape> */
     use SdkModel;
 
+    /** @var "web_fetch_tool_result_error" $type */
     #[Api]
     public string $type = 'web_fetch_tool_result_error';
 
-    /** @var value-of<BetaWebFetchToolResultErrorCode> $errorCode */
-    #[Api('error_code', enum: BetaWebFetchToolResultErrorCode::class)]
-    public string $errorCode;
+    /** @var value-of<BetaWebFetchToolResultErrorCode> $error_code */
+    #[Api(enum: BetaWebFetchToolResultErrorCode::class)]
+    public string $error_code;
 
     /**
      * `new BetaWebFetchToolResultErrorBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaWebFetchToolResultErrorBlock::with(errorCode: ...)
+     * BetaWebFetchToolResultErrorBlock::with(error_code: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -49,14 +51,14 @@ final class BetaWebFetchToolResultErrorBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaWebFetchToolResultErrorCode|value-of<BetaWebFetchToolResultErrorCode> $errorCode
+     * @param BetaWebFetchToolResultErrorCode|value-of<BetaWebFetchToolResultErrorCode> $error_code
      */
     public static function with(
-        BetaWebFetchToolResultErrorCode|string $errorCode
+        BetaWebFetchToolResultErrorCode|string $error_code
     ): self {
         $obj = new self;
 
-        $obj['errorCode'] = $errorCode;
+        $obj['error_code'] = $error_code;
 
         return $obj;
     }
@@ -68,7 +70,7 @@ final class BetaWebFetchToolResultErrorBlock implements BaseModel
         BetaWebFetchToolResultErrorCode|string $errorCode
     ): self {
         $obj = clone $this;
-        $obj['errorCode'] = $errorCode;
+        $obj['error_code'] = $errorCode;
 
         return $obj;
     }

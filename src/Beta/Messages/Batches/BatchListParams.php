@@ -13,13 +13,13 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * List all Message Batches within a Workspace. Most recently created batches are returned first.
  *
- * Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
+ * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
  *
- * @see Anthropic\Beta\Messages\Batches->list
+ * @see Anthropic\Services\Beta\Messages\BatchesService::list()
  *
  * @phpstan-type BatchListParamsShape = array{
- *   afterID?: string,
- *   beforeID?: string,
+ *   after_id?: string,
+ *   before_id?: string,
  *   limit?: int,
  *   betas?: list<string|AnthropicBeta>,
  * }
@@ -34,13 +34,13 @@ final class BatchListParams implements BaseModel
      * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
      */
     #[Api(optional: true)]
-    public ?string $afterID;
+    public ?string $after_id;
 
     /**
      * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
      */
     #[Api(optional: true)]
-    public ?string $beforeID;
+    public ?string $before_id;
 
     /**
      * Number of items to return per page.
@@ -71,15 +71,15 @@ final class BatchListParams implements BaseModel
      * @param list<string|AnthropicBeta> $betas
      */
     public static function with(
-        ?string $afterID = null,
-        ?string $beforeID = null,
+        ?string $after_id = null,
+        ?string $before_id = null,
         ?int $limit = null,
         ?array $betas = null,
     ): self {
         $obj = new self;
 
-        null !== $afterID && $obj->afterID = $afterID;
-        null !== $beforeID && $obj->beforeID = $beforeID;
+        null !== $after_id && $obj->after_id = $after_id;
+        null !== $before_id && $obj->before_id = $before_id;
         null !== $limit && $obj->limit = $limit;
         null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
 
@@ -92,7 +92,7 @@ final class BatchListParams implements BaseModel
     public function withAfterID(string $afterID): self
     {
         $obj = clone $this;
-        $obj->afterID = $afterID;
+        $obj->after_id = $afterID;
 
         return $obj;
     }
@@ -103,7 +103,7 @@ final class BatchListParams implements BaseModel
     public function withBeforeID(string $beforeID): self
     {
         $obj = clone $this;
-        $obj->beforeID = $beforeID;
+        $obj->before_id = $beforeID;
 
         return $obj;
     }

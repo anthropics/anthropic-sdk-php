@@ -11,9 +11,9 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type WebSearchToolResultBlockParamShape = array{
  *   content: list<WebSearchResultBlockParam>|WebSearchToolRequestError,
- *   toolUseID: string,
- *   type: string,
- *   cacheControl?: CacheControlEphemeral|null,
+ *   tool_use_id: string,
+ *   type: "web_search_tool_result",
+ *   cache_control?: CacheControlEphemeral|null,
  * }
  */
 final class WebSearchToolResultBlockParam implements BaseModel
@@ -21,6 +21,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
     /** @use SdkModel<WebSearchToolResultBlockParamShape> */
     use SdkModel;
 
+    /** @var "web_search_tool_result" $type */
     #[Api]
     public string $type = 'web_search_tool_result';
 
@@ -28,21 +29,21 @@ final class WebSearchToolResultBlockParam implements BaseModel
     #[Api(union: WebSearchToolResultBlockParamContent::class)]
     public array|WebSearchToolRequestError $content;
 
-    #[Api('tool_use_id')]
-    public string $toolUseID;
+    #[Api]
+    public string $tool_use_id;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?CacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?CacheControlEphemeral $cache_control;
 
     /**
      * `new WebSearchToolResultBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * WebSearchToolResultBlockParam::with(content: ..., toolUseID: ...)
+     * WebSearchToolResultBlockParam::with(content: ..., tool_use_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -65,15 +66,15 @@ final class WebSearchToolResultBlockParam implements BaseModel
      */
     public static function with(
         array|WebSearchToolRequestError $content,
-        string $toolUseID,
-        ?CacheControlEphemeral $cacheControl = null,
+        string $tool_use_id,
+        ?CacheControlEphemeral $cache_control = null,
     ): self {
         $obj = new self;
 
         $obj->content = $content;
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $tool_use_id;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
 
         return $obj;
     }
@@ -92,7 +93,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->toolUseID = $toolUseID;
+        $obj->tool_use_id = $toolUseID;
 
         return $obj;
     }
@@ -103,7 +104,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
     public function withCacheControl(?CacheControlEphemeral $cacheControl): self
     {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }

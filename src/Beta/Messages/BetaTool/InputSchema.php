@@ -14,8 +14,8 @@ use Anthropic\Core\Contracts\BaseModel;
  * This defines the shape of the `input` that your tool accepts and that the model will produce.
  *
  * @phpstan-type InputSchemaShape = array{
- *   type: string,
- *   properties?: array<string, mixed>|null,
+ *   type: "object",
+ *   properties?: array<string,mixed>|null,
  *   required?: list<string>|null,
  * }
  */
@@ -24,10 +24,11 @@ final class InputSchema implements BaseModel
     /** @use SdkModel<InputSchemaShape> */
     use SdkModel;
 
+    /** @var "object" $type */
     #[Api]
     public string $type = 'object';
 
-    /** @var array<string, mixed>|null $properties */
+    /** @var array<string,mixed>|null $properties */
     #[Api(map: 'mixed', nullable: true, optional: true)]
     public ?array $properties;
 
@@ -45,7 +46,7 @@ final class InputSchema implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, mixed>|null $properties
+     * @param array<string,mixed>|null $properties
      * @param list<string>|null $required
      */
     public static function with(
@@ -61,7 +62,7 @@ final class InputSchema implements BaseModel
     }
 
     /**
-     * @param array<string, mixed>|null $properties
+     * @param array<string,mixed>|null $properties
      */
     public function withProperties(?array $properties): self
     {

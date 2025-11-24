@@ -15,4 +15,8 @@ enum Name: string
     case BASH_CODE_EXECUTION = 'bash_code_execution';
 
     case TEXT_EDITOR_CODE_EXECUTION = 'text_editor_code_execution';
+
+    case TOOL_SEARCH_TOOL_REGEX = 'tool_search_tool_regex';
+
+    case TOOL_SEARCH_TOOL_BM25 = 'tool_search_tool_bm25';
 }

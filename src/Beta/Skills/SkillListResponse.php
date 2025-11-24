@@ -13,12 +13,12 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 /**
  * @phpstan-type SkillListResponseShape = array{
  *   id: string,
- *   createdAt: string,
- *   displayTitle: string|null,
- *   latestVersion: string|null,
+ *   created_at: string,
+ *   display_title: string|null,
+ *   latest_version: string|null,
  *   source: string,
  *   type: string,
- *   updatedAt: string,
+ *   updated_at: string,
  * }
  */
 final class SkillListResponse implements BaseModel, ResponseConverter
@@ -39,24 +39,24 @@ final class SkillListResponse implements BaseModel, ResponseConverter
     /**
      * ISO 8601 timestamp of when the skill was created.
      */
-    #[Api('created_at')]
-    public string $createdAt;
+    #[Api]
+    public string $created_at;
 
     /**
      * Display title for the skill.
      *
      * This is a human-readable label that is not included in the prompt sent to the model.
      */
-    #[Api('display_title')]
-    public ?string $displayTitle;
+    #[Api]
+    public ?string $display_title;
 
     /**
      * The latest version identifier for the skill.
      *
      * This represents the most recent version of the skill that has been created.
      */
-    #[Api('latest_version')]
-    public ?string $latestVersion;
+    #[Api]
+    public ?string $latest_version;
 
     /**
      * Source of the skill.
@@ -79,8 +79,8 @@ final class SkillListResponse implements BaseModel, ResponseConverter
     /**
      * ISO 8601 timestamp of when the skill was last updated.
      */
-    #[Api('updated_at')]
-    public string $updatedAt;
+    #[Api]
+    public string $updated_at;
 
     /**
      * `new SkillListResponse()` is missing required properties by the API.
@@ -89,12 +89,12 @@ final class SkillListResponse implements BaseModel, ResponseConverter
      * ```
      * SkillListResponse::with(
      *   id: ...,
-     *   createdAt: ...,
-     *   displayTitle: ...,
-     *   latestVersion: ...,
+     *   created_at: ...,
+     *   display_title: ...,
+     *   latest_version: ...,
      *   source: ...,
      *   type: ...,
-     *   updatedAt: ...,
+     *   updated_at: ...,
      * )
      * ```
      *
@@ -123,22 +123,22 @@ final class SkillListResponse implements BaseModel, ResponseConverter
      */
     public static function with(
         string $id,
-        string $createdAt,
-        ?string $displayTitle,
-        ?string $latestVersion,
+        string $created_at,
+        ?string $display_title,
+        ?string $latest_version,
         string $source,
-        string $updatedAt,
+        string $updated_at,
         string $type = 'skill',
     ): self {
         $obj = new self;
 
         $obj->id = $id;
-        $obj->createdAt = $createdAt;
-        $obj->displayTitle = $displayTitle;
-        $obj->latestVersion = $latestVersion;
+        $obj->created_at = $created_at;
+        $obj->display_title = $display_title;
+        $obj->latest_version = $latest_version;
         $obj->source = $source;
         $obj->type = $type;
-        $obj->updatedAt = $updatedAt;
+        $obj->updated_at = $updated_at;
 
         return $obj;
     }
@@ -162,7 +162,7 @@ final class SkillListResponse implements BaseModel, ResponseConverter
     public function withCreatedAt(string $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -175,7 +175,7 @@ final class SkillListResponse implements BaseModel, ResponseConverter
     public function withDisplayTitle(?string $displayTitle): self
     {
         $obj = clone $this;
-        $obj->displayTitle = $displayTitle;
+        $obj->display_title = $displayTitle;
 
         return $obj;
     }
@@ -188,7 +188,7 @@ final class SkillListResponse implements BaseModel, ResponseConverter
     public function withLatestVersion(?string $latestVersion): self
     {
         $obj = clone $this;
-        $obj->latestVersion = $latestVersion;
+        $obj->latest_version = $latestVersion;
 
         return $obj;
     }
@@ -227,7 +227,7 @@ final class SkillListResponse implements BaseModel, ResponseConverter
     public function withUpdatedAt(string $updatedAt): self
     {
         $obj = clone $this;
-        $obj->updatedAt = $updatedAt;
+        $obj->updated_at = $updatedAt;
 
         return $obj;
     }

@@ -8,10 +8,14 @@ use Anthropic\Beta\Messages\BetaImageBlockParam;
 use Anthropic\Beta\Messages\BetaRequestDocumentBlock;
 use Anthropic\Beta\Messages\BetaSearchResultBlockParam;
 use Anthropic\Beta\Messages\BetaTextBlockParam;
+use Anthropic\Beta\Messages\BetaToolReferenceBlockParam;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * Tool reference block that can be included in tool_result content.
+ */
 final class UnionMember1 implements ConverterSource
 {
     use SdkUnion;
@@ -22,8 +26,7 @@ final class UnionMember1 implements ConverterSource
     }
 
     /**
-     * @return list<string|Converter|ConverterSource>|array<string,
-     * string|Converter|ConverterSource,>
+     * @return list<string|Converter|ConverterSource>|array<string,string|Converter|ConverterSource>
      */
     public static function variants(): array
     {
@@ -32,6 +35,7 @@ final class UnionMember1 implements ConverterSource
             'image' => BetaImageBlockParam::class,
             'search_result' => BetaSearchResultBlockParam::class,
             'document' => BetaRequestDocumentBlock::class,
+            'tool_reference' => BetaToolReferenceBlockParam::class,
         ];
     }
 }

@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaContextManagementConfigShape = array{
- *   edits?: list<BetaClearToolUses20250919Edit|BetaClearThinking20251015Edit>
+ *   edits?: list<BetaClearToolUses20250919Edit|BetaClearThinking20251015Edit>|null
  * }
  */
 final class BetaContextManagementConfig implements BaseModel

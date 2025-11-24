@@ -33,7 +33,7 @@ final class VersionsTest extends TestCase
             $this->markTestSkipped('prism binary unsupported');
         }
 
-        $result = $this->client->beta->skills->versions->create('skill_id');
+        $result = $this->client->beta->skills->versions->create('skill_id', []);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -43,7 +43,7 @@ final class VersionsTest extends TestCase
     {
         $result = $this->client->beta->skills->versions->retrieve(
             'version',
-            skillID: 'skill_id'
+            ['skill_id' => 'skill_id']
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -54,7 +54,7 @@ final class VersionsTest extends TestCase
     {
         $result = $this->client->beta->skills->versions->retrieve(
             'version',
-            skillID: 'skill_id'
+            ['skill_id' => 'skill_id']
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -67,7 +67,7 @@ final class VersionsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->beta->skills->versions->list('skill_id');
+        $result = $this->client->beta->skills->versions->list('skill_id', []);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -77,7 +77,7 @@ final class VersionsTest extends TestCase
     {
         $result = $this->client->beta->skills->versions->delete(
             'version',
-            skillID: 'skill_id'
+            ['skill_id' => 'skill_id']
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -88,7 +88,7 @@ final class VersionsTest extends TestCase
     {
         $result = $this->client->beta->skills->versions->delete(
             'version',
-            skillID: 'skill_id'
+            ['skill_id' => 'skill_id']
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType

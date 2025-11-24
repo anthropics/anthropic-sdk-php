@@ -8,13 +8,18 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * Configuration for a group of tools from an MCP server.
+ *
+ * Allows configuring enabled status and defer_loading for all tools
+ * from an MCP server, with optional per-tool overrides.
+ */
 final class BetaToolUnion implements ConverterSource
 {
     use SdkUnion;
 
     /**
-     * @return list<string|Converter|ConverterSource>|array<string,
-     * string|Converter|ConverterSource,>
+     * @return list<string|Converter|ConverterSource>|array<string,string|Converter|ConverterSource>
      */
     public static function variants(): array
     {
@@ -28,11 +33,15 @@ final class BetaToolUnion implements ConverterSource
             BetaMemoryTool20250818::class,
             BetaToolComputerUse20250124::class,
             BetaToolTextEditor20241022::class,
+            BetaToolComputerUse20251124::class,
             BetaToolTextEditor20250124::class,
             BetaToolTextEditor20250429::class,
             BetaToolTextEditor20250728::class,
             BetaWebSearchTool20250305::class,
             BetaWebFetchTool20250910::class,
+            BetaToolSearchToolBm25_20251119::class,
+            BetaToolSearchToolRegex20251119::class,
+            BetaMCPToolset::class,
         ];
     }
 }

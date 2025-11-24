@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCountTokensContextManagementResponseShape = array{
- *   originalInputTokens: int
+ *   original_input_tokens: int
  * }
  */
 final class BetaCountTokensContextManagementResponse implements BaseModel
@@ -21,15 +21,15 @@ final class BetaCountTokensContextManagementResponse implements BaseModel
     /**
      * The original token count before context management was applied.
      */
-    #[Api('original_input_tokens')]
-    public int $originalInputTokens;
+    #[Api]
+    public int $original_input_tokens;
 
     /**
      * `new BetaCountTokensContextManagementResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaCountTokensContextManagementResponse::with(originalInputTokens: ...)
+     * BetaCountTokensContextManagementResponse::with(original_input_tokens: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -48,11 +48,11 @@ final class BetaCountTokensContextManagementResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(int $originalInputTokens): self
+    public static function with(int $original_input_tokens): self
     {
         $obj = new self;
 
-        $obj->originalInputTokens = $originalInputTokens;
+        $obj->original_input_tokens = $original_input_tokens;
 
         return $obj;
     }
@@ -63,7 +63,7 @@ final class BetaCountTokensContextManagementResponse implements BaseModel
     public function withOriginalInputTokens(int $originalInputTokens): self
     {
         $obj = clone $this;
-        $obj->originalInputTokens = $originalInputTokens;
+        $obj->original_input_tokens = $originalInputTokens;
 
         return $obj;
     }

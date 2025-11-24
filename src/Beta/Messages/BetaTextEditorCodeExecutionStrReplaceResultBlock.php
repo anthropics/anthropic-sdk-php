@@ -11,11 +11,11 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaTextEditorCodeExecutionStrReplaceResultBlockShape = array{
  *   lines: list<string>|null,
- *   newLines: int|null,
- *   newStart: int|null,
- *   oldLines: int|null,
- *   oldStart: int|null,
- *   type: string,
+ *   new_lines: int|null,
+ *   new_start: int|null,
+ *   old_lines: int|null,
+ *   old_start: int|null,
+ *   type: "text_editor_code_execution_str_replace_result",
  * }
  */
 final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseModel
@@ -23,6 +23,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
     /** @use SdkModel<BetaTextEditorCodeExecutionStrReplaceResultBlockShape> */
     use SdkModel;
 
+    /** @var "text_editor_code_execution_str_replace_result" $type */
     #[Api]
     public string $type = 'text_editor_code_execution_str_replace_result';
 
@@ -30,17 +31,17 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
     #[Api(list: 'string')]
     public ?array $lines;
 
-    #[Api('new_lines')]
-    public ?int $newLines;
+    #[Api]
+    public ?int $new_lines;
 
-    #[Api('new_start')]
-    public ?int $newStart;
+    #[Api]
+    public ?int $new_start;
 
-    #[Api('old_lines')]
-    public ?int $oldLines;
+    #[Api]
+    public ?int $old_lines;
 
-    #[Api('old_start')]
-    public ?int $oldStart;
+    #[Api]
+    public ?int $old_start;
 
     /**
      * `new BetaTextEditorCodeExecutionStrReplaceResultBlock()` is missing required properties by the API.
@@ -48,7 +49,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
      * To enforce required parameters use
      * ```
      * BetaTextEditorCodeExecutionStrReplaceResultBlock::with(
-     *   lines: ..., newLines: ..., newStart: ..., oldLines: ..., oldStart: ...
+     *   lines: ..., new_lines: ..., new_start: ..., old_lines: ..., old_start: ...
      * )
      * ```
      *
@@ -77,18 +78,18 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
      */
     public static function with(
         ?array $lines,
-        ?int $newLines,
-        ?int $newStart,
-        ?int $oldLines,
-        ?int $oldStart,
+        ?int $new_lines,
+        ?int $new_start,
+        ?int $old_lines,
+        ?int $old_start,
     ): self {
         $obj = new self;
 
         $obj->lines = $lines;
-        $obj->newLines = $newLines;
-        $obj->newStart = $newStart;
-        $obj->oldLines = $oldLines;
-        $obj->oldStart = $oldStart;
+        $obj->new_lines = $new_lines;
+        $obj->new_start = $new_start;
+        $obj->old_lines = $old_lines;
+        $obj->old_start = $old_start;
 
         return $obj;
     }
@@ -107,7 +108,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
     public function withNewLines(?int $newLines): self
     {
         $obj = clone $this;
-        $obj->newLines = $newLines;
+        $obj->new_lines = $newLines;
 
         return $obj;
     }
@@ -115,7 +116,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
     public function withNewStart(?int $newStart): self
     {
         $obj = clone $this;
-        $obj->newStart = $newStart;
+        $obj->new_start = $newStart;
 
         return $obj;
     }
@@ -123,7 +124,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
     public function withOldLines(?int $oldLines): self
     {
         $obj = clone $this;
-        $obj->oldLines = $oldLines;
+        $obj->old_lines = $oldLines;
 
         return $obj;
     }
@@ -131,7 +132,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
     public function withOldStart(?int $oldStart): self
     {
         $obj = clone $this;
-        $obj->oldStart = $oldStart;
+        $obj->old_start = $oldStart;
 
         return $obj;
     }

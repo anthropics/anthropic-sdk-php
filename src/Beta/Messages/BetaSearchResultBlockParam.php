@@ -13,9 +13,9 @@ use Anthropic\Core\Contracts\BaseModel;
  *   content: list<BetaTextBlockParam>,
  *   source: string,
  *   title: string,
- *   type: string,
- *   cacheControl?: BetaCacheControlEphemeral|null,
- *   citations?: BetaCitationsConfigParam,
+ *   type: "search_result",
+ *   cache_control?: BetaCacheControlEphemeral|null,
+ *   citations?: BetaCitationsConfigParam|null,
  * }
  */
 final class BetaSearchResultBlockParam implements BaseModel
@@ -23,6 +23,7 @@ final class BetaSearchResultBlockParam implements BaseModel
     /** @use SdkModel<BetaSearchResultBlockParamShape> */
     use SdkModel;
 
+    /** @var "search_result" $type */
     #[Api]
     public string $type = 'search_result';
 
@@ -39,8 +40,8 @@ final class BetaSearchResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api('cache_control', nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cacheControl;
+    #[Api(nullable: true, optional: true)]
+    public ?BetaCacheControlEphemeral $cache_control;
 
     #[Api(optional: true)]
     public ?BetaCitationsConfigParam $citations;
@@ -78,7 +79,7 @@ final class BetaSearchResultBlockParam implements BaseModel
         array $content,
         string $source,
         string $title,
-        ?BetaCacheControlEphemeral $cacheControl = null,
+        ?BetaCacheControlEphemeral $cache_control = null,
         ?BetaCitationsConfigParam $citations = null,
     ): self {
         $obj = new self;
@@ -87,7 +88,7 @@ final class BetaSearchResultBlockParam implements BaseModel
         $obj->source = $source;
         $obj->title = $title;
 
-        null !== $cacheControl && $obj->cacheControl = $cacheControl;
+        null !== $cache_control && $obj->cache_control = $cache_control;
         null !== $citations && $obj->citations = $citations;
 
         return $obj;
@@ -127,7 +128,7 @@ final class BetaSearchResultBlockParam implements BaseModel
         ?BetaCacheControlEphemeral $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cacheControl = $cacheControl;
+        $obj->cache_control = $cacheControl;
 
         return $obj;
     }

@@ -10,7 +10,7 @@ class APITimeoutException extends APIConnectionException
     protected const DESC = 'Anthropic API Timeout Exception';
 
     public function __construct(
-        public RequestInterface $request,
+        RequestInterface $request,
         ?\Throwable $previous = null,
         string $message = 'Request timed out.',
     ) {

@@ -10,7 +10,9 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaClearToolUses20250919EditResponseShape = array{
- *   clearedInputTokens: int, clearedToolUses: int, type: string
+ *   cleared_input_tokens: int,
+ *   cleared_tool_uses: int,
+ *   type: "clear_tool_uses_20250919",
  * }
  */
 final class BetaClearToolUses20250919EditResponse implements BaseModel
@@ -20,6 +22,8 @@ final class BetaClearToolUses20250919EditResponse implements BaseModel
 
     /**
      * The type of context management edit applied.
+     *
+     * @var "clear_tool_uses_20250919" $type
      */
     #[Api]
     public string $type = 'clear_tool_uses_20250919';
@@ -27,14 +31,14 @@ final class BetaClearToolUses20250919EditResponse implements BaseModel
     /**
      * Number of input tokens cleared by this edit.
      */
-    #[Api('cleared_input_tokens')]
-    public int $clearedInputTokens;
+    #[Api]
+    public int $cleared_input_tokens;
 
     /**
      * Number of tool uses that were cleared.
      */
-    #[Api('cleared_tool_uses')]
-    public int $clearedToolUses;
+    #[Api]
+    public int $cleared_tool_uses;
 
     /**
      * `new BetaClearToolUses20250919EditResponse()` is missing required properties by the API.
@@ -42,7 +46,7 @@ final class BetaClearToolUses20250919EditResponse implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaClearToolUses20250919EditResponse::with(
-     *   clearedInputTokens: ..., clearedToolUses: ...
+     *   cleared_input_tokens: ..., cleared_tool_uses: ...
      * )
      * ```
      *
@@ -65,13 +69,13 @@ final class BetaClearToolUses20250919EditResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        int $clearedInputTokens,
-        int $clearedToolUses
+        int $cleared_input_tokens,
+        int $cleared_tool_uses
     ): self {
         $obj = new self;
 
-        $obj->clearedInputTokens = $clearedInputTokens;
-        $obj->clearedToolUses = $clearedToolUses;
+        $obj->cleared_input_tokens = $cleared_input_tokens;
+        $obj->cleared_tool_uses = $cleared_tool_uses;
 
         return $obj;
     }
@@ -82,7 +86,7 @@ final class BetaClearToolUses20250919EditResponse implements BaseModel
     public function withClearedInputTokens(int $clearedInputTokens): self
     {
         $obj = clone $this;
-        $obj->clearedInputTokens = $clearedInputTokens;
+        $obj->cleared_input_tokens = $clearedInputTokens;
 
         return $obj;
     }
@@ -93,7 +97,7 @@ final class BetaClearToolUses20250919EditResponse implements BaseModel
     public function withClearedToolUses(int $clearedToolUses): self
     {
         $obj = clone $this;
-        $obj->clearedToolUses = $clearedToolUses;
+        $obj->cleared_tool_uses = $clearedToolUses;
 
         return $obj;
     }
