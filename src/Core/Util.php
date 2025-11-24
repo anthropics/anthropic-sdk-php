@@ -52,9 +52,9 @@ final class Util
     }
 
     /**
-     * @param array<string,mixed> $arr
+     * @param array<mixed,mixed> $arr
      *
-     * @return array<string,mixed>
+     * @return array<mixed,mixed>
      */
     public static function array_filter_omit(array $arr): array
     {
@@ -149,6 +149,7 @@ final class Util
     ): RequestInterface {
         foreach ($headers as $name => $value) {
             if (is_null($value)) {
+                /** @var RequestInterface */
                 $req = $req->withoutHeader($name);
             } else {
                 $value = is_int($value)
@@ -156,6 +157,8 @@ final class Util
                             : (is_array($value)
                             ? array_map(static fn ($v) => (string) $v, array: $value)
                             : $value);
+
+                /** @var RequestInterface */
                 $req = $req->withHeader($name, $value);
             }
         }
@@ -190,6 +193,7 @@ final class Util
         mixed $body
     ): RequestInterface {
         if ($body instanceof StreamInterface) {
+            /** @var RequestInterface */
             return $req->withBody($body);
         }
 
@@ -199,6 +203,7 @@ final class Util
                 $encoded = json_encode($body, flags: self::JSON_ENCODE_FLAGS);
                 $stream = $factory->createStream($encoded);
 
+                /** @var RequestInterface */
                 return $req->withBody($stream);
             }
         }
@@ -208,12 +213,14 @@ final class Util
             $encoded = implode('', iterator_to_array($gen));
             $stream = $factory->createStream($encoded);
 
+            /** @var RequestInterface */
             return $req->withHeader('Content-Type', "{$contentType}; boundary={$boundary}")->withBody($stream);
         }
 
         if (is_resource($body)) {
             $stream = $factory->createStreamFromResource($body);
 
+            /** @var RequestInterface */
             return $req->withBody($stream);
         }
 

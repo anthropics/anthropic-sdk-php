@@ -296,8 +296,8 @@ abstract class BaseClient
     ): ResponseInterface {
         assert(null !== $opts->streamFactory && null !== $opts->transporter);
 
+        /** @var RequestInterface */
         $req = $req->withHeader('X-Stainless-Retry-Count', strval($retryCount));
-
         $req = Util::withSetBody($opts->streamFactory, req: $req, body: $data);
 
         $rsp = null;
