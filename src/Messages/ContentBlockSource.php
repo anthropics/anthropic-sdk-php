@@ -11,7 +11,7 @@ use Anthropic\Messages\ContentBlockSource\Content;
 
 /**
  * @phpstan-type ContentBlockSourceShape = array{
- *   content: string|list<TextBlockParam|ImageBlockParam>, type: "content"
+ *   content: string|list<TextBlockParam|ImageBlockParam>, type: 'content'
  * }
  */
 final class ContentBlockSource implements BaseModel
@@ -19,7 +19,7 @@ final class ContentBlockSource implements BaseModel
     /** @use SdkModel<ContentBlockSourceShape> */
     use SdkModel;
 
-    /** @var "content" $type */
+    /** @var 'content' $type */
     #[Api]
     public string $type = 'content';
 

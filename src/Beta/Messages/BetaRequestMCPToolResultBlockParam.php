@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaRequestMCPToolResultBlockParamShape = array{
  *   tool_use_id: string,
- *   type: "mcp_tool_result",
+ *   type: 'mcp_tool_result',
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   content?: string|null|list<BetaTextBlockParam>,
  *   is_error?: bool|null,
@@ -23,7 +23,7 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
     /** @use SdkModel<BetaRequestMCPToolResultBlockParamShape> */
     use SdkModel;
 
-    /** @var "mcp_tool_result" $type */
+    /** @var 'mcp_tool_result' $type */
     #[Api]
     public string $type = 'mcp_tool_result';
 

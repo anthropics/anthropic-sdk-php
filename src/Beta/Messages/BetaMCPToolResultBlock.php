@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   content: string|list<BetaTextBlock>,
  *   is_error: bool,
  *   tool_use_id: string,
- *   type: "mcp_tool_result",
+ *   type: 'mcp_tool_result',
  * }
  */
 final class BetaMCPToolResultBlock implements BaseModel
@@ -22,7 +22,7 @@ final class BetaMCPToolResultBlock implements BaseModel
     /** @use SdkModel<BetaMCPToolResultBlockShape> */
     use SdkModel;
 
-    /** @var "mcp_tool_result" $type */
+    /** @var 'mcp_tool_result' $type */
     #[Api]
     public string $type = 'mcp_tool_result';
 

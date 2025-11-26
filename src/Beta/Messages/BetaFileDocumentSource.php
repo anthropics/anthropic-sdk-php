@@ -9,14 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaFileDocumentSourceShape = array{file_id: string, type: "file"}
+ * @phpstan-type BetaFileDocumentSourceShape = array{file_id: string, type: 'file'}
  */
 final class BetaFileDocumentSource implements BaseModel
 {
     /** @use SdkModel<BetaFileDocumentSourceShape> */
     use SdkModel;
 
-    /** @var "file" $type */
+    /** @var 'file' $type */
     #[Api]
     public string $type = 'file';
 

@@ -11,14 +11,14 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * The model will not be allowed to use tools.
  *
- * @phpstan-type ToolChoiceNoneShape = array{type: "none"}
+ * @phpstan-type ToolChoiceNoneShape = array{type: 'none'}
  */
 final class ToolChoiceNone implements BaseModel
 {
     /** @use SdkModel<ToolChoiceNoneShape> */
     use SdkModel;
 
-    /** @var "none" $type */
+    /** @var 'none' $type */
     #[Api]
     public string $type = 'none';
 

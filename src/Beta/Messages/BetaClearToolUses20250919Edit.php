@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaClearToolUses20250919EditShape = array{
- *   type: "clear_tool_uses_20250919",
+ *   type: 'clear_tool_uses_20250919',
  *   clear_at_least?: BetaInputTokensClearAtLeast|null,
  *   clear_tool_inputs?: bool|null|list<string>,
  *   exclude_tools?: list<string>|null,
@@ -25,7 +25,7 @@ final class BetaClearToolUses20250919Edit implements BaseModel
     /** @use SdkModel<BetaClearToolUses20250919EditShape> */
     use SdkModel;
 
-    /** @var "clear_tool_uses_20250919" $type */
+    /** @var 'clear_tool_uses_20250919' $type */
     #[Api]
     public string $type = 'clear_tool_uses_20250919';
 

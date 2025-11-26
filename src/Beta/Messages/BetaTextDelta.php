@@ -9,14 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaTextDeltaShape = array{text: string, type: "text_delta"}
+ * @phpstan-type BetaTextDeltaShape = array{text: string, type: 'text_delta'}
  */
 final class BetaTextDelta implements BaseModel
 {
     /** @use SdkModel<BetaTextDeltaShape> */
     use SdkModel;
 
-    /** @var "text_delta" $type */
+    /** @var 'text_delta' $type */
     #[Api]
     public string $type = 'text_delta';
 

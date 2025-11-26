@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   new_start: int|null,
  *   old_lines: int|null,
  *   old_start: int|null,
- *   type: "text_editor_code_execution_str_replace_result",
+ *   type: 'text_editor_code_execution_str_replace_result',
  * }
  */
 final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseModel
@@ -23,7 +23,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
     /** @use SdkModel<BetaTextEditorCodeExecutionStrReplaceResultBlockShape> */
     use SdkModel;
 
-    /** @var "text_editor_code_execution_str_replace_result" $type */
+    /** @var 'text_editor_code_execution_str_replace_result' $type */
     #[Api]
     public string $type = 'text_editor_code_execution_str_replace_result';
 

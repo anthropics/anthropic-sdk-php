@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type WebSearchToolResultBlockParamShape = array{
  *   content: list<WebSearchResultBlockParam>|WebSearchToolRequestError,
  *   tool_use_id: string,
- *   type: "web_search_tool_result",
+ *   type: 'web_search_tool_result',
  *   cache_control?: CacheControlEphemeral|null,
  * }
  */
@@ -21,7 +21,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
     /** @use SdkModel<WebSearchToolResultBlockParamShape> */
     use SdkModel;
 
-    /** @var "web_search_tool_result" $type */
+    /** @var 'web_search_tool_result' $type */
     #[Api]
     public string $type = 'web_search_tool_result';
 

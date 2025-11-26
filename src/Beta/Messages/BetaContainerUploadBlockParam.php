@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type BetaContainerUploadBlockParamShape = array{
  *   file_id: string,
- *   type: "container_upload",
+ *   type: 'container_upload',
  *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
@@ -23,7 +23,7 @@ final class BetaContainerUploadBlockParam implements BaseModel
     /** @use SdkModel<BetaContainerUploadBlockParamShape> */
     use SdkModel;
 
-    /** @var "container_upload" $type */
+    /** @var 'container_upload' $type */
     #[Api]
     public string $type = 'container_upload';
 

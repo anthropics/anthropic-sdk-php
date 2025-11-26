@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaNotFoundErrorShape = array{
- *   message: string, type: "not_found_error"
+ *   message: string, type: 'not_found_error'
  * }
  */
 final class BetaNotFoundError implements BaseModel
@@ -18,7 +18,7 @@ final class BetaNotFoundError implements BaseModel
     /** @use SdkModel<BetaNotFoundErrorShape> */
     use SdkModel;
 
-    /** @var "not_found_error" $type */
+    /** @var 'not_found_error' $type */
     #[Api]
     public string $type = 'not_found_error';
 

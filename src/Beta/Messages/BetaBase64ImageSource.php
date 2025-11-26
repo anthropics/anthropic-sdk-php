@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaBase64ImageSourceShape = array{
- *   data: string, media_type: value-of<MediaType>, type: "base64"
+ *   data: string, media_type: value-of<MediaType>, type: 'base64'
  * }
  */
 final class BetaBase64ImageSource implements BaseModel
@@ -19,7 +19,7 @@ final class BetaBase64ImageSource implements BaseModel
     /** @use SdkModel<BetaBase64ImageSourceShape> */
     use SdkModel;
 
-    /** @var "base64" $type */
+    /** @var 'base64' $type */
     #[Api]
     public string $type = 'base64';
 

@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type ToolTextEditor20250124Shape = array{
- *   name: "str_replace_editor",
- *   type: "text_editor_20250124",
+ *   name: 'str_replace_editor',
+ *   type: 'text_editor_20250124',
  *   cache_control?: CacheControlEphemeral|null,
  * }
  */
@@ -25,12 +25,12 @@ final class ToolTextEditor20250124 implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      *
-     * @var "str_replace_editor" $name
+     * @var 'str_replace_editor' $name
      */
     #[Api]
     public string $name = 'str_replace_editor';
 
-    /** @var "text_editor_20250124" $type */
+    /** @var 'text_editor_20250124' $type */
     #[Api]
     public string $type = 'text_editor_20250124';
 

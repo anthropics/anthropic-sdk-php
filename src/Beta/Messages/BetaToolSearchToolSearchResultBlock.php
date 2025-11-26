@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaToolSearchToolSearchResultBlockShape = array{
  *   tool_references: list<BetaToolReferenceBlock>,
- *   type: "tool_search_tool_search_result",
+ *   type: 'tool_search_tool_search_result',
  * }
  */
 final class BetaToolSearchToolSearchResultBlock implements BaseModel
@@ -19,7 +19,7 @@ final class BetaToolSearchToolSearchResultBlock implements BaseModel
     /** @use SdkModel<BetaToolSearchToolSearchResultBlockShape> */
     use SdkModel;
 
-    /** @var "tool_search_tool_search_result" $type */
+    /** @var 'tool_search_tool_search_result' $type */
     #[Api]
     public string $type = 'tool_search_tool_search_result';
 

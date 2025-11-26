@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type TextBlockParamShape = array{
  *   text: string,
- *   type: "text",
+ *   type: 'text',
  *   cache_control?: CacheControlEphemeral|null,
  *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
  * }
@@ -21,7 +21,7 @@ final class TextBlockParam implements BaseModel
     /** @use SdkModel<TextBlockParamShape> */
     use SdkModel;
 
-    /** @var "text" $type */
+    /** @var 'text' $type */
     #[Api]
     public string $type = 'text';
 

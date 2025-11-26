@@ -11,14 +11,14 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * The model will not be allowed to use tools.
  *
- * @phpstan-type BetaToolChoiceNoneShape = array{type: "none"}
+ * @phpstan-type BetaToolChoiceNoneShape = array{type: 'none'}
  */
 final class BetaToolChoiceNone implements BaseModel
 {
     /** @use SdkModel<BetaToolChoiceNoneShape> */
     use SdkModel;
 
-    /** @var "none" $type */
+    /** @var 'none' $type */
     #[Api]
     public string $type = 'none';
 

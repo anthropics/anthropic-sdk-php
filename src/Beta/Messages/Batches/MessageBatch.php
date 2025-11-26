@@ -22,7 +22,7 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  *   processing_status: value-of<ProcessingStatus>,
  *   request_counts: MessageBatchRequestCounts,
  *   results_url: string|null,
- *   type: "message_batch",
+ *   type: 'message_batch',
  * }
  */
 final class MessageBatch implements BaseModel, ResponseConverter
@@ -37,7 +37,7 @@ final class MessageBatch implements BaseModel, ResponseConverter
      *
      * For Message Batches, this is always `"message_batch"`.
      *
-     * @var "message_batch" $type
+     * @var 'message_batch' $type
      */
     #[Api]
     public string $type = 'message_batch';
