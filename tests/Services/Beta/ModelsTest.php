@@ -2,7 +2,9 @@
 
 namespace Tests\Services\Beta;
 
+use Anthropic\Beta\Models\BetaModelInfo;
 use Anthropic\Client;
+use Anthropic\Page;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -31,7 +33,8 @@ final class ModelsTest extends TestCase
     {
         $result = $this->client->beta->models->retrieve('model_id', []);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(BetaModelInfo::class, $result);
     }
 
     #[Test]
@@ -43,6 +46,7 @@ final class ModelsTest extends TestCase
 
         $result = $this->client->beta->models->list([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Page::class, $result);
     }
 }

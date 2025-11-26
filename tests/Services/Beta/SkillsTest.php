@@ -2,7 +2,11 @@
 
 namespace Tests\Services\Beta;
 
+use Anthropic\Beta\Skills\SkillDeleteResponse;
+use Anthropic\Beta\Skills\SkillGetResponse;
+use Anthropic\Beta\Skills\SkillNewResponse;
 use Anthropic\Client;
+use Anthropic\PageCursor;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -35,7 +39,8 @@ final class SkillsTest extends TestCase
 
         $result = $this->client->beta->skills->create([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(SkillNewResponse::class, $result);
     }
 
     #[Test]
@@ -43,7 +48,8 @@ final class SkillsTest extends TestCase
     {
         $result = $this->client->beta->skills->retrieve('skill_id', []);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(SkillGetResponse::class, $result);
     }
 
     #[Test]
@@ -55,7 +61,8 @@ final class SkillsTest extends TestCase
 
         $result = $this->client->beta->skills->list([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(PageCursor::class, $result);
     }
 
     #[Test]
@@ -63,6 +70,7 @@ final class SkillsTest extends TestCase
     {
         $result = $this->client->beta->skills->delete('skill_id', []);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(SkillDeleteResponse::class, $result);
     }
 }

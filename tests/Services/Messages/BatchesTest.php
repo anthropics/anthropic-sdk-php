@@ -3,6 +3,10 @@
 namespace Tests\Services\Messages;
 
 use Anthropic\Client;
+use Anthropic\Messages\Batches\DeletedMessageBatch;
+use Anthropic\Messages\Batches\MessageBatch;
+use Anthropic\Messages\Batches\MessageBatchIndividualResponse;
+use Anthropic\Page;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -42,7 +46,8 @@ final class BatchesTest extends TestCase
             ],
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(MessageBatch::class, $result);
     }
 
     #[Test]
@@ -100,7 +105,8 @@ final class BatchesTest extends TestCase
             ],
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(MessageBatch::class, $result);
     }
 
     #[Test]
@@ -108,7 +114,8 @@ final class BatchesTest extends TestCase
     {
         $result = $this->client->messages->batches->retrieve('message_batch_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(MessageBatch::class, $result);
     }
 
     #[Test]
@@ -120,7 +127,8 @@ final class BatchesTest extends TestCase
 
         $result = $this->client->messages->batches->list([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Page::class, $result);
     }
 
     #[Test]
@@ -128,7 +136,8 @@ final class BatchesTest extends TestCase
     {
         $result = $this->client->messages->batches->delete('message_batch_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DeletedMessageBatch::class, $result);
     }
 
     #[Test]
@@ -136,7 +145,8 @@ final class BatchesTest extends TestCase
     {
         $result = $this->client->messages->batches->cancel('message_batch_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(MessageBatch::class, $result);
     }
 
     #[Test]
@@ -148,6 +158,7 @@ final class BatchesTest extends TestCase
 
         $result = $this->client->messages->batches->results('message_batch_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(MessageBatchIndividualResponse::class, $result);
     }
 }
