@@ -70,10 +70,6 @@ final class VersionsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: currently unsupported');
-        }
-
         $result = $this->client->beta->skills->versions->list('skill_id', []);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

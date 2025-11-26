@@ -70,7 +70,7 @@ final class PageCursor implements BaseModel, BasePage
         // @phpstan-ignore-next-line
         self::__unserialize($data);
 
-        if ($this->offsetExists('data')) {
+        if ($this->offsetGet('data')) {
             $acc = Conversion::coerce(
                 new ListOf($convert),
                 value: $this->offsetGet('data')
@@ -83,7 +83,7 @@ final class PageCursor implements BaseModel, BasePage
     /** @return list<TItem> */
     public function getItems(): array
     {
-        // @phpstan-ignore-next-line
+        // @phpstan-ignore-next-line return.type
         return $this->offsetGet('data') ?? [];
     }
 
@@ -103,8 +103,11 @@ final class PageCursor implements BaseModel, BasePage
      */
     public function nextRequest(): ?array
     {
-        $next = $this->next_page ?? null;
-        if (!$next) {
+        if (!($this->has_more ?? null) || !count($this->getItems())) {
+            return null;
+        }
+
+        if (!($next = $this->next_page ?? null)) {
             return null;
         }
 
@@ -113,7 +116,7 @@ final class PageCursor implements BaseModel, BasePage
             ['query' => ['page' => $next]]
         );
 
-        // @phpstan-ignore-next-line
+        // @phpstan-ignore-next-line return.type
         return [$nextRequest, $this->options];
     }
 }
