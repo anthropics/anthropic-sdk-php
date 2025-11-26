@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type BetaMCPToolsetShape = array{
  *   mcp_server_name: string,
- *   type: "mcp_toolset",
+ *   type: 'mcp_toolset',
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   configs?: array<string,BetaMCPToolConfig>|null,
  *   default_config?: BetaMCPToolDefaultConfig|null,
@@ -27,7 +27,7 @@ final class BetaMCPToolset implements BaseModel
     /** @use SdkModel<BetaMCPToolsetShape> */
     use SdkModel;
 
-    /** @var "mcp_toolset" $type */
+    /** @var 'mcp_toolset' $type */
     #[Api]
     public string $type = 'mcp_toolset';
 

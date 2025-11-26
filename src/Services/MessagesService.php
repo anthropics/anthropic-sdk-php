@@ -51,15 +51,15 @@ final class MessagesService implements MessagesContract
      * @param array{
      *   max_tokens: int,
      *   messages: list<array{
-     *     content: string|list<array<string,mixed>>, role: "user"|"assistant"
+     *     content: string|list<array<string,mixed>>, role: 'user'|'assistant'
      *   }>,
      *   model: string|Model,
      *   metadata?: array{user_id?: string|null},
-     *   service_tier?: "auto"|"standard_only",
+     *   service_tier?: 'auto'|'standard_only',
      *   stop_sequences?: list<string>,
      *   system?: string|list<array{
      *     text: string,
-     *     type: "text",
+     *     type: 'text',
      *     cache_control?: array<mixed>|null,
      *     citations?: list<array<string,mixed>>|null,
      *   }>,
@@ -98,15 +98,15 @@ final class MessagesService implements MessagesContract
      * @param array{
      *   max_tokens: int,
      *   messages: list<array{
-     *     content: string|list<array<string,mixed>>, role: "user"|"assistant"
+     *     content: string|list<array<string,mixed>>, role: 'user'|'assistant'
      *   }>,
      *   model: string|Model,
      *   metadata?: array{user_id?: string|null},
-     *   service_tier?: "auto"|"standard_only",
+     *   service_tier?: 'auto'|'standard_only',
      *   stop_sequences?: list<string>,
      *   system?: string|list<array{
      *     text: string,
-     *     type: "text",
+     *     type: 'text',
      *     cache_control?: array<mixed>|null,
      *     citations?: list<array<string,mixed>>|null,
      *   }>,
@@ -155,12 +155,12 @@ final class MessagesService implements MessagesContract
      *
      * @param array{
      *   messages: list<array{
-     *     content: string|list<array<string,mixed>>, role: "user"|"assistant"
+     *     content: string|list<array<string,mixed>>, role: 'user'|'assistant'
      *   }>,
      *   model: string|Model,
      *   system?: string|list<array{
      *     text: string,
-     *     type: "text",
+     *     type: 'text',
      *     cache_control?: array<mixed>|null,
      *     citations?: list<array<string,mixed>>|null,
      *   }>,

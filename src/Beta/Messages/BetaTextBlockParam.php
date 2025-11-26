@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaTextBlockParamShape = array{
  *   text: string,
- *   type: "text",
+ *   type: 'text',
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
  * }
@@ -21,7 +21,7 @@ final class BetaTextBlockParam implements BaseModel
     /** @use SdkModel<BetaTextBlockParamShape> */
     use SdkModel;
 
-    /** @var "text" $type */
+    /** @var 'text' $type */
     #[Api]
     public string $type = 'text';
 

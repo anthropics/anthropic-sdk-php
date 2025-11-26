@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaJSONOutputFormatShape = array{
- *   schema: array<string,mixed>, type: "json_schema"
+ *   schema: array<string,mixed>, type: 'json_schema'
  * }
  */
 final class BetaJSONOutputFormat implements BaseModel
@@ -18,7 +18,7 @@ final class BetaJSONOutputFormat implements BaseModel
     /** @use SdkModel<BetaJSONOutputFormatShape> */
     use SdkModel;
 
-    /** @var "json_schema" $type */
+    /** @var 'json_schema' $type */
     #[Api]
     public string $type = 'json_schema';
 

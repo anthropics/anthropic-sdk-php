@@ -11,7 +11,7 @@ use Anthropic\Messages\CacheControlEphemeral\TTL;
 
 /**
  * @phpstan-type CacheControlEphemeralShape = array{
- *   type: "ephemeral", ttl?: value-of<TTL>|null
+ *   type: 'ephemeral', ttl?: value-of<TTL>|null
  * }
  */
 final class CacheControlEphemeral implements BaseModel
@@ -19,7 +19,7 @@ final class CacheControlEphemeral implements BaseModel
     /** @use SdkModel<CacheControlEphemeralShape> */
     use SdkModel;
 
-    /** @var "ephemeral" $type */
+    /** @var 'ephemeral' $type */
     #[Api]
     public string $type = 'ephemeral';
 

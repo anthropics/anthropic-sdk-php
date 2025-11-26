@@ -103,7 +103,7 @@ final class BatchesTest extends TestCase
                         'stream' => true,
                         'system' => [
                             [
-                                'text' => "Today's date is 2024-06-01.",
+                                'text' => 'Today\'s date is 2024-06-01.',
                                 'type' => 'text',
                                 'cache_control' => ['type' => 'ephemeral', 'ttl' => '5m'],
                                 'citations' => [
@@ -199,7 +199,7 @@ final class BatchesTest extends TestCase
     public function testResults(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped("Prism doesn't support application/x-jsonl responses");
+            $this->markTestSkipped('Prism doesn\'t support application/x-jsonl responses');
         }
 
         $result = $this->client->beta->messages->batches->results(

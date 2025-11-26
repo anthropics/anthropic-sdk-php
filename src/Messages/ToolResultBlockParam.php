@@ -12,7 +12,7 @@ use Anthropic\Messages\ToolResultBlockParam\Content;
 /**
  * @phpstan-type ToolResultBlockParamShape = array{
  *   tool_use_id: string,
- *   type: "tool_result",
+ *   type: 'tool_result',
  *   cache_control?: CacheControlEphemeral|null,
  *   content?: string|null|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam>,
  *   is_error?: bool|null,
@@ -23,7 +23,7 @@ final class ToolResultBlockParam implements BaseModel
     /** @use SdkModel<ToolResultBlockParamShape> */
     use SdkModel;
 
-    /** @var "tool_result" $type */
+    /** @var 'tool_result' $type */
     #[Api]
     public string $type = 'tool_result';
 

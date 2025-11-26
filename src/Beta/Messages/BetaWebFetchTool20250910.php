@@ -11,8 +11,8 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaWebFetchTool20250910Shape = array{
- *   name: "web_fetch",
- *   type: "web_fetch_20250910",
+ *   name: 'web_fetch',
+ *   type: 'web_fetch_20250910',
  *   allowed_callers?: list<value-of<AllowedCaller>>|null,
  *   allowed_domains?: list<string>|null,
  *   blocked_domains?: list<string>|null,
@@ -34,12 +34,12 @@ final class BetaWebFetchTool20250910 implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      *
-     * @var "web_fetch" $name
+     * @var 'web_fetch' $name
      */
     #[Api]
     public string $name = 'web_fetch';
 
-    /** @var "web_fetch_20250910" $type */
+    /** @var 'web_fetch_20250910' $type */
     #[Api]
     public string $type = 'web_fetch_20250910';
 

@@ -11,7 +11,7 @@ use Anthropic\ErrorResponse;
 
 /**
  * @phpstan-type MessageBatchErroredResultShape = array{
- *   error: ErrorResponse, type: "errored"
+ *   error: ErrorResponse, type: 'errored'
  * }
  */
 final class MessageBatchErroredResult implements BaseModel
@@ -19,7 +19,7 @@ final class MessageBatchErroredResult implements BaseModel
     /** @use SdkModel<MessageBatchErroredResultShape> */
     use SdkModel;
 
-    /** @var "errored" $type */
+    /** @var 'errored' $type */
     #[Api]
     public string $type = 'errored';
 

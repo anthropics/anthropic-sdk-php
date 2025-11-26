@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaBashCodeExecutionToolResultBlockShape = array{
  *   content: BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock,
  *   tool_use_id: string,
- *   type: "bash_code_execution_tool_result",
+ *   type: 'bash_code_execution_tool_result',
  * }
  */
 final class BetaBashCodeExecutionToolResultBlock implements BaseModel
@@ -20,7 +20,7 @@ final class BetaBashCodeExecutionToolResultBlock implements BaseModel
     /** @use SdkModel<BetaBashCodeExecutionToolResultBlockShape> */
     use SdkModel;
 
-    /** @var "bash_code_execution_tool_result" $type */
+    /** @var 'bash_code_execution_tool_result' $type */
     #[Api]
     public string $type = 'bash_code_execution_tool_result';
 

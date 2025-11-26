@@ -11,8 +11,8 @@ use Anthropic\Messages\WebSearchTool20250305\UserLocation;
 
 /**
  * @phpstan-type WebSearchTool20250305Shape = array{
- *   name: "web_search",
- *   type: "web_search_20250305",
+ *   name: 'web_search',
+ *   type: 'web_search_20250305',
  *   allowed_domains?: list<string>|null,
  *   blocked_domains?: list<string>|null,
  *   cache_control?: CacheControlEphemeral|null,
@@ -30,12 +30,12 @@ final class WebSearchTool20250305 implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      *
-     * @var "web_search" $name
+     * @var 'web_search' $name
      */
     #[Api]
     public string $name = 'web_search';
 
-    /** @var "web_search_20250305" $type */
+    /** @var 'web_search_20250305' $type */
     #[Api]
     public string $type = 'web_search_20250305';
 

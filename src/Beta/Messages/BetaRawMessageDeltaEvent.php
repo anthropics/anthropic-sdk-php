@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaRawMessageDeltaEventShape = array{
  *   context_management: BetaContextManagementResponse|null,
  *   delta: Delta,
- *   type: "message_delta",
+ *   type: 'message_delta',
  *   usage: BetaMessageDeltaUsage,
  * }
  */
@@ -22,7 +22,7 @@ final class BetaRawMessageDeltaEvent implements BaseModel
     /** @use SdkModel<BetaRawMessageDeltaEventShape> */
     use SdkModel;
 
-    /** @var "message_delta" $type */
+    /** @var 'message_delta' $type */
     #[Api]
     public string $type = 'message_delta';
 

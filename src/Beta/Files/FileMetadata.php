@@ -17,7 +17,7 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  *   filename: string,
  *   mime_type: string,
  *   size_bytes: int,
- *   type: "file",
+ *   type: 'file',
  *   downloadable?: bool|null,
  * }
  */
@@ -33,7 +33,7 @@ final class FileMetadata implements BaseModel, ResponseConverter
      *
      * For files, this is always `"file"`.
      *
-     * @var "file" $type
+     * @var 'file' $type
      */
     #[Api]
     public string $type = 'file';

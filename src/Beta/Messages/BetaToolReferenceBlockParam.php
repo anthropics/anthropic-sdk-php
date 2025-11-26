@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type BetaToolReferenceBlockParamShape = array{
  *   tool_name: string,
- *   type: "tool_reference",
+ *   type: 'tool_reference',
  *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
@@ -22,7 +22,7 @@ final class BetaToolReferenceBlockParam implements BaseModel
     /** @use SdkModel<BetaToolReferenceBlockParamShape> */
     use SdkModel;
 
-    /** @var "tool_reference" $type */
+    /** @var 'tool_reference' $type */
     #[Api]
     public string $type = 'tool_reference';
 

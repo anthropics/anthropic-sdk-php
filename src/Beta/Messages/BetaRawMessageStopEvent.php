@@ -9,14 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaRawMessageStopEventShape = array{type: "message_stop"}
+ * @phpstan-type BetaRawMessageStopEventShape = array{type: 'message_stop'}
  */
 final class BetaRawMessageStopEvent implements BaseModel
 {
     /** @use SdkModel<BetaRawMessageStopEventShape> */
     use SdkModel;
 
-    /** @var "message_stop" $type */
+    /** @var 'message_stop' $type */
     #[Api]
     public string $type = 'message_stop';
 

@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   end_block_index: int,
  *   file_id: string|null,
  *   start_block_index: int,
- *   type: "content_block_location",
+ *   type: 'content_block_location',
  * }
  */
 final class BetaCitationContentBlockLocation implements BaseModel
@@ -24,7 +24,7 @@ final class BetaCitationContentBlockLocation implements BaseModel
     /** @use SdkModel<BetaCitationContentBlockLocationShape> */
     use SdkModel;
 
-    /** @var "content_block_location" $type */
+    /** @var 'content_block_location' $type */
     #[Api]
     public string $type = 'content_block_location';
 

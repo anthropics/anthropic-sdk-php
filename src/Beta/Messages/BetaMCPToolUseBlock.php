@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   input: array<string,mixed>,
  *   name: string,
  *   server_name: string,
- *   type: "mcp_tool_use",
+ *   type: 'mcp_tool_use',
  * }
  */
 final class BetaMCPToolUseBlock implements BaseModel
@@ -22,7 +22,7 @@ final class BetaMCPToolUseBlock implements BaseModel
     /** @use SdkModel<BetaMCPToolUseBlockShape> */
     use SdkModel;
 
-    /** @var "mcp_tool_use" $type */
+    /** @var 'mcp_tool_use' $type */
     #[Api]
     public string $type = 'mcp_tool_use';
 

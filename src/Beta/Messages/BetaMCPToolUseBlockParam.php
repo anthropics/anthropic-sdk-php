@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   input: array<string,mixed>,
  *   name: string,
  *   server_name: string,
- *   type: "mcp_tool_use",
+ *   type: 'mcp_tool_use',
  *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
@@ -23,7 +23,7 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     /** @use SdkModel<BetaMCPToolUseBlockParamShape> */
     use SdkModel;
 
-    /** @var "mcp_tool_use" $type */
+    /** @var 'mcp_tool_use' $type */
     #[Api]
     public string $type = 'mcp_tool_use';
 

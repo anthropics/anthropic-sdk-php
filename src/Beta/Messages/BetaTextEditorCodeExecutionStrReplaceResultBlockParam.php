@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaTextEditorCodeExecutionStrReplaceResultBlockParamShape = array{
- *   type: "text_editor_code_execution_str_replace_result",
+ *   type: 'text_editor_code_execution_str_replace_result',
  *   lines?: list<string>|null,
  *   new_lines?: int|null,
  *   new_start?: int|null,
@@ -23,7 +23,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
     /** @use SdkModel<BetaTextEditorCodeExecutionStrReplaceResultBlockParamShape> */
     use SdkModel;
 
-    /** @var "text_editor_code_execution_str_replace_result" $type */
+    /** @var 'text_editor_code_execution_str_replace_result' $type */
     #[Api]
     public string $type = 'text_editor_code_execution_str_replace_result';
 

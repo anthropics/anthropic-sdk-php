@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaWebSearchResultBlockParamShape = array{
  *   encrypted_content: string,
  *   title: string,
- *   type: "web_search_result",
+ *   type: 'web_search_result',
  *   url: string,
  *   page_age?: string|null,
  * }
@@ -22,7 +22,7 @@ final class BetaWebSearchResultBlockParam implements BaseModel
     /** @use SdkModel<BetaWebSearchResultBlockParamShape> */
     use SdkModel;
 
-    /** @var "web_search_result" $type */
+    /** @var 'web_search_result' $type */
     #[Api]
     public string $type = 'web_search_result';
 

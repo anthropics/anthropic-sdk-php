@@ -11,8 +11,8 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCodeExecutionTool20250825Shape = array{
- *   name: "code_execution",
- *   type: "code_execution_20250825",
+ *   name: 'code_execution',
+ *   type: 'code_execution_20250825',
  *   allowed_callers?: list<value-of<AllowedCaller>>|null,
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   defer_loading?: bool|null,
@@ -29,12 +29,12 @@ final class BetaCodeExecutionTool20250825 implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      *
-     * @var "code_execution" $name
+     * @var 'code_execution' $name
      */
     #[Api]
     public string $name = 'code_execution';
 
-    /** @var "code_execution_20250825" $type */
+    /** @var 'code_execution_20250825' $type */
     #[Api]
     public string $type = 'code_execution_20250825';
 

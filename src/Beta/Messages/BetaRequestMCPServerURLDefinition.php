@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaRequestMCPServerURLDefinitionShape = array{
  *   name: string,
- *   type: "url",
+ *   type: 'url',
  *   url: string,
  *   authorization_token?: string|null,
  *   tool_configuration?: BetaRequestMCPServerToolConfiguration|null,
@@ -22,7 +22,7 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
     /** @use SdkModel<BetaRequestMCPServerURLDefinitionShape> */
     use SdkModel;
 
-    /** @var "url" $type */
+    /** @var 'url' $type */
     #[Api]
     public string $type = 'url';
 

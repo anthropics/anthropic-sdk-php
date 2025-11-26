@@ -9,14 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type ThinkingConfigDisabledShape = array{type: "disabled"}
+ * @phpstan-type ThinkingConfigDisabledShape = array{type: 'disabled'}
  */
 final class ThinkingConfigDisabled implements BaseModel
 {
     /** @use SdkModel<ThinkingConfigDisabledShape> */
     use SdkModel;
 
-    /** @var "disabled" $type */
+    /** @var 'disabled' $type */
     #[Api]
     public string $type = 'disabled';
 

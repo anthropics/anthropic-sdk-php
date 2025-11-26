@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   id: string,
  *   input: array<string,mixed>,
  *   name: string,
- *   type: "tool_use",
+ *   type: 'tool_use',
  *   caller?: null|BetaDirectCaller|BetaServerToolCaller,
  * }
  */
@@ -23,7 +23,7 @@ final class BetaToolUseBlock implements BaseModel
     /** @use SdkModel<BetaToolUseBlockShape> */
     use SdkModel;
 
-    /** @var "tool_use" $type */
+    /** @var 'tool_use' $type */
     #[Api]
     public string $type = 'tool_use';
 

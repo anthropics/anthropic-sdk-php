@@ -12,8 +12,8 @@ use Anthropic\Core\Conversion\MapOf;
 
 /**
  * @phpstan-type BetaToolBash20241022Shape = array{
- *   name: "bash",
- *   type: "bash_20241022",
+ *   name: 'bash',
+ *   type: 'bash_20241022',
  *   allowed_callers?: list<value-of<AllowedCaller>>|null,
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   defer_loading?: bool|null,
@@ -31,12 +31,12 @@ final class BetaToolBash20241022 implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      *
-     * @var "bash" $name
+     * @var 'bash' $name
      */
     #[Api]
     public string $name = 'bash';
 
-    /** @var "bash_20241022" $type */
+    /** @var 'bash_20241022' $type */
     #[Api]
     public string $type = 'bash_20241022';
 

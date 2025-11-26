@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaThinkingConfigEnabledShape = array{
- *   budget_tokens: int, type: "enabled"
+ *   budget_tokens: int, type: 'enabled'
  * }
  */
 final class BetaThinkingConfigEnabled implements BaseModel
@@ -18,7 +18,7 @@ final class BetaThinkingConfigEnabled implements BaseModel
     /** @use SdkModel<BetaThinkingConfigEnabledShape> */
     use SdkModel;
 
-    /** @var "enabled" $type */
+    /** @var 'enabled' $type */
     #[Api]
     public string $type = 'enabled';
 

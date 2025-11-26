@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaToolReferenceBlockShape = array{
- *   tool_name: string, type: "tool_reference"
+ *   tool_name: string, type: 'tool_reference'
  * }
  */
 final class BetaToolReferenceBlock implements BaseModel
@@ -18,7 +18,7 @@ final class BetaToolReferenceBlock implements BaseModel
     /** @use SdkModel<BetaToolReferenceBlockShape> */
     use SdkModel;
 
-    /** @var "tool_reference" $type */
+    /** @var 'tool_reference' $type */
     #[Api]
     public string $type = 'tool_reference';
 

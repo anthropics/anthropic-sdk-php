@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaTextEditorCodeExecutionToolResultBlockShape = array{
  *   content: BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock,
  *   tool_use_id: string,
- *   type: "text_editor_code_execution_tool_result",
+ *   type: 'text_editor_code_execution_tool_result',
  * }
  */
 final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
@@ -20,7 +20,7 @@ final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
     /** @use SdkModel<BetaTextEditorCodeExecutionToolResultBlockShape> */
     use SdkModel;
 
-    /** @var "text_editor_code_execution_tool_result" $type */
+    /** @var 'text_editor_code_execution_tool_result' $type */
     #[Api]
     public string $type = 'text_editor_code_execution_tool_result';
 
