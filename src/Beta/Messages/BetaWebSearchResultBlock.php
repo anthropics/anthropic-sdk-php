@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   encrypted_content: string,
  *   page_age: string|null,
  *   title: string,
- *   type: "web_search_result",
+ *   type: 'web_search_result',
  *   url: string,
  * }
  */
@@ -22,7 +22,7 @@ final class BetaWebSearchResultBlock implements BaseModel
     /** @use SdkModel<BetaWebSearchResultBlockShape> */
     use SdkModel;
 
-    /** @var "web_search_result" $type */
+    /** @var 'web_search_result' $type */
     #[Api]
     public string $type = 'web_search_result';
 

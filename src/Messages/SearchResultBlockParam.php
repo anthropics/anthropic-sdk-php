@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   content: list<TextBlockParam>,
  *   source: string,
  *   title: string,
- *   type: "search_result",
+ *   type: 'search_result',
  *   cache_control?: CacheControlEphemeral|null,
  *   citations?: CitationsConfigParam|null,
  * }
@@ -23,7 +23,7 @@ final class SearchResultBlockParam implements BaseModel
     /** @use SdkModel<SearchResultBlockParamShape> */
     use SdkModel;
 
-    /** @var "search_result" $type */
+    /** @var 'search_result' $type */
     #[Api]
     public string $type = 'search_result';
 

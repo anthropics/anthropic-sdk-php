@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type MessageBatchSucceededResultShape = array{
- *   message: BetaMessage, type: "succeeded"
+ *   message: BetaMessage, type: 'succeeded'
  * }
  */
 final class MessageBatchSucceededResult implements BaseModel
@@ -19,7 +19,7 @@ final class MessageBatchSucceededResult implements BaseModel
     /** @use SdkModel<MessageBatchSucceededResultShape> */
     use SdkModel;
 
-    /** @var "succeeded" $type */
+    /** @var 'succeeded' $type */
     #[Api]
     public string $type = 'succeeded';
 

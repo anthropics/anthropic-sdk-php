@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   source: string,
  *   start_block_index: int,
  *   title: string|null,
- *   type: "search_result_location",
+ *   type: 'search_result_location',
  * }
  */
 final class BetaCitationSearchResultLocationParam implements BaseModel
@@ -24,7 +24,7 @@ final class BetaCitationSearchResultLocationParam implements BaseModel
     /** @use SdkModel<BetaCitationSearchResultLocationParamShape> */
     use SdkModel;
 
-    /** @var "search_result_location" $type */
+    /** @var 'search_result_location' $type */
     #[Api]
     public string $type = 'search_result_location';
 

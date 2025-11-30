@@ -76,7 +76,7 @@ final class Page implements BaseModel, BasePage
         // @phpstan-ignore-next-line
         self::__unserialize($data);
 
-        if ($this->offsetExists('data')) {
+        if ($this->offsetGet('data')) {
             $acc = Conversion::coerce(
                 new ListOf($convert),
                 value: $this->offsetGet('data')
@@ -89,7 +89,7 @@ final class Page implements BaseModel, BasePage
     /** @return list<TItem> */
     public function getItems(): array
     {
-        // @phpstan-ignore-next-line
+        // @phpstan-ignore-next-line return.type
         return $this->offsetGet('data') ?? [];
     }
 
@@ -109,17 +109,22 @@ final class Page implements BaseModel, BasePage
      */
     public function nextRequest(): ?array
     {
-        $next = $this->last_id ?? null;
-        if (!$next) {
+        if (!($this->has_more ?? null) || !count($this->getItems())) {
+            return null;
+        }
+
+        if (!($prev = $this->first_id ?? null) && !($next = $this->last_id ?? null)) {
             return null;
         }
 
         $nextRequest = array_merge_recursive(
             $this->request,
-            ['query' => ['after_id' => $next]]
+            [
+                'query' => empty($prev) ? ['after_id' => $next] : ['before_id' => $prev],
+            ],
         );
 
-        // @phpstan-ignore-next-line
+        // @phpstan-ignore-next-line return.type
         return [$nextRequest, $this->options];
     }
 }

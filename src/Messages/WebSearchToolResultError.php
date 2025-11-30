@@ -11,7 +11,7 @@ use Anthropic\Messages\WebSearchToolResultError\ErrorCode;
 
 /**
  * @phpstan-type WebSearchToolResultErrorShape = array{
- *   error_code: value-of<ErrorCode>, type: "web_search_tool_result_error"
+ *   error_code: value-of<ErrorCode>, type: 'web_search_tool_result_error'
  * }
  */
 final class WebSearchToolResultError implements BaseModel
@@ -19,7 +19,7 @@ final class WebSearchToolResultError implements BaseModel
     /** @use SdkModel<WebSearchToolResultErrorShape> */
     use SdkModel;
 
-    /** @var "web_search_tool_result_error" $type */
+    /** @var 'web_search_tool_result_error' $type */
     #[Api]
     public string $type = 'web_search_tool_result_error';
 

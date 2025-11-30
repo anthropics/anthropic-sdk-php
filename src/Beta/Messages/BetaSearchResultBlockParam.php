@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   content: list<BetaTextBlockParam>,
  *   source: string,
  *   title: string,
- *   type: "search_result",
+ *   type: 'search_result',
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   citations?: BetaCitationsConfigParam|null,
  * }
@@ -23,7 +23,7 @@ final class BetaSearchResultBlockParam implements BaseModel
     /** @use SdkModel<BetaSearchResultBlockParamShape> */
     use SdkModel;
 
-    /** @var "search_result" $type */
+    /** @var 'search_result' $type */
     #[Api]
     public string $type = 'search_result';
 

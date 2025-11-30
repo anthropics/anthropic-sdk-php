@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaClearToolUses20250919EditResponseShape = array{
  *   cleared_input_tokens: int,
  *   cleared_tool_uses: int,
- *   type: "clear_tool_uses_20250919",
+ *   type: 'clear_tool_uses_20250919',
  * }
  */
 final class BetaClearToolUses20250919EditResponse implements BaseModel
@@ -23,7 +23,7 @@ final class BetaClearToolUses20250919EditResponse implements BaseModel
     /**
      * The type of context management edit applied.
      *
-     * @var "clear_tool_uses_20250919" $type
+     * @var 'clear_tool_uses_20250919' $type
      */
     #[Api]
     public string $type = 'clear_tool_uses_20250919';

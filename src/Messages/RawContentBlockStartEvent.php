@@ -13,7 +13,7 @@ use Anthropic\Messages\RawContentBlockStartEvent\ContentBlock;
  * @phpstan-type RawContentBlockStartEventShape = array{
  *   content_block: TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock,
  *   index: int,
- *   type: "content_block_start",
+ *   type: 'content_block_start',
  * }
  */
 final class RawContentBlockStartEvent implements BaseModel
@@ -21,7 +21,7 @@ final class RawContentBlockStartEvent implements BaseModel
     /** @use SdkModel<RawContentBlockStartEventShape> */
     use SdkModel;
 
-    /** @var "content_block_start" $type */
+    /** @var 'content_block_start' $type */
     #[Api]
     public string $type = 'content_block_start';
 

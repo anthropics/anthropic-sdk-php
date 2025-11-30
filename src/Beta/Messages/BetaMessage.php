@@ -18,10 +18,10 @@ use Anthropic\Messages\Model;
  *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
  *   context_management: BetaContextManagementResponse|null,
  *   model: string|value-of<Model>,
- *   role: "assistant",
+ *   role: 'assistant',
  *   stop_reason: value-of<BetaStopReason>|null,
  *   stop_sequence: string|null,
- *   type: "message",
+ *   type: 'message',
  *   usage: BetaUsage,
  * }
  */
@@ -37,7 +37,7 @@ final class BetaMessage implements BaseModel, ResponseConverter
      *
      * This will always be `"assistant"`.
      *
-     * @var "assistant" $role
+     * @var 'assistant' $role
      */
     #[Api]
     public string $role = 'assistant';
@@ -47,7 +47,7 @@ final class BetaMessage implements BaseModel, ResponseConverter
      *
      * For Messages, this is always `"message"`.
      *
-     * @var "message" $type
+     * @var 'message' $type
      */
     #[Api]
     public string $type = 'message';

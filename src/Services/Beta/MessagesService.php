@@ -52,7 +52,7 @@ final class MessagesService implements MessagesContract
      * @param array{
      *   max_tokens: int,
      *   messages: list<array{
-     *     content: string|list<array<string,mixed>>, role: "user"|"assistant"
+     *     content: string|list<array<string,mixed>>, role: 'user'|'assistant'
      *   }>,
      *   model: string|Model,
      *   container?: string|array{
@@ -61,7 +61,7 @@ final class MessagesService implements MessagesContract
      *   context_management?: array{edits?: list<array<string,mixed>>}|null,
      *   mcp_servers?: list<array{
      *     name: string,
-     *     type: "url",
+     *     type: 'url',
      *     url: string,
      *     authorization_token?: string|null,
      *     tool_configuration?: array{
@@ -69,13 +69,13 @@ final class MessagesService implements MessagesContract
      *     }|null,
      *   }>,
      *   metadata?: array{user_id?: string|null},
-     *   output_config?: array{effort?: "low"|"medium"|"high"|null},
-     *   output_format?: array{schema: array<string,mixed>, type: "json_schema"}|null,
-     *   service_tier?: "auto"|"standard_only",
+     *   output_config?: array{effort?: 'low'|'medium'|'high'|null},
+     *   output_format?: array{schema: array<string,mixed>, type: 'json_schema'}|null,
+     *   service_tier?: 'auto'|'standard_only',
      *   stop_sequences?: list<string>,
      *   system?: string|list<array{
      *     text: string,
-     *     type: "text",
+     *     type: 'text',
      *     cache_control?: array<mixed>|null,
      *     citations?: list<array<string,mixed>>|null,
      *   }>,
@@ -120,7 +120,7 @@ final class MessagesService implements MessagesContract
      * @param array{
      *   max_tokens: int,
      *   messages: list<array{
-     *     content: string|list<array<string,mixed>>, role: "user"|"assistant"
+     *     content: string|list<array<string,mixed>>, role: 'user'|'assistant'
      *   }>,
      *   model: string|Model,
      *   container?: string|array{
@@ -129,7 +129,7 @@ final class MessagesService implements MessagesContract
      *   context_management?: array{edits?: list<array<string,mixed>>}|null,
      *   mcp_servers?: list<array{
      *     name: string,
-     *     type: "url",
+     *     type: 'url',
      *     url: string,
      *     authorization_token?: string|null,
      *     tool_configuration?: array{
@@ -137,13 +137,13 @@ final class MessagesService implements MessagesContract
      *     }|null,
      *   }>,
      *   metadata?: array{user_id?: string|null},
-     *   output_config?: array{effort?: "low"|"medium"|"high"|null},
-     *   output_format?: array{schema: array<string,mixed>, type: "json_schema"}|null,
-     *   service_tier?: "auto"|"standard_only",
+     *   output_config?: array{effort?: 'low'|'medium'|'high'|null},
+     *   output_format?: array{schema: array<string,mixed>, type: 'json_schema'}|null,
+     *   service_tier?: 'auto'|'standard_only',
      *   stop_sequences?: list<string>,
      *   system?: string|list<array{
      *     text: string,
-     *     type: "text",
+     *     type: 'text',
      *     cache_control?: array<mixed>|null,
      *     citations?: list<array<string,mixed>>|null,
      *   }>,
@@ -200,24 +200,24 @@ final class MessagesService implements MessagesContract
      *
      * @param array{
      *   messages: list<array{
-     *     content: string|list<array<string,mixed>>, role: "user"|"assistant"
+     *     content: string|list<array<string,mixed>>, role: 'user'|'assistant'
      *   }>,
      *   model: string|Model,
      *   context_management?: array{edits?: list<array<string,mixed>>}|null,
      *   mcp_servers?: list<array{
      *     name: string,
-     *     type: "url",
+     *     type: 'url',
      *     url: string,
      *     authorization_token?: string|null,
      *     tool_configuration?: array{
      *       allowed_tools?: list<string>|null, enabled?: bool|null
      *     }|null,
      *   }>,
-     *   output_config?: array{effort?: "low"|"medium"|"high"|null},
-     *   output_format?: array{schema: array<string,mixed>, type: "json_schema"}|null,
+     *   output_config?: array{effort?: 'low'|'medium'|'high'|null},
+     *   output_format?: array{schema: array<string,mixed>, type: 'json_schema'}|null,
      *   system?: string|list<array{
      *     text: string,
-     *     type: "text",
+     *     type: 'text',
      *     cache_control?: array<mixed>|null,
      *     citations?: list<array<string,mixed>>|null,
      *   }>,

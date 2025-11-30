@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type ToolBash20250124Shape = array{
- *   name: "bash",
- *   type: "bash_20250124",
+ *   name: 'bash',
+ *   type: 'bash_20250124',
  *   cache_control?: CacheControlEphemeral|null,
  * }
  */
@@ -25,12 +25,12 @@ final class ToolBash20250124 implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      *
-     * @var "bash" $name
+     * @var 'bash' $name
      */
     #[Api]
     public string $name = 'bash';
 
-    /** @var "bash_20250124" $type */
+    /** @var 'bash_20250124' $type */
     #[Api]
     public string $type = 'bash_20250124';
 

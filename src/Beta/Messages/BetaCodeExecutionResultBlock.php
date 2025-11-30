@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   return_code: int,
  *   stderr: string,
  *   stdout: string,
- *   type: "code_execution_result",
+ *   type: 'code_execution_result',
  * }
  */
 final class BetaCodeExecutionResultBlock implements BaseModel
@@ -22,7 +22,7 @@ final class BetaCodeExecutionResultBlock implements BaseModel
     /** @use SdkModel<BetaCodeExecutionResultBlockShape> */
     use SdkModel;
 
-    /** @var "code_execution_result" $type */
+    /** @var 'code_execution_result' $type */
     #[Api]
     public string $type = 'code_execution_result';
 

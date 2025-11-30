@@ -12,8 +12,8 @@ use Anthropic\Core\Conversion\MapOf;
 
 /**
  * @phpstan-type BetaToolTextEditor20250728Shape = array{
- *   name: "str_replace_based_edit_tool",
- *   type: "text_editor_20250728",
+ *   name: 'str_replace_based_edit_tool',
+ *   type: 'text_editor_20250728',
  *   allowed_callers?: list<value-of<AllowedCaller>>|null,
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   defer_loading?: bool|null,
@@ -32,12 +32,12 @@ final class BetaToolTextEditor20250728 implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      *
-     * @var "str_replace_based_edit_tool" $name
+     * @var 'str_replace_based_edit_tool' $name
      */
     #[Api]
     public string $name = 'str_replace_based_edit_tool';
 
-    /** @var "text_editor_20250728" $type */
+    /** @var 'text_editor_20250728' $type */
     #[Api]
     public string $type = 'text_editor_20250728';
 

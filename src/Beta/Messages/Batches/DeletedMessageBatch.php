@@ -12,7 +12,7 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type DeletedMessageBatchShape = array{
- *   id: string, type: "message_batch_deleted"
+ *   id: string, type: 'message_batch_deleted'
  * }
  */
 final class DeletedMessageBatch implements BaseModel, ResponseConverter
@@ -27,7 +27,7 @@ final class DeletedMessageBatch implements BaseModel, ResponseConverter
      *
      * For Message Batches, this is always `"message_batch_deleted"`.
      *
-     * @var "message_batch_deleted" $type
+     * @var 'message_batch_deleted' $type
      */
     #[Api]
     public string $type = 'message_batch_deleted';

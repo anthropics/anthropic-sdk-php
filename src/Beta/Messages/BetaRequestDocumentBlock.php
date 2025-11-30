@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaRequestDocumentBlockShape = array{
  *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource,
- *   type: "document",
+ *   type: 'document',
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   citations?: BetaCitationsConfigParam|null,
  *   context?: string|null,
@@ -24,7 +24,7 @@ final class BetaRequestDocumentBlock implements BaseModel
     /** @use SdkModel<BetaRequestDocumentBlockShape> */
     use SdkModel;
 
-    /** @var "document" $type */
+    /** @var 'document' $type */
     #[Api]
     public string $type = 'document';
 

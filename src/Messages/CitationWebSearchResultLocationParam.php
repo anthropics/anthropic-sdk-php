@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   cited_text: string,
  *   encrypted_index: string,
  *   title: string|null,
- *   type: "web_search_result_location",
+ *   type: 'web_search_result_location',
  *   url: string,
  * }
  */
@@ -22,7 +22,7 @@ final class CitationWebSearchResultLocationParam implements BaseModel
     /** @use SdkModel<CitationWebSearchResultLocationParamShape> */
     use SdkModel;
 
-    /** @var "web_search_result_location" $type */
+    /** @var 'web_search_result_location' $type */
     #[Api]
     public string $type = 'web_search_result_location';
 

@@ -15,10 +15,10 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  *   id: string,
  *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
  *   model: string|value-of<Model>,
- *   role: "assistant",
+ *   role: 'assistant',
  *   stop_reason: value-of<StopReason>|null,
  *   stop_sequence: string|null,
- *   type: "message",
+ *   type: 'message',
  *   usage: Usage,
  * }
  */
@@ -34,7 +34,7 @@ final class Message implements BaseModel, ResponseConverter
      *
      * This will always be `"assistant"`.
      *
-     * @var "assistant" $role
+     * @var 'assistant' $role
      */
     #[Api]
     public string $role = 'assistant';
@@ -44,7 +44,7 @@ final class Message implements BaseModel, ResponseConverter
      *
      * For Messages, this is always `"message"`.
      *
-     * @var "message" $type
+     * @var 'message' $type
      */
     #[Api]
     public string $type = 'message';

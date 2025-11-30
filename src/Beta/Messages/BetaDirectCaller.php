@@ -11,14 +11,14 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Tool invocation directly from the model.
  *
- * @phpstan-type BetaDirectCallerShape = array{type: "direct"}
+ * @phpstan-type BetaDirectCallerShape = array{type: 'direct'}
  */
 final class BetaDirectCaller implements BaseModel
 {
     /** @use SdkModel<BetaDirectCallerShape> */
     use SdkModel;
 
-    /** @var "direct" $type */
+    /** @var 'direct' $type */
     #[Api]
     public string $type = 'direct';
 

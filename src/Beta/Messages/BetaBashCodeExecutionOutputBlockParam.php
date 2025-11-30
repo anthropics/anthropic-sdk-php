@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaBashCodeExecutionOutputBlockParamShape = array{
- *   file_id: string, type: "bash_code_execution_output"
+ *   file_id: string, type: 'bash_code_execution_output'
  * }
  */
 final class BetaBashCodeExecutionOutputBlockParam implements BaseModel
@@ -18,7 +18,7 @@ final class BetaBashCodeExecutionOutputBlockParam implements BaseModel
     /** @use SdkModel<BetaBashCodeExecutionOutputBlockParamShape> */
     use SdkModel;
 
-    /** @var "bash_code_execution_output" $type */
+    /** @var 'bash_code_execution_output' $type */
     #[Api]
     public string $type = 'bash_code_execution_output';
 

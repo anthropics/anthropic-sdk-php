@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaImageBlockParamShape = array{
  *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource,
- *   type: "image",
+ *   type: 'image',
  *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
@@ -21,7 +21,7 @@ final class BetaImageBlockParam implements BaseModel
     /** @use SdkModel<BetaImageBlockParamShape> */
     use SdkModel;
 
-    /** @var "image" $type */
+    /** @var 'image' $type */
     #[Api]
     public string $type = 'image';
 

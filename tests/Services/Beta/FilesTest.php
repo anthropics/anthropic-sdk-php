@@ -2,11 +2,13 @@
 
 namespace Tests\Services\Beta;
 
+use Anthropic\Beta\Files\DeletedFile;
+use Anthropic\Beta\Files\FileMetadata;
 use Anthropic\Client;
+use Anthropic\Page;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -29,13 +31,10 @@ final class FilesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: currently unsupported');
-        }
-
         $result = $this->client->beta->files->list([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Page::class, $result);
     }
 
     #[Test]
@@ -43,7 +42,8 @@ final class FilesTest extends TestCase
     {
         $result = $this->client->beta->files->delete('file_id', []);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DeletedFile::class, $result);
     }
 
     #[Test]
@@ -51,6 +51,7 @@ final class FilesTest extends TestCase
     {
         $result = $this->client->beta->files->retrieveMetadata('file_id', []);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(FileMetadata::class, $result);
     }
 }

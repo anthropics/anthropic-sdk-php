@@ -12,8 +12,8 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type ServerToolUseBlockParamShape = array{
  *   id: string,
  *   input: array<string,mixed>,
- *   name: "web_search",
- *   type: "server_tool_use",
+ *   name: 'web_search',
+ *   type: 'server_tool_use',
  *   cache_control?: CacheControlEphemeral|null,
  * }
  */
@@ -22,11 +22,11 @@ final class ServerToolUseBlockParam implements BaseModel
     /** @use SdkModel<ServerToolUseBlockParamShape> */
     use SdkModel;
 
-    /** @var "web_search" $name */
+    /** @var 'web_search' $name */
     #[Api]
     public string $name = 'web_search';
 
-    /** @var "server_tool_use" $type */
+    /** @var 'server_tool_use' $type */
     #[Api]
     public string $type = 'server_tool_use';
 

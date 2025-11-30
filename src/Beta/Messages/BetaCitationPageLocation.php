@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   end_page_number: int,
  *   file_id: string|null,
  *   start_page_number: int,
- *   type: "page_location",
+ *   type: 'page_location',
  * }
  */
 final class BetaCitationPageLocation implements BaseModel
@@ -24,7 +24,7 @@ final class BetaCitationPageLocation implements BaseModel
     /** @use SdkModel<BetaCitationPageLocationShape> */
     use SdkModel;
 
-    /** @var "page_location" $type */
+    /** @var 'page_location' $type */
     #[Api]
     public string $type = 'page_location';
 

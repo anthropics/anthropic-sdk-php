@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818ViewCommandShape = array{
- *   command: "view", path: string, view_range?: list<int>|null
+ *   command: 'view', path: string, view_range?: list<int>|null
  * }
  */
 final class BetaMemoryTool20250818ViewCommand implements BaseModel
@@ -21,7 +21,7 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
     /**
      * Command type identifier.
      *
-     * @var "view" $command
+     * @var 'view' $command
      */
     #[Api]
     public string $command = 'view';

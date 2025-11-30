@@ -12,7 +12,7 @@ use Anthropic\Messages\DocumentBlockParam\Source;
 /**
  * @phpstan-type DocumentBlockParamShape = array{
  *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
- *   type: "document",
+ *   type: 'document',
  *   cache_control?: CacheControlEphemeral|null,
  *   citations?: CitationsConfigParam|null,
  *   context?: string|null,
@@ -24,7 +24,7 @@ final class DocumentBlockParam implements BaseModel
     /** @use SdkModel<DocumentBlockParamShape> */
     use SdkModel;
 
-    /** @var "document" $type */
+    /** @var 'document' $type */
     #[Api]
     public string $type = 'document';
 

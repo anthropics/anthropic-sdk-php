@@ -12,8 +12,8 @@ use Anthropic\Core\Conversion\MapOf;
 
 /**
  * @phpstan-type BetaMemoryTool20250818Shape = array{
- *   name: "memory",
- *   type: "memory_20250818",
+ *   name: 'memory',
+ *   type: 'memory_20250818',
  *   allowed_callers?: list<value-of<AllowedCaller>>|null,
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   defer_loading?: bool|null,
@@ -31,12 +31,12 @@ final class BetaMemoryTool20250818 implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      *
-     * @var "memory" $name
+     * @var 'memory' $name
      */
     #[Api]
     public string $name = 'memory';
 
-    /** @var "memory_20250818" $type */
+    /** @var 'memory_20250818' $type */
     #[Api]
     public string $type = 'memory_20250818';
 

@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.5.0 (2025-11-30)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.4.0...v0.5.0)
+
+### Features
+
+* better support for pagination mechanisms ([829ee6e](https://github.com/anthropics/anthropic-sdk-php/commit/829ee6eddf267729c0f78b9422433d8ecec2ed90))
+
+
+### Chores
+
+* use non-trivial test assertions ([c223976](https://github.com/anthropics/anthropic-sdk-php/commit/c223976e6b6540e7389799ac1428a321119365b2))
+* use single quote strings ([441785c](https://github.com/anthropics/anthropic-sdk-php/commit/441785c73c427e4b7f60fdf6f5e0562b7ede94e6))
+
 ## 0.4.0 (2025-11-24)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.3.0...v0.4.0)

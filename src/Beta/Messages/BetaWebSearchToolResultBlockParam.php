@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaWebSearchToolResultBlockParamShape = array{
  *   content: list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError,
  *   tool_use_id: string,
- *   type: "web_search_tool_result",
+ *   type: 'web_search_tool_result',
  *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
@@ -21,13 +21,11 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
     /** @use SdkModel<BetaWebSearchToolResultBlockParamShape> */
     use SdkModel;
 
-    /** @var "web_search_tool_result" $type */
+    /** @var 'web_search_tool_result' $type */
     #[Api]
     public string $type = 'web_search_tool_result';
 
-    /**
-     * @var list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError $content
-     */
+    /** @var list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError $content */
     #[Api(union: BetaWebSearchToolResultBlockParamContent::class)]
     public array|BetaWebSearchToolRequestError $content;
 

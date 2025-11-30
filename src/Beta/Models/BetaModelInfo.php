@@ -15,7 +15,7 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  *   id: string,
  *   created_at: \DateTimeInterface,
  *   display_name: string,
- *   type: "model",
+ *   type: 'model',
  * }
  */
 final class BetaModelInfo implements BaseModel, ResponseConverter
@@ -30,7 +30,7 @@ final class BetaModelInfo implements BaseModel, ResponseConverter
      *
      * For Models, this is always `"model"`.
      *
-     * @var "model" $type
+     * @var 'model' $type
      */
     #[Api]
     public string $type = 'model';

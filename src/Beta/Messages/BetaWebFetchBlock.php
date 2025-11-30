@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaWebFetchBlockShape = array{
  *   content: BetaDocumentBlock,
  *   retrieved_at: string|null,
- *   type: "web_fetch_result",
+ *   type: 'web_fetch_result',
  *   url: string,
  * }
  */
@@ -21,7 +21,7 @@ final class BetaWebFetchBlock implements BaseModel
     /** @use SdkModel<BetaWebFetchBlockShape> */
     use SdkModel;
 
-    /** @var "web_fetch_result" $type */
+    /** @var 'web_fetch_result' $type */
     #[Api]
     public string $type = 'web_fetch_result';
 

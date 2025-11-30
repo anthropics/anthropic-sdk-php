@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaRedactedThinkingBlockShape = array{
- *   data: string, type: "redacted_thinking"
+ *   data: string, type: 'redacted_thinking'
  * }
  */
 final class BetaRedactedThinkingBlock implements BaseModel
@@ -18,7 +18,7 @@ final class BetaRedactedThinkingBlock implements BaseModel
     /** @use SdkModel<BetaRedactedThinkingBlockShape> */
     use SdkModel;
 
-    /** @var "redacted_thinking" $type */
+    /** @var 'redacted_thinking' $type */
     #[Api]
     public string $type = 'redacted_thinking';
 

@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * Parameters for the user's location. Used to provide more relevant search results.
  *
  * @phpstan-type UserLocationShape = array{
- *   type: "approximate",
+ *   type: 'approximate',
  *   city?: string|null,
  *   country?: string|null,
  *   region?: string|null,
@@ -24,7 +24,7 @@ final class UserLocation implements BaseModel
     /** @use SdkModel<UserLocationShape> */
     use SdkModel;
 
-    /** @var "approximate" $type */
+    /** @var 'approximate' $type */
     #[Api]
     public string $type = 'approximate';
 

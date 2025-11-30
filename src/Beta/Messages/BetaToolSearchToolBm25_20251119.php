@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaToolSearchToolBm25_20251119Shape = array{
- *   name: "tool_search_tool_bm25",
+ *   name: 'tool_search_tool_bm25',
  *   type: value-of<Type>,
  *   allowed_callers?: list<value-of<AllowedCaller>>|null,
  *   cache_control?: BetaCacheControlEphemeral|null,
@@ -30,7 +30,7 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      *
-     * @var "tool_search_tool_bm25" $name
+     * @var 'tool_search_tool_bm25' $name
      */
     #[Api]
     public string $name = 'tool_search_tool_bm25';

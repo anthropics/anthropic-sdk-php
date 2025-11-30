@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type ThinkingConfigEnabledShape = array{
- *   budget_tokens: int, type: "enabled"
+ *   budget_tokens: int, type: 'enabled'
  * }
  */
 final class ThinkingConfigEnabled implements BaseModel
@@ -18,7 +18,7 @@ final class ThinkingConfigEnabled implements BaseModel
     /** @use SdkModel<ThinkingConfigEnabledShape> */
     use SdkModel;
 
-    /** @var "enabled" $type */
+    /** @var 'enabled' $type */
     #[Api]
     public string $type = 'enabled';
 

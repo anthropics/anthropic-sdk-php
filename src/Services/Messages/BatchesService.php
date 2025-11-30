@@ -42,7 +42,7 @@ final class BatchesService implements BatchesContract
      *       messages: list<array<mixed>>,
      *       model: string|Model,
      *       metadata?: array<mixed>,
-     *       service_tier?: "auto"|"standard_only",
+     *       service_tier?: 'auto'|'standard_only',
      *       stop_sequences?: list<string>,
      *       stream?: bool,
      *       system?: string|list<array<mixed>>,

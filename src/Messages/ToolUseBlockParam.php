@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   id: string,
  *   input: array<string,mixed>,
  *   name: string,
- *   type: "tool_use",
+ *   type: 'tool_use',
  *   cache_control?: CacheControlEphemeral|null,
  * }
  */
@@ -22,7 +22,7 @@ final class ToolUseBlockParam implements BaseModel
     /** @use SdkModel<ToolUseBlockParamShape> */
     use SdkModel;
 
-    /** @var "tool_use" $type */
+    /** @var 'tool_use' $type */
     #[Api]
     public string $type = 'tool_use';
 

@@ -11,7 +11,7 @@ use Anthropic\Messages\RawMessageDeltaEvent\Delta;
 
 /**
  * @phpstan-type RawMessageDeltaEventShape = array{
- *   delta: Delta, type: "message_delta", usage: MessageDeltaUsage
+ *   delta: Delta, type: 'message_delta', usage: MessageDeltaUsage
  * }
  */
 final class RawMessageDeltaEvent implements BaseModel
@@ -19,7 +19,7 @@ final class RawMessageDeltaEvent implements BaseModel
     /** @use SdkModel<RawMessageDeltaEventShape> */
     use SdkModel;
 
-    /** @var "message_delta" $type */
+    /** @var 'message_delta' $type */
     #[Api]
     public string $type = 'message_delta';
 

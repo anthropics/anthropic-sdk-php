@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   document_title: string|null,
  *   end_char_index: int,
  *   start_char_index: int,
- *   type: "char_location",
+ *   type: 'char_location',
  * }
  */
 final class BetaCitationCharLocationParam implements BaseModel
@@ -23,7 +23,7 @@ final class BetaCitationCharLocationParam implements BaseModel
     /** @use SdkModel<BetaCitationCharLocationParamShape> */
     use SdkModel;
 
-    /** @var "char_location" $type */
+    /** @var 'char_location' $type */
     #[Api]
     public string $type = 'char_location';
 

@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type ThinkingBlockParamShape = array{
- *   signature: string, thinking: string, type: "thinking"
+ *   signature: string, thinking: string, type: 'thinking'
  * }
  */
 final class ThinkingBlockParam implements BaseModel
@@ -18,7 +18,7 @@ final class ThinkingBlockParam implements BaseModel
     /** @use SdkModel<ThinkingBlockParamShape> */
     use SdkModel;
 
-    /** @var "thinking" $type */
+    /** @var 'thinking' $type */
     #[Api]
     public string $type = 'thinking';
 

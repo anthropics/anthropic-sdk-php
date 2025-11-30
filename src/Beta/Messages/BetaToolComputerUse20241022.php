@@ -14,8 +14,8 @@ use Anthropic\Core\Conversion\MapOf;
  * @phpstan-type BetaToolComputerUse20241022Shape = array{
  *   display_height_px: int,
  *   display_width_px: int,
- *   name: "computer",
- *   type: "computer_20241022",
+ *   name: 'computer',
+ *   type: 'computer_20241022',
  *   allowed_callers?: list<value-of<AllowedCaller>>|null,
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   defer_loading?: bool|null,
@@ -34,12 +34,12 @@ final class BetaToolComputerUse20241022 implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      *
-     * @var "computer" $name
+     * @var 'computer' $name
      */
     #[Api]
     public string $name = 'computer';
 
-    /** @var "computer_20241022" $type */
+    /** @var 'computer_20241022' $type */
     #[Api]
     public string $type = 'computer_20241022';
 

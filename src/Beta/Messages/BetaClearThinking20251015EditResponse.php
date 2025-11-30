@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaClearThinking20251015EditResponseShape = array{
  *   cleared_input_tokens: int,
  *   cleared_thinking_turns: int,
- *   type: "clear_thinking_20251015",
+ *   type: 'clear_thinking_20251015',
  * }
  */
 final class BetaClearThinking20251015EditResponse implements BaseModel
@@ -23,7 +23,7 @@ final class BetaClearThinking20251015EditResponse implements BaseModel
     /**
      * The type of context management edit applied.
      *
-     * @var "clear_thinking_20251015" $type
+     * @var 'clear_thinking_20251015' $type
      */
     #[Api]
     public string $type = 'clear_thinking_20251015';
