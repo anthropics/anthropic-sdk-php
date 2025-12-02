@@ -29,7 +29,7 @@ interface MessagesContract
      */
     public function create(
         array|MessageCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): BetaMessage;
 
     /**
@@ -43,7 +43,7 @@ interface MessagesContract
      */
     public function createStream(
         array|MessageCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): BaseStream;
 
     /**
