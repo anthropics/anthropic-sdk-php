@@ -31,7 +31,8 @@ trait SdkStream
         protected RequestInterface $request,
         protected ResponseInterface $response,
     ) {
-        $this->stream = Util::decodeContent($response); // @phpstan-ignore-line
+        // @phpstan-ignore-next-line argument.type
+        $this->stream = Util::decodeContent($response);
         $this->generator = $this->parsedGenerator();
     }
 

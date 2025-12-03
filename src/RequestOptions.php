@@ -83,7 +83,8 @@ final class RequestOptions implements BaseModel
     {
         $parsed = array_map(static fn ($o) => $o instanceof self ? $o->toProperties() : $o ?? [], array: $options);
 
-        return self::with(...array_merge(...$parsed)); // @phpstan-ignore-line
+        // @phpstan-ignore-next-line argument.type
+        return self::with(...array_merge(...$parsed));
     }
 
     /**

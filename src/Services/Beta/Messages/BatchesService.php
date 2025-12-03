@@ -79,7 +79,7 @@ final class BatchesService implements BatchesContract
         );
         $header_params = ['betas' => 'anthropic-beta'];
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'v1/messages/batches?beta=true',
@@ -117,7 +117,7 @@ final class BatchesService implements BatchesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['v1/messages/batches/%1$s?beta=true', $messageBatchID],
@@ -161,7 +161,7 @@ final class BatchesService implements BatchesContract
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'v1/messages/batches?beta=true',
@@ -202,7 +202,7 @@ final class BatchesService implements BatchesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
             path: ['v1/messages/batches/%1$s?beta=true', $messageBatchID],
@@ -241,7 +241,7 @@ final class BatchesService implements BatchesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: ['v1/messages/batches/%1$s/cancel?beta=true', $messageBatchID],
@@ -280,7 +280,7 @@ final class BatchesService implements BatchesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['v1/messages/batches/%1$s/results?beta=true', $messageBatchID],
@@ -315,7 +315,7 @@ final class BatchesService implements BatchesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['v1/messages/batches/%1$s/results?beta=true', $messageBatchID],
