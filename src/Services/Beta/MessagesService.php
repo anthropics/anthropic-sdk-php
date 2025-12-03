@@ -100,7 +100,7 @@ final class MessagesService implements MessagesContract
         );
         $header_params = ['betas' => 'anthropic-beta'];
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'v1/messages?beta=true',
@@ -171,7 +171,7 @@ final class MessagesService implements MessagesContract
         $parsed['stream'] = true;
         $header_params = ['betas' => 'anthropic-beta'];
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'v1/messages?beta=true',
@@ -239,7 +239,7 @@ final class MessagesService implements MessagesContract
         );
         $header_params = ['betas' => 'anthropic-beta'];
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'v1/messages/count_tokens?beta=true',

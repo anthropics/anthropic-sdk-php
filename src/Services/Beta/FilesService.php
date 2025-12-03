@@ -49,7 +49,7 @@ final class FilesService implements FilesContract
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'v1/files?beta=true',
@@ -86,7 +86,7 @@ final class FilesService implements FilesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
             path: ['v1/files/%1$s?beta=true', $fileID],
@@ -121,7 +121,7 @@ final class FilesService implements FilesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['v1/files/%1$s?beta=true', $fileID],

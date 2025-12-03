@@ -67,7 +67,7 @@ final class PageCursor implements BaseModel, BasePage
             return;
         }
 
-        // @phpstan-ignore-next-line
+        // @phpstan-ignore-next-line argument.type
         self::__unserialize($data);
 
         if ($this->offsetGet('data')) {

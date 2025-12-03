@@ -25,7 +25,9 @@ final class RawContentBlockStartEvent implements BaseModel
     #[Api]
     public string $type = 'content_block_start';
 
-    #[Api(union: ContentBlock::class)]
+    #[Api(
+        union: ContentBlock::class
+    )]
     public TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $content_block;
 
     #[Api]
