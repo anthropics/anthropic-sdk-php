@@ -66,7 +66,7 @@ final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
 
         $obj['error_code'] = $error_code;
 
-        null !== $error_message && $obj->error_message = $error_message;
+        null !== $error_message && $obj['error_message'] = $error_message;
 
         return $obj;
     }
@@ -85,7 +85,7 @@ final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
     public function withErrorMessage(?string $errorMessage): self
     {
         $obj = clone $this;
-        $obj->error_message = $errorMessage;
+        $obj['error_message'] = $errorMessage;
 
         return $obj;
     }

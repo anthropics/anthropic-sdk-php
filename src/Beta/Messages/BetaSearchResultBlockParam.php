@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -73,34 +74,48 @@ final class BetaSearchResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaTextBlockParam> $content
+     * @param list<BetaTextBlockParam|array{
+     *   text: string,
+     *   type: 'text',
+     *   cache_control?: BetaCacheControlEphemeral|null,
+     *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
+     * }> $content
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cache_control
+     * @param BetaCitationsConfigParam|array{enabled?: bool|null} $citations
      */
     public static function with(
         array $content,
         string $source,
         string $title,
-        ?BetaCacheControlEphemeral $cache_control = null,
-        ?BetaCitationsConfigParam $citations = null,
+        BetaCacheControlEphemeral|array|null $cache_control = null,
+        BetaCitationsConfigParam|array|null $citations = null,
     ): self {
         $obj = new self;
 
-        $obj->content = $content;
-        $obj->source = $source;
-        $obj->title = $title;
+        $obj['content'] = $content;
+        $obj['source'] = $source;
+        $obj['title'] = $title;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $citations && $obj->citations = $citations;
+        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $citations && $obj['citations'] = $citations;
 
         return $obj;
     }
 
     /**
-     * @param list<BetaTextBlockParam> $content
+     * @param list<BetaTextBlockParam|array{
+     *   text: string,
+     *   type: 'text',
+     *   cache_control?: BetaCacheControlEphemeral|null,
+     *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
+     * }> $content
      */
     public function withContent(array $content): self
     {
         $obj = clone $this;
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }
@@ -108,7 +123,7 @@ final class BetaSearchResultBlockParam implements BaseModel
     public function withSource(string $source): self
     {
         $obj = clone $this;
-        $obj->source = $source;
+        $obj['source'] = $source;
 
         return $obj;
     }
@@ -116,27 +131,35 @@ final class BetaSearchResultBlockParam implements BaseModel
     public function withTitle(string $title): self
     {
         $obj = clone $this;
-        $obj->title = $title;
+        $obj['title'] = $title;
 
         return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $obj['cache_control'] = $cacheControl;
 
         return $obj;
     }
 
-    public function withCitations(BetaCitationsConfigParam $citations): self
-    {
+    /**
+     * @param BetaCitationsConfigParam|array{enabled?: bool|null} $citations
+     */
+    public function withCitations(
+        BetaCitationsConfigParam|array $citations
+    ): self {
         $obj = clone $this;
-        $obj->citations = $citations;
+        $obj['citations'] = $citations;
 
         return $obj;
     }

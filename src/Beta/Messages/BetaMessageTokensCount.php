@@ -58,27 +58,35 @@ final class BetaMessageTokensCount implements BaseModel, ResponseConverter
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaCountTokensContextManagementResponse|array{
+     *   original_input_tokens: int
+     * }|null $context_management
      */
     public static function with(
-        ?BetaCountTokensContextManagementResponse $context_management,
+        BetaCountTokensContextManagementResponse|array|null $context_management,
         int $input_tokens,
     ): self {
         $obj = new self;
 
-        $obj->context_management = $context_management;
-        $obj->input_tokens = $input_tokens;
+        $obj['context_management'] = $context_management;
+        $obj['input_tokens'] = $input_tokens;
 
         return $obj;
     }
 
     /**
      * Information about context management applied to the message.
+     *
+     * @param BetaCountTokensContextManagementResponse|array{
+     *   original_input_tokens: int
+     * }|null $contextManagement
      */
     public function withContextManagement(
-        ?BetaCountTokensContextManagementResponse $contextManagement
+        BetaCountTokensContextManagementResponse|array|null $contextManagement
     ): self {
         $obj = clone $this;
-        $obj->context_management = $contextManagement;
+        $obj['context_management'] = $contextManagement;
 
         return $obj;
     }
@@ -89,7 +97,7 @@ final class BetaMessageTokensCount implements BaseModel, ResponseConverter
     public function withInputTokens(int $inputTokens): self
     {
         $obj = clone $this;
-        $obj->input_tokens = $inputTokens;
+        $obj['input_tokens'] = $inputTokens;
 
         return $obj;
     }

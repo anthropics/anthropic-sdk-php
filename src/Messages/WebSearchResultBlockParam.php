@@ -73,11 +73,11 @@ final class WebSearchResultBlockParam implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->encrypted_content = $encrypted_content;
-        $obj->title = $title;
-        $obj->url = $url;
+        $obj['encrypted_content'] = $encrypted_content;
+        $obj['title'] = $title;
+        $obj['url'] = $url;
 
-        null !== $page_age && $obj->page_age = $page_age;
+        null !== $page_age && $obj['page_age'] = $page_age;
 
         return $obj;
     }
@@ -85,7 +85,7 @@ final class WebSearchResultBlockParam implements BaseModel
     public function withEncryptedContent(string $encryptedContent): self
     {
         $obj = clone $this;
-        $obj->encrypted_content = $encryptedContent;
+        $obj['encrypted_content'] = $encryptedContent;
 
         return $obj;
     }
@@ -93,7 +93,7 @@ final class WebSearchResultBlockParam implements BaseModel
     public function withTitle(string $title): self
     {
         $obj = clone $this;
-        $obj->title = $title;
+        $obj['title'] = $title;
 
         return $obj;
     }
@@ -101,7 +101,7 @@ final class WebSearchResultBlockParam implements BaseModel
     public function withURL(string $url): self
     {
         $obj = clone $this;
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }
@@ -109,7 +109,7 @@ final class WebSearchResultBlockParam implements BaseModel
     public function withPageAge(?string $pageAge): self
     {
         $obj = clone $this;
-        $obj->page_age = $pageAge;
+        $obj['page_age'] = $pageAge;
 
         return $obj;
     }

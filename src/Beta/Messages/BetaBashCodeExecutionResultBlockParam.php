@@ -69,7 +69,9 @@ final class BetaBashCodeExecutionResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaBashCodeExecutionOutputBlockParam> $content
+     * @param list<BetaBashCodeExecutionOutputBlockParam|array{
+     *   file_id: string, type: 'bash_code_execution_output'
+     * }> $content
      */
     public static function with(
         array $content,
@@ -79,21 +81,23 @@ final class BetaBashCodeExecutionResultBlockParam implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->content = $content;
-        $obj->return_code = $return_code;
-        $obj->stderr = $stderr;
-        $obj->stdout = $stdout;
+        $obj['content'] = $content;
+        $obj['return_code'] = $return_code;
+        $obj['stderr'] = $stderr;
+        $obj['stdout'] = $stdout;
 
         return $obj;
     }
 
     /**
-     * @param list<BetaBashCodeExecutionOutputBlockParam> $content
+     * @param list<BetaBashCodeExecutionOutputBlockParam|array{
+     *   file_id: string, type: 'bash_code_execution_output'
+     * }> $content
      */
     public function withContent(array $content): self
     {
         $obj = clone $this;
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }
@@ -101,7 +105,7 @@ final class BetaBashCodeExecutionResultBlockParam implements BaseModel
     public function withReturnCode(int $returnCode): self
     {
         $obj = clone $this;
-        $obj->return_code = $returnCode;
+        $obj['return_code'] = $returnCode;
 
         return $obj;
     }
@@ -109,7 +113,7 @@ final class BetaBashCodeExecutionResultBlockParam implements BaseModel
     public function withStderr(string $stderr): self
     {
         $obj = clone $this;
-        $obj->stderr = $stderr;
+        $obj['stderr'] = $stderr;
 
         return $obj;
     }
@@ -117,7 +121,7 @@ final class BetaBashCodeExecutionResultBlockParam implements BaseModel
     public function withStdout(string $stdout): self
     {
         $obj = clone $this;
-        $obj->stdout = $stdout;
+        $obj['stdout'] = $stdout;
 
         return $obj;
     }

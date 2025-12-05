@@ -64,37 +64,54 @@ final class BetaDocumentBlock implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaCitationConfig|array{enabled: bool}|null $citations
+     * @param BetaBase64PDFSource|array{
+     *   data: string, media_type: 'application/pdf', type: 'base64'
+     * }|BetaPlainTextSource|array{
+     *   data: string, media_type: 'text/plain', type: 'text'
+     * } $source
      */
     public static function with(
-        ?BetaCitationConfig $citations,
-        BetaBase64PDFSource|BetaPlainTextSource $source,
+        BetaCitationConfig|array|null $citations,
+        BetaBase64PDFSource|array|BetaPlainTextSource $source,
         ?string $title,
     ): self {
         $obj = new self;
 
-        $obj->citations = $citations;
-        $obj->source = $source;
-        $obj->title = $title;
+        $obj['citations'] = $citations;
+        $obj['source'] = $source;
+        $obj['title'] = $title;
 
         return $obj;
     }
 
     /**
      * Citation configuration for the document.
+     *
+     * @param BetaCitationConfig|array{enabled: bool}|null $citations
      */
-    public function withCitations(?BetaCitationConfig $citations): self
-    {
+    public function withCitations(
+        BetaCitationConfig|array|null $citations
+    ): self {
         $obj = clone $this;
-        $obj->citations = $citations;
+        $obj['citations'] = $citations;
 
         return $obj;
     }
 
+    /**
+     * @param BetaBase64PDFSource|array{
+     *   data: string, media_type: 'application/pdf', type: 'base64'
+     * }|BetaPlainTextSource|array{
+     *   data: string, media_type: 'text/plain', type: 'text'
+     * } $source
+     */
     public function withSource(
-        BetaBase64PDFSource|BetaPlainTextSource $source
+        BetaBase64PDFSource|array|BetaPlainTextSource $source
     ): self {
         $obj = clone $this;
-        $obj->source = $source;
+        $obj['source'] = $source;
 
         return $obj;
     }
@@ -105,7 +122,7 @@ final class BetaDocumentBlock implements BaseModel
     public function withTitle(?string $title): self
     {
         $obj = clone $this;
-        $obj->title = $title;
+        $obj['title'] = $title;
 
         return $obj;
     }

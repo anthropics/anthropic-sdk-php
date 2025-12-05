@@ -51,7 +51,7 @@ final class BetaToolUsesKeep implements BaseModel
     {
         $obj = new self;
 
-        $obj->value = $value;
+        $obj['value'] = $value;
 
         return $obj;
     }
@@ -59,7 +59,7 @@ final class BetaToolUsesKeep implements BaseModel
     public function withValue(int $value): self
     {
         $obj = clone $this;
-        $obj->value = $value;
+        $obj['value'] = $value;
 
         return $obj;
     }

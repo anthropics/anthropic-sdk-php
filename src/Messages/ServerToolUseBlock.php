@@ -66,8 +66,8 @@ final class ServerToolUseBlock implements BaseModel
     {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->input = $input;
+        $obj['id'] = $id;
+        $obj['input'] = $input;
 
         return $obj;
     }
@@ -75,7 +75,7 @@ final class ServerToolUseBlock implements BaseModel
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -86,7 +86,7 @@ final class ServerToolUseBlock implements BaseModel
     public function withInput(array $input): self
     {
         $obj = clone $this;
-        $obj->input = $input;
+        $obj['input'] = $input;
 
         return $obj;
     }

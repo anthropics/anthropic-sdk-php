@@ -68,20 +68,23 @@ final class BetaToolUseBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,mixed> $input
+     * @param BetaDirectCaller|array{type: 'direct'}|BetaServerToolCaller|array{
+     *   tool_id: string, type: 'code_execution_20250825'
+     * } $caller
      */
     public static function with(
         string $id,
         array $input,
         string $name,
-        BetaDirectCaller|BetaServerToolCaller|null $caller = null,
+        BetaDirectCaller|array|BetaServerToolCaller|null $caller = null,
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->input = $input;
-        $obj->name = $name;
+        $obj['id'] = $id;
+        $obj['input'] = $input;
+        $obj['name'] = $name;
 
-        null !== $caller && $obj->caller = $caller;
+        null !== $caller && $obj['caller'] = $caller;
 
         return $obj;
     }
@@ -89,7 +92,7 @@ final class BetaToolUseBlock implements BaseModel
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -100,7 +103,7 @@ final class BetaToolUseBlock implements BaseModel
     public function withInput(array $input): self
     {
         $obj = clone $this;
-        $obj->input = $input;
+        $obj['input'] = $input;
 
         return $obj;
     }
@@ -108,19 +111,23 @@ final class BetaToolUseBlock implements BaseModel
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
 
     /**
      * Tool invocation directly from the model.
+     *
+     * @param BetaDirectCaller|array{type: 'direct'}|BetaServerToolCaller|array{
+     *   tool_id: string, type: 'code_execution_20250825'
+     * } $caller
      */
     public function withCaller(
-        BetaDirectCaller|BetaServerToolCaller $caller
+        BetaDirectCaller|array|BetaServerToolCaller $caller
     ): self {
         $obj = clone $this;
-        $obj->caller = $caller;
+        $obj['caller'] = $caller;
 
         return $obj;
     }

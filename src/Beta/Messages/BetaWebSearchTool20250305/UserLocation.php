@@ -70,10 +70,10 @@ final class UserLocation implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $city && $obj->city = $city;
-        null !== $country && $obj->country = $country;
-        null !== $region && $obj->region = $region;
-        null !== $timezone && $obj->timezone = $timezone;
+        null !== $city && $obj['city'] = $city;
+        null !== $country && $obj['country'] = $country;
+        null !== $region && $obj['region'] = $region;
+        null !== $timezone && $obj['timezone'] = $timezone;
 
         return $obj;
     }
@@ -84,7 +84,7 @@ final class UserLocation implements BaseModel
     public function withCity(?string $city): self
     {
         $obj = clone $this;
-        $obj->city = $city;
+        $obj['city'] = $city;
 
         return $obj;
     }
@@ -95,7 +95,7 @@ final class UserLocation implements BaseModel
     public function withCountry(?string $country): self
     {
         $obj = clone $this;
-        $obj->country = $country;
+        $obj['country'] = $country;
 
         return $obj;
     }
@@ -106,7 +106,7 @@ final class UserLocation implements BaseModel
     public function withRegion(?string $region): self
     {
         $obj = clone $this;
-        $obj->region = $region;
+        $obj['region'] = $region;
 
         return $obj;
     }
@@ -117,7 +117,7 @@ final class UserLocation implements BaseModel
     public function withTimezone(?string $timezone): self
     {
         $obj = clone $this;
-        $obj->timezone = $timezone;
+        $obj['timezone'] = $timezone;
 
         return $obj;
     }

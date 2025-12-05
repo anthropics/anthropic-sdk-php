@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaBase64ImageSource\MediaType;
+use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaImageBlockParam\Source;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
@@ -57,37 +59,57 @@ final class BetaImageBlockParam implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaBase64ImageSource|array{
+     *   data: string, media_type: value-of<MediaType>, type: 'base64'
+     * }|BetaURLImageSource|array{type: 'url', url: string}|BetaFileImageSource|array{
+     *   file_id: string, type: 'file'
+     * } $source
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cache_control
      */
     public static function with(
-        BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource $source,
-        ?BetaCacheControlEphemeral $cache_control = null,
+        BetaBase64ImageSource|array|BetaURLImageSource|BetaFileImageSource $source,
+        BetaCacheControlEphemeral|array|null $cache_control = null,
     ): self {
         $obj = new self;
 
-        $obj->source = $source;
+        $obj['source'] = $source;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $cache_control && $obj['cache_control'] = $cache_control;
 
         return $obj;
     }
 
+    /**
+     * @param BetaBase64ImageSource|array{
+     *   data: string, media_type: value-of<MediaType>, type: 'base64'
+     * }|BetaURLImageSource|array{type: 'url', url: string}|BetaFileImageSource|array{
+     *   file_id: string, type: 'file'
+     * } $source
+     */
     public function withSource(
-        BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource $source
+        BetaBase64ImageSource|array|BetaURLImageSource|BetaFileImageSource $source
     ): self {
         $obj = clone $this;
-        $obj->source = $source;
+        $obj['source'] = $source;
 
         return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $obj['cache_control'] = $cacheControl;
 
         return $obj;
     }

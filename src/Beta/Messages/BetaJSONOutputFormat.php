@@ -60,7 +60,7 @@ final class BetaJSONOutputFormat implements BaseModel
     {
         $obj = new self;
 
-        $obj->schema = $schema;
+        $obj['schema'] = $schema;
 
         return $obj;
     }
@@ -73,7 +73,7 @@ final class BetaJSONOutputFormat implements BaseModel
     public function withSchema(array $schema): self
     {
         $obj = clone $this;
-        $obj->schema = $schema;
+        $obj['schema'] = $schema;
 
         return $obj;
     }

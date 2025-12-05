@@ -53,7 +53,7 @@ final class BetaToolReferenceBlock implements BaseModel
     {
         $obj = new self;
 
-        $obj->tool_name = $tool_name;
+        $obj['tool_name'] = $tool_name;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class BetaToolReferenceBlock implements BaseModel
     public function withToolName(string $toolName): self
     {
         $obj = clone $this;
-        $obj->tool_name = $toolName;
+        $obj['tool_name'] = $toolName;
 
         return $obj;
     }

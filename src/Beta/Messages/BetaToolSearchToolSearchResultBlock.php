@@ -51,24 +51,28 @@ final class BetaToolSearchToolSearchResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaToolReferenceBlock> $tool_references
+     * @param list<BetaToolReferenceBlock|array{
+     *   tool_name: string, type: 'tool_reference'
+     * }> $tool_references
      */
     public static function with(array $tool_references): self
     {
         $obj = new self;
 
-        $obj->tool_references = $tool_references;
+        $obj['tool_references'] = $tool_references;
 
         return $obj;
     }
 
     /**
-     * @param list<BetaToolReferenceBlock> $toolReferences
+     * @param list<BetaToolReferenceBlock|array{
+     *   tool_name: string, type: 'tool_reference'
+     * }> $toolReferences
      */
     public function withToolReferences(array $toolReferences): self
     {
         $obj = clone $this;
-        $obj->tool_references = $toolReferences;
+        $obj['tool_references'] = $toolReferences;
 
         return $obj;
     }

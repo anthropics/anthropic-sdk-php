@@ -53,7 +53,7 @@ final class BetaInvalidRequestError implements BaseModel
     {
         $obj = new self;
 
-        $obj->message = $message;
+        $obj['message'] = $message;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class BetaInvalidRequestError implements BaseModel
     public function withMessage(string $message): self
     {
         $obj = clone $this;
-        $obj->message = $message;
+        $obj['message'] = $message;
 
         return $obj;
     }

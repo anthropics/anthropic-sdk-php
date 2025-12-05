@@ -68,9 +68,9 @@ final class BetaToolChoiceTool implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->name = $name;
+        $obj['name'] = $name;
 
-        null !== $disable_parallel_tool_use && $obj->disable_parallel_tool_use = $disable_parallel_tool_use;
+        null !== $disable_parallel_tool_use && $obj['disable_parallel_tool_use'] = $disable_parallel_tool_use;
 
         return $obj;
     }
@@ -81,7 +81,7 @@ final class BetaToolChoiceTool implements BaseModel
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -95,7 +95,7 @@ final class BetaToolChoiceTool implements BaseModel
         bool $disableParallelToolUse
     ): self {
         $obj = clone $this;
-        $obj->disable_parallel_tool_use = $disableParallelToolUse;
+        $obj['disable_parallel_tool_use'] = $disableParallelToolUse;
 
         return $obj;
     }

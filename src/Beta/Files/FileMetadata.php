@@ -117,13 +117,13 @@ final class FileMetadata implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->created_at = $created_at;
-        $obj->filename = $filename;
-        $obj->mime_type = $mime_type;
-        $obj->size_bytes = $size_bytes;
+        $obj['id'] = $id;
+        $obj['created_at'] = $created_at;
+        $obj['filename'] = $filename;
+        $obj['mime_type'] = $mime_type;
+        $obj['size_bytes'] = $size_bytes;
 
-        null !== $downloadable && $obj->downloadable = $downloadable;
+        null !== $downloadable && $obj['downloadable'] = $downloadable;
 
         return $obj;
     }
@@ -136,7 +136,7 @@ final class FileMetadata implements BaseModel, ResponseConverter
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -147,7 +147,7 @@ final class FileMetadata implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -158,7 +158,7 @@ final class FileMetadata implements BaseModel, ResponseConverter
     public function withFilename(string $filename): self
     {
         $obj = clone $this;
-        $obj->filename = $filename;
+        $obj['filename'] = $filename;
 
         return $obj;
     }
@@ -169,7 +169,7 @@ final class FileMetadata implements BaseModel, ResponseConverter
     public function withMimeType(string $mimeType): self
     {
         $obj = clone $this;
-        $obj->mime_type = $mimeType;
+        $obj['mime_type'] = $mimeType;
 
         return $obj;
     }
@@ -180,7 +180,7 @@ final class FileMetadata implements BaseModel, ResponseConverter
     public function withSizeBytes(int $sizeBytes): self
     {
         $obj = clone $this;
-        $obj->size_bytes = $sizeBytes;
+        $obj['size_bytes'] = $sizeBytes;
 
         return $obj;
     }
@@ -191,7 +191,7 @@ final class FileMetadata implements BaseModel, ResponseConverter
     public function withDownloadable(bool $downloadable): self
     {
         $obj = clone $this;
-        $obj->downloadable = $downloadable;
+        $obj['downloadable'] = $downloadable;
 
         return $obj;
     }

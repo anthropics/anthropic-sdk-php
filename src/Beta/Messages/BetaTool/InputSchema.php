@@ -55,8 +55,8 @@ final class InputSchema implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $properties && $obj->properties = $properties;
-        null !== $required && $obj->required = $required;
+        null !== $properties && $obj['properties'] = $properties;
+        null !== $required && $obj['required'] = $required;
 
         return $obj;
     }
@@ -67,7 +67,7 @@ final class InputSchema implements BaseModel
     public function withProperties(?array $properties): self
     {
         $obj = clone $this;
-        $obj->properties = $properties;
+        $obj['properties'] = $properties;
 
         return $obj;
     }
@@ -78,7 +78,7 @@ final class InputSchema implements BaseModel
     public function withRequired(?array $required): self
     {
         $obj = clone $this;
-        $obj->required = $required;
+        $obj['required'] = $required;
 
         return $obj;
     }

@@ -53,7 +53,7 @@ final class ThinkingDelta implements BaseModel
     {
         $obj = new self;
 
-        $obj->thinking = $thinking;
+        $obj['thinking'] = $thinking;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class ThinkingDelta implements BaseModel
     public function withThinking(string $thinking): self
     {
         $obj = clone $this;
-        $obj->thinking = $thinking;
+        $obj['thinking'] = $thinking;
 
         return $obj;
     }

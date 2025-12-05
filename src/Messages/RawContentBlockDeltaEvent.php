@@ -53,24 +53,43 @@ final class RawContentBlockDeltaEvent implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param TextDelta|array{text: string, type: 'text_delta'}|InputJSONDelta|array{
+     *   partial_json: string, type: 'input_json_delta'
+     * }|CitationsDelta|array{
+     *   citation: CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation,
+     *   type: 'citations_delta',
+     * }|ThinkingDelta|array{
+     *   thinking: string, type: 'thinking_delta'
+     * }|SignatureDelta|array{signature: string, type: 'signature_delta'} $delta
      */
     public static function with(
-        TextDelta|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta $delta,
+        TextDelta|array|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta $delta,
         int $index,
     ): self {
         $obj = new self;
 
-        $obj->delta = $delta;
-        $obj->index = $index;
+        $obj['delta'] = $delta;
+        $obj['index'] = $index;
 
         return $obj;
     }
 
+    /**
+     * @param TextDelta|array{text: string, type: 'text_delta'}|InputJSONDelta|array{
+     *   partial_json: string, type: 'input_json_delta'
+     * }|CitationsDelta|array{
+     *   citation: CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation,
+     *   type: 'citations_delta',
+     * }|ThinkingDelta|array{
+     *   thinking: string, type: 'thinking_delta'
+     * }|SignatureDelta|array{signature: string, type: 'signature_delta'} $delta
+     */
     public function withDelta(
-        TextDelta|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta $delta
+        TextDelta|array|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta $delta,
     ): self {
         $obj = clone $this;
-        $obj->delta = $delta;
+        $obj['delta'] = $delta;
 
         return $obj;
     }
@@ -78,7 +97,7 @@ final class RawContentBlockDeltaEvent implements BaseModel
     public function withIndex(int $index): self
     {
         $obj = clone $this;
-        $obj->index = $index;
+        $obj['index'] = $index;
 
         return $obj;
     }

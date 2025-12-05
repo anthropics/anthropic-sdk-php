@@ -60,7 +60,7 @@ final class ThinkingConfigEnabled implements BaseModel
     {
         $obj = new self;
 
-        $obj->budget_tokens = $budget_tokens;
+        $obj['budget_tokens'] = $budget_tokens;
 
         return $obj;
     }
@@ -75,7 +75,7 @@ final class ThinkingConfigEnabled implements BaseModel
     public function withBudgetTokens(int $budgetTokens): self
     {
         $obj = clone $this;
-        $obj->budget_tokens = $budgetTokens;
+        $obj['budget_tokens'] = $budgetTokens;
 
         return $obj;
     }

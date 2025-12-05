@@ -74,8 +74,8 @@ final class BetaClearThinking20251015EditResponse implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->cleared_input_tokens = $cleared_input_tokens;
-        $obj->cleared_thinking_turns = $cleared_thinking_turns;
+        $obj['cleared_input_tokens'] = $cleared_input_tokens;
+        $obj['cleared_thinking_turns'] = $cleared_thinking_turns;
 
         return $obj;
     }
@@ -86,7 +86,7 @@ final class BetaClearThinking20251015EditResponse implements BaseModel
     public function withClearedInputTokens(int $clearedInputTokens): self
     {
         $obj = clone $this;
-        $obj->cleared_input_tokens = $clearedInputTokens;
+        $obj['cleared_input_tokens'] = $clearedInputTokens;
 
         return $obj;
     }
@@ -97,7 +97,7 @@ final class BetaClearThinking20251015EditResponse implements BaseModel
     public function withClearedThinkingTurns(int $clearedThinkingTurns): self
     {
         $obj = clone $this;
-        $obj->cleared_thinking_turns = $clearedThinkingTurns;
+        $obj['cleared_thinking_turns'] = $clearedThinkingTurns;
 
         return $obj;
     }

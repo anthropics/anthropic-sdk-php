@@ -7,6 +7,8 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\Base64ImageSource\MediaType;
+use Anthropic\Messages\CacheControlEphemeral\TTL;
 use Anthropic\Messages\ImageBlockParam\Source;
 
 /**
@@ -57,35 +59,53 @@ final class ImageBlockParam implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param Base64ImageSource|array{
+     *   data: string, media_type: value-of<MediaType>, type: 'base64'
+     * }|URLImageSource|array{type: 'url', url: string} $source
+     * @param CacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cache_control
      */
     public static function with(
-        Base64ImageSource|URLImageSource $source,
-        ?CacheControlEphemeral $cache_control = null,
+        Base64ImageSource|array|URLImageSource $source,
+        CacheControlEphemeral|array|null $cache_control = null,
     ): self {
         $obj = new self;
 
-        $obj->source = $source;
+        $obj['source'] = $source;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $cache_control && $obj['cache_control'] = $cache_control;
 
         return $obj;
     }
 
-    public function withSource(Base64ImageSource|URLImageSource $source): self
-    {
+    /**
+     * @param Base64ImageSource|array{
+     *   data: string, media_type: value-of<MediaType>, type: 'base64'
+     * }|URLImageSource|array{type: 'url', url: string} $source
+     */
+    public function withSource(
+        Base64ImageSource|array|URLImageSource $source
+    ): self {
         $obj = clone $this;
-        $obj->source = $source;
+        $obj['source'] = $source;
 
         return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param CacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
-    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
-    {
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
         $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $obj['cache_control'] = $cacheControl;
 
         return $obj;
     }

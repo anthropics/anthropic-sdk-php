@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaRequestMCPToolResultBlockParam\Content;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
@@ -67,21 +68,29 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|list<BetaTextBlockParam> $content
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cache_control
+     * @param string|list<BetaTextBlockParam|array{
+     *   text: string,
+     *   type: 'text',
+     *   cache_control?: BetaCacheControlEphemeral|null,
+     *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
+     * }> $content
      */
     public static function with(
         string $tool_use_id,
-        ?BetaCacheControlEphemeral $cache_control = null,
+        BetaCacheControlEphemeral|array|null $cache_control = null,
         string|array|null $content = null,
         ?bool $is_error = null,
     ): self {
         $obj = new self;
 
-        $obj->tool_use_id = $tool_use_id;
+        $obj['tool_use_id'] = $tool_use_id;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $content && $obj->content = $content;
-        null !== $is_error && $obj->is_error = $is_error;
+        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $content && $obj['content'] = $content;
+        null !== $is_error && $obj['is_error'] = $is_error;
 
         return $obj;
     }
@@ -89,30 +98,39 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->tool_use_id = $toolUseID;
+        $obj['tool_use_id'] = $toolUseID;
 
         return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $obj['cache_control'] = $cacheControl;
 
         return $obj;
     }
 
     /**
-     * @param string|list<BetaTextBlockParam> $content
+     * @param string|list<BetaTextBlockParam|array{
+     *   text: string,
+     *   type: 'text',
+     *   cache_control?: BetaCacheControlEphemeral|null,
+     *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
+     * }> $content
      */
     public function withContent(string|array $content): self
     {
         $obj = clone $this;
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }
@@ -120,7 +138,7 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
     public function withIsError(bool $isError): self
     {
         $obj = clone $this;
-        $obj->is_error = $isError;
+        $obj['is_error'] = $isError;
 
         return $obj;
     }

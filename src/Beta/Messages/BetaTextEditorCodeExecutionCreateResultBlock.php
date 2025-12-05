@@ -53,7 +53,7 @@ final class BetaTextEditorCodeExecutionCreateResultBlock implements BaseModel
     {
         $obj = new self;
 
-        $obj->is_file_update = $is_file_update;
+        $obj['is_file_update'] = $is_file_update;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class BetaTextEditorCodeExecutionCreateResultBlock implements BaseModel
     public function withIsFileUpdate(bool $isFileUpdate): self
     {
         $obj = clone $this;
-        $obj->is_file_update = $isFileUpdate;
+        $obj['is_file_update'] = $isFileUpdate;
 
         return $obj;
     }

@@ -150,6 +150,9 @@ final class MessageBatch implements BaseModel, ResponseConverter
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ProcessingStatus|value-of<ProcessingStatus> $processing_status
+     * @param MessageBatchRequestCounts|array{
+     *   canceled: int, errored: int, expired: int, processing: int, succeeded: int
+     * } $request_counts
      */
     public static function with(
         string $id,
@@ -159,20 +162,20 @@ final class MessageBatch implements BaseModel, ResponseConverter
         ?\DateTimeInterface $ended_at,
         \DateTimeInterface $expires_at,
         ProcessingStatus|string $processing_status,
-        MessageBatchRequestCounts $request_counts,
+        MessageBatchRequestCounts|array $request_counts,
         ?string $results_url,
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->archived_at = $archived_at;
-        $obj->cancel_initiated_at = $cancel_initiated_at;
-        $obj->created_at = $created_at;
-        $obj->ended_at = $ended_at;
-        $obj->expires_at = $expires_at;
+        $obj['id'] = $id;
+        $obj['archived_at'] = $archived_at;
+        $obj['cancel_initiated_at'] = $cancel_initiated_at;
+        $obj['created_at'] = $created_at;
+        $obj['ended_at'] = $ended_at;
+        $obj['expires_at'] = $expires_at;
         $obj['processing_status'] = $processing_status;
-        $obj->request_counts = $request_counts;
-        $obj->results_url = $results_url;
+        $obj['request_counts'] = $request_counts;
+        $obj['results_url'] = $results_url;
 
         return $obj;
     }
@@ -185,7 +188,7 @@ final class MessageBatch implements BaseModel, ResponseConverter
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -196,7 +199,7 @@ final class MessageBatch implements BaseModel, ResponseConverter
     public function withArchivedAt(?\DateTimeInterface $archivedAt): self
     {
         $obj = clone $this;
-        $obj->archived_at = $archivedAt;
+        $obj['archived_at'] = $archivedAt;
 
         return $obj;
     }
@@ -208,7 +211,7 @@ final class MessageBatch implements BaseModel, ResponseConverter
         ?\DateTimeInterface $cancelInitiatedAt
     ): self {
         $obj = clone $this;
-        $obj->cancel_initiated_at = $cancelInitiatedAt;
+        $obj['cancel_initiated_at'] = $cancelInitiatedAt;
 
         return $obj;
     }
@@ -219,7 +222,7 @@ final class MessageBatch implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -232,7 +235,7 @@ final class MessageBatch implements BaseModel, ResponseConverter
     public function withEndedAt(?\DateTimeInterface $endedAt): self
     {
         $obj = clone $this;
-        $obj->ended_at = $endedAt;
+        $obj['ended_at'] = $endedAt;
 
         return $obj;
     }
@@ -243,7 +246,7 @@ final class MessageBatch implements BaseModel, ResponseConverter
     public function withExpiresAt(\DateTimeInterface $expiresAt): self
     {
         $obj = clone $this;
-        $obj->expires_at = $expiresAt;
+        $obj['expires_at'] = $expiresAt;
 
         return $obj;
     }
@@ -266,12 +269,16 @@ final class MessageBatch implements BaseModel, ResponseConverter
      * Tallies requests within the Message Batch, categorized by their status.
      *
      * Requests start as `processing` and move to one of the other statuses only once processing of the entire batch ends. The sum of all values always matches the total number of requests in the batch.
+     *
+     * @param MessageBatchRequestCounts|array{
+     *   canceled: int, errored: int, expired: int, processing: int, succeeded: int
+     * } $requestCounts
      */
     public function withRequestCounts(
-        MessageBatchRequestCounts $requestCounts
+        MessageBatchRequestCounts|array $requestCounts
     ): self {
         $obj = clone $this;
-        $obj->request_counts = $requestCounts;
+        $obj['request_counts'] = $requestCounts;
 
         return $obj;
     }
@@ -284,7 +291,7 @@ final class MessageBatch implements BaseModel, ResponseConverter
     public function withResultsURL(?string $resultsURL): self
     {
         $obj = clone $this;
-        $obj->results_url = $resultsURL;
+        $obj['results_url'] = $resultsURL;
 
         return $obj;
     }

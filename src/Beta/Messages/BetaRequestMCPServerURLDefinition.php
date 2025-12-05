@@ -61,20 +61,24 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaRequestMCPServerToolConfiguration|array{
+     *   allowed_tools?: list<string>|null, enabled?: bool|null
+     * }|null $tool_configuration
      */
     public static function with(
         string $name,
         string $url,
         ?string $authorization_token = null,
-        ?BetaRequestMCPServerToolConfiguration $tool_configuration = null,
+        BetaRequestMCPServerToolConfiguration|array|null $tool_configuration = null,
     ): self {
         $obj = new self;
 
-        $obj->name = $name;
-        $obj->url = $url;
+        $obj['name'] = $name;
+        $obj['url'] = $url;
 
-        null !== $authorization_token && $obj->authorization_token = $authorization_token;
-        null !== $tool_configuration && $obj->tool_configuration = $tool_configuration;
+        null !== $authorization_token && $obj['authorization_token'] = $authorization_token;
+        null !== $tool_configuration && $obj['tool_configuration'] = $tool_configuration;
 
         return $obj;
     }
@@ -82,7 +86,7 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -90,7 +94,7 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
     public function withURL(string $url): self
     {
         $obj = clone $this;
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }
@@ -98,16 +102,21 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
     public function withAuthorizationToken(?string $authorizationToken): self
     {
         $obj = clone $this;
-        $obj->authorization_token = $authorizationToken;
+        $obj['authorization_token'] = $authorizationToken;
 
         return $obj;
     }
 
+    /**
+     * @param BetaRequestMCPServerToolConfiguration|array{
+     *   allowed_tools?: list<string>|null, enabled?: bool|null
+     * }|null $toolConfiguration
+     */
     public function withToolConfiguration(
-        ?BetaRequestMCPServerToolConfiguration $toolConfiguration
+        BetaRequestMCPServerToolConfiguration|array|null $toolConfiguration
     ): self {
         $obj = clone $this;
-        $obj->tool_configuration = $toolConfiguration;
+        $obj['tool_configuration'] = $toolConfiguration;
 
         return $obj;
     }

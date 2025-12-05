@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaWebFetchTool20250910\AllowedCaller;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
@@ -109,13 +110,17 @@ final class BetaWebFetchTool20250910 implements BaseModel
      * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
      * @param list<string>|null $allowed_domains
      * @param list<string>|null $blocked_domains
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cache_control
+     * @param BetaCitationsConfigParam|array{enabled?: bool|null}|null $citations
      */
     public static function with(
         ?array $allowed_callers = null,
         ?array $allowed_domains = null,
         ?array $blocked_domains = null,
-        ?BetaCacheControlEphemeral $cache_control = null,
-        ?BetaCitationsConfigParam $citations = null,
+        BetaCacheControlEphemeral|array|null $cache_control = null,
+        BetaCitationsConfigParam|array|null $citations = null,
         ?bool $defer_loading = null,
         ?int $max_content_tokens = null,
         ?int $max_uses = null,
@@ -124,14 +129,14 @@ final class BetaWebFetchTool20250910 implements BaseModel
         $obj = new self;
 
         null !== $allowed_callers && $obj['allowed_callers'] = $allowed_callers;
-        null !== $allowed_domains && $obj->allowed_domains = $allowed_domains;
-        null !== $blocked_domains && $obj->blocked_domains = $blocked_domains;
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $citations && $obj->citations = $citations;
-        null !== $defer_loading && $obj->defer_loading = $defer_loading;
-        null !== $max_content_tokens && $obj->max_content_tokens = $max_content_tokens;
-        null !== $max_uses && $obj->max_uses = $max_uses;
-        null !== $strict && $obj->strict = $strict;
+        null !== $allowed_domains && $obj['allowed_domains'] = $allowed_domains;
+        null !== $blocked_domains && $obj['blocked_domains'] = $blocked_domains;
+        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $citations && $obj['citations'] = $citations;
+        null !== $defer_loading && $obj['defer_loading'] = $defer_loading;
+        null !== $max_content_tokens && $obj['max_content_tokens'] = $max_content_tokens;
+        null !== $max_uses && $obj['max_uses'] = $max_uses;
+        null !== $strict && $obj['strict'] = $strict;
 
         return $obj;
     }
@@ -155,7 +160,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     public function withAllowedDomains(?array $allowedDomains): self
     {
         $obj = clone $this;
-        $obj->allowed_domains = $allowedDomains;
+        $obj['allowed_domains'] = $allowedDomains;
 
         return $obj;
     }
@@ -168,30 +173,37 @@ final class BetaWebFetchTool20250910 implements BaseModel
     public function withBlockedDomains(?array $blockedDomains): self
     {
         $obj = clone $this;
-        $obj->blocked_domains = $blockedDomains;
+        $obj['blocked_domains'] = $blockedDomains;
 
         return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $obj['cache_control'] = $cacheControl;
 
         return $obj;
     }
 
     /**
      * Citations configuration for fetched documents. Citations are disabled by default.
+     *
+     * @param BetaCitationsConfigParam|array{enabled?: bool|null}|null $citations
      */
-    public function withCitations(?BetaCitationsConfigParam $citations): self
-    {
+    public function withCitations(
+        BetaCitationsConfigParam|array|null $citations
+    ): self {
         $obj = clone $this;
-        $obj->citations = $citations;
+        $obj['citations'] = $citations;
 
         return $obj;
     }
@@ -202,7 +214,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     public function withDeferLoading(bool $deferLoading): self
     {
         $obj = clone $this;
-        $obj->defer_loading = $deferLoading;
+        $obj['defer_loading'] = $deferLoading;
 
         return $obj;
     }
@@ -213,7 +225,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     public function withMaxContentTokens(?int $maxContentTokens): self
     {
         $obj = clone $this;
-        $obj->max_content_tokens = $maxContentTokens;
+        $obj['max_content_tokens'] = $maxContentTokens;
 
         return $obj;
     }
@@ -224,7 +236,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     public function withMaxUses(?int $maxUses): self
     {
         $obj = clone $this;
-        $obj->max_uses = $maxUses;
+        $obj['max_uses'] = $maxUses;
 
         return $obj;
     }
@@ -232,7 +244,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     public function withStrict(bool $strict): self
     {
         $obj = clone $this;
-        $obj->strict = $strict;
+        $obj['strict'] = $strict;
 
         return $obj;
     }

@@ -63,7 +63,11 @@ final class BetaMCPToolResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|list<BetaTextBlock> $content
+     * @param string|list<BetaTextBlock|array{
+     *   citations: list<BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation>|null,
+     *   text: string,
+     *   type: 'text',
+     * }> $content
      */
     public static function with(
         string|array $content,
@@ -72,20 +76,24 @@ final class BetaMCPToolResultBlock implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->content = $content;
-        $obj->is_error = $is_error;
-        $obj->tool_use_id = $tool_use_id;
+        $obj['content'] = $content;
+        $obj['is_error'] = $is_error;
+        $obj['tool_use_id'] = $tool_use_id;
 
         return $obj;
     }
 
     /**
-     * @param string|list<BetaTextBlock> $content
+     * @param string|list<BetaTextBlock|array{
+     *   citations: list<BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation>|null,
+     *   text: string,
+     *   type: 'text',
+     * }> $content
      */
     public function withContent(string|array $content): self
     {
         $obj = clone $this;
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }
@@ -93,7 +101,7 @@ final class BetaMCPToolResultBlock implements BaseModel
     public function withIsError(bool $isError): self
     {
         $obj = clone $this;
-        $obj->is_error = $isError;
+        $obj['is_error'] = $isError;
 
         return $obj;
     }
@@ -101,7 +109,7 @@ final class BetaMCPToolResultBlock implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->tool_use_id = $toolUseID;
+        $obj['tool_use_id'] = $toolUseID;
 
         return $obj;
     }

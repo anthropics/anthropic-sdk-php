@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\CacheControlEphemeral\TTL;
 use Anthropic\Messages\WebSearchTool20250305\UserLocation;
 
 /**
@@ -85,21 +86,31 @@ final class WebSearchTool20250305 implements BaseModel
      *
      * @param list<string>|null $allowed_domains
      * @param list<string>|null $blocked_domains
+     * @param CacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cache_control
+     * @param UserLocation|array{
+     *   type: 'approximate',
+     *   city?: string|null,
+     *   country?: string|null,
+     *   region?: string|null,
+     *   timezone?: string|null,
+     * }|null $user_location
      */
     public static function with(
         ?array $allowed_domains = null,
         ?array $blocked_domains = null,
-        ?CacheControlEphemeral $cache_control = null,
+        CacheControlEphemeral|array|null $cache_control = null,
         ?int $max_uses = null,
-        ?UserLocation $user_location = null,
+        UserLocation|array|null $user_location = null,
     ): self {
         $obj = new self;
 
-        null !== $allowed_domains && $obj->allowed_domains = $allowed_domains;
-        null !== $blocked_domains && $obj->blocked_domains = $blocked_domains;
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $max_uses && $obj->max_uses = $max_uses;
-        null !== $user_location && $obj->user_location = $user_location;
+        null !== $allowed_domains && $obj['allowed_domains'] = $allowed_domains;
+        null !== $blocked_domains && $obj['blocked_domains'] = $blocked_domains;
+        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $max_uses && $obj['max_uses'] = $max_uses;
+        null !== $user_location && $obj['user_location'] = $user_location;
 
         return $obj;
     }
@@ -112,7 +123,7 @@ final class WebSearchTool20250305 implements BaseModel
     public function withAllowedDomains(?array $allowedDomains): self
     {
         $obj = clone $this;
-        $obj->allowed_domains = $allowedDomains;
+        $obj['allowed_domains'] = $allowedDomains;
 
         return $obj;
     }
@@ -125,18 +136,23 @@ final class WebSearchTool20250305 implements BaseModel
     public function withBlockedDomains(?array $blockedDomains): self
     {
         $obj = clone $this;
-        $obj->blocked_domains = $blockedDomains;
+        $obj['blocked_domains'] = $blockedDomains;
 
         return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param CacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
-    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
-    {
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
         $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $obj['cache_control'] = $cacheControl;
 
         return $obj;
     }
@@ -147,18 +163,27 @@ final class WebSearchTool20250305 implements BaseModel
     public function withMaxUses(?int $maxUses): self
     {
         $obj = clone $this;
-        $obj->max_uses = $maxUses;
+        $obj['max_uses'] = $maxUses;
 
         return $obj;
     }
 
     /**
      * Parameters for the user's location. Used to provide more relevant search results.
+     *
+     * @param UserLocation|array{
+     *   type: 'approximate',
+     *   city?: string|null,
+     *   country?: string|null,
+     *   region?: string|null,
+     *   timezone?: string|null,
+     * }|null $userLocation
      */
-    public function withUserLocation(?UserLocation $userLocation): self
-    {
+    public function withUserLocation(
+        UserLocation|array|null $userLocation
+    ): self {
         $obj = clone $this;
-        $obj->user_location = $userLocation;
+        $obj['user_location'] = $userLocation;
 
         return $obj;
     }

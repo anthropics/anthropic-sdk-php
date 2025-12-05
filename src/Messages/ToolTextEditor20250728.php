@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\CacheControlEphemeral\TTL;
 
 /**
  * @phpstan-type ToolTextEditor20250728Shape = array{
@@ -56,26 +57,35 @@ final class ToolTextEditor20250728 implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param CacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cache_control
      */
     public static function with(
-        ?CacheControlEphemeral $cache_control = null,
-        ?int $max_characters = null
+        CacheControlEphemeral|array|null $cache_control = null,
+        ?int $max_characters = null,
     ): self {
         $obj = new self;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $max_characters && $obj->max_characters = $max_characters;
+        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $max_characters && $obj['max_characters'] = $max_characters;
 
         return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param CacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
-    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
-    {
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
         $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $obj['cache_control'] = $cacheControl;
 
         return $obj;
     }
@@ -86,7 +96,7 @@ final class ToolTextEditor20250728 implements BaseModel
     public function withMaxCharacters(?int $maxCharacters): self
     {
         $obj = clone $this;
-        $obj->max_characters = $maxCharacters;
+        $obj['max_characters'] = $maxCharacters;
 
         return $obj;
     }

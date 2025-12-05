@@ -66,8 +66,8 @@ final class BetaMemoryTool20250818CreateCommand implements BaseModel
     {
         $obj = new self;
 
-        $obj->file_text = $file_text;
-        $obj->path = $path;
+        $obj['file_text'] = $file_text;
+        $obj['path'] = $path;
 
         return $obj;
     }
@@ -78,7 +78,7 @@ final class BetaMemoryTool20250818CreateCommand implements BaseModel
     public function withFileText(string $fileText): self
     {
         $obj = clone $this;
-        $obj->file_text = $fileText;
+        $obj['file_text'] = $fileText;
 
         return $obj;
     }
@@ -89,7 +89,7 @@ final class BetaMemoryTool20250818CreateCommand implements BaseModel
     public function withPath(string $path): self
     {
         $obj = clone $this;
-        $obj->path = $path;
+        $obj['path'] = $path;
 
         return $obj;
     }

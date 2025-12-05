@@ -62,7 +62,7 @@ final class Base64ImageSource implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->data = $data;
+        $obj['data'] = $data;
         $obj['media_type'] = $media_type;
 
         return $obj;
@@ -71,7 +71,7 @@ final class Base64ImageSource implements BaseModel
     public function withData(string $data): self
     {
         $obj = clone $this;
-        $obj->data = $data;
+        $obj['data'] = $data;
 
         return $obj;
     }
