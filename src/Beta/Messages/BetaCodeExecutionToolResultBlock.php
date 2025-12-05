@@ -53,24 +53,47 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaCodeExecutionToolResultError|array{
+     *   error_code: value-of<BetaCodeExecutionToolResultErrorCode>,
+     *   type: 'code_execution_tool_result_error',
+     * }|BetaCodeExecutionResultBlock|array{
+     *   content: list<BetaCodeExecutionOutputBlock>,
+     *   return_code: int,
+     *   stderr: string,
+     *   stdout: string,
+     *   type: 'code_execution_result',
+     * } $content
      */
     public static function with(
-        BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock $content,
+        BetaCodeExecutionToolResultError|array|BetaCodeExecutionResultBlock $content,
         string $tool_use_id,
     ): self {
         $obj = new self;
 
-        $obj->content = $content;
-        $obj->tool_use_id = $tool_use_id;
+        $obj['content'] = $content;
+        $obj['tool_use_id'] = $tool_use_id;
 
         return $obj;
     }
 
+    /**
+     * @param BetaCodeExecutionToolResultError|array{
+     *   error_code: value-of<BetaCodeExecutionToolResultErrorCode>,
+     *   type: 'code_execution_tool_result_error',
+     * }|BetaCodeExecutionResultBlock|array{
+     *   content: list<BetaCodeExecutionOutputBlock>,
+     *   return_code: int,
+     *   stderr: string,
+     *   stdout: string,
+     *   type: 'code_execution_result',
+     * } $content
+     */
     public function withContent(
-        BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock $content
+        BetaCodeExecutionToolResultError|array|BetaCodeExecutionResultBlock $content
     ): self {
         $obj = clone $this;
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }
@@ -78,7 +101,7 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->tool_use_id = $toolUseID;
+        $obj['tool_use_id'] = $toolUseID;
 
         return $obj;
     }

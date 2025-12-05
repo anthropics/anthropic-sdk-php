@@ -46,7 +46,7 @@ final class ToolChoiceAny implements BaseModel
     {
         $obj = new self;
 
-        null !== $disable_parallel_tool_use && $obj->disable_parallel_tool_use = $disable_parallel_tool_use;
+        null !== $disable_parallel_tool_use && $obj['disable_parallel_tool_use'] = $disable_parallel_tool_use;
 
         return $obj;
     }
@@ -60,7 +60,7 @@ final class ToolChoiceAny implements BaseModel
         bool $disableParallelToolUse
     ): self {
         $obj = clone $this;
-        $obj->disable_parallel_tool_use = $disableParallelToolUse;
+        $obj['disable_parallel_tool_use'] = $disableParallelToolUse;
 
         return $obj;
     }

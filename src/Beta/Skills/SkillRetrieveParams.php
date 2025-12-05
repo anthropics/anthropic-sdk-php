@@ -49,7 +49,7 @@ final class SkillRetrieveParams implements BaseModel
     {
         $obj = new self;
 
-        null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        null !== $betas && $obj['betas'] = $betas;
 
         return $obj;
     }
@@ -62,7 +62,7 @@ final class SkillRetrieveParams implements BaseModel
     public function withBetas(array $betas): self
     {
         $obj = clone $this;
-        $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        $obj['betas'] = $betas;
 
         return $obj;
     }

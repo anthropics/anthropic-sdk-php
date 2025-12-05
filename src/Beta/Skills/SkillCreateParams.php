@@ -73,9 +73,9 @@ final class SkillCreateParams implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $display_title && $obj->display_title = $display_title;
-        null !== $files && $obj->files = $files;
-        null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        null !== $display_title && $obj['display_title'] = $display_title;
+        null !== $files && $obj['files'] = $files;
+        null !== $betas && $obj['betas'] = $betas;
 
         return $obj;
     }
@@ -88,7 +88,7 @@ final class SkillCreateParams implements BaseModel
     public function withDisplayTitle(?string $displayTitle): self
     {
         $obj = clone $this;
-        $obj->display_title = $displayTitle;
+        $obj['display_title'] = $displayTitle;
 
         return $obj;
     }
@@ -103,7 +103,7 @@ final class SkillCreateParams implements BaseModel
     public function withFiles(?array $files): self
     {
         $obj = clone $this;
-        $obj->files = $files;
+        $obj['files'] = $files;
 
         return $obj;
     }
@@ -116,7 +116,7 @@ final class SkillCreateParams implements BaseModel
     public function withBetas(array $betas): self
     {
         $obj = clone $this;
-        $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        $obj['betas'] = $betas;
 
         return $obj;
     }

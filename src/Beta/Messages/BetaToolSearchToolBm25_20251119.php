@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaToolSearchToolBm25_20251119\AllowedCaller;
 use Anthropic\Beta\Messages\BetaToolSearchToolBm25_20251119\Type;
 use Anthropic\Core\Attributes\Api;
@@ -84,11 +85,14 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
      *
      * @param Type|value-of<Type> $type
      * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cache_control
      */
     public static function with(
         Type|string $type,
         ?array $allowed_callers = null,
-        ?BetaCacheControlEphemeral $cache_control = null,
+        BetaCacheControlEphemeral|array|null $cache_control = null,
         ?bool $defer_loading = null,
         ?bool $strict = null,
     ): self {
@@ -97,9 +101,9 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
         $obj['type'] = $type;
 
         null !== $allowed_callers && $obj['allowed_callers'] = $allowed_callers;
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $defer_loading && $obj->defer_loading = $defer_loading;
-        null !== $strict && $obj->strict = $strict;
+        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $defer_loading && $obj['defer_loading'] = $defer_loading;
+        null !== $strict && $obj['strict'] = $strict;
 
         return $obj;
     }
@@ -128,12 +132,16 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $obj['cache_control'] = $cacheControl;
 
         return $obj;
     }
@@ -144,7 +152,7 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
     public function withDeferLoading(bool $deferLoading): self
     {
         $obj = clone $this;
-        $obj->defer_loading = $deferLoading;
+        $obj['defer_loading'] = $deferLoading;
 
         return $obj;
     }
@@ -152,7 +160,7 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
     public function withStrict(bool $strict): self
     {
         $obj = clone $this;
-        $obj->strict = $strict;
+        $obj['strict'] = $strict;
 
         return $obj;
     }

@@ -4,7 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\Batches;
 
+use Anthropic\Beta\BetaAPIError;
+use Anthropic\Beta\BetaAuthenticationError;
+use Anthropic\Beta\BetaBillingError;
 use Anthropic\Beta\BetaErrorResponse;
+use Anthropic\Beta\BetaGatewayTimeoutError;
+use Anthropic\Beta\BetaInvalidRequestError;
+use Anthropic\Beta\BetaNotFoundError;
+use Anthropic\Beta\BetaOverloadedError;
+use Anthropic\Beta\BetaPermissionError;
+use Anthropic\Beta\BetaRateLimitError;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -49,20 +58,33 @@ final class MessageBatchErroredResult implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaErrorResponse|array{
+     *   error: BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError,
+     *   request_id: string|null,
+     *   type: 'error',
+     * } $error
      */
-    public static function with(BetaErrorResponse $error): self
+    public static function with(BetaErrorResponse|array $error): self
     {
         $obj = new self;
 
-        $obj->error = $error;
+        $obj['error'] = $error;
 
         return $obj;
     }
 
-    public function withError(BetaErrorResponse $error): self
+    /**
+     * @param BetaErrorResponse|array{
+     *   error: BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError,
+     *   request_id: string|null,
+     *   type: 'error',
+     * } $error
+     */
+    public function withError(BetaErrorResponse|array $error): self
     {
         $obj = clone $this;
-        $obj->error = $error;
+        $obj['error'] = $error;
 
         return $obj;
     }

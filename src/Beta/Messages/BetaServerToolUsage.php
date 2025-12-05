@@ -60,8 +60,8 @@ final class BetaServerToolUsage implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->web_fetch_requests = $web_fetch_requests;
-        $obj->web_search_requests = $web_search_requests;
+        $obj['web_fetch_requests'] = $web_fetch_requests;
+        $obj['web_search_requests'] = $web_search_requests;
 
         return $obj;
     }
@@ -72,7 +72,7 @@ final class BetaServerToolUsage implements BaseModel
     public function withWebFetchRequests(int $webFetchRequests): self
     {
         $obj = clone $this;
-        $obj->web_fetch_requests = $webFetchRequests;
+        $obj['web_fetch_requests'] = $webFetchRequests;
 
         return $obj;
     }
@@ -83,7 +83,7 @@ final class BetaServerToolUsage implements BaseModel
     public function withWebSearchRequests(int $webSearchRequests): self
     {
         $obj = clone $this;
-        $obj->web_search_requests = $webSearchRequests;
+        $obj['web_search_requests'] = $webSearchRequests;
 
         return $obj;
     }

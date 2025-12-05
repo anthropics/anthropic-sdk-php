@@ -93,12 +93,12 @@ final class BetaCitationContentBlockLocation implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->cited_text = $cited_text;
-        $obj->document_index = $document_index;
-        $obj->document_title = $document_title;
-        $obj->end_block_index = $end_block_index;
-        $obj->file_id = $file_id;
-        $obj->start_block_index = $start_block_index;
+        $obj['cited_text'] = $cited_text;
+        $obj['document_index'] = $document_index;
+        $obj['document_title'] = $document_title;
+        $obj['end_block_index'] = $end_block_index;
+        $obj['file_id'] = $file_id;
+        $obj['start_block_index'] = $start_block_index;
 
         return $obj;
     }
@@ -106,7 +106,7 @@ final class BetaCitationContentBlockLocation implements BaseModel
     public function withCitedText(string $citedText): self
     {
         $obj = clone $this;
-        $obj->cited_text = $citedText;
+        $obj['cited_text'] = $citedText;
 
         return $obj;
     }
@@ -114,7 +114,7 @@ final class BetaCitationContentBlockLocation implements BaseModel
     public function withDocumentIndex(int $documentIndex): self
     {
         $obj = clone $this;
-        $obj->document_index = $documentIndex;
+        $obj['document_index'] = $documentIndex;
 
         return $obj;
     }
@@ -122,7 +122,7 @@ final class BetaCitationContentBlockLocation implements BaseModel
     public function withDocumentTitle(?string $documentTitle): self
     {
         $obj = clone $this;
-        $obj->document_title = $documentTitle;
+        $obj['document_title'] = $documentTitle;
 
         return $obj;
     }
@@ -130,7 +130,7 @@ final class BetaCitationContentBlockLocation implements BaseModel
     public function withEndBlockIndex(int $endBlockIndex): self
     {
         $obj = clone $this;
-        $obj->end_block_index = $endBlockIndex;
+        $obj['end_block_index'] = $endBlockIndex;
 
         return $obj;
     }
@@ -138,7 +138,7 @@ final class BetaCitationContentBlockLocation implements BaseModel
     public function withFileID(?string $fileID): self
     {
         $obj = clone $this;
-        $obj->file_id = $fileID;
+        $obj['file_id'] = $fileID;
 
         return $obj;
     }
@@ -146,7 +146,7 @@ final class BetaCitationContentBlockLocation implements BaseModel
     public function withStartBlockIndex(int $startBlockIndex): self
     {
         $obj = clone $this;
-        $obj->start_block_index = $startBlockIndex;
+        $obj['start_block_index'] = $startBlockIndex;
 
         return $obj;
     }

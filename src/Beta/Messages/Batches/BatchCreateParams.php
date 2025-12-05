@@ -6,6 +6,7 @@ namespace Anthropic\Beta\Messages\Batches;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request;
+use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
@@ -21,7 +22,8 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\Messages\BatchesService::create()
  *
  * @phpstan-type BatchCreateParamsShape = array{
- *   requests: list<Request>, betas?: list<string|AnthropicBeta>
+ *   requests: list<Request|array{custom_id: string, params: Params}>,
+ *   betas?: list<string|AnthropicBeta>,
  * }
  */
 final class BatchCreateParams implements BaseModel
@@ -70,16 +72,16 @@ final class BatchCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Request> $requests
+     * @param list<Request|array{custom_id: string, params: Params}> $requests
      * @param list<string|AnthropicBeta> $betas
      */
     public static function with(array $requests, ?array $betas = null): self
     {
         $obj = new self;
 
-        $obj->requests = $requests;
+        $obj['requests'] = $requests;
 
-        null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        null !== $betas && $obj['betas'] = $betas;
 
         return $obj;
     }
@@ -87,12 +89,12 @@ final class BatchCreateParams implements BaseModel
     /**
      * List of requests for prompt completion. Each is an individual request to create a Message.
      *
-     * @param list<Request> $requests
+     * @param list<Request|array{custom_id: string, params: Params}> $requests
      */
     public function withRequests(array $requests): self
     {
         $obj = clone $this;
-        $obj->requests = $requests;
+        $obj['requests'] = $requests;
 
         return $obj;
     }
@@ -105,7 +107,7 @@ final class BatchCreateParams implements BaseModel
     public function withBetas(array $betas): self
     {
         $obj = clone $this;
-        $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        $obj['betas'] = $betas;
 
         return $obj;
     }

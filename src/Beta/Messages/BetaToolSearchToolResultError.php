@@ -65,7 +65,7 @@ final class BetaToolSearchToolResultError implements BaseModel
         $obj = new self;
 
         $obj['error_code'] = $error_code;
-        $obj->error_message = $error_message;
+        $obj['error_message'] = $error_message;
 
         return $obj;
     }
@@ -84,7 +84,7 @@ final class BetaToolSearchToolResultError implements BaseModel
     public function withErrorMessage(?string $errorMessage): self
     {
         $obj = clone $this;
-        $obj->error_message = $errorMessage;
+        $obj['error_message'] = $errorMessage;
 
         return $obj;
     }

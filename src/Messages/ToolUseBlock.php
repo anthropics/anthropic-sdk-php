@@ -62,9 +62,9 @@ final class ToolUseBlock implements BaseModel
     {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->input = $input;
-        $obj->name = $name;
+        $obj['id'] = $id;
+        $obj['input'] = $input;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -72,7 +72,7 @@ final class ToolUseBlock implements BaseModel
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -83,7 +83,7 @@ final class ToolUseBlock implements BaseModel
     public function withInput(array $input): self
     {
         $obj = clone $this;
-        $obj->input = $input;
+        $obj['input'] = $input;
 
         return $obj;
     }
@@ -91,7 +91,7 @@ final class ToolUseBlock implements BaseModel
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }

@@ -53,24 +53,45 @@ final class BetaWebFetchToolResultBlock implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaWebFetchToolResultErrorBlock|array{
+     *   error_code: value-of<BetaWebFetchToolResultErrorCode>,
+     *   type: 'web_fetch_tool_result_error',
+     * }|BetaWebFetchBlock|array{
+     *   content: BetaDocumentBlock,
+     *   retrieved_at: string|null,
+     *   type: 'web_fetch_result',
+     *   url: string,
+     * } $content
      */
     public static function with(
-        BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock $content,
+        BetaWebFetchToolResultErrorBlock|array|BetaWebFetchBlock $content,
         string $tool_use_id,
     ): self {
         $obj = new self;
 
-        $obj->content = $content;
-        $obj->tool_use_id = $tool_use_id;
+        $obj['content'] = $content;
+        $obj['tool_use_id'] = $tool_use_id;
 
         return $obj;
     }
 
+    /**
+     * @param BetaWebFetchToolResultErrorBlock|array{
+     *   error_code: value-of<BetaWebFetchToolResultErrorCode>,
+     *   type: 'web_fetch_tool_result_error',
+     * }|BetaWebFetchBlock|array{
+     *   content: BetaDocumentBlock,
+     *   retrieved_at: string|null,
+     *   type: 'web_fetch_result',
+     *   url: string,
+     * } $content
+     */
     public function withContent(
-        BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock $content
+        BetaWebFetchToolResultErrorBlock|array|BetaWebFetchBlock $content
     ): self {
         $obj = clone $this;
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }
@@ -78,7 +99,7 @@ final class BetaWebFetchToolResultBlock implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->tool_use_id = $toolUseID;
+        $obj['tool_use_id'] = $toolUseID;
 
         return $obj;
     }

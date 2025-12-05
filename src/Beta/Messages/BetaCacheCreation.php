@@ -64,8 +64,8 @@ final class BetaCacheCreation implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->ephemeral_1h_input_tokens = $ephemeral_1h_input_tokens;
-        $obj->ephemeral_5m_input_tokens = $ephemeral_5m_input_tokens;
+        $obj['ephemeral_1h_input_tokens'] = $ephemeral_1h_input_tokens;
+        $obj['ephemeral_5m_input_tokens'] = $ephemeral_5m_input_tokens;
 
         return $obj;
     }
@@ -77,7 +77,7 @@ final class BetaCacheCreation implements BaseModel
         int $ephemeral1hInputTokens
     ): self {
         $obj = clone $this;
-        $obj->ephemeral_1h_input_tokens = $ephemeral1hInputTokens;
+        $obj['ephemeral_1h_input_tokens'] = $ephemeral1hInputTokens;
 
         return $obj;
     }
@@ -89,7 +89,7 @@ final class BetaCacheCreation implements BaseModel
         int $ephemeral5mInputTokens
     ): self {
         $obj = clone $this;
-        $obj->ephemeral_5m_input_tokens = $ephemeral5mInputTokens;
+        $obj['ephemeral_5m_input_tokens'] = $ephemeral5mInputTokens;
 
         return $obj;
     }

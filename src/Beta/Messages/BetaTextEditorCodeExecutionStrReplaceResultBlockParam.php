@@ -64,11 +64,11 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
     ): self {
         $obj = new self;
 
-        null !== $lines && $obj->lines = $lines;
-        null !== $new_lines && $obj->new_lines = $new_lines;
-        null !== $new_start && $obj->new_start = $new_start;
-        null !== $old_lines && $obj->old_lines = $old_lines;
-        null !== $old_start && $obj->old_start = $old_start;
+        null !== $lines && $obj['lines'] = $lines;
+        null !== $new_lines && $obj['new_lines'] = $new_lines;
+        null !== $new_start && $obj['new_start'] = $new_start;
+        null !== $old_lines && $obj['old_lines'] = $old_lines;
+        null !== $old_start && $obj['old_start'] = $old_start;
 
         return $obj;
     }
@@ -79,7 +79,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
     public function withLines(?array $lines): self
     {
         $obj = clone $this;
-        $obj->lines = $lines;
+        $obj['lines'] = $lines;
 
         return $obj;
     }
@@ -87,7 +87,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
     public function withNewLines(?int $newLines): self
     {
         $obj = clone $this;
-        $obj->new_lines = $newLines;
+        $obj['new_lines'] = $newLines;
 
         return $obj;
     }
@@ -95,7 +95,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
     public function withNewStart(?int $newStart): self
     {
         $obj = clone $this;
-        $obj->new_start = $newStart;
+        $obj['new_start'] = $newStart;
 
         return $obj;
     }
@@ -103,7 +103,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
     public function withOldLines(?int $oldLines): self
     {
         $obj = clone $this;
-        $obj->old_lines = $oldLines;
+        $obj['old_lines'] = $oldLines;
 
         return $obj;
     }
@@ -111,7 +111,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
     public function withOldStart(?int $oldStart): self
     {
         $obj = clone $this;
-        $obj->old_start = $oldStart;
+        $obj['old_start'] = $oldStart;
 
         return $obj;
     }

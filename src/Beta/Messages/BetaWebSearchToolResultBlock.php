@@ -55,7 +55,16 @@ final class BetaWebSearchToolResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaWebSearchToolResultError|list<BetaWebSearchResultBlock> $content
+     * @param BetaWebSearchToolResultError|array{
+     *   error_code: value-of<BetaWebSearchToolResultErrorCode>,
+     *   type: 'web_search_tool_result_error',
+     * }|list<BetaWebSearchResultBlock|array{
+     *   encrypted_content: string,
+     *   page_age: string|null,
+     *   title: string,
+     *   type: 'web_search_result',
+     *   url: string,
+     * }> $content
      */
     public static function with(
         BetaWebSearchToolResultError|array $content,
@@ -63,20 +72,29 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->content = $content;
-        $obj->tool_use_id = $tool_use_id;
+        $obj['content'] = $content;
+        $obj['tool_use_id'] = $tool_use_id;
 
         return $obj;
     }
 
     /**
-     * @param BetaWebSearchToolResultError|list<BetaWebSearchResultBlock> $content
+     * @param BetaWebSearchToolResultError|array{
+     *   error_code: value-of<BetaWebSearchToolResultErrorCode>,
+     *   type: 'web_search_tool_result_error',
+     * }|list<BetaWebSearchResultBlock|array{
+     *   encrypted_content: string,
+     *   page_age: string|null,
+     *   title: string,
+     *   type: 'web_search_result',
+     *   url: string,
+     * }> $content
      */
     public function withContent(
         BetaWebSearchToolResultError|array $content
     ): self {
         $obj = clone $this;
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }
@@ -84,7 +102,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->tool_use_id = $toolUseID;
+        $obj['tool_use_id'] = $toolUseID;
 
         return $obj;
     }

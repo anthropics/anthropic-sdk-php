@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -62,27 +63,53 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaCodeExecutionToolResultErrorParam|array{
+     *   error_code: value-of<BetaCodeExecutionToolResultErrorCode>,
+     *   type: 'code_execution_tool_result_error',
+     * }|BetaCodeExecutionResultBlockParam|array{
+     *   content: list<BetaCodeExecutionOutputBlockParam>,
+     *   return_code: int,
+     *   stderr: string,
+     *   stdout: string,
+     *   type: 'code_execution_result',
+     * } $content
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cache_control
      */
     public static function with(
-        BetaCodeExecutionToolResultErrorParam|BetaCodeExecutionResultBlockParam $content,
+        BetaCodeExecutionToolResultErrorParam|array|BetaCodeExecutionResultBlockParam $content,
         string $tool_use_id,
-        ?BetaCacheControlEphemeral $cache_control = null,
+        BetaCacheControlEphemeral|array|null $cache_control = null,
     ): self {
         $obj = new self;
 
-        $obj->content = $content;
-        $obj->tool_use_id = $tool_use_id;
+        $obj['content'] = $content;
+        $obj['tool_use_id'] = $tool_use_id;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $cache_control && $obj['cache_control'] = $cache_control;
 
         return $obj;
     }
 
+    /**
+     * @param BetaCodeExecutionToolResultErrorParam|array{
+     *   error_code: value-of<BetaCodeExecutionToolResultErrorCode>,
+     *   type: 'code_execution_tool_result_error',
+     * }|BetaCodeExecutionResultBlockParam|array{
+     *   content: list<BetaCodeExecutionOutputBlockParam>,
+     *   return_code: int,
+     *   stderr: string,
+     *   stdout: string,
+     *   type: 'code_execution_result',
+     * } $content
+     */
     public function withContent(
-        BetaCodeExecutionToolResultErrorParam|BetaCodeExecutionResultBlockParam $content,
+        BetaCodeExecutionToolResultErrorParam|array|BetaCodeExecutionResultBlockParam $content,
     ): self {
         $obj = clone $this;
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }
@@ -90,19 +117,23 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->tool_use_id = $toolUseID;
+        $obj['tool_use_id'] = $toolUseID;
 
         return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $obj['cache_control'] = $cacheControl;
 
         return $obj;
     }

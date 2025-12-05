@@ -9,6 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\Contracts\ResponseConverter;
+use Anthropic\Messages\Usage\ServiceTier;
 
 /**
  * @phpstan-type MessageShape = array{
@@ -174,8 +175,36 @@ final class Message implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock> $content
+     * @param list<TextBlock|array{
+     *   citations: list<CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation>|null,
+     *   text: string,
+     *   type: 'text',
+     * }|ThinkingBlock|array{
+     *   signature: string, thinking: string, type: 'thinking'
+     * }|RedactedThinkingBlock|array{
+     *   data: string, type: 'redacted_thinking'
+     * }|ToolUseBlock|array{
+     *   id: string, input: array<string,mixed>, name: string, type: 'tool_use'
+     * }|ServerToolUseBlock|array{
+     *   id: string,
+     *   input: array<string,mixed>,
+     *   name: 'web_search',
+     *   type: 'server_tool_use',
+     * }|WebSearchToolResultBlock|array{
+     *   content: WebSearchToolResultError|list<WebSearchResultBlock>,
+     *   tool_use_id: string,
+     *   type: 'web_search_tool_result',
+     * }> $content
      * @param StopReason|value-of<StopReason>|null $stop_reason
+     * @param Usage|array{
+     *   cache_creation: CacheCreation|null,
+     *   cache_creation_input_tokens: int|null,
+     *   cache_read_input_tokens: int|null,
+     *   input_tokens: int,
+     *   output_tokens: int,
+     *   server_tool_use: ServerToolUsage|null,
+     *   service_tier: value-of<ServiceTier>|null,
+     * } $usage
      */
     public static function with(
         string $id,
@@ -183,16 +212,16 @@ final class Message implements BaseModel, ResponseConverter
         string|Model $model,
         StopReason|string|null $stop_reason,
         ?string $stop_sequence,
-        Usage $usage,
+        Usage|array $usage,
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->content = $content;
-        $obj->model = $model instanceof Model ? $model->value : $model;
+        $obj['id'] = $id;
+        $obj['content'] = $content;
+        $obj['model'] = $model;
         $obj['stop_reason'] = $stop_reason;
-        $obj->stop_sequence = $stop_sequence;
-        $obj->usage = $usage;
+        $obj['stop_sequence'] = $stop_sequence;
+        $obj['usage'] = $usage;
 
         return $obj;
     }
@@ -205,7 +234,7 @@ final class Message implements BaseModel, ResponseConverter
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -237,12 +266,31 @@ final class Message implements BaseModel, ResponseConverter
      * [{"type": "text", "text": "B)"}]
      * ```
      *
-     * @param list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock> $content
+     * @param list<TextBlock|array{
+     *   citations: list<CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation>|null,
+     *   text: string,
+     *   type: 'text',
+     * }|ThinkingBlock|array{
+     *   signature: string, thinking: string, type: 'thinking'
+     * }|RedactedThinkingBlock|array{
+     *   data: string, type: 'redacted_thinking'
+     * }|ToolUseBlock|array{
+     *   id: string, input: array<string,mixed>, name: string, type: 'tool_use'
+     * }|ServerToolUseBlock|array{
+     *   id: string,
+     *   input: array<string,mixed>,
+     *   name: 'web_search',
+     *   type: 'server_tool_use',
+     * }|WebSearchToolResultBlock|array{
+     *   content: WebSearchToolResultError|list<WebSearchResultBlock>,
+     *   tool_use_id: string,
+     *   type: 'web_search_tool_result',
+     * }> $content
      */
     public function withContent(array $content): self
     {
         $obj = clone $this;
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }
@@ -253,7 +301,7 @@ final class Message implements BaseModel, ResponseConverter
     public function withModel(string|Model $model): self
     {
         $obj = clone $this;
-        $obj->model = $model instanceof Model ? $model->value : $model;
+        $obj['model'] = $model;
 
         return $obj;
     }
@@ -289,7 +337,7 @@ final class Message implements BaseModel, ResponseConverter
     public function withStopSequence(?string $stopSequence): self
     {
         $obj = clone $this;
-        $obj->stop_sequence = $stopSequence;
+        $obj['stop_sequence'] = $stopSequence;
 
         return $obj;
     }
@@ -304,11 +352,21 @@ final class Message implements BaseModel, ResponseConverter
      * For example, `output_tokens` will be non-zero, even for an empty string response from Claude.
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
+     *
+     * @param Usage|array{
+     *   cache_creation: CacheCreation|null,
+     *   cache_creation_input_tokens: int|null,
+     *   cache_read_input_tokens: int|null,
+     *   input_tokens: int,
+     *   output_tokens: int,
+     *   server_tool_use: ServerToolUsage|null,
+     *   service_tier: value-of<ServiceTier>|null,
+     * } $usage
      */
-    public function withUsage(Usage $usage): self
+    public function withUsage(Usage|array $usage): self
     {
         $obj = clone $this;
-        $obj->usage = $usage;
+        $obj['usage'] = $usage;
 
         return $obj;
     }

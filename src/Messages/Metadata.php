@@ -38,7 +38,7 @@ final class Metadata implements BaseModel
     {
         $obj = new self;
 
-        null !== $user_id && $obj->user_id = $user_id;
+        null !== $user_id && $obj['user_id'] = $user_id;
 
         return $obj;
     }
@@ -51,7 +51,7 @@ final class Metadata implements BaseModel
     public function withUserID(?string $userID): self
     {
         $obj = clone $this;
-        $obj->user_id = $userID;
+        $obj['user_id'] = $userID;
 
         return $obj;
     }

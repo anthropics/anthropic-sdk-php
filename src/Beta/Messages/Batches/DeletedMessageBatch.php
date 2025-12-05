@@ -66,7 +66,7 @@ final class DeletedMessageBatch implements BaseModel, ResponseConverter
     {
         $obj = new self;
 
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -77,7 +77,7 @@ final class DeletedMessageBatch implements BaseModel, ResponseConverter
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }

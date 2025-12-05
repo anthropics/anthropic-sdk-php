@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaSkill\Type;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -64,7 +65,9 @@ final class BetaContainer implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaSkill>|null $skills
+     * @param list<BetaSkill|array{
+     *   skill_id: string, type: value-of<Type>, version: string
+     * }>|null $skills
      */
     public static function with(
         string $id,
@@ -73,9 +76,9 @@ final class BetaContainer implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->expires_at = $expires_at;
-        $obj->skills = $skills;
+        $obj['id'] = $id;
+        $obj['expires_at'] = $expires_at;
+        $obj['skills'] = $skills;
 
         return $obj;
     }
@@ -86,7 +89,7 @@ final class BetaContainer implements BaseModel
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -97,7 +100,7 @@ final class BetaContainer implements BaseModel
     public function withExpiresAt(\DateTimeInterface $expiresAt): self
     {
         $obj = clone $this;
-        $obj->expires_at = $expiresAt;
+        $obj['expires_at'] = $expiresAt;
 
         return $obj;
     }
@@ -105,12 +108,14 @@ final class BetaContainer implements BaseModel
     /**
      * Skills loaded in the container.
      *
-     * @param list<BetaSkill>|null $skills
+     * @param list<BetaSkill|array{
+     *   skill_id: string, type: value-of<Type>, version: string
+     * }>|null $skills
      */
     public function withSkills(?array $skills): self
     {
         $obj = clone $this;
-        $obj->skills = $skills;
+        $obj['skills'] = $skills;
 
         return $obj;
     }

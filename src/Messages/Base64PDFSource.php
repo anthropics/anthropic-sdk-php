@@ -57,7 +57,7 @@ final class Base64PDFSource implements BaseModel
     {
         $obj = new self;
 
-        $obj->data = $data;
+        $obj['data'] = $data;
 
         return $obj;
     }
@@ -65,7 +65,7 @@ final class Base64PDFSource implements BaseModel
     public function withData(string $data): self
     {
         $obj = clone $this;
-        $obj->data = $data;
+        $obj['data'] = $data;
 
         return $obj;
     }

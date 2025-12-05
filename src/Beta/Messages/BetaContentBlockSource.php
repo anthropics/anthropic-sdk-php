@@ -51,24 +51,42 @@ final class BetaContentBlockSource implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|list<BetaTextBlockParam|BetaImageBlockParam> $content
+     * @param string|list<BetaTextBlockParam|array{
+     *   text: string,
+     *   type: 'text',
+     *   cache_control?: BetaCacheControlEphemeral|null,
+     *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
+     * }|BetaImageBlockParam|array{
+     *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource,
+     *   type: 'image',
+     *   cache_control?: BetaCacheControlEphemeral|null,
+     * }> $content
      */
     public static function with(string|array $content): self
     {
         $obj = new self;
 
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }
 
     /**
-     * @param string|list<BetaTextBlockParam|BetaImageBlockParam> $content
+     * @param string|list<BetaTextBlockParam|array{
+     *   text: string,
+     *   type: 'text',
+     *   cache_control?: BetaCacheControlEphemeral|null,
+     *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
+     * }|BetaImageBlockParam|array{
+     *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource,
+     *   type: 'image',
+     *   cache_control?: BetaCacheControlEphemeral|null,
+     * }> $content
      */
     public function withContent(string|array $content): self
     {
         $obj = clone $this;
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }

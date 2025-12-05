@@ -73,35 +73,46 @@ final class BetaClearToolUses20250919Edit implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param BetaInputTokensClearAtLeast|array{
+     *   type: 'input_tokens', value: int
+     * }|null $clear_at_least
      * @param bool|list<string>|null $clear_tool_inputs
      * @param list<string>|null $exclude_tools
+     * @param BetaToolUsesKeep|array{type: 'tool_uses', value: int} $keep
+     * @param BetaInputTokensTrigger|array{
+     *   type: 'input_tokens', value: int
+     * }|BetaToolUsesTrigger|array{type: 'tool_uses', value: int} $trigger
      */
     public static function with(
-        ?BetaInputTokensClearAtLeast $clear_at_least = null,
+        BetaInputTokensClearAtLeast|array|null $clear_at_least = null,
         bool|array|null $clear_tool_inputs = null,
         ?array $exclude_tools = null,
-        ?BetaToolUsesKeep $keep = null,
-        BetaInputTokensTrigger|BetaToolUsesTrigger|null $trigger = null,
+        BetaToolUsesKeep|array|null $keep = null,
+        BetaInputTokensTrigger|array|BetaToolUsesTrigger|null $trigger = null,
     ): self {
         $obj = new self;
 
-        null !== $clear_at_least && $obj->clear_at_least = $clear_at_least;
-        null !== $clear_tool_inputs && $obj->clear_tool_inputs = $clear_tool_inputs;
-        null !== $exclude_tools && $obj->exclude_tools = $exclude_tools;
-        null !== $keep && $obj->keep = $keep;
-        null !== $trigger && $obj->trigger = $trigger;
+        null !== $clear_at_least && $obj['clear_at_least'] = $clear_at_least;
+        null !== $clear_tool_inputs && $obj['clear_tool_inputs'] = $clear_tool_inputs;
+        null !== $exclude_tools && $obj['exclude_tools'] = $exclude_tools;
+        null !== $keep && $obj['keep'] = $keep;
+        null !== $trigger && $obj['trigger'] = $trigger;
 
         return $obj;
     }
 
     /**
      * Minimum number of tokens that must be cleared when triggered. Context will only be modified if at least this many tokens can be removed.
+     *
+     * @param BetaInputTokensClearAtLeast|array{
+     *   type: 'input_tokens', value: int
+     * }|null $clearAtLeast
      */
     public function withClearAtLeast(
-        ?BetaInputTokensClearAtLeast $clearAtLeast
+        BetaInputTokensClearAtLeast|array|null $clearAtLeast
     ): self {
         $obj = clone $this;
-        $obj->clear_at_least = $clearAtLeast;
+        $obj['clear_at_least'] = $clearAtLeast;
 
         return $obj;
     }
@@ -114,7 +125,7 @@ final class BetaClearToolUses20250919Edit implements BaseModel
     public function withClearToolInputs(bool|array|null $clearToolInputs): self
     {
         $obj = clone $this;
-        $obj->clear_tool_inputs = $clearToolInputs;
+        $obj['clear_tool_inputs'] = $clearToolInputs;
 
         return $obj;
     }
@@ -127,30 +138,36 @@ final class BetaClearToolUses20250919Edit implements BaseModel
     public function withExcludeTools(?array $excludeTools): self
     {
         $obj = clone $this;
-        $obj->exclude_tools = $excludeTools;
+        $obj['exclude_tools'] = $excludeTools;
 
         return $obj;
     }
 
     /**
      * Number of tool uses to retain in the conversation.
+     *
+     * @param BetaToolUsesKeep|array{type: 'tool_uses', value: int} $keep
      */
-    public function withKeep(BetaToolUsesKeep $keep): self
+    public function withKeep(BetaToolUsesKeep|array $keep): self
     {
         $obj = clone $this;
-        $obj->keep = $keep;
+        $obj['keep'] = $keep;
 
         return $obj;
     }
 
     /**
      * Condition that triggers the context management strategy.
+     *
+     * @param BetaInputTokensTrigger|array{
+     *   type: 'input_tokens', value: int
+     * }|BetaToolUsesTrigger|array{type: 'tool_uses', value: int} $trigger
      */
     public function withTrigger(
-        BetaInputTokensTrigger|BetaToolUsesTrigger $trigger
+        BetaInputTokensTrigger|array|BetaToolUsesTrigger $trigger
     ): self {
         $obj = clone $this;
-        $obj->trigger = $trigger;
+        $obj['trigger'] = $trigger;
 
         return $obj;
     }

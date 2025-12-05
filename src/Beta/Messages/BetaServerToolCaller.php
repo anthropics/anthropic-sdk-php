@@ -55,7 +55,7 @@ final class BetaServerToolCaller implements BaseModel
     {
         $obj = new self;
 
-        $obj->tool_id = $tool_id;
+        $obj['tool_id'] = $tool_id;
 
         return $obj;
     }
@@ -63,7 +63,7 @@ final class BetaServerToolCaller implements BaseModel
     public function withToolID(string $toolID): self
     {
         $obj = clone $this;
-        $obj->tool_id = $toolID;
+        $obj['tool_id'] = $toolID;
 
         return $obj;
     }

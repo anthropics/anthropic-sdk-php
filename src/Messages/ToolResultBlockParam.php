@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\CacheControlEphemeral\TTL;
 use Anthropic\Messages\ToolResultBlockParam\Content;
 
 /**
@@ -69,21 +70,47 @@ final class ToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam> $content
+     * @param CacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cache_control
+     * @param string|list<TextBlockParam|array{
+     *   text: string,
+     *   type: 'text',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
+     * }|ImageBlockParam|array{
+     *   source: Base64ImageSource|URLImageSource,
+     *   type: 'image',
+     *   cache_control?: CacheControlEphemeral|null,
+     * }|SearchResultBlockParam|array{
+     *   content: list<TextBlockParam>,
+     *   source: string,
+     *   title: string,
+     *   type: 'search_result',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   citations?: CitationsConfigParam|null,
+     * }|DocumentBlockParam|array{
+     *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
+     *   type: 'document',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   citations?: CitationsConfigParam|null,
+     *   context?: string|null,
+     *   title?: string|null,
+     * }> $content
      */
     public static function with(
         string $tool_use_id,
-        ?CacheControlEphemeral $cache_control = null,
+        CacheControlEphemeral|array|null $cache_control = null,
         string|array|null $content = null,
         ?bool $is_error = null,
     ): self {
         $obj = new self;
 
-        $obj->tool_use_id = $tool_use_id;
+        $obj['tool_use_id'] = $tool_use_id;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $content && $obj->content = $content;
-        null !== $is_error && $obj->is_error = $is_error;
+        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $content && $obj['content'] = $content;
+        null !== $is_error && $obj['is_error'] = $is_error;
 
         return $obj;
     }
@@ -91,29 +118,57 @@ final class ToolResultBlockParam implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->tool_use_id = $toolUseID;
+        $obj['tool_use_id'] = $toolUseID;
 
         return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param CacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
-    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
-    {
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
         $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $obj['cache_control'] = $cacheControl;
 
         return $obj;
     }
 
     /**
-     * @param string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam> $content
+     * @param string|list<TextBlockParam|array{
+     *   text: string,
+     *   type: 'text',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
+     * }|ImageBlockParam|array{
+     *   source: Base64ImageSource|URLImageSource,
+     *   type: 'image',
+     *   cache_control?: CacheControlEphemeral|null,
+     * }|SearchResultBlockParam|array{
+     *   content: list<TextBlockParam>,
+     *   source: string,
+     *   title: string,
+     *   type: 'search_result',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   citations?: CitationsConfigParam|null,
+     * }|DocumentBlockParam|array{
+     *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
+     *   type: 'document',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   citations?: CitationsConfigParam|null,
+     *   context?: string|null,
+     *   title?: string|null,
+     * }> $content
      */
     public function withContent(string|array $content): self
     {
         $obj = clone $this;
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }
@@ -121,7 +176,7 @@ final class ToolResultBlockParam implements BaseModel
     public function withIsError(bool $isError): self
     {
         $obj = clone $this;
-        $obj->is_error = $isError;
+        $obj['is_error'] = $isError;
 
         return $obj;
     }

@@ -93,12 +93,12 @@ final class BetaCitationSearchResultLocation implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->cited_text = $cited_text;
-        $obj->end_block_index = $end_block_index;
-        $obj->search_result_index = $search_result_index;
-        $obj->source = $source;
-        $obj->start_block_index = $start_block_index;
-        $obj->title = $title;
+        $obj['cited_text'] = $cited_text;
+        $obj['end_block_index'] = $end_block_index;
+        $obj['search_result_index'] = $search_result_index;
+        $obj['source'] = $source;
+        $obj['start_block_index'] = $start_block_index;
+        $obj['title'] = $title;
 
         return $obj;
     }
@@ -106,7 +106,7 @@ final class BetaCitationSearchResultLocation implements BaseModel
     public function withCitedText(string $citedText): self
     {
         $obj = clone $this;
-        $obj->cited_text = $citedText;
+        $obj['cited_text'] = $citedText;
 
         return $obj;
     }
@@ -114,7 +114,7 @@ final class BetaCitationSearchResultLocation implements BaseModel
     public function withEndBlockIndex(int $endBlockIndex): self
     {
         $obj = clone $this;
-        $obj->end_block_index = $endBlockIndex;
+        $obj['end_block_index'] = $endBlockIndex;
 
         return $obj;
     }
@@ -122,7 +122,7 @@ final class BetaCitationSearchResultLocation implements BaseModel
     public function withSearchResultIndex(int $searchResultIndex): self
     {
         $obj = clone $this;
-        $obj->search_result_index = $searchResultIndex;
+        $obj['search_result_index'] = $searchResultIndex;
 
         return $obj;
     }
@@ -130,7 +130,7 @@ final class BetaCitationSearchResultLocation implements BaseModel
     public function withSource(string $source): self
     {
         $obj = clone $this;
-        $obj->source = $source;
+        $obj['source'] = $source;
 
         return $obj;
     }
@@ -138,7 +138,7 @@ final class BetaCitationSearchResultLocation implements BaseModel
     public function withStartBlockIndex(int $startBlockIndex): self
     {
         $obj = clone $this;
-        $obj->start_block_index = $startBlockIndex;
+        $obj['start_block_index'] = $startBlockIndex;
 
         return $obj;
     }
@@ -146,7 +146,7 @@ final class BetaCitationSearchResultLocation implements BaseModel
     public function withTitle(?string $title): self
     {
         $obj = clone $this;
-        $obj->title = $title;
+        $obj['title'] = $title;
 
         return $obj;
     }

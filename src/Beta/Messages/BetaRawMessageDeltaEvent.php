@@ -75,37 +75,64 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaContextManagementResponse|array{
+     *   applied_edits: list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse>,
+     * }|null $context_management
+     * @param Delta|array{
+     *   container: BetaContainer|null,
+     *   stop_reason: value-of<BetaStopReason>|null,
+     *   stop_sequence: string|null,
+     * } $delta
+     * @param BetaMessageDeltaUsage|array{
+     *   cache_creation_input_tokens: int|null,
+     *   cache_read_input_tokens: int|null,
+     *   input_tokens: int|null,
+     *   output_tokens: int,
+     *   server_tool_use: BetaServerToolUsage|null,
+     * } $usage
      */
     public static function with(
-        ?BetaContextManagementResponse $context_management,
-        Delta $delta,
-        BetaMessageDeltaUsage $usage,
+        BetaContextManagementResponse|array|null $context_management,
+        Delta|array $delta,
+        BetaMessageDeltaUsage|array $usage,
     ): self {
         $obj = new self;
 
-        $obj->context_management = $context_management;
-        $obj->delta = $delta;
-        $obj->usage = $usage;
+        $obj['context_management'] = $context_management;
+        $obj['delta'] = $delta;
+        $obj['usage'] = $usage;
 
         return $obj;
     }
 
     /**
      * Information about context management strategies applied during the request.
+     *
+     * @param BetaContextManagementResponse|array{
+     *   applied_edits: list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse>,
+     * }|null $contextManagement
      */
     public function withContextManagement(
-        ?BetaContextManagementResponse $contextManagement
+        BetaContextManagementResponse|array|null $contextManagement
     ): self {
         $obj = clone $this;
-        $obj->context_management = $contextManagement;
+        $obj['context_management'] = $contextManagement;
 
         return $obj;
     }
 
-    public function withDelta(Delta $delta): self
+    /**
+     * @param Delta|array{
+     *   container: BetaContainer|null,
+     *   stop_reason: value-of<BetaStopReason>|null,
+     *   stop_sequence: string|null,
+     * } $delta
+     */
+    public function withDelta(Delta|array $delta): self
     {
         $obj = clone $this;
-        $obj->delta = $delta;
+        $obj['delta'] = $delta;
 
         return $obj;
     }
@@ -120,11 +147,19 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      * For example, `output_tokens` will be non-zero, even for an empty string response from Claude.
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
+     *
+     * @param BetaMessageDeltaUsage|array{
+     *   cache_creation_input_tokens: int|null,
+     *   cache_read_input_tokens: int|null,
+     *   input_tokens: int|null,
+     *   output_tokens: int,
+     *   server_tool_use: BetaServerToolUsage|null,
+     * } $usage
      */
-    public function withUsage(BetaMessageDeltaUsage $usage): self
+    public function withUsage(BetaMessageDeltaUsage|array $usage): self
     {
         $obj = clone $this;
-        $obj->usage = $usage;
+        $obj['usage'] = $usage;
 
         return $obj;
     }

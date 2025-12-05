@@ -108,25 +108,29 @@ final class Usage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param CacheCreation|array{
+     *   ephemeral_1h_input_tokens: int, ephemeral_5m_input_tokens: int
+     * }|null $cache_creation
+     * @param ServerToolUsage|array{web_search_requests: int}|null $server_tool_use
      * @param ServiceTier|value-of<ServiceTier>|null $service_tier
      */
     public static function with(
-        ?CacheCreation $cache_creation,
+        CacheCreation|array|null $cache_creation,
         ?int $cache_creation_input_tokens,
         ?int $cache_read_input_tokens,
         int $input_tokens,
         int $output_tokens,
-        ?ServerToolUsage $server_tool_use,
+        ServerToolUsage|array|null $server_tool_use,
         ServiceTier|string|null $service_tier,
     ): self {
         $obj = new self;
 
-        $obj->cache_creation = $cache_creation;
-        $obj->cache_creation_input_tokens = $cache_creation_input_tokens;
-        $obj->cache_read_input_tokens = $cache_read_input_tokens;
-        $obj->input_tokens = $input_tokens;
-        $obj->output_tokens = $output_tokens;
-        $obj->server_tool_use = $server_tool_use;
+        $obj['cache_creation'] = $cache_creation;
+        $obj['cache_creation_input_tokens'] = $cache_creation_input_tokens;
+        $obj['cache_read_input_tokens'] = $cache_read_input_tokens;
+        $obj['input_tokens'] = $input_tokens;
+        $obj['output_tokens'] = $output_tokens;
+        $obj['server_tool_use'] = $server_tool_use;
         $obj['service_tier'] = $service_tier;
 
         return $obj;
@@ -134,11 +138,16 @@ final class Usage implements BaseModel
 
     /**
      * Breakdown of cached tokens by TTL.
+     *
+     * @param CacheCreation|array{
+     *   ephemeral_1h_input_tokens: int, ephemeral_5m_input_tokens: int
+     * }|null $cacheCreation
      */
-    public function withCacheCreation(?CacheCreation $cacheCreation): self
-    {
+    public function withCacheCreation(
+        CacheCreation|array|null $cacheCreation
+    ): self {
         $obj = clone $this;
-        $obj->cache_creation = $cacheCreation;
+        $obj['cache_creation'] = $cacheCreation;
 
         return $obj;
     }
@@ -150,7 +159,7 @@ final class Usage implements BaseModel
         ?int $cacheCreationInputTokens
     ): self {
         $obj = clone $this;
-        $obj->cache_creation_input_tokens = $cacheCreationInputTokens;
+        $obj['cache_creation_input_tokens'] = $cacheCreationInputTokens;
 
         return $obj;
     }
@@ -161,7 +170,7 @@ final class Usage implements BaseModel
     public function withCacheReadInputTokens(?int $cacheReadInputTokens): self
     {
         $obj = clone $this;
-        $obj->cache_read_input_tokens = $cacheReadInputTokens;
+        $obj['cache_read_input_tokens'] = $cacheReadInputTokens;
 
         return $obj;
     }
@@ -172,7 +181,7 @@ final class Usage implements BaseModel
     public function withInputTokens(int $inputTokens): self
     {
         $obj = clone $this;
-        $obj->input_tokens = $inputTokens;
+        $obj['input_tokens'] = $inputTokens;
 
         return $obj;
     }
@@ -183,18 +192,21 @@ final class Usage implements BaseModel
     public function withOutputTokens(int $outputTokens): self
     {
         $obj = clone $this;
-        $obj->output_tokens = $outputTokens;
+        $obj['output_tokens'] = $outputTokens;
 
         return $obj;
     }
 
     /**
      * The number of server tool requests.
+     *
+     * @param ServerToolUsage|array{web_search_requests: int}|null $serverToolUse
      */
-    public function withServerToolUse(?ServerToolUsage $serverToolUse): self
-    {
+    public function withServerToolUse(
+        ServerToolUsage|array|null $serverToolUse
+    ): self {
         $obj = clone $this;
-        $obj->server_tool_use = $serverToolUse;
+        $obj['server_tool_use'] = $serverToolUse;
 
         return $obj;
     }

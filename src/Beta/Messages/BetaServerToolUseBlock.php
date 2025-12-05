@@ -75,18 +75,21 @@ final class BetaServerToolUseBlock implements BaseModel
      *
      * @param array<string,mixed> $input
      * @param Name|value-of<Name> $name
+     * @param BetaDirectCaller|array{type: 'direct'}|BetaServerToolCaller|array{
+     *   tool_id: string, type: 'code_execution_20250825'
+     * } $caller
      */
     public static function with(
         string $id,
         array $input,
         Name|string $name,
-        BetaDirectCaller|BetaServerToolCaller $caller = ['type' => 'direct'],
+        BetaDirectCaller|array|BetaServerToolCaller $caller = ['type' => 'direct'],
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->caller = $caller;
-        $obj->input = $input;
+        $obj['id'] = $id;
+        $obj['caller'] = $caller;
+        $obj['input'] = $input;
         $obj['name'] = $name;
 
         return $obj;
@@ -95,19 +98,23 @@ final class BetaServerToolUseBlock implements BaseModel
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
 
     /**
      * Tool invocation directly from the model.
+     *
+     * @param BetaDirectCaller|array{type: 'direct'}|BetaServerToolCaller|array{
+     *   tool_id: string, type: 'code_execution_20250825'
+     * } $caller
      */
     public function withCaller(
-        BetaDirectCaller|BetaServerToolCaller $caller
+        BetaDirectCaller|array|BetaServerToolCaller $caller
     ): self {
         $obj = clone $this;
-        $obj->caller = $caller;
+        $obj['caller'] = $caller;
 
         return $obj;
     }
@@ -118,7 +125,7 @@ final class BetaServerToolUseBlock implements BaseModel
     public function withInput(array $input): self
     {
         $obj = clone $this;
-        $obj->input = $input;
+        $obj['input'] = $input;
 
         return $obj;
     }

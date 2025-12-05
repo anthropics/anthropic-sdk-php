@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\Batches;
 
+use Anthropic\Beta\BetaErrorResponse;
+use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkResponse;
@@ -64,15 +66,23 @@ final class MessageBatchIndividualResponse implements BaseModel, ResponseConvert
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param MessageBatchSucceededResult|array{
+     *   message: BetaMessage, type: 'succeeded'
+     * }|MessageBatchErroredResult|array{
+     *   error: BetaErrorResponse, type: 'errored'
+     * }|MessageBatchCanceledResult|array{
+     *   type: 'canceled'
+     * }|MessageBatchExpiredResult|array{type: 'expired'} $result
      */
     public static function with(
         string $custom_id,
-        MessageBatchSucceededResult|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult $result,
+        MessageBatchSucceededResult|array|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult $result,
     ): self {
         $obj = new self;
 
-        $obj->custom_id = $custom_id;
-        $obj->result = $result;
+        $obj['custom_id'] = $custom_id;
+        $obj['result'] = $result;
 
         return $obj;
     }
@@ -85,7 +95,7 @@ final class MessageBatchIndividualResponse implements BaseModel, ResponseConvert
     public function withCustomID(string $customID): self
     {
         $obj = clone $this;
-        $obj->custom_id = $customID;
+        $obj['custom_id'] = $customID;
 
         return $obj;
     }
@@ -94,12 +104,20 @@ final class MessageBatchIndividualResponse implements BaseModel, ResponseConvert
      * Processing result for this request.
      *
      * Contains a Message output if processing was successful, an error response if processing failed, or the reason why processing was not attempted, such as cancellation or expiration.
+     *
+     * @param MessageBatchSucceededResult|array{
+     *   message: BetaMessage, type: 'succeeded'
+     * }|MessageBatchErroredResult|array{
+     *   error: BetaErrorResponse, type: 'errored'
+     * }|MessageBatchCanceledResult|array{
+     *   type: 'canceled'
+     * }|MessageBatchExpiredResult|array{type: 'expired'} $result
      */
     public function withResult(
-        MessageBatchSucceededResult|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult $result,
+        MessageBatchSucceededResult|array|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult $result,
     ): self {
         $obj = clone $this;
-        $obj->result = $result;
+        $obj['result'] = $result;
 
         return $obj;
     }

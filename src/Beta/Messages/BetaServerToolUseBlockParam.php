@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaServerToolUseBlockParam\Caller;
 use Anthropic\Beta\Messages\BetaServerToolUseBlockParam\Name;
 use Anthropic\Core\Attributes\Api;
@@ -78,22 +79,28 @@ final class BetaServerToolUseBlockParam implements BaseModel
      *
      * @param array<string,mixed> $input
      * @param Name|value-of<Name> $name
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cache_control
+     * @param BetaDirectCaller|array{type: 'direct'}|BetaServerToolCaller|array{
+     *   tool_id: string, type: 'code_execution_20250825'
+     * } $caller
      */
     public static function with(
         string $id,
         array $input,
         Name|string $name,
-        ?BetaCacheControlEphemeral $cache_control = null,
-        BetaDirectCaller|BetaServerToolCaller|null $caller = null,
+        BetaCacheControlEphemeral|array|null $cache_control = null,
+        BetaDirectCaller|array|BetaServerToolCaller|null $caller = null,
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->input = $input;
+        $obj['id'] = $id;
+        $obj['input'] = $input;
         $obj['name'] = $name;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $caller && $obj->caller = $caller;
+        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $caller && $obj['caller'] = $caller;
 
         return $obj;
     }
@@ -101,7 +108,7 @@ final class BetaServerToolUseBlockParam implements BaseModel
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -112,7 +119,7 @@ final class BetaServerToolUseBlockParam implements BaseModel
     public function withInput(array $input): self
     {
         $obj = clone $this;
-        $obj->input = $input;
+        $obj['input'] = $input;
 
         return $obj;
     }
@@ -130,24 +137,32 @@ final class BetaServerToolUseBlockParam implements BaseModel
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $obj['cache_control'] = $cacheControl;
 
         return $obj;
     }
 
     /**
      * Tool invocation directly from the model.
+     *
+     * @param BetaDirectCaller|array{type: 'direct'}|BetaServerToolCaller|array{
+     *   tool_id: string, type: 'code_execution_20250825'
+     * } $caller
      */
     public function withCaller(
-        BetaDirectCaller|BetaServerToolCaller $caller
+        BetaDirectCaller|array|BetaServerToolCaller $caller
     ): self {
         $obj = clone $this;
-        $obj->caller = $caller;
+        $obj['caller'] = $caller;
 
         return $obj;
     }

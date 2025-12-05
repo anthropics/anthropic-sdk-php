@@ -7,6 +7,8 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\CacheControlEphemeral\TTL;
+use Anthropic\Messages\WebSearchToolRequestError\ErrorCode;
 
 /**
  * @phpstan-type WebSearchToolResultBlockParamShape = array{
@@ -62,30 +64,49 @@ final class WebSearchToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<WebSearchResultBlockParam>|WebSearchToolRequestError $content
+     * @param list<WebSearchResultBlockParam|array{
+     *   encrypted_content: string,
+     *   title: string,
+     *   type: 'web_search_result',
+     *   url: string,
+     *   page_age?: string|null,
+     * }>|WebSearchToolRequestError|array{
+     *   error_code: value-of<ErrorCode>, type: 'web_search_tool_result_error'
+     * } $content
+     * @param CacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cache_control
      */
     public static function with(
         array|WebSearchToolRequestError $content,
         string $tool_use_id,
-        ?CacheControlEphemeral $cache_control = null,
+        CacheControlEphemeral|array|null $cache_control = null,
     ): self {
         $obj = new self;
 
-        $obj->content = $content;
-        $obj->tool_use_id = $tool_use_id;
+        $obj['content'] = $content;
+        $obj['tool_use_id'] = $tool_use_id;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $cache_control && $obj['cache_control'] = $cache_control;
 
         return $obj;
     }
 
     /**
-     * @param list<WebSearchResultBlockParam>|WebSearchToolRequestError $content
+     * @param list<WebSearchResultBlockParam|array{
+     *   encrypted_content: string,
+     *   title: string,
+     *   type: 'web_search_result',
+     *   url: string,
+     *   page_age?: string|null,
+     * }>|WebSearchToolRequestError|array{
+     *   error_code: value-of<ErrorCode>, type: 'web_search_tool_result_error'
+     * } $content
      */
     public function withContent(array|WebSearchToolRequestError $content): self
     {
         $obj = clone $this;
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }
@@ -93,18 +114,23 @@ final class WebSearchToolResultBlockParam implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->tool_use_id = $toolUseID;
+        $obj['tool_use_id'] = $toolUseID;
 
         return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param CacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
-    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
-    {
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
         $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $obj['cache_control'] = $cacheControl;
 
         return $obj;
     }

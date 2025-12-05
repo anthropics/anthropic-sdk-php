@@ -52,7 +52,7 @@ final class BetaCountTokensContextManagementResponse implements BaseModel
     {
         $obj = new self;
 
-        $obj->original_input_tokens = $original_input_tokens;
+        $obj['original_input_tokens'] = $original_input_tokens;
 
         return $obj;
     }
@@ -63,7 +63,7 @@ final class BetaCountTokensContextManagementResponse implements BaseModel
     public function withOriginalInputTokens(int $originalInputTokens): self
     {
         $obj = clone $this;
-        $obj->original_input_tokens = $originalInputTokens;
+        $obj['original_input_tokens'] = $originalInputTokens;
 
         return $obj;
     }

@@ -51,7 +51,7 @@ final class TextDelta implements BaseModel
     {
         $obj = new self;
 
-        $obj->text = $text;
+        $obj['text'] = $text;
 
         return $obj;
     }
@@ -59,7 +59,7 @@ final class TextDelta implements BaseModel
     public function withText(string $text): self
     {
         $obj = clone $this;
-        $obj->text = $text;
+        $obj['text'] = $text;
 
         return $obj;
     }

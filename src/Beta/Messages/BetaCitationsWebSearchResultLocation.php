@@ -76,10 +76,10 @@ final class BetaCitationsWebSearchResultLocation implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->cited_text = $cited_text;
-        $obj->encrypted_index = $encrypted_index;
-        $obj->title = $title;
-        $obj->url = $url;
+        $obj['cited_text'] = $cited_text;
+        $obj['encrypted_index'] = $encrypted_index;
+        $obj['title'] = $title;
+        $obj['url'] = $url;
 
         return $obj;
     }
@@ -87,7 +87,7 @@ final class BetaCitationsWebSearchResultLocation implements BaseModel
     public function withCitedText(string $citedText): self
     {
         $obj = clone $this;
-        $obj->cited_text = $citedText;
+        $obj['cited_text'] = $citedText;
 
         return $obj;
     }
@@ -95,7 +95,7 @@ final class BetaCitationsWebSearchResultLocation implements BaseModel
     public function withEncryptedIndex(string $encryptedIndex): self
     {
         $obj = clone $this;
-        $obj->encrypted_index = $encryptedIndex;
+        $obj['encrypted_index'] = $encryptedIndex;
 
         return $obj;
     }
@@ -103,7 +103,7 @@ final class BetaCitationsWebSearchResultLocation implements BaseModel
     public function withTitle(?string $title): self
     {
         $obj = clone $this;
-        $obj->title = $title;
+        $obj['title'] = $title;
 
         return $obj;
     }
@@ -111,7 +111,7 @@ final class BetaCitationsWebSearchResultLocation implements BaseModel
     public function withURL(string $url): self
     {
         $obj = clone $this;
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }

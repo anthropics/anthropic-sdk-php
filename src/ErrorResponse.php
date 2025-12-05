@@ -53,24 +53,61 @@ final class ErrorResponse implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param InvalidRequestError|array{
+     *   message: string, type: 'invalid_request_error'
+     * }|AuthenticationError|array{
+     *   message: string, type: 'authentication_error'
+     * }|BillingError|array{
+     *   message: string, type: 'billing_error'
+     * }|PermissionError|array{
+     *   message: string, type: 'permission_error'
+     * }|NotFoundError|array{
+     *   message: string, type: 'not_found_error'
+     * }|RateLimitError|array{
+     *   message: string, type: 'rate_limit_error'
+     * }|GatewayTimeoutError|array{
+     *   message: string, type: 'timeout_error'
+     * }|APIErrorObject|array{
+     *   message: string, type: 'api_error'
+     * }|OverloadedError|array{message: string, type: 'overloaded_error'} $error
      */
     public static function with(
-        InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error,
+        InvalidRequestError|array|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error,
         ?string $request_id,
     ): self {
         $obj = new self;
 
-        $obj->error = $error;
-        $obj->request_id = $request_id;
+        $obj['error'] = $error;
+        $obj['request_id'] = $request_id;
 
         return $obj;
     }
 
+    /**
+     * @param InvalidRequestError|array{
+     *   message: string, type: 'invalid_request_error'
+     * }|AuthenticationError|array{
+     *   message: string, type: 'authentication_error'
+     * }|BillingError|array{
+     *   message: string, type: 'billing_error'
+     * }|PermissionError|array{
+     *   message: string, type: 'permission_error'
+     * }|NotFoundError|array{
+     *   message: string, type: 'not_found_error'
+     * }|RateLimitError|array{
+     *   message: string, type: 'rate_limit_error'
+     * }|GatewayTimeoutError|array{
+     *   message: string, type: 'timeout_error'
+     * }|APIErrorObject|array{
+     *   message: string, type: 'api_error'
+     * }|OverloadedError|array{message: string, type: 'overloaded_error'} $error
+     */
     public function withError(
-        InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error,
+        InvalidRequestError|array|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error,
     ): self {
         $obj = clone $this;
-        $obj->error = $error;
+        $obj['error'] = $error;
 
         return $obj;
     }
@@ -78,7 +115,7 @@ final class ErrorResponse implements BaseModel
     public function withRequestID(?string $requestID): self
     {
         $obj = clone $this;
-        $obj->request_id = $requestID;
+        $obj['request_id'] = $requestID;
 
         return $obj;
     }
