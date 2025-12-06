@@ -54,7 +54,7 @@ final class MessageTokensCount implements BaseModel, ResponseConverter
     {
         $obj = new self;
 
-        $obj->input_tokens = $input_tokens;
+        $obj['input_tokens'] = $input_tokens;
 
         return $obj;
     }
@@ -65,7 +65,7 @@ final class MessageTokensCount implements BaseModel, ResponseConverter
     public function withInputTokens(int $inputTokens): self
     {
         $obj = clone $this;
-        $obj->input_tokens = $inputTokens;
+        $obj['input_tokens'] = $inputTokens;
 
         return $obj;
     }

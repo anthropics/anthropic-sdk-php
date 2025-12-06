@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type ThinkingDeltaShape = array{
- *   thinking: string, type: "thinking_delta"
+ *   thinking: string, type: 'thinking_delta'
  * }
  */
 final class ThinkingDelta implements BaseModel
@@ -18,7 +18,7 @@ final class ThinkingDelta implements BaseModel
     /** @use SdkModel<ThinkingDeltaShape> */
     use SdkModel;
 
-    /** @var "thinking_delta" $type */
+    /** @var 'thinking_delta' $type */
     #[Api]
     public string $type = 'thinking_delta';
 
@@ -53,7 +53,7 @@ final class ThinkingDelta implements BaseModel
     {
         $obj = new self;
 
-        $obj->thinking = $thinking;
+        $obj['thinking'] = $thinking;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class ThinkingDelta implements BaseModel
     public function withThinking(string $thinking): self
     {
         $obj = clone $this;
-        $obj->thinking = $thinking;
+        $obj['thinking'] = $thinking;
 
         return $obj;
     }

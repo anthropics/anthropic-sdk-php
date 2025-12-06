@@ -12,8 +12,8 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type ServerToolUseBlockShape = array{
  *   id: string,
  *   input: array<string,mixed>,
- *   name: "web_search",
- *   type: "server_tool_use",
+ *   name: 'web_search',
+ *   type: 'server_tool_use',
  * }
  */
 final class ServerToolUseBlock implements BaseModel
@@ -21,11 +21,11 @@ final class ServerToolUseBlock implements BaseModel
     /** @use SdkModel<ServerToolUseBlockShape> */
     use SdkModel;
 
-    /** @var "web_search" $name */
+    /** @var 'web_search' $name */
     #[Api]
     public string $name = 'web_search';
 
-    /** @var "server_tool_use" $type */
+    /** @var 'server_tool_use' $type */
     #[Api]
     public string $type = 'server_tool_use';
 
@@ -66,8 +66,8 @@ final class ServerToolUseBlock implements BaseModel
     {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->input = $input;
+        $obj['id'] = $id;
+        $obj['input'] = $input;
 
         return $obj;
     }
@@ -75,7 +75,7 @@ final class ServerToolUseBlock implements BaseModel
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -86,7 +86,7 @@ final class ServerToolUseBlock implements BaseModel
     public function withInput(array $input): self
     {
         $obj = clone $this;
-        $obj->input = $input;
+        $obj['input'] = $input;
 
         return $obj;
     }

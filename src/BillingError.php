@@ -9,14 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BillingErrorShape = array{message: string, type: "billing_error"}
+ * @phpstan-type BillingErrorShape = array{message: string, type: 'billing_error'}
  */
 final class BillingError implements BaseModel
 {
     /** @use SdkModel<BillingErrorShape> */
     use SdkModel;
 
-    /** @var "billing_error" $type */
+    /** @var 'billing_error' $type */
     #[Api]
     public string $type = 'billing_error';
 
@@ -51,7 +51,7 @@ final class BillingError implements BaseModel
     {
         $obj = new self;
 
-        $obj->message = $message;
+        $obj['message'] = $message;
 
         return $obj;
     }
@@ -59,7 +59,7 @@ final class BillingError implements BaseModel
     public function withMessage(string $message): self
     {
         $obj = clone $this;
-        $obj->message = $message;
+        $obj['message'] = $message;
 
         return $obj;
     }

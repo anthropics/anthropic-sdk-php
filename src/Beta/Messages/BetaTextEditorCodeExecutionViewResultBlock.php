@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   num_lines: int|null,
  *   start_line: int|null,
  *   total_lines: int|null,
- *   type: "text_editor_code_execution_view_result",
+ *   type: 'text_editor_code_execution_view_result',
  * }
  */
 final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
@@ -24,7 +24,7 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
     /** @use SdkModel<BetaTextEditorCodeExecutionViewResultBlockShape> */
     use SdkModel;
 
-    /** @var "text_editor_code_execution_view_result" $type */
+    /** @var 'text_editor_code_execution_view_result' $type */
     #[Api]
     public string $type = 'text_editor_code_execution_view_result';
 
@@ -90,11 +90,11 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->content = $content;
+        $obj['content'] = $content;
         $obj['file_type'] = $file_type;
-        $obj->num_lines = $num_lines;
-        $obj->start_line = $start_line;
-        $obj->total_lines = $total_lines;
+        $obj['num_lines'] = $num_lines;
+        $obj['start_line'] = $start_line;
+        $obj['total_lines'] = $total_lines;
 
         return $obj;
     }
@@ -102,7 +102,7 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
     public function withContent(string $content): self
     {
         $obj = clone $this;
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }
@@ -121,7 +121,7 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
     public function withNumLines(?int $numLines): self
     {
         $obj = clone $this;
-        $obj->num_lines = $numLines;
+        $obj['num_lines'] = $numLines;
 
         return $obj;
     }
@@ -129,7 +129,7 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
     public function withStartLine(?int $startLine): self
     {
         $obj = clone $this;
-        $obj->start_line = $startLine;
+        $obj['start_line'] = $startLine;
 
         return $obj;
     }
@@ -137,7 +137,7 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
     public function withTotalLines(?int $totalLines): self
     {
         $obj = clone $this;
-        $obj->total_lines = $totalLines;
+        $obj['total_lines'] = $totalLines;
 
         return $obj;
     }

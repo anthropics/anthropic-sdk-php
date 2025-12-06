@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.5.0 (2025-12-06)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.4.0...v0.5.0)
+
+### Features
+
+* allow both model class instances and arrays in setters ([71aa7fc](https://github.com/anthropics/anthropic-sdk-php/commit/71aa7fcf3e610a024e407edc0fc77cf7a9050f9c))
+* better support for pagination mechanisms ([829ee6e](https://github.com/anthropics/anthropic-sdk-php/commit/829ee6eddf267729c0f78b9422433d8ecec2ed90))
+
+
+### Chores
+
+* be more targeted in suppressing superfluous linter warnings ([4b8cbf5](https://github.com/anthropics/anthropic-sdk-php/commit/4b8cbf5aa58f27965e28830089d144f724774866))
+* formatting ([5878c16](https://github.com/anthropics/anthropic-sdk-php/commit/5878c16d13731b6680e415b897928ecfaf3d6059))
+* use non-trivial test assertions ([c223976](https://github.com/anthropics/anthropic-sdk-php/commit/c223976e6b6540e7389799ac1428a321119365b2))
+* use single quote strings ([441785c](https://github.com/anthropics/anthropic-sdk-php/commit/441785c73c427e4b7f60fdf6f5e0562b7ede94e6))
+
 ## 0.4.0 (2025-11-24)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.3.0...v0.4.0)

@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * The model will use any available tools.
  *
  * @phpstan-type ToolChoiceAnyShape = array{
- *   type: "any", disable_parallel_tool_use?: bool|null
+ *   type: 'any', disable_parallel_tool_use?: bool|null
  * }
  */
 final class ToolChoiceAny implements BaseModel
@@ -20,7 +20,7 @@ final class ToolChoiceAny implements BaseModel
     /** @use SdkModel<ToolChoiceAnyShape> */
     use SdkModel;
 
-    /** @var "any" $type */
+    /** @var 'any' $type */
     #[Api]
     public string $type = 'any';
 
@@ -46,7 +46,7 @@ final class ToolChoiceAny implements BaseModel
     {
         $obj = new self;
 
-        null !== $disable_parallel_tool_use && $obj->disable_parallel_tool_use = $disable_parallel_tool_use;
+        null !== $disable_parallel_tool_use && $obj['disable_parallel_tool_use'] = $disable_parallel_tool_use;
 
         return $obj;
     }
@@ -60,7 +60,7 @@ final class ToolChoiceAny implements BaseModel
         bool $disableParallelToolUse
     ): self {
         $obj = clone $this;
-        $obj->disable_parallel_tool_use = $disableParallelToolUse;
+        $obj['disable_parallel_tool_use'] = $disableParallelToolUse;
 
         return $obj;
     }

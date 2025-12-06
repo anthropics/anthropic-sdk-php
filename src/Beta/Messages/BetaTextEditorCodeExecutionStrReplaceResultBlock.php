@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   new_start: int|null,
  *   old_lines: int|null,
  *   old_start: int|null,
- *   type: "text_editor_code_execution_str_replace_result",
+ *   type: 'text_editor_code_execution_str_replace_result',
  * }
  */
 final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseModel
@@ -23,7 +23,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
     /** @use SdkModel<BetaTextEditorCodeExecutionStrReplaceResultBlockShape> */
     use SdkModel;
 
-    /** @var "text_editor_code_execution_str_replace_result" $type */
+    /** @var 'text_editor_code_execution_str_replace_result' $type */
     #[Api]
     public string $type = 'text_editor_code_execution_str_replace_result';
 
@@ -85,11 +85,11 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
     ): self {
         $obj = new self;
 
-        $obj->lines = $lines;
-        $obj->new_lines = $new_lines;
-        $obj->new_start = $new_start;
-        $obj->old_lines = $old_lines;
-        $obj->old_start = $old_start;
+        $obj['lines'] = $lines;
+        $obj['new_lines'] = $new_lines;
+        $obj['new_start'] = $new_start;
+        $obj['old_lines'] = $old_lines;
+        $obj['old_start'] = $old_start;
 
         return $obj;
     }
@@ -100,7 +100,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
     public function withLines(?array $lines): self
     {
         $obj = clone $this;
-        $obj->lines = $lines;
+        $obj['lines'] = $lines;
 
         return $obj;
     }
@@ -108,7 +108,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
     public function withNewLines(?int $newLines): self
     {
         $obj = clone $this;
-        $obj->new_lines = $newLines;
+        $obj['new_lines'] = $newLines;
 
         return $obj;
     }
@@ -116,7 +116,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
     public function withNewStart(?int $newStart): self
     {
         $obj = clone $this;
-        $obj->new_start = $newStart;
+        $obj['new_start'] = $newStart;
 
         return $obj;
     }
@@ -124,7 +124,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
     public function withOldLines(?int $oldLines): self
     {
         $obj = clone $this;
-        $obj->old_lines = $oldLines;
+        $obj['old_lines'] = $oldLines;
 
         return $obj;
     }
@@ -132,7 +132,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
     public function withOldStart(?int $oldStart): self
     {
         $obj = clone $this;
-        $obj->old_start = $oldStart;
+        $obj['old_start'] = $oldStart;
 
         return $obj;
     }

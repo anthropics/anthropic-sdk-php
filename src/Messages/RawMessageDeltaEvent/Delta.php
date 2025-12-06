@@ -59,7 +59,7 @@ final class Delta implements BaseModel
         $obj = new self;
 
         $obj['stop_reason'] = $stop_reason;
-        $obj->stop_sequence = $stop_sequence;
+        $obj['stop_sequence'] = $stop_sequence;
 
         return $obj;
     }
@@ -78,7 +78,7 @@ final class Delta implements BaseModel
     public function withStopSequence(?string $stopSequence): self
     {
         $obj = clone $this;
-        $obj->stop_sequence = $stopSequence;
+        $obj['stop_sequence'] = $stopSequence;
 
         return $obj;
     }

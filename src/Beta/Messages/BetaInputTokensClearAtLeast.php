@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaInputTokensClearAtLeastShape = array{
- *   type: "input_tokens", value: int
+ *   type: 'input_tokens', value: int
  * }
  */
 final class BetaInputTokensClearAtLeast implements BaseModel
@@ -18,7 +18,7 @@ final class BetaInputTokensClearAtLeast implements BaseModel
     /** @use SdkModel<BetaInputTokensClearAtLeastShape> */
     use SdkModel;
 
-    /** @var "input_tokens" $type */
+    /** @var 'input_tokens' $type */
     #[Api]
     public string $type = 'input_tokens';
 
@@ -53,7 +53,7 @@ final class BetaInputTokensClearAtLeast implements BaseModel
     {
         $obj = new self;
 
-        $obj->value = $value;
+        $obj['value'] = $value;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class BetaInputTokensClearAtLeast implements BaseModel
     public function withValue(int $value): self
     {
         $obj = clone $this;
-        $obj->value = $value;
+        $obj['value'] = $value;
 
         return $obj;
     }

@@ -96,11 +96,11 @@ final class MessageBatchRequestCounts implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->canceled = $canceled;
-        $obj->errored = $errored;
-        $obj->expired = $expired;
-        $obj->processing = $processing;
-        $obj->succeeded = $succeeded;
+        $obj['canceled'] = $canceled;
+        $obj['errored'] = $errored;
+        $obj['expired'] = $expired;
+        $obj['processing'] = $processing;
+        $obj['succeeded'] = $succeeded;
 
         return $obj;
     }
@@ -113,7 +113,7 @@ final class MessageBatchRequestCounts implements BaseModel
     public function withCanceled(int $canceled): self
     {
         $obj = clone $this;
-        $obj->canceled = $canceled;
+        $obj['canceled'] = $canceled;
 
         return $obj;
     }
@@ -126,7 +126,7 @@ final class MessageBatchRequestCounts implements BaseModel
     public function withErrored(int $errored): self
     {
         $obj = clone $this;
-        $obj->errored = $errored;
+        $obj['errored'] = $errored;
 
         return $obj;
     }
@@ -139,7 +139,7 @@ final class MessageBatchRequestCounts implements BaseModel
     public function withExpired(int $expired): self
     {
         $obj = clone $this;
-        $obj->expired = $expired;
+        $obj['expired'] = $expired;
 
         return $obj;
     }
@@ -150,7 +150,7 @@ final class MessageBatchRequestCounts implements BaseModel
     public function withProcessing(int $processing): self
     {
         $obj = clone $this;
-        $obj->processing = $processing;
+        $obj['processing'] = $processing;
 
         return $obj;
     }
@@ -163,7 +163,7 @@ final class MessageBatchRequestCounts implements BaseModel
     public function withSucceeded(int $succeeded): self
     {
         $obj = clone $this;
-        $obj->succeeded = $succeeded;
+        $obj['succeeded'] = $succeeded;
 
         return $obj;
     }

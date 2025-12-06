@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818StrReplaceCommandShape = array{
- *   command: "str_replace", new_str: string, old_str: string, path: string
+ *   command: 'str_replace', new_str: string, old_str: string, path: string
  * }
  */
 final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
@@ -21,7 +21,7 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
     /**
      * Command type identifier.
      *
-     * @var "str_replace" $command
+     * @var 'str_replace' $command
      */
     #[Api]
     public string $command = 'str_replace';
@@ -80,9 +80,9 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->new_str = $new_str;
-        $obj->old_str = $old_str;
-        $obj->path = $path;
+        $obj['new_str'] = $new_str;
+        $obj['old_str'] = $old_str;
+        $obj['path'] = $path;
 
         return $obj;
     }
@@ -93,7 +93,7 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
     public function withNewStr(string $newStr): self
     {
         $obj = clone $this;
-        $obj->new_str = $newStr;
+        $obj['new_str'] = $newStr;
 
         return $obj;
     }
@@ -104,7 +104,7 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
     public function withOldStr(string $oldStr): self
     {
         $obj = clone $this;
-        $obj->old_str = $oldStr;
+        $obj['old_str'] = $oldStr;
 
         return $obj;
     }
@@ -115,7 +115,7 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
     public function withPath(string $path): self
     {
         $obj = clone $this;
-        $obj->path = $path;
+        $obj['path'] = $path;
 
         return $obj;
     }

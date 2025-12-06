@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaTextEditorCodeExecutionCreateResultBlockParamShape = array{
- *   is_file_update: bool, type: "text_editor_code_execution_create_result"
+ *   is_file_update: bool, type: 'text_editor_code_execution_create_result'
  * }
  */
 final class BetaTextEditorCodeExecutionCreateResultBlockParam implements BaseModel
@@ -18,7 +18,7 @@ final class BetaTextEditorCodeExecutionCreateResultBlockParam implements BaseMod
     /** @use SdkModel<BetaTextEditorCodeExecutionCreateResultBlockParamShape> */
     use SdkModel;
 
-    /** @var "text_editor_code_execution_create_result" $type */
+    /** @var 'text_editor_code_execution_create_result' $type */
     #[Api]
     public string $type = 'text_editor_code_execution_create_result';
 
@@ -53,7 +53,7 @@ final class BetaTextEditorCodeExecutionCreateResultBlockParam implements BaseMod
     {
         $obj = new self;
 
-        $obj->is_file_update = $is_file_update;
+        $obj['is_file_update'] = $is_file_update;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class BetaTextEditorCodeExecutionCreateResultBlockParam implements BaseMod
     public function withIsFileUpdate(bool $isFileUpdate): self
     {
         $obj = clone $this;
-        $obj->is_file_update = $isFileUpdate;
+        $obj['is_file_update'] = $isFileUpdate;
 
         return $obj;
     }

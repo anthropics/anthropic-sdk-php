@@ -9,14 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaFileDocumentSourceShape = array{file_id: string, type: "file"}
+ * @phpstan-type BetaFileDocumentSourceShape = array{file_id: string, type: 'file'}
  */
 final class BetaFileDocumentSource implements BaseModel
 {
     /** @use SdkModel<BetaFileDocumentSourceShape> */
     use SdkModel;
 
-    /** @var "file" $type */
+    /** @var 'file' $type */
     #[Api]
     public string $type = 'file';
 
@@ -51,7 +51,7 @@ final class BetaFileDocumentSource implements BaseModel
     {
         $obj = new self;
 
-        $obj->file_id = $file_id;
+        $obj['file_id'] = $file_id;
 
         return $obj;
     }
@@ -59,7 +59,7 @@ final class BetaFileDocumentSource implements BaseModel
     public function withFileID(string $fileID): self
     {
         $obj = clone $this;
-        $obj->file_id = $fileID;
+        $obj['file_id'] = $fileID;
 
         return $obj;
     }

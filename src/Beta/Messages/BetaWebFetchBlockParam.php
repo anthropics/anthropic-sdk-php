@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaWebFetchBlockParamShape = array{
  *   content: BetaRequestDocumentBlock,
- *   type: "web_fetch_result",
+ *   type: 'web_fetch_result',
  *   url: string,
  *   retrieved_at?: string|null,
  * }
@@ -21,7 +21,7 @@ final class BetaWebFetchBlockParam implements BaseModel
     /** @use SdkModel<BetaWebFetchBlockParamShape> */
     use SdkModel;
 
-    /** @var "web_fetch_result" $type */
+    /** @var 'web_fetch_result' $type */
     #[Api]
     public string $type = 'web_fetch_result';
 
@@ -63,26 +63,45 @@ final class BetaWebFetchBlockParam implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaRequestDocumentBlock|array{
+     *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource,
+     *   type: 'document',
+     *   cache_control?: BetaCacheControlEphemeral|null,
+     *   citations?: BetaCitationsConfigParam|null,
+     *   context?: string|null,
+     *   title?: string|null,
+     * } $content
      */
     public static function with(
-        BetaRequestDocumentBlock $content,
+        BetaRequestDocumentBlock|array $content,
         string $url,
-        ?string $retrieved_at = null
+        ?string $retrieved_at = null,
     ): self {
         $obj = new self;
 
-        $obj->content = $content;
-        $obj->url = $url;
+        $obj['content'] = $content;
+        $obj['url'] = $url;
 
-        null !== $retrieved_at && $obj->retrieved_at = $retrieved_at;
+        null !== $retrieved_at && $obj['retrieved_at'] = $retrieved_at;
 
         return $obj;
     }
 
-    public function withContent(BetaRequestDocumentBlock $content): self
+    /**
+     * @param BetaRequestDocumentBlock|array{
+     *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource,
+     *   type: 'document',
+     *   cache_control?: BetaCacheControlEphemeral|null,
+     *   citations?: BetaCitationsConfigParam|null,
+     *   context?: string|null,
+     *   title?: string|null,
+     * } $content
+     */
+    public function withContent(BetaRequestDocumentBlock|array $content): self
     {
         $obj = clone $this;
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }
@@ -93,7 +112,7 @@ final class BetaWebFetchBlockParam implements BaseModel
     public function withURL(string $url): self
     {
         $obj = clone $this;
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }
@@ -104,7 +123,7 @@ final class BetaWebFetchBlockParam implements BaseModel
     public function withRetrievedAt(?string $retrievedAt): self
     {
         $obj = clone $this;
-        $obj->retrieved_at = $retrievedAt;
+        $obj['retrieved_at'] = $retrievedAt;
 
         return $obj;
     }

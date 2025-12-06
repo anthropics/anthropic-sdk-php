@@ -34,7 +34,6 @@ trait SdkUnion
             return static::$converter;
         }
 
-        // @phpstan-ignore-next-line
         return static::$converter = new UnionOf(discriminator: static::discriminator(), variants: static::variants());
     }
 }

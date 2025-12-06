@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type RawContentBlockStopEventShape = array{
- *   index: int, type: "content_block_stop"
+ *   index: int, type: 'content_block_stop'
  * }
  */
 final class RawContentBlockStopEvent implements BaseModel
@@ -18,7 +18,7 @@ final class RawContentBlockStopEvent implements BaseModel
     /** @use SdkModel<RawContentBlockStopEventShape> */
     use SdkModel;
 
-    /** @var "content_block_stop" $type */
+    /** @var 'content_block_stop' $type */
     #[Api]
     public string $type = 'content_block_stop';
 
@@ -53,7 +53,7 @@ final class RawContentBlockStopEvent implements BaseModel
     {
         $obj = new self;
 
-        $obj->index = $index;
+        $obj['index'] = $index;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class RawContentBlockStopEvent implements BaseModel
     public function withIndex(int $index): self
     {
         $obj = clone $this;
-        $obj->index = $index;
+        $obj['index'] = $index;
 
         return $obj;
     }

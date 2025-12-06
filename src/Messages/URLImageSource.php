@@ -9,14 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type URLImageSourceShape = array{type: "url", url: string}
+ * @phpstan-type URLImageSourceShape = array{type: 'url', url: string}
  */
 final class URLImageSource implements BaseModel
 {
     /** @use SdkModel<URLImageSourceShape> */
     use SdkModel;
 
-    /** @var "url" $type */
+    /** @var 'url' $type */
     #[Api]
     public string $type = 'url';
 
@@ -51,7 +51,7 @@ final class URLImageSource implements BaseModel
     {
         $obj = new self;
 
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }
@@ -59,7 +59,7 @@ final class URLImageSource implements BaseModel
     public function withURL(string $url): self
     {
         $obj = clone $this;
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }

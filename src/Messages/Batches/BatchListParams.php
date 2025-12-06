@@ -63,9 +63,9 @@ final class BatchListParams implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $after_id && $obj->after_id = $after_id;
-        null !== $before_id && $obj->before_id = $before_id;
-        null !== $limit && $obj->limit = $limit;
+        null !== $after_id && $obj['after_id'] = $after_id;
+        null !== $before_id && $obj['before_id'] = $before_id;
+        null !== $limit && $obj['limit'] = $limit;
 
         return $obj;
     }
@@ -76,7 +76,7 @@ final class BatchListParams implements BaseModel
     public function withAfterID(string $afterID): self
     {
         $obj = clone $this;
-        $obj->after_id = $afterID;
+        $obj['after_id'] = $afterID;
 
         return $obj;
     }
@@ -87,7 +87,7 @@ final class BatchListParams implements BaseModel
     public function withBeforeID(string $beforeID): self
     {
         $obj = clone $this;
-        $obj->before_id = $beforeID;
+        $obj['before_id'] = $beforeID;
 
         return $obj;
     }
@@ -100,7 +100,7 @@ final class BatchListParams implements BaseModel
     public function withLimit(int $limit): self
     {
         $obj = clone $this;
-        $obj->limit = $limit;
+        $obj['limit'] = $limit;
 
         return $obj;
     }

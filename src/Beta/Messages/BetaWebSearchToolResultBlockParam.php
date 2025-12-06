@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -12,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaWebSearchToolResultBlockParamShape = array{
  *   content: list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError,
  *   tool_use_id: string,
- *   type: "web_search_tool_result",
+ *   type: 'web_search_tool_result',
  *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
@@ -21,13 +22,11 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
     /** @use SdkModel<BetaWebSearchToolResultBlockParamShape> */
     use SdkModel;
 
-    /** @var "web_search_tool_result" $type */
+    /** @var 'web_search_tool_result' $type */
     #[Api]
     public string $type = 'web_search_tool_result';
 
-    /**
-     * @var list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError $content
-     */
+    /** @var list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError $content */
     #[Api(union: BetaWebSearchToolResultBlockParamContent::class)]
     public array|BetaWebSearchToolRequestError $content;
 
@@ -64,31 +63,52 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError $content
+     * @param list<BetaWebSearchResultBlockParam|array{
+     *   encrypted_content: string,
+     *   title: string,
+     *   type: 'web_search_result',
+     *   url: string,
+     *   page_age?: string|null,
+     * }>|BetaWebSearchToolRequestError|array{
+     *   error_code: value-of<BetaWebSearchToolResultErrorCode>,
+     *   type: 'web_search_tool_result_error',
+     * } $content
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cache_control
      */
     public static function with(
         array|BetaWebSearchToolRequestError $content,
         string $tool_use_id,
-        ?BetaCacheControlEphemeral $cache_control = null,
+        BetaCacheControlEphemeral|array|null $cache_control = null,
     ): self {
         $obj = new self;
 
-        $obj->content = $content;
-        $obj->tool_use_id = $tool_use_id;
+        $obj['content'] = $content;
+        $obj['tool_use_id'] = $tool_use_id;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $cache_control && $obj['cache_control'] = $cache_control;
 
         return $obj;
     }
 
     /**
-     * @param list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError $content
+     * @param list<BetaWebSearchResultBlockParam|array{
+     *   encrypted_content: string,
+     *   title: string,
+     *   type: 'web_search_result',
+     *   url: string,
+     *   page_age?: string|null,
+     * }>|BetaWebSearchToolRequestError|array{
+     *   error_code: value-of<BetaWebSearchToolResultErrorCode>,
+     *   type: 'web_search_tool_result_error',
+     * } $content
      */
     public function withContent(
         array|BetaWebSearchToolRequestError $content
     ): self {
         $obj = clone $this;
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }
@@ -96,19 +116,23 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->tool_use_id = $toolUseID;
+        $obj['tool_use_id'] = $toolUseID;
 
         return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $obj['cache_control'] = $cacheControl;
 
         return $obj;
     }

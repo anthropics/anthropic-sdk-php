@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type PermissionErrorShape = array{
- *   message: string, type: "permission_error"
+ *   message: string, type: 'permission_error'
  * }
  */
 final class PermissionError implements BaseModel
@@ -18,7 +18,7 @@ final class PermissionError implements BaseModel
     /** @use SdkModel<PermissionErrorShape> */
     use SdkModel;
 
-    /** @var "permission_error" $type */
+    /** @var 'permission_error' $type */
     #[Api]
     public string $type = 'permission_error';
 
@@ -53,7 +53,7 @@ final class PermissionError implements BaseModel
     {
         $obj = new self;
 
-        $obj->message = $message;
+        $obj['message'] = $message;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class PermissionError implements BaseModel
     public function withMessage(string $message): self
     {
         $obj = clone $this;
-        $obj->message = $message;
+        $obj['message'] = $message;
 
         return $obj;
     }

@@ -33,7 +33,7 @@ final class BetaCitationsConfigParam implements BaseModel
     {
         $obj = new self;
 
-        null !== $enabled && $obj->enabled = $enabled;
+        null !== $enabled && $obj['enabled'] = $enabled;
 
         return $obj;
     }
@@ -41,7 +41,7 @@ final class BetaCitationsConfigParam implements BaseModel
     public function withEnabled(bool $enabled): self
     {
         $obj = clone $this;
-        $obj->enabled = $enabled;
+        $obj['enabled'] = $enabled;
 
         return $obj;
     }

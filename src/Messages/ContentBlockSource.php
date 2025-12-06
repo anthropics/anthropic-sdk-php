@@ -11,7 +11,7 @@ use Anthropic\Messages\ContentBlockSource\Content;
 
 /**
  * @phpstan-type ContentBlockSourceShape = array{
- *   content: string|list<TextBlockParam|ImageBlockParam>, type: "content"
+ *   content: string|list<TextBlockParam|ImageBlockParam>, type: 'content'
  * }
  */
 final class ContentBlockSource implements BaseModel
@@ -19,7 +19,7 @@ final class ContentBlockSource implements BaseModel
     /** @use SdkModel<ContentBlockSourceShape> */
     use SdkModel;
 
-    /** @var "content" $type */
+    /** @var 'content' $type */
     #[Api]
     public string $type = 'content';
 
@@ -51,24 +51,42 @@ final class ContentBlockSource implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|list<TextBlockParam|ImageBlockParam> $content
+     * @param string|list<TextBlockParam|array{
+     *   text: string,
+     *   type: 'text',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
+     * }|ImageBlockParam|array{
+     *   source: Base64ImageSource|URLImageSource,
+     *   type: 'image',
+     *   cache_control?: CacheControlEphemeral|null,
+     * }> $content
      */
     public static function with(string|array $content): self
     {
         $obj = new self;
 
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }
 
     /**
-     * @param string|list<TextBlockParam|ImageBlockParam> $content
+     * @param string|list<TextBlockParam|array{
+     *   text: string,
+     *   type: 'text',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
+     * }|ImageBlockParam|array{
+     *   source: Base64ImageSource|URLImageSource,
+     *   type: 'image',
+     *   cache_control?: CacheControlEphemeral|null,
+     * }> $content
      */
     public function withContent(string|array $content): self
     {
         $obj = clone $this;
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }

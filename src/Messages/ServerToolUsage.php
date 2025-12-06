@@ -50,7 +50,7 @@ final class ServerToolUsage implements BaseModel
     {
         $obj = new self;
 
-        $obj->web_search_requests = $web_search_requests;
+        $obj['web_search_requests'] = $web_search_requests;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class ServerToolUsage implements BaseModel
     public function withWebSearchRequests(int $webSearchRequests): self
     {
         $obj = clone $this;
-        $obj->web_search_requests = $webSearchRequests;
+        $obj['web_search_requests'] = $webSearchRequests;
 
         return $obj;
     }

@@ -51,13 +51,21 @@ final class BetaContextManagementResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse> $applied_edits
+     * @param list<BetaClearToolUses20250919EditResponse|array{
+     *   cleared_input_tokens: int,
+     *   cleared_tool_uses: int,
+     *   type: 'clear_tool_uses_20250919',
+     * }|BetaClearThinking20251015EditResponse|array{
+     *   cleared_input_tokens: int,
+     *   cleared_thinking_turns: int,
+     *   type: 'clear_thinking_20251015',
+     * }> $applied_edits
      */
     public static function with(array $applied_edits): self
     {
         $obj = new self;
 
-        $obj->applied_edits = $applied_edits;
+        $obj['applied_edits'] = $applied_edits;
 
         return $obj;
     }
@@ -65,12 +73,20 @@ final class BetaContextManagementResponse implements BaseModel
     /**
      * List of context management edits that were applied.
      *
-     * @param list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse> $appliedEdits
+     * @param list<BetaClearToolUses20250919EditResponse|array{
+     *   cleared_input_tokens: int,
+     *   cleared_tool_uses: int,
+     *   type: 'clear_tool_uses_20250919',
+     * }|BetaClearThinking20251015EditResponse|array{
+     *   cleared_input_tokens: int,
+     *   cleared_thinking_turns: int,
+     *   type: 'clear_thinking_20251015',
+     * }> $appliedEdits
      */
     public function withAppliedEdits(array $appliedEdits): self
     {
         $obj = clone $this;
-        $obj->applied_edits = $appliedEdits;
+        $obj['applied_edits'] = $appliedEdits;
 
         return $obj;
     }

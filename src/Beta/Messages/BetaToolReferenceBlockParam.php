@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -13,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type BetaToolReferenceBlockParamShape = array{
  *   tool_name: string,
- *   type: "tool_reference",
+ *   type: 'tool_reference',
  *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
@@ -22,7 +23,7 @@ final class BetaToolReferenceBlockParam implements BaseModel
     /** @use SdkModel<BetaToolReferenceBlockParamShape> */
     use SdkModel;
 
-    /** @var "tool_reference" $type */
+    /** @var 'tool_reference' $type */
     #[Api]
     public string $type = 'tool_reference';
 
@@ -58,16 +59,20 @@ final class BetaToolReferenceBlockParam implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cache_control
      */
     public static function with(
         string $tool_name,
-        ?BetaCacheControlEphemeral $cache_control = null
+        BetaCacheControlEphemeral|array|null $cache_control = null,
     ): self {
         $obj = new self;
 
-        $obj->tool_name = $tool_name;
+        $obj['tool_name'] = $tool_name;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $cache_control && $obj['cache_control'] = $cache_control;
 
         return $obj;
     }
@@ -75,19 +80,23 @@ final class BetaToolReferenceBlockParam implements BaseModel
     public function withToolName(string $toolName): self
     {
         $obj = clone $this;
-        $obj->tool_name = $toolName;
+        $obj['tool_name'] = $toolName;
 
         return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $obj['cache_control'] = $cacheControl;
 
         return $obj;
     }

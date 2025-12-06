@@ -7,12 +7,13 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\WebSearchToolResultError\ErrorCode;
 
 /**
  * @phpstan-type WebSearchToolResultBlockShape = array{
  *   content: WebSearchToolResultError|list<WebSearchResultBlock>,
  *   tool_use_id: string,
- *   type: "web_search_tool_result",
+ *   type: 'web_search_tool_result',
  * }
  */
 final class WebSearchToolResultBlock implements BaseModel
@@ -20,7 +21,7 @@ final class WebSearchToolResultBlock implements BaseModel
     /** @use SdkModel<WebSearchToolResultBlockShape> */
     use SdkModel;
 
-    /** @var "web_search_tool_result" $type */
+    /** @var 'web_search_tool_result' $type */
     #[Api]
     public string $type = 'web_search_tool_result';
 
@@ -55,7 +56,15 @@ final class WebSearchToolResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param WebSearchToolResultError|list<WebSearchResultBlock> $content
+     * @param WebSearchToolResultError|array{
+     *   error_code: value-of<ErrorCode>, type: 'web_search_tool_result_error'
+     * }|list<WebSearchResultBlock|array{
+     *   encrypted_content: string,
+     *   page_age: string|null,
+     *   title: string,
+     *   type: 'web_search_result',
+     *   url: string,
+     * }> $content
      */
     public static function with(
         WebSearchToolResultError|array $content,
@@ -63,19 +72,27 @@ final class WebSearchToolResultBlock implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->content = $content;
-        $obj->tool_use_id = $tool_use_id;
+        $obj['content'] = $content;
+        $obj['tool_use_id'] = $tool_use_id;
 
         return $obj;
     }
 
     /**
-     * @param WebSearchToolResultError|list<WebSearchResultBlock> $content
+     * @param WebSearchToolResultError|array{
+     *   error_code: value-of<ErrorCode>, type: 'web_search_tool_result_error'
+     * }|list<WebSearchResultBlock|array{
+     *   encrypted_content: string,
+     *   page_age: string|null,
+     *   title: string,
+     *   type: 'web_search_result',
+     *   url: string,
+     * }> $content
      */
     public function withContent(WebSearchToolResultError|array $content): self
     {
         $obj = clone $this;
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }
@@ -83,7 +100,7 @@ final class WebSearchToolResultBlock implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj->tool_use_id = $toolUseID;
+        $obj['tool_use_id'] = $toolUseID;
 
         return $obj;
     }

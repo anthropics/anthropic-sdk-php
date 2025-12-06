@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaSkillParams\Type;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -44,14 +45,16 @@ final class BetaContainerParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaSkillParams>|null $skills
+     * @param list<BetaSkillParams|array{
+     *   skill_id: string, type: value-of<Type>, version?: string|null
+     * }>|null $skills
      */
     public static function with(?string $id = null, ?array $skills = null): self
     {
         $obj = new self;
 
-        null !== $id && $obj->id = $id;
-        null !== $skills && $obj->skills = $skills;
+        null !== $id && $obj['id'] = $id;
+        null !== $skills && $obj['skills'] = $skills;
 
         return $obj;
     }
@@ -62,7 +65,7 @@ final class BetaContainerParams implements BaseModel
     public function withID(?string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -70,12 +73,14 @@ final class BetaContainerParams implements BaseModel
     /**
      * List of skills to load in the container.
      *
-     * @param list<BetaSkillParams>|null $skills
+     * @param list<BetaSkillParams|array{
+     *   skill_id: string, type: value-of<Type>, version?: string|null
+     * }>|null $skills
      */
     public function withSkills(?array $skills): self
     {
         $obj = clone $this;
-        $obj->skills = $skills;
+        $obj['skills'] = $skills;
 
         return $obj;
     }

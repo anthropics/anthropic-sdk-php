@@ -37,12 +37,7 @@ trait SdkPage
 
     public function hasNextPage(): bool
     {
-        $items = $this->getItems();
-        if (empty($items)) {
-            return false;
-        }
-
-        return null != $this->nextRequest();
+        return !is_null($this->nextRequest());
     }
 
     /**
@@ -65,7 +60,7 @@ trait SdkPage
 
         [$req, $opts] = $next;
 
-        // @phpstan-ignore-next-line
+        // @phpstan-ignore-next-line argument.type
         return $this->client->request(...$req, convert: $this->convert, page: $this::class, options: $opts);
     }
 

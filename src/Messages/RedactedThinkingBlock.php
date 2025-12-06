@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type RedactedThinkingBlockShape = array{
- *   data: string, type: "redacted_thinking"
+ *   data: string, type: 'redacted_thinking'
  * }
  */
 final class RedactedThinkingBlock implements BaseModel
@@ -18,7 +18,7 @@ final class RedactedThinkingBlock implements BaseModel
     /** @use SdkModel<RedactedThinkingBlockShape> */
     use SdkModel;
 
-    /** @var "redacted_thinking" $type */
+    /** @var 'redacted_thinking' $type */
     #[Api]
     public string $type = 'redacted_thinking';
 
@@ -53,7 +53,7 @@ final class RedactedThinkingBlock implements BaseModel
     {
         $obj = new self;
 
-        $obj->data = $data;
+        $obj['data'] = $data;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class RedactedThinkingBlock implements BaseModel
     public function withData(string $data): self
     {
         $obj = clone $this;
-        $obj->data = $data;
+        $obj['data'] = $data;
 
         return $obj;
     }

@@ -9,14 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaUrlpdfSourceShape = array{type: "url", url: string}
+ * @phpstan-type BetaUrlpdfSourceShape = array{type: 'url', url: string}
  */
 final class BetaURLPDFSource implements BaseModel
 {
     /** @use SdkModel<BetaUrlpdfSourceShape> */
     use SdkModel;
 
-    /** @var "url" $type */
+    /** @var 'url' $type */
     #[Api]
     public string $type = 'url';
 
@@ -51,7 +51,7 @@ final class BetaURLPDFSource implements BaseModel
     {
         $obj = new self;
 
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }
@@ -59,7 +59,7 @@ final class BetaURLPDFSource implements BaseModel
     public function withURL(string $url): self
     {
         $obj = clone $this;
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }

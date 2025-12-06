@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaWebSearchToolResultErrorShape = array{
  *   error_code: value-of<BetaWebSearchToolResultErrorCode>,
- *   type: "web_search_tool_result_error",
+ *   type: 'web_search_tool_result_error',
  * }
  */
 final class BetaWebSearchToolResultError implements BaseModel
@@ -19,7 +19,7 @@ final class BetaWebSearchToolResultError implements BaseModel
     /** @use SdkModel<BetaWebSearchToolResultErrorShape> */
     use SdkModel;
 
-    /** @var "web_search_tool_result_error" $type */
+    /** @var 'web_search_tool_result_error' $type */
     #[Api]
     public string $type = 'web_search_tool_result_error';
 

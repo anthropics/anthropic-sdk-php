@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818RenameCommandShape = array{
- *   command: "rename", new_path: string, old_path: string
+ *   command: 'rename', new_path: string, old_path: string
  * }
  */
 final class BetaMemoryTool20250818RenameCommand implements BaseModel
@@ -21,7 +21,7 @@ final class BetaMemoryTool20250818RenameCommand implements BaseModel
     /**
      * Command type identifier.
      *
-     * @var "rename" $command
+     * @var 'rename' $command
      */
     #[Api]
     public string $command = 'rename';
@@ -66,8 +66,8 @@ final class BetaMemoryTool20250818RenameCommand implements BaseModel
     {
         $obj = new self;
 
-        $obj->new_path = $new_path;
-        $obj->old_path = $old_path;
+        $obj['new_path'] = $new_path;
+        $obj['old_path'] = $old_path;
 
         return $obj;
     }
@@ -78,7 +78,7 @@ final class BetaMemoryTool20250818RenameCommand implements BaseModel
     public function withNewPath(string $newPath): self
     {
         $obj = clone $this;
-        $obj->new_path = $newPath;
+        $obj['new_path'] = $newPath;
 
         return $obj;
     }
@@ -89,7 +89,7 @@ final class BetaMemoryTool20250818RenameCommand implements BaseModel
     public function withOldPath(string $oldPath): self
     {
         $obj = clone $this;
-        $obj->old_path = $oldPath;
+        $obj['old_path'] = $oldPath;
 
         return $obj;
     }

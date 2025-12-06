@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * The model will use the specified tool with `tool_choice.name`.
  *
  * @phpstan-type ToolChoiceToolShape = array{
- *   name: string, type: "tool", disable_parallel_tool_use?: bool|null
+ *   name: string, type: 'tool', disable_parallel_tool_use?: bool|null
  * }
  */
 final class ToolChoiceTool implements BaseModel
@@ -20,7 +20,7 @@ final class ToolChoiceTool implements BaseModel
     /** @use SdkModel<ToolChoiceToolShape> */
     use SdkModel;
 
-    /** @var "tool" $type */
+    /** @var 'tool' $type */
     #[Api]
     public string $type = 'tool';
 
@@ -68,9 +68,9 @@ final class ToolChoiceTool implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->name = $name;
+        $obj['name'] = $name;
 
-        null !== $disable_parallel_tool_use && $obj->disable_parallel_tool_use = $disable_parallel_tool_use;
+        null !== $disable_parallel_tool_use && $obj['disable_parallel_tool_use'] = $disable_parallel_tool_use;
 
         return $obj;
     }
@@ -81,7 +81,7 @@ final class ToolChoiceTool implements BaseModel
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -95,7 +95,7 @@ final class ToolChoiceTool implements BaseModel
         bool $disableParallelToolUse
     ): self {
         $obj = clone $this;
-        $obj->disable_parallel_tool_use = $disableParallelToolUse;
+        $obj['disable_parallel_tool_use'] = $disableParallelToolUse;
 
         return $obj;
     }

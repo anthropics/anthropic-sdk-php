@@ -55,26 +55,126 @@ final class MessageParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam> $content
+     * @param string|list<TextBlockParam|array{
+     *   text: string,
+     *   type: 'text',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
+     * }|ImageBlockParam|array{
+     *   source: Base64ImageSource|URLImageSource,
+     *   type: 'image',
+     *   cache_control?: CacheControlEphemeral|null,
+     * }|DocumentBlockParam|array{
+     *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
+     *   type: 'document',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   citations?: CitationsConfigParam|null,
+     *   context?: string|null,
+     *   title?: string|null,
+     * }|SearchResultBlockParam|array{
+     *   content: list<TextBlockParam>,
+     *   source: string,
+     *   title: string,
+     *   type: 'search_result',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   citations?: CitationsConfigParam|null,
+     * }|ThinkingBlockParam|array{
+     *   signature: string, thinking: string, type: 'thinking'
+     * }|RedactedThinkingBlockParam|array{
+     *   data: string, type: 'redacted_thinking'
+     * }|ToolUseBlockParam|array{
+     *   id: string,
+     *   input: array<string,mixed>,
+     *   name: string,
+     *   type: 'tool_use',
+     *   cache_control?: CacheControlEphemeral|null,
+     * }|ToolResultBlockParam|array{
+     *   tool_use_id: string,
+     *   type: 'tool_result',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   content?: string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam>|null,
+     *   is_error?: bool|null,
+     * }|ServerToolUseBlockParam|array{
+     *   id: string,
+     *   input: array<string,mixed>,
+     *   name: 'web_search',
+     *   type: 'server_tool_use',
+     *   cache_control?: CacheControlEphemeral|null,
+     * }|WebSearchToolResultBlockParam|array{
+     *   content: list<WebSearchResultBlockParam>|WebSearchToolRequestError,
+     *   tool_use_id: string,
+     *   type: 'web_search_tool_result',
+     *   cache_control?: CacheControlEphemeral|null,
+     * }> $content
      * @param Role|value-of<Role> $role
      */
     public static function with(string|array $content, Role|string $role): self
     {
         $obj = new self;
 
-        $obj->content = $content;
+        $obj['content'] = $content;
         $obj['role'] = $role;
 
         return $obj;
     }
 
     /**
-     * @param string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam> $content
+     * @param string|list<TextBlockParam|array{
+     *   text: string,
+     *   type: 'text',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
+     * }|ImageBlockParam|array{
+     *   source: Base64ImageSource|URLImageSource,
+     *   type: 'image',
+     *   cache_control?: CacheControlEphemeral|null,
+     * }|DocumentBlockParam|array{
+     *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
+     *   type: 'document',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   citations?: CitationsConfigParam|null,
+     *   context?: string|null,
+     *   title?: string|null,
+     * }|SearchResultBlockParam|array{
+     *   content: list<TextBlockParam>,
+     *   source: string,
+     *   title: string,
+     *   type: 'search_result',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   citations?: CitationsConfigParam|null,
+     * }|ThinkingBlockParam|array{
+     *   signature: string, thinking: string, type: 'thinking'
+     * }|RedactedThinkingBlockParam|array{
+     *   data: string, type: 'redacted_thinking'
+     * }|ToolUseBlockParam|array{
+     *   id: string,
+     *   input: array<string,mixed>,
+     *   name: string,
+     *   type: 'tool_use',
+     *   cache_control?: CacheControlEphemeral|null,
+     * }|ToolResultBlockParam|array{
+     *   tool_use_id: string,
+     *   type: 'tool_result',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   content?: string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam>|null,
+     *   is_error?: bool|null,
+     * }|ServerToolUseBlockParam|array{
+     *   id: string,
+     *   input: array<string,mixed>,
+     *   name: 'web_search',
+     *   type: 'server_tool_use',
+     *   cache_control?: CacheControlEphemeral|null,
+     * }|WebSearchToolResultBlockParam|array{
+     *   content: list<WebSearchResultBlockParam>|WebSearchToolRequestError,
+     *   tool_use_id: string,
+     *   type: 'web_search_tool_result',
+     *   cache_control?: CacheControlEphemeral|null,
+     * }> $content
      */
     public function withContent(string|array $content): self
     {
         $obj = clone $this;
-        $obj->content = $content;
+        $obj['content'] = $content;
 
         return $obj;
     }

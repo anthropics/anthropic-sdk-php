@@ -9,14 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaThinkingTurnsShape = array{type: "thinking_turns", value: int}
+ * @phpstan-type BetaThinkingTurnsShape = array{type: 'thinking_turns', value: int}
  */
 final class BetaThinkingTurns implements BaseModel
 {
     /** @use SdkModel<BetaThinkingTurnsShape> */
     use SdkModel;
 
-    /** @var "thinking_turns" $type */
+    /** @var 'thinking_turns' $type */
     #[Api]
     public string $type = 'thinking_turns';
 
@@ -51,7 +51,7 @@ final class BetaThinkingTurns implements BaseModel
     {
         $obj = new self;
 
-        $obj->value = $value;
+        $obj['value'] = $value;
 
         return $obj;
     }
@@ -59,7 +59,7 @@ final class BetaThinkingTurns implements BaseModel
     public function withValue(int $value): self
     {
         $obj = clone $this;
-        $obj->value = $value;
+        $obj['value'] = $value;
 
         return $obj;
     }

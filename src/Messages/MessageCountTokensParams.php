@@ -9,6 +9,10 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\MessageCountTokensParams\System;
+use Anthropic\Messages\MessageParam\Role;
+use Anthropic\Messages\Tool\InputSchema;
+use Anthropic\Messages\Tool\Type;
+use Anthropic\Messages\WebSearchTool20250305\UserLocation;
 
 /**
  * Count the number of tokens in a Message.
@@ -20,12 +24,59 @@ use Anthropic\Messages\MessageCountTokensParams\System;
  * @see Anthropic\Services\MessagesService::countTokens()
  *
  * @phpstan-type MessageCountTokensParamsShape = array{
- *   messages: list<MessageParam>,
+ *   messages: list<MessageParam|array{
+ *     content: string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam>,
+ *     role: value-of<Role>,
+ *   }>,
  *   model: string|Model,
- *   system?: string|list<TextBlockParam>,
- *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
- *   tool_choice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
- *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>,
+ *   system?: string|list<TextBlockParam|array{
+ *     text: string,
+ *     type: 'text',
+ *     cache_control?: CacheControlEphemeral|null,
+ *     citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
+ *   }>,
+ *   thinking?: ThinkingConfigEnabled|array{
+ *     budget_tokens: int, type: 'enabled'
+ *   }|ThinkingConfigDisabled|array{type: 'disabled'},
+ *   tool_choice?: ToolChoiceAuto|array{
+ *     type: 'auto', disable_parallel_tool_use?: bool|null
+ *   }|ToolChoiceAny|array{
+ *     type: 'any', disable_parallel_tool_use?: bool|null
+ *   }|ToolChoiceTool|array{
+ *     name: string, type: 'tool', disable_parallel_tool_use?: bool|null
+ *   }|ToolChoiceNone|array{type: 'none'},
+ *   tools?: list<Tool|array{
+ *     input_schema: InputSchema,
+ *     name: string,
+ *     cache_control?: CacheControlEphemeral|null,
+ *     description?: string|null,
+ *     type?: value-of<Type>|null,
+ *   }|ToolBash20250124|array{
+ *     name: 'bash',
+ *     type: 'bash_20250124',
+ *     cache_control?: CacheControlEphemeral|null,
+ *   }|ToolTextEditor20250124|array{
+ *     name: 'str_replace_editor',
+ *     type: 'text_editor_20250124',
+ *     cache_control?: CacheControlEphemeral|null,
+ *   }|ToolTextEditor20250429|array{
+ *     name: 'str_replace_based_edit_tool',
+ *     type: 'text_editor_20250429',
+ *     cache_control?: CacheControlEphemeral|null,
+ *   }|ToolTextEditor20250728|array{
+ *     name: 'str_replace_based_edit_tool',
+ *     type: 'text_editor_20250728',
+ *     cache_control?: CacheControlEphemeral|null,
+ *     max_characters?: int|null,
+ *   }|WebSearchTool20250305|array{
+ *     name: 'web_search',
+ *     type: 'web_search_20250305',
+ *     allowed_domains?: list<string>|null,
+ *     blocked_domains?: list<string>|null,
+ *     cache_control?: CacheControlEphemeral|null,
+ *     max_uses?: int|null,
+ *     user_location?: UserLocation|null,
+ *   }>,
  * }
  */
 final class MessageCountTokensParams implements BaseModel
@@ -215,27 +266,76 @@ final class MessageCountTokensParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<MessageParam> $messages
-     * @param string|list<TextBlockParam> $system
-     * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
+     * @param list<MessageParam|array{
+     *   content: string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam>,
+     *   role: value-of<Role>,
+     * }> $messages
+     * @param string|list<TextBlockParam|array{
+     *   text: string,
+     *   type: 'text',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
+     * }> $system
+     * @param ThinkingConfigEnabled|array{
+     *   budget_tokens: int, type: 'enabled'
+     * }|ThinkingConfigDisabled|array{type: 'disabled'} $thinking
+     * @param ToolChoiceAuto|array{
+     *   type: 'auto', disable_parallel_tool_use?: bool|null
+     * }|ToolChoiceAny|array{
+     *   type: 'any', disable_parallel_tool_use?: bool|null
+     * }|ToolChoiceTool|array{
+     *   name: string, type: 'tool', disable_parallel_tool_use?: bool|null
+     * }|ToolChoiceNone|array{type: 'none'} $tool_choice
+     * @param list<Tool|array{
+     *   input_schema: InputSchema,
+     *   name: string,
+     *   cache_control?: CacheControlEphemeral|null,
+     *   description?: string|null,
+     *   type?: value-of<Type>|null,
+     * }|ToolBash20250124|array{
+     *   name: 'bash',
+     *   type: 'bash_20250124',
+     *   cache_control?: CacheControlEphemeral|null,
+     * }|ToolTextEditor20250124|array{
+     *   name: 'str_replace_editor',
+     *   type: 'text_editor_20250124',
+     *   cache_control?: CacheControlEphemeral|null,
+     * }|ToolTextEditor20250429|array{
+     *   name: 'str_replace_based_edit_tool',
+     *   type: 'text_editor_20250429',
+     *   cache_control?: CacheControlEphemeral|null,
+     * }|ToolTextEditor20250728|array{
+     *   name: 'str_replace_based_edit_tool',
+     *   type: 'text_editor_20250728',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   max_characters?: int|null,
+     * }|WebSearchTool20250305|array{
+     *   name: 'web_search',
+     *   type: 'web_search_20250305',
+     *   allowed_domains?: list<string>|null,
+     *   blocked_domains?: list<string>|null,
+     *   cache_control?: CacheControlEphemeral|null,
+     *   max_uses?: int|null,
+     *   user_location?: UserLocation|null,
+     * }> $tools
      */
     public static function with(
         array $messages,
         string|Model $model,
         string|array|null $system = null,
-        ThinkingConfigEnabled|ThinkingConfigDisabled|null $thinking = null,
-        ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $tool_choice = null,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|null $thinking = null,
+        ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $tool_choice = null,
         ?array $tools = null,
     ): self {
         $obj = new self;
 
-        $obj->messages = $messages;
-        $obj->model = $model instanceof Model ? $model->value : $model;
+        $obj['messages'] = $messages;
+        $obj['model'] = $model;
 
-        null !== $system && $obj->system = $system;
-        null !== $thinking && $obj->thinking = $thinking;
-        null !== $tool_choice && $obj->tool_choice = $tool_choice;
-        null !== $tools && $obj->tools = $tools;
+        null !== $system && $obj['system'] = $system;
+        null !== $thinking && $obj['thinking'] = $thinking;
+        null !== $tool_choice && $obj['tool_choice'] = $tool_choice;
+        null !== $tools && $obj['tools'] = $tools;
 
         return $obj;
     }
@@ -290,12 +390,15 @@ final class MessageCountTokensParams implements BaseModel
      *
      * There is a limit of 100,000 messages in a single request.
      *
-     * @param list<MessageParam> $messages
+     * @param list<MessageParam|array{
+     *   content: string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam>,
+     *   role: value-of<Role>,
+     * }> $messages
      */
     public function withMessages(array $messages): self
     {
         $obj = clone $this;
-        $obj->messages = $messages;
+        $obj['messages'] = $messages;
 
         return $obj;
     }
@@ -306,7 +409,7 @@ final class MessageCountTokensParams implements BaseModel
     public function withModel(string|Model $model): self
     {
         $obj = clone $this;
-        $obj->model = $model instanceof Model ? $model->value : $model;
+        $obj['model'] = $model;
 
         return $obj;
     }
@@ -316,12 +419,17 @@ final class MessageCountTokensParams implements BaseModel
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.claude.com/en/docs/system-prompts).
      *
-     * @param string|list<TextBlockParam> $system
+     * @param string|list<TextBlockParam|array{
+     *   text: string,
+     *   type: 'text',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
+     * }> $system
      */
     public function withSystem(string|array $system): self
     {
         $obj = clone $this;
-        $obj->system = $system;
+        $obj['system'] = $system;
 
         return $obj;
     }
@@ -332,24 +440,36 @@ final class MessageCountTokensParams implements BaseModel
      * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
      *
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
+     *
+     * @param ThinkingConfigEnabled|array{
+     *   budget_tokens: int, type: 'enabled'
+     * }|ThinkingConfigDisabled|array{type: 'disabled'} $thinking
      */
     public function withThinking(
-        ThinkingConfigEnabled|ThinkingConfigDisabled $thinking
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled $thinking
     ): self {
         $obj = clone $this;
-        $obj->thinking = $thinking;
+        $obj['thinking'] = $thinking;
 
         return $obj;
     }
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
+     *
+     * @param ToolChoiceAuto|array{
+     *   type: 'auto', disable_parallel_tool_use?: bool|null
+     * }|ToolChoiceAny|array{
+     *   type: 'any', disable_parallel_tool_use?: bool|null
+     * }|ToolChoiceTool|array{
+     *   name: string, type: 'tool', disable_parallel_tool_use?: bool|null
+     * }|ToolChoiceNone|array{type: 'none'} $toolChoice
      */
     public function withToolChoice(
-        ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone $toolChoice
+        ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone $toolChoice
     ): self {
         $obj = clone $this;
-        $obj->tool_choice = $toolChoice;
+        $obj['tool_choice'] = $toolChoice;
 
         return $obj;
     }
@@ -417,12 +537,43 @@ final class MessageCountTokensParams implements BaseModel
      *
      * See our [guide](https://docs.claude.com/en/docs/tool-use) for more details.
      *
-     * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
+     * @param list<Tool|array{
+     *   input_schema: InputSchema,
+     *   name: string,
+     *   cache_control?: CacheControlEphemeral|null,
+     *   description?: string|null,
+     *   type?: value-of<Type>|null,
+     * }|ToolBash20250124|array{
+     *   name: 'bash',
+     *   type: 'bash_20250124',
+     *   cache_control?: CacheControlEphemeral|null,
+     * }|ToolTextEditor20250124|array{
+     *   name: 'str_replace_editor',
+     *   type: 'text_editor_20250124',
+     *   cache_control?: CacheControlEphemeral|null,
+     * }|ToolTextEditor20250429|array{
+     *   name: 'str_replace_based_edit_tool',
+     *   type: 'text_editor_20250429',
+     *   cache_control?: CacheControlEphemeral|null,
+     * }|ToolTextEditor20250728|array{
+     *   name: 'str_replace_based_edit_tool',
+     *   type: 'text_editor_20250728',
+     *   cache_control?: CacheControlEphemeral|null,
+     *   max_characters?: int|null,
+     * }|WebSearchTool20250305|array{
+     *   name: 'web_search',
+     *   type: 'web_search_20250305',
+     *   allowed_domains?: list<string>|null,
+     *   blocked_domains?: list<string>|null,
+     *   cache_control?: CacheControlEphemeral|null,
+     *   max_uses?: int|null,
+     *   user_location?: UserLocation|null,
+     * }> $tools
      */
     public function withTools(array $tools): self
     {
         $obj = clone $this;
-        $obj->tools = $tools;
+        $obj['tools'] = $tools;
 
         return $obj;
     }

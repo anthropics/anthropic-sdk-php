@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCodeExecutionOutputBlockParamShape = array{
- *   file_id: string, type: "code_execution_output"
+ *   file_id: string, type: 'code_execution_output'
  * }
  */
 final class BetaCodeExecutionOutputBlockParam implements BaseModel
@@ -18,7 +18,7 @@ final class BetaCodeExecutionOutputBlockParam implements BaseModel
     /** @use SdkModel<BetaCodeExecutionOutputBlockParamShape> */
     use SdkModel;
 
-    /** @var "code_execution_output" $type */
+    /** @var 'code_execution_output' $type */
     #[Api]
     public string $type = 'code_execution_output';
 
@@ -53,7 +53,7 @@ final class BetaCodeExecutionOutputBlockParam implements BaseModel
     {
         $obj = new self;
 
-        $obj->file_id = $file_id;
+        $obj['file_id'] = $file_id;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class BetaCodeExecutionOutputBlockParam implements BaseModel
     public function withFileID(string $fileID): self
     {
         $obj = clone $this;
-        $obj->file_id = $fileID;
+        $obj['file_id'] = $fileID;
 
         return $obj;
     }

@@ -142,14 +142,14 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->created_at = $created_at;
-        $obj->description = $description;
-        $obj->directory = $directory;
-        $obj->name = $name;
-        $obj->skill_id = $skill_id;
-        $obj->type = $type;
-        $obj->version = $version;
+        $obj['id'] = $id;
+        $obj['created_at'] = $created_at;
+        $obj['description'] = $description;
+        $obj['directory'] = $directory;
+        $obj['name'] = $name;
+        $obj['skill_id'] = $skill_id;
+        $obj['type'] = $type;
+        $obj['version'] = $version;
 
         return $obj;
     }
@@ -162,7 +162,7 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -173,7 +173,7 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
     public function withCreatedAt(string $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -186,7 +186,7 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
     public function withDescription(string $description): self
     {
         $obj = clone $this;
-        $obj->description = $description;
+        $obj['description'] = $description;
 
         return $obj;
     }
@@ -199,7 +199,7 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
     public function withDirectory(string $directory): self
     {
         $obj = clone $this;
-        $obj->directory = $directory;
+        $obj['directory'] = $directory;
 
         return $obj;
     }
@@ -212,7 +212,7 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -223,7 +223,7 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
     public function withSkillID(string $skillID): self
     {
         $obj = clone $this;
-        $obj->skill_id = $skillID;
+        $obj['skill_id'] = $skillID;
 
         return $obj;
     }
@@ -236,7 +236,7 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
     public function withType(string $type): self
     {
         $obj = clone $this;
-        $obj->type = $type;
+        $obj['type'] = $type;
 
         return $obj;
     }
@@ -249,7 +249,7 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
     public function withVersion(string $version): self
     {
         $obj = clone $this;
-        $obj->version = $version;
+        $obj['version'] = $version;
 
         return $obj;
     }

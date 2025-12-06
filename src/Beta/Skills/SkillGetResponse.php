@@ -132,13 +132,13 @@ final class SkillGetResponse implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->created_at = $created_at;
-        $obj->display_title = $display_title;
-        $obj->latest_version = $latest_version;
-        $obj->source = $source;
-        $obj->type = $type;
-        $obj->updated_at = $updated_at;
+        $obj['id'] = $id;
+        $obj['created_at'] = $created_at;
+        $obj['display_title'] = $display_title;
+        $obj['latest_version'] = $latest_version;
+        $obj['source'] = $source;
+        $obj['type'] = $type;
+        $obj['updated_at'] = $updated_at;
 
         return $obj;
     }
@@ -151,7 +151,7 @@ final class SkillGetResponse implements BaseModel, ResponseConverter
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -162,7 +162,7 @@ final class SkillGetResponse implements BaseModel, ResponseConverter
     public function withCreatedAt(string $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -175,7 +175,7 @@ final class SkillGetResponse implements BaseModel, ResponseConverter
     public function withDisplayTitle(?string $displayTitle): self
     {
         $obj = clone $this;
-        $obj->display_title = $displayTitle;
+        $obj['display_title'] = $displayTitle;
 
         return $obj;
     }
@@ -188,7 +188,7 @@ final class SkillGetResponse implements BaseModel, ResponseConverter
     public function withLatestVersion(?string $latestVersion): self
     {
         $obj = clone $this;
-        $obj->latest_version = $latestVersion;
+        $obj['latest_version'] = $latestVersion;
 
         return $obj;
     }
@@ -203,7 +203,7 @@ final class SkillGetResponse implements BaseModel, ResponseConverter
     public function withSource(string $source): self
     {
         $obj = clone $this;
-        $obj->source = $source;
+        $obj['source'] = $source;
 
         return $obj;
     }
@@ -216,7 +216,7 @@ final class SkillGetResponse implements BaseModel, ResponseConverter
     public function withType(string $type): self
     {
         $obj = clone $this;
-        $obj->type = $type;
+        $obj['type'] = $type;
 
         return $obj;
     }
@@ -227,7 +227,7 @@ final class SkillGetResponse implements BaseModel, ResponseConverter
     public function withUpdatedAt(string $updatedAt): self
     {
         $obj = clone $this;
-        $obj->updated_at = $updatedAt;
+        $obj['updated_at'] = $updatedAt;
 
         return $obj;
     }

@@ -60,8 +60,8 @@ final class VersionCreateParams implements BaseModel
     {
         $obj = new self;
 
-        null !== $files && $obj->files = $files;
-        null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        null !== $files && $obj['files'] = $files;
+        null !== $betas && $obj['betas'] = $betas;
 
         return $obj;
     }
@@ -76,7 +76,7 @@ final class VersionCreateParams implements BaseModel
     public function withFiles(?array $files): self
     {
         $obj = clone $this;
-        $obj->files = $files;
+        $obj['files'] = $files;
 
         return $obj;
     }
@@ -89,7 +89,7 @@ final class VersionCreateParams implements BaseModel
     public function withBetas(array $betas): self
     {
         $obj = clone $this;
-        $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        $obj['betas'] = $betas;
 
         return $obj;
     }

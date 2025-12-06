@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818ViewCommandShape = array{
- *   command: "view", path: string, view_range?: list<int>|null
+ *   command: 'view', path: string, view_range?: list<int>|null
  * }
  */
 final class BetaMemoryTool20250818ViewCommand implements BaseModel
@@ -21,7 +21,7 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
     /**
      * Command type identifier.
      *
-     * @var "view" $command
+     * @var 'view' $command
      */
     #[Api]
     public string $command = 'view';
@@ -70,9 +70,9 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
     {
         $obj = new self;
 
-        $obj->path = $path;
+        $obj['path'] = $path;
 
-        null !== $view_range && $obj->view_range = $view_range;
+        null !== $view_range && $obj['view_range'] = $view_range;
 
         return $obj;
     }
@@ -83,7 +83,7 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
     public function withPath(string $path): self
     {
         $obj = clone $this;
-        $obj->path = $path;
+        $obj['path'] = $path;
 
         return $obj;
     }
@@ -96,7 +96,7 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
     public function withViewRange(array $viewRange): self
     {
         $obj = clone $this;
-        $obj->view_range = $viewRange;
+        $obj['view_range'] = $viewRange;
 
         return $obj;
     }

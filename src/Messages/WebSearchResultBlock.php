@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   encrypted_content: string,
  *   page_age: string|null,
  *   title: string,
- *   type: "web_search_result",
+ *   type: 'web_search_result',
  *   url: string,
  * }
  */
@@ -22,7 +22,7 @@ final class WebSearchResultBlock implements BaseModel
     /** @use SdkModel<WebSearchResultBlockShape> */
     use SdkModel;
 
-    /** @var "web_search_result" $type */
+    /** @var 'web_search_result' $type */
     #[Api]
     public string $type = 'web_search_result';
 
@@ -76,10 +76,10 @@ final class WebSearchResultBlock implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->encrypted_content = $encrypted_content;
-        $obj->page_age = $page_age;
-        $obj->title = $title;
-        $obj->url = $url;
+        $obj['encrypted_content'] = $encrypted_content;
+        $obj['page_age'] = $page_age;
+        $obj['title'] = $title;
+        $obj['url'] = $url;
 
         return $obj;
     }
@@ -87,7 +87,7 @@ final class WebSearchResultBlock implements BaseModel
     public function withEncryptedContent(string $encryptedContent): self
     {
         $obj = clone $this;
-        $obj->encrypted_content = $encryptedContent;
+        $obj['encrypted_content'] = $encryptedContent;
 
         return $obj;
     }
@@ -95,7 +95,7 @@ final class WebSearchResultBlock implements BaseModel
     public function withPageAge(?string $pageAge): self
     {
         $obj = clone $this;
-        $obj->page_age = $pageAge;
+        $obj['page_age'] = $pageAge;
 
         return $obj;
     }
@@ -103,7 +103,7 @@ final class WebSearchResultBlock implements BaseModel
     public function withTitle(string $title): self
     {
         $obj = clone $this;
-        $obj->title = $title;
+        $obj['title'] = $title;
 
         return $obj;
     }
@@ -111,7 +111,7 @@ final class WebSearchResultBlock implements BaseModel
     public function withURL(string $url): self
     {
         $obj = clone $this;
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }

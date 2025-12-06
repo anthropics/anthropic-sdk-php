@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaBillingErrorShape = array{
- *   message: string, type: "billing_error"
+ *   message: string, type: 'billing_error'
  * }
  */
 final class BetaBillingError implements BaseModel
@@ -18,7 +18,7 @@ final class BetaBillingError implements BaseModel
     /** @use SdkModel<BetaBillingErrorShape> */
     use SdkModel;
 
-    /** @var "billing_error" $type */
+    /** @var 'billing_error' $type */
     #[Api]
     public string $type = 'billing_error';
 
@@ -53,7 +53,7 @@ final class BetaBillingError implements BaseModel
     {
         $obj = new self;
 
-        $obj->message = $message;
+        $obj['message'] = $message;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class BetaBillingError implements BaseModel
     public function withMessage(string $message): self
     {
         $obj = clone $this;
-        $obj->message = $message;
+        $obj['message'] = $message;
 
         return $obj;
     }

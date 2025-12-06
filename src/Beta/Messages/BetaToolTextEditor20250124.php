@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaToolTextEditor20250124\AllowedCaller;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
@@ -12,8 +13,8 @@ use Anthropic\Core\Conversion\MapOf;
 
 /**
  * @phpstan-type BetaToolTextEditor20250124Shape = array{
- *   name: "str_replace_editor",
- *   type: "text_editor_20250124",
+ *   name: 'str_replace_editor',
+ *   type: 'text_editor_20250124',
  *   allowed_callers?: list<value-of<AllowedCaller>>|null,
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   defer_loading?: bool|null,
@@ -31,12 +32,12 @@ final class BetaToolTextEditor20250124 implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      *
-     * @var "str_replace_editor" $name
+     * @var 'str_replace_editor' $name
      */
     #[Api]
     public string $name = 'str_replace_editor';
 
-    /** @var "text_editor_20250124" $type */
+    /** @var 'text_editor_20250124' $type */
     #[Api]
     public string $type = 'text_editor_20250124';
 
@@ -74,11 +75,14 @@ final class BetaToolTextEditor20250124 implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cache_control
      * @param list<array<string,mixed>> $input_examples
      */
     public static function with(
         ?array $allowed_callers = null,
-        ?BetaCacheControlEphemeral $cache_control = null,
+        BetaCacheControlEphemeral|array|null $cache_control = null,
         ?bool $defer_loading = null,
         ?array $input_examples = null,
         ?bool $strict = null,
@@ -86,10 +90,10 @@ final class BetaToolTextEditor20250124 implements BaseModel
         $obj = new self;
 
         null !== $allowed_callers && $obj['allowed_callers'] = $allowed_callers;
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $defer_loading && $obj->defer_loading = $defer_loading;
-        null !== $input_examples && $obj->input_examples = $input_examples;
-        null !== $strict && $obj->strict = $strict;
+        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $defer_loading && $obj['defer_loading'] = $defer_loading;
+        null !== $input_examples && $obj['input_examples'] = $input_examples;
+        null !== $strict && $obj['strict'] = $strict;
 
         return $obj;
     }
@@ -107,12 +111,16 @@ final class BetaToolTextEditor20250124 implements BaseModel
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $obj['cache_control'] = $cacheControl;
 
         return $obj;
     }
@@ -123,7 +131,7 @@ final class BetaToolTextEditor20250124 implements BaseModel
     public function withDeferLoading(bool $deferLoading): self
     {
         $obj = clone $this;
-        $obj->defer_loading = $deferLoading;
+        $obj['defer_loading'] = $deferLoading;
 
         return $obj;
     }
@@ -134,7 +142,7 @@ final class BetaToolTextEditor20250124 implements BaseModel
     public function withInputExamples(array $inputExamples): self
     {
         $obj = clone $this;
-        $obj->input_examples = $inputExamples;
+        $obj['input_examples'] = $inputExamples;
 
         return $obj;
     }
@@ -142,7 +150,7 @@ final class BetaToolTextEditor20250124 implements BaseModel
     public function withStrict(bool $strict): self
     {
         $obj = clone $this;
-        $obj->strict = $strict;
+        $obj['strict'] = $strict;
 
         return $obj;
     }

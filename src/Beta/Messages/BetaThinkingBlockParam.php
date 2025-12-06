@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaThinkingBlockParamShape = array{
- *   signature: string, thinking: string, type: "thinking"
+ *   signature: string, thinking: string, type: 'thinking'
  * }
  */
 final class BetaThinkingBlockParam implements BaseModel
@@ -18,7 +18,7 @@ final class BetaThinkingBlockParam implements BaseModel
     /** @use SdkModel<BetaThinkingBlockParamShape> */
     use SdkModel;
 
-    /** @var "thinking" $type */
+    /** @var 'thinking' $type */
     #[Api]
     public string $type = 'thinking';
 
@@ -56,8 +56,8 @@ final class BetaThinkingBlockParam implements BaseModel
     {
         $obj = new self;
 
-        $obj->signature = $signature;
-        $obj->thinking = $thinking;
+        $obj['signature'] = $signature;
+        $obj['thinking'] = $thinking;
 
         return $obj;
     }
@@ -65,7 +65,7 @@ final class BetaThinkingBlockParam implements BaseModel
     public function withSignature(string $signature): self
     {
         $obj = clone $this;
-        $obj->signature = $signature;
+        $obj['signature'] = $signature;
 
         return $obj;
     }
@@ -73,7 +73,7 @@ final class BetaThinkingBlockParam implements BaseModel
     public function withThinking(string $thinking): self
     {
         $obj = clone $this;
-        $obj->thinking = $thinking;
+        $obj['thinking'] = $thinking;
 
         return $obj;
     }

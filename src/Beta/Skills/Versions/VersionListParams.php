@@ -66,9 +66,9 @@ final class VersionListParams implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $limit && $obj->limit = $limit;
-        null !== $page && $obj->page = $page;
-        null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        null !== $limit && $obj['limit'] = $limit;
+        null !== $page && $obj['page'] = $page;
+        null !== $betas && $obj['betas'] = $betas;
 
         return $obj;
     }
@@ -81,7 +81,7 @@ final class VersionListParams implements BaseModel
     public function withLimit(?int $limit): self
     {
         $obj = clone $this;
-        $obj->limit = $limit;
+        $obj['limit'] = $limit;
 
         return $obj;
     }
@@ -92,7 +92,7 @@ final class VersionListParams implements BaseModel
     public function withPage(?string $page): self
     {
         $obj = clone $this;
-        $obj->page = $page;
+        $obj['page'] = $page;
 
         return $obj;
     }
@@ -105,7 +105,7 @@ final class VersionListParams implements BaseModel
     public function withBetas(array $betas): self
     {
         $obj = clone $this;
-        $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        $obj['betas'] = $betas;
 
         return $obj;
     }

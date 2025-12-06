@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type NotFoundErrorShape = array{
- *   message: string, type: "not_found_error"
+ *   message: string, type: 'not_found_error'
  * }
  */
 final class NotFoundError implements BaseModel
@@ -18,7 +18,7 @@ final class NotFoundError implements BaseModel
     /** @use SdkModel<NotFoundErrorShape> */
     use SdkModel;
 
-    /** @var "not_found_error" $type */
+    /** @var 'not_found_error' $type */
     #[Api]
     public string $type = 'not_found_error';
 
@@ -53,7 +53,7 @@ final class NotFoundError implements BaseModel
     {
         $obj = new self;
 
-        $obj->message = $message;
+        $obj['message'] = $message;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class NotFoundError implements BaseModel
     public function withMessage(string $message): self
     {
         $obj = clone $this;
-        $obj->message = $message;
+        $obj['message'] = $message;
 
         return $obj;
     }

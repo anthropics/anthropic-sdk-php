@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\CacheControlEphemeral\TTL;
 use Anthropic\Messages\Tool\InputSchema;
 use Anthropic\Messages\Tool\Type;
 
@@ -82,22 +83,30 @@ final class Tool implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param InputSchema|array{
+     *   type: 'object',
+     *   properties?: array<string,mixed>|null,
+     *   required?: list<string>|null,
+     * } $input_schema
+     * @param CacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cache_control
      * @param Type|value-of<Type>|null $type
      */
     public static function with(
-        InputSchema $input_schema,
+        InputSchema|array $input_schema,
         string $name,
-        ?CacheControlEphemeral $cache_control = null,
+        CacheControlEphemeral|array|null $cache_control = null,
         ?string $description = null,
         Type|string|null $type = null,
     ): self {
         $obj = new self;
 
-        $obj->input_schema = $input_schema;
-        $obj->name = $name;
+        $obj['input_schema'] = $input_schema;
+        $obj['name'] = $name;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $description && $obj->description = $description;
+        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $description && $obj['description'] = $description;
         null !== $type && $obj['type'] = $type;
 
         return $obj;
@@ -107,11 +116,17 @@ final class Tool implements BaseModel
      * [JSON schema](https://json-schema.org/draft/2020-12) for this tool's input.
      *
      * This defines the shape of the `input` that your tool accepts and that the model will produce.
+     *
+     * @param InputSchema|array{
+     *   type: 'object',
+     *   properties?: array<string,mixed>|null,
+     *   required?: list<string>|null,
+     * } $inputSchema
      */
-    public function withInputSchema(InputSchema $inputSchema): self
+    public function withInputSchema(InputSchema|array $inputSchema): self
     {
         $obj = clone $this;
-        $obj->input_schema = $inputSchema;
+        $obj['input_schema'] = $inputSchema;
 
         return $obj;
     }
@@ -124,18 +139,23 @@ final class Tool implements BaseModel
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param CacheControlEphemeral|array{
+     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
-    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
-    {
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
         $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $obj['cache_control'] = $cacheControl;
 
         return $obj;
     }
@@ -148,7 +168,7 @@ final class Tool implements BaseModel
     public function withDescription(string $description): self
     {
         $obj = clone $this;
-        $obj->description = $description;
+        $obj['description'] = $description;
 
         return $obj;
     }

@@ -11,7 +11,7 @@ use Anthropic\Messages\Base64ImageSource\MediaType;
 
 /**
  * @phpstan-type Base64ImageSourceShape = array{
- *   data: string, media_type: value-of<MediaType>, type: "base64"
+ *   data: string, media_type: value-of<MediaType>, type: 'base64'
  * }
  */
 final class Base64ImageSource implements BaseModel
@@ -19,7 +19,7 @@ final class Base64ImageSource implements BaseModel
     /** @use SdkModel<Base64ImageSourceShape> */
     use SdkModel;
 
-    /** @var "base64" $type */
+    /** @var 'base64' $type */
     #[Api]
     public string $type = 'base64';
 
@@ -62,7 +62,7 @@ final class Base64ImageSource implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->data = $data;
+        $obj['data'] = $data;
         $obj['media_type'] = $media_type;
 
         return $obj;
@@ -71,7 +71,7 @@ final class Base64ImageSource implements BaseModel
     public function withData(string $data): self
     {
         $obj = clone $this;
-        $obj->data = $data;
+        $obj['data'] = $data;
 
         return $obj;
     }

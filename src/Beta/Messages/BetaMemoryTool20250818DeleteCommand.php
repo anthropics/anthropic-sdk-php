@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818DeleteCommandShape = array{
- *   command: "delete", path: string
+ *   command: 'delete', path: string
  * }
  */
 final class BetaMemoryTool20250818DeleteCommand implements BaseModel
@@ -21,7 +21,7 @@ final class BetaMemoryTool20250818DeleteCommand implements BaseModel
     /**
      * Command type identifier.
      *
-     * @var "delete" $command
+     * @var 'delete' $command
      */
     #[Api]
     public string $command = 'delete';
@@ -60,7 +60,7 @@ final class BetaMemoryTool20250818DeleteCommand implements BaseModel
     {
         $obj = new self;
 
-        $obj->path = $path;
+        $obj['path'] = $path;
 
         return $obj;
     }
@@ -71,7 +71,7 @@ final class BetaMemoryTool20250818DeleteCommand implements BaseModel
     public function withPath(string $path): self
     {
         $obj = clone $this;
-        $obj->path = $path;
+        $obj['path'] = $path;
 
         return $obj;
     }

@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaTextEditorCodeExecutionToolResultErrorParamShape = array{
  *   error_code: value-of<ErrorCode>,
- *   type: "text_editor_code_execution_tool_result_error",
+ *   type: 'text_editor_code_execution_tool_result_error',
  *   error_message?: string|null,
  * }
  */
@@ -21,7 +21,7 @@ final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
     /** @use SdkModel<BetaTextEditorCodeExecutionToolResultErrorParamShape> */
     use SdkModel;
 
-    /** @var "text_editor_code_execution_tool_result_error" $type */
+    /** @var 'text_editor_code_execution_tool_result_error' $type */
     #[Api]
     public string $type = 'text_editor_code_execution_tool_result_error';
 
@@ -66,7 +66,7 @@ final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
 
         $obj['error_code'] = $error_code;
 
-        null !== $error_message && $obj->error_message = $error_message;
+        null !== $error_message && $obj['error_message'] = $error_message;
 
         return $obj;
     }
@@ -85,7 +85,7 @@ final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
     public function withErrorMessage(?string $errorMessage): self
     {
         $obj = clone $this;
-        $obj->error_message = $errorMessage;
+        $obj['error_message'] = $errorMessage;
 
         return $obj;
     }

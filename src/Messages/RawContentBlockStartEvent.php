@@ -13,7 +13,7 @@ use Anthropic\Messages\RawContentBlockStartEvent\ContentBlock;
  * @phpstan-type RawContentBlockStartEventShape = array{
  *   content_block: TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock,
  *   index: int,
- *   type: "content_block_start",
+ *   type: 'content_block_start',
  * }
  */
 final class RawContentBlockStartEvent implements BaseModel
@@ -21,11 +21,13 @@ final class RawContentBlockStartEvent implements BaseModel
     /** @use SdkModel<RawContentBlockStartEventShape> */
     use SdkModel;
 
-    /** @var "content_block_start" $type */
+    /** @var 'content_block_start' $type */
     #[Api]
     public string $type = 'content_block_start';
 
-    #[Api(union: ContentBlock::class)]
+    #[Api(
+        union: ContentBlock::class
+    )]
     public TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $content_block;
 
     #[Api]
@@ -54,24 +56,67 @@ final class RawContentBlockStartEvent implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param TextBlock|array{
+     *   citations: list<CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation>|null,
+     *   text: string,
+     *   type: 'text',
+     * }|ThinkingBlock|array{
+     *   signature: string, thinking: string, type: 'thinking'
+     * }|RedactedThinkingBlock|array{
+     *   data: string, type: 'redacted_thinking'
+     * }|ToolUseBlock|array{
+     *   id: string, input: array<string,mixed>, name: string, type: 'tool_use'
+     * }|ServerToolUseBlock|array{
+     *   id: string,
+     *   input: array<string,mixed>,
+     *   name: 'web_search',
+     *   type: 'server_tool_use',
+     * }|WebSearchToolResultBlock|array{
+     *   content: WebSearchToolResultError|list<WebSearchResultBlock>,
+     *   tool_use_id: string,
+     *   type: 'web_search_tool_result',
+     * } $content_block
      */
     public static function with(
-        TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $content_block,
+        TextBlock|array|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $content_block,
         int $index,
     ): self {
         $obj = new self;
 
-        $obj->content_block = $content_block;
-        $obj->index = $index;
+        $obj['content_block'] = $content_block;
+        $obj['index'] = $index;
 
         return $obj;
     }
 
+    /**
+     * @param TextBlock|array{
+     *   citations: list<CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation>|null,
+     *   text: string,
+     *   type: 'text',
+     * }|ThinkingBlock|array{
+     *   signature: string, thinking: string, type: 'thinking'
+     * }|RedactedThinkingBlock|array{
+     *   data: string, type: 'redacted_thinking'
+     * }|ToolUseBlock|array{
+     *   id: string, input: array<string,mixed>, name: string, type: 'tool_use'
+     * }|ServerToolUseBlock|array{
+     *   id: string,
+     *   input: array<string,mixed>,
+     *   name: 'web_search',
+     *   type: 'server_tool_use',
+     * }|WebSearchToolResultBlock|array{
+     *   content: WebSearchToolResultError|list<WebSearchResultBlock>,
+     *   tool_use_id: string,
+     *   type: 'web_search_tool_result',
+     * } $contentBlock
+     */
     public function withContentBlock(
-        TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $contentBlock,
+        TextBlock|array|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $contentBlock,
     ): self {
         $obj = clone $this;
-        $obj->content_block = $contentBlock;
+        $obj['content_block'] = $contentBlock;
 
         return $obj;
     }
@@ -79,7 +124,7 @@ final class RawContentBlockStartEvent implements BaseModel
     public function withIndex(int $index): self
     {
         $obj = clone $this;
-        $obj->index = $index;
+        $obj['index'] = $index;
 
         return $obj;
     }

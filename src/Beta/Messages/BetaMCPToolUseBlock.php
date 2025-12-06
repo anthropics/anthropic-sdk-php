@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   input: array<string,mixed>,
  *   name: string,
  *   server_name: string,
- *   type: "mcp_tool_use",
+ *   type: 'mcp_tool_use',
  * }
  */
 final class BetaMCPToolUseBlock implements BaseModel
@@ -22,7 +22,7 @@ final class BetaMCPToolUseBlock implements BaseModel
     /** @use SdkModel<BetaMCPToolUseBlockShape> */
     use SdkModel;
 
-    /** @var "mcp_tool_use" $type */
+    /** @var 'mcp_tool_use' $type */
     #[Api]
     public string $type = 'mcp_tool_use';
 
@@ -83,10 +83,10 @@ final class BetaMCPToolUseBlock implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->input = $input;
-        $obj->name = $name;
-        $obj->server_name = $server_name;
+        $obj['id'] = $id;
+        $obj['input'] = $input;
+        $obj['name'] = $name;
+        $obj['server_name'] = $server_name;
 
         return $obj;
     }
@@ -94,7 +94,7 @@ final class BetaMCPToolUseBlock implements BaseModel
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -105,7 +105,7 @@ final class BetaMCPToolUseBlock implements BaseModel
     public function withInput(array $input): self
     {
         $obj = clone $this;
-        $obj->input = $input;
+        $obj['input'] = $input;
 
         return $obj;
     }
@@ -116,7 +116,7 @@ final class BetaMCPToolUseBlock implements BaseModel
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -127,7 +127,7 @@ final class BetaMCPToolUseBlock implements BaseModel
     public function withServerName(string $serverName): self
     {
         $obj = clone $this;
-        $obj->server_name = $serverName;
+        $obj['server_name'] = $serverName;
 
         return $obj;
     }

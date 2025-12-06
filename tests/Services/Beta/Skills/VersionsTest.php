@@ -2,7 +2,11 @@
 
 namespace Tests\Services\Beta\Skills;
 
+use Anthropic\Beta\Skills\Versions\VersionDeleteResponse;
+use Anthropic\Beta\Skills\Versions\VersionGetResponse;
+use Anthropic\Beta\Skills\Versions\VersionNewResponse;
 use Anthropic\Client;
+use Anthropic\PageCursor;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -35,7 +39,8 @@ final class VersionsTest extends TestCase
 
         $result = $this->client->beta->skills->versions->create('skill_id', []);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(VersionNewResponse::class, $result);
     }
 
     #[Test]
@@ -46,7 +51,8 @@ final class VersionsTest extends TestCase
             ['skill_id' => 'skill_id']
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(VersionGetResponse::class, $result);
     }
 
     #[Test]
@@ -54,22 +60,20 @@ final class VersionsTest extends TestCase
     {
         $result = $this->client->beta->skills->versions->retrieve(
             'version',
-            ['skill_id' => 'skill_id']
+            ['skill_id' => 'skill_id', 'betas' => ['string']]
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(VersionGetResponse::class, $result);
     }
 
     #[Test]
     public function testList(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: currently unsupported');
-        }
-
         $result = $this->client->beta->skills->versions->list('skill_id', []);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(PageCursor::class, $result);
     }
 
     #[Test]
@@ -80,7 +84,8 @@ final class VersionsTest extends TestCase
             ['skill_id' => 'skill_id']
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(VersionDeleteResponse::class, $result);
     }
 
     #[Test]
@@ -88,9 +93,10 @@ final class VersionsTest extends TestCase
     {
         $result = $this->client->beta->skills->versions->delete(
             'version',
-            ['skill_id' => 'skill_id']
+            ['skill_id' => 'skill_id', 'betas' => ['string']]
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(VersionDeleteResponse::class, $result);
     }
 }

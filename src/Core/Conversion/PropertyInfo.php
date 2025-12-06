@@ -59,7 +59,7 @@ final class PropertyInfo
         }
 
         if ($type instanceof \ReflectionUnionType) {
-            // @phpstan-ignore-next-line
+            // @phpstan-ignore-next-line argument.type
             return new UnionOf(array_map(static fn ($t) => self::parse($t), array: $type->getTypes()));
         }
 

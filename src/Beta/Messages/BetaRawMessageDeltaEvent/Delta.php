@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages\BetaRawMessageDeltaEvent;
 
 use Anthropic\Beta\Messages\BetaContainer;
+use Anthropic\Beta\Messages\BetaSkill;
 use Anthropic\Beta\Messages\BetaStopReason;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
@@ -59,29 +60,36 @@ final class Delta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param BetaContainer|array{
+     *   id: string, expires_at: \DateTimeInterface, skills: list<BetaSkill>|null
+     * }|null $container
      * @param BetaStopReason|value-of<BetaStopReason>|null $stop_reason
      */
     public static function with(
-        ?BetaContainer $container,
+        BetaContainer|array|null $container,
         BetaStopReason|string|null $stop_reason,
         ?string $stop_sequence,
     ): self {
         $obj = new self;
 
-        $obj->container = $container;
+        $obj['container'] = $container;
         $obj['stop_reason'] = $stop_reason;
-        $obj->stop_sequence = $stop_sequence;
+        $obj['stop_sequence'] = $stop_sequence;
 
         return $obj;
     }
 
     /**
      * Information about the container used in the request (for the code execution tool).
+     *
+     * @param BetaContainer|array{
+     *   id: string, expires_at: \DateTimeInterface, skills: list<BetaSkill>|null
+     * }|null $container
      */
-    public function withContainer(?BetaContainer $container): self
+    public function withContainer(BetaContainer|array|null $container): self
     {
         $obj = clone $this;
-        $obj->container = $container;
+        $obj['container'] = $container;
 
         return $obj;
     }
@@ -100,7 +108,7 @@ final class Delta implements BaseModel
     public function withStopSequence(?string $stopSequence): self
     {
         $obj = clone $this;
-        $obj->stop_sequence = $stopSequence;
+        $obj['stop_sequence'] = $stopSequence;
 
         return $obj;
     }

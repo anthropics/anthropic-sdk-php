@@ -48,7 +48,7 @@ final class VersionsService implements VersionsContract
         );
         $header_params = ['betas' => 'anthropic-beta'];
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: ['v1/skills/%1$s/versions?beta=true', $skillID],
@@ -91,7 +91,7 @@ final class VersionsService implements VersionsContract
         $skillID = $parsed['skill_id'];
         unset($parsed['skill_id']);
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['v1/skills/%1$s/versions/%2$s?beta=true', $skillID, $version],
@@ -134,7 +134,7 @@ final class VersionsService implements VersionsContract
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['v1/skills/%1$s/versions?beta=true', $skillID],
@@ -173,7 +173,7 @@ final class VersionsService implements VersionsContract
         $skillID = $parsed['skill_id'];
         unset($parsed['skill_id']);
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
             path: ['v1/skills/%1$s/versions/%2$s?beta=true', $skillID, $version],

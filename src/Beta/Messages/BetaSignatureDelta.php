@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaSignatureDeltaShape = array{
- *   signature: string, type: "signature_delta"
+ *   signature: string, type: 'signature_delta'
  * }
  */
 final class BetaSignatureDelta implements BaseModel
@@ -18,7 +18,7 @@ final class BetaSignatureDelta implements BaseModel
     /** @use SdkModel<BetaSignatureDeltaShape> */
     use SdkModel;
 
-    /** @var "signature_delta" $type */
+    /** @var 'signature_delta' $type */
     #[Api]
     public string $type = 'signature_delta';
 
@@ -53,7 +53,7 @@ final class BetaSignatureDelta implements BaseModel
     {
         $obj = new self;
 
-        $obj->signature = $signature;
+        $obj['signature'] = $signature;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class BetaSignatureDelta implements BaseModel
     public function withSignature(string $signature): self
     {
         $obj = clone $this;
-        $obj->signature = $signature;
+        $obj['signature'] = $signature;
 
         return $obj;
     }

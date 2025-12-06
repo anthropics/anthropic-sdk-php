@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaThinkingConfigEnabledShape = array{
- *   budget_tokens: int, type: "enabled"
+ *   budget_tokens: int, type: 'enabled'
  * }
  */
 final class BetaThinkingConfigEnabled implements BaseModel
@@ -18,7 +18,7 @@ final class BetaThinkingConfigEnabled implements BaseModel
     /** @use SdkModel<BetaThinkingConfigEnabledShape> */
     use SdkModel;
 
-    /** @var "enabled" $type */
+    /** @var 'enabled' $type */
     #[Api]
     public string $type = 'enabled';
 
@@ -60,7 +60,7 @@ final class BetaThinkingConfigEnabled implements BaseModel
     {
         $obj = new self;
 
-        $obj->budget_tokens = $budget_tokens;
+        $obj['budget_tokens'] = $budget_tokens;
 
         return $obj;
     }
@@ -75,7 +75,7 @@ final class BetaThinkingConfigEnabled implements BaseModel
     public function withBudgetTokens(int $budgetTokens): self
     {
         $obj = clone $this;
-        $obj->budget_tokens = $budgetTokens;
+        $obj['budget_tokens'] = $budgetTokens;
 
         return $obj;
     }

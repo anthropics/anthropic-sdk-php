@@ -71,9 +71,9 @@ final class VersionRetrieveParams implements BaseModel
     {
         $obj = new self;
 
-        $obj->skill_id = $skill_id;
+        $obj['skill_id'] = $skill_id;
 
-        null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        null !== $betas && $obj['betas'] = $betas;
 
         return $obj;
     }
@@ -86,7 +86,7 @@ final class VersionRetrieveParams implements BaseModel
     public function withSkillID(string $skillID): self
     {
         $obj = clone $this;
-        $obj->skill_id = $skillID;
+        $obj['skill_id'] = $skillID;
 
         return $obj;
     }
@@ -99,7 +99,7 @@ final class VersionRetrieveParams implements BaseModel
     public function withBetas(array $betas): self
     {
         $obj = clone $this;
-        $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        $obj['betas'] = $betas;
 
         return $obj;
     }

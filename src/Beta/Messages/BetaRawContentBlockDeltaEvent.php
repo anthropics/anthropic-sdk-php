@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaRawContentBlockDeltaEventShape = array{
  *   delta: BetaTextDelta|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta,
  *   index: int,
- *   type: "content_block_delta",
+ *   type: 'content_block_delta',
  * }
  */
 final class BetaRawContentBlockDeltaEvent implements BaseModel
@@ -20,7 +20,7 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
     /** @use SdkModel<BetaRawContentBlockDeltaEventShape> */
     use SdkModel;
 
-    /** @var "content_block_delta" $type */
+    /** @var 'content_block_delta' $type */
     #[Api]
     public string $type = 'content_block_delta';
 
@@ -53,24 +53,47 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaTextDelta|array{
+     *   text: string, type: 'text_delta'
+     * }|BetaInputJSONDelta|array{
+     *   partial_json: string, type: 'input_json_delta'
+     * }|BetaCitationsDelta|array{
+     *   citation: BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation,
+     *   type: 'citations_delta',
+     * }|BetaThinkingDelta|array{
+     *   thinking: string, type: 'thinking_delta'
+     * }|BetaSignatureDelta|array{signature: string, type: 'signature_delta'} $delta
      */
     public static function with(
-        BetaTextDelta|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta $delta,
+        BetaTextDelta|array|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta $delta,
         int $index,
     ): self {
         $obj = new self;
 
-        $obj->delta = $delta;
-        $obj->index = $index;
+        $obj['delta'] = $delta;
+        $obj['index'] = $index;
 
         return $obj;
     }
 
+    /**
+     * @param BetaTextDelta|array{
+     *   text: string, type: 'text_delta'
+     * }|BetaInputJSONDelta|array{
+     *   partial_json: string, type: 'input_json_delta'
+     * }|BetaCitationsDelta|array{
+     *   citation: BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation,
+     *   type: 'citations_delta',
+     * }|BetaThinkingDelta|array{
+     *   thinking: string, type: 'thinking_delta'
+     * }|BetaSignatureDelta|array{signature: string, type: 'signature_delta'} $delta
+     */
     public function withDelta(
-        BetaTextDelta|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta $delta,
+        BetaTextDelta|array|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta $delta,
     ): self {
         $obj = clone $this;
-        $obj->delta = $delta;
+        $obj['delta'] = $delta;
 
         return $obj;
     }
@@ -78,7 +101,7 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
     public function withIndex(int $index): self
     {
         $obj = clone $this;
-        $obj->index = $index;
+        $obj['index'] = $index;
 
         return $obj;
     }

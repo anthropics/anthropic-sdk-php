@@ -3,6 +3,8 @@
 namespace Tests\Services;
 
 use Anthropic\Client;
+use Anthropic\Messages\Message;
+use Anthropic\Messages\MessageTokensCount;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -34,7 +36,8 @@ final class MessagesTest extends TestCase
             'model' => 'claude-sonnet-4-5-20250929',
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Message::class, $result);
     }
 
     #[Test]
@@ -44,9 +47,48 @@ final class MessagesTest extends TestCase
             'max_tokens' => 1024,
             'messages' => [['content' => 'Hello, world', 'role' => 'user']],
             'model' => 'claude-sonnet-4-5-20250929',
+            'metadata' => ['user_id' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
+            'service_tier' => 'auto',
+            'stop_sequences' => ['string'],
+            'system' => [
+                [
+                    'text' => 'Today\'s date is 2024-06-01.',
+                    'type' => 'text',
+                    'cache_control' => ['type' => 'ephemeral', 'ttl' => '5m'],
+                    'citations' => [
+                        [
+                            'cited_text' => 'cited_text',
+                            'document_index' => 0,
+                            'document_title' => 'x',
+                            'end_char_index' => 0,
+                            'start_char_index' => 0,
+                            'type' => 'char_location',
+                        ],
+                    ],
+                ],
+            ],
+            'temperature' => 1,
+            'thinking' => ['budget_tokens' => 1024, 'type' => 'enabled'],
+            'tool_choice' => ['type' => 'auto', 'disable_parallel_tool_use' => true],
+            'tools' => [
+                [
+                    'input_schema' => [
+                        'type' => 'object',
+                        'properties' => ['location' => 'bar', 'unit' => 'bar'],
+                        'required' => ['location'],
+                    ],
+                    'name' => 'name',
+                    'cache_control' => ['type' => 'ephemeral', 'ttl' => '5m'],
+                    'description' => 'Get the current weather in a given location',
+                    'type' => 'custom',
+                ],
+            ],
+            'top_k' => 5,
+            'top_p' => 0.7,
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Message::class, $result);
     }
 
     #[Test]
@@ -57,7 +99,8 @@ final class MessagesTest extends TestCase
             'model' => 'claude-opus-4-5-20251101',
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(MessageTokensCount::class, $result);
     }
 
     #[Test]
@@ -66,8 +109,41 @@ final class MessagesTest extends TestCase
         $result = $this->client->messages->countTokens([
             'messages' => [['content' => 'string', 'role' => 'user']],
             'model' => 'claude-opus-4-5-20251101',
+            'system' => [
+                [
+                    'text' => 'Today\'s date is 2024-06-01.',
+                    'type' => 'text',
+                    'cache_control' => ['type' => 'ephemeral', 'ttl' => '5m'],
+                    'citations' => [
+                        [
+                            'cited_text' => 'cited_text',
+                            'document_index' => 0,
+                            'document_title' => 'x',
+                            'end_char_index' => 0,
+                            'start_char_index' => 0,
+                            'type' => 'char_location',
+                        ],
+                    ],
+                ],
+            ],
+            'thinking' => ['budget_tokens' => 1024, 'type' => 'enabled'],
+            'tool_choice' => ['type' => 'auto', 'disable_parallel_tool_use' => true],
+            'tools' => [
+                [
+                    'input_schema' => [
+                        'type' => 'object',
+                        'properties' => ['location' => 'bar', 'unit' => 'bar'],
+                        'required' => ['location'],
+                    ],
+                    'name' => 'name',
+                    'cache_control' => ['type' => 'ephemeral', 'ttl' => '5m'],
+                    'description' => 'Get the current weather in a given location',
+                    'type' => 'custom',
+                ],
+            ],
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(MessageTokensCount::class, $result);
     }
 }

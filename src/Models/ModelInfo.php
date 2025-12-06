@@ -15,7 +15,7 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  *   id: string,
  *   created_at: \DateTimeInterface,
  *   display_name: string,
- *   type: "model",
+ *   type: 'model',
  * }
  */
 final class ModelInfo implements BaseModel, ResponseConverter
@@ -30,7 +30,7 @@ final class ModelInfo implements BaseModel, ResponseConverter
      *
      * For Models, this is always `"model"`.
      *
-     * @var "model" $type
+     * @var 'model' $type
      */
     #[Api]
     public string $type = 'model';
@@ -84,9 +84,9 @@ final class ModelInfo implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->created_at = $created_at;
-        $obj->display_name = $display_name;
+        $obj['id'] = $id;
+        $obj['created_at'] = $created_at;
+        $obj['display_name'] = $display_name;
 
         return $obj;
     }
@@ -97,7 +97,7 @@ final class ModelInfo implements BaseModel, ResponseConverter
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -108,7 +108,7 @@ final class ModelInfo implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -119,7 +119,7 @@ final class ModelInfo implements BaseModel, ResponseConverter
     public function withDisplayName(string $displayName): self
     {
         $obj = clone $this;
-        $obj->display_name = $displayName;
+        $obj['display_name'] = $displayName;
 
         return $obj;
     }

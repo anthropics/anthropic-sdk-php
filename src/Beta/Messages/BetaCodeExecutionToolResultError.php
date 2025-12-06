@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaCodeExecutionToolResultErrorShape = array{
  *   error_code: value-of<BetaCodeExecutionToolResultErrorCode>,
- *   type: "code_execution_tool_result_error",
+ *   type: 'code_execution_tool_result_error',
  * }
  */
 final class BetaCodeExecutionToolResultError implements BaseModel
@@ -19,7 +19,7 @@ final class BetaCodeExecutionToolResultError implements BaseModel
     /** @use SdkModel<BetaCodeExecutionToolResultErrorShape> */
     use SdkModel;
 
-    /** @var "code_execution_tool_result_error" $type */
+    /** @var 'code_execution_tool_result_error' $type */
     #[Api]
     public string $type = 'code_execution_tool_result_error';
 

@@ -9,14 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaAPIErrorShape = array{message: string, type: "api_error"}
+ * @phpstan-type BetaAPIErrorShape = array{message: string, type: 'api_error'}
  */
 final class BetaAPIError implements BaseModel
 {
     /** @use SdkModel<BetaAPIErrorShape> */
     use SdkModel;
 
-    /** @var "api_error" $type */
+    /** @var 'api_error' $type */
     #[Api]
     public string $type = 'api_error';
 
@@ -51,7 +51,7 @@ final class BetaAPIError implements BaseModel
     {
         $obj = new self;
 
-        $obj->message = $message;
+        $obj['message'] = $message;
 
         return $obj;
     }
@@ -59,7 +59,7 @@ final class BetaAPIError implements BaseModel
     public function withMessage(string $message): self
     {
         $obj = clone $this;
-        $obj->message = $message;
+        $obj['message'] = $message;
 
         return $obj;
     }

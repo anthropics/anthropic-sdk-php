@@ -56,7 +56,7 @@ final class SkillsService implements SkillsContract
         );
         $header_params = ['betas' => 'anthropic-beta'];
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'v1/skills?beta=true',
@@ -95,7 +95,7 @@ final class SkillsService implements SkillsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['v1/skills/%1$s?beta=true', $skillID],
@@ -137,7 +137,7 @@ final class SkillsService implements SkillsContract
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'v1/skills?beta=true',
@@ -174,7 +174,7 @@ final class SkillsService implements SkillsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
             path: ['v1/skills/%1$s?beta=true', $skillID],

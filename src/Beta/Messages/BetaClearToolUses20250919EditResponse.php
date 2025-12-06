@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaClearToolUses20250919EditResponseShape = array{
  *   cleared_input_tokens: int,
  *   cleared_tool_uses: int,
- *   type: "clear_tool_uses_20250919",
+ *   type: 'clear_tool_uses_20250919',
  * }
  */
 final class BetaClearToolUses20250919EditResponse implements BaseModel
@@ -23,7 +23,7 @@ final class BetaClearToolUses20250919EditResponse implements BaseModel
     /**
      * The type of context management edit applied.
      *
-     * @var "clear_tool_uses_20250919" $type
+     * @var 'clear_tool_uses_20250919' $type
      */
     #[Api]
     public string $type = 'clear_tool_uses_20250919';
@@ -74,8 +74,8 @@ final class BetaClearToolUses20250919EditResponse implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->cleared_input_tokens = $cleared_input_tokens;
-        $obj->cleared_tool_uses = $cleared_tool_uses;
+        $obj['cleared_input_tokens'] = $cleared_input_tokens;
+        $obj['cleared_tool_uses'] = $cleared_tool_uses;
 
         return $obj;
     }
@@ -86,7 +86,7 @@ final class BetaClearToolUses20250919EditResponse implements BaseModel
     public function withClearedInputTokens(int $clearedInputTokens): self
     {
         $obj = clone $this;
-        $obj->cleared_input_tokens = $clearedInputTokens;
+        $obj['cleared_input_tokens'] = $clearedInputTokens;
 
         return $obj;
     }
@@ -97,7 +97,7 @@ final class BetaClearToolUses20250919EditResponse implements BaseModel
     public function withClearedToolUses(int $clearedToolUses): self
     {
         $obj = clone $this;
-        $obj->cleared_tool_uses = $clearedToolUses;
+        $obj['cleared_tool_uses'] = $clearedToolUses;
 
         return $obj;
     }

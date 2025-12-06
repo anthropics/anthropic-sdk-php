@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type OverloadedErrorShape = array{
- *   message: string, type: "overloaded_error"
+ *   message: string, type: 'overloaded_error'
  * }
  */
 final class OverloadedError implements BaseModel
@@ -18,7 +18,7 @@ final class OverloadedError implements BaseModel
     /** @use SdkModel<OverloadedErrorShape> */
     use SdkModel;
 
-    /** @var "overloaded_error" $type */
+    /** @var 'overloaded_error' $type */
     #[Api]
     public string $type = 'overloaded_error';
 
@@ -53,7 +53,7 @@ final class OverloadedError implements BaseModel
     {
         $obj = new self;
 
-        $obj->message = $message;
+        $obj['message'] = $message;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class OverloadedError implements BaseModel
     public function withMessage(string $message): self
     {
         $obj = clone $this;
-        $obj->message = $message;
+        $obj['message'] = $message;
 
         return $obj;
     }

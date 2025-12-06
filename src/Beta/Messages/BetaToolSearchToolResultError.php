@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaToolSearchToolResultErrorShape = array{
  *   error_code: value-of<ErrorCode>,
  *   error_message: string|null,
- *   type: "tool_search_tool_result_error",
+ *   type: 'tool_search_tool_result_error',
  * }
  */
 final class BetaToolSearchToolResultError implements BaseModel
@@ -21,7 +21,7 @@ final class BetaToolSearchToolResultError implements BaseModel
     /** @use SdkModel<BetaToolSearchToolResultErrorShape> */
     use SdkModel;
 
-    /** @var "tool_search_tool_result_error" $type */
+    /** @var 'tool_search_tool_result_error' $type */
     #[Api]
     public string $type = 'tool_search_tool_result_error';
 
@@ -65,7 +65,7 @@ final class BetaToolSearchToolResultError implements BaseModel
         $obj = new self;
 
         $obj['error_code'] = $error_code;
-        $obj->error_message = $error_message;
+        $obj['error_message'] = $error_message;
 
         return $obj;
     }
@@ -84,7 +84,7 @@ final class BetaToolSearchToolResultError implements BaseModel
     public function withErrorMessage(?string $errorMessage): self
     {
         $obj = clone $this;
-        $obj->error_message = $errorMessage;
+        $obj['error_message'] = $errorMessage;
 
         return $obj;
     }
