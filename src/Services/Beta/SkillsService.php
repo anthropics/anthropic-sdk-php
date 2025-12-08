@@ -13,6 +13,7 @@ use Anthropic\Beta\Skills\SkillListResponse;
 use Anthropic\Beta\Skills\SkillNewResponse;
 use Anthropic\Beta\Skills\SkillRetrieveParams;
 use Anthropic\Client;
+use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
@@ -56,8 +57,8 @@ final class SkillsService implements SkillsContract
         );
         $header_params = ['betas' => 'anthropic-beta'];
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<SkillNewResponse> */
+        $response = $this->client->request(
             method: 'post',
             path: 'v1/skills?beta=true',
             headers: Util::array_transform_keys(
@@ -74,6 +75,8 @@ final class SkillsService implements SkillsContract
             ),
             convert: SkillNewResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -95,8 +98,8 @@ final class SkillsService implements SkillsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<SkillGetResponse> */
+        $response = $this->client->request(
             method: 'get',
             path: ['v1/skills/%1$s?beta=true', $skillID],
             headers: Util::array_transform_keys(
@@ -109,6 +112,8 @@ final class SkillsService implements SkillsContract
             ),
             convert: SkillGetResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -137,8 +142,8 @@ final class SkillsService implements SkillsContract
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<PageCursor<SkillListResponse>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'v1/skills?beta=true',
             query: array_intersect_key($parsed, $query_params),
@@ -153,6 +158,8 @@ final class SkillsService implements SkillsContract
             convert: SkillListResponse::class,
             page: PageCursor::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -174,8 +181,8 @@ final class SkillsService implements SkillsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<SkillDeleteResponse> */
+        $response = $this->client->request(
             method: 'delete',
             path: ['v1/skills/%1$s?beta=true', $skillID],
             headers: Util::array_transform_keys(
@@ -188,5 +195,7 @@ final class SkillsService implements SkillsContract
             ),
             convert: SkillDeleteResponse::class,
         );
+
+        return $response->parse();
     }
 }

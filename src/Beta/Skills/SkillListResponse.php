@@ -6,9 +6,7 @@ namespace Anthropic\Beta\Skills;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type SkillListResponseShape = array{
@@ -21,12 +19,10 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  *   updated_at: string,
  * }
  */
-final class SkillListResponse implements BaseModel, ResponseConverter
+final class SkillListResponse implements BaseModel
 {
     /** @use SdkModel<SkillListResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Unique identifier for the skill.

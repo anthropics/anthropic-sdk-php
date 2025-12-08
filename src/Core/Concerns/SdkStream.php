@@ -6,7 +6,6 @@ use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Implementation\IteratorExit;
-use Anthropic\Core\Util;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -30,9 +29,10 @@ trait SdkStream
         protected string|Converter|ConverterSource $convert,
         protected RequestInterface $request,
         protected ResponseInterface $response,
+        protected mixed $parsedBody,
     ) {
-        // @phpstan-ignore-next-line argument.type
-        $this->stream = Util::decodeContent($response);
+        // @phpstan-ignore-next-line
+        $this->stream = $parsedBody;
         $this->generator = $this->parsedGenerator();
     }
 

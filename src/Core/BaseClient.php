@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Anthropic\Core;
 
 use Anthropic\Core\Contracts\BasePage;
+use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Exceptions\APIConnectionException;
 use Anthropic\Core\Exceptions\APIStatusException;
+use Anthropic\Core\Implementation\RawResponse;
 use Anthropic\RequestOptions;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
@@ -51,9 +53,11 @@ abstract class BaseClient
      * @param string|list<mixed> $path
      * @param array<string,mixed> $query
      * @param array<string,mixed> $headers
-     * @param class-string<BasePage<mixed>> $page
-     * @param class-string<BaseStream<mixed>> $stream
+     * @param class-string<BasePage<mixed>>|null $page
+     * @param class-string<BaseStream<mixed>>|null $stream
      * @param RequestOptions|array<string,mixed>|null $options
+     *
+     * @return BaseResponse<mixed>
      */
     public function request(
         string $method,
@@ -65,7 +69,7 @@ abstract class BaseClient
         ?string $page = null,
         ?string $stream = null,
         RequestOptions|array|null $options = [],
-    ): mixed {
+    ): BaseResponse {
         // @phpstan-ignore-next-line
         [$req, $opts] = $this->buildRequest(method: $method, path: $path, query: $query, headers: $headers, body: $body, opts: $options);
         ['method' => $method, 'path' => $uri, 'headers' => $headers] = $req;
@@ -74,32 +78,11 @@ abstract class BaseClient
         $request = $opts->requestFactory->createRequest($method, uri: $uri);
         $request = Util::withSetHeaders($request, headers: $headers);
 
-        // @phpstan-ignore-next-line
+        // @phpstan-ignore-next-line argument.type
         $rsp = $this->sendRequest($opts, req: $request, data: $body, redirectCount: 0, retryCount: 0);
 
-        if (!is_null($stream)) {
-            return new $stream(
-                convert: $convert,
-                request: $request,
-                response: $rsp
-            );
-        }
-
-        if (!is_null($page)) {
-            return new $page(
-                convert: $convert,
-                client: $this,
-                request: $req,
-                response: $rsp,
-                options: $opts,
-            );
-        }
-
-        if (!is_null($convert)) {
-            return Conversion::coerceResponse($convert, response: $rsp);
-        }
-
-        return Util::decodeContent($rsp);
+        // @phpstan-ignore-next-line argument.type
+        return new RawResponse(client: $this, request: $request, response: $rsp, options: $opts, requestInfo: $req, stream: $stream, page: $page, convert: $convert ?? 'null');
     }
 
     /** @return array<string,string> */

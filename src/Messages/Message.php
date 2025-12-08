@@ -6,9 +6,7 @@ namespace Anthropic\Messages;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 use Anthropic\Messages\Usage\ServiceTier;
 
 /**
@@ -23,12 +21,10 @@ use Anthropic\Messages\Usage\ServiceTier;
  *   usage: Usage,
  * }
  */
-final class Message implements BaseModel, ResponseConverter
+final class Message implements BaseModel
 {
     /** @use SdkModel<MessageShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Conversational role of the generated message.

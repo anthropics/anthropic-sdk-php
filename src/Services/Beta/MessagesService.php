@@ -16,6 +16,7 @@ use Anthropic\Beta\Messages\BetaRawMessageStreamEvent;
 use Anthropic\Beta\Messages\MessageCountTokensParams;
 use Anthropic\Beta\Messages\MessageCreateParams;
 use Anthropic\Client;
+use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
@@ -100,8 +101,8 @@ final class MessagesService implements MessagesContract
         );
         $header_params = ['betas' => 'anthropic-beta'];
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<BetaMessage> */
+        $response = $this->client->request(
             method: 'post',
             path: 'v1/messages?beta=true',
             headers: Util::array_transform_keys(
@@ -112,6 +113,8 @@ final class MessagesService implements MessagesContract
             options: $options,
             convert: BetaMessage::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -171,8 +174,8 @@ final class MessagesService implements MessagesContract
         $parsed['stream'] = true;
         $header_params = ['betas' => 'anthropic-beta'];
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<BaseStream<BetaRawMessageStartEvent|BetaRawMessageDeltaEvent|BetaRawMessageStopEvent|BetaRawContentBlockStartEvent|BetaRawContentBlockDeltaEvent|BetaRawContentBlockStopEvent,>,> */
+        $response = $this->client->request(
             method: 'post',
             path: 'v1/messages?beta=true',
             headers: Util::array_transform_keys(
@@ -187,6 +190,8 @@ final class MessagesService implements MessagesContract
             convert: BetaRawMessageStreamEvent::class,
             stream: SSEStream::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -239,8 +244,8 @@ final class MessagesService implements MessagesContract
         );
         $header_params = ['betas' => 'anthropic-beta'];
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<BetaMessageTokensCount> */
+        $response = $this->client->request(
             method: 'post',
             path: 'v1/messages/count_tokens?beta=true',
             headers: Util::array_transform_keys(
@@ -251,5 +256,7 @@ final class MessagesService implements MessagesContract
             options: $options,
             convert: BetaMessageTokensCount::class,
         );
+
+        return $response->parse();
     }
 }

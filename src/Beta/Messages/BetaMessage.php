@@ -8,9 +8,7 @@ use Anthropic\Beta\Messages\BetaServerToolUseBlock\Name;
 use Anthropic\Beta\Messages\BetaUsage\ServiceTier;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 use Anthropic\Messages\Model;
 
 /**
@@ -27,12 +25,10 @@ use Anthropic\Messages\Model;
  *   usage: BetaUsage,
  * }
  */
-final class BetaMessage implements BaseModel, ResponseConverter
+final class BetaMessage implements BaseModel
 {
     /** @use SdkModel<BetaMessageShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Conversational role of the generated message.

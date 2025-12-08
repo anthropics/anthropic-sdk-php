@@ -6,9 +6,7 @@ namespace Anthropic\Messages\Batches;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 use Anthropic\ErrorResponse;
 use Anthropic\Messages\Message;
 
@@ -20,12 +18,10 @@ use Anthropic\Messages\Message;
  *   result: MessageBatchSucceededResult|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult,
  * }
  */
-final class MessageBatchIndividualResponse implements BaseModel, ResponseConverter
+final class MessageBatchIndividualResponse implements BaseModel
 {
     /** @use SdkModel<MessageBatchIndividualResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Developer-provided ID created for each request in a Message Batch. Useful for matching results to requests, as results may be given out of request order.

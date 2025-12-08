@@ -6,9 +6,7 @@ namespace Anthropic\Models;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type ModelInfoShape = array{
@@ -18,12 +16,10 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  *   type: 'model',
  * }
  */
-final class ModelInfo implements BaseModel, ResponseConverter
+final class ModelInfo implements BaseModel
 {
     /** @use SdkModel<ModelInfoShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Object type.

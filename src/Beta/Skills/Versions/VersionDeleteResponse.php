@@ -6,19 +6,15 @@ namespace Anthropic\Beta\Skills\Versions;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type VersionDeleteResponseShape = array{id: string, type: string}
  */
-final class VersionDeleteResponse implements BaseModel, ResponseConverter
+final class VersionDeleteResponse implements BaseModel
 {
     /** @use SdkModel<VersionDeleteResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Version identifier for the skill.

@@ -6,21 +6,17 @@ namespace Anthropic\Messages\Batches;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type DeletedMessageBatchShape = array{
  *   id: string, type: 'message_batch_deleted'
  * }
  */
-final class DeletedMessageBatch implements BaseModel, ResponseConverter
+final class DeletedMessageBatch implements BaseModel
 {
     /** @use SdkModel<DeletedMessageBatchShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Deleted object type.

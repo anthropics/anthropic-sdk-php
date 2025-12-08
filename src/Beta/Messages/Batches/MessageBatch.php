@@ -7,9 +7,7 @@ namespace Anthropic\Beta\Messages\Batches;
 use Anthropic\Beta\Messages\Batches\MessageBatch\ProcessingStatus;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type MessageBatchShape = array{
@@ -25,12 +23,10 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  *   type: 'message_batch',
  * }
  */
-final class MessageBatch implements BaseModel, ResponseConverter
+final class MessageBatch implements BaseModel
 {
     /** @use SdkModel<MessageBatchShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Object type.

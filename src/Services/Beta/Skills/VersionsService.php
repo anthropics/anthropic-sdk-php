@@ -13,6 +13,7 @@ use Anthropic\Beta\Skills\Versions\VersionListResponse;
 use Anthropic\Beta\Skills\Versions\VersionNewResponse;
 use Anthropic\Beta\Skills\Versions\VersionRetrieveParams;
 use Anthropic\Client;
+use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
@@ -48,8 +49,8 @@ final class VersionsService implements VersionsContract
         );
         $header_params = ['betas' => 'anthropic-beta'];
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<VersionNewResponse> */
+        $response = $this->client->request(
             method: 'post',
             path: ['v1/skills/%1$s/versions?beta=true', $skillID],
             headers: Util::array_transform_keys(
@@ -66,6 +67,8 @@ final class VersionsService implements VersionsContract
             ),
             convert: VersionNewResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -91,8 +94,8 @@ final class VersionsService implements VersionsContract
         $skillID = $parsed['skill_id'];
         unset($parsed['skill_id']);
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<VersionGetResponse> */
+        $response = $this->client->request(
             method: 'get',
             path: ['v1/skills/%1$s/versions/%2$s?beta=true', $skillID, $version],
             headers: Util::array_transform_keys(
@@ -105,6 +108,8 @@ final class VersionsService implements VersionsContract
             ),
             convert: VersionGetResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -134,8 +139,8 @@ final class VersionsService implements VersionsContract
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<PageCursor<VersionListResponse>> */
+        $response = $this->client->request(
             method: 'get',
             path: ['v1/skills/%1$s/versions?beta=true', $skillID],
             query: array_intersect_key($parsed, $query_params),
@@ -150,6 +155,8 @@ final class VersionsService implements VersionsContract
             convert: VersionListResponse::class,
             page: PageCursor::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -173,8 +180,8 @@ final class VersionsService implements VersionsContract
         $skillID = $parsed['skill_id'];
         unset($parsed['skill_id']);
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<VersionDeleteResponse> */
+        $response = $this->client->request(
             method: 'delete',
             path: ['v1/skills/%1$s/versions/%2$s?beta=true', $skillID, $version],
             headers: Util::array_transform_keys(
@@ -187,5 +194,7 @@ final class VersionsService implements VersionsContract
             ),
             convert: VersionDeleteResponse::class,
         );
+
+        return $response->parse();
     }
 }
