@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaTextEditorCodeExecutionViewResultBlockParam\FileType;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -25,23 +26,23 @@ final class BetaTextEditorCodeExecutionViewResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'text_editor_code_execution_view_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'text_editor_code_execution_view_result';
 
-    #[Api]
+    #[Required]
     public string $content;
 
     /** @var value-of<FileType> $file_type */
-    #[Api(enum: FileType::class)]
+    #[Required(enum: FileType::class)]
     public string $file_type;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $num_lines;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $start_line;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $total_lines;
 
     /**

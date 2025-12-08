@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -19,10 +19,10 @@ final class InputJSONDelta implements BaseModel
     use SdkModel;
 
     /** @var 'input_json_delta' $type */
-    #[Api]
+    #[Required]
     public string $type = 'input_json_delta';
 
-    #[Api]
+    #[Required]
     public string $partial_json;
 
     /**

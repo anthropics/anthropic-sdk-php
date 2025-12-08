@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -23,25 +23,25 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
      *
      * @var 'str_replace' $command
      */
-    #[Api]
+    #[Required]
     public string $command = 'str_replace';
 
     /**
      * Text to replace with.
      */
-    #[Api]
+    #[Required]
     public string $new_str;
 
     /**
      * Text to search for and replace.
      */
-    #[Api]
+    #[Required]
     public string $old_str;
 
     /**
      * Path to the file where text should be replaced.
      */
-    #[Api]
+    #[Required]
     public string $path;
 
     /**

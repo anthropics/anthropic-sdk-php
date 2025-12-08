@@ -7,7 +7,8 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Beta\Messages\BetaBase64ImageSource\MediaType;
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaImageBlockParam\Source;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -24,16 +25,16 @@ final class BetaImageBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'image' $type */
-    #[Api]
+    #[Required]
     public string $type = 'image';
 
-    #[Api(union: Source::class)]
+    #[Required(union: Source::class)]
     public BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource $source;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaCacheControlEphemeral $cache_control;
 
     /**

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\CacheControlEphemeral\TTL;
@@ -26,25 +27,25 @@ final class DocumentBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'document' $type */
-    #[Api]
+    #[Required]
     public string $type = 'document';
 
-    #[Api(union: Source::class)]
+    #[Required(union: Source::class)]
     public Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource $source;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?CacheControlEphemeral $cache_control;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?CitationsConfigParam $citations;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $context;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $title;
 
     /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -19,10 +19,10 @@ final class InvalidRequestError implements BaseModel
     use SdkModel;
 
     /** @var 'invalid_request_error' $type */
-    #[Api]
+    #[Required]
     public string $type = 'invalid_request_error';
 
-    #[Api]
+    #[Required]
     public string $message;
 
     /**

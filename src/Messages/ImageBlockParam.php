@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Base64ImageSource\MediaType;
@@ -24,16 +25,16 @@ final class ImageBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'image' $type */
-    #[Api]
+    #[Required]
     public string $type = 'image';
 
-    #[Api(union: Source::class)]
+    #[Required(union: Source::class)]
     public Base64ImageSource|URLImageSource $source;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?CacheControlEphemeral $cache_control;
 
     /**

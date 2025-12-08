@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -19,13 +19,13 @@ final class ThinkingBlock implements BaseModel
     use SdkModel;
 
     /** @var 'thinking' $type */
-    #[Api]
+    #[Required]
     public string $type = 'thinking';
 
-    #[Api]
+    #[Required]
     public string $signature;
 
-    #[Api]
+    #[Required]
     public string $thinking;
 
     /**

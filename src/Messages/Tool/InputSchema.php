@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Tool;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -25,15 +26,15 @@ final class InputSchema implements BaseModel
     use SdkModel;
 
     /** @var 'object' $type */
-    #[Api]
+    #[Required]
     public string $type = 'object';
 
     /** @var array<string,mixed>|null $properties */
-    #[Api(map: 'mixed', nullable: true, optional: true)]
+    #[Optional(map: 'mixed', nullable: true)]
     public ?array $properties;
 
     /** @var list<string>|null $required */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $required;
 
     public function __construct()

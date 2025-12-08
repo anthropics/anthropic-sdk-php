@@ -8,7 +8,8 @@ use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaTool\AllowedCaller;
 use Anthropic\Beta\Messages\BetaTool\InputSchema;
 use Anthropic\Beta\Messages\BetaTool\Type;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\MapOf;
@@ -36,7 +37,7 @@ final class BetaTool implements BaseModel
      *
      * This defines the shape of the `input` that your tool accepts and that the model will produce.
      */
-    #[Api]
+    #[Required]
     public InputSchema $input_schema;
 
     /**
@@ -44,23 +45,23 @@ final class BetaTool implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      */
-    #[Api]
+    #[Required]
     public string $name;
 
     /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
-    #[Api(list: AllowedCaller::class, optional: true)]
+    #[Optional(list: AllowedCaller::class)]
     public ?array $allowed_callers;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaCacheControlEphemeral $cache_control;
 
     /**
      * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $defer_loading;
 
     /**
@@ -68,18 +69,18 @@ final class BetaTool implements BaseModel
      *
      * Tool descriptions should be as detailed as possible. The more information that the model has about what the tool is and how to use it, the better it will perform. You can use natural language descriptions to reinforce important aspects of the tool input JSON schema.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $description;
 
     /** @var list<array<string,mixed>>|null $input_examples */
-    #[Api(list: new MapOf('mixed'), optional: true)]
+    #[Optional(list: new MapOf('mixed'))]
     public ?array $input_examples;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $strict;
 
     /** @var value-of<Type>|null $type */
-    #[Api(enum: Type::class, nullable: true, optional: true)]
+    #[Optional(enum: Type::class, nullable: true)]
     public ?string $type;
 
     /**

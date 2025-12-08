@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -21,13 +21,13 @@ final class BetaErrorResponse implements BaseModel
     use SdkModel;
 
     /** @var 'error' $type */
-    #[Api]
+    #[Required]
     public string $type = 'error';
 
-    #[Api(union: BetaError::class)]
+    #[Required(union: BetaError::class)]
     public BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error;
 
-    #[Api]
+    #[Required]
     public ?string $request_id;
 
     /**

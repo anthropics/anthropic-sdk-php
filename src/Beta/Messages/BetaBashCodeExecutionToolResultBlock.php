@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultError\ErrorCode;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -22,13 +22,13 @@ final class BetaBashCodeExecutionToolResultBlock implements BaseModel
     use SdkModel;
 
     /** @var 'bash_code_execution_tool_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'bash_code_execution_tool_result';
 
-    #[Api]
+    #[Required]
     public BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock $content;
 
-    #[Api]
+    #[Required]
     public string $tool_use_id;
 
     /**

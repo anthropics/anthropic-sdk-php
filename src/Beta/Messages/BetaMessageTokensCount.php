@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -22,13 +22,13 @@ final class BetaMessageTokensCount implements BaseModel
     /**
      * Information about context management applied to the message.
      */
-    #[Api]
+    #[Required]
     public ?BetaCountTokensContextManagementResponse $context_management;
 
     /**
      * The total number of tokens across the provided list of messages, system prompt, and tools.
      */
-    #[Api]
+    #[Required]
     public int $input_tokens;
 
     /**

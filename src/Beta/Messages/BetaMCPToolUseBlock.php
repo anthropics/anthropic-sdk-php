@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -23,26 +23,26 @@ final class BetaMCPToolUseBlock implements BaseModel
     use SdkModel;
 
     /** @var 'mcp_tool_use' $type */
-    #[Api]
+    #[Required]
     public string $type = 'mcp_tool_use';
 
-    #[Api]
+    #[Required]
     public string $id;
 
     /** @var array<string,mixed> $input */
-    #[Api(map: 'mixed')]
+    #[Required(map: 'mixed')]
     public array $input;
 
     /**
      * The name of the MCP tool.
      */
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
      * The name of the MCP server.
      */
-    #[Api]
+    #[Required]
     public string $server_name;
 
     /**

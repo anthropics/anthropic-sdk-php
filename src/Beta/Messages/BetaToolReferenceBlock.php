@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -19,10 +19,10 @@ final class BetaToolReferenceBlock implements BaseModel
     use SdkModel;
 
     /** @var 'tool_reference' $type */
-    #[Api]
+    #[Required]
     public string $type = 'tool_reference';
 
-    #[Api]
+    #[Required]
     public string $tool_name;
 
     /**

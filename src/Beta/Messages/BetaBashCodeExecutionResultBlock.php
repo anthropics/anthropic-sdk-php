@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -23,20 +23,20 @@ final class BetaBashCodeExecutionResultBlock implements BaseModel
     use SdkModel;
 
     /** @var 'bash_code_execution_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'bash_code_execution_result';
 
     /** @var list<BetaBashCodeExecutionOutputBlock> $content */
-    #[Api(list: BetaBashCodeExecutionOutputBlock::class)]
+    #[Required(list: BetaBashCodeExecutionOutputBlock::class)]
     public array $content;
 
-    #[Api]
+    #[Required]
     public int $return_code;
 
-    #[Api]
+    #[Required]
     public string $stderr;
 
-    #[Api]
+    #[Required]
     public string $stdout;
 
     /**

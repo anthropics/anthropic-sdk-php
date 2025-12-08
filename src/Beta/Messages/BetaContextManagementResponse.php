@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaContextManagementResponse\AppliedEdit;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -24,7 +24,7 @@ final class BetaContextManagementResponse implements BaseModel
      *
      * @var list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse> $applied_edits
      */
-    #[Api(list: AppliedEdit::class)]
+    #[Required(list: AppliedEdit::class)]
     public array $applied_edits;
 
     /**

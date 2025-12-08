@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -19,14 +19,14 @@ final class Base64PDFSource implements BaseModel
     use SdkModel;
 
     /** @var 'application/pdf' $media_type */
-    #[Api]
+    #[Required]
     public string $media_type = 'application/pdf';
 
     /** @var 'base64' $type */
-    #[Api]
+    #[Required]
     public string $type = 'base64';
 
-    #[Api]
+    #[Required]
     public string $data;
 
     /**

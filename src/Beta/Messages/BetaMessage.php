@@ -6,7 +6,7 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaServerToolUseBlock\Name;
 use Anthropic\Beta\Messages\BetaUsage\ServiceTier;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Model;
@@ -37,7 +37,7 @@ final class BetaMessage implements BaseModel
      *
      * @var 'assistant' $role
      */
-    #[Api]
+    #[Required]
     public string $role = 'assistant';
 
     /**
@@ -47,7 +47,7 @@ final class BetaMessage implements BaseModel
      *
      * @var 'message' $type
      */
-    #[Api]
+    #[Required]
     public string $type = 'message';
 
     /**
@@ -55,13 +55,13 @@ final class BetaMessage implements BaseModel
      *
      * The format and length of IDs may change over time.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
      * Information about the container used in the request (for the code execution tool).
      */
-    #[Api]
+    #[Required]
     public ?BetaContainer $container;
 
     /**
@@ -93,7 +93,7 @@ final class BetaMessage implements BaseModel
      *
      * @var list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock> $content
      */
-    #[Api(list: BetaContentBlock::class)]
+    #[Required(list: BetaContentBlock::class)]
     public array $content;
 
     /**
@@ -101,7 +101,7 @@ final class BetaMessage implements BaseModel
      *
      * Information about context management strategies applied during the request.
      */
-    #[Api]
+    #[Required]
     public ?BetaContextManagementResponse $context_management;
 
     /**
@@ -109,7 +109,7 @@ final class BetaMessage implements BaseModel
      *
      * @var string|value-of<Model> $model
      */
-    #[Api(enum: Model::class)]
+    #[Required(enum: Model::class)]
     public string $model;
 
     /**
@@ -127,7 +127,7 @@ final class BetaMessage implements BaseModel
      *
      * @var value-of<BetaStopReason>|null $stop_reason
      */
-    #[Api(enum: BetaStopReason::class)]
+    #[Required(enum: BetaStopReason::class)]
     public ?string $stop_reason;
 
     /**
@@ -135,7 +135,7 @@ final class BetaMessage implements BaseModel
      *
      * This value will be a non-null string if one of your custom stop sequences was generated.
      */
-    #[Api]
+    #[Required]
     public ?string $stop_sequence;
 
     /**
@@ -149,7 +149,7 @@ final class BetaMessage implements BaseModel
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      */
-    #[Api]
+    #[Required]
     public BetaUsage $usage;
 
     /**

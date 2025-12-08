@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -21,7 +22,7 @@ final class BetaToolChoiceAuto implements BaseModel
     use SdkModel;
 
     /** @var 'auto' $type */
-    #[Api]
+    #[Required]
     public string $type = 'auto';
 
     /**
@@ -29,7 +30,7 @@ final class BetaToolChoiceAuto implements BaseModel
      *
      * Defaults to `false`. If set to `true`, the model will output at most one tool use.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $disable_parallel_tool_use;
 
     public function __construct()

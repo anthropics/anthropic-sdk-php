@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaToolUseBlock\Caller;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -24,23 +25,23 @@ final class BetaToolUseBlock implements BaseModel
     use SdkModel;
 
     /** @var 'tool_use' $type */
-    #[Api]
+    #[Required]
     public string $type = 'tool_use';
 
-    #[Api]
+    #[Required]
     public string $id;
 
     /** @var array<string,mixed> $input */
-    #[Api(map: 'mixed')]
+    #[Required(map: 'mixed')]
     public array $input;
 
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
      * Tool invocation directly from the model.
      */
-    #[Api(union: Caller::class, optional: true)]
+    #[Optional(union: Caller::class)]
     public BetaDirectCaller|BetaServerToolCaller|null $caller;
 
     /**

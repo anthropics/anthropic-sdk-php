@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -21,13 +21,13 @@ final class BetaServerToolUsage implements BaseModel
     /**
      * The number of web fetch tool requests.
      */
-    #[Api]
+    #[Required]
     public int $web_fetch_requests;
 
     /**
      * The number of web search tool requests.
      */
-    #[Api]
+    #[Required]
     public int $web_search_requests;
 
     /**

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaContentBlockSource\Content;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -20,11 +20,11 @@ final class BetaContentBlockSource implements BaseModel
     use SdkModel;
 
     /** @var 'content' $type */
-    #[Api]
+    #[Required]
     public string $type = 'content';
 
     /** @var string|list<BetaTextBlockParam|BetaImageBlockParam> $content */
-    #[Api(union: Content::class)]
+    #[Required(union: Content::class)]
     public string|array $content;
 
     /**

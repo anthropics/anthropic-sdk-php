@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\ContentBlockSource\Content;
@@ -20,11 +20,11 @@ final class ContentBlockSource implements BaseModel
     use SdkModel;
 
     /** @var 'content' $type */
-    #[Api]
+    #[Required]
     public string $type = 'content';
 
     /** @var string|list<TextBlockParam|ImageBlockParam> $content */
-    #[Api(union: Content::class)]
+    #[Required(union: Content::class)]
     public string|array $content;
 
     /**

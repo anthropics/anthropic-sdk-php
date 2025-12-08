@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\CacheControlEphemeral\TTL;
@@ -33,11 +34,11 @@ final class WebSearchTool20250305 implements BaseModel
      *
      * @var 'web_search' $name
      */
-    #[Api]
+    #[Required]
     public string $name = 'web_search';
 
     /** @var 'web_search_20250305' $type */
-    #[Api]
+    #[Required]
     public string $type = 'web_search_20250305';
 
     /**
@@ -45,7 +46,7 @@ final class WebSearchTool20250305 implements BaseModel
      *
      * @var list<string>|null $allowed_domains
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $allowed_domains;
 
     /**
@@ -53,25 +54,25 @@ final class WebSearchTool20250305 implements BaseModel
      *
      * @var list<string>|null $blocked_domains
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $blocked_domains;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?CacheControlEphemeral $cache_control;
 
     /**
      * Maximum number of times the tool can be used in the API request.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $max_uses;
 
     /**
      * Parameters for the user's location. Used to provide more relevant search results.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?UserLocation $user_location;
 
     public function __construct()

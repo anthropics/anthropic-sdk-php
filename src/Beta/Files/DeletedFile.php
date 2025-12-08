@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Files;
 
 use Anthropic\Beta\Files\DeletedFile\Type;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -20,7 +21,7 @@ final class DeletedFile implements BaseModel
     /**
      * ID of the deleted file.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
@@ -30,7 +31,7 @@ final class DeletedFile implements BaseModel
      *
      * @var value-of<Type>|null $type
      */
-    #[Api(enum: Type::class, optional: true)]
+    #[Optional(enum: Type::class)]
     public ?string $type;
 
     /**

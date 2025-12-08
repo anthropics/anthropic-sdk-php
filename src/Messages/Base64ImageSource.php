@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Base64ImageSource\MediaType;
@@ -20,14 +20,14 @@ final class Base64ImageSource implements BaseModel
     use SdkModel;
 
     /** @var 'base64' $type */
-    #[Api]
+    #[Required]
     public string $type = 'base64';
 
-    #[Api]
+    #[Required]
     public string $data;
 
     /** @var value-of<MediaType> $media_type */
-    #[Api(enum: MediaType::class)]
+    #[Required(enum: MediaType::class)]
     public string $media_type;
 
     /**

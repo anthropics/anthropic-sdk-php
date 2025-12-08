@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -19,7 +19,7 @@ final class MessageTokensCount implements BaseModel
     /**
      * The total number of tokens across the provided list of messages, system prompt, and tools.
      */
-    #[Api]
+    #[Required]
     public int $input_tokens;
 
     /**

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -137,7 +138,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @var list<MessageParam> $messages
      */
-    #[Api(list: MessageParam::class)]
+    #[Required(list: MessageParam::class)]
     public array $messages;
 
     /**
@@ -145,7 +146,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @var string|value-of<Model> $model
      */
-    #[Api(enum: Model::class)]
+    #[Required(enum: Model::class)]
     public string $model;
 
     /**
@@ -155,7 +156,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @var string|list<TextBlockParam>|null $system
      */
-    #[Api(union: System::class, optional: true)]
+    #[Optional(union: System::class)]
     public string|array|null $system;
 
     /**
@@ -165,13 +166,13 @@ final class MessageCountTokensParams implements BaseModel
      *
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      */
-    #[Api(union: ThinkingConfigParam::class, optional: true)]
+    #[Optional(union: ThinkingConfigParam::class)]
     public ThinkingConfigEnabled|ThinkingConfigDisabled|null $thinking;
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
-    #[Api(union: ToolChoice::class, optional: true)]
+    #[Optional(union: ToolChoice::class)]
     public ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $tool_choice;
 
     /**
@@ -239,7 +240,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @var list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null $tools
      */
-    #[Api(list: MessageCountTokensTool::class, optional: true)]
+    #[Optional(list: MessageCountTokensTool::class)]
     public ?array $tools;
 
     /**

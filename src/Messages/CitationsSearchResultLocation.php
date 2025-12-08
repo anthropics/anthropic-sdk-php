@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -25,25 +25,25 @@ final class CitationsSearchResultLocation implements BaseModel
     use SdkModel;
 
     /** @var 'search_result_location' $type */
-    #[Api]
+    #[Required]
     public string $type = 'search_result_location';
 
-    #[Api]
+    #[Required]
     public string $cited_text;
 
-    #[Api]
+    #[Required]
     public int $end_block_index;
 
-    #[Api]
+    #[Required]
     public int $search_result_index;
 
-    #[Api]
+    #[Required]
     public string $source;
 
-    #[Api]
+    #[Required]
     public int $start_block_index;
 
-    #[Api]
+    #[Required]
     public ?string $title;
 
     /**

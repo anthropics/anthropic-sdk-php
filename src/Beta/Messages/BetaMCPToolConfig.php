@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -20,10 +20,10 @@ final class BetaMCPToolConfig implements BaseModel
     /** @use SdkModel<BetaMCPToolConfigShape> */
     use SdkModel;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $defer_loading;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $enabled;
 
     public function __construct()

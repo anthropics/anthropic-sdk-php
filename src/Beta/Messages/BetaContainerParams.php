@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaSkillParams\Type;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -24,7 +24,7 @@ final class BetaContainerParams implements BaseModel
     /**
      * Container id.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $id;
 
     /**
@@ -32,7 +32,7 @@ final class BetaContainerParams implements BaseModel
      *
      * @var list<BetaSkillParams>|null $skills
      */
-    #[Api(list: BetaSkillParams::class, nullable: true, optional: true)]
+    #[Optional(list: BetaSkillParams::class, nullable: true)]
     public ?array $skills;
 
     public function __construct()

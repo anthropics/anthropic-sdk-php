@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Skills;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -21,7 +21,7 @@ final class SkillDeleteResponse implements BaseModel
      *
      * The format and length of IDs may change over time.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
@@ -29,7 +29,7 @@ final class SkillDeleteResponse implements BaseModel
      *
      * For Skills, this is always `"skill_deleted"`.
      */
-    #[Api]
+    #[Required]
     public string $type;
 
     /**

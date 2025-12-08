@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -19,10 +19,10 @@ final class BetaCodeExecutionOutputBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'code_execution_output' $type */
-    #[Api]
+    #[Required]
     public string $type = 'code_execution_output';
 
-    #[Api]
+    #[Required]
     public string $file_id;
 
     /**

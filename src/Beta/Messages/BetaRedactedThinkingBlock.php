@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -19,10 +19,10 @@ final class BetaRedactedThinkingBlock implements BaseModel
     use SdkModel;
 
     /** @var 'redacted_thinking' $type */
-    #[Api]
+    #[Required]
     public string $type = 'redacted_thinking';
 
-    #[Api]
+    #[Required]
     public string $data;
 
     /**

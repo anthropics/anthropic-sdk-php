@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaRawMessageDeltaEvent\Delta;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -23,16 +23,16 @@ final class BetaRawMessageDeltaEvent implements BaseModel
     use SdkModel;
 
     /** @var 'message_delta' $type */
-    #[Api]
+    #[Required]
     public string $type = 'message_delta';
 
     /**
      * Information about context management strategies applied during the request.
      */
-    #[Api]
+    #[Required]
     public ?BetaContextManagementResponse $context_management;
 
-    #[Api]
+    #[Required]
     public Delta $delta;
 
     /**
@@ -46,7 +46,7 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      */
-    #[Api]
+    #[Required]
     public BetaMessageDeltaUsage $usage;
 
     /**

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Skills\Versions;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -30,13 +30,13 @@ final class VersionListParams implements BaseModel
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $limit;
 
     /**
      * Optionally set to the `next_page` token from the previous response.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $page;
 
     /**
@@ -44,7 +44,7 @@ final class VersionListParams implements BaseModel
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
      */
-    #[Api(list: AnthropicBeta::class, optional: true)]
+    #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
     public function __construct()

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaContextManagementConfig\Edit;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -24,7 +24,7 @@ final class BetaContextManagementConfig implements BaseModel
      *
      * @var list<BetaClearToolUses20250919Edit|BetaClearThinking20251015Edit>|null $edits
      */
-    #[Api(list: Edit::class, optional: true)]
+    #[Optional(list: Edit::class)]
     public ?array $edits;
 
     public function __construct()

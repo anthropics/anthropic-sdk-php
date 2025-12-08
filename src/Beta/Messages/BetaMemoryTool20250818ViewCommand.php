@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -23,13 +24,13 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
      *
      * @var 'view' $command
      */
-    #[Api]
+    #[Required]
     public string $command = 'view';
 
     /**
      * Path to directory or file to view.
      */
-    #[Api]
+    #[Required]
     public string $path;
 
     /**
@@ -37,7 +38,7 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
      *
      * @var list<int>|null $view_range
      */
-    #[Api(list: 'int', optional: true)]
+    #[Optional(list: 'int')]
     public ?array $view_range;
 
     /**

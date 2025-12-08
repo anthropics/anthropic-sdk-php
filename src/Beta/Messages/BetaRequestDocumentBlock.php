@@ -6,7 +6,8 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaRequestDocumentBlock\Source;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -26,25 +27,25 @@ final class BetaRequestDocumentBlock implements BaseModel
     use SdkModel;
 
     /** @var 'document' $type */
-    #[Api]
+    #[Required]
     public string $type = 'document';
 
-    #[Api(union: Source::class)]
+    #[Required(union: Source::class)]
     public BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource $source;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaCacheControlEphemeral $cache_control;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaCitationsConfigParam $citations;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $context;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $title;
 
     /**

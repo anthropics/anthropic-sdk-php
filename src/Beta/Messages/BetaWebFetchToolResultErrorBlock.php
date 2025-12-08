@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -20,11 +20,11 @@ final class BetaWebFetchToolResultErrorBlock implements BaseModel
     use SdkModel;
 
     /** @var 'web_fetch_tool_result_error' $type */
-    #[Api]
+    #[Required]
     public string $type = 'web_fetch_tool_result_error';
 
     /** @var value-of<BetaWebFetchToolResultErrorCode> $error_code */
-    #[Api(enum: BetaWebFetchToolResultErrorCode::class)]
+    #[Required(enum: BetaWebFetchToolResultErrorCode::class)]
     public string $error_code;
 
     /**

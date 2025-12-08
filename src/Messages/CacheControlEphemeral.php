@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\CacheControlEphemeral\TTL;
@@ -20,7 +21,7 @@ final class CacheControlEphemeral implements BaseModel
     use SdkModel;
 
     /** @var 'ephemeral' $type */
-    #[Api]
+    #[Required]
     public string $type = 'ephemeral';
 
     /**
@@ -34,7 +35,7 @@ final class CacheControlEphemeral implements BaseModel
      *
      * @var value-of<TTL>|null $ttl
      */
-    #[Api(enum: TTL::class, optional: true)]
+    #[Optional(enum: TTL::class)]
     public ?string $ttl;
 
     public function __construct()

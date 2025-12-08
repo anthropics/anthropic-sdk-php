@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -17,7 +17,7 @@ final class ThinkingConfigDisabled implements BaseModel
     use SdkModel;
 
     /** @var 'disabled' $type */
-    #[Api]
+    #[Required]
     public string $type = 'disabled';
 
     public function __construct()

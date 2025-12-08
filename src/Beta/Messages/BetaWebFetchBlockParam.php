@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -22,22 +23,22 @@ final class BetaWebFetchBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'web_fetch_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'web_fetch_result';
 
-    #[Api]
+    #[Required]
     public BetaRequestDocumentBlock $content;
 
     /**
      * Fetched content URL.
      */
-    #[Api]
+    #[Required]
     public string $url;
 
     /**
      * ISO 8601 timestamp when the content was retrieved.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $retrieved_at;
 
     /**

@@ -7,7 +7,7 @@ namespace Anthropic\Beta\Messages\BetaRawMessageDeltaEvent;
 use Anthropic\Beta\Messages\BetaContainer;
 use Anthropic\Beta\Messages\BetaSkill;
 use Anthropic\Beta\Messages\BetaStopReason;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -26,14 +26,14 @@ final class Delta implements BaseModel
     /**
      * Information about the container used in the request (for the code execution tool).
      */
-    #[Api]
+    #[Required]
     public ?BetaContainer $container;
 
     /** @var value-of<BetaStopReason>|null $stop_reason */
-    #[Api(enum: BetaStopReason::class)]
+    #[Required(enum: BetaStopReason::class)]
     public ?string $stop_reason;
 
-    #[Api]
+    #[Required]
     public ?string $stop_sequence;
 
     /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Batches\BatchCreateParams;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Batches\BatchCreateParams\Request\Params;
@@ -39,7 +39,7 @@ final class Request implements BaseModel
      *
      * Must be unique for each request within the Message Batch.
      */
-    #[Api]
+    #[Required]
     public string $custom_id;
 
     /**
@@ -47,7 +47,7 @@ final class Request implements BaseModel
      *
      * See the [Messages API reference](https://docs.claude.com/en/api/messages) for full documentation on available parameters.
      */
-    #[Api]
+    #[Required]
     public Params $params;
 
     /**

@@ -6,7 +6,8 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaClearToolUses20250919Edit\ClearToolInputs;
 use Anthropic\Beta\Messages\BetaClearToolUses20250919Edit\Trigger;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -26,13 +27,13 @@ final class BetaClearToolUses20250919Edit implements BaseModel
     use SdkModel;
 
     /** @var 'clear_tool_uses_20250919' $type */
-    #[Api]
+    #[Required]
     public string $type = 'clear_tool_uses_20250919';
 
     /**
      * Minimum number of tokens that must be cleared when triggered. Context will only be modified if at least this many tokens can be removed.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaInputTokensClearAtLeast $clear_at_least;
 
     /**
@@ -40,7 +41,7 @@ final class BetaClearToolUses20250919Edit implements BaseModel
      *
      * @var bool|list<string>|null $clear_tool_inputs
      */
-    #[Api(union: ClearToolInputs::class, nullable: true, optional: true)]
+    #[Optional(union: ClearToolInputs::class, nullable: true)]
     public bool|array|null $clear_tool_inputs;
 
     /**
@@ -48,19 +49,19 @@ final class BetaClearToolUses20250919Edit implements BaseModel
      *
      * @var list<string>|null $exclude_tools
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $exclude_tools;
 
     /**
      * Number of tool uses to retain in the conversation.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?BetaToolUsesKeep $keep;
 
     /**
      * Condition that triggers the context management strategy.
      */
-    #[Api(union: Trigger::class, optional: true)]
+    #[Optional(union: Trigger::class)]
     public BetaInputTokensTrigger|BetaToolUsesTrigger|null $trigger;
 
     public function __construct()

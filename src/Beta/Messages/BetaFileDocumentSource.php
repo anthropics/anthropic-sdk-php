@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -17,10 +17,10 @@ final class BetaFileDocumentSource implements BaseModel
     use SdkModel;
 
     /** @var 'file' $type */
-    #[Api]
+    #[Required]
     public string $type = 'file';
 
-    #[Api]
+    #[Required]
     public string $file_id;
 
     /**

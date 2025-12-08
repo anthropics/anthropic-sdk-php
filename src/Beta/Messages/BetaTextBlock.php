@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -21,7 +21,7 @@ final class BetaTextBlock implements BaseModel
     use SdkModel;
 
     /** @var 'text' $type */
-    #[Api]
+    #[Required]
     public string $type = 'text';
 
     /**
@@ -31,10 +31,10 @@ final class BetaTextBlock implements BaseModel
      *
      * @var list<BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation>|null $citations
      */
-    #[Api(list: BetaTextCitation::class)]
+    #[Required(list: BetaTextCitation::class)]
     public ?array $citations;
 
-    #[Api]
+    #[Required]
     public string $text;
 
     /**

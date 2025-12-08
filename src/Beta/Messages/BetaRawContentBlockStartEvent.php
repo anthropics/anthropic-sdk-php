@@ -6,7 +6,7 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaRawContentBlockStartEvent\ContentBlock;
 use Anthropic\Beta\Messages\BetaServerToolUseBlock\Name;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -23,16 +23,16 @@ final class BetaRawContentBlockStartEvent implements BaseModel
     use SdkModel;
 
     /** @var 'content_block_start' $type */
-    #[Api]
+    #[Required]
     public string $type = 'content_block_start';
 
     /**
      * Response model for a file uploaded to the container.
      */
-    #[Api(union: ContentBlock::class)]
+    #[Required(union: ContentBlock::class)]
     public BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock $content_block;
 
-    #[Api]
+    #[Required]
     public int $index;
 
     /**

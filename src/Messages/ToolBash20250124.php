@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\CacheControlEphemeral\TTL;
@@ -28,17 +29,17 @@ final class ToolBash20250124 implements BaseModel
      *
      * @var 'bash' $name
      */
-    #[Api]
+    #[Required]
     public string $name = 'bash';
 
     /** @var 'bash_20250124' $type */
-    #[Api]
+    #[Required]
     public string $type = 'bash_20250124';
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?CacheControlEphemeral $cache_control;
 
     public function __construct()

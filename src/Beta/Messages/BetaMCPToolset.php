@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -29,19 +30,19 @@ final class BetaMCPToolset implements BaseModel
     use SdkModel;
 
     /** @var 'mcp_toolset' $type */
-    #[Api]
+    #[Required]
     public string $type = 'mcp_toolset';
 
     /**
      * Name of the MCP server to configure tools for.
      */
-    #[Api]
+    #[Required]
     public string $mcp_server_name;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaCacheControlEphemeral $cache_control;
 
     /**
@@ -49,13 +50,13 @@ final class BetaMCPToolset implements BaseModel
      *
      * @var array<string,BetaMCPToolConfig>|null $configs
      */
-    #[Api(map: BetaMCPToolConfig::class, nullable: true, optional: true)]
+    #[Optional(map: BetaMCPToolConfig::class, nullable: true)]
     public ?array $configs;
 
     /**
      * Default configuration applied to all tools from this server.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?BetaMCPToolDefaultConfig $default_config;
 
     /**

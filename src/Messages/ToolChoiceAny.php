@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -21,7 +22,7 @@ final class ToolChoiceAny implements BaseModel
     use SdkModel;
 
     /** @var 'any' $type */
-    #[Api]
+    #[Required]
     public string $type = 'any';
 
     /**
@@ -29,7 +30,7 @@ final class ToolChoiceAny implements BaseModel
      *
      * Defaults to `false`. If set to `true`, the model will output exactly one tool use.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $disable_parallel_tool_use;
 
     public function __construct()

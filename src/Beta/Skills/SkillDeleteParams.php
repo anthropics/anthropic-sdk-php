@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Skills;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -28,7 +28,7 @@ final class SkillDeleteParams implements BaseModel
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
      */
-    #[Api(list: AnthropicBeta::class, optional: true)]
+    #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
     public function __construct()

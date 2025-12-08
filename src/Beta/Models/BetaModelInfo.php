@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Models;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -28,25 +28,25 @@ final class BetaModelInfo implements BaseModel
      *
      * @var 'model' $type
      */
-    #[Api]
+    #[Required]
     public string $type = 'model';
 
     /**
      * Unique model identifier.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
      * RFC 3339 datetime string representing the time at which the model was released. May be set to an epoch value if the release date is unknown.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
     /**
      * A human-readable name for the model.
      */
-    #[Api]
+    #[Required]
     public string $display_name;
 
     /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -19,10 +19,10 @@ final class BetaTextEditorCodeExecutionCreateResultBlockParam implements BaseMod
     use SdkModel;
 
     /** @var 'text_editor_code_execution_create_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'text_editor_code_execution_create_result';
 
-    #[Api]
+    #[Required]
     public bool $is_file_update;
 
     /**

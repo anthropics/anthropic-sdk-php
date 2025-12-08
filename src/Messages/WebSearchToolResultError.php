@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\WebSearchToolResultError\ErrorCode;
@@ -20,11 +20,11 @@ final class WebSearchToolResultError implements BaseModel
     use SdkModel;
 
     /** @var 'web_search_tool_result_error' $type */
-    #[Api]
+    #[Required]
     public string $type = 'web_search_tool_result_error';
 
     /** @var value-of<ErrorCode> $error_code */
-    #[Api(enum: ErrorCode::class)]
+    #[Required(enum: ErrorCode::class)]
     public string $error_code;
 
     /**

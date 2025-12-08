@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaSkill\Type;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -24,7 +24,7 @@ final class BetaSkill implements BaseModel
     /**
      * Skill ID.
      */
-    #[Api]
+    #[Required]
     public string $skill_id;
 
     /**
@@ -32,13 +32,13 @@ final class BetaSkill implements BaseModel
      *
      * @var value-of<Type> $type
      */
-    #[Api(enum: Type::class)]
+    #[Required(enum: Type::class)]
     public string $type;
 
     /**
      * Skill version or 'latest' for most recent version.
      */
-    #[Api]
+    #[Required]
     public string $version;
 
     /**

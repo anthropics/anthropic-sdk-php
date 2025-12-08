@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaBase64ImageSource\MediaType;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -20,14 +20,14 @@ final class BetaBase64ImageSource implements BaseModel
     use SdkModel;
 
     /** @var 'base64' $type */
-    #[Api]
+    #[Required]
     public string $type = 'base64';
 
-    #[Api]
+    #[Required]
     public string $data;
 
     /** @var value-of<MediaType> $media_type */
-    #[Api(enum: MediaType::class)]
+    #[Required(enum: MediaType::class)]
     public string $media_type;
 
     /**

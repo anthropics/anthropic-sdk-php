@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -33,13 +33,13 @@ final class ModelListParams implements BaseModel
     /**
      * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $after_id;
 
     /**
      * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $before_id;
 
     /**
@@ -47,7 +47,7 @@ final class ModelListParams implements BaseModel
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $limit;
 
     /**
@@ -55,7 +55,7 @@ final class ModelListParams implements BaseModel
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
      */
-    #[Api(list: AnthropicBeta::class, optional: true)]
+    #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
     public function __construct()
