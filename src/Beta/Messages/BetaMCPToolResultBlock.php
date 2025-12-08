@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaMCPToolResultBlock\Content;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -23,17 +23,17 @@ final class BetaMCPToolResultBlock implements BaseModel
     use SdkModel;
 
     /** @var 'mcp_tool_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'mcp_tool_result';
 
     /** @var string|list<BetaTextBlock> $content */
-    #[Api(union: Content::class)]
+    #[Required(union: Content::class)]
     public string|array $content;
 
-    #[Api]
+    #[Required]
     public bool $is_error;
 
-    #[Api]
+    #[Required]
     public string $tool_use_id;
 
     /**

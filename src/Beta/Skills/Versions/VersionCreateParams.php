@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Skills\Versions;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -32,7 +32,7 @@ final class VersionCreateParams implements BaseModel
      *
      * @var list<string>|null $files
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $files;
 
     /**
@@ -40,7 +40,7 @@ final class VersionCreateParams implements BaseModel
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
      */
-    #[Api(list: AnthropicBeta::class, optional: true)]
+    #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
     public function __construct()

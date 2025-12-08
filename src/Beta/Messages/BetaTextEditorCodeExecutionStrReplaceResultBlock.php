@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -24,23 +24,23 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
     use SdkModel;
 
     /** @var 'text_editor_code_execution_str_replace_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'text_editor_code_execution_str_replace_result';
 
     /** @var list<string>|null $lines */
-    #[Api(list: 'string')]
+    #[Required(list: 'string')]
     public ?array $lines;
 
-    #[Api]
+    #[Required]
     public ?int $new_lines;
 
-    #[Api]
+    #[Required]
     public ?int $new_start;
 
-    #[Api]
+    #[Required]
     public ?int $old_lines;
 
-    #[Api]
+    #[Required]
     public ?int $old_start;
 
     /**

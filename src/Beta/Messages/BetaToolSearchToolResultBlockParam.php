@@ -6,7 +6,8 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaToolSearchToolResultErrorParam\ErrorCode;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -24,19 +25,19 @@ final class BetaToolSearchToolResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'tool_search_tool_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'tool_search_tool_result';
 
-    #[Api]
+    #[Required]
     public BetaToolSearchToolResultErrorParam|BetaToolSearchToolSearchResultBlockParam $content;
 
-    #[Api]
+    #[Required]
     public string $tool_use_id;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaCacheControlEphemeral $cache_control;
 
     /**

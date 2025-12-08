@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Usage\ServiceTier;
@@ -33,7 +33,7 @@ final class Message implements BaseModel
      *
      * @var 'assistant' $role
      */
-    #[Api]
+    #[Required]
     public string $role = 'assistant';
 
     /**
@@ -43,7 +43,7 @@ final class Message implements BaseModel
      *
      * @var 'message' $type
      */
-    #[Api]
+    #[Required]
     public string $type = 'message';
 
     /**
@@ -51,7 +51,7 @@ final class Message implements BaseModel
      *
      * The format and length of IDs may change over time.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
@@ -83,7 +83,7 @@ final class Message implements BaseModel
      *
      * @var list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock> $content
      */
-    #[Api(list: ContentBlock::class)]
+    #[Required(list: ContentBlock::class)]
     public array $content;
 
     /**
@@ -91,7 +91,7 @@ final class Message implements BaseModel
      *
      * @var string|value-of<Model> $model
      */
-    #[Api(enum: Model::class)]
+    #[Required(enum: Model::class)]
     public string $model;
 
     /**
@@ -109,7 +109,7 @@ final class Message implements BaseModel
      *
      * @var value-of<StopReason>|null $stop_reason
      */
-    #[Api(enum: StopReason::class)]
+    #[Required(enum: StopReason::class)]
     public ?string $stop_reason;
 
     /**
@@ -117,7 +117,7 @@ final class Message implements BaseModel
      *
      * This value will be a non-null string if one of your custom stop sequences was generated.
      */
-    #[Api]
+    #[Required]
     public ?string $stop_sequence;
 
     /**
@@ -131,7 +131,7 @@ final class Message implements BaseModel
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      */
-    #[Api]
+    #[Required]
     public Usage $usage;
 
     /**

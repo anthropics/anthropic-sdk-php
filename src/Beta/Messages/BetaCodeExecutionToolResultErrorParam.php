@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -20,11 +20,11 @@ final class BetaCodeExecutionToolResultErrorParam implements BaseModel
     use SdkModel;
 
     /** @var 'code_execution_tool_result_error' $type */
-    #[Api]
+    #[Required]
     public string $type = 'code_execution_tool_result_error';
 
     /** @var value-of<BetaCodeExecutionToolResultErrorCode> $error_code */
-    #[Api(enum: BetaCodeExecutionToolResultErrorCode::class)]
+    #[Required(enum: BetaCodeExecutionToolResultErrorCode::class)]
     public string $error_code;
 
     /**

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -20,7 +21,7 @@ final class BetaClearThinking20251015Edit implements BaseModel
     use SdkModel;
 
     /** @var 'clear_thinking_20251015' $type */
-    #[Api]
+    #[Required]
     public string $type = 'clear_thinking_20251015';
 
     /**
@@ -28,7 +29,7 @@ final class BetaClearThinking20251015Edit implements BaseModel
      *
      * @var 'all'|BetaThinkingTurns|BetaAllThinkingTurns|null $keep
      */
-    #[Api(optional: true)]
+    #[Optional]
     public string|BetaThinkingTurns|BetaAllThinkingTurns|null $keep;
 
     public function __construct()

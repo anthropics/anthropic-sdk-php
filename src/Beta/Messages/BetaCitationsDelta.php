@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaCitationsDelta\Citation;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -21,10 +21,10 @@ final class BetaCitationsDelta implements BaseModel
     use SdkModel;
 
     /** @var 'citations_delta' $type */
-    #[Api]
+    #[Required]
     public string $type = 'citations_delta';
 
-    #[Api(union: Citation::class)]
+    #[Required(union: Citation::class)]
     public BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation $citation;
 
     /**

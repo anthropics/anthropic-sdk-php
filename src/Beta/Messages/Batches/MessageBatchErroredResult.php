@@ -14,7 +14,7 @@ use Anthropic\Beta\BetaNotFoundError;
 use Anthropic\Beta\BetaOverloadedError;
 use Anthropic\Beta\BetaPermissionError;
 use Anthropic\Beta\BetaRateLimitError;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -29,10 +29,10 @@ final class MessageBatchErroredResult implements BaseModel
     use SdkModel;
 
     /** @var 'errored' $type */
-    #[Api]
+    #[Required]
     public string $type = 'errored';
 
-    #[Api]
+    #[Required]
     public BetaErrorResponse $error;
 
     /**

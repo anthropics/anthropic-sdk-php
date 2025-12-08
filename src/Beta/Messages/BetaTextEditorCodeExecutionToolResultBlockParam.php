@@ -7,7 +7,8 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaTextEditorCodeExecutionToolResultErrorParam\ErrorCode;
 use Anthropic\Beta\Messages\BetaTextEditorCodeExecutionViewResultBlockParam\FileType;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -25,19 +26,19 @@ final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'text_editor_code_execution_tool_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'text_editor_code_execution_tool_result';
 
-    #[Api]
+    #[Required]
     public BetaTextEditorCodeExecutionToolResultErrorParam|BetaTextEditorCodeExecutionViewResultBlockParam|BetaTextEditorCodeExecutionCreateResultBlockParam|BetaTextEditorCodeExecutionStrReplaceResultBlockParam $content;
 
-    #[Api]
+    #[Required]
     public string $tool_use_id;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaCacheControlEphemeral $cache_control;
 
     /**

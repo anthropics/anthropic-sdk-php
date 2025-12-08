@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaTextEditorCodeExecutionToolResultErrorParam\ErrorCode;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -22,14 +23,14 @@ final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
     use SdkModel;
 
     /** @var 'text_editor_code_execution_tool_result_error' $type */
-    #[Api]
+    #[Required]
     public string $type = 'text_editor_code_execution_tool_result_error';
 
     /** @var value-of<ErrorCode> $error_code */
-    #[Api(enum: ErrorCode::class)]
+    #[Required(enum: ErrorCode::class)]
     public string $error_code;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $error_message;
 
     /**

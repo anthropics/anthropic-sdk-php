@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -19,7 +19,7 @@ final class ServerToolUsage implements BaseModel
     /**
      * The number of web search tool requests.
      */
-    #[Api]
+    #[Required]
     public int $web_search_requests;
 
     /**

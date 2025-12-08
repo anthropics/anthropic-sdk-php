@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Batches;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -29,13 +29,13 @@ final class BatchListParams implements BaseModel
     /**
      * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $after_id;
 
     /**
      * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $before_id;
 
     /**
@@ -43,7 +43,7 @@ final class BatchListParams implements BaseModel
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $limit;
 
     public function __construct()

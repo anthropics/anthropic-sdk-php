@@ -77,7 +77,8 @@ use Anthropic\Beta\Messages\BetaWebFetchToolResultBlockParam;
 use Anthropic\Beta\Messages\BetaWebSearchTool20250305;
 use Anthropic\Beta\Messages\BetaWebSearchTool20250305\UserLocation;
 use Anthropic\Beta\Messages\BetaWebSearchToolResultBlockParam;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Model;
@@ -121,7 +122,7 @@ final class Params implements BaseModel
      *
      * Different models have different maximum values for this parameter.  See [models](https://docs.claude.com/en/docs/models-overview) for details.
      */
-    #[Api]
+    #[Required]
     public int $max_tokens;
 
     /**
@@ -176,7 +177,7 @@ final class Params implements BaseModel
      *
      * @var list<BetaMessageParam> $messages
      */
-    #[Api(list: BetaMessageParam::class)]
+    #[Required(list: BetaMessageParam::class)]
     public array $messages;
 
     /**
@@ -184,13 +185,13 @@ final class Params implements BaseModel
      *
      * @var string|value-of<Model> $model
      */
-    #[Api(enum: Model::class)]
+    #[Required(enum: Model::class)]
     public string $model;
 
     /**
      * Container identifier for reuse across requests.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public string|BetaContainerParams|null $container;
 
     /**
@@ -198,7 +199,7 @@ final class Params implements BaseModel
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaContextManagementConfig $context_management;
 
     /**
@@ -206,25 +207,25 @@ final class Params implements BaseModel
      *
      * @var list<BetaRequestMCPServerURLDefinition>|null $mcp_servers
      */
-    #[Api(list: BetaRequestMCPServerURLDefinition::class, optional: true)]
+    #[Optional(list: BetaRequestMCPServerURLDefinition::class)]
     public ?array $mcp_servers;
 
     /**
      * An object describing metadata about the request.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?BetaMetadata $metadata;
 
     /**
      * Configuration options for the model's output. Controls aspects like how much effort the model puts into its response.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?BetaOutputConfig $output_config;
 
     /**
      * A schema to specify Claude's output format in responses.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaJSONOutputFormat $output_format;
 
     /**
@@ -234,7 +235,7 @@ final class Params implements BaseModel
      *
      * @var value-of<ServiceTier>|null $service_tier
      */
-    #[Api(enum: ServiceTier::class, optional: true)]
+    #[Optional(enum: ServiceTier::class)]
     public ?string $service_tier;
 
     /**
@@ -246,7 +247,7 @@ final class Params implements BaseModel
      *
      * @var list<string>|null $stop_sequences
      */
-    #[Api(list: 'string', optional: true)]
+    #[Optional(list: 'string')]
     public ?array $stop_sequences;
 
     /**
@@ -254,7 +255,7 @@ final class Params implements BaseModel
      *
      * See [streaming](https://docs.claude.com/en/api/messages-streaming) for details.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $stream;
 
     /**
@@ -264,7 +265,7 @@ final class Params implements BaseModel
      *
      * @var string|list<BetaTextBlockParam>|null $system
      */
-    #[Api(union: System::class, optional: true)]
+    #[Optional(union: System::class)]
     public string|array|null $system;
 
     /**
@@ -274,7 +275,7 @@ final class Params implements BaseModel
      *
      * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?float $temperature;
 
     /**
@@ -284,13 +285,13 @@ final class Params implements BaseModel
      *
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      */
-    #[Api(union: BetaThinkingConfigParam::class, optional: true)]
+    #[Optional(union: BetaThinkingConfigParam::class)]
     public BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null $thinking;
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
-    #[Api(union: BetaToolChoice::class, optional: true)]
+    #[Optional(union: BetaToolChoice::class)]
     public BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $tool_choice;
 
     /**
@@ -358,7 +359,7 @@ final class Params implements BaseModel
      *
      * @var list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset>|null $tools
      */
-    #[Api(list: BetaToolUnion::class, optional: true)]
+    #[Optional(list: BetaToolUnion::class)]
     public ?array $tools;
 
     /**
@@ -368,7 +369,7 @@ final class Params implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $top_k;
 
     /**
@@ -378,7 +379,7 @@ final class Params implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?float $top_p;
 
     /**

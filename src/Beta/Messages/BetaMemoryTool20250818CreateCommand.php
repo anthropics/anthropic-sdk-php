@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -23,19 +23,19 @@ final class BetaMemoryTool20250818CreateCommand implements BaseModel
      *
      * @var 'create' $command
      */
-    #[Api]
+    #[Required]
     public string $command = 'create';
 
     /**
      * Content to write to the file.
      */
-    #[Api]
+    #[Required]
     public string $file_text;
 
     /**
      * Path where the file should be created.
      */
-    #[Api]
+    #[Required]
     public string $path;
 
     /**

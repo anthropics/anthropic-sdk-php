@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Batches;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -35,7 +35,7 @@ final class BatchCreateParams implements BaseModel
      *
      * @var list<Request> $requests
      */
-    #[Api(list: Request::class)]
+    #[Required(list: Request::class)]
     public array $requests;
 
     /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Skills\Versions;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -30,13 +30,13 @@ final class VersionListResponse implements BaseModel
      *
      * The format and length of IDs may change over time.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
      * ISO 8601 timestamp of when the skill version was created.
      */
-    #[Api]
+    #[Required]
     public string $created_at;
 
     /**
@@ -44,7 +44,7 @@ final class VersionListResponse implements BaseModel
      *
      * This is extracted from the SKILL.md file in the skill upload.
      */
-    #[Api]
+    #[Required]
     public string $description;
 
     /**
@@ -52,7 +52,7 @@ final class VersionListResponse implements BaseModel
      *
      * This is the top-level directory name that was extracted from the uploaded files.
      */
-    #[Api]
+    #[Required]
     public string $directory;
 
     /**
@@ -60,13 +60,13 @@ final class VersionListResponse implements BaseModel
      *
      * This is extracted from the SKILL.md file in the skill upload.
      */
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
      * Identifier for the skill that this version belongs to.
      */
-    #[Api]
+    #[Required]
     public string $skill_id;
 
     /**
@@ -74,7 +74,7 @@ final class VersionListResponse implements BaseModel
      *
      * For Skill Versions, this is always `"skill_version"`.
      */
-    #[Api]
+    #[Required]
     public string $type;
 
     /**
@@ -82,7 +82,7 @@ final class VersionListResponse implements BaseModel
      *
      * Each version is identified by a Unix epoch timestamp (e.g., "1759178010641129").
      */
-    #[Api]
+    #[Required]
     public string $version;
 
     /**

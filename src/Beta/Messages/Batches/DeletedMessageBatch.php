@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\Batches;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -25,13 +25,13 @@ final class DeletedMessageBatch implements BaseModel
      *
      * @var 'message_batch_deleted' $type
      */
-    #[Api]
+    #[Required]
     public string $type = 'message_batch_deleted';
 
     /**
      * ID of the Message Batch.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**

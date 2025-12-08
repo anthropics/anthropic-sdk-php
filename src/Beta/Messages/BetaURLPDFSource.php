@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -17,10 +17,10 @@ final class BetaURLPDFSource implements BaseModel
     use SdkModel;
 
     /** @var 'url' $type */
-    #[Api]
+    #[Required]
     public string $type = 'url';
 
-    #[Api]
+    #[Required]
     public string $url;
 
     /**

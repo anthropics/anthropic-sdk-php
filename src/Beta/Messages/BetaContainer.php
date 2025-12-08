@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaSkill\Type;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -24,13 +24,13 @@ final class BetaContainer implements BaseModel
     /**
      * Identifier for the container used in this request.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
      * The time at which the container will expire.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $expires_at;
 
     /**
@@ -38,7 +38,7 @@ final class BetaContainer implements BaseModel
      *
      * @var list<BetaSkill>|null $skills
      */
-    #[Api(list: BetaSkill::class)]
+    #[Required(list: BetaSkill::class)]
     public ?array $skills;
 
     /**

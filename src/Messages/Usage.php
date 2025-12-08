@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Usage\ServiceTier;
@@ -28,37 +28,37 @@ final class Usage implements BaseModel
     /**
      * Breakdown of cached tokens by TTL.
      */
-    #[Api]
+    #[Required]
     public ?CacheCreation $cache_creation;
 
     /**
      * The number of input tokens used to create the cache entry.
      */
-    #[Api]
+    #[Required]
     public ?int $cache_creation_input_tokens;
 
     /**
      * The number of input tokens read from the cache.
      */
-    #[Api]
+    #[Required]
     public ?int $cache_read_input_tokens;
 
     /**
      * The number of input tokens which were used.
      */
-    #[Api]
+    #[Required]
     public int $input_tokens;
 
     /**
      * The number of output tokens which were used.
      */
-    #[Api]
+    #[Required]
     public int $output_tokens;
 
     /**
      * The number of server tool requests.
      */
-    #[Api]
+    #[Required]
     public ?ServerToolUsage $server_tool_use;
 
     /**
@@ -66,7 +66,7 @@ final class Usage implements BaseModel
      *
      * @var value-of<ServiceTier>|null $service_tier
      */
-    #[Api(enum: ServiceTier::class)]
+    #[Required(enum: ServiceTier::class)]
     public ?string $service_tier;
 
     /**

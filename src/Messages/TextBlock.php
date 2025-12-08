@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -21,7 +21,7 @@ final class TextBlock implements BaseModel
     use SdkModel;
 
     /** @var 'text' $type */
-    #[Api]
+    #[Required]
     public string $type = 'text';
 
     /**
@@ -31,10 +31,10 @@ final class TextBlock implements BaseModel
      *
      * @var list<CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation>|null $citations
      */
-    #[Api(list: TextCitation::class)]
+    #[Required(list: TextCitation::class)]
     public ?array $citations;
 
-    #[Api]
+    #[Required]
     public string $text;
 
     /**

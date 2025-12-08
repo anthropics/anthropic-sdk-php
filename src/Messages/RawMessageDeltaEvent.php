@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\RawMessageDeltaEvent\Delta;
@@ -20,10 +20,10 @@ final class RawMessageDeltaEvent implements BaseModel
     use SdkModel;
 
     /** @var 'message_delta' $type */
-    #[Api]
+    #[Required]
     public string $type = 'message_delta';
 
-    #[Api]
+    #[Required]
     public Delta $delta;
 
     /**
@@ -37,7 +37,7 @@ final class RawMessageDeltaEvent implements BaseModel
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      */
-    #[Api]
+    #[Required]
     public MessageDeltaUsage $usage;
 
     /**

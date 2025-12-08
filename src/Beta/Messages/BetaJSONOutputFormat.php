@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -19,7 +19,7 @@ final class BetaJSONOutputFormat implements BaseModel
     use SdkModel;
 
     /** @var 'json_schema' $type */
-    #[Api]
+    #[Required]
     public string $type = 'json_schema';
 
     /**
@@ -27,7 +27,7 @@ final class BetaJSONOutputFormat implements BaseModel
      *
      * @var array<string,mixed> $schema
      */
-    #[Api(map: 'mixed')]
+    #[Required(map: 'mixed')]
     public array $schema;
 
     /**

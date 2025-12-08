@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\CacheControlEphemeral\TTL;
@@ -25,25 +26,25 @@ final class ToolResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'tool_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'tool_result';
 
-    #[Api]
+    #[Required]
     public string $tool_use_id;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?CacheControlEphemeral $cache_control;
 
     /**
      * @var string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam>|null $content
      */
-    #[Api(union: Content::class, optional: true)]
+    #[Optional(union: Content::class)]
     public string|array|null $content;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $is_error;
 
     /**

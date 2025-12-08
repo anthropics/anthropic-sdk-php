@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -21,7 +21,7 @@ final class BetaCountTokensContextManagementResponse implements BaseModel
     /**
      * The original token count before context management was applied.
      */
-    #[Api]
+    #[Required]
     public int $original_input_tokens;
 
     /**

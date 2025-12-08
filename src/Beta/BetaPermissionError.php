@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -19,10 +19,10 @@ final class BetaPermissionError implements BaseModel
     use SdkModel;
 
     /** @var 'permission_error' $type */
-    #[Api]
+    #[Required]
     public string $type = 'permission_error';
 
-    #[Api]
+    #[Required]
     public string $message;
 
     /**

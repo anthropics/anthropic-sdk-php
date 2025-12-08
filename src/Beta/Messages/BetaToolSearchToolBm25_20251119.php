@@ -7,7 +7,8 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaToolSearchToolBm25_20251119\AllowedCaller;
 use Anthropic\Beta\Messages\BetaToolSearchToolBm25_20251119\Type;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -33,30 +34,30 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
      *
      * @var 'tool_search_tool_bm25' $name
      */
-    #[Api]
+    #[Required]
     public string $name = 'tool_search_tool_bm25';
 
     /** @var value-of<Type> $type */
-    #[Api(enum: Type::class)]
+    #[Required(enum: Type::class)]
     public string $type;
 
     /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
-    #[Api(list: AllowedCaller::class, optional: true)]
+    #[Optional(list: AllowedCaller::class)]
     public ?array $allowed_callers;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaCacheControlEphemeral $cache_control;
 
     /**
      * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $defer_loading;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $strict;
 
     /**

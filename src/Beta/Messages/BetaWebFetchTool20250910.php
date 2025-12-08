@@ -6,7 +6,8 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaWebFetchTool20250910\AllowedCaller;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -37,15 +38,15 @@ final class BetaWebFetchTool20250910 implements BaseModel
      *
      * @var 'web_fetch' $name
      */
-    #[Api]
+    #[Required]
     public string $name = 'web_fetch';
 
     /** @var 'web_fetch_20250910' $type */
-    #[Api]
+    #[Required]
     public string $type = 'web_fetch_20250910';
 
     /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
-    #[Api(list: AllowedCaller::class, optional: true)]
+    #[Optional(list: AllowedCaller::class)]
     public ?array $allowed_callers;
 
     /**
@@ -53,7 +54,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
      *
      * @var list<string>|null $allowed_domains
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $allowed_domains;
 
     /**
@@ -61,40 +62,40 @@ final class BetaWebFetchTool20250910 implements BaseModel
      *
      * @var list<string>|null $blocked_domains
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $blocked_domains;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaCacheControlEphemeral $cache_control;
 
     /**
      * Citations configuration for fetched documents. Citations are disabled by default.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaCitationsConfigParam $citations;
 
     /**
      * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $defer_loading;
 
     /**
      * Maximum number of tokens used by including web page text content in the context. The limit is approximate and does not apply to binary content such as PDFs.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $max_content_tokens;
 
     /**
      * Maximum number of times the tool can be used in the API request.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $max_uses;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $strict;
 
     public function __construct()

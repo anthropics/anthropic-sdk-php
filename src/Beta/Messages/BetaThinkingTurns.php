@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -17,10 +17,10 @@ final class BetaThinkingTurns implements BaseModel
     use SdkModel;
 
     /** @var 'thinking_turns' $type */
-    #[Api]
+    #[Required]
     public string $type = 'thinking_turns';
 
-    #[Api]
+    #[Required]
     public int $value;
 
     /**

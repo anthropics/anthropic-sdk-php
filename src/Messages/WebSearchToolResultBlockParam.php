@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\CacheControlEphemeral\TTL;
@@ -24,20 +25,20 @@ final class WebSearchToolResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'web_search_tool_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'web_search_tool_result';
 
     /** @var list<WebSearchResultBlockParam>|WebSearchToolRequestError $content */
-    #[Api(union: WebSearchToolResultBlockParamContent::class)]
+    #[Required(union: WebSearchToolResultBlockParamContent::class)]
     public array|WebSearchToolRequestError $content;
 
-    #[Api]
+    #[Required]
     public string $tool_use_id;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?CacheControlEphemeral $cache_control;
 
     /**

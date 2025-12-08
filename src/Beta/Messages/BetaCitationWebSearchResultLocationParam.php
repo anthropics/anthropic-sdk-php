@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -23,19 +23,19 @@ final class BetaCitationWebSearchResultLocationParam implements BaseModel
     use SdkModel;
 
     /** @var 'web_search_result_location' $type */
-    #[Api]
+    #[Required]
     public string $type = 'web_search_result_location';
 
-    #[Api]
+    #[Required]
     public string $cited_text;
 
-    #[Api]
+    #[Required]
     public string $encrypted_index;
 
-    #[Api]
+    #[Required]
     public ?string $title;
 
-    #[Api]
+    #[Required]
     public string $url;
 
     /**

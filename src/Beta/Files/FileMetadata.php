@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Files;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -31,7 +32,7 @@ final class FileMetadata implements BaseModel
      *
      * @var 'file' $type
      */
-    #[Api]
+    #[Required]
     public string $type = 'file';
 
     /**
@@ -39,37 +40,37 @@ final class FileMetadata implements BaseModel
      *
      * The format and length of IDs may change over time.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
      * RFC 3339 datetime string representing when the file was created.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
     /**
      * Original filename of the uploaded file.
      */
-    #[Api]
+    #[Required]
     public string $filename;
 
     /**
      * MIME type of the file.
      */
-    #[Api]
+    #[Required]
     public string $mime_type;
 
     /**
      * Size of the file in bytes.
      */
-    #[Api]
+    #[Required]
     public int $size_bytes;
 
     /**
      * Whether the file can be downloaded.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $downloadable;
 
     /**

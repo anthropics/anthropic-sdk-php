@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Skills\Versions;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -21,7 +21,7 @@ final class VersionDeleteResponse implements BaseModel
      *
      * Each version is identified by a Unix epoch timestamp (e.g., "1759178010641129").
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
@@ -29,7 +29,7 @@ final class VersionDeleteResponse implements BaseModel
      *
      * For Skill Versions, this is always `"skill_version_deleted"`.
      */
-    #[Api]
+    #[Required]
     public string $type;
 
     /**

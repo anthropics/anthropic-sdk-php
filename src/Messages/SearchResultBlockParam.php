@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\CacheControlEphemeral\TTL;
@@ -25,26 +26,26 @@ final class SearchResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'search_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'search_result';
 
     /** @var list<TextBlockParam> $content */
-    #[Api(list: TextBlockParam::class)]
+    #[Required(list: TextBlockParam::class)]
     public array $content;
 
-    #[Api]
+    #[Required]
     public string $source;
 
-    #[Api]
+    #[Required]
     public string $title;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?CacheControlEphemeral $cache_control;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?CitationsConfigParam $citations;
 
     /**

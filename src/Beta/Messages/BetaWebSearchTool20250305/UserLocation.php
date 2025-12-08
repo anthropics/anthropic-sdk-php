@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\BetaWebSearchTool20250305;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -25,31 +26,31 @@ final class UserLocation implements BaseModel
     use SdkModel;
 
     /** @var 'approximate' $type */
-    #[Api]
+    #[Required]
     public string $type = 'approximate';
 
     /**
      * The city of the user.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $city;
 
     /**
      * The two letter [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the user.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $country;
 
     /**
      * The region of the user.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $region;
 
     /**
      * The [IANA timezone](https://nodatime.org/TimeZones) of the user.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $timezone;
 
     public function __construct()

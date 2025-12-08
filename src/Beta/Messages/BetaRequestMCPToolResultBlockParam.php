@@ -6,7 +6,8 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaRequestMCPToolResultBlockParam\Content;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -25,23 +26,23 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'mcp_tool_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'mcp_tool_result';
 
-    #[Api]
+    #[Required]
     public string $tool_use_id;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaCacheControlEphemeral $cache_control;
 
     /** @var string|list<BetaTextBlockParam>|null $content */
-    #[Api(union: Content::class, optional: true)]
+    #[Optional(union: Content::class)]
     public string|array|null $content;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $is_error;
 
     /**

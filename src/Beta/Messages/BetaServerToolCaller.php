@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -21,10 +21,10 @@ final class BetaServerToolCaller implements BaseModel
     use SdkModel;
 
     /** @var 'code_execution_20250825' $type */
-    #[Api]
+    #[Required]
     public string $type = 'code_execution_20250825';
 
-    #[Api]
+    #[Required]
     public string $tool_id;
 
     /**

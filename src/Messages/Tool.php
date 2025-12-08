@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\CacheControlEphemeral\TTL;
@@ -30,7 +31,7 @@ final class Tool implements BaseModel
      *
      * This defines the shape of the `input` that your tool accepts and that the model will produce.
      */
-    #[Api]
+    #[Required]
     public InputSchema $input_schema;
 
     /**
@@ -38,13 +39,13 @@ final class Tool implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      */
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?CacheControlEphemeral $cache_control;
 
     /**
@@ -52,11 +53,11 @@ final class Tool implements BaseModel
      *
      * Tool descriptions should be as detailed as possible. The more information that the model has about what the tool is and how to use it, the better it will perform. You can use natural language descriptions to reinforce important aspects of the tool input JSON schema.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $description;
 
     /** @var value-of<Type>|null $type */
-    #[Api(enum: Type::class, nullable: true, optional: true)]
+    #[Optional(enum: Type::class, nullable: true)]
     public ?string $type;
 
     /**

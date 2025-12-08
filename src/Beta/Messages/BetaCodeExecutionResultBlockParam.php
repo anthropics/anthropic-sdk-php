@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -23,20 +23,20 @@ final class BetaCodeExecutionResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'code_execution_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'code_execution_result';
 
     /** @var list<BetaCodeExecutionOutputBlockParam> $content */
-    #[Api(list: BetaCodeExecutionOutputBlockParam::class)]
+    #[Required(list: BetaCodeExecutionOutputBlockParam::class)]
     public array $content;
 
-    #[Api]
+    #[Required]
     public int $return_code;
 
-    #[Api]
+    #[Required]
     public string $stderr;
 
-    #[Api]
+    #[Required]
     public string $stdout;
 
     /**

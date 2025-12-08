@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Skills;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -33,7 +33,7 @@ final class SkillListParams implements BaseModel
      *
      * Maximum value is 100. Defaults to 20.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $limit;
 
     /**
@@ -41,7 +41,7 @@ final class SkillListParams implements BaseModel
      *
      * Pass the value from a previous response's `next_page` field to get the next page of results.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $page;
 
     /**
@@ -51,7 +51,7 @@ final class SkillListParams implements BaseModel
      * * `"custom"`: only return user-created skills
      * * `"anthropic"`: only return Anthropic-created skills
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $source;
 
     /**
@@ -59,7 +59,7 @@ final class SkillListParams implements BaseModel
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
      */
-    #[Api(list: AnthropicBeta::class, optional: true)]
+    #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
     public function __construct()

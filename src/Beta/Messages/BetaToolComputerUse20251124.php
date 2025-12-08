@@ -6,7 +6,8 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaToolComputerUse20251124\AllowedCaller;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\MapOf;
@@ -38,58 +39,58 @@ final class BetaToolComputerUse20251124 implements BaseModel
      *
      * @var 'computer' $name
      */
-    #[Api]
+    #[Required]
     public string $name = 'computer';
 
     /** @var 'computer_20251124' $type */
-    #[Api]
+    #[Required]
     public string $type = 'computer_20251124';
 
     /**
      * The height of the display in pixels.
      */
-    #[Api]
+    #[Required]
     public int $display_height_px;
 
     /**
      * The width of the display in pixels.
      */
-    #[Api]
+    #[Required]
     public int $display_width_px;
 
     /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
-    #[Api(list: AllowedCaller::class, optional: true)]
+    #[Optional(list: AllowedCaller::class)]
     public ?array $allowed_callers;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaCacheControlEphemeral $cache_control;
 
     /**
      * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $defer_loading;
 
     /**
      * The X11 display number (e.g. 0, 1) for the display.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $display_number;
 
     /**
      * Whether to enable an action to take a zoomed-in screenshot of the screen.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $enable_zoom;
 
     /** @var list<array<string,mixed>>|null $input_examples */
-    #[Api(list: new MapOf('mixed'), optional: true)]
+    #[Optional(list: new MapOf('mixed'))]
     public ?array $input_examples;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $strict;
 
     /**

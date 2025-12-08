@@ -6,7 +6,8 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaToolUseBlockParam\Caller;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -26,29 +27,29 @@ final class BetaToolUseBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'tool_use' $type */
-    #[Api]
+    #[Required]
     public string $type = 'tool_use';
 
-    #[Api]
+    #[Required]
     public string $id;
 
     /** @var array<string,mixed> $input */
-    #[Api(map: 'mixed')]
+    #[Required(map: 'mixed')]
     public array $input;
 
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaCacheControlEphemeral $cache_control;
 
     /**
      * Tool invocation directly from the model.
      */
-    #[Api(union: Caller::class, optional: true)]
+    #[Optional(union: Caller::class)]
     public BetaDirectCaller|BetaServerToolCaller|null $caller;
 
     /**

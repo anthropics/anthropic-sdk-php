@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Batches;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -23,7 +23,7 @@ final class MessageBatchRequestCounts implements BaseModel
      *
      * This is zero until processing of the entire Message Batch has ended.
      */
-    #[Api]
+    #[Required]
     public int $canceled;
 
     /**
@@ -31,7 +31,7 @@ final class MessageBatchRequestCounts implements BaseModel
      *
      * This is zero until processing of the entire Message Batch has ended.
      */
-    #[Api]
+    #[Required]
     public int $errored;
 
     /**
@@ -39,13 +39,13 @@ final class MessageBatchRequestCounts implements BaseModel
      *
      * This is zero until processing of the entire Message Batch has ended.
      */
-    #[Api]
+    #[Required]
     public int $expired;
 
     /**
      * Number of requests in the Message Batch that are processing.
      */
-    #[Api]
+    #[Required]
     public int $processing;
 
     /**
@@ -53,7 +53,7 @@ final class MessageBatchRequestCounts implements BaseModel
      *
      * This is zero until processing of the entire Message Batch has ended.
      */
-    #[Api]
+    #[Required]
     public int $succeeded;
 
     /**

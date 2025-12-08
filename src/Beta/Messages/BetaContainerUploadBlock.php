@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -21,10 +21,10 @@ final class BetaContainerUploadBlock implements BaseModel
     use SdkModel;
 
     /** @var 'container_upload' $type */
-    #[Api]
+    #[Required]
     public string $type = 'container_upload';
 
-    #[Api]
+    #[Required]
     public string $file_id;
 
     /**

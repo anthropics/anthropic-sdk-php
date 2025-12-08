@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaDocumentBlock\Source;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -23,22 +23,22 @@ final class BetaDocumentBlock implements BaseModel
     use SdkModel;
 
     /** @var 'document' $type */
-    #[Api]
+    #[Required]
     public string $type = 'document';
 
     /**
      * Citation configuration for the document.
      */
-    #[Api]
+    #[Required]
     public ?BetaCitationConfig $citations;
 
-    #[Api(union: Source::class)]
+    #[Required(union: Source::class)]
     public BetaBase64PDFSource|BetaPlainTextSource $source;
 
     /**
      * The title of the document.
      */
-    #[Api]
+    #[Required]
     public ?string $title;
 
     /**

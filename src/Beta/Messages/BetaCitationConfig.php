@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -16,7 +16,7 @@ final class BetaCitationConfig implements BaseModel
     /** @use SdkModel<BetaCitationConfigShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public bool $enabled;
 
     /**

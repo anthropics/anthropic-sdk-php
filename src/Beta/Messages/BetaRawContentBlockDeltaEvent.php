@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -21,13 +21,13 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
     use SdkModel;
 
     /** @var 'content_block_delta' $type */
-    #[Api]
+    #[Required]
     public string $type = 'content_block_delta';
 
-    #[Api(union: BetaRawContentBlockDelta::class)]
+    #[Required(union: BetaRawContentBlockDelta::class)]
     public BetaTextDelta|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta $delta;
 
-    #[Api]
+    #[Required]
     public int $index;
 
     /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -20,11 +20,11 @@ final class BetaWebSearchToolResultError implements BaseModel
     use SdkModel;
 
     /** @var 'web_search_tool_result_error' $type */
-    #[Api]
+    #[Required]
     public string $type = 'web_search_tool_result_error';
 
     /** @var value-of<BetaWebSearchToolResultErrorCode> $error_code */
-    #[Api(enum: BetaWebSearchToolResultErrorCode::class)]
+    #[Required(enum: BetaWebSearchToolResultErrorCode::class)]
     public string $error_code;
 
     /**

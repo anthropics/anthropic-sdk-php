@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -19,10 +19,10 @@ final class SignatureDelta implements BaseModel
     use SdkModel;
 
     /** @var 'signature_delta' $type */
-    #[Api]
+    #[Required]
     public string $type = 'signature_delta';
 
-    #[Api]
+    #[Required]
     public string $signature;
 
     /**

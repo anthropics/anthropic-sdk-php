@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Skills;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -29,13 +29,13 @@ final class SkillListResponse implements BaseModel
      *
      * The format and length of IDs may change over time.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
      * ISO 8601 timestamp of when the skill was created.
      */
-    #[Api]
+    #[Required]
     public string $created_at;
 
     /**
@@ -43,7 +43,7 @@ final class SkillListResponse implements BaseModel
      *
      * This is a human-readable label that is not included in the prompt sent to the model.
      */
-    #[Api]
+    #[Required]
     public ?string $display_title;
 
     /**
@@ -51,7 +51,7 @@ final class SkillListResponse implements BaseModel
      *
      * This represents the most recent version of the skill that has been created.
      */
-    #[Api]
+    #[Required]
     public ?string $latest_version;
 
     /**
@@ -61,7 +61,7 @@ final class SkillListResponse implements BaseModel
      * * `"custom"`: the skill was created by a user
      * * `"anthropic"`: the skill was created by Anthropic
      */
-    #[Api]
+    #[Required]
     public string $source;
 
     /**
@@ -69,13 +69,13 @@ final class SkillListResponse implements BaseModel
      *
      * For Skills, this is always `"skill"`.
      */
-    #[Api]
+    #[Required]
     public string $type;
 
     /**
      * ISO 8601 timestamp of when the skill was last updated.
      */
-    #[Api]
+    #[Required]
     public string $updated_at;
 
     /**

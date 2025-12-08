@@ -6,7 +6,8 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaCodeExecutionTool20250522\AllowedCaller;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -32,30 +33,30 @@ final class BetaCodeExecutionTool20250522 implements BaseModel
      *
      * @var 'code_execution' $name
      */
-    #[Api]
+    #[Required]
     public string $name = 'code_execution';
 
     /** @var 'code_execution_20250522' $type */
-    #[Api]
+    #[Required]
     public string $type = 'code_execution_20250522';
 
     /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
-    #[Api(list: AllowedCaller::class, optional: true)]
+    #[Optional(list: AllowedCaller::class)]
     public ?array $allowed_callers;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaCacheControlEphemeral $cache_control;
 
     /**
      * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $defer_loading;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $strict;
 
     public function __construct()

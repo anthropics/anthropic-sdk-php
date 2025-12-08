@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\RawContentBlockStartEvent\ContentBlock;
@@ -22,15 +22,15 @@ final class RawContentBlockStartEvent implements BaseModel
     use SdkModel;
 
     /** @var 'content_block_start' $type */
-    #[Api]
+    #[Required]
     public string $type = 'content_block_start';
 
-    #[Api(
+    #[Required(
         union: ContentBlock::class
     )]
     public TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $content_block;
 
-    #[Api]
+    #[Required]
     public int $index;
 
     /**

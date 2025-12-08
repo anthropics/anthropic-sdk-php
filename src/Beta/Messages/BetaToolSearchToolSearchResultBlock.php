@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -20,11 +20,11 @@ final class BetaToolSearchToolSearchResultBlock implements BaseModel
     use SdkModel;
 
     /** @var 'tool_search_tool_search_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'tool_search_tool_search_result';
 
     /** @var list<BetaToolReferenceBlock> $tool_references */
-    #[Api(list: BetaToolReferenceBlock::class)]
+    #[Required(list: BetaToolReferenceBlock::class)]
     public array $tool_references;
 
     /**

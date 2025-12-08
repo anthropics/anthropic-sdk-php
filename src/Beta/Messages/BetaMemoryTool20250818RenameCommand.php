@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -23,19 +23,19 @@ final class BetaMemoryTool20250818RenameCommand implements BaseModel
      *
      * @var 'rename' $command
      */
-    #[Api]
+    #[Required]
     public string $command = 'rename';
 
     /**
      * New path for the file or directory.
      */
-    #[Api]
+    #[Required]
     public string $new_path;
 
     /**
      * Current path of the file or directory.
      */
-    #[Api]
+    #[Required]
     public string $old_path;
 
     /**

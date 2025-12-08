@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -100,7 +101,7 @@ final class MessageCreateParams implements BaseModel
      *
      * Different models have different maximum values for this parameter.  See [models](https://docs.claude.com/en/docs/models-overview) for details.
      */
-    #[Api]
+    #[Required]
     public int $max_tokens;
 
     /**
@@ -155,7 +156,7 @@ final class MessageCreateParams implements BaseModel
      *
      * @var list<MessageParam> $messages
      */
-    #[Api(list: MessageParam::class)]
+    #[Required(list: MessageParam::class)]
     public array $messages;
 
     /**
@@ -163,13 +164,13 @@ final class MessageCreateParams implements BaseModel
      *
      * @var string|value-of<Model> $model
      */
-    #[Api(enum: Model::class)]
+    #[Required(enum: Model::class)]
     public string $model;
 
     /**
      * An object describing metadata about the request.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?Metadata $metadata;
 
     /**
@@ -179,7 +180,7 @@ final class MessageCreateParams implements BaseModel
      *
      * @var value-of<ServiceTier>|null $service_tier
      */
-    #[Api(enum: ServiceTier::class, optional: true)]
+    #[Optional(enum: ServiceTier::class)]
     public ?string $service_tier;
 
     /**
@@ -191,7 +192,7 @@ final class MessageCreateParams implements BaseModel
      *
      * @var list<string>|null $stop_sequences
      */
-    #[Api(list: 'string', optional: true)]
+    #[Optional(list: 'string')]
     public ?array $stop_sequences;
 
     /**
@@ -201,7 +202,7 @@ final class MessageCreateParams implements BaseModel
      *
      * @var string|list<TextBlockParam>|null $system
      */
-    #[Api(union: System::class, optional: true)]
+    #[Optional(union: System::class)]
     public string|array|null $system;
 
     /**
@@ -211,7 +212,7 @@ final class MessageCreateParams implements BaseModel
      *
      * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?float $temperature;
 
     /**
@@ -221,13 +222,13 @@ final class MessageCreateParams implements BaseModel
      *
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      */
-    #[Api(union: ThinkingConfigParam::class, optional: true)]
+    #[Optional(union: ThinkingConfigParam::class)]
     public ThinkingConfigEnabled|ThinkingConfigDisabled|null $thinking;
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
-    #[Api(union: ToolChoice::class, optional: true)]
+    #[Optional(union: ToolChoice::class)]
     public ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $tool_choice;
 
     /**
@@ -295,7 +296,7 @@ final class MessageCreateParams implements BaseModel
      *
      * @var list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null $tools
      */
-    #[Api(list: ToolUnion::class, optional: true)]
+    #[Optional(list: ToolUnion::class)]
     public ?array $tools;
 
     /**
@@ -305,7 +306,7 @@ final class MessageCreateParams implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $top_k;
 
     /**
@@ -315,7 +316,7 @@ final class MessageCreateParams implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?float $top_p;
 
     /**

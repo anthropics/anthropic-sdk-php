@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Batches;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\ErrorResponse;
@@ -28,7 +28,7 @@ final class MessageBatchIndividualResponse implements BaseModel
      *
      * Must be unique for each request within the Message Batch.
      */
-    #[Api]
+    #[Required]
     public string $custom_id;
 
     /**
@@ -36,7 +36,7 @@ final class MessageBatchIndividualResponse implements BaseModel
      *
      * Contains a Message output if processing was successful, an error response if processing failed, or the reason why processing was not attempted, such as cancellation or expiration.
      */
-    #[Api(union: MessageBatchResult::class)]
+    #[Required(union: MessageBatchResult::class)]
     public MessageBatchSucceededResult|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult $result;
 
     /**

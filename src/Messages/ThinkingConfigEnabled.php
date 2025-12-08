@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -19,7 +19,7 @@ final class ThinkingConfigEnabled implements BaseModel
     use SdkModel;
 
     /** @var 'enabled' $type */
-    #[Api]
+    #[Required]
     public string $type = 'enabled';
 
     /**
@@ -29,7 +29,7 @@ final class ThinkingConfigEnabled implements BaseModel
      *
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      */
-    #[Api]
+    #[Required]
     public int $budget_tokens;
 
     /**

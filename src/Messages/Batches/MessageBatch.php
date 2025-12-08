@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Batches;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Batches\MessageBatch\ProcessingStatus;
@@ -35,7 +35,7 @@ final class MessageBatch implements BaseModel
      *
      * @var 'message_batch' $type
      */
-    #[Api]
+    #[Required]
     public string $type = 'message_batch';
 
     /**
@@ -43,25 +43,25 @@ final class MessageBatch implements BaseModel
      *
      * The format and length of IDs may change over time.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
      * RFC 3339 datetime string representing the time at which the Message Batch was archived and its results became unavailable.
      */
-    #[Api]
+    #[Required]
     public ?\DateTimeInterface $archived_at;
 
     /**
      * RFC 3339 datetime string representing the time at which cancellation was initiated for the Message Batch. Specified only if cancellation was initiated.
      */
-    #[Api]
+    #[Required]
     public ?\DateTimeInterface $cancel_initiated_at;
 
     /**
      * RFC 3339 datetime string representing the time at which the Message Batch was created.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
     /**
@@ -69,13 +69,13 @@ final class MessageBatch implements BaseModel
      *
      * Processing ends when every request in a Message Batch has either succeeded, errored, canceled, or expired.
      */
-    #[Api]
+    #[Required]
     public ?\DateTimeInterface $ended_at;
 
     /**
      * RFC 3339 datetime string representing the time at which the Message Batch will expire and end processing, which is 24 hours after creation.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $expires_at;
 
     /**
@@ -83,7 +83,7 @@ final class MessageBatch implements BaseModel
      *
      * @var value-of<ProcessingStatus> $processing_status
      */
-    #[Api(enum: ProcessingStatus::class)]
+    #[Required(enum: ProcessingStatus::class)]
     public string $processing_status;
 
     /**
@@ -91,7 +91,7 @@ final class MessageBatch implements BaseModel
      *
      * Requests start as `processing` and move to one of the other statuses only once processing of the entire batch ends. The sum of all values always matches the total number of requests in the batch.
      */
-    #[Api]
+    #[Required]
     public MessageBatchRequestCounts $request_counts;
 
     /**
@@ -99,7 +99,7 @@ final class MessageBatch implements BaseModel
      *
      * Results in the file are not guaranteed to be in the same order as requests. Use the `custom_id` field to match results to requests.
      */
-    #[Api]
+    #[Required]
     public ?string $results_url;
 
     /**

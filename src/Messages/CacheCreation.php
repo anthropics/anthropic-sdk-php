@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -21,13 +21,13 @@ final class CacheCreation implements BaseModel
     /**
      * The number of input tokens used to create the 1 hour cache entry.
      */
-    #[Api]
+    #[Required]
     public int $ephemeral_1h_input_tokens;
 
     /**
      * The number of input tokens used to create the 5 minute cache entry.
      */
-    #[Api]
+    #[Required]
     public int $ephemeral_5m_input_tokens;
 
     /**

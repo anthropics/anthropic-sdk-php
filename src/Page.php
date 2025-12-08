@@ -2,7 +2,7 @@
 
 namespace Anthropic;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkPage;
 use Anthropic\Core\Contracts\BaseModel;
@@ -34,16 +34,16 @@ final class Page implements BaseModel, BasePage
     use SdkPage;
 
     /** @var list<TItem>|null $data */
-    #[Api(list: 'mixed', optional: true)]
+    #[Optional(list: 'mixed')]
     public ?array $data;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $has_more;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $first_id;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $last_id;
 
     /**

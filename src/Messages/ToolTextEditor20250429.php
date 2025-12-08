@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\CacheControlEphemeral\TTL;
@@ -28,17 +29,17 @@ final class ToolTextEditor20250429 implements BaseModel
      *
      * @var 'str_replace_based_edit_tool' $name
      */
-    #[Api]
+    #[Required]
     public string $name = 'str_replace_based_edit_tool';
 
     /** @var 'text_editor_20250429' $type */
-    #[Api]
+    #[Required]
     public string $type = 'text_editor_20250429';
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?CacheControlEphemeral $cache_control;
 
     public function __construct()

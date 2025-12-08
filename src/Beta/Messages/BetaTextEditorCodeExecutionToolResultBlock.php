@@ -6,7 +6,7 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaTextEditorCodeExecutionToolResultError\ErrorCode;
 use Anthropic\Beta\Messages\BetaTextEditorCodeExecutionViewResultBlock\FileType;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -23,13 +23,13 @@ final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
     use SdkModel;
 
     /** @var 'text_editor_code_execution_tool_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'text_editor_code_execution_tool_result';
 
-    #[Api]
+    #[Required]
     public BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock $content;
 
-    #[Api]
+    #[Required]
     public string $tool_use_id;
 
     /**

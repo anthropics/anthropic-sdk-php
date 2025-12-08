@@ -7,7 +7,7 @@ namespace Anthropic\Messages\Batches;
 use Anthropic\APIErrorObject;
 use Anthropic\AuthenticationError;
 use Anthropic\BillingError;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\ErrorResponse;
@@ -29,10 +29,10 @@ final class MessageBatchErroredResult implements BaseModel
     use SdkModel;
 
     /** @var 'errored' $type */
-    #[Api]
+    #[Required]
     public string $type = 'errored';
 
-    #[Api]
+    #[Required]
     public ErrorResponse $error;
 
     /**

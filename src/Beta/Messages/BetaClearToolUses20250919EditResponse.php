@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -25,19 +25,19 @@ final class BetaClearToolUses20250919EditResponse implements BaseModel
      *
      * @var 'clear_tool_uses_20250919' $type
      */
-    #[Api]
+    #[Required]
     public string $type = 'clear_tool_uses_20250919';
 
     /**
      * Number of input tokens cleared by this edit.
      */
-    #[Api]
+    #[Required]
     public int $cleared_input_tokens;
 
     /**
      * Number of tool uses that were cleared.
      */
-    #[Api]
+    #[Required]
     public int $cleared_tool_uses;
 
     /**

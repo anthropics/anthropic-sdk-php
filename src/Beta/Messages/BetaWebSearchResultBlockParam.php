@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -23,19 +24,19 @@ final class BetaWebSearchResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'web_search_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'web_search_result';
 
-    #[Api]
+    #[Required]
     public string $encrypted_content;
 
-    #[Api]
+    #[Required]
     public string $title;
 
-    #[Api]
+    #[Required]
     public string $url;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $page_age;
 
     /**

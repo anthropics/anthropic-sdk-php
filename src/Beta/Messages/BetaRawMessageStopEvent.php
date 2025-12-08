@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -17,7 +17,7 @@ final class BetaRawMessageStopEvent implements BaseModel
     use SdkModel;
 
     /** @var 'message_stop' $type */
-    #[Api]
+    #[Required]
     public string $type = 'message_stop';
 
     public function __construct()

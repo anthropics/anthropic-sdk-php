@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -23,25 +23,25 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
      *
      * @var 'insert' $command
      */
-    #[Api]
+    #[Required]
     public string $command = 'insert';
 
     /**
      * Line number where text should be inserted.
      */
-    #[Api]
+    #[Required]
     public int $insert_line;
 
     /**
      * Text to insert at the specified line.
      */
-    #[Api]
+    #[Required]
     public string $insert_text;
 
     /**
      * Path to the file where text should be inserted.
      */
-    #[Api]
+    #[Required]
     public string $path;
 
     /**

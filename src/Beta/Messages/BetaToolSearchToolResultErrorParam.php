@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaToolSearchToolResultErrorParam\ErrorCode;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -20,11 +20,11 @@ final class BetaToolSearchToolResultErrorParam implements BaseModel
     use SdkModel;
 
     /** @var 'tool_search_tool_result_error' $type */
-    #[Api]
+    #[Required]
     public string $type = 'tool_search_tool_result_error';
 
     /** @var value-of<ErrorCode> $error_code */
-    #[Api(enum: ErrorCode::class)]
+    #[Required(enum: ErrorCode::class)]
     public string $error_code;
 
     /**

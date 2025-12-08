@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -23,19 +24,19 @@ final class BetaWebFetchToolResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'web_fetch_tool_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'web_fetch_tool_result';
 
-    #[Api]
+    #[Required]
     public BetaWebFetchToolResultErrorBlockParam|BetaWebFetchBlockParam $content;
 
-    #[Api]
+    #[Required]
     public string $tool_use_id;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaCacheControlEphemeral $cache_control;
 
     /**

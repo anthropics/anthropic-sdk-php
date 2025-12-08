@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -25,26 +26,26 @@ final class BetaSearchResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'search_result' $type */
-    #[Api]
+    #[Required]
     public string $type = 'search_result';
 
     /** @var list<BetaTextBlockParam> $content */
-    #[Api(list: BetaTextBlockParam::class)]
+    #[Required(list: BetaTextBlockParam::class)]
     public array $content;
 
-    #[Api]
+    #[Required]
     public string $source;
 
-    #[Api]
+    #[Required]
     public string $title;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaCacheControlEphemeral $cache_control;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?BetaCitationsConfigParam $citations;
 
     /**

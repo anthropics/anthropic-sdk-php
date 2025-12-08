@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -24,22 +24,22 @@ final class CitationCharLocationParam implements BaseModel
     use SdkModel;
 
     /** @var 'char_location' $type */
-    #[Api]
+    #[Required]
     public string $type = 'char_location';
 
-    #[Api]
+    #[Required]
     public string $cited_text;
 
-    #[Api]
+    #[Required]
     public int $document_index;
 
-    #[Api]
+    #[Required]
     public ?string $document_title;
 
-    #[Api]
+    #[Required]
     public int $end_char_index;
 
-    #[Api]
+    #[Required]
     public int $start_char_index;
 
     /**

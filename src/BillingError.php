@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -17,10 +17,10 @@ final class BillingError implements BaseModel
     use SdkModel;
 
     /** @var 'billing_error' $type */
-    #[Api]
+    #[Required]
     public string $type = 'billing_error';
 
-    #[Api]
+    #[Required]
     public string $message;
 
     /**
