@@ -6,9 +6,7 @@ namespace Anthropic\Beta\Files;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type FileMetadataShape = array{
@@ -21,12 +19,10 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  *   downloadable?: bool|null,
  * }
  */
-final class FileMetadata implements BaseModel, ResponseConverter
+final class FileMetadata implements BaseModel
 {
     /** @use SdkModel<FileMetadataShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Object type.

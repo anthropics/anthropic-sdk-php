@@ -4,12 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Core\Contracts;
 
-use Anthropic\Client;
-use Anthropic\Core\Conversion\Contracts\Converter;
-use Anthropic\Core\Conversion\Contracts\ConverterSource;
-use Anthropic\RequestOptions;
-use Psr\Http\Message\ResponseInterface;
-
 /**
  * @internal
  *
@@ -21,19 +15,6 @@ use Psr\Http\Message\ResponseInterface;
  */
 interface BasePage extends \IteratorAggregate
 {
-    /**
-     * @internal
-     *
-     * @param normalized_request $request
-     */
-    public function __construct(
-        Converter|ConverterSource|string $convert,
-        Client $client,
-        array $request,
-        RequestOptions $options,
-        ResponseInterface $response,
-    );
-
     public function hasNextPage(): bool;
 
     /**

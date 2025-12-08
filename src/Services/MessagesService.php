@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Services;
 
 use Anthropic\Client;
+use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Messages\Message;
@@ -82,14 +83,16 @@ final class MessagesService implements MessagesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Message> */
+        $response = $this->client->request(
             method: 'post',
             path: 'v1/messages',
             body: (object) $parsed,
             options: $options,
             convert: Message::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -132,8 +135,8 @@ final class MessagesService implements MessagesContract
         );
         $parsed['stream'] = true;
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<BaseStream<RawMessageStartEvent|RawMessageDeltaEvent|RawMessageStopEvent|RawContentBlockStartEvent|RawContentBlockDeltaEvent|RawContentBlockStopEvent,>,> */
+        $response = $this->client->request(
             method: 'post',
             path: 'v1/messages',
             headers: ['Accept' => 'text/event-stream'],
@@ -142,6 +145,8 @@ final class MessagesService implements MessagesContract
             convert: RawMessageStreamEvent::class,
             stream: SSEStream::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -180,13 +185,15 @@ final class MessagesService implements MessagesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<MessageTokensCount> */
+        $response = $this->client->request(
             method: 'post',
             path: 'v1/messages/count_tokens',
             body: (object) $parsed,
             options: $options,
             convert: MessageTokensCount::class,
         );
+
+        return $response->parse();
     }
 }

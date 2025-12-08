@@ -8,6 +8,7 @@ use Anthropic\Beta\Models\BetaModelInfo;
 use Anthropic\Beta\Models\ModelListParams;
 use Anthropic\Beta\Models\ModelRetrieveParams;
 use Anthropic\Client;
+use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
 use Anthropic\Page;
@@ -42,8 +43,8 @@ final class ModelsService implements ModelsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<BetaModelInfo> */
+        $response = $this->client->request(
             method: 'get',
             path: ['v1/models/%1$s?beta=true', $modelID],
             headers: Util::array_transform_keys(
@@ -53,6 +54,8 @@ final class ModelsService implements ModelsContract
             options: $options,
             convert: BetaModelInfo::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -83,8 +86,8 @@ final class ModelsService implements ModelsContract
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Page<BetaModelInfo>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'v1/models?beta=true',
             query: array_intersect_key($parsed, $query_params),
@@ -96,5 +99,7 @@ final class ModelsService implements ModelsContract
             convert: BetaModelInfo::class,
             page: Page::class,
         );
+
+        return $response->parse();
     }
 }

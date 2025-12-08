@@ -6,19 +6,15 @@ namespace Anthropic\Messages;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type MessageTokensCountShape = array{input_tokens: int}
  */
-final class MessageTokensCount implements BaseModel, ResponseConverter
+final class MessageTokensCount implements BaseModel
 {
     /** @use SdkModel<MessageTokensCountShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * The total number of tokens across the provided list of messages, system prompt, and tools.

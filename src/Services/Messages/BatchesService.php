@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Services\Messages;
 
 use Anthropic\Client;
+use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Messages\Batches\BatchCreateParams;
@@ -67,14 +68,16 @@ final class BatchesService implements BatchesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<MessageBatch> */
+        $response = $this->client->request(
             method: 'post',
             path: 'v1/messages/batches',
             body: (object) $parsed,
             options: $options,
             convert: MessageBatch::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -90,13 +93,15 @@ final class BatchesService implements BatchesContract
         string $messageBatchID,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<MessageBatch> */
+        $response = $this->client->request(
             method: 'get',
             path: ['v1/messages/batches/%1$s', $messageBatchID],
             options: $requestOptions,
             convert: MessageBatch::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -123,8 +128,8 @@ final class BatchesService implements BatchesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Page<MessageBatch>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'v1/messages/batches',
             query: $parsed,
@@ -132,6 +137,8 @@ final class BatchesService implements BatchesContract
             convert: MessageBatch::class,
             page: Page::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -149,13 +156,15 @@ final class BatchesService implements BatchesContract
         string $messageBatchID,
         ?RequestOptions $requestOptions = null
     ): DeletedMessageBatch {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DeletedMessageBatch> */
+        $response = $this->client->request(
             method: 'delete',
             path: ['v1/messages/batches/%1$s', $messageBatchID],
             options: $requestOptions,
             convert: DeletedMessageBatch::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -173,13 +182,15 @@ final class BatchesService implements BatchesContract
         string $messageBatchID,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<MessageBatch> */
+        $response = $this->client->request(
             method: 'post',
             path: ['v1/messages/batches/%1$s/cancel', $messageBatchID],
             options: $requestOptions,
             convert: MessageBatch::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -197,14 +208,16 @@ final class BatchesService implements BatchesContract
         string $messageBatchID,
         ?RequestOptions $requestOptions = null
     ): MessageBatchIndividualResponse {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<MessageBatchIndividualResponse> */
+        $response = $this->client->request(
             method: 'get',
             path: ['v1/messages/batches/%1$s/results', $messageBatchID],
             headers: ['Accept' => 'application/x-jsonl'],
             options: $requestOptions,
             convert: MessageBatchIndividualResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -218,8 +231,8 @@ final class BatchesService implements BatchesContract
         string $messageBatchID,
         ?RequestOptions $requestOptions = null
     ): BaseStream {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<BaseStream<MessageBatchIndividualResponse>> */
+        $response = $this->client->request(
             method: 'get',
             path: ['v1/messages/batches/%1$s/results', $messageBatchID],
             headers: ['Accept' => 'application/x-jsonl'],
@@ -227,5 +240,7 @@ final class BatchesService implements BatchesContract
             convert: MessageBatchIndividualResponse::class,
             stream: SSEStream::class,
         );
+
+        return $response->parse();
     }
 }

@@ -6,9 +6,7 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type BetaMessageTokensCountShape = array{
@@ -16,12 +14,10 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  *   input_tokens: int,
  * }
  */
-final class BetaMessageTokensCount implements BaseModel, ResponseConverter
+final class BetaMessageTokensCount implements BaseModel
 {
     /** @use SdkModel<BetaMessageTokensCountShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Information about context management applied to the message.

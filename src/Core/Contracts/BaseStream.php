@@ -22,6 +22,7 @@ interface BaseStream extends \IteratorAggregate
         Converter|ConverterSource|string $convert,
         RequestInterface $request,
         ResponseInterface $response,
+        mixed $parsedBody,
     );
 
     /**

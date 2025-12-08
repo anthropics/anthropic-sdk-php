@@ -7,19 +7,15 @@ namespace Anthropic\Beta\Files;
 use Anthropic\Beta\Files\DeletedFile\Type;
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type DeletedFileShape = array{id: string, type?: value-of<Type>|null}
  */
-final class DeletedFile implements BaseModel, ResponseConverter
+final class DeletedFile implements BaseModel
 {
     /** @use SdkModel<DeletedFileShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * ID of the deleted file.

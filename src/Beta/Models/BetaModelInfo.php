@@ -6,9 +6,7 @@ namespace Anthropic\Beta\Models;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type BetaModelInfoShape = array{
@@ -18,12 +16,10 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  *   type: 'model',
  * }
  */
-final class BetaModelInfo implements BaseModel, ResponseConverter
+final class BetaModelInfo implements BaseModel
 {
     /** @use SdkModel<BetaModelInfoShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Object type.

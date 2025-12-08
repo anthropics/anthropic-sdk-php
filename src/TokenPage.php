@@ -11,7 +11,6 @@ use Anthropic\Core\Conversion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Util;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -50,25 +49,24 @@ final class TokenPage implements BaseModel, BasePage
      *   query: array<string,mixed>,
      *   headers: array<string,string|list<string>|null>,
      *   body: mixed,
-     * } $request
+     * } $requestInfo
      */
     public function __construct(
         private string|Converter|ConverterSource $convert,
         private Client $client,
-        private array $request,
+        private array $requestInfo,
         private RequestOptions $options,
-        ResponseInterface $response,
+        private ResponseInterface $response,
+        private mixed $parsedBody,
     ) {
         $this->initialize();
 
-        $data = Util::decodeContent($response);
-
-        if (!is_array($data)) {
+        if (!is_array($this->parsedBody)) {
             return;
         }
 
         // @phpstan-ignore-next-line argument.type
-        self::__unserialize($data);
+        self::__unserialize($this->parsedBody);
 
         if ($this->offsetGet('data')) {
             $acc = Conversion::coerce(
@@ -112,7 +110,7 @@ final class TokenPage implements BaseModel, BasePage
         }
 
         $nextRequest = array_merge_recursive(
-            $this->request,
+            $this->requestInfo,
             ['query' => ['page_token' => $next]]
         );
 

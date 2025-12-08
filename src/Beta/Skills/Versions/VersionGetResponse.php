@@ -6,9 +6,7 @@ namespace Anthropic\Beta\Skills\Versions;
 
 use Anthropic\Core\Attributes\Api;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type VersionGetResponseShape = array{
@@ -22,12 +20,10 @@ use Anthropic\Core\Conversion\Contracts\ResponseConverter;
  *   version: string,
  * }
  */
-final class VersionGetResponse implements BaseModel, ResponseConverter
+final class VersionGetResponse implements BaseModel
 {
     /** @use SdkModel<VersionGetResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Unique identifier for the skill version.

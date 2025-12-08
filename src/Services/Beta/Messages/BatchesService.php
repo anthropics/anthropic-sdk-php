@@ -14,6 +14,7 @@ use Anthropic\Beta\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Client;
+use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
@@ -79,8 +80,8 @@ final class BatchesService implements BatchesContract
         );
         $header_params = ['betas' => 'anthropic-beta'];
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<MessageBatch> */
+        $response = $this->client->request(
             method: 'post',
             path: 'v1/messages/batches?beta=true',
             headers: Util::array_transform_keys(
@@ -94,6 +95,8 @@ final class BatchesService implements BatchesContract
             ),
             convert: MessageBatch::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -117,8 +120,8 @@ final class BatchesService implements BatchesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<MessageBatch> */
+        $response = $this->client->request(
             method: 'get',
             path: ['v1/messages/batches/%1$s?beta=true', $messageBatchID],
             headers: Util::array_transform_keys(
@@ -131,6 +134,8 @@ final class BatchesService implements BatchesContract
             ),
             convert: MessageBatch::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -161,8 +166,8 @@ final class BatchesService implements BatchesContract
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Page<MessageBatch>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'v1/messages/batches?beta=true',
             query: array_intersect_key($parsed, $query_params),
@@ -177,6 +182,8 @@ final class BatchesService implements BatchesContract
             convert: MessageBatch::class,
             page: Page::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -202,8 +209,8 @@ final class BatchesService implements BatchesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DeletedMessageBatch> */
+        $response = $this->client->request(
             method: 'delete',
             path: ['v1/messages/batches/%1$s?beta=true', $messageBatchID],
             headers: Util::array_transform_keys(
@@ -216,6 +223,8 @@ final class BatchesService implements BatchesContract
             ),
             convert: DeletedMessageBatch::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -241,8 +250,8 @@ final class BatchesService implements BatchesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<MessageBatch> */
+        $response = $this->client->request(
             method: 'post',
             path: ['v1/messages/batches/%1$s/cancel?beta=true', $messageBatchID],
             headers: Util::array_transform_keys(
@@ -255,6 +264,8 @@ final class BatchesService implements BatchesContract
             ),
             convert: MessageBatch::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -280,8 +291,8 @@ final class BatchesService implements BatchesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<MessageBatchIndividualResponse> */
+        $response = $this->client->request(
             method: 'get',
             path: ['v1/messages/batches/%1$s/results?beta=true', $messageBatchID],
             headers: Util::array_transform_keys(
@@ -294,6 +305,8 @@ final class BatchesService implements BatchesContract
             ),
             convert: MessageBatchIndividualResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -315,8 +328,8 @@ final class BatchesService implements BatchesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<BaseStream<MessageBatchIndividualResponse>> */
+        $response = $this->client->request(
             method: 'get',
             path: ['v1/messages/batches/%1$s/results?beta=true', $messageBatchID],
             headers: Util::array_transform_keys(
@@ -330,5 +343,7 @@ final class BatchesService implements BatchesContract
             convert: MessageBatchIndividualResponse::class,
             stream: SSEStream::class,
         );
+
+        return $response->parse();
     }
 }
