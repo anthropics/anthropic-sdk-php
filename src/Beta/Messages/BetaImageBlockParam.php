@@ -74,13 +74,13 @@ final class BetaImageBlockParam implements BaseModel
         BetaBase64ImageSource|array|BetaURLImageSource|BetaFileImageSource $source,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['source'] = $source;
+        $self['source'] = $source;
 
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -93,10 +93,10 @@ final class BetaImageBlockParam implements BaseModel
     public function withSource(
         BetaBase64ImageSource|array|BetaURLImageSource|BetaFileImageSource $source
     ): self {
-        $obj = clone $this;
-        $obj['source'] = $source;
+        $self = clone $this;
+        $self['source'] = $source;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -109,9 +109,9 @@ final class BetaImageBlockParam implements BaseModel
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 }

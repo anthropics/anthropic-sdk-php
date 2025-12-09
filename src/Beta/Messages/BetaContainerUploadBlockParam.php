@@ -70,21 +70,21 @@ final class BetaContainerUploadBlockParam implements BaseModel
         string $fileID,
         BetaCacheControlEphemeral|array|null $cacheControl = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['fileID'] = $fileID;
+        $self['fileID'] = $fileID;
 
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileID(string $fileID): self
     {
-        $obj = clone $this;
-        $obj['fileID'] = $fileID;
+        $self = clone $this;
+        $self['fileID'] = $fileID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -97,9 +97,9 @@ final class BetaContainerUploadBlockParam implements BaseModel
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 }

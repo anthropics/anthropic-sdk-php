@@ -55,11 +55,11 @@ final class BetaToolSearchToolResultErrorParam implements BaseModel
      */
     public static function with(ErrorCode|string $errorCode): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['errorCode'] = $errorCode;
+        $self['errorCode'] = $errorCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -67,9 +67,9 @@ final class BetaToolSearchToolResultErrorParam implements BaseModel
      */
     public function withErrorCode(ErrorCode|string $errorCode): self
     {
-        $obj = clone $this;
-        $obj['errorCode'] = $errorCode;
+        $self = clone $this;
+        $self['errorCode'] = $errorCode;
 
-        return $obj;
+        return $self;
     }
 }

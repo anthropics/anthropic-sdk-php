@@ -58,11 +58,11 @@ final class BetaThinkingConfigEnabled implements BaseModel
      */
     public static function with(int $budgetTokens): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['budgetTokens'] = $budgetTokens;
+        $self['budgetTokens'] = $budgetTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -74,9 +74,9 @@ final class BetaThinkingConfigEnabled implements BaseModel
      */
     public function withBudgetTokens(int $budgetTokens): self
     {
-        $obj = clone $this;
-        $obj['budgetTokens'] = $budgetTokens;
+        $self = clone $this;
+        $self['budgetTokens'] = $budgetTokens;
 
-        return $obj;
+        return $self;
     }
 }

@@ -49,18 +49,18 @@ final class TextDelta implements BaseModel
      */
     public static function with(string $text): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['text'] = $text;
+        $self['text'] = $text;
 
-        return $obj;
+        return $self;
     }
 
     public function withText(string $text): self
     {
-        $obj = clone $this;
-        $obj['text'] = $text;
+        $self = clone $this;
+        $self['text'] = $text;
 
-        return $obj;
+        return $self;
     }
 }

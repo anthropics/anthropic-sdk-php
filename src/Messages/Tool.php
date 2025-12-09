@@ -101,16 +101,16 @@ final class Tool implements BaseModel
         ?string $description = null,
         Type|string|null $type = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['inputSchema'] = $inputSchema;
-        $obj['name'] = $name;
+        $self['inputSchema'] = $inputSchema;
+        $self['name'] = $name;
 
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
-        null !== $description && $obj['description'] = $description;
-        null !== $type && $obj['type'] = $type;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $description && $self['description'] = $description;
+        null !== $type && $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -126,10 +126,10 @@ final class Tool implements BaseModel
      */
     public function withInputSchema(InputSchema|array $inputSchema): self
     {
-        $obj = clone $this;
-        $obj['inputSchema'] = $inputSchema;
+        $self = clone $this;
+        $self['inputSchema'] = $inputSchema;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -139,10 +139,10 @@ final class Tool implements BaseModel
      */
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -155,10 +155,10 @@ final class Tool implements BaseModel
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -168,10 +168,10 @@ final class Tool implements BaseModel
      */
     public function withDescription(string $description): self
     {
-        $obj = clone $this;
-        $obj['description'] = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -179,9 +179,9 @@ final class Tool implements BaseModel
      */
     public function withType(Type|string|null $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 }

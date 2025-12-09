@@ -103,12 +103,12 @@ final class TextBlock implements BaseModel
      */
     public static function with(?array $citations, string $text): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['citations'] = $citations;
-        $obj['text'] = $text;
+        $self['citations'] = $citations;
+        $self['text'] = $text;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -158,17 +158,17 @@ final class TextBlock implements BaseModel
      */
     public function withCitations(?array $citations): self
     {
-        $obj = clone $this;
-        $obj['citations'] = $citations;
+        $self = clone $this;
+        $self['citations'] = $citations;
 
-        return $obj;
+        return $self;
     }
 
     public function withText(string $text): self
     {
-        $obj = clone $this;
-        $obj['text'] = $text;
+        $self = clone $this;
+        $self['text'] = $text;
 
-        return $obj;
+        return $self;
     }
 }

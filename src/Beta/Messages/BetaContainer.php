@@ -74,13 +74,13 @@ final class BetaContainer implements BaseModel
         \DateTimeInterface $expiresAt,
         ?array $skills
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['expiresAt'] = $expiresAt;
-        $obj['skills'] = $skills;
+        $self['id'] = $id;
+        $self['expiresAt'] = $expiresAt;
+        $self['skills'] = $skills;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -88,10 +88,10 @@ final class BetaContainer implements BaseModel
      */
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -99,10 +99,10 @@ final class BetaContainer implements BaseModel
      */
     public function withExpiresAt(\DateTimeInterface $expiresAt): self
     {
-        $obj = clone $this;
-        $obj['expiresAt'] = $expiresAt;
+        $self = clone $this;
+        $self['expiresAt'] = $expiresAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -114,9 +114,9 @@ final class BetaContainer implements BaseModel
      */
     public function withSkills(?array $skills): self
     {
-        $obj = clone $this;
-        $obj['skills'] = $skills;
+        $self = clone $this;
+        $self['skills'] = $skills;
 
-        return $obj;
+        return $self;
     }
 }

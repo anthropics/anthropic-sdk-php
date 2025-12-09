@@ -94,11 +94,11 @@ final class BetaCitationsDelta implements BaseModel
     public static function with(
         BetaCitationCharLocation|array|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation $citation,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['citation'] = $citation;
+        $self['citation'] = $citation;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -145,9 +145,9 @@ final class BetaCitationsDelta implements BaseModel
     public function withCitation(
         BetaCitationCharLocation|array|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation $citation,
     ): self {
-        $obj = clone $this;
-        $obj['citation'] = $citation;
+        $self = clone $this;
+        $self['citation'] = $citation;
 
-        return $obj;
+        return $self;
     }
 }

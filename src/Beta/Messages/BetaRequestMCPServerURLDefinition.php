@@ -73,39 +73,39 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
         ?string $authorizationToken = null,
         BetaRequestMCPServerToolConfiguration|array|null $toolConfiguration = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['name'] = $name;
-        $obj['url'] = $url;
+        $self['name'] = $name;
+        $self['url'] = $url;
 
-        null !== $authorizationToken && $obj['authorizationToken'] = $authorizationToken;
-        null !== $toolConfiguration && $obj['toolConfiguration'] = $toolConfiguration;
+        null !== $authorizationToken && $self['authorizationToken'] = $authorizationToken;
+        null !== $toolConfiguration && $self['toolConfiguration'] = $toolConfiguration;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     public function withURL(string $url): self
     {
-        $obj = clone $this;
-        $obj['url'] = $url;
+        $self = clone $this;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 
     public function withAuthorizationToken(?string $authorizationToken): self
     {
-        $obj = clone $this;
-        $obj['authorizationToken'] = $authorizationToken;
+        $self = clone $this;
+        $self['authorizationToken'] = $authorizationToken;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -116,9 +116,9 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
     public function withToolConfiguration(
         BetaRequestMCPServerToolConfiguration|array|null $toolConfiguration
     ): self {
-        $obj = clone $this;
-        $obj['toolConfiguration'] = $toolConfiguration;
+        $self = clone $this;
+        $self['toolConfiguration'] = $toolConfiguration;
 
-        return $obj;
+        return $self;
     }
 }

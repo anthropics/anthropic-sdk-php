@@ -123,17 +123,17 @@ final class Usage implements BaseModel
         ServerToolUsage|array|null $serverToolUse,
         ServiceTier|string|null $serviceTier,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['cacheCreation'] = $cacheCreation;
-        $obj['cacheCreationInputTokens'] = $cacheCreationInputTokens;
-        $obj['cacheReadInputTokens'] = $cacheReadInputTokens;
-        $obj['inputTokens'] = $inputTokens;
-        $obj['outputTokens'] = $outputTokens;
-        $obj['serverToolUse'] = $serverToolUse;
-        $obj['serviceTier'] = $serviceTier;
+        $self['cacheCreation'] = $cacheCreation;
+        $self['cacheCreationInputTokens'] = $cacheCreationInputTokens;
+        $self['cacheReadInputTokens'] = $cacheReadInputTokens;
+        $self['inputTokens'] = $inputTokens;
+        $self['outputTokens'] = $outputTokens;
+        $self['serverToolUse'] = $serverToolUse;
+        $self['serviceTier'] = $serviceTier;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -146,10 +146,10 @@ final class Usage implements BaseModel
     public function withCacheCreation(
         CacheCreation|array|null $cacheCreation
     ): self {
-        $obj = clone $this;
-        $obj['cacheCreation'] = $cacheCreation;
+        $self = clone $this;
+        $self['cacheCreation'] = $cacheCreation;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -158,10 +158,10 @@ final class Usage implements BaseModel
     public function withCacheCreationInputTokens(
         ?int $cacheCreationInputTokens
     ): self {
-        $obj = clone $this;
-        $obj['cacheCreationInputTokens'] = $cacheCreationInputTokens;
+        $self = clone $this;
+        $self['cacheCreationInputTokens'] = $cacheCreationInputTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -169,10 +169,10 @@ final class Usage implements BaseModel
      */
     public function withCacheReadInputTokens(?int $cacheReadInputTokens): self
     {
-        $obj = clone $this;
-        $obj['cacheReadInputTokens'] = $cacheReadInputTokens;
+        $self = clone $this;
+        $self['cacheReadInputTokens'] = $cacheReadInputTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -180,10 +180,10 @@ final class Usage implements BaseModel
      */
     public function withInputTokens(int $inputTokens): self
     {
-        $obj = clone $this;
-        $obj['inputTokens'] = $inputTokens;
+        $self = clone $this;
+        $self['inputTokens'] = $inputTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -191,10 +191,10 @@ final class Usage implements BaseModel
      */
     public function withOutputTokens(int $outputTokens): self
     {
-        $obj = clone $this;
-        $obj['outputTokens'] = $outputTokens;
+        $self = clone $this;
+        $self['outputTokens'] = $outputTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -205,10 +205,10 @@ final class Usage implements BaseModel
     public function withServerToolUse(
         ServerToolUsage|array|null $serverToolUse
     ): self {
-        $obj = clone $this;
-        $obj['serverToolUse'] = $serverToolUse;
+        $self = clone $this;
+        $self['serverToolUse'] = $serverToolUse;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -218,9 +218,9 @@ final class Usage implements BaseModel
      */
     public function withServiceTier(ServiceTier|string|null $serviceTier): self
     {
-        $obj = clone $this;
-        $obj['serviceTier'] = $serviceTier;
+        $self = clone $this;
+        $self['serviceTier'] = $serviceTier;
 
-        return $obj;
+        return $self;
     }
 }

@@ -48,11 +48,11 @@ final class ServerToolUsage implements BaseModel
      */
     public static function with(int $webSearchRequests = 0): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['webSearchRequests'] = $webSearchRequests;
+        $self['webSearchRequests'] = $webSearchRequests;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -60,9 +60,9 @@ final class ServerToolUsage implements BaseModel
      */
     public function withWebSearchRequests(int $webSearchRequests): self
     {
-        $obj = clone $this;
-        $obj['webSearchRequests'] = $webSearchRequests;
+        $self = clone $this;
+        $self['webSearchRequests'] = $webSearchRequests;
 
-        return $obj;
+        return $self;
     }
 }

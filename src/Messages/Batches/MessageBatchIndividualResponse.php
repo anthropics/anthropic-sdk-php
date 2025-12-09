@@ -75,12 +75,12 @@ final class MessageBatchIndividualResponse implements BaseModel
         string $customID,
         MessageBatchSucceededResult|array|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult $result,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['customID'] = $customID;
-        $obj['result'] = $result;
+        $self['customID'] = $customID;
+        $self['result'] = $result;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -90,10 +90,10 @@ final class MessageBatchIndividualResponse implements BaseModel
      */
     public function withCustomID(string $customID): self
     {
-        $obj = clone $this;
-        $obj['customID'] = $customID;
+        $self = clone $this;
+        $self['customID'] = $customID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -112,9 +112,9 @@ final class MessageBatchIndividualResponse implements BaseModel
     public function withResult(
         MessageBatchSucceededResult|array|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult $result,
     ): self {
-        $obj = clone $this;
-        $obj['result'] = $result;
+        $self = clone $this;
+        $self['result'] = $result;
 
-        return $obj;
+        return $self;
     }
 }

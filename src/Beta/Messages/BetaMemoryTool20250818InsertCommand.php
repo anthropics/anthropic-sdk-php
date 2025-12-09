@@ -78,13 +78,13 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
         string $insertText,
         string $path
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['insertLine'] = $insertLine;
-        $obj['insertText'] = $insertText;
-        $obj['path'] = $path;
+        $self['insertLine'] = $insertLine;
+        $self['insertText'] = $insertText;
+        $self['path'] = $path;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -92,10 +92,10 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
      */
     public function withInsertLine(int $insertLine): self
     {
-        $obj = clone $this;
-        $obj['insertLine'] = $insertLine;
+        $self = clone $this;
+        $self['insertLine'] = $insertLine;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -103,10 +103,10 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
      */
     public function withInsertText(string $insertText): self
     {
-        $obj = clone $this;
-        $obj['insertText'] = $insertText;
+        $self = clone $this;
+        $self['insertText'] = $insertText;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -114,9 +114,9 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
      */
     public function withPath(string $path): self
     {
-        $obj = clone $this;
-        $obj['path'] = $path;
+        $self = clone $this;
+        $self['path'] = $path;
 
-        return $obj;
+        return $self;
     }
 }

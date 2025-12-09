@@ -74,45 +74,45 @@ final class WebSearchResultBlock implements BaseModel
         string $title,
         string $url
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['encryptedContent'] = $encryptedContent;
-        $obj['pageAge'] = $pageAge;
-        $obj['title'] = $title;
-        $obj['url'] = $url;
+        $self['encryptedContent'] = $encryptedContent;
+        $self['pageAge'] = $pageAge;
+        $self['title'] = $title;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 
     public function withEncryptedContent(string $encryptedContent): self
     {
-        $obj = clone $this;
-        $obj['encryptedContent'] = $encryptedContent;
+        $self = clone $this;
+        $self['encryptedContent'] = $encryptedContent;
 
-        return $obj;
+        return $self;
     }
 
     public function withPageAge(?string $pageAge): self
     {
-        $obj = clone $this;
-        $obj['pageAge'] = $pageAge;
+        $self = clone $this;
+        $self['pageAge'] = $pageAge;
 
-        return $obj;
+        return $self;
     }
 
     public function withTitle(string $title): self
     {
-        $obj = clone $this;
-        $obj['title'] = $title;
+        $self = clone $this;
+        $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 
     public function withURL(string $url): self
     {
-        $obj = clone $this;
-        $obj['url'] = $url;
+        $self = clone $this;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 }

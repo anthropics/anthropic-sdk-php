@@ -64,12 +64,12 @@ final class BetaMemoryTool20250818RenameCommand implements BaseModel
      */
     public static function with(string $newPath, string $oldPath): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['newPath'] = $newPath;
-        $obj['oldPath'] = $oldPath;
+        $self['newPath'] = $newPath;
+        $self['oldPath'] = $oldPath;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -77,10 +77,10 @@ final class BetaMemoryTool20250818RenameCommand implements BaseModel
      */
     public function withNewPath(string $newPath): self
     {
-        $obj = clone $this;
-        $obj['newPath'] = $newPath;
+        $self = clone $this;
+        $self['newPath'] = $newPath;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -88,9 +88,9 @@ final class BetaMemoryTool20250818RenameCommand implements BaseModel
      */
     public function withOldPath(string $oldPath): self
     {
-        $obj = clone $this;
-        $obj['oldPath'] = $oldPath;
+        $self = clone $this;
+        $self['oldPath'] = $oldPath;
 
-        return $obj;
+        return $self;
     }
 }

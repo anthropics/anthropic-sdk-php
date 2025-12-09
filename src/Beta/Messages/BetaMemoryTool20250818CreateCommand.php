@@ -64,12 +64,12 @@ final class BetaMemoryTool20250818CreateCommand implements BaseModel
      */
     public static function with(string $fileText, string $path): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['fileText'] = $fileText;
-        $obj['path'] = $path;
+        $self['fileText'] = $fileText;
+        $self['path'] = $path;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -77,10 +77,10 @@ final class BetaMemoryTool20250818CreateCommand implements BaseModel
      */
     public function withFileText(string $fileText): self
     {
-        $obj = clone $this;
-        $obj['fileText'] = $fileText;
+        $self = clone $this;
+        $self['fileText'] = $fileText;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -88,9 +88,9 @@ final class BetaMemoryTool20250818CreateCommand implements BaseModel
      */
     public function withPath(string $path): self
     {
-        $obj = clone $this;
-        $obj['path'] = $path;
+        $self = clone $this;
+        $self['path'] = $path;
 
-        return $obj;
+        return $self;
     }
 }

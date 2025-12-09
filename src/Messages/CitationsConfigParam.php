@@ -31,18 +31,18 @@ final class CitationsConfigParam implements BaseModel
      */
     public static function with(?bool $enabled = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        null !== $enabled && $obj['enabled'] = $enabled;
+        null !== $enabled && $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 
     public function withEnabled(bool $enabled): self
     {
-        $obj = clone $this;
-        $obj['enabled'] = $enabled;
+        $self = clone $this;
+        $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 }

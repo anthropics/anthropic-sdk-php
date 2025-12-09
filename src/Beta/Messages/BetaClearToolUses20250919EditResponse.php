@@ -72,12 +72,12 @@ final class BetaClearToolUses20250919EditResponse implements BaseModel
         int $clearedInputTokens,
         int $clearedToolUses
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['clearedInputTokens'] = $clearedInputTokens;
-        $obj['clearedToolUses'] = $clearedToolUses;
+        $self['clearedInputTokens'] = $clearedInputTokens;
+        $self['clearedToolUses'] = $clearedToolUses;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -85,10 +85,10 @@ final class BetaClearToolUses20250919EditResponse implements BaseModel
      */
     public function withClearedInputTokens(int $clearedInputTokens): self
     {
-        $obj = clone $this;
-        $obj['clearedInputTokens'] = $clearedInputTokens;
+        $self = clone $this;
+        $self['clearedInputTokens'] = $clearedInputTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -96,9 +96,9 @@ final class BetaClearToolUses20250919EditResponse implements BaseModel
      */
     public function withClearedToolUses(int $clearedToolUses): self
     {
-        $obj = clone $this;
-        $obj['clearedToolUses'] = $clearedToolUses;
+        $self = clone $this;
+        $self['clearedToolUses'] = $clearedToolUses;
 
-        return $obj;
+        return $self;
     }
 }

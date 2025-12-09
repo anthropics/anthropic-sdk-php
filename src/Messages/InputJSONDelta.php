@@ -51,18 +51,18 @@ final class InputJSONDelta implements BaseModel
      */
     public static function with(string $partialJSON): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['partialJSON'] = $partialJSON;
+        $self['partialJSON'] = $partialJSON;
 
-        return $obj;
+        return $self;
     }
 
     public function withPartialJSON(string $partialJSON): self
     {
-        $obj = clone $this;
-        $obj['partialJSON'] = $partialJSON;
+        $self = clone $this;
+        $self['partialJSON'] = $partialJSON;
 
-        return $obj;
+        return $self;
     }
 }

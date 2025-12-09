@@ -40,27 +40,27 @@ final class BetaMCPToolDefaultConfig implements BaseModel
         ?bool $deferLoading = null,
         ?bool $enabled = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $deferLoading && $obj['deferLoading'] = $deferLoading;
-        null !== $enabled && $obj['enabled'] = $enabled;
+        null !== $deferLoading && $self['deferLoading'] = $deferLoading;
+        null !== $enabled && $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 
     public function withDeferLoading(bool $deferLoading): self
     {
-        $obj = clone $this;
-        $obj['deferLoading'] = $deferLoading;
+        $self = clone $this;
+        $self['deferLoading'] = $deferLoading;
 
-        return $obj;
+        return $self;
     }
 
     public function withEnabled(bool $enabled): self
     {
-        $obj = clone $this;
-        $obj['enabled'] = $enabled;
+        $self = clone $this;
+        $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 }

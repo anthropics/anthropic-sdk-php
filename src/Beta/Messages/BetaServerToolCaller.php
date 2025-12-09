@@ -53,18 +53,18 @@ final class BetaServerToolCaller implements BaseModel
      */
     public static function with(string $toolID): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['toolID'] = $toolID;
+        $self['toolID'] = $toolID;
 
-        return $obj;
+        return $self;
     }
 
     public function withToolID(string $toolID): self
     {
-        $obj = clone $this;
-        $obj['toolID'] = $toolID;
+        $self = clone $this;
+        $self['toolID'] = $toolID;
 
-        return $obj;
+        return $self;
     }
 }

@@ -48,11 +48,11 @@ final class MessageTokensCount implements BaseModel
      */
     public static function with(int $inputTokens): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['inputTokens'] = $inputTokens;
+        $self['inputTokens'] = $inputTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -60,9 +60,9 @@ final class MessageTokensCount implements BaseModel
      */
     public function withInputTokens(int $inputTokens): self
     {
-        $obj = clone $this;
-        $obj['inputTokens'] = $inputTokens;
+        $self = clone $this;
+        $self['inputTokens'] = $inputTokens;
 
-        return $obj;
+        return $self;
     }
 }

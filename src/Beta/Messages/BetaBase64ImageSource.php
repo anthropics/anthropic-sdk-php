@@ -58,20 +58,20 @@ final class BetaBase64ImageSource implements BaseModel
      */
     public static function with(string $data, MediaType|string $mediaType): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['data'] = $data;
-        $obj['mediaType'] = $mediaType;
+        $self['data'] = $data;
+        $self['mediaType'] = $mediaType;
 
-        return $obj;
+        return $self;
     }
 
     public function withData(string $data): self
     {
-        $obj = clone $this;
-        $obj['data'] = $data;
+        $self = clone $this;
+        $self['data'] = $data;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -79,9 +79,9 @@ final class BetaBase64ImageSource implements BaseModel
      */
     public function withMediaType(MediaType|string $mediaType): self
     {
-        $obj = clone $this;
-        $obj['mediaType'] = $mediaType;
+        $self = clone $this;
+        $self['mediaType'] = $mediaType;
 
-        return $obj;
+        return $self;
     }
 }

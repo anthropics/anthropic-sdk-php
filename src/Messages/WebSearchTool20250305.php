@@ -105,15 +105,15 @@ final class WebSearchTool20250305 implements BaseModel
         ?int $maxUses = null,
         UserLocation|array|null $userLocation = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $allowedDomains && $obj['allowedDomains'] = $allowedDomains;
-        null !== $blockedDomains && $obj['blockedDomains'] = $blockedDomains;
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
-        null !== $maxUses && $obj['maxUses'] = $maxUses;
-        null !== $userLocation && $obj['userLocation'] = $userLocation;
+        null !== $allowedDomains && $self['allowedDomains'] = $allowedDomains;
+        null !== $blockedDomains && $self['blockedDomains'] = $blockedDomains;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $maxUses && $self['maxUses'] = $maxUses;
+        null !== $userLocation && $self['userLocation'] = $userLocation;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -123,10 +123,10 @@ final class WebSearchTool20250305 implements BaseModel
      */
     public function withAllowedDomains(?array $allowedDomains): self
     {
-        $obj = clone $this;
-        $obj['allowedDomains'] = $allowedDomains;
+        $self = clone $this;
+        $self['allowedDomains'] = $allowedDomains;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -136,10 +136,10 @@ final class WebSearchTool20250305 implements BaseModel
      */
     public function withBlockedDomains(?array $blockedDomains): self
     {
-        $obj = clone $this;
-        $obj['blockedDomains'] = $blockedDomains;
+        $self = clone $this;
+        $self['blockedDomains'] = $blockedDomains;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -152,10 +152,10 @@ final class WebSearchTool20250305 implements BaseModel
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -163,10 +163,10 @@ final class WebSearchTool20250305 implements BaseModel
      */
     public function withMaxUses(?int $maxUses): self
     {
-        $obj = clone $this;
-        $obj['maxUses'] = $maxUses;
+        $self = clone $this;
+        $self['maxUses'] = $maxUses;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -183,9 +183,9 @@ final class WebSearchTool20250305 implements BaseModel
     public function withUserLocation(
         UserLocation|array|null $userLocation
     ): self {
-        $obj = clone $this;
-        $obj['userLocation'] = $userLocation;
+        $self = clone $this;
+        $self['userLocation'] = $userLocation;
 
-        return $obj;
+        return $self;
     }
 }

@@ -74,45 +74,45 @@ final class CitationsWebSearchResultLocation implements BaseModel
         ?string $title,
         string $url
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['citedText'] = $citedText;
-        $obj['encryptedIndex'] = $encryptedIndex;
-        $obj['title'] = $title;
-        $obj['url'] = $url;
+        $self['citedText'] = $citedText;
+        $self['encryptedIndex'] = $encryptedIndex;
+        $self['title'] = $title;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 
     public function withCitedText(string $citedText): self
     {
-        $obj = clone $this;
-        $obj['citedText'] = $citedText;
+        $self = clone $this;
+        $self['citedText'] = $citedText;
 
-        return $obj;
+        return $self;
     }
 
     public function withEncryptedIndex(string $encryptedIndex): self
     {
-        $obj = clone $this;
-        $obj['encryptedIndex'] = $encryptedIndex;
+        $self = clone $this;
+        $self['encryptedIndex'] = $encryptedIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withTitle(?string $title): self
     {
-        $obj = clone $this;
-        $obj['title'] = $title;
+        $self = clone $this;
+        $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 
     public function withURL(string $url): self
     {
-        $obj = clone $this;
-        $obj['url'] = $url;
+        $self = clone $this;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 }

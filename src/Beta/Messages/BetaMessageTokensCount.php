@@ -63,12 +63,12 @@ final class BetaMessageTokensCount implements BaseModel
         BetaCountTokensContextManagementResponse|array|null $contextManagement,
         int $inputTokens,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['contextManagement'] = $contextManagement;
-        $obj['inputTokens'] = $inputTokens;
+        $self['contextManagement'] = $contextManagement;
+        $self['inputTokens'] = $inputTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -81,10 +81,10 @@ final class BetaMessageTokensCount implements BaseModel
     public function withContextManagement(
         BetaCountTokensContextManagementResponse|array|null $contextManagement
     ): self {
-        $obj = clone $this;
-        $obj['contextManagement'] = $contextManagement;
+        $self = clone $this;
+        $self['contextManagement'] = $contextManagement;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -92,9 +92,9 @@ final class BetaMessageTokensCount implements BaseModel
      */
     public function withInputTokens(int $inputTokens): self
     {
-        $obj = clone $this;
-        $obj['inputTokens'] = $inputTokens;
+        $self = clone $this;
+        $self['inputTokens'] = $inputTokens;
 
-        return $obj;
+        return $self;
     }
 }

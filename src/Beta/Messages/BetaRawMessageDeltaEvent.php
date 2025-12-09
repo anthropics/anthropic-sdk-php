@@ -97,13 +97,13 @@ final class BetaRawMessageDeltaEvent implements BaseModel
         Delta|array $delta,
         BetaMessageDeltaUsage|array $usage,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['contextManagement'] = $contextManagement;
-        $obj['delta'] = $delta;
-        $obj['usage'] = $usage;
+        $self['contextManagement'] = $contextManagement;
+        $self['delta'] = $delta;
+        $self['usage'] = $usage;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -116,10 +116,10 @@ final class BetaRawMessageDeltaEvent implements BaseModel
     public function withContextManagement(
         BetaContextManagementResponse|array|null $contextManagement
     ): self {
-        $obj = clone $this;
-        $obj['contextManagement'] = $contextManagement;
+        $self = clone $this;
+        $self['contextManagement'] = $contextManagement;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -131,10 +131,10 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      */
     public function withDelta(Delta|array $delta): self
     {
-        $obj = clone $this;
-        $obj['delta'] = $delta;
+        $self = clone $this;
+        $self['delta'] = $delta;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -158,9 +158,9 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      */
     public function withUsage(BetaMessageDeltaUsage|array $usage): self
     {
-        $obj = clone $this;
-        $obj['usage'] = $usage;
+        $self = clone $this;
+        $self['usage'] = $usage;
 
-        return $obj;
+        return $self;
     }
 }

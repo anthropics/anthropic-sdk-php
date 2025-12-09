@@ -79,22 +79,22 @@ final class ServerToolUseBlockParam implements BaseModel
         array $input,
         CacheControlEphemeral|array|null $cacheControl = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['input'] = $input;
+        $self['id'] = $id;
+        $self['input'] = $input;
 
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -102,10 +102,10 @@ final class ServerToolUseBlockParam implements BaseModel
      */
     public function withInput(array $input): self
     {
-        $obj = clone $this;
-        $obj['input'] = $input;
+        $self = clone $this;
+        $self['input'] = $input;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -118,9 +118,9 @@ final class ServerToolUseBlockParam implements BaseModel
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 }

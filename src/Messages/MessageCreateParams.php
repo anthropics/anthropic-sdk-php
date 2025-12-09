@@ -414,24 +414,24 @@ final class MessageCreateParams implements BaseModel
         ?int $topK = null,
         ?float $topP = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['maxTokens'] = $maxTokens;
-        $obj['messages'] = $messages;
-        $obj['model'] = $model;
+        $self['maxTokens'] = $maxTokens;
+        $self['messages'] = $messages;
+        $self['model'] = $model;
 
-        null !== $metadata && $obj['metadata'] = $metadata;
-        null !== $serviceTier && $obj['serviceTier'] = $serviceTier;
-        null !== $stopSequences && $obj['stopSequences'] = $stopSequences;
-        null !== $system && $obj['system'] = $system;
-        null !== $temperature && $obj['temperature'] = $temperature;
-        null !== $thinking && $obj['thinking'] = $thinking;
-        null !== $toolChoice && $obj['toolChoice'] = $toolChoice;
-        null !== $tools && $obj['tools'] = $tools;
-        null !== $topK && $obj['topK'] = $topK;
-        null !== $topP && $obj['topP'] = $topP;
+        null !== $metadata && $self['metadata'] = $metadata;
+        null !== $serviceTier && $self['serviceTier'] = $serviceTier;
+        null !== $stopSequences && $self['stopSequences'] = $stopSequences;
+        null !== $system && $self['system'] = $system;
+        null !== $temperature && $self['temperature'] = $temperature;
+        null !== $thinking && $self['thinking'] = $thinking;
+        null !== $toolChoice && $self['toolChoice'] = $toolChoice;
+        null !== $tools && $self['tools'] = $tools;
+        null !== $topK && $self['topK'] = $topK;
+        null !== $topP && $self['topP'] = $topP;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -443,10 +443,10 @@ final class MessageCreateParams implements BaseModel
      */
     public function withMaxTokens(int $maxTokens): self
     {
-        $obj = clone $this;
-        $obj['maxTokens'] = $maxTokens;
+        $self = clone $this;
+        $self['maxTokens'] = $maxTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -506,10 +506,10 @@ final class MessageCreateParams implements BaseModel
      */
     public function withMessages(array $messages): self
     {
-        $obj = clone $this;
-        $obj['messages'] = $messages;
+        $self = clone $this;
+        $self['messages'] = $messages;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -517,10 +517,10 @@ final class MessageCreateParams implements BaseModel
      */
     public function withModel(string|Model $model): self
     {
-        $obj = clone $this;
-        $obj['model'] = $model;
+        $self = clone $this;
+        $self['model'] = $model;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -530,10 +530,10 @@ final class MessageCreateParams implements BaseModel
      */
     public function withMetadata(Metadata|array $metadata): self
     {
-        $obj = clone $this;
-        $obj['metadata'] = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -545,10 +545,10 @@ final class MessageCreateParams implements BaseModel
      */
     public function withServiceTier(ServiceTier|string $serviceTier): self
     {
-        $obj = clone $this;
-        $obj['serviceTier'] = $serviceTier;
+        $self = clone $this;
+        $self['serviceTier'] = $serviceTier;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -562,10 +562,10 @@ final class MessageCreateParams implements BaseModel
      */
     public function withStopSequences(array $stopSequences): self
     {
-        $obj = clone $this;
-        $obj['stopSequences'] = $stopSequences;
+        $self = clone $this;
+        $self['stopSequences'] = $stopSequences;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -582,10 +582,10 @@ final class MessageCreateParams implements BaseModel
      */
     public function withSystem(string|array $system): self
     {
-        $obj = clone $this;
-        $obj['system'] = $system;
+        $self = clone $this;
+        $self['system'] = $system;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -597,10 +597,10 @@ final class MessageCreateParams implements BaseModel
      */
     public function withTemperature(float $temperature): self
     {
-        $obj = clone $this;
-        $obj['temperature'] = $temperature;
+        $self = clone $this;
+        $self['temperature'] = $temperature;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -617,10 +617,10 @@ final class MessageCreateParams implements BaseModel
     public function withThinking(
         ThinkingConfigEnabled|array|ThinkingConfigDisabled $thinking
     ): self {
-        $obj = clone $this;
-        $obj['thinking'] = $thinking;
+        $self = clone $this;
+        $self['thinking'] = $thinking;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -637,10 +637,10 @@ final class MessageCreateParams implements BaseModel
     public function withToolChoice(
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone $toolChoice
     ): self {
-        $obj = clone $this;
-        $obj['toolChoice'] = $toolChoice;
+        $self = clone $this;
+        $self['toolChoice'] = $toolChoice;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -741,10 +741,10 @@ final class MessageCreateParams implements BaseModel
      */
     public function withTools(array $tools): self
     {
-        $obj = clone $this;
-        $obj['tools'] = $tools;
+        $self = clone $this;
+        $self['tools'] = $tools;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -756,10 +756,10 @@ final class MessageCreateParams implements BaseModel
      */
     public function withTopK(int $topK): self
     {
-        $obj = clone $this;
-        $obj['topK'] = $topK;
+        $self = clone $this;
+        $self['topK'] = $topK;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -771,9 +771,9 @@ final class MessageCreateParams implements BaseModel
      */
     public function withTopP(float $topP): self
     {
-        $obj = clone $this;
-        $obj['topP'] = $topP;
+        $self = clone $this;
+        $self['topP'] = $topP;
 
-        return $obj;
+        return $self;
     }
 }

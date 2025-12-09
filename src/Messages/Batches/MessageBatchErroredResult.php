@@ -67,11 +67,11 @@ final class MessageBatchErroredResult implements BaseModel
      */
     public static function with(ErrorResponse|array $error): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['error'] = $error;
+        $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -83,9 +83,9 @@ final class MessageBatchErroredResult implements BaseModel
      */
     public function withError(ErrorResponse|array $error): self
     {
-        $obj = clone $this;
-        $obj['error'] = $error;
+        $self = clone $this;
+        $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 }

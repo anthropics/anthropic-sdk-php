@@ -84,54 +84,54 @@ final class CitationPageLocationParam implements BaseModel
         int $endPageNumber,
         int $startPageNumber,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['citedText'] = $citedText;
-        $obj['documentIndex'] = $documentIndex;
-        $obj['documentTitle'] = $documentTitle;
-        $obj['endPageNumber'] = $endPageNumber;
-        $obj['startPageNumber'] = $startPageNumber;
+        $self['citedText'] = $citedText;
+        $self['documentIndex'] = $documentIndex;
+        $self['documentTitle'] = $documentTitle;
+        $self['endPageNumber'] = $endPageNumber;
+        $self['startPageNumber'] = $startPageNumber;
 
-        return $obj;
+        return $self;
     }
 
     public function withCitedText(string $citedText): self
     {
-        $obj = clone $this;
-        $obj['citedText'] = $citedText;
+        $self = clone $this;
+        $self['citedText'] = $citedText;
 
-        return $obj;
+        return $self;
     }
 
     public function withDocumentIndex(int $documentIndex): self
     {
-        $obj = clone $this;
-        $obj['documentIndex'] = $documentIndex;
+        $self = clone $this;
+        $self['documentIndex'] = $documentIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withDocumentTitle(?string $documentTitle): self
     {
-        $obj = clone $this;
-        $obj['documentTitle'] = $documentTitle;
+        $self = clone $this;
+        $self['documentTitle'] = $documentTitle;
 
-        return $obj;
+        return $self;
     }
 
     public function withEndPageNumber(int $endPageNumber): self
     {
-        $obj = clone $this;
-        $obj['endPageNumber'] = $endPageNumber;
+        $self = clone $this;
+        $self['endPageNumber'] = $endPageNumber;
 
-        return $obj;
+        return $self;
     }
 
     public function withStartPageNumber(int $startPageNumber): self
     {
-        $obj = clone $this;
-        $obj['startPageNumber'] = $startPageNumber;
+        $self = clone $this;
+        $self['startPageNumber'] = $startPageNumber;
 
-        return $obj;
+        return $self;
     }
 }

@@ -83,14 +83,14 @@ final class WebSearchToolResultBlockParam implements BaseModel
         string $toolUseID,
         CacheControlEphemeral|array|null $cacheControl = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['content'] = $content;
-        $obj['toolUseID'] = $toolUseID;
+        $self['content'] = $content;
+        $self['toolUseID'] = $toolUseID;
 
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -106,18 +106,18 @@ final class WebSearchToolResultBlockParam implements BaseModel
      */
     public function withContent(array|WebSearchToolRequestError $content): self
     {
-        $obj = clone $this;
-        $obj['content'] = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     public function withToolUseID(string $toolUseID): self
     {
-        $obj = clone $this;
-        $obj['toolUseID'] = $toolUseID;
+        $self = clone $this;
+        $self['toolUseID'] = $toolUseID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -130,9 +130,9 @@ final class WebSearchToolResultBlockParam implements BaseModel
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 }

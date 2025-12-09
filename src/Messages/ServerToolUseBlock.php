@@ -64,20 +64,20 @@ final class ServerToolUseBlock implements BaseModel
      */
     public static function with(string $id, array $input): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['input'] = $input;
+        $self['id'] = $id;
+        $self['input'] = $input;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -85,9 +85,9 @@ final class ServerToolUseBlock implements BaseModel
      */
     public function withInput(array $input): self
     {
-        $obj = clone $this;
-        $obj['input'] = $input;
+        $self = clone $this;
+        $self['input'] = $input;
 
-        return $obj;
+        return $self;
     }
 }

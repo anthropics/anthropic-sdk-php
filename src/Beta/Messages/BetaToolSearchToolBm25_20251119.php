@@ -97,16 +97,16 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
         ?bool $deferLoading = null,
         ?bool $strict = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['type'] = $type;
+        $self['type'] = $type;
 
-        null !== $allowedCallers && $obj['allowedCallers'] = $allowedCallers;
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
-        null !== $deferLoading && $obj['deferLoading'] = $deferLoading;
-        null !== $strict && $obj['strict'] = $strict;
+        null !== $allowedCallers && $self['allowedCallers'] = $allowedCallers;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $deferLoading && $self['deferLoading'] = $deferLoading;
+        null !== $strict && $self['strict'] = $strict;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -114,10 +114,10 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
      */
     public function withType(Type|string $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -125,10 +125,10 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
      */
     public function withAllowedCallers(array $allowedCallers): self
     {
-        $obj = clone $this;
-        $obj['allowedCallers'] = $allowedCallers;
+        $self = clone $this;
+        $self['allowedCallers'] = $allowedCallers;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -141,10 +141,10 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -152,17 +152,17 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
      */
     public function withDeferLoading(bool $deferLoading): self
     {
-        $obj = clone $this;
-        $obj['deferLoading'] = $deferLoading;
+        $self = clone $this;
+        $self['deferLoading'] = $deferLoading;
 
-        return $obj;
+        return $self;
     }
 
     public function withStrict(bool $strict): self
     {
-        $obj = clone $this;
-        $obj['strict'] = $strict;
+        $self = clone $this;
+        $self['strict'] = $strict;
 
-        return $obj;
+        return $self;
     }
 }

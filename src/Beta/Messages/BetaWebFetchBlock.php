@@ -76,13 +76,13 @@ final class BetaWebFetchBlock implements BaseModel
         ?string $retrievedAt,
         string $url
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['content'] = $content;
-        $obj['retrievedAt'] = $retrievedAt;
-        $obj['url'] = $url;
+        $self['content'] = $content;
+        $self['retrievedAt'] = $retrievedAt;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -95,10 +95,10 @@ final class BetaWebFetchBlock implements BaseModel
      */
     public function withContent(BetaDocumentBlock|array $content): self
     {
-        $obj = clone $this;
-        $obj['content'] = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -106,10 +106,10 @@ final class BetaWebFetchBlock implements BaseModel
      */
     public function withRetrievedAt(?string $retrievedAt): self
     {
-        $obj = clone $this;
-        $obj['retrievedAt'] = $retrievedAt;
+        $self = clone $this;
+        $self['retrievedAt'] = $retrievedAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -117,9 +117,9 @@ final class BetaWebFetchBlock implements BaseModel
      */
     public function withURL(string $url): self
     {
-        $obj = clone $this;
-        $obj['url'] = $url;
+        $self = clone $this;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 }

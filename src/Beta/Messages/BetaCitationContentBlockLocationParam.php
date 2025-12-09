@@ -84,54 +84,54 @@ final class BetaCitationContentBlockLocationParam implements BaseModel
         int $endBlockIndex,
         int $startBlockIndex,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['citedText'] = $citedText;
-        $obj['documentIndex'] = $documentIndex;
-        $obj['documentTitle'] = $documentTitle;
-        $obj['endBlockIndex'] = $endBlockIndex;
-        $obj['startBlockIndex'] = $startBlockIndex;
+        $self['citedText'] = $citedText;
+        $self['documentIndex'] = $documentIndex;
+        $self['documentTitle'] = $documentTitle;
+        $self['endBlockIndex'] = $endBlockIndex;
+        $self['startBlockIndex'] = $startBlockIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withCitedText(string $citedText): self
     {
-        $obj = clone $this;
-        $obj['citedText'] = $citedText;
+        $self = clone $this;
+        $self['citedText'] = $citedText;
 
-        return $obj;
+        return $self;
     }
 
     public function withDocumentIndex(int $documentIndex): self
     {
-        $obj = clone $this;
-        $obj['documentIndex'] = $documentIndex;
+        $self = clone $this;
+        $self['documentIndex'] = $documentIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withDocumentTitle(?string $documentTitle): self
     {
-        $obj = clone $this;
-        $obj['documentTitle'] = $documentTitle;
+        $self = clone $this;
+        $self['documentTitle'] = $documentTitle;
 
-        return $obj;
+        return $self;
     }
 
     public function withEndBlockIndex(int $endBlockIndex): self
     {
-        $obj = clone $this;
-        $obj['endBlockIndex'] = $endBlockIndex;
+        $self = clone $this;
+        $self['endBlockIndex'] = $endBlockIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withStartBlockIndex(int $startBlockIndex): self
     {
-        $obj = clone $this;
-        $obj['startBlockIndex'] = $startBlockIndex;
+        $self = clone $this;
+        $self['startBlockIndex'] = $startBlockIndex;
 
-        return $obj;
+        return $self;
     }
 }

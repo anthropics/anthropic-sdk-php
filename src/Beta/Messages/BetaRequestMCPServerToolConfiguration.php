@@ -41,12 +41,12 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
         ?array $allowedTools = null,
         ?bool $enabled = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $allowedTools && $obj['allowedTools'] = $allowedTools;
-        null !== $enabled && $obj['enabled'] = $enabled;
+        null !== $allowedTools && $self['allowedTools'] = $allowedTools;
+        null !== $enabled && $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -54,17 +54,17 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
      */
     public function withAllowedTools(?array $allowedTools): self
     {
-        $obj = clone $this;
-        $obj['allowedTools'] = $allowedTools;
+        $self = clone $this;
+        $self['allowedTools'] = $allowedTools;
 
-        return $obj;
+        return $self;
     }
 
     public function withEnabled(?bool $enabled): self
     {
-        $obj = clone $this;
-        $obj['enabled'] = $enabled;
+        $self = clone $this;
+        $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 }

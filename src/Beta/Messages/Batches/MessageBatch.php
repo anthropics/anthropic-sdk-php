@@ -161,19 +161,19 @@ final class MessageBatch implements BaseModel
         MessageBatchRequestCounts|array $requestCounts,
         ?string $resultsURL,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['archivedAt'] = $archivedAt;
-        $obj['cancelInitiatedAt'] = $cancelInitiatedAt;
-        $obj['createdAt'] = $createdAt;
-        $obj['endedAt'] = $endedAt;
-        $obj['expiresAt'] = $expiresAt;
-        $obj['processingStatus'] = $processingStatus;
-        $obj['requestCounts'] = $requestCounts;
-        $obj['resultsURL'] = $resultsURL;
+        $self['id'] = $id;
+        $self['archivedAt'] = $archivedAt;
+        $self['cancelInitiatedAt'] = $cancelInitiatedAt;
+        $self['createdAt'] = $createdAt;
+        $self['endedAt'] = $endedAt;
+        $self['expiresAt'] = $expiresAt;
+        $self['processingStatus'] = $processingStatus;
+        $self['requestCounts'] = $requestCounts;
+        $self['resultsURL'] = $resultsURL;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -183,10 +183,10 @@ final class MessageBatch implements BaseModel
      */
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -194,10 +194,10 @@ final class MessageBatch implements BaseModel
      */
     public function withArchivedAt(?\DateTimeInterface $archivedAt): self
     {
-        $obj = clone $this;
-        $obj['archivedAt'] = $archivedAt;
+        $self = clone $this;
+        $self['archivedAt'] = $archivedAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -206,10 +206,10 @@ final class MessageBatch implements BaseModel
     public function withCancelInitiatedAt(
         ?\DateTimeInterface $cancelInitiatedAt
     ): self {
-        $obj = clone $this;
-        $obj['cancelInitiatedAt'] = $cancelInitiatedAt;
+        $self = clone $this;
+        $self['cancelInitiatedAt'] = $cancelInitiatedAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -217,10 +217,10 @@ final class MessageBatch implements BaseModel
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -230,10 +230,10 @@ final class MessageBatch implements BaseModel
      */
     public function withEndedAt(?\DateTimeInterface $endedAt): self
     {
-        $obj = clone $this;
-        $obj['endedAt'] = $endedAt;
+        $self = clone $this;
+        $self['endedAt'] = $endedAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -241,10 +241,10 @@ final class MessageBatch implements BaseModel
      */
     public function withExpiresAt(\DateTimeInterface $expiresAt): self
     {
-        $obj = clone $this;
-        $obj['expiresAt'] = $expiresAt;
+        $self = clone $this;
+        $self['expiresAt'] = $expiresAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -255,10 +255,10 @@ final class MessageBatch implements BaseModel
     public function withProcessingStatus(
         ProcessingStatus|string $processingStatus
     ): self {
-        $obj = clone $this;
-        $obj['processingStatus'] = $processingStatus;
+        $self = clone $this;
+        $self['processingStatus'] = $processingStatus;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -273,10 +273,10 @@ final class MessageBatch implements BaseModel
     public function withRequestCounts(
         MessageBatchRequestCounts|array $requestCounts
     ): self {
-        $obj = clone $this;
-        $obj['requestCounts'] = $requestCounts;
+        $self = clone $this;
+        $self['requestCounts'] = $requestCounts;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -286,9 +286,9 @@ final class MessageBatch implements BaseModel
      */
     public function withResultsURL(?string $resultsURL): self
     {
-        $obj = clone $this;
-        $obj['resultsURL'] = $resultsURL;
+        $self = clone $this;
+        $self['resultsURL'] = $resultsURL;
 
-        return $obj;
+        return $self;
     }
 }

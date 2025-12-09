@@ -95,15 +95,15 @@ final class BetaClearToolUses20250919Edit implements BaseModel
         BetaToolUsesKeep|array|null $keep = null,
         BetaInputTokensTrigger|array|BetaToolUsesTrigger|null $trigger = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $clearAtLeast && $obj['clearAtLeast'] = $clearAtLeast;
-        null !== $clearToolInputs && $obj['clearToolInputs'] = $clearToolInputs;
-        null !== $excludeTools && $obj['excludeTools'] = $excludeTools;
-        null !== $keep && $obj['keep'] = $keep;
-        null !== $trigger && $obj['trigger'] = $trigger;
+        null !== $clearAtLeast && $self['clearAtLeast'] = $clearAtLeast;
+        null !== $clearToolInputs && $self['clearToolInputs'] = $clearToolInputs;
+        null !== $excludeTools && $self['excludeTools'] = $excludeTools;
+        null !== $keep && $self['keep'] = $keep;
+        null !== $trigger && $self['trigger'] = $trigger;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -116,10 +116,10 @@ final class BetaClearToolUses20250919Edit implements BaseModel
     public function withClearAtLeast(
         BetaInputTokensClearAtLeast|array|null $clearAtLeast
     ): self {
-        $obj = clone $this;
-        $obj['clearAtLeast'] = $clearAtLeast;
+        $self = clone $this;
+        $self['clearAtLeast'] = $clearAtLeast;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -129,10 +129,10 @@ final class BetaClearToolUses20250919Edit implements BaseModel
      */
     public function withClearToolInputs(bool|array|null $clearToolInputs): self
     {
-        $obj = clone $this;
-        $obj['clearToolInputs'] = $clearToolInputs;
+        $self = clone $this;
+        $self['clearToolInputs'] = $clearToolInputs;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -142,10 +142,10 @@ final class BetaClearToolUses20250919Edit implements BaseModel
      */
     public function withExcludeTools(?array $excludeTools): self
     {
-        $obj = clone $this;
-        $obj['excludeTools'] = $excludeTools;
+        $self = clone $this;
+        $self['excludeTools'] = $excludeTools;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -155,10 +155,10 @@ final class BetaClearToolUses20250919Edit implements BaseModel
      */
     public function withKeep(BetaToolUsesKeep|array $keep): self
     {
-        $obj = clone $this;
-        $obj['keep'] = $keep;
+        $self = clone $this;
+        $self['keep'] = $keep;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -171,9 +171,9 @@ final class BetaClearToolUses20250919Edit implements BaseModel
     public function withTrigger(
         BetaInputTokensTrigger|array|BetaToolUsesTrigger $trigger
     ): self {
-        $obj = clone $this;
-        $obj['trigger'] = $trigger;
+        $self = clone $this;
+        $self['trigger'] = $trigger;
 
-        return $obj;
+        return $self;
     }
 }

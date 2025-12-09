@@ -91,24 +91,24 @@ final class BetaToolUseBlockParam implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl = null,
         BetaDirectCaller|array|BetaServerToolCaller|null $caller = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['input'] = $input;
-        $obj['name'] = $name;
+        $self['id'] = $id;
+        $self['input'] = $input;
+        $self['name'] = $name;
 
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
-        null !== $caller && $obj['caller'] = $caller;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $caller && $self['caller'] = $caller;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -116,18 +116,18 @@ final class BetaToolUseBlockParam implements BaseModel
      */
     public function withInput(array $input): self
     {
-        $obj = clone $this;
-        $obj['input'] = $input;
+        $self = clone $this;
+        $self['input'] = $input;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -140,10 +140,10 @@ final class BetaToolUseBlockParam implements BaseModel
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -156,9 +156,9 @@ final class BetaToolUseBlockParam implements BaseModel
     public function withCaller(
         BetaDirectCaller|array|BetaServerToolCaller $caller
     ): self {
-        $obj = clone $this;
-        $obj['caller'] = $caller;
+        $self = clone $this;
+        $self['caller'] = $caller;
 
-        return $obj;
+        return $self;
     }
 }

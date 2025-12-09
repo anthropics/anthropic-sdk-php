@@ -51,18 +51,18 @@ final class BetaCodeExecutionOutputBlockParam implements BaseModel
      */
     public static function with(string $fileID): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['fileID'] = $fileID;
+        $self['fileID'] = $fileID;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileID(string $fileID): self
     {
-        $obj = clone $this;
-        $obj['fileID'] = $fileID;
+        $self = clone $this;
+        $self['fileID'] = $fileID;
 
-        return $obj;
+        return $self;
     }
 }

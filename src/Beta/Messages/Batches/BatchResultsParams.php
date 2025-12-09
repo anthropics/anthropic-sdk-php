@@ -51,11 +51,11 @@ final class BatchResultsParams implements BaseModel
      */
     public static function with(?array $betas = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        null !== $betas && $obj['betas'] = $betas;
+        null !== $betas && $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -65,9 +65,9 @@ final class BatchResultsParams implements BaseModel
      */
     public function withBetas(array $betas): self
     {
-        $obj = clone $this;
-        $obj['betas'] = $betas;
+        $self = clone $this;
+        $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 }

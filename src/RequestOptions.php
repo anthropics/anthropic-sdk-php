@@ -106,53 +106,55 @@ final class RequestOptions implements BaseModel
         ?StreamFactoryInterface $streamFactory = null,
         ?RequestFactoryInterface $requestFactory = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $timeout && $obj->timeout = $timeout;
-        null !== $maxRetries && $obj->maxRetries = $maxRetries;
-        null !== $initialRetryDelay && $obj->initialRetryDelay = $initialRetryDelay;
-        null !== $maxRetryDelay && $obj->maxRetryDelay = $maxRetryDelay;
-        null !== $extraHeaders && $obj->extraHeaders = $extraHeaders;
-        null !== $extraQueryParams && $obj->extraQueryParams = $extraQueryParams;
-        omit !== $extraBodyParams && $obj->extraBodyParams = $extraBodyParams;
-        null !== $transporter && $obj->transporter = $transporter;
-        null !== $uriFactory && $obj->uriFactory = $uriFactory;
-        null !== $streamFactory && $obj->streamFactory = $streamFactory;
-        null !== $requestFactory && $obj->requestFactory = $requestFactory;
+        null !== $timeout && $self->timeout = $timeout;
+        null !== $maxRetries && $self->maxRetries = $maxRetries;
+        null !== $initialRetryDelay && $self
+            ->initialRetryDelay = $initialRetryDelay
+        ;
+        null !== $maxRetryDelay && $self->maxRetryDelay = $maxRetryDelay;
+        null !== $extraHeaders && $self->extraHeaders = $extraHeaders;
+        null !== $extraQueryParams && $self->extraQueryParams = $extraQueryParams;
+        omit !== $extraBodyParams && $self->extraBodyParams = $extraBodyParams;
+        null !== $transporter && $self->transporter = $transporter;
+        null !== $uriFactory && $self->uriFactory = $uriFactory;
+        null !== $streamFactory && $self->streamFactory = $streamFactory;
+        null !== $requestFactory && $self->requestFactory = $requestFactory;
 
-        return $obj;
+        return $self;
     }
 
     public function withTimeout(float $timeout): self
     {
-        $obj = clone $this;
-        $obj->timeout = $timeout;
+        $self = clone $this;
+        $self->timeout = $timeout;
 
-        return $obj;
+        return $self;
     }
 
     public function withMaxRetries(int $maxRetries): self
     {
-        $obj = clone $this;
-        $obj->maxRetries = $maxRetries;
+        $self = clone $this;
+        $self->maxRetries = $maxRetries;
 
-        return $obj;
+        return $self;
     }
 
     public function withInitialRetryDelay(float $initialRetryDelay): self
     {
-        $obj = clone $this;
-        $obj->initialRetryDelay = $initialRetryDelay;
+        $self = clone $this;
+        $self->initialRetryDelay = $initialRetryDelay;
 
-        return $obj;
+        return $self;
     }
 
     public function withMaxRetryDelay(float $maxRetryDelay): self
     {
-        $obj = clone $this;
-        $obj->maxRetryDelay = $maxRetryDelay;
+        $self = clone $this;
+        $self->maxRetryDelay = $maxRetryDelay;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -160,10 +162,10 @@ final class RequestOptions implements BaseModel
      */
     public function withExtraHeaders(array $extraHeaders): self
     {
-        $obj = clone $this;
-        $obj->extraHeaders = $extraHeaders;
+        $self = clone $this;
+        $self->extraHeaders = $extraHeaders;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -171,51 +173,51 @@ final class RequestOptions implements BaseModel
      */
     public function withExtraQueryParams(array $extraQueryParams): self
     {
-        $obj = clone $this;
-        $obj->extraQueryParams = $extraQueryParams;
+        $self = clone $this;
+        $self->extraQueryParams = $extraQueryParams;
 
-        return $obj;
+        return $self;
     }
 
     public function withExtraBodyParams(mixed $extraBodyParams): self
     {
-        $obj = clone $this;
-        $obj->extraBodyParams = $extraBodyParams;
+        $self = clone $this;
+        $self->extraBodyParams = $extraBodyParams;
 
-        return $obj;
+        return $self;
     }
 
     public function withTransporter(ClientInterface $transporter): self
     {
-        $obj = clone $this;
-        $obj->transporter = $transporter;
+        $self = clone $this;
+        $self->transporter = $transporter;
 
-        return $obj;
+        return $self;
     }
 
     public function withUriFactory(UriFactoryInterface $uriFactory): self
     {
-        $obj = clone $this;
-        $obj->uriFactory = $uriFactory;
+        $self = clone $this;
+        $self->uriFactory = $uriFactory;
 
-        return $obj;
+        return $self;
     }
 
     public function withStreamFactory(
         StreamFactoryInterface $streamFactory
     ): self {
-        $obj = clone $this;
-        $obj->streamFactory = $streamFactory;
+        $self = clone $this;
+        $self->streamFactory = $streamFactory;
 
-        return $obj;
+        return $self;
     }
 
     public function withRequestFactory(
         RequestFactoryInterface $requestFactory
     ): self {
-        $obj = clone $this;
-        $obj->requestFactory = $requestFactory;
+        $self = clone $this;
+        $self->requestFactory = $requestFactory;
 
-        return $obj;
+        return $self;
     }
 }

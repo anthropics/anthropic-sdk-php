@@ -76,12 +76,12 @@ final class BetaErrorResponse implements BaseModel
         BetaInvalidRequestError|array|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error,
         ?string $requestID,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['error'] = $error;
-        $obj['requestID'] = $requestID;
+        $self['error'] = $error;
+        $self['requestID'] = $requestID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -106,17 +106,17 @@ final class BetaErrorResponse implements BaseModel
     public function withError(
         BetaInvalidRequestError|array|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error,
     ): self {
-        $obj = clone $this;
-        $obj['error'] = $error;
+        $self = clone $this;
+        $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 
     public function withRequestID(?string $requestID): self
     {
-        $obj = clone $this;
-        $obj['requestID'] = $requestID;
+        $self = clone $this;
+        $self['requestID'] = $requestID;
 
-        return $obj;
+        return $self;
     }
 }

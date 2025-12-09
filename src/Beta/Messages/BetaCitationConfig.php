@@ -45,18 +45,18 @@ final class BetaCitationConfig implements BaseModel
      */
     public static function with(bool $enabled = false): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['enabled'] = $enabled;
+        $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 
     public function withEnabled(bool $enabled): self
     {
-        $obj = clone $this;
-        $obj['enabled'] = $enabled;
+        $self = clone $this;
+        $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 }

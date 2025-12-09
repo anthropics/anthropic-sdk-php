@@ -94,11 +94,11 @@ final class CitationsDelta implements BaseModel
     public static function with(
         CitationCharLocation|array|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation $citation,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['citation'] = $citation;
+        $self['citation'] = $citation;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -145,9 +145,9 @@ final class CitationsDelta implements BaseModel
     public function withCitation(
         CitationCharLocation|array|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation $citation,
     ): self {
-        $obj = clone $this;
-        $obj['citation'] = $citation;
+        $self = clone $this;
+        $self['citation'] = $citation;
 
-        return $obj;
+        return $self;
     }
 }

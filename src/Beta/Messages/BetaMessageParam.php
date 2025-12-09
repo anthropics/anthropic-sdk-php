@@ -155,12 +155,12 @@ final class BetaMessageParam implements BaseModel
      */
     public static function with(string|array $content, Role|string $role): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['content'] = $content;
-        $obj['role'] = $role;
+        $self['content'] = $content;
+        $self['role'] = $role;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -262,10 +262,10 @@ final class BetaMessageParam implements BaseModel
      */
     public function withContent(string|array $content): self
     {
-        $obj = clone $this;
-        $obj['content'] = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -273,9 +273,9 @@ final class BetaMessageParam implements BaseModel
      */
     public function withRole(Role|string $role): self
     {
-        $obj = clone $this;
-        $obj['role'] = $role;
+        $self = clone $this;
+        $self['role'] = $role;
 
-        return $obj;
+        return $self;
     }
 }

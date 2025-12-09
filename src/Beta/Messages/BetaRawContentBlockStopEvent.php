@@ -51,18 +51,18 @@ final class BetaRawContentBlockStopEvent implements BaseModel
      */
     public static function with(int $index): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['index'] = $index;
+        $self['index'] = $index;
 
-        return $obj;
+        return $self;
     }
 
     public function withIndex(int $index): self
     {
-        $obj = clone $this;
-        $obj['index'] = $index;
+        $self = clone $this;
+        $self['index'] = $index;
 
-        return $obj;
+        return $self;
     }
 }

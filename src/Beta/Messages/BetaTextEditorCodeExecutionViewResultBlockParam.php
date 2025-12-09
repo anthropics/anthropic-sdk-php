@@ -82,24 +82,24 @@ final class BetaTextEditorCodeExecutionViewResultBlockParam implements BaseModel
         ?int $startLine = null,
         ?int $totalLines = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['content'] = $content;
-        $obj['fileType'] = $fileType;
+        $self['content'] = $content;
+        $self['fileType'] = $fileType;
 
-        null !== $numLines && $obj['numLines'] = $numLines;
-        null !== $startLine && $obj['startLine'] = $startLine;
-        null !== $totalLines && $obj['totalLines'] = $totalLines;
+        null !== $numLines && $self['numLines'] = $numLines;
+        null !== $startLine && $self['startLine'] = $startLine;
+        null !== $totalLines && $self['totalLines'] = $totalLines;
 
-        return $obj;
+        return $self;
     }
 
     public function withContent(string $content): self
     {
-        $obj = clone $this;
-        $obj['content'] = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -107,33 +107,33 @@ final class BetaTextEditorCodeExecutionViewResultBlockParam implements BaseModel
      */
     public function withFileType(FileType|string $fileType): self
     {
-        $obj = clone $this;
-        $obj['fileType'] = $fileType;
+        $self = clone $this;
+        $self['fileType'] = $fileType;
 
-        return $obj;
+        return $self;
     }
 
     public function withNumLines(?int $numLines): self
     {
-        $obj = clone $this;
-        $obj['numLines'] = $numLines;
+        $self = clone $this;
+        $self['numLines'] = $numLines;
 
-        return $obj;
+        return $self;
     }
 
     public function withStartLine(?int $startLine): self
     {
-        $obj = clone $this;
-        $obj['startLine'] = $startLine;
+        $self = clone $this;
+        $self['startLine'] = $startLine;
 
-        return $obj;
+        return $self;
     }
 
     public function withTotalLines(?int $totalLines): self
     {
-        $obj = clone $this;
-        $obj['totalLines'] = $totalLines;
+        $self = clone $this;
+        $self['totalLines'] = $totalLines;
 
-        return $obj;
+        return $self;
     }
 }

@@ -62,13 +62,13 @@ final class DeletedFile implements BaseModel
      */
     public static function with(string $id, Type|string|null $type = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
+        $self['id'] = $id;
 
-        null !== $type && $obj['type'] = $type;
+        null !== $type && $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -76,10 +76,10 @@ final class DeletedFile implements BaseModel
      */
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -91,9 +91,9 @@ final class DeletedFile implements BaseModel
      */
     public function withType(Type|string $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 }

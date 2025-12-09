@@ -49,11 +49,11 @@ final class BetaClearThinking20251015Edit implements BaseModel
     public static function with(
         string|BetaThinkingTurns|array|BetaAllThinkingTurns|null $keep = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $keep && $obj['keep'] = $keep;
+        null !== $keep && $self['keep'] = $keep;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -66,9 +66,9 @@ final class BetaClearThinking20251015Edit implements BaseModel
     public function withKeep(
         string|BetaThinkingTurns|array|BetaAllThinkingTurns $keep
     ): self {
-        $obj = clone $this;
-        $obj['keep'] = $keep;
+        $self = clone $this;
+        $self['keep'] = $keep;
 
-        return $obj;
+        return $self;
     }
 }

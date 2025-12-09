@@ -58,12 +58,12 @@ final class VersionCreateParams implements BaseModel
      */
     public static function with(?array $files = null, ?array $betas = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        null !== $files && $obj['files'] = $files;
-        null !== $betas && $obj['betas'] = $betas;
+        null !== $files && $self['files'] = $files;
+        null !== $betas && $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -75,10 +75,10 @@ final class VersionCreateParams implements BaseModel
      */
     public function withFiles(?array $files): self
     {
-        $obj = clone $this;
-        $obj['files'] = $files;
+        $self = clone $this;
+        $self['files'] = $files;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -88,9 +88,9 @@ final class VersionCreateParams implements BaseModel
      */
     public function withBetas(array $betas): self
     {
-        $obj = clone $this;
-        $obj['betas'] = $betas;
+        $self = clone $this;
+        $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 }

@@ -51,18 +51,18 @@ final class BetaInputTokensTrigger implements BaseModel
      */
     public static function with(int $value): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['value'] = $value;
+        $self['value'] = $value;
 
-        return $obj;
+        return $self;
     }
 
     public function withValue(int $value): self
     {
-        $obj = clone $this;
-        $obj['value'] = $value;
+        $self = clone $this;
+        $self['value'] = $value;
 
-        return $obj;
+        return $self;
     }
 }

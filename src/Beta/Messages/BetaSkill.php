@@ -72,13 +72,13 @@ final class BetaSkill implements BaseModel
         Type|string $type,
         string $version
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['skillID'] = $skillID;
-        $obj['type'] = $type;
-        $obj['version'] = $version;
+        $self['skillID'] = $skillID;
+        $self['type'] = $type;
+        $self['version'] = $version;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -86,10 +86,10 @@ final class BetaSkill implements BaseModel
      */
     public function withSkillID(string $skillID): self
     {
-        $obj = clone $this;
-        $obj['skillID'] = $skillID;
+        $self = clone $this;
+        $self['skillID'] = $skillID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -99,10 +99,10 @@ final class BetaSkill implements BaseModel
      */
     public function withType(Type|string $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -110,9 +110,9 @@ final class BetaSkill implements BaseModel
      */
     public function withVersion(string $version): self
     {
-        $obj = clone $this;
-        $obj['version'] = $version;
+        $self = clone $this;
+        $self['version'] = $version;
 
-        return $obj;
+        return $self;
     }
 }

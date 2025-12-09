@@ -126,18 +126,18 @@ final class BetaWebSearchTool20250305 implements BaseModel
         ?bool $strict = null,
         UserLocation|array|null $userLocation = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $allowedCallers && $obj['allowedCallers'] = $allowedCallers;
-        null !== $allowedDomains && $obj['allowedDomains'] = $allowedDomains;
-        null !== $blockedDomains && $obj['blockedDomains'] = $blockedDomains;
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
-        null !== $deferLoading && $obj['deferLoading'] = $deferLoading;
-        null !== $maxUses && $obj['maxUses'] = $maxUses;
-        null !== $strict && $obj['strict'] = $strict;
-        null !== $userLocation && $obj['userLocation'] = $userLocation;
+        null !== $allowedCallers && $self['allowedCallers'] = $allowedCallers;
+        null !== $allowedDomains && $self['allowedDomains'] = $allowedDomains;
+        null !== $blockedDomains && $self['blockedDomains'] = $blockedDomains;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $deferLoading && $self['deferLoading'] = $deferLoading;
+        null !== $maxUses && $self['maxUses'] = $maxUses;
+        null !== $strict && $self['strict'] = $strict;
+        null !== $userLocation && $self['userLocation'] = $userLocation;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -145,10 +145,10 @@ final class BetaWebSearchTool20250305 implements BaseModel
      */
     public function withAllowedCallers(array $allowedCallers): self
     {
-        $obj = clone $this;
-        $obj['allowedCallers'] = $allowedCallers;
+        $self = clone $this;
+        $self['allowedCallers'] = $allowedCallers;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -158,10 +158,10 @@ final class BetaWebSearchTool20250305 implements BaseModel
      */
     public function withAllowedDomains(?array $allowedDomains): self
     {
-        $obj = clone $this;
-        $obj['allowedDomains'] = $allowedDomains;
+        $self = clone $this;
+        $self['allowedDomains'] = $allowedDomains;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -171,10 +171,10 @@ final class BetaWebSearchTool20250305 implements BaseModel
      */
     public function withBlockedDomains(?array $blockedDomains): self
     {
-        $obj = clone $this;
-        $obj['blockedDomains'] = $blockedDomains;
+        $self = clone $this;
+        $self['blockedDomains'] = $blockedDomains;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -187,10 +187,10 @@ final class BetaWebSearchTool20250305 implements BaseModel
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -198,10 +198,10 @@ final class BetaWebSearchTool20250305 implements BaseModel
      */
     public function withDeferLoading(bool $deferLoading): self
     {
-        $obj = clone $this;
-        $obj['deferLoading'] = $deferLoading;
+        $self = clone $this;
+        $self['deferLoading'] = $deferLoading;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -209,18 +209,18 @@ final class BetaWebSearchTool20250305 implements BaseModel
      */
     public function withMaxUses(?int $maxUses): self
     {
-        $obj = clone $this;
-        $obj['maxUses'] = $maxUses;
+        $self = clone $this;
+        $self['maxUses'] = $maxUses;
 
-        return $obj;
+        return $self;
     }
 
     public function withStrict(bool $strict): self
     {
-        $obj = clone $this;
-        $obj['strict'] = $strict;
+        $self = clone $this;
+        $self['strict'] = $strict;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -237,9 +237,9 @@ final class BetaWebSearchTool20250305 implements BaseModel
     public function withUserLocation(
         UserLocation|array|null $userLocation
     ): self {
-        $obj = clone $this;
-        $obj['userLocation'] = $userLocation;
+        $self = clone $this;
+        $self['userLocation'] = $userLocation;
 
-        return $obj;
+        return $self;
     }
 }

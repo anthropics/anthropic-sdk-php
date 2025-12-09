@@ -112,17 +112,17 @@ final class FileMetadata implements BaseModel
         int $sizeBytes,
         ?bool $downloadable = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['createdAt'] = $createdAt;
-        $obj['filename'] = $filename;
-        $obj['mimeType'] = $mimeType;
-        $obj['sizeBytes'] = $sizeBytes;
+        $self['id'] = $id;
+        $self['createdAt'] = $createdAt;
+        $self['filename'] = $filename;
+        $self['mimeType'] = $mimeType;
+        $self['sizeBytes'] = $sizeBytes;
 
-        null !== $downloadable && $obj['downloadable'] = $downloadable;
+        null !== $downloadable && $self['downloadable'] = $downloadable;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -132,10 +132,10 @@ final class FileMetadata implements BaseModel
      */
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -143,10 +143,10 @@ final class FileMetadata implements BaseModel
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -154,10 +154,10 @@ final class FileMetadata implements BaseModel
      */
     public function withFilename(string $filename): self
     {
-        $obj = clone $this;
-        $obj['filename'] = $filename;
+        $self = clone $this;
+        $self['filename'] = $filename;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -165,10 +165,10 @@ final class FileMetadata implements BaseModel
      */
     public function withMimeType(string $mimeType): self
     {
-        $obj = clone $this;
-        $obj['mimeType'] = $mimeType;
+        $self = clone $this;
+        $self['mimeType'] = $mimeType;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -176,10 +176,10 @@ final class FileMetadata implements BaseModel
      */
     public function withSizeBytes(int $sizeBytes): self
     {
-        $obj = clone $this;
-        $obj['sizeBytes'] = $sizeBytes;
+        $self = clone $this;
+        $self['sizeBytes'] = $sizeBytes;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -187,9 +187,9 @@ final class FileMetadata implements BaseModel
      */
     public function withDownloadable(bool $downloadable): self
     {
-        $obj = clone $this;
-        $obj['downloadable'] = $downloadable;
+        $self = clone $this;
+        $self['downloadable'] = $downloadable;
 
-        return $obj;
+        return $self;
     }
 }

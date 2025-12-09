@@ -67,12 +67,12 @@ final class RawContentBlockDeltaEvent implements BaseModel
         TextDelta|array|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta $delta,
         int $index,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['delta'] = $delta;
-        $obj['index'] = $index;
+        $self['delta'] = $delta;
+        $self['index'] = $index;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -88,17 +88,17 @@ final class RawContentBlockDeltaEvent implements BaseModel
     public function withDelta(
         TextDelta|array|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta $delta,
     ): self {
-        $obj = clone $this;
-        $obj['delta'] = $delta;
+        $self = clone $this;
+        $self['delta'] = $delta;
 
-        return $obj;
+        return $self;
     }
 
     public function withIndex(int $index): self
     {
-        $obj = clone $this;
-        $obj['index'] = $index;
+        $self = clone $this;
+        $self['index'] = $index;
 
-        return $obj;
+        return $self;
     }
 }

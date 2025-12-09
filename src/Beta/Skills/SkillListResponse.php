@@ -126,17 +126,17 @@ final class SkillListResponse implements BaseModel
         string $updatedAt,
         string $type = 'skill',
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['createdAt'] = $createdAt;
-        $obj['displayTitle'] = $displayTitle;
-        $obj['latestVersion'] = $latestVersion;
-        $obj['source'] = $source;
-        $obj['type'] = $type;
-        $obj['updatedAt'] = $updatedAt;
+        $self['id'] = $id;
+        $self['createdAt'] = $createdAt;
+        $self['displayTitle'] = $displayTitle;
+        $self['latestVersion'] = $latestVersion;
+        $self['source'] = $source;
+        $self['type'] = $type;
+        $self['updatedAt'] = $updatedAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -146,10 +146,10 @@ final class SkillListResponse implements BaseModel
      */
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -157,10 +157,10 @@ final class SkillListResponse implements BaseModel
      */
     public function withCreatedAt(string $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -170,10 +170,10 @@ final class SkillListResponse implements BaseModel
      */
     public function withDisplayTitle(?string $displayTitle): self
     {
-        $obj = clone $this;
-        $obj['displayTitle'] = $displayTitle;
+        $self = clone $this;
+        $self['displayTitle'] = $displayTitle;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -183,10 +183,10 @@ final class SkillListResponse implements BaseModel
      */
     public function withLatestVersion(?string $latestVersion): self
     {
-        $obj = clone $this;
-        $obj['latestVersion'] = $latestVersion;
+        $self = clone $this;
+        $self['latestVersion'] = $latestVersion;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -198,10 +198,10 @@ final class SkillListResponse implements BaseModel
      */
     public function withSource(string $source): self
     {
-        $obj = clone $this;
-        $obj['source'] = $source;
+        $self = clone $this;
+        $self['source'] = $source;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -211,10 +211,10 @@ final class SkillListResponse implements BaseModel
      */
     public function withType(string $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -222,9 +222,9 @@ final class SkillListResponse implements BaseModel
      */
     public function withUpdatedAt(string $updatedAt): self
     {
-        $obj = clone $this;
-        $obj['updatedAt'] = $updatedAt;
+        $self = clone $this;
+        $self['updatedAt'] = $updatedAt;
 
-        return $obj;
+        return $self;
     }
 }

@@ -64,11 +64,11 @@ final class ContentBlockSource implements BaseModel
      */
     public static function with(string|array $content): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['content'] = $content;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -85,9 +85,9 @@ final class ContentBlockSource implements BaseModel
      */
     public function withContent(string|array $content): self
     {
-        $obj = clone $this;
-        $obj['content'] = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 }

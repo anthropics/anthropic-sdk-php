@@ -130,20 +130,20 @@ final class BetaTool implements BaseModel
         ?bool $strict = null,
         Type|string|null $type = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['inputSchema'] = $inputSchema;
-        $obj['name'] = $name;
+        $self['inputSchema'] = $inputSchema;
+        $self['name'] = $name;
 
-        null !== $allowedCallers && $obj['allowedCallers'] = $allowedCallers;
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
-        null !== $deferLoading && $obj['deferLoading'] = $deferLoading;
-        null !== $description && $obj['description'] = $description;
-        null !== $inputExamples && $obj['inputExamples'] = $inputExamples;
-        null !== $strict && $obj['strict'] = $strict;
-        null !== $type && $obj['type'] = $type;
+        null !== $allowedCallers && $self['allowedCallers'] = $allowedCallers;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $deferLoading && $self['deferLoading'] = $deferLoading;
+        null !== $description && $self['description'] = $description;
+        null !== $inputExamples && $self['inputExamples'] = $inputExamples;
+        null !== $strict && $self['strict'] = $strict;
+        null !== $type && $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -159,10 +159,10 @@ final class BetaTool implements BaseModel
      */
     public function withInputSchema(InputSchema|array $inputSchema): self
     {
-        $obj = clone $this;
-        $obj['inputSchema'] = $inputSchema;
+        $self = clone $this;
+        $self['inputSchema'] = $inputSchema;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -172,10 +172,10 @@ final class BetaTool implements BaseModel
      */
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -183,10 +183,10 @@ final class BetaTool implements BaseModel
      */
     public function withAllowedCallers(array $allowedCallers): self
     {
-        $obj = clone $this;
-        $obj['allowedCallers'] = $allowedCallers;
+        $self = clone $this;
+        $self['allowedCallers'] = $allowedCallers;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -199,10 +199,10 @@ final class BetaTool implements BaseModel
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -210,10 +210,10 @@ final class BetaTool implements BaseModel
      */
     public function withDeferLoading(bool $deferLoading): self
     {
-        $obj = clone $this;
-        $obj['deferLoading'] = $deferLoading;
+        $self = clone $this;
+        $self['deferLoading'] = $deferLoading;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -223,10 +223,10 @@ final class BetaTool implements BaseModel
      */
     public function withDescription(string $description): self
     {
-        $obj = clone $this;
-        $obj['description'] = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -234,18 +234,18 @@ final class BetaTool implements BaseModel
      */
     public function withInputExamples(array $inputExamples): self
     {
-        $obj = clone $this;
-        $obj['inputExamples'] = $inputExamples;
+        $self = clone $this;
+        $self['inputExamples'] = $inputExamples;
 
-        return $obj;
+        return $self;
     }
 
     public function withStrict(bool $strict): self
     {
-        $obj = clone $this;
-        $obj['strict'] = $strict;
+        $self = clone $this;
+        $self['strict'] = $strict;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -253,9 +253,9 @@ final class BetaTool implements BaseModel
      */
     public function withType(Type|string|null $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 }
