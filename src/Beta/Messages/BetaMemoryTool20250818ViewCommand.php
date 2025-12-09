@@ -69,13 +69,13 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
      */
     public static function with(string $path, ?array $viewRange = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['path'] = $path;
+        $self['path'] = $path;
 
-        null !== $viewRange && $obj['viewRange'] = $viewRange;
+        null !== $viewRange && $self['viewRange'] = $viewRange;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -83,10 +83,10 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
      */
     public function withPath(string $path): self
     {
-        $obj = clone $this;
-        $obj['path'] = $path;
+        $self = clone $this;
+        $self['path'] = $path;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -96,9 +96,9 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
      */
     public function withViewRange(array $viewRange): self
     {
-        $obj = clone $this;
-        $obj['viewRange'] = $viewRange;
+        $self = clone $this;
+        $self['viewRange'] = $viewRange;
 
-        return $obj;
+        return $self;
     }
 }

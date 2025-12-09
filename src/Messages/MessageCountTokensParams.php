@@ -328,17 +328,17 @@ final class MessageCountTokensParams implements BaseModel
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['messages'] = $messages;
-        $obj['model'] = $model;
+        $self['messages'] = $messages;
+        $self['model'] = $model;
 
-        null !== $system && $obj['system'] = $system;
-        null !== $thinking && $obj['thinking'] = $thinking;
-        null !== $toolChoice && $obj['toolChoice'] = $toolChoice;
-        null !== $tools && $obj['tools'] = $tools;
+        null !== $system && $self['system'] = $system;
+        null !== $thinking && $self['thinking'] = $thinking;
+        null !== $toolChoice && $self['toolChoice'] = $toolChoice;
+        null !== $tools && $self['tools'] = $tools;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -398,10 +398,10 @@ final class MessageCountTokensParams implements BaseModel
      */
     public function withMessages(array $messages): self
     {
-        $obj = clone $this;
-        $obj['messages'] = $messages;
+        $self = clone $this;
+        $self['messages'] = $messages;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -409,10 +409,10 @@ final class MessageCountTokensParams implements BaseModel
      */
     public function withModel(string|Model $model): self
     {
-        $obj = clone $this;
-        $obj['model'] = $model;
+        $self = clone $this;
+        $self['model'] = $model;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -429,10 +429,10 @@ final class MessageCountTokensParams implements BaseModel
      */
     public function withSystem(string|array $system): self
     {
-        $obj = clone $this;
-        $obj['system'] = $system;
+        $self = clone $this;
+        $self['system'] = $system;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -449,10 +449,10 @@ final class MessageCountTokensParams implements BaseModel
     public function withThinking(
         ThinkingConfigEnabled|array|ThinkingConfigDisabled $thinking
     ): self {
-        $obj = clone $this;
-        $obj['thinking'] = $thinking;
+        $self = clone $this;
+        $self['thinking'] = $thinking;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -469,10 +469,10 @@ final class MessageCountTokensParams implements BaseModel
     public function withToolChoice(
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone $toolChoice
     ): self {
-        $obj = clone $this;
-        $obj['toolChoice'] = $toolChoice;
+        $self = clone $this;
+        $self['toolChoice'] = $toolChoice;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -573,9 +573,9 @@ final class MessageCountTokensParams implements BaseModel
      */
     public function withTools(array $tools): self
     {
-        $obj = clone $this;
-        $obj['tools'] = $tools;
+        $self = clone $this;
+        $self['tools'] = $tools;
 
-        return $obj;
+        return $self;
     }
 }

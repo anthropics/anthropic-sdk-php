@@ -83,12 +83,12 @@ final class RawContentBlockStartEvent implements BaseModel
         TextBlock|array|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $contentBlock,
         int $index,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['contentBlock'] = $contentBlock;
-        $obj['index'] = $index;
+        $self['contentBlock'] = $contentBlock;
+        $self['index'] = $index;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -116,17 +116,17 @@ final class RawContentBlockStartEvent implements BaseModel
     public function withContentBlock(
         TextBlock|array|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $contentBlock,
     ): self {
-        $obj = clone $this;
-        $obj['contentBlock'] = $contentBlock;
+        $self = clone $this;
+        $self['contentBlock'] = $contentBlock;
 
-        return $obj;
+        return $self;
     }
 
     public function withIndex(int $index): self
     {
-        $obj = clone $this;
-        $obj['index'] = $index;
+        $self = clone $this;
+        $self['index'] = $index;
 
-        return $obj;
+        return $self;
     }
 }

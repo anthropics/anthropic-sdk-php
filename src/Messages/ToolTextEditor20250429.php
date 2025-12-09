@@ -59,11 +59,11 @@ final class ToolTextEditor20250429 implements BaseModel
     public static function with(
         CacheControlEphemeral|array|null $cacheControl = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -76,9 +76,9 @@ final class ToolTextEditor20250429 implements BaseModel
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 }

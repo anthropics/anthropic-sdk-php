@@ -45,11 +45,11 @@ final class ToolChoiceAuto implements BaseModel
      */
     public static function with(?bool $disableParallelToolUse = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        null !== $disableParallelToolUse && $obj['disableParallelToolUse'] = $disableParallelToolUse;
+        null !== $disableParallelToolUse && $self['disableParallelToolUse'] = $disableParallelToolUse;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -60,9 +60,9 @@ final class ToolChoiceAuto implements BaseModel
     public function withDisableParallelToolUse(
         bool $disableParallelToolUse
     ): self {
-        $obj = clone $this;
-        $obj['disableParallelToolUse'] = $disableParallelToolUse;
+        $self = clone $this;
+        $self['disableParallelToolUse'] = $disableParallelToolUse;
 
-        return $obj;
+        return $self;
     }
 }

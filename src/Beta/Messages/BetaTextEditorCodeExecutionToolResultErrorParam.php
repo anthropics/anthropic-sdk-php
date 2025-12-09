@@ -63,13 +63,13 @@ final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
         ErrorCode|string $errorCode,
         ?string $errorMessage = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['errorCode'] = $errorCode;
+        $self['errorCode'] = $errorCode;
 
-        null !== $errorMessage && $obj['errorMessage'] = $errorMessage;
+        null !== $errorMessage && $self['errorMessage'] = $errorMessage;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -77,17 +77,17 @@ final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
      */
     public function withErrorCode(ErrorCode|string $errorCode): self
     {
-        $obj = clone $this;
-        $obj['errorCode'] = $errorCode;
+        $self = clone $this;
+        $self['errorCode'] = $errorCode;
 
-        return $obj;
+        return $self;
     }
 
     public function withErrorMessage(?string $errorMessage): self
     {
-        $obj = clone $this;
-        $obj['errorMessage'] = $errorMessage;
+        $self = clone $this;
+        $self['errorMessage'] = $errorMessage;
 
-        return $obj;
+        return $self;
     }
 }

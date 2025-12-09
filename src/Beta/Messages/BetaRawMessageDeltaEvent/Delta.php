@@ -70,13 +70,13 @@ final class Delta implements BaseModel
         BetaStopReason|string|null $stopReason,
         ?string $stopSequence,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['container'] = $container;
-        $obj['stopReason'] = $stopReason;
-        $obj['stopSequence'] = $stopSequence;
+        $self['container'] = $container;
+        $self['stopReason'] = $stopReason;
+        $self['stopSequence'] = $stopSequence;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -88,10 +88,10 @@ final class Delta implements BaseModel
      */
     public function withContainer(BetaContainer|array|null $container): self
     {
-        $obj = clone $this;
-        $obj['container'] = $container;
+        $self = clone $this;
+        $self['container'] = $container;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -99,17 +99,17 @@ final class Delta implements BaseModel
      */
     public function withStopReason(BetaStopReason|string|null $stopReason): self
     {
-        $obj = clone $this;
-        $obj['stopReason'] = $stopReason;
+        $self = clone $this;
+        $self['stopReason'] = $stopReason;
 
-        return $obj;
+        return $self;
     }
 
     public function withStopSequence(?string $stopSequence): self
     {
-        $obj = clone $this;
-        $obj['stopSequence'] = $stopSequence;
+        $self = clone $this;
+        $self['stopSequence'] = $stopSequence;
 
-        return $obj;
+        return $self;
     }
 }

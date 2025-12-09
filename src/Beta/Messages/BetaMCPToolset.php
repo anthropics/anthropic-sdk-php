@@ -99,15 +99,15 @@ final class BetaMCPToolset implements BaseModel
         ?array $configs = null,
         BetaMCPToolDefaultConfig|array|null $defaultConfig = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['mcpServerName'] = $mcpServerName;
+        $self['mcpServerName'] = $mcpServerName;
 
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
-        null !== $configs && $obj['configs'] = $configs;
-        null !== $defaultConfig && $obj['defaultConfig'] = $defaultConfig;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $configs && $self['configs'] = $configs;
+        null !== $defaultConfig && $self['defaultConfig'] = $defaultConfig;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -115,10 +115,10 @@ final class BetaMCPToolset implements BaseModel
      */
     public function withMCPServerName(string $mcpServerName): self
     {
-        $obj = clone $this;
-        $obj['mcpServerName'] = $mcpServerName;
+        $self = clone $this;
+        $self['mcpServerName'] = $mcpServerName;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -131,10 +131,10 @@ final class BetaMCPToolset implements BaseModel
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -146,10 +146,10 @@ final class BetaMCPToolset implements BaseModel
      */
     public function withConfigs(?array $configs): self
     {
-        $obj = clone $this;
-        $obj['configs'] = $configs;
+        $self = clone $this;
+        $self['configs'] = $configs;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -162,9 +162,9 @@ final class BetaMCPToolset implements BaseModel
     public function withDefaultConfig(
         BetaMCPToolDefaultConfig|array $defaultConfig
     ): self {
-        $obj = clone $this;
-        $obj['defaultConfig'] = $defaultConfig;
+        $self = clone $this;
+        $self['defaultConfig'] = $defaultConfig;
 
-        return $obj;
+        return $self;
     }
 }

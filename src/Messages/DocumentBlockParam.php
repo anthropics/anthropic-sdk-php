@@ -91,16 +91,16 @@ final class DocumentBlockParam implements BaseModel
         ?string $context = null,
         ?string $title = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['source'] = $source;
+        $self['source'] = $source;
 
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
-        null !== $citations && $obj['citations'] = $citations;
-        null !== $context && $obj['context'] = $context;
-        null !== $title && $obj['title'] = $title;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $citations && $self['citations'] = $citations;
+        null !== $context && $self['context'] = $context;
+        null !== $title && $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -115,10 +115,10 @@ final class DocumentBlockParam implements BaseModel
     public function withSource(
         Base64PDFSource|array|PlainTextSource|ContentBlockSource|URLPDFSource $source,
     ): self {
-        $obj = clone $this;
-        $obj['source'] = $source;
+        $self = clone $this;
+        $self['source'] = $source;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -131,10 +131,10 @@ final class DocumentBlockParam implements BaseModel
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -143,25 +143,25 @@ final class DocumentBlockParam implements BaseModel
     public function withCitations(
         CitationsConfigParam|array|null $citations
     ): self {
-        $obj = clone $this;
-        $obj['citations'] = $citations;
+        $self = clone $this;
+        $self['citations'] = $citations;
 
-        return $obj;
+        return $self;
     }
 
     public function withContext(?string $context): self
     {
-        $obj = clone $this;
-        $obj['context'] = $context;
+        $self = clone $this;
+        $self['context'] = $context;
 
-        return $obj;
+        return $self;
     }
 
     public function withTitle(?string $title): self
     {
-        $obj = clone $this;
-        $obj['title'] = $title;
+        $self = clone $this;
+        $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 }

@@ -69,21 +69,21 @@ final class BetaToolReferenceBlockParam implements BaseModel
         string $toolName,
         BetaCacheControlEphemeral|array|null $cacheControl = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['toolName'] = $toolName;
+        $self['toolName'] = $toolName;
 
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     public function withToolName(string $toolName): self
     {
-        $obj = clone $this;
-        $obj['toolName'] = $toolName;
+        $self = clone $this;
+        $self['toolName'] = $toolName;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -96,9 +96,9 @@ final class BetaToolReferenceBlockParam implements BaseModel
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 }

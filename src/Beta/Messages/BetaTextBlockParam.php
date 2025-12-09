@@ -111,22 +111,22 @@ final class BetaTextBlockParam implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl = null,
         ?array $citations = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['text'] = $text;
+        $self['text'] = $text;
 
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
-        null !== $citations && $obj['citations'] = $citations;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $citations && $self['citations'] = $citations;
 
-        return $obj;
+        return $self;
     }
 
     public function withText(string $text): self
     {
-        $obj = clone $this;
-        $obj['text'] = $text;
+        $self = clone $this;
+        $self['text'] = $text;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -139,10 +139,10 @@ final class BetaTextBlockParam implements BaseModel
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -185,9 +185,9 @@ final class BetaTextBlockParam implements BaseModel
      */
     public function withCitations(?array $citations): self
     {
-        $obj = clone $this;
-        $obj['citations'] = $citations;
+        $self = clone $this;
+        $self['citations'] = $citations;
 
-        return $obj;
+        return $self;
     }
 }

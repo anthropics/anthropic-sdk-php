@@ -81,22 +81,22 @@ final class BetaMCPToolUseBlock implements BaseModel
         string $name,
         string $serverName
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['input'] = $input;
-        $obj['name'] = $name;
-        $obj['serverName'] = $serverName;
+        $self['id'] = $id;
+        $self['input'] = $input;
+        $self['name'] = $name;
+        $self['serverName'] = $serverName;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -104,10 +104,10 @@ final class BetaMCPToolUseBlock implements BaseModel
      */
     public function withInput(array $input): self
     {
-        $obj = clone $this;
-        $obj['input'] = $input;
+        $self = clone $this;
+        $self['input'] = $input;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -115,10 +115,10 @@ final class BetaMCPToolUseBlock implements BaseModel
      */
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -126,9 +126,9 @@ final class BetaMCPToolUseBlock implements BaseModel
      */
     public function withServerName(string $serverName): self
     {
-        $obj = clone $this;
-        $obj['serverName'] = $serverName;
+        $self = clone $this;
+        $self['serverName'] = $serverName;
 
-        return $obj;
+        return $self;
     }
 }

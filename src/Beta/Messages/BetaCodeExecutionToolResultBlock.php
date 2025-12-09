@@ -69,12 +69,12 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
         BetaCodeExecutionToolResultError|array|BetaCodeExecutionResultBlock $content,
         string $toolUseID,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['content'] = $content;
-        $obj['toolUseID'] = $toolUseID;
+        $self['content'] = $content;
+        $self['toolUseID'] = $toolUseID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -92,17 +92,17 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
     public function withContent(
         BetaCodeExecutionToolResultError|array|BetaCodeExecutionResultBlock $content
     ): self {
-        $obj = clone $this;
-        $obj['content'] = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     public function withToolUseID(string $toolUseID): self
     {
-        $obj = clone $this;
-        $obj['toolUseID'] = $toolUseID;
+        $self = clone $this;
+        $self['toolUseID'] = $toolUseID;
 
-        return $obj;
+        return $self;
     }
 }

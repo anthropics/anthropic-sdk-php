@@ -51,18 +51,18 @@ final class ThinkingDelta implements BaseModel
      */
     public static function with(string $thinking): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['thinking'] = $thinking;
+        $self['thinking'] = $thinking;
 
-        return $obj;
+        return $self;
     }
 
     public function withThinking(string $thinking): self
     {
-        $obj = clone $this;
-        $obj['thinking'] = $thinking;
+        $self = clone $this;
+        $self['thinking'] = $thinking;
 
-        return $obj;
+        return $self;
     }
 }

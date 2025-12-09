@@ -70,13 +70,13 @@ final class VersionDeleteParams implements BaseModel
      */
     public static function with(string $skillID, ?array $betas = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['skillID'] = $skillID;
+        $self['skillID'] = $skillID;
 
-        null !== $betas && $obj['betas'] = $betas;
+        null !== $betas && $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -86,10 +86,10 @@ final class VersionDeleteParams implements BaseModel
      */
     public function withSkillID(string $skillID): self
     {
-        $obj = clone $this;
-        $obj['skillID'] = $skillID;
+        $self = clone $this;
+        $self['skillID'] = $skillID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -99,9 +99,9 @@ final class VersionDeleteParams implements BaseModel
      */
     public function withBetas(array $betas): self
     {
-        $obj = clone $this;
-        $obj['betas'] = $betas;
+        $self = clone $this;
+        $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 }

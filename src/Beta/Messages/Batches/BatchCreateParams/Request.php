@@ -115,12 +115,12 @@ final class Request implements BaseModel
      */
     public static function with(string $customID, Params|array $params): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['customID'] = $customID;
-        $obj['params'] = $params;
+        $self['customID'] = $customID;
+        $self['params'] = $params;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -130,10 +130,10 @@ final class Request implements BaseModel
      */
     public function withCustomID(string $customID): self
     {
-        $obj = clone $this;
-        $obj['customID'] = $customID;
+        $self = clone $this;
+        $self['customID'] = $customID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -165,9 +165,9 @@ final class Request implements BaseModel
      */
     public function withParams(Params|array $params): self
     {
-        $obj = clone $this;
-        $obj['params'] = $params;
+        $self = clone $this;
+        $self['params'] = $params;
 
-        return $obj;
+        return $self;
     }
 }

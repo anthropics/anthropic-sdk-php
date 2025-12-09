@@ -77,13 +77,13 @@ final class BetaDocumentBlock implements BaseModel
         BetaBase64PDFSource|array|BetaPlainTextSource $source,
         ?string $title,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['citations'] = $citations;
-        $obj['source'] = $source;
-        $obj['title'] = $title;
+        $self['citations'] = $citations;
+        $self['source'] = $source;
+        $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -94,10 +94,10 @@ final class BetaDocumentBlock implements BaseModel
     public function withCitations(
         BetaCitationConfig|array|null $citations
     ): self {
-        $obj = clone $this;
-        $obj['citations'] = $citations;
+        $self = clone $this;
+        $self['citations'] = $citations;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -110,10 +110,10 @@ final class BetaDocumentBlock implements BaseModel
     public function withSource(
         BetaBase64PDFSource|array|BetaPlainTextSource $source
     ): self {
-        $obj = clone $this;
-        $obj['source'] = $source;
+        $self = clone $this;
+        $self['source'] = $source;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -121,9 +121,9 @@ final class BetaDocumentBlock implements BaseModel
      */
     public function withTitle(?string $title): self
     {
-        $obj = clone $this;
-        $obj['title'] = $title;
+        $self = clone $this;
+        $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 }

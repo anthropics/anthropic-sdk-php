@@ -80,14 +80,14 @@ final class SkillListParams implements BaseModel
         ?string $source = null,
         ?array $betas = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $limit && $obj['limit'] = $limit;
-        null !== $page && $obj['page'] = $page;
-        null !== $source && $obj['source'] = $source;
-        null !== $betas && $obj['betas'] = $betas;
+        null !== $limit && $self['limit'] = $limit;
+        null !== $page && $self['page'] = $page;
+        null !== $source && $self['source'] = $source;
+        null !== $betas && $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -97,10 +97,10 @@ final class SkillListParams implements BaseModel
      */
     public function withLimit(int $limit): self
     {
-        $obj = clone $this;
-        $obj['limit'] = $limit;
+        $self = clone $this;
+        $self['limit'] = $limit;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -110,10 +110,10 @@ final class SkillListParams implements BaseModel
      */
     public function withPage(?string $page): self
     {
-        $obj = clone $this;
-        $obj['page'] = $page;
+        $self = clone $this;
+        $self['page'] = $page;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -125,10 +125,10 @@ final class SkillListParams implements BaseModel
      */
     public function withSource(?string $source): self
     {
-        $obj = clone $this;
-        $obj['source'] = $source;
+        $self = clone $this;
+        $self['source'] = $source;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -138,9 +138,9 @@ final class SkillListParams implements BaseModel
      */
     public function withBetas(array $betas): self
     {
-        $obj = clone $this;
-        $obj['betas'] = $betas;
+        $self = clone $this;
+        $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 }

@@ -658,22 +658,22 @@ final class MessageCountTokensParams implements BaseModel
         ?array $tools = null,
         ?array $betas = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['messages'] = $messages;
-        $obj['model'] = $model;
+        $self['messages'] = $messages;
+        $self['model'] = $model;
 
-        null !== $contextManagement && $obj['contextManagement'] = $contextManagement;
-        null !== $mcpServers && $obj['mcpServers'] = $mcpServers;
-        null !== $outputConfig && $obj['outputConfig'] = $outputConfig;
-        null !== $outputFormat && $obj['outputFormat'] = $outputFormat;
-        null !== $system && $obj['system'] = $system;
-        null !== $thinking && $obj['thinking'] = $thinking;
-        null !== $toolChoice && $obj['toolChoice'] = $toolChoice;
-        null !== $tools && $obj['tools'] = $tools;
-        null !== $betas && $obj['betas'] = $betas;
+        null !== $contextManagement && $self['contextManagement'] = $contextManagement;
+        null !== $mcpServers && $self['mcpServers'] = $mcpServers;
+        null !== $outputConfig && $self['outputConfig'] = $outputConfig;
+        null !== $outputFormat && $self['outputFormat'] = $outputFormat;
+        null !== $system && $self['system'] = $system;
+        null !== $thinking && $self['thinking'] = $thinking;
+        null !== $toolChoice && $self['toolChoice'] = $toolChoice;
+        null !== $tools && $self['tools'] = $tools;
+        null !== $betas && $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -733,10 +733,10 @@ final class MessageCountTokensParams implements BaseModel
      */
     public function withMessages(array $messages): self
     {
-        $obj = clone $this;
-        $obj['messages'] = $messages;
+        $self = clone $this;
+        $self['messages'] = $messages;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -744,10 +744,10 @@ final class MessageCountTokensParams implements BaseModel
      */
     public function withModel(string|Model $model): self
     {
-        $obj = clone $this;
-        $obj['model'] = $model;
+        $self = clone $this;
+        $self['model'] = $model;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -762,10 +762,10 @@ final class MessageCountTokensParams implements BaseModel
     public function withContextManagement(
         BetaContextManagementConfig|array|null $contextManagement
     ): self {
-        $obj = clone $this;
-        $obj['contextManagement'] = $contextManagement;
+        $self = clone $this;
+        $self['contextManagement'] = $contextManagement;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -781,10 +781,10 @@ final class MessageCountTokensParams implements BaseModel
      */
     public function withMCPServers(array $mcpServers): self
     {
-        $obj = clone $this;
-        $obj['mcpServers'] = $mcpServers;
+        $self = clone $this;
+        $self['mcpServers'] = $mcpServers;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -794,10 +794,10 @@ final class MessageCountTokensParams implements BaseModel
      */
     public function withOutputConfig(BetaOutputConfig|array $outputConfig): self
     {
-        $obj = clone $this;
-        $obj['outputConfig'] = $outputConfig;
+        $self = clone $this;
+        $self['outputConfig'] = $outputConfig;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -810,10 +810,10 @@ final class MessageCountTokensParams implements BaseModel
     public function withOutputFormat(
         BetaJSONOutputFormat|array|null $outputFormat
     ): self {
-        $obj = clone $this;
-        $obj['outputFormat'] = $outputFormat;
+        $self = clone $this;
+        $self['outputFormat'] = $outputFormat;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -830,10 +830,10 @@ final class MessageCountTokensParams implements BaseModel
      */
     public function withSystem(string|array $system): self
     {
-        $obj = clone $this;
-        $obj['system'] = $system;
+        $self = clone $this;
+        $self['system'] = $system;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -850,10 +850,10 @@ final class MessageCountTokensParams implements BaseModel
     public function withThinking(
         BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled $thinking
     ): self {
-        $obj = clone $this;
-        $obj['thinking'] = $thinking;
+        $self = clone $this;
+        $self['thinking'] = $thinking;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -870,10 +870,10 @@ final class MessageCountTokensParams implements BaseModel
     public function withToolChoice(
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone $toolChoice,
     ): self {
-        $obj = clone $this;
-        $obj['toolChoice'] = $toolChoice;
+        $self = clone $this;
+        $self['toolChoice'] = $toolChoice;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -1101,10 +1101,10 @@ final class MessageCountTokensParams implements BaseModel
      */
     public function withTools(array $tools): self
     {
-        $obj = clone $this;
-        $obj['tools'] = $tools;
+        $self = clone $this;
+        $self['tools'] = $tools;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -1114,9 +1114,9 @@ final class MessageCountTokensParams implements BaseModel
      */
     public function withBetas(array $betas): self
     {
-        $obj = clone $this;
-        $obj['betas'] = $betas;
+        $self = clone $this;
+        $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 }

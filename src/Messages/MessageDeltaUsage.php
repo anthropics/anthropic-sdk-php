@@ -96,15 +96,15 @@ final class MessageDeltaUsage implements BaseModel
         int $outputTokens,
         ServerToolUsage|array|null $serverToolUse,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['cacheCreationInputTokens'] = $cacheCreationInputTokens;
-        $obj['cacheReadInputTokens'] = $cacheReadInputTokens;
-        $obj['inputTokens'] = $inputTokens;
-        $obj['outputTokens'] = $outputTokens;
-        $obj['serverToolUse'] = $serverToolUse;
+        $self['cacheCreationInputTokens'] = $cacheCreationInputTokens;
+        $self['cacheReadInputTokens'] = $cacheReadInputTokens;
+        $self['inputTokens'] = $inputTokens;
+        $self['outputTokens'] = $outputTokens;
+        $self['serverToolUse'] = $serverToolUse;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -113,10 +113,10 @@ final class MessageDeltaUsage implements BaseModel
     public function withCacheCreationInputTokens(
         ?int $cacheCreationInputTokens
     ): self {
-        $obj = clone $this;
-        $obj['cacheCreationInputTokens'] = $cacheCreationInputTokens;
+        $self = clone $this;
+        $self['cacheCreationInputTokens'] = $cacheCreationInputTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -124,10 +124,10 @@ final class MessageDeltaUsage implements BaseModel
      */
     public function withCacheReadInputTokens(?int $cacheReadInputTokens): self
     {
-        $obj = clone $this;
-        $obj['cacheReadInputTokens'] = $cacheReadInputTokens;
+        $self = clone $this;
+        $self['cacheReadInputTokens'] = $cacheReadInputTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -135,10 +135,10 @@ final class MessageDeltaUsage implements BaseModel
      */
     public function withInputTokens(?int $inputTokens): self
     {
-        $obj = clone $this;
-        $obj['inputTokens'] = $inputTokens;
+        $self = clone $this;
+        $self['inputTokens'] = $inputTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -146,10 +146,10 @@ final class MessageDeltaUsage implements BaseModel
      */
     public function withOutputTokens(int $outputTokens): self
     {
-        $obj = clone $this;
-        $obj['outputTokens'] = $outputTokens;
+        $self = clone $this;
+        $self['outputTokens'] = $outputTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -160,9 +160,9 @@ final class MessageDeltaUsage implements BaseModel
     public function withServerToolUse(
         ServerToolUsage|array|null $serverToolUse
     ): self {
-        $obj = clone $this;
-        $obj['serverToolUse'] = $serverToolUse;
+        $self = clone $this;
+        $self['serverToolUse'] = $serverToolUse;
 
-        return $obj;
+        return $self;
     }
 }

@@ -51,18 +51,18 @@ final class BetaTextEditorCodeExecutionCreateResultBlock implements BaseModel
      */
     public static function with(bool $isFileUpdate): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['isFileUpdate'] = $isFileUpdate;
+        $self['isFileUpdate'] = $isFileUpdate;
 
-        return $obj;
+        return $self;
     }
 
     public function withIsFileUpdate(bool $isFileUpdate): self
     {
-        $obj = clone $this;
-        $obj['isFileUpdate'] = $isFileUpdate;
+        $self = clone $this;
+        $self['isFileUpdate'] = $isFileUpdate;
 
-        return $obj;
+        return $self;
     }
 }

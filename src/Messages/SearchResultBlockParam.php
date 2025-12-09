@@ -90,16 +90,16 @@ final class SearchResultBlockParam implements BaseModel
         CacheControlEphemeral|array|null $cacheControl = null,
         CitationsConfigParam|array|null $citations = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['content'] = $content;
-        $obj['source'] = $source;
-        $obj['title'] = $title;
+        $self['content'] = $content;
+        $self['source'] = $source;
+        $self['title'] = $title;
 
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
-        null !== $citations && $obj['citations'] = $citations;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $citations && $self['citations'] = $citations;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -112,26 +112,26 @@ final class SearchResultBlockParam implements BaseModel
      */
     public function withContent(array $content): self
     {
-        $obj = clone $this;
-        $obj['content'] = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     public function withSource(string $source): self
     {
-        $obj = clone $this;
-        $obj['source'] = $source;
+        $self = clone $this;
+        $self['source'] = $source;
 
-        return $obj;
+        return $self;
     }
 
     public function withTitle(string $title): self
     {
-        $obj = clone $this;
-        $obj['title'] = $title;
+        $self = clone $this;
+        $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -144,10 +144,10 @@ final class SearchResultBlockParam implements BaseModel
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -155,9 +155,9 @@ final class SearchResultBlockParam implements BaseModel
      */
     public function withCitations(CitationsConfigParam|array $citations): self
     {
-        $obj = clone $this;
-        $obj['citations'] = $citations;
+        $self = clone $this;
+        $self['citations'] = $citations;
 
-        return $obj;
+        return $self;
     }
 }

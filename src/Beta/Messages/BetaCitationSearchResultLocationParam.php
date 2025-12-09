@@ -91,63 +91,63 @@ final class BetaCitationSearchResultLocationParam implements BaseModel
         int $startBlockIndex,
         ?string $title,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['citedText'] = $citedText;
-        $obj['endBlockIndex'] = $endBlockIndex;
-        $obj['searchResultIndex'] = $searchResultIndex;
-        $obj['source'] = $source;
-        $obj['startBlockIndex'] = $startBlockIndex;
-        $obj['title'] = $title;
+        $self['citedText'] = $citedText;
+        $self['endBlockIndex'] = $endBlockIndex;
+        $self['searchResultIndex'] = $searchResultIndex;
+        $self['source'] = $source;
+        $self['startBlockIndex'] = $startBlockIndex;
+        $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 
     public function withCitedText(string $citedText): self
     {
-        $obj = clone $this;
-        $obj['citedText'] = $citedText;
+        $self = clone $this;
+        $self['citedText'] = $citedText;
 
-        return $obj;
+        return $self;
     }
 
     public function withEndBlockIndex(int $endBlockIndex): self
     {
-        $obj = clone $this;
-        $obj['endBlockIndex'] = $endBlockIndex;
+        $self = clone $this;
+        $self['endBlockIndex'] = $endBlockIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withSearchResultIndex(int $searchResultIndex): self
     {
-        $obj = clone $this;
-        $obj['searchResultIndex'] = $searchResultIndex;
+        $self = clone $this;
+        $self['searchResultIndex'] = $searchResultIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withSource(string $source): self
     {
-        $obj = clone $this;
-        $obj['source'] = $source;
+        $self = clone $this;
+        $self['source'] = $source;
 
-        return $obj;
+        return $self;
     }
 
     public function withStartBlockIndex(int $startBlockIndex): self
     {
-        $obj = clone $this;
-        $obj['startBlockIndex'] = $startBlockIndex;
+        $self = clone $this;
+        $self['startBlockIndex'] = $startBlockIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withTitle(?string $title): self
     {
-        $obj = clone $this;
-        $obj['title'] = $title;
+        $self = clone $this;
+        $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 }

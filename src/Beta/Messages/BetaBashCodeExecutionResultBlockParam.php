@@ -79,14 +79,14 @@ final class BetaBashCodeExecutionResultBlockParam implements BaseModel
         string $stderr,
         string $stdout
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['content'] = $content;
-        $obj['returnCode'] = $returnCode;
-        $obj['stderr'] = $stderr;
-        $obj['stdout'] = $stdout;
+        $self['content'] = $content;
+        $self['returnCode'] = $returnCode;
+        $self['stderr'] = $stderr;
+        $self['stdout'] = $stdout;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -96,33 +96,33 @@ final class BetaBashCodeExecutionResultBlockParam implements BaseModel
      */
     public function withContent(array $content): self
     {
-        $obj = clone $this;
-        $obj['content'] = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     public function withReturnCode(int $returnCode): self
     {
-        $obj = clone $this;
-        $obj['returnCode'] = $returnCode;
+        $self = clone $this;
+        $self['returnCode'] = $returnCode;
 
-        return $obj;
+        return $self;
     }
 
     public function withStderr(string $stderr): self
     {
-        $obj = clone $this;
-        $obj['stderr'] = $stderr;
+        $self = clone $this;
+        $self['stderr'] = $stderr;
 
-        return $obj;
+        return $self;
     }
 
     public function withStdout(string $stdout): self
     {
-        $obj = clone $this;
-        $obj['stdout'] = $stdout;
+        $self = clone $this;
+        $self['stdout'] = $stdout;
 
-        return $obj;
+        return $self;
     }
 }

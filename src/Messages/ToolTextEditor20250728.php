@@ -67,12 +67,12 @@ final class ToolTextEditor20250728 implements BaseModel
         CacheControlEphemeral|array|null $cacheControl = null,
         ?int $maxCharacters = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
-        null !== $maxCharacters && $obj['maxCharacters'] = $maxCharacters;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $maxCharacters && $self['maxCharacters'] = $maxCharacters;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -85,10 +85,10 @@ final class ToolTextEditor20250728 implements BaseModel
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -96,9 +96,9 @@ final class ToolTextEditor20250728 implements BaseModel
      */
     public function withMaxCharacters(?int $maxCharacters): self
     {
-        $obj = clone $this;
-        $obj['maxCharacters'] = $maxCharacters;
+        $self = clone $this;
+        $self['maxCharacters'] = $maxCharacters;
 
-        return $obj;
+        return $self;
     }
 }

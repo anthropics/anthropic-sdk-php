@@ -84,54 +84,54 @@ final class CitationCharLocationParam implements BaseModel
         int $endCharIndex,
         int $startCharIndex,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['citedText'] = $citedText;
-        $obj['documentIndex'] = $documentIndex;
-        $obj['documentTitle'] = $documentTitle;
-        $obj['endCharIndex'] = $endCharIndex;
-        $obj['startCharIndex'] = $startCharIndex;
+        $self['citedText'] = $citedText;
+        $self['documentIndex'] = $documentIndex;
+        $self['documentTitle'] = $documentTitle;
+        $self['endCharIndex'] = $endCharIndex;
+        $self['startCharIndex'] = $startCharIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withCitedText(string $citedText): self
     {
-        $obj = clone $this;
-        $obj['citedText'] = $citedText;
+        $self = clone $this;
+        $self['citedText'] = $citedText;
 
-        return $obj;
+        return $self;
     }
 
     public function withDocumentIndex(int $documentIndex): self
     {
-        $obj = clone $this;
-        $obj['documentIndex'] = $documentIndex;
+        $self = clone $this;
+        $self['documentIndex'] = $documentIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withDocumentTitle(?string $documentTitle): self
     {
-        $obj = clone $this;
-        $obj['documentTitle'] = $documentTitle;
+        $self = clone $this;
+        $self['documentTitle'] = $documentTitle;
 
-        return $obj;
+        return $self;
     }
 
     public function withEndCharIndex(int $endCharIndex): self
     {
-        $obj = clone $this;
-        $obj['endCharIndex'] = $endCharIndex;
+        $self = clone $this;
+        $self['endCharIndex'] = $endCharIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withStartCharIndex(int $startCharIndex): self
     {
-        $obj = clone $this;
-        $obj['startCharIndex'] = $startCharIndex;
+        $self = clone $this;
+        $self['startCharIndex'] = $startCharIndex;
 
-        return $obj;
+        return $self;
     }
 }

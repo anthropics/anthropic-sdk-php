@@ -51,12 +51,12 @@ final class BetaContainerParams implements BaseModel
      */
     public static function with(?string $id = null, ?array $skills = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        null !== $id && $obj['id'] = $id;
-        null !== $skills && $obj['skills'] = $skills;
+        null !== $id && $self['id'] = $id;
+        null !== $skills && $self['skills'] = $skills;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -64,10 +64,10 @@ final class BetaContainerParams implements BaseModel
      */
     public function withID(?string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -79,9 +79,9 @@ final class BetaContainerParams implements BaseModel
      */
     public function withSkills(?array $skills): self
     {
-        $obj = clone $this;
-        $obj['skills'] = $skills;
+        $self = clone $this;
+        $self['skills'] = $skills;
 
-        return $obj;
+        return $self;
     }
 }

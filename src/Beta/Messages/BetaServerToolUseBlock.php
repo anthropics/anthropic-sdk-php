@@ -85,22 +85,22 @@ final class BetaServerToolUseBlock implements BaseModel
         Name|string $name,
         BetaDirectCaller|array|BetaServerToolCaller $caller = ['type' => 'direct'],
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['caller'] = $caller;
-        $obj['input'] = $input;
-        $obj['name'] = $name;
+        $self['id'] = $id;
+        $self['caller'] = $caller;
+        $self['input'] = $input;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -113,10 +113,10 @@ final class BetaServerToolUseBlock implements BaseModel
     public function withCaller(
         BetaDirectCaller|array|BetaServerToolCaller $caller
     ): self {
-        $obj = clone $this;
-        $obj['caller'] = $caller;
+        $self = clone $this;
+        $self['caller'] = $caller;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -124,10 +124,10 @@ final class BetaServerToolUseBlock implements BaseModel
      */
     public function withInput(array $input): self
     {
-        $obj = clone $this;
-        $obj['input'] = $input;
+        $self = clone $this;
+        $self['input'] = $input;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -135,9 +135,9 @@ final class BetaServerToolUseBlock implements BaseModel
      */
     public function withName(Name|string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 }

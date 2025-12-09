@@ -136,18 +136,18 @@ final class VersionListResponse implements BaseModel
         string $version,
         string $type = 'skill_version',
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['createdAt'] = $createdAt;
-        $obj['description'] = $description;
-        $obj['directory'] = $directory;
-        $obj['name'] = $name;
-        $obj['skillID'] = $skillID;
-        $obj['type'] = $type;
-        $obj['version'] = $version;
+        $self['id'] = $id;
+        $self['createdAt'] = $createdAt;
+        $self['description'] = $description;
+        $self['directory'] = $directory;
+        $self['name'] = $name;
+        $self['skillID'] = $skillID;
+        $self['type'] = $type;
+        $self['version'] = $version;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -157,10 +157,10 @@ final class VersionListResponse implements BaseModel
      */
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -168,10 +168,10 @@ final class VersionListResponse implements BaseModel
      */
     public function withCreatedAt(string $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -181,10 +181,10 @@ final class VersionListResponse implements BaseModel
      */
     public function withDescription(string $description): self
     {
-        $obj = clone $this;
-        $obj['description'] = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -194,10 +194,10 @@ final class VersionListResponse implements BaseModel
      */
     public function withDirectory(string $directory): self
     {
-        $obj = clone $this;
-        $obj['directory'] = $directory;
+        $self = clone $this;
+        $self['directory'] = $directory;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -207,10 +207,10 @@ final class VersionListResponse implements BaseModel
      */
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -218,10 +218,10 @@ final class VersionListResponse implements BaseModel
      */
     public function withSkillID(string $skillID): self
     {
-        $obj = clone $this;
-        $obj['skillID'] = $skillID;
+        $self = clone $this;
+        $self['skillID'] = $skillID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -231,10 +231,10 @@ final class VersionListResponse implements BaseModel
      */
     public function withType(string $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -244,9 +244,9 @@ final class VersionListResponse implements BaseModel
      */
     public function withVersion(string $version): self
     {
-        $obj = clone $this;
-        $obj['version'] = $version;
+        $self = clone $this;
+        $self['version'] = $version;
 
-        return $obj;
+        return $self;
     }
 }

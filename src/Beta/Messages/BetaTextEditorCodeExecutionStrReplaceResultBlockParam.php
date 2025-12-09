@@ -63,15 +63,15 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
         ?int $oldLines = null,
         ?int $oldStart = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $lines && $obj['lines'] = $lines;
-        null !== $newLines && $obj['newLines'] = $newLines;
-        null !== $newStart && $obj['newStart'] = $newStart;
-        null !== $oldLines && $obj['oldLines'] = $oldLines;
-        null !== $oldStart && $obj['oldStart'] = $oldStart;
+        null !== $lines && $self['lines'] = $lines;
+        null !== $newLines && $self['newLines'] = $newLines;
+        null !== $newStart && $self['newStart'] = $newStart;
+        null !== $oldLines && $self['oldLines'] = $oldLines;
+        null !== $oldStart && $self['oldStart'] = $oldStart;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -79,41 +79,41 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
      */
     public function withLines(?array $lines): self
     {
-        $obj = clone $this;
-        $obj['lines'] = $lines;
+        $self = clone $this;
+        $self['lines'] = $lines;
 
-        return $obj;
+        return $self;
     }
 
     public function withNewLines(?int $newLines): self
     {
-        $obj = clone $this;
-        $obj['newLines'] = $newLines;
+        $self = clone $this;
+        $self['newLines'] = $newLines;
 
-        return $obj;
+        return $self;
     }
 
     public function withNewStart(?int $newStart): self
     {
-        $obj = clone $this;
-        $obj['newStart'] = $newStart;
+        $self = clone $this;
+        $self['newStart'] = $newStart;
 
-        return $obj;
+        return $self;
     }
 
     public function withOldLines(?int $oldLines): self
     {
-        $obj = clone $this;
-        $obj['oldLines'] = $oldLines;
+        $self = clone $this;
+        $self['oldLines'] = $oldLines;
 
-        return $obj;
+        return $self;
     }
 
     public function withOldStart(?int $oldStart): self
     {
-        $obj = clone $this;
-        $obj['oldStart'] = $oldStart;
+        $self = clone $this;
+        $self['oldStart'] = $oldStart;
 
-        return $obj;
+        return $self;
     }
 }

@@ -39,11 +39,11 @@ final class BetaOutputConfig implements BaseModel
      */
     public static function with(Effort|string|null $effort = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        null !== $effort && $obj['effort'] = $effort;
+        null !== $effort && $self['effort'] = $effort;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -53,9 +53,9 @@ final class BetaOutputConfig implements BaseModel
      */
     public function withEffort(Effort|string|null $effort): self
     {
-        $obj = clone $this;
-        $obj['effort'] = $effort;
+        $self = clone $this;
+        $self['effort'] = $effort;
 
-        return $obj;
+        return $self;
     }
 }

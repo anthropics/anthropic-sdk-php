@@ -91,24 +91,24 @@ final class BetaMCPToolUseBlockParam implements BaseModel
         string $serverName,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['input'] = $input;
-        $obj['name'] = $name;
-        $obj['serverName'] = $serverName;
+        $self['id'] = $id;
+        $self['input'] = $input;
+        $self['name'] = $name;
+        $self['serverName'] = $serverName;
 
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -116,18 +116,18 @@ final class BetaMCPToolUseBlockParam implements BaseModel
      */
     public function withInput(array $input): self
     {
-        $obj = clone $this;
-        $obj['input'] = $input;
+        $self = clone $this;
+        $self['input'] = $input;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -135,10 +135,10 @@ final class BetaMCPToolUseBlockParam implements BaseModel
      */
     public function withServerName(string $serverName): self
     {
-        $obj = clone $this;
-        $obj['serverName'] = $serverName;
+        $self = clone $this;
+        $self['serverName'] = $serverName;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -151,9 +151,9 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 }

@@ -79,12 +79,12 @@ final class RawMessageDeltaEvent implements BaseModel
         Delta|array $delta,
         MessageDeltaUsage|array $usage
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['delta'] = $delta;
-        $obj['usage'] = $usage;
+        $self['delta'] = $delta;
+        $self['usage'] = $usage;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -94,10 +94,10 @@ final class RawMessageDeltaEvent implements BaseModel
      */
     public function withDelta(Delta|array $delta): self
     {
-        $obj = clone $this;
-        $obj['delta'] = $delta;
+        $self = clone $this;
+        $self['delta'] = $delta;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -121,9 +121,9 @@ final class RawMessageDeltaEvent implements BaseModel
      */
     public function withUsage(MessageDeltaUsage|array $usage): self
     {
-        $obj = clone $this;
-        $obj['usage'] = $usage;
+        $self = clone $this;
+        $self['usage'] = $usage;
 
-        return $obj;
+        return $self;
     }
 }

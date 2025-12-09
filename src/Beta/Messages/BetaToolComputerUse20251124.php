@@ -136,20 +136,20 @@ final class BetaToolComputerUse20251124 implements BaseModel
         ?array $inputExamples = null,
         ?bool $strict = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['displayHeightPx'] = $displayHeightPx;
-        $obj['displayWidthPx'] = $displayWidthPx;
+        $self['displayHeightPx'] = $displayHeightPx;
+        $self['displayWidthPx'] = $displayWidthPx;
 
-        null !== $allowedCallers && $obj['allowedCallers'] = $allowedCallers;
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
-        null !== $deferLoading && $obj['deferLoading'] = $deferLoading;
-        null !== $displayNumber && $obj['displayNumber'] = $displayNumber;
-        null !== $enableZoom && $obj['enableZoom'] = $enableZoom;
-        null !== $inputExamples && $obj['inputExamples'] = $inputExamples;
-        null !== $strict && $obj['strict'] = $strict;
+        null !== $allowedCallers && $self['allowedCallers'] = $allowedCallers;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $deferLoading && $self['deferLoading'] = $deferLoading;
+        null !== $displayNumber && $self['displayNumber'] = $displayNumber;
+        null !== $enableZoom && $self['enableZoom'] = $enableZoom;
+        null !== $inputExamples && $self['inputExamples'] = $inputExamples;
+        null !== $strict && $self['strict'] = $strict;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -157,10 +157,10 @@ final class BetaToolComputerUse20251124 implements BaseModel
      */
     public function withDisplayHeightPx(int $displayHeightPx): self
     {
-        $obj = clone $this;
-        $obj['displayHeightPx'] = $displayHeightPx;
+        $self = clone $this;
+        $self['displayHeightPx'] = $displayHeightPx;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -168,10 +168,10 @@ final class BetaToolComputerUse20251124 implements BaseModel
      */
     public function withDisplayWidthPx(int $displayWidthPx): self
     {
-        $obj = clone $this;
-        $obj['displayWidthPx'] = $displayWidthPx;
+        $self = clone $this;
+        $self['displayWidthPx'] = $displayWidthPx;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -179,10 +179,10 @@ final class BetaToolComputerUse20251124 implements BaseModel
      */
     public function withAllowedCallers(array $allowedCallers): self
     {
-        $obj = clone $this;
-        $obj['allowedCallers'] = $allowedCallers;
+        $self = clone $this;
+        $self['allowedCallers'] = $allowedCallers;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -195,10 +195,10 @@ final class BetaToolComputerUse20251124 implements BaseModel
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -206,10 +206,10 @@ final class BetaToolComputerUse20251124 implements BaseModel
      */
     public function withDeferLoading(bool $deferLoading): self
     {
-        $obj = clone $this;
-        $obj['deferLoading'] = $deferLoading;
+        $self = clone $this;
+        $self['deferLoading'] = $deferLoading;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -217,10 +217,10 @@ final class BetaToolComputerUse20251124 implements BaseModel
      */
     public function withDisplayNumber(?int $displayNumber): self
     {
-        $obj = clone $this;
-        $obj['displayNumber'] = $displayNumber;
+        $self = clone $this;
+        $self['displayNumber'] = $displayNumber;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -228,10 +228,10 @@ final class BetaToolComputerUse20251124 implements BaseModel
      */
     public function withEnableZoom(bool $enableZoom): self
     {
-        $obj = clone $this;
-        $obj['enableZoom'] = $enableZoom;
+        $self = clone $this;
+        $self['enableZoom'] = $enableZoom;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -239,17 +239,17 @@ final class BetaToolComputerUse20251124 implements BaseModel
      */
     public function withInputExamples(array $inputExamples): self
     {
-        $obj = clone $this;
-        $obj['inputExamples'] = $inputExamples;
+        $self = clone $this;
+        $self['inputExamples'] = $inputExamples;
 
-        return $obj;
+        return $self;
     }
 
     public function withStrict(bool $strict): self
     {
-        $obj = clone $this;
-        $obj['strict'] = $strict;
+        $self = clone $this;
+        $self['strict'] = $strict;
 
-        return $obj;
+        return $self;
     }
 }

@@ -65,11 +65,11 @@ final class BetaRawMessageStartEvent implements BaseModel
      */
     public static function with(BetaMessage|array $message): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['message'] = $message;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -88,9 +88,9 @@ final class BetaRawMessageStartEvent implements BaseModel
      */
     public function withMessage(BetaMessage|array $message): self
     {
-        $obj = clone $this;
-        $obj['message'] = $message;
+        $self = clone $this;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 }

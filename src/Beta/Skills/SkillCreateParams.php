@@ -71,13 +71,13 @@ final class SkillCreateParams implements BaseModel
         ?array $files = null,
         ?array $betas = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $displayTitle && $obj['displayTitle'] = $displayTitle;
-        null !== $files && $obj['files'] = $files;
-        null !== $betas && $obj['betas'] = $betas;
+        null !== $displayTitle && $self['displayTitle'] = $displayTitle;
+        null !== $files && $self['files'] = $files;
+        null !== $betas && $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -87,10 +87,10 @@ final class SkillCreateParams implements BaseModel
      */
     public function withDisplayTitle(?string $displayTitle): self
     {
-        $obj = clone $this;
-        $obj['displayTitle'] = $displayTitle;
+        $self = clone $this;
+        $self['displayTitle'] = $displayTitle;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -102,10 +102,10 @@ final class SkillCreateParams implements BaseModel
      */
     public function withFiles(?array $files): self
     {
-        $obj = clone $this;
-        $obj['files'] = $files;
+        $self = clone $this;
+        $self['files'] = $files;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -115,9 +115,9 @@ final class SkillCreateParams implements BaseModel
      */
     public function withBetas(array $betas): self
     {
-        $obj = clone $this;
-        $obj['betas'] = $betas;
+        $self = clone $this;
+        $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 }

@@ -78,13 +78,13 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
         string $oldStr,
         string $path
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['newStr'] = $newStr;
-        $obj['oldStr'] = $oldStr;
-        $obj['path'] = $path;
+        $self['newStr'] = $newStr;
+        $self['oldStr'] = $oldStr;
+        $self['path'] = $path;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -92,10 +92,10 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
      */
     public function withNewStr(string $newStr): self
     {
-        $obj = clone $this;
-        $obj['newStr'] = $newStr;
+        $self = clone $this;
+        $self['newStr'] = $newStr;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -103,10 +103,10 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
      */
     public function withOldStr(string $oldStr): self
     {
-        $obj = clone $this;
-        $obj['oldStr'] = $oldStr;
+        $self = clone $this;
+        $self['oldStr'] = $oldStr;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -114,9 +114,9 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
      */
     public function withPath(string $path): self
     {
-        $obj = clone $this;
-        $obj['path'] = $path;
+        $self = clone $this;
+        $self['path'] = $path;
 
-        return $obj;
+        return $self;
     }
 }

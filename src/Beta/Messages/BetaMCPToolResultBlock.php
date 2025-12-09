@@ -74,13 +74,13 @@ final class BetaMCPToolResultBlock implements BaseModel
         string $toolUseID,
         bool $isError = false
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['content'] = $content;
-        $obj['isError'] = $isError;
-        $obj['toolUseID'] = $toolUseID;
+        $self['content'] = $content;
+        $self['isError'] = $isError;
+        $self['toolUseID'] = $toolUseID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -92,25 +92,25 @@ final class BetaMCPToolResultBlock implements BaseModel
      */
     public function withContent(string|array $content): self
     {
-        $obj = clone $this;
-        $obj['content'] = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     public function withIsError(bool $isError): self
     {
-        $obj = clone $this;
-        $obj['isError'] = $isError;
+        $self = clone $this;
+        $self['isError'] = $isError;
 
-        return $obj;
+        return $self;
     }
 
     public function withToolUseID(string $toolUseID): self
     {
-        $obj = clone $this;
-        $obj['toolUseID'] = $toolUseID;
+        $self = clone $this;
+        $self['toolUseID'] = $toolUseID;
 
-        return $obj;
+        return $self;
     }
 }

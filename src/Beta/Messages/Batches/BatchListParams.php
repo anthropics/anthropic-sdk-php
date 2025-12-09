@@ -76,14 +76,14 @@ final class BatchListParams implements BaseModel
         ?int $limit = null,
         ?array $betas = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $afterID && $obj['afterID'] = $afterID;
-        null !== $beforeID && $obj['beforeID'] = $beforeID;
-        null !== $limit && $obj['limit'] = $limit;
-        null !== $betas && $obj['betas'] = $betas;
+        null !== $afterID && $self['afterID'] = $afterID;
+        null !== $beforeID && $self['beforeID'] = $beforeID;
+        null !== $limit && $self['limit'] = $limit;
+        null !== $betas && $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -91,10 +91,10 @@ final class BatchListParams implements BaseModel
      */
     public function withAfterID(string $afterID): self
     {
-        $obj = clone $this;
-        $obj['afterID'] = $afterID;
+        $self = clone $this;
+        $self['afterID'] = $afterID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -102,10 +102,10 @@ final class BatchListParams implements BaseModel
      */
     public function withBeforeID(string $beforeID): self
     {
-        $obj = clone $this;
-        $obj['beforeID'] = $beforeID;
+        $self = clone $this;
+        $self['beforeID'] = $beforeID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -115,10 +115,10 @@ final class BatchListParams implements BaseModel
      */
     public function withLimit(int $limit): self
     {
-        $obj = clone $this;
-        $obj['limit'] = $limit;
+        $self = clone $this;
+        $self['limit'] = $limit;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -128,9 +128,9 @@ final class BatchListParams implements BaseModel
      */
     public function withBetas(array $betas): self
     {
-        $obj = clone $this;
-        $obj['betas'] = $betas;
+        $self = clone $this;
+        $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 }

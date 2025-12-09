@@ -122,12 +122,12 @@ final class BetaRawContentBlockStartEvent implements BaseModel
         BetaTextBlock|array|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock $contentBlock,
         int $index,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['contentBlock'] = $contentBlock;
-        $obj['index'] = $index;
+        $self['contentBlock'] = $contentBlock;
+        $self['index'] = $index;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -195,17 +195,17 @@ final class BetaRawContentBlockStartEvent implements BaseModel
     public function withContentBlock(
         BetaTextBlock|array|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock $contentBlock,
     ): self {
-        $obj = clone $this;
-        $obj['contentBlock'] = $contentBlock;
+        $self = clone $this;
+        $self['contentBlock'] = $contentBlock;
 
-        return $obj;
+        return $self;
     }
 
     public function withIndex(int $index): self
     {
-        $obj = clone $this;
-        $obj['index'] = $index;
+        $self = clone $this;
+        $self['index'] = $index;
 
-        return $obj;
+        return $self;
     }
 }

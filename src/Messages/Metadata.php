@@ -36,11 +36,11 @@ final class Metadata implements BaseModel
      */
     public static function with(?string $userID = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        null !== $userID && $obj['userID'] = $userID;
+        null !== $userID && $self['userID'] = $userID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -50,9 +50,9 @@ final class Metadata implements BaseModel
      */
     public function withUserID(?string $userID): self
     {
-        $obj = clone $this;
-        $obj['userID'] = $userID;
+        $self = clone $this;
+        $self['userID'] = $userID;
 
-        return $obj;
+        return $self;
     }
 }

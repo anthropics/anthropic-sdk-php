@@ -59,11 +59,11 @@ final class BetaToolSearchToolSearchResultBlockParam implements BaseModel
      */
     public static function with(array $toolReferences): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['toolReferences'] = $toolReferences;
+        $self['toolReferences'] = $toolReferences;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -75,9 +75,9 @@ final class BetaToolSearchToolSearchResultBlockParam implements BaseModel
      */
     public function withToolReferences(array $toolReferences): self
     {
-        $obj = clone $this;
-        $obj['toolReferences'] = $toolReferences;
+        $self = clone $this;
+        $self['toolReferences'] = $toolReferences;
 
-        return $obj;
+        return $self;
     }
 }

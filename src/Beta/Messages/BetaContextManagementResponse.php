@@ -63,11 +63,11 @@ final class BetaContextManagementResponse implements BaseModel
      */
     public static function with(array $appliedEdits): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['appliedEdits'] = $appliedEdits;
+        $self['appliedEdits'] = $appliedEdits;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -85,9 +85,9 @@ final class BetaContextManagementResponse implements BaseModel
      */
     public function withAppliedEdits(array $appliedEdits): self
     {
-        $obj = clone $this;
-        $obj['appliedEdits'] = $appliedEdits;
+        $self = clone $this;
+        $self['appliedEdits'] = $appliedEdits;
 
-        return $obj;
+        return $self;
     }
 }

@@ -51,18 +51,18 @@ final class BetaSignatureDelta implements BaseModel
      */
     public static function with(string $signature): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['signature'] = $signature;
+        $self['signature'] = $signature;
 
-        return $obj;
+        return $self;
     }
 
     public function withSignature(string $signature): self
     {
-        $obj = clone $this;
-        $obj['signature'] = $signature;
+        $self = clone $this;
+        $self['signature'] = $signature;
 
-        return $obj;
+        return $self;
     }
 }

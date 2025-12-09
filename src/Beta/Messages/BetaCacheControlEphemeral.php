@@ -52,11 +52,11 @@ final class BetaCacheControlEphemeral implements BaseModel
      */
     public static function with(TTL|string|null $ttl = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        null !== $ttl && $obj['ttl'] = $ttl;
+        null !== $ttl && $self['ttl'] = $ttl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -72,9 +72,9 @@ final class BetaCacheControlEphemeral implements BaseModel
      */
     public function withTTL(TTL|string $ttl): self
     {
-        $obj = clone $this;
-        $obj['ttl'] = $ttl;
+        $self = clone $this;
+        $self['ttl'] = $ttl;
 
-        return $obj;
+        return $self;
     }
 }

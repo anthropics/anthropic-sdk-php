@@ -105,23 +105,23 @@ final class ToolResultBlockParam implements BaseModel
         string|array|null $content = null,
         ?bool $isError = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['toolUseID'] = $toolUseID;
+        $self['toolUseID'] = $toolUseID;
 
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
-        null !== $content && $obj['content'] = $content;
-        null !== $isError && $obj['isError'] = $isError;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $content && $self['content'] = $content;
+        null !== $isError && $self['isError'] = $isError;
 
-        return $obj;
+        return $self;
     }
 
     public function withToolUseID(string $toolUseID): self
     {
-        $obj = clone $this;
-        $obj['toolUseID'] = $toolUseID;
+        $self = clone $this;
+        $self['toolUseID'] = $toolUseID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -134,10 +134,10 @@ final class ToolResultBlockParam implements BaseModel
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -168,17 +168,17 @@ final class ToolResultBlockParam implements BaseModel
      */
     public function withContent(string|array $content): self
     {
-        $obj = clone $this;
-        $obj['content'] = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     public function withIsError(bool $isError): self
     {
-        $obj = clone $this;
-        $obj['isError'] = $isError;
+        $self = clone $this;
+        $self['isError'] = $isError;
 
-        return $obj;
+        return $self;
     }
 }

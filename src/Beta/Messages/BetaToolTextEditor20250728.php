@@ -96,16 +96,16 @@ final class BetaToolTextEditor20250728 implements BaseModel
         ?int $maxCharacters = null,
         ?bool $strict = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $allowedCallers && $obj['allowedCallers'] = $allowedCallers;
-        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
-        null !== $deferLoading && $obj['deferLoading'] = $deferLoading;
-        null !== $inputExamples && $obj['inputExamples'] = $inputExamples;
-        null !== $maxCharacters && $obj['maxCharacters'] = $maxCharacters;
-        null !== $strict && $obj['strict'] = $strict;
+        null !== $allowedCallers && $self['allowedCallers'] = $allowedCallers;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $deferLoading && $self['deferLoading'] = $deferLoading;
+        null !== $inputExamples && $self['inputExamples'] = $inputExamples;
+        null !== $maxCharacters && $self['maxCharacters'] = $maxCharacters;
+        null !== $strict && $self['strict'] = $strict;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -113,10 +113,10 @@ final class BetaToolTextEditor20250728 implements BaseModel
      */
     public function withAllowedCallers(array $allowedCallers): self
     {
-        $obj = clone $this;
-        $obj['allowedCallers'] = $allowedCallers;
+        $self = clone $this;
+        $self['allowedCallers'] = $allowedCallers;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -129,10 +129,10 @@ final class BetaToolTextEditor20250728 implements BaseModel
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj['cacheControl'] = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -140,10 +140,10 @@ final class BetaToolTextEditor20250728 implements BaseModel
      */
     public function withDeferLoading(bool $deferLoading): self
     {
-        $obj = clone $this;
-        $obj['deferLoading'] = $deferLoading;
+        $self = clone $this;
+        $self['deferLoading'] = $deferLoading;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -151,10 +151,10 @@ final class BetaToolTextEditor20250728 implements BaseModel
      */
     public function withInputExamples(array $inputExamples): self
     {
-        $obj = clone $this;
-        $obj['inputExamples'] = $inputExamples;
+        $self = clone $this;
+        $self['inputExamples'] = $inputExamples;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -162,17 +162,17 @@ final class BetaToolTextEditor20250728 implements BaseModel
      */
     public function withMaxCharacters(?int $maxCharacters): self
     {
-        $obj = clone $this;
-        $obj['maxCharacters'] = $maxCharacters;
+        $self = clone $this;
+        $self['maxCharacters'] = $maxCharacters;
 
-        return $obj;
+        return $self;
     }
 
     public function withStrict(bool $strict): self
     {
-        $obj = clone $this;
-        $obj['strict'] = $strict;
+        $self = clone $this;
+        $self['strict'] = $strict;
 
-        return $obj;
+        return $self;
     }
 }

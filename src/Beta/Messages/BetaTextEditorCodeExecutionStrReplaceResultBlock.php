@@ -83,15 +83,15 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
         ?int $oldLines,
         ?int $oldStart,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['lines'] = $lines;
-        $obj['newLines'] = $newLines;
-        $obj['newStart'] = $newStart;
-        $obj['oldLines'] = $oldLines;
-        $obj['oldStart'] = $oldStart;
+        $self['lines'] = $lines;
+        $self['newLines'] = $newLines;
+        $self['newStart'] = $newStart;
+        $self['oldLines'] = $oldLines;
+        $self['oldStart'] = $oldStart;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -99,41 +99,41 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
      */
     public function withLines(?array $lines): self
     {
-        $obj = clone $this;
-        $obj['lines'] = $lines;
+        $self = clone $this;
+        $self['lines'] = $lines;
 
-        return $obj;
+        return $self;
     }
 
     public function withNewLines(?int $newLines): self
     {
-        $obj = clone $this;
-        $obj['newLines'] = $newLines;
+        $self = clone $this;
+        $self['newLines'] = $newLines;
 
-        return $obj;
+        return $self;
     }
 
     public function withNewStart(?int $newStart): self
     {
-        $obj = clone $this;
-        $obj['newStart'] = $newStart;
+        $self = clone $this;
+        $self['newStart'] = $newStart;
 
-        return $obj;
+        return $self;
     }
 
     public function withOldLines(?int $oldLines): self
     {
-        $obj = clone $this;
-        $obj['oldLines'] = $oldLines;
+        $self = clone $this;
+        $self['oldLines'] = $oldLines;
 
-        return $obj;
+        return $self;
     }
 
     public function withOldStart(?int $oldStart): self
     {
-        $obj = clone $this;
-        $obj['oldStart'] = $oldStart;
+        $self = clone $this;
+        $self['oldStart'] = $oldStart;
 
-        return $obj;
+        return $self;
     }
 }

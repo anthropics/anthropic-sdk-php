@@ -94,15 +94,15 @@ final class MessageBatchRequestCounts implements BaseModel
         int $processing = 0,
         int $succeeded = 0,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['canceled'] = $canceled;
-        $obj['errored'] = $errored;
-        $obj['expired'] = $expired;
-        $obj['processing'] = $processing;
-        $obj['succeeded'] = $succeeded;
+        $self['canceled'] = $canceled;
+        $self['errored'] = $errored;
+        $self['expired'] = $expired;
+        $self['processing'] = $processing;
+        $self['succeeded'] = $succeeded;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -112,10 +112,10 @@ final class MessageBatchRequestCounts implements BaseModel
      */
     public function withCanceled(int $canceled): self
     {
-        $obj = clone $this;
-        $obj['canceled'] = $canceled;
+        $self = clone $this;
+        $self['canceled'] = $canceled;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -125,10 +125,10 @@ final class MessageBatchRequestCounts implements BaseModel
      */
     public function withErrored(int $errored): self
     {
-        $obj = clone $this;
-        $obj['errored'] = $errored;
+        $self = clone $this;
+        $self['errored'] = $errored;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -138,10 +138,10 @@ final class MessageBatchRequestCounts implements BaseModel
      */
     public function withExpired(int $expired): self
     {
-        $obj = clone $this;
-        $obj['expired'] = $expired;
+        $self = clone $this;
+        $self['expired'] = $expired;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -149,10 +149,10 @@ final class MessageBatchRequestCounts implements BaseModel
      */
     public function withProcessing(int $processing): self
     {
-        $obj = clone $this;
-        $obj['processing'] = $processing;
+        $self = clone $this;
+        $self['processing'] = $processing;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -162,9 +162,9 @@ final class MessageBatchRequestCounts implements BaseModel
      */
     public function withSucceeded(int $succeeded): self
     {
-        $obj = clone $this;
-        $obj['succeeded'] = $succeeded;
+        $self = clone $this;
+        $self['succeeded'] = $succeeded;
 
-        return $obj;
+        return $self;
     }
 }

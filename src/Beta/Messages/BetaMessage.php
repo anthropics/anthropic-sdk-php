@@ -278,18 +278,18 @@ final class BetaMessage implements BaseModel
         ?string $stopSequence,
         BetaUsage|array $usage,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['container'] = $container;
-        $obj['content'] = $content;
-        $obj['contextManagement'] = $contextManagement;
-        $obj['model'] = $model;
-        $obj['stopReason'] = $stopReason;
-        $obj['stopSequence'] = $stopSequence;
-        $obj['usage'] = $usage;
+        $self['id'] = $id;
+        $self['container'] = $container;
+        $self['content'] = $content;
+        $self['contextManagement'] = $contextManagement;
+        $self['model'] = $model;
+        $self['stopReason'] = $stopReason;
+        $self['stopSequence'] = $stopSequence;
+        $self['usage'] = $usage;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -299,10 +299,10 @@ final class BetaMessage implements BaseModel
      */
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -314,10 +314,10 @@ final class BetaMessage implements BaseModel
      */
     public function withContainer(BetaContainer|array|null $container): self
     {
-        $obj = clone $this;
-        $obj['container'] = $container;
+        $self = clone $this;
+        $self['container'] = $container;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -408,10 +408,10 @@ final class BetaMessage implements BaseModel
      */
     public function withContent(array $content): self
     {
-        $obj = clone $this;
-        $obj['content'] = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -426,10 +426,10 @@ final class BetaMessage implements BaseModel
     public function withContextManagement(
         BetaContextManagementResponse|array|null $contextManagement
     ): self {
-        $obj = clone $this;
-        $obj['contextManagement'] = $contextManagement;
+        $self = clone $this;
+        $self['contextManagement'] = $contextManagement;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -437,10 +437,10 @@ final class BetaMessage implements BaseModel
      */
     public function withModel(string|Model $model): self
     {
-        $obj = clone $this;
-        $obj['model'] = $model;
+        $self = clone $this;
+        $self['model'] = $model;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -460,10 +460,10 @@ final class BetaMessage implements BaseModel
      */
     public function withStopReason(BetaStopReason|string|null $stopReason): self
     {
-        $obj = clone $this;
-        $obj['stopReason'] = $stopReason;
+        $self = clone $this;
+        $self['stopReason'] = $stopReason;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -473,10 +473,10 @@ final class BetaMessage implements BaseModel
      */
     public function withStopSequence(?string $stopSequence): self
     {
-        $obj = clone $this;
-        $obj['stopSequence'] = $stopSequence;
+        $self = clone $this;
+        $self['stopSequence'] = $stopSequence;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -502,9 +502,9 @@ final class BetaMessage implements BaseModel
      */
     public function withUsage(BetaUsage|array $usage): self
     {
-        $obj = clone $this;
-        $obj['usage'] = $usage;
+        $self = clone $this;
+        $self['usage'] = $usage;
 
-        return $obj;
+        return $self;
     }
 }

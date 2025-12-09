@@ -78,13 +78,13 @@ final class BatchCreateParams implements BaseModel
      */
     public static function with(array $requests, ?array $betas = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['requests'] = $requests;
+        $self['requests'] = $requests;
 
-        null !== $betas && $obj['betas'] = $betas;
+        null !== $betas && $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -94,10 +94,10 @@ final class BatchCreateParams implements BaseModel
      */
     public function withRequests(array $requests): self
     {
-        $obj = clone $this;
-        $obj['requests'] = $requests;
+        $self = clone $this;
+        $self['requests'] = $requests;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -107,9 +107,9 @@ final class BatchCreateParams implements BaseModel
      */
     public function withBetas(array $betas): self
     {
-        $obj = clone $this;
-        $obj['betas'] = $betas;
+        $self = clone $this;
+        $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 }
