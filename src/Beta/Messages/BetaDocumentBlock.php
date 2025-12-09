@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   citations: BetaCitationConfig|null,
  *   source: BetaBase64PDFSource|BetaPlainTextSource,
  *   title: string|null,
- *   type: 'document',
+ *   type?: 'document',
  * }
  */
 final class BetaDocumentBlock implements BaseModel
@@ -67,9 +67,9 @@ final class BetaDocumentBlock implements BaseModel
      *
      * @param BetaCitationConfig|array{enabled: bool}|null $citations
      * @param BetaBase64PDFSource|array{
-     *   data: string, media_type: 'application/pdf', type: 'base64'
+     *   data: string, media_type?: 'application/pdf', type?: 'base64'
      * }|BetaPlainTextSource|array{
-     *   data: string, media_type: 'text/plain', type: 'text'
+     *   data: string, media_type?: 'text/plain', type?: 'text'
      * } $source
      */
     public static function with(
@@ -102,9 +102,9 @@ final class BetaDocumentBlock implements BaseModel
 
     /**
      * @param BetaBase64PDFSource|array{
-     *   data: string, media_type: 'application/pdf', type: 'base64'
+     *   data: string, media_type?: 'application/pdf', type?: 'base64'
      * }|BetaPlainTextSource|array{
-     *   data: string, media_type: 'text/plain', type: 'text'
+     *   data: string, media_type?: 'text/plain', type?: 'text'
      * } $source
      */
     public function withSource(

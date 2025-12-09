@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaToolSearchToolResultBlockParamShape = array{
  *   content: BetaToolSearchToolResultErrorParam|BetaToolSearchToolSearchResultBlockParam,
  *   tool_use_id: string,
- *   type: 'tool_search_tool_result',
+ *   type?: 'tool_search_tool_result',
  *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
@@ -65,13 +65,13 @@ final class BetaToolSearchToolResultBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaToolSearchToolResultErrorParam|array{
-     *   error_code: value-of<ErrorCode>, type: 'tool_search_tool_result_error'
+     *   error_code: value-of<ErrorCode>, type?: 'tool_search_tool_result_error'
      * }|BetaToolSearchToolSearchResultBlockParam|array{
      *   tool_references: list<BetaToolReferenceBlockParam>,
-     *   type: 'tool_search_tool_search_result',
+     *   type?: 'tool_search_tool_search_result',
      * } $content
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      */
     public static function with(
@@ -91,10 +91,10 @@ final class BetaToolSearchToolResultBlockParam implements BaseModel
 
     /**
      * @param BetaToolSearchToolResultErrorParam|array{
-     *   error_code: value-of<ErrorCode>, type: 'tool_search_tool_result_error'
+     *   error_code: value-of<ErrorCode>, type?: 'tool_search_tool_result_error'
      * }|BetaToolSearchToolSearchResultBlockParam|array{
      *   tool_references: list<BetaToolReferenceBlockParam>,
-     *   type: 'tool_search_tool_search_result',
+     *   type?: 'tool_search_tool_search_result',
      * } $content
      */
     public function withContent(
@@ -118,7 +118,7 @@ final class BetaToolSearchToolResultBlockParam implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

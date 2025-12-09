@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaCodeExecutionToolResultBlockShape = array{
  *   content: BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock,
  *   tool_use_id: string,
- *   type: 'code_execution_tool_result',
+ *   type?: 'code_execution_tool_result',
  * }
  */
 final class BetaCodeExecutionToolResultBlock implements BaseModel
@@ -56,13 +56,13 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
      *
      * @param BetaCodeExecutionToolResultError|array{
      *   error_code: value-of<BetaCodeExecutionToolResultErrorCode>,
-     *   type: 'code_execution_tool_result_error',
+     *   type?: 'code_execution_tool_result_error',
      * }|BetaCodeExecutionResultBlock|array{
      *   content: list<BetaCodeExecutionOutputBlock>,
      *   return_code: int,
      *   stderr: string,
      *   stdout: string,
-     *   type: 'code_execution_result',
+     *   type?: 'code_execution_result',
      * } $content
      */
     public static function with(
@@ -80,13 +80,13 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
     /**
      * @param BetaCodeExecutionToolResultError|array{
      *   error_code: value-of<BetaCodeExecutionToolResultErrorCode>,
-     *   type: 'code_execution_tool_result_error',
+     *   type?: 'code_execution_tool_result_error',
      * }|BetaCodeExecutionResultBlock|array{
      *   content: list<BetaCodeExecutionOutputBlock>,
      *   return_code: int,
      *   stderr: string,
      *   stdout: string,
-     *   type: 'code_execution_result',
+     *   type?: 'code_execution_result',
      * } $content
      */
     public function withContent(

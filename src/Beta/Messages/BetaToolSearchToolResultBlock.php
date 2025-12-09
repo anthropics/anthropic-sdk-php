@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaToolSearchToolResultBlockShape = array{
  *   content: BetaToolSearchToolResultError|BetaToolSearchToolSearchResultBlock,
  *   tool_use_id: string,
- *   type: 'tool_search_tool_result',
+ *   type?: 'tool_search_tool_result',
  * }
  */
 final class BetaToolSearchToolResultBlock implements BaseModel
@@ -58,10 +58,10 @@ final class BetaToolSearchToolResultBlock implements BaseModel
      * @param BetaToolSearchToolResultError|array{
      *   error_code: value-of<ErrorCode>,
      *   error_message: string|null,
-     *   type: 'tool_search_tool_result_error',
+     *   type?: 'tool_search_tool_result_error',
      * }|BetaToolSearchToolSearchResultBlock|array{
      *   tool_references: list<BetaToolReferenceBlock>,
-     *   type: 'tool_search_tool_search_result',
+     *   type?: 'tool_search_tool_search_result',
      * } $content
      */
     public static function with(
@@ -80,10 +80,10 @@ final class BetaToolSearchToolResultBlock implements BaseModel
      * @param BetaToolSearchToolResultError|array{
      *   error_code: value-of<ErrorCode>,
      *   error_message: string|null,
-     *   type: 'tool_search_tool_result_error',
+     *   type?: 'tool_search_tool_result_error',
      * }|BetaToolSearchToolSearchResultBlock|array{
      *   tool_references: list<BetaToolReferenceBlock>,
-     *   type: 'tool_search_tool_search_result',
+     *   type?: 'tool_search_tool_search_result',
      * } $content
      */
     public function withContent(

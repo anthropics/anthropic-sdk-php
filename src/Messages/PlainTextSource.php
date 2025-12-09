@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type PlainTextSourceShape = array{
- *   data: string, media_type: 'text/plain', type: 'text'
+ *   data: string, media_type?: 'text/plain', type?: 'text'
  * }
  */
 final class PlainTextSource implements BaseModel

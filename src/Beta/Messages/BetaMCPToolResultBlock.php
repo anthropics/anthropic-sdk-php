@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   content: string|list<BetaTextBlock>,
  *   is_error: bool,
  *   tool_use_id: string,
- *   type: 'mcp_tool_result',
+ *   type?: 'mcp_tool_result',
  * }
  */
 final class BetaMCPToolResultBlock implements BaseModel
@@ -66,7 +66,7 @@ final class BetaMCPToolResultBlock implements BaseModel
      * @param string|list<BetaTextBlock|array{
      *   citations: list<BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation>|null,
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      * }> $content
      */
     public static function with(
@@ -87,7 +87,7 @@ final class BetaMCPToolResultBlock implements BaseModel
      * @param string|list<BetaTextBlock|array{
      *   citations: list<BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation>|null,
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      * }> $content
      */
     public function withContent(string|array $content): self

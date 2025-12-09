@@ -11,7 +11,7 @@ use Anthropic\Messages\Model;
 
 /**
  * @phpstan-type BetaRawMessageStartEventShape = array{
- *   message: BetaMessage, type: 'message_start'
+ *   message: BetaMessage, type?: 'message_start'
  * }
  */
 final class BetaRawMessageStartEvent implements BaseModel
@@ -56,10 +56,10 @@ final class BetaRawMessageStartEvent implements BaseModel
      *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
      *   context_management: BetaContextManagementResponse|null,
      *   model: string|value-of<Model>,
-     *   role: 'assistant',
+     *   role?: 'assistant',
      *   stop_reason: value-of<BetaStopReason>|null,
      *   stop_sequence: string|null,
-     *   type: 'message',
+     *   type?: 'message',
      *   usage: BetaUsage,
      * } $message
      */
@@ -79,10 +79,10 @@ final class BetaRawMessageStartEvent implements BaseModel
      *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
      *   context_management: BetaContextManagementResponse|null,
      *   model: string|value-of<Model>,
-     *   role: 'assistant',
+     *   role?: 'assistant',
      *   stop_reason: value-of<BetaStopReason>|null,
      *   stop_sequence: string|null,
-     *   type: 'message',
+     *   type?: 'message',
      *   usage: BetaUsage,
      * } $message
      */

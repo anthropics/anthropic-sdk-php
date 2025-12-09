@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaWebFetchToolResultBlockShape = array{
  *   content: BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock,
  *   tool_use_id: string,
- *   type: 'web_fetch_tool_result',
+ *   type?: 'web_fetch_tool_result',
  * }
  */
 final class BetaWebFetchToolResultBlock implements BaseModel
@@ -56,11 +56,11 @@ final class BetaWebFetchToolResultBlock implements BaseModel
      *
      * @param BetaWebFetchToolResultErrorBlock|array{
      *   error_code: value-of<BetaWebFetchToolResultErrorCode>,
-     *   type: 'web_fetch_tool_result_error',
+     *   type?: 'web_fetch_tool_result_error',
      * }|BetaWebFetchBlock|array{
      *   content: BetaDocumentBlock,
      *   retrieved_at: string|null,
-     *   type: 'web_fetch_result',
+     *   type?: 'web_fetch_result',
      *   url: string,
      * } $content
      */
@@ -79,11 +79,11 @@ final class BetaWebFetchToolResultBlock implements BaseModel
     /**
      * @param BetaWebFetchToolResultErrorBlock|array{
      *   error_code: value-of<BetaWebFetchToolResultErrorCode>,
-     *   type: 'web_fetch_tool_result_error',
+     *   type?: 'web_fetch_tool_result_error',
      * }|BetaWebFetchBlock|array{
      *   content: BetaDocumentBlock,
      *   retrieved_at: string|null,
-     *   type: 'web_fetch_result',
+     *   type?: 'web_fetch_result',
      *   url: string,
      * } $content
      */

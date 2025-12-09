@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type BetaContainerUploadBlockParamShape = array{
  *   file_id: string,
- *   type: 'container_upload',
+ *   type?: 'container_upload',
  *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
@@ -63,7 +63,7 @@ final class BetaContainerUploadBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      */
     public static function with(
@@ -91,7 +91,7 @@ final class BetaContainerUploadBlockParam implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

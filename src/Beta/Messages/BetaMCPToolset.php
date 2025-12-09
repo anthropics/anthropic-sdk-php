@@ -18,7 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type BetaMCPToolsetShape = array{
  *   mcp_server_name: string,
- *   type: 'mcp_toolset',
+ *   type?: 'mcp_toolset',
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   configs?: array<string,BetaMCPToolConfig>|null,
  *   default_config?: BetaMCPToolDefaultConfig|null,
@@ -84,7 +84,7 @@ final class BetaMCPToolset implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      * @param array<string,BetaMCPToolConfig|array{
      *   defer_loading?: bool|null, enabled?: bool|null
@@ -125,7 +125,7 @@ final class BetaMCPToolset implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

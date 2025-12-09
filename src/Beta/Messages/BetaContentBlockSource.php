@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaContentBlockSourceShape = array{
- *   content: string|list<BetaTextBlockParam|BetaImageBlockParam>, type: 'content'
+ *   content: string|list<BetaTextBlockParam|BetaImageBlockParam>, type?: 'content'
  * }
  */
 final class BetaContentBlockSource implements BaseModel
@@ -53,12 +53,12 @@ final class BetaContentBlockSource implements BaseModel
      *
      * @param string|list<BetaTextBlockParam|array{
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
      * }|BetaImageBlockParam|array{
      *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource,
-     *   type: 'image',
+     *   type?: 'image',
      *   cache_control?: BetaCacheControlEphemeral|null,
      * }> $content
      */
@@ -74,12 +74,12 @@ final class BetaContentBlockSource implements BaseModel
     /**
      * @param string|list<BetaTextBlockParam|array{
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
      * }|BetaImageBlockParam|array{
      *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource,
-     *   type: 'image',
+     *   type?: 'image',
      *   cache_control?: BetaCacheControlEphemeral|null,
      * }> $content
      */

@@ -38,14 +38,14 @@ final class BetaContextManagementConfig implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaClearToolUses20250919Edit|array{
-     *   type: 'clear_tool_uses_20250919',
+     *   type?: 'clear_tool_uses_20250919',
      *   clear_at_least?: BetaInputTokensClearAtLeast|null,
      *   clear_tool_inputs?: bool|list<string>|null,
      *   exclude_tools?: list<string>|null,
      *   keep?: BetaToolUsesKeep|null,
      *   trigger?: BetaInputTokensTrigger|BetaToolUsesTrigger|null,
      * }|BetaClearThinking20251015Edit|array{
-     *   type: 'clear_thinking_20251015',
+     *   type?: 'clear_thinking_20251015',
      *   keep?: 'all'|BetaThinkingTurns|BetaAllThinkingTurns|null,
      * }> $edits
      */
@@ -62,14 +62,14 @@ final class BetaContextManagementConfig implements BaseModel
      * List of context management edits to apply.
      *
      * @param list<BetaClearToolUses20250919Edit|array{
-     *   type: 'clear_tool_uses_20250919',
+     *   type?: 'clear_tool_uses_20250919',
      *   clear_at_least?: BetaInputTokensClearAtLeast|null,
      *   clear_tool_inputs?: bool|list<string>|null,
      *   exclude_tools?: list<string>|null,
      *   keep?: BetaToolUsesKeep|null,
      *   trigger?: BetaInputTokensTrigger|BetaToolUsesTrigger|null,
      * }|BetaClearThinking20251015Edit|array{
-     *   type: 'clear_thinking_20251015',
+     *   type?: 'clear_thinking_20251015',
      *   keep?: 'all'|BetaThinkingTurns|BetaAllThinkingTurns|null,
      * }> $edits
      */

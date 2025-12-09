@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\Services\Beta;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\BetaMessage;
+use Anthropic\Beta\Messages\BetaMessageParam\Role;
 use Anthropic\Beta\Messages\BetaMessageTokensCount;
+use Anthropic\Beta\Messages\BetaOutputConfig\Effort;
 use Anthropic\Beta\Messages\BetaRawContentBlockDeltaEvent;
 use Anthropic\Beta\Messages\BetaRawContentBlockStartEvent;
 use Anthropic\Beta\Messages\BetaRawContentBlockStopEvent;
@@ -15,6 +18,7 @@ use Anthropic\Beta\Messages\BetaRawMessageStopEvent;
 use Anthropic\Beta\Messages\BetaRawMessageStreamEvent;
 use Anthropic\Beta\Messages\MessageCountTokensParams;
 use Anthropic\Beta\Messages\MessageCreateParams;
+use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
@@ -53,16 +57,16 @@ final class MessagesService implements MessagesContract
      * @param array{
      *   max_tokens: int,
      *   messages: list<array{
-     *     content: string|list<array<string,mixed>>, role: 'user'|'assistant'
+     *     content: string|list<array<string,mixed>>, role: 'user'|'assistant'|Role
      *   }>,
-     *   model: string|Model,
+     *   model: string|'claude-opus-4-5-20251101'|'claude-opus-4-5'|'claude-3-7-sonnet-latest'|'claude-3-7-sonnet-20250219'|'claude-3-5-haiku-latest'|'claude-3-5-haiku-20241022'|'claude-haiku-4-5'|'claude-haiku-4-5-20251001'|'claude-sonnet-4-20250514'|'claude-sonnet-4-0'|'claude-4-sonnet-20250514'|'claude-sonnet-4-5'|'claude-sonnet-4-5-20250929'|'claude-opus-4-0'|'claude-opus-4-20250514'|'claude-4-opus-20250514'|'claude-opus-4-1-20250805'|'claude-3-opus-latest'|'claude-3-opus-20240229'|'claude-3-haiku-20240307'|Model,
      *   container?: string|array{
      *     id?: string|null, skills?: list<array<mixed>>|null
      *   }|null,
      *   context_management?: array{edits?: list<array<string,mixed>>}|null,
      *   mcp_servers?: list<array{
      *     name: string,
-     *     type: 'url',
+     *     type?: 'url',
      *     url: string,
      *     authorization_token?: string|null,
      *     tool_configuration?: array{
@@ -70,13 +74,13 @@ final class MessagesService implements MessagesContract
      *     }|null,
      *   }>,
      *   metadata?: array{user_id?: string|null},
-     *   output_config?: array{effort?: 'low'|'medium'|'high'|null},
-     *   output_format?: array{schema: array<string,mixed>, type: 'json_schema'}|null,
-     *   service_tier?: 'auto'|'standard_only',
+     *   output_config?: array{effort?: 'low'|'medium'|'high'|Effort|null},
+     *   output_format?: array{schema: array<string,mixed>, type?: 'json_schema'}|null,
+     *   service_tier?: 'auto'|'standard_only'|ServiceTier,
      *   stop_sequences?: list<string>,
      *   system?: string|list<array{
      *     text: string,
-     *     type: 'text',
+     *     type?: 'text',
      *     cache_control?: array<mixed>|null,
      *     citations?: list<array<string,mixed>>|null,
      *   }>,
@@ -86,7 +90,7 @@ final class MessagesService implements MessagesContract
      *   tools?: list<array<string,mixed>>,
      *   top_k?: int,
      *   top_p?: float,
-     *   betas?: list<string>,
+     *   betas?: list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta>,
      * }|MessageCreateParams $params
      *
      * @throws APIException
@@ -123,16 +127,16 @@ final class MessagesService implements MessagesContract
      * @param array{
      *   max_tokens: int,
      *   messages: list<array{
-     *     content: string|list<array<string,mixed>>, role: 'user'|'assistant'
+     *     content: string|list<array<string,mixed>>, role: 'user'|'assistant'|Role
      *   }>,
-     *   model: string|Model,
+     *   model: string|'claude-opus-4-5-20251101'|'claude-opus-4-5'|'claude-3-7-sonnet-latest'|'claude-3-7-sonnet-20250219'|'claude-3-5-haiku-latest'|'claude-3-5-haiku-20241022'|'claude-haiku-4-5'|'claude-haiku-4-5-20251001'|'claude-sonnet-4-20250514'|'claude-sonnet-4-0'|'claude-4-sonnet-20250514'|'claude-sonnet-4-5'|'claude-sonnet-4-5-20250929'|'claude-opus-4-0'|'claude-opus-4-20250514'|'claude-4-opus-20250514'|'claude-opus-4-1-20250805'|'claude-3-opus-latest'|'claude-3-opus-20240229'|'claude-3-haiku-20240307'|Model,
      *   container?: string|array{
      *     id?: string|null, skills?: list<array<mixed>>|null
      *   }|null,
      *   context_management?: array{edits?: list<array<string,mixed>>}|null,
      *   mcp_servers?: list<array{
      *     name: string,
-     *     type: 'url',
+     *     type?: 'url',
      *     url: string,
      *     authorization_token?: string|null,
      *     tool_configuration?: array{
@@ -140,13 +144,13 @@ final class MessagesService implements MessagesContract
      *     }|null,
      *   }>,
      *   metadata?: array{user_id?: string|null},
-     *   output_config?: array{effort?: 'low'|'medium'|'high'|null},
-     *   output_format?: array{schema: array<string,mixed>, type: 'json_schema'}|null,
-     *   service_tier?: 'auto'|'standard_only',
+     *   output_config?: array{effort?: 'low'|'medium'|'high'|Effort|null},
+     *   output_format?: array{schema: array<string,mixed>, type?: 'json_schema'}|null,
+     *   service_tier?: 'auto'|'standard_only'|ServiceTier,
      *   stop_sequences?: list<string>,
      *   system?: string|list<array{
      *     text: string,
-     *     type: 'text',
+     *     type?: 'text',
      *     cache_control?: array<mixed>|null,
      *     citations?: list<array<string,mixed>>|null,
      *   }>,
@@ -156,7 +160,7 @@ final class MessagesService implements MessagesContract
      *   tools?: list<array<string,mixed>>,
      *   top_k?: int,
      *   top_p?: float,
-     *   betas?: list<string>,
+     *   betas?: list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta>,
      * }|MessageCreateParams $params
      *
      * @return BaseStream<BetaRawMessageStartEvent|BetaRawMessageDeltaEvent|BetaRawMessageStopEvent|BetaRawContentBlockStartEvent|BetaRawContentBlockDeltaEvent|BetaRawContentBlockStopEvent,>
@@ -205,31 +209,31 @@ final class MessagesService implements MessagesContract
      *
      * @param array{
      *   messages: list<array{
-     *     content: string|list<array<string,mixed>>, role: 'user'|'assistant'
+     *     content: string|list<array<string,mixed>>, role: 'user'|'assistant'|Role
      *   }>,
-     *   model: string|Model,
+     *   model: string|'claude-opus-4-5-20251101'|'claude-opus-4-5'|'claude-3-7-sonnet-latest'|'claude-3-7-sonnet-20250219'|'claude-3-5-haiku-latest'|'claude-3-5-haiku-20241022'|'claude-haiku-4-5'|'claude-haiku-4-5-20251001'|'claude-sonnet-4-20250514'|'claude-sonnet-4-0'|'claude-4-sonnet-20250514'|'claude-sonnet-4-5'|'claude-sonnet-4-5-20250929'|'claude-opus-4-0'|'claude-opus-4-20250514'|'claude-4-opus-20250514'|'claude-opus-4-1-20250805'|'claude-3-opus-latest'|'claude-3-opus-20240229'|'claude-3-haiku-20240307'|Model,
      *   context_management?: array{edits?: list<array<string,mixed>>}|null,
      *   mcp_servers?: list<array{
      *     name: string,
-     *     type: 'url',
+     *     type?: 'url',
      *     url: string,
      *     authorization_token?: string|null,
      *     tool_configuration?: array{
      *       allowed_tools?: list<string>|null, enabled?: bool|null
      *     }|null,
      *   }>,
-     *   output_config?: array{effort?: 'low'|'medium'|'high'|null},
-     *   output_format?: array{schema: array<string,mixed>, type: 'json_schema'}|null,
+     *   output_config?: array{effort?: 'low'|'medium'|'high'|Effort|null},
+     *   output_format?: array{schema: array<string,mixed>, type?: 'json_schema'}|null,
      *   system?: string|list<array{
      *     text: string,
-     *     type: 'text',
+     *     type?: 'text',
      *     cache_control?: array<mixed>|null,
      *     citations?: list<array<string,mixed>>|null,
      *   }>,
      *   thinking?: array<string,mixed>,
      *   tool_choice?: array<string,mixed>,
      *   tools?: list<array<string,mixed>>,
-     *   betas?: list<string>,
+     *   betas?: list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta>,
      * }|MessageCountTokensParams $params
      *
      * @throws APIException

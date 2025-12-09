@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   caller: BetaDirectCaller|BetaServerToolCaller,
  *   input: array<string,mixed>,
  *   name: value-of<Name>,
- *   type: 'server_tool_use',
+ *   type?: 'server_tool_use',
  * }
  */
 final class BetaServerToolUseBlock implements BaseModel
@@ -75,8 +75,8 @@ final class BetaServerToolUseBlock implements BaseModel
      *
      * @param array<string,mixed> $input
      * @param Name|value-of<Name> $name
-     * @param BetaDirectCaller|array{type: 'direct'}|BetaServerToolCaller|array{
-     *   tool_id: string, type: 'code_execution_20250825'
+     * @param BetaDirectCaller|array{type?: 'direct'}|BetaServerToolCaller|array{
+     *   tool_id: string, type?: 'code_execution_20250825'
      * } $caller
      */
     public static function with(
@@ -106,8 +106,8 @@ final class BetaServerToolUseBlock implements BaseModel
     /**
      * Tool invocation directly from the model.
      *
-     * @param BetaDirectCaller|array{type: 'direct'}|BetaServerToolCaller|array{
-     *   tool_id: string, type: 'code_execution_20250825'
+     * @param BetaDirectCaller|array{type?: 'direct'}|BetaServerToolCaller|array{
+     *   tool_id: string, type?: 'code_execution_20250825'
      * } $caller
      */
     public function withCaller(

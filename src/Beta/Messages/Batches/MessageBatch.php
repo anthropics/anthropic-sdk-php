@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   processing_status: value-of<ProcessingStatus>,
  *   request_counts: MessageBatchRequestCounts,
  *   results_url: string|null,
- *   type: 'message_batch',
+ *   type?: 'message_batch',
  * }
  */
 final class MessageBatch implements BaseModel

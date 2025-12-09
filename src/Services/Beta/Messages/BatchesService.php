@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Services\Beta\Messages;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\Batches\BatchCancelParams;
 use Anthropic\Beta\Messages\Batches\BatchCreateParams;
+use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\ServiceTier;
 use Anthropic\Beta\Messages\Batches\BatchDeleteParams;
 use Anthropic\Beta\Messages\Batches\BatchListParams;
 use Anthropic\Beta\Messages\Batches\BatchResultsParams;
@@ -46,14 +48,14 @@ final class BatchesService implements BatchesContract
      *     params: array{
      *       max_tokens: int,
      *       messages: list<array<mixed>>,
-     *       model: string|Model,
+     *       model: string|'claude-opus-4-5-20251101'|'claude-opus-4-5'|'claude-3-7-sonnet-latest'|'claude-3-7-sonnet-20250219'|'claude-3-5-haiku-latest'|'claude-3-5-haiku-20241022'|'claude-haiku-4-5'|'claude-haiku-4-5-20251001'|'claude-sonnet-4-20250514'|'claude-sonnet-4-0'|'claude-4-sonnet-20250514'|'claude-sonnet-4-5'|'claude-sonnet-4-5-20250929'|'claude-opus-4-0'|'claude-opus-4-20250514'|'claude-4-opus-20250514'|'claude-opus-4-1-20250805'|'claude-3-opus-latest'|'claude-3-opus-20240229'|'claude-3-haiku-20240307'|Model,
      *       container?: string|array<mixed>|null,
      *       context_management?: array<mixed>|null,
      *       mcp_servers?: list<array<mixed>>,
      *       metadata?: array<mixed>,
      *       output_config?: array<mixed>,
      *       output_format?: array<mixed>|null,
-     *       service_tier?: 'auto'|'standard_only',
+     *       service_tier?: 'auto'|'standard_only'|ServiceTier,
      *       stop_sequences?: list<string>,
      *       stream?: bool,
      *       system?: string|list<array<mixed>>,
@@ -65,7 +67,7 @@ final class BatchesService implements BatchesContract
      *       top_p?: float,
      *     },
      *   }>,
-     *   betas?: list<string>,
+     *   betas?: list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta>,
      * }|BatchCreateParams $params
      *
      * @throws APIException
@@ -106,7 +108,9 @@ final class BatchesService implements BatchesContract
      *
      * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
      *
-     * @param array{betas?: list<string>}|BatchRetrieveParams $params
+     * @param array{
+     *   betas?: list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta>,
+     * }|BatchRetrieveParams $params
      *
      * @throws APIException
      */
@@ -146,7 +150,10 @@ final class BatchesService implements BatchesContract
      * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
      *
      * @param array{
-     *   after_id?: string, before_id?: string, limit?: int, betas?: list<string>
+     *   after_id?: string,
+     *   before_id?: string,
+     *   limit?: int,
+     *   betas?: list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta>,
      * }|BatchListParams $params
      *
      * @return Page<MessageBatch>
@@ -195,7 +202,9 @@ final class BatchesService implements BatchesContract
      *
      * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
      *
-     * @param array{betas?: list<string>}|BatchDeleteParams $params
+     * @param array{
+     *   betas?: list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta>,
+     * }|BatchDeleteParams $params
      *
      * @throws APIException
      */
@@ -236,7 +245,9 @@ final class BatchesService implements BatchesContract
      *
      * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
      *
-     * @param array{betas?: list<string>}|BatchCancelParams $params
+     * @param array{
+     *   betas?: list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta>,
+     * }|BatchCancelParams $params
      *
      * @throws APIException
      */
@@ -277,7 +288,9 @@ final class BatchesService implements BatchesContract
      *
      * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
      *
-     * @param array{betas?: list<string>}|BatchResultsParams $params
+     * @param array{
+     *   betas?: list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta>,
+     * }|BatchResultsParams $params
      *
      * @throws APIException
      */
@@ -312,7 +325,9 @@ final class BatchesService implements BatchesContract
     /**
      * @api
      *
-     * @param array{betas?: list<string>}|BatchResultsParams $params
+     * @param array{
+     *   betas?: list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta>,
+     * }|BatchResultsParams $params
      *
      * @return BaseStream<MessageBatchIndividualResponse>
      *

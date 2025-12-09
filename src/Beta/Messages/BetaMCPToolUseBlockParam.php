@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   input: array<string,mixed>,
  *   name: string,
  *   server_name: string,
- *   type: 'mcp_tool_use',
+ *   type?: 'mcp_tool_use',
  *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
@@ -81,7 +81,7 @@ final class BetaMCPToolUseBlockParam implements BaseModel
      *
      * @param array<string,mixed> $input
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      */
     public static function with(
@@ -145,7 +145,7 @@ final class BetaMCPToolUseBlockParam implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

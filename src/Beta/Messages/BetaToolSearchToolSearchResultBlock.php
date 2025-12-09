@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaToolSearchToolSearchResultBlockShape = array{
  *   tool_references: list<BetaToolReferenceBlock>,
- *   type: 'tool_search_tool_search_result',
+ *   type?: 'tool_search_tool_search_result',
  * }
  */
 final class BetaToolSearchToolSearchResultBlock implements BaseModel
@@ -52,7 +52,7 @@ final class BetaToolSearchToolSearchResultBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaToolReferenceBlock|array{
-     *   tool_name: string, type: 'tool_reference'
+     *   tool_name: string, type?: 'tool_reference'
      * }> $tool_references
      */
     public static function with(array $tool_references): self
@@ -66,7 +66,7 @@ final class BetaToolSearchToolSearchResultBlock implements BaseModel
 
     /**
      * @param list<BetaToolReferenceBlock|array{
-     *   tool_name: string, type: 'tool_reference'
+     *   tool_name: string, type?: 'tool_reference'
      * }> $toolReferences
      */
     public function withToolReferences(array $toolReferences): self

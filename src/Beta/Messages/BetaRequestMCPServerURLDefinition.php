@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaRequestMCPServerURLDefinitionShape = array{
  *   name: string,
- *   type: 'url',
+ *   type?: 'url',
  *   url: string,
  *   authorization_token?: string|null,
  *   tool_configuration?: BetaRequestMCPServerToolConfiguration|null,

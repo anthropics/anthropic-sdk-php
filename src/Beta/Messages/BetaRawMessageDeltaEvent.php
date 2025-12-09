@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaRawMessageDeltaEventShape = array{
  *   context_management: BetaContextManagementResponse|null,
  *   delta: Delta,
- *   type: 'message_delta',
+ *   type?: 'message_delta',
  *   usage: BetaMessageDeltaUsage,
  * }
  */

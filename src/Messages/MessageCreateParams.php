@@ -37,21 +37,21 @@ use Anthropic\Messages\WebSearchTool20250305\UserLocation;
  *   stop_sequences?: list<string>,
  *   system?: string|list<TextBlockParam|array{
  *     text: string,
- *     type: 'text',
+ *     type?: 'text',
  *     cache_control?: CacheControlEphemeral|null,
  *     citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
  *   }>,
  *   temperature?: float,
  *   thinking?: ThinkingConfigEnabled|array{
- *     budget_tokens: int, type: 'enabled'
- *   }|ThinkingConfigDisabled|array{type: 'disabled'},
+ *     budget_tokens: int, type?: 'enabled'
+ *   }|ThinkingConfigDisabled|array{type?: 'disabled'},
  *   tool_choice?: ToolChoiceAuto|array{
- *     type: 'auto', disable_parallel_tool_use?: bool|null
+ *     type?: 'auto', disable_parallel_tool_use?: bool|null
  *   }|ToolChoiceAny|array{
- *     type: 'any', disable_parallel_tool_use?: bool|null
+ *     type?: 'any', disable_parallel_tool_use?: bool|null
  *   }|ToolChoiceTool|array{
- *     name: string, type: 'tool', disable_parallel_tool_use?: bool|null
- *   }|ToolChoiceNone|array{type: 'none'},
+ *     name: string, type?: 'tool', disable_parallel_tool_use?: bool|null
+ *   }|ToolChoiceNone|array{type?: 'none'},
  *   tools?: list<Tool|array{
  *     input_schema: InputSchema,
  *     name: string,
@@ -59,25 +59,25 @@ use Anthropic\Messages\WebSearchTool20250305\UserLocation;
  *     description?: string|null,
  *     type?: value-of<Type>|null,
  *   }|ToolBash20250124|array{
- *     name: 'bash',
- *     type: 'bash_20250124',
+ *     name?: 'bash',
+ *     type?: 'bash_20250124',
  *     cache_control?: CacheControlEphemeral|null,
  *   }|ToolTextEditor20250124|array{
- *     name: 'str_replace_editor',
- *     type: 'text_editor_20250124',
+ *     name?: 'str_replace_editor',
+ *     type?: 'text_editor_20250124',
  *     cache_control?: CacheControlEphemeral|null,
  *   }|ToolTextEditor20250429|array{
- *     name: 'str_replace_based_edit_tool',
- *     type: 'text_editor_20250429',
+ *     name?: 'str_replace_based_edit_tool',
+ *     type?: 'text_editor_20250429',
  *     cache_control?: CacheControlEphemeral|null,
  *   }|ToolTextEditor20250728|array{
- *     name: 'str_replace_based_edit_tool',
- *     type: 'text_editor_20250728',
+ *     name?: 'str_replace_based_edit_tool',
+ *     type?: 'text_editor_20250728',
  *     cache_control?: CacheControlEphemeral|null,
  *     max_characters?: int|null,
  *   }|WebSearchTool20250305|array{
- *     name: 'web_search',
- *     type: 'web_search_20250305',
+ *     name?: 'web_search',
+ *     type?: 'web_search_20250305',
  *     allowed_domains?: list<string>|null,
  *     blocked_domains?: list<string>|null,
  *     cache_control?: CacheControlEphemeral|null,
@@ -352,20 +352,20 @@ final class MessageCreateParams implements BaseModel
      * @param list<string> $stop_sequences
      * @param string|list<TextBlockParam|array{
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      *   cache_control?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }> $system
      * @param ThinkingConfigEnabled|array{
-     *   budget_tokens: int, type: 'enabled'
-     * }|ThinkingConfigDisabled|array{type: 'disabled'} $thinking
+     *   budget_tokens: int, type?: 'enabled'
+     * }|ThinkingConfigDisabled|array{type?: 'disabled'} $thinking
      * @param ToolChoiceAuto|array{
-     *   type: 'auto', disable_parallel_tool_use?: bool|null
+     *   type?: 'auto', disable_parallel_tool_use?: bool|null
      * }|ToolChoiceAny|array{
-     *   type: 'any', disable_parallel_tool_use?: bool|null
+     *   type?: 'any', disable_parallel_tool_use?: bool|null
      * }|ToolChoiceTool|array{
-     *   name: string, type: 'tool', disable_parallel_tool_use?: bool|null
-     * }|ToolChoiceNone|array{type: 'none'} $tool_choice
+     *   name: string, type?: 'tool', disable_parallel_tool_use?: bool|null
+     * }|ToolChoiceNone|array{type?: 'none'} $tool_choice
      * @param list<Tool|array{
      *   input_schema: InputSchema,
      *   name: string,
@@ -373,25 +373,25 @@ final class MessageCreateParams implements BaseModel
      *   description?: string|null,
      *   type?: value-of<Type>|null,
      * }|ToolBash20250124|array{
-     *   name: 'bash',
-     *   type: 'bash_20250124',
+     *   name?: 'bash',
+     *   type?: 'bash_20250124',
      *   cache_control?: CacheControlEphemeral|null,
      * }|ToolTextEditor20250124|array{
-     *   name: 'str_replace_editor',
-     *   type: 'text_editor_20250124',
+     *   name?: 'str_replace_editor',
+     *   type?: 'text_editor_20250124',
      *   cache_control?: CacheControlEphemeral|null,
      * }|ToolTextEditor20250429|array{
-     *   name: 'str_replace_based_edit_tool',
-     *   type: 'text_editor_20250429',
+     *   name?: 'str_replace_based_edit_tool',
+     *   type?: 'text_editor_20250429',
      *   cache_control?: CacheControlEphemeral|null,
      * }|ToolTextEditor20250728|array{
-     *   name: 'str_replace_based_edit_tool',
-     *   type: 'text_editor_20250728',
+     *   name?: 'str_replace_based_edit_tool',
+     *   type?: 'text_editor_20250728',
      *   cache_control?: CacheControlEphemeral|null,
      *   max_characters?: int|null,
      * }|WebSearchTool20250305|array{
-     *   name: 'web_search',
-     *   type: 'web_search_20250305',
+     *   name?: 'web_search',
+     *   type?: 'web_search_20250305',
      *   allowed_domains?: list<string>|null,
      *   blocked_domains?: list<string>|null,
      *   cache_control?: CacheControlEphemeral|null,
@@ -575,7 +575,7 @@ final class MessageCreateParams implements BaseModel
      *
      * @param string|list<TextBlockParam|array{
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      *   cache_control?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }> $system
@@ -611,8 +611,8 @@ final class MessageCreateParams implements BaseModel
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      *
      * @param ThinkingConfigEnabled|array{
-     *   budget_tokens: int, type: 'enabled'
-     * }|ThinkingConfigDisabled|array{type: 'disabled'} $thinking
+     *   budget_tokens: int, type?: 'enabled'
+     * }|ThinkingConfigDisabled|array{type?: 'disabled'} $thinking
      */
     public function withThinking(
         ThinkingConfigEnabled|array|ThinkingConfigDisabled $thinking
@@ -627,12 +627,12 @@ final class MessageCreateParams implements BaseModel
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      *
      * @param ToolChoiceAuto|array{
-     *   type: 'auto', disable_parallel_tool_use?: bool|null
+     *   type?: 'auto', disable_parallel_tool_use?: bool|null
      * }|ToolChoiceAny|array{
-     *   type: 'any', disable_parallel_tool_use?: bool|null
+     *   type?: 'any', disable_parallel_tool_use?: bool|null
      * }|ToolChoiceTool|array{
-     *   name: string, type: 'tool', disable_parallel_tool_use?: bool|null
-     * }|ToolChoiceNone|array{type: 'none'} $toolChoice
+     *   name: string, type?: 'tool', disable_parallel_tool_use?: bool|null
+     * }|ToolChoiceNone|array{type?: 'none'} $toolChoice
      */
     public function withToolChoice(
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone $toolChoice
@@ -713,25 +713,25 @@ final class MessageCreateParams implements BaseModel
      *   description?: string|null,
      *   type?: value-of<Type>|null,
      * }|ToolBash20250124|array{
-     *   name: 'bash',
-     *   type: 'bash_20250124',
+     *   name?: 'bash',
+     *   type?: 'bash_20250124',
      *   cache_control?: CacheControlEphemeral|null,
      * }|ToolTextEditor20250124|array{
-     *   name: 'str_replace_editor',
-     *   type: 'text_editor_20250124',
+     *   name?: 'str_replace_editor',
+     *   type?: 'text_editor_20250124',
      *   cache_control?: CacheControlEphemeral|null,
      * }|ToolTextEditor20250429|array{
-     *   name: 'str_replace_based_edit_tool',
-     *   type: 'text_editor_20250429',
+     *   name?: 'str_replace_based_edit_tool',
+     *   type?: 'text_editor_20250429',
      *   cache_control?: CacheControlEphemeral|null,
      * }|ToolTextEditor20250728|array{
-     *   name: 'str_replace_based_edit_tool',
-     *   type: 'text_editor_20250728',
+     *   name?: 'str_replace_based_edit_tool',
+     *   type?: 'text_editor_20250728',
      *   cache_control?: CacheControlEphemeral|null,
      *   max_characters?: int|null,
      * }|WebSearchTool20250305|array{
-     *   name: 'web_search',
-     *   type: 'web_search_20250305',
+     *   name?: 'web_search',
+     *   type?: 'web_search_20250305',
      *   allowed_domains?: list<string>|null,
      *   blocked_domains?: list<string>|null,
      *   cache_control?: CacheControlEphemeral|null,

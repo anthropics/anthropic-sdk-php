@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaTextEditorCodeExecutionToolResultBlockShape = array{
  *   content: BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock,
  *   tool_use_id: string,
- *   type: 'text_editor_code_execution_tool_result',
+ *   type?: 'text_editor_code_execution_tool_result',
  * }
  */
 final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
@@ -61,23 +61,23 @@ final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
      * @param BetaTextEditorCodeExecutionToolResultError|array{
      *   error_code: value-of<ErrorCode>,
      *   error_message: string|null,
-     *   type: 'text_editor_code_execution_tool_result_error',
+     *   type?: 'text_editor_code_execution_tool_result_error',
      * }|BetaTextEditorCodeExecutionViewResultBlock|array{
      *   content: string,
      *   file_type: value-of<FileType>,
      *   num_lines: int|null,
      *   start_line: int|null,
      *   total_lines: int|null,
-     *   type: 'text_editor_code_execution_view_result',
+     *   type?: 'text_editor_code_execution_view_result',
      * }|BetaTextEditorCodeExecutionCreateResultBlock|array{
-     *   is_file_update: bool, type: 'text_editor_code_execution_create_result'
+     *   is_file_update: bool, type?: 'text_editor_code_execution_create_result'
      * }|BetaTextEditorCodeExecutionStrReplaceResultBlock|array{
      *   lines: list<string>|null,
      *   new_lines: int|null,
      *   new_start: int|null,
      *   old_lines: int|null,
      *   old_start: int|null,
-     *   type: 'text_editor_code_execution_str_replace_result',
+     *   type?: 'text_editor_code_execution_str_replace_result',
      * } $content
      */
     public static function with(
@@ -96,23 +96,23 @@ final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
      * @param BetaTextEditorCodeExecutionToolResultError|array{
      *   error_code: value-of<ErrorCode>,
      *   error_message: string|null,
-     *   type: 'text_editor_code_execution_tool_result_error',
+     *   type?: 'text_editor_code_execution_tool_result_error',
      * }|BetaTextEditorCodeExecutionViewResultBlock|array{
      *   content: string,
      *   file_type: value-of<FileType>,
      *   num_lines: int|null,
      *   start_line: int|null,
      *   total_lines: int|null,
-     *   type: 'text_editor_code_execution_view_result',
+     *   type?: 'text_editor_code_execution_view_result',
      * }|BetaTextEditorCodeExecutionCreateResultBlock|array{
-     *   is_file_update: bool, type: 'text_editor_code_execution_create_result'
+     *   is_file_update: bool, type?: 'text_editor_code_execution_create_result'
      * }|BetaTextEditorCodeExecutionStrReplaceResultBlock|array{
      *   lines: list<string>|null,
      *   new_lines: int|null,
      *   new_start: int|null,
      *   old_lines: int|null,
      *   old_start: int|null,
-     *   type: 'text_editor_code_execution_str_replace_result',
+     *   type?: 'text_editor_code_execution_str_replace_result',
      * } $content
      */
     public function withContent(

@@ -14,8 +14,8 @@ use Anthropic\Core\Conversion\MapOf;
 
 /**
  * @phpstan-type BetaToolBash20241022Shape = array{
- *   name: 'bash',
- *   type: 'bash_20241022',
+ *   name?: 'bash',
+ *   type?: 'bash_20241022',
  *   allowed_callers?: list<value-of<AllowedCaller>>|null,
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   defer_loading?: bool|null,
@@ -77,7 +77,7 @@ final class BetaToolBash20241022 implements BaseModel
      *
      * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      * @param list<array<string,mixed>> $input_examples
      */
@@ -114,7 +114,7 @@ final class BetaToolBash20241022 implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

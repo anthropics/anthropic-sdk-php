@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaWebSearchToolResultBlockParamShape = array{
  *   content: list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError,
  *   tool_use_id: string,
- *   type: 'web_search_tool_result',
+ *   type?: 'web_search_tool_result',
  *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
@@ -67,15 +67,15 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
      * @param list<BetaWebSearchResultBlockParam|array{
      *   encrypted_content: string,
      *   title: string,
-     *   type: 'web_search_result',
+     *   type?: 'web_search_result',
      *   url: string,
      *   page_age?: string|null,
      * }>|BetaWebSearchToolRequestError|array{
      *   error_code: value-of<BetaWebSearchToolResultErrorCode>,
-     *   type: 'web_search_tool_result_error',
+     *   type?: 'web_search_tool_result_error',
      * } $content
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      */
     public static function with(
@@ -97,12 +97,12 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
      * @param list<BetaWebSearchResultBlockParam|array{
      *   encrypted_content: string,
      *   title: string,
-     *   type: 'web_search_result',
+     *   type?: 'web_search_result',
      *   url: string,
      *   page_age?: string|null,
      * }>|BetaWebSearchToolRequestError|array{
      *   error_code: value-of<BetaWebSearchToolResultErrorCode>,
-     *   type: 'web_search_tool_result_error',
+     *   type?: 'web_search_tool_result_error',
      * } $content
      */
     public function withContent(
@@ -126,7 +126,7 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

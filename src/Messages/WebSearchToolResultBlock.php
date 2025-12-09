@@ -13,7 +13,7 @@ use Anthropic\Messages\WebSearchToolResultError\ErrorCode;
  * @phpstan-type WebSearchToolResultBlockShape = array{
  *   content: WebSearchToolResultError|list<WebSearchResultBlock>,
  *   tool_use_id: string,
- *   type: 'web_search_tool_result',
+ *   type?: 'web_search_tool_result',
  * }
  */
 final class WebSearchToolResultBlock implements BaseModel
@@ -57,12 +57,12 @@ final class WebSearchToolResultBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param WebSearchToolResultError|array{
-     *   error_code: value-of<ErrorCode>, type: 'web_search_tool_result_error'
+     *   error_code: value-of<ErrorCode>, type?: 'web_search_tool_result_error'
      * }|list<WebSearchResultBlock|array{
      *   encrypted_content: string,
      *   page_age: string|null,
      *   title: string,
-     *   type: 'web_search_result',
+     *   type?: 'web_search_result',
      *   url: string,
      * }> $content
      */
@@ -80,12 +80,12 @@ final class WebSearchToolResultBlock implements BaseModel
 
     /**
      * @param WebSearchToolResultError|array{
-     *   error_code: value-of<ErrorCode>, type: 'web_search_tool_result_error'
+     *   error_code: value-of<ErrorCode>, type?: 'web_search_tool_result_error'
      * }|list<WebSearchResultBlock|array{
      *   encrypted_content: string,
      *   page_age: string|null,
      *   title: string,
-     *   type: 'web_search_result',
+     *   type?: 'web_search_result',
      *   url: string,
      * }> $content
      */

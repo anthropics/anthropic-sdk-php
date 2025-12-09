@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaTextEditorCodeExecutionCreateResultBlockParamShape = array{
- *   is_file_update: bool, type: 'text_editor_code_execution_create_result'
+ *   is_file_update: bool, type?: 'text_editor_code_execution_create_result'
  * }
  */
 final class BetaTextEditorCodeExecutionCreateResultBlockParam implements BaseModel

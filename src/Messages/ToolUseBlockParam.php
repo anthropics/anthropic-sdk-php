@@ -15,7 +15,7 @@ use Anthropic\Messages\CacheControlEphemeral\TTL;
  *   id: string,
  *   input: array<string,mixed>,
  *   name: string,
- *   type: 'tool_use',
+ *   type?: 'tool_use',
  *   cache_control?: CacheControlEphemeral|null,
  * }
  */
@@ -70,7 +70,7 @@ final class ToolUseBlockParam implements BaseModel
      *
      * @param array<string,mixed> $input
      * @param CacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      */
     public static function with(
@@ -121,7 +121,7 @@ final class ToolUseBlockParam implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param CacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

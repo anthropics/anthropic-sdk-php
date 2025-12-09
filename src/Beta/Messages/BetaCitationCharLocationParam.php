@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   document_title: string|null,
  *   end_char_index: int,
  *   start_char_index: int,
- *   type: 'char_location',
+ *   type?: 'char_location',
  * }
  */
 final class BetaCitationCharLocationParam implements BaseModel

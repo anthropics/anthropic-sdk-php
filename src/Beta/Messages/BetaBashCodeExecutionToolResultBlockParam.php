@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaBashCodeExecutionToolResultBlockParamShape = array{
  *   content: BetaBashCodeExecutionToolResultErrorParam|BetaBashCodeExecutionResultBlockParam,
  *   tool_use_id: string,
- *   type: 'bash_code_execution_tool_result',
+ *   type?: 'bash_code_execution_tool_result',
  *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
@@ -67,16 +67,17 @@ final class BetaBashCodeExecutionToolResultBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaBashCodeExecutionToolResultErrorParam|array{
-     *   error_code: value-of<ErrorCode>, type: 'bash_code_execution_tool_result_error'
+     *   error_code: value-of<ErrorCode>,
+     *   type?: 'bash_code_execution_tool_result_error',
      * }|BetaBashCodeExecutionResultBlockParam|array{
      *   content: list<BetaBashCodeExecutionOutputBlockParam>,
      *   return_code: int,
      *   stderr: string,
      *   stdout: string,
-     *   type: 'bash_code_execution_result',
+     *   type?: 'bash_code_execution_result',
      * } $content
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      */
     public static function with(
@@ -96,13 +97,14 @@ final class BetaBashCodeExecutionToolResultBlockParam implements BaseModel
 
     /**
      * @param BetaBashCodeExecutionToolResultErrorParam|array{
-     *   error_code: value-of<ErrorCode>, type: 'bash_code_execution_tool_result_error'
+     *   error_code: value-of<ErrorCode>,
+     *   type?: 'bash_code_execution_tool_result_error',
      * }|BetaBashCodeExecutionResultBlockParam|array{
      *   content: list<BetaBashCodeExecutionOutputBlockParam>,
      *   return_code: int,
      *   stderr: string,
      *   stdout: string,
-     *   type: 'bash_code_execution_result',
+     *   type?: 'bash_code_execution_result',
      * } $content
      */
     public function withContent(
@@ -126,7 +128,7 @@ final class BetaBashCodeExecutionToolResultBlockParam implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

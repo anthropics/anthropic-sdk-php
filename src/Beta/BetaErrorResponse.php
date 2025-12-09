@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaErrorResponseShape = array{
  *   error: BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError,
  *   request_id: string|null,
- *   type: 'error',
+ *   type?: 'error',
  * }
  */
 final class BetaErrorResponse implements BaseModel
@@ -55,22 +55,22 @@ final class BetaErrorResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaInvalidRequestError|array{
-     *   message: string, type: 'invalid_request_error'
+     *   message: string, type?: 'invalid_request_error'
      * }|BetaAuthenticationError|array{
-     *   message: string, type: 'authentication_error'
+     *   message: string, type?: 'authentication_error'
      * }|BetaBillingError|array{
-     *   message: string, type: 'billing_error'
+     *   message: string, type?: 'billing_error'
      * }|BetaPermissionError|array{
-     *   message: string, type: 'permission_error'
+     *   message: string, type?: 'permission_error'
      * }|BetaNotFoundError|array{
-     *   message: string, type: 'not_found_error'
+     *   message: string, type?: 'not_found_error'
      * }|BetaRateLimitError|array{
-     *   message: string, type: 'rate_limit_error'
+     *   message: string, type?: 'rate_limit_error'
      * }|BetaGatewayTimeoutError|array{
-     *   message: string, type: 'timeout_error'
+     *   message: string, type?: 'timeout_error'
      * }|BetaAPIError|array{
-     *   message: string, type: 'api_error'
-     * }|BetaOverloadedError|array{message: string, type: 'overloaded_error'} $error
+     *   message: string, type?: 'api_error'
+     * }|BetaOverloadedError|array{message: string, type?: 'overloaded_error'} $error
      */
     public static function with(
         BetaInvalidRequestError|array|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error,
@@ -86,22 +86,22 @@ final class BetaErrorResponse implements BaseModel
 
     /**
      * @param BetaInvalidRequestError|array{
-     *   message: string, type: 'invalid_request_error'
+     *   message: string, type?: 'invalid_request_error'
      * }|BetaAuthenticationError|array{
-     *   message: string, type: 'authentication_error'
+     *   message: string, type?: 'authentication_error'
      * }|BetaBillingError|array{
-     *   message: string, type: 'billing_error'
+     *   message: string, type?: 'billing_error'
      * }|BetaPermissionError|array{
-     *   message: string, type: 'permission_error'
+     *   message: string, type?: 'permission_error'
      * }|BetaNotFoundError|array{
-     *   message: string, type: 'not_found_error'
+     *   message: string, type?: 'not_found_error'
      * }|BetaRateLimitError|array{
-     *   message: string, type: 'rate_limit_error'
+     *   message: string, type?: 'rate_limit_error'
      * }|BetaGatewayTimeoutError|array{
-     *   message: string, type: 'timeout_error'
+     *   message: string, type?: 'timeout_error'
      * }|BetaAPIError|array{
-     *   message: string, type: 'api_error'
-     * }|BetaOverloadedError|array{message: string, type: 'overloaded_error'} $error
+     *   message: string, type?: 'api_error'
+     * }|BetaOverloadedError|array{message: string, type?: 'overloaded_error'} $error
      */
     public function withError(
         BetaInvalidRequestError|array|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error,

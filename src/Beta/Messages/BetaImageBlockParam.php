@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaImageBlockParamShape = array{
  *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource,
- *   type: 'image',
+ *   type?: 'image',
  *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
@@ -62,12 +62,12 @@ final class BetaImageBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaBase64ImageSource|array{
-     *   data: string, media_type: value-of<MediaType>, type: 'base64'
-     * }|BetaURLImageSource|array{type: 'url', url: string}|BetaFileImageSource|array{
-     *   file_id: string, type: 'file'
+     *   data: string, media_type: value-of<MediaType>, type?: 'base64'
+     * }|BetaURLImageSource|array{type?: 'url', url: string}|BetaFileImageSource|array{
+     *   file_id: string, type?: 'file'
      * } $source
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      */
     public static function with(
@@ -85,9 +85,9 @@ final class BetaImageBlockParam implements BaseModel
 
     /**
      * @param BetaBase64ImageSource|array{
-     *   data: string, media_type: value-of<MediaType>, type: 'base64'
-     * }|BetaURLImageSource|array{type: 'url', url: string}|BetaFileImageSource|array{
-     *   file_id: string, type: 'file'
+     *   data: string, media_type: value-of<MediaType>, type?: 'base64'
+     * }|BetaURLImageSource|array{type?: 'url', url: string}|BetaFileImageSource|array{
+     *   file_id: string, type?: 'file'
      * } $source
      */
     public function withSource(
@@ -103,7 +103,7 @@ final class BetaImageBlockParam implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

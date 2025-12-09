@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaRequestDocumentBlockShape = array{
  *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource,
- *   type: 'document',
+ *   type?: 'document',
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   citations?: BetaCitationsConfigParam|null,
  *   context?: string|null,
@@ -73,16 +73,16 @@ final class BetaRequestDocumentBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaBase64PDFSource|array{
-     *   data: string, media_type: 'application/pdf', type: 'base64'
+     *   data: string, media_type?: 'application/pdf', type?: 'base64'
      * }|BetaPlainTextSource|array{
-     *   data: string, media_type: 'text/plain', type: 'text'
+     *   data: string, media_type?: 'text/plain', type?: 'text'
      * }|BetaContentBlockSource|array{
-     *   content: string|list<BetaTextBlockParam|BetaImageBlockParam>, type: 'content'
-     * }|BetaURLPDFSource|array{type: 'url', url: string}|BetaFileDocumentSource|array{
-     *   file_id: string, type: 'file'
-     * } $source
+     *   content: string|list<BetaTextBlockParam|BetaImageBlockParam>, type?: 'content'
+     * }|BetaURLPDFSource|array{
+     *   type?: 'url', url: string
+     * }|BetaFileDocumentSource|array{file_id: string, type?: 'file'} $source
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      * @param BetaCitationsConfigParam|array{enabled?: bool|null}|null $citations
      */
@@ -107,14 +107,14 @@ final class BetaRequestDocumentBlock implements BaseModel
 
     /**
      * @param BetaBase64PDFSource|array{
-     *   data: string, media_type: 'application/pdf', type: 'base64'
+     *   data: string, media_type?: 'application/pdf', type?: 'base64'
      * }|BetaPlainTextSource|array{
-     *   data: string, media_type: 'text/plain', type: 'text'
+     *   data: string, media_type?: 'text/plain', type?: 'text'
      * }|BetaContentBlockSource|array{
-     *   content: string|list<BetaTextBlockParam|BetaImageBlockParam>, type: 'content'
-     * }|BetaURLPDFSource|array{type: 'url', url: string}|BetaFileDocumentSource|array{
-     *   file_id: string, type: 'file'
-     * } $source
+     *   content: string|list<BetaTextBlockParam|BetaImageBlockParam>, type?: 'content'
+     * }|BetaURLPDFSource|array{
+     *   type?: 'url', url: string
+     * }|BetaFileDocumentSource|array{file_id: string, type?: 'file'} $source
      */
     public function withSource(
         BetaBase64PDFSource|array|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource $source,
@@ -129,7 +129,7 @@ final class BetaRequestDocumentBlock implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

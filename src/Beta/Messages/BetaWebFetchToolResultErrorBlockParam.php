@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaWebFetchToolResultErrorBlockParamShape = array{
  *   error_code: value-of<BetaWebFetchToolResultErrorCode>,
- *   type: 'web_fetch_tool_result_error',
+ *   type?: 'web_fetch_tool_result_error',
  * }
  */
 final class BetaWebFetchToolResultErrorBlockParam implements BaseModel

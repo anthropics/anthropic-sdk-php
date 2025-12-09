@@ -13,7 +13,7 @@ use Anthropic\Messages\CacheControlEphemeral\TTL;
 /**
  * @phpstan-type TextBlockParamShape = array{
  *   text: string,
- *   type: 'text',
+ *   type?: 'text',
  *   cache_control?: CacheControlEphemeral|null,
  *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
  * }
@@ -67,7 +67,7 @@ final class TextBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param CacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      * @param list<CitationCharLocationParam|array{
      *   cited_text: string,
@@ -75,26 +75,26 @@ final class TextBlockParam implements BaseModel
      *   document_title: string|null,
      *   end_char_index: int,
      *   start_char_index: int,
-     *   type: 'char_location',
+     *   type?: 'char_location',
      * }|CitationPageLocationParam|array{
      *   cited_text: string,
      *   document_index: int,
      *   document_title: string|null,
      *   end_page_number: int,
      *   start_page_number: int,
-     *   type: 'page_location',
+     *   type?: 'page_location',
      * }|CitationContentBlockLocationParam|array{
      *   cited_text: string,
      *   document_index: int,
      *   document_title: string|null,
      *   end_block_index: int,
      *   start_block_index: int,
-     *   type: 'content_block_location',
+     *   type?: 'content_block_location',
      * }|CitationWebSearchResultLocationParam|array{
      *   cited_text: string,
      *   encrypted_index: string,
      *   title: string|null,
-     *   type: 'web_search_result_location',
+     *   type?: 'web_search_result_location',
      *   url: string,
      * }|CitationSearchResultLocationParam|array{
      *   cited_text: string,
@@ -103,7 +103,7 @@ final class TextBlockParam implements BaseModel
      *   source: string,
      *   start_block_index: int,
      *   title: string|null,
-     *   type: 'search_result_location',
+     *   type?: 'search_result_location',
      * }>|null $citations
      */
     public static function with(
@@ -133,7 +133,7 @@ final class TextBlockParam implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param CacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(
@@ -152,26 +152,26 @@ final class TextBlockParam implements BaseModel
      *   document_title: string|null,
      *   end_char_index: int,
      *   start_char_index: int,
-     *   type: 'char_location',
+     *   type?: 'char_location',
      * }|CitationPageLocationParam|array{
      *   cited_text: string,
      *   document_index: int,
      *   document_title: string|null,
      *   end_page_number: int,
      *   start_page_number: int,
-     *   type: 'page_location',
+     *   type?: 'page_location',
      * }|CitationContentBlockLocationParam|array{
      *   cited_text: string,
      *   document_index: int,
      *   document_title: string|null,
      *   end_block_index: int,
      *   start_block_index: int,
-     *   type: 'content_block_location',
+     *   type?: 'content_block_location',
      * }|CitationWebSearchResultLocationParam|array{
      *   cited_text: string,
      *   encrypted_index: string,
      *   title: string|null,
-     *   type: 'web_search_result_location',
+     *   type?: 'web_search_result_location',
      *   url: string,
      * }|CitationSearchResultLocationParam|array{
      *   cited_text: string,
@@ -180,7 +180,7 @@ final class TextBlockParam implements BaseModel
      *   source: string,
      *   start_block_index: int,
      *   title: string|null,
-     *   type: 'search_result_location',
+     *   type?: 'search_result_location',
      * }>|null $citations
      */
     public function withCitations(?array $citations): self

@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * The model will use any available tools.
  *
  * @phpstan-type BetaToolChoiceAnyShape = array{
- *   type: 'any', disable_parallel_tool_use?: bool|null
+ *   type?: 'any', disable_parallel_tool_use?: bool|null
  * }
  */
 final class BetaToolChoiceAny implements BaseModel

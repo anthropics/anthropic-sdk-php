@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   id: string,
  *   created_at: \DateTimeInterface,
  *   display_name: string,
- *   type: 'model',
+ *   type?: 'model',
  * }
  */
 final class BetaModelInfo implements BaseModel

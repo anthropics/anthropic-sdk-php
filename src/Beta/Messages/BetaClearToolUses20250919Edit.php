@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaClearToolUses20250919EditShape = array{
- *   type: 'clear_tool_uses_20250919',
+ *   type?: 'clear_tool_uses_20250919',
  *   clear_at_least?: BetaInputTokensClearAtLeast|null,
  *   clear_tool_inputs?: bool|null|list<string>,
  *   exclude_tools?: list<string>|null,
@@ -75,14 +75,14 @@ final class BetaClearToolUses20250919Edit implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaInputTokensClearAtLeast|array{
-     *   type: 'input_tokens', value: int
+     *   type?: 'input_tokens', value: int
      * }|null $clear_at_least
      * @param bool|list<string>|null $clear_tool_inputs
      * @param list<string>|null $exclude_tools
-     * @param BetaToolUsesKeep|array{type: 'tool_uses', value: int} $keep
+     * @param BetaToolUsesKeep|array{type?: 'tool_uses', value: int} $keep
      * @param BetaInputTokensTrigger|array{
-     *   type: 'input_tokens', value: int
-     * }|BetaToolUsesTrigger|array{type: 'tool_uses', value: int} $trigger
+     *   type?: 'input_tokens', value: int
+     * }|BetaToolUsesTrigger|array{type?: 'tool_uses', value: int} $trigger
      */
     public static function with(
         BetaInputTokensClearAtLeast|array|null $clear_at_least = null,
@@ -106,7 +106,7 @@ final class BetaClearToolUses20250919Edit implements BaseModel
      * Minimum number of tokens that must be cleared when triggered. Context will only be modified if at least this many tokens can be removed.
      *
      * @param BetaInputTokensClearAtLeast|array{
-     *   type: 'input_tokens', value: int
+     *   type?: 'input_tokens', value: int
      * }|null $clearAtLeast
      */
     public function withClearAtLeast(
@@ -147,7 +147,7 @@ final class BetaClearToolUses20250919Edit implements BaseModel
     /**
      * Number of tool uses to retain in the conversation.
      *
-     * @param BetaToolUsesKeep|array{type: 'tool_uses', value: int} $keep
+     * @param BetaToolUsesKeep|array{type?: 'tool_uses', value: int} $keep
      */
     public function withKeep(BetaToolUsesKeep|array $keep): self
     {
@@ -161,8 +161,8 @@ final class BetaClearToolUses20250919Edit implements BaseModel
      * Condition that triggers the context management strategy.
      *
      * @param BetaInputTokensTrigger|array{
-     *   type: 'input_tokens', value: int
-     * }|BetaToolUsesTrigger|array{type: 'tool_uses', value: int} $trigger
+     *   type?: 'input_tokens', value: int
+     * }|BetaToolUsesTrigger|array{type?: 'tool_uses', value: int} $trigger
      */
     public function withTrigger(
         BetaInputTokensTrigger|array|BetaToolUsesTrigger $trigger
