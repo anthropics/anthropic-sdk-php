@@ -55,7 +55,7 @@ final class MessagesService implements MessagesContract
      * Learn more about the Messages API in our [user guide](https://docs.claude.com/en/docs/initial-setup)
      *
      * @param array{
-     *   max_tokens: int,
+     *   maxTokens: int,
      *   messages: list<array{
      *     content: string|list<array<string,mixed>>, role: 'user'|'assistant'|Role
      *   }>,
@@ -63,33 +63,33 @@ final class MessagesService implements MessagesContract
      *   container?: string|array{
      *     id?: string|null, skills?: list<array<mixed>>|null
      *   }|null,
-     *   context_management?: array{edits?: list<array<string,mixed>>}|null,
-     *   mcp_servers?: list<array{
+     *   contextManagement?: array{edits?: list<array<string,mixed>>}|null,
+     *   mcpServers?: list<array{
      *     name: string,
      *     type?: 'url',
      *     url: string,
-     *     authorization_token?: string|null,
-     *     tool_configuration?: array{
-     *       allowed_tools?: list<string>|null, enabled?: bool|null
+     *     authorizationToken?: string|null,
+     *     toolConfiguration?: array{
+     *       allowedTools?: list<string>|null, enabled?: bool|null
      *     }|null,
      *   }>,
-     *   metadata?: array{user_id?: string|null},
-     *   output_config?: array{effort?: 'low'|'medium'|'high'|Effort|null},
-     *   output_format?: array{schema: array<string,mixed>, type?: 'json_schema'}|null,
-     *   service_tier?: 'auto'|'standard_only'|ServiceTier,
-     *   stop_sequences?: list<string>,
+     *   metadata?: array{userID?: string|null},
+     *   outputConfig?: array{effort?: 'low'|'medium'|'high'|Effort|null},
+     *   outputFormat?: array{schema: array<string,mixed>, type?: 'json_schema'}|null,
+     *   serviceTier?: 'auto'|'standard_only'|ServiceTier,
+     *   stopSequences?: list<string>,
      *   system?: string|list<array{
      *     text: string,
      *     type?: 'text',
-     *     cache_control?: array<mixed>|null,
+     *     cacheControl?: array<mixed>|null,
      *     citations?: list<array<string,mixed>>|null,
      *   }>,
      *   temperature?: float,
      *   thinking?: array<string,mixed>,
-     *   tool_choice?: array<string,mixed>,
+     *   toolChoice?: array<string,mixed>,
      *   tools?: list<array<string,mixed>>,
-     *   top_k?: int,
-     *   top_p?: float,
+     *   topK?: int,
+     *   topP?: float,
      *   betas?: list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta>,
      * }|MessageCreateParams $params
      *
@@ -125,7 +125,7 @@ final class MessagesService implements MessagesContract
      * @api
      *
      * @param array{
-     *   max_tokens: int,
+     *   maxTokens: int,
      *   messages: list<array{
      *     content: string|list<array<string,mixed>>, role: 'user'|'assistant'|Role
      *   }>,
@@ -133,33 +133,33 @@ final class MessagesService implements MessagesContract
      *   container?: string|array{
      *     id?: string|null, skills?: list<array<mixed>>|null
      *   }|null,
-     *   context_management?: array{edits?: list<array<string,mixed>>}|null,
-     *   mcp_servers?: list<array{
+     *   contextManagement?: array{edits?: list<array<string,mixed>>}|null,
+     *   mcpServers?: list<array{
      *     name: string,
      *     type?: 'url',
      *     url: string,
-     *     authorization_token?: string|null,
-     *     tool_configuration?: array{
-     *       allowed_tools?: list<string>|null, enabled?: bool|null
+     *     authorizationToken?: string|null,
+     *     toolConfiguration?: array{
+     *       allowedTools?: list<string>|null, enabled?: bool|null
      *     }|null,
      *   }>,
-     *   metadata?: array{user_id?: string|null},
-     *   output_config?: array{effort?: 'low'|'medium'|'high'|Effort|null},
-     *   output_format?: array{schema: array<string,mixed>, type?: 'json_schema'}|null,
-     *   service_tier?: 'auto'|'standard_only'|ServiceTier,
-     *   stop_sequences?: list<string>,
+     *   metadata?: array{userID?: string|null},
+     *   outputConfig?: array{effort?: 'low'|'medium'|'high'|Effort|null},
+     *   outputFormat?: array{schema: array<string,mixed>, type?: 'json_schema'}|null,
+     *   serviceTier?: 'auto'|'standard_only'|ServiceTier,
+     *   stopSequences?: list<string>,
      *   system?: string|list<array{
      *     text: string,
      *     type?: 'text',
-     *     cache_control?: array<mixed>|null,
+     *     cacheControl?: array<mixed>|null,
      *     citations?: list<array<string,mixed>>|null,
      *   }>,
      *   temperature?: float,
      *   thinking?: array<string,mixed>,
-     *   tool_choice?: array<string,mixed>,
+     *   toolChoice?: array<string,mixed>,
      *   tools?: list<array<string,mixed>>,
-     *   top_k?: int,
-     *   top_p?: float,
+     *   topK?: int,
+     *   topP?: float,
      *   betas?: list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta>,
      * }|MessageCreateParams $params
      *
@@ -212,26 +212,26 @@ final class MessagesService implements MessagesContract
      *     content: string|list<array<string,mixed>>, role: 'user'|'assistant'|Role
      *   }>,
      *   model: string|'claude-opus-4-5-20251101'|'claude-opus-4-5'|'claude-3-7-sonnet-latest'|'claude-3-7-sonnet-20250219'|'claude-3-5-haiku-latest'|'claude-3-5-haiku-20241022'|'claude-haiku-4-5'|'claude-haiku-4-5-20251001'|'claude-sonnet-4-20250514'|'claude-sonnet-4-0'|'claude-4-sonnet-20250514'|'claude-sonnet-4-5'|'claude-sonnet-4-5-20250929'|'claude-opus-4-0'|'claude-opus-4-20250514'|'claude-4-opus-20250514'|'claude-opus-4-1-20250805'|'claude-3-opus-latest'|'claude-3-opus-20240229'|'claude-3-haiku-20240307'|Model,
-     *   context_management?: array{edits?: list<array<string,mixed>>}|null,
-     *   mcp_servers?: list<array{
+     *   contextManagement?: array{edits?: list<array<string,mixed>>}|null,
+     *   mcpServers?: list<array{
      *     name: string,
      *     type?: 'url',
      *     url: string,
-     *     authorization_token?: string|null,
-     *     tool_configuration?: array{
-     *       allowed_tools?: list<string>|null, enabled?: bool|null
+     *     authorizationToken?: string|null,
+     *     toolConfiguration?: array{
+     *       allowedTools?: list<string>|null, enabled?: bool|null
      *     }|null,
      *   }>,
-     *   output_config?: array{effort?: 'low'|'medium'|'high'|Effort|null},
-     *   output_format?: array{schema: array<string,mixed>, type?: 'json_schema'}|null,
+     *   outputConfig?: array{effort?: 'low'|'medium'|'high'|Effort|null},
+     *   outputFormat?: array{schema: array<string,mixed>, type?: 'json_schema'}|null,
      *   system?: string|list<array{
      *     text: string,
      *     type?: 'text',
-     *     cache_control?: array<mixed>|null,
+     *     cacheControl?: array<mixed>|null,
      *     citations?: list<array<string,mixed>>|null,
      *   }>,
      *   thinking?: array<string,mixed>,
-     *   tool_choice?: array<string,mixed>,
+     *   toolChoice?: array<string,mixed>,
      *   tools?: list<array<string,mixed>>,
      *   betas?: list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta>,
      * }|MessageCountTokensParams $params

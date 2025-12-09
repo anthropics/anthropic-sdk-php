@@ -10,11 +10,11 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCitationCharLocationParamShape = array{
- *   cited_text: string,
- *   document_index: int,
- *   document_title: string|null,
- *   end_char_index: int,
- *   start_char_index: int,
+ *   citedText: string,
+ *   documentIndex: int,
+ *   documentTitle: string|null,
+ *   endCharIndex: int,
+ *   startCharIndex: int,
  *   type?: 'char_location',
  * }
  */
@@ -27,20 +27,20 @@ final class BetaCitationCharLocationParam implements BaseModel
     #[Required]
     public string $type = 'char_location';
 
-    #[Required]
-    public string $cited_text;
+    #[Required('cited_text')]
+    public string $citedText;
 
-    #[Required]
-    public int $document_index;
+    #[Required('document_index')]
+    public int $documentIndex;
 
-    #[Required]
-    public ?string $document_title;
+    #[Required('document_title')]
+    public ?string $documentTitle;
 
-    #[Required]
-    public int $end_char_index;
+    #[Required('end_char_index')]
+    public int $endCharIndex;
 
-    #[Required]
-    public int $start_char_index;
+    #[Required('start_char_index')]
+    public int $startCharIndex;
 
     /**
      * `new BetaCitationCharLocationParam()` is missing required properties by the API.
@@ -48,11 +48,11 @@ final class BetaCitationCharLocationParam implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaCitationCharLocationParam::with(
-     *   cited_text: ...,
-     *   document_index: ...,
-     *   document_title: ...,
-     *   end_char_index: ...,
-     *   start_char_index: ...,
+     *   citedText: ...,
+     *   documentIndex: ...,
+     *   documentTitle: ...,
+     *   endCharIndex: ...,
+     *   startCharIndex: ...,
      * )
      * ```
      *
@@ -78,19 +78,19 @@ final class BetaCitationCharLocationParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $cited_text,
-        int $document_index,
-        ?string $document_title,
-        int $end_char_index,
-        int $start_char_index,
+        string $citedText,
+        int $documentIndex,
+        ?string $documentTitle,
+        int $endCharIndex,
+        int $startCharIndex,
     ): self {
         $obj = new self;
 
-        $obj['cited_text'] = $cited_text;
-        $obj['document_index'] = $document_index;
-        $obj['document_title'] = $document_title;
-        $obj['end_char_index'] = $end_char_index;
-        $obj['start_char_index'] = $start_char_index;
+        $obj['citedText'] = $citedText;
+        $obj['documentIndex'] = $documentIndex;
+        $obj['documentTitle'] = $documentTitle;
+        $obj['endCharIndex'] = $endCharIndex;
+        $obj['startCharIndex'] = $startCharIndex;
 
         return $obj;
     }
@@ -98,7 +98,7 @@ final class BetaCitationCharLocationParam implements BaseModel
     public function withCitedText(string $citedText): self
     {
         $obj = clone $this;
-        $obj['cited_text'] = $citedText;
+        $obj['citedText'] = $citedText;
 
         return $obj;
     }
@@ -106,7 +106,7 @@ final class BetaCitationCharLocationParam implements BaseModel
     public function withDocumentIndex(int $documentIndex): self
     {
         $obj = clone $this;
-        $obj['document_index'] = $documentIndex;
+        $obj['documentIndex'] = $documentIndex;
 
         return $obj;
     }
@@ -114,7 +114,7 @@ final class BetaCitationCharLocationParam implements BaseModel
     public function withDocumentTitle(?string $documentTitle): self
     {
         $obj = clone $this;
-        $obj['document_title'] = $documentTitle;
+        $obj['documentTitle'] = $documentTitle;
 
         return $obj;
     }
@@ -122,7 +122,7 @@ final class BetaCitationCharLocationParam implements BaseModel
     public function withEndCharIndex(int $endCharIndex): self
     {
         $obj = clone $this;
-        $obj['end_char_index'] = $endCharIndex;
+        $obj['endCharIndex'] = $endCharIndex;
 
         return $obj;
     }
@@ -130,7 +130,7 @@ final class BetaCitationCharLocationParam implements BaseModel
     public function withStartCharIndex(int $startCharIndex): self
     {
         $obj = clone $this;
-        $obj['start_char_index'] = $startCharIndex;
+        $obj['startCharIndex'] = $startCharIndex;
 
         return $obj;
     }

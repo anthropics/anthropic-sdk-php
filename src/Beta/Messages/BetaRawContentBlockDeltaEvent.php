@@ -57,7 +57,7 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
      * @param BetaTextDelta|array{
      *   text: string, type?: 'text_delta'
      * }|BetaInputJSONDelta|array{
-     *   partial_json: string, type?: 'input_json_delta'
+     *   partialJSON: string, type?: 'input_json_delta'
      * }|BetaCitationsDelta|array{
      *   citation: BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation,
      *   type?: 'citations_delta',
@@ -81,7 +81,7 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
      * @param BetaTextDelta|array{
      *   text: string, type?: 'text_delta'
      * }|BetaInputJSONDelta|array{
-     *   partial_json: string, type?: 'input_json_delta'
+     *   partialJSON: string, type?: 'input_json_delta'
      * }|BetaCitationsDelta|array{
      *   citation: BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation,
      *   type?: 'citations_delta',

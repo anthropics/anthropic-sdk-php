@@ -16,8 +16,8 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\FilesService::list()
  *
  * @phpstan-type FileListParamsShape = array{
- *   after_id?: string,
- *   before_id?: string,
+ *   afterID?: string,
+ *   beforeID?: string,
  *   limit?: int,
  *   betas?: list<string|AnthropicBeta>,
  * }
@@ -32,13 +32,13 @@ final class FileListParams implements BaseModel
      * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
      */
     #[Optional]
-    public ?string $after_id;
+    public ?string $afterID;
 
     /**
      * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
      */
     #[Optional]
-    public ?string $before_id;
+    public ?string $beforeID;
 
     /**
      * Number of items to return per page.
@@ -69,15 +69,15 @@ final class FileListParams implements BaseModel
      * @param list<string|AnthropicBeta> $betas
      */
     public static function with(
-        ?string $after_id = null,
-        ?string $before_id = null,
+        ?string $afterID = null,
+        ?string $beforeID = null,
         ?int $limit = null,
         ?array $betas = null,
     ): self {
         $obj = new self;
 
-        null !== $after_id && $obj['after_id'] = $after_id;
-        null !== $before_id && $obj['before_id'] = $before_id;
+        null !== $afterID && $obj['afterID'] = $afterID;
+        null !== $beforeID && $obj['beforeID'] = $beforeID;
         null !== $limit && $obj['limit'] = $limit;
         null !== $betas && $obj['betas'] = $betas;
 
@@ -90,7 +90,7 @@ final class FileListParams implements BaseModel
     public function withAfterID(string $afterID): self
     {
         $obj = clone $this;
-        $obj['after_id'] = $afterID;
+        $obj['afterID'] = $afterID;
 
         return $obj;
     }
@@ -101,7 +101,7 @@ final class FileListParams implements BaseModel
     public function withBeforeID(string $beforeID): self
     {
         $obj = clone $this;
-        $obj['before_id'] = $beforeID;
+        $obj['beforeID'] = $beforeID;
 
         return $obj;
     }

@@ -11,8 +11,8 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaToolSearchToolResultErrorShape = array{
- *   error_code: value-of<ErrorCode>,
- *   error_message: string|null,
+ *   errorCode: value-of<ErrorCode>,
+ *   errorMessage: string|null,
  *   type?: 'tool_search_tool_result_error',
  * }
  */
@@ -25,19 +25,19 @@ final class BetaToolSearchToolResultError implements BaseModel
     #[Required]
     public string $type = 'tool_search_tool_result_error';
 
-    /** @var value-of<ErrorCode> $error_code */
-    #[Required(enum: ErrorCode::class)]
-    public string $error_code;
+    /** @var value-of<ErrorCode> $errorCode */
+    #[Required('error_code', enum: ErrorCode::class)]
+    public string $errorCode;
 
-    #[Required]
-    public ?string $error_message;
+    #[Required('error_message')]
+    public ?string $errorMessage;
 
     /**
      * `new BetaToolSearchToolResultError()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaToolSearchToolResultError::with(error_code: ..., error_message: ...)
+     * BetaToolSearchToolResultError::with(errorCode: ..., errorMessage: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -56,16 +56,16 @@ final class BetaToolSearchToolResultError implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ErrorCode|value-of<ErrorCode> $error_code
+     * @param ErrorCode|value-of<ErrorCode> $errorCode
      */
     public static function with(
-        ErrorCode|string $error_code,
-        ?string $error_message
+        ErrorCode|string $errorCode,
+        ?string $errorMessage
     ): self {
         $obj = new self;
 
-        $obj['error_code'] = $error_code;
-        $obj['error_message'] = $error_message;
+        $obj['errorCode'] = $errorCode;
+        $obj['errorMessage'] = $errorMessage;
 
         return $obj;
     }
@@ -76,7 +76,7 @@ final class BetaToolSearchToolResultError implements BaseModel
     public function withErrorCode(ErrorCode|string $errorCode): self
     {
         $obj = clone $this;
-        $obj['error_code'] = $errorCode;
+        $obj['errorCode'] = $errorCode;
 
         return $obj;
     }
@@ -84,7 +84,7 @@ final class BetaToolSearchToolResultError implements BaseModel
     public function withErrorMessage(?string $errorMessage): self
     {
         $obj = clone $this;
-        $obj['error_message'] = $errorMessage;
+        $obj['errorMessage'] = $errorMessage;
 
         return $obj;
     }

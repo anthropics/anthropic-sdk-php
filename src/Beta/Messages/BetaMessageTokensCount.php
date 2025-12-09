@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMessageTokensCountShape = array{
- *   context_management: BetaCountTokensContextManagementResponse|null,
- *   input_tokens: int,
+ *   contextManagement: BetaCountTokensContextManagementResponse|null,
+ *   inputTokens: int,
  * }
  */
 final class BetaMessageTokensCount implements BaseModel
@@ -22,21 +22,21 @@ final class BetaMessageTokensCount implements BaseModel
     /**
      * Information about context management applied to the message.
      */
-    #[Required]
-    public ?BetaCountTokensContextManagementResponse $context_management;
+    #[Required('context_management')]
+    public ?BetaCountTokensContextManagementResponse $contextManagement;
 
     /**
      * The total number of tokens across the provided list of messages, system prompt, and tools.
      */
-    #[Required]
-    public int $input_tokens;
+    #[Required('input_tokens')]
+    public int $inputTokens;
 
     /**
      * `new BetaMessageTokensCount()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaMessageTokensCount::with(context_management: ..., input_tokens: ...)
+     * BetaMessageTokensCount::with(contextManagement: ..., inputTokens: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -56,17 +56,17 @@ final class BetaMessageTokensCount implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaCountTokensContextManagementResponse|array{
-     *   original_input_tokens: int
-     * }|null $context_management
+     *   originalInputTokens: int
+     * }|null $contextManagement
      */
     public static function with(
-        BetaCountTokensContextManagementResponse|array|null $context_management,
-        int $input_tokens,
+        BetaCountTokensContextManagementResponse|array|null $contextManagement,
+        int $inputTokens,
     ): self {
         $obj = new self;
 
-        $obj['context_management'] = $context_management;
-        $obj['input_tokens'] = $input_tokens;
+        $obj['contextManagement'] = $contextManagement;
+        $obj['inputTokens'] = $inputTokens;
 
         return $obj;
     }
@@ -75,14 +75,14 @@ final class BetaMessageTokensCount implements BaseModel
      * Information about context management applied to the message.
      *
      * @param BetaCountTokensContextManagementResponse|array{
-     *   original_input_tokens: int
+     *   originalInputTokens: int
      * }|null $contextManagement
      */
     public function withContextManagement(
         BetaCountTokensContextManagementResponse|array|null $contextManagement
     ): self {
         $obj = clone $this;
-        $obj['context_management'] = $contextManagement;
+        $obj['contextManagement'] = $contextManagement;
 
         return $obj;
     }
@@ -93,7 +93,7 @@ final class BetaMessageTokensCount implements BaseModel
     public function withInputTokens(int $inputTokens): self
     {
         $obj = clone $this;
-        $obj['input_tokens'] = $inputTokens;
+        $obj['inputTokens'] = $inputTokens;
 
         return $obj;
     }

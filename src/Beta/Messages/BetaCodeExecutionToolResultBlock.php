@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaCodeExecutionToolResultBlockShape = array{
  *   content: BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock,
- *   tool_use_id: string,
+ *   toolUseID: string,
  *   type?: 'code_execution_tool_result',
  * }
  */
@@ -27,15 +27,15 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
     #[Required]
     public BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock $content;
 
-    #[Required]
-    public string $tool_use_id;
+    #[Required('tool_use_id')]
+    public string $toolUseID;
 
     /**
      * `new BetaCodeExecutionToolResultBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaCodeExecutionToolResultBlock::with(content: ..., tool_use_id: ...)
+     * BetaCodeExecutionToolResultBlock::with(content: ..., toolUseID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -55,11 +55,11 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaCodeExecutionToolResultError|array{
-     *   error_code: value-of<BetaCodeExecutionToolResultErrorCode>,
+     *   errorCode: value-of<BetaCodeExecutionToolResultErrorCode>,
      *   type?: 'code_execution_tool_result_error',
      * }|BetaCodeExecutionResultBlock|array{
      *   content: list<BetaCodeExecutionOutputBlock>,
-     *   return_code: int,
+     *   returnCode: int,
      *   stderr: string,
      *   stdout: string,
      *   type?: 'code_execution_result',
@@ -67,23 +67,23 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
      */
     public static function with(
         BetaCodeExecutionToolResultError|array|BetaCodeExecutionResultBlock $content,
-        string $tool_use_id,
+        string $toolUseID,
     ): self {
         $obj = new self;
 
         $obj['content'] = $content;
-        $obj['tool_use_id'] = $tool_use_id;
+        $obj['toolUseID'] = $toolUseID;
 
         return $obj;
     }
 
     /**
      * @param BetaCodeExecutionToolResultError|array{
-     *   error_code: value-of<BetaCodeExecutionToolResultErrorCode>,
+     *   errorCode: value-of<BetaCodeExecutionToolResultErrorCode>,
      *   type?: 'code_execution_tool_result_error',
      * }|BetaCodeExecutionResultBlock|array{
      *   content: list<BetaCodeExecutionOutputBlock>,
-     *   return_code: int,
+     *   returnCode: int,
      *   stderr: string,
      *   stdout: string,
      *   type?: 'code_execution_result',
@@ -101,7 +101,7 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj['tool_use_id'] = $toolUseID;
+        $obj['toolUseID'] = $toolUseID;
 
         return $obj;
     }

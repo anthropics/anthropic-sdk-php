@@ -16,14 +16,14 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaWebSearchTool20250305Shape = array{
  *   name?: 'web_search',
  *   type?: 'web_search_20250305',
- *   allowed_callers?: list<value-of<AllowedCaller>>|null,
- *   allowed_domains?: list<string>|null,
- *   blocked_domains?: list<string>|null,
- *   cache_control?: BetaCacheControlEphemeral|null,
- *   defer_loading?: bool|null,
- *   max_uses?: int|null,
+ *   allowedCallers?: list<value-of<AllowedCaller>>|null,
+ *   allowedDomains?: list<string>|null,
+ *   blockedDomains?: list<string>|null,
+ *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   deferLoading?: bool|null,
+ *   maxUses?: int|null,
  *   strict?: bool|null,
- *   user_location?: UserLocation|null,
+ *   userLocation?: UserLocation|null,
  * }
  */
 final class BetaWebSearchTool20250305 implements BaseModel
@@ -45,43 +45,43 @@ final class BetaWebSearchTool20250305 implements BaseModel
     #[Required]
     public string $type = 'web_search_20250305';
 
-    /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
-    #[Optional(list: AllowedCaller::class)]
-    public ?array $allowed_callers;
+    /** @var list<value-of<AllowedCaller>>|null $allowedCallers */
+    #[Optional('allowed_callers', list: AllowedCaller::class)]
+    public ?array $allowedCallers;
 
     /**
      * If provided, only these domains will be included in results. Cannot be used alongside `blocked_domains`.
      *
-     * @var list<string>|null $allowed_domains
+     * @var list<string>|null $allowedDomains
      */
-    #[Optional(list: 'string', nullable: true)]
-    public ?array $allowed_domains;
+    #[Optional('allowed_domains', list: 'string', nullable: true)]
+    public ?array $allowedDomains;
 
     /**
      * If provided, these domains will never appear in results. Cannot be used alongside `allowed_domains`.
      *
-     * @var list<string>|null $blocked_domains
+     * @var list<string>|null $blockedDomains
      */
-    #[Optional(list: 'string', nullable: true)]
-    public ?array $blocked_domains;
+    #[Optional('blocked_domains', list: 'string', nullable: true)]
+    public ?array $blockedDomains;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
      */
-    #[Optional]
-    public ?bool $defer_loading;
+    #[Optional('defer_loading')]
+    public ?bool $deferLoading;
 
     /**
      * Maximum number of times the tool can be used in the API request.
      */
-    #[Optional(nullable: true)]
-    public ?int $max_uses;
+    #[Optional('max_uses', nullable: true)]
+    public ?int $maxUses;
 
     #[Optional]
     public ?bool $strict;
@@ -89,8 +89,8 @@ final class BetaWebSearchTool20250305 implements BaseModel
     /**
      * Parameters for the user's location. Used to provide more relevant search results.
      */
-    #[Optional(nullable: true)]
-    public ?UserLocation $user_location;
+    #[Optional('user_location', nullable: true)]
+    public ?UserLocation $userLocation;
 
     public function __construct()
     {
@@ -102,40 +102,40 @@ final class BetaWebSearchTool20250305 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
-     * @param list<string>|null $allowed_domains
-     * @param list<string>|null $blocked_domains
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
+     * @param list<string>|null $allowedDomains
+     * @param list<string>|null $blockedDomains
      * @param BetaCacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      * @param UserLocation|array{
      *   type?: 'approximate',
      *   city?: string|null,
      *   country?: string|null,
      *   region?: string|null,
      *   timezone?: string|null,
-     * }|null $user_location
+     * }|null $userLocation
      */
     public static function with(
-        ?array $allowed_callers = null,
-        ?array $allowed_domains = null,
-        ?array $blocked_domains = null,
-        BetaCacheControlEphemeral|array|null $cache_control = null,
-        ?bool $defer_loading = null,
-        ?int $max_uses = null,
+        ?array $allowedCallers = null,
+        ?array $allowedDomains = null,
+        ?array $blockedDomains = null,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
+        ?bool $deferLoading = null,
+        ?int $maxUses = null,
         ?bool $strict = null,
-        UserLocation|array|null $user_location = null,
+        UserLocation|array|null $userLocation = null,
     ): self {
         $obj = new self;
 
-        null !== $allowed_callers && $obj['allowed_callers'] = $allowed_callers;
-        null !== $allowed_domains && $obj['allowed_domains'] = $allowed_domains;
-        null !== $blocked_domains && $obj['blocked_domains'] = $blocked_domains;
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
-        null !== $defer_loading && $obj['defer_loading'] = $defer_loading;
-        null !== $max_uses && $obj['max_uses'] = $max_uses;
+        null !== $allowedCallers && $obj['allowedCallers'] = $allowedCallers;
+        null !== $allowedDomains && $obj['allowedDomains'] = $allowedDomains;
+        null !== $blockedDomains && $obj['blockedDomains'] = $blockedDomains;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
+        null !== $deferLoading && $obj['deferLoading'] = $deferLoading;
+        null !== $maxUses && $obj['maxUses'] = $maxUses;
         null !== $strict && $obj['strict'] = $strict;
-        null !== $user_location && $obj['user_location'] = $user_location;
+        null !== $userLocation && $obj['userLocation'] = $userLocation;
 
         return $obj;
     }
@@ -146,7 +146,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
     public function withAllowedCallers(array $allowedCallers): self
     {
         $obj = clone $this;
-        $obj['allowed_callers'] = $allowedCallers;
+        $obj['allowedCallers'] = $allowedCallers;
 
         return $obj;
     }
@@ -159,7 +159,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
     public function withAllowedDomains(?array $allowedDomains): self
     {
         $obj = clone $this;
-        $obj['allowed_domains'] = $allowedDomains;
+        $obj['allowedDomains'] = $allowedDomains;
 
         return $obj;
     }
@@ -172,7 +172,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
     public function withBlockedDomains(?array $blockedDomains): self
     {
         $obj = clone $this;
-        $obj['blocked_domains'] = $blockedDomains;
+        $obj['blockedDomains'] = $blockedDomains;
 
         return $obj;
     }
@@ -188,7 +188,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }
@@ -199,7 +199,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
     public function withDeferLoading(bool $deferLoading): self
     {
         $obj = clone $this;
-        $obj['defer_loading'] = $deferLoading;
+        $obj['deferLoading'] = $deferLoading;
 
         return $obj;
     }
@@ -210,7 +210,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
     public function withMaxUses(?int $maxUses): self
     {
         $obj = clone $this;
-        $obj['max_uses'] = $maxUses;
+        $obj['maxUses'] = $maxUses;
 
         return $obj;
     }
@@ -238,7 +238,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
         UserLocation|array|null $userLocation
     ): self {
         $obj = clone $this;
-        $obj['user_location'] = $userLocation;
+        $obj['userLocation'] = $userLocation;
 
         return $obj;
     }

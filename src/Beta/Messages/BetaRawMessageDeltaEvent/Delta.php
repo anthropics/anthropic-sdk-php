@@ -14,8 +14,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type DeltaShape = array{
  *   container: BetaContainer|null,
- *   stop_reason: value-of<BetaStopReason>|null,
- *   stop_sequence: string|null,
+ *   stopReason: value-of<BetaStopReason>|null,
+ *   stopSequence: string|null,
  * }
  */
 final class Delta implements BaseModel
@@ -29,19 +29,19 @@ final class Delta implements BaseModel
     #[Required]
     public ?BetaContainer $container;
 
-    /** @var value-of<BetaStopReason>|null $stop_reason */
-    #[Required(enum: BetaStopReason::class)]
-    public ?string $stop_reason;
+    /** @var value-of<BetaStopReason>|null $stopReason */
+    #[Required('stop_reason', enum: BetaStopReason::class)]
+    public ?string $stopReason;
 
-    #[Required]
-    public ?string $stop_sequence;
+    #[Required('stop_sequence')]
+    public ?string $stopSequence;
 
     /**
      * `new Delta()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Delta::with(container: ..., stop_reason: ..., stop_sequence: ...)
+     * Delta::with(container: ..., stopReason: ..., stopSequence: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -61,20 +61,20 @@ final class Delta implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaContainer|array{
-     *   id: string, expires_at: \DateTimeInterface, skills: list<BetaSkill>|null
+     *   id: string, expiresAt: \DateTimeInterface, skills: list<BetaSkill>|null
      * }|null $container
-     * @param BetaStopReason|value-of<BetaStopReason>|null $stop_reason
+     * @param BetaStopReason|value-of<BetaStopReason>|null $stopReason
      */
     public static function with(
         BetaContainer|array|null $container,
-        BetaStopReason|string|null $stop_reason,
-        ?string $stop_sequence,
+        BetaStopReason|string|null $stopReason,
+        ?string $stopSequence,
     ): self {
         $obj = new self;
 
         $obj['container'] = $container;
-        $obj['stop_reason'] = $stop_reason;
-        $obj['stop_sequence'] = $stop_sequence;
+        $obj['stopReason'] = $stopReason;
+        $obj['stopSequence'] = $stopSequence;
 
         return $obj;
     }
@@ -83,7 +83,7 @@ final class Delta implements BaseModel
      * Information about the container used in the request (for the code execution tool).
      *
      * @param BetaContainer|array{
-     *   id: string, expires_at: \DateTimeInterface, skills: list<BetaSkill>|null
+     *   id: string, expiresAt: \DateTimeInterface, skills: list<BetaSkill>|null
      * }|null $container
      */
     public function withContainer(BetaContainer|array|null $container): self
@@ -100,7 +100,7 @@ final class Delta implements BaseModel
     public function withStopReason(BetaStopReason|string|null $stopReason): self
     {
         $obj = clone $this;
-        $obj['stop_reason'] = $stopReason;
+        $obj['stopReason'] = $stopReason;
 
         return $obj;
     }
@@ -108,7 +108,7 @@ final class Delta implements BaseModel
     public function withStopSequence(?string $stopSequence): self
     {
         $obj = clone $this;
-        $obj['stop_sequence'] = $stopSequence;
+        $obj['stopSequence'] = $stopSequence;
 
         return $obj;
     }

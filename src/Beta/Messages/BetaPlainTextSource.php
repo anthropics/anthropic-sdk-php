@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaPlainTextSourceShape = array{
- *   data: string, media_type?: 'text/plain', type?: 'text'
+ *   data: string, mediaType?: 'text/plain', type?: 'text'
  * }
  */
 final class BetaPlainTextSource implements BaseModel
@@ -18,9 +18,9 @@ final class BetaPlainTextSource implements BaseModel
     /** @use SdkModel<BetaPlainTextSourceShape> */
     use SdkModel;
 
-    /** @var 'text/plain' $media_type */
-    #[Required]
-    public string $media_type = 'text/plain';
+    /** @var 'text/plain' $mediaType */
+    #[Required('media_type')]
+    public string $mediaType = 'text/plain';
 
     /** @var 'text' $type */
     #[Required]

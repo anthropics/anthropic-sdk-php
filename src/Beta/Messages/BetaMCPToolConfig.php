@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * Configuration for a specific tool in an MCP toolset.
  *
  * @phpstan-type BetaMCPToolConfigShape = array{
- *   defer_loading?: bool|null, enabled?: bool|null
+ *   deferLoading?: bool|null, enabled?: bool|null
  * }
  */
 final class BetaMCPToolConfig implements BaseModel
@@ -20,8 +20,8 @@ final class BetaMCPToolConfig implements BaseModel
     /** @use SdkModel<BetaMCPToolConfigShape> */
     use SdkModel;
 
-    #[Optional]
-    public ?bool $defer_loading;
+    #[Optional('defer_loading')]
+    public ?bool $deferLoading;
 
     #[Optional]
     public ?bool $enabled;
@@ -37,12 +37,12 @@ final class BetaMCPToolConfig implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?bool $defer_loading = null,
+        ?bool $deferLoading = null,
         ?bool $enabled = null
     ): self {
         $obj = new self;
 
-        null !== $defer_loading && $obj['defer_loading'] = $defer_loading;
+        null !== $deferLoading && $obj['deferLoading'] = $deferLoading;
         null !== $enabled && $obj['enabled'] = $enabled;
 
         return $obj;
@@ -51,7 +51,7 @@ final class BetaMCPToolConfig implements BaseModel
     public function withDeferLoading(bool $deferLoading): self
     {
         $obj = clone $this;
-        $obj['defer_loading'] = $deferLoading;
+        $obj['deferLoading'] = $deferLoading;
 
         return $obj;
     }

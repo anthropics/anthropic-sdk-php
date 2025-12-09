@@ -14,9 +14,9 @@ use Anthropic\Messages\Tool\Type;
 
 /**
  * @phpstan-type ToolShape = array{
- *   input_schema: InputSchema,
+ *   inputSchema: InputSchema,
  *   name: string,
- *   cache_control?: CacheControlEphemeral|null,
+ *   cacheControl?: CacheControlEphemeral|null,
  *   description?: string|null,
  *   type?: value-of<Type>|null,
  * }
@@ -31,8 +31,8 @@ final class Tool implements BaseModel
      *
      * This defines the shape of the `input` that your tool accepts and that the model will produce.
      */
-    #[Required]
-    public InputSchema $input_schema;
+    #[Required('input_schema')]
+    public InputSchema $inputSchema;
 
     /**
      * Name of the tool.
@@ -45,8 +45,8 @@ final class Tool implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
      * Description of what this tool does.
@@ -65,7 +65,7 @@ final class Tool implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Tool::with(input_schema: ..., name: ...)
+     * Tool::with(inputSchema: ..., name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -88,25 +88,25 @@ final class Tool implements BaseModel
      *   type?: 'object',
      *   properties?: array<string,mixed>|null,
      *   required?: list<string>|null,
-     * } $input_schema
+     * } $inputSchema
      * @param CacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      * @param Type|value-of<Type>|null $type
      */
     public static function with(
-        InputSchema|array $input_schema,
+        InputSchema|array $inputSchema,
         string $name,
-        CacheControlEphemeral|array|null $cache_control = null,
+        CacheControlEphemeral|array|null $cacheControl = null,
         ?string $description = null,
         Type|string|null $type = null,
     ): self {
         $obj = new self;
 
-        $obj['input_schema'] = $input_schema;
+        $obj['inputSchema'] = $inputSchema;
         $obj['name'] = $name;
 
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
         null !== $description && $obj['description'] = $description;
         null !== $type && $obj['type'] = $type;
 
@@ -127,7 +127,7 @@ final class Tool implements BaseModel
     public function withInputSchema(InputSchema|array $inputSchema): self
     {
         $obj = clone $this;
-        $obj['input_schema'] = $inputSchema;
+        $obj['inputSchema'] = $inputSchema;
 
         return $obj;
     }
@@ -156,7 +156,7 @@ final class Tool implements BaseModel
         CacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }

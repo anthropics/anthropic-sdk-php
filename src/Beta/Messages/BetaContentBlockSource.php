@@ -54,12 +54,12 @@ final class BetaContentBlockSource implements BaseModel
      * @param string|list<BetaTextBlockParam|array{
      *   text: string,
      *   type?: 'text',
-     *   cache_control?: BetaCacheControlEphemeral|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
      *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
      * }|BetaImageBlockParam|array{
      *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource,
      *   type?: 'image',
-     *   cache_control?: BetaCacheControlEphemeral|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
      * }> $content
      */
     public static function with(string|array $content): self
@@ -75,12 +75,12 @@ final class BetaContentBlockSource implements BaseModel
      * @param string|list<BetaTextBlockParam|array{
      *   text: string,
      *   type?: 'text',
-     *   cache_control?: BetaCacheControlEphemeral|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
      *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
      * }|BetaImageBlockParam|array{
      *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource,
      *   type?: 'image',
-     *   cache_control?: BetaCacheControlEphemeral|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
      * }> $content
      */
     public function withContent(string|array $content): self

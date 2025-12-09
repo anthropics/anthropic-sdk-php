@@ -15,7 +15,7 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * @phpstan-type TokenPageShape = array{
- *   data?: list<mixed>|null, has_more?: bool|null, next_page?: string|null
+ *   data?: list<mixed>|null, hasMore?: bool|null, nextPage?: string|null
  * }
  *
  * @template TItem
@@ -34,11 +34,11 @@ final class TokenPage implements BaseModel, BasePage
     #[Optional(list: 'mixed')]
     public ?array $data;
 
-    #[Optional]
-    public ?bool $has_more;
+    #[Optional('has_more')]
+    public ?bool $hasMore;
 
-    #[Optional(nullable: true)]
-    public ?string $next_page;
+    #[Optional('next_page', nullable: true)]
+    public ?string $nextPage;
 
     /**
      * @internal
@@ -101,11 +101,11 @@ final class TokenPage implements BaseModel, BasePage
      */
     public function nextRequest(): ?array
     {
-        if (!($this->has_more ?? null) || !count($this->getItems())) {
+        if (!($this->hasMore ?? null) || !count($this->getItems())) {
             return null;
         }
 
-        if (!($next = $this->next_page ?? null)) {
+        if (!($next = $this->nextPage ?? null)) {
             return null;
         }
 

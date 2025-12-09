@@ -14,7 +14,7 @@ use Anthropic\Messages\CacheControlEphemeral\TTL;
  * @phpstan-type TextBlockParamShape = array{
  *   text: string,
  *   type?: 'text',
- *   cache_control?: CacheControlEphemeral|null,
+ *   cacheControl?: CacheControlEphemeral|null,
  *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
  * }
  */
@@ -33,8 +33,8 @@ final class TextBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
      * @var list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null $citations
@@ -68,54 +68,54 @@ final class TextBlockParam implements BaseModel
      *
      * @param CacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      * @param list<CitationCharLocationParam|array{
-     *   cited_text: string,
-     *   document_index: int,
-     *   document_title: string|null,
-     *   end_char_index: int,
-     *   start_char_index: int,
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endCharIndex: int,
+     *   startCharIndex: int,
      *   type?: 'char_location',
      * }|CitationPageLocationParam|array{
-     *   cited_text: string,
-     *   document_index: int,
-     *   document_title: string|null,
-     *   end_page_number: int,
-     *   start_page_number: int,
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endPageNumber: int,
+     *   startPageNumber: int,
      *   type?: 'page_location',
      * }|CitationContentBlockLocationParam|array{
-     *   cited_text: string,
-     *   document_index: int,
-     *   document_title: string|null,
-     *   end_block_index: int,
-     *   start_block_index: int,
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endBlockIndex: int,
+     *   startBlockIndex: int,
      *   type?: 'content_block_location',
      * }|CitationWebSearchResultLocationParam|array{
-     *   cited_text: string,
-     *   encrypted_index: string,
+     *   citedText: string,
+     *   encryptedIndex: string,
      *   title: string|null,
      *   type?: 'web_search_result_location',
      *   url: string,
      * }|CitationSearchResultLocationParam|array{
-     *   cited_text: string,
-     *   end_block_index: int,
-     *   search_result_index: int,
+     *   citedText: string,
+     *   endBlockIndex: int,
+     *   searchResultIndex: int,
      *   source: string,
-     *   start_block_index: int,
+     *   startBlockIndex: int,
      *   title: string|null,
      *   type?: 'search_result_location',
      * }>|null $citations
      */
     public static function with(
         string $text,
-        CacheControlEphemeral|array|null $cache_control = null,
+        CacheControlEphemeral|array|null $cacheControl = null,
         ?array $citations = null,
     ): self {
         $obj = new self;
 
         $obj['text'] = $text;
 
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
         null !== $citations && $obj['citations'] = $citations;
 
         return $obj;
@@ -140,45 +140,45 @@ final class TextBlockParam implements BaseModel
         CacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }
 
     /**
      * @param list<CitationCharLocationParam|array{
-     *   cited_text: string,
-     *   document_index: int,
-     *   document_title: string|null,
-     *   end_char_index: int,
-     *   start_char_index: int,
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endCharIndex: int,
+     *   startCharIndex: int,
      *   type?: 'char_location',
      * }|CitationPageLocationParam|array{
-     *   cited_text: string,
-     *   document_index: int,
-     *   document_title: string|null,
-     *   end_page_number: int,
-     *   start_page_number: int,
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endPageNumber: int,
+     *   startPageNumber: int,
      *   type?: 'page_location',
      * }|CitationContentBlockLocationParam|array{
-     *   cited_text: string,
-     *   document_index: int,
-     *   document_title: string|null,
-     *   end_block_index: int,
-     *   start_block_index: int,
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endBlockIndex: int,
+     *   startBlockIndex: int,
      *   type?: 'content_block_location',
      * }|CitationWebSearchResultLocationParam|array{
-     *   cited_text: string,
-     *   encrypted_index: string,
+     *   citedText: string,
+     *   encryptedIndex: string,
      *   title: string|null,
      *   type?: 'web_search_result_location',
      *   url: string,
      * }|CitationSearchResultLocationParam|array{
-     *   cited_text: string,
-     *   end_block_index: int,
-     *   search_result_index: int,
+     *   citedText: string,
+     *   endBlockIndex: int,
+     *   searchResultIndex: int,
      *   source: string,
-     *   start_block_index: int,
+     *   startBlockIndex: int,
      *   title: string|null,
      *   type?: 'search_result_location',
      * }>|null $citations

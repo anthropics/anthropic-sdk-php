@@ -46,7 +46,7 @@ final class BetaContainerParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaSkillParams|array{
-     *   skill_id: string, type: value-of<Type>, version?: string|null
+     *   skillID: string, type: value-of<Type>, version?: string|null
      * }>|null $skills
      */
     public static function with(?string $id = null, ?array $skills = null): self
@@ -74,7 +74,7 @@ final class BetaContainerParams implements BaseModel
      * List of skills to load in the container.
      *
      * @param list<BetaSkillParams|array{
-     *   skill_id: string, type: value-of<Type>, version?: string|null
+     *   skillID: string, type: value-of<Type>, version?: string|null
      * }>|null $skills
      */
     public function withSkills(?array $skills): self

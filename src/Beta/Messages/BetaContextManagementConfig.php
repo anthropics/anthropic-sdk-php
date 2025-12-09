@@ -39,9 +39,9 @@ final class BetaContextManagementConfig implements BaseModel
      *
      * @param list<BetaClearToolUses20250919Edit|array{
      *   type?: 'clear_tool_uses_20250919',
-     *   clear_at_least?: BetaInputTokensClearAtLeast|null,
-     *   clear_tool_inputs?: bool|list<string>|null,
-     *   exclude_tools?: list<string>|null,
+     *   clearAtLeast?: BetaInputTokensClearAtLeast|null,
+     *   clearToolInputs?: bool|list<string>|null,
+     *   excludeTools?: list<string>|null,
      *   keep?: BetaToolUsesKeep|null,
      *   trigger?: BetaInputTokensTrigger|BetaToolUsesTrigger|null,
      * }|BetaClearThinking20251015Edit|array{
@@ -63,9 +63,9 @@ final class BetaContextManagementConfig implements BaseModel
      *
      * @param list<BetaClearToolUses20250919Edit|array{
      *   type?: 'clear_tool_uses_20250919',
-     *   clear_at_least?: BetaInputTokensClearAtLeast|null,
-     *   clear_tool_inputs?: bool|list<string>|null,
-     *   exclude_tools?: list<string>|null,
+     *   clearAtLeast?: BetaInputTokensClearAtLeast|null,
+     *   clearToolInputs?: bool|list<string>|null,
+     *   excludeTools?: list<string>|null,
      *   keep?: BetaToolUsesKeep|null,
      *   trigger?: BetaInputTokensTrigger|BetaToolUsesTrigger|null,
      * }|BetaClearThinking20251015Edit|array{

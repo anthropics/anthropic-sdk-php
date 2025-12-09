@@ -14,9 +14,9 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaClearToolUses20250919EditShape = array{
  *   type?: 'clear_tool_uses_20250919',
- *   clear_at_least?: BetaInputTokensClearAtLeast|null,
- *   clear_tool_inputs?: bool|null|list<string>,
- *   exclude_tools?: list<string>|null,
+ *   clearAtLeast?: BetaInputTokensClearAtLeast|null,
+ *   clearToolInputs?: bool|null|list<string>,
+ *   excludeTools?: list<string>|null,
  *   keep?: BetaToolUsesKeep|null,
  *   trigger?: null|BetaInputTokensTrigger|BetaToolUsesTrigger,
  * }
@@ -33,24 +33,28 @@ final class BetaClearToolUses20250919Edit implements BaseModel
     /**
      * Minimum number of tokens that must be cleared when triggered. Context will only be modified if at least this many tokens can be removed.
      */
-    #[Optional(nullable: true)]
-    public ?BetaInputTokensClearAtLeast $clear_at_least;
+    #[Optional('clear_at_least', nullable: true)]
+    public ?BetaInputTokensClearAtLeast $clearAtLeast;
 
     /**
      * Whether to clear all tool inputs (bool) or specific tool inputs to clear (list).
      *
-     * @var bool|list<string>|null $clear_tool_inputs
+     * @var bool|list<string>|null $clearToolInputs
      */
-    #[Optional(union: ClearToolInputs::class, nullable: true)]
-    public bool|array|null $clear_tool_inputs;
+    #[Optional(
+        'clear_tool_inputs',
+        union: ClearToolInputs::class,
+        nullable: true
+    )]
+    public bool|array|null $clearToolInputs;
 
     /**
      * Tool names whose uses are preserved from clearing.
      *
-     * @var list<string>|null $exclude_tools
+     * @var list<string>|null $excludeTools
      */
-    #[Optional(list: 'string', nullable: true)]
-    public ?array $exclude_tools;
+    #[Optional('exclude_tools', list: 'string', nullable: true)]
+    public ?array $excludeTools;
 
     /**
      * Number of tool uses to retain in the conversation.
@@ -76,26 +80,26 @@ final class BetaClearToolUses20250919Edit implements BaseModel
      *
      * @param BetaInputTokensClearAtLeast|array{
      *   type?: 'input_tokens', value: int
-     * }|null $clear_at_least
-     * @param bool|list<string>|null $clear_tool_inputs
-     * @param list<string>|null $exclude_tools
+     * }|null $clearAtLeast
+     * @param bool|list<string>|null $clearToolInputs
+     * @param list<string>|null $excludeTools
      * @param BetaToolUsesKeep|array{type?: 'tool_uses', value: int} $keep
      * @param BetaInputTokensTrigger|array{
      *   type?: 'input_tokens', value: int
      * }|BetaToolUsesTrigger|array{type?: 'tool_uses', value: int} $trigger
      */
     public static function with(
-        BetaInputTokensClearAtLeast|array|null $clear_at_least = null,
-        bool|array|null $clear_tool_inputs = null,
-        ?array $exclude_tools = null,
+        BetaInputTokensClearAtLeast|array|null $clearAtLeast = null,
+        bool|array|null $clearToolInputs = null,
+        ?array $excludeTools = null,
         BetaToolUsesKeep|array|null $keep = null,
         BetaInputTokensTrigger|array|BetaToolUsesTrigger|null $trigger = null,
     ): self {
         $obj = new self;
 
-        null !== $clear_at_least && $obj['clear_at_least'] = $clear_at_least;
-        null !== $clear_tool_inputs && $obj['clear_tool_inputs'] = $clear_tool_inputs;
-        null !== $exclude_tools && $obj['exclude_tools'] = $exclude_tools;
+        null !== $clearAtLeast && $obj['clearAtLeast'] = $clearAtLeast;
+        null !== $clearToolInputs && $obj['clearToolInputs'] = $clearToolInputs;
+        null !== $excludeTools && $obj['excludeTools'] = $excludeTools;
         null !== $keep && $obj['keep'] = $keep;
         null !== $trigger && $obj['trigger'] = $trigger;
 
@@ -113,7 +117,7 @@ final class BetaClearToolUses20250919Edit implements BaseModel
         BetaInputTokensClearAtLeast|array|null $clearAtLeast
     ): self {
         $obj = clone $this;
-        $obj['clear_at_least'] = $clearAtLeast;
+        $obj['clearAtLeast'] = $clearAtLeast;
 
         return $obj;
     }
@@ -126,7 +130,7 @@ final class BetaClearToolUses20250919Edit implements BaseModel
     public function withClearToolInputs(bool|array|null $clearToolInputs): self
     {
         $obj = clone $this;
-        $obj['clear_tool_inputs'] = $clearToolInputs;
+        $obj['clearToolInputs'] = $clearToolInputs;
 
         return $obj;
     }
@@ -139,7 +143,7 @@ final class BetaClearToolUses20250919Edit implements BaseModel
     public function withExcludeTools(?array $excludeTools): self
     {
         $obj = clone $this;
-        $obj['exclude_tools'] = $excludeTools;
+        $obj['excludeTools'] = $excludeTools;
 
         return $obj;
     }

@@ -26,66 +26,66 @@ use Anthropic\Messages\WebSearchTool20250305\UserLocation;
  * @see Anthropic\Services\MessagesService::create()
  *
  * @phpstan-type MessageCreateParamsShape = array{
- *   max_tokens: int,
+ *   maxTokens: int,
  *   messages: list<MessageParam|array{
  *     content: string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam>,
  *     role: value-of<Role>,
  *   }>,
  *   model: string|Model,
- *   metadata?: Metadata|array{user_id?: string|null},
- *   service_tier?: ServiceTier|value-of<ServiceTier>,
- *   stop_sequences?: list<string>,
+ *   metadata?: Metadata|array{userID?: string|null},
+ *   serviceTier?: ServiceTier|value-of<ServiceTier>,
+ *   stopSequences?: list<string>,
  *   system?: string|list<TextBlockParam|array{
  *     text: string,
  *     type?: 'text',
- *     cache_control?: CacheControlEphemeral|null,
+ *     cacheControl?: CacheControlEphemeral|null,
  *     citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
  *   }>,
  *   temperature?: float,
  *   thinking?: ThinkingConfigEnabled|array{
- *     budget_tokens: int, type?: 'enabled'
+ *     budgetTokens: int, type?: 'enabled'
  *   }|ThinkingConfigDisabled|array{type?: 'disabled'},
- *   tool_choice?: ToolChoiceAuto|array{
- *     type?: 'auto', disable_parallel_tool_use?: bool|null
+ *   toolChoice?: ToolChoiceAuto|array{
+ *     type?: 'auto', disableParallelToolUse?: bool|null
  *   }|ToolChoiceAny|array{
- *     type?: 'any', disable_parallel_tool_use?: bool|null
+ *     type?: 'any', disableParallelToolUse?: bool|null
  *   }|ToolChoiceTool|array{
- *     name: string, type?: 'tool', disable_parallel_tool_use?: bool|null
+ *     name: string, type?: 'tool', disableParallelToolUse?: bool|null
  *   }|ToolChoiceNone|array{type?: 'none'},
  *   tools?: list<Tool|array{
- *     input_schema: InputSchema,
+ *     inputSchema: InputSchema,
  *     name: string,
- *     cache_control?: CacheControlEphemeral|null,
+ *     cacheControl?: CacheControlEphemeral|null,
  *     description?: string|null,
  *     type?: value-of<Type>|null,
  *   }|ToolBash20250124|array{
  *     name?: 'bash',
  *     type?: 'bash_20250124',
- *     cache_control?: CacheControlEphemeral|null,
+ *     cacheControl?: CacheControlEphemeral|null,
  *   }|ToolTextEditor20250124|array{
  *     name?: 'str_replace_editor',
  *     type?: 'text_editor_20250124',
- *     cache_control?: CacheControlEphemeral|null,
+ *     cacheControl?: CacheControlEphemeral|null,
  *   }|ToolTextEditor20250429|array{
  *     name?: 'str_replace_based_edit_tool',
  *     type?: 'text_editor_20250429',
- *     cache_control?: CacheControlEphemeral|null,
+ *     cacheControl?: CacheControlEphemeral|null,
  *   }|ToolTextEditor20250728|array{
  *     name?: 'str_replace_based_edit_tool',
  *     type?: 'text_editor_20250728',
- *     cache_control?: CacheControlEphemeral|null,
- *     max_characters?: int|null,
+ *     cacheControl?: CacheControlEphemeral|null,
+ *     maxCharacters?: int|null,
  *   }|WebSearchTool20250305|array{
  *     name?: 'web_search',
  *     type?: 'web_search_20250305',
- *     allowed_domains?: list<string>|null,
- *     blocked_domains?: list<string>|null,
- *     cache_control?: CacheControlEphemeral|null,
- *     max_uses?: int|null,
- *     user_location?: UserLocation|null,
+ *     allowedDomains?: list<string>|null,
+ *     blockedDomains?: list<string>|null,
+ *     cacheControl?: CacheControlEphemeral|null,
+ *     maxUses?: int|null,
+ *     userLocation?: UserLocation|null,
  *   }>,
- *   top_k?: int,
- *   top_p?: float,
+ *   topK?: int,
+ *   topP?: float,
  * }
  */
 final class MessageCreateParams implements BaseModel
@@ -101,8 +101,8 @@ final class MessageCreateParams implements BaseModel
      *
      * Different models have different maximum values for this parameter.  See [models](https://docs.claude.com/en/docs/models-overview) for details.
      */
-    #[Required]
-    public int $max_tokens;
+    #[Required('max_tokens')]
+    public int $maxTokens;
 
     /**
      * Input messages.
@@ -178,10 +178,10 @@ final class MessageCreateParams implements BaseModel
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.claude.com/en/api/service-tiers) for details.
      *
-     * @var value-of<ServiceTier>|null $service_tier
+     * @var value-of<ServiceTier>|null $serviceTier
      */
-    #[Optional(enum: ServiceTier::class)]
-    public ?string $service_tier;
+    #[Optional('service_tier', enum: ServiceTier::class)]
+    public ?string $serviceTier;
 
     /**
      * Custom text sequences that will cause the model to stop generating.
@@ -190,10 +190,10 @@ final class MessageCreateParams implements BaseModel
      *
      * If you want the model to stop generating when it encounters custom strings of text, you can use the `stop_sequences` parameter. If the model encounters one of the custom sequences, the response `stop_reason` value will be `"stop_sequence"` and the response `stop_sequence` value will contain the matched stop sequence.
      *
-     * @var list<string>|null $stop_sequences
+     * @var list<string>|null $stopSequences
      */
-    #[Optional(list: 'string')]
-    public ?array $stop_sequences;
+    #[Optional('stop_sequences', list: 'string')]
+    public ?array $stopSequences;
 
     /**
      * System prompt.
@@ -228,8 +228,8 @@ final class MessageCreateParams implements BaseModel
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
-    #[Optional(union: ToolChoice::class)]
-    public ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $tool_choice;
+    #[Optional('tool_choice', union: ToolChoice::class)]
+    public ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice;
 
     /**
      * Definitions of tools that the model may use.
@@ -306,8 +306,8 @@ final class MessageCreateParams implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    #[Optional]
-    public ?int $top_k;
+    #[Optional('top_k')]
+    public ?int $topK;
 
     /**
      * Use nucleus sampling.
@@ -316,15 +316,15 @@ final class MessageCreateParams implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    #[Optional]
-    public ?float $top_p;
+    #[Optional('top_p')]
+    public ?float $topP;
 
     /**
      * `new MessageCreateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * MessageCreateParams::with(max_tokens: ..., messages: ..., model: ...)
+     * MessageCreateParams::with(maxTokens: ..., messages: ..., model: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -347,89 +347,89 @@ final class MessageCreateParams implements BaseModel
      *   content: string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam>,
      *   role: value-of<Role>,
      * }> $messages
-     * @param Metadata|array{user_id?: string|null} $metadata
-     * @param ServiceTier|value-of<ServiceTier> $service_tier
-     * @param list<string> $stop_sequences
+     * @param Metadata|array{userID?: string|null} $metadata
+     * @param ServiceTier|value-of<ServiceTier> $serviceTier
+     * @param list<string> $stopSequences
      * @param string|list<TextBlockParam|array{
      *   text: string,
      *   type?: 'text',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }> $system
      * @param ThinkingConfigEnabled|array{
-     *   budget_tokens: int, type?: 'enabled'
+     *   budgetTokens: int, type?: 'enabled'
      * }|ThinkingConfigDisabled|array{type?: 'disabled'} $thinking
      * @param ToolChoiceAuto|array{
-     *   type?: 'auto', disable_parallel_tool_use?: bool|null
+     *   type?: 'auto', disableParallelToolUse?: bool|null
      * }|ToolChoiceAny|array{
-     *   type?: 'any', disable_parallel_tool_use?: bool|null
+     *   type?: 'any', disableParallelToolUse?: bool|null
      * }|ToolChoiceTool|array{
-     *   name: string, type?: 'tool', disable_parallel_tool_use?: bool|null
-     * }|ToolChoiceNone|array{type?: 'none'} $tool_choice
+     *   name: string, type?: 'tool', disableParallelToolUse?: bool|null
+     * }|ToolChoiceNone|array{type?: 'none'} $toolChoice
      * @param list<Tool|array{
-     *   input_schema: InputSchema,
+     *   inputSchema: InputSchema,
      *   name: string,
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   description?: string|null,
      *   type?: value-of<Type>|null,
      * }|ToolBash20250124|array{
      *   name?: 'bash',
      *   type?: 'bash_20250124',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|ToolTextEditor20250124|array{
      *   name?: 'str_replace_editor',
      *   type?: 'text_editor_20250124',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|ToolTextEditor20250429|array{
      *   name?: 'str_replace_based_edit_tool',
      *   type?: 'text_editor_20250429',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|ToolTextEditor20250728|array{
      *   name?: 'str_replace_based_edit_tool',
      *   type?: 'text_editor_20250728',
-     *   cache_control?: CacheControlEphemeral|null,
-     *   max_characters?: int|null,
+     *   cacheControl?: CacheControlEphemeral|null,
+     *   maxCharacters?: int|null,
      * }|WebSearchTool20250305|array{
      *   name?: 'web_search',
      *   type?: 'web_search_20250305',
-     *   allowed_domains?: list<string>|null,
-     *   blocked_domains?: list<string>|null,
-     *   cache_control?: CacheControlEphemeral|null,
-     *   max_uses?: int|null,
-     *   user_location?: UserLocation|null,
+     *   allowedDomains?: list<string>|null,
+     *   blockedDomains?: list<string>|null,
+     *   cacheControl?: CacheControlEphemeral|null,
+     *   maxUses?: int|null,
+     *   userLocation?: UserLocation|null,
      * }> $tools
      */
     public static function with(
-        int $max_tokens,
+        int $maxTokens,
         array $messages,
         string|Model $model,
         Metadata|array|null $metadata = null,
-        ServiceTier|string|null $service_tier = null,
-        ?array $stop_sequences = null,
+        ServiceTier|string|null $serviceTier = null,
+        ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
         ThinkingConfigEnabled|array|ThinkingConfigDisabled|null $thinking = null,
-        ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $tool_choice = null,
+        ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
-        ?int $top_k = null,
-        ?float $top_p = null,
+        ?int $topK = null,
+        ?float $topP = null,
     ): self {
         $obj = new self;
 
-        $obj['max_tokens'] = $max_tokens;
+        $obj['maxTokens'] = $maxTokens;
         $obj['messages'] = $messages;
         $obj['model'] = $model;
 
         null !== $metadata && $obj['metadata'] = $metadata;
-        null !== $service_tier && $obj['service_tier'] = $service_tier;
-        null !== $stop_sequences && $obj['stop_sequences'] = $stop_sequences;
+        null !== $serviceTier && $obj['serviceTier'] = $serviceTier;
+        null !== $stopSequences && $obj['stopSequences'] = $stopSequences;
         null !== $system && $obj['system'] = $system;
         null !== $temperature && $obj['temperature'] = $temperature;
         null !== $thinking && $obj['thinking'] = $thinking;
-        null !== $tool_choice && $obj['tool_choice'] = $tool_choice;
+        null !== $toolChoice && $obj['toolChoice'] = $toolChoice;
         null !== $tools && $obj['tools'] = $tools;
-        null !== $top_k && $obj['top_k'] = $top_k;
-        null !== $top_p && $obj['top_p'] = $top_p;
+        null !== $topK && $obj['topK'] = $topK;
+        null !== $topP && $obj['topP'] = $topP;
 
         return $obj;
     }
@@ -444,7 +444,7 @@ final class MessageCreateParams implements BaseModel
     public function withMaxTokens(int $maxTokens): self
     {
         $obj = clone $this;
-        $obj['max_tokens'] = $maxTokens;
+        $obj['maxTokens'] = $maxTokens;
 
         return $obj;
     }
@@ -526,7 +526,7 @@ final class MessageCreateParams implements BaseModel
     /**
      * An object describing metadata about the request.
      *
-     * @param Metadata|array{user_id?: string|null} $metadata
+     * @param Metadata|array{userID?: string|null} $metadata
      */
     public function withMetadata(Metadata|array $metadata): self
     {
@@ -546,7 +546,7 @@ final class MessageCreateParams implements BaseModel
     public function withServiceTier(ServiceTier|string $serviceTier): self
     {
         $obj = clone $this;
-        $obj['service_tier'] = $serviceTier;
+        $obj['serviceTier'] = $serviceTier;
 
         return $obj;
     }
@@ -563,7 +563,7 @@ final class MessageCreateParams implements BaseModel
     public function withStopSequences(array $stopSequences): self
     {
         $obj = clone $this;
-        $obj['stop_sequences'] = $stopSequences;
+        $obj['stopSequences'] = $stopSequences;
 
         return $obj;
     }
@@ -576,7 +576,7 @@ final class MessageCreateParams implements BaseModel
      * @param string|list<TextBlockParam|array{
      *   text: string,
      *   type?: 'text',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }> $system
      */
@@ -611,7 +611,7 @@ final class MessageCreateParams implements BaseModel
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      *
      * @param ThinkingConfigEnabled|array{
-     *   budget_tokens: int, type?: 'enabled'
+     *   budgetTokens: int, type?: 'enabled'
      * }|ThinkingConfigDisabled|array{type?: 'disabled'} $thinking
      */
     public function withThinking(
@@ -627,18 +627,18 @@ final class MessageCreateParams implements BaseModel
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      *
      * @param ToolChoiceAuto|array{
-     *   type?: 'auto', disable_parallel_tool_use?: bool|null
+     *   type?: 'auto', disableParallelToolUse?: bool|null
      * }|ToolChoiceAny|array{
-     *   type?: 'any', disable_parallel_tool_use?: bool|null
+     *   type?: 'any', disableParallelToolUse?: bool|null
      * }|ToolChoiceTool|array{
-     *   name: string, type?: 'tool', disable_parallel_tool_use?: bool|null
+     *   name: string, type?: 'tool', disableParallelToolUse?: bool|null
      * }|ToolChoiceNone|array{type?: 'none'} $toolChoice
      */
     public function withToolChoice(
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone $toolChoice
     ): self {
         $obj = clone $this;
-        $obj['tool_choice'] = $toolChoice;
+        $obj['toolChoice'] = $toolChoice;
 
         return $obj;
     }
@@ -707,36 +707,36 @@ final class MessageCreateParams implements BaseModel
      * See our [guide](https://docs.claude.com/en/docs/tool-use) for more details.
      *
      * @param list<Tool|array{
-     *   input_schema: InputSchema,
+     *   inputSchema: InputSchema,
      *   name: string,
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   description?: string|null,
      *   type?: value-of<Type>|null,
      * }|ToolBash20250124|array{
      *   name?: 'bash',
      *   type?: 'bash_20250124',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|ToolTextEditor20250124|array{
      *   name?: 'str_replace_editor',
      *   type?: 'text_editor_20250124',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|ToolTextEditor20250429|array{
      *   name?: 'str_replace_based_edit_tool',
      *   type?: 'text_editor_20250429',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|ToolTextEditor20250728|array{
      *   name?: 'str_replace_based_edit_tool',
      *   type?: 'text_editor_20250728',
-     *   cache_control?: CacheControlEphemeral|null,
-     *   max_characters?: int|null,
+     *   cacheControl?: CacheControlEphemeral|null,
+     *   maxCharacters?: int|null,
      * }|WebSearchTool20250305|array{
      *   name?: 'web_search',
      *   type?: 'web_search_20250305',
-     *   allowed_domains?: list<string>|null,
-     *   blocked_domains?: list<string>|null,
-     *   cache_control?: CacheControlEphemeral|null,
-     *   max_uses?: int|null,
-     *   user_location?: UserLocation|null,
+     *   allowedDomains?: list<string>|null,
+     *   blockedDomains?: list<string>|null,
+     *   cacheControl?: CacheControlEphemeral|null,
+     *   maxUses?: int|null,
+     *   userLocation?: UserLocation|null,
      * }> $tools
      */
     public function withTools(array $tools): self
@@ -757,7 +757,7 @@ final class MessageCreateParams implements BaseModel
     public function withTopK(int $topK): self
     {
         $obj = clone $this;
-        $obj['top_k'] = $topK;
+        $obj['topK'] = $topK;
 
         return $obj;
     }
@@ -772,7 +772,7 @@ final class MessageCreateParams implements BaseModel
     public function withTopP(float $topP): self
     {
         $obj = clone $this;
-        $obj['top_p'] = $topP;
+        $obj['topP'] = $topP;
 
         return $obj;
     }

@@ -94,6 +94,34 @@ final class ModelOf implements Converter
         return $this->from($acc); // @phpstan-ignore-line
     }
 
+    public function dump(mixed $value, DumpState $state): mixed
+    {
+        if ($value instanceof BaseModel) {
+            $value = $value->toProperties();
+        }
+
+        if (is_array($value)) {
+            ++$state->yes;
+            $acc = [];
+
+            foreach ($value as $name => $item) {
+                if (array_key_exists($name, array: $this->properties)) {
+                    ++$state->yes;
+                    $info = $this->properties[$name];
+                    $acc[$info->apiName] = Conversion::dump($info->type, value: $item, state: $state);
+                } else {
+                    $acc[$name] = Conversion::dump_unknown($item, state: $state);
+                }
+            }
+
+            return empty($acc) ? ((object) $acc) : $acc;
+        }
+
+        ++$state->no;
+
+        return Conversion::dump_unknown($value, state: $state);
+    }
+
     /**
      * @param array<string, mixed> $data
      */
@@ -104,29 +132,5 @@ final class ModelOf implements Converter
         $instance->__unserialize($data);
 
         return $instance;
-    }
-
-    public function dump(mixed $value, DumpState $state): mixed
-    {
-        if ($value instanceof BaseModel) {
-            $value = $value->toProperties();
-        }
-
-        if (is_array($value)) {
-            $acc = [];
-
-            foreach ($value as $name => $item) {
-                if (array_key_exists($name, array: $this->properties)) {
-                    $info = $this->properties[$name];
-                    $acc[$info->apiName] = Conversion::dump($info->type, value: $item, state: $state);
-                } else {
-                    $acc[$name] = Conversion::dump_unknown($item, state: $state);
-                }
-            }
-
-            return empty($acc) ? ((object) []) : $acc;
-        }
-
-        return Conversion::dump_unknown($value, state: $state);
     }
 }

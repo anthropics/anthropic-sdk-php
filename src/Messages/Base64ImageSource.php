@@ -11,7 +11,7 @@ use Anthropic\Messages\Base64ImageSource\MediaType;
 
 /**
  * @phpstan-type Base64ImageSourceShape = array{
- *   data: string, media_type: value-of<MediaType>, type?: 'base64'
+ *   data: string, mediaType: value-of<MediaType>, type?: 'base64'
  * }
  */
 final class Base64ImageSource implements BaseModel
@@ -26,16 +26,16 @@ final class Base64ImageSource implements BaseModel
     #[Required]
     public string $data;
 
-    /** @var value-of<MediaType> $media_type */
-    #[Required(enum: MediaType::class)]
-    public string $media_type;
+    /** @var value-of<MediaType> $mediaType */
+    #[Required('media_type', enum: MediaType::class)]
+    public string $mediaType;
 
     /**
      * `new Base64ImageSource()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Base64ImageSource::with(data: ..., media_type: ...)
+     * Base64ImageSource::with(data: ..., mediaType: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -54,16 +54,14 @@ final class Base64ImageSource implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param MediaType|value-of<MediaType> $media_type
+     * @param MediaType|value-of<MediaType> $mediaType
      */
-    public static function with(
-        string $data,
-        MediaType|string $media_type
-    ): self {
+    public static function with(string $data, MediaType|string $mediaType): self
+    {
         $obj = new self;
 
         $obj['data'] = $data;
-        $obj['media_type'] = $media_type;
+        $obj['mediaType'] = $mediaType;
 
         return $obj;
     }
@@ -82,7 +80,7 @@ final class Base64ImageSource implements BaseModel
     public function withMediaType(MediaType|string $mediaType): self
     {
         $obj = clone $this;
-        $obj['media_type'] = $mediaType;
+        $obj['mediaType'] = $mediaType;
 
         return $obj;
     }

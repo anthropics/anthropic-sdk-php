@@ -64,8 +64,8 @@ final class MessageBatchSucceededResult implements BaseModel
      *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
      *   model: string|value-of<Model>,
      *   role?: 'assistant',
-     *   stop_reason: value-of<StopReason>|null,
-     *   stop_sequence: string|null,
+     *   stopReason: value-of<StopReason>|null,
+     *   stopSequence: string|null,
      *   type?: 'message',
      *   usage: Usage,
      * } $message
@@ -85,8 +85,8 @@ final class MessageBatchSucceededResult implements BaseModel
      *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
      *   model: string|value-of<Model>,
      *   role?: 'assistant',
-     *   stop_reason: value-of<StopReason>|null,
-     *   stop_sequence: string|null,
+     *   stopReason: value-of<StopReason>|null,
+     *   stopSequence: string|null,
      *   type?: 'message',
      *   usage: Usage,
      * } $message

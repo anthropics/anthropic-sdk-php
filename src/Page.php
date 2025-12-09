@@ -16,9 +16,9 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @phpstan-type PageShape = array{
  *   data?: list<mixed>|null,
- *   has_more?: bool|null,
- *   first_id?: string|null,
- *   last_id?: string|null,
+ *   hasMore?: bool|null,
+ *   firstID?: string|null,
+ *   lastID?: string|null,
  * }
  *
  * @template TItem
@@ -37,14 +37,14 @@ final class Page implements BaseModel, BasePage
     #[Optional(list: 'mixed')]
     public ?array $data;
 
-    #[Optional]
-    public ?bool $has_more;
+    #[Optional('has_more')]
+    public ?bool $hasMore;
 
-    #[Optional(nullable: true)]
-    public ?string $first_id;
+    #[Optional('first_id', nullable: true)]
+    public ?string $firstID;
 
-    #[Optional(nullable: true)]
-    public ?string $last_id;
+    #[Optional('last_id', nullable: true)]
+    public ?string $lastID;
 
     /**
      * @internal
@@ -107,11 +107,11 @@ final class Page implements BaseModel, BasePage
      */
     public function nextRequest(): ?array
     {
-        if (!($this->has_more ?? null) || !count($this->getItems())) {
+        if (!($this->hasMore ?? null) || !count($this->getItems())) {
             return null;
         }
 
-        if (!($prev = $this->first_id ?? null) && !($next = $this->last_id ?? null)) {
+        if (!($prev = $this->firstID ?? null) && !($next = $this->lastID ?? null)) {
             return null;
         }
 

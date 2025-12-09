@@ -8,6 +8,7 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Util;
 use Anthropic\Messages\Batches\BatchCreateParams;
 use Anthropic\Messages\Batches\BatchCreateParams\Request\Params\ServiceTier;
 use Anthropic\Messages\Batches\BatchListParams;
@@ -38,22 +39,22 @@ final class BatchesService implements BatchesContract
      *
      * @param array{
      *   requests: list<array{
-     *     custom_id: string,
+     *     customID: string,
      *     params: array{
-     *       max_tokens: int,
+     *       maxTokens: int,
      *       messages: list<array<mixed>>,
      *       model: string|'claude-opus-4-5-20251101'|'claude-opus-4-5'|'claude-3-7-sonnet-latest'|'claude-3-7-sonnet-20250219'|'claude-3-5-haiku-latest'|'claude-3-5-haiku-20241022'|'claude-haiku-4-5'|'claude-haiku-4-5-20251001'|'claude-sonnet-4-20250514'|'claude-sonnet-4-0'|'claude-4-sonnet-20250514'|'claude-sonnet-4-5'|'claude-sonnet-4-5-20250929'|'claude-opus-4-0'|'claude-opus-4-20250514'|'claude-4-opus-20250514'|'claude-opus-4-1-20250805'|'claude-3-opus-latest'|'claude-3-opus-20240229'|'claude-3-haiku-20240307'|Model,
      *       metadata?: array<mixed>,
-     *       service_tier?: 'auto'|'standard_only'|ServiceTier,
-     *       stop_sequences?: list<string>,
+     *       serviceTier?: 'auto'|'standard_only'|ServiceTier,
+     *       stopSequences?: list<string>,
      *       stream?: bool,
      *       system?: string|list<array<mixed>>,
      *       temperature?: float,
      *       thinking?: array<string,mixed>,
-     *       tool_choice?: array<string,mixed>,
+     *       toolChoice?: array<string,mixed>,
      *       tools?: list<array<string,mixed>>,
-     *       top_k?: int,
-     *       top_p?: float,
+     *       topK?: int,
+     *       topP?: float,
      *     },
      *   }>,
      * }|BatchCreateParams $params
@@ -113,7 +114,7 @@ final class BatchesService implements BatchesContract
      * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
      *
      * @param array{
-     *   after_id?: string, before_id?: string, limit?: int
+     *   afterID?: string, beforeID?: string, limit?: int
      * }|BatchListParams $params
      *
      * @return Page<MessageBatch>
@@ -133,7 +134,10 @@ final class BatchesService implements BatchesContract
         $response = $this->client->request(
             method: 'get',
             path: 'v1/messages/batches',
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                ['afterID' => 'after_id', 'beforeID' => 'before_id']
+            ),
             options: $options,
             convert: MessageBatch::class,
             page: Page::class,

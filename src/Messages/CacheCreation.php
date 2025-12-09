@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type CacheCreationShape = array{
- *   ephemeral_1h_input_tokens: int, ephemeral_5m_input_tokens: int
+ *   ephemeral1hInputTokens: int, ephemeral5mInputTokens: int
  * }
  */
 final class CacheCreation implements BaseModel
@@ -21,23 +21,21 @@ final class CacheCreation implements BaseModel
     /**
      * The number of input tokens used to create the 1 hour cache entry.
      */
-    #[Required]
-    public int $ephemeral_1h_input_tokens;
+    #[Required('ephemeral_1h_input_tokens')]
+    public int $ephemeral1hInputTokens;
 
     /**
      * The number of input tokens used to create the 5 minute cache entry.
      */
-    #[Required]
-    public int $ephemeral_5m_input_tokens;
+    #[Required('ephemeral_5m_input_tokens')]
+    public int $ephemeral5mInputTokens;
 
     /**
      * `new CacheCreation()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * CacheCreation::with(
-     *   ephemeral_1h_input_tokens: ..., ephemeral_5m_input_tokens: ...
-     * )
+     * CacheCreation::with(ephemeral1hInputTokens: ..., ephemeral5mInputTokens: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -59,13 +57,13 @@ final class CacheCreation implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        int $ephemeral_1h_input_tokens = 0,
-        int $ephemeral_5m_input_tokens = 0
+        int $ephemeral1hInputTokens = 0,
+        int $ephemeral5mInputTokens = 0
     ): self {
         $obj = new self;
 
-        $obj['ephemeral_1h_input_tokens'] = $ephemeral_1h_input_tokens;
-        $obj['ephemeral_5m_input_tokens'] = $ephemeral_5m_input_tokens;
+        $obj['ephemeral1hInputTokens'] = $ephemeral1hInputTokens;
+        $obj['ephemeral5mInputTokens'] = $ephemeral5mInputTokens;
 
         return $obj;
     }
@@ -77,7 +75,7 @@ final class CacheCreation implements BaseModel
         int $ephemeral1hInputTokens
     ): self {
         $obj = clone $this;
-        $obj['ephemeral_1h_input_tokens'] = $ephemeral1hInputTokens;
+        $obj['ephemeral1hInputTokens'] = $ephemeral1hInputTokens;
 
         return $obj;
     }
@@ -89,7 +87,7 @@ final class CacheCreation implements BaseModel
         int $ephemeral5mInputTokens
     ): self {
         $obj = clone $this;
-        $obj['ephemeral_5m_input_tokens'] = $ephemeral5mInputTokens;
+        $obj['ephemeral5mInputTokens'] = $ephemeral5mInputTokens;
 
         return $obj;
     }

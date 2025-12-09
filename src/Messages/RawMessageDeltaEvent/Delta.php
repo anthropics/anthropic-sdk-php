@@ -11,7 +11,7 @@ use Anthropic\Messages\StopReason;
 
 /**
  * @phpstan-type DeltaShape = array{
- *   stop_reason: value-of<StopReason>|null, stop_sequence: string|null
+ *   stopReason: value-of<StopReason>|null, stopSequence: string|null
  * }
  */
 final class Delta implements BaseModel
@@ -19,19 +19,19 @@ final class Delta implements BaseModel
     /** @use SdkModel<DeltaShape> */
     use SdkModel;
 
-    /** @var value-of<StopReason>|null $stop_reason */
-    #[Required(enum: StopReason::class)]
-    public ?string $stop_reason;
+    /** @var value-of<StopReason>|null $stopReason */
+    #[Required('stop_reason', enum: StopReason::class)]
+    public ?string $stopReason;
 
-    #[Required]
-    public ?string $stop_sequence;
+    #[Required('stop_sequence')]
+    public ?string $stopSequence;
 
     /**
      * `new Delta()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Delta::with(stop_reason: ..., stop_sequence: ...)
+     * Delta::with(stopReason: ..., stopSequence: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -50,16 +50,16 @@ final class Delta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param StopReason|value-of<StopReason>|null $stop_reason
+     * @param StopReason|value-of<StopReason>|null $stopReason
      */
     public static function with(
-        StopReason|string|null $stop_reason,
-        ?string $stop_sequence
+        StopReason|string|null $stopReason,
+        ?string $stopSequence
     ): self {
         $obj = new self;
 
-        $obj['stop_reason'] = $stop_reason;
-        $obj['stop_sequence'] = $stop_sequence;
+        $obj['stopReason'] = $stopReason;
+        $obj['stopSequence'] = $stopSequence;
 
         return $obj;
     }
@@ -70,7 +70,7 @@ final class Delta implements BaseModel
     public function withStopReason(StopReason|string|null $stopReason): self
     {
         $obj = clone $this;
-        $obj['stop_reason'] = $stopReason;
+        $obj['stopReason'] = $stopReason;
 
         return $obj;
     }
@@ -78,7 +78,7 @@ final class Delta implements BaseModel
     public function withStopSequence(?string $stopSequence): self
     {
         $obj = clone $this;
-        $obj['stop_sequence'] = $stopSequence;
+        $obj['stopSequence'] = $stopSequence;
 
         return $obj;
     }

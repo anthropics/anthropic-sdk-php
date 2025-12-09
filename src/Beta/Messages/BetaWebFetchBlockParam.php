@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   content: BetaRequestDocumentBlock,
  *   type?: 'web_fetch_result',
  *   url: string,
- *   retrieved_at?: string|null,
+ *   retrievedAt?: string|null,
  * }
  */
 final class BetaWebFetchBlockParam implements BaseModel
@@ -38,8 +38,8 @@ final class BetaWebFetchBlockParam implements BaseModel
     /**
      * ISO 8601 timestamp when the content was retrieved.
      */
-    #[Optional(nullable: true)]
-    public ?string $retrieved_at;
+    #[Optional('retrieved_at', nullable: true)]
+    public ?string $retrievedAt;
 
     /**
      * `new BetaWebFetchBlockParam()` is missing required properties by the API.
@@ -68,7 +68,7 @@ final class BetaWebFetchBlockParam implements BaseModel
      * @param BetaRequestDocumentBlock|array{
      *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource,
      *   type?: 'document',
-     *   cache_control?: BetaCacheControlEphemeral|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
      *   citations?: BetaCitationsConfigParam|null,
      *   context?: string|null,
      *   title?: string|null,
@@ -77,14 +77,14 @@ final class BetaWebFetchBlockParam implements BaseModel
     public static function with(
         BetaRequestDocumentBlock|array $content,
         string $url,
-        ?string $retrieved_at = null,
+        ?string $retrievedAt = null,
     ): self {
         $obj = new self;
 
         $obj['content'] = $content;
         $obj['url'] = $url;
 
-        null !== $retrieved_at && $obj['retrieved_at'] = $retrieved_at;
+        null !== $retrievedAt && $obj['retrievedAt'] = $retrievedAt;
 
         return $obj;
     }
@@ -93,7 +93,7 @@ final class BetaWebFetchBlockParam implements BaseModel
      * @param BetaRequestDocumentBlock|array{
      *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource,
      *   type?: 'document',
-     *   cache_control?: BetaCacheControlEphemeral|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
      *   citations?: BetaCitationsConfigParam|null,
      *   context?: string|null,
      *   title?: string|null,
@@ -124,7 +124,7 @@ final class BetaWebFetchBlockParam implements BaseModel
     public function withRetrievedAt(?string $retrievedAt): self
     {
         $obj = clone $this;
-        $obj['retrieved_at'] = $retrievedAt;
+        $obj['retrievedAt'] = $retrievedAt;
 
         return $obj;
     }

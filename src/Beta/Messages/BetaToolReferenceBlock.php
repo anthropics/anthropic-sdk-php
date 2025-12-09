@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaToolReferenceBlockShape = array{
- *   tool_name: string, type?: 'tool_reference'
+ *   toolName: string, type?: 'tool_reference'
  * }
  */
 final class BetaToolReferenceBlock implements BaseModel
@@ -22,15 +22,15 @@ final class BetaToolReferenceBlock implements BaseModel
     #[Required]
     public string $type = 'tool_reference';
 
-    #[Required]
-    public string $tool_name;
+    #[Required('tool_name')]
+    public string $toolName;
 
     /**
      * `new BetaToolReferenceBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaToolReferenceBlock::with(tool_name: ...)
+     * BetaToolReferenceBlock::with(toolName: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -49,11 +49,11 @@ final class BetaToolReferenceBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $tool_name): self
+    public static function with(string $toolName): self
     {
         $obj = new self;
 
-        $obj['tool_name'] = $tool_name;
+        $obj['toolName'] = $toolName;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class BetaToolReferenceBlock implements BaseModel
     public function withToolName(string $toolName): self
     {
         $obj = clone $this;
-        $obj['tool_name'] = $toolName;
+        $obj['toolName'] = $toolName;
 
         return $obj;
     }

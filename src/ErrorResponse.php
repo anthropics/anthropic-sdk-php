@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type ErrorResponseShape = array{
  *   error: InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError,
- *   request_id: string|null,
+ *   requestID: string|null,
  *   type?: 'error',
  * }
  */
@@ -27,15 +27,15 @@ final class ErrorResponse implements BaseModel
     #[Required(union: ErrorObject::class)]
     public InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error;
 
-    #[Required]
-    public ?string $request_id;
+    #[Required('request_id')]
+    public ?string $requestID;
 
     /**
      * `new ErrorResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ErrorResponse::with(error: ..., request_id: ...)
+     * ErrorResponse::with(error: ..., requestID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -74,12 +74,12 @@ final class ErrorResponse implements BaseModel
      */
     public static function with(
         InvalidRequestError|array|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error,
-        ?string $request_id,
+        ?string $requestID,
     ): self {
         $obj = new self;
 
         $obj['error'] = $error;
-        $obj['request_id'] = $request_id;
+        $obj['requestID'] = $requestID;
 
         return $obj;
     }
@@ -115,7 +115,7 @@ final class ErrorResponse implements BaseModel
     public function withRequestID(?string $requestID): self
     {
         $obj = clone $this;
-        $obj['request_id'] = $requestID;
+        $obj['requestID'] = $requestID;
 
         return $obj;
     }

@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaTextEditorCodeExecutionCreateResultBlockShape = array{
- *   is_file_update: bool, type?: 'text_editor_code_execution_create_result'
+ *   isFileUpdate: bool, type?: 'text_editor_code_execution_create_result'
  * }
  */
 final class BetaTextEditorCodeExecutionCreateResultBlock implements BaseModel
@@ -22,15 +22,15 @@ final class BetaTextEditorCodeExecutionCreateResultBlock implements BaseModel
     #[Required]
     public string $type = 'text_editor_code_execution_create_result';
 
-    #[Required]
-    public bool $is_file_update;
+    #[Required('is_file_update')]
+    public bool $isFileUpdate;
 
     /**
      * `new BetaTextEditorCodeExecutionCreateResultBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaTextEditorCodeExecutionCreateResultBlock::with(is_file_update: ...)
+     * BetaTextEditorCodeExecutionCreateResultBlock::with(isFileUpdate: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -49,11 +49,11 @@ final class BetaTextEditorCodeExecutionCreateResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(bool $is_file_update): self
+    public static function with(bool $isFileUpdate): self
     {
         $obj = new self;
 
-        $obj['is_file_update'] = $is_file_update;
+        $obj['isFileUpdate'] = $isFileUpdate;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class BetaTextEditorCodeExecutionCreateResultBlock implements BaseModel
     public function withIsFileUpdate(bool $isFileUpdate): self
     {
         $obj = clone $this;
-        $obj['is_file_update'] = $isFileUpdate;
+        $obj['isFileUpdate'] = $isFileUpdate;
 
         return $obj;
     }

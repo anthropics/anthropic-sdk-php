@@ -11,11 +11,11 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type VersionListResponseShape = array{
  *   id: string,
- *   created_at: string,
+ *   createdAt: string,
  *   description: string,
  *   directory: string,
  *   name: string,
- *   skill_id: string,
+ *   skillID: string,
  *   type: string,
  *   version: string,
  * }
@@ -36,8 +36,8 @@ final class VersionListResponse implements BaseModel
     /**
      * ISO 8601 timestamp of when the skill version was created.
      */
-    #[Required]
-    public string $created_at;
+    #[Required('created_at')]
+    public string $createdAt;
 
     /**
      * Description of the skill version.
@@ -66,8 +66,8 @@ final class VersionListResponse implements BaseModel
     /**
      * Identifier for the skill that this version belongs to.
      */
-    #[Required]
-    public string $skill_id;
+    #[Required('skill_id')]
+    public string $skillID;
 
     /**
      * Object type.
@@ -92,11 +92,11 @@ final class VersionListResponse implements BaseModel
      * ```
      * VersionListResponse::with(
      *   id: ...,
-     *   created_at: ...,
+     *   createdAt: ...,
      *   description: ...,
      *   directory: ...,
      *   name: ...,
-     *   skill_id: ...,
+     *   skillID: ...,
      *   type: ...,
      *   version: ...,
      * )
@@ -128,22 +128,22 @@ final class VersionListResponse implements BaseModel
      */
     public static function with(
         string $id,
-        string $created_at,
+        string $createdAt,
         string $description,
         string $directory,
         string $name,
-        string $skill_id,
+        string $skillID,
         string $version,
         string $type = 'skill_version',
     ): self {
         $obj = new self;
 
         $obj['id'] = $id;
-        $obj['created_at'] = $created_at;
+        $obj['createdAt'] = $createdAt;
         $obj['description'] = $description;
         $obj['directory'] = $directory;
         $obj['name'] = $name;
-        $obj['skill_id'] = $skill_id;
+        $obj['skillID'] = $skillID;
         $obj['type'] = $type;
         $obj['version'] = $version;
 
@@ -169,7 +169,7 @@ final class VersionListResponse implements BaseModel
     public function withCreatedAt(string $createdAt): self
     {
         $obj = clone $this;
-        $obj['created_at'] = $createdAt;
+        $obj['createdAt'] = $createdAt;
 
         return $obj;
     }
@@ -219,7 +219,7 @@ final class VersionListResponse implements BaseModel
     public function withSkillID(string $skillID): self
     {
         $obj = clone $this;
-        $obj['skill_id'] = $skillID;
+        $obj['skillID'] = $skillID;
 
         return $obj;
     }

@@ -11,7 +11,7 @@ use Anthropic\Messages\RawContentBlockStartEvent\ContentBlock;
 
 /**
  * @phpstan-type RawContentBlockStartEventShape = array{
- *   content_block: TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock,
+ *   contentBlock: TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock,
  *   index: int,
  *   type?: 'content_block_start',
  * }
@@ -26,9 +26,10 @@ final class RawContentBlockStartEvent implements BaseModel
     public string $type = 'content_block_start';
 
     #[Required(
-        union: ContentBlock::class
+        'content_block',
+        union: ContentBlock::class,
     )]
-    public TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $content_block;
+    public TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $contentBlock;
 
     #[Required]
     public int $index;
@@ -38,7 +39,7 @@ final class RawContentBlockStartEvent implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * RawContentBlockStartEvent::with(content_block: ..., index: ...)
+     * RawContentBlockStartEvent::with(contentBlock: ..., index: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -74,17 +75,17 @@ final class RawContentBlockStartEvent implements BaseModel
      *   type?: 'server_tool_use',
      * }|WebSearchToolResultBlock|array{
      *   content: WebSearchToolResultError|list<WebSearchResultBlock>,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'web_search_tool_result',
-     * } $content_block
+     * } $contentBlock
      */
     public static function with(
-        TextBlock|array|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $content_block,
+        TextBlock|array|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $contentBlock,
         int $index,
     ): self {
         $obj = new self;
 
-        $obj['content_block'] = $content_block;
+        $obj['contentBlock'] = $contentBlock;
         $obj['index'] = $index;
 
         return $obj;
@@ -108,7 +109,7 @@ final class RawContentBlockStartEvent implements BaseModel
      *   type?: 'server_tool_use',
      * }|WebSearchToolResultBlock|array{
      *   content: WebSearchToolResultError|list<WebSearchResultBlock>,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'web_search_tool_result',
      * } $contentBlock
      */
@@ -116,7 +117,7 @@ final class RawContentBlockStartEvent implements BaseModel
         TextBlock|array|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $contentBlock,
     ): self {
         $obj = clone $this;
-        $obj['content_block'] = $contentBlock;
+        $obj['contentBlock'] = $contentBlock;
 
         return $obj;
     }

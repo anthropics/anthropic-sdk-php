@@ -10,10 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type ModelInfoShape = array{
- *   id: string,
- *   created_at: \DateTimeInterface,
- *   display_name: string,
- *   type?: 'model',
+ *   id: string, createdAt: \DateTimeInterface, displayName: string, type?: 'model'
  * }
  */
 final class ModelInfo implements BaseModel
@@ -40,21 +37,21 @@ final class ModelInfo implements BaseModel
     /**
      * RFC 3339 datetime string representing the time at which the model was released. May be set to an epoch value if the release date is unknown.
      */
-    #[Required]
-    public \DateTimeInterface $created_at;
+    #[Required('created_at')]
+    public \DateTimeInterface $createdAt;
 
     /**
      * A human-readable name for the model.
      */
-    #[Required]
-    public string $display_name;
+    #[Required('display_name')]
+    public string $displayName;
 
     /**
      * `new ModelInfo()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ModelInfo::with(id: ..., created_at: ..., display_name: ...)
+     * ModelInfo::with(id: ..., createdAt: ..., displayName: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -75,14 +72,14 @@ final class ModelInfo implements BaseModel
      */
     public static function with(
         string $id,
-        \DateTimeInterface $created_at,
-        string $display_name
+        \DateTimeInterface $createdAt,
+        string $displayName
     ): self {
         $obj = new self;
 
         $obj['id'] = $id;
-        $obj['created_at'] = $created_at;
-        $obj['display_name'] = $display_name;
+        $obj['createdAt'] = $createdAt;
+        $obj['displayName'] = $displayName;
 
         return $obj;
     }
@@ -104,7 +101,7 @@ final class ModelInfo implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj['created_at'] = $createdAt;
+        $obj['createdAt'] = $createdAt;
 
         return $obj;
     }
@@ -115,7 +112,7 @@ final class ModelInfo implements BaseModel
     public function withDisplayName(string $displayName): self
     {
         $obj = clone $this;
-        $obj['display_name'] = $displayName;
+        $obj['displayName'] = $displayName;
 
         return $obj;
     }

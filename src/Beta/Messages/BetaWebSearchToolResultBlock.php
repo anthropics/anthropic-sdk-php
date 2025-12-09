@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaWebSearchToolResultBlockShape = array{
  *   content: BetaWebSearchToolResultError|list<BetaWebSearchResultBlock>,
- *   tool_use_id: string,
+ *   toolUseID: string,
  *   type?: 'web_search_tool_result',
  * }
  */
@@ -28,15 +28,15 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     #[Required(union: BetaWebSearchToolResultBlockContent::class)]
     public BetaWebSearchToolResultError|array $content;
 
-    #[Required]
-    public string $tool_use_id;
+    #[Required('tool_use_id')]
+    public string $toolUseID;
 
     /**
      * `new BetaWebSearchToolResultBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaWebSearchToolResultBlock::with(content: ..., tool_use_id: ...)
+     * BetaWebSearchToolResultBlock::with(content: ..., toolUseID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -56,11 +56,11 @@ final class BetaWebSearchToolResultBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaWebSearchToolResultError|array{
-     *   error_code: value-of<BetaWebSearchToolResultErrorCode>,
+     *   errorCode: value-of<BetaWebSearchToolResultErrorCode>,
      *   type?: 'web_search_tool_result_error',
      * }|list<BetaWebSearchResultBlock|array{
-     *   encrypted_content: string,
-     *   page_age: string|null,
+     *   encryptedContent: string,
+     *   pageAge: string|null,
      *   title: string,
      *   type?: 'web_search_result',
      *   url: string,
@@ -68,23 +68,23 @@ final class BetaWebSearchToolResultBlock implements BaseModel
      */
     public static function with(
         BetaWebSearchToolResultError|array $content,
-        string $tool_use_id
+        string $toolUseID
     ): self {
         $obj = new self;
 
         $obj['content'] = $content;
-        $obj['tool_use_id'] = $tool_use_id;
+        $obj['toolUseID'] = $toolUseID;
 
         return $obj;
     }
 
     /**
      * @param BetaWebSearchToolResultError|array{
-     *   error_code: value-of<BetaWebSearchToolResultErrorCode>,
+     *   errorCode: value-of<BetaWebSearchToolResultErrorCode>,
      *   type?: 'web_search_tool_result_error',
      * }|list<BetaWebSearchResultBlock|array{
-     *   encrypted_content: string,
-     *   page_age: string|null,
+     *   encryptedContent: string,
+     *   pageAge: string|null,
      *   title: string,
      *   type?: 'web_search_result',
      *   url: string,
@@ -102,7 +102,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj['tool_use_id'] = $toolUseID;
+        $obj['toolUseID'] = $toolUseID;
 
         return $obj;
     }

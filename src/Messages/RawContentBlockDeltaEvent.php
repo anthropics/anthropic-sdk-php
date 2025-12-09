@@ -55,7 +55,7 @@ final class RawContentBlockDeltaEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param TextDelta|array{text: string, type?: 'text_delta'}|InputJSONDelta|array{
-     *   partial_json: string, type?: 'input_json_delta'
+     *   partialJSON: string, type?: 'input_json_delta'
      * }|CitationsDelta|array{
      *   citation: CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation,
      *   type?: 'citations_delta',
@@ -77,7 +77,7 @@ final class RawContentBlockDeltaEvent implements BaseModel
 
     /**
      * @param TextDelta|array{text: string, type?: 'text_delta'}|InputJSONDelta|array{
-     *   partial_json: string, type?: 'input_json_delta'
+     *   partialJSON: string, type?: 'input_json_delta'
      * }|CitationsDelta|array{
      *   citation: CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation,
      *   type?: 'citations_delta',

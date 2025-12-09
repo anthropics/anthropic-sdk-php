@@ -14,9 +14,9 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaToolSearchToolResultBlockParamShape = array{
  *   content: BetaToolSearchToolResultErrorParam|BetaToolSearchToolSearchResultBlockParam,
- *   tool_use_id: string,
+ *   toolUseID: string,
  *   type?: 'tool_search_tool_result',
- *   cache_control?: BetaCacheControlEphemeral|null,
+ *   cacheControl?: BetaCacheControlEphemeral|null,
  * }
  */
 final class BetaToolSearchToolResultBlockParam implements BaseModel
@@ -31,21 +31,21 @@ final class BetaToolSearchToolResultBlockParam implements BaseModel
     #[Required]
     public BetaToolSearchToolResultErrorParam|BetaToolSearchToolSearchResultBlockParam $content;
 
-    #[Required]
-    public string $tool_use_id;
+    #[Required('tool_use_id')]
+    public string $toolUseID;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * `new BetaToolSearchToolResultBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaToolSearchToolResultBlockParam::with(content: ..., tool_use_id: ...)
+     * BetaToolSearchToolResultBlockParam::with(content: ..., toolUseID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -65,35 +65,35 @@ final class BetaToolSearchToolResultBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaToolSearchToolResultErrorParam|array{
-     *   error_code: value-of<ErrorCode>, type?: 'tool_search_tool_result_error'
+     *   errorCode: value-of<ErrorCode>, type?: 'tool_search_tool_result_error'
      * }|BetaToolSearchToolSearchResultBlockParam|array{
-     *   tool_references: list<BetaToolReferenceBlockParam>,
+     *   toolReferences: list<BetaToolReferenceBlockParam>,
      *   type?: 'tool_search_tool_search_result',
      * } $content
      * @param BetaCacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      */
     public static function with(
         BetaToolSearchToolResultErrorParam|array|BetaToolSearchToolSearchResultBlockParam $content,
-        string $tool_use_id,
-        BetaCacheControlEphemeral|array|null $cache_control = null,
+        string $toolUseID,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
     ): self {
         $obj = new self;
 
         $obj['content'] = $content;
-        $obj['tool_use_id'] = $tool_use_id;
+        $obj['toolUseID'] = $toolUseID;
 
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }
 
     /**
      * @param BetaToolSearchToolResultErrorParam|array{
-     *   error_code: value-of<ErrorCode>, type?: 'tool_search_tool_result_error'
+     *   errorCode: value-of<ErrorCode>, type?: 'tool_search_tool_result_error'
      * }|BetaToolSearchToolSearchResultBlockParam|array{
-     *   tool_references: list<BetaToolReferenceBlockParam>,
+     *   toolReferences: list<BetaToolReferenceBlockParam>,
      *   type?: 'tool_search_tool_search_result',
      * } $content
      */
@@ -109,7 +109,7 @@ final class BetaToolSearchToolResultBlockParam implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj['tool_use_id'] = $toolUseID;
+        $obj['toolUseID'] = $toolUseID;
 
         return $obj;
     }
@@ -125,7 +125,7 @@ final class BetaToolSearchToolResultBlockParam implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }

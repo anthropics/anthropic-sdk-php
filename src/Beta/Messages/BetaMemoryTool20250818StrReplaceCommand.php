@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818StrReplaceCommandShape = array{
- *   command?: 'str_replace', new_str: string, old_str: string, path: string
+ *   command?: 'str_replace', newStr: string, oldStr: string, path: string
  * }
  */
 final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
@@ -29,14 +29,14 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
     /**
      * Text to replace with.
      */
-    #[Required]
-    public string $new_str;
+    #[Required('new_str')]
+    public string $newStr;
 
     /**
      * Text to search for and replace.
      */
-    #[Required]
-    public string $old_str;
+    #[Required('old_str')]
+    public string $oldStr;
 
     /**
      * Path to the file where text should be replaced.
@@ -50,7 +50,7 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaMemoryTool20250818StrReplaceCommand::with(
-     *   new_str: ..., old_str: ..., path: ...
+     *   newStr: ..., oldStr: ..., path: ...
      * )
      * ```
      *
@@ -74,14 +74,14 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $new_str,
-        string $old_str,
+        string $newStr,
+        string $oldStr,
         string $path
     ): self {
         $obj = new self;
 
-        $obj['new_str'] = $new_str;
-        $obj['old_str'] = $old_str;
+        $obj['newStr'] = $newStr;
+        $obj['oldStr'] = $oldStr;
         $obj['path'] = $path;
 
         return $obj;
@@ -93,7 +93,7 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
     public function withNewStr(string $newStr): self
     {
         $obj = clone $this;
-        $obj['new_str'] = $newStr;
+        $obj['newStr'] = $newStr;
 
         return $obj;
     }
@@ -104,7 +104,7 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
     public function withOldStr(string $oldStr): self
     {
         $obj = clone $this;
-        $obj['old_str'] = $oldStr;
+        $obj['oldStr'] = $oldStr;
 
         return $obj;
     }

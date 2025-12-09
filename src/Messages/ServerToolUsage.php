@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type ServerToolUsageShape = array{web_search_requests: int}
+ * @phpstan-type ServerToolUsageShape = array{webSearchRequests: int}
  */
 final class ServerToolUsage implements BaseModel
 {
@@ -19,15 +19,15 @@ final class ServerToolUsage implements BaseModel
     /**
      * The number of web search tool requests.
      */
-    #[Required]
-    public int $web_search_requests;
+    #[Required('web_search_requests')]
+    public int $webSearchRequests;
 
     /**
      * `new ServerToolUsage()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ServerToolUsage::with(web_search_requests: ...)
+     * ServerToolUsage::with(webSearchRequests: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -46,11 +46,11 @@ final class ServerToolUsage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(int $web_search_requests = 0): self
+    public static function with(int $webSearchRequests = 0): self
     {
         $obj = new self;
 
-        $obj['web_search_requests'] = $web_search_requests;
+        $obj['webSearchRequests'] = $webSearchRequests;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class ServerToolUsage implements BaseModel
     public function withWebSearchRequests(int $webSearchRequests): self
     {
         $obj = clone $this;
-        $obj['web_search_requests'] = $webSearchRequests;
+        $obj['webSearchRequests'] = $webSearchRequests;
 
         return $obj;
     }

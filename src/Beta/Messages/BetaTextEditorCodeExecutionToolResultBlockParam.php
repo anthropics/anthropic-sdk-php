@@ -15,9 +15,9 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaTextEditorCodeExecutionToolResultBlockParamShape = array{
  *   content: BetaTextEditorCodeExecutionToolResultErrorParam|BetaTextEditorCodeExecutionViewResultBlockParam|BetaTextEditorCodeExecutionCreateResultBlockParam|BetaTextEditorCodeExecutionStrReplaceResultBlockParam,
- *   tool_use_id: string,
+ *   toolUseID: string,
  *   type?: 'text_editor_code_execution_tool_result',
- *   cache_control?: BetaCacheControlEphemeral|null,
+ *   cacheControl?: BetaCacheControlEphemeral|null,
  * }
  */
 final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
@@ -32,14 +32,14 @@ final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
     #[Required]
     public BetaTextEditorCodeExecutionToolResultErrorParam|BetaTextEditorCodeExecutionViewResultBlockParam|BetaTextEditorCodeExecutionCreateResultBlockParam|BetaTextEditorCodeExecutionStrReplaceResultBlockParam $content;
 
-    #[Required]
-    public string $tool_use_id;
+    #[Required('tool_use_id')]
+    public string $toolUseID;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * `new BetaTextEditorCodeExecutionToolResultBlockParam()` is missing required properties by the API.
@@ -47,7 +47,7 @@ final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaTextEditorCodeExecutionToolResultBlockParam::with(
-     *   content: ..., tool_use_id: ...
+     *   content: ..., toolUseID: ...
      * )
      * ```
      *
@@ -70,66 +70,66 @@ final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaTextEditorCodeExecutionToolResultErrorParam|array{
-     *   error_code: value-of<ErrorCode>,
+     *   errorCode: value-of<ErrorCode>,
      *   type?: 'text_editor_code_execution_tool_result_error',
-     *   error_message?: string|null,
+     *   errorMessage?: string|null,
      * }|BetaTextEditorCodeExecutionViewResultBlockParam|array{
      *   content: string,
-     *   file_type: value-of<FileType>,
+     *   fileType: value-of<FileType>,
      *   type?: 'text_editor_code_execution_view_result',
-     *   num_lines?: int|null,
-     *   start_line?: int|null,
-     *   total_lines?: int|null,
+     *   numLines?: int|null,
+     *   startLine?: int|null,
+     *   totalLines?: int|null,
      * }|BetaTextEditorCodeExecutionCreateResultBlockParam|array{
-     *   is_file_update: bool, type?: 'text_editor_code_execution_create_result'
+     *   isFileUpdate: bool, type?: 'text_editor_code_execution_create_result'
      * }|BetaTextEditorCodeExecutionStrReplaceResultBlockParam|array{
      *   type?: 'text_editor_code_execution_str_replace_result',
      *   lines?: list<string>|null,
-     *   new_lines?: int|null,
-     *   new_start?: int|null,
-     *   old_lines?: int|null,
-     *   old_start?: int|null,
+     *   newLines?: int|null,
+     *   newStart?: int|null,
+     *   oldLines?: int|null,
+     *   oldStart?: int|null,
      * } $content
      * @param BetaCacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      */
     public static function with(
         BetaTextEditorCodeExecutionToolResultErrorParam|array|BetaTextEditorCodeExecutionViewResultBlockParam|BetaTextEditorCodeExecutionCreateResultBlockParam|BetaTextEditorCodeExecutionStrReplaceResultBlockParam $content,
-        string $tool_use_id,
-        BetaCacheControlEphemeral|array|null $cache_control = null,
+        string $toolUseID,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
     ): self {
         $obj = new self;
 
         $obj['content'] = $content;
-        $obj['tool_use_id'] = $tool_use_id;
+        $obj['toolUseID'] = $toolUseID;
 
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }
 
     /**
      * @param BetaTextEditorCodeExecutionToolResultErrorParam|array{
-     *   error_code: value-of<ErrorCode>,
+     *   errorCode: value-of<ErrorCode>,
      *   type?: 'text_editor_code_execution_tool_result_error',
-     *   error_message?: string|null,
+     *   errorMessage?: string|null,
      * }|BetaTextEditorCodeExecutionViewResultBlockParam|array{
      *   content: string,
-     *   file_type: value-of<FileType>,
+     *   fileType: value-of<FileType>,
      *   type?: 'text_editor_code_execution_view_result',
-     *   num_lines?: int|null,
-     *   start_line?: int|null,
-     *   total_lines?: int|null,
+     *   numLines?: int|null,
+     *   startLine?: int|null,
+     *   totalLines?: int|null,
      * }|BetaTextEditorCodeExecutionCreateResultBlockParam|array{
-     *   is_file_update: bool, type?: 'text_editor_code_execution_create_result'
+     *   isFileUpdate: bool, type?: 'text_editor_code_execution_create_result'
      * }|BetaTextEditorCodeExecutionStrReplaceResultBlockParam|array{
      *   type?: 'text_editor_code_execution_str_replace_result',
      *   lines?: list<string>|null,
-     *   new_lines?: int|null,
-     *   new_start?: int|null,
-     *   old_lines?: int|null,
-     *   old_start?: int|null,
+     *   newLines?: int|null,
+     *   newStart?: int|null,
+     *   oldLines?: int|null,
+     *   oldStart?: int|null,
      * } $content
      */
     public function withContent(
@@ -144,7 +144,7 @@ final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj['tool_use_id'] = $toolUseID;
+        $obj['toolUseID'] = $toolUseID;
 
         return $obj;
     }
@@ -160,7 +160,7 @@ final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }

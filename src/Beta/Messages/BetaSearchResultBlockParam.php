@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   source: string,
  *   title: string,
  *   type?: 'search_result',
- *   cache_control?: BetaCacheControlEphemeral|null,
+ *   cacheControl?: BetaCacheControlEphemeral|null,
  *   citations?: BetaCitationsConfigParam|null,
  * }
  */
@@ -42,8 +42,8 @@ final class BetaSearchResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     #[Optional]
     public ?BetaCitationsConfigParam $citations;
@@ -78,19 +78,19 @@ final class BetaSearchResultBlockParam implements BaseModel
      * @param list<BetaTextBlockParam|array{
      *   text: string,
      *   type?: 'text',
-     *   cache_control?: BetaCacheControlEphemeral|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
      *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
      * }> $content
      * @param BetaCacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      * @param BetaCitationsConfigParam|array{enabled?: bool|null} $citations
      */
     public static function with(
         array $content,
         string $source,
         string $title,
-        BetaCacheControlEphemeral|array|null $cache_control = null,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
         BetaCitationsConfigParam|array|null $citations = null,
     ): self {
         $obj = new self;
@@ -99,7 +99,7 @@ final class BetaSearchResultBlockParam implements BaseModel
         $obj['source'] = $source;
         $obj['title'] = $title;
 
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
         null !== $citations && $obj['citations'] = $citations;
 
         return $obj;
@@ -109,7 +109,7 @@ final class BetaSearchResultBlockParam implements BaseModel
      * @param list<BetaTextBlockParam|array{
      *   text: string,
      *   type?: 'text',
-     *   cache_control?: BetaCacheControlEphemeral|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
      *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
      * }> $content
      */
@@ -148,7 +148,7 @@ final class BetaSearchResultBlockParam implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }

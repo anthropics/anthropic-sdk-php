@@ -16,10 +16,10 @@ use Anthropic\Core\Conversion\MapOf;
  * @phpstan-type BetaToolBash20250124Shape = array{
  *   name?: 'bash',
  *   type?: 'bash_20250124',
- *   allowed_callers?: list<value-of<AllowedCaller>>|null,
- *   cache_control?: BetaCacheControlEphemeral|null,
- *   defer_loading?: bool|null,
- *   input_examples?: list<array<string,mixed>>|null,
+ *   allowedCallers?: list<value-of<AllowedCaller>>|null,
+ *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   deferLoading?: bool|null,
+ *   inputExamples?: list<array<string,mixed>>|null,
  *   strict?: bool|null,
  * }
  */
@@ -42,25 +42,25 @@ final class BetaToolBash20250124 implements BaseModel
     #[Required]
     public string $type = 'bash_20250124';
 
-    /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
-    #[Optional(list: AllowedCaller::class)]
-    public ?array $allowed_callers;
+    /** @var list<value-of<AllowedCaller>>|null $allowedCallers */
+    #[Optional('allowed_callers', list: AllowedCaller::class)]
+    public ?array $allowedCallers;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
      */
-    #[Optional]
-    public ?bool $defer_loading;
+    #[Optional('defer_loading')]
+    public ?bool $deferLoading;
 
-    /** @var list<array<string,mixed>>|null $input_examples */
-    #[Optional(list: new MapOf('mixed'))]
-    public ?array $input_examples;
+    /** @var list<array<string,mixed>>|null $inputExamples */
+    #[Optional('input_examples', list: new MapOf('mixed'))]
+    public ?array $inputExamples;
 
     #[Optional]
     public ?bool $strict;
@@ -75,25 +75,25 @@ final class BetaToolBash20250124 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
      * @param BetaCacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
-     * @param list<array<string,mixed>> $input_examples
+     * }|null $cacheControl
+     * @param list<array<string,mixed>> $inputExamples
      */
     public static function with(
-        ?array $allowed_callers = null,
-        BetaCacheControlEphemeral|array|null $cache_control = null,
-        ?bool $defer_loading = null,
-        ?array $input_examples = null,
+        ?array $allowedCallers = null,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
+        ?bool $deferLoading = null,
+        ?array $inputExamples = null,
         ?bool $strict = null,
     ): self {
         $obj = new self;
 
-        null !== $allowed_callers && $obj['allowed_callers'] = $allowed_callers;
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
-        null !== $defer_loading && $obj['defer_loading'] = $defer_loading;
-        null !== $input_examples && $obj['input_examples'] = $input_examples;
+        null !== $allowedCallers && $obj['allowedCallers'] = $allowedCallers;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
+        null !== $deferLoading && $obj['deferLoading'] = $deferLoading;
+        null !== $inputExamples && $obj['inputExamples'] = $inputExamples;
         null !== $strict && $obj['strict'] = $strict;
 
         return $obj;
@@ -105,7 +105,7 @@ final class BetaToolBash20250124 implements BaseModel
     public function withAllowedCallers(array $allowedCallers): self
     {
         $obj = clone $this;
-        $obj['allowed_callers'] = $allowedCallers;
+        $obj['allowedCallers'] = $allowedCallers;
 
         return $obj;
     }
@@ -121,7 +121,7 @@ final class BetaToolBash20250124 implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }
@@ -132,7 +132,7 @@ final class BetaToolBash20250124 implements BaseModel
     public function withDeferLoading(bool $deferLoading): self
     {
         $obj = clone $this;
-        $obj['defer_loading'] = $deferLoading;
+        $obj['deferLoading'] = $deferLoading;
 
         return $obj;
     }
@@ -143,7 +143,7 @@ final class BetaToolBash20250124 implements BaseModel
     public function withInputExamples(array $inputExamples): self
     {
         $obj = clone $this;
-        $obj['input_examples'] = $inputExamples;
+        $obj['inputExamples'] = $inputExamples;
 
         return $obj;
     }

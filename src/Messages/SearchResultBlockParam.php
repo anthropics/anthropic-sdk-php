@@ -16,7 +16,7 @@ use Anthropic\Messages\CacheControlEphemeral\TTL;
  *   source: string,
  *   title: string,
  *   type?: 'search_result',
- *   cache_control?: CacheControlEphemeral|null,
+ *   cacheControl?: CacheControlEphemeral|null,
  *   citations?: CitationsConfigParam|null,
  * }
  */
@@ -42,8 +42,8 @@ final class SearchResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     #[Optional]
     public ?CitationsConfigParam $citations;
@@ -75,19 +75,19 @@ final class SearchResultBlockParam implements BaseModel
      * @param list<TextBlockParam|array{
      *   text: string,
      *   type?: 'text',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }> $content
      * @param CacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      * @param CitationsConfigParam|array{enabled?: bool|null} $citations
      */
     public static function with(
         array $content,
         string $source,
         string $title,
-        CacheControlEphemeral|array|null $cache_control = null,
+        CacheControlEphemeral|array|null $cacheControl = null,
         CitationsConfigParam|array|null $citations = null,
     ): self {
         $obj = new self;
@@ -96,7 +96,7 @@ final class SearchResultBlockParam implements BaseModel
         $obj['source'] = $source;
         $obj['title'] = $title;
 
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
         null !== $citations && $obj['citations'] = $citations;
 
         return $obj;
@@ -106,7 +106,7 @@ final class SearchResultBlockParam implements BaseModel
      * @param list<TextBlockParam|array{
      *   text: string,
      *   type?: 'text',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }> $content
      */
@@ -145,7 +145,7 @@ final class SearchResultBlockParam implements BaseModel
         CacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }

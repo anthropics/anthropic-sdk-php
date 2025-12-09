@@ -10,12 +10,12 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCitationContentBlockLocationShape = array{
- *   cited_text: string,
- *   document_index: int,
- *   document_title: string|null,
- *   end_block_index: int,
- *   file_id: string|null,
- *   start_block_index: int,
+ *   citedText: string,
+ *   documentIndex: int,
+ *   documentTitle: string|null,
+ *   endBlockIndex: int,
+ *   fileID: string|null,
+ *   startBlockIndex: int,
  *   type?: 'content_block_location',
  * }
  */
@@ -28,23 +28,23 @@ final class BetaCitationContentBlockLocation implements BaseModel
     #[Required]
     public string $type = 'content_block_location';
 
-    #[Required]
-    public string $cited_text;
+    #[Required('cited_text')]
+    public string $citedText;
 
-    #[Required]
-    public int $document_index;
+    #[Required('document_index')]
+    public int $documentIndex;
 
-    #[Required]
-    public ?string $document_title;
+    #[Required('document_title')]
+    public ?string $documentTitle;
 
-    #[Required]
-    public int $end_block_index;
+    #[Required('end_block_index')]
+    public int $endBlockIndex;
 
-    #[Required]
-    public ?string $file_id;
+    #[Required('file_id')]
+    public ?string $fileID;
 
-    #[Required]
-    public int $start_block_index;
+    #[Required('start_block_index')]
+    public int $startBlockIndex;
 
     /**
      * `new BetaCitationContentBlockLocation()` is missing required properties by the API.
@@ -52,12 +52,12 @@ final class BetaCitationContentBlockLocation implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaCitationContentBlockLocation::with(
-     *   cited_text: ...,
-     *   document_index: ...,
-     *   document_title: ...,
-     *   end_block_index: ...,
-     *   file_id: ...,
-     *   start_block_index: ...,
+     *   citedText: ...,
+     *   documentIndex: ...,
+     *   documentTitle: ...,
+     *   endBlockIndex: ...,
+     *   fileID: ...,
+     *   startBlockIndex: ...,
      * )
      * ```
      *
@@ -84,21 +84,21 @@ final class BetaCitationContentBlockLocation implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $cited_text,
-        int $document_index,
-        ?string $document_title,
-        int $end_block_index,
-        ?string $file_id,
-        int $start_block_index,
+        string $citedText,
+        int $documentIndex,
+        ?string $documentTitle,
+        int $endBlockIndex,
+        ?string $fileID,
+        int $startBlockIndex,
     ): self {
         $obj = new self;
 
-        $obj['cited_text'] = $cited_text;
-        $obj['document_index'] = $document_index;
-        $obj['document_title'] = $document_title;
-        $obj['end_block_index'] = $end_block_index;
-        $obj['file_id'] = $file_id;
-        $obj['start_block_index'] = $start_block_index;
+        $obj['citedText'] = $citedText;
+        $obj['documentIndex'] = $documentIndex;
+        $obj['documentTitle'] = $documentTitle;
+        $obj['endBlockIndex'] = $endBlockIndex;
+        $obj['fileID'] = $fileID;
+        $obj['startBlockIndex'] = $startBlockIndex;
 
         return $obj;
     }
@@ -106,7 +106,7 @@ final class BetaCitationContentBlockLocation implements BaseModel
     public function withCitedText(string $citedText): self
     {
         $obj = clone $this;
-        $obj['cited_text'] = $citedText;
+        $obj['citedText'] = $citedText;
 
         return $obj;
     }
@@ -114,7 +114,7 @@ final class BetaCitationContentBlockLocation implements BaseModel
     public function withDocumentIndex(int $documentIndex): self
     {
         $obj = clone $this;
-        $obj['document_index'] = $documentIndex;
+        $obj['documentIndex'] = $documentIndex;
 
         return $obj;
     }
@@ -122,7 +122,7 @@ final class BetaCitationContentBlockLocation implements BaseModel
     public function withDocumentTitle(?string $documentTitle): self
     {
         $obj = clone $this;
-        $obj['document_title'] = $documentTitle;
+        $obj['documentTitle'] = $documentTitle;
 
         return $obj;
     }
@@ -130,7 +130,7 @@ final class BetaCitationContentBlockLocation implements BaseModel
     public function withEndBlockIndex(int $endBlockIndex): self
     {
         $obj = clone $this;
-        $obj['end_block_index'] = $endBlockIndex;
+        $obj['endBlockIndex'] = $endBlockIndex;
 
         return $obj;
     }
@@ -138,7 +138,7 @@ final class BetaCitationContentBlockLocation implements BaseModel
     public function withFileID(?string $fileID): self
     {
         $obj = clone $this;
-        $obj['file_id'] = $fileID;
+        $obj['fileID'] = $fileID;
 
         return $obj;
     }
@@ -146,7 +146,7 @@ final class BetaCitationContentBlockLocation implements BaseModel
     public function withStartBlockIndex(int $startBlockIndex): self
     {
         $obj = clone $this;
-        $obj['start_block_index'] = $startBlockIndex;
+        $obj['startBlockIndex'] = $startBlockIndex;
 
         return $obj;
     }

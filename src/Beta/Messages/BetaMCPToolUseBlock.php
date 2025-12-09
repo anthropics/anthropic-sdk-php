@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   id: string,
  *   input: array<string,mixed>,
  *   name: string,
- *   server_name: string,
+ *   serverName: string,
  *   type?: 'mcp_tool_use',
  * }
  */
@@ -42,15 +42,15 @@ final class BetaMCPToolUseBlock implements BaseModel
     /**
      * The name of the MCP server.
      */
-    #[Required]
-    public string $server_name;
+    #[Required('server_name')]
+    public string $serverName;
 
     /**
      * `new BetaMCPToolUseBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaMCPToolUseBlock::with(id: ..., input: ..., name: ..., server_name: ...)
+     * BetaMCPToolUseBlock::with(id: ..., input: ..., name: ..., serverName: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -79,14 +79,14 @@ final class BetaMCPToolUseBlock implements BaseModel
         string $id,
         array $input,
         string $name,
-        string $server_name
+        string $serverName
     ): self {
         $obj = new self;
 
         $obj['id'] = $id;
         $obj['input'] = $input;
         $obj['name'] = $name;
-        $obj['server_name'] = $server_name;
+        $obj['serverName'] = $serverName;
 
         return $obj;
     }
@@ -127,7 +127,7 @@ final class BetaMCPToolUseBlock implements BaseModel
     public function withServerName(string $serverName): self
     {
         $obj = clone $this;
-        $obj['server_name'] = $serverName;
+        $obj['serverName'] = $serverName;
 
         return $obj;
     }

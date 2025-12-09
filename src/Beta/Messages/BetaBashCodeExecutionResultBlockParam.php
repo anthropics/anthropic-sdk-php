@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaBashCodeExecutionResultBlockParamShape = array{
  *   content: list<BetaBashCodeExecutionOutputBlockParam>,
- *   return_code: int,
+ *   returnCode: int,
  *   stderr: string,
  *   stdout: string,
  *   type?: 'bash_code_execution_result',
@@ -30,8 +30,8 @@ final class BetaBashCodeExecutionResultBlockParam implements BaseModel
     #[Required(list: BetaBashCodeExecutionOutputBlockParam::class)]
     public array $content;
 
-    #[Required]
-    public int $return_code;
+    #[Required('return_code')]
+    public int $returnCode;
 
     #[Required]
     public string $stderr;
@@ -45,7 +45,7 @@ final class BetaBashCodeExecutionResultBlockParam implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaBashCodeExecutionResultBlockParam::with(
-     *   content: ..., return_code: ..., stderr: ..., stdout: ...
+     *   content: ..., returnCode: ..., stderr: ..., stdout: ...
      * )
      * ```
      *
@@ -70,19 +70,19 @@ final class BetaBashCodeExecutionResultBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaBashCodeExecutionOutputBlockParam|array{
-     *   file_id: string, type?: 'bash_code_execution_output'
+     *   fileID: string, type?: 'bash_code_execution_output'
      * }> $content
      */
     public static function with(
         array $content,
-        int $return_code,
+        int $returnCode,
         string $stderr,
         string $stdout
     ): self {
         $obj = new self;
 
         $obj['content'] = $content;
-        $obj['return_code'] = $return_code;
+        $obj['returnCode'] = $returnCode;
         $obj['stderr'] = $stderr;
         $obj['stdout'] = $stdout;
 
@@ -91,7 +91,7 @@ final class BetaBashCodeExecutionResultBlockParam implements BaseModel
 
     /**
      * @param list<BetaBashCodeExecutionOutputBlockParam|array{
-     *   file_id: string, type?: 'bash_code_execution_output'
+     *   fileID: string, type?: 'bash_code_execution_output'
      * }> $content
      */
     public function withContent(array $content): self
@@ -105,7 +105,7 @@ final class BetaBashCodeExecutionResultBlockParam implements BaseModel
     public function withReturnCode(int $returnCode): self
     {
         $obj = clone $this;
-        $obj['return_code'] = $returnCode;
+        $obj['returnCode'] = $returnCode;
 
         return $obj;
     }

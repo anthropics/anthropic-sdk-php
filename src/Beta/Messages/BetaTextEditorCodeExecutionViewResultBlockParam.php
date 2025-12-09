@@ -13,11 +13,11 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaTextEditorCodeExecutionViewResultBlockParamShape = array{
  *   content: string,
- *   file_type: value-of<FileType>,
+ *   fileType: value-of<FileType>,
  *   type?: 'text_editor_code_execution_view_result',
- *   num_lines?: int|null,
- *   start_line?: int|null,
- *   total_lines?: int|null,
+ *   numLines?: int|null,
+ *   startLine?: int|null,
+ *   totalLines?: int|null,
  * }
  */
 final class BetaTextEditorCodeExecutionViewResultBlockParam implements BaseModel
@@ -32,18 +32,18 @@ final class BetaTextEditorCodeExecutionViewResultBlockParam implements BaseModel
     #[Required]
     public string $content;
 
-    /** @var value-of<FileType> $file_type */
-    #[Required(enum: FileType::class)]
-    public string $file_type;
+    /** @var value-of<FileType> $fileType */
+    #[Required('file_type', enum: FileType::class)]
+    public string $fileType;
 
-    #[Optional(nullable: true)]
-    public ?int $num_lines;
+    #[Optional('num_lines', nullable: true)]
+    public ?int $numLines;
 
-    #[Optional(nullable: true)]
-    public ?int $start_line;
+    #[Optional('start_line', nullable: true)]
+    public ?int $startLine;
 
-    #[Optional(nullable: true)]
-    public ?int $total_lines;
+    #[Optional('total_lines', nullable: true)]
+    public ?int $totalLines;
 
     /**
      * `new BetaTextEditorCodeExecutionViewResultBlockParam()` is missing required properties by the API.
@@ -51,7 +51,7 @@ final class BetaTextEditorCodeExecutionViewResultBlockParam implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaTextEditorCodeExecutionViewResultBlockParam::with(
-     *   content: ..., file_type: ...
+     *   content: ..., fileType: ...
      * )
      * ```
      *
@@ -73,23 +73,23 @@ final class BetaTextEditorCodeExecutionViewResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param FileType|value-of<FileType> $file_type
+     * @param FileType|value-of<FileType> $fileType
      */
     public static function with(
         string $content,
-        FileType|string $file_type,
-        ?int $num_lines = null,
-        ?int $start_line = null,
-        ?int $total_lines = null,
+        FileType|string $fileType,
+        ?int $numLines = null,
+        ?int $startLine = null,
+        ?int $totalLines = null,
     ): self {
         $obj = new self;
 
         $obj['content'] = $content;
-        $obj['file_type'] = $file_type;
+        $obj['fileType'] = $fileType;
 
-        null !== $num_lines && $obj['num_lines'] = $num_lines;
-        null !== $start_line && $obj['start_line'] = $start_line;
-        null !== $total_lines && $obj['total_lines'] = $total_lines;
+        null !== $numLines && $obj['numLines'] = $numLines;
+        null !== $startLine && $obj['startLine'] = $startLine;
+        null !== $totalLines && $obj['totalLines'] = $totalLines;
 
         return $obj;
     }
@@ -108,7 +108,7 @@ final class BetaTextEditorCodeExecutionViewResultBlockParam implements BaseModel
     public function withFileType(FileType|string $fileType): self
     {
         $obj = clone $this;
-        $obj['file_type'] = $fileType;
+        $obj['fileType'] = $fileType;
 
         return $obj;
     }
@@ -116,7 +116,7 @@ final class BetaTextEditorCodeExecutionViewResultBlockParam implements BaseModel
     public function withNumLines(?int $numLines): self
     {
         $obj = clone $this;
-        $obj['num_lines'] = $numLines;
+        $obj['numLines'] = $numLines;
 
         return $obj;
     }
@@ -124,7 +124,7 @@ final class BetaTextEditorCodeExecutionViewResultBlockParam implements BaseModel
     public function withStartLine(?int $startLine): self
     {
         $obj = clone $this;
-        $obj['start_line'] = $startLine;
+        $obj['startLine'] = $startLine;
 
         return $obj;
     }
@@ -132,7 +132,7 @@ final class BetaTextEditorCodeExecutionViewResultBlockParam implements BaseModel
     public function withTotalLines(?int $totalLines): self
     {
         $obj = clone $this;
-        $obj['total_lines'] = $totalLines;
+        $obj['totalLines'] = $totalLines;
 
         return $obj;
     }

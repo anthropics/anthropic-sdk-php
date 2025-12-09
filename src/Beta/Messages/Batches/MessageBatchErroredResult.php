@@ -61,7 +61,7 @@ final class MessageBatchErroredResult implements BaseModel
      *
      * @param BetaErrorResponse|array{
      *   error: BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError,
-     *   request_id: string|null,
+     *   requestID: string|null,
      *   type?: 'error',
      * } $error
      */
@@ -77,7 +77,7 @@ final class MessageBatchErroredResult implements BaseModel
     /**
      * @param BetaErrorResponse|array{
      *   error: BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError,
-     *   request_id: string|null,
+     *   requestID: string|null,
      *   type?: 'error',
      * } $error
      */

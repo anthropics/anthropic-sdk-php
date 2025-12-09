@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\Skills\VersionsService::retrieve()
  *
  * @phpstan-type VersionRetrieveParamsShape = array{
- *   skill_id: string, betas?: list<string|AnthropicBeta>
+ *   skillID: string, betas?: list<string|AnthropicBeta>
  * }
  */
 final class VersionRetrieveParams implements BaseModel
@@ -32,7 +32,7 @@ final class VersionRetrieveParams implements BaseModel
      * The format and length of IDs may change over time.
      */
     #[Required]
-    public string $skill_id;
+    public string $skillID;
 
     /**
      * Optional header to specify the beta version(s) you want to use.
@@ -47,7 +47,7 @@ final class VersionRetrieveParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * VersionRetrieveParams::with(skill_id: ...)
+     * VersionRetrieveParams::with(skillID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -68,11 +68,11 @@ final class VersionRetrieveParams implements BaseModel
      *
      * @param list<string|AnthropicBeta> $betas
      */
-    public static function with(string $skill_id, ?array $betas = null): self
+    public static function with(string $skillID, ?array $betas = null): self
     {
         $obj = new self;
 
-        $obj['skill_id'] = $skill_id;
+        $obj['skillID'] = $skillID;
 
         null !== $betas && $obj['betas'] = $betas;
 
@@ -87,7 +87,7 @@ final class VersionRetrieveParams implements BaseModel
     public function withSkillID(string $skillID): self
     {
         $obj = clone $this;
-        $obj['skill_id'] = $skillID;
+        $obj['skillID'] = $skillID;
 
         return $obj;
     }

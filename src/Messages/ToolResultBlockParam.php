@@ -13,11 +13,11 @@ use Anthropic\Messages\ToolResultBlockParam\Content;
 
 /**
  * @phpstan-type ToolResultBlockParamShape = array{
- *   tool_use_id: string,
+ *   toolUseID: string,
  *   type?: 'tool_result',
- *   cache_control?: CacheControlEphemeral|null,
+ *   cacheControl?: CacheControlEphemeral|null,
  *   content?: string|null|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam>,
- *   is_error?: bool|null,
+ *   isError?: bool|null,
  * }
  */
 final class ToolResultBlockParam implements BaseModel
@@ -29,14 +29,14 @@ final class ToolResultBlockParam implements BaseModel
     #[Required]
     public string $type = 'tool_result';
 
-    #[Required]
-    public string $tool_use_id;
+    #[Required('tool_use_id')]
+    public string $toolUseID;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
      * @var string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam>|null $content
@@ -44,15 +44,15 @@ final class ToolResultBlockParam implements BaseModel
     #[Optional(union: Content::class)]
     public string|array|null $content;
 
-    #[Optional]
-    public ?bool $is_error;
+    #[Optional('is_error')]
+    public ?bool $isError;
 
     /**
      * `new ToolResultBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ToolResultBlockParam::with(tool_use_id: ...)
+     * ToolResultBlockParam::with(toolUseID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -73,45 +73,45 @@ final class ToolResultBlockParam implements BaseModel
      *
      * @param CacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      * @param string|list<TextBlockParam|array{
      *   text: string,
      *   type?: 'text',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }|ImageBlockParam|array{
      *   source: Base64ImageSource|URLImageSource,
      *   type?: 'image',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|SearchResultBlockParam|array{
      *   content: list<TextBlockParam>,
      *   source: string,
      *   title: string,
      *   type?: 'search_result',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: CitationsConfigParam|null,
      * }|DocumentBlockParam|array{
      *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
      *   type?: 'document',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: CitationsConfigParam|null,
      *   context?: string|null,
      *   title?: string|null,
      * }> $content
      */
     public static function with(
-        string $tool_use_id,
-        CacheControlEphemeral|array|null $cache_control = null,
+        string $toolUseID,
+        CacheControlEphemeral|array|null $cacheControl = null,
         string|array|null $content = null,
-        ?bool $is_error = null,
+        ?bool $isError = null,
     ): self {
         $obj = new self;
 
-        $obj['tool_use_id'] = $tool_use_id;
+        $obj['toolUseID'] = $toolUseID;
 
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
         null !== $content && $obj['content'] = $content;
-        null !== $is_error && $obj['is_error'] = $is_error;
+        null !== $isError && $obj['isError'] = $isError;
 
         return $obj;
     }
@@ -119,7 +119,7 @@ final class ToolResultBlockParam implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj['tool_use_id'] = $toolUseID;
+        $obj['toolUseID'] = $toolUseID;
 
         return $obj;
     }
@@ -135,7 +135,7 @@ final class ToolResultBlockParam implements BaseModel
         CacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }
@@ -144,23 +144,23 @@ final class ToolResultBlockParam implements BaseModel
      * @param string|list<TextBlockParam|array{
      *   text: string,
      *   type?: 'text',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }|ImageBlockParam|array{
      *   source: Base64ImageSource|URLImageSource,
      *   type?: 'image',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|SearchResultBlockParam|array{
      *   content: list<TextBlockParam>,
      *   source: string,
      *   title: string,
      *   type?: 'search_result',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: CitationsConfigParam|null,
      * }|DocumentBlockParam|array{
      *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
      *   type?: 'document',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: CitationsConfigParam|null,
      *   context?: string|null,
      *   title?: string|null,
@@ -177,7 +177,7 @@ final class ToolResultBlockParam implements BaseModel
     public function withIsError(bool $isError): self
     {
         $obj = clone $this;
-        $obj['is_error'] = $isError;
+        $obj['isError'] = $isError;
 
         return $obj;
     }

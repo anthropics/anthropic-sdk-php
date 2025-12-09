@@ -48,7 +48,7 @@ final class VersionsTest extends TestCase
     {
         $result = $this->client->beta->skills->versions->retrieve(
             'version',
-            ['skill_id' => 'skill_id']
+            ['skillID' => 'skill_id']
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -60,7 +60,7 @@ final class VersionsTest extends TestCase
     {
         $result = $this->client->beta->skills->versions->retrieve(
             'version',
-            ['skill_id' => 'skill_id', 'betas' => ['string']]
+            ['skillID' => 'skill_id', 'betas' => ['string']]
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -81,7 +81,7 @@ final class VersionsTest extends TestCase
     {
         $result = $this->client->beta->skills->versions->delete(
             'version',
-            ['skill_id' => 'skill_id']
+            ['skillID' => 'skill_id']
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -93,7 +93,7 @@ final class VersionsTest extends TestCase
     {
         $result = $this->client->beta->skills->versions->delete(
             'version',
-            ['skill_id' => 'skill_id', 'betas' => ['string']]
+            ['skillID' => 'skill_id', 'betas' => ['string']]
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

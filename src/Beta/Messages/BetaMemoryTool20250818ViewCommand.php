@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818ViewCommandShape = array{
- *   command?: 'view', path: string, view_range?: list<int>|null
+ *   command?: 'view', path: string, viewRange?: list<int>|null
  * }
  */
 final class BetaMemoryTool20250818ViewCommand implements BaseModel
@@ -36,10 +36,10 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
     /**
      * Optional line range for viewing specific lines.
      *
-     * @var list<int>|null $view_range
+     * @var list<int>|null $viewRange
      */
-    #[Optional(list: 'int')]
-    public ?array $view_range;
+    #[Optional('view_range', list: 'int')]
+    public ?array $viewRange;
 
     /**
      * `new BetaMemoryTool20250818ViewCommand()` is missing required properties by the API.
@@ -65,15 +65,15 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<int> $view_range
+     * @param list<int> $viewRange
      */
-    public static function with(string $path, ?array $view_range = null): self
+    public static function with(string $path, ?array $viewRange = null): self
     {
         $obj = new self;
 
         $obj['path'] = $path;
 
-        null !== $view_range && $obj['view_range'] = $view_range;
+        null !== $viewRange && $obj['viewRange'] = $viewRange;
 
         return $obj;
     }
@@ -97,7 +97,7 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
     public function withViewRange(array $viewRange): self
     {
         $obj = clone $this;
-        $obj['view_range'] = $viewRange;
+        $obj['viewRange'] = $viewRange;
 
         return $obj;
     }
