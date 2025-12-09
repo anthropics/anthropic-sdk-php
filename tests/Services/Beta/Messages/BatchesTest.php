@@ -37,8 +37,8 @@ final class BatchesTest extends TestCase
             $this->markTestSkipped('prism validates based on the non-beta endpoint');
         }
 
-        $result = $this->client->beta->messages->batches->create([
-            'requests' => [
+        $result = $this->client->beta->messages->batches->create(
+            requests: [
                 [
                     'customID' => 'my-custom-id-1',
                     'params' => [
@@ -48,7 +48,7 @@ final class BatchesTest extends TestCase
                     ],
                 ],
             ],
-        ]);
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(MessageBatch::class, $result);
@@ -61,8 +61,8 @@ final class BatchesTest extends TestCase
             $this->markTestSkipped('prism validates based on the non-beta endpoint');
         }
 
-        $result = $this->client->beta->messages->batches->create([
-            'requests' => [
+        $result = $this->client->beta->messages->batches->create(
+            requests: [
                 [
                     'customID' => 'my-custom-id-1',
                     'params' => [
@@ -150,8 +150,8 @@ final class BatchesTest extends TestCase
                     ],
                 ],
             ],
-            'betas' => ['string'],
-        ]);
+            betas: ['string'],
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(MessageBatch::class, $result);
@@ -161,8 +161,7 @@ final class BatchesTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->messages->batches->retrieve(
-            'message_batch_id',
-            []
+            'message_batch_id'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -172,7 +171,7 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->beta->messages->batches->list([]);
+        $result = $this->client->beta->messages->batches->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Page::class, $result);
@@ -182,8 +181,7 @@ final class BatchesTest extends TestCase
     public function testDelete(): void
     {
         $result = $this->client->beta->messages->batches->delete(
-            'message_batch_id',
-            []
+            'message_batch_id'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -194,8 +192,7 @@ final class BatchesTest extends TestCase
     public function testCancel(): void
     {
         $result = $this->client->beta->messages->batches->cancel(
-            'message_batch_id',
-            []
+            'message_batch_id'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -210,8 +207,7 @@ final class BatchesTest extends TestCase
         }
 
         $result = $this->client->beta->messages->batches->results(
-            'message_batch_id',
-            []
+            'message_batch_id'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

@@ -33,8 +33,8 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->messages->batches->create([
-            'requests' => [
+        $result = $this->client->messages->batches->create(
+            requests: [
                 [
                     'customID' => 'my-custom-id-1',
                     'params' => [
@@ -44,7 +44,7 @@ final class BatchesTest extends TestCase
                     ],
                 ],
             ],
-        ]);
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(MessageBatch::class, $result);
@@ -53,8 +53,8 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->messages->batches->create([
-            'requests' => [
+        $result = $this->client->messages->batches->create(
+            requests: [
                 [
                     'customID' => 'my-custom-id-1',
                     'params' => [
@@ -105,7 +105,7 @@ final class BatchesTest extends TestCase
                     ],
                 ],
             ],
-        ]);
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(MessageBatch::class, $result);
@@ -123,7 +123,7 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->messages->batches->list([]);
+        $result = $this->client->messages->batches->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Page::class, $result);
