@@ -123,10 +123,15 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->messages->batches->list();
+        $page = $this->client->messages->batches->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(Page::class, $result);
+        $this->assertInstanceOf(Page::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(MessageBatch::class, $item);
+        }
     }
 
     #[Test]
