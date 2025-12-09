@@ -4,6 +4,7 @@ namespace Tests\Services\Beta;
 
 use Anthropic\Beta\Skills\SkillDeleteResponse;
 use Anthropic\Beta\Skills\SkillGetResponse;
+use Anthropic\Beta\Skills\SkillListResponse;
 use Anthropic\Beta\Skills\SkillNewResponse;
 use Anthropic\Client;
 use Anthropic\PageCursor;
@@ -55,10 +56,15 @@ final class SkillsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->beta->skills->list();
+        $page = $this->client->beta->skills->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(PageCursor::class, $result);
+        $this->assertInstanceOf(PageCursor::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(SkillListResponse::class, $item);
+        }
     }
 
     #[Test]

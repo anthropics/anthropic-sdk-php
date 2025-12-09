@@ -39,9 +39,14 @@ final class ModelsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->beta->models->list();
+        $page = $this->client->beta->models->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(Page::class, $result);
+        $this->assertInstanceOf(Page::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(BetaModelInfo::class, $item);
+        }
     }
 }

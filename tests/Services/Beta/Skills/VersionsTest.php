@@ -4,6 +4,7 @@ namespace Tests\Services\Beta\Skills;
 
 use Anthropic\Beta\Skills\Versions\VersionDeleteResponse;
 use Anthropic\Beta\Skills\Versions\VersionGetResponse;
+use Anthropic\Beta\Skills\Versions\VersionListResponse;
 use Anthropic\Beta\Skills\Versions\VersionNewResponse;
 use Anthropic\Client;
 use Anthropic\PageCursor;
@@ -71,10 +72,15 @@ final class VersionsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->beta->skills->versions->list('skill_id');
+        $page = $this->client->beta->skills->versions->list('skill_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(PageCursor::class, $result);
+        $this->assertInstanceOf(PageCursor::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(VersionListResponse::class, $item);
+        }
     }
 
     #[Test]
