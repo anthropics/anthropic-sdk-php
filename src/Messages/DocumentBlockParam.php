@@ -14,7 +14,7 @@ use Anthropic\Messages\DocumentBlockParam\Source;
 /**
  * @phpstan-type DocumentBlockParamShape = array{
  *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
- *   type: 'document',
+ *   type?: 'document',
  *   cache_control?: CacheControlEphemeral|null,
  *   citations?: CitationsConfigParam|null,
  *   context?: string|null,
@@ -73,14 +73,14 @@ final class DocumentBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Base64PDFSource|array{
-     *   data: string, media_type: 'application/pdf', type: 'base64'
+     *   data: string, media_type?: 'application/pdf', type?: 'base64'
      * }|PlainTextSource|array{
-     *   data: string, media_type: 'text/plain', type: 'text'
+     *   data: string, media_type?: 'text/plain', type?: 'text'
      * }|ContentBlockSource|array{
-     *   content: string|list<TextBlockParam|ImageBlockParam>, type: 'content'
-     * }|URLPDFSource|array{type: 'url', url: string} $source
+     *   content: string|list<TextBlockParam|ImageBlockParam>, type?: 'content'
+     * }|URLPDFSource|array{type?: 'url', url: string} $source
      * @param CacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      * @param CitationsConfigParam|array{enabled?: bool|null}|null $citations
      */
@@ -105,12 +105,12 @@ final class DocumentBlockParam implements BaseModel
 
     /**
      * @param Base64PDFSource|array{
-     *   data: string, media_type: 'application/pdf', type: 'base64'
+     *   data: string, media_type?: 'application/pdf', type?: 'base64'
      * }|PlainTextSource|array{
-     *   data: string, media_type: 'text/plain', type: 'text'
+     *   data: string, media_type?: 'text/plain', type?: 'text'
      * }|ContentBlockSource|array{
-     *   content: string|list<TextBlockParam|ImageBlockParam>, type: 'content'
-     * }|URLPDFSource|array{type: 'url', url: string} $source
+     *   content: string|list<TextBlockParam|ImageBlockParam>, type?: 'content'
+     * }|URLPDFSource|array{type?: 'url', url: string} $source
      */
     public function withSource(
         Base64PDFSource|array|PlainTextSource|ContentBlockSource|URLPDFSource $source,
@@ -125,7 +125,7 @@ final class DocumentBlockParam implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param CacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

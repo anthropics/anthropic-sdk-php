@@ -40,31 +40,31 @@ use Anthropic\Messages\Model;
  *   },
  *   mcp_servers?: list<BetaRequestMCPServerURLDefinition|array{
  *     name: string,
- *     type: 'url',
+ *     type?: 'url',
  *     url: string,
  *     authorization_token?: string|null,
  *     tool_configuration?: BetaRequestMCPServerToolConfiguration|null,
  *   }>,
  *   output_config?: BetaOutputConfig|array{effort?: value-of<Effort>|null},
  *   output_format?: null|BetaJSONOutputFormat|array{
- *     schema: array<string,mixed>, type: 'json_schema'
+ *     schema: array<string,mixed>, type?: 'json_schema'
  *   },
  *   system?: string|list<BetaTextBlockParam|array{
  *     text: string,
- *     type: 'text',
+ *     type?: 'text',
  *     cache_control?: BetaCacheControlEphemeral|null,
  *     citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
  *   }>,
  *   thinking?: BetaThinkingConfigEnabled|array{
- *     budget_tokens: int, type: 'enabled'
- *   }|BetaThinkingConfigDisabled|array{type: 'disabled'},
+ *     budget_tokens: int, type?: 'enabled'
+ *   }|BetaThinkingConfigDisabled|array{type?: 'disabled'},
  *   tool_choice?: BetaToolChoiceAuto|array{
- *     type: 'auto', disable_parallel_tool_use?: bool|null
+ *     type?: 'auto', disable_parallel_tool_use?: bool|null
  *   }|BetaToolChoiceAny|array{
- *     type: 'any', disable_parallel_tool_use?: bool|null
+ *     type?: 'any', disable_parallel_tool_use?: bool|null
  *   }|BetaToolChoiceTool|array{
- *     name: string, type: 'tool', disable_parallel_tool_use?: bool|null
- *   }|BetaToolChoiceNone|array{type: 'none'},
+ *     name: string, type?: 'tool', disable_parallel_tool_use?: bool|null
+ *   }|BetaToolChoiceNone|array{type?: 'none'},
  *   tools?: list<BetaTool|array{
  *     input_schema: InputSchema,
  *     name: string,
@@ -76,31 +76,31 @@ use Anthropic\Messages\Model;
  *     strict?: bool|null,
  *     type?: value-of<Type>|null,
  *   }|BetaToolBash20241022|array{
- *     name: 'bash',
- *     type: 'bash_20241022',
+ *     name?: 'bash',
+ *     type?: 'bash_20241022',
  *     allowed_callers?: list<value-of<\Anthropic\Beta\Messages\BetaToolBash20241022\AllowedCaller>>|null,
  *     cache_control?: BetaCacheControlEphemeral|null,
  *     defer_loading?: bool|null,
  *     input_examples?: list<array<string,mixed>>|null,
  *     strict?: bool|null,
  *   }|BetaToolBash20250124|array{
- *     name: 'bash',
- *     type: 'bash_20250124',
+ *     name?: 'bash',
+ *     type?: 'bash_20250124',
  *     allowed_callers?: list<value-of<\Anthropic\Beta\Messages\BetaToolBash20250124\AllowedCaller>>|null,
  *     cache_control?: BetaCacheControlEphemeral|null,
  *     defer_loading?: bool|null,
  *     input_examples?: list<array<string,mixed>>|null,
  *     strict?: bool|null,
  *   }|BetaCodeExecutionTool20250522|array{
- *     name: 'code_execution',
- *     type: 'code_execution_20250522',
+ *     name?: 'code_execution',
+ *     type?: 'code_execution_20250522',
  *     allowed_callers?: list<value-of<\Anthropic\Beta\Messages\BetaCodeExecutionTool20250522\AllowedCaller>>|null,
  *     cache_control?: BetaCacheControlEphemeral|null,
  *     defer_loading?: bool|null,
  *     strict?: bool|null,
  *   }|BetaCodeExecutionTool20250825|array{
- *     name: 'code_execution',
- *     type: 'code_execution_20250825',
+ *     name?: 'code_execution',
+ *     type?: 'code_execution_20250825',
  *     allowed_callers?: list<value-of<\Anthropic\Beta\Messages\BetaCodeExecutionTool20250825\AllowedCaller>>|null,
  *     cache_control?: BetaCacheControlEphemeral|null,
  *     defer_loading?: bool|null,
@@ -108,8 +108,8 @@ use Anthropic\Messages\Model;
  *   }|BetaToolComputerUse20241022|array{
  *     display_height_px: int,
  *     display_width_px: int,
- *     name: 'computer',
- *     type: 'computer_20241022',
+ *     name?: 'computer',
+ *     type?: 'computer_20241022',
  *     allowed_callers?: list<value-of<\Anthropic\Beta\Messages\BetaToolComputerUse20241022\AllowedCaller>>|null,
  *     cache_control?: BetaCacheControlEphemeral|null,
  *     defer_loading?: bool|null,
@@ -117,8 +117,8 @@ use Anthropic\Messages\Model;
  *     input_examples?: list<array<string,mixed>>|null,
  *     strict?: bool|null,
  *   }|BetaMemoryTool20250818|array{
- *     name: 'memory',
- *     type: 'memory_20250818',
+ *     name?: 'memory',
+ *     type?: 'memory_20250818',
  *     allowed_callers?: list<value-of<\Anthropic\Beta\Messages\BetaMemoryTool20250818\AllowedCaller>>|null,
  *     cache_control?: BetaCacheControlEphemeral|null,
  *     defer_loading?: bool|null,
@@ -127,8 +127,8 @@ use Anthropic\Messages\Model;
  *   }|BetaToolComputerUse20250124|array{
  *     display_height_px: int,
  *     display_width_px: int,
- *     name: 'computer',
- *     type: 'computer_20250124',
+ *     name?: 'computer',
+ *     type?: 'computer_20250124',
  *     allowed_callers?: list<value-of<\Anthropic\Beta\Messages\BetaToolComputerUse20250124\AllowedCaller>>|null,
  *     cache_control?: BetaCacheControlEphemeral|null,
  *     defer_loading?: bool|null,
@@ -136,8 +136,8 @@ use Anthropic\Messages\Model;
  *     input_examples?: list<array<string,mixed>>|null,
  *     strict?: bool|null,
  *   }|BetaToolTextEditor20241022|array{
- *     name: 'str_replace_editor',
- *     type: 'text_editor_20241022',
+ *     name?: 'str_replace_editor',
+ *     type?: 'text_editor_20241022',
  *     allowed_callers?: list<value-of<\Anthropic\Beta\Messages\BetaToolTextEditor20241022\AllowedCaller>>|null,
  *     cache_control?: BetaCacheControlEphemeral|null,
  *     defer_loading?: bool|null,
@@ -146,8 +146,8 @@ use Anthropic\Messages\Model;
  *   }|BetaToolComputerUse20251124|array{
  *     display_height_px: int,
  *     display_width_px: int,
- *     name: 'computer',
- *     type: 'computer_20251124',
+ *     name?: 'computer',
+ *     type?: 'computer_20251124',
  *     allowed_callers?: list<value-of<\Anthropic\Beta\Messages\BetaToolComputerUse20251124\AllowedCaller>>|null,
  *     cache_control?: BetaCacheControlEphemeral|null,
  *     defer_loading?: bool|null,
@@ -156,24 +156,24 @@ use Anthropic\Messages\Model;
  *     input_examples?: list<array<string,mixed>>|null,
  *     strict?: bool|null,
  *   }|BetaToolTextEditor20250124|array{
- *     name: 'str_replace_editor',
- *     type: 'text_editor_20250124',
+ *     name?: 'str_replace_editor',
+ *     type?: 'text_editor_20250124',
  *     allowed_callers?: list<value-of<\Anthropic\Beta\Messages\BetaToolTextEditor20250124\AllowedCaller>>|null,
  *     cache_control?: BetaCacheControlEphemeral|null,
  *     defer_loading?: bool|null,
  *     input_examples?: list<array<string,mixed>>|null,
  *     strict?: bool|null,
  *   }|BetaToolTextEditor20250429|array{
- *     name: 'str_replace_based_edit_tool',
- *     type: 'text_editor_20250429',
+ *     name?: 'str_replace_based_edit_tool',
+ *     type?: 'text_editor_20250429',
  *     allowed_callers?: list<value-of<\Anthropic\Beta\Messages\BetaToolTextEditor20250429\AllowedCaller>>|null,
  *     cache_control?: BetaCacheControlEphemeral|null,
  *     defer_loading?: bool|null,
  *     input_examples?: list<array<string,mixed>>|null,
  *     strict?: bool|null,
  *   }|BetaToolTextEditor20250728|array{
- *     name: 'str_replace_based_edit_tool',
- *     type: 'text_editor_20250728',
+ *     name?: 'str_replace_based_edit_tool',
+ *     type?: 'text_editor_20250728',
  *     allowed_callers?: list<value-of<\Anthropic\Beta\Messages\BetaToolTextEditor20250728\AllowedCaller>>|null,
  *     cache_control?: BetaCacheControlEphemeral|null,
  *     defer_loading?: bool|null,
@@ -181,8 +181,8 @@ use Anthropic\Messages\Model;
  *     max_characters?: int|null,
  *     strict?: bool|null,
  *   }|BetaWebSearchTool20250305|array{
- *     name: 'web_search',
- *     type: 'web_search_20250305',
+ *     name?: 'web_search',
+ *     type?: 'web_search_20250305',
  *     allowed_callers?: list<value-of<\Anthropic\Beta\Messages\BetaWebSearchTool20250305\AllowedCaller>>|null,
  *     allowed_domains?: list<string>|null,
  *     blocked_domains?: list<string>|null,
@@ -192,8 +192,8 @@ use Anthropic\Messages\Model;
  *     strict?: bool|null,
  *     user_location?: UserLocation|null,
  *   }|BetaWebFetchTool20250910|array{
- *     name: 'web_fetch',
- *     type: 'web_fetch_20250910',
+ *     name?: 'web_fetch',
+ *     type?: 'web_fetch_20250910',
  *     allowed_callers?: list<value-of<\Anthropic\Beta\Messages\BetaWebFetchTool20250910\AllowedCaller>>|null,
  *     allowed_domains?: list<string>|null,
  *     blocked_domains?: list<string>|null,
@@ -204,14 +204,14 @@ use Anthropic\Messages\Model;
  *     max_uses?: int|null,
  *     strict?: bool|null,
  *   }|BetaToolSearchToolBm25_20251119|array{
- *     name: 'tool_search_tool_bm25',
+ *     name?: 'tool_search_tool_bm25',
  *     type: value-of<\Anthropic\Beta\Messages\BetaToolSearchToolBm25_20251119\Type>,
  *     allowed_callers?: list<value-of<\Anthropic\Beta\Messages\BetaToolSearchToolBm25_20251119\AllowedCaller>>|null,
  *     cache_control?: BetaCacheControlEphemeral|null,
  *     defer_loading?: bool|null,
  *     strict?: bool|null,
  *   }|BetaToolSearchToolRegex20251119|array{
- *     name: 'tool_search_tool_regex',
+ *     name?: 'tool_search_tool_regex',
  *     type: value-of<\Anthropic\Beta\Messages\BetaToolSearchToolRegex20251119\Type>,
  *     allowed_callers?: list<value-of<\Anthropic\Beta\Messages\BetaToolSearchToolRegex20251119\AllowedCaller>>|null,
  *     cache_control?: BetaCacheControlEphemeral|null,
@@ -219,7 +219,7 @@ use Anthropic\Messages\Model;
  *     strict?: bool|null,
  *   }|BetaMCPToolset|array{
  *     mcp_server_name: string,
- *     type: 'mcp_toolset',
+ *     type?: 'mcp_toolset',
  *     cache_control?: BetaCacheControlEphemeral|null,
  *     configs?: array<string,BetaMCPToolConfig>|null,
  *     default_config?: BetaMCPToolDefaultConfig|null,
@@ -459,31 +459,31 @@ final class MessageCountTokensParams implements BaseModel
      * }|null $context_management
      * @param list<BetaRequestMCPServerURLDefinition|array{
      *   name: string,
-     *   type: 'url',
+     *   type?: 'url',
      *   url: string,
      *   authorization_token?: string|null,
      *   tool_configuration?: BetaRequestMCPServerToolConfiguration|null,
      * }> $mcp_servers
      * @param BetaOutputConfig|array{effort?: value-of<Effort>|null} $output_config
      * @param BetaJSONOutputFormat|array{
-     *   schema: array<string,mixed>, type: 'json_schema'
+     *   schema: array<string,mixed>, type?: 'json_schema'
      * }|null $output_format
      * @param string|list<BetaTextBlockParam|array{
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
      * }> $system
      * @param BetaThinkingConfigEnabled|array{
-     *   budget_tokens: int, type: 'enabled'
-     * }|BetaThinkingConfigDisabled|array{type: 'disabled'} $thinking
+     *   budget_tokens: int, type?: 'enabled'
+     * }|BetaThinkingConfigDisabled|array{type?: 'disabled'} $thinking
      * @param BetaToolChoiceAuto|array{
-     *   type: 'auto', disable_parallel_tool_use?: bool|null
+     *   type?: 'auto', disable_parallel_tool_use?: bool|null
      * }|BetaToolChoiceAny|array{
-     *   type: 'any', disable_parallel_tool_use?: bool|null
+     *   type?: 'any', disable_parallel_tool_use?: bool|null
      * }|BetaToolChoiceTool|array{
-     *   name: string, type: 'tool', disable_parallel_tool_use?: bool|null
-     * }|BetaToolChoiceNone|array{type: 'none'} $tool_choice
+     *   name: string, type?: 'tool', disable_parallel_tool_use?: bool|null
+     * }|BetaToolChoiceNone|array{type?: 'none'} $tool_choice
      * @param list<BetaTool|array{
      *   input_schema: InputSchema,
      *   name: string,
@@ -495,31 +495,31 @@ final class MessageCountTokensParams implements BaseModel
      *   strict?: bool|null,
      *   type?: value-of<Type>|null,
      * }|BetaToolBash20241022|array{
-     *   name: 'bash',
-     *   type: 'bash_20241022',
+     *   name?: 'bash',
+     *   type?: 'bash_20241022',
      *   allowed_callers?: list<value-of<BetaToolBash20241022\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
      *   input_examples?: list<array<string,mixed>>|null,
      *   strict?: bool|null,
      * }|BetaToolBash20250124|array{
-     *   name: 'bash',
-     *   type: 'bash_20250124',
+     *   name?: 'bash',
+     *   type?: 'bash_20250124',
      *   allowed_callers?: list<value-of<BetaToolBash20250124\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
      *   input_examples?: list<array<string,mixed>>|null,
      *   strict?: bool|null,
      * }|BetaCodeExecutionTool20250522|array{
-     *   name: 'code_execution',
-     *   type: 'code_execution_20250522',
+     *   name?: 'code_execution',
+     *   type?: 'code_execution_20250522',
      *   allowed_callers?: list<value-of<BetaCodeExecutionTool20250522\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
      *   strict?: bool|null,
      * }|BetaCodeExecutionTool20250825|array{
-     *   name: 'code_execution',
-     *   type: 'code_execution_20250825',
+     *   name?: 'code_execution',
+     *   type?: 'code_execution_20250825',
      *   allowed_callers?: list<value-of<BetaCodeExecutionTool20250825\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
@@ -527,8 +527,8 @@ final class MessageCountTokensParams implements BaseModel
      * }|BetaToolComputerUse20241022|array{
      *   display_height_px: int,
      *   display_width_px: int,
-     *   name: 'computer',
-     *   type: 'computer_20241022',
+     *   name?: 'computer',
+     *   type?: 'computer_20241022',
      *   allowed_callers?: list<value-of<BetaToolComputerUse20241022\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
@@ -536,8 +536,8 @@ final class MessageCountTokensParams implements BaseModel
      *   input_examples?: list<array<string,mixed>>|null,
      *   strict?: bool|null,
      * }|BetaMemoryTool20250818|array{
-     *   name: 'memory',
-     *   type: 'memory_20250818',
+     *   name?: 'memory',
+     *   type?: 'memory_20250818',
      *   allowed_callers?: list<value-of<BetaMemoryTool20250818\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
@@ -546,8 +546,8 @@ final class MessageCountTokensParams implements BaseModel
      * }|BetaToolComputerUse20250124|array{
      *   display_height_px: int,
      *   display_width_px: int,
-     *   name: 'computer',
-     *   type: 'computer_20250124',
+     *   name?: 'computer',
+     *   type?: 'computer_20250124',
      *   allowed_callers?: list<value-of<BetaToolComputerUse20250124\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
@@ -555,8 +555,8 @@ final class MessageCountTokensParams implements BaseModel
      *   input_examples?: list<array<string,mixed>>|null,
      *   strict?: bool|null,
      * }|BetaToolTextEditor20241022|array{
-     *   name: 'str_replace_editor',
-     *   type: 'text_editor_20241022',
+     *   name?: 'str_replace_editor',
+     *   type?: 'text_editor_20241022',
      *   allowed_callers?: list<value-of<BetaToolTextEditor20241022\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
@@ -565,8 +565,8 @@ final class MessageCountTokensParams implements BaseModel
      * }|BetaToolComputerUse20251124|array{
      *   display_height_px: int,
      *   display_width_px: int,
-     *   name: 'computer',
-     *   type: 'computer_20251124',
+     *   name?: 'computer',
+     *   type?: 'computer_20251124',
      *   allowed_callers?: list<value-of<BetaToolComputerUse20251124\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
@@ -575,24 +575,24 @@ final class MessageCountTokensParams implements BaseModel
      *   input_examples?: list<array<string,mixed>>|null,
      *   strict?: bool|null,
      * }|BetaToolTextEditor20250124|array{
-     *   name: 'str_replace_editor',
-     *   type: 'text_editor_20250124',
+     *   name?: 'str_replace_editor',
+     *   type?: 'text_editor_20250124',
      *   allowed_callers?: list<value-of<BetaToolTextEditor20250124\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
      *   input_examples?: list<array<string,mixed>>|null,
      *   strict?: bool|null,
      * }|BetaToolTextEditor20250429|array{
-     *   name: 'str_replace_based_edit_tool',
-     *   type: 'text_editor_20250429',
+     *   name?: 'str_replace_based_edit_tool',
+     *   type?: 'text_editor_20250429',
      *   allowed_callers?: list<value-of<BetaToolTextEditor20250429\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
      *   input_examples?: list<array<string,mixed>>|null,
      *   strict?: bool|null,
      * }|BetaToolTextEditor20250728|array{
-     *   name: 'str_replace_based_edit_tool',
-     *   type: 'text_editor_20250728',
+     *   name?: 'str_replace_based_edit_tool',
+     *   type?: 'text_editor_20250728',
      *   allowed_callers?: list<value-of<BetaToolTextEditor20250728\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
@@ -600,8 +600,8 @@ final class MessageCountTokensParams implements BaseModel
      *   max_characters?: int|null,
      *   strict?: bool|null,
      * }|BetaWebSearchTool20250305|array{
-     *   name: 'web_search',
-     *   type: 'web_search_20250305',
+     *   name?: 'web_search',
+     *   type?: 'web_search_20250305',
      *   allowed_callers?: list<value-of<BetaWebSearchTool20250305\AllowedCaller>>|null,
      *   allowed_domains?: list<string>|null,
      *   blocked_domains?: list<string>|null,
@@ -611,8 +611,8 @@ final class MessageCountTokensParams implements BaseModel
      *   strict?: bool|null,
      *   user_location?: UserLocation|null,
      * }|BetaWebFetchTool20250910|array{
-     *   name: 'web_fetch',
-     *   type: 'web_fetch_20250910',
+     *   name?: 'web_fetch',
+     *   type?: 'web_fetch_20250910',
      *   allowed_callers?: list<value-of<BetaWebFetchTool20250910\AllowedCaller>>|null,
      *   allowed_domains?: list<string>|null,
      *   blocked_domains?: list<string>|null,
@@ -623,14 +623,14 @@ final class MessageCountTokensParams implements BaseModel
      *   max_uses?: int|null,
      *   strict?: bool|null,
      * }|BetaToolSearchToolBm25_20251119|array{
-     *   name: 'tool_search_tool_bm25',
+     *   name?: 'tool_search_tool_bm25',
      *   type: value-of<BetaToolSearchToolBm25_20251119\Type>,
      *   allowed_callers?: list<value-of<BetaToolSearchToolBm25_20251119\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
      *   strict?: bool|null,
      * }|BetaToolSearchToolRegex20251119|array{
-     *   name: 'tool_search_tool_regex',
+     *   name?: 'tool_search_tool_regex',
      *   type: value-of<BetaToolSearchToolRegex20251119\Type>,
      *   allowed_callers?: list<value-of<BetaToolSearchToolRegex20251119\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
@@ -638,7 +638,7 @@ final class MessageCountTokensParams implements BaseModel
      *   strict?: bool|null,
      * }|BetaMCPToolset|array{
      *   mcp_server_name: string,
-     *   type: 'mcp_toolset',
+     *   type?: 'mcp_toolset',
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   configs?: array<string,BetaMCPToolConfig>|null,
      *   default_config?: BetaMCPToolDefaultConfig|null,
@@ -773,7 +773,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param list<BetaRequestMCPServerURLDefinition|array{
      *   name: string,
-     *   type: 'url',
+     *   type?: 'url',
      *   url: string,
      *   authorization_token?: string|null,
      *   tool_configuration?: BetaRequestMCPServerToolConfiguration|null,
@@ -804,7 +804,7 @@ final class MessageCountTokensParams implements BaseModel
      * A schema to specify Claude's output format in responses.
      *
      * @param BetaJSONOutputFormat|array{
-     *   schema: array<string,mixed>, type: 'json_schema'
+     *   schema: array<string,mixed>, type?: 'json_schema'
      * }|null $outputFormat
      */
     public function withOutputFormat(
@@ -823,7 +823,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param string|list<BetaTextBlockParam|array{
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
      * }> $system
@@ -844,8 +844,8 @@ final class MessageCountTokensParams implements BaseModel
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      *
      * @param BetaThinkingConfigEnabled|array{
-     *   budget_tokens: int, type: 'enabled'
-     * }|BetaThinkingConfigDisabled|array{type: 'disabled'} $thinking
+     *   budget_tokens: int, type?: 'enabled'
+     * }|BetaThinkingConfigDisabled|array{type?: 'disabled'} $thinking
      */
     public function withThinking(
         BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled $thinking
@@ -860,12 +860,12 @@ final class MessageCountTokensParams implements BaseModel
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      *
      * @param BetaToolChoiceAuto|array{
-     *   type: 'auto', disable_parallel_tool_use?: bool|null
+     *   type?: 'auto', disable_parallel_tool_use?: bool|null
      * }|BetaToolChoiceAny|array{
-     *   type: 'any', disable_parallel_tool_use?: bool|null
+     *   type?: 'any', disable_parallel_tool_use?: bool|null
      * }|BetaToolChoiceTool|array{
-     *   name: string, type: 'tool', disable_parallel_tool_use?: bool|null
-     * }|BetaToolChoiceNone|array{type: 'none'} $toolChoice
+     *   name: string, type?: 'tool', disable_parallel_tool_use?: bool|null
+     * }|BetaToolChoiceNone|array{type?: 'none'} $toolChoice
      */
     public function withToolChoice(
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone $toolChoice,
@@ -950,31 +950,31 @@ final class MessageCountTokensParams implements BaseModel
      *   strict?: bool|null,
      *   type?: value-of<Type>|null,
      * }|BetaToolBash20241022|array{
-     *   name: 'bash',
-     *   type: 'bash_20241022',
+     *   name?: 'bash',
+     *   type?: 'bash_20241022',
      *   allowed_callers?: list<value-of<BetaToolBash20241022\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
      *   input_examples?: list<array<string,mixed>>|null,
      *   strict?: bool|null,
      * }|BetaToolBash20250124|array{
-     *   name: 'bash',
-     *   type: 'bash_20250124',
+     *   name?: 'bash',
+     *   type?: 'bash_20250124',
      *   allowed_callers?: list<value-of<BetaToolBash20250124\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
      *   input_examples?: list<array<string,mixed>>|null,
      *   strict?: bool|null,
      * }|BetaCodeExecutionTool20250522|array{
-     *   name: 'code_execution',
-     *   type: 'code_execution_20250522',
+     *   name?: 'code_execution',
+     *   type?: 'code_execution_20250522',
      *   allowed_callers?: list<value-of<BetaCodeExecutionTool20250522\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
      *   strict?: bool|null,
      * }|BetaCodeExecutionTool20250825|array{
-     *   name: 'code_execution',
-     *   type: 'code_execution_20250825',
+     *   name?: 'code_execution',
+     *   type?: 'code_execution_20250825',
      *   allowed_callers?: list<value-of<BetaCodeExecutionTool20250825\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
@@ -982,8 +982,8 @@ final class MessageCountTokensParams implements BaseModel
      * }|BetaToolComputerUse20241022|array{
      *   display_height_px: int,
      *   display_width_px: int,
-     *   name: 'computer',
-     *   type: 'computer_20241022',
+     *   name?: 'computer',
+     *   type?: 'computer_20241022',
      *   allowed_callers?: list<value-of<BetaToolComputerUse20241022\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
@@ -991,8 +991,8 @@ final class MessageCountTokensParams implements BaseModel
      *   input_examples?: list<array<string,mixed>>|null,
      *   strict?: bool|null,
      * }|BetaMemoryTool20250818|array{
-     *   name: 'memory',
-     *   type: 'memory_20250818',
+     *   name?: 'memory',
+     *   type?: 'memory_20250818',
      *   allowed_callers?: list<value-of<BetaMemoryTool20250818\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
@@ -1001,8 +1001,8 @@ final class MessageCountTokensParams implements BaseModel
      * }|BetaToolComputerUse20250124|array{
      *   display_height_px: int,
      *   display_width_px: int,
-     *   name: 'computer',
-     *   type: 'computer_20250124',
+     *   name?: 'computer',
+     *   type?: 'computer_20250124',
      *   allowed_callers?: list<value-of<BetaToolComputerUse20250124\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
@@ -1010,8 +1010,8 @@ final class MessageCountTokensParams implements BaseModel
      *   input_examples?: list<array<string,mixed>>|null,
      *   strict?: bool|null,
      * }|BetaToolTextEditor20241022|array{
-     *   name: 'str_replace_editor',
-     *   type: 'text_editor_20241022',
+     *   name?: 'str_replace_editor',
+     *   type?: 'text_editor_20241022',
      *   allowed_callers?: list<value-of<BetaToolTextEditor20241022\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
@@ -1020,8 +1020,8 @@ final class MessageCountTokensParams implements BaseModel
      * }|BetaToolComputerUse20251124|array{
      *   display_height_px: int,
      *   display_width_px: int,
-     *   name: 'computer',
-     *   type: 'computer_20251124',
+     *   name?: 'computer',
+     *   type?: 'computer_20251124',
      *   allowed_callers?: list<value-of<BetaToolComputerUse20251124\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
@@ -1030,24 +1030,24 @@ final class MessageCountTokensParams implements BaseModel
      *   input_examples?: list<array<string,mixed>>|null,
      *   strict?: bool|null,
      * }|BetaToolTextEditor20250124|array{
-     *   name: 'str_replace_editor',
-     *   type: 'text_editor_20250124',
+     *   name?: 'str_replace_editor',
+     *   type?: 'text_editor_20250124',
      *   allowed_callers?: list<value-of<BetaToolTextEditor20250124\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
      *   input_examples?: list<array<string,mixed>>|null,
      *   strict?: bool|null,
      * }|BetaToolTextEditor20250429|array{
-     *   name: 'str_replace_based_edit_tool',
-     *   type: 'text_editor_20250429',
+     *   name?: 'str_replace_based_edit_tool',
+     *   type?: 'text_editor_20250429',
      *   allowed_callers?: list<value-of<BetaToolTextEditor20250429\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
      *   input_examples?: list<array<string,mixed>>|null,
      *   strict?: bool|null,
      * }|BetaToolTextEditor20250728|array{
-     *   name: 'str_replace_based_edit_tool',
-     *   type: 'text_editor_20250728',
+     *   name?: 'str_replace_based_edit_tool',
+     *   type?: 'text_editor_20250728',
      *   allowed_callers?: list<value-of<BetaToolTextEditor20250728\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
@@ -1055,8 +1055,8 @@ final class MessageCountTokensParams implements BaseModel
      *   max_characters?: int|null,
      *   strict?: bool|null,
      * }|BetaWebSearchTool20250305|array{
-     *   name: 'web_search',
-     *   type: 'web_search_20250305',
+     *   name?: 'web_search',
+     *   type?: 'web_search_20250305',
      *   allowed_callers?: list<value-of<BetaWebSearchTool20250305\AllowedCaller>>|null,
      *   allowed_domains?: list<string>|null,
      *   blocked_domains?: list<string>|null,
@@ -1066,8 +1066,8 @@ final class MessageCountTokensParams implements BaseModel
      *   strict?: bool|null,
      *   user_location?: UserLocation|null,
      * }|BetaWebFetchTool20250910|array{
-     *   name: 'web_fetch',
-     *   type: 'web_fetch_20250910',
+     *   name?: 'web_fetch',
+     *   type?: 'web_fetch_20250910',
      *   allowed_callers?: list<value-of<BetaWebFetchTool20250910\AllowedCaller>>|null,
      *   allowed_domains?: list<string>|null,
      *   blocked_domains?: list<string>|null,
@@ -1078,14 +1078,14 @@ final class MessageCountTokensParams implements BaseModel
      *   max_uses?: int|null,
      *   strict?: bool|null,
      * }|BetaToolSearchToolBm25_20251119|array{
-     *   name: 'tool_search_tool_bm25',
+     *   name?: 'tool_search_tool_bm25',
      *   type: value-of<BetaToolSearchToolBm25_20251119\Type>,
      *   allowed_callers?: list<value-of<BetaToolSearchToolBm25_20251119\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   defer_loading?: bool|null,
      *   strict?: bool|null,
      * }|BetaToolSearchToolRegex20251119|array{
-     *   name: 'tool_search_tool_regex',
+     *   name?: 'tool_search_tool_regex',
      *   type: value-of<BetaToolSearchToolRegex20251119\Type>,
      *   allowed_callers?: list<value-of<BetaToolSearchToolRegex20251119\AllowedCaller>>|null,
      *   cache_control?: BetaCacheControlEphemeral|null,
@@ -1093,7 +1093,7 @@ final class MessageCountTokensParams implements BaseModel
      *   strict?: bool|null,
      * }|BetaMCPToolset|array{
      *   mcp_server_name: string,
-     *   type: 'mcp_toolset',
+     *   type?: 'mcp_toolset',
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   configs?: array<string,BetaMCPToolConfig>|null,
      *   default_config?: BetaMCPToolDefaultConfig|null,

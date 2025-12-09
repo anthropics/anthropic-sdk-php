@@ -12,8 +12,8 @@ use Anthropic\Messages\CacheControlEphemeral\TTL;
 
 /**
  * @phpstan-type ToolTextEditor20250124Shape = array{
- *   name: 'str_replace_editor',
- *   type: 'text_editor_20250124',
+ *   name?: 'str_replace_editor',
+ *   type?: 'text_editor_20250124',
  *   cache_control?: CacheControlEphemeral|null,
  * }
  */
@@ -53,7 +53,7 @@ final class ToolTextEditor20250124 implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param CacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      */
     public static function with(
@@ -70,7 +70,7 @@ final class ToolTextEditor20250124 implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param CacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

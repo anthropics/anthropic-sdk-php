@@ -20,7 +20,7 @@ use Anthropic\RateLimitError;
 
 /**
  * @phpstan-type MessageBatchErroredResultShape = array{
- *   error: ErrorResponse, type: 'errored'
+ *   error: ErrorResponse, type?: 'errored'
  * }
  */
 final class MessageBatchErroredResult implements BaseModel
@@ -62,7 +62,7 @@ final class MessageBatchErroredResult implements BaseModel
      * @param ErrorResponse|array{
      *   error: InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError,
      *   request_id: string|null,
-     *   type: 'error',
+     *   type?: 'error',
      * } $error
      */
     public static function with(ErrorResponse|array $error): self
@@ -78,7 +78,7 @@ final class MessageBatchErroredResult implements BaseModel
      * @param ErrorResponse|array{
      *   error: InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError,
      *   request_id: string|null,
-     *   type: 'error',
+     *   type?: 'error',
      * } $error
      */
     public function withError(ErrorResponse|array $error): self

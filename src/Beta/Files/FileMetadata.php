@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   filename: string,
  *   mime_type: string,
  *   size_bytes: int,
- *   type: 'file',
+ *   type?: 'file',
  *   downloadable?: bool|null,
  * }
  */

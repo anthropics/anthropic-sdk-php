@@ -13,7 +13,7 @@ use Anthropic\Messages\RawContentBlockStartEvent\ContentBlock;
  * @phpstan-type RawContentBlockStartEventShape = array{
  *   content_block: TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock,
  *   index: int,
- *   type: 'content_block_start',
+ *   type?: 'content_block_start',
  * }
  */
 final class RawContentBlockStartEvent implements BaseModel
@@ -60,22 +60,22 @@ final class RawContentBlockStartEvent implements BaseModel
      * @param TextBlock|array{
      *   citations: list<CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation>|null,
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      * }|ThinkingBlock|array{
-     *   signature: string, thinking: string, type: 'thinking'
+     *   signature: string, thinking: string, type?: 'thinking'
      * }|RedactedThinkingBlock|array{
-     *   data: string, type: 'redacted_thinking'
+     *   data: string, type?: 'redacted_thinking'
      * }|ToolUseBlock|array{
-     *   id: string, input: array<string,mixed>, name: string, type: 'tool_use'
+     *   id: string, input: array<string,mixed>, name: string, type?: 'tool_use'
      * }|ServerToolUseBlock|array{
      *   id: string,
      *   input: array<string,mixed>,
-     *   name: 'web_search',
-     *   type: 'server_tool_use',
+     *   name?: 'web_search',
+     *   type?: 'server_tool_use',
      * }|WebSearchToolResultBlock|array{
      *   content: WebSearchToolResultError|list<WebSearchResultBlock>,
      *   tool_use_id: string,
-     *   type: 'web_search_tool_result',
+     *   type?: 'web_search_tool_result',
      * } $content_block
      */
     public static function with(
@@ -94,22 +94,22 @@ final class RawContentBlockStartEvent implements BaseModel
      * @param TextBlock|array{
      *   citations: list<CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation>|null,
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      * }|ThinkingBlock|array{
-     *   signature: string, thinking: string, type: 'thinking'
+     *   signature: string, thinking: string, type?: 'thinking'
      * }|RedactedThinkingBlock|array{
-     *   data: string, type: 'redacted_thinking'
+     *   data: string, type?: 'redacted_thinking'
      * }|ToolUseBlock|array{
-     *   id: string, input: array<string,mixed>, name: string, type: 'tool_use'
+     *   id: string, input: array<string,mixed>, name: string, type?: 'tool_use'
      * }|ServerToolUseBlock|array{
      *   id: string,
      *   input: array<string,mixed>,
-     *   name: 'web_search',
-     *   type: 'server_tool_use',
+     *   name?: 'web_search',
+     *   type?: 'server_tool_use',
      * }|WebSearchToolResultBlock|array{
      *   content: WebSearchToolResultError|list<WebSearchResultBlock>,
      *   tool_use_id: string,
-     *   type: 'web_search_tool_result',
+     *   type?: 'web_search_tool_result',
      * } $contentBlock
      */
     public function withContentBlock(

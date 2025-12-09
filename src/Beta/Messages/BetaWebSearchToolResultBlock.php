@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaWebSearchToolResultBlockShape = array{
  *   content: BetaWebSearchToolResultError|list<BetaWebSearchResultBlock>,
  *   tool_use_id: string,
- *   type: 'web_search_tool_result',
+ *   type?: 'web_search_tool_result',
  * }
  */
 final class BetaWebSearchToolResultBlock implements BaseModel
@@ -57,12 +57,12 @@ final class BetaWebSearchToolResultBlock implements BaseModel
      *
      * @param BetaWebSearchToolResultError|array{
      *   error_code: value-of<BetaWebSearchToolResultErrorCode>,
-     *   type: 'web_search_tool_result_error',
+     *   type?: 'web_search_tool_result_error',
      * }|list<BetaWebSearchResultBlock|array{
      *   encrypted_content: string,
      *   page_age: string|null,
      *   title: string,
-     *   type: 'web_search_result',
+     *   type?: 'web_search_result',
      *   url: string,
      * }> $content
      */
@@ -81,12 +81,12 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     /**
      * @param BetaWebSearchToolResultError|array{
      *   error_code: value-of<BetaWebSearchToolResultErrorCode>,
-     *   type: 'web_search_tool_result_error',
+     *   type?: 'web_search_tool_result_error',
      * }|list<BetaWebSearchResultBlock|array{
      *   encrypted_content: string,
      *   page_age: string|null,
      *   title: string,
-     *   type: 'web_search_result',
+     *   type?: 'web_search_result',
      *   url: string,
      * }> $content
      */

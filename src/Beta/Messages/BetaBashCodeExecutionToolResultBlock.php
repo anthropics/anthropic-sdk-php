@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaBashCodeExecutionToolResultBlockShape = array{
  *   content: BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock,
  *   tool_use_id: string,
- *   type: 'bash_code_execution_tool_result',
+ *   type?: 'bash_code_execution_tool_result',
  * }
  */
 final class BetaBashCodeExecutionToolResultBlock implements BaseModel
@@ -56,13 +56,14 @@ final class BetaBashCodeExecutionToolResultBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaBashCodeExecutionToolResultError|array{
-     *   error_code: value-of<ErrorCode>, type: 'bash_code_execution_tool_result_error'
+     *   error_code: value-of<ErrorCode>,
+     *   type?: 'bash_code_execution_tool_result_error',
      * }|BetaBashCodeExecutionResultBlock|array{
      *   content: list<BetaBashCodeExecutionOutputBlock>,
      *   return_code: int,
      *   stderr: string,
      *   stdout: string,
-     *   type: 'bash_code_execution_result',
+     *   type?: 'bash_code_execution_result',
      * } $content
      */
     public static function with(
@@ -79,13 +80,14 @@ final class BetaBashCodeExecutionToolResultBlock implements BaseModel
 
     /**
      * @param BetaBashCodeExecutionToolResultError|array{
-     *   error_code: value-of<ErrorCode>, type: 'bash_code_execution_tool_result_error'
+     *   error_code: value-of<ErrorCode>,
+     *   type?: 'bash_code_execution_tool_result_error',
      * }|BetaBashCodeExecutionResultBlock|array{
      *   content: list<BetaBashCodeExecutionOutputBlock>,
      *   return_code: int,
      *   stderr: string,
      *   stdout: string,
-     *   type: 'bash_code_execution_result',
+     *   type?: 'bash_code_execution_result',
      * } $content
      */
     public function withContent(

@@ -85,12 +85,12 @@ final class Tool implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param InputSchema|array{
-     *   type: 'object',
+     *   type?: 'object',
      *   properties?: array<string,mixed>|null,
      *   required?: list<string>|null,
      * } $input_schema
      * @param CacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      * @param Type|value-of<Type>|null $type
      */
@@ -119,7 +119,7 @@ final class Tool implements BaseModel
      * This defines the shape of the `input` that your tool accepts and that the model will produce.
      *
      * @param InputSchema|array{
-     *   type: 'object',
+     *   type?: 'object',
      *   properties?: array<string,mixed>|null,
      *   required?: list<string>|null,
      * } $inputSchema
@@ -149,7 +149,7 @@ final class Tool implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param CacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

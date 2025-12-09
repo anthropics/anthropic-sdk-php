@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type WebSearchResultBlockParamShape = array{
  *   encrypted_content: string,
  *   title: string,
- *   type: 'web_search_result',
+ *   type?: 'web_search_result',
  *   url: string,
  *   page_age?: string|null,
  * }

@@ -11,7 +11,7 @@ use Anthropic\Messages\RawMessageDeltaEvent\Delta;
 
 /**
  * @phpstan-type RawMessageDeltaEventShape = array{
- *   delta: Delta, type: 'message_delta', usage: MessageDeltaUsage
+ *   delta: Delta, type?: 'message_delta', usage: MessageDeltaUsage
  * }
  */
 final class RawMessageDeltaEvent implements BaseModel

@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCodeExecutionTool20250825Shape = array{
- *   name: 'code_execution',
- *   type: 'code_execution_20250825',
+ *   name?: 'code_execution',
+ *   type?: 'code_execution_20250825',
  *   allowed_callers?: list<value-of<AllowedCaller>>|null,
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   defer_loading?: bool|null,
@@ -71,7 +71,7 @@ final class BetaCodeExecutionTool20250825 implements BaseModel
      *
      * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      */
     public static function with(
@@ -105,7 +105,7 @@ final class BetaCodeExecutionTool20250825 implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

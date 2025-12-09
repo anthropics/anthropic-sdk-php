@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaTextBlockShape = array{
  *   citations: list<BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation>|null,
  *   text: string,
- *   type: 'text',
+ *   type?: 'text',
  * }
  */
 final class BetaTextBlock implements BaseModel
@@ -68,7 +68,7 @@ final class BetaTextBlock implements BaseModel
      *   end_char_index: int,
      *   file_id: string|null,
      *   start_char_index: int,
-     *   type: 'char_location',
+     *   type?: 'char_location',
      * }|BetaCitationPageLocation|array{
      *   cited_text: string,
      *   document_index: int,
@@ -76,7 +76,7 @@ final class BetaTextBlock implements BaseModel
      *   end_page_number: int,
      *   file_id: string|null,
      *   start_page_number: int,
-     *   type: 'page_location',
+     *   type?: 'page_location',
      * }|BetaCitationContentBlockLocation|array{
      *   cited_text: string,
      *   document_index: int,
@@ -84,12 +84,12 @@ final class BetaTextBlock implements BaseModel
      *   end_block_index: int,
      *   file_id: string|null,
      *   start_block_index: int,
-     *   type: 'content_block_location',
+     *   type?: 'content_block_location',
      * }|BetaCitationsWebSearchResultLocation|array{
      *   cited_text: string,
      *   encrypted_index: string,
      *   title: string|null,
-     *   type: 'web_search_result_location',
+     *   type?: 'web_search_result_location',
      *   url: string,
      * }|BetaCitationSearchResultLocation|array{
      *   cited_text: string,
@@ -98,7 +98,7 @@ final class BetaTextBlock implements BaseModel
      *   source: string,
      *   start_block_index: int,
      *   title: string|null,
-     *   type: 'search_result_location',
+     *   type?: 'search_result_location',
      * }>|null $citations
      */
     public static function with(?array $citations, string $text): self
@@ -123,7 +123,7 @@ final class BetaTextBlock implements BaseModel
      *   end_char_index: int,
      *   file_id: string|null,
      *   start_char_index: int,
-     *   type: 'char_location',
+     *   type?: 'char_location',
      * }|BetaCitationPageLocation|array{
      *   cited_text: string,
      *   document_index: int,
@@ -131,7 +131,7 @@ final class BetaTextBlock implements BaseModel
      *   end_page_number: int,
      *   file_id: string|null,
      *   start_page_number: int,
-     *   type: 'page_location',
+     *   type?: 'page_location',
      * }|BetaCitationContentBlockLocation|array{
      *   cited_text: string,
      *   document_index: int,
@@ -139,12 +139,12 @@ final class BetaTextBlock implements BaseModel
      *   end_block_index: int,
      *   file_id: string|null,
      *   start_block_index: int,
-     *   type: 'content_block_location',
+     *   type?: 'content_block_location',
      * }|BetaCitationsWebSearchResultLocation|array{
      *   cited_text: string,
      *   encrypted_index: string,
      *   title: string|null,
-     *   type: 'web_search_result_location',
+     *   type?: 'web_search_result_location',
      *   url: string,
      * }|BetaCitationSearchResultLocation|array{
      *   cited_text: string,
@@ -153,7 +153,7 @@ final class BetaTextBlock implements BaseModel
      *   source: string,
      *   start_block_index: int,
      *   title: string|null,
-     *   type: 'search_result_location',
+     *   type?: 'search_result_location',
      * }>|null $citations
      */
     public function withCitations(?array $citations): self

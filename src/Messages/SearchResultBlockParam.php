@@ -15,7 +15,7 @@ use Anthropic\Messages\CacheControlEphemeral\TTL;
  *   content: list<TextBlockParam>,
  *   source: string,
  *   title: string,
- *   type: 'search_result',
+ *   type?: 'search_result',
  *   cache_control?: CacheControlEphemeral|null,
  *   citations?: CitationsConfigParam|null,
  * }
@@ -74,12 +74,12 @@ final class SearchResultBlockParam implements BaseModel
      *
      * @param list<TextBlockParam|array{
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      *   cache_control?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }> $content
      * @param CacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      * @param CitationsConfigParam|array{enabled?: bool|null} $citations
      */
@@ -105,7 +105,7 @@ final class SearchResultBlockParam implements BaseModel
     /**
      * @param list<TextBlockParam|array{
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      *   cache_control?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }> $content
@@ -138,7 +138,7 @@ final class SearchResultBlockParam implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param CacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

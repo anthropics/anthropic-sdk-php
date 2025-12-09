@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaWebFetchBlockShape = array{
  *   content: BetaDocumentBlock,
  *   retrieved_at: string|null,
- *   type: 'web_fetch_result',
+ *   type?: 'web_fetch_result',
  *   url: string,
  * }
  */
@@ -68,7 +68,7 @@ final class BetaWebFetchBlock implements BaseModel
      *   citations: BetaCitationConfig|null,
      *   source: BetaBase64PDFSource|BetaPlainTextSource,
      *   title: string|null,
-     *   type: 'document',
+     *   type?: 'document',
      * } $content
      */
     public static function with(
@@ -90,7 +90,7 @@ final class BetaWebFetchBlock implements BaseModel
      *   citations: BetaCitationConfig|null,
      *   source: BetaBase64PDFSource|BetaPlainTextSource,
      *   title: string|null,
-     *   type: 'document',
+     *   type?: 'document',
      * } $content
      */
     public function withContent(BetaDocumentBlock|array $content): self

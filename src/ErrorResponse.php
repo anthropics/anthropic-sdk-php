@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type ErrorResponseShape = array{
  *   error: InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError,
  *   request_id: string|null,
- *   type: 'error',
+ *   type?: 'error',
  * }
  */
 final class ErrorResponse implements BaseModel
@@ -55,22 +55,22 @@ final class ErrorResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param InvalidRequestError|array{
-     *   message: string, type: 'invalid_request_error'
+     *   message: string, type?: 'invalid_request_error'
      * }|AuthenticationError|array{
-     *   message: string, type: 'authentication_error'
+     *   message: string, type?: 'authentication_error'
      * }|BillingError|array{
-     *   message: string, type: 'billing_error'
+     *   message: string, type?: 'billing_error'
      * }|PermissionError|array{
-     *   message: string, type: 'permission_error'
+     *   message: string, type?: 'permission_error'
      * }|NotFoundError|array{
-     *   message: string, type: 'not_found_error'
+     *   message: string, type?: 'not_found_error'
      * }|RateLimitError|array{
-     *   message: string, type: 'rate_limit_error'
+     *   message: string, type?: 'rate_limit_error'
      * }|GatewayTimeoutError|array{
-     *   message: string, type: 'timeout_error'
+     *   message: string, type?: 'timeout_error'
      * }|APIErrorObject|array{
-     *   message: string, type: 'api_error'
-     * }|OverloadedError|array{message: string, type: 'overloaded_error'} $error
+     *   message: string, type?: 'api_error'
+     * }|OverloadedError|array{message: string, type?: 'overloaded_error'} $error
      */
     public static function with(
         InvalidRequestError|array|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error,
@@ -86,22 +86,22 @@ final class ErrorResponse implements BaseModel
 
     /**
      * @param InvalidRequestError|array{
-     *   message: string, type: 'invalid_request_error'
+     *   message: string, type?: 'invalid_request_error'
      * }|AuthenticationError|array{
-     *   message: string, type: 'authentication_error'
+     *   message: string, type?: 'authentication_error'
      * }|BillingError|array{
-     *   message: string, type: 'billing_error'
+     *   message: string, type?: 'billing_error'
      * }|PermissionError|array{
-     *   message: string, type: 'permission_error'
+     *   message: string, type?: 'permission_error'
      * }|NotFoundError|array{
-     *   message: string, type: 'not_found_error'
+     *   message: string, type?: 'not_found_error'
      * }|RateLimitError|array{
-     *   message: string, type: 'rate_limit_error'
+     *   message: string, type?: 'rate_limit_error'
      * }|GatewayTimeoutError|array{
-     *   message: string, type: 'timeout_error'
+     *   message: string, type?: 'timeout_error'
      * }|APIErrorObject|array{
-     *   message: string, type: 'api_error'
-     * }|OverloadedError|array{message: string, type: 'overloaded_error'} $error
+     *   message: string, type?: 'api_error'
+     * }|OverloadedError|array{message: string, type?: 'overloaded_error'} $error
      */
     public function withError(
         InvalidRequestError|array|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error,

@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   content: list<BetaTextBlockParam>,
  *   source: string,
  *   title: string,
- *   type: 'search_result',
+ *   type?: 'search_result',
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   citations?: BetaCitationsConfigParam|null,
  * }
@@ -77,12 +77,12 @@ final class BetaSearchResultBlockParam implements BaseModel
      *
      * @param list<BetaTextBlockParam|array{
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
      * }> $content
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      * @param BetaCitationsConfigParam|array{enabled?: bool|null} $citations
      */
@@ -108,7 +108,7 @@ final class BetaSearchResultBlockParam implements BaseModel
     /**
      * @param list<BetaTextBlockParam|array{
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
      * }> $content
@@ -141,7 +141,7 @@ final class BetaSearchResultBlockParam implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

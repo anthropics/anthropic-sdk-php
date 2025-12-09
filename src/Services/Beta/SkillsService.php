@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Services\Beta;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Skills\SkillCreateParams;
 use Anthropic\Beta\Skills\SkillDeleteParams;
 use Anthropic\Beta\Skills\SkillDeleteResponse;
@@ -42,7 +43,9 @@ final class SkillsService implements SkillsContract
      * Create Skill
      *
      * @param array{
-     *   display_title?: string|null, files?: list<string>|null, betas?: list<string>
+     *   display_title?: string|null,
+     *   files?: list<string>|null,
+     *   betas?: list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta>,
      * }|SkillCreateParams $params
      *
      * @throws APIException
@@ -84,7 +87,9 @@ final class SkillsService implements SkillsContract
      *
      * Get Skill
      *
-     * @param array{betas?: list<string>}|SkillRetrieveParams $params
+     * @param array{
+     *   betas?: list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta>,
+     * }|SkillRetrieveParams $params
      *
      * @throws APIException
      */
@@ -122,7 +127,10 @@ final class SkillsService implements SkillsContract
      * List Skills
      *
      * @param array{
-     *   limit?: int, page?: string|null, source?: string|null, betas?: list<string>
+     *   limit?: int,
+     *   page?: string|null,
+     *   source?: string|null,
+     *   betas?: list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta>,
      * }|SkillListParams $params
      *
      * @return PageCursor<SkillListResponse>
@@ -167,7 +175,9 @@ final class SkillsService implements SkillsContract
      *
      * Delete Skill
      *
-     * @param array{betas?: list<string>}|SkillDeleteParams $params
+     * @param array{
+     *   betas?: list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta>,
+     * }|SkillDeleteParams $params
      *
      * @throws APIException
      */

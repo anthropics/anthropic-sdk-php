@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaTextEditorCodeExecutionToolResultErrorShape = array{
  *   error_code: value-of<ErrorCode>,
  *   error_message: string|null,
- *   type: 'text_editor_code_execution_tool_result_error',
+ *   type?: 'text_editor_code_execution_tool_result_error',
  * }
  */
 final class BetaTextEditorCodeExecutionToolResultError implements BaseModel

@@ -30,7 +30,7 @@ use Anthropic\Messages\Model;
 
 /**
  * @phpstan-type MessageBatchSucceededResultShape = array{
- *   message: BetaMessage, type: 'succeeded'
+ *   message: BetaMessage, type?: 'succeeded'
  * }
  */
 final class MessageBatchSucceededResult implements BaseModel
@@ -75,10 +75,10 @@ final class MessageBatchSucceededResult implements BaseModel
      *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
      *   context_management: BetaContextManagementResponse|null,
      *   model: string|value-of<Model>,
-     *   role: 'assistant',
+     *   role?: 'assistant',
      *   stop_reason: value-of<BetaStopReason>|null,
      *   stop_sequence: string|null,
-     *   type: 'message',
+     *   type?: 'message',
      *   usage: BetaUsage,
      * } $message
      */
@@ -98,10 +98,10 @@ final class MessageBatchSucceededResult implements BaseModel
      *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
      *   context_management: BetaContextManagementResponse|null,
      *   model: string|value-of<Model>,
-     *   role: 'assistant',
+     *   role?: 'assistant',
      *   stop_reason: value-of<BetaStopReason>|null,
      *   stop_sequence: string|null,
-     *   type: 'message',
+     *   type?: 'message',
      *   usage: BetaUsage,
      * } $message
      */

@@ -11,7 +11,7 @@ use Anthropic\Messages\ContentBlockSource\Content;
 
 /**
  * @phpstan-type ContentBlockSourceShape = array{
- *   content: string|list<TextBlockParam|ImageBlockParam>, type: 'content'
+ *   content: string|list<TextBlockParam|ImageBlockParam>, type?: 'content'
  * }
  */
 final class ContentBlockSource implements BaseModel
@@ -53,12 +53,12 @@ final class ContentBlockSource implements BaseModel
      *
      * @param string|list<TextBlockParam|array{
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      *   cache_control?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }|ImageBlockParam|array{
      *   source: Base64ImageSource|URLImageSource,
-     *   type: 'image',
+     *   type?: 'image',
      *   cache_control?: CacheControlEphemeral|null,
      * }> $content
      */
@@ -74,12 +74,12 @@ final class ContentBlockSource implements BaseModel
     /**
      * @param string|list<TextBlockParam|array{
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      *   cache_control?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }|ImageBlockParam|array{
      *   source: Base64ImageSource|URLImageSource,
-     *   type: 'image',
+     *   type?: 'image',
      *   cache_control?: CacheControlEphemeral|null,
      * }> $content
      */

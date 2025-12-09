@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type MessageBatchErroredResultShape = array{
- *   error: BetaErrorResponse, type: 'errored'
+ *   error: BetaErrorResponse, type?: 'errored'
  * }
  */
 final class MessageBatchErroredResult implements BaseModel
@@ -62,7 +62,7 @@ final class MessageBatchErroredResult implements BaseModel
      * @param BetaErrorResponse|array{
      *   error: BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError,
      *   request_id: string|null,
-     *   type: 'error',
+     *   type?: 'error',
      * } $error
      */
     public static function with(BetaErrorResponse|array $error): self
@@ -78,7 +78,7 @@ final class MessageBatchErroredResult implements BaseModel
      * @param BetaErrorResponse|array{
      *   error: BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError,
      *   request_id: string|null,
-     *   type: 'error',
+     *   type?: 'error',
      * } $error
      */
     public function withError(BetaErrorResponse|array $error): self

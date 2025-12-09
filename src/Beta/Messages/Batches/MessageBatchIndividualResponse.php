@@ -64,12 +64,12 @@ final class MessageBatchIndividualResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param MessageBatchSucceededResult|array{
-     *   message: BetaMessage, type: 'succeeded'
+     *   message: BetaMessage, type?: 'succeeded'
      * }|MessageBatchErroredResult|array{
-     *   error: BetaErrorResponse, type: 'errored'
+     *   error: BetaErrorResponse, type?: 'errored'
      * }|MessageBatchCanceledResult|array{
-     *   type: 'canceled'
-     * }|MessageBatchExpiredResult|array{type: 'expired'} $result
+     *   type?: 'canceled'
+     * }|MessageBatchExpiredResult|array{type?: 'expired'} $result
      */
     public static function with(
         string $custom_id,
@@ -102,12 +102,12 @@ final class MessageBatchIndividualResponse implements BaseModel
      * Contains a Message output if processing was successful, an error response if processing failed, or the reason why processing was not attempted, such as cancellation or expiration.
      *
      * @param MessageBatchSucceededResult|array{
-     *   message: BetaMessage, type: 'succeeded'
+     *   message: BetaMessage, type?: 'succeeded'
      * }|MessageBatchErroredResult|array{
-     *   error: BetaErrorResponse, type: 'errored'
+     *   error: BetaErrorResponse, type?: 'errored'
      * }|MessageBatchCanceledResult|array{
-     *   type: 'canceled'
-     * }|MessageBatchExpiredResult|array{type: 'expired'} $result
+     *   type?: 'canceled'
+     * }|MessageBatchExpiredResult|array{type?: 'expired'} $result
      */
     public function withResult(
         MessageBatchSucceededResult|array|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult $result,

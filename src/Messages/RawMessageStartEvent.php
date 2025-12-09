@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type RawMessageStartEventShape = array{
- *   message: Message, type: 'message_start'
+ *   message: Message, type?: 'message_start'
  * }
  */
 final class RawMessageStartEvent implements BaseModel
@@ -53,10 +53,10 @@ final class RawMessageStartEvent implements BaseModel
      *   id: string,
      *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
      *   model: string|value-of<Model>,
-     *   role: 'assistant',
+     *   role?: 'assistant',
      *   stop_reason: value-of<StopReason>|null,
      *   stop_sequence: string|null,
-     *   type: 'message',
+     *   type?: 'message',
      *   usage: Usage,
      * } $message
      */
@@ -74,10 +74,10 @@ final class RawMessageStartEvent implements BaseModel
      *   id: string,
      *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
      *   model: string|value-of<Model>,
-     *   role: 'assistant',
+     *   role?: 'assistant',
      *   stop_reason: value-of<StopReason>|null,
      *   stop_sequence: string|null,
-     *   type: 'message',
+     *   type?: 'message',
      *   usage: Usage,
      * } $message
      */

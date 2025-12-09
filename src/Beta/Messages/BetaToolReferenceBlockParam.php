@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type BetaToolReferenceBlockParamShape = array{
  *   tool_name: string,
- *   type: 'tool_reference',
+ *   type?: 'tool_reference',
  *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
@@ -62,7 +62,7 @@ final class BetaToolReferenceBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      */
     public static function with(
@@ -90,7 +90,7 @@ final class BetaToolReferenceBlockParam implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

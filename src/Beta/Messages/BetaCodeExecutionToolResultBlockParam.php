@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaCodeExecutionToolResultBlockParamShape = array{
  *   content: BetaCodeExecutionToolResultErrorParam|BetaCodeExecutionResultBlockParam,
  *   tool_use_id: string,
- *   type: 'code_execution_tool_result',
+ *   type?: 'code_execution_tool_result',
  *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
@@ -67,16 +67,16 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
      *
      * @param BetaCodeExecutionToolResultErrorParam|array{
      *   error_code: value-of<BetaCodeExecutionToolResultErrorCode>,
-     *   type: 'code_execution_tool_result_error',
+     *   type?: 'code_execution_tool_result_error',
      * }|BetaCodeExecutionResultBlockParam|array{
      *   content: list<BetaCodeExecutionOutputBlockParam>,
      *   return_code: int,
      *   stderr: string,
      *   stdout: string,
-     *   type: 'code_execution_result',
+     *   type?: 'code_execution_result',
      * } $content
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      */
     public static function with(
@@ -97,13 +97,13 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
     /**
      * @param BetaCodeExecutionToolResultErrorParam|array{
      *   error_code: value-of<BetaCodeExecutionToolResultErrorCode>,
-     *   type: 'code_execution_tool_result_error',
+     *   type?: 'code_execution_tool_result_error',
      * }|BetaCodeExecutionResultBlockParam|array{
      *   content: list<BetaCodeExecutionOutputBlockParam>,
      *   return_code: int,
      *   stderr: string,
      *   stdout: string,
-     *   type: 'code_execution_result',
+     *   type?: 'code_execution_result',
      * } $content
      */
     public function withContent(
@@ -127,7 +127,7 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

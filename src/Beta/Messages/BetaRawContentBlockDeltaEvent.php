@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaRawContentBlockDeltaEventShape = array{
  *   delta: BetaTextDelta|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta,
  *   index: int,
- *   type: 'content_block_delta',
+ *   type?: 'content_block_delta',
  * }
  */
 final class BetaRawContentBlockDeltaEvent implements BaseModel
@@ -55,15 +55,15 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaTextDelta|array{
-     *   text: string, type: 'text_delta'
+     *   text: string, type?: 'text_delta'
      * }|BetaInputJSONDelta|array{
-     *   partial_json: string, type: 'input_json_delta'
+     *   partial_json: string, type?: 'input_json_delta'
      * }|BetaCitationsDelta|array{
      *   citation: BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation,
-     *   type: 'citations_delta',
+     *   type?: 'citations_delta',
      * }|BetaThinkingDelta|array{
-     *   thinking: string, type: 'thinking_delta'
-     * }|BetaSignatureDelta|array{signature: string, type: 'signature_delta'} $delta
+     *   thinking: string, type?: 'thinking_delta'
+     * }|BetaSignatureDelta|array{signature: string, type?: 'signature_delta'} $delta
      */
     public static function with(
         BetaTextDelta|array|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta $delta,
@@ -79,15 +79,15 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
 
     /**
      * @param BetaTextDelta|array{
-     *   text: string, type: 'text_delta'
+     *   text: string, type?: 'text_delta'
      * }|BetaInputJSONDelta|array{
-     *   partial_json: string, type: 'input_json_delta'
+     *   partial_json: string, type?: 'input_json_delta'
      * }|BetaCitationsDelta|array{
      *   citation: BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation,
-     *   type: 'citations_delta',
+     *   type?: 'citations_delta',
      * }|BetaThinkingDelta|array{
-     *   thinking: string, type: 'thinking_delta'
-     * }|BetaSignatureDelta|array{signature: string, type: 'signature_delta'} $delta
+     *   thinking: string, type?: 'thinking_delta'
+     * }|BetaSignatureDelta|array{signature: string, type?: 'signature_delta'} $delta
      */
     public function withDelta(
         BetaTextDelta|array|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta $delta,

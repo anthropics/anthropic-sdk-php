@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   id: string,
  *   input: array<string,mixed>,
  *   name: value-of<Name>,
- *   type: 'server_tool_use',
+ *   type?: 'server_tool_use',
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   caller?: null|BetaDirectCaller|BetaServerToolCaller,
  * }
@@ -81,10 +81,10 @@ final class BetaServerToolUseBlockParam implements BaseModel
      * @param array<string,mixed> $input
      * @param Name|value-of<Name> $name
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
-     * @param BetaDirectCaller|array{type: 'direct'}|BetaServerToolCaller|array{
-     *   tool_id: string, type: 'code_execution_20250825'
+     * @param BetaDirectCaller|array{type?: 'direct'}|BetaServerToolCaller|array{
+     *   tool_id: string, type?: 'code_execution_20250825'
      * } $caller
      */
     public static function with(
@@ -140,7 +140,7 @@ final class BetaServerToolUseBlockParam implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(
@@ -155,8 +155,8 @@ final class BetaServerToolUseBlockParam implements BaseModel
     /**
      * Tool invocation directly from the model.
      *
-     * @param BetaDirectCaller|array{type: 'direct'}|BetaServerToolCaller|array{
-     *   tool_id: string, type: 'code_execution_20250825'
+     * @param BetaDirectCaller|array{type?: 'direct'}|BetaServerToolCaller|array{
+     *   tool_id: string, type?: 'code_execution_20250825'
      * } $caller
      */
     public function withCaller(

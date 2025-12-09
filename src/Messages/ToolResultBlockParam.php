@@ -14,7 +14,7 @@ use Anthropic\Messages\ToolResultBlockParam\Content;
 /**
  * @phpstan-type ToolResultBlockParamShape = array{
  *   tool_use_id: string,
- *   type: 'tool_result',
+ *   type?: 'tool_result',
  *   cache_control?: CacheControlEphemeral|null,
  *   content?: string|null|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam>,
  *   is_error?: bool|null,
@@ -72,27 +72,27 @@ final class ToolResultBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param CacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      * @param string|list<TextBlockParam|array{
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      *   cache_control?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }|ImageBlockParam|array{
      *   source: Base64ImageSource|URLImageSource,
-     *   type: 'image',
+     *   type?: 'image',
      *   cache_control?: CacheControlEphemeral|null,
      * }|SearchResultBlockParam|array{
      *   content: list<TextBlockParam>,
      *   source: string,
      *   title: string,
-     *   type: 'search_result',
+     *   type?: 'search_result',
      *   cache_control?: CacheControlEphemeral|null,
      *   citations?: CitationsConfigParam|null,
      * }|DocumentBlockParam|array{
      *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
-     *   type: 'document',
+     *   type?: 'document',
      *   cache_control?: CacheControlEphemeral|null,
      *   citations?: CitationsConfigParam|null,
      *   context?: string|null,
@@ -128,7 +128,7 @@ final class ToolResultBlockParam implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param CacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(
@@ -143,23 +143,23 @@ final class ToolResultBlockParam implements BaseModel
     /**
      * @param string|list<TextBlockParam|array{
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      *   cache_control?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }|ImageBlockParam|array{
      *   source: Base64ImageSource|URLImageSource,
-     *   type: 'image',
+     *   type?: 'image',
      *   cache_control?: CacheControlEphemeral|null,
      * }|SearchResultBlockParam|array{
      *   content: list<TextBlockParam>,
      *   source: string,
      *   title: string,
-     *   type: 'search_result',
+     *   type?: 'search_result',
      *   cache_control?: CacheControlEphemeral|null,
      *   citations?: CitationsConfigParam|null,
      * }|DocumentBlockParam|array{
      *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
-     *   type: 'document',
+     *   type?: 'document',
      *   cache_control?: CacheControlEphemeral|null,
      *   citations?: CitationsConfigParam|null,
      *   context?: string|null,

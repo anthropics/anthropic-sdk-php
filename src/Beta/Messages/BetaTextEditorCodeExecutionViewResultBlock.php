@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   num_lines: int|null,
  *   start_line: int|null,
  *   total_lines: int|null,
- *   type: 'text_editor_code_execution_view_result',
+ *   type?: 'text_editor_code_execution_view_result',
  * }
  */
 final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel

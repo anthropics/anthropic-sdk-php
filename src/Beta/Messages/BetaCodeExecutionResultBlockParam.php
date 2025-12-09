@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   return_code: int,
  *   stderr: string,
  *   stdout: string,
- *   type: 'code_execution_result',
+ *   type?: 'code_execution_result',
  * }
  */
 final class BetaCodeExecutionResultBlockParam implements BaseModel
@@ -70,7 +70,7 @@ final class BetaCodeExecutionResultBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaCodeExecutionOutputBlockParam|array{
-     *   file_id: string, type: 'code_execution_output'
+     *   file_id: string, type?: 'code_execution_output'
      * }> $content
      */
     public static function with(
@@ -91,7 +91,7 @@ final class BetaCodeExecutionResultBlockParam implements BaseModel
 
     /**
      * @param list<BetaCodeExecutionOutputBlockParam|array{
-     *   file_id: string, type: 'code_execution_output'
+     *   file_id: string, type?: 'code_execution_output'
      * }> $content
      */
     public function withContent(array $content): self

@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   end_block_index: int,
  *   file_id: string|null,
  *   start_block_index: int,
- *   type: 'content_block_location',
+ *   type?: 'content_block_location',
  * }
  */
 final class BetaCitationContentBlockLocation implements BaseModel

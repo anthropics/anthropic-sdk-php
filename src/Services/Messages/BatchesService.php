@@ -9,6 +9,7 @@ use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Messages\Batches\BatchCreateParams;
+use Anthropic\Messages\Batches\BatchCreateParams\Request\Params\ServiceTier;
 use Anthropic\Messages\Batches\BatchListParams;
 use Anthropic\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Messages\Batches\MessageBatch;
@@ -41,9 +42,9 @@ final class BatchesService implements BatchesContract
      *     params: array{
      *       max_tokens: int,
      *       messages: list<array<mixed>>,
-     *       model: string|Model,
+     *       model: string|'claude-opus-4-5-20251101'|'claude-opus-4-5'|'claude-3-7-sonnet-latest'|'claude-3-7-sonnet-20250219'|'claude-3-5-haiku-latest'|'claude-3-5-haiku-20241022'|'claude-haiku-4-5'|'claude-haiku-4-5-20251001'|'claude-sonnet-4-20250514'|'claude-sonnet-4-0'|'claude-4-sonnet-20250514'|'claude-sonnet-4-5'|'claude-sonnet-4-5-20250929'|'claude-opus-4-0'|'claude-opus-4-20250514'|'claude-4-opus-20250514'|'claude-opus-4-1-20250805'|'claude-3-opus-latest'|'claude-3-opus-20240229'|'claude-3-haiku-20240307'|Model,
      *       metadata?: array<mixed>,
-     *       service_tier?: 'auto'|'standard_only',
+     *       service_tier?: 'auto'|'standard_only'|ServiceTier,
      *       stop_sequences?: list<string>,
      *       stream?: bool,
      *       system?: string|list<array<mixed>>,

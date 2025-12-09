@@ -18,10 +18,10 @@ use Anthropic\Messages\Model;
  *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
  *   context_management: BetaContextManagementResponse|null,
  *   model: string|value-of<Model>,
- *   role: 'assistant',
+ *   role?: 'assistant',
  *   stop_reason: value-of<BetaStopReason>|null,
  *   stop_sequence: string|null,
- *   type: 'message',
+ *   type?: 'message',
  *   usage: BetaUsage,
  * }
  */
@@ -199,60 +199,60 @@ final class BetaMessage implements BaseModel
      * @param list<BetaTextBlock|array{
      *   citations: list<BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation>|null,
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      * }|BetaThinkingBlock|array{
-     *   signature: string, thinking: string, type: 'thinking'
+     *   signature: string, thinking: string, type?: 'thinking'
      * }|BetaRedactedThinkingBlock|array{
-     *   data: string, type: 'redacted_thinking'
+     *   data: string, type?: 'redacted_thinking'
      * }|BetaToolUseBlock|array{
      *   id: string,
      *   input: array<string,mixed>,
      *   name: string,
-     *   type: 'tool_use',
+     *   type?: 'tool_use',
      *   caller?: BetaDirectCaller|BetaServerToolCaller|null,
      * }|BetaServerToolUseBlock|array{
      *   id: string,
      *   caller: BetaDirectCaller|BetaServerToolCaller,
      *   input: array<string,mixed>,
      *   name: value-of<Name>,
-     *   type: 'server_tool_use',
+     *   type?: 'server_tool_use',
      * }|BetaWebSearchToolResultBlock|array{
      *   content: BetaWebSearchToolResultError|list<BetaWebSearchResultBlock>,
      *   tool_use_id: string,
-     *   type: 'web_search_tool_result',
+     *   type?: 'web_search_tool_result',
      * }|BetaWebFetchToolResultBlock|array{
      *   content: BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock,
      *   tool_use_id: string,
-     *   type: 'web_fetch_tool_result',
+     *   type?: 'web_fetch_tool_result',
      * }|BetaCodeExecutionToolResultBlock|array{
      *   content: BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock,
      *   tool_use_id: string,
-     *   type: 'code_execution_tool_result',
+     *   type?: 'code_execution_tool_result',
      * }|BetaBashCodeExecutionToolResultBlock|array{
      *   content: BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock,
      *   tool_use_id: string,
-     *   type: 'bash_code_execution_tool_result',
+     *   type?: 'bash_code_execution_tool_result',
      * }|BetaTextEditorCodeExecutionToolResultBlock|array{
      *   content: BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock,
      *   tool_use_id: string,
-     *   type: 'text_editor_code_execution_tool_result',
+     *   type?: 'text_editor_code_execution_tool_result',
      * }|BetaToolSearchToolResultBlock|array{
      *   content: BetaToolSearchToolResultError|BetaToolSearchToolSearchResultBlock,
      *   tool_use_id: string,
-     *   type: 'tool_search_tool_result',
+     *   type?: 'tool_search_tool_result',
      * }|BetaMCPToolUseBlock|array{
      *   id: string,
      *   input: array<string,mixed>,
      *   name: string,
      *   server_name: string,
-     *   type: 'mcp_tool_use',
+     *   type?: 'mcp_tool_use',
      * }|BetaMCPToolResultBlock|array{
      *   content: string|list<BetaTextBlock>,
      *   is_error: bool,
      *   tool_use_id: string,
-     *   type: 'mcp_tool_result',
+     *   type?: 'mcp_tool_result',
      * }|BetaContainerUploadBlock|array{
-     *   file_id: string, type: 'container_upload'
+     *   file_id: string, type?: 'container_upload'
      * }> $content
      * @param BetaContextManagementResponse|array{
      *   applied_edits: list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse>,
@@ -350,60 +350,60 @@ final class BetaMessage implements BaseModel
      * @param list<BetaTextBlock|array{
      *   citations: list<BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation>|null,
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      * }|BetaThinkingBlock|array{
-     *   signature: string, thinking: string, type: 'thinking'
+     *   signature: string, thinking: string, type?: 'thinking'
      * }|BetaRedactedThinkingBlock|array{
-     *   data: string, type: 'redacted_thinking'
+     *   data: string, type?: 'redacted_thinking'
      * }|BetaToolUseBlock|array{
      *   id: string,
      *   input: array<string,mixed>,
      *   name: string,
-     *   type: 'tool_use',
+     *   type?: 'tool_use',
      *   caller?: BetaDirectCaller|BetaServerToolCaller|null,
      * }|BetaServerToolUseBlock|array{
      *   id: string,
      *   caller: BetaDirectCaller|BetaServerToolCaller,
      *   input: array<string,mixed>,
      *   name: value-of<Name>,
-     *   type: 'server_tool_use',
+     *   type?: 'server_tool_use',
      * }|BetaWebSearchToolResultBlock|array{
      *   content: BetaWebSearchToolResultError|list<BetaWebSearchResultBlock>,
      *   tool_use_id: string,
-     *   type: 'web_search_tool_result',
+     *   type?: 'web_search_tool_result',
      * }|BetaWebFetchToolResultBlock|array{
      *   content: BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock,
      *   tool_use_id: string,
-     *   type: 'web_fetch_tool_result',
+     *   type?: 'web_fetch_tool_result',
      * }|BetaCodeExecutionToolResultBlock|array{
      *   content: BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock,
      *   tool_use_id: string,
-     *   type: 'code_execution_tool_result',
+     *   type?: 'code_execution_tool_result',
      * }|BetaBashCodeExecutionToolResultBlock|array{
      *   content: BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock,
      *   tool_use_id: string,
-     *   type: 'bash_code_execution_tool_result',
+     *   type?: 'bash_code_execution_tool_result',
      * }|BetaTextEditorCodeExecutionToolResultBlock|array{
      *   content: BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock,
      *   tool_use_id: string,
-     *   type: 'text_editor_code_execution_tool_result',
+     *   type?: 'text_editor_code_execution_tool_result',
      * }|BetaToolSearchToolResultBlock|array{
      *   content: BetaToolSearchToolResultError|BetaToolSearchToolSearchResultBlock,
      *   tool_use_id: string,
-     *   type: 'tool_search_tool_result',
+     *   type?: 'tool_search_tool_result',
      * }|BetaMCPToolUseBlock|array{
      *   id: string,
      *   input: array<string,mixed>,
      *   name: string,
      *   server_name: string,
-     *   type: 'mcp_tool_use',
+     *   type?: 'mcp_tool_use',
      * }|BetaMCPToolResultBlock|array{
      *   content: string|list<BetaTextBlock>,
      *   is_error: bool,
      *   tool_use_id: string,
-     *   type: 'mcp_tool_result',
+     *   type?: 'mcp_tool_result',
      * }|BetaContainerUploadBlock|array{
-     *   file_id: string, type: 'container_upload'
+     *   file_id: string, type?: 'container_upload'
      * }> $content
      */
     public function withContent(array $content): self

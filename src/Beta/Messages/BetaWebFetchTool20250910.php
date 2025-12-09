@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaWebFetchTool20250910Shape = array{
- *   name: 'web_fetch',
- *   type: 'web_fetch_20250910',
+ *   name?: 'web_fetch',
+ *   type?: 'web_fetch_20250910',
  *   allowed_callers?: list<value-of<AllowedCaller>>|null,
  *   allowed_domains?: list<string>|null,
  *   blocked_domains?: list<string>|null,
@@ -112,7 +112,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
      * @param list<string>|null $allowed_domains
      * @param list<string>|null $blocked_domains
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      * @param BetaCitationsConfigParam|array{enabled?: bool|null}|null $citations
      */
@@ -183,7 +183,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

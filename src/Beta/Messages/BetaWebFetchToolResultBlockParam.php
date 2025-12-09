@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaWebFetchToolResultBlockParamShape = array{
  *   content: BetaWebFetchToolResultErrorBlockParam|BetaWebFetchBlockParam,
  *   tool_use_id: string,
- *   type: 'web_fetch_tool_result',
+ *   type?: 'web_fetch_tool_result',
  *   cache_control?: BetaCacheControlEphemeral|null,
  * }
  */
@@ -65,15 +65,15 @@ final class BetaWebFetchToolResultBlockParam implements BaseModel
      *
      * @param BetaWebFetchToolResultErrorBlockParam|array{
      *   error_code: value-of<BetaWebFetchToolResultErrorCode>,
-     *   type: 'web_fetch_tool_result_error',
+     *   type?: 'web_fetch_tool_result_error',
      * }|BetaWebFetchBlockParam|array{
      *   content: BetaRequestDocumentBlock,
-     *   type: 'web_fetch_result',
+     *   type?: 'web_fetch_result',
      *   url: string,
      *   retrieved_at?: string|null,
      * } $content
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      */
     public static function with(
@@ -94,10 +94,10 @@ final class BetaWebFetchToolResultBlockParam implements BaseModel
     /**
      * @param BetaWebFetchToolResultErrorBlockParam|array{
      *   error_code: value-of<BetaWebFetchToolResultErrorCode>,
-     *   type: 'web_fetch_tool_result_error',
+     *   type?: 'web_fetch_tool_result_error',
      * }|BetaWebFetchBlockParam|array{
      *   content: BetaRequestDocumentBlock,
-     *   type: 'web_fetch_result',
+     *   type?: 'web_fetch_result',
      *   url: string,
      *   retrieved_at?: string|null,
      * } $content
@@ -123,7 +123,7 @@ final class BetaWebFetchToolResultBlockParam implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

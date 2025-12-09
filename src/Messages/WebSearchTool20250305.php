@@ -13,8 +13,8 @@ use Anthropic\Messages\WebSearchTool20250305\UserLocation;
 
 /**
  * @phpstan-type WebSearchTool20250305Shape = array{
- *   name: 'web_search',
- *   type: 'web_search_20250305',
+ *   name?: 'web_search',
+ *   type?: 'web_search_20250305',
  *   allowed_domains?: list<string>|null,
  *   blocked_domains?: list<string>|null,
  *   cache_control?: CacheControlEphemeral|null,
@@ -88,10 +88,10 @@ final class WebSearchTool20250305 implements BaseModel
      * @param list<string>|null $allowed_domains
      * @param list<string>|null $blocked_domains
      * @param CacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      * @param UserLocation|array{
-     *   type: 'approximate',
+     *   type?: 'approximate',
      *   city?: string|null,
      *   country?: string|null,
      *   region?: string|null,
@@ -146,7 +146,7 @@ final class WebSearchTool20250305 implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param CacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(
@@ -173,7 +173,7 @@ final class WebSearchTool20250305 implements BaseModel
      * Parameters for the user's location. Used to provide more relevant search results.
      *
      * @param UserLocation|array{
-     *   type: 'approximate',
+     *   type?: 'approximate',
      *   city?: string|null,
      *   country?: string|null,
      *   region?: string|null,

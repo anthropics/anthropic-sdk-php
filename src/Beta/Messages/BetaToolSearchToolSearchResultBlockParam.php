@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaToolSearchToolSearchResultBlockParamShape = array{
  *   tool_references: list<BetaToolReferenceBlockParam>,
- *   type: 'tool_search_tool_search_result',
+ *   type?: 'tool_search_tool_search_result',
  * }
  */
 final class BetaToolSearchToolSearchResultBlockParam implements BaseModel
@@ -53,7 +53,7 @@ final class BetaToolSearchToolSearchResultBlockParam implements BaseModel
      *
      * @param list<BetaToolReferenceBlockParam|array{
      *   tool_name: string,
-     *   type: 'tool_reference',
+     *   type?: 'tool_reference',
      *   cache_control?: BetaCacheControlEphemeral|null,
      * }> $tool_references
      */
@@ -69,7 +69,7 @@ final class BetaToolSearchToolSearchResultBlockParam implements BaseModel
     /**
      * @param list<BetaToolReferenceBlockParam|array{
      *   tool_name: string,
-     *   type: 'tool_reference',
+     *   type?: 'tool_reference',
      *   cache_control?: BetaCacheControlEphemeral|null,
      * }> $toolReferences
      */

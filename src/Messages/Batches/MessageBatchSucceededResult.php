@@ -20,7 +20,7 @@ use Anthropic\Messages\WebSearchToolResultBlock;
 
 /**
  * @phpstan-type MessageBatchSucceededResultShape = array{
- *   message: Message, type: 'succeeded'
+ *   message: Message, type?: 'succeeded'
  * }
  */
 final class MessageBatchSucceededResult implements BaseModel
@@ -63,10 +63,10 @@ final class MessageBatchSucceededResult implements BaseModel
      *   id: string,
      *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
      *   model: string|value-of<Model>,
-     *   role: 'assistant',
+     *   role?: 'assistant',
      *   stop_reason: value-of<StopReason>|null,
      *   stop_sequence: string|null,
-     *   type: 'message',
+     *   type?: 'message',
      *   usage: Usage,
      * } $message
      */
@@ -84,10 +84,10 @@ final class MessageBatchSucceededResult implements BaseModel
      *   id: string,
      *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
      *   model: string|value-of<Model>,
-     *   role: 'assistant',
+     *   role?: 'assistant',
      *   stop_reason: value-of<StopReason>|null,
      *   stop_sequence: string|null,
-     *   type: 'message',
+     *   type?: 'message',
      *   usage: Usage,
      * } $message
      */

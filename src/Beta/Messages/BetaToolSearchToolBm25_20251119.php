@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaToolSearchToolBm25_20251119Shape = array{
- *   name: 'tool_search_tool_bm25',
+ *   name?: 'tool_search_tool_bm25',
  *   type: value-of<Type>,
  *   allowed_callers?: list<value-of<AllowedCaller>>|null,
  *   cache_control?: BetaCacheControlEphemeral|null,
@@ -87,7 +87,7 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
      * @param Type|value-of<Type> $type
      * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      */
     public static function with(
@@ -135,7 +135,7 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(

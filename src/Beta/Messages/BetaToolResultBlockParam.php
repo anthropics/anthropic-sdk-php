@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaToolResultBlockParamShape = array{
  *   tool_use_id: string,
- *   type: 'tool_result',
+ *   type?: 'tool_result',
  *   cache_control?: BetaCacheControlEphemeral|null,
  *   content?: string|null|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock|BetaToolReferenceBlockParam>,
  *   is_error?: bool|null,
@@ -72,34 +72,34 @@ final class BetaToolResultBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cache_control
      * @param string|list<BetaTextBlockParam|array{
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
      * }|BetaImageBlockParam|array{
      *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource,
-     *   type: 'image',
+     *   type?: 'image',
      *   cache_control?: BetaCacheControlEphemeral|null,
      * }|BetaSearchResultBlockParam|array{
      *   content: list<BetaTextBlockParam>,
      *   source: string,
      *   title: string,
-     *   type: 'search_result',
+     *   type?: 'search_result',
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   citations?: BetaCitationsConfigParam|null,
      * }|BetaRequestDocumentBlock|array{
      *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource,
-     *   type: 'document',
+     *   type?: 'document',
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   citations?: BetaCitationsConfigParam|null,
      *   context?: string|null,
      *   title?: string|null,
      * }|BetaToolReferenceBlockParam|array{
      *   tool_name: string,
-     *   type: 'tool_reference',
+     *   type?: 'tool_reference',
      *   cache_control?: BetaCacheControlEphemeral|null,
      * }> $content
      */
@@ -132,7 +132,7 @@ final class BetaToolResultBlockParam implements BaseModel
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|array{
-     *   type: 'ephemeral', ttl?: value-of<TTL>|null
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
      * }|null $cacheControl
      */
     public function withCacheControl(
@@ -147,30 +147,30 @@ final class BetaToolResultBlockParam implements BaseModel
     /**
      * @param string|list<BetaTextBlockParam|array{
      *   text: string,
-     *   type: 'text',
+     *   type?: 'text',
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
      * }|BetaImageBlockParam|array{
      *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource,
-     *   type: 'image',
+     *   type?: 'image',
      *   cache_control?: BetaCacheControlEphemeral|null,
      * }|BetaSearchResultBlockParam|array{
      *   content: list<BetaTextBlockParam>,
      *   source: string,
      *   title: string,
-     *   type: 'search_result',
+     *   type?: 'search_result',
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   citations?: BetaCitationsConfigParam|null,
      * }|BetaRequestDocumentBlock|array{
      *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource,
-     *   type: 'document',
+     *   type?: 'document',
      *   cache_control?: BetaCacheControlEphemeral|null,
      *   citations?: BetaCitationsConfigParam|null,
      *   context?: string|null,
      *   title?: string|null,
      * }|BetaToolReferenceBlockParam|array{
      *   tool_name: string,
-     *   type: 'tool_reference',
+     *   type?: 'tool_reference',
      *   cache_control?: BetaCacheControlEphemeral|null,
      * }> $content
      */

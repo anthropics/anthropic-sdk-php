@@ -54,11 +54,11 @@ final class BetaContextManagementResponse implements BaseModel
      * @param list<BetaClearToolUses20250919EditResponse|array{
      *   cleared_input_tokens: int,
      *   cleared_tool_uses: int,
-     *   type: 'clear_tool_uses_20250919',
+     *   type?: 'clear_tool_uses_20250919',
      * }|BetaClearThinking20251015EditResponse|array{
      *   cleared_input_tokens: int,
      *   cleared_thinking_turns: int,
-     *   type: 'clear_thinking_20251015',
+     *   type?: 'clear_thinking_20251015',
      * }> $applied_edits
      */
     public static function with(array $applied_edits): self
@@ -76,11 +76,11 @@ final class BetaContextManagementResponse implements BaseModel
      * @param list<BetaClearToolUses20250919EditResponse|array{
      *   cleared_input_tokens: int,
      *   cleared_tool_uses: int,
-     *   type: 'clear_tool_uses_20250919',
+     *   type?: 'clear_tool_uses_20250919',
      * }|BetaClearThinking20251015EditResponse|array{
      *   cleared_input_tokens: int,
      *   cleared_thinking_turns: int,
-     *   type: 'clear_thinking_20251015',
+     *   type?: 'clear_thinking_20251015',
      * }> $appliedEdits
      */
     public function withAppliedEdits(array $appliedEdits): self
