@@ -30,11 +30,11 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->messages->create([
-            'maxTokens' => 1024,
-            'messages' => [['content' => 'Hello, world', 'role' => 'user']],
-            'model' => 'claude-sonnet-4-5-20250929',
-        ]);
+        $result = $this->client->messages->create(
+            maxTokens: 1024,
+            messages: [['content' => 'Hello, world', 'role' => 'user']],
+            model: 'claude-sonnet-4-5-20250929',
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Message::class, $result);
@@ -43,14 +43,14 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->messages->create([
-            'maxTokens' => 1024,
-            'messages' => [['content' => 'Hello, world', 'role' => 'user']],
-            'model' => 'claude-sonnet-4-5-20250929',
-            'metadata' => ['userID' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
-            'serviceTier' => 'auto',
-            'stopSequences' => ['string'],
-            'system' => [
+        $result = $this->client->messages->create(
+            maxTokens: 1024,
+            messages: [['content' => 'Hello, world', 'role' => 'user']],
+            model: 'claude-sonnet-4-5-20250929',
+            metadata: ['userID' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
+            serviceTier: 'auto',
+            stopSequences: ['string'],
+            system: [
                 [
                     'text' => 'Today\'s date is 2024-06-01.',
                     'type' => 'text',
@@ -67,10 +67,10 @@ final class MessagesTest extends TestCase
                     ],
                 ],
             ],
-            'temperature' => 1,
-            'thinking' => ['budgetTokens' => 1024, 'type' => 'enabled'],
-            'toolChoice' => ['type' => 'auto', 'disableParallelToolUse' => true],
-            'tools' => [
+            temperature: 1,
+            thinking: ['budgetTokens' => 1024, 'type' => 'enabled'],
+            toolChoice: ['type' => 'auto', 'disableParallelToolUse' => true],
+            tools: [
                 [
                     'inputSchema' => [
                         'type' => 'object',
@@ -83,9 +83,9 @@ final class MessagesTest extends TestCase
                     'type' => 'custom',
                 ],
             ],
-            'topK' => 5,
-            'topP' => 0.7,
-        ]);
+            topK: 5,
+            topP: 0.7,
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Message::class, $result);
@@ -94,10 +94,10 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCountTokens(): void
     {
-        $result = $this->client->messages->countTokens([
-            'messages' => [['content' => 'string', 'role' => 'user']],
-            'model' => 'claude-opus-4-5-20251101',
-        ]);
+        $result = $this->client->messages->countTokens(
+            messages: [['content' => 'string', 'role' => 'user']],
+            model: 'claude-opus-4-5-20251101',
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(MessageTokensCount::class, $result);
@@ -106,10 +106,10 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCountTokensWithOptionalParams(): void
     {
-        $result = $this->client->messages->countTokens([
-            'messages' => [['content' => 'string', 'role' => 'user']],
-            'model' => 'claude-opus-4-5-20251101',
-            'system' => [
+        $result = $this->client->messages->countTokens(
+            messages: [['content' => 'string', 'role' => 'user']],
+            model: 'claude-opus-4-5-20251101',
+            system: [
                 [
                     'text' => 'Today\'s date is 2024-06-01.',
                     'type' => 'text',
@@ -126,9 +126,9 @@ final class MessagesTest extends TestCase
                     ],
                 ],
             ],
-            'thinking' => ['budgetTokens' => 1024, 'type' => 'enabled'],
-            'toolChoice' => ['type' => 'auto', 'disableParallelToolUse' => true],
-            'tools' => [
+            thinking: ['budgetTokens' => 1024, 'type' => 'enabled'],
+            toolChoice: ['type' => 'auto', 'disableParallelToolUse' => true],
+            tools: [
                 [
                     'inputSchema' => [
                         'type' => 'object',
@@ -141,7 +141,7 @@ final class MessagesTest extends TestCase
                     'type' => 'custom',
                 ],
             ],
-        ]);
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(MessageTokensCount::class, $result);

@@ -35,11 +35,11 @@ final class MessagesTest extends TestCase
             $this->markTestSkipped('prism validates based on the non-beta endpoint');
         }
 
-        $result = $this->client->beta->messages->create([
-            'maxTokens' => 1024,
-            'messages' => [['content' => 'Hello, world', 'role' => 'user']],
-            'model' => 'claude-sonnet-4-5-20250929',
-        ]);
+        $result = $this->client->beta->messages->create(
+            maxTokens: 1024,
+            messages: [['content' => 'Hello, world', 'role' => 'user']],
+            model: 'claude-sonnet-4-5-20250929',
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaMessage::class, $result);
@@ -52,17 +52,17 @@ final class MessagesTest extends TestCase
             $this->markTestSkipped('prism validates based on the non-beta endpoint');
         }
 
-        $result = $this->client->beta->messages->create([
-            'maxTokens' => 1024,
-            'messages' => [['content' => 'Hello, world', 'role' => 'user']],
-            'model' => 'claude-sonnet-4-5-20250929',
-            'container' => [
+        $result = $this->client->beta->messages->create(
+            maxTokens: 1024,
+            messages: [['content' => 'Hello, world', 'role' => 'user']],
+            model: 'claude-sonnet-4-5-20250929',
+            container: [
                 'id' => 'id',
                 'skills' => [
                     ['skillID' => 'x', 'type' => 'anthropic', 'version' => 'x'],
                 ],
             ],
-            'contextManagement' => [
+            contextManagement: [
                 'edits' => [
                     [
                         'type' => 'clear_tool_uses_20250919',
@@ -74,7 +74,7 @@ final class MessagesTest extends TestCase
                     ],
                 ],
             ],
-            'mcpServers' => [
+            mcpServers: [
                 [
                     'name' => 'name',
                     'type' => 'url',
@@ -85,12 +85,12 @@ final class MessagesTest extends TestCase
                     ],
                 ],
             ],
-            'metadata' => ['userID' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
-            'outputConfig' => ['effort' => 'low'],
-            'outputFormat' => ['schema' => ['foo' => 'bar'], 'type' => 'json_schema'],
-            'serviceTier' => 'auto',
-            'stopSequences' => ['string'],
-            'system' => [
+            metadata: ['userID' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
+            outputConfig: ['effort' => 'low'],
+            outputFormat: ['schema' => ['foo' => 'bar'], 'type' => 'json_schema'],
+            serviceTier: 'auto',
+            stopSequences: ['string'],
+            system: [
                 [
                     'text' => 'Today\'s date is 2024-06-01.',
                     'type' => 'text',
@@ -107,10 +107,10 @@ final class MessagesTest extends TestCase
                     ],
                 ],
             ],
-            'temperature' => 1,
-            'thinking' => ['budgetTokens' => 1024, 'type' => 'enabled'],
-            'toolChoice' => ['type' => 'auto', 'disableParallelToolUse' => true],
-            'tools' => [
+            temperature: 1,
+            thinking: ['budgetTokens' => 1024, 'type' => 'enabled'],
+            toolChoice: ['type' => 'auto', 'disableParallelToolUse' => true],
+            tools: [
                 [
                     'inputSchema' => [
                         'type' => 'object',
@@ -127,10 +127,10 @@ final class MessagesTest extends TestCase
                     'type' => 'custom',
                 ],
             ],
-            'topK' => 5,
-            'topP' => 0.7,
-            'betas' => ['string'],
-        ]);
+            topK: 5,
+            topP: 0.7,
+            betas: ['string'],
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaMessage::class, $result);
@@ -143,10 +143,10 @@ final class MessagesTest extends TestCase
             $this->markTestSkipped('prism validates based on the non-beta endpoint');
         }
 
-        $result = $this->client->beta->messages->countTokens([
-            'messages' => [['content' => 'string', 'role' => 'user']],
-            'model' => 'claude-opus-4-5-20251101',
-        ]);
+        $result = $this->client->beta->messages->countTokens(
+            messages: [['content' => 'string', 'role' => 'user']],
+            model: 'claude-opus-4-5-20251101',
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaMessageTokensCount::class, $result);
@@ -159,10 +159,10 @@ final class MessagesTest extends TestCase
             $this->markTestSkipped('prism validates based on the non-beta endpoint');
         }
 
-        $result = $this->client->beta->messages->countTokens([
-            'messages' => [['content' => 'string', 'role' => 'user']],
-            'model' => 'claude-opus-4-5-20251101',
-            'contextManagement' => [
+        $result = $this->client->beta->messages->countTokens(
+            messages: [['content' => 'string', 'role' => 'user']],
+            model: 'claude-opus-4-5-20251101',
+            contextManagement: [
                 'edits' => [
                     [
                         'type' => 'clear_tool_uses_20250919',
@@ -174,7 +174,7 @@ final class MessagesTest extends TestCase
                     ],
                 ],
             ],
-            'mcpServers' => [
+            mcpServers: [
                 [
                     'name' => 'name',
                     'type' => 'url',
@@ -185,9 +185,9 @@ final class MessagesTest extends TestCase
                     ],
                 ],
             ],
-            'outputConfig' => ['effort' => 'low'],
-            'outputFormat' => ['schema' => ['foo' => 'bar'], 'type' => 'json_schema'],
-            'system' => [
+            outputConfig: ['effort' => 'low'],
+            outputFormat: ['schema' => ['foo' => 'bar'], 'type' => 'json_schema'],
+            system: [
                 [
                     'text' => 'Today\'s date is 2024-06-01.',
                     'type' => 'text',
@@ -204,9 +204,9 @@ final class MessagesTest extends TestCase
                     ],
                 ],
             ],
-            'thinking' => ['budgetTokens' => 1024, 'type' => 'enabled'],
-            'toolChoice' => ['type' => 'auto', 'disableParallelToolUse' => true],
-            'tools' => [
+            thinking: ['budgetTokens' => 1024, 'type' => 'enabled'],
+            toolChoice: ['type' => 'auto', 'disableParallelToolUse' => true],
+            tools: [
                 [
                     'inputSchema' => [
                         'type' => 'object',
@@ -223,8 +223,8 @@ final class MessagesTest extends TestCase
                     'type' => 'custom',
                 ],
             ],
-            'betas' => ['string'],
-        ]);
+            betas: ['string'],
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaMessageTokensCount::class, $result);

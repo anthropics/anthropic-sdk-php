@@ -30,7 +30,7 @@ final class ModelsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->models->retrieve('model_id', []);
+        $result = $this->client->models->retrieve('model_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(ModelInfo::class, $result);
@@ -39,7 +39,7 @@ final class ModelsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->models->list([]);
+        $result = $this->client->models->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Page::class, $result);

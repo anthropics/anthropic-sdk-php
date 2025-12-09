@@ -37,7 +37,7 @@ final class SkillsTest extends TestCase
             $this->markTestSkipped('prism binary unsupported');
         }
 
-        $result = $this->client->beta->skills->create([]);
+        $result = $this->client->beta->skills->create();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(SkillNewResponse::class, $result);
@@ -46,7 +46,7 @@ final class SkillsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->beta->skills->retrieve('skill_id', []);
+        $result = $this->client->beta->skills->retrieve('skill_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(SkillGetResponse::class, $result);
@@ -55,7 +55,7 @@ final class SkillsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->beta->skills->list([]);
+        $result = $this->client->beta->skills->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $result);
@@ -64,7 +64,7 @@ final class SkillsTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $result = $this->client->beta->skills->delete('skill_id', []);
+        $result = $this->client->beta->skills->delete('skill_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(SkillDeleteResponse::class, $result);

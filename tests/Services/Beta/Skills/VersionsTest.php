@@ -37,7 +37,7 @@ final class VersionsTest extends TestCase
             $this->markTestSkipped('prism binary unsupported');
         }
 
-        $result = $this->client->beta->skills->versions->create('skill_id', []);
+        $result = $this->client->beta->skills->versions->create('skill_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(VersionNewResponse::class, $result);
@@ -48,7 +48,7 @@ final class VersionsTest extends TestCase
     {
         $result = $this->client->beta->skills->versions->retrieve(
             'version',
-            ['skillID' => 'skill_id']
+            skillID: 'skill_id'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -60,7 +60,8 @@ final class VersionsTest extends TestCase
     {
         $result = $this->client->beta->skills->versions->retrieve(
             'version',
-            ['skillID' => 'skill_id', 'betas' => ['string']]
+            skillID: 'skill_id',
+            betas: ['string']
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -70,7 +71,7 @@ final class VersionsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->beta->skills->versions->list('skill_id', []);
+        $result = $this->client->beta->skills->versions->list('skill_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $result);
@@ -81,7 +82,7 @@ final class VersionsTest extends TestCase
     {
         $result = $this->client->beta->skills->versions->delete(
             'version',
-            ['skillID' => 'skill_id']
+            skillID: 'skill_id'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -93,7 +94,8 @@ final class VersionsTest extends TestCase
     {
         $result = $this->client->beta->skills->versions->delete(
             'version',
-            ['skillID' => 'skill_id', 'betas' => ['string']]
+            skillID: 'skill_id',
+            betas: ['string']
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
