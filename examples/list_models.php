@@ -10,6 +10,6 @@ $client = new Client(
     apiKey: getenv('ANTHROPIC_API_KEY') ?: 'my-anthropic-api-key'
 );
 
-$page = $client->models->list([]);
+$page = $client->models->list();
 
 var_dump($page);
