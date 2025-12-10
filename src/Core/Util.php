@@ -33,6 +33,32 @@ final class Util
         return get_object_vars($object);
     }
 
+    public static function machtype(): string
+    {
+        $arch = php_uname('m');
+
+        return match (true) {
+            str_contains($arch, 'aarch64'), str_contains($arch, 'arm64') => 'arm64',
+            str_contains($arch, 'x86_64'), str_contains($arch, 'amd64') => 'x64',
+            str_contains($arch, 'i386'), str_contains($arch, 'i686') => 'x32',
+            str_contains($arch, 'arm') => 'arm',
+            default => 'unknown',
+        };
+    }
+
+    public static function ostype(): string
+    {
+        return match ($os = strtolower(PHP_OS_FAMILY)) {
+            'linux' => 'Linux',
+            'darwin' => 'MacOS',
+            'windows' => 'Windows',
+            'solaris' => 'Solaris',
+            // @phpstan-ignore-next-line match.alwaysFalse
+            'bsd', 'freebsd', 'openbsd' => 'BSD',
+            default => "Other:{$os}",
+        };
+    }
+
     /**
      * @template T
      *

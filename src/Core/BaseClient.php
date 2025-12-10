@@ -53,6 +53,7 @@ abstract class BaseClient
      * @param string|list<mixed> $path
      * @param array<string,mixed> $query
      * @param array<string,mixed> $headers
+     * @param string|int|list<string|int>|null $unwrap
      * @param class-string<BasePage<mixed>>|null $page
      * @param class-string<BaseStream<mixed>>|null $stream
      * @param RequestOptions|array<string,mixed>|null $options
@@ -65,6 +66,7 @@ abstract class BaseClient
         array $query = [],
         array $headers = [],
         mixed $body = null,
+        string|int|array|null $unwrap = null,
         string|Converter|ConverterSource|null $convert = null,
         ?string $page = null,
         ?string $stream = null,
@@ -82,7 +84,7 @@ abstract class BaseClient
         $rsp = $this->sendRequest($opts, req: $request, data: $body, redirectCount: 0, retryCount: 0);
 
         // @phpstan-ignore-next-line argument.type
-        return new RawResponse(client: $this, request: $request, response: $rsp, options: $opts, requestInfo: $req, stream: $stream, page: $page, convert: $convert ?? 'null');
+        return new RawResponse(client: $this, request: $request, response: $rsp, options: $opts, requestInfo: $req, unwrap: $unwrap, stream: $stream, page: $page, convert: $convert ?? 'null');
     }
 
     /** @return array<string,string> */
@@ -96,56 +98,6 @@ abstract class BaseClient
 
     /** @return array<string,string> */
     abstract protected function bearerAuth(): array;
-
-    protected function getNormalizedOS(): string
-    {
-        $os = strtolower(PHP_OS_FAMILY);
-
-        switch ($os) {
-            case 'windows':
-                return 'Windows';
-
-            case 'darwin':
-                return 'MacOS';
-
-            case 'linux':
-                return 'Linux';
-
-            case 'bsd':
-            case 'freebsd':
-            case 'openbsd':
-                return 'BSD';
-
-            case 'solaris':
-                return 'Solaris';
-
-            case 'unix':
-            case 'unknown':
-                return 'Unknown';
-
-            default:
-                return 'Other:'.$os;
-        }
-    }
-
-    protected function getNormalizedArchitecture(): string
-    {
-        $arch = php_uname('m');
-        if (false !== strpos($arch, 'x86_64') || false !== strpos($arch, 'amd64')) {
-            return 'x64';
-        }
-        if (false !== strpos($arch, 'i386') || false !== strpos($arch, 'i686')) {
-            return 'x32';
-        }
-        if (false !== strpos($arch, 'aarch64') || false !== strpos($arch, 'arm64')) {
-            return 'arm64';
-        }
-        if (false !== strpos($arch, 'arm')) {
-            return 'arm';
-        }
-
-        return 'unknown';
-    }
 
     /**
      * @internal
