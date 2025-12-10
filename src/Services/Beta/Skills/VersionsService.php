@@ -11,6 +11,7 @@ use Anthropic\Beta\Skills\Versions\VersionListResponse;
 use Anthropic\Beta\Skills\Versions\VersionNewResponse;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Skills\VersionsContract;
@@ -51,9 +52,7 @@ final class VersionsService implements VersionsContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): VersionNewResponse {
-        $params = ['files' => $files, 'betas' => $betas];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['files' => $files, 'betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create($skillID, params: $params, requestOptions: $requestOptions);
@@ -82,9 +81,7 @@ final class VersionsService implements VersionsContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): VersionGetResponse {
-        $params = ['skillID' => $skillID, 'betas' => $betas];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['skillID' => $skillID, 'betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($version, params: $params, requestOptions: $requestOptions);
@@ -117,9 +114,9 @@ final class VersionsService implements VersionsContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): PageCursor {
-        $params = ['limit' => $limit, 'page' => $page, 'betas' => $betas];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            ['limit' => $limit, 'page' => $page, 'betas' => $betas]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list($skillID, params: $params, requestOptions: $requestOptions);
@@ -148,9 +145,7 @@ final class VersionsService implements VersionsContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): VersionDeleteResponse {
-        $params = ['skillID' => $skillID, 'betas' => $betas];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['skillID' => $skillID, 'betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($version, params: $params, requestOptions: $requestOptions);

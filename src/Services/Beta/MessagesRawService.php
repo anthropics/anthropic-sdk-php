@@ -104,10 +104,13 @@ final class MessagesRawService implements MessagesRawContract
             method: 'post',
             path: 'v1/messages?beta=true',
             headers: Util::array_transform_keys(
-                array_intersect_key($parsed, array_keys($header_params)),
-                $header_params
+                array_intersect_key($parsed, array_flip(array_keys($header_params))),
+                $header_params,
             ),
-            body: (object) array_diff_key($parsed, array_keys($header_params)),
+            body: (object) array_diff_key(
+                $parsed,
+                array_flip(array_keys($header_params))
+            ),
             options: $options,
             convert: BetaMessage::class,
         );
@@ -177,11 +180,17 @@ final class MessagesRawService implements MessagesRawContract
             headers: Util::array_transform_keys(
                 [
                     'Accept' => 'text/event-stream',
-                    ...array_intersect_key($parsed, array_keys($header_params)),
+                    ...array_intersect_key(
+                        $parsed,
+                        array_flip(array_keys($header_params))
+                    ),
                 ],
                 $header_params,
             ),
-            body: (object) array_diff_key($parsed, array_keys($header_params)),
+            body: (object) array_diff_key(
+                $parsed,
+                array_flip(array_keys($header_params))
+            ),
             options: $options,
             convert: BetaRawMessageStreamEvent::class,
             stream: SSEStream::class,
@@ -245,10 +254,13 @@ final class MessagesRawService implements MessagesRawContract
             method: 'post',
             path: 'v1/messages/count_tokens?beta=true',
             headers: Util::array_transform_keys(
-                array_intersect_key($parsed, array_keys($header_params)),
-                $header_params
+                array_intersect_key($parsed, array_flip(array_keys($header_params))),
+                $header_params,
             ),
-            body: (object) array_diff_key($parsed, array_keys($header_params)),
+            body: (object) array_diff_key(
+                $parsed,
+                array_flip(array_keys($header_params))
+            ),
             options: $options,
             convert: BetaMessageTokensCount::class,
         );

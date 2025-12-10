@@ -8,6 +8,7 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Models\BetaModelInfo;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Util;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\ModelsContract;
@@ -44,9 +45,7 @@ final class ModelsService implements ModelsContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null
     ): BetaModelInfo {
-        $params = ['betas' => $betas];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($modelID, params: $params, requestOptions: $requestOptions);
@@ -79,14 +78,14 @@ final class ModelsService implements ModelsContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): Page {
-        $params = [
-            'afterID' => $afterID,
-            'beforeID' => $beforeID,
-            'limit' => $limit,
-            'betas' => $betas,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'afterID' => $afterID,
+                'beforeID' => $beforeID,
+                'limit' => $limit,
+                'betas' => $betas,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);

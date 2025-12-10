@@ -90,10 +90,13 @@ final class BatchesRawService implements BatchesRawContract
             method: 'post',
             path: 'v1/messages/batches?beta=true',
             headers: Util::array_transform_keys(
-                array_intersect_key($parsed, array_keys($header_params)),
-                $header_params
+                array_intersect_key($parsed, array_flip(array_keys($header_params))),
+                $header_params,
             ),
-            body: (object) array_diff_key($parsed, array_keys($header_params)),
+            body: (object) array_diff_key(
+                $parsed,
+                array_flip(array_keys($header_params))
+            ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
@@ -170,7 +173,7 @@ final class BatchesRawService implements BatchesRawContract
             $params,
             $requestOptions,
         );
-        $query_params = array_flip(['after_id', 'before_id', 'limit']);
+        $query_params = array_flip(['afterID', 'beforeID', 'limit']);
 
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);

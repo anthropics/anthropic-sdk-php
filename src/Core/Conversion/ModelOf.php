@@ -91,7 +91,8 @@ final class ModelOf implements Converter
             $acc[$name] = $item;
         }
 
-        return $this->from($acc); // @phpstan-ignore-line
+        // @phpstan-ignore-next-line return.type
+        return $this->from($acc);
     }
 
     public function dump(mixed $value, DumpState $state): mixed

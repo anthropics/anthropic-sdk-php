@@ -11,6 +11,7 @@ use Anthropic\Beta\Skills\SkillListResponse;
 use Anthropic\Beta\Skills\SkillNewResponse;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\SkillsContract;
@@ -58,11 +59,9 @@ final class SkillsService implements SkillsContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): SkillNewResponse {
-        $params = [
-            'displayTitle' => $displayTitle, 'files' => $files, 'betas' => $betas,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            ['displayTitle' => $displayTitle, 'files' => $files, 'betas' => $betas]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
@@ -87,9 +86,7 @@ final class SkillsService implements SkillsContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null
     ): SkillGetResponse {
-        $params = ['betas' => $betas];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($skillID, params: $params, requestOptions: $requestOptions);
@@ -126,11 +123,14 @@ final class SkillsService implements SkillsContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): PageCursor {
-        $params = [
-            'limit' => $limit, 'page' => $page, 'source' => $source, 'betas' => $betas,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'limit' => $limit,
+                'page' => $page,
+                'source' => $source,
+                'betas' => $betas,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
@@ -155,9 +155,7 @@ final class SkillsService implements SkillsContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null
     ): SkillDeleteResponse {
-        $params = ['betas' => $betas];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($skillID, params: $params, requestOptions: $requestOptions);

@@ -61,11 +61,17 @@ final class SkillsRawService implements SkillsRawContract
             headers: Util::array_transform_keys(
                 [
                     'Content-Type' => 'multipart/form-data',
-                    ...array_intersect_key($parsed, array_keys($header_params)),
+                    ...array_intersect_key(
+                        $parsed,
+                        array_flip(array_keys($header_params))
+                    ),
                 ],
                 $header_params,
             ),
-            body: (object) array_diff_key($parsed, array_keys($header_params)),
+            body: (object) array_diff_key(
+                $parsed,
+                array_flip(array_keys($header_params))
+            ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'skills-2025-10-02']],
                 $options

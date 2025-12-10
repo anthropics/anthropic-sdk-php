@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-class TestModel implements BaseModel
+class Model implements BaseModel
 {
     /** @use SdkModel<array<string, mixed>> */
     use SdkModel;
@@ -53,12 +53,12 @@ class TestModel implements BaseModel
  * @coversNothing
  */
 #[CoversNothing]
-class TestModelTest extends TestCase
+class ModelTest extends TestCase
 {
     #[Test]
     public function testBasicGetAndSet(): void
     {
-        $model = new TestModel(
+        $model = new Model(
             name: 'Bob',
             ageYears: 12,
             owner: null,
@@ -72,7 +72,7 @@ class TestModelTest extends TestCase
     #[Test]
     public function testNullAccess(): void
     {
-        $model = new TestModel(
+        $model = new Model(
             name: 'Bob',
             ageYears: 12,
             owner: null,
@@ -84,7 +84,7 @@ class TestModelTest extends TestCase
     #[Test]
     public function testArrayGetAndSet(): void
     {
-        $model = new TestModel(
+        $model = new Model(
             name: 'Bob',
             ageYears: 12,
             owner: null,
@@ -98,12 +98,12 @@ class TestModelTest extends TestCase
     #[Test]
     public function testDiscernsBetweenNullAndUnset(): void
     {
-        $modelUnsetFriends = new TestModel(
+        $modelUnsetFriends = new Model(
             name: 'Bob',
             ageYears: 12,
             owner: null,
         );
-        $modelNullFriends = new TestModel(
+        $modelNullFriends = new Model(
             name: 'bob',
             ageYears: 12,
             owner: null,
@@ -126,7 +126,7 @@ class TestModelTest extends TestCase
     #[Test]
     public function testIssetOnOmittedProperties(): void
     {
-        $model = new TestModel(
+        $model = new Model(
             name: 'Bob',
             ageYears: 12,
             owner: null,
@@ -138,7 +138,7 @@ class TestModelTest extends TestCase
     #[Test]
     public function testSerializeBasicModel(): void
     {
-        $model = new TestModel(
+        $model = new Model(
             name: 'Bob',
             ageYears: 12,
             owner: 'Eve',
@@ -153,7 +153,7 @@ class TestModelTest extends TestCase
     #[Test]
     public function testSerializeModelWithOmittedProperties(): void
     {
-        $model = new TestModel(
+        $model = new Model(
             name: 'Bob',
             ageYears: 12,
             owner: null,
@@ -167,7 +167,7 @@ class TestModelTest extends TestCase
     #[Test]
     public function testSerializeModelWithExplicitNull(): void
     {
-        $model = new TestModel(
+        $model = new Model(
             name: 'Bob',
             ageYears: 12,
             owner: null,

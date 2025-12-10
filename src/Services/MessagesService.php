@@ -7,6 +7,7 @@ namespace Anthropic\Services;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Util;
 use Anthropic\Messages\CacheControlEphemeral\TTL;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
@@ -229,23 +230,23 @@ final class MessagesService implements MessagesContract
         ?float $topP = null,
         ?RequestOptions $requestOptions = null,
     ): Message {
-        $params = [
-            'maxTokens' => $maxTokens,
-            'messages' => $messages,
-            'model' => $model,
-            'metadata' => $metadata,
-            'serviceTier' => $serviceTier,
-            'stopSequences' => $stopSequences,
-            'system' => $system,
-            'temperature' => $temperature,
-            'thinking' => $thinking,
-            'toolChoice' => $toolChoice,
-            'tools' => $tools,
-            'topK' => $topK,
-            'topP' => $topP,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'maxTokens' => $maxTokens,
+                'messages' => $messages,
+                'model' => $model,
+                'metadata' => $metadata,
+                'serviceTier' => $serviceTier,
+                'stopSequences' => $stopSequences,
+                'system' => $system,
+                'temperature' => $temperature,
+                'thinking' => $thinking,
+                'toolChoice' => $toolChoice,
+                'tools' => $tools,
+                'topK' => $topK,
+                'topP' => $topP,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
@@ -434,23 +435,23 @@ final class MessagesService implements MessagesContract
         ?float $topP = null,
         ?RequestOptions $requestOptions = null,
     ): BaseStream {
-        $params = [
-            'maxTokens' => $maxTokens,
-            'messages' => $messages,
-            'model' => $model,
-            'metadata' => $metadata,
-            'serviceTier' => $serviceTier,
-            'stopSequences' => $stopSequences,
-            'system' => $system,
-            'temperature' => $temperature,
-            'thinking' => $thinking,
-            'toolChoice' => $toolChoice,
-            'tools' => $tools,
-            'topK' => $topK,
-            'topP' => $topP,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'maxTokens' => $maxTokens,
+                'messages' => $messages,
+                'model' => $model,
+                'metadata' => $metadata,
+                'serviceTier' => $serviceTier,
+                'stopSequences' => $stopSequences,
+                'system' => $system,
+                'temperature' => $temperature,
+                'thinking' => $thinking,
+                'toolChoice' => $toolChoice,
+                'tools' => $tools,
+                'topK' => $topK,
+                'topP' => $topP,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->createStream(params: $params, requestOptions: $requestOptions);
@@ -605,16 +606,16 @@ final class MessagesService implements MessagesContract
         ?array $tools = null,
         ?RequestOptions $requestOptions = null,
     ): MessageTokensCount {
-        $params = [
-            'messages' => $messages,
-            'model' => $model,
-            'system' => $system,
-            'thinking' => $thinking,
-            'toolChoice' => $toolChoice,
-            'tools' => $tools,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'messages' => $messages,
+                'model' => $model,
+                'system' => $system,
+                'thinking' => $thinking,
+                'toolChoice' => $toolChoice,
+                'tools' => $tools,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->countTokens(params: $params, requestOptions: $requestOptions);

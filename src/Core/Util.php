@@ -88,6 +88,29 @@ final class Util
     }
 
     /**
+     * @param callable $callback
+     */
+    public static function mapRecursive(mixed $callback, mixed $value): mixed
+    {
+        $mapped = match (true) {
+            is_array($value) => array_map(static fn ($v) => self::mapRecursive($callback, value: $v), $value),
+            default => $value,
+        };
+
+        return $callback($mapped);
+    }
+
+    public static function removeNulls(mixed $value): mixed
+    {
+        $mapped = self::mapRecursive(
+            static fn ($vs) => is_array($vs) && !array_is_list($vs) ? array_filter($vs, callback: static fn ($v) => !is_null($v)) : $vs,
+            value: $value
+        );
+
+        return $mapped;
+    }
+
+    /**
      * @param string|int|list<string|int>|callable $key
      */
     public static function dig(
@@ -127,7 +150,7 @@ final class Util
         }
 
         [$template] = $path;
-        $mapped = array_map(static fn ($s) => self::rawUrlEncode($s), array: array_slice($path, 1));
+        $mapped = array_map(static fn ($s) => rawurlencode(self::strVal($s)), array: array_slice($path, 1));
 
         return sprintf($template, ...$mapped);
     }
@@ -161,8 +184,9 @@ final class Util
         parse_str($base->getQuery(), $q1);
         parse_str($parsed['query'] ?? '', $q2);
 
-        $merged_query = array_merge_recursive($q1, $q2, $query);
-        $qs = http_build_query($merged_query, encoding_type: PHP_QUERY_RFC3986);
+        $mergedQuery = array_merge_recursive($q1, $q2, $query);
+        $normalizedQuery = array_map(static fn ($v) => self::strVal($v), array: $mergedQuery);
+        $qs = http_build_query($normalizedQuery, encoding_type: PHP_QUERY_RFC3986);
 
         return $base->withQuery($qs);
     }
@@ -179,11 +203,7 @@ final class Util
                 /** @var RequestInterface */
                 $req = $req->withoutHeader($name);
             } else {
-                $value = is_int($value)
-                            ? (string) $value
-                            : (is_array($value)
-                            ? array_map(static fn ($v) => (string) $v, array: $value)
-                            : $value);
+                $value = is_array($value) ? array_map(static fn ($v) => self::strVal($v), array: $value) : self::strVal($value);
 
                 /** @var RequestInterface */
                 $req = $req->withHeader($name, $value);
@@ -248,6 +268,13 @@ final class Util
             $stream = $factory->createStreamFromResource($body);
 
             /** @var RequestInterface */
+            return $req->withBody($stream);
+        }
+
+        if (is_string($body)) {
+            $stream = $factory->createStream($body);
+
+            // @var RequestInterface
             return $req->withBody($stream);
         }
 
@@ -382,15 +409,18 @@ final class Util
         return json_encode($obj, flags: JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
     }
 
-    private static function rawUrlEncode(
-        string|int|\DateTimeInterface $value
-    ): string {
-        // @phpstan-ignore-next-line function.alreadyNarrowedType
-        if (is_object($value) && is_a($value, class: \DateTimeInterface::class)) {
-            $value = date_format($value, format: \DateTimeInterface::RFC3339);
+    private static function strVal(mixed $value): string
+    {
+        if (is_bool($value)) {
+            return $value ? 'true' : 'false';
         }
 
-        return rawurlencode((string) $value);
+        if (is_object($value) && is_a($value, class: \DateTimeInterface::class)) {
+            return date_format($value, format: \DateTimeInterface::RFC3339);
+        }
+
+        // @phpstan-ignore-next-line argument.type
+        return strval($value);
     }
 
     /**
@@ -415,7 +445,7 @@ final class Util
         } elseif (is_string($val) || is_numeric($val) || is_bool($val)) {
             yield sprintf($contentLine, $contentType ?? 'text/plain');
 
-            yield (string) $val;
+            yield self::strVal($val);
         } else {
             yield sprintf($contentLine, $contentType ?? 'application/json');
 
@@ -441,7 +471,7 @@ final class Util
         yield 'Content-Disposition: form-data';
 
         if (!is_null($key)) {
-            $name = self::rawUrlEncode($key);
+            $name = rawurlencode(self::strVal($key));
 
             yield "; name=\"{$name}\"";
         }

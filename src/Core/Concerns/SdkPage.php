@@ -94,15 +94,6 @@ trait SdkPage
     /**
      * @internal
      *
-     * @param array<string, mixed> $data
-     *
-     * @return static<Item>
-     */
-    abstract public static function fromArray(array $data): static;
-
-    /**
-     * @internal
-     *
      * @return array{normalized_request, RequestOptions}
      */
     abstract protected function nextRequest(): ?array;

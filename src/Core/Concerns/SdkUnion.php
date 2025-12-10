@@ -15,7 +15,7 @@ trait SdkUnion
 {
     private static Converter $converter;
 
-    public static function discriminator(): ?string // @phpstan-ignore-line
+    public static function discriminator(): ?string
     {
         return null;
     }
