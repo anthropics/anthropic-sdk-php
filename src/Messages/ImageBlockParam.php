@@ -16,7 +16,7 @@ use Anthropic\Messages\ImageBlockParam\Source;
  * @phpstan-type ImageBlockParamShape = array{
  *   source: Base64ImageSource|URLImageSource,
  *   type?: 'image',
- *   cache_control?: CacheControlEphemeral|null,
+ *   cacheControl?: CacheControlEphemeral|null,
  * }
  */
 final class ImageBlockParam implements BaseModel
@@ -34,8 +34,8 @@ final class ImageBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
      * `new ImageBlockParam()` is missing required properties by the API.
@@ -62,28 +62,28 @@ final class ImageBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Base64ImageSource|array{
-     *   data: string, media_type: value-of<MediaType>, type?: 'base64'
+     *   data: string, mediaType: value-of<MediaType>, type?: 'base64'
      * }|URLImageSource|array{type?: 'url', url: string} $source
      * @param CacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      */
     public static function with(
         Base64ImageSource|array|URLImageSource $source,
-        CacheControlEphemeral|array|null $cache_control = null,
+        CacheControlEphemeral|array|null $cacheControl = null,
     ): self {
         $obj = new self;
 
         $obj['source'] = $source;
 
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }
 
     /**
      * @param Base64ImageSource|array{
-     *   data: string, media_type: value-of<MediaType>, type?: 'base64'
+     *   data: string, mediaType: value-of<MediaType>, type?: 'base64'
      * }|URLImageSource|array{type?: 'url', url: string} $source
      */
     public function withSource(
@@ -106,7 +106,7 @@ final class ImageBlockParam implements BaseModel
         CacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }

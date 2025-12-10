@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaWebFetchToolResultErrorBlockShape = array{
- *   error_code: value-of<BetaWebFetchToolResultErrorCode>,
+ *   errorCode: value-of<BetaWebFetchToolResultErrorCode>,
  *   type?: 'web_fetch_tool_result_error',
  * }
  */
@@ -23,16 +23,16 @@ final class BetaWebFetchToolResultErrorBlock implements BaseModel
     #[Required]
     public string $type = 'web_fetch_tool_result_error';
 
-    /** @var value-of<BetaWebFetchToolResultErrorCode> $error_code */
-    #[Required(enum: BetaWebFetchToolResultErrorCode::class)]
-    public string $error_code;
+    /** @var value-of<BetaWebFetchToolResultErrorCode> $errorCode */
+    #[Required('error_code', enum: BetaWebFetchToolResultErrorCode::class)]
+    public string $errorCode;
 
     /**
      * `new BetaWebFetchToolResultErrorBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaWebFetchToolResultErrorBlock::with(error_code: ...)
+     * BetaWebFetchToolResultErrorBlock::with(errorCode: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -51,14 +51,14 @@ final class BetaWebFetchToolResultErrorBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaWebFetchToolResultErrorCode|value-of<BetaWebFetchToolResultErrorCode> $error_code
+     * @param BetaWebFetchToolResultErrorCode|value-of<BetaWebFetchToolResultErrorCode> $errorCode
      */
     public static function with(
-        BetaWebFetchToolResultErrorCode|string $error_code
+        BetaWebFetchToolResultErrorCode|string $errorCode
     ): self {
         $obj = new self;
 
-        $obj['error_code'] = $error_code;
+        $obj['errorCode'] = $errorCode;
 
         return $obj;
     }
@@ -70,7 +70,7 @@ final class BetaWebFetchToolResultErrorBlock implements BaseModel
         BetaWebFetchToolResultErrorCode|string $errorCode
     ): self {
         $obj = clone $this;
-        $obj['error_code'] = $errorCode;
+        $obj['errorCode'] = $errorCode;
 
         return $obj;
     }

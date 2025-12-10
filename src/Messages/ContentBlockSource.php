@@ -54,12 +54,12 @@ final class ContentBlockSource implements BaseModel
      * @param string|list<TextBlockParam|array{
      *   text: string,
      *   type?: 'text',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }|ImageBlockParam|array{
      *   source: Base64ImageSource|URLImageSource,
      *   type?: 'image',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }> $content
      */
     public static function with(string|array $content): self
@@ -75,12 +75,12 @@ final class ContentBlockSource implements BaseModel
      * @param string|list<TextBlockParam|array{
      *   text: string,
      *   type?: 'text',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }|ImageBlockParam|array{
      *   source: Base64ImageSource|URLImageSource,
      *   type?: 'image',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }> $content
      */
     public function withContent(string|array $content): self

@@ -14,16 +14,16 @@ use Anthropic\Core\Conversion\MapOf;
 
 /**
  * @phpstan-type BetaToolComputerUse20251124Shape = array{
- *   display_height_px: int,
- *   display_width_px: int,
+ *   displayHeightPx: int,
+ *   displayWidthPx: int,
  *   name?: 'computer',
  *   type?: 'computer_20251124',
- *   allowed_callers?: list<value-of<AllowedCaller>>|null,
- *   cache_control?: BetaCacheControlEphemeral|null,
- *   defer_loading?: bool|null,
- *   display_number?: int|null,
- *   enable_zoom?: bool|null,
- *   input_examples?: list<array<string,mixed>>|null,
+ *   allowedCallers?: list<value-of<AllowedCaller>>|null,
+ *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   deferLoading?: bool|null,
+ *   displayNumber?: int|null,
+ *   enableZoom?: bool|null,
+ *   inputExamples?: list<array<string,mixed>>|null,
  *   strict?: bool|null,
  * }
  */
@@ -49,46 +49,46 @@ final class BetaToolComputerUse20251124 implements BaseModel
     /**
      * The height of the display in pixels.
      */
-    #[Required]
-    public int $display_height_px;
+    #[Required('display_height_px')]
+    public int $displayHeightPx;
 
     /**
      * The width of the display in pixels.
      */
-    #[Required]
-    public int $display_width_px;
+    #[Required('display_width_px')]
+    public int $displayWidthPx;
 
-    /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
-    #[Optional(list: AllowedCaller::class)]
-    public ?array $allowed_callers;
+    /** @var list<value-of<AllowedCaller>>|null $allowedCallers */
+    #[Optional('allowed_callers', list: AllowedCaller::class)]
+    public ?array $allowedCallers;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
      */
-    #[Optional]
-    public ?bool $defer_loading;
+    #[Optional('defer_loading')]
+    public ?bool $deferLoading;
 
     /**
      * The X11 display number (e.g. 0, 1) for the display.
      */
-    #[Optional(nullable: true)]
-    public ?int $display_number;
+    #[Optional('display_number', nullable: true)]
+    public ?int $displayNumber;
 
     /**
      * Whether to enable an action to take a zoomed-in screenshot of the screen.
      */
-    #[Optional]
-    public ?bool $enable_zoom;
+    #[Optional('enable_zoom')]
+    public ?bool $enableZoom;
 
-    /** @var list<array<string,mixed>>|null $input_examples */
-    #[Optional(list: new MapOf('mixed'))]
-    public ?array $input_examples;
+    /** @var list<array<string,mixed>>|null $inputExamples */
+    #[Optional('input_examples', list: new MapOf('mixed'))]
+    public ?array $inputExamples;
 
     #[Optional]
     public ?bool $strict;
@@ -98,7 +98,7 @@ final class BetaToolComputerUse20251124 implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaToolComputerUse20251124::with(display_height_px: ..., display_width_px: ...)
+     * BetaToolComputerUse20251124::with(displayHeightPx: ..., displayWidthPx: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -119,34 +119,34 @@ final class BetaToolComputerUse20251124 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
      * @param BetaCacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
-     * @param list<array<string,mixed>> $input_examples
+     * }|null $cacheControl
+     * @param list<array<string,mixed>> $inputExamples
      */
     public static function with(
-        int $display_height_px,
-        int $display_width_px,
-        ?array $allowed_callers = null,
-        BetaCacheControlEphemeral|array|null $cache_control = null,
-        ?bool $defer_loading = null,
-        ?int $display_number = null,
-        ?bool $enable_zoom = null,
-        ?array $input_examples = null,
+        int $displayHeightPx,
+        int $displayWidthPx,
+        ?array $allowedCallers = null,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
+        ?bool $deferLoading = null,
+        ?int $displayNumber = null,
+        ?bool $enableZoom = null,
+        ?array $inputExamples = null,
         ?bool $strict = null,
     ): self {
         $obj = new self;
 
-        $obj['display_height_px'] = $display_height_px;
-        $obj['display_width_px'] = $display_width_px;
+        $obj['displayHeightPx'] = $displayHeightPx;
+        $obj['displayWidthPx'] = $displayWidthPx;
 
-        null !== $allowed_callers && $obj['allowed_callers'] = $allowed_callers;
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
-        null !== $defer_loading && $obj['defer_loading'] = $defer_loading;
-        null !== $display_number && $obj['display_number'] = $display_number;
-        null !== $enable_zoom && $obj['enable_zoom'] = $enable_zoom;
-        null !== $input_examples && $obj['input_examples'] = $input_examples;
+        null !== $allowedCallers && $obj['allowedCallers'] = $allowedCallers;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
+        null !== $deferLoading && $obj['deferLoading'] = $deferLoading;
+        null !== $displayNumber && $obj['displayNumber'] = $displayNumber;
+        null !== $enableZoom && $obj['enableZoom'] = $enableZoom;
+        null !== $inputExamples && $obj['inputExamples'] = $inputExamples;
         null !== $strict && $obj['strict'] = $strict;
 
         return $obj;
@@ -158,7 +158,7 @@ final class BetaToolComputerUse20251124 implements BaseModel
     public function withDisplayHeightPx(int $displayHeightPx): self
     {
         $obj = clone $this;
-        $obj['display_height_px'] = $displayHeightPx;
+        $obj['displayHeightPx'] = $displayHeightPx;
 
         return $obj;
     }
@@ -169,7 +169,7 @@ final class BetaToolComputerUse20251124 implements BaseModel
     public function withDisplayWidthPx(int $displayWidthPx): self
     {
         $obj = clone $this;
-        $obj['display_width_px'] = $displayWidthPx;
+        $obj['displayWidthPx'] = $displayWidthPx;
 
         return $obj;
     }
@@ -180,7 +180,7 @@ final class BetaToolComputerUse20251124 implements BaseModel
     public function withAllowedCallers(array $allowedCallers): self
     {
         $obj = clone $this;
-        $obj['allowed_callers'] = $allowedCallers;
+        $obj['allowedCallers'] = $allowedCallers;
 
         return $obj;
     }
@@ -196,7 +196,7 @@ final class BetaToolComputerUse20251124 implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }
@@ -207,7 +207,7 @@ final class BetaToolComputerUse20251124 implements BaseModel
     public function withDeferLoading(bool $deferLoading): self
     {
         $obj = clone $this;
-        $obj['defer_loading'] = $deferLoading;
+        $obj['deferLoading'] = $deferLoading;
 
         return $obj;
     }
@@ -218,7 +218,7 @@ final class BetaToolComputerUse20251124 implements BaseModel
     public function withDisplayNumber(?int $displayNumber): self
     {
         $obj = clone $this;
-        $obj['display_number'] = $displayNumber;
+        $obj['displayNumber'] = $displayNumber;
 
         return $obj;
     }
@@ -229,7 +229,7 @@ final class BetaToolComputerUse20251124 implements BaseModel
     public function withEnableZoom(bool $enableZoom): self
     {
         $obj = clone $this;
-        $obj['enable_zoom'] = $enableZoom;
+        $obj['enableZoom'] = $enableZoom;
 
         return $obj;
     }
@@ -240,7 +240,7 @@ final class BetaToolComputerUse20251124 implements BaseModel
     public function withInputExamples(array $inputExamples): self
     {
         $obj = clone $this;
-        $obj['input_examples'] = $inputExamples;
+        $obj['inputExamples'] = $inputExamples;
 
         return $obj;
     }

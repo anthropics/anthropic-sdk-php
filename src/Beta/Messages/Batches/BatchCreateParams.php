@@ -23,7 +23,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\Messages\BatchesService::create()
  *
  * @phpstan-type BatchCreateParamsShape = array{
- *   requests: list<Request|array{custom_id: string, params: Params}>,
+ *   requests: list<Request|array{customID: string, params: Params}>,
  *   betas?: list<string|AnthropicBeta>,
  * }
  */
@@ -73,7 +73,7 @@ final class BatchCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Request|array{custom_id: string, params: Params}> $requests
+     * @param list<Request|array{customID: string, params: Params}> $requests
      * @param list<string|AnthropicBeta> $betas
      */
     public static function with(array $requests, ?array $betas = null): self
@@ -90,7 +90,7 @@ final class BatchCreateParams implements BaseModel
     /**
      * List of requests for prompt completion. Each is an individual request to create a Message.
      *
-     * @param list<Request|array{custom_id: string, params: Params}> $requests
+     * @param list<Request|array{customID: string, params: Params}> $requests
      */
     public function withRequests(array $requests): self
     {

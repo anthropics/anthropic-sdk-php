@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\SkillsService::create()
  *
  * @phpstan-type SkillCreateParamsShape = array{
- *   display_title?: string|null,
+ *   displayTitle?: string|null,
  *   files?: list<string>|null,
  *   betas?: list<string|AnthropicBeta>,
  * }
@@ -32,8 +32,8 @@ final class SkillCreateParams implements BaseModel
      *
      * This is a human-readable label that is not included in the prompt sent to the model.
      */
-    #[Optional(nullable: true)]
-    public ?string $display_title;
+    #[Optional('display_title', nullable: true)]
+    public ?string $displayTitle;
 
     /**
      * Files to upload for the skill.
@@ -67,13 +67,13 @@ final class SkillCreateParams implements BaseModel
      * @param list<string|AnthropicBeta> $betas
      */
     public static function with(
-        ?string $display_title = null,
+        ?string $displayTitle = null,
         ?array $files = null,
         ?array $betas = null
     ): self {
         $obj = new self;
 
-        null !== $display_title && $obj['display_title'] = $display_title;
+        null !== $displayTitle && $obj['displayTitle'] = $displayTitle;
         null !== $files && $obj['files'] = $files;
         null !== $betas && $obj['betas'] = $betas;
 
@@ -88,7 +88,7 @@ final class SkillCreateParams implements BaseModel
     public function withDisplayTitle(?string $displayTitle): self
     {
         $obj = clone $this;
-        $obj['display_title'] = $displayTitle;
+        $obj['displayTitle'] = $displayTitle;
 
         return $obj;
     }

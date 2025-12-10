@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * The model will use any available tools.
  *
  * @phpstan-type BetaToolChoiceAnyShape = array{
- *   type?: 'any', disable_parallel_tool_use?: bool|null
+ *   type?: 'any', disableParallelToolUse?: bool|null
  * }
  */
 final class BetaToolChoiceAny implements BaseModel
@@ -30,8 +30,8 @@ final class BetaToolChoiceAny implements BaseModel
      *
      * Defaults to `false`. If set to `true`, the model will output exactly one tool use.
      */
-    #[Optional]
-    public ?bool $disable_parallel_tool_use;
+    #[Optional('disable_parallel_tool_use')]
+    public ?bool $disableParallelToolUse;
 
     public function __construct()
     {
@@ -43,11 +43,11 @@ final class BetaToolChoiceAny implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(?bool $disable_parallel_tool_use = null): self
+    public static function with(?bool $disableParallelToolUse = null): self
     {
         $obj = new self;
 
-        null !== $disable_parallel_tool_use && $obj['disable_parallel_tool_use'] = $disable_parallel_tool_use;
+        null !== $disableParallelToolUse && $obj['disableParallelToolUse'] = $disableParallelToolUse;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class BetaToolChoiceAny implements BaseModel
         bool $disableParallelToolUse
     ): self {
         $obj = clone $this;
-        $obj['disable_parallel_tool_use'] = $disableParallelToolUse;
+        $obj['disableParallelToolUse'] = $disableParallelToolUse;
 
         return $obj;
     }

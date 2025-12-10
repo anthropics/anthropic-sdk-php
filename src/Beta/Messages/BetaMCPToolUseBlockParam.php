@@ -15,9 +15,9 @@ use Anthropic\Core\Contracts\BaseModel;
  *   id: string,
  *   input: array<string,mixed>,
  *   name: string,
- *   server_name: string,
+ *   serverName: string,
  *   type?: 'mcp_tool_use',
- *   cache_control?: BetaCacheControlEphemeral|null,
+ *   cacheControl?: BetaCacheControlEphemeral|null,
  * }
  */
 final class BetaMCPToolUseBlockParam implements BaseModel
@@ -42,21 +42,21 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     /**
      * The name of the MCP server.
      */
-    #[Required]
-    public string $server_name;
+    #[Required('server_name')]
+    public string $serverName;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * `new BetaMCPToolUseBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaMCPToolUseBlockParam::with(id: ..., input: ..., name: ..., server_name: ...)
+     * BetaMCPToolUseBlockParam::with(id: ..., input: ..., name: ..., serverName: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -82,23 +82,23 @@ final class BetaMCPToolUseBlockParam implements BaseModel
      * @param array<string,mixed> $input
      * @param BetaCacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      */
     public static function with(
         string $id,
         array $input,
         string $name,
-        string $server_name,
-        BetaCacheControlEphemeral|array|null $cache_control = null,
+        string $serverName,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
     ): self {
         $obj = new self;
 
         $obj['id'] = $id;
         $obj['input'] = $input;
         $obj['name'] = $name;
-        $obj['server_name'] = $server_name;
+        $obj['serverName'] = $serverName;
 
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }
@@ -136,7 +136,7 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     public function withServerName(string $serverName): self
     {
         $obj = clone $this;
-        $obj['server_name'] = $serverName;
+        $obj['serverName'] = $serverName;
 
         return $obj;
     }
@@ -152,7 +152,7 @@ final class BetaMCPToolUseBlockParam implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }

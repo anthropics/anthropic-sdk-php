@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * This is a single line in the response `.jsonl` file and does not represent the response as a whole.
  *
  * @phpstan-type MessageBatchIndividualResponseShape = array{
- *   custom_id: string,
+ *   customID: string,
  *   result: MessageBatchSucceededResult|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult,
  * }
  */
@@ -28,8 +28,8 @@ final class MessageBatchIndividualResponse implements BaseModel
      *
      * Must be unique for each request within the Message Batch.
      */
-    #[Required]
-    public string $custom_id;
+    #[Required('custom_id')]
+    public string $customID;
 
     /**
      * Processing result for this request.
@@ -44,7 +44,7 @@ final class MessageBatchIndividualResponse implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * MessageBatchIndividualResponse::with(custom_id: ..., result: ...)
+     * MessageBatchIndividualResponse::with(customID: ..., result: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -72,12 +72,12 @@ final class MessageBatchIndividualResponse implements BaseModel
      * }|MessageBatchExpiredResult|array{type?: 'expired'} $result
      */
     public static function with(
-        string $custom_id,
+        string $customID,
         MessageBatchSucceededResult|array|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult $result,
     ): self {
         $obj = new self;
 
-        $obj['custom_id'] = $custom_id;
+        $obj['customID'] = $customID;
         $obj['result'] = $result;
 
         return $obj;
@@ -91,7 +91,7 @@ final class MessageBatchIndividualResponse implements BaseModel
     public function withCustomID(string $customID): self
     {
         $obj = clone $this;
-        $obj['custom_id'] = $customID;
+        $obj['customID'] = $customID;
 
         return $obj;
     }

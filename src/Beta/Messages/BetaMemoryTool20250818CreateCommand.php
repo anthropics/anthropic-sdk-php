@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818CreateCommandShape = array{
- *   command?: 'create', file_text: string, path: string
+ *   command?: 'create', fileText: string, path: string
  * }
  */
 final class BetaMemoryTool20250818CreateCommand implements BaseModel
@@ -29,8 +29,8 @@ final class BetaMemoryTool20250818CreateCommand implements BaseModel
     /**
      * Content to write to the file.
      */
-    #[Required]
-    public string $file_text;
+    #[Required('file_text')]
+    public string $fileText;
 
     /**
      * Path where the file should be created.
@@ -43,7 +43,7 @@ final class BetaMemoryTool20250818CreateCommand implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaMemoryTool20250818CreateCommand::with(file_text: ..., path: ...)
+     * BetaMemoryTool20250818CreateCommand::with(fileText: ..., path: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -62,11 +62,11 @@ final class BetaMemoryTool20250818CreateCommand implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $file_text, string $path): self
+    public static function with(string $fileText, string $path): self
     {
         $obj = new self;
 
-        $obj['file_text'] = $file_text;
+        $obj['fileText'] = $fileText;
         $obj['path'] = $path;
 
         return $obj;
@@ -78,7 +78,7 @@ final class BetaMemoryTool20250818CreateCommand implements BaseModel
     public function withFileText(string $fileText): self
     {
         $obj = clone $this;
-        $obj['file_text'] = $fileText;
+        $obj['fileText'] = $fileText;
 
         return $obj;
     }

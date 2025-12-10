@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaToolSearchToolResultErrorParamShape = array{
- *   error_code: value-of<ErrorCode>, type?: 'tool_search_tool_result_error'
+ *   errorCode: value-of<ErrorCode>, type?: 'tool_search_tool_result_error'
  * }
  */
 final class BetaToolSearchToolResultErrorParam implements BaseModel
@@ -23,16 +23,16 @@ final class BetaToolSearchToolResultErrorParam implements BaseModel
     #[Required]
     public string $type = 'tool_search_tool_result_error';
 
-    /** @var value-of<ErrorCode> $error_code */
-    #[Required(enum: ErrorCode::class)]
-    public string $error_code;
+    /** @var value-of<ErrorCode> $errorCode */
+    #[Required('error_code', enum: ErrorCode::class)]
+    public string $errorCode;
 
     /**
      * `new BetaToolSearchToolResultErrorParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaToolSearchToolResultErrorParam::with(error_code: ...)
+     * BetaToolSearchToolResultErrorParam::with(errorCode: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -51,13 +51,13 @@ final class BetaToolSearchToolResultErrorParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ErrorCode|value-of<ErrorCode> $error_code
+     * @param ErrorCode|value-of<ErrorCode> $errorCode
      */
-    public static function with(ErrorCode|string $error_code): self
+    public static function with(ErrorCode|string $errorCode): self
     {
         $obj = new self;
 
-        $obj['error_code'] = $error_code;
+        $obj['errorCode'] = $errorCode;
 
         return $obj;
     }
@@ -68,7 +68,7 @@ final class BetaToolSearchToolResultErrorParam implements BaseModel
     public function withErrorCode(ErrorCode|string $errorCode): self
     {
         $obj = clone $this;
-        $obj['error_code'] = $errorCode;
+        $obj['errorCode'] = $errorCode;
 
         return $obj;
     }

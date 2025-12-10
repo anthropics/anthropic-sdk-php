@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaRawContentBlockStartEventShape = array{
- *   content_block: BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock,
+ *   contentBlock: BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock,
  *   index: int,
  *   type?: 'content_block_start',
  * }
@@ -29,8 +29,8 @@ final class BetaRawContentBlockStartEvent implements BaseModel
     /**
      * Response model for a file uploaded to the container.
      */
-    #[Required(union: ContentBlock::class)]
-    public BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock $content_block;
+    #[Required('content_block', union: ContentBlock::class)]
+    public BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock $contentBlock;
 
     #[Required]
     public int $index;
@@ -40,7 +40,7 @@ final class BetaRawContentBlockStartEvent implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaRawContentBlockStartEvent::with(content_block: ..., index: ...)
+     * BetaRawContentBlockStartEvent::with(contentBlock: ..., index: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -81,50 +81,50 @@ final class BetaRawContentBlockStartEvent implements BaseModel
      *   type?: 'server_tool_use',
      * }|BetaWebSearchToolResultBlock|array{
      *   content: BetaWebSearchToolResultError|list<BetaWebSearchResultBlock>,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'web_search_tool_result',
      * }|BetaWebFetchToolResultBlock|array{
      *   content: BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'web_fetch_tool_result',
      * }|BetaCodeExecutionToolResultBlock|array{
      *   content: BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'code_execution_tool_result',
      * }|BetaBashCodeExecutionToolResultBlock|array{
      *   content: BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'bash_code_execution_tool_result',
      * }|BetaTextEditorCodeExecutionToolResultBlock|array{
      *   content: BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'text_editor_code_execution_tool_result',
      * }|BetaToolSearchToolResultBlock|array{
      *   content: BetaToolSearchToolResultError|BetaToolSearchToolSearchResultBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'tool_search_tool_result',
      * }|BetaMCPToolUseBlock|array{
      *   id: string,
      *   input: array<string,mixed>,
      *   name: string,
-     *   server_name: string,
+     *   serverName: string,
      *   type?: 'mcp_tool_use',
      * }|BetaMCPToolResultBlock|array{
      *   content: string|list<BetaTextBlock>,
-     *   is_error: bool,
-     *   tool_use_id: string,
+     *   isError: bool,
+     *   toolUseID: string,
      *   type?: 'mcp_tool_result',
      * }|BetaContainerUploadBlock|array{
-     *   file_id: string, type?: 'container_upload'
-     * } $content_block
+     *   fileID: string, type?: 'container_upload'
+     * } $contentBlock
      */
     public static function with(
-        BetaTextBlock|array|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock $content_block,
+        BetaTextBlock|array|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock $contentBlock,
         int $index,
     ): self {
         $obj = new self;
 
-        $obj['content_block'] = $content_block;
+        $obj['contentBlock'] = $contentBlock;
         $obj['index'] = $index;
 
         return $obj;
@@ -155,48 +155,48 @@ final class BetaRawContentBlockStartEvent implements BaseModel
      *   type?: 'server_tool_use',
      * }|BetaWebSearchToolResultBlock|array{
      *   content: BetaWebSearchToolResultError|list<BetaWebSearchResultBlock>,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'web_search_tool_result',
      * }|BetaWebFetchToolResultBlock|array{
      *   content: BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'web_fetch_tool_result',
      * }|BetaCodeExecutionToolResultBlock|array{
      *   content: BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'code_execution_tool_result',
      * }|BetaBashCodeExecutionToolResultBlock|array{
      *   content: BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'bash_code_execution_tool_result',
      * }|BetaTextEditorCodeExecutionToolResultBlock|array{
      *   content: BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'text_editor_code_execution_tool_result',
      * }|BetaToolSearchToolResultBlock|array{
      *   content: BetaToolSearchToolResultError|BetaToolSearchToolSearchResultBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'tool_search_tool_result',
      * }|BetaMCPToolUseBlock|array{
      *   id: string,
      *   input: array<string,mixed>,
      *   name: string,
-     *   server_name: string,
+     *   serverName: string,
      *   type?: 'mcp_tool_use',
      * }|BetaMCPToolResultBlock|array{
      *   content: string|list<BetaTextBlock>,
-     *   is_error: bool,
-     *   tool_use_id: string,
+     *   isError: bool,
+     *   toolUseID: string,
      *   type?: 'mcp_tool_result',
      * }|BetaContainerUploadBlock|array{
-     *   file_id: string, type?: 'container_upload'
+     *   fileID: string, type?: 'container_upload'
      * } $contentBlock
      */
     public function withContentBlock(
         BetaTextBlock|array|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock $contentBlock,
     ): self {
         $obj = clone $this;
-        $obj['content_block'] = $contentBlock;
+        $obj['contentBlock'] = $contentBlock;
 
         return $obj;
     }

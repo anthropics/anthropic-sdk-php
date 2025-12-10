@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * Specification for a skill to be loaded in a container (request model).
  *
  * @phpstan-type BetaSkillParamsShape = array{
- *   skill_id: string, type: value-of<Type>, version?: string|null
+ *   skillID: string, type: value-of<Type>, version?: string|null
  * }
  */
 final class BetaSkillParams implements BaseModel
@@ -25,8 +25,8 @@ final class BetaSkillParams implements BaseModel
     /**
      * Skill ID.
      */
-    #[Required]
-    public string $skill_id;
+    #[Required('skill_id')]
+    public string $skillID;
 
     /**
      * Type of skill - either 'anthropic' (built-in) or 'custom' (user-defined).
@@ -47,7 +47,7 @@ final class BetaSkillParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaSkillParams::with(skill_id: ..., type: ...)
+     * BetaSkillParams::with(skillID: ..., type: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -69,13 +69,13 @@ final class BetaSkillParams implements BaseModel
      * @param Type|value-of<Type> $type
      */
     public static function with(
-        string $skill_id,
+        string $skillID,
         Type|string $type,
         ?string $version = null
     ): self {
         $obj = new self;
 
-        $obj['skill_id'] = $skill_id;
+        $obj['skillID'] = $skillID;
         $obj['type'] = $type;
 
         null !== $version && $obj['version'] = $version;
@@ -89,7 +89,7 @@ final class BetaSkillParams implements BaseModel
     public function withSkillID(string $skillID): self
     {
         $obj = clone $this;
-        $obj['skill_id'] = $skillID;
+        $obj['skillID'] = $skillID;
 
         return $obj;
     }

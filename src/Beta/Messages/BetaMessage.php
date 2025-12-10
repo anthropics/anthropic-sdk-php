@@ -16,11 +16,11 @@ use Anthropic\Messages\Model;
  *   id: string,
  *   container: BetaContainer|null,
  *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
- *   context_management: BetaContextManagementResponse|null,
+ *   contextManagement: BetaContextManagementResponse|null,
  *   model: string|value-of<Model>,
  *   role?: 'assistant',
- *   stop_reason: value-of<BetaStopReason>|null,
- *   stop_sequence: string|null,
+ *   stopReason: value-of<BetaStopReason>|null,
+ *   stopSequence: string|null,
  *   type?: 'message',
  *   usage: BetaUsage,
  * }
@@ -101,8 +101,8 @@ final class BetaMessage implements BaseModel
      *
      * Information about context management strategies applied during the request.
      */
-    #[Required]
-    public ?BetaContextManagementResponse $context_management;
+    #[Required('context_management')]
+    public ?BetaContextManagementResponse $contextManagement;
 
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
@@ -125,18 +125,18 @@ final class BetaMessage implements BaseModel
      *
      * In non-streaming mode this value is always non-null. In streaming mode, it is null in the `message_start` event and non-null otherwise.
      *
-     * @var value-of<BetaStopReason>|null $stop_reason
+     * @var value-of<BetaStopReason>|null $stopReason
      */
-    #[Required(enum: BetaStopReason::class)]
-    public ?string $stop_reason;
+    #[Required('stop_reason', enum: BetaStopReason::class)]
+    public ?string $stopReason;
 
     /**
      * Which custom stop sequence was generated, if any.
      *
      * This value will be a non-null string if one of your custom stop sequences was generated.
      */
-    #[Required]
-    public ?string $stop_sequence;
+    #[Required('stop_sequence')]
+    public ?string $stopSequence;
 
     /**
      * Billing and rate-limit usage.
@@ -161,10 +161,10 @@ final class BetaMessage implements BaseModel
      *   id: ...,
      *   container: ...,
      *   content: ...,
-     *   context_management: ...,
+     *   contextManagement: ...,
      *   model: ...,
-     *   stop_reason: ...,
-     *   stop_sequence: ...,
+     *   stopReason: ...,
+     *   stopSequence: ...,
      *   usage: ...,
      * )
      * ```
@@ -194,7 +194,7 @@ final class BetaMessage implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaContainer|array{
-     *   id: string, expires_at: \DateTimeInterface, skills: list<BetaSkill>|null
+     *   id: string, expiresAt: \DateTimeInterface, skills: list<BetaSkill>|null
      * }|null $container
      * @param list<BetaTextBlock|array{
      *   citations: list<BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation>|null,
@@ -218,64 +218,64 @@ final class BetaMessage implements BaseModel
      *   type?: 'server_tool_use',
      * }|BetaWebSearchToolResultBlock|array{
      *   content: BetaWebSearchToolResultError|list<BetaWebSearchResultBlock>,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'web_search_tool_result',
      * }|BetaWebFetchToolResultBlock|array{
      *   content: BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'web_fetch_tool_result',
      * }|BetaCodeExecutionToolResultBlock|array{
      *   content: BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'code_execution_tool_result',
      * }|BetaBashCodeExecutionToolResultBlock|array{
      *   content: BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'bash_code_execution_tool_result',
      * }|BetaTextEditorCodeExecutionToolResultBlock|array{
      *   content: BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'text_editor_code_execution_tool_result',
      * }|BetaToolSearchToolResultBlock|array{
      *   content: BetaToolSearchToolResultError|BetaToolSearchToolSearchResultBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'tool_search_tool_result',
      * }|BetaMCPToolUseBlock|array{
      *   id: string,
      *   input: array<string,mixed>,
      *   name: string,
-     *   server_name: string,
+     *   serverName: string,
      *   type?: 'mcp_tool_use',
      * }|BetaMCPToolResultBlock|array{
      *   content: string|list<BetaTextBlock>,
-     *   is_error: bool,
-     *   tool_use_id: string,
+     *   isError: bool,
+     *   toolUseID: string,
      *   type?: 'mcp_tool_result',
      * }|BetaContainerUploadBlock|array{
-     *   file_id: string, type?: 'container_upload'
+     *   fileID: string, type?: 'container_upload'
      * }> $content
      * @param BetaContextManagementResponse|array{
-     *   applied_edits: list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse>,
-     * }|null $context_management
-     * @param BetaStopReason|value-of<BetaStopReason>|null $stop_reason
+     *   appliedEdits: list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse>,
+     * }|null $contextManagement
+     * @param BetaStopReason|value-of<BetaStopReason>|null $stopReason
      * @param BetaUsage|array{
-     *   cache_creation: BetaCacheCreation|null,
-     *   cache_creation_input_tokens: int|null,
-     *   cache_read_input_tokens: int|null,
-     *   input_tokens: int,
-     *   output_tokens: int,
-     *   server_tool_use: BetaServerToolUsage|null,
-     *   service_tier: value-of<ServiceTier>|null,
+     *   cacheCreation: BetaCacheCreation|null,
+     *   cacheCreationInputTokens: int|null,
+     *   cacheReadInputTokens: int|null,
+     *   inputTokens: int,
+     *   outputTokens: int,
+     *   serverToolUse: BetaServerToolUsage|null,
+     *   serviceTier: value-of<ServiceTier>|null,
      * } $usage
      */
     public static function with(
         string $id,
         BetaContainer|array|null $container,
         array $content,
-        BetaContextManagementResponse|array|null $context_management,
+        BetaContextManagementResponse|array|null $contextManagement,
         string|Model $model,
-        BetaStopReason|string|null $stop_reason,
-        ?string $stop_sequence,
+        BetaStopReason|string|null $stopReason,
+        ?string $stopSequence,
         BetaUsage|array $usage,
     ): self {
         $obj = new self;
@@ -283,10 +283,10 @@ final class BetaMessage implements BaseModel
         $obj['id'] = $id;
         $obj['container'] = $container;
         $obj['content'] = $content;
-        $obj['context_management'] = $context_management;
+        $obj['contextManagement'] = $contextManagement;
         $obj['model'] = $model;
-        $obj['stop_reason'] = $stop_reason;
-        $obj['stop_sequence'] = $stop_sequence;
+        $obj['stopReason'] = $stopReason;
+        $obj['stopSequence'] = $stopSequence;
         $obj['usage'] = $usage;
 
         return $obj;
@@ -309,7 +309,7 @@ final class BetaMessage implements BaseModel
      * Information about the container used in the request (for the code execution tool).
      *
      * @param BetaContainer|array{
-     *   id: string, expires_at: \DateTimeInterface, skills: list<BetaSkill>|null
+     *   id: string, expiresAt: \DateTimeInterface, skills: list<BetaSkill>|null
      * }|null $container
      */
     public function withContainer(BetaContainer|array|null $container): self
@@ -369,41 +369,41 @@ final class BetaMessage implements BaseModel
      *   type?: 'server_tool_use',
      * }|BetaWebSearchToolResultBlock|array{
      *   content: BetaWebSearchToolResultError|list<BetaWebSearchResultBlock>,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'web_search_tool_result',
      * }|BetaWebFetchToolResultBlock|array{
      *   content: BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'web_fetch_tool_result',
      * }|BetaCodeExecutionToolResultBlock|array{
      *   content: BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'code_execution_tool_result',
      * }|BetaBashCodeExecutionToolResultBlock|array{
      *   content: BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'bash_code_execution_tool_result',
      * }|BetaTextEditorCodeExecutionToolResultBlock|array{
      *   content: BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'text_editor_code_execution_tool_result',
      * }|BetaToolSearchToolResultBlock|array{
      *   content: BetaToolSearchToolResultError|BetaToolSearchToolSearchResultBlock,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'tool_search_tool_result',
      * }|BetaMCPToolUseBlock|array{
      *   id: string,
      *   input: array<string,mixed>,
      *   name: string,
-     *   server_name: string,
+     *   serverName: string,
      *   type?: 'mcp_tool_use',
      * }|BetaMCPToolResultBlock|array{
      *   content: string|list<BetaTextBlock>,
-     *   is_error: bool,
-     *   tool_use_id: string,
+     *   isError: bool,
+     *   toolUseID: string,
      *   type?: 'mcp_tool_result',
      * }|BetaContainerUploadBlock|array{
-     *   file_id: string, type?: 'container_upload'
+     *   fileID: string, type?: 'container_upload'
      * }> $content
      */
     public function withContent(array $content): self
@@ -420,14 +420,14 @@ final class BetaMessage implements BaseModel
      * Information about context management strategies applied during the request.
      *
      * @param BetaContextManagementResponse|array{
-     *   applied_edits: list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse>,
+     *   appliedEdits: list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse>,
      * }|null $contextManagement
      */
     public function withContextManagement(
         BetaContextManagementResponse|array|null $contextManagement
     ): self {
         $obj = clone $this;
-        $obj['context_management'] = $contextManagement;
+        $obj['contextManagement'] = $contextManagement;
 
         return $obj;
     }
@@ -461,7 +461,7 @@ final class BetaMessage implements BaseModel
     public function withStopReason(BetaStopReason|string|null $stopReason): self
     {
         $obj = clone $this;
-        $obj['stop_reason'] = $stopReason;
+        $obj['stopReason'] = $stopReason;
 
         return $obj;
     }
@@ -474,7 +474,7 @@ final class BetaMessage implements BaseModel
     public function withStopSequence(?string $stopSequence): self
     {
         $obj = clone $this;
-        $obj['stop_sequence'] = $stopSequence;
+        $obj['stopSequence'] = $stopSequence;
 
         return $obj;
     }
@@ -491,13 +491,13 @@ final class BetaMessage implements BaseModel
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      *
      * @param BetaUsage|array{
-     *   cache_creation: BetaCacheCreation|null,
-     *   cache_creation_input_tokens: int|null,
-     *   cache_read_input_tokens: int|null,
-     *   input_tokens: int,
-     *   output_tokens: int,
-     *   server_tool_use: BetaServerToolUsage|null,
-     *   service_tier: value-of<ServiceTier>|null,
+     *   cacheCreation: BetaCacheCreation|null,
+     *   cacheCreationInputTokens: int|null,
+     *   cacheReadInputTokens: int|null,
+     *   inputTokens: int,
+     *   outputTokens: int,
+     *   serverToolUse: BetaServerToolUsage|null,
+     *   serviceTier: value-of<ServiceTier>|null,
      * } $usage
      */
     public function withUsage(BetaUsage|array $usage): self

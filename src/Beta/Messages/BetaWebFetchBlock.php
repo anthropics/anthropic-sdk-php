@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaWebFetchBlockShape = array{
  *   content: BetaDocumentBlock,
- *   retrieved_at: string|null,
+ *   retrievedAt: string|null,
  *   type?: 'web_fetch_result',
  *   url: string,
  * }
@@ -31,8 +31,8 @@ final class BetaWebFetchBlock implements BaseModel
     /**
      * ISO 8601 timestamp when the content was retrieved.
      */
-    #[Required]
-    public ?string $retrieved_at;
+    #[Required('retrieved_at')]
+    public ?string $retrievedAt;
 
     /**
      * Fetched content URL.
@@ -45,7 +45,7 @@ final class BetaWebFetchBlock implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaWebFetchBlock::with(content: ..., retrieved_at: ..., url: ...)
+     * BetaWebFetchBlock::with(content: ..., retrievedAt: ..., url: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -73,13 +73,13 @@ final class BetaWebFetchBlock implements BaseModel
      */
     public static function with(
         BetaDocumentBlock|array $content,
-        ?string $retrieved_at,
+        ?string $retrievedAt,
         string $url
     ): self {
         $obj = new self;
 
         $obj['content'] = $content;
-        $obj['retrieved_at'] = $retrieved_at;
+        $obj['retrievedAt'] = $retrievedAt;
         $obj['url'] = $url;
 
         return $obj;
@@ -107,7 +107,7 @@ final class BetaWebFetchBlock implements BaseModel
     public function withRetrievedAt(?string $retrievedAt): self
     {
         $obj = clone $this;
-        $obj['retrieved_at'] = $retrievedAt;
+        $obj['retrievedAt'] = $retrievedAt;
 
         return $obj;
     }

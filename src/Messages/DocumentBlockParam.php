@@ -15,7 +15,7 @@ use Anthropic\Messages\DocumentBlockParam\Source;
  * @phpstan-type DocumentBlockParamShape = array{
  *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
  *   type?: 'document',
- *   cache_control?: CacheControlEphemeral|null,
+ *   cacheControl?: CacheControlEphemeral|null,
  *   citations?: CitationsConfigParam|null,
  *   context?: string|null,
  *   title?: string|null,
@@ -36,8 +36,8 @@ final class DocumentBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     #[Optional(nullable: true)]
     public ?CitationsConfigParam $citations;
@@ -73,20 +73,20 @@ final class DocumentBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Base64PDFSource|array{
-     *   data: string, media_type?: 'application/pdf', type?: 'base64'
+     *   data: string, mediaType?: 'application/pdf', type?: 'base64'
      * }|PlainTextSource|array{
-     *   data: string, media_type?: 'text/plain', type?: 'text'
+     *   data: string, mediaType?: 'text/plain', type?: 'text'
      * }|ContentBlockSource|array{
      *   content: string|list<TextBlockParam|ImageBlockParam>, type?: 'content'
      * }|URLPDFSource|array{type?: 'url', url: string} $source
      * @param CacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      * @param CitationsConfigParam|array{enabled?: bool|null}|null $citations
      */
     public static function with(
         Base64PDFSource|array|PlainTextSource|ContentBlockSource|URLPDFSource $source,
-        CacheControlEphemeral|array|null $cache_control = null,
+        CacheControlEphemeral|array|null $cacheControl = null,
         CitationsConfigParam|array|null $citations = null,
         ?string $context = null,
         ?string $title = null,
@@ -95,7 +95,7 @@ final class DocumentBlockParam implements BaseModel
 
         $obj['source'] = $source;
 
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
         null !== $citations && $obj['citations'] = $citations;
         null !== $context && $obj['context'] = $context;
         null !== $title && $obj['title'] = $title;
@@ -105,9 +105,9 @@ final class DocumentBlockParam implements BaseModel
 
     /**
      * @param Base64PDFSource|array{
-     *   data: string, media_type?: 'application/pdf', type?: 'base64'
+     *   data: string, mediaType?: 'application/pdf', type?: 'base64'
      * }|PlainTextSource|array{
-     *   data: string, media_type?: 'text/plain', type?: 'text'
+     *   data: string, mediaType?: 'text/plain', type?: 'text'
      * }|ContentBlockSource|array{
      *   content: string|list<TextBlockParam|ImageBlockParam>, type?: 'content'
      * }|URLPDFSource|array{type?: 'url', url: string} $source
@@ -132,7 +132,7 @@ final class DocumentBlockParam implements BaseModel
         CacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }

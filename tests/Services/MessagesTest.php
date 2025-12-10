@@ -31,7 +31,7 @@ final class MessagesTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->messages->create([
-            'max_tokens' => 1024,
+            'maxTokens' => 1024,
             'messages' => [['content' => 'Hello, world', 'role' => 'user']],
             'model' => 'claude-sonnet-4-5-20250929',
         ]);
@@ -44,47 +44,47 @@ final class MessagesTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->messages->create([
-            'max_tokens' => 1024,
+            'maxTokens' => 1024,
             'messages' => [['content' => 'Hello, world', 'role' => 'user']],
             'model' => 'claude-sonnet-4-5-20250929',
-            'metadata' => ['user_id' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
-            'service_tier' => 'auto',
-            'stop_sequences' => ['string'],
+            'metadata' => ['userID' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
+            'serviceTier' => 'auto',
+            'stopSequences' => ['string'],
             'system' => [
                 [
                     'text' => 'Today\'s date is 2024-06-01.',
                     'type' => 'text',
-                    'cache_control' => ['type' => 'ephemeral', 'ttl' => '5m'],
+                    'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                     'citations' => [
                         [
-                            'cited_text' => 'cited_text',
-                            'document_index' => 0,
-                            'document_title' => 'x',
-                            'end_char_index' => 0,
-                            'start_char_index' => 0,
+                            'citedText' => 'cited_text',
+                            'documentIndex' => 0,
+                            'documentTitle' => 'x',
+                            'endCharIndex' => 0,
+                            'startCharIndex' => 0,
                             'type' => 'char_location',
                         ],
                     ],
                 ],
             ],
             'temperature' => 1,
-            'thinking' => ['budget_tokens' => 1024, 'type' => 'enabled'],
-            'tool_choice' => ['type' => 'auto', 'disable_parallel_tool_use' => true],
+            'thinking' => ['budgetTokens' => 1024, 'type' => 'enabled'],
+            'toolChoice' => ['type' => 'auto', 'disableParallelToolUse' => true],
             'tools' => [
                 [
-                    'input_schema' => [
+                    'inputSchema' => [
                         'type' => 'object',
                         'properties' => ['location' => 'bar', 'unit' => 'bar'],
                         'required' => ['location'],
                     ],
                     'name' => 'name',
-                    'cache_control' => ['type' => 'ephemeral', 'ttl' => '5m'],
+                    'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                     'description' => 'Get the current weather in a given location',
                     'type' => 'custom',
                 ],
             ],
-            'top_k' => 5,
-            'top_p' => 0.7,
+            'topK' => 5,
+            'topP' => 0.7,
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -113,30 +113,30 @@ final class MessagesTest extends TestCase
                 [
                     'text' => 'Today\'s date is 2024-06-01.',
                     'type' => 'text',
-                    'cache_control' => ['type' => 'ephemeral', 'ttl' => '5m'],
+                    'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                     'citations' => [
                         [
-                            'cited_text' => 'cited_text',
-                            'document_index' => 0,
-                            'document_title' => 'x',
-                            'end_char_index' => 0,
-                            'start_char_index' => 0,
+                            'citedText' => 'cited_text',
+                            'documentIndex' => 0,
+                            'documentTitle' => 'x',
+                            'endCharIndex' => 0,
+                            'startCharIndex' => 0,
                             'type' => 'char_location',
                         ],
                     ],
                 ],
             ],
-            'thinking' => ['budget_tokens' => 1024, 'type' => 'enabled'],
-            'tool_choice' => ['type' => 'auto', 'disable_parallel_tool_use' => true],
+            'thinking' => ['budgetTokens' => 1024, 'type' => 'enabled'],
+            'toolChoice' => ['type' => 'auto', 'disableParallelToolUse' => true],
             'tools' => [
                 [
-                    'input_schema' => [
+                    'inputSchema' => [
                         'type' => 'object',
                         'properties' => ['location' => 'bar', 'unit' => 'bar'],
                         'required' => ['location'],
                     ],
                     'name' => 'name',
-                    'cache_control' => ['type' => 'ephemeral', 'ttl' => '5m'],
+                    'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                     'description' => 'Get the current weather in a given location',
                     'type' => 'custom',
                 ],

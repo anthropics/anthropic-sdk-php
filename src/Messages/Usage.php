@@ -11,13 +11,13 @@ use Anthropic\Messages\Usage\ServiceTier;
 
 /**
  * @phpstan-type UsageShape = array{
- *   cache_creation: CacheCreation|null,
- *   cache_creation_input_tokens: int|null,
- *   cache_read_input_tokens: int|null,
- *   input_tokens: int,
- *   output_tokens: int,
- *   server_tool_use: ServerToolUsage|null,
- *   service_tier: value-of<ServiceTier>|null,
+ *   cacheCreation: CacheCreation|null,
+ *   cacheCreationInputTokens: int|null,
+ *   cacheReadInputTokens: int|null,
+ *   inputTokens: int,
+ *   outputTokens: int,
+ *   serverToolUse: ServerToolUsage|null,
+ *   serviceTier: value-of<ServiceTier>|null,
  * }
  */
 final class Usage implements BaseModel
@@ -28,46 +28,46 @@ final class Usage implements BaseModel
     /**
      * Breakdown of cached tokens by TTL.
      */
-    #[Required]
-    public ?CacheCreation $cache_creation;
+    #[Required('cache_creation')]
+    public ?CacheCreation $cacheCreation;
 
     /**
      * The number of input tokens used to create the cache entry.
      */
-    #[Required]
-    public ?int $cache_creation_input_tokens;
+    #[Required('cache_creation_input_tokens')]
+    public ?int $cacheCreationInputTokens;
 
     /**
      * The number of input tokens read from the cache.
      */
-    #[Required]
-    public ?int $cache_read_input_tokens;
+    #[Required('cache_read_input_tokens')]
+    public ?int $cacheReadInputTokens;
 
     /**
      * The number of input tokens which were used.
      */
-    #[Required]
-    public int $input_tokens;
+    #[Required('input_tokens')]
+    public int $inputTokens;
 
     /**
      * The number of output tokens which were used.
      */
-    #[Required]
-    public int $output_tokens;
+    #[Required('output_tokens')]
+    public int $outputTokens;
 
     /**
      * The number of server tool requests.
      */
-    #[Required]
-    public ?ServerToolUsage $server_tool_use;
+    #[Required('server_tool_use')]
+    public ?ServerToolUsage $serverToolUse;
 
     /**
      * If the request used the priority, standard, or batch tier.
      *
-     * @var value-of<ServiceTier>|null $service_tier
+     * @var value-of<ServiceTier>|null $serviceTier
      */
-    #[Required(enum: ServiceTier::class)]
-    public ?string $service_tier;
+    #[Required('service_tier', enum: ServiceTier::class)]
+    public ?string $serviceTier;
 
     /**
      * `new Usage()` is missing required properties by the API.
@@ -75,13 +75,13 @@ final class Usage implements BaseModel
      * To enforce required parameters use
      * ```
      * Usage::with(
-     *   cache_creation: ...,
-     *   cache_creation_input_tokens: ...,
-     *   cache_read_input_tokens: ...,
-     *   input_tokens: ...,
-     *   output_tokens: ...,
-     *   server_tool_use: ...,
-     *   service_tier: ...,
+     *   cacheCreation: ...,
+     *   cacheCreationInputTokens: ...,
+     *   cacheReadInputTokens: ...,
+     *   inputTokens: ...,
+     *   outputTokens: ...,
+     *   serverToolUse: ...,
+     *   serviceTier: ...,
      * )
      * ```
      *
@@ -109,29 +109,29 @@ final class Usage implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param CacheCreation|array{
-     *   ephemeral_1h_input_tokens: int, ephemeral_5m_input_tokens: int
-     * }|null $cache_creation
-     * @param ServerToolUsage|array{web_search_requests: int}|null $server_tool_use
-     * @param ServiceTier|value-of<ServiceTier>|null $service_tier
+     *   ephemeral1hInputTokens: int, ephemeral5mInputTokens: int
+     * }|null $cacheCreation
+     * @param ServerToolUsage|array{webSearchRequests: int}|null $serverToolUse
+     * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
      */
     public static function with(
-        CacheCreation|array|null $cache_creation,
-        ?int $cache_creation_input_tokens,
-        ?int $cache_read_input_tokens,
-        int $input_tokens,
-        int $output_tokens,
-        ServerToolUsage|array|null $server_tool_use,
-        ServiceTier|string|null $service_tier,
+        CacheCreation|array|null $cacheCreation,
+        ?int $cacheCreationInputTokens,
+        ?int $cacheReadInputTokens,
+        int $inputTokens,
+        int $outputTokens,
+        ServerToolUsage|array|null $serverToolUse,
+        ServiceTier|string|null $serviceTier,
     ): self {
         $obj = new self;
 
-        $obj['cache_creation'] = $cache_creation;
-        $obj['cache_creation_input_tokens'] = $cache_creation_input_tokens;
-        $obj['cache_read_input_tokens'] = $cache_read_input_tokens;
-        $obj['input_tokens'] = $input_tokens;
-        $obj['output_tokens'] = $output_tokens;
-        $obj['server_tool_use'] = $server_tool_use;
-        $obj['service_tier'] = $service_tier;
+        $obj['cacheCreation'] = $cacheCreation;
+        $obj['cacheCreationInputTokens'] = $cacheCreationInputTokens;
+        $obj['cacheReadInputTokens'] = $cacheReadInputTokens;
+        $obj['inputTokens'] = $inputTokens;
+        $obj['outputTokens'] = $outputTokens;
+        $obj['serverToolUse'] = $serverToolUse;
+        $obj['serviceTier'] = $serviceTier;
 
         return $obj;
     }
@@ -140,14 +140,14 @@ final class Usage implements BaseModel
      * Breakdown of cached tokens by TTL.
      *
      * @param CacheCreation|array{
-     *   ephemeral_1h_input_tokens: int, ephemeral_5m_input_tokens: int
+     *   ephemeral1hInputTokens: int, ephemeral5mInputTokens: int
      * }|null $cacheCreation
      */
     public function withCacheCreation(
         CacheCreation|array|null $cacheCreation
     ): self {
         $obj = clone $this;
-        $obj['cache_creation'] = $cacheCreation;
+        $obj['cacheCreation'] = $cacheCreation;
 
         return $obj;
     }
@@ -159,7 +159,7 @@ final class Usage implements BaseModel
         ?int $cacheCreationInputTokens
     ): self {
         $obj = clone $this;
-        $obj['cache_creation_input_tokens'] = $cacheCreationInputTokens;
+        $obj['cacheCreationInputTokens'] = $cacheCreationInputTokens;
 
         return $obj;
     }
@@ -170,7 +170,7 @@ final class Usage implements BaseModel
     public function withCacheReadInputTokens(?int $cacheReadInputTokens): self
     {
         $obj = clone $this;
-        $obj['cache_read_input_tokens'] = $cacheReadInputTokens;
+        $obj['cacheReadInputTokens'] = $cacheReadInputTokens;
 
         return $obj;
     }
@@ -181,7 +181,7 @@ final class Usage implements BaseModel
     public function withInputTokens(int $inputTokens): self
     {
         $obj = clone $this;
-        $obj['input_tokens'] = $inputTokens;
+        $obj['inputTokens'] = $inputTokens;
 
         return $obj;
     }
@@ -192,7 +192,7 @@ final class Usage implements BaseModel
     public function withOutputTokens(int $outputTokens): self
     {
         $obj = clone $this;
-        $obj['output_tokens'] = $outputTokens;
+        $obj['outputTokens'] = $outputTokens;
 
         return $obj;
     }
@@ -200,13 +200,13 @@ final class Usage implements BaseModel
     /**
      * The number of server tool requests.
      *
-     * @param ServerToolUsage|array{web_search_requests: int}|null $serverToolUse
+     * @param ServerToolUsage|array{webSearchRequests: int}|null $serverToolUse
      */
     public function withServerToolUse(
         ServerToolUsage|array|null $serverToolUse
     ): self {
         $obj = clone $this;
-        $obj['server_tool_use'] = $serverToolUse;
+        $obj['serverToolUse'] = $serverToolUse;
 
         return $obj;
     }
@@ -219,7 +219,7 @@ final class Usage implements BaseModel
     public function withServiceTier(ServiceTier|string|null $serviceTier): self
     {
         $obj = clone $this;
-        $obj['service_tier'] = $serviceTier;
+        $obj['serviceTier'] = $serviceTier;
 
         return $obj;
     }

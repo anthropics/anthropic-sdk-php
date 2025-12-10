@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaWebFetchToolResultBlockShape = array{
  *   content: BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock,
- *   tool_use_id: string,
+ *   toolUseID: string,
  *   type?: 'web_fetch_tool_result',
  * }
  */
@@ -27,15 +27,15 @@ final class BetaWebFetchToolResultBlock implements BaseModel
     #[Required]
     public BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock $content;
 
-    #[Required]
-    public string $tool_use_id;
+    #[Required('tool_use_id')]
+    public string $toolUseID;
 
     /**
      * `new BetaWebFetchToolResultBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaWebFetchToolResultBlock::with(content: ..., tool_use_id: ...)
+     * BetaWebFetchToolResultBlock::with(content: ..., toolUseID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -55,34 +55,34 @@ final class BetaWebFetchToolResultBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaWebFetchToolResultErrorBlock|array{
-     *   error_code: value-of<BetaWebFetchToolResultErrorCode>,
+     *   errorCode: value-of<BetaWebFetchToolResultErrorCode>,
      *   type?: 'web_fetch_tool_result_error',
      * }|BetaWebFetchBlock|array{
      *   content: BetaDocumentBlock,
-     *   retrieved_at: string|null,
+     *   retrievedAt: string|null,
      *   type?: 'web_fetch_result',
      *   url: string,
      * } $content
      */
     public static function with(
         BetaWebFetchToolResultErrorBlock|array|BetaWebFetchBlock $content,
-        string $tool_use_id,
+        string $toolUseID,
     ): self {
         $obj = new self;
 
         $obj['content'] = $content;
-        $obj['tool_use_id'] = $tool_use_id;
+        $obj['toolUseID'] = $toolUseID;
 
         return $obj;
     }
 
     /**
      * @param BetaWebFetchToolResultErrorBlock|array{
-     *   error_code: value-of<BetaWebFetchToolResultErrorCode>,
+     *   errorCode: value-of<BetaWebFetchToolResultErrorCode>,
      *   type?: 'web_fetch_tool_result_error',
      * }|BetaWebFetchBlock|array{
      *   content: BetaDocumentBlock,
-     *   retrieved_at: string|null,
+     *   retrievedAt: string|null,
      *   type?: 'web_fetch_result',
      *   url: string,
      * } $content
@@ -99,7 +99,7 @@ final class BetaWebFetchToolResultBlock implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj['tool_use_id'] = $toolUseID;
+        $obj['toolUseID'] = $toolUseID;
 
         return $obj;
     }

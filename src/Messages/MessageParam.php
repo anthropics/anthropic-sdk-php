@@ -58,16 +58,16 @@ final class MessageParam implements BaseModel
      * @param string|list<TextBlockParam|array{
      *   text: string,
      *   type?: 'text',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }|ImageBlockParam|array{
      *   source: Base64ImageSource|URLImageSource,
      *   type?: 'image',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|DocumentBlockParam|array{
      *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
      *   type?: 'document',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: CitationsConfigParam|null,
      *   context?: string|null,
      *   title?: string|null,
@@ -76,7 +76,7 @@ final class MessageParam implements BaseModel
      *   source: string,
      *   title: string,
      *   type?: 'search_result',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: CitationsConfigParam|null,
      * }|ThinkingBlockParam|array{
      *   signature: string, thinking: string, type?: 'thinking'
@@ -87,24 +87,24 @@ final class MessageParam implements BaseModel
      *   input: array<string,mixed>,
      *   name: string,
      *   type?: 'tool_use',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|ToolResultBlockParam|array{
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'tool_result',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   content?: string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam>|null,
-     *   is_error?: bool|null,
+     *   isError?: bool|null,
      * }|ServerToolUseBlockParam|array{
      *   id: string,
      *   input: array<string,mixed>,
      *   name?: 'web_search',
      *   type?: 'server_tool_use',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|WebSearchToolResultBlockParam|array{
      *   content: list<WebSearchResultBlockParam>|WebSearchToolRequestError,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'web_search_tool_result',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }> $content
      * @param Role|value-of<Role> $role
      */
@@ -122,16 +122,16 @@ final class MessageParam implements BaseModel
      * @param string|list<TextBlockParam|array{
      *   text: string,
      *   type?: 'text',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }|ImageBlockParam|array{
      *   source: Base64ImageSource|URLImageSource,
      *   type?: 'image',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|DocumentBlockParam|array{
      *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
      *   type?: 'document',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: CitationsConfigParam|null,
      *   context?: string|null,
      *   title?: string|null,
@@ -140,7 +140,7 @@ final class MessageParam implements BaseModel
      *   source: string,
      *   title: string,
      *   type?: 'search_result',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: CitationsConfigParam|null,
      * }|ThinkingBlockParam|array{
      *   signature: string, thinking: string, type?: 'thinking'
@@ -151,24 +151,24 @@ final class MessageParam implements BaseModel
      *   input: array<string,mixed>,
      *   name: string,
      *   type?: 'tool_use',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|ToolResultBlockParam|array{
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'tool_result',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   content?: string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam>|null,
-     *   is_error?: bool|null,
+     *   isError?: bool|null,
      * }|ServerToolUseBlockParam|array{
      *   id: string,
      *   input: array<string,mixed>,
      *   name?: 'web_search',
      *   type?: 'server_tool_use',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|WebSearchToolResultBlockParam|array{
      *   content: list<WebSearchResultBlockParam>|WebSearchToolRequestError,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'web_search_tool_result',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }> $content
      */
     public function withContent(string|array $content): self

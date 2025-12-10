@@ -15,9 +15,9 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaCodeExecutionTool20250825Shape = array{
  *   name?: 'code_execution',
  *   type?: 'code_execution_20250825',
- *   allowed_callers?: list<value-of<AllowedCaller>>|null,
- *   cache_control?: BetaCacheControlEphemeral|null,
- *   defer_loading?: bool|null,
+ *   allowedCallers?: list<value-of<AllowedCaller>>|null,
+ *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   deferLoading?: bool|null,
  *   strict?: bool|null,
  * }
  */
@@ -40,21 +40,21 @@ final class BetaCodeExecutionTool20250825 implements BaseModel
     #[Required]
     public string $type = 'code_execution_20250825';
 
-    /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
-    #[Optional(list: AllowedCaller::class)]
-    public ?array $allowed_callers;
+    /** @var list<value-of<AllowedCaller>>|null $allowedCallers */
+    #[Optional('allowed_callers', list: AllowedCaller::class)]
+    public ?array $allowedCallers;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
      */
-    #[Optional]
-    public ?bool $defer_loading;
+    #[Optional('defer_loading')]
+    public ?bool $deferLoading;
 
     #[Optional]
     public ?bool $strict;
@@ -69,22 +69,22 @@ final class BetaCodeExecutionTool20250825 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
      * @param BetaCacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      */
     public static function with(
-        ?array $allowed_callers = null,
-        BetaCacheControlEphemeral|array|null $cache_control = null,
-        ?bool $defer_loading = null,
+        ?array $allowedCallers = null,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
+        ?bool $deferLoading = null,
         ?bool $strict = null,
     ): self {
         $obj = new self;
 
-        null !== $allowed_callers && $obj['allowed_callers'] = $allowed_callers;
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
-        null !== $defer_loading && $obj['defer_loading'] = $defer_loading;
+        null !== $allowedCallers && $obj['allowedCallers'] = $allowedCallers;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
+        null !== $deferLoading && $obj['deferLoading'] = $deferLoading;
         null !== $strict && $obj['strict'] = $strict;
 
         return $obj;
@@ -96,7 +96,7 @@ final class BetaCodeExecutionTool20250825 implements BaseModel
     public function withAllowedCallers(array $allowedCallers): self
     {
         $obj = clone $this;
-        $obj['allowed_callers'] = $allowedCallers;
+        $obj['allowedCallers'] = $allowedCallers;
 
         return $obj;
     }
@@ -112,7 +112,7 @@ final class BetaCodeExecutionTool20250825 implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }
@@ -123,7 +123,7 @@ final class BetaCodeExecutionTool20250825 implements BaseModel
     public function withDeferLoading(bool $deferLoading): self
     {
         $obj = clone $this;
-        $obj['defer_loading'] = $deferLoading;
+        $obj['deferLoading'] = $deferLoading;
 
         return $obj;
     }

@@ -38,7 +38,7 @@ $client = new Client(
 );
 
 $message = $client->messages->create([
-  'max_tokens' => 1024,
+  'maxTokens' => 1024,
   'messages' => [['role' => 'user', 'content' => 'Hello, Claude']],
   'model' => 'claude-sonnet-4-5-20250929',
 ]);
@@ -67,7 +67,7 @@ $client = new Client(
 );
 
 $stream = $client->messages->createStream([
-  'max_tokens' => 1024,
+  'maxTokens' => 1024,
   'messages' => [['role' => 'user', 'content' => 'Hello, Claude']],
   'model' => 'claude-sonnet-4-5-20250929',
 ]);
@@ -117,7 +117,7 @@ use Anthropic\Core\Exceptions\APIConnectionException;
 
 try {
   $message = $client->messages->create([
-    'max_tokens' => 1024,
+    'maxTokens' => 1024,
     'messages' => [['role' => 'user', 'content' => 'Hello, Claude']],
     'model' => 'claude-sonnet-4-5-20250929',
   ]);
@@ -168,7 +168,7 @@ $client = new Client(maxRetries: 0);
 // Or, configure per-request:
 $result = $client->messages->create(
   [
-    'max_tokens' => 1024,
+    'maxTokens' => 1024,
     'messages' => [['role' => 'user', 'content' => 'Hello, Claude']],
     'model' => 'claude-sonnet-4-5-20250929',
   ],
@@ -193,7 +193,7 @@ use Anthropic\RequestOptions;
 
 $message = $client->messages->create(
   [
-    'max_tokens' => 1024,
+    'maxTokens' => 1024,
     'messages' => [['role' => 'user', 'content' => 'Hello, Claude']],
     'model' => 'claude-sonnet-4-5-20250929',
   ],

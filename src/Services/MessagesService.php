@@ -52,26 +52,26 @@ final class MessagesService implements MessagesContract
      * Learn more about the Messages API in our [user guide](https://docs.claude.com/en/docs/initial-setup)
      *
      * @param array{
-     *   max_tokens: int,
+     *   maxTokens: int,
      *   messages: list<array{
      *     content: string|list<array<string,mixed>>, role: 'user'|'assistant'|Role
      *   }>,
      *   model: string|'claude-opus-4-5-20251101'|'claude-opus-4-5'|'claude-3-7-sonnet-latest'|'claude-3-7-sonnet-20250219'|'claude-3-5-haiku-latest'|'claude-3-5-haiku-20241022'|'claude-haiku-4-5'|'claude-haiku-4-5-20251001'|'claude-sonnet-4-20250514'|'claude-sonnet-4-0'|'claude-4-sonnet-20250514'|'claude-sonnet-4-5'|'claude-sonnet-4-5-20250929'|'claude-opus-4-0'|'claude-opus-4-20250514'|'claude-4-opus-20250514'|'claude-opus-4-1-20250805'|'claude-3-opus-latest'|'claude-3-opus-20240229'|'claude-3-haiku-20240307'|Model,
-     *   metadata?: array{user_id?: string|null},
-     *   service_tier?: 'auto'|'standard_only'|ServiceTier,
-     *   stop_sequences?: list<string>,
+     *   metadata?: array{userID?: string|null},
+     *   serviceTier?: 'auto'|'standard_only'|ServiceTier,
+     *   stopSequences?: list<string>,
      *   system?: string|list<array{
      *     text: string,
      *     type?: 'text',
-     *     cache_control?: array<mixed>|null,
+     *     cacheControl?: array<mixed>|null,
      *     citations?: list<array<string,mixed>>|null,
      *   }>,
      *   temperature?: float,
      *   thinking?: array<string,mixed>,
-     *   tool_choice?: array<string,mixed>,
+     *   toolChoice?: array<string,mixed>,
      *   tools?: list<array<string,mixed>>,
-     *   top_k?: int,
-     *   top_p?: float,
+     *   topK?: int,
+     *   topP?: float,
      * }|MessageCreateParams $params
      *
      * @throws APIException
@@ -101,26 +101,26 @@ final class MessagesService implements MessagesContract
      * @api
      *
      * @param array{
-     *   max_tokens: int,
+     *   maxTokens: int,
      *   messages: list<array{
      *     content: string|list<array<string,mixed>>, role: 'user'|'assistant'|Role
      *   }>,
      *   model: string|'claude-opus-4-5-20251101'|'claude-opus-4-5'|'claude-3-7-sonnet-latest'|'claude-3-7-sonnet-20250219'|'claude-3-5-haiku-latest'|'claude-3-5-haiku-20241022'|'claude-haiku-4-5'|'claude-haiku-4-5-20251001'|'claude-sonnet-4-20250514'|'claude-sonnet-4-0'|'claude-4-sonnet-20250514'|'claude-sonnet-4-5'|'claude-sonnet-4-5-20250929'|'claude-opus-4-0'|'claude-opus-4-20250514'|'claude-4-opus-20250514'|'claude-opus-4-1-20250805'|'claude-3-opus-latest'|'claude-3-opus-20240229'|'claude-3-haiku-20240307'|Model,
-     *   metadata?: array{user_id?: string|null},
-     *   service_tier?: 'auto'|'standard_only'|ServiceTier,
-     *   stop_sequences?: list<string>,
+     *   metadata?: array{userID?: string|null},
+     *   serviceTier?: 'auto'|'standard_only'|ServiceTier,
+     *   stopSequences?: list<string>,
      *   system?: string|list<array{
      *     text: string,
      *     type?: 'text',
-     *     cache_control?: array<mixed>|null,
+     *     cacheControl?: array<mixed>|null,
      *     citations?: list<array<string,mixed>>|null,
      *   }>,
      *   temperature?: float,
      *   thinking?: array<string,mixed>,
-     *   tool_choice?: array<string,mixed>,
+     *   toolChoice?: array<string,mixed>,
      *   tools?: list<array<string,mixed>>,
-     *   top_k?: int,
-     *   top_p?: float,
+     *   topK?: int,
+     *   topP?: float,
      * }|MessageCreateParams $params
      *
      * @return BaseStream<RawMessageStartEvent|RawMessageDeltaEvent|RawMessageStopEvent|RawContentBlockStartEvent|RawContentBlockDeltaEvent|RawContentBlockStopEvent,>
@@ -168,11 +168,11 @@ final class MessagesService implements MessagesContract
      *   system?: string|list<array{
      *     text: string,
      *     type?: 'text',
-     *     cache_control?: array<mixed>|null,
+     *     cacheControl?: array<mixed>|null,
      *     citations?: list<array<string,mixed>>|null,
      *   }>,
      *   thinking?: array<string,mixed>,
-     *   tool_choice?: array<string,mixed>,
+     *   toolChoice?: array<string,mixed>,
      *   tools?: list<array<string,mixed>>,
      * }|MessageCountTokensParams $params
      *

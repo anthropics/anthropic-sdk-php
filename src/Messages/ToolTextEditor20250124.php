@@ -14,7 +14,7 @@ use Anthropic\Messages\CacheControlEphemeral\TTL;
  * @phpstan-type ToolTextEditor20250124Shape = array{
  *   name?: 'str_replace_editor',
  *   type?: 'text_editor_20250124',
- *   cache_control?: CacheControlEphemeral|null,
+ *   cacheControl?: CacheControlEphemeral|null,
  * }
  */
 final class ToolTextEditor20250124 implements BaseModel
@@ -39,8 +39,8 @@ final class ToolTextEditor20250124 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     public function __construct()
     {
@@ -54,14 +54,14 @@ final class ToolTextEditor20250124 implements BaseModel
      *
      * @param CacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      */
     public static function with(
-        CacheControlEphemeral|array|null $cache_control = null
+        CacheControlEphemeral|array|null $cacheControl = null
     ): self {
         $obj = new self;
 
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }
@@ -77,7 +77,7 @@ final class ToolTextEditor20250124 implements BaseModel
         CacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }

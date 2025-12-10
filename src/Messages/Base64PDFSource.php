@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type Base64PDFSourceShape = array{
- *   data: string, media_type?: 'application/pdf', type?: 'base64'
+ *   data: string, mediaType?: 'application/pdf', type?: 'base64'
  * }
  */
 final class Base64PDFSource implements BaseModel
@@ -18,9 +18,9 @@ final class Base64PDFSource implements BaseModel
     /** @use SdkModel<Base64PDFSourceShape> */
     use SdkModel;
 
-    /** @var 'application/pdf' $media_type */
-    #[Required]
-    public string $media_type = 'application/pdf';
+    /** @var 'application/pdf' $mediaType */
+    #[Required('media_type')]
+    public string $mediaType = 'application/pdf';
 
     /** @var 'base64' $type */
     #[Required]

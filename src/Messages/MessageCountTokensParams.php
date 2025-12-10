@@ -33,50 +33,50 @@ use Anthropic\Messages\WebSearchTool20250305\UserLocation;
  *   system?: string|list<TextBlockParam|array{
  *     text: string,
  *     type?: 'text',
- *     cache_control?: CacheControlEphemeral|null,
+ *     cacheControl?: CacheControlEphemeral|null,
  *     citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
  *   }>,
  *   thinking?: ThinkingConfigEnabled|array{
- *     budget_tokens: int, type?: 'enabled'
+ *     budgetTokens: int, type?: 'enabled'
  *   }|ThinkingConfigDisabled|array{type?: 'disabled'},
- *   tool_choice?: ToolChoiceAuto|array{
- *     type?: 'auto', disable_parallel_tool_use?: bool|null
+ *   toolChoice?: ToolChoiceAuto|array{
+ *     type?: 'auto', disableParallelToolUse?: bool|null
  *   }|ToolChoiceAny|array{
- *     type?: 'any', disable_parallel_tool_use?: bool|null
+ *     type?: 'any', disableParallelToolUse?: bool|null
  *   }|ToolChoiceTool|array{
- *     name: string, type?: 'tool', disable_parallel_tool_use?: bool|null
+ *     name: string, type?: 'tool', disableParallelToolUse?: bool|null
  *   }|ToolChoiceNone|array{type?: 'none'},
  *   tools?: list<Tool|array{
- *     input_schema: InputSchema,
+ *     inputSchema: InputSchema,
  *     name: string,
- *     cache_control?: CacheControlEphemeral|null,
+ *     cacheControl?: CacheControlEphemeral|null,
  *     description?: string|null,
  *     type?: value-of<Type>|null,
  *   }|ToolBash20250124|array{
  *     name?: 'bash',
  *     type?: 'bash_20250124',
- *     cache_control?: CacheControlEphemeral|null,
+ *     cacheControl?: CacheControlEphemeral|null,
  *   }|ToolTextEditor20250124|array{
  *     name?: 'str_replace_editor',
  *     type?: 'text_editor_20250124',
- *     cache_control?: CacheControlEphemeral|null,
+ *     cacheControl?: CacheControlEphemeral|null,
  *   }|ToolTextEditor20250429|array{
  *     name?: 'str_replace_based_edit_tool',
  *     type?: 'text_editor_20250429',
- *     cache_control?: CacheControlEphemeral|null,
+ *     cacheControl?: CacheControlEphemeral|null,
  *   }|ToolTextEditor20250728|array{
  *     name?: 'str_replace_based_edit_tool',
  *     type?: 'text_editor_20250728',
- *     cache_control?: CacheControlEphemeral|null,
- *     max_characters?: int|null,
+ *     cacheControl?: CacheControlEphemeral|null,
+ *     maxCharacters?: int|null,
  *   }|WebSearchTool20250305|array{
  *     name?: 'web_search',
  *     type?: 'web_search_20250305',
- *     allowed_domains?: list<string>|null,
- *     blocked_domains?: list<string>|null,
- *     cache_control?: CacheControlEphemeral|null,
- *     max_uses?: int|null,
- *     user_location?: UserLocation|null,
+ *     allowedDomains?: list<string>|null,
+ *     blockedDomains?: list<string>|null,
+ *     cacheControl?: CacheControlEphemeral|null,
+ *     maxUses?: int|null,
+ *     userLocation?: UserLocation|null,
  *   }>,
  * }
  */
@@ -172,8 +172,8 @@ final class MessageCountTokensParams implements BaseModel
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
-    #[Optional(union: ToolChoice::class)]
-    public ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $tool_choice;
+    #[Optional('tool_choice', union: ToolChoice::class)]
+    public ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice;
 
     /**
      * Definitions of tools that the model may use.
@@ -274,50 +274,50 @@ final class MessageCountTokensParams implements BaseModel
      * @param string|list<TextBlockParam|array{
      *   text: string,
      *   type?: 'text',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }> $system
      * @param ThinkingConfigEnabled|array{
-     *   budget_tokens: int, type?: 'enabled'
+     *   budgetTokens: int, type?: 'enabled'
      * }|ThinkingConfigDisabled|array{type?: 'disabled'} $thinking
      * @param ToolChoiceAuto|array{
-     *   type?: 'auto', disable_parallel_tool_use?: bool|null
+     *   type?: 'auto', disableParallelToolUse?: bool|null
      * }|ToolChoiceAny|array{
-     *   type?: 'any', disable_parallel_tool_use?: bool|null
+     *   type?: 'any', disableParallelToolUse?: bool|null
      * }|ToolChoiceTool|array{
-     *   name: string, type?: 'tool', disable_parallel_tool_use?: bool|null
-     * }|ToolChoiceNone|array{type?: 'none'} $tool_choice
+     *   name: string, type?: 'tool', disableParallelToolUse?: bool|null
+     * }|ToolChoiceNone|array{type?: 'none'} $toolChoice
      * @param list<Tool|array{
-     *   input_schema: InputSchema,
+     *   inputSchema: InputSchema,
      *   name: string,
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   description?: string|null,
      *   type?: value-of<Type>|null,
      * }|ToolBash20250124|array{
      *   name?: 'bash',
      *   type?: 'bash_20250124',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|ToolTextEditor20250124|array{
      *   name?: 'str_replace_editor',
      *   type?: 'text_editor_20250124',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|ToolTextEditor20250429|array{
      *   name?: 'str_replace_based_edit_tool',
      *   type?: 'text_editor_20250429',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|ToolTextEditor20250728|array{
      *   name?: 'str_replace_based_edit_tool',
      *   type?: 'text_editor_20250728',
-     *   cache_control?: CacheControlEphemeral|null,
-     *   max_characters?: int|null,
+     *   cacheControl?: CacheControlEphemeral|null,
+     *   maxCharacters?: int|null,
      * }|WebSearchTool20250305|array{
      *   name?: 'web_search',
      *   type?: 'web_search_20250305',
-     *   allowed_domains?: list<string>|null,
-     *   blocked_domains?: list<string>|null,
-     *   cache_control?: CacheControlEphemeral|null,
-     *   max_uses?: int|null,
-     *   user_location?: UserLocation|null,
+     *   allowedDomains?: list<string>|null,
+     *   blockedDomains?: list<string>|null,
+     *   cacheControl?: CacheControlEphemeral|null,
+     *   maxUses?: int|null,
+     *   userLocation?: UserLocation|null,
      * }> $tools
      */
     public static function with(
@@ -325,7 +325,7 @@ final class MessageCountTokensParams implements BaseModel
         string|Model $model,
         string|array|null $system = null,
         ThinkingConfigEnabled|array|ThinkingConfigDisabled|null $thinking = null,
-        ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $tool_choice = null,
+        ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
     ): self {
         $obj = new self;
@@ -335,7 +335,7 @@ final class MessageCountTokensParams implements BaseModel
 
         null !== $system && $obj['system'] = $system;
         null !== $thinking && $obj['thinking'] = $thinking;
-        null !== $tool_choice && $obj['tool_choice'] = $tool_choice;
+        null !== $toolChoice && $obj['toolChoice'] = $toolChoice;
         null !== $tools && $obj['tools'] = $tools;
 
         return $obj;
@@ -423,7 +423,7 @@ final class MessageCountTokensParams implements BaseModel
      * @param string|list<TextBlockParam|array{
      *   text: string,
      *   type?: 'text',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
      * }> $system
      */
@@ -443,7 +443,7 @@ final class MessageCountTokensParams implements BaseModel
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      *
      * @param ThinkingConfigEnabled|array{
-     *   budget_tokens: int, type?: 'enabled'
+     *   budgetTokens: int, type?: 'enabled'
      * }|ThinkingConfigDisabled|array{type?: 'disabled'} $thinking
      */
     public function withThinking(
@@ -459,18 +459,18 @@ final class MessageCountTokensParams implements BaseModel
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      *
      * @param ToolChoiceAuto|array{
-     *   type?: 'auto', disable_parallel_tool_use?: bool|null
+     *   type?: 'auto', disableParallelToolUse?: bool|null
      * }|ToolChoiceAny|array{
-     *   type?: 'any', disable_parallel_tool_use?: bool|null
+     *   type?: 'any', disableParallelToolUse?: bool|null
      * }|ToolChoiceTool|array{
-     *   name: string, type?: 'tool', disable_parallel_tool_use?: bool|null
+     *   name: string, type?: 'tool', disableParallelToolUse?: bool|null
      * }|ToolChoiceNone|array{type?: 'none'} $toolChoice
      */
     public function withToolChoice(
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone $toolChoice
     ): self {
         $obj = clone $this;
-        $obj['tool_choice'] = $toolChoice;
+        $obj['toolChoice'] = $toolChoice;
 
         return $obj;
     }
@@ -539,36 +539,36 @@ final class MessageCountTokensParams implements BaseModel
      * See our [guide](https://docs.claude.com/en/docs/tool-use) for more details.
      *
      * @param list<Tool|array{
-     *   input_schema: InputSchema,
+     *   inputSchema: InputSchema,
      *   name: string,
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      *   description?: string|null,
      *   type?: value-of<Type>|null,
      * }|ToolBash20250124|array{
      *   name?: 'bash',
      *   type?: 'bash_20250124',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|ToolTextEditor20250124|array{
      *   name?: 'str_replace_editor',
      *   type?: 'text_editor_20250124',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|ToolTextEditor20250429|array{
      *   name?: 'str_replace_based_edit_tool',
      *   type?: 'text_editor_20250429',
-     *   cache_control?: CacheControlEphemeral|null,
+     *   cacheControl?: CacheControlEphemeral|null,
      * }|ToolTextEditor20250728|array{
      *   name?: 'str_replace_based_edit_tool',
      *   type?: 'text_editor_20250728',
-     *   cache_control?: CacheControlEphemeral|null,
-     *   max_characters?: int|null,
+     *   cacheControl?: CacheControlEphemeral|null,
+     *   maxCharacters?: int|null,
      * }|WebSearchTool20250305|array{
      *   name?: 'web_search',
      *   type?: 'web_search_20250305',
-     *   allowed_domains?: list<string>|null,
-     *   blocked_domains?: list<string>|null,
-     *   cache_control?: CacheControlEphemeral|null,
-     *   max_uses?: int|null,
-     *   user_location?: UserLocation|null,
+     *   allowedDomains?: list<string>|null,
+     *   blockedDomains?: list<string>|null,
+     *   cacheControl?: CacheControlEphemeral|null,
+     *   maxUses?: int|null,
+     *   userLocation?: UserLocation|null,
      * }> $tools
      */
     public function withTools(array $tools): self

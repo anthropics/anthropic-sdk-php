@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaErrorResponseShape = array{
  *   error: BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError,
- *   request_id: string|null,
+ *   requestID: string|null,
  *   type?: 'error',
  * }
  */
@@ -27,15 +27,15 @@ final class BetaErrorResponse implements BaseModel
     #[Required(union: BetaError::class)]
     public BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error;
 
-    #[Required]
-    public ?string $request_id;
+    #[Required('request_id')]
+    public ?string $requestID;
 
     /**
      * `new BetaErrorResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaErrorResponse::with(error: ..., request_id: ...)
+     * BetaErrorResponse::with(error: ..., requestID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -74,12 +74,12 @@ final class BetaErrorResponse implements BaseModel
      */
     public static function with(
         BetaInvalidRequestError|array|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error,
-        ?string $request_id,
+        ?string $requestID,
     ): self {
         $obj = new self;
 
         $obj['error'] = $error;
-        $obj['request_id'] = $request_id;
+        $obj['requestID'] = $requestID;
 
         return $obj;
     }
@@ -115,7 +115,7 @@ final class BetaErrorResponse implements BaseModel
     public function withRequestID(?string $requestID): self
     {
         $obj = clone $this;
-        $obj['request_id'] = $requestID;
+        $obj['requestID'] = $requestID;
 
         return $obj;
     }

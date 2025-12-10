@@ -12,8 +12,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaMCPToolResultBlockShape = array{
  *   content: string|list<BetaTextBlock>,
- *   is_error: bool,
- *   tool_use_id: string,
+ *   isError: bool,
+ *   toolUseID: string,
  *   type?: 'mcp_tool_result',
  * }
  */
@@ -30,18 +30,18 @@ final class BetaMCPToolResultBlock implements BaseModel
     #[Required(union: Content::class)]
     public string|array $content;
 
-    #[Required]
-    public bool $is_error;
+    #[Required('is_error')]
+    public bool $isError;
 
-    #[Required]
-    public string $tool_use_id;
+    #[Required('tool_use_id')]
+    public string $toolUseID;
 
     /**
      * `new BetaMCPToolResultBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaMCPToolResultBlock::with(content: ..., is_error: ..., tool_use_id: ...)
+     * BetaMCPToolResultBlock::with(content: ..., isError: ..., toolUseID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -71,14 +71,14 @@ final class BetaMCPToolResultBlock implements BaseModel
      */
     public static function with(
         string|array $content,
-        string $tool_use_id,
-        bool $is_error = false
+        string $toolUseID,
+        bool $isError = false
     ): self {
         $obj = new self;
 
         $obj['content'] = $content;
-        $obj['is_error'] = $is_error;
-        $obj['tool_use_id'] = $tool_use_id;
+        $obj['isError'] = $isError;
+        $obj['toolUseID'] = $toolUseID;
 
         return $obj;
     }
@@ -101,7 +101,7 @@ final class BetaMCPToolResultBlock implements BaseModel
     public function withIsError(bool $isError): self
     {
         $obj = clone $this;
-        $obj['is_error'] = $isError;
+        $obj['isError'] = $isError;
 
         return $obj;
     }
@@ -109,7 +109,7 @@ final class BetaMCPToolResultBlock implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj['tool_use_id'] = $toolUseID;
+        $obj['toolUseID'] = $toolUseID;
 
         return $obj;
     }

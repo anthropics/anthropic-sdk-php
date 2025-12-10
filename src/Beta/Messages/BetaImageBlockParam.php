@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaImageBlockParamShape = array{
  *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource,
  *   type?: 'image',
- *   cache_control?: BetaCacheControlEphemeral|null,
+ *   cacheControl?: BetaCacheControlEphemeral|null,
  * }
  */
 final class BetaImageBlockParam implements BaseModel
@@ -34,8 +34,8 @@ final class BetaImageBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * `new BetaImageBlockParam()` is missing required properties by the API.
@@ -62,32 +62,32 @@ final class BetaImageBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaBase64ImageSource|array{
-     *   data: string, media_type: value-of<MediaType>, type?: 'base64'
+     *   data: string, mediaType: value-of<MediaType>, type?: 'base64'
      * }|BetaURLImageSource|array{type?: 'url', url: string}|BetaFileImageSource|array{
-     *   file_id: string, type?: 'file'
+     *   fileID: string, type?: 'file'
      * } $source
      * @param BetaCacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      */
     public static function with(
         BetaBase64ImageSource|array|BetaURLImageSource|BetaFileImageSource $source,
-        BetaCacheControlEphemeral|array|null $cache_control = null,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
     ): self {
         $obj = new self;
 
         $obj['source'] = $source;
 
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }
 
     /**
      * @param BetaBase64ImageSource|array{
-     *   data: string, media_type: value-of<MediaType>, type?: 'base64'
+     *   data: string, mediaType: value-of<MediaType>, type?: 'base64'
      * }|BetaURLImageSource|array{type?: 'url', url: string}|BetaFileImageSource|array{
-     *   file_id: string, type?: 'file'
+     *   fileID: string, type?: 'file'
      * } $source
      */
     public function withSource(
@@ -110,7 +110,7 @@ final class BetaImageBlockParam implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }

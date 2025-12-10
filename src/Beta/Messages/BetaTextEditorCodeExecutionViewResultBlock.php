@@ -12,10 +12,10 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaTextEditorCodeExecutionViewResultBlockShape = array{
  *   content: string,
- *   file_type: value-of<FileType>,
- *   num_lines: int|null,
- *   start_line: int|null,
- *   total_lines: int|null,
+ *   fileType: value-of<FileType>,
+ *   numLines: int|null,
+ *   startLine: int|null,
+ *   totalLines: int|null,
  *   type?: 'text_editor_code_execution_view_result',
  * }
  */
@@ -31,18 +31,18 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
     #[Required]
     public string $content;
 
-    /** @var value-of<FileType> $file_type */
-    #[Required(enum: FileType::class)]
-    public string $file_type;
+    /** @var value-of<FileType> $fileType */
+    #[Required('file_type', enum: FileType::class)]
+    public string $fileType;
 
-    #[Required]
-    public ?int $num_lines;
+    #[Required('num_lines')]
+    public ?int $numLines;
 
-    #[Required]
-    public ?int $start_line;
+    #[Required('start_line')]
+    public ?int $startLine;
 
-    #[Required]
-    public ?int $total_lines;
+    #[Required('total_lines')]
+    public ?int $totalLines;
 
     /**
      * `new BetaTextEditorCodeExecutionViewResultBlock()` is missing required properties by the API.
@@ -50,11 +50,7 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaTextEditorCodeExecutionViewResultBlock::with(
-     *   content: ...,
-     *   file_type: ...,
-     *   num_lines: ...,
-     *   start_line: ...,
-     *   total_lines: ...,
+     *   content: ..., fileType: ..., numLines: ..., startLine: ..., totalLines: ...
      * )
      * ```
      *
@@ -79,22 +75,22 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param FileType|value-of<FileType> $file_type
+     * @param FileType|value-of<FileType> $fileType
      */
     public static function with(
         string $content,
-        FileType|string $file_type,
-        ?int $num_lines,
-        ?int $start_line,
-        ?int $total_lines,
+        FileType|string $fileType,
+        ?int $numLines,
+        ?int $startLine,
+        ?int $totalLines,
     ): self {
         $obj = new self;
 
         $obj['content'] = $content;
-        $obj['file_type'] = $file_type;
-        $obj['num_lines'] = $num_lines;
-        $obj['start_line'] = $start_line;
-        $obj['total_lines'] = $total_lines;
+        $obj['fileType'] = $fileType;
+        $obj['numLines'] = $numLines;
+        $obj['startLine'] = $startLine;
+        $obj['totalLines'] = $totalLines;
 
         return $obj;
     }
@@ -113,7 +109,7 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
     public function withFileType(FileType|string $fileType): self
     {
         $obj = clone $this;
-        $obj['file_type'] = $fileType;
+        $obj['fileType'] = $fileType;
 
         return $obj;
     }
@@ -121,7 +117,7 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
     public function withNumLines(?int $numLines): self
     {
         $obj = clone $this;
-        $obj['num_lines'] = $numLines;
+        $obj['numLines'] = $numLines;
 
         return $obj;
     }
@@ -129,7 +125,7 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
     public function withStartLine(?int $startLine): self
     {
         $obj = clone $this;
-        $obj['start_line'] = $startLine;
+        $obj['startLine'] = $startLine;
 
         return $obj;
     }
@@ -137,7 +133,7 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
     public function withTotalLines(?int $totalLines): self
     {
         $obj = clone $this;
-        $obj['total_lines'] = $totalLines;
+        $obj['totalLines'] = $totalLines;
 
         return $obj;
     }

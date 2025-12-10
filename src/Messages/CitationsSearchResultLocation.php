@@ -10,11 +10,11 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type CitationsSearchResultLocationShape = array{
- *   cited_text: string,
- *   end_block_index: int,
- *   search_result_index: int,
+ *   citedText: string,
+ *   endBlockIndex: int,
+ *   searchResultIndex: int,
  *   source: string,
- *   start_block_index: int,
+ *   startBlockIndex: int,
  *   title: string|null,
  *   type?: 'search_result_location',
  * }
@@ -28,20 +28,20 @@ final class CitationsSearchResultLocation implements BaseModel
     #[Required]
     public string $type = 'search_result_location';
 
-    #[Required]
-    public string $cited_text;
+    #[Required('cited_text')]
+    public string $citedText;
 
-    #[Required]
-    public int $end_block_index;
+    #[Required('end_block_index')]
+    public int $endBlockIndex;
 
-    #[Required]
-    public int $search_result_index;
+    #[Required('search_result_index')]
+    public int $searchResultIndex;
 
     #[Required]
     public string $source;
 
-    #[Required]
-    public int $start_block_index;
+    #[Required('start_block_index')]
+    public int $startBlockIndex;
 
     #[Required]
     public ?string $title;
@@ -52,11 +52,11 @@ final class CitationsSearchResultLocation implements BaseModel
      * To enforce required parameters use
      * ```
      * CitationsSearchResultLocation::with(
-     *   cited_text: ...,
-     *   end_block_index: ...,
-     *   search_result_index: ...,
+     *   citedText: ...,
+     *   endBlockIndex: ...,
+     *   searchResultIndex: ...,
      *   source: ...,
-     *   start_block_index: ...,
+     *   startBlockIndex: ...,
      *   title: ...,
      * )
      * ```
@@ -84,20 +84,20 @@ final class CitationsSearchResultLocation implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $cited_text,
-        int $end_block_index,
-        int $search_result_index,
+        string $citedText,
+        int $endBlockIndex,
+        int $searchResultIndex,
         string $source,
-        int $start_block_index,
+        int $startBlockIndex,
         ?string $title,
     ): self {
         $obj = new self;
 
-        $obj['cited_text'] = $cited_text;
-        $obj['end_block_index'] = $end_block_index;
-        $obj['search_result_index'] = $search_result_index;
+        $obj['citedText'] = $citedText;
+        $obj['endBlockIndex'] = $endBlockIndex;
+        $obj['searchResultIndex'] = $searchResultIndex;
         $obj['source'] = $source;
-        $obj['start_block_index'] = $start_block_index;
+        $obj['startBlockIndex'] = $startBlockIndex;
         $obj['title'] = $title;
 
         return $obj;
@@ -106,7 +106,7 @@ final class CitationsSearchResultLocation implements BaseModel
     public function withCitedText(string $citedText): self
     {
         $obj = clone $this;
-        $obj['cited_text'] = $citedText;
+        $obj['citedText'] = $citedText;
 
         return $obj;
     }
@@ -114,7 +114,7 @@ final class CitationsSearchResultLocation implements BaseModel
     public function withEndBlockIndex(int $endBlockIndex): self
     {
         $obj = clone $this;
-        $obj['end_block_index'] = $endBlockIndex;
+        $obj['endBlockIndex'] = $endBlockIndex;
 
         return $obj;
     }
@@ -122,7 +122,7 @@ final class CitationsSearchResultLocation implements BaseModel
     public function withSearchResultIndex(int $searchResultIndex): self
     {
         $obj = clone $this;
-        $obj['search_result_index'] = $searchResultIndex;
+        $obj['searchResultIndex'] = $searchResultIndex;
 
         return $obj;
     }
@@ -138,7 +138,7 @@ final class CitationsSearchResultLocation implements BaseModel
     public function withStartBlockIndex(int $startBlockIndex): self
     {
         $obj = clone $this;
-        $obj['start_block_index'] = $startBlockIndex;
+        $obj['startBlockIndex'] = $startBlockIndex;
 
         return $obj;
     }

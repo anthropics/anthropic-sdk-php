@@ -44,7 +44,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Model;
 
 /**
- * @phpstan-type RequestShape = array{custom_id: string, params: Params}
+ * @phpstan-type RequestShape = array{customID: string, params: Params}
  */
 final class Request implements BaseModel
 {
@@ -56,8 +56,8 @@ final class Request implements BaseModel
      *
      * Must be unique for each request within the Message Batch.
      */
-    #[Required]
-    public string $custom_id;
+    #[Required('custom_id')]
+    public string $customID;
 
     /**
      * Messages API creation parameters for the individual request.
@@ -72,7 +72,7 @@ final class Request implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Request::with(custom_id: ..., params: ...)
+     * Request::with(customID: ..., params: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -92,32 +92,32 @@ final class Request implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Params|array{
-     *   max_tokens: int,
+     *   maxTokens: int,
      *   messages: list<BetaMessageParam>,
      *   model: string|value-of<Model>,
      *   container?: string|BetaContainerParams|null,
-     *   context_management?: BetaContextManagementConfig|null,
-     *   mcp_servers?: list<BetaRequestMCPServerURLDefinition>|null,
+     *   contextManagement?: BetaContextManagementConfig|null,
+     *   mcpServers?: list<BetaRequestMCPServerURLDefinition>|null,
      *   metadata?: BetaMetadata|null,
-     *   output_config?: BetaOutputConfig|null,
-     *   output_format?: BetaJSONOutputFormat|null,
-     *   service_tier?: value-of<ServiceTier>|null,
-     *   stop_sequences?: list<string>|null,
+     *   outputConfig?: BetaOutputConfig|null,
+     *   outputFormat?: BetaJSONOutputFormat|null,
+     *   serviceTier?: value-of<ServiceTier>|null,
+     *   stopSequences?: list<string>|null,
      *   stream?: bool|null,
      *   system?: string|list<BetaTextBlockParam>|null,
      *   temperature?: float|null,
      *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null,
-     *   tool_choice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null,
+     *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null,
      *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset>|null,
-     *   top_k?: int|null,
-     *   top_p?: float|null,
+     *   topK?: int|null,
+     *   topP?: float|null,
      * } $params
      */
-    public static function with(string $custom_id, Params|array $params): self
+    public static function with(string $customID, Params|array $params): self
     {
         $obj = new self;
 
-        $obj['custom_id'] = $custom_id;
+        $obj['customID'] = $customID;
         $obj['params'] = $params;
 
         return $obj;
@@ -131,7 +131,7 @@ final class Request implements BaseModel
     public function withCustomID(string $customID): self
     {
         $obj = clone $this;
-        $obj['custom_id'] = $customID;
+        $obj['customID'] = $customID;
 
         return $obj;
     }
@@ -142,25 +142,25 @@ final class Request implements BaseModel
      * See the [Messages API reference](https://docs.claude.com/en/api/messages) for full documentation on available parameters.
      *
      * @param Params|array{
-     *   max_tokens: int,
+     *   maxTokens: int,
      *   messages: list<BetaMessageParam>,
      *   model: string|value-of<Model>,
      *   container?: string|BetaContainerParams|null,
-     *   context_management?: BetaContextManagementConfig|null,
-     *   mcp_servers?: list<BetaRequestMCPServerURLDefinition>|null,
+     *   contextManagement?: BetaContextManagementConfig|null,
+     *   mcpServers?: list<BetaRequestMCPServerURLDefinition>|null,
      *   metadata?: BetaMetadata|null,
-     *   output_config?: BetaOutputConfig|null,
-     *   output_format?: BetaJSONOutputFormat|null,
-     *   service_tier?: value-of<ServiceTier>|null,
-     *   stop_sequences?: list<string>|null,
+     *   outputConfig?: BetaOutputConfig|null,
+     *   outputFormat?: BetaJSONOutputFormat|null,
+     *   serviceTier?: value-of<ServiceTier>|null,
+     *   stopSequences?: list<string>|null,
      *   stream?: bool|null,
      *   system?: string|list<BetaTextBlockParam>|null,
      *   temperature?: float|null,
      *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null,
-     *   tool_choice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null,
+     *   toolChoice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null,
      *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset>|null,
-     *   top_k?: int|null,
-     *   top_p?: float|null,
+     *   topK?: int|null,
+     *   topP?: float|null,
      * } $params
      */
     public function withParams(Params|array $params): self

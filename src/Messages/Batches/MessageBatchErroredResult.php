@@ -61,7 +61,7 @@ final class MessageBatchErroredResult implements BaseModel
      *
      * @param ErrorResponse|array{
      *   error: InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError,
-     *   request_id: string|null,
+     *   requestID: string|null,
      *   type?: 'error',
      * } $error
      */
@@ -77,7 +77,7 @@ final class MessageBatchErroredResult implements BaseModel
     /**
      * @param ErrorResponse|array{
      *   error: InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError,
-     *   request_id: string|null,
+     *   requestID: string|null,
      *   type?: 'error',
      * } $error
      */

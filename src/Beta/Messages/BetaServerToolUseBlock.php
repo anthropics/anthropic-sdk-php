@@ -76,7 +76,7 @@ final class BetaServerToolUseBlock implements BaseModel
      * @param array<string,mixed> $input
      * @param Name|value-of<Name> $name
      * @param BetaDirectCaller|array{type?: 'direct'}|BetaServerToolCaller|array{
-     *   tool_id: string, type?: 'code_execution_20250825'
+     *   toolID: string, type?: 'code_execution_20250825'
      * } $caller
      */
     public static function with(
@@ -107,7 +107,7 @@ final class BetaServerToolUseBlock implements BaseModel
      * Tool invocation directly from the model.
      *
      * @param BetaDirectCaller|array{type?: 'direct'}|BetaServerToolCaller|array{
-     *   tool_id: string, type?: 'code_execution_20250825'
+     *   toolID: string, type?: 'code_execution_20250825'
      * } $caller
      */
     public function withCaller(

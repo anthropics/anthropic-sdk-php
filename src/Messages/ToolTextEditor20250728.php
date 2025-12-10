@@ -14,8 +14,8 @@ use Anthropic\Messages\CacheControlEphemeral\TTL;
  * @phpstan-type ToolTextEditor20250728Shape = array{
  *   name?: 'str_replace_based_edit_tool',
  *   type?: 'text_editor_20250728',
- *   cache_control?: CacheControlEphemeral|null,
- *   max_characters?: int|null,
+ *   cacheControl?: CacheControlEphemeral|null,
+ *   maxCharacters?: int|null,
  * }
  */
 final class ToolTextEditor20250728 implements BaseModel
@@ -40,14 +40,14 @@ final class ToolTextEditor20250728 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
      * Maximum number of characters to display when viewing a file. If not specified, defaults to displaying the full file.
      */
-    #[Optional(nullable: true)]
-    public ?int $max_characters;
+    #[Optional('max_characters', nullable: true)]
+    public ?int $maxCharacters;
 
     public function __construct()
     {
@@ -61,16 +61,16 @@ final class ToolTextEditor20250728 implements BaseModel
      *
      * @param CacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      */
     public static function with(
-        CacheControlEphemeral|array|null $cache_control = null,
-        ?int $max_characters = null,
+        CacheControlEphemeral|array|null $cacheControl = null,
+        ?int $maxCharacters = null,
     ): self {
         $obj = new self;
 
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
-        null !== $max_characters && $obj['max_characters'] = $max_characters;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
+        null !== $maxCharacters && $obj['maxCharacters'] = $maxCharacters;
 
         return $obj;
     }
@@ -86,7 +86,7 @@ final class ToolTextEditor20250728 implements BaseModel
         CacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }
@@ -97,7 +97,7 @@ final class ToolTextEditor20250728 implements BaseModel
     public function withMaxCharacters(?int $maxCharacters): self
     {
         $obj = clone $this;
-        $obj['max_characters'] = $maxCharacters;
+        $obj['maxCharacters'] = $maxCharacters;
 
         return $obj;
     }

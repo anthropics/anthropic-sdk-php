@@ -15,8 +15,8 @@ use Anthropic\Messages\Usage\ServiceTier;
  *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
  *   model: string|value-of<Model>,
  *   role?: 'assistant',
- *   stop_reason: value-of<StopReason>|null,
- *   stop_sequence: string|null,
+ *   stopReason: value-of<StopReason>|null,
+ *   stopSequence: string|null,
  *   type?: 'message',
  *   usage: Usage,
  * }
@@ -107,18 +107,18 @@ final class Message implements BaseModel
      *
      * In non-streaming mode this value is always non-null. In streaming mode, it is null in the `message_start` event and non-null otherwise.
      *
-     * @var value-of<StopReason>|null $stop_reason
+     * @var value-of<StopReason>|null $stopReason
      */
-    #[Required(enum: StopReason::class)]
-    public ?string $stop_reason;
+    #[Required('stop_reason', enum: StopReason::class)]
+    public ?string $stopReason;
 
     /**
      * Which custom stop sequence was generated, if any.
      *
      * This value will be a non-null string if one of your custom stop sequences was generated.
      */
-    #[Required]
-    public ?string $stop_sequence;
+    #[Required('stop_sequence')]
+    public ?string $stopSequence;
 
     /**
      * Billing and rate-limit usage.
@@ -143,8 +143,8 @@ final class Message implements BaseModel
      *   id: ...,
      *   content: ...,
      *   model: ...,
-     *   stop_reason: ...,
-     *   stop_sequence: ...,
+     *   stopReason: ...,
+     *   stopSequence: ...,
      *   usage: ...,
      * )
      * ```
@@ -188,26 +188,26 @@ final class Message implements BaseModel
      *   type?: 'server_tool_use',
      * }|WebSearchToolResultBlock|array{
      *   content: WebSearchToolResultError|list<WebSearchResultBlock>,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'web_search_tool_result',
      * }> $content
-     * @param StopReason|value-of<StopReason>|null $stop_reason
+     * @param StopReason|value-of<StopReason>|null $stopReason
      * @param Usage|array{
-     *   cache_creation: CacheCreation|null,
-     *   cache_creation_input_tokens: int|null,
-     *   cache_read_input_tokens: int|null,
-     *   input_tokens: int,
-     *   output_tokens: int,
-     *   server_tool_use: ServerToolUsage|null,
-     *   service_tier: value-of<ServiceTier>|null,
+     *   cacheCreation: CacheCreation|null,
+     *   cacheCreationInputTokens: int|null,
+     *   cacheReadInputTokens: int|null,
+     *   inputTokens: int,
+     *   outputTokens: int,
+     *   serverToolUse: ServerToolUsage|null,
+     *   serviceTier: value-of<ServiceTier>|null,
      * } $usage
      */
     public static function with(
         string $id,
         array $content,
         string|Model $model,
-        StopReason|string|null $stop_reason,
-        ?string $stop_sequence,
+        StopReason|string|null $stopReason,
+        ?string $stopSequence,
         Usage|array $usage,
     ): self {
         $obj = new self;
@@ -215,8 +215,8 @@ final class Message implements BaseModel
         $obj['id'] = $id;
         $obj['content'] = $content;
         $obj['model'] = $model;
-        $obj['stop_reason'] = $stop_reason;
-        $obj['stop_sequence'] = $stop_sequence;
+        $obj['stopReason'] = $stopReason;
+        $obj['stopSequence'] = $stopSequence;
         $obj['usage'] = $usage;
 
         return $obj;
@@ -279,7 +279,7 @@ final class Message implements BaseModel
      *   type?: 'server_tool_use',
      * }|WebSearchToolResultBlock|array{
      *   content: WebSearchToolResultError|list<WebSearchResultBlock>,
-     *   tool_use_id: string,
+     *   toolUseID: string,
      *   type?: 'web_search_tool_result',
      * }> $content
      */
@@ -320,7 +320,7 @@ final class Message implements BaseModel
     public function withStopReason(StopReason|string|null $stopReason): self
     {
         $obj = clone $this;
-        $obj['stop_reason'] = $stopReason;
+        $obj['stopReason'] = $stopReason;
 
         return $obj;
     }
@@ -333,7 +333,7 @@ final class Message implements BaseModel
     public function withStopSequence(?string $stopSequence): self
     {
         $obj = clone $this;
-        $obj['stop_sequence'] = $stopSequence;
+        $obj['stopSequence'] = $stopSequence;
 
         return $obj;
     }
@@ -350,13 +350,13 @@ final class Message implements BaseModel
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      *
      * @param Usage|array{
-     *   cache_creation: CacheCreation|null,
-     *   cache_creation_input_tokens: int|null,
-     *   cache_read_input_tokens: int|null,
-     *   input_tokens: int,
-     *   output_tokens: int,
-     *   server_tool_use: ServerToolUsage|null,
-     *   service_tier: value-of<ServiceTier>|null,
+     *   cacheCreation: CacheCreation|null,
+     *   cacheCreationInputTokens: int|null,
+     *   cacheReadInputTokens: int|null,
+     *   inputTokens: int,
+     *   outputTokens: int,
+     *   serverToolUse: ServerToolUsage|null,
+     *   serviceTier: value-of<ServiceTier>|null,
      * } $usage
      */
     public function withUsage(Usage|array $usage): self

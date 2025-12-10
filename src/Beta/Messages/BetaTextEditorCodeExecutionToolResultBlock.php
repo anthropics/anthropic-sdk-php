@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaTextEditorCodeExecutionToolResultBlockShape = array{
  *   content: BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock,
- *   tool_use_id: string,
+ *   toolUseID: string,
  *   type?: 'text_editor_code_execution_tool_result',
  * }
  */
@@ -29,15 +29,15 @@ final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
     #[Required]
     public BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock $content;
 
-    #[Required]
-    public string $tool_use_id;
+    #[Required('tool_use_id')]
+    public string $toolUseID;
 
     /**
      * `new BetaTextEditorCodeExecutionToolResultBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaTextEditorCodeExecutionToolResultBlock::with(content: ..., tool_use_id: ...)
+     * BetaTextEditorCodeExecutionToolResultBlock::with(content: ..., toolUseID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -59,59 +59,59 @@ final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaTextEditorCodeExecutionToolResultError|array{
-     *   error_code: value-of<ErrorCode>,
-     *   error_message: string|null,
+     *   errorCode: value-of<ErrorCode>,
+     *   errorMessage: string|null,
      *   type?: 'text_editor_code_execution_tool_result_error',
      * }|BetaTextEditorCodeExecutionViewResultBlock|array{
      *   content: string,
-     *   file_type: value-of<FileType>,
-     *   num_lines: int|null,
-     *   start_line: int|null,
-     *   total_lines: int|null,
+     *   fileType: value-of<FileType>,
+     *   numLines: int|null,
+     *   startLine: int|null,
+     *   totalLines: int|null,
      *   type?: 'text_editor_code_execution_view_result',
      * }|BetaTextEditorCodeExecutionCreateResultBlock|array{
-     *   is_file_update: bool, type?: 'text_editor_code_execution_create_result'
+     *   isFileUpdate: bool, type?: 'text_editor_code_execution_create_result'
      * }|BetaTextEditorCodeExecutionStrReplaceResultBlock|array{
      *   lines: list<string>|null,
-     *   new_lines: int|null,
-     *   new_start: int|null,
-     *   old_lines: int|null,
-     *   old_start: int|null,
+     *   newLines: int|null,
+     *   newStart: int|null,
+     *   oldLines: int|null,
+     *   oldStart: int|null,
      *   type?: 'text_editor_code_execution_str_replace_result',
      * } $content
      */
     public static function with(
         BetaTextEditorCodeExecutionToolResultError|array|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock $content,
-        string $tool_use_id,
+        string $toolUseID,
     ): self {
         $obj = new self;
 
         $obj['content'] = $content;
-        $obj['tool_use_id'] = $tool_use_id;
+        $obj['toolUseID'] = $toolUseID;
 
         return $obj;
     }
 
     /**
      * @param BetaTextEditorCodeExecutionToolResultError|array{
-     *   error_code: value-of<ErrorCode>,
-     *   error_message: string|null,
+     *   errorCode: value-of<ErrorCode>,
+     *   errorMessage: string|null,
      *   type?: 'text_editor_code_execution_tool_result_error',
      * }|BetaTextEditorCodeExecutionViewResultBlock|array{
      *   content: string,
-     *   file_type: value-of<FileType>,
-     *   num_lines: int|null,
-     *   start_line: int|null,
-     *   total_lines: int|null,
+     *   fileType: value-of<FileType>,
+     *   numLines: int|null,
+     *   startLine: int|null,
+     *   totalLines: int|null,
      *   type?: 'text_editor_code_execution_view_result',
      * }|BetaTextEditorCodeExecutionCreateResultBlock|array{
-     *   is_file_update: bool, type?: 'text_editor_code_execution_create_result'
+     *   isFileUpdate: bool, type?: 'text_editor_code_execution_create_result'
      * }|BetaTextEditorCodeExecutionStrReplaceResultBlock|array{
      *   lines: list<string>|null,
-     *   new_lines: int|null,
-     *   new_start: int|null,
-     *   old_lines: int|null,
-     *   old_start: int|null,
+     *   newLines: int|null,
+     *   newStart: int|null,
+     *   oldLines: int|null,
+     *   oldStart: int|null,
      *   type?: 'text_editor_code_execution_str_replace_result',
      * } $content
      */
@@ -127,7 +127,7 @@ final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj['tool_use_id'] = $toolUseID;
+        $obj['toolUseID'] = $toolUseID;
 
         return $obj;
     }

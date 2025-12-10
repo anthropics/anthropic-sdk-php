@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaToolSearchToolSearchResultBlockParamShape = array{
- *   tool_references: list<BetaToolReferenceBlockParam>,
+ *   toolReferences: list<BetaToolReferenceBlockParam>,
  *   type?: 'tool_search_tool_search_result',
  * }
  */
@@ -23,16 +23,16 @@ final class BetaToolSearchToolSearchResultBlockParam implements BaseModel
     #[Required]
     public string $type = 'tool_search_tool_search_result';
 
-    /** @var list<BetaToolReferenceBlockParam> $tool_references */
-    #[Required(list: BetaToolReferenceBlockParam::class)]
-    public array $tool_references;
+    /** @var list<BetaToolReferenceBlockParam> $toolReferences */
+    #[Required('tool_references', list: BetaToolReferenceBlockParam::class)]
+    public array $toolReferences;
 
     /**
      * `new BetaToolSearchToolSearchResultBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaToolSearchToolSearchResultBlockParam::with(tool_references: ...)
+     * BetaToolSearchToolSearchResultBlockParam::with(toolReferences: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -52,31 +52,31 @@ final class BetaToolSearchToolSearchResultBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaToolReferenceBlockParam|array{
-     *   tool_name: string,
+     *   toolName: string,
      *   type?: 'tool_reference',
-     *   cache_control?: BetaCacheControlEphemeral|null,
-     * }> $tool_references
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     * }> $toolReferences
      */
-    public static function with(array $tool_references): self
+    public static function with(array $toolReferences): self
     {
         $obj = new self;
 
-        $obj['tool_references'] = $tool_references;
+        $obj['toolReferences'] = $toolReferences;
 
         return $obj;
     }
 
     /**
      * @param list<BetaToolReferenceBlockParam|array{
-     *   tool_name: string,
+     *   toolName: string,
      *   type?: 'tool_reference',
-     *   cache_control?: BetaCacheControlEphemeral|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
      * }> $toolReferences
      */
     public function withToolReferences(array $toolReferences): self
     {
         $obj = clone $this;
-        $obj['tool_references'] = $toolReferences;
+        $obj['toolReferences'] = $toolReferences;
 
         return $obj;
     }

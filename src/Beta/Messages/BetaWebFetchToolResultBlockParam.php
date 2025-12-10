@@ -13,9 +13,9 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaWebFetchToolResultBlockParamShape = array{
  *   content: BetaWebFetchToolResultErrorBlockParam|BetaWebFetchBlockParam,
- *   tool_use_id: string,
+ *   toolUseID: string,
  *   type?: 'web_fetch_tool_result',
- *   cache_control?: BetaCacheControlEphemeral|null,
+ *   cacheControl?: BetaCacheControlEphemeral|null,
  * }
  */
 final class BetaWebFetchToolResultBlockParam implements BaseModel
@@ -30,21 +30,21 @@ final class BetaWebFetchToolResultBlockParam implements BaseModel
     #[Required]
     public BetaWebFetchToolResultErrorBlockParam|BetaWebFetchBlockParam $content;
 
-    #[Required]
-    public string $tool_use_id;
+    #[Required('tool_use_id')]
+    public string $toolUseID;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * `new BetaWebFetchToolResultBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaWebFetchToolResultBlockParam::with(content: ..., tool_use_id: ...)
+     * BetaWebFetchToolResultBlockParam::with(content: ..., toolUseID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -64,42 +64,42 @@ final class BetaWebFetchToolResultBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaWebFetchToolResultErrorBlockParam|array{
-     *   error_code: value-of<BetaWebFetchToolResultErrorCode>,
+     *   errorCode: value-of<BetaWebFetchToolResultErrorCode>,
      *   type?: 'web_fetch_tool_result_error',
      * }|BetaWebFetchBlockParam|array{
      *   content: BetaRequestDocumentBlock,
      *   type?: 'web_fetch_result',
      *   url: string,
-     *   retrieved_at?: string|null,
+     *   retrievedAt?: string|null,
      * } $content
      * @param BetaCacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      */
     public static function with(
         BetaWebFetchToolResultErrorBlockParam|array|BetaWebFetchBlockParam $content,
-        string $tool_use_id,
-        BetaCacheControlEphemeral|array|null $cache_control = null,
+        string $toolUseID,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
     ): self {
         $obj = new self;
 
         $obj['content'] = $content;
-        $obj['tool_use_id'] = $tool_use_id;
+        $obj['toolUseID'] = $toolUseID;
 
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }
 
     /**
      * @param BetaWebFetchToolResultErrorBlockParam|array{
-     *   error_code: value-of<BetaWebFetchToolResultErrorCode>,
+     *   errorCode: value-of<BetaWebFetchToolResultErrorCode>,
      *   type?: 'web_fetch_tool_result_error',
      * }|BetaWebFetchBlockParam|array{
      *   content: BetaRequestDocumentBlock,
      *   type?: 'web_fetch_result',
      *   url: string,
-     *   retrieved_at?: string|null,
+     *   retrievedAt?: string|null,
      * } $content
      */
     public function withContent(
@@ -114,7 +114,7 @@ final class BetaWebFetchToolResultBlockParam implements BaseModel
     public function withToolUseID(string $toolUseID): self
     {
         $obj = clone $this;
-        $obj['tool_use_id'] = $toolUseID;
+        $obj['toolUseID'] = $toolUseID;
 
         return $obj;
     }
@@ -130,7 +130,7 @@ final class BetaWebFetchToolResultBlockParam implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }

@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaRequestDocumentBlockShape = array{
  *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource,
  *   type?: 'document',
- *   cache_control?: BetaCacheControlEphemeral|null,
+ *   cacheControl?: BetaCacheControlEphemeral|null,
  *   citations?: BetaCitationsConfigParam|null,
  *   context?: string|null,
  *   title?: string|null,
@@ -36,8 +36,8 @@ final class BetaRequestDocumentBlock implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     #[Optional(nullable: true)]
     public ?BetaCitationsConfigParam $citations;
@@ -73,22 +73,22 @@ final class BetaRequestDocumentBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaBase64PDFSource|array{
-     *   data: string, media_type?: 'application/pdf', type?: 'base64'
+     *   data: string, mediaType?: 'application/pdf', type?: 'base64'
      * }|BetaPlainTextSource|array{
-     *   data: string, media_type?: 'text/plain', type?: 'text'
+     *   data: string, mediaType?: 'text/plain', type?: 'text'
      * }|BetaContentBlockSource|array{
      *   content: string|list<BetaTextBlockParam|BetaImageBlockParam>, type?: 'content'
      * }|BetaURLPDFSource|array{
      *   type?: 'url', url: string
-     * }|BetaFileDocumentSource|array{file_id: string, type?: 'file'} $source
+     * }|BetaFileDocumentSource|array{fileID: string, type?: 'file'} $source
      * @param BetaCacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      * @param BetaCitationsConfigParam|array{enabled?: bool|null}|null $citations
      */
     public static function with(
         BetaBase64PDFSource|array|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource $source,
-        BetaCacheControlEphemeral|array|null $cache_control = null,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
         BetaCitationsConfigParam|array|null $citations = null,
         ?string $context = null,
         ?string $title = null,
@@ -97,7 +97,7 @@ final class BetaRequestDocumentBlock implements BaseModel
 
         $obj['source'] = $source;
 
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
         null !== $citations && $obj['citations'] = $citations;
         null !== $context && $obj['context'] = $context;
         null !== $title && $obj['title'] = $title;
@@ -107,14 +107,14 @@ final class BetaRequestDocumentBlock implements BaseModel
 
     /**
      * @param BetaBase64PDFSource|array{
-     *   data: string, media_type?: 'application/pdf', type?: 'base64'
+     *   data: string, mediaType?: 'application/pdf', type?: 'base64'
      * }|BetaPlainTextSource|array{
-     *   data: string, media_type?: 'text/plain', type?: 'text'
+     *   data: string, mediaType?: 'text/plain', type?: 'text'
      * }|BetaContentBlockSource|array{
      *   content: string|list<BetaTextBlockParam|BetaImageBlockParam>, type?: 'content'
      * }|BetaURLPDFSource|array{
      *   type?: 'url', url: string
-     * }|BetaFileDocumentSource|array{file_id: string, type?: 'file'} $source
+     * }|BetaFileDocumentSource|array{fileID: string, type?: 'file'} $source
      */
     public function withSource(
         BetaBase64PDFSource|array|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource $source,
@@ -136,7 +136,7 @@ final class BetaRequestDocumentBlock implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }

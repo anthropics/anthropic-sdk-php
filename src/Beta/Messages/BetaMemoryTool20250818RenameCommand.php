@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818RenameCommandShape = array{
- *   command?: 'rename', new_path: string, old_path: string
+ *   command?: 'rename', newPath: string, oldPath: string
  * }
  */
 final class BetaMemoryTool20250818RenameCommand implements BaseModel
@@ -29,21 +29,21 @@ final class BetaMemoryTool20250818RenameCommand implements BaseModel
     /**
      * New path for the file or directory.
      */
-    #[Required]
-    public string $new_path;
+    #[Required('new_path')]
+    public string $newPath;
 
     /**
      * Current path of the file or directory.
      */
-    #[Required]
-    public string $old_path;
+    #[Required('old_path')]
+    public string $oldPath;
 
     /**
      * `new BetaMemoryTool20250818RenameCommand()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaMemoryTool20250818RenameCommand::with(new_path: ..., old_path: ...)
+     * BetaMemoryTool20250818RenameCommand::with(newPath: ..., oldPath: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -62,12 +62,12 @@ final class BetaMemoryTool20250818RenameCommand implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $new_path, string $old_path): self
+    public static function with(string $newPath, string $oldPath): self
     {
         $obj = new self;
 
-        $obj['new_path'] = $new_path;
-        $obj['old_path'] = $old_path;
+        $obj['newPath'] = $newPath;
+        $obj['oldPath'] = $oldPath;
 
         return $obj;
     }
@@ -78,7 +78,7 @@ final class BetaMemoryTool20250818RenameCommand implements BaseModel
     public function withNewPath(string $newPath): self
     {
         $obj = clone $this;
-        $obj['new_path'] = $newPath;
+        $obj['newPath'] = $newPath;
 
         return $obj;
     }
@@ -89,7 +89,7 @@ final class BetaMemoryTool20250818RenameCommand implements BaseModel
     public function withOldPath(string $oldPath): self
     {
         $obj = clone $this;
-        $obj['old_path'] = $oldPath;
+        $obj['oldPath'] = $oldPath;
 
         return $obj;
     }

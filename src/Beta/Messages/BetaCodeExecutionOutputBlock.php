@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCodeExecutionOutputBlockShape = array{
- *   file_id: string, type?: 'code_execution_output'
+ *   fileID: string, type?: 'code_execution_output'
  * }
  */
 final class BetaCodeExecutionOutputBlock implements BaseModel
@@ -22,15 +22,15 @@ final class BetaCodeExecutionOutputBlock implements BaseModel
     #[Required]
     public string $type = 'code_execution_output';
 
-    #[Required]
-    public string $file_id;
+    #[Required('file_id')]
+    public string $fileID;
 
     /**
      * `new BetaCodeExecutionOutputBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaCodeExecutionOutputBlock::with(file_id: ...)
+     * BetaCodeExecutionOutputBlock::with(fileID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -49,11 +49,11 @@ final class BetaCodeExecutionOutputBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $file_id): self
+    public static function with(string $fileID): self
     {
         $obj = new self;
 
-        $obj['file_id'] = $file_id;
+        $obj['fileID'] = $fileID;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class BetaCodeExecutionOutputBlock implements BaseModel
     public function withFileID(string $fileID): self
     {
         $obj = clone $this;
-        $obj['file_id'] = $fileID;
+        $obj['fileID'] = $fileID;
 
         return $obj;
     }

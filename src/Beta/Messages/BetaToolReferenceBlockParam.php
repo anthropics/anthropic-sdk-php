@@ -14,9 +14,9 @@ use Anthropic\Core\Contracts\BaseModel;
  * Tool reference block that can be included in tool_result content.
  *
  * @phpstan-type BetaToolReferenceBlockParamShape = array{
- *   tool_name: string,
+ *   toolName: string,
  *   type?: 'tool_reference',
- *   cache_control?: BetaCacheControlEphemeral|null,
+ *   cacheControl?: BetaCacheControlEphemeral|null,
  * }
  */
 final class BetaToolReferenceBlockParam implements BaseModel
@@ -28,21 +28,21 @@ final class BetaToolReferenceBlockParam implements BaseModel
     #[Required]
     public string $type = 'tool_reference';
 
-    #[Required]
-    public string $tool_name;
+    #[Required('tool_name')]
+    public string $toolName;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * `new BetaToolReferenceBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaToolReferenceBlockParam::with(tool_name: ...)
+     * BetaToolReferenceBlockParam::with(toolName: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -63,17 +63,17 @@ final class BetaToolReferenceBlockParam implements BaseModel
      *
      * @param BetaCacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      */
     public static function with(
-        string $tool_name,
-        BetaCacheControlEphemeral|array|null $cache_control = null,
+        string $toolName,
+        BetaCacheControlEphemeral|array|null $cacheControl = null
     ): self {
         $obj = new self;
 
-        $obj['tool_name'] = $tool_name;
+        $obj['toolName'] = $toolName;
 
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }
@@ -81,7 +81,7 @@ final class BetaToolReferenceBlockParam implements BaseModel
     public function withToolName(string $toolName): self
     {
         $obj = clone $this;
-        $obj['tool_name'] = $toolName;
+        $obj['toolName'] = $toolName;
 
         return $obj;
     }
@@ -97,7 +97,7 @@ final class BetaToolReferenceBlockParam implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }

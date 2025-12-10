@@ -10,11 +10,11 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type MessageDeltaUsageShape = array{
- *   cache_creation_input_tokens: int|null,
- *   cache_read_input_tokens: int|null,
- *   input_tokens: int|null,
- *   output_tokens: int,
- *   server_tool_use: ServerToolUsage|null,
+ *   cacheCreationInputTokens: int|null,
+ *   cacheReadInputTokens: int|null,
+ *   inputTokens: int|null,
+ *   outputTokens: int,
+ *   serverToolUse: ServerToolUsage|null,
  * }
  */
 final class MessageDeltaUsage implements BaseModel
@@ -25,32 +25,32 @@ final class MessageDeltaUsage implements BaseModel
     /**
      * The cumulative number of input tokens used to create the cache entry.
      */
-    #[Required]
-    public ?int $cache_creation_input_tokens;
+    #[Required('cache_creation_input_tokens')]
+    public ?int $cacheCreationInputTokens;
 
     /**
      * The cumulative number of input tokens read from the cache.
      */
-    #[Required]
-    public ?int $cache_read_input_tokens;
+    #[Required('cache_read_input_tokens')]
+    public ?int $cacheReadInputTokens;
 
     /**
      * The cumulative number of input tokens which were used.
      */
-    #[Required]
-    public ?int $input_tokens;
+    #[Required('input_tokens')]
+    public ?int $inputTokens;
 
     /**
      * The cumulative number of output tokens which were used.
      */
-    #[Required]
-    public int $output_tokens;
+    #[Required('output_tokens')]
+    public int $outputTokens;
 
     /**
      * The number of server tool requests.
      */
-    #[Required]
-    public ?ServerToolUsage $server_tool_use;
+    #[Required('server_tool_use')]
+    public ?ServerToolUsage $serverToolUse;
 
     /**
      * `new MessageDeltaUsage()` is missing required properties by the API.
@@ -58,11 +58,11 @@ final class MessageDeltaUsage implements BaseModel
      * To enforce required parameters use
      * ```
      * MessageDeltaUsage::with(
-     *   cache_creation_input_tokens: ...,
-     *   cache_read_input_tokens: ...,
-     *   input_tokens: ...,
-     *   output_tokens: ...,
-     *   server_tool_use: ...,
+     *   cacheCreationInputTokens: ...,
+     *   cacheReadInputTokens: ...,
+     *   inputTokens: ...,
+     *   outputTokens: ...,
+     *   serverToolUse: ...,
      * )
      * ```
      *
@@ -87,22 +87,22 @@ final class MessageDeltaUsage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ServerToolUsage|array{web_search_requests: int}|null $server_tool_use
+     * @param ServerToolUsage|array{webSearchRequests: int}|null $serverToolUse
      */
     public static function with(
-        ?int $cache_creation_input_tokens,
-        ?int $cache_read_input_tokens,
-        ?int $input_tokens,
-        int $output_tokens,
-        ServerToolUsage|array|null $server_tool_use,
+        ?int $cacheCreationInputTokens,
+        ?int $cacheReadInputTokens,
+        ?int $inputTokens,
+        int $outputTokens,
+        ServerToolUsage|array|null $serverToolUse,
     ): self {
         $obj = new self;
 
-        $obj['cache_creation_input_tokens'] = $cache_creation_input_tokens;
-        $obj['cache_read_input_tokens'] = $cache_read_input_tokens;
-        $obj['input_tokens'] = $input_tokens;
-        $obj['output_tokens'] = $output_tokens;
-        $obj['server_tool_use'] = $server_tool_use;
+        $obj['cacheCreationInputTokens'] = $cacheCreationInputTokens;
+        $obj['cacheReadInputTokens'] = $cacheReadInputTokens;
+        $obj['inputTokens'] = $inputTokens;
+        $obj['outputTokens'] = $outputTokens;
+        $obj['serverToolUse'] = $serverToolUse;
 
         return $obj;
     }
@@ -114,7 +114,7 @@ final class MessageDeltaUsage implements BaseModel
         ?int $cacheCreationInputTokens
     ): self {
         $obj = clone $this;
-        $obj['cache_creation_input_tokens'] = $cacheCreationInputTokens;
+        $obj['cacheCreationInputTokens'] = $cacheCreationInputTokens;
 
         return $obj;
     }
@@ -125,7 +125,7 @@ final class MessageDeltaUsage implements BaseModel
     public function withCacheReadInputTokens(?int $cacheReadInputTokens): self
     {
         $obj = clone $this;
-        $obj['cache_read_input_tokens'] = $cacheReadInputTokens;
+        $obj['cacheReadInputTokens'] = $cacheReadInputTokens;
 
         return $obj;
     }
@@ -136,7 +136,7 @@ final class MessageDeltaUsage implements BaseModel
     public function withInputTokens(?int $inputTokens): self
     {
         $obj = clone $this;
-        $obj['input_tokens'] = $inputTokens;
+        $obj['inputTokens'] = $inputTokens;
 
         return $obj;
     }
@@ -147,7 +147,7 @@ final class MessageDeltaUsage implements BaseModel
     public function withOutputTokens(int $outputTokens): self
     {
         $obj = clone $this;
-        $obj['output_tokens'] = $outputTokens;
+        $obj['outputTokens'] = $outputTokens;
 
         return $obj;
     }
@@ -155,13 +155,13 @@ final class MessageDeltaUsage implements BaseModel
     /**
      * The number of server tool requests.
      *
-     * @param ServerToolUsage|array{web_search_requests: int}|null $serverToolUse
+     * @param ServerToolUsage|array{webSearchRequests: int}|null $serverToolUse
      */
     public function withServerToolUse(
         ServerToolUsage|array|null $serverToolUse
     ): self {
         $obj = clone $this;
-        $obj['server_tool_use'] = $serverToolUse;
+        $obj['serverToolUse'] = $serverToolUse;
 
         return $obj;
     }

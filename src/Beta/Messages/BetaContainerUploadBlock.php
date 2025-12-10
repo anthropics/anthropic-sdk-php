@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * Response model for a file uploaded to the container.
  *
  * @phpstan-type BetaContainerUploadBlockShape = array{
- *   file_id: string, type?: 'container_upload'
+ *   fileID: string, type?: 'container_upload'
  * }
  */
 final class BetaContainerUploadBlock implements BaseModel
@@ -24,15 +24,15 @@ final class BetaContainerUploadBlock implements BaseModel
     #[Required]
     public string $type = 'container_upload';
 
-    #[Required]
-    public string $file_id;
+    #[Required('file_id')]
+    public string $fileID;
 
     /**
      * `new BetaContainerUploadBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaContainerUploadBlock::with(file_id: ...)
+     * BetaContainerUploadBlock::with(fileID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -51,11 +51,11 @@ final class BetaContainerUploadBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $file_id): self
+    public static function with(string $fileID): self
     {
         $obj = new self;
 
-        $obj['file_id'] = $file_id;
+        $obj['fileID'] = $fileID;
 
         return $obj;
     }
@@ -63,7 +63,7 @@ final class BetaContainerUploadBlock implements BaseModel
     public function withFileID(string $fileID): self
     {
         $obj = clone $this;
-        $obj['file_id'] = $fileID;
+        $obj['fileID'] = $fileID;
 
         return $obj;
     }

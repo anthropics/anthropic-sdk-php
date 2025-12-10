@@ -65,14 +65,14 @@ final class RawMessageDeltaEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Delta|array{
-     *   stop_reason: value-of<StopReason>|null, stop_sequence: string|null
+     *   stopReason: value-of<StopReason>|null, stopSequence: string|null
      * } $delta
      * @param MessageDeltaUsage|array{
-     *   cache_creation_input_tokens: int|null,
-     *   cache_read_input_tokens: int|null,
-     *   input_tokens: int|null,
-     *   output_tokens: int,
-     *   server_tool_use: ServerToolUsage|null,
+     *   cacheCreationInputTokens: int|null,
+     *   cacheReadInputTokens: int|null,
+     *   inputTokens: int|null,
+     *   outputTokens: int,
+     *   serverToolUse: ServerToolUsage|null,
      * } $usage
      */
     public static function with(
@@ -89,7 +89,7 @@ final class RawMessageDeltaEvent implements BaseModel
 
     /**
      * @param Delta|array{
-     *   stop_reason: value-of<StopReason>|null, stop_sequence: string|null
+     *   stopReason: value-of<StopReason>|null, stopSequence: string|null
      * } $delta
      */
     public function withDelta(Delta|array $delta): self
@@ -112,11 +112,11 @@ final class RawMessageDeltaEvent implements BaseModel
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      *
      * @param MessageDeltaUsage|array{
-     *   cache_creation_input_tokens: int|null,
-     *   cache_read_input_tokens: int|null,
-     *   input_tokens: int|null,
-     *   output_tokens: int,
-     *   server_tool_use: ServerToolUsage|null,
+     *   cacheCreationInputTokens: int|null,
+     *   cacheReadInputTokens: int|null,
+     *   inputTokens: int|null,
+     *   outputTokens: int,
+     *   serverToolUse: ServerToolUsage|null,
      * } $usage
      */
     public function withUsage(MessageDeltaUsage|array $usage): self

@@ -27,7 +27,7 @@ use Anthropic\Messages\ToolTextEditor20250728;
 use Anthropic\Messages\WebSearchTool20250305;
 
 /**
- * @phpstan-type RequestShape = array{custom_id: string, params: Params}
+ * @phpstan-type RequestShape = array{customID: string, params: Params}
  */
 final class Request implements BaseModel
 {
@@ -39,8 +39,8 @@ final class Request implements BaseModel
      *
      * Must be unique for each request within the Message Batch.
      */
-    #[Required]
-    public string $custom_id;
+    #[Required('custom_id')]
+    public string $customID;
 
     /**
      * Messages API creation parameters for the individual request.
@@ -55,7 +55,7 @@ final class Request implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Request::with(custom_id: ..., params: ...)
+     * Request::with(customID: ..., params: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -75,27 +75,27 @@ final class Request implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Params|array{
-     *   max_tokens: int,
+     *   maxTokens: int,
      *   messages: list<MessageParam>,
      *   model: string|value-of<Model>,
      *   metadata?: Metadata|null,
-     *   service_tier?: value-of<ServiceTier>|null,
-     *   stop_sequences?: list<string>|null,
+     *   serviceTier?: value-of<ServiceTier>|null,
+     *   stopSequences?: list<string>|null,
      *   stream?: bool|null,
      *   system?: string|list<TextBlockParam>|null,
      *   temperature?: float|null,
      *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled|null,
-     *   tool_choice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null,
+     *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null,
      *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null,
-     *   top_k?: int|null,
-     *   top_p?: float|null,
+     *   topK?: int|null,
+     *   topP?: float|null,
      * } $params
      */
-    public static function with(string $custom_id, Params|array $params): self
+    public static function with(string $customID, Params|array $params): self
     {
         $obj = new self;
 
-        $obj['custom_id'] = $custom_id;
+        $obj['customID'] = $customID;
         $obj['params'] = $params;
 
         return $obj;
@@ -109,7 +109,7 @@ final class Request implements BaseModel
     public function withCustomID(string $customID): self
     {
         $obj = clone $this;
-        $obj['custom_id'] = $customID;
+        $obj['customID'] = $customID;
 
         return $obj;
     }
@@ -120,20 +120,20 @@ final class Request implements BaseModel
      * See the [Messages API reference](https://docs.claude.com/en/api/messages) for full documentation on available parameters.
      *
      * @param Params|array{
-     *   max_tokens: int,
+     *   maxTokens: int,
      *   messages: list<MessageParam>,
      *   model: string|value-of<Model>,
      *   metadata?: Metadata|null,
-     *   service_tier?: value-of<ServiceTier>|null,
-     *   stop_sequences?: list<string>|null,
+     *   serviceTier?: value-of<ServiceTier>|null,
+     *   stopSequences?: list<string>|null,
      *   stream?: bool|null,
      *   system?: string|list<TextBlockParam>|null,
      *   temperature?: float|null,
      *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled|null,
-     *   tool_choice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null,
+     *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null,
      *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null,
-     *   top_k?: int|null,
-     *   top_p?: float|null,
+     *   topK?: int|null,
+     *   topP?: float|null,
      * } $params
      */
     public function withParams(Params|array $params): self

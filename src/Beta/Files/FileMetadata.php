@@ -12,10 +12,10 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type FileMetadataShape = array{
  *   id: string,
- *   created_at: \DateTimeInterface,
+ *   createdAt: \DateTimeInterface,
  *   filename: string,
- *   mime_type: string,
- *   size_bytes: int,
+ *   mimeType: string,
+ *   sizeBytes: int,
  *   type?: 'file',
  *   downloadable?: bool|null,
  * }
@@ -46,8 +46,8 @@ final class FileMetadata implements BaseModel
     /**
      * RFC 3339 datetime string representing when the file was created.
      */
-    #[Required]
-    public \DateTimeInterface $created_at;
+    #[Required('created_at')]
+    public \DateTimeInterface $createdAt;
 
     /**
      * Original filename of the uploaded file.
@@ -58,14 +58,14 @@ final class FileMetadata implements BaseModel
     /**
      * MIME type of the file.
      */
-    #[Required]
-    public string $mime_type;
+    #[Required('mime_type')]
+    public string $mimeType;
 
     /**
      * Size of the file in bytes.
      */
-    #[Required]
-    public int $size_bytes;
+    #[Required('size_bytes')]
+    public int $sizeBytes;
 
     /**
      * Whether the file can be downloaded.
@@ -79,7 +79,7 @@ final class FileMetadata implements BaseModel
      * To enforce required parameters use
      * ```
      * FileMetadata::with(
-     *   id: ..., created_at: ..., filename: ..., mime_type: ..., size_bytes: ...
+     *   id: ..., createdAt: ..., filename: ..., mimeType: ..., sizeBytes: ...
      * )
      * ```
      *
@@ -106,19 +106,19 @@ final class FileMetadata implements BaseModel
      */
     public static function with(
         string $id,
-        \DateTimeInterface $created_at,
+        \DateTimeInterface $createdAt,
         string $filename,
-        string $mime_type,
-        int $size_bytes,
+        string $mimeType,
+        int $sizeBytes,
         ?bool $downloadable = null,
     ): self {
         $obj = new self;
 
         $obj['id'] = $id;
-        $obj['created_at'] = $created_at;
+        $obj['createdAt'] = $createdAt;
         $obj['filename'] = $filename;
-        $obj['mime_type'] = $mime_type;
-        $obj['size_bytes'] = $size_bytes;
+        $obj['mimeType'] = $mimeType;
+        $obj['sizeBytes'] = $sizeBytes;
 
         null !== $downloadable && $obj['downloadable'] = $downloadable;
 
@@ -144,7 +144,7 @@ final class FileMetadata implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj['created_at'] = $createdAt;
+        $obj['createdAt'] = $createdAt;
 
         return $obj;
     }
@@ -166,7 +166,7 @@ final class FileMetadata implements BaseModel
     public function withMimeType(string $mimeType): self
     {
         $obj = clone $this;
-        $obj['mime_type'] = $mimeType;
+        $obj['mimeType'] = $mimeType;
 
         return $obj;
     }
@@ -177,7 +177,7 @@ final class FileMetadata implements BaseModel
     public function withSizeBytes(int $sizeBytes): self
     {
         $obj = clone $this;
-        $obj['size_bytes'] = $sizeBytes;
+        $obj['sizeBytes'] = $sizeBytes;
 
         return $obj;
     }

@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type MetadataShape = array{user_id?: string|null}
+ * @phpstan-type MetadataShape = array{userID?: string|null}
  */
 final class Metadata implements BaseModel
 {
@@ -21,8 +21,8 @@ final class Metadata implements BaseModel
      *
      * This should be a uuid, hash value, or other opaque identifier. Anthropic may use this id to help detect abuse. Do not include any identifying information such as name, email address, or phone number.
      */
-    #[Optional(nullable: true)]
-    public ?string $user_id;
+    #[Optional('user_id', nullable: true)]
+    public ?string $userID;
 
     public function __construct()
     {
@@ -34,11 +34,11 @@ final class Metadata implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(?string $user_id = null): self
+    public static function with(?string $userID = null): self
     {
         $obj = new self;
 
-        null !== $user_id && $obj['user_id'] = $user_id;
+        null !== $userID && $obj['userID'] = $userID;
 
         return $obj;
     }
@@ -51,7 +51,7 @@ final class Metadata implements BaseModel
     public function withUserID(?string $userID): self
     {
         $obj = clone $this;
-        $obj['user_id'] = $userID;
+        $obj['userID'] = $userID;
 
         return $obj;
     }

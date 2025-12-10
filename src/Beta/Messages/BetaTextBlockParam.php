@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaTextBlockParamShape = array{
  *   text: string,
  *   type?: 'text',
- *   cache_control?: BetaCacheControlEphemeral|null,
+ *   cacheControl?: BetaCacheControlEphemeral|null,
  *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
  * }
  */
@@ -33,8 +33,8 @@ final class BetaTextBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * @var list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null $citations
@@ -68,54 +68,54 @@ final class BetaTextBlockParam implements BaseModel
      *
      * @param BetaCacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      * @param list<BetaCitationCharLocationParam|array{
-     *   cited_text: string,
-     *   document_index: int,
-     *   document_title: string|null,
-     *   end_char_index: int,
-     *   start_char_index: int,
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endCharIndex: int,
+     *   startCharIndex: int,
      *   type?: 'char_location',
      * }|BetaCitationPageLocationParam|array{
-     *   cited_text: string,
-     *   document_index: int,
-     *   document_title: string|null,
-     *   end_page_number: int,
-     *   start_page_number: int,
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endPageNumber: int,
+     *   startPageNumber: int,
      *   type?: 'page_location',
      * }|BetaCitationContentBlockLocationParam|array{
-     *   cited_text: string,
-     *   document_index: int,
-     *   document_title: string|null,
-     *   end_block_index: int,
-     *   start_block_index: int,
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endBlockIndex: int,
+     *   startBlockIndex: int,
      *   type?: 'content_block_location',
      * }|BetaCitationWebSearchResultLocationParam|array{
-     *   cited_text: string,
-     *   encrypted_index: string,
+     *   citedText: string,
+     *   encryptedIndex: string,
      *   title: string|null,
      *   type?: 'web_search_result_location',
      *   url: string,
      * }|BetaCitationSearchResultLocationParam|array{
-     *   cited_text: string,
-     *   end_block_index: int,
-     *   search_result_index: int,
+     *   citedText: string,
+     *   endBlockIndex: int,
+     *   searchResultIndex: int,
      *   source: string,
-     *   start_block_index: int,
+     *   startBlockIndex: int,
      *   title: string|null,
      *   type?: 'search_result_location',
      * }>|null $citations
      */
     public static function with(
         string $text,
-        BetaCacheControlEphemeral|array|null $cache_control = null,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
         ?array $citations = null,
     ): self {
         $obj = new self;
 
         $obj['text'] = $text;
 
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
         null !== $citations && $obj['citations'] = $citations;
 
         return $obj;
@@ -140,45 +140,45 @@ final class BetaTextBlockParam implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }
 
     /**
      * @param list<BetaCitationCharLocationParam|array{
-     *   cited_text: string,
-     *   document_index: int,
-     *   document_title: string|null,
-     *   end_char_index: int,
-     *   start_char_index: int,
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endCharIndex: int,
+     *   startCharIndex: int,
      *   type?: 'char_location',
      * }|BetaCitationPageLocationParam|array{
-     *   cited_text: string,
-     *   document_index: int,
-     *   document_title: string|null,
-     *   end_page_number: int,
-     *   start_page_number: int,
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endPageNumber: int,
+     *   startPageNumber: int,
      *   type?: 'page_location',
      * }|BetaCitationContentBlockLocationParam|array{
-     *   cited_text: string,
-     *   document_index: int,
-     *   document_title: string|null,
-     *   end_block_index: int,
-     *   start_block_index: int,
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endBlockIndex: int,
+     *   startBlockIndex: int,
      *   type?: 'content_block_location',
      * }|BetaCitationWebSearchResultLocationParam|array{
-     *   cited_text: string,
-     *   encrypted_index: string,
+     *   citedText: string,
+     *   encryptedIndex: string,
      *   title: string|null,
      *   type?: 'web_search_result_location',
      *   url: string,
      * }|BetaCitationSearchResultLocationParam|array{
-     *   cited_text: string,
-     *   end_block_index: int,
-     *   search_result_index: int,
+     *   citedText: string,
+     *   endBlockIndex: int,
+     *   searchResultIndex: int,
      *   source: string,
-     *   start_block_index: int,
+     *   startBlockIndex: int,
      *   title: string|null,
      *   type?: 'search_result_location',
      * }>|null $citations

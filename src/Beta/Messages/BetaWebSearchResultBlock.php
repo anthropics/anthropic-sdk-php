@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaWebSearchResultBlockShape = array{
- *   encrypted_content: string,
- *   page_age: string|null,
+ *   encryptedContent: string,
+ *   pageAge: string|null,
  *   title: string,
  *   type?: 'web_search_result',
  *   url: string,
@@ -26,11 +26,11 @@ final class BetaWebSearchResultBlock implements BaseModel
     #[Required]
     public string $type = 'web_search_result';
 
-    #[Required]
-    public string $encrypted_content;
+    #[Required('encrypted_content')]
+    public string $encryptedContent;
 
-    #[Required]
-    public ?string $page_age;
+    #[Required('page_age')]
+    public ?string $pageAge;
 
     #[Required]
     public string $title;
@@ -44,7 +44,7 @@ final class BetaWebSearchResultBlock implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaWebSearchResultBlock::with(
-     *   encrypted_content: ..., page_age: ..., title: ..., url: ...
+     *   encryptedContent: ..., pageAge: ..., title: ..., url: ...
      * )
      * ```
      *
@@ -69,15 +69,15 @@ final class BetaWebSearchResultBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $encrypted_content,
-        ?string $page_age,
+        string $encryptedContent,
+        ?string $pageAge,
         string $title,
         string $url
     ): self {
         $obj = new self;
 
-        $obj['encrypted_content'] = $encrypted_content;
-        $obj['page_age'] = $page_age;
+        $obj['encryptedContent'] = $encryptedContent;
+        $obj['pageAge'] = $pageAge;
         $obj['title'] = $title;
         $obj['url'] = $url;
 
@@ -87,7 +87,7 @@ final class BetaWebSearchResultBlock implements BaseModel
     public function withEncryptedContent(string $encryptedContent): self
     {
         $obj = clone $this;
-        $obj['encrypted_content'] = $encryptedContent;
+        $obj['encryptedContent'] = $encryptedContent;
 
         return $obj;
     }
@@ -95,7 +95,7 @@ final class BetaWebSearchResultBlock implements BaseModel
     public function withPageAge(?string $pageAge): self
     {
         $obj = clone $this;
-        $obj['page_age'] = $pageAge;
+        $obj['pageAge'] = $pageAge;
 
         return $obj;
     }

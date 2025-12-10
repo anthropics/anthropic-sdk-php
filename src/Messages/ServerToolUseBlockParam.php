@@ -16,7 +16,7 @@ use Anthropic\Messages\CacheControlEphemeral\TTL;
  *   input: array<string,mixed>,
  *   name?: 'web_search',
  *   type?: 'server_tool_use',
- *   cache_control?: CacheControlEphemeral|null,
+ *   cacheControl?: CacheControlEphemeral|null,
  * }
  */
 final class ServerToolUseBlockParam implements BaseModel
@@ -42,8 +42,8 @@ final class ServerToolUseBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Optional(nullable: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
      * `new ServerToolUseBlockParam()` is missing required properties by the API.
@@ -72,19 +72,19 @@ final class ServerToolUseBlockParam implements BaseModel
      * @param array<string,mixed> $input
      * @param CacheControlEphemeral|array{
      *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cache_control
+     * }|null $cacheControl
      */
     public static function with(
         string $id,
         array $input,
-        CacheControlEphemeral|array|null $cache_control = null,
+        CacheControlEphemeral|array|null $cacheControl = null,
     ): self {
         $obj = new self;
 
         $obj['id'] = $id;
         $obj['input'] = $input;
 
-        null !== $cache_control && $obj['cache_control'] = $cache_control;
+        null !== $cacheControl && $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }
@@ -119,7 +119,7 @@ final class ServerToolUseBlockParam implements BaseModel
         CacheControlEphemeral|array|null $cacheControl
     ): self {
         $obj = clone $this;
-        $obj['cache_control'] = $cacheControl;
+        $obj['cacheControl'] = $cacheControl;
 
         return $obj;
     }

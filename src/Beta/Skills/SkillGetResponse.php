@@ -11,12 +11,12 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type SkillGetResponseShape = array{
  *   id: string,
- *   created_at: string,
- *   display_title: string|null,
- *   latest_version: string|null,
+ *   createdAt: string,
+ *   displayTitle: string|null,
+ *   latestVersion: string|null,
  *   source: string,
  *   type: string,
- *   updated_at: string,
+ *   updatedAt: string,
  * }
  */
 final class SkillGetResponse implements BaseModel
@@ -35,24 +35,24 @@ final class SkillGetResponse implements BaseModel
     /**
      * ISO 8601 timestamp of when the skill was created.
      */
-    #[Required]
-    public string $created_at;
+    #[Required('created_at')]
+    public string $createdAt;
 
     /**
      * Display title for the skill.
      *
      * This is a human-readable label that is not included in the prompt sent to the model.
      */
-    #[Required]
-    public ?string $display_title;
+    #[Required('display_title')]
+    public ?string $displayTitle;
 
     /**
      * The latest version identifier for the skill.
      *
      * This represents the most recent version of the skill that has been created.
      */
-    #[Required]
-    public ?string $latest_version;
+    #[Required('latest_version')]
+    public ?string $latestVersion;
 
     /**
      * Source of the skill.
@@ -75,8 +75,8 @@ final class SkillGetResponse implements BaseModel
     /**
      * ISO 8601 timestamp of when the skill was last updated.
      */
-    #[Required]
-    public string $updated_at;
+    #[Required('updated_at')]
+    public string $updatedAt;
 
     /**
      * `new SkillGetResponse()` is missing required properties by the API.
@@ -85,12 +85,12 @@ final class SkillGetResponse implements BaseModel
      * ```
      * SkillGetResponse::with(
      *   id: ...,
-     *   created_at: ...,
-     *   display_title: ...,
-     *   latest_version: ...,
+     *   createdAt: ...,
+     *   displayTitle: ...,
+     *   latestVersion: ...,
      *   source: ...,
      *   type: ...,
-     *   updated_at: ...,
+     *   updatedAt: ...,
      * )
      * ```
      *
@@ -119,22 +119,22 @@ final class SkillGetResponse implements BaseModel
      */
     public static function with(
         string $id,
-        string $created_at,
-        ?string $display_title,
-        ?string $latest_version,
+        string $createdAt,
+        ?string $displayTitle,
+        ?string $latestVersion,
         string $source,
-        string $updated_at,
+        string $updatedAt,
         string $type = 'skill',
     ): self {
         $obj = new self;
 
         $obj['id'] = $id;
-        $obj['created_at'] = $created_at;
-        $obj['display_title'] = $display_title;
-        $obj['latest_version'] = $latest_version;
+        $obj['createdAt'] = $createdAt;
+        $obj['displayTitle'] = $displayTitle;
+        $obj['latestVersion'] = $latestVersion;
         $obj['source'] = $source;
         $obj['type'] = $type;
-        $obj['updated_at'] = $updated_at;
+        $obj['updatedAt'] = $updatedAt;
 
         return $obj;
     }
@@ -158,7 +158,7 @@ final class SkillGetResponse implements BaseModel
     public function withCreatedAt(string $createdAt): self
     {
         $obj = clone $this;
-        $obj['created_at'] = $createdAt;
+        $obj['createdAt'] = $createdAt;
 
         return $obj;
     }
@@ -171,7 +171,7 @@ final class SkillGetResponse implements BaseModel
     public function withDisplayTitle(?string $displayTitle): self
     {
         $obj = clone $this;
-        $obj['display_title'] = $displayTitle;
+        $obj['displayTitle'] = $displayTitle;
 
         return $obj;
     }
@@ -184,7 +184,7 @@ final class SkillGetResponse implements BaseModel
     public function withLatestVersion(?string $latestVersion): self
     {
         $obj = clone $this;
-        $obj['latest_version'] = $latestVersion;
+        $obj['latestVersion'] = $latestVersion;
 
         return $obj;
     }
@@ -223,7 +223,7 @@ final class SkillGetResponse implements BaseModel
     public function withUpdatedAt(string $updatedAt): self
     {
         $obj = clone $this;
-        $obj['updated_at'] = $updatedAt;
+        $obj['updatedAt'] = $updatedAt;
 
         return $obj;
     }

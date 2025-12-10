@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCitationWebSearchResultLocationParamShape = array{
- *   cited_text: string,
- *   encrypted_index: string,
+ *   citedText: string,
+ *   encryptedIndex: string,
  *   title: string|null,
  *   type?: 'web_search_result_location',
  *   url: string,
@@ -26,11 +26,11 @@ final class BetaCitationWebSearchResultLocationParam implements BaseModel
     #[Required]
     public string $type = 'web_search_result_location';
 
-    #[Required]
-    public string $cited_text;
+    #[Required('cited_text')]
+    public string $citedText;
 
-    #[Required]
-    public string $encrypted_index;
+    #[Required('encrypted_index')]
+    public string $encryptedIndex;
 
     #[Required]
     public ?string $title;
@@ -44,7 +44,7 @@ final class BetaCitationWebSearchResultLocationParam implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaCitationWebSearchResultLocationParam::with(
-     *   cited_text: ..., encrypted_index: ..., title: ..., url: ...
+     *   citedText: ..., encryptedIndex: ..., title: ..., url: ...
      * )
      * ```
      *
@@ -69,15 +69,15 @@ final class BetaCitationWebSearchResultLocationParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $cited_text,
-        string $encrypted_index,
+        string $citedText,
+        string $encryptedIndex,
         ?string $title,
         string $url
     ): self {
         $obj = new self;
 
-        $obj['cited_text'] = $cited_text;
-        $obj['encrypted_index'] = $encrypted_index;
+        $obj['citedText'] = $citedText;
+        $obj['encryptedIndex'] = $encryptedIndex;
         $obj['title'] = $title;
         $obj['url'] = $url;
 
@@ -87,7 +87,7 @@ final class BetaCitationWebSearchResultLocationParam implements BaseModel
     public function withCitedText(string $citedText): self
     {
         $obj = clone $this;
-        $obj['cited_text'] = $citedText;
+        $obj['citedText'] = $citedText;
 
         return $obj;
     }
@@ -95,7 +95,7 @@ final class BetaCitationWebSearchResultLocationParam implements BaseModel
     public function withEncryptedIndex(string $encryptedIndex): self
     {
         $obj = clone $this;
-        $obj['encrypted_index'] = $encryptedIndex;
+        $obj['encryptedIndex'] = $encryptedIndex;
 
         return $obj;
     }
