@@ -7,6 +7,7 @@ namespace Anthropic\Services\Messages;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Util;
 use Anthropic\Messages\Batches\BatchCreateParams\Request\Params\ServiceTier;
 use Anthropic\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Messages\Batches\MessageBatch;
@@ -75,7 +76,7 @@ final class BatchesService implements BatchesContract
         array $requests,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
-        $params = ['requests' => $requests];
+        $params = Util::removeNulls(['requests' => $requests]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
@@ -127,11 +128,9 @@ final class BatchesService implements BatchesContract
         int $limit = 20,
         ?RequestOptions $requestOptions = null,
     ): Page {
-        $params = [
-            'afterID' => $afterID, 'beforeID' => $beforeID, 'limit' => $limit,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            ['afterID' => $afterID, 'beforeID' => $beforeID, 'limit' => $limit]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);

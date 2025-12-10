@@ -28,6 +28,7 @@ trait SdkEnum
             }
         }
 
-        return static::$converter = new EnumOf($acc); // @phpstan-ignore-line
+        // @phpstan-ignore-next-line return.type
+        return static::$converter = new EnumOf($acc);
     }
 }

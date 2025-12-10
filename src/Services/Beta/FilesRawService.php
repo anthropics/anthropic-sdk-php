@@ -50,7 +50,7 @@ final class FilesRawService implements FilesRawContract
             $params,
             $requestOptions,
         );
-        $query_params = array_flip(['after_id', 'before_id', 'limit']);
+        $query_params = array_flip(['afterID', 'beforeID', 'limit']);
 
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);

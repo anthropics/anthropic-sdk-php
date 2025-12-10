@@ -57,7 +57,8 @@ final class PropertyInfo
         }
 
         if (is_array($type)) {
-            return new UnionOf($type); // @phpstan-ignore-line
+            // @phpstan-ignore-next-line return.type
+            return new UnionOf($type);
         }
 
         if ($type instanceof \ReflectionUnionType) {

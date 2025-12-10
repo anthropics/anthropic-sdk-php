@@ -21,6 +21,7 @@ use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Util;
 use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\MessagesContract;
@@ -266,29 +267,29 @@ final class MessagesService implements MessagesContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): BetaMessage {
-        $params = [
-            'maxTokens' => $maxTokens,
-            'messages' => $messages,
-            'model' => $model,
-            'container' => $container,
-            'contextManagement' => $contextManagement,
-            'mcpServers' => $mcpServers,
-            'metadata' => $metadata,
-            'outputConfig' => $outputConfig,
-            'outputFormat' => $outputFormat,
-            'serviceTier' => $serviceTier,
-            'stopSequences' => $stopSequences,
-            'system' => $system,
-            'temperature' => $temperature,
-            'thinking' => $thinking,
-            'toolChoice' => $toolChoice,
-            'tools' => $tools,
-            'topK' => $topK,
-            'topP' => $topP,
-            'betas' => $betas,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'maxTokens' => $maxTokens,
+                'messages' => $messages,
+                'model' => $model,
+                'container' => $container,
+                'contextManagement' => $contextManagement,
+                'mcpServers' => $mcpServers,
+                'metadata' => $metadata,
+                'outputConfig' => $outputConfig,
+                'outputFormat' => $outputFormat,
+                'serviceTier' => $serviceTier,
+                'stopSequences' => $stopSequences,
+                'system' => $system,
+                'temperature' => $temperature,
+                'thinking' => $thinking,
+                'toolChoice' => $toolChoice,
+                'tools' => $tools,
+                'topK' => $topK,
+                'topP' => $topP,
+                'betas' => $betas,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
@@ -511,29 +512,29 @@ final class MessagesService implements MessagesContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): BaseStream {
-        $params = [
-            'maxTokens' => $maxTokens,
-            'messages' => $messages,
-            'model' => $model,
-            'container' => $container,
-            'contextManagement' => $contextManagement,
-            'mcpServers' => $mcpServers,
-            'metadata' => $metadata,
-            'outputConfig' => $outputConfig,
-            'outputFormat' => $outputFormat,
-            'serviceTier' => $serviceTier,
-            'stopSequences' => $stopSequences,
-            'system' => $system,
-            'temperature' => $temperature,
-            'thinking' => $thinking,
-            'toolChoice' => $toolChoice,
-            'tools' => $tools,
-            'topK' => $topK,
-            'topP' => $topP,
-            'betas' => $betas,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'maxTokens' => $maxTokens,
+                'messages' => $messages,
+                'model' => $model,
+                'container' => $container,
+                'contextManagement' => $contextManagement,
+                'mcpServers' => $mcpServers,
+                'metadata' => $metadata,
+                'outputConfig' => $outputConfig,
+                'outputFormat' => $outputFormat,
+                'serviceTier' => $serviceTier,
+                'stopSequences' => $stopSequences,
+                'system' => $system,
+                'temperature' => $temperature,
+                'thinking' => $thinking,
+                'toolChoice' => $toolChoice,
+                'tools' => $tools,
+                'topK' => $topK,
+                'topP' => $topP,
+                'betas' => $betas,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->createStream(params: $params, requestOptions: $requestOptions);
@@ -715,21 +716,21 @@ final class MessagesService implements MessagesContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): BetaMessageTokensCount {
-        $params = [
-            'messages' => $messages,
-            'model' => $model,
-            'contextManagement' => $contextManagement,
-            'mcpServers' => $mcpServers,
-            'outputConfig' => $outputConfig,
-            'outputFormat' => $outputFormat,
-            'system' => $system,
-            'thinking' => $thinking,
-            'toolChoice' => $toolChoice,
-            'tools' => $tools,
-            'betas' => $betas,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'messages' => $messages,
+                'model' => $model,
+                'contextManagement' => $contextManagement,
+                'mcpServers' => $mcpServers,
+                'outputConfig' => $outputConfig,
+                'outputFormat' => $outputFormat,
+                'system' => $system,
+                'thinking' => $thinking,
+                'toolChoice' => $toolChoice,
+                'tools' => $tools,
+                'betas' => $betas,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->countTokens(params: $params, requestOptions: $requestOptions);

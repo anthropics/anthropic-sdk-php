@@ -16,6 +16,7 @@ use Anthropic\Beta\Messages\BetaSkillParams\Type;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Util;
 use Anthropic\Messages\Model;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
@@ -100,9 +101,7 @@ final class BatchesService implements BatchesContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
-        $params = ['requests' => $requests, 'betas' => $betas];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['requests' => $requests, 'betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
@@ -127,9 +126,7 @@ final class BatchesService implements BatchesContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch {
-        $params = ['betas' => $betas];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($messageBatchID, params: $params, requestOptions: $requestOptions);
@@ -162,14 +159,14 @@ final class BatchesService implements BatchesContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): Page {
-        $params = [
-            'afterID' => $afterID,
-            'beforeID' => $beforeID,
-            'limit' => $limit,
-            'betas' => $betas,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'afterID' => $afterID,
+                'beforeID' => $beforeID,
+                'limit' => $limit,
+                'betas' => $betas,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
@@ -196,9 +193,7 @@ final class BatchesService implements BatchesContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): DeletedMessageBatch {
-        $params = ['betas' => $betas];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($messageBatchID, params: $params, requestOptions: $requestOptions);
@@ -225,9 +220,7 @@ final class BatchesService implements BatchesContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch {
-        $params = ['betas' => $betas];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->cancel($messageBatchID, params: $params, requestOptions: $requestOptions);
@@ -254,9 +247,7 @@ final class BatchesService implements BatchesContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): MessageBatchIndividualResponse {
-        $params = ['betas' => $betas];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->results($messageBatchID, params: $params, requestOptions: $requestOptions);
@@ -279,9 +270,7 @@ final class BatchesService implements BatchesContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): BaseStream {
-        $params = ['betas' => $betas];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->resultsStream($messageBatchID, params: $params, requestOptions: $requestOptions);

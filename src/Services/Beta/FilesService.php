@@ -9,6 +9,7 @@ use Anthropic\Beta\Files\DeletedFile;
 use Anthropic\Beta\Files\FileMetadata;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Util;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\FilesContract;
@@ -51,14 +52,14 @@ final class FilesService implements FilesContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): Page {
-        $params = [
-            'afterID' => $afterID,
-            'beforeID' => $beforeID,
-            'limit' => $limit,
-            'betas' => $betas,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'afterID' => $afterID,
+                'beforeID' => $beforeID,
+                'limit' => $limit,
+                'betas' => $betas,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
@@ -81,9 +82,7 @@ final class FilesService implements FilesContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null
     ): DeletedFile {
-        $params = ['betas' => $betas];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($fileID, params: $params, requestOptions: $requestOptions);
@@ -106,9 +105,7 @@ final class FilesService implements FilesContract
         ?array $betas = null,
         ?RequestOptions $requestOptions = null
     ): FileMetadata {
-        $params = ['betas' => $betas];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieveMetadata($fileID, params: $params, requestOptions: $requestOptions);
