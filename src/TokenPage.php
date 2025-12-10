@@ -68,13 +68,10 @@ final class TokenPage implements BaseModel, BasePage
         // @phpstan-ignore-next-line argument.type
         self::__unserialize($this->parsedBody);
 
-        if ($this->offsetGet('data')) {
-            $acc = Conversion::coerce(
-                new ListOf($convert),
-                value: $this->offsetGet('data')
-            );
+        if (is_array($items = $this->offsetGet('data'))) {
+            $parsed = Conversion::coerce(new ListOf($convert), value: $items);
             // @phpstan-ignore-next-line
-            $this->offsetSet('data', $acc);
+            $this->offsetSet('data', value: $parsed);
         }
     }
 
