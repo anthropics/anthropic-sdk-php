@@ -20,11 +20,11 @@ use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
+use Anthropic\JsonLStream;
 use Anthropic\Messages\Model;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Messages\BatchesRawContract;
-use Anthropic\SSEStream;
 
 final class BatchesRawService implements BatchesRawContract
 {
@@ -366,7 +366,7 @@ final class BatchesRawService implements BatchesRawContract
                 $options,
             ),
             convert: MessageBatchIndividualResponse::class,
-            stream: SSEStream::class,
+            stream: JsonLStream::class,
         );
     }
 }
