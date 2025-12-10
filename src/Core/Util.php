@@ -127,8 +127,9 @@ final class Util
         }
 
         [$template] = $path;
+        $mapped = array_map(static fn ($s) => self::rawUrlEncode($s), array: array_slice($path, 1));
 
-        return sprintf($template, ...array_map('rawurlencode', array: array_slice($path, 1)));
+        return sprintf($template, ...$mapped);
     }
 
     /**
@@ -381,6 +382,17 @@ final class Util
         return json_encode($obj, flags: JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
     }
 
+    private static function rawUrlEncode(
+        string|int|\DateTimeInterface $value
+    ): string {
+        // @phpstan-ignore-next-line function.alreadyNarrowedType
+        if (is_object($value) && is_a($value, class: \DateTimeInterface::class)) {
+            $value = date_format($value, format: \DateTimeInterface::RFC3339);
+        }
+
+        return rawurlencode((string) $value);
+    }
+
     /**
      * @param list<callable> $closing
      *
@@ -429,7 +441,7 @@ final class Util
         yield 'Content-Disposition: form-data';
 
         if (!is_null($key)) {
-            $name = rawurlencode($key);
+            $name = self::rawUrlEncode($key);
 
             yield "; name=\"{$name}\"";
         }
