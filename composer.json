@@ -4,6 +4,7 @@
   "autoload": {
     "files": [
       "src/Core.php",
+      "src/Version.php",
       "src/Client.php"
     ],
     "psr-4": {

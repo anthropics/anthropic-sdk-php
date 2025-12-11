@@ -51,12 +51,11 @@ class Client extends BaseClient
         );
 
         parent::__construct(
-            // x-release-please-start-version
             headers: [
                 'anthropic-version' => '2023-06-01',
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
-                'User-Agent' => sprintf('anthropic/PHP %s', '0.4.0'),
+                'User-Agent' => sprintf('anthropic/PHP %s', VERSION),
                 'X-Stainless-Lang' => 'php',
                 'X-Stainless-Package-Version' => '0.0.1',
                 'X-Stainless-Arch' => Util::machtype(),
@@ -64,9 +63,8 @@ class Client extends BaseClient
                 'X-Stainless-Runtime' => php_sapi_name(),
                 'X-Stainless-Runtime-Version' => phpversion(),
             ],
-            // x-release-please-end
             baseUrl: $baseUrl,
-            options: $options,
+            options: $options
         );
 
         $this->messages = new MessagesService($this);

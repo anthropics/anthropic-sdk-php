@@ -43,6 +43,7 @@ abstract class BaseClient
     public function __construct(
         protected array $headers,
         string $baseUrl,
+        protected ?string $idempotencyHeader = null,
         protected RequestOptions $options = new RequestOptions,
     ) {
         assert(!is_null($this->options->uriFactory));
@@ -101,6 +102,16 @@ abstract class BaseClient
 
     /**
      * @internal
+     */
+    protected function generateIdempotencyKey(): string
+    {
+        $hex = bin2hex(random_bytes(32));
+
+        return "stainless-php-retry-{$hex}";
+    }
+
+    /**
+     * @internal
      *
      * @param string|list<string> $path
      * @param array<string,mixed> $query
@@ -136,15 +147,21 @@ abstract class BaseClient
         /** @var array<string,mixed> $mergedQuery */
         $mergedQuery = array_merge_recursive(
             $query,
-            $options->extraQueryParams ?? [],
+            $options->extraQueryParams ?? []
         );
         $uri = Util::joinUri($this->baseUrl, path: $parsedPath, query: $mergedQuery)->__toString();
+        $idempotencyHeaders = $this->idempotencyHeader && !array_key_exists($this->idempotencyHeader, array: $headers)
+            ? [$this->idempotencyHeader => $this->generateIdempotencyKey()]
+            : [];
 
         /** @var array<string,string|list<string>|null> $mergedHeaders */
-        $mergedHeaders = [...$this->headers,
+        $mergedHeaders = [
+            ...$this->headers,
             ...$this->authHeaders(),
             ...$headers,
-            ...($options->extraHeaders ?? []), ];
+            ...($options->extraHeaders ?? []),
+            ...$idempotencyHeaders,
+        ];
 
         $req = ['method' => strtoupper($method), 'path' => $uri, 'query' => $mergedQuery, 'headers' => $mergedHeaders, 'body' => $body];
 

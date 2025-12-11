@@ -62,6 +62,6 @@
   "release-type": "php",
   "extra-files": [
     "README.md",
-    "src/Client.php"
+    "src/Version.php"
   ]
 }
