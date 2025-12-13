@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Anthropic\Services\Beta\Messages;
 
-use Anthropic\Beta\Messages\Batches\BatchCancelParams;
-use Anthropic\Beta\Messages\Batches\BatchCreateParams;
-use Anthropic\Beta\Messages\Batches\BatchDeleteParams;
-use Anthropic\Beta\Messages\Batches\BatchListParams;
-use Anthropic\Beta\Messages\Batches\BatchResultsParams;
-use Anthropic\Beta\Messages\Batches\BatchRetrieveParams;
+use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\ServiceTier;
 use Anthropic\Beta\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
+use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
+use Anthropic\Beta\Messages\BetaMessageParam\Role;
+use Anthropic\Beta\Messages\BetaOutputConfig\Effort;
+use Anthropic\Beta\Messages\BetaSkillParams\Type;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
@@ -21,14 +21,21 @@ use Anthropic\Messages\Model;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Messages\BatchesContract;
-use Anthropic\SSEStream;
 
 final class BatchesService implements BatchesContract
 {
     /**
+     * @api
+     */
+    public BatchesRawService $raw;
+
+    /**
      * @internal
      */
-    public function __construct(private Client $client) {}
+    public function __construct(private Client $client)
+    {
+        $this->raw = new BatchesRawService($client);
+    }
 
     /**
      * @api
@@ -39,61 +46,67 @@ final class BatchesService implements BatchesContract
      *
      * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
      *
-     * @param array{
-     *   requests: list<array{
-     *     custom_id: string,
-     *     params: array{
-     *       max_tokens: int,
-     *       messages: list<array<mixed>>,
-     *       model: string|Model,
-     *       container?: string|array<mixed>|null,
-     *       context_management?: array<mixed>|null,
-     *       mcp_servers?: list<array<mixed>>,
-     *       metadata?: array<mixed>,
-     *       output_config?: array<mixed>,
-     *       output_format?: array<mixed>|null,
-     *       service_tier?: "auto"|"standard_only",
-     *       stop_sequences?: list<string>,
-     *       stream?: bool,
-     *       system?: string|list<array<mixed>>,
-     *       temperature?: float,
-     *       thinking?: array<string,mixed>,
-     *       tool_choice?: array<string,mixed>,
-     *       tools?: list<array<string,mixed>>,
-     *       top_k?: int,
-     *       top_p?: float,
-     *     },
-     *   }>,
-     *   betas?: list<string>,
-     * }|BatchCreateParams $params
+     * @param list<array{
+     *   customID: string,
+     *   params: array{
+     *     maxTokens: int,
+     *     messages: list<array{
+     *       content: string|list<array<string,mixed>>, role: 'user'|'assistant'|Role
+     *     }>,
+     *     model: string|'claude-opus-4-5-20251101'|'claude-opus-4-5'|'claude-3-7-sonnet-latest'|'claude-3-7-sonnet-20250219'|'claude-3-5-haiku-latest'|'claude-3-5-haiku-20241022'|'claude-haiku-4-5'|'claude-haiku-4-5-20251001'|'claude-sonnet-4-20250514'|'claude-sonnet-4-0'|'claude-4-sonnet-20250514'|'claude-sonnet-4-5'|'claude-sonnet-4-5-20250929'|'claude-opus-4-0'|'claude-opus-4-20250514'|'claude-4-opus-20250514'|'claude-opus-4-1-20250805'|'claude-3-opus-latest'|'claude-3-opus-20240229'|'claude-3-haiku-20240307'|Model,
+     *     container?: string|array{
+     *       id?: string|null,
+     *       skills?: list<array{
+     *         skillID: string, type: 'anthropic'|'custom'|Type, version?: string
+     *       }>|null,
+     *     }|null,
+     *     contextManagement?: array{edits?: list<array<string,mixed>>}|null,
+     *     mcpServers?: list<array{
+     *       name: string,
+     *       type?: 'url',
+     *       url: string,
+     *       authorizationToken?: string|null,
+     *       toolConfiguration?: array{
+     *         allowedTools?: list<string>|null, enabled?: bool|null
+     *       }|null,
+     *     }>,
+     *     metadata?: array{userID?: string|null},
+     *     outputConfig?: array{effort?: 'low'|'medium'|'high'|Effort|null},
+     *     outputFormat?: array{
+     *       schema: array<string,mixed>, type?: 'json_schema'
+     *     }|null,
+     *     serviceTier?: 'auto'|'standard_only'|ServiceTier,
+     *     stopSequences?: list<string>,
+     *     stream?: bool,
+     *     system?: string|list<array{
+     *       text: string,
+     *       type?: 'text',
+     *       cacheControl?: array{type?: 'ephemeral', ttl?: '5m'|'1h'|TTL}|null,
+     *       citations?: list<array<string,mixed>>|null,
+     *     }>,
+     *     temperature?: float,
+     *     thinking?: array<string,mixed>,
+     *     toolChoice?: array<string,mixed>,
+     *     tools?: list<array<string,mixed>>,
+     *     topK?: int,
+     *     topP?: float,
+     *   },
+     * }> $requests Body param: List of requests for prompt completion. Each is an individual request to create a Message.
+     * @param list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta> $betas header param: Optional header to specify the beta version(s) you want to use
      *
      * @throws APIException
      */
     public function create(
-        array|BatchCreateParams $params,
+        array $requests,
+        ?array $betas = null,
         ?RequestOptions $requestOptions = null
     ): MessageBatch {
-        [$parsed, $options] = BatchCreateParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $params = Util::removeNulls(['requests' => $requests, 'betas' => $betas]);
 
-        // @phpstan-ignore-next-line;
-        return $this->client->request(
-            method: 'post',
-            path: 'v1/messages/batches?beta=true',
-            headers: Util::array_transform_keys(
-                array_intersect_key($parsed, array_keys($header_params)),
-                $header_params
-            ),
-            body: (object) array_diff_key($parsed, array_keys($header_params)),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
-                $options,
-            ),
-            convert: MessageBatch::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
     }
 
     /**
@@ -103,34 +116,22 @@ final class BatchesService implements BatchesContract
      *
      * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
      *
-     * @param array{betas?: list<string>}|BatchRetrieveParams $params
+     * @param string $messageBatchID ID of the Message Batch
+     * @param list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @throws APIException
      */
     public function retrieve(
         string $messageBatchID,
-        array|BatchRetrieveParams $params,
+        ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch {
-        [$parsed, $options] = BatchRetrieveParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = Util::removeNulls(['betas' => $betas]);
 
-        // @phpstan-ignore-next-line;
-        return $this->client->request(
-            method: 'get',
-            path: ['v1/messages/batches/%1$s?beta=true', $messageBatchID],
-            headers: Util::array_transform_keys(
-                $parsed,
-                ['betas' => 'anthropic-beta']
-            ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
-                $options,
-            ),
-            convert: MessageBatch::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieve($messageBatchID, params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
     }
 
     /**
@@ -140,43 +141,37 @@ final class BatchesService implements BatchesContract
      *
      * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
      *
-     * @param array{
-     *   after_id?: string, before_id?: string, limit?: int, betas?: list<string>
-     * }|BatchListParams $params
+     * @param string $afterID Query param: ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
+     * @param string $beforeID Query param: ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
+     * @param int $limit Query param: Number of items to return per page.
+     *
+     * Defaults to `20`. Ranges from `1` to `1000`.
+     * @param list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta> $betas header param: Optional header to specify the beta version(s) you want to use
      *
      * @return Page<MessageBatch>
      *
      * @throws APIException
      */
     public function list(
-        array|BatchListParams $params,
-        ?RequestOptions $requestOptions = null
+        ?string $afterID = null,
+        ?string $beforeID = null,
+        int $limit = 20,
+        ?array $betas = null,
+        ?RequestOptions $requestOptions = null,
     ): Page {
-        [$parsed, $options] = BatchListParams::parseRequest(
-            $params,
-            $requestOptions,
+        $params = Util::removeNulls(
+            [
+                'afterID' => $afterID,
+                'beforeID' => $beforeID,
+                'limit' => $limit,
+                'betas' => $betas,
+            ],
         );
-        $query_params = array_flip(['after_id', 'before_id', 'limit']);
 
-        /** @var array<string,string> */
-        $header_params = array_diff_key($parsed, $query_params);
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
 
-        // @phpstan-ignore-next-line;
-        return $this->client->request(
-            method: 'get',
-            path: 'v1/messages/batches?beta=true',
-            query: array_intersect_key($parsed, $query_params),
-            headers: Util::array_transform_keys(
-                $header_params,
-                ['betas' => 'anthropic-beta']
-            ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
-                $options,
-            ),
-            convert: MessageBatch::class,
-            page: Page::class,
-        );
+        return $response->parse();
     }
 
     /**
@@ -188,34 +183,22 @@ final class BatchesService implements BatchesContract
      *
      * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
      *
-     * @param array{betas?: list<string>}|BatchDeleteParams $params
+     * @param string $messageBatchID ID of the Message Batch
+     * @param list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @throws APIException
      */
     public function delete(
         string $messageBatchID,
-        array|BatchDeleteParams $params,
+        ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): DeletedMessageBatch {
-        [$parsed, $options] = BatchDeleteParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = Util::removeNulls(['betas' => $betas]);
 
-        // @phpstan-ignore-next-line;
-        return $this->client->request(
-            method: 'delete',
-            path: ['v1/messages/batches/%1$s?beta=true', $messageBatchID],
-            headers: Util::array_transform_keys(
-                $parsed,
-                ['betas' => 'anthropic-beta']
-            ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
-                $options,
-            ),
-            convert: DeletedMessageBatch::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->delete($messageBatchID, params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
     }
 
     /**
@@ -227,34 +210,22 @@ final class BatchesService implements BatchesContract
      *
      * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
      *
-     * @param array{betas?: list<string>}|BatchCancelParams $params
+     * @param string $messageBatchID ID of the Message Batch
+     * @param list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @throws APIException
      */
     public function cancel(
         string $messageBatchID,
-        array|BatchCancelParams $params,
+        ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): MessageBatch {
-        [$parsed, $options] = BatchCancelParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = Util::removeNulls(['betas' => $betas]);
 
-        // @phpstan-ignore-next-line;
-        return $this->client->request(
-            method: 'post',
-            path: ['v1/messages/batches/%1$s/cancel?beta=true', $messageBatchID],
-            headers: Util::array_transform_keys(
-                $parsed,
-                ['betas' => 'anthropic-beta']
-            ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
-                $options,
-            ),
-            convert: MessageBatch::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->cancel($messageBatchID, params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
     }
 
     /**
@@ -266,40 +237,29 @@ final class BatchesService implements BatchesContract
      *
      * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
      *
-     * @param array{betas?: list<string>}|BatchResultsParams $params
+     * @param string $messageBatchID ID of the Message Batch
+     * @param list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @throws APIException
      */
     public function results(
         string $messageBatchID,
-        array|BatchResultsParams $params,
+        ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): MessageBatchIndividualResponse {
-        [$parsed, $options] = BatchResultsParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = Util::removeNulls(['betas' => $betas]);
 
-        // @phpstan-ignore-next-line;
-        return $this->client->request(
-            method: 'get',
-            path: ['v1/messages/batches/%1$s/results?beta=true', $messageBatchID],
-            headers: Util::array_transform_keys(
-                ['Accept' => 'application/x-jsonl', ...$parsed],
-                ['betas' => 'anthropic-beta'],
-            ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
-                $options,
-            ),
-            convert: MessageBatchIndividualResponse::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->results($messageBatchID, params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
     }
 
     /**
      * @api
      *
-     * @param array{betas?: list<string>}|BatchResultsParams $params
+     * @param string $messageBatchID ID of the Message Batch
+     * @param list<string|'message-batches-2024-09-24'|'prompt-caching-2024-07-31'|'computer-use-2024-10-22'|'computer-use-2025-01-24'|'pdfs-2024-09-25'|'token-counting-2024-11-01'|'token-efficient-tools-2025-02-19'|'output-128k-2025-02-19'|'files-api-2025-04-14'|'mcp-client-2025-04-04'|'mcp-client-2025-11-20'|'dev-full-thinking-2025-05-14'|'interleaved-thinking-2025-05-14'|'code-execution-2025-05-22'|'extended-cache-ttl-2025-04-11'|'context-1m-2025-08-07'|'context-management-2025-06-27'|'model-context-window-exceeded-2025-08-26'|'skills-2025-10-02'|AnthropicBeta> $betas optional header to specify the beta version(s) you want to use
      *
      * @return BaseStream<MessageBatchIndividualResponse>
      *
@@ -307,28 +267,14 @@ final class BatchesService implements BatchesContract
      */
     public function resultsStream(
         string $messageBatchID,
-        array|BatchResultsParams $params,
+        ?array $betas = null,
         ?RequestOptions $requestOptions = null,
     ): BaseStream {
-        [$parsed, $options] = BatchResultsParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = Util::removeNulls(['betas' => $betas]);
 
-        // @phpstan-ignore-next-line;
-        return $this->client->request(
-            method: 'get',
-            path: ['v1/messages/batches/%1$s/results?beta=true', $messageBatchID],
-            headers: Util::array_transform_keys(
-                ['Accept' => 'application/x-jsonl', ...$parsed],
-                ['betas' => 'anthropic-beta'],
-            ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
-                $options,
-            ),
-            convert: MessageBatchIndividualResponse::class,
-            stream: SSEStream::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->resultsStream($messageBatchID, params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
     }
 }

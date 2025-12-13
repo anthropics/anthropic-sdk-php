@@ -4,14 +4,23 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Batches;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\APIErrorObject;
+use Anthropic\AuthenticationError;
+use Anthropic\BillingError;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\ErrorResponse;
+use Anthropic\GatewayTimeoutError;
+use Anthropic\InvalidRequestError;
+use Anthropic\NotFoundError;
+use Anthropic\OverloadedError;
+use Anthropic\PermissionError;
+use Anthropic\RateLimitError;
 
 /**
  * @phpstan-type MessageBatchErroredResultShape = array{
- *   error: ErrorResponse, type: "errored"
+ *   error: ErrorResponse, type?: 'errored'
  * }
  */
 final class MessageBatchErroredResult implements BaseModel
@@ -19,11 +28,11 @@ final class MessageBatchErroredResult implements BaseModel
     /** @use SdkModel<MessageBatchErroredResultShape> */
     use SdkModel;
 
-    /** @var "errored" $type */
-    #[Api]
+    /** @var 'errored' $type */
+    #[Required]
     public string $type = 'errored';
 
-    #[Api]
+    #[Required]
     public ErrorResponse $error;
 
     /**
@@ -49,21 +58,34 @@ final class MessageBatchErroredResult implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param ErrorResponse|array{
+     *   error: InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError,
+     *   requestID: string|null,
+     *   type?: 'error',
+     * } $error
      */
-    public static function with(ErrorResponse $error): self
+    public static function with(ErrorResponse|array $error): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->error = $error;
+        $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 
-    public function withError(ErrorResponse $error): self
+    /**
+     * @param ErrorResponse|array{
+     *   error: InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError,
+     *   requestID: string|null,
+     *   type?: 'error',
+     * } $error
+     */
+    public function withError(ErrorResponse|array $error): self
     {
-        $obj = clone $this;
-        $obj->error = $error;
+        $self = clone $this;
+        $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 }

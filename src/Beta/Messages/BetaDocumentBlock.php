@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaDocumentBlock\Source;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   citations: BetaCitationConfig|null,
  *   source: BetaBase64PDFSource|BetaPlainTextSource,
  *   title: string|null,
- *   type: "document",
+ *   type?: 'document',
  * }
  */
 final class BetaDocumentBlock implements BaseModel
@@ -22,23 +22,23 @@ final class BetaDocumentBlock implements BaseModel
     /** @use SdkModel<BetaDocumentBlockShape> */
     use SdkModel;
 
-    /** @var "document" $type */
-    #[Api]
+    /** @var 'document' $type */
+    #[Required]
     public string $type = 'document';
 
     /**
      * Citation configuration for the document.
      */
-    #[Api]
+    #[Required]
     public ?BetaCitationConfig $citations;
 
-    #[Api(union: Source::class)]
+    #[Required(union: Source::class)]
     public BetaBase64PDFSource|BetaPlainTextSource $source;
 
     /**
      * The title of the document.
      */
-    #[Api]
+    #[Required]
     public ?string $title;
 
     /**
@@ -64,39 +64,56 @@ final class BetaDocumentBlock implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaCitationConfig|array{enabled: bool}|null $citations
+     * @param BetaBase64PDFSource|array{
+     *   data: string, mediaType?: 'application/pdf', type?: 'base64'
+     * }|BetaPlainTextSource|array{
+     *   data: string, mediaType?: 'text/plain', type?: 'text'
+     * } $source
      */
     public static function with(
-        ?BetaCitationConfig $citations,
-        BetaBase64PDFSource|BetaPlainTextSource $source,
+        BetaCitationConfig|array|null $citations,
+        BetaBase64PDFSource|array|BetaPlainTextSource $source,
         ?string $title,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->citations = $citations;
-        $obj->source = $source;
-        $obj->title = $title;
+        $self['citations'] = $citations;
+        $self['source'] = $source;
+        $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Citation configuration for the document.
+     *
+     * @param BetaCitationConfig|array{enabled: bool}|null $citations
      */
-    public function withCitations(?BetaCitationConfig $citations): self
-    {
-        $obj = clone $this;
-        $obj->citations = $citations;
+    public function withCitations(
+        BetaCitationConfig|array|null $citations
+    ): self {
+        $self = clone $this;
+        $self['citations'] = $citations;
 
-        return $obj;
+        return $self;
     }
 
+    /**
+     * @param BetaBase64PDFSource|array{
+     *   data: string, mediaType?: 'application/pdf', type?: 'base64'
+     * }|BetaPlainTextSource|array{
+     *   data: string, mediaType?: 'text/plain', type?: 'text'
+     * } $source
+     */
     public function withSource(
-        BetaBase64PDFSource|BetaPlainTextSource $source
+        BetaBase64PDFSource|array|BetaPlainTextSource $source
     ): self {
-        $obj = clone $this;
-        $obj->source = $source;
+        $self = clone $this;
+        $self['source'] = $source;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -104,9 +121,9 @@ final class BetaDocumentBlock implements BaseModel
      */
     public function withTitle(?string $title): self
     {
-        $obj = clone $this;
-        $obj->title = $title;
+        $self = clone $this;
+        $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 }

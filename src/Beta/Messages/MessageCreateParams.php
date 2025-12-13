@@ -5,9 +5,16 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Messages\BetaMessageParam\Role;
+use Anthropic\Beta\Messages\BetaOutputConfig\Effort;
+use Anthropic\Beta\Messages\BetaTool\AllowedCaller;
+use Anthropic\Beta\Messages\BetaTool\InputSchema;
+use Anthropic\Beta\Messages\BetaTool\Type;
+use Anthropic\Beta\Messages\BetaWebSearchTool20250305\UserLocation;
 use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Beta\Messages\MessageCreateParams\System;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -23,24 +30,210 @@ use Anthropic\Messages\Model;
  * @see Anthropic\Services\Beta\MessagesService::create()
  *
  * @phpstan-type MessageCreateParamsShape = array{
- *   max_tokens: int,
- *   messages: list<BetaMessageParam>,
+ *   maxTokens: int,
+ *   messages: list<BetaMessageParam|array{
+ *     content: string|list<BetaTextBlockParam|BetaImageBlockParam|BetaRequestDocumentBlock|BetaSearchResultBlockParam|BetaThinkingBlockParam|BetaRedactedThinkingBlockParam|BetaToolUseBlockParam|BetaToolResultBlockParam|BetaServerToolUseBlockParam|BetaWebSearchToolResultBlockParam|BetaWebFetchToolResultBlockParam|BetaCodeExecutionToolResultBlockParam|BetaBashCodeExecutionToolResultBlockParam|BetaTextEditorCodeExecutionToolResultBlockParam|BetaToolSearchToolResultBlockParam|BetaMCPToolUseBlockParam|BetaRequestMCPToolResultBlockParam|BetaContainerUploadBlockParam>,
+ *     role: value-of<Role>,
+ *   }>,
  *   model: string|Model,
- *   container?: string|null|BetaContainerParams,
- *   context_management?: BetaContextManagementConfig|null,
- *   mcp_servers?: list<BetaRequestMCPServerURLDefinition>,
- *   metadata?: BetaMetadata,
- *   output_config?: BetaOutputConfig,
- *   output_format?: BetaJSONOutputFormat|null,
- *   service_tier?: ServiceTier|value-of<ServiceTier>,
- *   stop_sequences?: list<string>,
- *   system?: string|list<BetaTextBlockParam>,
+ *   container?: string|null|BetaContainerParams|array{
+ *     id?: string|null, skills?: list<BetaSkillParams>|null
+ *   },
+ *   contextManagement?: null|BetaContextManagementConfig|array{
+ *     edits?: list<BetaClearToolUses20250919Edit|BetaClearThinking20251015Edit>|null,
+ *   },
+ *   mcpServers?: list<BetaRequestMCPServerURLDefinition|array{
+ *     name: string,
+ *     type?: 'url',
+ *     url: string,
+ *     authorizationToken?: string|null,
+ *     toolConfiguration?: BetaRequestMCPServerToolConfiguration|null,
+ *   }>,
+ *   metadata?: BetaMetadata|array{userID?: string|null},
+ *   outputConfig?: BetaOutputConfig|array{effort?: value-of<Effort>|null},
+ *   outputFormat?: null|BetaJSONOutputFormat|array{
+ *     schema: array<string,mixed>, type?: 'json_schema'
+ *   },
+ *   serviceTier?: ServiceTier|value-of<ServiceTier>,
+ *   stopSequences?: list<string>,
+ *   system?: string|list<BetaTextBlockParam|array{
+ *     text: string,
+ *     type?: 'text',
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
+ *   }>,
  *   temperature?: float,
- *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
- *   tool_choice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
- *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset>,
- *   top_k?: int,
- *   top_p?: float,
+ *   thinking?: BetaThinkingConfigEnabled|array{
+ *     budgetTokens: int, type?: 'enabled'
+ *   }|BetaThinkingConfigDisabled|array{type?: 'disabled'},
+ *   toolChoice?: BetaToolChoiceAuto|array{
+ *     type?: 'auto', disableParallelToolUse?: bool|null
+ *   }|BetaToolChoiceAny|array{
+ *     type?: 'any', disableParallelToolUse?: bool|null
+ *   }|BetaToolChoiceTool|array{
+ *     name: string, type?: 'tool', disableParallelToolUse?: bool|null
+ *   }|BetaToolChoiceNone|array{type?: 'none'},
+ *   tools?: list<BetaTool|array{
+ *     inputSchema: InputSchema,
+ *     name: string,
+ *     allowedCallers?: list<value-of<AllowedCaller>>|null,
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     deferLoading?: bool|null,
+ *     description?: string|null,
+ *     inputExamples?: list<array<string,mixed>>|null,
+ *     strict?: bool|null,
+ *     type?: value-of<Type>|null,
+ *   }|BetaToolBash20241022|array{
+ *     name?: 'bash',
+ *     type?: 'bash_20241022',
+ *     allowedCallers?: list<value-of<\Anthropic\Beta\Messages\BetaToolBash20241022\AllowedCaller>>|null,
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     deferLoading?: bool|null,
+ *     inputExamples?: list<array<string,mixed>>|null,
+ *     strict?: bool|null,
+ *   }|BetaToolBash20250124|array{
+ *     name?: 'bash',
+ *     type?: 'bash_20250124',
+ *     allowedCallers?: list<value-of<\Anthropic\Beta\Messages\BetaToolBash20250124\AllowedCaller>>|null,
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     deferLoading?: bool|null,
+ *     inputExamples?: list<array<string,mixed>>|null,
+ *     strict?: bool|null,
+ *   }|BetaCodeExecutionTool20250522|array{
+ *     name?: 'code_execution',
+ *     type?: 'code_execution_20250522',
+ *     allowedCallers?: list<value-of<\Anthropic\Beta\Messages\BetaCodeExecutionTool20250522\AllowedCaller>>|null,
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     deferLoading?: bool|null,
+ *     strict?: bool|null,
+ *   }|BetaCodeExecutionTool20250825|array{
+ *     name?: 'code_execution',
+ *     type?: 'code_execution_20250825',
+ *     allowedCallers?: list<value-of<\Anthropic\Beta\Messages\BetaCodeExecutionTool20250825\AllowedCaller>>|null,
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     deferLoading?: bool|null,
+ *     strict?: bool|null,
+ *   }|BetaToolComputerUse20241022|array{
+ *     displayHeightPx: int,
+ *     displayWidthPx: int,
+ *     name?: 'computer',
+ *     type?: 'computer_20241022',
+ *     allowedCallers?: list<value-of<\Anthropic\Beta\Messages\BetaToolComputerUse20241022\AllowedCaller>>|null,
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     deferLoading?: bool|null,
+ *     displayNumber?: int|null,
+ *     inputExamples?: list<array<string,mixed>>|null,
+ *     strict?: bool|null,
+ *   }|BetaMemoryTool20250818|array{
+ *     name?: 'memory',
+ *     type?: 'memory_20250818',
+ *     allowedCallers?: list<value-of<\Anthropic\Beta\Messages\BetaMemoryTool20250818\AllowedCaller>>|null,
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     deferLoading?: bool|null,
+ *     inputExamples?: list<array<string,mixed>>|null,
+ *     strict?: bool|null,
+ *   }|BetaToolComputerUse20250124|array{
+ *     displayHeightPx: int,
+ *     displayWidthPx: int,
+ *     name?: 'computer',
+ *     type?: 'computer_20250124',
+ *     allowedCallers?: list<value-of<\Anthropic\Beta\Messages\BetaToolComputerUse20250124\AllowedCaller>>|null,
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     deferLoading?: bool|null,
+ *     displayNumber?: int|null,
+ *     inputExamples?: list<array<string,mixed>>|null,
+ *     strict?: bool|null,
+ *   }|BetaToolTextEditor20241022|array{
+ *     name?: 'str_replace_editor',
+ *     type?: 'text_editor_20241022',
+ *     allowedCallers?: list<value-of<\Anthropic\Beta\Messages\BetaToolTextEditor20241022\AllowedCaller>>|null,
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     deferLoading?: bool|null,
+ *     inputExamples?: list<array<string,mixed>>|null,
+ *     strict?: bool|null,
+ *   }|BetaToolComputerUse20251124|array{
+ *     displayHeightPx: int,
+ *     displayWidthPx: int,
+ *     name?: 'computer',
+ *     type?: 'computer_20251124',
+ *     allowedCallers?: list<value-of<\Anthropic\Beta\Messages\BetaToolComputerUse20251124\AllowedCaller>>|null,
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     deferLoading?: bool|null,
+ *     displayNumber?: int|null,
+ *     enableZoom?: bool|null,
+ *     inputExamples?: list<array<string,mixed>>|null,
+ *     strict?: bool|null,
+ *   }|BetaToolTextEditor20250124|array{
+ *     name?: 'str_replace_editor',
+ *     type?: 'text_editor_20250124',
+ *     allowedCallers?: list<value-of<\Anthropic\Beta\Messages\BetaToolTextEditor20250124\AllowedCaller>>|null,
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     deferLoading?: bool|null,
+ *     inputExamples?: list<array<string,mixed>>|null,
+ *     strict?: bool|null,
+ *   }|BetaToolTextEditor20250429|array{
+ *     name?: 'str_replace_based_edit_tool',
+ *     type?: 'text_editor_20250429',
+ *     allowedCallers?: list<value-of<\Anthropic\Beta\Messages\BetaToolTextEditor20250429\AllowedCaller>>|null,
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     deferLoading?: bool|null,
+ *     inputExamples?: list<array<string,mixed>>|null,
+ *     strict?: bool|null,
+ *   }|BetaToolTextEditor20250728|array{
+ *     name?: 'str_replace_based_edit_tool',
+ *     type?: 'text_editor_20250728',
+ *     allowedCallers?: list<value-of<\Anthropic\Beta\Messages\BetaToolTextEditor20250728\AllowedCaller>>|null,
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     deferLoading?: bool|null,
+ *     inputExamples?: list<array<string,mixed>>|null,
+ *     maxCharacters?: int|null,
+ *     strict?: bool|null,
+ *   }|BetaWebSearchTool20250305|array{
+ *     name?: 'web_search',
+ *     type?: 'web_search_20250305',
+ *     allowedCallers?: list<value-of<\Anthropic\Beta\Messages\BetaWebSearchTool20250305\AllowedCaller>>|null,
+ *     allowedDomains?: list<string>|null,
+ *     blockedDomains?: list<string>|null,
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     deferLoading?: bool|null,
+ *     maxUses?: int|null,
+ *     strict?: bool|null,
+ *     userLocation?: UserLocation|null,
+ *   }|BetaWebFetchTool20250910|array{
+ *     name?: 'web_fetch',
+ *     type?: 'web_fetch_20250910',
+ *     allowedCallers?: list<value-of<\Anthropic\Beta\Messages\BetaWebFetchTool20250910\AllowedCaller>>|null,
+ *     allowedDomains?: list<string>|null,
+ *     blockedDomains?: list<string>|null,
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     citations?: BetaCitationsConfigParam|null,
+ *     deferLoading?: bool|null,
+ *     maxContentTokens?: int|null,
+ *     maxUses?: int|null,
+ *     strict?: bool|null,
+ *   }|BetaToolSearchToolBm25_20251119|array{
+ *     name?: 'tool_search_tool_bm25',
+ *     type: value-of<\Anthropic\Beta\Messages\BetaToolSearchToolBm25_20251119\Type>,
+ *     allowedCallers?: list<value-of<\Anthropic\Beta\Messages\BetaToolSearchToolBm25_20251119\AllowedCaller>>|null,
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     deferLoading?: bool|null,
+ *     strict?: bool|null,
+ *   }|BetaToolSearchToolRegex20251119|array{
+ *     name?: 'tool_search_tool_regex',
+ *     type: value-of<\Anthropic\Beta\Messages\BetaToolSearchToolRegex20251119\Type>,
+ *     allowedCallers?: list<value-of<\Anthropic\Beta\Messages\BetaToolSearchToolRegex20251119\AllowedCaller>>|null,
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     deferLoading?: bool|null,
+ *     strict?: bool|null,
+ *   }|BetaMCPToolset|array{
+ *     mcpServerName: string,
+ *     type?: 'mcp_toolset',
+ *     cacheControl?: BetaCacheControlEphemeral|null,
+ *     configs?: array<string,BetaMCPToolConfig>|null,
+ *     defaultConfig?: BetaMCPToolDefaultConfig|null,
+ *   }>,
+ *   topK?: int,
+ *   topP?: float,
  *   betas?: list<string|AnthropicBeta>,
  * }
  */
@@ -57,8 +250,8 @@ final class MessageCreateParams implements BaseModel
      *
      * Different models have different maximum values for this parameter.  See [models](https://docs.claude.com/en/docs/models-overview) for details.
      */
-    #[Api]
-    public int $max_tokens;
+    #[Required('max_tokens')]
+    public int $maxTokens;
 
     /**
      * Input messages.
@@ -112,7 +305,7 @@ final class MessageCreateParams implements BaseModel
      *
      * @var list<BetaMessageParam> $messages
      */
-    #[Api(list: BetaMessageParam::class)]
+    #[Required(list: BetaMessageParam::class)]
     public array $messages;
 
     /**
@@ -120,13 +313,13 @@ final class MessageCreateParams implements BaseModel
      *
      * @var string|value-of<Model> $model
      */
-    #[Api(enum: Model::class)]
+    #[Required(enum: Model::class)]
     public string $model;
 
     /**
      * Container identifier for reuse across requests.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public string|BetaContainerParams|null $container;
 
     /**
@@ -134,44 +327,44 @@ final class MessageCreateParams implements BaseModel
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaContextManagementConfig $context_management;
+    #[Optional('context_management', nullable: true)]
+    public ?BetaContextManagementConfig $contextManagement;
 
     /**
      * MCP servers to be utilized in this request.
      *
-     * @var list<BetaRequestMCPServerURLDefinition>|null $mcp_servers
+     * @var list<BetaRequestMCPServerURLDefinition>|null $mcpServers
      */
-    #[Api(list: BetaRequestMCPServerURLDefinition::class, optional: true)]
-    public ?array $mcp_servers;
+    #[Optional('mcp_servers', list: BetaRequestMCPServerURLDefinition::class)]
+    public ?array $mcpServers;
 
     /**
      * An object describing metadata about the request.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?BetaMetadata $metadata;
 
     /**
      * Configuration options for the model's output. Controls aspects like how much effort the model puts into its response.
      */
-    #[Api(optional: true)]
-    public ?BetaOutputConfig $output_config;
+    #[Optional('output_config')]
+    public ?BetaOutputConfig $outputConfig;
 
     /**
      * A schema to specify Claude's output format in responses.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaJSONOutputFormat $output_format;
+    #[Optional('output_format', nullable: true)]
+    public ?BetaJSONOutputFormat $outputFormat;
 
     /**
      * Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.claude.com/en/api/service-tiers) for details.
      *
-     * @var value-of<ServiceTier>|null $service_tier
+     * @var value-of<ServiceTier>|null $serviceTier
      */
-    #[Api(enum: ServiceTier::class, optional: true)]
-    public ?string $service_tier;
+    #[Optional('service_tier', enum: ServiceTier::class)]
+    public ?string $serviceTier;
 
     /**
      * Custom text sequences that will cause the model to stop generating.
@@ -180,10 +373,10 @@ final class MessageCreateParams implements BaseModel
      *
      * If you want the model to stop generating when it encounters custom strings of text, you can use the `stop_sequences` parameter. If the model encounters one of the custom sequences, the response `stop_reason` value will be `"stop_sequence"` and the response `stop_sequence` value will contain the matched stop sequence.
      *
-     * @var list<string>|null $stop_sequences
+     * @var list<string>|null $stopSequences
      */
-    #[Api(list: 'string', optional: true)]
-    public ?array $stop_sequences;
+    #[Optional('stop_sequences', list: 'string')]
+    public ?array $stopSequences;
 
     /**
      * System prompt.
@@ -192,7 +385,7 @@ final class MessageCreateParams implements BaseModel
      *
      * @var string|list<BetaTextBlockParam>|null $system
      */
-    #[Api(union: System::class, optional: true)]
+    #[Optional(union: System::class)]
     public string|array|null $system;
 
     /**
@@ -202,7 +395,7 @@ final class MessageCreateParams implements BaseModel
      *
      * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?float $temperature;
 
     /**
@@ -212,14 +405,14 @@ final class MessageCreateParams implements BaseModel
      *
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      */
-    #[Api(union: BetaThinkingConfigParam::class, optional: true)]
+    #[Optional(union: BetaThinkingConfigParam::class)]
     public BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null $thinking;
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
-    #[Api(union: BetaToolChoice::class, optional: true)]
-    public BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $tool_choice;
+    #[Optional('tool_choice', union: BetaToolChoice::class)]
+    public BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice;
 
     /**
      * Definitions of tools that the model may use.
@@ -286,7 +479,7 @@ final class MessageCreateParams implements BaseModel
      *
      * @var list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset>|null $tools
      */
-    #[Api(list: BetaToolUnion::class, optional: true)]
+    #[Optional(list: BetaToolUnion::class)]
     public ?array $tools;
 
     /**
@@ -296,8 +489,8 @@ final class MessageCreateParams implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    #[Api(optional: true)]
-    public ?int $top_k;
+    #[Optional('top_k')]
+    public ?int $topK;
 
     /**
      * Use nucleus sampling.
@@ -306,15 +499,15 @@ final class MessageCreateParams implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    #[Api(optional: true)]
-    public ?float $top_p;
+    #[Optional('top_p')]
+    public ?float $topP;
 
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
      */
-    #[Api(list: AnthropicBeta::class, optional: true)]
+    #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
     /**
@@ -322,7 +515,7 @@ final class MessageCreateParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * MessageCreateParams::with(max_tokens: ..., messages: ..., model: ...)
+     * MessageCreateParams::with(maxTokens: ..., messages: ..., model: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -341,59 +534,252 @@ final class MessageCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaMessageParam> $messages
-     * @param list<BetaRequestMCPServerURLDefinition> $mcp_servers
-     * @param ServiceTier|value-of<ServiceTier> $service_tier
-     * @param list<string> $stop_sequences
-     * @param string|list<BetaTextBlockParam> $system
-     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset> $tools
+     * @param list<BetaMessageParam|array{
+     *   content: string|list<BetaTextBlockParam|BetaImageBlockParam|BetaRequestDocumentBlock|BetaSearchResultBlockParam|BetaThinkingBlockParam|BetaRedactedThinkingBlockParam|BetaToolUseBlockParam|BetaToolResultBlockParam|BetaServerToolUseBlockParam|BetaWebSearchToolResultBlockParam|BetaWebFetchToolResultBlockParam|BetaCodeExecutionToolResultBlockParam|BetaBashCodeExecutionToolResultBlockParam|BetaTextEditorCodeExecutionToolResultBlockParam|BetaToolSearchToolResultBlockParam|BetaMCPToolUseBlockParam|BetaRequestMCPToolResultBlockParam|BetaContainerUploadBlockParam>,
+     *   role: value-of<Role>,
+     * }> $messages
+     * @param string|BetaContainerParams|array{
+     *   id?: string|null, skills?: list<BetaSkillParams>|null
+     * }|null $container
+     * @param BetaContextManagementConfig|array{
+     *   edits?: list<BetaClearToolUses20250919Edit|BetaClearThinking20251015Edit>|null
+     * }|null $contextManagement
+     * @param list<BetaRequestMCPServerURLDefinition|array{
+     *   name: string,
+     *   type?: 'url',
+     *   url: string,
+     *   authorizationToken?: string|null,
+     *   toolConfiguration?: BetaRequestMCPServerToolConfiguration|null,
+     * }> $mcpServers
+     * @param BetaMetadata|array{userID?: string|null} $metadata
+     * @param BetaOutputConfig|array{effort?: value-of<Effort>|null} $outputConfig
+     * @param BetaJSONOutputFormat|array{
+     *   schema: array<string,mixed>, type?: 'json_schema'
+     * }|null $outputFormat
+     * @param ServiceTier|value-of<ServiceTier> $serviceTier
+     * @param list<string> $stopSequences
+     * @param string|list<BetaTextBlockParam|array{
+     *   text: string,
+     *   type?: 'text',
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
+     * }> $system
+     * @param BetaThinkingConfigEnabled|array{
+     *   budgetTokens: int, type?: 'enabled'
+     * }|BetaThinkingConfigDisabled|array{type?: 'disabled'} $thinking
+     * @param BetaToolChoiceAuto|array{
+     *   type?: 'auto', disableParallelToolUse?: bool|null
+     * }|BetaToolChoiceAny|array{
+     *   type?: 'any', disableParallelToolUse?: bool|null
+     * }|BetaToolChoiceTool|array{
+     *   name: string, type?: 'tool', disableParallelToolUse?: bool|null
+     * }|BetaToolChoiceNone|array{type?: 'none'} $toolChoice
+     * @param list<BetaTool|array{
+     *   inputSchema: InputSchema,
+     *   name: string,
+     *   allowedCallers?: list<value-of<AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   description?: string|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     *   type?: value-of<Type>|null,
+     * }|BetaToolBash20241022|array{
+     *   name?: 'bash',
+     *   type?: 'bash_20241022',
+     *   allowedCallers?: list<value-of<BetaToolBash20241022\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     * }|BetaToolBash20250124|array{
+     *   name?: 'bash',
+     *   type?: 'bash_20250124',
+     *   allowedCallers?: list<value-of<BetaToolBash20250124\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     * }|BetaCodeExecutionTool20250522|array{
+     *   name?: 'code_execution',
+     *   type?: 'code_execution_20250522',
+     *   allowedCallers?: list<value-of<BetaCodeExecutionTool20250522\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   strict?: bool|null,
+     * }|BetaCodeExecutionTool20250825|array{
+     *   name?: 'code_execution',
+     *   type?: 'code_execution_20250825',
+     *   allowedCallers?: list<value-of<BetaCodeExecutionTool20250825\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   strict?: bool|null,
+     * }|BetaToolComputerUse20241022|array{
+     *   displayHeightPx: int,
+     *   displayWidthPx: int,
+     *   name?: 'computer',
+     *   type?: 'computer_20241022',
+     *   allowedCallers?: list<value-of<BetaToolComputerUse20241022\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   displayNumber?: int|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     * }|BetaMemoryTool20250818|array{
+     *   name?: 'memory',
+     *   type?: 'memory_20250818',
+     *   allowedCallers?: list<value-of<BetaMemoryTool20250818\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     * }|BetaToolComputerUse20250124|array{
+     *   displayHeightPx: int,
+     *   displayWidthPx: int,
+     *   name?: 'computer',
+     *   type?: 'computer_20250124',
+     *   allowedCallers?: list<value-of<BetaToolComputerUse20250124\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   displayNumber?: int|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     * }|BetaToolTextEditor20241022|array{
+     *   name?: 'str_replace_editor',
+     *   type?: 'text_editor_20241022',
+     *   allowedCallers?: list<value-of<BetaToolTextEditor20241022\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     * }|BetaToolComputerUse20251124|array{
+     *   displayHeightPx: int,
+     *   displayWidthPx: int,
+     *   name?: 'computer',
+     *   type?: 'computer_20251124',
+     *   allowedCallers?: list<value-of<BetaToolComputerUse20251124\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   displayNumber?: int|null,
+     *   enableZoom?: bool|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     * }|BetaToolTextEditor20250124|array{
+     *   name?: 'str_replace_editor',
+     *   type?: 'text_editor_20250124',
+     *   allowedCallers?: list<value-of<BetaToolTextEditor20250124\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     * }|BetaToolTextEditor20250429|array{
+     *   name?: 'str_replace_based_edit_tool',
+     *   type?: 'text_editor_20250429',
+     *   allowedCallers?: list<value-of<BetaToolTextEditor20250429\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     * }|BetaToolTextEditor20250728|array{
+     *   name?: 'str_replace_based_edit_tool',
+     *   type?: 'text_editor_20250728',
+     *   allowedCallers?: list<value-of<BetaToolTextEditor20250728\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   maxCharacters?: int|null,
+     *   strict?: bool|null,
+     * }|BetaWebSearchTool20250305|array{
+     *   name?: 'web_search',
+     *   type?: 'web_search_20250305',
+     *   allowedCallers?: list<value-of<BetaWebSearchTool20250305\AllowedCaller>>|null,
+     *   allowedDomains?: list<string>|null,
+     *   blockedDomains?: list<string>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   maxUses?: int|null,
+     *   strict?: bool|null,
+     *   userLocation?: UserLocation|null,
+     * }|BetaWebFetchTool20250910|array{
+     *   name?: 'web_fetch',
+     *   type?: 'web_fetch_20250910',
+     *   allowedCallers?: list<value-of<BetaWebFetchTool20250910\AllowedCaller>>|null,
+     *   allowedDomains?: list<string>|null,
+     *   blockedDomains?: list<string>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   citations?: BetaCitationsConfigParam|null,
+     *   deferLoading?: bool|null,
+     *   maxContentTokens?: int|null,
+     *   maxUses?: int|null,
+     *   strict?: bool|null,
+     * }|BetaToolSearchToolBm25_20251119|array{
+     *   name?: 'tool_search_tool_bm25',
+     *   type: value-of<BetaToolSearchToolBm25_20251119\Type>,
+     *   allowedCallers?: list<value-of<BetaToolSearchToolBm25_20251119\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   strict?: bool|null,
+     * }|BetaToolSearchToolRegex20251119|array{
+     *   name?: 'tool_search_tool_regex',
+     *   type: value-of<BetaToolSearchToolRegex20251119\Type>,
+     *   allowedCallers?: list<value-of<BetaToolSearchToolRegex20251119\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   strict?: bool|null,
+     * }|BetaMCPToolset|array{
+     *   mcpServerName: string,
+     *   type?: 'mcp_toolset',
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   configs?: array<string,BetaMCPToolConfig>|null,
+     *   defaultConfig?: BetaMCPToolDefaultConfig|null,
+     * }> $tools
      * @param list<string|AnthropicBeta> $betas
      */
     public static function with(
-        int $max_tokens,
+        int $maxTokens,
         array $messages,
         string|Model $model,
-        string|BetaContainerParams|null $container = null,
-        ?BetaContextManagementConfig $context_management = null,
-        ?array $mcp_servers = null,
-        ?BetaMetadata $metadata = null,
-        ?BetaOutputConfig $output_config = null,
-        ?BetaJSONOutputFormat $output_format = null,
-        ServiceTier|string|null $service_tier = null,
-        ?array $stop_sequences = null,
+        string|BetaContainerParams|array|null $container = null,
+        BetaContextManagementConfig|array|null $contextManagement = null,
+        ?array $mcpServers = null,
+        BetaMetadata|array|null $metadata = null,
+        BetaOutputConfig|array|null $outputConfig = null,
+        BetaJSONOutputFormat|array|null $outputFormat = null,
+        ServiceTier|string|null $serviceTier = null,
+        ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
-        BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null $thinking = null,
-        BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $tool_choice = null,
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|null $thinking = null,
+        BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
-        ?int $top_k = null,
-        ?float $top_p = null,
+        ?int $topK = null,
+        ?float $topP = null,
         ?array $betas = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->max_tokens = $max_tokens;
-        $obj->messages = $messages;
-        $obj->model = $model instanceof Model ? $model->value : $model;
+        $self['maxTokens'] = $maxTokens;
+        $self['messages'] = $messages;
+        $self['model'] = $model;
 
-        null !== $container && $obj->container = $container;
-        null !== $context_management && $obj->context_management = $context_management;
-        null !== $mcp_servers && $obj->mcp_servers = $mcp_servers;
-        null !== $metadata && $obj->metadata = $metadata;
-        null !== $output_config && $obj->output_config = $output_config;
-        null !== $output_format && $obj->output_format = $output_format;
-        null !== $service_tier && $obj['service_tier'] = $service_tier;
-        null !== $stop_sequences && $obj->stop_sequences = $stop_sequences;
-        null !== $system && $obj->system = $system;
-        null !== $temperature && $obj->temperature = $temperature;
-        null !== $thinking && $obj->thinking = $thinking;
-        null !== $tool_choice && $obj->tool_choice = $tool_choice;
-        null !== $tools && $obj->tools = $tools;
-        null !== $top_k && $obj->top_k = $top_k;
-        null !== $top_p && $obj->top_p = $top_p;
-        null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        null !== $container && $self['container'] = $container;
+        null !== $contextManagement && $self['contextManagement'] = $contextManagement;
+        null !== $mcpServers && $self['mcpServers'] = $mcpServers;
+        null !== $metadata && $self['metadata'] = $metadata;
+        null !== $outputConfig && $self['outputConfig'] = $outputConfig;
+        null !== $outputFormat && $self['outputFormat'] = $outputFormat;
+        null !== $serviceTier && $self['serviceTier'] = $serviceTier;
+        null !== $stopSequences && $self['stopSequences'] = $stopSequences;
+        null !== $system && $self['system'] = $system;
+        null !== $temperature && $self['temperature'] = $temperature;
+        null !== $thinking && $self['thinking'] = $thinking;
+        null !== $toolChoice && $self['toolChoice'] = $toolChoice;
+        null !== $tools && $self['tools'] = $tools;
+        null !== $topK && $self['topK'] = $topK;
+        null !== $topP && $self['topP'] = $topP;
+        null !== $betas && $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -405,10 +791,10 @@ final class MessageCreateParams implements BaseModel
      */
     public function withMaxTokens(int $maxTokens): self
     {
-        $obj = clone $this;
-        $obj->max_tokens = $maxTokens;
+        $self = clone $this;
+        $self['maxTokens'] = $maxTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -461,14 +847,17 @@ final class MessageCreateParams implements BaseModel
      *
      * There is a limit of 100,000 messages in a single request.
      *
-     * @param list<BetaMessageParam> $messages
+     * @param list<BetaMessageParam|array{
+     *   content: string|list<BetaTextBlockParam|BetaImageBlockParam|BetaRequestDocumentBlock|BetaSearchResultBlockParam|BetaThinkingBlockParam|BetaRedactedThinkingBlockParam|BetaToolUseBlockParam|BetaToolResultBlockParam|BetaServerToolUseBlockParam|BetaWebSearchToolResultBlockParam|BetaWebFetchToolResultBlockParam|BetaCodeExecutionToolResultBlockParam|BetaBashCodeExecutionToolResultBlockParam|BetaTextEditorCodeExecutionToolResultBlockParam|BetaToolSearchToolResultBlockParam|BetaMCPToolUseBlockParam|BetaRequestMCPToolResultBlockParam|BetaContainerUploadBlockParam>,
+     *   role: value-of<Role>,
+     * }> $messages
      */
     public function withMessages(array $messages): self
     {
-        $obj = clone $this;
-        $obj->messages = $messages;
+        $self = clone $this;
+        $self['messages'] = $messages;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -476,82 +865,105 @@ final class MessageCreateParams implements BaseModel
      */
     public function withModel(string|Model $model): self
     {
-        $obj = clone $this;
-        $obj->model = $model instanceof Model ? $model->value : $model;
+        $self = clone $this;
+        $self['model'] = $model;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Container identifier for reuse across requests.
+     *
+     * @param string|BetaContainerParams|array{
+     *   id?: string|null, skills?: list<BetaSkillParams>|null
+     * }|null $container
      */
     public function withContainer(
-        string|BetaContainerParams|null $container
+        string|BetaContainerParams|array|null $container
     ): self {
-        $obj = clone $this;
-        $obj->container = $container;
+        $self = clone $this;
+        $self['container'] = $container;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Context management configuration.
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
+     *
+     * @param BetaContextManagementConfig|array{
+     *   edits?: list<BetaClearToolUses20250919Edit|BetaClearThinking20251015Edit>|null
+     * }|null $contextManagement
      */
     public function withContextManagement(
-        ?BetaContextManagementConfig $contextManagement
+        BetaContextManagementConfig|array|null $contextManagement
     ): self {
-        $obj = clone $this;
-        $obj->context_management = $contextManagement;
+        $self = clone $this;
+        $self['contextManagement'] = $contextManagement;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * MCP servers to be utilized in this request.
      *
-     * @param list<BetaRequestMCPServerURLDefinition> $mcpServers
+     * @param list<BetaRequestMCPServerURLDefinition|array{
+     *   name: string,
+     *   type?: 'url',
+     *   url: string,
+     *   authorizationToken?: string|null,
+     *   toolConfiguration?: BetaRequestMCPServerToolConfiguration|null,
+     * }> $mcpServers
      */
     public function withMCPServers(array $mcpServers): self
     {
-        $obj = clone $this;
-        $obj->mcp_servers = $mcpServers;
+        $self = clone $this;
+        $self['mcpServers'] = $mcpServers;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * An object describing metadata about the request.
+     *
+     * @param BetaMetadata|array{userID?: string|null} $metadata
      */
-    public function withMetadata(BetaMetadata $metadata): self
+    public function withMetadata(BetaMetadata|array $metadata): self
     {
-        $obj = clone $this;
-        $obj->metadata = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Configuration options for the model's output. Controls aspects like how much effort the model puts into its response.
+     *
+     * @param BetaOutputConfig|array{effort?: value-of<Effort>|null} $outputConfig
      */
-    public function withOutputConfig(BetaOutputConfig $outputConfig): self
+    public function withOutputConfig(BetaOutputConfig|array $outputConfig): self
     {
-        $obj = clone $this;
-        $obj->output_config = $outputConfig;
+        $self = clone $this;
+        $self['outputConfig'] = $outputConfig;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * A schema to specify Claude's output format in responses.
+     *
+     * @param BetaJSONOutputFormat|array{
+     *   schema: array<string,mixed>, type?: 'json_schema'
+     * }|null $outputFormat
      */
-    public function withOutputFormat(?BetaJSONOutputFormat $outputFormat): self
-    {
-        $obj = clone $this;
-        $obj->output_format = $outputFormat;
+    public function withOutputFormat(
+        BetaJSONOutputFormat|array|null $outputFormat
+    ): self {
+        $self = clone $this;
+        $self['outputFormat'] = $outputFormat;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -563,10 +975,10 @@ final class MessageCreateParams implements BaseModel
      */
     public function withServiceTier(ServiceTier|string $serviceTier): self
     {
-        $obj = clone $this;
-        $obj['service_tier'] = $serviceTier;
+        $self = clone $this;
+        $self['serviceTier'] = $serviceTier;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -580,10 +992,10 @@ final class MessageCreateParams implements BaseModel
      */
     public function withStopSequences(array $stopSequences): self
     {
-        $obj = clone $this;
-        $obj->stop_sequences = $stopSequences;
+        $self = clone $this;
+        $self['stopSequences'] = $stopSequences;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -591,14 +1003,19 @@ final class MessageCreateParams implements BaseModel
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.claude.com/en/docs/system-prompts).
      *
-     * @param string|list<BetaTextBlockParam> $system
+     * @param string|list<BetaTextBlockParam|array{
+     *   text: string,
+     *   type?: 'text',
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
+     * }> $system
      */
     public function withSystem(string|array $system): self
     {
-        $obj = clone $this;
-        $obj->system = $system;
+        $self = clone $this;
+        $self['system'] = $system;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -610,10 +1027,10 @@ final class MessageCreateParams implements BaseModel
      */
     public function withTemperature(float $temperature): self
     {
-        $obj = clone $this;
-        $obj->temperature = $temperature;
+        $self = clone $this;
+        $self['temperature'] = $temperature;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -622,26 +1039,38 @@ final class MessageCreateParams implements BaseModel
      * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
      *
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
+     *
+     * @param BetaThinkingConfigEnabled|array{
+     *   budgetTokens: int, type?: 'enabled'
+     * }|BetaThinkingConfigDisabled|array{type?: 'disabled'} $thinking
      */
     public function withThinking(
-        BetaThinkingConfigEnabled|BetaThinkingConfigDisabled $thinking
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled $thinking
     ): self {
-        $obj = clone $this;
-        $obj->thinking = $thinking;
+        $self = clone $this;
+        $self['thinking'] = $thinking;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
+     *
+     * @param BetaToolChoiceAuto|array{
+     *   type?: 'auto', disableParallelToolUse?: bool|null
+     * }|BetaToolChoiceAny|array{
+     *   type?: 'any', disableParallelToolUse?: bool|null
+     * }|BetaToolChoiceTool|array{
+     *   name: string, type?: 'tool', disableParallelToolUse?: bool|null
+     * }|BetaToolChoiceNone|array{type?: 'none'} $toolChoice
      */
     public function withToolChoice(
-        BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone $toolChoice,
+        BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone $toolChoice,
     ): self {
-        $obj = clone $this;
-        $obj->tool_choice = $toolChoice;
+        $self = clone $this;
+        $self['toolChoice'] = $toolChoice;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -707,14 +1136,172 @@ final class MessageCreateParams implements BaseModel
      *
      * See our [guide](https://docs.claude.com/en/docs/tool-use) for more details.
      *
-     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset> $tools
+     * @param list<BetaTool|array{
+     *   inputSchema: InputSchema,
+     *   name: string,
+     *   allowedCallers?: list<value-of<AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   description?: string|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     *   type?: value-of<Type>|null,
+     * }|BetaToolBash20241022|array{
+     *   name?: 'bash',
+     *   type?: 'bash_20241022',
+     *   allowedCallers?: list<value-of<BetaToolBash20241022\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     * }|BetaToolBash20250124|array{
+     *   name?: 'bash',
+     *   type?: 'bash_20250124',
+     *   allowedCallers?: list<value-of<BetaToolBash20250124\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     * }|BetaCodeExecutionTool20250522|array{
+     *   name?: 'code_execution',
+     *   type?: 'code_execution_20250522',
+     *   allowedCallers?: list<value-of<BetaCodeExecutionTool20250522\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   strict?: bool|null,
+     * }|BetaCodeExecutionTool20250825|array{
+     *   name?: 'code_execution',
+     *   type?: 'code_execution_20250825',
+     *   allowedCallers?: list<value-of<BetaCodeExecutionTool20250825\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   strict?: bool|null,
+     * }|BetaToolComputerUse20241022|array{
+     *   displayHeightPx: int,
+     *   displayWidthPx: int,
+     *   name?: 'computer',
+     *   type?: 'computer_20241022',
+     *   allowedCallers?: list<value-of<BetaToolComputerUse20241022\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   displayNumber?: int|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     * }|BetaMemoryTool20250818|array{
+     *   name?: 'memory',
+     *   type?: 'memory_20250818',
+     *   allowedCallers?: list<value-of<BetaMemoryTool20250818\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     * }|BetaToolComputerUse20250124|array{
+     *   displayHeightPx: int,
+     *   displayWidthPx: int,
+     *   name?: 'computer',
+     *   type?: 'computer_20250124',
+     *   allowedCallers?: list<value-of<BetaToolComputerUse20250124\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   displayNumber?: int|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     * }|BetaToolTextEditor20241022|array{
+     *   name?: 'str_replace_editor',
+     *   type?: 'text_editor_20241022',
+     *   allowedCallers?: list<value-of<BetaToolTextEditor20241022\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     * }|BetaToolComputerUse20251124|array{
+     *   displayHeightPx: int,
+     *   displayWidthPx: int,
+     *   name?: 'computer',
+     *   type?: 'computer_20251124',
+     *   allowedCallers?: list<value-of<BetaToolComputerUse20251124\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   displayNumber?: int|null,
+     *   enableZoom?: bool|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     * }|BetaToolTextEditor20250124|array{
+     *   name?: 'str_replace_editor',
+     *   type?: 'text_editor_20250124',
+     *   allowedCallers?: list<value-of<BetaToolTextEditor20250124\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     * }|BetaToolTextEditor20250429|array{
+     *   name?: 'str_replace_based_edit_tool',
+     *   type?: 'text_editor_20250429',
+     *   allowedCallers?: list<value-of<BetaToolTextEditor20250429\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   strict?: bool|null,
+     * }|BetaToolTextEditor20250728|array{
+     *   name?: 'str_replace_based_edit_tool',
+     *   type?: 'text_editor_20250728',
+     *   allowedCallers?: list<value-of<BetaToolTextEditor20250728\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   inputExamples?: list<array<string,mixed>>|null,
+     *   maxCharacters?: int|null,
+     *   strict?: bool|null,
+     * }|BetaWebSearchTool20250305|array{
+     *   name?: 'web_search',
+     *   type?: 'web_search_20250305',
+     *   allowedCallers?: list<value-of<BetaWebSearchTool20250305\AllowedCaller>>|null,
+     *   allowedDomains?: list<string>|null,
+     *   blockedDomains?: list<string>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   maxUses?: int|null,
+     *   strict?: bool|null,
+     *   userLocation?: UserLocation|null,
+     * }|BetaWebFetchTool20250910|array{
+     *   name?: 'web_fetch',
+     *   type?: 'web_fetch_20250910',
+     *   allowedCallers?: list<value-of<BetaWebFetchTool20250910\AllowedCaller>>|null,
+     *   allowedDomains?: list<string>|null,
+     *   blockedDomains?: list<string>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   citations?: BetaCitationsConfigParam|null,
+     *   deferLoading?: bool|null,
+     *   maxContentTokens?: int|null,
+     *   maxUses?: int|null,
+     *   strict?: bool|null,
+     * }|BetaToolSearchToolBm25_20251119|array{
+     *   name?: 'tool_search_tool_bm25',
+     *   type: value-of<BetaToolSearchToolBm25_20251119\Type>,
+     *   allowedCallers?: list<value-of<BetaToolSearchToolBm25_20251119\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   strict?: bool|null,
+     * }|BetaToolSearchToolRegex20251119|array{
+     *   name?: 'tool_search_tool_regex',
+     *   type: value-of<BetaToolSearchToolRegex20251119\Type>,
+     *   allowedCallers?: list<value-of<BetaToolSearchToolRegex20251119\AllowedCaller>>|null,
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   deferLoading?: bool|null,
+     *   strict?: bool|null,
+     * }|BetaMCPToolset|array{
+     *   mcpServerName: string,
+     *   type?: 'mcp_toolset',
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   configs?: array<string,BetaMCPToolConfig>|null,
+     *   defaultConfig?: BetaMCPToolDefaultConfig|null,
+     * }> $tools
      */
     public function withTools(array $tools): self
     {
-        $obj = clone $this;
-        $obj->tools = $tools;
+        $self = clone $this;
+        $self['tools'] = $tools;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -726,10 +1313,10 @@ final class MessageCreateParams implements BaseModel
      */
     public function withTopK(int $topK): self
     {
-        $obj = clone $this;
-        $obj->top_k = $topK;
+        $self = clone $this;
+        $self['topK'] = $topK;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -741,10 +1328,10 @@ final class MessageCreateParams implements BaseModel
      */
     public function withTopP(float $topP): self
     {
-        $obj = clone $this;
-        $obj->top_p = $topP;
+        $self = clone $this;
+        $self['topP'] = $topP;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -754,9 +1341,9 @@ final class MessageCreateParams implements BaseModel
      */
     public function withBetas(array $betas): self
     {
-        $obj = clone $this;
-        $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        $self = clone $this;
+        $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 }

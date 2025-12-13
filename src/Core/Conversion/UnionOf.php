@@ -65,17 +65,46 @@ final class UnionOf implements Converter
 
     public function dump(mixed $value, DumpState $state): mixed
     {
-        if (null !== ($target = $this->resolveVariant(value: $value))) {
+        if (!is_null($target = $this->resolveVariant(value: $value))) {
             return Conversion::dump($target, value: $value, state: $state);
         }
 
-        foreach ($this->variants as $variant) {
+        $alternatives = [];
+        foreach ($this->variants as $_ => $variant) {
+            ++$state->branched;
             if ($value instanceof $variant) {
                 return Conversion::dump($variant, value: $value, state: $state);
             }
+
+            $newState = new DumpState;
+            $dumped = Conversion::dump($variant, value: $value, state: $newState);
+            if (($newState->no + $newState->maybe) === 0) {
+                $state->yes += $newState->yes;
+
+                return $dumped;
+            }
+            if ($newState->maybe > 0) {
+                $alternatives[] = [[-$newState->yes, -$newState->maybe, $newState->no], $newState, $dumped];
+            }
         }
 
-        return Conversion::dump_unknown($value, state: $state);
+        usort(
+            $alternatives,
+            static fn (array $a, array $b): int => $a[0][0] <=> $b[0][0] ?: $a[0][1] <=> $b[0][1] ?: $a[0][2] <=> $b[0][2]
+        );
+
+        if (empty($alternatives)) {
+            ++$state->no;
+
+            return Conversion::dump_unknown($value, state: $state);
+        }
+
+        [[,$newState, $best]] = $alternatives;
+        $state->yes += $newState->yes;
+        $state->maybe += $newState->maybe;
+        $state->no += $newState->no;
+
+        return $best;
     }
 
     private function resolveVariant(

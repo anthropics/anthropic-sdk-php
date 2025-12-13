@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Core\Conversion;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
@@ -28,9 +29,10 @@ final class PropertyInfo
         $apiName = $property->getName();
         $type = $property->getType();
         $optional = false;
+        $attributes = [...$property->getAttributes(Required::class), ...$property->getAttributes(Optional::class)];
 
-        foreach ($property->getAttributes(Api::class) as $attr) {
-            /** @var Api $attribute */
+        foreach ($attributes as $attr) {
+            /** @var Required $attribute */
             $attribute = $attr->newInstance();
 
             $apiName = $attribute->apiName ?? $apiName;
@@ -55,11 +57,12 @@ final class PropertyInfo
         }
 
         if (is_array($type)) {
-            return new UnionOf($type); // @phpstan-ignore-line
+            // @phpstan-ignore-next-line return.type
+            return new UnionOf($type);
         }
 
         if ($type instanceof \ReflectionUnionType) {
-            // @phpstan-ignore-next-line
+            // @phpstan-ignore-next-line argument.type
             return new UnionOf(array_map(static fn ($t) => self::parse($t), array: $type->getTypes()));
         }
 

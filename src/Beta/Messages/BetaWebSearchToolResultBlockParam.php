@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaWebSearchToolResultBlockParamShape = array{
  *   content: list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError,
- *   tool_use_id: string,
- *   type: "web_search_tool_result",
- *   cache_control?: BetaCacheControlEphemeral|null,
+ *   toolUseID: string,
+ *   type?: 'web_search_tool_result',
+ *   cacheControl?: BetaCacheControlEphemeral|null,
  * }
  */
 final class BetaWebSearchToolResultBlockParam implements BaseModel
@@ -21,31 +23,29 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
     /** @use SdkModel<BetaWebSearchToolResultBlockParamShape> */
     use SdkModel;
 
-    /** @var "web_search_tool_result" $type */
-    #[Api]
+    /** @var 'web_search_tool_result' $type */
+    #[Required]
     public string $type = 'web_search_tool_result';
 
-    /**
-     * @var list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError $content
-     */
-    #[Api(union: BetaWebSearchToolResultBlockParamContent::class)]
+    /** @var list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError $content */
+    #[Required(union: BetaWebSearchToolResultBlockParamContent::class)]
     public array|BetaWebSearchToolRequestError $content;
 
-    #[Api]
-    public string $tool_use_id;
+    #[Required('tool_use_id')]
+    public string $toolUseID;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * `new BetaWebSearchToolResultBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaWebSearchToolResultBlockParam::with(content: ..., tool_use_id: ...)
+     * BetaWebSearchToolResultBlockParam::with(content: ..., toolUseID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -64,52 +64,77 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError $content
+     * @param list<BetaWebSearchResultBlockParam|array{
+     *   encryptedContent: string,
+     *   title: string,
+     *   type?: 'web_search_result',
+     *   url: string,
+     *   pageAge?: string|null,
+     * }>|BetaWebSearchToolRequestError|array{
+     *   errorCode: value-of<BetaWebSearchToolResultErrorCode>,
+     *   type?: 'web_search_tool_result_error',
+     * } $content
+     * @param BetaCacheControlEphemeral|array{
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
     public static function with(
         array|BetaWebSearchToolRequestError $content,
-        string $tool_use_id,
-        ?BetaCacheControlEphemeral $cache_control = null,
+        string $toolUseID,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->content = $content;
-        $obj->tool_use_id = $tool_use_id;
+        $self['content'] = $content;
+        $self['toolUseID'] = $toolUseID;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
-     * @param list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError $content
+     * @param list<BetaWebSearchResultBlockParam|array{
+     *   encryptedContent: string,
+     *   title: string,
+     *   type?: 'web_search_result',
+     *   url: string,
+     *   pageAge?: string|null,
+     * }>|BetaWebSearchToolRequestError|array{
+     *   errorCode: value-of<BetaWebSearchToolResultErrorCode>,
+     *   type?: 'web_search_tool_result_error',
+     * } $content
      */
     public function withContent(
         array|BetaWebSearchToolRequestError $content
     ): self {
-        $obj = clone $this;
-        $obj->content = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     public function withToolUseID(string $toolUseID): self
     {
-        $obj = clone $this;
-        $obj->tool_use_id = $toolUseID;
+        $self = clone $this;
+        $self['toolUseID'] = $toolUseID;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|array{
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 }

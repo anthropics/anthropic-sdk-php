@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Core\Conversion;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Conversion\Contracts\Converter;
@@ -27,7 +28,9 @@ final class ModelOf implements Converter
         $properties = [];
 
         foreach ($this->class->getProperties() as $property) {
-            if (!empty($property->getAttributes(Api::class))) {
+            $attributes = [...$property->getAttributes(Required::class), ...$property->getAttributes(Optional::class)];
+
+            if (!empty($attributes)) {
                 $name = $property->getName();
                 $properties[$name] = new PropertyInfo($property);
             }
@@ -88,18 +91,8 @@ final class ModelOf implements Converter
             $acc[$name] = $item;
         }
 
-        return $this->from($acc); // @phpstan-ignore-line
-    }
-
-    /**
-     * @param array<string, mixed> $data
-     */
-    public function from(array $data): BaseModel
-    {
-        $instance = $this->class->newInstanceWithoutConstructor();
-        $instance->__unserialize($data); // @phpstan-ignore-line
-
-        return $instance;
+        // @phpstan-ignore-next-line return.type
+        return $this->from($acc);
     }
 
     public function dump(mixed $value, DumpState $state): mixed
@@ -109,10 +102,12 @@ final class ModelOf implements Converter
         }
 
         if (is_array($value)) {
+            ++$state->yes;
             $acc = [];
 
             foreach ($value as $name => $item) {
                 if (array_key_exists($name, array: $this->properties)) {
+                    ++$state->yes;
                     $info = $this->properties[$name];
                     $acc[$info->apiName] = Conversion::dump($info->type, value: $item, state: $state);
                 } else {
@@ -120,9 +115,23 @@ final class ModelOf implements Converter
                 }
             }
 
-            return empty($acc) ? ((object) []) : $acc;
+            return empty($acc) ? ((object) $acc) : $acc;
         }
 
+        ++$state->no;
+
         return Conversion::dump_unknown($value, state: $state);
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    public function from(array $data): BaseModel
+    {
+        $instance = $this->class->newInstanceWithoutConstructor();
+        // @phpstan-ignore-next-line
+        $instance->__unserialize($data);
+
+        return $instance;
     }
 }

@@ -18,7 +18,7 @@ The REST API documentation can be found on [docs.anthropic.com](https://docs.ant
 <!-- x-release-please-start-version -->
 
 ```
-composer require "anthropic-ai/sdk 0.4.0"
+composer require "anthropic-ai/sdk 0.5.0"
 ```
 
 <!-- x-release-please-end -->
@@ -34,24 +34,24 @@ Parameters with a default value must be set by name.
 use Anthropic\Client;
 
 $client = new Client(
-  apiKey: getenv("ANTHROPIC_API_KEY") ?: "my-anthropic-api-key"
+  apiKey: getenv('ANTHROPIC_API_KEY') ?: 'my-anthropic-api-key'
 );
 
-$message = $client->messages->create([
-  "max_tokens" => 1024,
-  "messages" => [["role" => "user", "content" => "Hello, Claude"]],
-  "model" => "claude-sonnet-4-5-20250929",
-]);
+$message = $client->messages->create(
+  maxTokens: 1024,
+  messages: [['role' => 'user', 'content' => 'Hello, Claude']],
+  model: 'claude-sonnet-4-5-20250929',
+);
 
 var_dump($message->content);
 ```
 
 ### Value Objects
 
-It is recommended to use the static `with` constructor `Base64ImageSource::with(data: "U3RhaW5sZXNzIHJvY2tz", ...)`
+It is recommended to use the static `with` constructor `Base64ImageSource::with(data: 'U3RhaW5sZXNzIHJvY2tz', ...)`
 and named parameters to initialize value objects.
 
-However, builders are also provided `(new Base64ImageSource)->withData("U3RhaW5sZXNzIHJvY2tz")`.
+However, builders are also provided `(new Base64ImageSource)->withData('U3RhaW5sZXNzIHJvY2tz')`.
 
 ### Streaming
 
@@ -63,14 +63,14 @@ We provide support for streaming responses using Server-Sent Events (SSE).
 use Anthropic\Client;
 
 $client = new Client(
-  apiKey: getenv("ANTHROPIC_API_KEY") ?: "my-anthropic-api-key"
+  apiKey: getenv('ANTHROPIC_API_KEY') ?: 'my-anthropic-api-key'
 );
 
-$stream = $client->messages->createStream([
-  "max_tokens" => 1024,
-  "messages" => [["role" => "user", "content" => "Hello, Claude"]],
-  "model" => "claude-sonnet-4-5-20250929",
-]);
+$stream = $client->messages->createStream(
+  maxTokens: 1024,
+  messages: [['role' => 'user', 'content' => 'Hello, Claude']],
+  model: 'claude-sonnet-4-5-20250929',
+);
 
 foreach ($stream as $message) {
   var_dump($message);
@@ -89,10 +89,10 @@ This library provides auto-paginating iterators with each list response, so you 
 use Anthropic\Client;
 
 $client = new Client(
-  apiKey: getenv("ANTHROPIC_API_KEY") ?: "my-anthropic-api-key"
+  apiKey: getenv('ANTHROPIC_API_KEY') ?: 'my-anthropic-api-key'
 );
 
-$page = $client->beta->messages->batches->list([]);
+$page = $client->beta->messages->batches->list(limit: 20);
 
 var_dump($page);
 
@@ -116,15 +116,15 @@ When the library is unable to connect to the API, or if the API returns a non-su
 use Anthropic\Core\Exceptions\APIConnectionException;
 
 try {
-  $message = $client->messages->create([
-    "max_tokens" => 1024,
-    "messages" => [["role" => "user", "content" => "Hello, Claude"]],
-    "model" => "claude-sonnet-4-5-20250929",
-  ]);
+  $message = $client->messages->create(
+    maxTokens: 1024,
+    messages: [['role' => 'user', 'content' => 'Hello, Claude']],
+    model: 'claude-sonnet-4-5-20250929',
+  );
 } catch (APIConnectionException $e) {
   echo "The server could not be reached", PHP_EOL;
   var_dump($e->getPrevious());
-} catch (RateLimitError $_) {
+} catch (RateLimitError $e) {
   echo "A 429 status code was received; we should back off a bit.", PHP_EOL;
 } catch (APIStatusError $e) {
   echo "Another non-200-range status code was received", PHP_EOL;
@@ -167,12 +167,10 @@ $client = new Client(maxRetries: 0);
 
 // Or, configure per-request:
 $result = $client->messages->create(
-  [
-    "max_tokens" => 1024,
-    "messages" => [["role" => "user", "content" => "Hello, Claude"]],
-    "model" => "claude-sonnet-4-5-20250929",
-  ],
-  RequestOptions::with(maxRetries: 5),
+  maxTokens: 1024,
+  messages: [['role' => 'user', 'content' => 'Hello, Claude']],
+  model: 'claude-sonnet-4-5-20250929',
+  requestOptions: RequestOptions::with(maxRetries: 5),
 );
 ```
 
@@ -192,15 +190,13 @@ Note: the `extra*` parameters of the same name overrides the documented paramete
 use Anthropic\RequestOptions;
 
 $message = $client->messages->create(
-  [
-    "max_tokens" => 1024,
-    "messages" => [["role" => "user", "content" => "Hello, Claude"]],
-    "model" => "claude-sonnet-4-5-20250929",
-  ],
-  RequestOptions::with(
-    extraQueryParams: ["my_query_parameter" => "value"],
-    extraBodyParams: ["my_body_parameter" => "value"],
-    extraHeaders: ["my-header" => "value"],
+  maxTokens: 1024,
+  messages: [['role' => 'user', 'content' => 'Hello, Claude']],
+  model: 'claude-sonnet-4-5-20250929',
+  requestOptions: RequestOptions::with(
+    extraQueryParams: ['my_query_parameter' => 'value'],
+    extraBodyParams: ['my_body_parameter' => 'value'],
+    extraHeaders: ['my-header' => 'value'],
   ),
 );
 ```

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaOutputConfig\Effort;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -22,7 +22,7 @@ final class BetaOutputConfig implements BaseModel
      *
      * @var value-of<Effort>|null $effort
      */
-    #[Api(enum: Effort::class, nullable: true, optional: true)]
+    #[Optional(enum: Effort::class, nullable: true)]
     public ?string $effort;
 
     public function __construct()
@@ -39,11 +39,11 @@ final class BetaOutputConfig implements BaseModel
      */
     public static function with(Effort|string|null $effort = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        null !== $effort && $obj['effort'] = $effort;
+        null !== $effort && $self['effort'] = $effort;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -53,9 +53,9 @@ final class BetaOutputConfig implements BaseModel
      */
     public function withEffort(Effort|string|null $effort): self
     {
-        $obj = clone $this;
-        $obj['effort'] = $effort;
+        $self = clone $this;
+        $self['effort'] = $effort;
 
-        return $obj;
+        return $self;
     }
 }

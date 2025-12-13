@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Skills;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\SkillsService::create()
  *
  * @phpstan-type SkillCreateParamsShape = array{
- *   display_title?: string|null,
+ *   displayTitle?: string|null,
  *   files?: list<string>|null,
  *   betas?: list<string|AnthropicBeta>,
  * }
@@ -32,8 +32,8 @@ final class SkillCreateParams implements BaseModel
      *
      * This is a human-readable label that is not included in the prompt sent to the model.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $display_title;
+    #[Optional('display_title', nullable: true)]
+    public ?string $displayTitle;
 
     /**
      * Files to upload for the skill.
@@ -42,7 +42,7 @@ final class SkillCreateParams implements BaseModel
      *
      * @var list<string>|null $files
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $files;
 
     /**
@@ -50,7 +50,7 @@ final class SkillCreateParams implements BaseModel
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
      */
-    #[Api(list: AnthropicBeta::class, optional: true)]
+    #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
     public function __construct()
@@ -67,17 +67,17 @@ final class SkillCreateParams implements BaseModel
      * @param list<string|AnthropicBeta> $betas
      */
     public static function with(
-        ?string $display_title = null,
+        ?string $displayTitle = null,
         ?array $files = null,
         ?array $betas = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $display_title && $obj->display_title = $display_title;
-        null !== $files && $obj->files = $files;
-        null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        null !== $displayTitle && $self['displayTitle'] = $displayTitle;
+        null !== $files && $self['files'] = $files;
+        null !== $betas && $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -87,10 +87,10 @@ final class SkillCreateParams implements BaseModel
      */
     public function withDisplayTitle(?string $displayTitle): self
     {
-        $obj = clone $this;
-        $obj->display_title = $displayTitle;
+        $self = clone $this;
+        $self['displayTitle'] = $displayTitle;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -102,10 +102,10 @@ final class SkillCreateParams implements BaseModel
      */
     public function withFiles(?array $files): self
     {
-        $obj = clone $this;
-        $obj->files = $files;
+        $self = clone $this;
+        $self['files'] = $files;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -115,9 +115,9 @@ final class SkillCreateParams implements BaseModel
      */
     public function withBetas(array $betas): self
     {
-        $obj = clone $this;
-        $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        $self = clone $this;
+        $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 }

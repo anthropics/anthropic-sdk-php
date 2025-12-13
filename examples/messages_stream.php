@@ -15,11 +15,11 @@ $client = new Client(
     apiKey: getenv('ANTHROPIC_API_KEY') ?: 'my-anthropic-api-key'
 );
 
-$stream = $client->messages->createStream([
-    'max_tokens' => 1024,
-    'messages' => [['role' => 'user', 'content' => 'Hello, Claude']],
-    'model' => 'claude-sonnet-4-20250514',
-]);
+$stream = $client->messages->createStream(
+    maxTokens: 1024,
+    messages: [['role' => 'user', 'content' => 'Hello, Claude']],
+    model: 'claude-sonnet-4-20250514'
+);
 
 foreach ($stream as $event) {
     switch (true) {
@@ -39,7 +39,7 @@ foreach ($stream as $event) {
             break;
 
         case $event instanceof RawContentBlockStartEvent:
-            var_dump($event->content_block);
+            var_dump($event->contentBlock);
 
             break;
 

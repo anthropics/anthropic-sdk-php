@@ -29,8 +29,8 @@ final class SSEStream implements BaseStream
             return;
         }
 
-        foreach ($this->stream as $chunk) {
-            switch ($chunk['event'] ?? '') {
+        foreach ($this->stream as $row) {
+            switch ($row['event'] ?? null) {
                 case 'completion':
                 case 'message_start':
                 case 'message_delta':
@@ -38,7 +38,7 @@ final class SSEStream implements BaseStream
                 case 'content_block_start':
                 case 'content_block_delta':
                 case 'content_block_stop':
-                    if ($data = $chunk['data'] ?? '') {
+                    if ($data = $row['data'] ?? '') {
                         $decoded = Util::decodeJson($data);
 
                         yield Conversion::coerce($this->convert, value: $decoded);
@@ -49,7 +49,7 @@ final class SSEStream implements BaseStream
                 case 'ping': break;
 
                 case 'error':
-                    if ($data = $chunk['data'] ?? '') {
+                    if ($data = $row['data'] ?? '') {
                         $json = Util::decodeJson($data);
                         $message = Util::prettyEncodeJson($json);
 

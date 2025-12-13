@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\CitationsDelta\Citation;
@@ -12,7 +12,7 @@ use Anthropic\Messages\CitationsDelta\Citation;
 /**
  * @phpstan-type CitationsDeltaShape = array{
  *   citation: CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation,
- *   type: "citations_delta",
+ *   type?: 'citations_delta',
  * }
  */
 final class CitationsDelta implements BaseModel
@@ -20,11 +20,11 @@ final class CitationsDelta implements BaseModel
     /** @use SdkModel<CitationsDeltaShape> */
     use SdkModel;
 
-    /** @var "citations_delta" $type */
-    #[Api]
+    /** @var 'citations_delta' $type */
+    #[Required]
     public string $type = 'citations_delta';
 
-    #[Api(union: Citation::class)]
+    #[Required(union: Citation::class)]
     public CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation $citation;
 
     /**
@@ -50,23 +50,104 @@ final class CitationsDelta implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param CitationCharLocation|array{
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endCharIndex: int,
+     *   fileID: string|null,
+     *   startCharIndex: int,
+     *   type?: 'char_location',
+     * }|CitationPageLocation|array{
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endPageNumber: int,
+     *   fileID: string|null,
+     *   startPageNumber: int,
+     *   type?: 'page_location',
+     * }|CitationContentBlockLocation|array{
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endBlockIndex: int,
+     *   fileID: string|null,
+     *   startBlockIndex: int,
+     *   type?: 'content_block_location',
+     * }|CitationsWebSearchResultLocation|array{
+     *   citedText: string,
+     *   encryptedIndex: string,
+     *   title: string|null,
+     *   type?: 'web_search_result_location',
+     *   url: string,
+     * }|CitationsSearchResultLocation|array{
+     *   citedText: string,
+     *   endBlockIndex: int,
+     *   searchResultIndex: int,
+     *   source: string,
+     *   startBlockIndex: int,
+     *   title: string|null,
+     *   type?: 'search_result_location',
+     * } $citation
      */
     public static function with(
-        CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation $citation,
+        CitationCharLocation|array|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation $citation,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->citation = $citation;
+        $self['citation'] = $citation;
 
-        return $obj;
+        return $self;
     }
 
+    /**
+     * @param CitationCharLocation|array{
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endCharIndex: int,
+     *   fileID: string|null,
+     *   startCharIndex: int,
+     *   type?: 'char_location',
+     * }|CitationPageLocation|array{
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endPageNumber: int,
+     *   fileID: string|null,
+     *   startPageNumber: int,
+     *   type?: 'page_location',
+     * }|CitationContentBlockLocation|array{
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endBlockIndex: int,
+     *   fileID: string|null,
+     *   startBlockIndex: int,
+     *   type?: 'content_block_location',
+     * }|CitationsWebSearchResultLocation|array{
+     *   citedText: string,
+     *   encryptedIndex: string,
+     *   title: string|null,
+     *   type?: 'web_search_result_location',
+     *   url: string,
+     * }|CitationsSearchResultLocation|array{
+     *   citedText: string,
+     *   endBlockIndex: int,
+     *   searchResultIndex: int,
+     *   source: string,
+     *   startBlockIndex: int,
+     *   title: string|null,
+     *   type?: 'search_result_location',
+     * } $citation
+     */
     public function withCitation(
-        CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation $citation,
+        CitationCharLocation|array|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation $citation,
     ): self {
-        $obj = clone $this;
-        $obj->citation = $citation;
+        $self = clone $this;
+        $self['citation'] = $citation;
 
-        return $obj;
+        return $self;
     }
 }

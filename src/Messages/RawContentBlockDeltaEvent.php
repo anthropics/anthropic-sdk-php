@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type RawContentBlockDeltaEventShape = array{
  *   delta: TextDelta|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta,
  *   index: int,
- *   type: "content_block_delta",
+ *   type?: 'content_block_delta',
  * }
  */
 final class RawContentBlockDeltaEvent implements BaseModel
@@ -20,14 +20,14 @@ final class RawContentBlockDeltaEvent implements BaseModel
     /** @use SdkModel<RawContentBlockDeltaEventShape> */
     use SdkModel;
 
-    /** @var "content_block_delta" $type */
-    #[Api]
+    /** @var 'content_block_delta' $type */
+    #[Required]
     public string $type = 'content_block_delta';
 
-    #[Api(union: RawContentBlockDelta::class)]
+    #[Required(union: RawContentBlockDelta::class)]
     public TextDelta|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta $delta;
 
-    #[Api]
+    #[Required]
     public int $index;
 
     /**
@@ -53,33 +53,52 @@ final class RawContentBlockDeltaEvent implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param TextDelta|array{text: string, type?: 'text_delta'}|InputJSONDelta|array{
+     *   partialJSON: string, type?: 'input_json_delta'
+     * }|CitationsDelta|array{
+     *   citation: CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation,
+     *   type?: 'citations_delta',
+     * }|ThinkingDelta|array{
+     *   thinking: string, type?: 'thinking_delta'
+     * }|SignatureDelta|array{signature: string, type?: 'signature_delta'} $delta
      */
     public static function with(
-        TextDelta|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta $delta,
+        TextDelta|array|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta $delta,
         int $index,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->delta = $delta;
-        $obj->index = $index;
+        $self['delta'] = $delta;
+        $self['index'] = $index;
 
-        return $obj;
+        return $self;
     }
 
+    /**
+     * @param TextDelta|array{text: string, type?: 'text_delta'}|InputJSONDelta|array{
+     *   partialJSON: string, type?: 'input_json_delta'
+     * }|CitationsDelta|array{
+     *   citation: CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation,
+     *   type?: 'citations_delta',
+     * }|ThinkingDelta|array{
+     *   thinking: string, type?: 'thinking_delta'
+     * }|SignatureDelta|array{signature: string, type?: 'signature_delta'} $delta
+     */
     public function withDelta(
-        TextDelta|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta $delta
+        TextDelta|array|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta $delta,
     ): self {
-        $obj = clone $this;
-        $obj->delta = $delta;
+        $self = clone $this;
+        $self['delta'] = $delta;
 
-        return $obj;
+        return $self;
     }
 
     public function withIndex(int $index): self
     {
-        $obj = clone $this;
-        $obj->index = $index;
+        $self = clone $this;
+        $self['index'] = $index;
 
-        return $obj;
+        return $self;
     }
 }

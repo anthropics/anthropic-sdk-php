@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\CacheControlEphemeral\TTL;
 
 /**
  * @phpstan-type SearchResultBlockParamShape = array{
  *   content: list<TextBlockParam>,
  *   source: string,
  *   title: string,
- *   type: "search_result",
- *   cache_control?: CacheControlEphemeral|null,
+ *   type?: 'search_result',
+ *   cacheControl?: CacheControlEphemeral|null,
  *   citations?: CitationsConfigParam|null,
  * }
  */
@@ -23,27 +25,27 @@ final class SearchResultBlockParam implements BaseModel
     /** @use SdkModel<SearchResultBlockParamShape> */
     use SdkModel;
 
-    /** @var "search_result" $type */
-    #[Api]
+    /** @var 'search_result' $type */
+    #[Required]
     public string $type = 'search_result';
 
     /** @var list<TextBlockParam> $content */
-    #[Api(list: TextBlockParam::class)]
+    #[Required(list: TextBlockParam::class)]
     public array $content;
 
-    #[Api]
+    #[Required]
     public string $source;
 
-    #[Api]
+    #[Required]
     public string $title;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?CitationsConfigParam $citations;
 
     /**
@@ -70,70 +72,92 @@ final class SearchResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<TextBlockParam> $content
+     * @param list<TextBlockParam|array{
+     *   text: string,
+     *   type?: 'text',
+     *   cacheControl?: CacheControlEphemeral|null,
+     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
+     * }> $content
+     * @param CacheControlEphemeral|array{
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
+     * @param CitationsConfigParam|array{enabled?: bool|null} $citations
      */
     public static function with(
         array $content,
         string $source,
         string $title,
-        ?CacheControlEphemeral $cache_control = null,
-        ?CitationsConfigParam $citations = null,
+        CacheControlEphemeral|array|null $cacheControl = null,
+        CitationsConfigParam|array|null $citations = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->content = $content;
-        $obj->source = $source;
-        $obj->title = $title;
+        $self['content'] = $content;
+        $self['source'] = $source;
+        $self['title'] = $title;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $citations && $obj->citations = $citations;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $citations && $self['citations'] = $citations;
 
-        return $obj;
+        return $self;
     }
 
     /**
-     * @param list<TextBlockParam> $content
+     * @param list<TextBlockParam|array{
+     *   text: string,
+     *   type?: 'text',
+     *   cacheControl?: CacheControlEphemeral|null,
+     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
+     * }> $content
      */
     public function withContent(array $content): self
     {
-        $obj = clone $this;
-        $obj->content = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     public function withSource(string $source): self
     {
-        $obj = clone $this;
-        $obj->source = $source;
+        $self = clone $this;
+        $self['source'] = $source;
 
-        return $obj;
+        return $self;
     }
 
     public function withTitle(string $title): self
     {
-        $obj = clone $this;
-        $obj->title = $title;
+        $self = clone $this;
+        $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param CacheControlEphemeral|array{
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
-    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
-    {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
-    public function withCitations(CitationsConfigParam $citations): self
+    /**
+     * @param CitationsConfigParam|array{enabled?: bool|null} $citations
+     */
+    public function withCitations(CitationsConfigParam|array $citations): self
     {
-        $obj = clone $this;
-        $obj->citations = $citations;
+        $self = clone $this;
+        $self['citations'] = $citations;
 
-        return $obj;
+        return $self;
     }
 }

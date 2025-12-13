@@ -5,16 +5,17 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages\BetaRawMessageDeltaEvent;
 
 use Anthropic\Beta\Messages\BetaContainer;
+use Anthropic\Beta\Messages\BetaSkill;
 use Anthropic\Beta\Messages\BetaStopReason;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type DeltaShape = array{
  *   container: BetaContainer|null,
- *   stop_reason: value-of<BetaStopReason>|null,
- *   stop_sequence: string|null,
+ *   stopReason: value-of<BetaStopReason>|null,
+ *   stopSequence: string|null,
  * }
  */
 final class Delta implements BaseModel
@@ -25,22 +26,22 @@ final class Delta implements BaseModel
     /**
      * Information about the container used in the request (for the code execution tool).
      */
-    #[Api]
+    #[Required]
     public ?BetaContainer $container;
 
-    /** @var value-of<BetaStopReason>|null $stop_reason */
-    #[Api(enum: BetaStopReason::class)]
-    public ?string $stop_reason;
+    /** @var value-of<BetaStopReason>|null $stopReason */
+    #[Required('stop_reason', enum: BetaStopReason::class)]
+    public ?string $stopReason;
 
-    #[Api]
-    public ?string $stop_sequence;
+    #[Required('stop_sequence')]
+    public ?string $stopSequence;
 
     /**
      * `new Delta()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Delta::with(container: ..., stop_reason: ..., stop_sequence: ...)
+     * Delta::with(container: ..., stopReason: ..., stopSequence: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -59,31 +60,38 @@ final class Delta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaStopReason|value-of<BetaStopReason>|null $stop_reason
+     * @param BetaContainer|array{
+     *   id: string, expiresAt: \DateTimeInterface, skills: list<BetaSkill>|null
+     * }|null $container
+     * @param BetaStopReason|value-of<BetaStopReason>|null $stopReason
      */
     public static function with(
-        ?BetaContainer $container,
-        BetaStopReason|string|null $stop_reason,
-        ?string $stop_sequence,
+        BetaContainer|array|null $container,
+        BetaStopReason|string|null $stopReason,
+        ?string $stopSequence,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->container = $container;
-        $obj['stop_reason'] = $stop_reason;
-        $obj->stop_sequence = $stop_sequence;
+        $self['container'] = $container;
+        $self['stopReason'] = $stopReason;
+        $self['stopSequence'] = $stopSequence;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Information about the container used in the request (for the code execution tool).
+     *
+     * @param BetaContainer|array{
+     *   id: string, expiresAt: \DateTimeInterface, skills: list<BetaSkill>|null
+     * }|null $container
      */
-    public function withContainer(?BetaContainer $container): self
+    public function withContainer(BetaContainer|array|null $container): self
     {
-        $obj = clone $this;
-        $obj->container = $container;
+        $self = clone $this;
+        $self['container'] = $container;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -91,17 +99,17 @@ final class Delta implements BaseModel
      */
     public function withStopReason(BetaStopReason|string|null $stopReason): self
     {
-        $obj = clone $this;
-        $obj['stop_reason'] = $stopReason;
+        $self = clone $this;
+        $self['stopReason'] = $stopReason;
 
-        return $obj;
+        return $self;
     }
 
     public function withStopSequence(?string $stopSequence): self
     {
-        $obj = clone $this;
-        $obj->stop_sequence = $stopSequence;
+        $self = clone $this;
+        $self['stopSequence'] = $stopSequence;
 
-        return $obj;
+        return $self;
     }
 }

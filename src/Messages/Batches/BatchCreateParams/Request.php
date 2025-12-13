@@ -4,13 +4,30 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Batches\BatchCreateParams;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Batches\BatchCreateParams\Request\Params;
+use Anthropic\Messages\Batches\BatchCreateParams\Request\Params\ServiceTier;
+use Anthropic\Messages\MessageParam;
+use Anthropic\Messages\Metadata;
+use Anthropic\Messages\Model;
+use Anthropic\Messages\TextBlockParam;
+use Anthropic\Messages\ThinkingConfigDisabled;
+use Anthropic\Messages\ThinkingConfigEnabled;
+use Anthropic\Messages\Tool;
+use Anthropic\Messages\ToolBash20250124;
+use Anthropic\Messages\ToolChoiceAny;
+use Anthropic\Messages\ToolChoiceAuto;
+use Anthropic\Messages\ToolChoiceNone;
+use Anthropic\Messages\ToolChoiceTool;
+use Anthropic\Messages\ToolTextEditor20250124;
+use Anthropic\Messages\ToolTextEditor20250429;
+use Anthropic\Messages\ToolTextEditor20250728;
+use Anthropic\Messages\WebSearchTool20250305;
 
 /**
- * @phpstan-type RequestShape = array{custom_id: string, params: Params}
+ * @phpstan-type RequestShape = array{customID: string, params: Params}
  */
 final class Request implements BaseModel
 {
@@ -22,15 +39,15 @@ final class Request implements BaseModel
      *
      * Must be unique for each request within the Message Batch.
      */
-    #[Api]
-    public string $custom_id;
+    #[Required('custom_id')]
+    public string $customID;
 
     /**
      * Messages API creation parameters for the individual request.
      *
      * See the [Messages API reference](https://docs.claude.com/en/api/messages) for full documentation on available parameters.
      */
-    #[Api]
+    #[Required]
     public Params $params;
 
     /**
@@ -38,7 +55,7 @@ final class Request implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Request::with(custom_id: ..., params: ...)
+     * Request::with(customID: ..., params: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -56,15 +73,32 @@ final class Request implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param Params|array{
+     *   maxTokens: int,
+     *   messages: list<MessageParam>,
+     *   model: string|value-of<Model>,
+     *   metadata?: Metadata|null,
+     *   serviceTier?: value-of<ServiceTier>|null,
+     *   stopSequences?: list<string>|null,
+     *   stream?: bool|null,
+     *   system?: string|list<TextBlockParam>|null,
+     *   temperature?: float|null,
+     *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled|null,
+     *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null,
+     *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null,
+     *   topK?: int|null,
+     *   topP?: float|null,
+     * } $params
      */
-    public static function with(string $custom_id, Params $params): self
+    public static function with(string $customID, Params|array $params): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->custom_id = $custom_id;
-        $obj->params = $params;
+        $self['customID'] = $customID;
+        $self['params'] = $params;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -74,22 +108,39 @@ final class Request implements BaseModel
      */
     public function withCustomID(string $customID): self
     {
-        $obj = clone $this;
-        $obj->custom_id = $customID;
+        $self = clone $this;
+        $self['customID'] = $customID;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Messages API creation parameters for the individual request.
      *
      * See the [Messages API reference](https://docs.claude.com/en/api/messages) for full documentation on available parameters.
+     *
+     * @param Params|array{
+     *   maxTokens: int,
+     *   messages: list<MessageParam>,
+     *   model: string|value-of<Model>,
+     *   metadata?: Metadata|null,
+     *   serviceTier?: value-of<ServiceTier>|null,
+     *   stopSequences?: list<string>|null,
+     *   stream?: bool|null,
+     *   system?: string|list<TextBlockParam>|null,
+     *   temperature?: float|null,
+     *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled|null,
+     *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null,
+     *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null,
+     *   topK?: int|null,
+     *   topP?: float|null,
+     * } $params
      */
-    public function withParams(Params $params): self
+    public function withParams(Params|array $params): self
     {
-        $obj = clone $this;
-        $obj->params = $params;
+        $self = clone $this;
+        $self['params'] = $params;
 
-        return $obj;
+        return $self;
     }
 }

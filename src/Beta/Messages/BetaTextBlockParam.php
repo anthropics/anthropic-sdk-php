@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaTextBlockParamShape = array{
  *   text: string,
- *   type: "text",
- *   cache_control?: BetaCacheControlEphemeral|null,
+ *   type?: 'text',
+ *   cacheControl?: BetaCacheControlEphemeral|null,
  *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
  * }
  */
@@ -21,23 +23,23 @@ final class BetaTextBlockParam implements BaseModel
     /** @use SdkModel<BetaTextBlockParamShape> */
     use SdkModel;
 
-    /** @var "text" $type */
-    #[Api]
+    /** @var 'text' $type */
+    #[Required]
     public string $type = 'text';
 
-    #[Api]
+    #[Required]
     public string $text;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * @var list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null $citations
      */
-    #[Api(list: BetaTextCitationParam::class, nullable: true, optional: true)]
+    #[Optional(list: BetaTextCitationParam::class, nullable: true)]
     public ?array $citations;
 
     /**
@@ -64,51 +66,128 @@ final class BetaTextBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null $citations
+     * @param BetaCacheControlEphemeral|array{
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
+     * @param list<BetaCitationCharLocationParam|array{
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endCharIndex: int,
+     *   startCharIndex: int,
+     *   type?: 'char_location',
+     * }|BetaCitationPageLocationParam|array{
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endPageNumber: int,
+     *   startPageNumber: int,
+     *   type?: 'page_location',
+     * }|BetaCitationContentBlockLocationParam|array{
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endBlockIndex: int,
+     *   startBlockIndex: int,
+     *   type?: 'content_block_location',
+     * }|BetaCitationWebSearchResultLocationParam|array{
+     *   citedText: string,
+     *   encryptedIndex: string,
+     *   title: string|null,
+     *   type?: 'web_search_result_location',
+     *   url: string,
+     * }|BetaCitationSearchResultLocationParam|array{
+     *   citedText: string,
+     *   endBlockIndex: int,
+     *   searchResultIndex: int,
+     *   source: string,
+     *   startBlockIndex: int,
+     *   title: string|null,
+     *   type?: 'search_result_location',
+     * }>|null $citations
      */
     public static function with(
         string $text,
-        ?BetaCacheControlEphemeral $cache_control = null,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
         ?array $citations = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->text = $text;
+        $self['text'] = $text;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $citations && $obj->citations = $citations;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $citations && $self['citations'] = $citations;
 
-        return $obj;
+        return $self;
     }
 
     public function withText(string $text): self
     {
-        $obj = clone $this;
-        $obj->text = $text;
+        $self = clone $this;
+        $self['text'] = $text;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|array{
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
-     * @param list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null $citations
+     * @param list<BetaCitationCharLocationParam|array{
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endCharIndex: int,
+     *   startCharIndex: int,
+     *   type?: 'char_location',
+     * }|BetaCitationPageLocationParam|array{
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endPageNumber: int,
+     *   startPageNumber: int,
+     *   type?: 'page_location',
+     * }|BetaCitationContentBlockLocationParam|array{
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endBlockIndex: int,
+     *   startBlockIndex: int,
+     *   type?: 'content_block_location',
+     * }|BetaCitationWebSearchResultLocationParam|array{
+     *   citedText: string,
+     *   encryptedIndex: string,
+     *   title: string|null,
+     *   type?: 'web_search_result_location',
+     *   url: string,
+     * }|BetaCitationSearchResultLocationParam|array{
+     *   citedText: string,
+     *   endBlockIndex: int,
+     *   searchResultIndex: int,
+     *   source: string,
+     *   startBlockIndex: int,
+     *   title: string|null,
+     *   type?: 'search_result_location',
+     * }>|null $citations
      */
     public function withCitations(?array $citations): self
     {
-        $obj = clone $this;
-        $obj->citations = $citations;
+        $self = clone $this;
+        $self['citations'] = $citations;
 
-        return $obj;
+        return $self;
     }
 }

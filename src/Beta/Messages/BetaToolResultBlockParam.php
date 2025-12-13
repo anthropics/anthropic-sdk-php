@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaToolResultBlockParam\Content;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaToolResultBlockParamShape = array{
- *   tool_use_id: string,
- *   type: "tool_result",
- *   cache_control?: BetaCacheControlEphemeral|null,
+ *   toolUseID: string,
+ *   type?: 'tool_result',
+ *   cacheControl?: BetaCacheControlEphemeral|null,
  *   content?: string|null|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock|BetaToolReferenceBlockParam>,
- *   is_error?: bool|null,
+ *   isError?: bool|null,
  * }
  */
 final class BetaToolResultBlockParam implements BaseModel
@@ -23,34 +25,34 @@ final class BetaToolResultBlockParam implements BaseModel
     /** @use SdkModel<BetaToolResultBlockParamShape> */
     use SdkModel;
 
-    /** @var "tool_result" $type */
-    #[Api]
+    /** @var 'tool_result' $type */
+    #[Required]
     public string $type = 'tool_result';
 
-    #[Api]
-    public string $tool_use_id;
+    #[Required('tool_use_id')]
+    public string $toolUseID;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * @var string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock|BetaToolReferenceBlockParam>|null $content
      */
-    #[Api(union: Content::class, optional: true)]
+    #[Optional(union: Content::class)]
     public string|array|null $content;
 
-    #[Api(optional: true)]
-    public ?bool $is_error;
+    #[Optional('is_error')]
+    public ?bool $isError;
 
     /**
      * `new BetaToolResultBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaToolResultBlockParam::with(tool_use_id: ...)
+     * BetaToolResultBlockParam::with(toolUseID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -69,61 +71,122 @@ final class BetaToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock|BetaToolReferenceBlockParam> $content
+     * @param BetaCacheControlEphemeral|array{
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
+     * @param string|list<BetaTextBlockParam|array{
+     *   text: string,
+     *   type?: 'text',
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
+     * }|BetaImageBlockParam|array{
+     *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource,
+     *   type?: 'image',
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     * }|BetaSearchResultBlockParam|array{
+     *   content: list<BetaTextBlockParam>,
+     *   source: string,
+     *   title: string,
+     *   type?: 'search_result',
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   citations?: BetaCitationsConfigParam|null,
+     * }|BetaRequestDocumentBlock|array{
+     *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource,
+     *   type?: 'document',
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   citations?: BetaCitationsConfigParam|null,
+     *   context?: string|null,
+     *   title?: string|null,
+     * }|BetaToolReferenceBlockParam|array{
+     *   toolName: string,
+     *   type?: 'tool_reference',
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     * }> $content
      */
     public static function with(
-        string $tool_use_id,
-        ?BetaCacheControlEphemeral $cache_control = null,
+        string $toolUseID,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
         string|array|null $content = null,
-        ?bool $is_error = null,
+        ?bool $isError = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->tool_use_id = $tool_use_id;
+        $self['toolUseID'] = $toolUseID;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $content && $obj->content = $content;
-        null !== $is_error && $obj->is_error = $is_error;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $content && $self['content'] = $content;
+        null !== $isError && $self['isError'] = $isError;
 
-        return $obj;
+        return $self;
     }
 
     public function withToolUseID(string $toolUseID): self
     {
-        $obj = clone $this;
-        $obj->tool_use_id = $toolUseID;
+        $self = clone $this;
+        $self['toolUseID'] = $toolUseID;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|array{
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
-     * @param string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock|BetaToolReferenceBlockParam> $content
+     * @param string|list<BetaTextBlockParam|array{
+     *   text: string,
+     *   type?: 'text',
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
+     * }|BetaImageBlockParam|array{
+     *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource,
+     *   type?: 'image',
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     * }|BetaSearchResultBlockParam|array{
+     *   content: list<BetaTextBlockParam>,
+     *   source: string,
+     *   title: string,
+     *   type?: 'search_result',
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   citations?: BetaCitationsConfigParam|null,
+     * }|BetaRequestDocumentBlock|array{
+     *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource,
+     *   type?: 'document',
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     *   citations?: BetaCitationsConfigParam|null,
+     *   context?: string|null,
+     *   title?: string|null,
+     * }|BetaToolReferenceBlockParam|array{
+     *   toolName: string,
+     *   type?: 'tool_reference',
+     *   cacheControl?: BetaCacheControlEphemeral|null,
+     * }> $content
      */
     public function withContent(string|array $content): self
     {
-        $obj = clone $this;
-        $obj->content = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     public function withIsError(bool $isError): self
     {
-        $obj = clone $this;
-        $obj->is_error = $isError;
+        $self = clone $this;
+        $self['isError'] = $isError;
 
-        return $obj;
+        return $self;
     }
 }

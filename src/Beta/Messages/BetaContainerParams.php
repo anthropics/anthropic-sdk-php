@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Beta\Messages\BetaSkillParams\Type;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -23,7 +24,7 @@ final class BetaContainerParams implements BaseModel
     /**
      * Container id.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $id;
 
     /**
@@ -31,7 +32,7 @@ final class BetaContainerParams implements BaseModel
      *
      * @var list<BetaSkillParams>|null $skills
      */
-    #[Api(list: BetaSkillParams::class, nullable: true, optional: true)]
+    #[Optional(list: BetaSkillParams::class, nullable: true)]
     public ?array $skills;
 
     public function __construct()
@@ -44,16 +45,18 @@ final class BetaContainerParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaSkillParams>|null $skills
+     * @param list<BetaSkillParams|array{
+     *   skillID: string, type: value-of<Type>, version?: string|null
+     * }>|null $skills
      */
     public static function with(?string $id = null, ?array $skills = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        null !== $id && $obj->id = $id;
-        null !== $skills && $obj->skills = $skills;
+        null !== $id && $self['id'] = $id;
+        null !== $skills && $self['skills'] = $skills;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -61,22 +64,24 @@ final class BetaContainerParams implements BaseModel
      */
     public function withID(?string $id): self
     {
-        $obj = clone $this;
-        $obj->id = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * List of skills to load in the container.
      *
-     * @param list<BetaSkillParams>|null $skills
+     * @param list<BetaSkillParams|array{
+     *   skillID: string, type: value-of<Type>, version?: string|null
+     * }>|null $skills
      */
     public function withSkills(?array $skills): self
     {
-        $obj = clone $this;
-        $obj->skills = $skills;
+        $self = clone $this;
+        $self['skills'] = $skills;
 
-        return $obj;
+        return $self;
     }
 }

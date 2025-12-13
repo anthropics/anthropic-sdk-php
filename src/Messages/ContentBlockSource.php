@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\ContentBlockSource\Content;
 
 /**
  * @phpstan-type ContentBlockSourceShape = array{
- *   content: string|list<TextBlockParam|ImageBlockParam>, type: "content"
+ *   content: string|list<TextBlockParam|ImageBlockParam>, type?: 'content'
  * }
  */
 final class ContentBlockSource implements BaseModel
@@ -19,12 +19,12 @@ final class ContentBlockSource implements BaseModel
     /** @use SdkModel<ContentBlockSourceShape> */
     use SdkModel;
 
-    /** @var "content" $type */
-    #[Api]
+    /** @var 'content' $type */
+    #[Required]
     public string $type = 'content';
 
     /** @var string|list<TextBlockParam|ImageBlockParam> $content */
-    #[Api(union: Content::class)]
+    #[Required(union: Content::class)]
     public string|array $content;
 
     /**
@@ -51,25 +51,43 @@ final class ContentBlockSource implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|list<TextBlockParam|ImageBlockParam> $content
+     * @param string|list<TextBlockParam|array{
+     *   text: string,
+     *   type?: 'text',
+     *   cacheControl?: CacheControlEphemeral|null,
+     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
+     * }|ImageBlockParam|array{
+     *   source: Base64ImageSource|URLImageSource,
+     *   type?: 'image',
+     *   cacheControl?: CacheControlEphemeral|null,
+     * }> $content
      */
     public static function with(string|array $content): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->content = $content;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     /**
-     * @param string|list<TextBlockParam|ImageBlockParam> $content
+     * @param string|list<TextBlockParam|array{
+     *   text: string,
+     *   type?: 'text',
+     *   cacheControl?: CacheControlEphemeral|null,
+     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
+     * }|ImageBlockParam|array{
+     *   source: Base64ImageSource|URLImageSource,
+     *   type?: 'image',
+     *   cacheControl?: CacheControlEphemeral|null,
+     * }> $content
      */
     public function withContent(string|array $content): self
     {
-        $obj = clone $this;
-        $obj->content = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 }

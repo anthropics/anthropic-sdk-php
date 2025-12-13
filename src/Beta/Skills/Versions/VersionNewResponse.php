@@ -4,51 +4,47 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Skills\Versions;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type VersionNewResponseShape = array{
  *   id: string,
- *   created_at: string,
+ *   createdAt: string,
  *   description: string,
  *   directory: string,
  *   name: string,
- *   skill_id: string,
+ *   skillID: string,
  *   type: string,
  *   version: string,
  * }
  */
-final class VersionNewResponse implements BaseModel, ResponseConverter
+final class VersionNewResponse implements BaseModel
 {
     /** @use SdkModel<VersionNewResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Unique identifier for the skill version.
      *
      * The format and length of IDs may change over time.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
      * ISO 8601 timestamp of when the skill version was created.
      */
-    #[Api]
-    public string $created_at;
+    #[Required('created_at')]
+    public string $createdAt;
 
     /**
      * Description of the skill version.
      *
      * This is extracted from the SKILL.md file in the skill upload.
      */
-    #[Api]
+    #[Required]
     public string $description;
 
     /**
@@ -56,7 +52,7 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
      *
      * This is the top-level directory name that was extracted from the uploaded files.
      */
-    #[Api]
+    #[Required]
     public string $directory;
 
     /**
@@ -64,21 +60,21 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
      *
      * This is extracted from the SKILL.md file in the skill upload.
      */
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
      * Identifier for the skill that this version belongs to.
      */
-    #[Api]
-    public string $skill_id;
+    #[Required('skill_id')]
+    public string $skillID;
 
     /**
      * Object type.
      *
      * For Skill Versions, this is always `"skill_version"`.
      */
-    #[Api]
+    #[Required]
     public string $type;
 
     /**
@@ -86,7 +82,7 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
      *
      * Each version is identified by a Unix epoch timestamp (e.g., "1759178010641129").
      */
-    #[Api]
+    #[Required]
     public string $version;
 
     /**
@@ -96,11 +92,11 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
      * ```
      * VersionNewResponse::with(
      *   id: ...,
-     *   created_at: ...,
+     *   createdAt: ...,
      *   description: ...,
      *   directory: ...,
      *   name: ...,
-     *   skill_id: ...,
+     *   skillID: ...,
      *   type: ...,
      *   version: ...,
      * )
@@ -132,26 +128,26 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
      */
     public static function with(
         string $id,
-        string $created_at,
+        string $createdAt,
         string $description,
         string $directory,
         string $name,
-        string $skill_id,
+        string $skillID,
         string $version,
         string $type = 'skill_version',
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->id = $id;
-        $obj->created_at = $created_at;
-        $obj->description = $description;
-        $obj->directory = $directory;
-        $obj->name = $name;
-        $obj->skill_id = $skill_id;
-        $obj->type = $type;
-        $obj->version = $version;
+        $self['id'] = $id;
+        $self['createdAt'] = $createdAt;
+        $self['description'] = $description;
+        $self['directory'] = $directory;
+        $self['name'] = $name;
+        $self['skillID'] = $skillID;
+        $self['type'] = $type;
+        $self['version'] = $version;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -161,10 +157,10 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
      */
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj->id = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -172,10 +168,10 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
      */
     public function withCreatedAt(string $createdAt): self
     {
-        $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -185,10 +181,10 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
      */
     public function withDescription(string $description): self
     {
-        $obj = clone $this;
-        $obj->description = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -198,10 +194,10 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
      */
     public function withDirectory(string $directory): self
     {
-        $obj = clone $this;
-        $obj->directory = $directory;
+        $self = clone $this;
+        $self['directory'] = $directory;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -211,10 +207,10 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
      */
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj->name = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -222,10 +218,10 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
      */
     public function withSkillID(string $skillID): self
     {
-        $obj = clone $this;
-        $obj->skill_id = $skillID;
+        $self = clone $this;
+        $self['skillID'] = $skillID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -235,10 +231,10 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
      */
     public function withType(string $type): self
     {
-        $obj = clone $this;
-        $obj->type = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -248,9 +244,9 @@ final class VersionNewResponse implements BaseModel, ResponseConverter
      */
     public function withVersion(string $version): self
     {
-        $obj = clone $this;
-        $obj->version = $version;
+        $self = clone $this;
+        $self['version'] = $version;
 
-        return $obj;
+        return $self;
     }
 }

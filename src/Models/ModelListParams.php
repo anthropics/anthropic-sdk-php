@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Models;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -18,8 +18,8 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\ModelsService::list()
  *
  * @phpstan-type ModelListParamsShape = array{
- *   after_id?: string,
- *   before_id?: string,
+ *   afterID?: string,
+ *   beforeID?: string,
  *   limit?: int,
  *   betas?: list<string|AnthropicBeta>,
  * }
@@ -33,21 +33,21 @@ final class ModelListParams implements BaseModel
     /**
      * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
      */
-    #[Api(optional: true)]
-    public ?string $after_id;
+    #[Optional]
+    public ?string $afterID;
 
     /**
      * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
      */
-    #[Api(optional: true)]
-    public ?string $before_id;
+    #[Optional]
+    public ?string $beforeID;
 
     /**
      * Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $limit;
 
     /**
@@ -55,7 +55,7 @@ final class ModelListParams implements BaseModel
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
      */
-    #[Api(list: AnthropicBeta::class, optional: true)]
+    #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
     public function __construct()
@@ -71,19 +71,19 @@ final class ModelListParams implements BaseModel
      * @param list<string|AnthropicBeta> $betas
      */
     public static function with(
-        ?string $after_id = null,
-        ?string $before_id = null,
+        ?string $afterID = null,
+        ?string $beforeID = null,
         ?int $limit = null,
         ?array $betas = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $after_id && $obj->after_id = $after_id;
-        null !== $before_id && $obj->before_id = $before_id;
-        null !== $limit && $obj->limit = $limit;
-        null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        null !== $afterID && $self['afterID'] = $afterID;
+        null !== $beforeID && $self['beforeID'] = $beforeID;
+        null !== $limit && $self['limit'] = $limit;
+        null !== $betas && $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -91,10 +91,10 @@ final class ModelListParams implements BaseModel
      */
     public function withAfterID(string $afterID): self
     {
-        $obj = clone $this;
-        $obj->after_id = $afterID;
+        $self = clone $this;
+        $self['afterID'] = $afterID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -102,10 +102,10 @@ final class ModelListParams implements BaseModel
      */
     public function withBeforeID(string $beforeID): self
     {
-        $obj = clone $this;
-        $obj->before_id = $beforeID;
+        $self = clone $this;
+        $self['beforeID'] = $beforeID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -115,10 +115,10 @@ final class ModelListParams implements BaseModel
      */
     public function withLimit(int $limit): self
     {
-        $obj = clone $this;
-        $obj->limit = $limit;
+        $self = clone $this;
+        $self['limit'] = $limit;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -128,9 +128,9 @@ final class ModelListParams implements BaseModel
      */
     public function withBetas(array $betas): self
     {
-        $obj = clone $this;
-        $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        $self = clone $this;
+        $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 }

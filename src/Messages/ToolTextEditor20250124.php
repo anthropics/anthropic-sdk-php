@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\CacheControlEphemeral\TTL;
 
 /**
  * @phpstan-type ToolTextEditor20250124Shape = array{
- *   name: "str_replace_editor",
- *   type: "text_editor_20250124",
- *   cache_control?: CacheControlEphemeral|null,
+ *   name?: 'str_replace_editor',
+ *   type?: 'text_editor_20250124',
+ *   cacheControl?: CacheControlEphemeral|null,
  * }
  */
 final class ToolTextEditor20250124 implements BaseModel
@@ -25,20 +27,20 @@ final class ToolTextEditor20250124 implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      *
-     * @var "str_replace_editor" $name
+     * @var 'str_replace_editor' $name
      */
-    #[Api]
+    #[Required]
     public string $name = 'str_replace_editor';
 
-    /** @var "text_editor_20250124" $type */
-    #[Api]
+    /** @var 'text_editor_20250124' $type */
+    #[Required]
     public string $type = 'text_editor_20250124';
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     public function __construct()
     {
@@ -49,25 +51,34 @@ final class ToolTextEditor20250124 implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param CacheControlEphemeral|array{
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
     public static function with(
-        ?CacheControlEphemeral $cache_control = null
+        CacheControlEphemeral|array|null $cacheControl = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param CacheControlEphemeral|array{
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
-    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
-    {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 }

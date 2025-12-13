@@ -4,14 +4,23 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Batches;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Message;
+use Anthropic\Messages\Model;
+use Anthropic\Messages\RedactedThinkingBlock;
+use Anthropic\Messages\ServerToolUseBlock;
+use Anthropic\Messages\StopReason;
+use Anthropic\Messages\TextBlock;
+use Anthropic\Messages\ThinkingBlock;
+use Anthropic\Messages\ToolUseBlock;
+use Anthropic\Messages\Usage;
+use Anthropic\Messages\WebSearchToolResultBlock;
 
 /**
  * @phpstan-type MessageBatchSucceededResultShape = array{
- *   message: Message, type: "succeeded"
+ *   message: Message, type?: 'succeeded'
  * }
  */
 final class MessageBatchSucceededResult implements BaseModel
@@ -19,11 +28,11 @@ final class MessageBatchSucceededResult implements BaseModel
     /** @use SdkModel<MessageBatchSucceededResultShape> */
     use SdkModel;
 
-    /** @var "succeeded" $type */
-    #[Api]
+    /** @var 'succeeded' $type */
+    #[Required]
     public string $type = 'succeeded';
 
-    #[Api]
+    #[Required]
     public Message $message;
 
     /**
@@ -49,21 +58,44 @@ final class MessageBatchSucceededResult implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param Message|array{
+     *   id: string,
+     *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
+     *   model: string|value-of<Model>,
+     *   role?: 'assistant',
+     *   stopReason: value-of<StopReason>|null,
+     *   stopSequence: string|null,
+     *   type?: 'message',
+     *   usage: Usage,
+     * } $message
      */
-    public static function with(Message $message): self
+    public static function with(Message|array $message): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->message = $message;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 
-    public function withMessage(Message $message): self
+    /**
+     * @param Message|array{
+     *   id: string,
+     *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
+     *   model: string|value-of<Model>,
+     *   role?: 'assistant',
+     *   stopReason: value-of<StopReason>|null,
+     *   stopSequence: string|null,
+     *   type?: 'message',
+     *   usage: Usage,
+     * } $message
+     */
+    public function withMessage(Message|array $message): self
     {
-        $obj = clone $this;
-        $obj->message = $message;
+        $self = clone $this;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 }

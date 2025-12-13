@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\CacheControlEphemeral\TTL;
 
 /**
  * @phpstan-type TextBlockParamShape = array{
  *   text: string,
- *   type: "text",
- *   cache_control?: CacheControlEphemeral|null,
+ *   type?: 'text',
+ *   cacheControl?: CacheControlEphemeral|null,
  *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
  * }
  */
@@ -21,23 +23,23 @@ final class TextBlockParam implements BaseModel
     /** @use SdkModel<TextBlockParamShape> */
     use SdkModel;
 
-    /** @var "text" $type */
-    #[Api]
+    /** @var 'text' $type */
+    #[Required]
     public string $type = 'text';
 
-    #[Api]
+    #[Required]
     public string $text;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
      * @var list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null $citations
      */
-    #[Api(list: TextCitationParam::class, nullable: true, optional: true)]
+    #[Optional(list: TextCitationParam::class, nullable: true)]
     public ?array $citations;
 
     /**
@@ -64,50 +66,128 @@ final class TextBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null $citations
+     * @param CacheControlEphemeral|array{
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
+     * @param list<CitationCharLocationParam|array{
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endCharIndex: int,
+     *   startCharIndex: int,
+     *   type?: 'char_location',
+     * }|CitationPageLocationParam|array{
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endPageNumber: int,
+     *   startPageNumber: int,
+     *   type?: 'page_location',
+     * }|CitationContentBlockLocationParam|array{
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endBlockIndex: int,
+     *   startBlockIndex: int,
+     *   type?: 'content_block_location',
+     * }|CitationWebSearchResultLocationParam|array{
+     *   citedText: string,
+     *   encryptedIndex: string,
+     *   title: string|null,
+     *   type?: 'web_search_result_location',
+     *   url: string,
+     * }|CitationSearchResultLocationParam|array{
+     *   citedText: string,
+     *   endBlockIndex: int,
+     *   searchResultIndex: int,
+     *   source: string,
+     *   startBlockIndex: int,
+     *   title: string|null,
+     *   type?: 'search_result_location',
+     * }>|null $citations
      */
     public static function with(
         string $text,
-        ?CacheControlEphemeral $cache_control = null,
+        CacheControlEphemeral|array|null $cacheControl = null,
         ?array $citations = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->text = $text;
+        $self['text'] = $text;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $citations && $obj->citations = $citations;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $citations && $self['citations'] = $citations;
 
-        return $obj;
+        return $self;
     }
 
     public function withText(string $text): self
     {
-        $obj = clone $this;
-        $obj->text = $text;
+        $self = clone $this;
+        $self['text'] = $text;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param CacheControlEphemeral|array{
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
-    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
-    {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
-     * @param list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null $citations
+     * @param list<CitationCharLocationParam|array{
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endCharIndex: int,
+     *   startCharIndex: int,
+     *   type?: 'char_location',
+     * }|CitationPageLocationParam|array{
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endPageNumber: int,
+     *   startPageNumber: int,
+     *   type?: 'page_location',
+     * }|CitationContentBlockLocationParam|array{
+     *   citedText: string,
+     *   documentIndex: int,
+     *   documentTitle: string|null,
+     *   endBlockIndex: int,
+     *   startBlockIndex: int,
+     *   type?: 'content_block_location',
+     * }|CitationWebSearchResultLocationParam|array{
+     *   citedText: string,
+     *   encryptedIndex: string,
+     *   title: string|null,
+     *   type?: 'web_search_result_location',
+     *   url: string,
+     * }|CitationSearchResultLocationParam|array{
+     *   citedText: string,
+     *   endBlockIndex: int,
+     *   searchResultIndex: int,
+     *   source: string,
+     *   startBlockIndex: int,
+     *   title: string|null,
+     *   type?: 'search_result_location',
+     * }>|null $citations
      */
     public function withCitations(?array $citations): self
     {
-        $obj = clone $this;
-        $obj->citations = $citations;
+        $self = clone $this;
+        $self['citations'] = $citations;
 
-        return $obj;
+        return $self;
     }
 }

@@ -6,7 +6,9 @@ namespace Anthropic\Beta\Messages\Batches;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -21,7 +23,8 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\Messages\BatchesService::create()
  *
  * @phpstan-type BatchCreateParamsShape = array{
- *   requests: list<Request>, betas?: list<string|AnthropicBeta>
+ *   requests: list<Request|array{customID: string, params: Params}>,
+ *   betas?: list<string|AnthropicBeta>,
  * }
  */
 final class BatchCreateParams implements BaseModel
@@ -35,7 +38,7 @@ final class BatchCreateParams implements BaseModel
      *
      * @var list<Request> $requests
      */
-    #[Api(list: Request::class)]
+    #[Required(list: Request::class)]
     public array $requests;
 
     /**
@@ -43,7 +46,7 @@ final class BatchCreateParams implements BaseModel
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
      */
-    #[Api(list: AnthropicBeta::class, optional: true)]
+    #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
     /**
@@ -70,31 +73,31 @@ final class BatchCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Request> $requests
+     * @param list<Request|array{customID: string, params: Params}> $requests
      * @param list<string|AnthropicBeta> $betas
      */
     public static function with(array $requests, ?array $betas = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->requests = $requests;
+        $self['requests'] = $requests;
 
-        null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        null !== $betas && $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * List of requests for prompt completion. Each is an individual request to create a Message.
      *
-     * @param list<Request> $requests
+     * @param list<Request|array{customID: string, params: Params}> $requests
      */
     public function withRequests(array $requests): self
     {
-        $obj = clone $this;
-        $obj->requests = $requests;
+        $self = clone $this;
+        $self['requests'] = $requests;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -104,9 +107,9 @@ final class BatchCreateParams implements BaseModel
      */
     public function withBetas(array $betas): self
     {
-        $obj = clone $this;
-        $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        $self = clone $this;
+        $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 }

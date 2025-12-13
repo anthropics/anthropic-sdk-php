@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\Model;
 
 /**
  * @phpstan-type BetaRawMessageStartEventShape = array{
- *   message: BetaMessage, type: "message_start"
+ *   message: BetaMessage, type?: 'message_start'
  * }
  */
 final class BetaRawMessageStartEvent implements BaseModel
@@ -18,11 +19,11 @@ final class BetaRawMessageStartEvent implements BaseModel
     /** @use SdkModel<BetaRawMessageStartEventShape> */
     use SdkModel;
 
-    /** @var "message_start" $type */
-    #[Api]
+    /** @var 'message_start' $type */
+    #[Required]
     public string $type = 'message_start';
 
-    #[Api]
+    #[Required]
     public BetaMessage $message;
 
     /**
@@ -48,21 +49,48 @@ final class BetaRawMessageStartEvent implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaMessage|array{
+     *   id: string,
+     *   container: BetaContainer|null,
+     *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
+     *   contextManagement: BetaContextManagementResponse|null,
+     *   model: string|value-of<Model>,
+     *   role?: 'assistant',
+     *   stopReason: value-of<BetaStopReason>|null,
+     *   stopSequence: string|null,
+     *   type?: 'message',
+     *   usage: BetaUsage,
+     * } $message
      */
-    public static function with(BetaMessage $message): self
+    public static function with(BetaMessage|array $message): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->message = $message;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 
-    public function withMessage(BetaMessage $message): self
+    /**
+     * @param BetaMessage|array{
+     *   id: string,
+     *   container: BetaContainer|null,
+     *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
+     *   contextManagement: BetaContextManagementResponse|null,
+     *   model: string|value-of<Model>,
+     *   role?: 'assistant',
+     *   stopReason: value-of<BetaStopReason>|null,
+     *   stopSequence: string|null,
+     *   type?: 'message',
+     *   usage: BetaUsage,
+     * } $message
+     */
+    public function withMessage(BetaMessage|array $message): self
     {
-        $obj = clone $this;
-        $obj->message = $message;
+        $self = clone $this;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 }

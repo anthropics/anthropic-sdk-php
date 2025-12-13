@@ -4,14 +4,23 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\Batches;
 
+use Anthropic\Beta\BetaAPIError;
+use Anthropic\Beta\BetaAuthenticationError;
+use Anthropic\Beta\BetaBillingError;
 use Anthropic\Beta\BetaErrorResponse;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Beta\BetaGatewayTimeoutError;
+use Anthropic\Beta\BetaInvalidRequestError;
+use Anthropic\Beta\BetaNotFoundError;
+use Anthropic\Beta\BetaOverloadedError;
+use Anthropic\Beta\BetaPermissionError;
+use Anthropic\Beta\BetaRateLimitError;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type MessageBatchErroredResultShape = array{
- *   error: BetaErrorResponse, type: "errored"
+ *   error: BetaErrorResponse, type?: 'errored'
  * }
  */
 final class MessageBatchErroredResult implements BaseModel
@@ -19,11 +28,11 @@ final class MessageBatchErroredResult implements BaseModel
     /** @use SdkModel<MessageBatchErroredResultShape> */
     use SdkModel;
 
-    /** @var "errored" $type */
-    #[Api]
+    /** @var 'errored' $type */
+    #[Required]
     public string $type = 'errored';
 
-    #[Api]
+    #[Required]
     public BetaErrorResponse $error;
 
     /**
@@ -49,21 +58,34 @@ final class MessageBatchErroredResult implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaErrorResponse|array{
+     *   error: BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError,
+     *   requestID: string|null,
+     *   type?: 'error',
+     * } $error
      */
-    public static function with(BetaErrorResponse $error): self
+    public static function with(BetaErrorResponse|array $error): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->error = $error;
+        $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 
-    public function withError(BetaErrorResponse $error): self
+    /**
+     * @param BetaErrorResponse|array{
+     *   error: BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError,
+     *   requestID: string|null,
+     *   type?: 'error',
+     * } $error
+     */
+    public function withError(BetaErrorResponse|array $error): self
     {
-        $obj = clone $this;
-        $obj->error = $error;
+        $self = clone $this;
+        $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * Configuration for a specific tool in an MCP toolset.
  *
  * @phpstan-type BetaMCPToolConfigShape = array{
- *   defer_loading?: bool|null, enabled?: bool|null
+ *   deferLoading?: bool|null, enabled?: bool|null
  * }
  */
 final class BetaMCPToolConfig implements BaseModel
@@ -20,10 +20,10 @@ final class BetaMCPToolConfig implements BaseModel
     /** @use SdkModel<BetaMCPToolConfigShape> */
     use SdkModel;
 
-    #[Api(optional: true)]
-    public ?bool $defer_loading;
+    #[Optional('defer_loading')]
+    public ?bool $deferLoading;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $enabled;
 
     public function __construct()
@@ -37,30 +37,30 @@ final class BetaMCPToolConfig implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?bool $defer_loading = null,
+        ?bool $deferLoading = null,
         ?bool $enabled = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $defer_loading && $obj->defer_loading = $defer_loading;
-        null !== $enabled && $obj->enabled = $enabled;
+        null !== $deferLoading && $self['deferLoading'] = $deferLoading;
+        null !== $enabled && $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 
     public function withDeferLoading(bool $deferLoading): self
     {
-        $obj = clone $this;
-        $obj->defer_loading = $deferLoading;
+        $self = clone $this;
+        $self['deferLoading'] = $deferLoading;
 
-        return $obj;
+        return $self;
     }
 
     public function withEnabled(bool $enabled): self
     {
-        $obj = clone $this;
-        $obj->enabled = $enabled;
+        $self = clone $this;
+        $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 }

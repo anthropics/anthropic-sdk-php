@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaToolUseBlockParam\Caller;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -14,8 +16,8 @@ use Anthropic\Core\Contracts\BaseModel;
  *   id: string,
  *   input: array<string,mixed>,
  *   name: string,
- *   type: "tool_use",
- *   cache_control?: BetaCacheControlEphemeral|null,
+ *   type?: 'tool_use',
+ *   cacheControl?: BetaCacheControlEphemeral|null,
  *   caller?: null|BetaDirectCaller|BetaServerToolCaller,
  * }
  */
@@ -24,30 +26,30 @@ final class BetaToolUseBlockParam implements BaseModel
     /** @use SdkModel<BetaToolUseBlockParamShape> */
     use SdkModel;
 
-    /** @var "tool_use" $type */
-    #[Api]
+    /** @var 'tool_use' $type */
+    #[Required]
     public string $type = 'tool_use';
 
-    #[Api]
+    #[Required]
     public string $id;
 
     /** @var array<string,mixed> $input */
-    #[Api(map: 'mixed')]
+    #[Required(map: 'mixed')]
     public array $input;
 
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * Tool invocation directly from the model.
      */
-    #[Api(union: Caller::class, optional: true)]
+    #[Optional(union: Caller::class)]
     public BetaDirectCaller|BetaServerToolCaller|null $caller;
 
     /**
@@ -75,32 +77,38 @@ final class BetaToolUseBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,mixed> $input
+     * @param BetaCacheControlEphemeral|array{
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
+     * @param BetaDirectCaller|array{type?: 'direct'}|BetaServerToolCaller|array{
+     *   toolID: string, type?: 'code_execution_20250825'
+     * } $caller
      */
     public static function with(
         string $id,
         array $input,
         string $name,
-        ?BetaCacheControlEphemeral $cache_control = null,
-        BetaDirectCaller|BetaServerToolCaller|null $caller = null,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
+        BetaDirectCaller|array|BetaServerToolCaller|null $caller = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->id = $id;
-        $obj->input = $input;
-        $obj->name = $name;
+        $self['id'] = $id;
+        $self['input'] = $input;
+        $self['name'] = $name;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $caller && $obj->caller = $caller;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $caller && $self['caller'] = $caller;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj->id = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -108,41 +116,49 @@ final class BetaToolUseBlockParam implements BaseModel
      */
     public function withInput(array $input): self
     {
-        $obj = clone $this;
-        $obj->input = $input;
+        $self = clone $this;
+        $self['input'] = $input;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj->name = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|array{
+     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
+     * }|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Tool invocation directly from the model.
+     *
+     * @param BetaDirectCaller|array{type?: 'direct'}|BetaServerToolCaller|array{
+     *   toolID: string, type?: 'code_execution_20250825'
+     * } $caller
      */
     public function withCaller(
-        BetaDirectCaller|BetaServerToolCaller $caller
+        BetaDirectCaller|array|BetaServerToolCaller $caller
     ): self {
-        $obj = clone $this;
-        $obj->caller = $caller;
+        $self = clone $this;
+        $self['caller'] = $caller;
 
-        return $obj;
+        return $self;
     }
 }

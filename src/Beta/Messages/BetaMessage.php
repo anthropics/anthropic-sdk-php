@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Beta\Messages\BetaServerToolUseBlock\Name;
+use Anthropic\Beta\Messages\BetaUsage\ServiceTier;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 use Anthropic\Messages\Model;
 
 /**
@@ -16,30 +16,28 @@ use Anthropic\Messages\Model;
  *   id: string,
  *   container: BetaContainer|null,
  *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
- *   context_management: BetaContextManagementResponse|null,
+ *   contextManagement: BetaContextManagementResponse|null,
  *   model: string|value-of<Model>,
- *   role: "assistant",
- *   stop_reason: value-of<BetaStopReason>|null,
- *   stop_sequence: string|null,
- *   type: "message",
+ *   role?: 'assistant',
+ *   stopReason: value-of<BetaStopReason>|null,
+ *   stopSequence: string|null,
+ *   type?: 'message',
  *   usage: BetaUsage,
  * }
  */
-final class BetaMessage implements BaseModel, ResponseConverter
+final class BetaMessage implements BaseModel
 {
     /** @use SdkModel<BetaMessageShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Conversational role of the generated message.
      *
      * This will always be `"assistant"`.
      *
-     * @var "assistant" $role
+     * @var 'assistant' $role
      */
-    #[Api]
+    #[Required]
     public string $role = 'assistant';
 
     /**
@@ -47,9 +45,9 @@ final class BetaMessage implements BaseModel, ResponseConverter
      *
      * For Messages, this is always `"message"`.
      *
-     * @var "message" $type
+     * @var 'message' $type
      */
-    #[Api]
+    #[Required]
     public string $type = 'message';
 
     /**
@@ -57,13 +55,13 @@ final class BetaMessage implements BaseModel, ResponseConverter
      *
      * The format and length of IDs may change over time.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
      * Information about the container used in the request (for the code execution tool).
      */
-    #[Api]
+    #[Required]
     public ?BetaContainer $container;
 
     /**
@@ -95,7 +93,7 @@ final class BetaMessage implements BaseModel, ResponseConverter
      *
      * @var list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock> $content
      */
-    #[Api(list: BetaContentBlock::class)]
+    #[Required(list: BetaContentBlock::class)]
     public array $content;
 
     /**
@@ -103,15 +101,15 @@ final class BetaMessage implements BaseModel, ResponseConverter
      *
      * Information about context management strategies applied during the request.
      */
-    #[Api]
-    public ?BetaContextManagementResponse $context_management;
+    #[Required('context_management')]
+    public ?BetaContextManagementResponse $contextManagement;
 
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
      * @var string|value-of<Model> $model
      */
-    #[Api(enum: Model::class)]
+    #[Required(enum: Model::class)]
     public string $model;
 
     /**
@@ -127,18 +125,18 @@ final class BetaMessage implements BaseModel, ResponseConverter
      *
      * In non-streaming mode this value is always non-null. In streaming mode, it is null in the `message_start` event and non-null otherwise.
      *
-     * @var value-of<BetaStopReason>|null $stop_reason
+     * @var value-of<BetaStopReason>|null $stopReason
      */
-    #[Api(enum: BetaStopReason::class)]
-    public ?string $stop_reason;
+    #[Required('stop_reason', enum: BetaStopReason::class)]
+    public ?string $stopReason;
 
     /**
      * Which custom stop sequence was generated, if any.
      *
      * This value will be a non-null string if one of your custom stop sequences was generated.
      */
-    #[Api]
-    public ?string $stop_sequence;
+    #[Required('stop_sequence')]
+    public ?string $stopSequence;
 
     /**
      * Billing and rate-limit usage.
@@ -151,7 +149,7 @@ final class BetaMessage implements BaseModel, ResponseConverter
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      */
-    #[Api]
+    #[Required]
     public BetaUsage $usage;
 
     /**
@@ -163,10 +161,10 @@ final class BetaMessage implements BaseModel, ResponseConverter
      *   id: ...,
      *   container: ...,
      *   content: ...,
-     *   context_management: ...,
+     *   contextManagement: ...,
      *   model: ...,
-     *   stop_reason: ...,
-     *   stop_sequence: ...,
+     *   stopReason: ...,
+     *   stopSequence: ...,
      *   usage: ...,
      * )
      * ```
@@ -195,31 +193,103 @@ final class BetaMessage implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock> $content
-     * @param BetaStopReason|value-of<BetaStopReason>|null $stop_reason
+     * @param BetaContainer|array{
+     *   id: string, expiresAt: \DateTimeInterface, skills: list<BetaSkill>|null
+     * }|null $container
+     * @param list<BetaTextBlock|array{
+     *   citations: list<BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation>|null,
+     *   text: string,
+     *   type?: 'text',
+     * }|BetaThinkingBlock|array{
+     *   signature: string, thinking: string, type?: 'thinking'
+     * }|BetaRedactedThinkingBlock|array{
+     *   data: string, type?: 'redacted_thinking'
+     * }|BetaToolUseBlock|array{
+     *   id: string,
+     *   input: array<string,mixed>,
+     *   name: string,
+     *   type?: 'tool_use',
+     *   caller?: BetaDirectCaller|BetaServerToolCaller|null,
+     * }|BetaServerToolUseBlock|array{
+     *   id: string,
+     *   caller: BetaDirectCaller|BetaServerToolCaller,
+     *   input: array<string,mixed>,
+     *   name: value-of<Name>,
+     *   type?: 'server_tool_use',
+     * }|BetaWebSearchToolResultBlock|array{
+     *   content: BetaWebSearchToolResultError|list<BetaWebSearchResultBlock>,
+     *   toolUseID: string,
+     *   type?: 'web_search_tool_result',
+     * }|BetaWebFetchToolResultBlock|array{
+     *   content: BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock,
+     *   toolUseID: string,
+     *   type?: 'web_fetch_tool_result',
+     * }|BetaCodeExecutionToolResultBlock|array{
+     *   content: BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock,
+     *   toolUseID: string,
+     *   type?: 'code_execution_tool_result',
+     * }|BetaBashCodeExecutionToolResultBlock|array{
+     *   content: BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock,
+     *   toolUseID: string,
+     *   type?: 'bash_code_execution_tool_result',
+     * }|BetaTextEditorCodeExecutionToolResultBlock|array{
+     *   content: BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock,
+     *   toolUseID: string,
+     *   type?: 'text_editor_code_execution_tool_result',
+     * }|BetaToolSearchToolResultBlock|array{
+     *   content: BetaToolSearchToolResultError|BetaToolSearchToolSearchResultBlock,
+     *   toolUseID: string,
+     *   type?: 'tool_search_tool_result',
+     * }|BetaMCPToolUseBlock|array{
+     *   id: string,
+     *   input: array<string,mixed>,
+     *   name: string,
+     *   serverName: string,
+     *   type?: 'mcp_tool_use',
+     * }|BetaMCPToolResultBlock|array{
+     *   content: string|list<BetaTextBlock>,
+     *   isError: bool,
+     *   toolUseID: string,
+     *   type?: 'mcp_tool_result',
+     * }|BetaContainerUploadBlock|array{
+     *   fileID: string, type?: 'container_upload'
+     * }> $content
+     * @param BetaContextManagementResponse|array{
+     *   appliedEdits: list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse>,
+     * }|null $contextManagement
+     * @param BetaStopReason|value-of<BetaStopReason>|null $stopReason
+     * @param BetaUsage|array{
+     *   cacheCreation: BetaCacheCreation|null,
+     *   cacheCreationInputTokens: int|null,
+     *   cacheReadInputTokens: int|null,
+     *   inputTokens: int,
+     *   outputTokens: int,
+     *   serverToolUse: BetaServerToolUsage|null,
+     *   serviceTier: value-of<ServiceTier>|null,
+     * } $usage
      */
     public static function with(
         string $id,
-        ?BetaContainer $container,
+        BetaContainer|array|null $container,
         array $content,
-        ?BetaContextManagementResponse $context_management,
+        BetaContextManagementResponse|array|null $contextManagement,
         string|Model $model,
-        BetaStopReason|string|null $stop_reason,
-        ?string $stop_sequence,
-        BetaUsage $usage,
+        BetaStopReason|string|null $stopReason,
+        ?string $stopSequence,
+        BetaUsage|array $usage,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->id = $id;
-        $obj->container = $container;
-        $obj->content = $content;
-        $obj->context_management = $context_management;
-        $obj->model = $model instanceof Model ? $model->value : $model;
-        $obj['stop_reason'] = $stop_reason;
-        $obj->stop_sequence = $stop_sequence;
-        $obj->usage = $usage;
+        $self['id'] = $id;
+        $self['container'] = $container;
+        $self['content'] = $content;
+        $self['contextManagement'] = $contextManagement;
+        $self['model'] = $model;
+        $self['stopReason'] = $stopReason;
+        $self['stopSequence'] = $stopSequence;
+        $self['usage'] = $usage;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -229,21 +299,25 @@ final class BetaMessage implements BaseModel, ResponseConverter
      */
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj->id = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Information about the container used in the request (for the code execution tool).
+     *
+     * @param BetaContainer|array{
+     *   id: string, expiresAt: \DateTimeInterface, skills: list<BetaSkill>|null
+     * }|null $container
      */
-    public function withContainer(?BetaContainer $container): self
+    public function withContainer(BetaContainer|array|null $container): self
     {
-        $obj = clone $this;
-        $obj->container = $container;
+        $self = clone $this;
+        $self['container'] = $container;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -273,28 +347,89 @@ final class BetaMessage implements BaseModel, ResponseConverter
      * [{"type": "text", "text": "B)"}]
      * ```
      *
-     * @param list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock> $content
+     * @param list<BetaTextBlock|array{
+     *   citations: list<BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation>|null,
+     *   text: string,
+     *   type?: 'text',
+     * }|BetaThinkingBlock|array{
+     *   signature: string, thinking: string, type?: 'thinking'
+     * }|BetaRedactedThinkingBlock|array{
+     *   data: string, type?: 'redacted_thinking'
+     * }|BetaToolUseBlock|array{
+     *   id: string,
+     *   input: array<string,mixed>,
+     *   name: string,
+     *   type?: 'tool_use',
+     *   caller?: BetaDirectCaller|BetaServerToolCaller|null,
+     * }|BetaServerToolUseBlock|array{
+     *   id: string,
+     *   caller: BetaDirectCaller|BetaServerToolCaller,
+     *   input: array<string,mixed>,
+     *   name: value-of<Name>,
+     *   type?: 'server_tool_use',
+     * }|BetaWebSearchToolResultBlock|array{
+     *   content: BetaWebSearchToolResultError|list<BetaWebSearchResultBlock>,
+     *   toolUseID: string,
+     *   type?: 'web_search_tool_result',
+     * }|BetaWebFetchToolResultBlock|array{
+     *   content: BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock,
+     *   toolUseID: string,
+     *   type?: 'web_fetch_tool_result',
+     * }|BetaCodeExecutionToolResultBlock|array{
+     *   content: BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock,
+     *   toolUseID: string,
+     *   type?: 'code_execution_tool_result',
+     * }|BetaBashCodeExecutionToolResultBlock|array{
+     *   content: BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock,
+     *   toolUseID: string,
+     *   type?: 'bash_code_execution_tool_result',
+     * }|BetaTextEditorCodeExecutionToolResultBlock|array{
+     *   content: BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock,
+     *   toolUseID: string,
+     *   type?: 'text_editor_code_execution_tool_result',
+     * }|BetaToolSearchToolResultBlock|array{
+     *   content: BetaToolSearchToolResultError|BetaToolSearchToolSearchResultBlock,
+     *   toolUseID: string,
+     *   type?: 'tool_search_tool_result',
+     * }|BetaMCPToolUseBlock|array{
+     *   id: string,
+     *   input: array<string,mixed>,
+     *   name: string,
+     *   serverName: string,
+     *   type?: 'mcp_tool_use',
+     * }|BetaMCPToolResultBlock|array{
+     *   content: string|list<BetaTextBlock>,
+     *   isError: bool,
+     *   toolUseID: string,
+     *   type?: 'mcp_tool_result',
+     * }|BetaContainerUploadBlock|array{
+     *   fileID: string, type?: 'container_upload'
+     * }> $content
      */
     public function withContent(array $content): self
     {
-        $obj = clone $this;
-        $obj->content = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Context management response.
      *
      * Information about context management strategies applied during the request.
+     *
+     * @param BetaContextManagementResponse|array{
+     *   appliedEdits: list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse>,
+     * }|null $contextManagement
      */
     public function withContextManagement(
-        ?BetaContextManagementResponse $contextManagement
+        BetaContextManagementResponse|array|null $contextManagement
     ): self {
-        $obj = clone $this;
-        $obj->context_management = $contextManagement;
+        $self = clone $this;
+        $self['contextManagement'] = $contextManagement;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -302,10 +437,10 @@ final class BetaMessage implements BaseModel, ResponseConverter
      */
     public function withModel(string|Model $model): self
     {
-        $obj = clone $this;
-        $obj->model = $model instanceof Model ? $model->value : $model;
+        $self = clone $this;
+        $self['model'] = $model;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -325,10 +460,10 @@ final class BetaMessage implements BaseModel, ResponseConverter
      */
     public function withStopReason(BetaStopReason|string|null $stopReason): self
     {
-        $obj = clone $this;
-        $obj['stop_reason'] = $stopReason;
+        $self = clone $this;
+        $self['stopReason'] = $stopReason;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -338,10 +473,10 @@ final class BetaMessage implements BaseModel, ResponseConverter
      */
     public function withStopSequence(?string $stopSequence): self
     {
-        $obj = clone $this;
-        $obj->stop_sequence = $stopSequence;
+        $self = clone $this;
+        $self['stopSequence'] = $stopSequence;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -354,12 +489,22 @@ final class BetaMessage implements BaseModel, ResponseConverter
      * For example, `output_tokens` will be non-zero, even for an empty string response from Claude.
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
+     *
+     * @param BetaUsage|array{
+     *   cacheCreation: BetaCacheCreation|null,
+     *   cacheCreationInputTokens: int|null,
+     *   cacheReadInputTokens: int|null,
+     *   inputTokens: int,
+     *   outputTokens: int,
+     *   serverToolUse: BetaServerToolUsage|null,
+     *   serviceTier: value-of<ServiceTier>|null,
+     * } $usage
      */
-    public function withUsage(BetaUsage $usage): self
+    public function withUsage(BetaUsage|array $usage): self
     {
-        $obj = clone $this;
-        $obj->usage = $usage;
+        $self = clone $this;
+        $self['usage'] = $usage;
 
-        return $obj;
+        return $self;
     }
 }

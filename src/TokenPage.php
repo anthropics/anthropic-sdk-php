@@ -2,7 +2,7 @@
 
 namespace Anthropic;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkPage;
 use Anthropic\Core\Contracts\BaseModel;
@@ -11,12 +11,11 @@ use Anthropic\Core\Conversion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
-use Anthropic\Core\Util;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * @phpstan-type TokenPageShape = array{
- *   data?: list<mixed>|null, has_more?: bool|null, next_page?: string|null
+ *   data?: list<mixed>|null, hasMore?: bool|null, nextPage?: string|null
  * }
  *
  * @template TItem
@@ -32,14 +31,14 @@ final class TokenPage implements BaseModel, BasePage
     use SdkPage;
 
     /** @var list<TItem>|null $data */
-    #[Api(list: 'mixed', optional: true)]
+    #[Optional(list: 'mixed')]
     public ?array $data;
 
-    #[Api(optional: true)]
-    public ?bool $has_more;
+    #[Optional('has_more')]
+    public ?bool $hasMore;
 
-    #[Api(nullable: true, optional: true)]
-    public ?string $next_page;
+    #[Optional('next_page', nullable: true)]
+    public ?string $nextPage;
 
     /**
      * @internal
@@ -50,40 +49,36 @@ final class TokenPage implements BaseModel, BasePage
      *   query: array<string,mixed>,
      *   headers: array<string,string|list<string>|null>,
      *   body: mixed,
-     * } $request
+     * } $requestInfo
      */
     public function __construct(
         private string|Converter|ConverterSource $convert,
         private Client $client,
-        private array $request,
+        private array $requestInfo,
         private RequestOptions $options,
-        ResponseInterface $response,
+        private ResponseInterface $response,
+        private mixed $parsedBody,
     ) {
         $this->initialize();
 
-        $data = Util::decodeContent($response);
-
-        if (!is_array($data)) {
+        if (!is_array($this->parsedBody)) {
             return;
         }
 
-        // @phpstan-ignore-next-line
-        self::__unserialize($data);
+        // @phpstan-ignore-next-line argument.type
+        self::__unserialize($this->parsedBody);
 
-        if ($this->offsetExists('data')) {
-            $acc = Conversion::coerce(
-                new ListOf($convert),
-                value: $this->offsetGet('data')
-            );
+        if (is_array($items = $this->offsetGet('data'))) {
+            $parsed = Conversion::coerce(new ListOf($convert), value: $items);
             // @phpstan-ignore-next-line
-            $this->offsetSet('data', $acc);
+            $this->offsetSet('data', value: $parsed);
         }
     }
 
     /** @return list<TItem> */
     public function getItems(): array
     {
-        // @phpstan-ignore-next-line
+        // @phpstan-ignore-next-line return.type
         return $this->offsetGet('data') ?? [];
     }
 
@@ -103,17 +98,20 @@ final class TokenPage implements BaseModel, BasePage
      */
     public function nextRequest(): ?array
     {
-        $next = $this->next_page ?? null;
-        if (!$next) {
+        if (!($this->hasMore ?? null) || !count($this->getItems())) {
+            return null;
+        }
+
+        if (!($next = $this->nextPage ?? null)) {
             return null;
         }
 
         $nextRequest = array_merge_recursive(
-            $this->request,
+            $this->requestInfo,
             ['query' => ['page_token' => $next]]
         );
 
-        // @phpstan-ignore-next-line
+        // @phpstan-ignore-next-line return.type
         return [$nextRequest, $this->options];
     }
 }

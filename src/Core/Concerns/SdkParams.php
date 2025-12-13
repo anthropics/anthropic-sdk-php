@@ -25,12 +25,14 @@ trait SdkParams
         $converter = self::converter();
         $state = new DumpState;
         $dumped = (array) Conversion::dump($converter, value: $value, state: $state);
-        $opts = RequestOptions::parse($options); // @phpstan-ignore-line
+        // @phpstan-ignore-next-line argument.type
+        $opts = RequestOptions::parse($options);
 
         if (!$state->canRetry) {
             $opts->maxRetries = 0;
         }
 
-        return [$dumped, $opts]; // @phpstan-ignore-line
+        // @phpstan-ignore-next-line return.type
+        return [$dumped, $opts];
     }
 }
