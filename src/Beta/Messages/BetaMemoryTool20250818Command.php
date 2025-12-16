@@ -8,6 +8,16 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-import-type BetaMemoryTool20250818ViewCommandShape from \Anthropic\Beta\Messages\BetaMemoryTool20250818ViewCommand
+ * @phpstan-import-type BetaMemoryTool20250818CreateCommandShape from \Anthropic\Beta\Messages\BetaMemoryTool20250818CreateCommand
+ * @phpstan-import-type BetaMemoryTool20250818StrReplaceCommandShape from \Anthropic\Beta\Messages\BetaMemoryTool20250818StrReplaceCommand
+ * @phpstan-import-type BetaMemoryTool20250818InsertCommandShape from \Anthropic\Beta\Messages\BetaMemoryTool20250818InsertCommand
+ * @phpstan-import-type BetaMemoryTool20250818DeleteCommandShape from \Anthropic\Beta\Messages\BetaMemoryTool20250818DeleteCommand
+ * @phpstan-import-type BetaMemoryTool20250818RenameCommandShape from \Anthropic\Beta\Messages\BetaMemoryTool20250818RenameCommand
+ *
+ * @phpstan-type BetaMemoryTool20250818CommandShape = BetaMemoryTool20250818ViewCommandShape|BetaMemoryTool20250818CreateCommandShape|BetaMemoryTool20250818StrReplaceCommandShape|BetaMemoryTool20250818InsertCommandShape|BetaMemoryTool20250818DeleteCommandShape|BetaMemoryTool20250818RenameCommandShape
+ */
 final class BetaMemoryTool20250818Command implements ConverterSource
 {
     use SdkUnion;

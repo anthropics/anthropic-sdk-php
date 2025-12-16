@@ -13,6 +13,15 @@ use Anthropic\Messages\CitationPageLocation;
 use Anthropic\Messages\CitationsSearchResultLocation;
 use Anthropic\Messages\CitationsWebSearchResultLocation;
 
+/**
+ * @phpstan-import-type CitationCharLocationShape from \Anthropic\Messages\CitationCharLocation
+ * @phpstan-import-type CitationPageLocationShape from \Anthropic\Messages\CitationPageLocation
+ * @phpstan-import-type CitationContentBlockLocationShape from \Anthropic\Messages\CitationContentBlockLocation
+ * @phpstan-import-type CitationsWebSearchResultLocationShape from \Anthropic\Messages\CitationsWebSearchResultLocation
+ * @phpstan-import-type CitationsSearchResultLocationShape from \Anthropic\Messages\CitationsSearchResultLocation
+ *
+ * @phpstan-type CitationShape = CitationCharLocationShape|CitationPageLocationShape|CitationContentBlockLocationShape|CitationsWebSearchResultLocationShape|CitationsSearchResultLocationShape
+ */
 final class Citation implements ConverterSource
 {
     use SdkUnion;

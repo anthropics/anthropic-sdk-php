@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaToolBash20250124\AllowedCaller;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
@@ -13,11 +12,13 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\MapOf;
 
 /**
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ *
  * @phpstan-type BetaToolBash20250124Shape = array{
- *   name?: 'bash',
- *   type?: 'bash_20250124',
- *   allowedCallers?: list<value-of<AllowedCaller>>|null,
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   name: 'bash',
+ *   type: 'bash_20250124',
+ *   allowedCallers?: list<AllowedCaller|value-of<AllowedCaller>>|null,
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   deferLoading?: bool|null,
  *   inputExamples?: list<array<string,mixed>>|null,
  *   strict?: bool|null,
@@ -76,9 +77,7 @@ final class BetaToolBash20250124 implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      * @param list<array<string,mixed>> $inputExamples
      */
     public static function with(
@@ -113,9 +112,7 @@ final class BetaToolBash20250124 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl

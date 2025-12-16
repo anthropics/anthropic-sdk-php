@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type URLImageSourceShape = array{type?: 'url', url: string}
+ * @phpstan-type URLImageSourceShape = array{type: 'url', url: string}
  */
 final class URLImageSource implements BaseModel
 {

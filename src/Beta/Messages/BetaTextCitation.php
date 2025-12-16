@@ -8,6 +8,15 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-import-type BetaCitationCharLocationShape from \Anthropic\Beta\Messages\BetaCitationCharLocation
+ * @phpstan-import-type BetaCitationPageLocationShape from \Anthropic\Beta\Messages\BetaCitationPageLocation
+ * @phpstan-import-type BetaCitationContentBlockLocationShape from \Anthropic\Beta\Messages\BetaCitationContentBlockLocation
+ * @phpstan-import-type BetaCitationsWebSearchResultLocationShape from \Anthropic\Beta\Messages\BetaCitationsWebSearchResultLocation
+ * @phpstan-import-type BetaCitationSearchResultLocationShape from \Anthropic\Beta\Messages\BetaCitationSearchResultLocation
+ *
+ * @phpstan-type BetaTextCitationShape = BetaCitationCharLocationShape|BetaCitationPageLocationShape|BetaCitationContentBlockLocationShape|BetaCitationsWebSearchResultLocationShape|BetaCitationSearchResultLocationShape
+ */
 final class BetaTextCitation implements ConverterSource
 {
     use SdkUnion;

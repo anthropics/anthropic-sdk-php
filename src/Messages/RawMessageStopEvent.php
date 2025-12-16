@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type RawMessageStopEventShape = array{type?: 'message_stop'}
+ * @phpstan-type RawMessageStopEventShape = array{type: 'message_stop'}
  */
 final class RawMessageStopEvent implements BaseModel
 {

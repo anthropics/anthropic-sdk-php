@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * The model will automatically decide whether to use tools.
  *
  * @phpstan-type BetaToolChoiceAutoShape = array{
- *   type?: 'auto', disableParallelToolUse?: bool|null
+ *   type: 'auto', disableParallelToolUse?: bool|null
  * }
  */
 final class BetaToolChoiceAuto implements BaseModel

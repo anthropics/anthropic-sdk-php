@@ -8,19 +8,12 @@ use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Message;
-use Anthropic\Messages\Model;
-use Anthropic\Messages\RedactedThinkingBlock;
-use Anthropic\Messages\ServerToolUseBlock;
-use Anthropic\Messages\StopReason;
-use Anthropic\Messages\TextBlock;
-use Anthropic\Messages\ThinkingBlock;
-use Anthropic\Messages\ToolUseBlock;
-use Anthropic\Messages\Usage;
-use Anthropic\Messages\WebSearchToolResultBlock;
 
 /**
+ * @phpstan-import-type MessageShape from \Anthropic\Messages\Message
+ *
  * @phpstan-type MessageBatchSucceededResultShape = array{
- *   message: Message, type?: 'succeeded'
+ *   message: Message|MessageShape, type: 'succeeded'
  * }
  */
 final class MessageBatchSucceededResult implements BaseModel
@@ -59,16 +52,7 @@ final class MessageBatchSucceededResult implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Message|array{
-     *   id: string,
-     *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
-     *   model: string|value-of<Model>,
-     *   role?: 'assistant',
-     *   stopReason: value-of<StopReason>|null,
-     *   stopSequence: string|null,
-     *   type?: 'message',
-     *   usage: Usage,
-     * } $message
+     * @param MessageShape $message
      */
     public static function with(Message|array $message): self
     {
@@ -80,16 +64,7 @@ final class MessageBatchSucceededResult implements BaseModel
     }
 
     /**
-     * @param Message|array{
-     *   id: string,
-     *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
-     *   model: string|value-of<Model>,
-     *   role?: 'assistant',
-     *   stopReason: value-of<StopReason>|null,
-     *   stopSequence: string|null,
-     *   type?: 'message',
-     *   usage: Usage,
-     * } $message
+     * @param MessageShape $message
      */
     public function withMessage(Message|array $message): self
     {

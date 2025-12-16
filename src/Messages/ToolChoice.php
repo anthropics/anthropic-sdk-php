@@ -10,6 +10,13 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
+ *
+ * @phpstan-import-type ToolChoiceAutoShape from \Anthropic\Messages\ToolChoiceAuto
+ * @phpstan-import-type ToolChoiceAnyShape from \Anthropic\Messages\ToolChoiceAny
+ * @phpstan-import-type ToolChoiceToolShape from \Anthropic\Messages\ToolChoiceTool
+ * @phpstan-import-type ToolChoiceNoneShape from \Anthropic\Messages\ToolChoiceNone
+ *
+ * @phpstan-type ToolChoiceShape = ToolChoiceAutoShape|ToolChoiceAnyShape|ToolChoiceToolShape|ToolChoiceNoneShape
  */
 final class ToolChoice implements ConverterSource
 {

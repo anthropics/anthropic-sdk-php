@@ -9,12 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaServerToolUsageShape from \Anthropic\Beta\Messages\BetaServerToolUsage
+ *
  * @phpstan-type BetaMessageDeltaUsageShape = array{
  *   cacheCreationInputTokens: int|null,
  *   cacheReadInputTokens: int|null,
  *   inputTokens: int|null,
  *   outputTokens: int,
- *   serverToolUse: BetaServerToolUsage|null,
+ *   serverToolUse: null|BetaServerToolUsage|BetaServerToolUsageShape,
  * }
  */
 final class BetaMessageDeltaUsage implements BaseModel
@@ -87,9 +89,7 @@ final class BetaMessageDeltaUsage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaServerToolUsage|array{
-     *   webFetchRequests: int, webSearchRequests: int
-     * }|null $serverToolUse
+     * @param BetaServerToolUsageShape|null $serverToolUse
      */
     public static function with(
         ?int $cacheCreationInputTokens,
@@ -157,9 +157,7 @@ final class BetaMessageDeltaUsage implements BaseModel
     /**
      * The number of server tool requests.
      *
-     * @param BetaServerToolUsage|array{
-     *   webFetchRequests: int, webSearchRequests: int
-     * }|null $serverToolUse
+     * @param BetaServerToolUsageShape|null $serverToolUse
      */
     public function withServerToolUse(
         BetaServerToolUsage|array|null $serverToolUse

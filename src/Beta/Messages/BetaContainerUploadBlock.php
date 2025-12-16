@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * Response model for a file uploaded to the container.
  *
  * @phpstan-type BetaContainerUploadBlockShape = array{
- *   fileID: string, type?: 'container_upload'
+ *   fileID: string, type: 'container_upload'
  * }
  */
 final class BetaContainerUploadBlock implements BaseModel

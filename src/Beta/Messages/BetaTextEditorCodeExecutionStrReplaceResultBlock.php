@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   newStart: int|null,
  *   oldLines: int|null,
  *   oldStart: int|null,
- *   type?: 'text_editor_code_execution_str_replace_result',
+ *   type: 'text_editor_code_execution_str_replace_result',
  * }
  */
 final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseModel

@@ -8,13 +8,14 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\CacheControlEphemeral\TTL;
 
 /**
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ *
  * @phpstan-type ToolBash20250124Shape = array{
- *   name?: 'bash',
- *   type?: 'bash_20250124',
- *   cacheControl?: CacheControlEphemeral|null,
+ *   name: 'bash',
+ *   type: 'bash_20250124',
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  * }
  */
 final class ToolBash20250124 implements BaseModel
@@ -52,9 +53,7 @@ final class ToolBash20250124 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param CacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         CacheControlEphemeral|array|null $cacheControl = null
@@ -69,9 +68,7 @@ final class ToolBash20250124 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param CacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl

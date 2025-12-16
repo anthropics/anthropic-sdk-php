@@ -8,6 +8,15 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-import-type CitationCharLocationParamShape from \Anthropic\Messages\CitationCharLocationParam
+ * @phpstan-import-type CitationPageLocationParamShape from \Anthropic\Messages\CitationPageLocationParam
+ * @phpstan-import-type CitationContentBlockLocationParamShape from \Anthropic\Messages\CitationContentBlockLocationParam
+ * @phpstan-import-type CitationWebSearchResultLocationParamShape from \Anthropic\Messages\CitationWebSearchResultLocationParam
+ * @phpstan-import-type CitationSearchResultLocationParamShape from \Anthropic\Messages\CitationSearchResultLocationParam
+ *
+ * @phpstan-type TextCitationParamShape = CitationCharLocationParamShape|CitationPageLocationParamShape|CitationContentBlockLocationParamShape|CitationWebSearchResultLocationParamShape|CitationSearchResultLocationParamShape
+ */
 final class TextCitationParam implements ConverterSource
 {
     use SdkUnion;

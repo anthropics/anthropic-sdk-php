@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type DeletedMessageBatchShape = array{
- *   id: string, type?: 'message_batch_deleted'
+ *   id: string, type: 'message_batch_deleted'
  * }
  */
 final class DeletedMessageBatch implements BaseModel

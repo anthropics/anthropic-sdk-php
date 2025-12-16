@@ -12,8 +12,8 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaTextEditorCodeExecutionToolResultErrorParamShape = array{
- *   errorCode: value-of<ErrorCode>,
- *   type?: 'text_editor_code_execution_tool_result_error',
+ *   errorCode: ErrorCode|value-of<ErrorCode>,
+ *   type: 'text_editor_code_execution_tool_result_error',
  *   errorMessage?: string|null,
  * }
  */

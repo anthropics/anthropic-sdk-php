@@ -12,7 +12,7 @@ use Anthropic\Messages\CacheControlEphemeral\TTL;
 
 /**
  * @phpstan-type CacheControlEphemeralShape = array{
- *   type?: 'ephemeral', ttl?: value-of<TTL>|null
+ *   type: 'ephemeral', ttl?: null|TTL|value-of<TTL>
  * }
  */
 final class CacheControlEphemeral implements BaseModel

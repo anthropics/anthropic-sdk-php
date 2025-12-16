@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Messages\BatchesService::list()
  *
  * @phpstan-type BatchListParamsShape = array{
- *   afterID?: string, beforeID?: string, limit?: int
+ *   afterID?: string|null, beforeID?: string|null, limit?: int|null
  * }
  */
 final class BatchListParams implements BaseModel

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaBase64ImageSource\MediaType;
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaImageBlockParam\Source;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
@@ -13,10 +11,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type SourceShape from \Anthropic\Beta\Messages\BetaImageBlockParam\Source
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ *
  * @phpstan-type BetaImageBlockParamShape = array{
- *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource,
- *   type?: 'image',
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource|SourceShape,
+ *   type: 'image',
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  * }
  */
 final class BetaImageBlockParam implements BaseModel
@@ -61,14 +62,8 @@ final class BetaImageBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaBase64ImageSource|array{
-     *   data: string, mediaType: value-of<MediaType>, type?: 'base64'
-     * }|BetaURLImageSource|array{type?: 'url', url: string}|BetaFileImageSource|array{
-     *   fileID: string, type?: 'file'
-     * } $source
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param SourceShape $source
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         BetaBase64ImageSource|array|BetaURLImageSource|BetaFileImageSource $source,
@@ -84,11 +79,7 @@ final class BetaImageBlockParam implements BaseModel
     }
 
     /**
-     * @param BetaBase64ImageSource|array{
-     *   data: string, mediaType: value-of<MediaType>, type?: 'base64'
-     * }|BetaURLImageSource|array{type?: 'url', url: string}|BetaFileImageSource|array{
-     *   fileID: string, type?: 'file'
-     * } $source
+     * @param SourceShape $source
      */
     public function withSource(
         BetaBase64ImageSource|array|BetaURLImageSource|BetaFileImageSource $source
@@ -102,9 +93,7 @@ final class BetaImageBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl

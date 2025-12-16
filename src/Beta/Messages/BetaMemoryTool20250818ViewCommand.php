@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818ViewCommandShape = array{
- *   command?: 'view', path: string, viewRange?: list<int>|null
+ *   command: 'view', path: string, viewRange?: list<int>|null
  * }
  */
 final class BetaMemoryTool20250818ViewCommand implements BaseModel

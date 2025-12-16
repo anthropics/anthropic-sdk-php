@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaInputTokensClearAtLeastShape = array{
- *   type?: 'input_tokens', value: int
+ *   type: 'input_tokens', value: int
  * }
  */
 final class BetaInputTokensClearAtLeast implements BaseModel

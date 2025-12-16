@@ -10,12 +10,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaRequestMCPServerToolConfigurationShape from \Anthropic\Beta\Messages\BetaRequestMCPServerToolConfiguration
+ *
  * @phpstan-type BetaRequestMCPServerURLDefinitionShape = array{
  *   name: string,
- *   type?: 'url',
+ *   type: 'url',
  *   url: string,
  *   authorizationToken?: string|null,
- *   toolConfiguration?: BetaRequestMCPServerToolConfiguration|null,
+ *   toolConfiguration?: null|BetaRequestMCPServerToolConfiguration|BetaRequestMCPServerToolConfigurationShape,
  * }
  */
 final class BetaRequestMCPServerURLDefinition implements BaseModel
@@ -63,9 +65,7 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaRequestMCPServerToolConfiguration|array{
-     *   allowedTools?: list<string>|null, enabled?: bool|null
-     * }|null $toolConfiguration
+     * @param BetaRequestMCPServerToolConfigurationShape|null $toolConfiguration
      */
     public static function with(
         string $name,
@@ -109,9 +109,7 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
     }
 
     /**
-     * @param BetaRequestMCPServerToolConfiguration|array{
-     *   allowedTools?: list<string>|null, enabled?: bool|null
-     * }|null $toolConfiguration
+     * @param BetaRequestMCPServerToolConfigurationShape|null $toolConfiguration
      */
     public function withToolConfiguration(
         BetaRequestMCPServerToolConfiguration|array|null $toolConfiguration

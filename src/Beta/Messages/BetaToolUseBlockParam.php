@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaToolUseBlockParam\Caller;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
@@ -12,13 +11,16 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type CallerShape from \Anthropic\Beta\Messages\BetaToolUseBlockParam\Caller
+ *
  * @phpstan-type BetaToolUseBlockParamShape = array{
  *   id: string,
  *   input: array<string,mixed>,
  *   name: string,
- *   type?: 'tool_use',
- *   cacheControl?: BetaCacheControlEphemeral|null,
- *   caller?: null|BetaDirectCaller|BetaServerToolCaller,
+ *   type: 'tool_use',
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
+ *   caller?: null|CallerShape|BetaDirectCaller|BetaServerToolCaller,
  * }
  */
 final class BetaToolUseBlockParam implements BaseModel
@@ -77,12 +79,8 @@ final class BetaToolUseBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,mixed> $input
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
-     * @param BetaDirectCaller|array{type?: 'direct'}|BetaServerToolCaller|array{
-     *   toolID: string, type?: 'code_execution_20250825'
-     * } $caller
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param CallerShape $caller
      */
     public static function with(
         string $id,
@@ -133,9 +131,7 @@ final class BetaToolUseBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
@@ -149,9 +145,7 @@ final class BetaToolUseBlockParam implements BaseModel
     /**
      * Tool invocation directly from the model.
      *
-     * @param BetaDirectCaller|array{type?: 'direct'}|BetaServerToolCaller|array{
-     *   toolID: string, type?: 'code_execution_20250825'
-     * } $caller
+     * @param CallerShape $caller
      */
     public function withCaller(
         BetaDirectCaller|array|BetaServerToolCaller $caller

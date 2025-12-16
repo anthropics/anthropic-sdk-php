@@ -18,7 +18,7 @@ interface ModelsRawContract
      * @api
      *
      * @param string $modelID model identifier or alias
-     * @param array<mixed>|ModelRetrieveParams $params
+     * @param array<string,mixed>|ModelRetrieveParams $params
      *
      * @return BaseResponse<ModelInfo>
      *
@@ -33,7 +33,7 @@ interface ModelsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|ModelListParams $params
+     * @param array<string,mixed>|ModelListParams $params
      *
      * @return BaseResponse<Page<ModelInfo>>
      *

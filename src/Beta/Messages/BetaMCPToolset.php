@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -16,12 +15,16 @@ use Anthropic\Core\Contracts\BaseModel;
  * Allows configuring enabled status and defer_loading for all tools
  * from an MCP server, with optional per-tool overrides.
  *
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type BetaMCPToolConfigShape from \Anthropic\Beta\Messages\BetaMCPToolConfig
+ * @phpstan-import-type BetaMCPToolDefaultConfigShape from \Anthropic\Beta\Messages\BetaMCPToolDefaultConfig
+ *
  * @phpstan-type BetaMCPToolsetShape = array{
  *   mcpServerName: string,
- *   type?: 'mcp_toolset',
- *   cacheControl?: BetaCacheControlEphemeral|null,
- *   configs?: array<string,BetaMCPToolConfig>|null,
- *   defaultConfig?: BetaMCPToolDefaultConfig|null,
+ *   type: 'mcp_toolset',
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
+ *   configs?: array<string,BetaMCPToolConfigShape>|null,
+ *   defaultConfig?: null|BetaMCPToolDefaultConfig|BetaMCPToolDefaultConfigShape,
  * }
  */
 final class BetaMCPToolset implements BaseModel
@@ -83,15 +86,9 @@ final class BetaMCPToolset implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
-     * @param array<string,BetaMCPToolConfig|array{
-     *   deferLoading?: bool|null, enabled?: bool|null
-     * }>|null $configs
-     * @param BetaMCPToolDefaultConfig|array{
-     *   deferLoading?: bool|null, enabled?: bool|null
-     * } $defaultConfig
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param array<string,BetaMCPToolConfigShape>|null $configs
+     * @param BetaMCPToolDefaultConfigShape $defaultConfig
      */
     public static function with(
         string $mcpServerName,
@@ -124,9 +121,7 @@ final class BetaMCPToolset implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
@@ -140,9 +135,7 @@ final class BetaMCPToolset implements BaseModel
     /**
      * Configuration overrides for specific tools, keyed by tool name.
      *
-     * @param array<string,BetaMCPToolConfig|array{
-     *   deferLoading?: bool|null, enabled?: bool|null
-     * }>|null $configs
+     * @param array<string,BetaMCPToolConfigShape>|null $configs
      */
     public function withConfigs(?array $configs): self
     {
@@ -155,9 +148,7 @@ final class BetaMCPToolset implements BaseModel
     /**
      * Default configuration applied to all tools from this server.
      *
-     * @param BetaMCPToolDefaultConfig|array{
-     *   deferLoading?: bool|null, enabled?: bool|null
-     * } $defaultConfig
+     * @param BetaMCPToolDefaultConfigShape $defaultConfig
      */
     public function withDefaultConfig(
         BetaMCPToolDefaultConfig|array $defaultConfig

@@ -11,9 +11,9 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaToolSearchToolResultErrorShape = array{
- *   errorCode: value-of<ErrorCode>,
+ *   errorCode: ErrorCode|value-of<ErrorCode>,
  *   errorMessage: string|null,
- *   type?: 'tool_search_tool_result_error',
+ *   type: 'tool_search_tool_result_error',
  * }
  */
 final class BetaToolSearchToolResultError implements BaseModel

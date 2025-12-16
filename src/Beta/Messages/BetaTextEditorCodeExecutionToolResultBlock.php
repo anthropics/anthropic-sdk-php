@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaTextEditorCodeExecutionToolResultError\ErrorCode;
-use Anthropic\Beta\Messages\BetaTextEditorCodeExecutionViewResultBlock\FileType;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaTextEditorCodeExecutionToolResultBlock\Content
+ *
  * @phpstan-type BetaTextEditorCodeExecutionToolResultBlockShape = array{
- *   content: BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock,
+ *   content: BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock|ContentShape,
  *   toolUseID: string,
- *   type?: 'text_editor_code_execution_tool_result',
+ *   type: 'text_editor_code_execution_tool_result',
  * }
  */
 final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
@@ -58,27 +58,7 @@ final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaTextEditorCodeExecutionToolResultError|array{
-     *   errorCode: value-of<ErrorCode>,
-     *   errorMessage: string|null,
-     *   type?: 'text_editor_code_execution_tool_result_error',
-     * }|BetaTextEditorCodeExecutionViewResultBlock|array{
-     *   content: string,
-     *   fileType: value-of<FileType>,
-     *   numLines: int|null,
-     *   startLine: int|null,
-     *   totalLines: int|null,
-     *   type?: 'text_editor_code_execution_view_result',
-     * }|BetaTextEditorCodeExecutionCreateResultBlock|array{
-     *   isFileUpdate: bool, type?: 'text_editor_code_execution_create_result'
-     * }|BetaTextEditorCodeExecutionStrReplaceResultBlock|array{
-     *   lines: list<string>|null,
-     *   newLines: int|null,
-     *   newStart: int|null,
-     *   oldLines: int|null,
-     *   oldStart: int|null,
-     *   type?: 'text_editor_code_execution_str_replace_result',
-     * } $content
+     * @param ContentShape $content
      */
     public static function with(
         BetaTextEditorCodeExecutionToolResultError|array|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock $content,
@@ -93,27 +73,7 @@ final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
     }
 
     /**
-     * @param BetaTextEditorCodeExecutionToolResultError|array{
-     *   errorCode: value-of<ErrorCode>,
-     *   errorMessage: string|null,
-     *   type?: 'text_editor_code_execution_tool_result_error',
-     * }|BetaTextEditorCodeExecutionViewResultBlock|array{
-     *   content: string,
-     *   fileType: value-of<FileType>,
-     *   numLines: int|null,
-     *   startLine: int|null,
-     *   totalLines: int|null,
-     *   type?: 'text_editor_code_execution_view_result',
-     * }|BetaTextEditorCodeExecutionCreateResultBlock|array{
-     *   isFileUpdate: bool, type?: 'text_editor_code_execution_create_result'
-     * }|BetaTextEditorCodeExecutionStrReplaceResultBlock|array{
-     *   lines: list<string>|null,
-     *   newLines: int|null,
-     *   newStart: int|null,
-     *   oldLines: int|null,
-     *   oldStart: int|null,
-     *   type?: 'text_editor_code_execution_str_replace_result',
-     * } $content
+     * @param ContentShape $content
      */
     public function withContent(
         BetaTextEditorCodeExecutionToolResultError|array|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock $content,

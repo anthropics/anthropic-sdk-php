@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaWebSearchToolResultErrorShape = array{
- *   errorCode: value-of<BetaWebSearchToolResultErrorCode>,
- *   type?: 'web_search_tool_result_error',
+ *   errorCode: BetaWebSearchToolResultErrorCode|value-of<BetaWebSearchToolResultErrorCode>,
+ *   type: 'web_search_tool_result_error',
  * }
  */
 final class BetaWebSearchToolResultError implements BaseModel

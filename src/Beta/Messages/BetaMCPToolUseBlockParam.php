@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ *
  * @phpstan-type BetaMCPToolUseBlockParamShape = array{
  *   id: string,
  *   input: array<string,mixed>,
  *   name: string,
  *   serverName: string,
- *   type?: 'mcp_tool_use',
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   type: 'mcp_tool_use',
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  * }
  */
 final class BetaMCPToolUseBlockParam implements BaseModel
@@ -80,9 +81,7 @@ final class BetaMCPToolUseBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,mixed> $input
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         string $id,
@@ -144,9 +143,7 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl

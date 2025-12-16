@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type ModelInfoShape = array{
- *   id: string, createdAt: \DateTimeInterface, displayName: string, type?: 'model'
+ *   id: string, createdAt: \DateTimeInterface, displayName: string, type: 'model'
  * }
  */
 final class ModelInfo implements BaseModel

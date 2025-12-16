@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type ToolUseBlockShape = array{
- *   id: string, input: array<string,mixed>, name: string, type?: 'tool_use'
+ *   id: string, input: array<string,mixed>, name: string, type: 'tool_use'
  * }
  */
 final class ToolUseBlock implements BaseModel

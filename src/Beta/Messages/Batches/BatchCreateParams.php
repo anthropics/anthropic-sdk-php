@@ -6,7 +6,6 @@ namespace Anthropic\Beta\Messages\Batches;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request;
-use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -22,9 +21,11 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Beta\Messages\BatchesService::create()
  *
+ * @phpstan-import-type RequestShape from \Anthropic\Beta\Messages\Batches\BatchCreateParams\Request
+ *
  * @phpstan-type BatchCreateParamsShape = array{
- *   requests: list<Request|array{customID: string, params: Params}>,
- *   betas?: list<string|AnthropicBeta>,
+ *   requests: list<RequestShape>,
+ *   betas?: list<AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
 final class BatchCreateParams implements BaseModel
@@ -44,7 +45,7 @@ final class BatchCreateParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var list<string|value-of<AnthropicBeta>>|null $betas
+     * @var list<value-of<AnthropicBeta>>|null $betas
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
@@ -73,8 +74,8 @@ final class BatchCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Request|array{customID: string, params: Params}> $requests
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<RequestShape> $requests
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
      */
     public static function with(array $requests, ?array $betas = null): self
     {
@@ -90,7 +91,7 @@ final class BatchCreateParams implements BaseModel
     /**
      * List of requests for prompt completion. Each is an individual request to create a Message.
      *
-     * @param list<Request|array{customID: string, params: Params}> $requests
+     * @param list<RequestShape> $requests
      */
     public function withRequests(array $requests): self
     {
@@ -103,7 +104,7 @@ final class BatchCreateParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
      */
     public function withBetas(array $betas): self
     {

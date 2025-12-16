@@ -10,7 +10,9 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaOutputConfigShape = array{effort?: value-of<Effort>|null}
+ * @phpstan-type BetaOutputConfigShape = array{
+ *   effort?: null|Effort|value-of<Effort>
+ * }
  */
 final class BetaOutputConfig implements BaseModel
 {

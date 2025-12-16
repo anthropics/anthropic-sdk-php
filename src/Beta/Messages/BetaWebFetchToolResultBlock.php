@@ -9,10 +9,12 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaWebFetchToolResultBlock\Content
+ *
  * @phpstan-type BetaWebFetchToolResultBlockShape = array{
- *   content: BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock,
+ *   content: BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock|ContentShape,
  *   toolUseID: string,
- *   type?: 'web_fetch_tool_result',
+ *   type: 'web_fetch_tool_result',
  * }
  */
 final class BetaWebFetchToolResultBlock implements BaseModel
@@ -54,15 +56,7 @@ final class BetaWebFetchToolResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaWebFetchToolResultErrorBlock|array{
-     *   errorCode: value-of<BetaWebFetchToolResultErrorCode>,
-     *   type?: 'web_fetch_tool_result_error',
-     * }|BetaWebFetchBlock|array{
-     *   content: BetaDocumentBlock,
-     *   retrievedAt: string|null,
-     *   type?: 'web_fetch_result',
-     *   url: string,
-     * } $content
+     * @param ContentShape $content
      */
     public static function with(
         BetaWebFetchToolResultErrorBlock|array|BetaWebFetchBlock $content,
@@ -77,15 +71,7 @@ final class BetaWebFetchToolResultBlock implements BaseModel
     }
 
     /**
-     * @param BetaWebFetchToolResultErrorBlock|array{
-     *   errorCode: value-of<BetaWebFetchToolResultErrorCode>,
-     *   type?: 'web_fetch_tool_result_error',
-     * }|BetaWebFetchBlock|array{
-     *   content: BetaDocumentBlock,
-     *   retrievedAt: string|null,
-     *   type?: 'web_fetch_result',
-     *   url: string,
-     * } $content
+     * @param ContentShape $content
      */
     public function withContent(
         BetaWebFetchToolResultErrorBlock|array|BetaWebFetchBlock $content

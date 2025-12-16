@@ -11,7 +11,8 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaBashCodeExecutionToolResultErrorShape = array{
- *   errorCode: value-of<ErrorCode>, type?: 'bash_code_execution_tool_result_error'
+ *   errorCode: ErrorCode|value-of<ErrorCode>,
+ *   type: 'bash_code_execution_tool_result_error',
  * }
  */
 final class BetaBashCodeExecutionToolResultError implements BaseModel

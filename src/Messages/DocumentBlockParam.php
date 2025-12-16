@@ -8,15 +8,18 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\CacheControlEphemeral\TTL;
 use Anthropic\Messages\DocumentBlockParam\Source;
 
 /**
+ * @phpstan-import-type SourceShape from \Anthropic\Messages\DocumentBlockParam\Source
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ * @phpstan-import-type CitationsConfigParamShape from \Anthropic\Messages\CitationsConfigParam
+ *
  * @phpstan-type DocumentBlockParamShape = array{
- *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
- *   type?: 'document',
- *   cacheControl?: CacheControlEphemeral|null,
- *   citations?: CitationsConfigParam|null,
+ *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource|SourceShape,
+ *   type: 'document',
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
+ *   citations?: null|CitationsConfigParam|CitationsConfigParamShape,
  *   context?: string|null,
  *   title?: string|null,
  * }
@@ -72,17 +75,9 @@ final class DocumentBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Base64PDFSource|array{
-     *   data: string, mediaType?: 'application/pdf', type?: 'base64'
-     * }|PlainTextSource|array{
-     *   data: string, mediaType?: 'text/plain', type?: 'text'
-     * }|ContentBlockSource|array{
-     *   content: string|list<TextBlockParam|ImageBlockParam>, type?: 'content'
-     * }|URLPDFSource|array{type?: 'url', url: string} $source
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
-     * @param CitationsConfigParam|array{enabled?: bool|null}|null $citations
+     * @param SourceShape $source
+     * @param CacheControlEphemeralShape|null $cacheControl
+     * @param CitationsConfigParamShape|null $citations
      */
     public static function with(
         Base64PDFSource|array|PlainTextSource|ContentBlockSource|URLPDFSource $source,
@@ -104,13 +99,7 @@ final class DocumentBlockParam implements BaseModel
     }
 
     /**
-     * @param Base64PDFSource|array{
-     *   data: string, mediaType?: 'application/pdf', type?: 'base64'
-     * }|PlainTextSource|array{
-     *   data: string, mediaType?: 'text/plain', type?: 'text'
-     * }|ContentBlockSource|array{
-     *   content: string|list<TextBlockParam|ImageBlockParam>, type?: 'content'
-     * }|URLPDFSource|array{type?: 'url', url: string} $source
+     * @param SourceShape $source
      */
     public function withSource(
         Base64PDFSource|array|PlainTextSource|ContentBlockSource|URLPDFSource $source,
@@ -124,9 +113,7 @@ final class DocumentBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param CacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl
@@ -138,7 +125,7 @@ final class DocumentBlockParam implements BaseModel
     }
 
     /**
-     * @param CitationsConfigParam|array{enabled?: bool|null}|null $citations
+     * @param CitationsConfigParamShape|null $citations
      */
     public function withCitations(
         CitationsConfigParam|array|null $citations

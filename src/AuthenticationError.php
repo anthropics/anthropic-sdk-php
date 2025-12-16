@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type AuthenticationErrorShape = array{
- *   message: string, type?: 'authentication_error'
+ *   message: string, type: 'authentication_error'
  * }
  */
 final class AuthenticationError implements BaseModel

@@ -22,7 +22,7 @@ interface SkillsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|SkillCreateParams $params
+     * @param array<string,mixed>|SkillCreateParams $params
      *
      * @return BaseResponse<SkillNewResponse>
      *
@@ -39,7 +39,7 @@ interface SkillsRawContract
      * @param string $skillID Unique identifier for the skill.
      *
      * The format and length of IDs may change over time.
-     * @param array<mixed>|SkillRetrieveParams $params
+     * @param array<string,mixed>|SkillRetrieveParams $params
      *
      * @return BaseResponse<SkillGetResponse>
      *
@@ -54,7 +54,7 @@ interface SkillsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|SkillListParams $params
+     * @param array<string,mixed>|SkillListParams $params
      *
      * @return BaseResponse<PageCursor<SkillListResponse>>
      *
@@ -71,7 +71,7 @@ interface SkillsRawContract
      * @param string $skillID Unique identifier for the skill.
      *
      * The format and length of IDs may change over time.
-     * @param array<mixed>|SkillDeleteParams $params
+     * @param array<string,mixed>|SkillDeleteParams $params
      *
      * @return BaseResponse<SkillDeleteResponse>
      *

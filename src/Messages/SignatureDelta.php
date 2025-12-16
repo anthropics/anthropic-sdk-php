@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type SignatureDeltaShape = array{
- *   signature: string, type?: 'signature_delta'
+ *   signature: string, type: 'signature_delta'
  * }
  */
 final class SignatureDelta implements BaseModel

@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultError\ErrorCode;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultBlock\Content
+ *
  * @phpstan-type BetaBashCodeExecutionToolResultBlockShape = array{
- *   content: BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock,
+ *   content: BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock|ContentShape,
  *   toolUseID: string,
- *   type?: 'bash_code_execution_tool_result',
+ *   type: 'bash_code_execution_tool_result',
  * }
  */
 final class BetaBashCodeExecutionToolResultBlock implements BaseModel
@@ -55,15 +56,7 @@ final class BetaBashCodeExecutionToolResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaBashCodeExecutionToolResultError|array{
-     *   errorCode: value-of<ErrorCode>, type?: 'bash_code_execution_tool_result_error'
-     * }|BetaBashCodeExecutionResultBlock|array{
-     *   content: list<BetaBashCodeExecutionOutputBlock>,
-     *   returnCode: int,
-     *   stderr: string,
-     *   stdout: string,
-     *   type?: 'bash_code_execution_result',
-     * } $content
+     * @param ContentShape $content
      */
     public static function with(
         BetaBashCodeExecutionToolResultError|array|BetaBashCodeExecutionResultBlock $content,
@@ -78,15 +71,7 @@ final class BetaBashCodeExecutionToolResultBlock implements BaseModel
     }
 
     /**
-     * @param BetaBashCodeExecutionToolResultError|array{
-     *   errorCode: value-of<ErrorCode>, type?: 'bash_code_execution_tool_result_error'
-     * }|BetaBashCodeExecutionResultBlock|array{
-     *   content: list<BetaBashCodeExecutionOutputBlock>,
-     *   returnCode: int,
-     *   stderr: string,
-     *   stdout: string,
-     *   type?: 'bash_code_execution_result',
-     * } $content
+     * @param ContentShape $content
      */
     public function withContent(
         BetaBashCodeExecutionToolResultError|array|BetaBashCodeExecutionResultBlock $content,

@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaThinkingBlockParamShape = array{
- *   signature: string, thinking: string, type?: 'thinking'
+ *   signature: string, thinking: string, type: 'thinking'
  * }
  */
 final class BetaThinkingBlockParam implements BaseModel

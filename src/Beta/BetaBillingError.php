@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaBillingErrorShape = array{
- *   message: string, type?: 'billing_error'
+ *   message: string, type: 'billing_error'
  * }
  */
 final class BetaBillingError implements BaseModel

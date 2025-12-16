@@ -8,15 +8,16 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\CacheControlEphemeral\TTL;
-use Anthropic\Messages\WebSearchToolRequestError\ErrorCode;
 
 /**
+ * @phpstan-import-type WebSearchToolResultBlockParamContentShape from \Anthropic\Messages\WebSearchToolResultBlockParamContent
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ *
  * @phpstan-type WebSearchToolResultBlockParamShape = array{
- *   content: list<WebSearchResultBlockParam>|WebSearchToolRequestError,
+ *   content: WebSearchToolResultBlockParamContentShape,
  *   toolUseID: string,
- *   type?: 'web_search_tool_result',
- *   cacheControl?: CacheControlEphemeral|null,
+ *   type: 'web_search_tool_result',
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  * }
  */
 final class WebSearchToolResultBlockParam implements BaseModel
@@ -65,18 +66,8 @@ final class WebSearchToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<WebSearchResultBlockParam|array{
-     *   encryptedContent: string,
-     *   title: string,
-     *   type?: 'web_search_result',
-     *   url: string,
-     *   pageAge?: string|null,
-     * }>|WebSearchToolRequestError|array{
-     *   errorCode: value-of<ErrorCode>, type?: 'web_search_tool_result_error'
-     * } $content
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param WebSearchToolResultBlockParamContentShape $content
+     * @param CacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         array|WebSearchToolRequestError $content,
@@ -94,15 +85,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
     }
 
     /**
-     * @param list<WebSearchResultBlockParam|array{
-     *   encryptedContent: string,
-     *   title: string,
-     *   type?: 'web_search_result',
-     *   url: string,
-     *   pageAge?: string|null,
-     * }>|WebSearchToolRequestError|array{
-     *   errorCode: value-of<ErrorCode>, type?: 'web_search_tool_result_error'
-     * } $content
+     * @param WebSearchToolResultBlockParamContentShape $content
      */
     public function withContent(array|WebSearchToolRequestError $content): self
     {
@@ -123,9 +106,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param CacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl

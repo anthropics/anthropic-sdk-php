@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * Specification for a skill to be loaded in a container (request model).
  *
  * @phpstan-type BetaSkillParamsShape = array{
- *   skillID: string, type: value-of<Type>, version?: string|null
+ *   skillID: string, type: Type|value-of<Type>, version?: string|null
  * }
  */
 final class BetaSkillParams implements BaseModel

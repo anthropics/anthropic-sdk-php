@@ -9,7 +9,6 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
-use Anthropic\Messages\Batches\BatchCreateParams\Request\Params;
 
 /**
  * Send a batch of Message creation requests.
@@ -20,9 +19,9 @@ use Anthropic\Messages\Batches\BatchCreateParams\Request\Params;
  *
  * @see Anthropic\Services\Messages\BatchesService::create()
  *
- * @phpstan-type BatchCreateParamsShape = array{
- *   requests: list<Request|array{customID: string, params: Params}>
- * }
+ * @phpstan-import-type RequestShape from \Anthropic\Messages\Batches\BatchCreateParams\Request
+ *
+ * @phpstan-type BatchCreateParamsShape = array{requests: list<RequestShape>}
  */
 final class BatchCreateParams implements BaseModel
 {
@@ -62,7 +61,7 @@ final class BatchCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Request|array{customID: string, params: Params}> $requests
+     * @param list<RequestShape> $requests
      */
     public static function with(array $requests): self
     {
@@ -76,7 +75,7 @@ final class BatchCreateParams implements BaseModel
     /**
      * List of requests for prompt completion. Each is an individual request to create a Message.
      *
-     * @param list<Request|array{customID: string, params: Params}> $requests
+     * @param list<RequestShape> $requests
      */
     public function withRequests(array $requests): self
     {

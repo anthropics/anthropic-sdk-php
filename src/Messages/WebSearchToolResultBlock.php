@@ -7,13 +7,14 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\WebSearchToolResultError\ErrorCode;
 
 /**
+ * @phpstan-import-type WebSearchToolResultBlockContentShape from \Anthropic\Messages\WebSearchToolResultBlockContent
+ *
  * @phpstan-type WebSearchToolResultBlockShape = array{
- *   content: WebSearchToolResultError|list<WebSearchResultBlock>,
+ *   content: WebSearchToolResultBlockContentShape,
  *   toolUseID: string,
- *   type?: 'web_search_tool_result',
+ *   type: 'web_search_tool_result',
  * }
  */
 final class WebSearchToolResultBlock implements BaseModel
@@ -56,15 +57,7 @@ final class WebSearchToolResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param WebSearchToolResultError|array{
-     *   errorCode: value-of<ErrorCode>, type?: 'web_search_tool_result_error'
-     * }|list<WebSearchResultBlock|array{
-     *   encryptedContent: string,
-     *   pageAge: string|null,
-     *   title: string,
-     *   type?: 'web_search_result',
-     *   url: string,
-     * }> $content
+     * @param WebSearchToolResultBlockContentShape $content
      */
     public static function with(
         WebSearchToolResultError|array $content,
@@ -79,15 +72,7 @@ final class WebSearchToolResultBlock implements BaseModel
     }
 
     /**
-     * @param WebSearchToolResultError|array{
-     *   errorCode: value-of<ErrorCode>, type?: 'web_search_tool_result_error'
-     * }|list<WebSearchResultBlock|array{
-     *   encryptedContent: string,
-     *   pageAge: string|null,
-     *   title: string,
-     *   type?: 'web_search_result',
-     *   url: string,
-     * }> $content
+     * @param WebSearchToolResultBlockContentShape $content
      */
     public function withContent(WebSearchToolResultError|array $content): self
     {

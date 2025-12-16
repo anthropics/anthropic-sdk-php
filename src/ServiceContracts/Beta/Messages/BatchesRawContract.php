@@ -24,7 +24,7 @@ interface BatchesRawContract
     /**
      * @api
      *
-     * @param array<mixed>|BatchCreateParams $params
+     * @param array<string,mixed>|BatchCreateParams $params
      *
      * @return BaseResponse<MessageBatch>
      *
@@ -39,7 +39,7 @@ interface BatchesRawContract
      * @api
      *
      * @param string $messageBatchID ID of the Message Batch
-     * @param array<mixed>|BatchRetrieveParams $params
+     * @param array<string,mixed>|BatchRetrieveParams $params
      *
      * @return BaseResponse<MessageBatch>
      *
@@ -54,7 +54,7 @@ interface BatchesRawContract
     /**
      * @api
      *
-     * @param array<mixed>|BatchListParams $params
+     * @param array<string,mixed>|BatchListParams $params
      *
      * @return BaseResponse<Page<MessageBatch>>
      *
@@ -69,7 +69,7 @@ interface BatchesRawContract
      * @api
      *
      * @param string $messageBatchID ID of the Message Batch
-     * @param array<mixed>|BatchDeleteParams $params
+     * @param array<string,mixed>|BatchDeleteParams $params
      *
      * @return BaseResponse<DeletedMessageBatch>
      *
@@ -85,7 +85,7 @@ interface BatchesRawContract
      * @api
      *
      * @param string $messageBatchID ID of the Message Batch
-     * @param array<mixed>|BatchCancelParams $params
+     * @param array<string,mixed>|BatchCancelParams $params
      *
      * @return BaseResponse<MessageBatch>
      *
@@ -101,7 +101,7 @@ interface BatchesRawContract
      * @api
      *
      * @param string $messageBatchID ID of the Message Batch
-     * @param array<mixed>|BatchResultsParams $params
+     * @param array<string,mixed>|BatchResultsParams $params
      *
      * @return BaseResponse<MessageBatchIndividualResponse>
      *
@@ -117,7 +117,7 @@ interface BatchesRawContract
      * @api
      *
      * @param string $messageBatchID ID of the Message Batch
-     * @param array<mixed>|BatchResultsParams $params
+     * @param array<string,mixed>|BatchResultsParams $params
      *
      * @return BaseResponse<BaseStream<MessageBatchIndividualResponse>>
      *

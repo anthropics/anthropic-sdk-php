@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaGatewayTimeoutErrorShape = array{
- *   message: string, type?: 'timeout_error'
+ *   message: string, type: 'timeout_error'
  * }
  */
 final class BetaGatewayTimeoutError implements BaseModel

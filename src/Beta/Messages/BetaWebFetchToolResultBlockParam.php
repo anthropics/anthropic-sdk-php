@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaWebFetchToolResultBlockParam\Content
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ *
  * @phpstan-type BetaWebFetchToolResultBlockParamShape = array{
- *   content: BetaWebFetchToolResultErrorBlockParam|BetaWebFetchBlockParam,
+ *   content: BetaWebFetchToolResultErrorBlockParam|BetaWebFetchBlockParam|ContentShape,
  *   toolUseID: string,
- *   type?: 'web_fetch_tool_result',
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   type: 'web_fetch_tool_result',
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  * }
  */
 final class BetaWebFetchToolResultBlockParam implements BaseModel
@@ -63,18 +65,8 @@ final class BetaWebFetchToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaWebFetchToolResultErrorBlockParam|array{
-     *   errorCode: value-of<BetaWebFetchToolResultErrorCode>,
-     *   type?: 'web_fetch_tool_result_error',
-     * }|BetaWebFetchBlockParam|array{
-     *   content: BetaRequestDocumentBlock,
-     *   type?: 'web_fetch_result',
-     *   url: string,
-     *   retrievedAt?: string|null,
-     * } $content
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param ContentShape $content
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         BetaWebFetchToolResultErrorBlockParam|array|BetaWebFetchBlockParam $content,
@@ -92,15 +84,7 @@ final class BetaWebFetchToolResultBlockParam implements BaseModel
     }
 
     /**
-     * @param BetaWebFetchToolResultErrorBlockParam|array{
-     *   errorCode: value-of<BetaWebFetchToolResultErrorCode>,
-     *   type?: 'web_fetch_tool_result_error',
-     * }|BetaWebFetchBlockParam|array{
-     *   content: BetaRequestDocumentBlock,
-     *   type?: 'web_fetch_result',
-     *   url: string,
-     *   retrievedAt?: string|null,
-     * } $content
+     * @param ContentShape $content
      */
     public function withContent(
         BetaWebFetchToolResultErrorBlockParam|array|BetaWebFetchBlockParam $content
@@ -122,9 +106,7 @@ final class BetaWebFetchToolResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl

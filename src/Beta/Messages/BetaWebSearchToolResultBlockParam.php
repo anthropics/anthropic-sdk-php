@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaWebSearchToolResultBlockParamContentShape from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlockParamContent
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ *
  * @phpstan-type BetaWebSearchToolResultBlockParamShape = array{
- *   content: list<BetaWebSearchResultBlockParam>|BetaWebSearchToolRequestError,
+ *   content: BetaWebSearchToolResultBlockParamContentShape,
  *   toolUseID: string,
- *   type?: 'web_search_tool_result',
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   type: 'web_search_tool_result',
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  * }
  */
 final class BetaWebSearchToolResultBlockParam implements BaseModel
@@ -64,19 +66,8 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaWebSearchResultBlockParam|array{
-     *   encryptedContent: string,
-     *   title: string,
-     *   type?: 'web_search_result',
-     *   url: string,
-     *   pageAge?: string|null,
-     * }>|BetaWebSearchToolRequestError|array{
-     *   errorCode: value-of<BetaWebSearchToolResultErrorCode>,
-     *   type?: 'web_search_tool_result_error',
-     * } $content
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaWebSearchToolResultBlockParamContentShape $content
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         array|BetaWebSearchToolRequestError $content,
@@ -94,16 +85,7 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
     }
 
     /**
-     * @param list<BetaWebSearchResultBlockParam|array{
-     *   encryptedContent: string,
-     *   title: string,
-     *   type?: 'web_search_result',
-     *   url: string,
-     *   pageAge?: string|null,
-     * }>|BetaWebSearchToolRequestError|array{
-     *   errorCode: value-of<BetaWebSearchToolResultErrorCode>,
-     *   type?: 'web_search_tool_result_error',
-     * } $content
+     * @param BetaWebSearchToolResultBlockParamContentShape $content
      */
     public function withContent(
         array|BetaWebSearchToolRequestError $content
@@ -125,9 +107,7 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl

@@ -9,10 +9,12 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaCodeExecutionToolResultBlockContentShape from \Anthropic\Beta\Messages\BetaCodeExecutionToolResultBlockContent
+ *
  * @phpstan-type BetaCodeExecutionToolResultBlockShape = array{
- *   content: BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock,
+ *   content: BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock|BetaCodeExecutionToolResultBlockContentShape,
  *   toolUseID: string,
- *   type?: 'code_execution_tool_result',
+ *   type: 'code_execution_tool_result',
  * }
  */
 final class BetaCodeExecutionToolResultBlock implements BaseModel
@@ -54,16 +56,7 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaCodeExecutionToolResultError|array{
-     *   errorCode: value-of<BetaCodeExecutionToolResultErrorCode>,
-     *   type?: 'code_execution_tool_result_error',
-     * }|BetaCodeExecutionResultBlock|array{
-     *   content: list<BetaCodeExecutionOutputBlock>,
-     *   returnCode: int,
-     *   stderr: string,
-     *   stdout: string,
-     *   type?: 'code_execution_result',
-     * } $content
+     * @param BetaCodeExecutionToolResultBlockContentShape $content
      */
     public static function with(
         BetaCodeExecutionToolResultError|array|BetaCodeExecutionResultBlock $content,
@@ -78,16 +71,7 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
     }
 
     /**
-     * @param BetaCodeExecutionToolResultError|array{
-     *   errorCode: value-of<BetaCodeExecutionToolResultErrorCode>,
-     *   type?: 'code_execution_tool_result_error',
-     * }|BetaCodeExecutionResultBlock|array{
-     *   content: list<BetaCodeExecutionOutputBlock>,
-     *   returnCode: int,
-     *   stderr: string,
-     *   stdout: string,
-     *   type?: 'code_execution_result',
-     * } $content
+     * @param BetaCodeExecutionToolResultBlockContentShape $content
      */
     public function withContent(
         BetaCodeExecutionToolResultError|array|BetaCodeExecutionResultBlock $content

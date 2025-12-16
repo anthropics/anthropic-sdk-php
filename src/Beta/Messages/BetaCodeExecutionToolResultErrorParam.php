@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCodeExecutionToolResultErrorParamShape = array{
- *   errorCode: value-of<BetaCodeExecutionToolResultErrorCode>,
- *   type?: 'code_execution_tool_result_error',
+ *   errorCode: BetaCodeExecutionToolResultErrorCode|value-of<BetaCodeExecutionToolResultErrorCode>,
+ *   type: 'code_execution_tool_result_error',
  * }
  */
 final class BetaCodeExecutionToolResultErrorParam implements BaseModel

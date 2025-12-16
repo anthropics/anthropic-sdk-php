@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type RateLimitErrorShape = array{
- *   message: string, type?: 'rate_limit_error'
+ *   message: string, type: 'rate_limit_error'
  * }
  */
 final class RateLimitError implements BaseModel

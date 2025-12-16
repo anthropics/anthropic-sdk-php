@@ -11,7 +11,9 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type DeletedFileShape = array{id: string, type?: value-of<Type>|null}
+ * @phpstan-type DeletedFileShape = array{
+ *   id: string, type?: null|Type|value-of<Type>
+ * }
  */
 final class DeletedFile implements BaseModel
 {

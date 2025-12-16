@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaThinkingDeltaShape = array{
- *   thinking: string, type?: 'thinking_delta'
+ *   thinking: string, type: 'thinking_delta'
  * }
  */
 final class BetaThinkingDelta implements BaseModel

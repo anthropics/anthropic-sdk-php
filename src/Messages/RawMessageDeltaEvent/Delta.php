@@ -11,7 +11,7 @@ use Anthropic\Messages\StopReason;
 
 /**
  * @phpstan-type DeltaShape = array{
- *   stopReason: value-of<StopReason>|null, stopSequence: string|null
+ *   stopReason: null|StopReason|value-of<StopReason>, stopSequence: string|null
  * }
  */
 final class Delta implements BaseModel

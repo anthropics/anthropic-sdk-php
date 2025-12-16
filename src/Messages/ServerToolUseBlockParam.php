@@ -8,15 +8,16 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\CacheControlEphemeral\TTL;
 
 /**
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ *
  * @phpstan-type ServerToolUseBlockParamShape = array{
  *   id: string,
  *   input: array<string,mixed>,
- *   name?: 'web_search',
- *   type?: 'server_tool_use',
- *   cacheControl?: CacheControlEphemeral|null,
+ *   name: 'web_search',
+ *   type: 'server_tool_use',
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  * }
  */
 final class ServerToolUseBlockParam implements BaseModel
@@ -70,9 +71,7 @@ final class ServerToolUseBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,mixed> $input
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param CacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         string $id,
@@ -111,9 +110,7 @@ final class ServerToolUseBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param CacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl

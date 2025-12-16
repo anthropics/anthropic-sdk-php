@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818RenameCommandShape = array{
- *   command?: 'rename', newPath: string, oldPath: string
+ *   command: 'rename', newPath: string, oldPath: string
  * }
  */
 final class BetaMemoryTool20250818RenameCommand implements BaseModel

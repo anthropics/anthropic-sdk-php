@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaRateLimitErrorShape = array{
- *   message: string, type?: 'rate_limit_error'
+ *   message: string, type: 'rate_limit_error'
  * }
  */
 final class BetaRateLimitError implements BaseModel

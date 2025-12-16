@@ -55,7 +55,7 @@ final class MessagesRawService implements MessagesRawContract
      *   system?: string|list<array{
      *     text: string,
      *     type?: 'text',
-     *     cacheControl?: array<mixed>|null,
+     *     cacheControl?: array<string,mixed>|null,
      *     citations?: list<array<string,mixed>>|null,
      *   }>,
      *   temperature?: float,
@@ -104,7 +104,7 @@ final class MessagesRawService implements MessagesRawContract
      *   system?: string|list<array{
      *     text: string,
      *     type?: 'text',
-     *     cacheControl?: array<mixed>|null,
+     *     cacheControl?: array<string,mixed>|null,
      *     citations?: list<array<string,mixed>>|null,
      *   }>,
      *   temperature?: float,
@@ -158,7 +158,7 @@ final class MessagesRawService implements MessagesRawContract
      *   system?: string|list<array{
      *     text: string,
      *     type?: 'text',
-     *     cacheControl?: array<mixed>|null,
+     *     cacheControl?: array<string,mixed>|null,
      *     citations?: list<array<string,mixed>>|null,
      *   }>,
      *   thinking?: array<string,mixed>,

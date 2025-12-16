@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaRequestDocumentBlock\Source;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
@@ -12,11 +11,15 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type SourceShape from \Anthropic\Beta\Messages\BetaRequestDocumentBlock\Source
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type BetaCitationsConfigParamShape from \Anthropic\Beta\Messages\BetaCitationsConfigParam
+ *
  * @phpstan-type BetaRequestDocumentBlockShape = array{
- *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource,
- *   type?: 'document',
- *   cacheControl?: BetaCacheControlEphemeral|null,
- *   citations?: BetaCitationsConfigParam|null,
+ *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource|SourceShape,
+ *   type: 'document',
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
+ *   citations?: null|BetaCitationsConfigParam|BetaCitationsConfigParamShape,
  *   context?: string|null,
  *   title?: string|null,
  * }
@@ -72,19 +75,9 @@ final class BetaRequestDocumentBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaBase64PDFSource|array{
-     *   data: string, mediaType?: 'application/pdf', type?: 'base64'
-     * }|BetaPlainTextSource|array{
-     *   data: string, mediaType?: 'text/plain', type?: 'text'
-     * }|BetaContentBlockSource|array{
-     *   content: string|list<BetaTextBlockParam|BetaImageBlockParam>, type?: 'content'
-     * }|BetaURLPDFSource|array{
-     *   type?: 'url', url: string
-     * }|BetaFileDocumentSource|array{fileID: string, type?: 'file'} $source
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
-     * @param BetaCitationsConfigParam|array{enabled?: bool|null}|null $citations
+     * @param SourceShape $source
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCitationsConfigParamShape|null $citations
      */
     public static function with(
         BetaBase64PDFSource|array|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource $source,
@@ -106,15 +99,7 @@ final class BetaRequestDocumentBlock implements BaseModel
     }
 
     /**
-     * @param BetaBase64PDFSource|array{
-     *   data: string, mediaType?: 'application/pdf', type?: 'base64'
-     * }|BetaPlainTextSource|array{
-     *   data: string, mediaType?: 'text/plain', type?: 'text'
-     * }|BetaContentBlockSource|array{
-     *   content: string|list<BetaTextBlockParam|BetaImageBlockParam>, type?: 'content'
-     * }|BetaURLPDFSource|array{
-     *   type?: 'url', url: string
-     * }|BetaFileDocumentSource|array{fileID: string, type?: 'file'} $source
+     * @param SourceShape $source
      */
     public function withSource(
         BetaBase64PDFSource|array|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource $source,
@@ -128,9 +113,7 @@ final class BetaRequestDocumentBlock implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
@@ -142,7 +125,7 @@ final class BetaRequestDocumentBlock implements BaseModel
     }
 
     /**
-     * @param BetaCitationsConfigParam|array{enabled?: bool|null}|null $citations
+     * @param BetaCitationsConfigParamShape|null $citations
      */
     public function withCitations(
         BetaCitationsConfigParam|array|null $citations

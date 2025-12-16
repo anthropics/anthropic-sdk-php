@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaSkill\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -12,8 +11,10 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Information about the container used in the request (for the code execution tool).
  *
+ * @phpstan-import-type BetaSkillShape from \Anthropic\Beta\Messages\BetaSkill
+ *
  * @phpstan-type BetaContainerShape = array{
- *   id: string, expiresAt: \DateTimeInterface, skills: list<BetaSkill>|null
+ *   id: string, expiresAt: \DateTimeInterface, skills: list<BetaSkillShape>|null
  * }
  */
 final class BetaContainer implements BaseModel
@@ -65,9 +66,7 @@ final class BetaContainer implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaSkill|array{
-     *   skillID: string, type: value-of<Type>, version: string
-     * }>|null $skills
+     * @param list<BetaSkillShape>|null $skills
      */
     public static function with(
         string $id,
@@ -108,9 +107,7 @@ final class BetaContainer implements BaseModel
     /**
      * Skills loaded in the container.
      *
-     * @param list<BetaSkill|array{
-     *   skillID: string, type: value-of<Type>, version: string
-     * }>|null $skills
+     * @param list<BetaSkillShape>|null $skills
      */
     public function withSkills(?array $skills): self
     {

@@ -24,6 +24,23 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * Response model for a file uploaded to the container.
+ *
+ * @phpstan-import-type BetaTextBlockShape from \Anthropic\Beta\Messages\BetaTextBlock
+ * @phpstan-import-type BetaThinkingBlockShape from \Anthropic\Beta\Messages\BetaThinkingBlock
+ * @phpstan-import-type BetaRedactedThinkingBlockShape from \Anthropic\Beta\Messages\BetaRedactedThinkingBlock
+ * @phpstan-import-type BetaToolUseBlockShape from \Anthropic\Beta\Messages\BetaToolUseBlock
+ * @phpstan-import-type BetaServerToolUseBlockShape from \Anthropic\Beta\Messages\BetaServerToolUseBlock
+ * @phpstan-import-type BetaWebSearchToolResultBlockShape from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlock
+ * @phpstan-import-type BetaWebFetchToolResultBlockShape from \Anthropic\Beta\Messages\BetaWebFetchToolResultBlock
+ * @phpstan-import-type BetaCodeExecutionToolResultBlockShape from \Anthropic\Beta\Messages\BetaCodeExecutionToolResultBlock
+ * @phpstan-import-type BetaBashCodeExecutionToolResultBlockShape from \Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultBlock
+ * @phpstan-import-type BetaTextEditorCodeExecutionToolResultBlockShape from \Anthropic\Beta\Messages\BetaTextEditorCodeExecutionToolResultBlock
+ * @phpstan-import-type BetaToolSearchToolResultBlockShape from \Anthropic\Beta\Messages\BetaToolSearchToolResultBlock
+ * @phpstan-import-type BetaMCPToolUseBlockShape from \Anthropic\Beta\Messages\BetaMCPToolUseBlock
+ * @phpstan-import-type BetaMCPToolResultBlockShape from \Anthropic\Beta\Messages\BetaMCPToolResultBlock
+ * @phpstan-import-type BetaContainerUploadBlockShape from \Anthropic\Beta\Messages\BetaContainerUploadBlock
+ *
+ * @phpstan-type ContentBlockShape = BetaTextBlockShape|BetaThinkingBlockShape|BetaRedactedThinkingBlockShape|BetaToolUseBlockShape|BetaServerToolUseBlockShape|BetaWebSearchToolResultBlockShape|BetaWebFetchToolResultBlockShape|BetaCodeExecutionToolResultBlockShape|BetaBashCodeExecutionToolResultBlockShape|BetaTextEditorCodeExecutionToolResultBlockShape|BetaToolSearchToolResultBlockShape|BetaMCPToolUseBlockShape|BetaMCPToolResultBlockShape|BetaContainerUploadBlockShape
  */
 final class ContentBlock implements ConverterSource
 {

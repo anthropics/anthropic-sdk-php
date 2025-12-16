@@ -10,14 +10,17 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Usage\ServiceTier;
 
 /**
+ * @phpstan-import-type CacheCreationShape from \Anthropic\Messages\CacheCreation
+ * @phpstan-import-type ServerToolUsageShape from \Anthropic\Messages\ServerToolUsage
+ *
  * @phpstan-type UsageShape = array{
- *   cacheCreation: CacheCreation|null,
+ *   cacheCreation: null|CacheCreation|CacheCreationShape,
  *   cacheCreationInputTokens: int|null,
  *   cacheReadInputTokens: int|null,
  *   inputTokens: int,
  *   outputTokens: int,
- *   serverToolUse: ServerToolUsage|null,
- *   serviceTier: value-of<ServiceTier>|null,
+ *   serverToolUse: null|ServerToolUsage|ServerToolUsageShape,
+ *   serviceTier: null|ServiceTier|value-of<ServiceTier>,
  * }
  */
 final class Usage implements BaseModel
@@ -108,10 +111,8 @@ final class Usage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CacheCreation|array{
-     *   ephemeral1hInputTokens: int, ephemeral5mInputTokens: int
-     * }|null $cacheCreation
-     * @param ServerToolUsage|array{webSearchRequests: int}|null $serverToolUse
+     * @param CacheCreationShape|null $cacheCreation
+     * @param ServerToolUsageShape|null $serverToolUse
      * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
      */
     public static function with(
@@ -139,9 +140,7 @@ final class Usage implements BaseModel
     /**
      * Breakdown of cached tokens by TTL.
      *
-     * @param CacheCreation|array{
-     *   ephemeral1hInputTokens: int, ephemeral5mInputTokens: int
-     * }|null $cacheCreation
+     * @param CacheCreationShape|null $cacheCreation
      */
     public function withCacheCreation(
         CacheCreation|array|null $cacheCreation
@@ -200,7 +199,7 @@ final class Usage implements BaseModel
     /**
      * The number of server tool requests.
      *
-     * @param ServerToolUsage|array{webSearchRequests: int}|null $serverToolUse
+     * @param ServerToolUsageShape|null $serverToolUse
      */
     public function withServerToolUse(
         ServerToolUsage|array|null $serverToolUse

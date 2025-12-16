@@ -4,20 +4,23 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaTextBlockParamShape from \Anthropic\Beta\Messages\BetaTextBlockParam
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type BetaCitationsConfigParamShape from \Anthropic\Beta\Messages\BetaCitationsConfigParam
+ *
  * @phpstan-type BetaSearchResultBlockParamShape = array{
- *   content: list<BetaTextBlockParam>,
+ *   content: list<BetaTextBlockParamShape>,
  *   source: string,
  *   title: string,
- *   type?: 'search_result',
- *   cacheControl?: BetaCacheControlEphemeral|null,
- *   citations?: BetaCitationsConfigParam|null,
+ *   type: 'search_result',
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
+ *   citations?: null|BetaCitationsConfigParam|BetaCitationsConfigParamShape,
  * }
  */
 final class BetaSearchResultBlockParam implements BaseModel
@@ -75,16 +78,9 @@ final class BetaSearchResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaTextBlockParam|array{
-     *   text: string,
-     *   type?: 'text',
-     *   cacheControl?: BetaCacheControlEphemeral|null,
-     *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
-     * }> $content
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
-     * @param BetaCitationsConfigParam|array{enabled?: bool|null} $citations
+     * @param list<BetaTextBlockParamShape> $content
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCitationsConfigParamShape $citations
      */
     public static function with(
         array $content,
@@ -106,12 +102,7 @@ final class BetaSearchResultBlockParam implements BaseModel
     }
 
     /**
-     * @param list<BetaTextBlockParam|array{
-     *   text: string,
-     *   type?: 'text',
-     *   cacheControl?: BetaCacheControlEphemeral|null,
-     *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
-     * }> $content
+     * @param list<BetaTextBlockParamShape> $content
      */
     public function withContent(array $content): self
     {
@@ -140,9 +131,7 @@ final class BetaSearchResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
@@ -154,7 +143,7 @@ final class BetaSearchResultBlockParam implements BaseModel
     }
 
     /**
-     * @param BetaCitationsConfigParam|array{enabled?: bool|null} $citations
+     * @param BetaCitationsConfigParamShape $citations
      */
     public function withCitations(
         BetaCitationsConfigParam|array $citations

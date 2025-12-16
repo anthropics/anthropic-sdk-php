@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818CreateCommandShape = array{
- *   command?: 'create', fileText: string, path: string
+ *   command: 'create', fileText: string, path: string
  * }
  */
 final class BetaMemoryTool20250818CreateCommand implements BaseModel

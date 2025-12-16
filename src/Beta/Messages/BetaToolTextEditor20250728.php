@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaToolTextEditor20250728\AllowedCaller;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
@@ -13,11 +12,13 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\MapOf;
 
 /**
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ *
  * @phpstan-type BetaToolTextEditor20250728Shape = array{
- *   name?: 'str_replace_based_edit_tool',
- *   type?: 'text_editor_20250728',
- *   allowedCallers?: list<value-of<AllowedCaller>>|null,
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   name: 'str_replace_based_edit_tool',
+ *   type: 'text_editor_20250728',
+ *   allowedCallers?: list<AllowedCaller|value-of<AllowedCaller>>|null,
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   deferLoading?: bool|null,
  *   inputExamples?: list<array<string,mixed>>|null,
  *   maxCharacters?: int|null,
@@ -83,9 +84,7 @@ final class BetaToolTextEditor20250728 implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      * @param list<array<string,mixed>> $inputExamples
      */
     public static function with(
@@ -122,9 +121,7 @@ final class BetaToolTextEditor20250728 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl

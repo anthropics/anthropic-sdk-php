@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type InputJSONDeltaShape = array{
- *   partialJSON: string, type?: 'input_json_delta'
+ *   partialJSON: string, type: 'input_json_delta'
  * }
  */
 final class InputJSONDelta implements BaseModel

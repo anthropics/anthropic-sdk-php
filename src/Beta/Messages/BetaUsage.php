@@ -10,14 +10,17 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaCacheCreationShape from \Anthropic\Beta\Messages\BetaCacheCreation
+ * @phpstan-import-type BetaServerToolUsageShape from \Anthropic\Beta\Messages\BetaServerToolUsage
+ *
  * @phpstan-type BetaUsageShape = array{
- *   cacheCreation: BetaCacheCreation|null,
+ *   cacheCreation: null|BetaCacheCreation|BetaCacheCreationShape,
  *   cacheCreationInputTokens: int|null,
  *   cacheReadInputTokens: int|null,
  *   inputTokens: int,
  *   outputTokens: int,
- *   serverToolUse: BetaServerToolUsage|null,
- *   serviceTier: value-of<ServiceTier>|null,
+ *   serverToolUse: null|BetaServerToolUsage|BetaServerToolUsageShape,
+ *   serviceTier: null|ServiceTier|value-of<ServiceTier>,
  * }
  */
 final class BetaUsage implements BaseModel
@@ -108,12 +111,8 @@ final class BetaUsage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaCacheCreation|array{
-     *   ephemeral1hInputTokens: int, ephemeral5mInputTokens: int
-     * }|null $cacheCreation
-     * @param BetaServerToolUsage|array{
-     *   webFetchRequests: int, webSearchRequests: int
-     * }|null $serverToolUse
+     * @param BetaCacheCreationShape|null $cacheCreation
+     * @param BetaServerToolUsageShape|null $serverToolUse
      * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
      */
     public static function with(
@@ -141,9 +140,7 @@ final class BetaUsage implements BaseModel
     /**
      * Breakdown of cached tokens by TTL.
      *
-     * @param BetaCacheCreation|array{
-     *   ephemeral1hInputTokens: int, ephemeral5mInputTokens: int
-     * }|null $cacheCreation
+     * @param BetaCacheCreationShape|null $cacheCreation
      */
     public function withCacheCreation(
         BetaCacheCreation|array|null $cacheCreation
@@ -202,9 +199,7 @@ final class BetaUsage implements BaseModel
     /**
      * The number of server tool requests.
      *
-     * @param BetaServerToolUsage|array{
-     *   webFetchRequests: int, webSearchRequests: int
-     * }|null $serverToolUse
+     * @param BetaServerToolUsageShape|null $serverToolUse
      */
     public function withServerToolUse(
         BetaServerToolUsage|array|null $serverToolUse

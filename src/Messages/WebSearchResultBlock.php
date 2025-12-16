@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   encryptedContent: string,
  *   pageAge: string|null,
  *   title: string,
- *   type?: 'web_search_result',
+ *   type: 'web_search_result',
  *   url: string,
  * }
  */

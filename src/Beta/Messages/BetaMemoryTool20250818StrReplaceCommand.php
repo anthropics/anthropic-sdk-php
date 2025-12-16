@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818StrReplaceCommandShape = array{
- *   command?: 'str_replace', newStr: string, oldStr: string, path: string
+ *   command: 'str_replace', newStr: string, oldStr: string, path: string
  * }
  */
 final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel

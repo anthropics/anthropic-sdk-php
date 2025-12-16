@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   input: array<string,mixed>,
  *   name: string,
  *   serverName: string,
- *   type?: 'mcp_tool_use',
+ *   type: 'mcp_tool_use',
  * }
  */
 final class BetaMCPToolUseBlock implements BaseModel

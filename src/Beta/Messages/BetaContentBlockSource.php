@@ -10,8 +10,10 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaContentBlockSource\Content
+ *
  * @phpstan-type BetaContentBlockSourceShape = array{
- *   content: string|list<BetaTextBlockParam|BetaImageBlockParam>, type?: 'content'
+ *   content: ContentShape, type: 'content'
  * }
  */
 final class BetaContentBlockSource implements BaseModel
@@ -51,16 +53,7 @@ final class BetaContentBlockSource implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|list<BetaTextBlockParam|array{
-     *   text: string,
-     *   type?: 'text',
-     *   cacheControl?: BetaCacheControlEphemeral|null,
-     *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
-     * }|BetaImageBlockParam|array{
-     *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource,
-     *   type?: 'image',
-     *   cacheControl?: BetaCacheControlEphemeral|null,
-     * }> $content
+     * @param ContentShape $content
      */
     public static function with(string|array $content): self
     {
@@ -72,16 +65,7 @@ final class BetaContentBlockSource implements BaseModel
     }
 
     /**
-     * @param string|list<BetaTextBlockParam|array{
-     *   text: string,
-     *   type?: 'text',
-     *   cacheControl?: BetaCacheControlEphemeral|null,
-     *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
-     * }|BetaImageBlockParam|array{
-     *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource,
-     *   type?: 'image',
-     *   cacheControl?: BetaCacheControlEphemeral|null,
-     * }> $content
+     * @param ContentShape $content
      */
     public function withContent(string|array $content): self
     {

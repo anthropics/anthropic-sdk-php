@@ -14,6 +14,10 @@ use Anthropic\Messages\TextBlockParam;
  * System prompt.
  *
  * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.claude.com/en/docs/system-prompts).
+ *
+ * @phpstan-import-type TextBlockParamShape from \Anthropic\Messages\TextBlockParam
+ *
+ * @phpstan-type SystemShape = string|list<TextBlockParamShape>
  */
 final class System implements ConverterSource
 {

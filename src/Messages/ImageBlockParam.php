@@ -8,15 +8,16 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\Base64ImageSource\MediaType;
-use Anthropic\Messages\CacheControlEphemeral\TTL;
 use Anthropic\Messages\ImageBlockParam\Source;
 
 /**
+ * @phpstan-import-type SourceShape from \Anthropic\Messages\ImageBlockParam\Source
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ *
  * @phpstan-type ImageBlockParamShape = array{
- *   source: Base64ImageSource|URLImageSource,
- *   type?: 'image',
- *   cacheControl?: CacheControlEphemeral|null,
+ *   source: Base64ImageSource|URLImageSource|SourceShape,
+ *   type: 'image',
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  * }
  */
 final class ImageBlockParam implements BaseModel
@@ -61,12 +62,8 @@ final class ImageBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Base64ImageSource|array{
-     *   data: string, mediaType: value-of<MediaType>, type?: 'base64'
-     * }|URLImageSource|array{type?: 'url', url: string} $source
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param SourceShape $source
+     * @param CacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         Base64ImageSource|array|URLImageSource $source,
@@ -82,9 +79,7 @@ final class ImageBlockParam implements BaseModel
     }
 
     /**
-     * @param Base64ImageSource|array{
-     *   data: string, mediaType: value-of<MediaType>, type?: 'base64'
-     * }|URLImageSource|array{type?: 'url', url: string} $source
+     * @param SourceShape $source
      */
     public function withSource(
         Base64ImageSource|array|URLImageSource $source
@@ -98,9 +93,7 @@ final class ImageBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param CacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl

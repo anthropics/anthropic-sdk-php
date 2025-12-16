@@ -7,15 +7,15 @@ namespace Anthropic\Messages\Batches;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\ErrorResponse;
-use Anthropic\Messages\Message;
 
 /**
  * This is a single line in the response `.jsonl` file and does not represent the response as a whole.
  *
+ * @phpstan-import-type MessageBatchResultShape from \Anthropic\Messages\Batches\MessageBatchResult
+ *
  * @phpstan-type MessageBatchIndividualResponseShape = array{
  *   customID: string,
- *   result: MessageBatchSucceededResult|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult,
+ *   result: MessageBatchSucceededResult|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult|MessageBatchResultShape,
  * }
  */
 final class MessageBatchIndividualResponse implements BaseModel
@@ -63,13 +63,7 @@ final class MessageBatchIndividualResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param MessageBatchSucceededResult|array{
-     *   message: Message, type?: 'succeeded'
-     * }|MessageBatchErroredResult|array{
-     *   error: ErrorResponse, type?: 'errored'
-     * }|MessageBatchCanceledResult|array{
-     *   type?: 'canceled'
-     * }|MessageBatchExpiredResult|array{type?: 'expired'} $result
+     * @param MessageBatchResultShape $result
      */
     public static function with(
         string $customID,
@@ -101,13 +95,7 @@ final class MessageBatchIndividualResponse implements BaseModel
      *
      * Contains a Message output if processing was successful, an error response if processing failed, or the reason why processing was not attempted, such as cancellation or expiration.
      *
-     * @param MessageBatchSucceededResult|array{
-     *   message: Message, type?: 'succeeded'
-     * }|MessageBatchErroredResult|array{
-     *   error: ErrorResponse, type?: 'errored'
-     * }|MessageBatchCanceledResult|array{
-     *   type?: 'canceled'
-     * }|MessageBatchExpiredResult|array{type?: 'expired'} $result
+     * @param MessageBatchResultShape $result
      */
     public function withResult(
         MessageBatchSucceededResult|array|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult $result,

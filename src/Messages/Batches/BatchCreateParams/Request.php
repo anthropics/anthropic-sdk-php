@@ -8,26 +8,11 @@ use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Batches\BatchCreateParams\Request\Params;
-use Anthropic\Messages\Batches\BatchCreateParams\Request\Params\ServiceTier;
-use Anthropic\Messages\MessageParam;
-use Anthropic\Messages\Metadata;
-use Anthropic\Messages\Model;
-use Anthropic\Messages\TextBlockParam;
-use Anthropic\Messages\ThinkingConfigDisabled;
-use Anthropic\Messages\ThinkingConfigEnabled;
-use Anthropic\Messages\Tool;
-use Anthropic\Messages\ToolBash20250124;
-use Anthropic\Messages\ToolChoiceAny;
-use Anthropic\Messages\ToolChoiceAuto;
-use Anthropic\Messages\ToolChoiceNone;
-use Anthropic\Messages\ToolChoiceTool;
-use Anthropic\Messages\ToolTextEditor20250124;
-use Anthropic\Messages\ToolTextEditor20250429;
-use Anthropic\Messages\ToolTextEditor20250728;
-use Anthropic\Messages\WebSearchTool20250305;
 
 /**
- * @phpstan-type RequestShape = array{customID: string, params: Params}
+ * @phpstan-import-type ParamsShape from \Anthropic\Messages\Batches\BatchCreateParams\Request\Params
+ *
+ * @phpstan-type RequestShape = array{customID: string, params: Params|ParamsShape}
  */
 final class Request implements BaseModel
 {
@@ -74,22 +59,7 @@ final class Request implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Params|array{
-     *   maxTokens: int,
-     *   messages: list<MessageParam>,
-     *   model: string|value-of<Model>,
-     *   metadata?: Metadata|null,
-     *   serviceTier?: value-of<ServiceTier>|null,
-     *   stopSequences?: list<string>|null,
-     *   stream?: bool|null,
-     *   system?: string|list<TextBlockParam>|null,
-     *   temperature?: float|null,
-     *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled|null,
-     *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null,
-     *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null,
-     *   topK?: int|null,
-     *   topP?: float|null,
-     * } $params
+     * @param ParamsShape $params
      */
     public static function with(string $customID, Params|array $params): self
     {
@@ -119,22 +89,7 @@ final class Request implements BaseModel
      *
      * See the [Messages API reference](https://docs.claude.com/en/api/messages) for full documentation on available parameters.
      *
-     * @param Params|array{
-     *   maxTokens: int,
-     *   messages: list<MessageParam>,
-     *   model: string|value-of<Model>,
-     *   metadata?: Metadata|null,
-     *   serviceTier?: value-of<ServiceTier>|null,
-     *   stopSequences?: list<string>|null,
-     *   stream?: bool|null,
-     *   system?: string|list<TextBlockParam>|null,
-     *   temperature?: float|null,
-     *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled|null,
-     *   toolChoice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null,
-     *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null,
-     *   topK?: int|null,
-     *   topP?: float|null,
-     * } $params
+     * @param ParamsShape $params
      */
     public function withParams(Params|array $params): self
     {

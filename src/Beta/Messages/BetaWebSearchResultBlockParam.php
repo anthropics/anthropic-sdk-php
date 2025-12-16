@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaWebSearchResultBlockParamShape = array{
  *   encryptedContent: string,
  *   title: string,
- *   type?: 'web_search_result',
+ *   type: 'web_search_result',
  *   url: string,
  *   pageAge?: string|null,
  * }

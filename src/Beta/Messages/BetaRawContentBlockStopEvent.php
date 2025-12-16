@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaRawContentBlockStopEventShape = array{
- *   index: int, type?: 'content_block_stop'
+ *   index: int, type: 'content_block_stop'
  * }
  */
 final class BetaRawContentBlockStopEvent implements BaseModel

@@ -8,6 +8,12 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-import-type BetaCodeExecutionToolResultErrorParamShape from \Anthropic\Beta\Messages\BetaCodeExecutionToolResultErrorParam
+ * @phpstan-import-type BetaCodeExecutionResultBlockParamShape from \Anthropic\Beta\Messages\BetaCodeExecutionResultBlockParam
+ *
+ * @phpstan-type BetaCodeExecutionToolResultBlockParamContentShape = BetaCodeExecutionToolResultErrorParamShape|BetaCodeExecutionResultBlockParamShape
+ */
 final class BetaCodeExecutionToolResultBlockParamContent implements ConverterSource
 {
     use SdkUnion;

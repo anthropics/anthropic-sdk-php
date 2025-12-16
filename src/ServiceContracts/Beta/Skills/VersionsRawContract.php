@@ -25,7 +25,7 @@ interface VersionsRawContract
      * @param string $skillID Path param: Unique identifier for the skill.
      *
      * The format and length of IDs may change over time.
-     * @param array<mixed>|VersionCreateParams $params
+     * @param array<string,mixed>|VersionCreateParams $params
      *
      * @return BaseResponse<VersionNewResponse>
      *
@@ -43,7 +43,7 @@ interface VersionsRawContract
      * @param string $version Path param: Version identifier for the skill.
      *
      * Each version is identified by a Unix epoch timestamp (e.g., "1759178010641129").
-     * @param array<mixed>|VersionRetrieveParams $params
+     * @param array<string,mixed>|VersionRetrieveParams $params
      *
      * @return BaseResponse<VersionGetResponse>
      *
@@ -61,7 +61,7 @@ interface VersionsRawContract
      * @param string $skillID Path param: Unique identifier for the skill.
      *
      * The format and length of IDs may change over time.
-     * @param array<mixed>|VersionListParams $params
+     * @param array<string,mixed>|VersionListParams $params
      *
      * @return BaseResponse<PageCursor<VersionListResponse>>
      *
@@ -79,7 +79,7 @@ interface VersionsRawContract
      * @param string $version Path param: Version identifier for the skill.
      *
      * Each version is identified by a Unix epoch timestamp (e.g., "1759178010641129").
-     * @param array<mixed>|VersionDeleteParams $params
+     * @param array<string,mixed>|VersionDeleteParams $params
      *
      * @return BaseResponse<VersionDeleteResponse>
      *

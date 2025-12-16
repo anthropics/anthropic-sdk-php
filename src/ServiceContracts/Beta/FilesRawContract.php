@@ -19,7 +19,7 @@ interface FilesRawContract
     /**
      * @api
      *
-     * @param array<mixed>|FileListParams $params
+     * @param array<string,mixed>|FileListParams $params
      *
      * @return BaseResponse<Page<FileMetadata>>
      *
@@ -34,7 +34,7 @@ interface FilesRawContract
      * @api
      *
      * @param string $fileID ID of the File
-     * @param array<mixed>|FileDeleteParams $params
+     * @param array<string,mixed>|FileDeleteParams $params
      *
      * @return BaseResponse<DeletedFile>
      *
@@ -50,7 +50,7 @@ interface FilesRawContract
      * @api
      *
      * @param string $fileID ID of the File
-     * @param array<mixed>|FileRetrieveMetadataParams $params
+     * @param array<string,mixed>|FileRetrieveMetadataParams $params
      *
      * @return BaseResponse<FileMetadata>
      *

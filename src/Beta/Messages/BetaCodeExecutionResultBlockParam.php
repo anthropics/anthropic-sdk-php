@@ -9,12 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaCodeExecutionOutputBlockParamShape from \Anthropic\Beta\Messages\BetaCodeExecutionOutputBlockParam
+ *
  * @phpstan-type BetaCodeExecutionResultBlockParamShape = array{
- *   content: list<BetaCodeExecutionOutputBlockParam>,
+ *   content: list<BetaCodeExecutionOutputBlockParamShape>,
  *   returnCode: int,
  *   stderr: string,
  *   stdout: string,
- *   type?: 'code_execution_result',
+ *   type: 'code_execution_result',
  * }
  */
 final class BetaCodeExecutionResultBlockParam implements BaseModel
@@ -69,9 +71,7 @@ final class BetaCodeExecutionResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaCodeExecutionOutputBlockParam|array{
-     *   fileID: string, type?: 'code_execution_output'
-     * }> $content
+     * @param list<BetaCodeExecutionOutputBlockParamShape> $content
      */
     public static function with(
         array $content,
@@ -90,9 +90,7 @@ final class BetaCodeExecutionResultBlockParam implements BaseModel
     }
 
     /**
-     * @param list<BetaCodeExecutionOutputBlockParam|array{
-     *   fileID: string, type?: 'code_execution_output'
-     * }> $content
+     * @param list<BetaCodeExecutionOutputBlockParamShape> $content
      */
     public function withContent(array $content): self
     {

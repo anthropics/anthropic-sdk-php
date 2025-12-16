@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaTextEditorCodeExecutionStrReplaceResultBlockParamShape = array{
- *   type?: 'text_editor_code_execution_str_replace_result',
+ *   type: 'text_editor_code_execution_str_replace_result',
  *   lines?: list<string>|null,
  *   newLines?: int|null,
  *   newStart?: int|null,
