@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-class Model implements BaseModel
+class Dog implements BaseModel
 {
     /** @use SdkModel<array<string, mixed>> */
     use SdkModel;
@@ -43,7 +43,7 @@ class Model implements BaseModel
         $this->ageYears = $ageYears;
         $this->owner = $owner;
 
-        null != $friends && $this->friends = $friends;
+        null !== $friends && $this['friends'] = $friends;
     }
 }
 
@@ -58,11 +58,7 @@ class ModelTest extends TestCase
     #[Test]
     public function testBasicGetAndSet(): void
     {
-        $model = new Model(
-            name: 'Bob',
-            ageYears: 12,
-            owner: null,
-        );
+        $model = new Dog(name: 'Bob', ageYears: 12, owner: null);
         $this->assertEquals(12, $model->ageYears);
 
         ++$model->ageYears;
@@ -72,11 +68,7 @@ class ModelTest extends TestCase
     #[Test]
     public function testNullAccess(): void
     {
-        $model = new Model(
-            name: 'Bob',
-            ageYears: 12,
-            owner: null,
-        );
+        $model = new Dog(name: 'Bob', ageYears: 12, owner: null);
         $this->assertNull($model->owner);
         $this->assertNull($model->friends);
     }
@@ -84,11 +76,7 @@ class ModelTest extends TestCase
     #[Test]
     public function testArrayGetAndSet(): void
     {
-        $model = new Model(
-            name: 'Bob',
-            ageYears: 12,
-            owner: null,
-        );
+        $model = new Dog(name: 'Bob', ageYears: 12, owner: null);
         $model->friends ??= [];
         $this->assertEquals([], $model->friends);
         $model->friends[] = 'Alice';
@@ -98,16 +86,8 @@ class ModelTest extends TestCase
     #[Test]
     public function testDiscernsBetweenNullAndUnset(): void
     {
-        $modelUnsetFriends = new Model(
-            name: 'Bob',
-            ageYears: 12,
-            owner: null,
-        );
-        $modelNullFriends = new Model(
-            name: 'bob',
-            ageYears: 12,
-            owner: null,
-        );
+        $modelUnsetFriends = new Dog(name: 'Bob', ageYears: 12, owner: null);
+        $modelNullFriends = new Dog(name: 'bob', ageYears: 12, owner: null);
         $modelNullFriends->friends = null;
 
         $this->assertEquals(12, $modelUnsetFriends->ageYears);
@@ -126,11 +106,7 @@ class ModelTest extends TestCase
     #[Test]
     public function testIssetOnOmittedProperties(): void
     {
-        $model = new Model(
-            name: 'Bob',
-            ageYears: 12,
-            owner: null,
-        );
+        $model = new Dog(name: 'Bob', ageYears: 12, owner: null);
         $this->assertFalse(isset($model->owner));
         $this->assertFalse(isset($model->friends));
     }
@@ -138,12 +114,7 @@ class ModelTest extends TestCase
     #[Test]
     public function testSerializeBasicModel(): void
     {
-        $model = new Model(
-            name: 'Bob',
-            ageYears: 12,
-            owner: 'Eve',
-            friends: ['Alice', 'Charlie'],
-        );
+        $model = new Dog(name: 'Bob', ageYears: 12, owner: 'Eve', friends: ['Alice', 'Charlie']);
         $this->assertEquals(
             '{"name":"Bob","age_years":12,"friends":["Alice","Charlie"],"owner":"Eve"}',
             json_encode($model)
@@ -153,11 +124,7 @@ class ModelTest extends TestCase
     #[Test]
     public function testSerializeModelWithOmittedProperties(): void
     {
-        $model = new Model(
-            name: 'Bob',
-            ageYears: 12,
-            owner: null,
-        );
+        $model = new Dog(name: 'Bob', ageYears: 12, owner: null);
         $this->assertEquals(
             '{"name":"Bob","age_years":12,"owner":null}',
             json_encode($model)
@@ -167,11 +134,7 @@ class ModelTest extends TestCase
     #[Test]
     public function testSerializeModelWithExplicitNull(): void
     {
-        $model = new Model(
-            name: 'Bob',
-            ageYears: 12,
-            owner: null,
-        );
+        $model = new Dog(name: 'Bob', ageYears: 12, owner: null);
         $model->friends = null;
         $this->assertEquals(
             '{"name":"Bob","age_years":12,"friends":null,"owner":null}',
