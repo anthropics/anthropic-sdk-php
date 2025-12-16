@@ -87,6 +87,20 @@ final class Util
         return array_filter($arr, fn ($v, $_) => OMIT !== $v, mode: ARRAY_FILTER_USE_BOTH);
     }
 
+    public static function strVal(mixed $value): string
+    {
+        if (is_bool($value)) {
+            return $value ? 'true' : 'false';
+        }
+
+        if (is_object($value) && is_a($value, class: \DateTimeInterface::class)) {
+            return date_format($value, format: \DateTimeInterface::RFC3339);
+        }
+
+        // @phpstan-ignore-next-line argument.type
+        return strval($value);
+    }
+
     /**
      * @param callable $callback
      */
@@ -185,7 +199,12 @@ final class Util
         parse_str($parsed['query'] ?? '', $q2);
 
         $mergedQuery = array_merge_recursive($q1, $q2, $query);
-        $normalizedQuery = array_map(static fn ($v) => self::strVal($v), array: $mergedQuery);
+
+        /** @var array<string,mixed> */
+        $normalizedQuery = self::mapRecursive(
+            static fn ($v) => is_bool($v) || is_numeric($v) ? self::strVal($v) : $v,
+            value: $mergedQuery
+        );
         $qs = http_build_query($normalizedQuery, encoding_type: PHP_QUERY_RFC3986);
 
         return $base->withQuery($qs);
@@ -407,20 +426,6 @@ final class Util
     public static function prettyEncodeJson(mixed $obj): string
     {
         return json_encode($obj, flags: JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
-    }
-
-    private static function strVal(mixed $value): string
-    {
-        if (is_bool($value)) {
-            return $value ? 'true' : 'false';
-        }
-
-        if (is_object($value) && is_a($value, class: \DateTimeInterface::class)) {
-            return date_format($value, format: \DateTimeInterface::RFC3339);
-        }
-
-        // @phpstan-ignore-next-line argument.type
-        return strval($value);
     }
 
     /**
