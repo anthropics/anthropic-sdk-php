@@ -12,11 +12,11 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaTextEditorCodeExecutionViewResultBlockShape = array{
  *   content: string,
- *   fileType: value-of<FileType>,
+ *   fileType: FileType|value-of<FileType>,
  *   numLines: int|null,
  *   startLine: int|null,
  *   totalLines: int|null,
- *   type?: 'text_editor_code_execution_view_result',
+ *   type: 'text_editor_code_execution_view_result',
  * }
  */
 final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel

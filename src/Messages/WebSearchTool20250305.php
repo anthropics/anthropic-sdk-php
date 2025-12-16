@@ -8,18 +8,20 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\CacheControlEphemeral\TTL;
 use Anthropic\Messages\WebSearchTool20250305\UserLocation;
 
 /**
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ * @phpstan-import-type UserLocationShape from \Anthropic\Messages\WebSearchTool20250305\UserLocation
+ *
  * @phpstan-type WebSearchTool20250305Shape = array{
- *   name?: 'web_search',
- *   type?: 'web_search_20250305',
+ *   name: 'web_search',
+ *   type: 'web_search_20250305',
  *   allowedDomains?: list<string>|null,
  *   blockedDomains?: list<string>|null,
- *   cacheControl?: CacheControlEphemeral|null,
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   maxUses?: int|null,
- *   userLocation?: UserLocation|null,
+ *   userLocation?: null|UserLocation|UserLocationShape,
  * }
  */
 final class WebSearchTool20250305 implements BaseModel
@@ -87,16 +89,8 @@ final class WebSearchTool20250305 implements BaseModel
      *
      * @param list<string>|null $allowedDomains
      * @param list<string>|null $blockedDomains
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
-     * @param UserLocation|array{
-     *   type?: 'approximate',
-     *   city?: string|null,
-     *   country?: string|null,
-     *   region?: string|null,
-     *   timezone?: string|null,
-     * }|null $userLocation
+     * @param CacheControlEphemeralShape|null $cacheControl
+     * @param UserLocationShape|null $userLocation
      */
     public static function with(
         ?array $allowedDomains = null,
@@ -145,9 +139,7 @@ final class WebSearchTool20250305 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param CacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl
@@ -172,13 +164,7 @@ final class WebSearchTool20250305 implements BaseModel
     /**
      * Parameters for the user's location. Used to provide more relevant search results.
      *
-     * @param UserLocation|array{
-     *   type?: 'approximate',
-     *   city?: string|null,
-     *   country?: string|null,
-     *   region?: string|null,
-     *   timezone?: string|null,
-     * }|null $userLocation
+     * @param UserLocationShape|null $userLocation
      */
     public function withUserLocation(
         UserLocation|array|null $userLocation

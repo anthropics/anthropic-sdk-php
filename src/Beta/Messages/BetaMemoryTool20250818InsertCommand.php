@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818InsertCommandShape = array{
- *   command?: 'insert', insertLine: int, insertText: string, path: string
+ *   command: 'insert', insertLine: int, insertText: string, path: string
  * }
  */
 final class BetaMemoryTool20250818InsertCommand implements BaseModel

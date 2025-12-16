@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaWebFetchTool20250910\AllowedCaller;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
@@ -12,14 +11,17 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type BetaCitationsConfigParamShape from \Anthropic\Beta\Messages\BetaCitationsConfigParam
+ *
  * @phpstan-type BetaWebFetchTool20250910Shape = array{
- *   name?: 'web_fetch',
- *   type?: 'web_fetch_20250910',
- *   allowedCallers?: list<value-of<AllowedCaller>>|null,
+ *   name: 'web_fetch',
+ *   type: 'web_fetch_20250910',
+ *   allowedCallers?: list<AllowedCaller|value-of<AllowedCaller>>|null,
  *   allowedDomains?: list<string>|null,
  *   blockedDomains?: list<string>|null,
- *   cacheControl?: BetaCacheControlEphemeral|null,
- *   citations?: BetaCitationsConfigParam|null,
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
+ *   citations?: null|BetaCitationsConfigParam|BetaCitationsConfigParamShape,
  *   deferLoading?: bool|null,
  *   maxContentTokens?: int|null,
  *   maxUses?: int|null,
@@ -111,10 +113,8 @@ final class BetaWebFetchTool20250910 implements BaseModel
      * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
      * @param list<string>|null $allowedDomains
      * @param list<string>|null $blockedDomains
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
-     * @param BetaCitationsConfigParam|array{enabled?: bool|null}|null $citations
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCitationsConfigParamShape|null $citations
      */
     public static function with(
         ?array $allowedCallers = null,
@@ -182,9 +182,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
@@ -198,7 +196,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     /**
      * Citations configuration for fetched documents. Citations are disabled by default.
      *
-     * @param BetaCitationsConfigParam|array{enabled?: bool|null}|null $citations
+     * @param BetaCitationsConfigParamShape|null $citations
      */
     public function withCitations(
         BetaCitationsConfigParam|array|null $citations

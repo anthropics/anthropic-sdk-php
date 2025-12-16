@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaToolSearchToolResultError\ErrorCode;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaToolSearchToolResultBlock\Content
+ *
  * @phpstan-type BetaToolSearchToolResultBlockShape = array{
- *   content: BetaToolSearchToolResultError|BetaToolSearchToolSearchResultBlock,
+ *   content: BetaToolSearchToolResultError|BetaToolSearchToolSearchResultBlock|ContentShape,
  *   toolUseID: string,
- *   type?: 'tool_search_tool_result',
+ *   type: 'tool_search_tool_result',
  * }
  */
 final class BetaToolSearchToolResultBlock implements BaseModel
@@ -55,14 +56,7 @@ final class BetaToolSearchToolResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaToolSearchToolResultError|array{
-     *   errorCode: value-of<ErrorCode>,
-     *   errorMessage: string|null,
-     *   type?: 'tool_search_tool_result_error',
-     * }|BetaToolSearchToolSearchResultBlock|array{
-     *   toolReferences: list<BetaToolReferenceBlock>,
-     *   type?: 'tool_search_tool_search_result',
-     * } $content
+     * @param ContentShape $content
      */
     public static function with(
         BetaToolSearchToolResultError|array|BetaToolSearchToolSearchResultBlock $content,
@@ -77,14 +71,7 @@ final class BetaToolSearchToolResultBlock implements BaseModel
     }
 
     /**
-     * @param BetaToolSearchToolResultError|array{
-     *   errorCode: value-of<ErrorCode>,
-     *   errorMessage: string|null,
-     *   type?: 'tool_search_tool_result_error',
-     * }|BetaToolSearchToolSearchResultBlock|array{
-     *   toolReferences: list<BetaToolReferenceBlock>,
-     *   type?: 'tool_search_tool_search_result',
-     * } $content
+     * @param ContentShape $content
      */
     public function withContent(
         BetaToolSearchToolResultError|array|BetaToolSearchToolSearchResultBlock $content,

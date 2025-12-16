@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaCodeExecutionTool20250522\AllowedCaller;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
@@ -12,11 +11,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ *
  * @phpstan-type BetaCodeExecutionTool20250522Shape = array{
- *   name?: 'code_execution',
- *   type?: 'code_execution_20250522',
- *   allowedCallers?: list<value-of<AllowedCaller>>|null,
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   name: 'code_execution',
+ *   type: 'code_execution_20250522',
+ *   allowedCallers?: list<AllowedCaller|value-of<AllowedCaller>>|null,
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   deferLoading?: bool|null,
  *   strict?: bool|null,
  * }
@@ -70,9 +71,7 @@ final class BetaCodeExecutionTool20250522 implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         ?array $allowedCallers = null,
@@ -104,9 +103,7 @@ final class BetaCodeExecutionTool20250522 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl

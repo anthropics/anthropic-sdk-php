@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaAuthenticationErrorShape = array{
- *   message: string, type?: 'authentication_error'
+ *   message: string, type: 'authentication_error'
  * }
  */
 final class BetaAuthenticationError implements BaseModel

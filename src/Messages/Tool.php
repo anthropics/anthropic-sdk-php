@@ -8,17 +8,19 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\CacheControlEphemeral\TTL;
 use Anthropic\Messages\Tool\InputSchema;
 use Anthropic\Messages\Tool\Type;
 
 /**
+ * @phpstan-import-type InputSchemaShape from \Anthropic\Messages\Tool\InputSchema
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ *
  * @phpstan-type ToolShape = array{
- *   inputSchema: InputSchema,
+ *   inputSchema: InputSchema|InputSchemaShape,
  *   name: string,
- *   cacheControl?: CacheControlEphemeral|null,
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   description?: string|null,
- *   type?: value-of<Type>|null,
+ *   type?: null|Type|value-of<Type>,
  * }
  */
 final class Tool implements BaseModel
@@ -84,14 +86,8 @@ final class Tool implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param InputSchema|array{
-     *   type?: 'object',
-     *   properties?: array<string,mixed>|null,
-     *   required?: list<string>|null,
-     * } $inputSchema
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param InputSchemaShape $inputSchema
+     * @param CacheControlEphemeralShape|null $cacheControl
      * @param Type|value-of<Type>|null $type
      */
     public static function with(
@@ -118,11 +114,7 @@ final class Tool implements BaseModel
      *
      * This defines the shape of the `input` that your tool accepts and that the model will produce.
      *
-     * @param InputSchema|array{
-     *   type?: 'object',
-     *   properties?: array<string,mixed>|null,
-     *   required?: list<string>|null,
-     * } $inputSchema
+     * @param InputSchemaShape $inputSchema
      */
     public function withInputSchema(InputSchema|array $inputSchema): self
     {
@@ -148,9 +140,7 @@ final class Tool implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param CacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl

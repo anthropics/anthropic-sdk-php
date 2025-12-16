@@ -75,8 +75,6 @@ trait SdkModel
      * a native class property, indicating an omitted value,
      * or a property overridden with an incongruent type
      *
-     * @return value-of<Shape>
-     *
      * @throws \Exception
      */
     public function __get(string $key): mixed

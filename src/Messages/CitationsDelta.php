@@ -10,9 +10,11 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\CitationsDelta\Citation;
 
 /**
+ * @phpstan-import-type CitationShape from \Anthropic\Messages\CitationsDelta\Citation
+ *
  * @phpstan-type CitationsDeltaShape = array{
- *   citation: CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation,
- *   type?: 'citations_delta',
+ *   citation: CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation|CitationShape,
+ *   type: 'citations_delta',
  * }
  */
 final class CitationsDelta implements BaseModel
@@ -51,45 +53,7 @@ final class CitationsDelta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CitationCharLocation|array{
-     *   citedText: string,
-     *   documentIndex: int,
-     *   documentTitle: string|null,
-     *   endCharIndex: int,
-     *   fileID: string|null,
-     *   startCharIndex: int,
-     *   type?: 'char_location',
-     * }|CitationPageLocation|array{
-     *   citedText: string,
-     *   documentIndex: int,
-     *   documentTitle: string|null,
-     *   endPageNumber: int,
-     *   fileID: string|null,
-     *   startPageNumber: int,
-     *   type?: 'page_location',
-     * }|CitationContentBlockLocation|array{
-     *   citedText: string,
-     *   documentIndex: int,
-     *   documentTitle: string|null,
-     *   endBlockIndex: int,
-     *   fileID: string|null,
-     *   startBlockIndex: int,
-     *   type?: 'content_block_location',
-     * }|CitationsWebSearchResultLocation|array{
-     *   citedText: string,
-     *   encryptedIndex: string,
-     *   title: string|null,
-     *   type?: 'web_search_result_location',
-     *   url: string,
-     * }|CitationsSearchResultLocation|array{
-     *   citedText: string,
-     *   endBlockIndex: int,
-     *   searchResultIndex: int,
-     *   source: string,
-     *   startBlockIndex: int,
-     *   title: string|null,
-     *   type?: 'search_result_location',
-     * } $citation
+     * @param CitationShape $citation
      */
     public static function with(
         CitationCharLocation|array|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation $citation,
@@ -102,45 +66,7 @@ final class CitationsDelta implements BaseModel
     }
 
     /**
-     * @param CitationCharLocation|array{
-     *   citedText: string,
-     *   documentIndex: int,
-     *   documentTitle: string|null,
-     *   endCharIndex: int,
-     *   fileID: string|null,
-     *   startCharIndex: int,
-     *   type?: 'char_location',
-     * }|CitationPageLocation|array{
-     *   citedText: string,
-     *   documentIndex: int,
-     *   documentTitle: string|null,
-     *   endPageNumber: int,
-     *   fileID: string|null,
-     *   startPageNumber: int,
-     *   type?: 'page_location',
-     * }|CitationContentBlockLocation|array{
-     *   citedText: string,
-     *   documentIndex: int,
-     *   documentTitle: string|null,
-     *   endBlockIndex: int,
-     *   fileID: string|null,
-     *   startBlockIndex: int,
-     *   type?: 'content_block_location',
-     * }|CitationsWebSearchResultLocation|array{
-     *   citedText: string,
-     *   encryptedIndex: string,
-     *   title: string|null,
-     *   type?: 'web_search_result_location',
-     *   url: string,
-     * }|CitationsSearchResultLocation|array{
-     *   citedText: string,
-     *   endBlockIndex: int,
-     *   searchResultIndex: int,
-     *   source: string,
-     *   startBlockIndex: int,
-     *   title: string|null,
-     *   type?: 'search_result_location',
-     * } $citation
+     * @param CitationShape $citation
      */
     public function withCitation(
         CitationCharLocation|array|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation $citation,

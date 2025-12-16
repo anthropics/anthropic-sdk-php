@@ -8,14 +8,16 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\CacheControlEphemeral\TTL;
 
 /**
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ * @phpstan-import-type TextCitationParamShape from \Anthropic\Messages\TextCitationParam
+ *
  * @phpstan-type TextBlockParamShape = array{
  *   text: string,
- *   type?: 'text',
- *   cacheControl?: CacheControlEphemeral|null,
- *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
+ *   type: 'text',
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
+ *   citations?: list<TextCitationParamShape>|null,
  * }
  */
 final class TextBlockParam implements BaseModel
@@ -66,45 +68,8 @@ final class TextBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
-     * @param list<CitationCharLocationParam|array{
-     *   citedText: string,
-     *   documentIndex: int,
-     *   documentTitle: string|null,
-     *   endCharIndex: int,
-     *   startCharIndex: int,
-     *   type?: 'char_location',
-     * }|CitationPageLocationParam|array{
-     *   citedText: string,
-     *   documentIndex: int,
-     *   documentTitle: string|null,
-     *   endPageNumber: int,
-     *   startPageNumber: int,
-     *   type?: 'page_location',
-     * }|CitationContentBlockLocationParam|array{
-     *   citedText: string,
-     *   documentIndex: int,
-     *   documentTitle: string|null,
-     *   endBlockIndex: int,
-     *   startBlockIndex: int,
-     *   type?: 'content_block_location',
-     * }|CitationWebSearchResultLocationParam|array{
-     *   citedText: string,
-     *   encryptedIndex: string,
-     *   title: string|null,
-     *   type?: 'web_search_result_location',
-     *   url: string,
-     * }|CitationSearchResultLocationParam|array{
-     *   citedText: string,
-     *   endBlockIndex: int,
-     *   searchResultIndex: int,
-     *   source: string,
-     *   startBlockIndex: int,
-     *   title: string|null,
-     *   type?: 'search_result_location',
-     * }>|null $citations
+     * @param CacheControlEphemeralShape|null $cacheControl
+     * @param list<TextCitationParamShape>|null $citations
      */
     public static function with(
         string $text,
@@ -132,9 +97,7 @@ final class TextBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param CacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl
@@ -146,42 +109,7 @@ final class TextBlockParam implements BaseModel
     }
 
     /**
-     * @param list<CitationCharLocationParam|array{
-     *   citedText: string,
-     *   documentIndex: int,
-     *   documentTitle: string|null,
-     *   endCharIndex: int,
-     *   startCharIndex: int,
-     *   type?: 'char_location',
-     * }|CitationPageLocationParam|array{
-     *   citedText: string,
-     *   documentIndex: int,
-     *   documentTitle: string|null,
-     *   endPageNumber: int,
-     *   startPageNumber: int,
-     *   type?: 'page_location',
-     * }|CitationContentBlockLocationParam|array{
-     *   citedText: string,
-     *   documentIndex: int,
-     *   documentTitle: string|null,
-     *   endBlockIndex: int,
-     *   startBlockIndex: int,
-     *   type?: 'content_block_location',
-     * }|CitationWebSearchResultLocationParam|array{
-     *   citedText: string,
-     *   encryptedIndex: string,
-     *   title: string|null,
-     *   type?: 'web_search_result_location',
-     *   url: string,
-     * }|CitationSearchResultLocationParam|array{
-     *   citedText: string,
-     *   endBlockIndex: int,
-     *   searchResultIndex: int,
-     *   source: string,
-     *   startBlockIndex: int,
-     *   title: string|null,
-     *   type?: 'search_result_location',
-     * }>|null $citations
+     * @param list<TextCitationParamShape>|null $citations
      */
     public function withCitations(?array $citations): self
     {

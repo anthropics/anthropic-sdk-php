@@ -10,6 +10,8 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type MessageBatchRequestCountsShape from \Anthropic\Beta\Messages\Batches\MessageBatchRequestCounts
+ *
  * @phpstan-type MessageBatchShape = array{
  *   id: string,
  *   archivedAt: \DateTimeInterface|null,
@@ -17,10 +19,10 @@ use Anthropic\Core\Contracts\BaseModel;
  *   createdAt: \DateTimeInterface,
  *   endedAt: \DateTimeInterface|null,
  *   expiresAt: \DateTimeInterface,
- *   processingStatus: value-of<ProcessingStatus>,
- *   requestCounts: MessageBatchRequestCounts,
+ *   processingStatus: ProcessingStatus|value-of<ProcessingStatus>,
+ *   requestCounts: MessageBatchRequestCounts|MessageBatchRequestCountsShape,
  *   resultsURL: string|null,
- *   type?: 'message_batch',
+ *   type: 'message_batch',
  * }
  */
 final class MessageBatch implements BaseModel
@@ -146,9 +148,7 @@ final class MessageBatch implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ProcessingStatus|value-of<ProcessingStatus> $processingStatus
-     * @param MessageBatchRequestCounts|array{
-     *   canceled: int, errored: int, expired: int, processing: int, succeeded: int
-     * } $requestCounts
+     * @param MessageBatchRequestCountsShape $requestCounts
      */
     public static function with(
         string $id,
@@ -266,9 +266,7 @@ final class MessageBatch implements BaseModel
      *
      * Requests start as `processing` and move to one of the other statuses only once processing of the entire batch ends. The sum of all values always matches the total number of requests in the batch.
      *
-     * @param MessageBatchRequestCounts|array{
-     *   canceled: int, errored: int, expired: int, processing: int, succeeded: int
-     * } $requestCounts
+     * @param MessageBatchRequestCountsShape $requestCounts
      */
     public function withRequestCounts(
         MessageBatchRequestCounts|array $requestCounts

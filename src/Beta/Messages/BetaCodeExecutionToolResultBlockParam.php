@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaCodeExecutionToolResultBlockParamContentShape from \Anthropic\Beta\Messages\BetaCodeExecutionToolResultBlockParamContent
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ *
  * @phpstan-type BetaCodeExecutionToolResultBlockParamShape = array{
- *   content: BetaCodeExecutionToolResultErrorParam|BetaCodeExecutionResultBlockParam,
+ *   content: BetaCodeExecutionToolResultErrorParam|BetaCodeExecutionResultBlockParam|BetaCodeExecutionToolResultBlockParamContentShape,
  *   toolUseID: string,
- *   type?: 'code_execution_tool_result',
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   type: 'code_execution_tool_result',
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  * }
  */
 final class BetaCodeExecutionToolResultBlockParam implements BaseModel
@@ -65,19 +67,8 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaCodeExecutionToolResultErrorParam|array{
-     *   errorCode: value-of<BetaCodeExecutionToolResultErrorCode>,
-     *   type?: 'code_execution_tool_result_error',
-     * }|BetaCodeExecutionResultBlockParam|array{
-     *   content: list<BetaCodeExecutionOutputBlockParam>,
-     *   returnCode: int,
-     *   stderr: string,
-     *   stdout: string,
-     *   type?: 'code_execution_result',
-     * } $content
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCodeExecutionToolResultBlockParamContentShape $content
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         BetaCodeExecutionToolResultErrorParam|array|BetaCodeExecutionResultBlockParam $content,
@@ -95,16 +86,7 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
     }
 
     /**
-     * @param BetaCodeExecutionToolResultErrorParam|array{
-     *   errorCode: value-of<BetaCodeExecutionToolResultErrorCode>,
-     *   type?: 'code_execution_tool_result_error',
-     * }|BetaCodeExecutionResultBlockParam|array{
-     *   content: list<BetaCodeExecutionOutputBlockParam>,
-     *   returnCode: int,
-     *   stderr: string,
-     *   stdout: string,
-     *   type?: 'code_execution_result',
-     * } $content
+     * @param BetaCodeExecutionToolResultBlockParamContentShape $content
      */
     public function withContent(
         BetaCodeExecutionToolResultErrorParam|array|BetaCodeExecutionResultBlockParam $content,
@@ -126,9 +108,7 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl

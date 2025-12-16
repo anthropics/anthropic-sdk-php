@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaInvalidRequestErrorShape = array{
- *   message: string, type?: 'invalid_request_error'
+ *   message: string, type: 'invalid_request_error'
  * }
  */
 final class BetaInvalidRequestError implements BaseModel

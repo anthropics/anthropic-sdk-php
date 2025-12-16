@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   source: string,
  *   startBlockIndex: int,
  *   title: string|null,
- *   type?: 'search_result_location',
+ *   type: 'search_result_location',
  * }
  */
 final class CitationSearchResultLocationParam implements BaseModel

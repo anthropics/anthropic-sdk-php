@@ -4,25 +4,28 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaServerToolUseBlock\Name;
-use Anthropic\Beta\Messages\BetaUsage\ServiceTier;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Model;
 
 /**
+ * @phpstan-import-type BetaContainerShape from \Anthropic\Beta\Messages\BetaContainer
+ * @phpstan-import-type BetaContentBlockShape from \Anthropic\Beta\Messages\BetaContentBlock
+ * @phpstan-import-type BetaContextManagementResponseShape from \Anthropic\Beta\Messages\BetaContextManagementResponse
+ * @phpstan-import-type BetaUsageShape from \Anthropic\Beta\Messages\BetaUsage
+ *
  * @phpstan-type BetaMessageShape = array{
  *   id: string,
- *   container: BetaContainer|null,
- *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
- *   contextManagement: BetaContextManagementResponse|null,
- *   model: string|value-of<Model>,
- *   role?: 'assistant',
- *   stopReason: value-of<BetaStopReason>|null,
+ *   container: null|BetaContainer|BetaContainerShape,
+ *   content: list<BetaContentBlockShape>,
+ *   contextManagement: null|BetaContextManagementResponse|BetaContextManagementResponseShape,
+ *   model: Model|value-of<Model>,
+ *   role: 'assistant',
+ *   stopReason: null|BetaStopReason|value-of<BetaStopReason>,
  *   stopSequence: string|null,
- *   type?: 'message',
- *   usage: BetaUsage,
+ *   type: 'message',
+ *   usage: BetaUsage|BetaUsageShape,
  * }
  */
 final class BetaMessage implements BaseModel
@@ -107,7 +110,7 @@ final class BetaMessage implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var string|value-of<Model> $model
+     * @var value-of<Model> $model
      */
     #[Required(enum: Model::class)]
     public string $model;
@@ -193,87 +196,19 @@ final class BetaMessage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaContainer|array{
-     *   id: string, expiresAt: \DateTimeInterface, skills: list<BetaSkill>|null
-     * }|null $container
-     * @param list<BetaTextBlock|array{
-     *   citations: list<BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation>|null,
-     *   text: string,
-     *   type?: 'text',
-     * }|BetaThinkingBlock|array{
-     *   signature: string, thinking: string, type?: 'thinking'
-     * }|BetaRedactedThinkingBlock|array{
-     *   data: string, type?: 'redacted_thinking'
-     * }|BetaToolUseBlock|array{
-     *   id: string,
-     *   input: array<string,mixed>,
-     *   name: string,
-     *   type?: 'tool_use',
-     *   caller?: BetaDirectCaller|BetaServerToolCaller|null,
-     * }|BetaServerToolUseBlock|array{
-     *   id: string,
-     *   caller: BetaDirectCaller|BetaServerToolCaller,
-     *   input: array<string,mixed>,
-     *   name: value-of<Name>,
-     *   type?: 'server_tool_use',
-     * }|BetaWebSearchToolResultBlock|array{
-     *   content: BetaWebSearchToolResultError|list<BetaWebSearchResultBlock>,
-     *   toolUseID: string,
-     *   type?: 'web_search_tool_result',
-     * }|BetaWebFetchToolResultBlock|array{
-     *   content: BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock,
-     *   toolUseID: string,
-     *   type?: 'web_fetch_tool_result',
-     * }|BetaCodeExecutionToolResultBlock|array{
-     *   content: BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock,
-     *   toolUseID: string,
-     *   type?: 'code_execution_tool_result',
-     * }|BetaBashCodeExecutionToolResultBlock|array{
-     *   content: BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock,
-     *   toolUseID: string,
-     *   type?: 'bash_code_execution_tool_result',
-     * }|BetaTextEditorCodeExecutionToolResultBlock|array{
-     *   content: BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock,
-     *   toolUseID: string,
-     *   type?: 'text_editor_code_execution_tool_result',
-     * }|BetaToolSearchToolResultBlock|array{
-     *   content: BetaToolSearchToolResultError|BetaToolSearchToolSearchResultBlock,
-     *   toolUseID: string,
-     *   type?: 'tool_search_tool_result',
-     * }|BetaMCPToolUseBlock|array{
-     *   id: string,
-     *   input: array<string,mixed>,
-     *   name: string,
-     *   serverName: string,
-     *   type?: 'mcp_tool_use',
-     * }|BetaMCPToolResultBlock|array{
-     *   content: string|list<BetaTextBlock>,
-     *   isError: bool,
-     *   toolUseID: string,
-     *   type?: 'mcp_tool_result',
-     * }|BetaContainerUploadBlock|array{
-     *   fileID: string, type?: 'container_upload'
-     * }> $content
-     * @param BetaContextManagementResponse|array{
-     *   appliedEdits: list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse>,
-     * }|null $contextManagement
+     * @param BetaContainerShape|null $container
+     * @param list<BetaContentBlockShape> $content
+     * @param BetaContextManagementResponseShape|null $contextManagement
+     * @param Model|value-of<Model> $model
      * @param BetaStopReason|value-of<BetaStopReason>|null $stopReason
-     * @param BetaUsage|array{
-     *   cacheCreation: BetaCacheCreation|null,
-     *   cacheCreationInputTokens: int|null,
-     *   cacheReadInputTokens: int|null,
-     *   inputTokens: int,
-     *   outputTokens: int,
-     *   serverToolUse: BetaServerToolUsage|null,
-     *   serviceTier: value-of<ServiceTier>|null,
-     * } $usage
+     * @param BetaUsageShape $usage
      */
     public static function with(
         string $id,
         BetaContainer|array|null $container,
         array $content,
         BetaContextManagementResponse|array|null $contextManagement,
-        string|Model $model,
+        Model|string $model,
         BetaStopReason|string|null $stopReason,
         ?string $stopSequence,
         BetaUsage|array $usage,
@@ -308,9 +243,7 @@ final class BetaMessage implements BaseModel
     /**
      * Information about the container used in the request (for the code execution tool).
      *
-     * @param BetaContainer|array{
-     *   id: string, expiresAt: \DateTimeInterface, skills: list<BetaSkill>|null
-     * }|null $container
+     * @param BetaContainerShape|null $container
      */
     public function withContainer(BetaContainer|array|null $container): self
     {
@@ -347,64 +280,7 @@ final class BetaMessage implements BaseModel
      * [{"type": "text", "text": "B)"}]
      * ```
      *
-     * @param list<BetaTextBlock|array{
-     *   citations: list<BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation>|null,
-     *   text: string,
-     *   type?: 'text',
-     * }|BetaThinkingBlock|array{
-     *   signature: string, thinking: string, type?: 'thinking'
-     * }|BetaRedactedThinkingBlock|array{
-     *   data: string, type?: 'redacted_thinking'
-     * }|BetaToolUseBlock|array{
-     *   id: string,
-     *   input: array<string,mixed>,
-     *   name: string,
-     *   type?: 'tool_use',
-     *   caller?: BetaDirectCaller|BetaServerToolCaller|null,
-     * }|BetaServerToolUseBlock|array{
-     *   id: string,
-     *   caller: BetaDirectCaller|BetaServerToolCaller,
-     *   input: array<string,mixed>,
-     *   name: value-of<Name>,
-     *   type?: 'server_tool_use',
-     * }|BetaWebSearchToolResultBlock|array{
-     *   content: BetaWebSearchToolResultError|list<BetaWebSearchResultBlock>,
-     *   toolUseID: string,
-     *   type?: 'web_search_tool_result',
-     * }|BetaWebFetchToolResultBlock|array{
-     *   content: BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock,
-     *   toolUseID: string,
-     *   type?: 'web_fetch_tool_result',
-     * }|BetaCodeExecutionToolResultBlock|array{
-     *   content: BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock,
-     *   toolUseID: string,
-     *   type?: 'code_execution_tool_result',
-     * }|BetaBashCodeExecutionToolResultBlock|array{
-     *   content: BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock,
-     *   toolUseID: string,
-     *   type?: 'bash_code_execution_tool_result',
-     * }|BetaTextEditorCodeExecutionToolResultBlock|array{
-     *   content: BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock,
-     *   toolUseID: string,
-     *   type?: 'text_editor_code_execution_tool_result',
-     * }|BetaToolSearchToolResultBlock|array{
-     *   content: BetaToolSearchToolResultError|BetaToolSearchToolSearchResultBlock,
-     *   toolUseID: string,
-     *   type?: 'tool_search_tool_result',
-     * }|BetaMCPToolUseBlock|array{
-     *   id: string,
-     *   input: array<string,mixed>,
-     *   name: string,
-     *   serverName: string,
-     *   type?: 'mcp_tool_use',
-     * }|BetaMCPToolResultBlock|array{
-     *   content: string|list<BetaTextBlock>,
-     *   isError: bool,
-     *   toolUseID: string,
-     *   type?: 'mcp_tool_result',
-     * }|BetaContainerUploadBlock|array{
-     *   fileID: string, type?: 'container_upload'
-     * }> $content
+     * @param list<BetaContentBlockShape> $content
      */
     public function withContent(array $content): self
     {
@@ -419,9 +295,7 @@ final class BetaMessage implements BaseModel
      *
      * Information about context management strategies applied during the request.
      *
-     * @param BetaContextManagementResponse|array{
-     *   appliedEdits: list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse>,
-     * }|null $contextManagement
+     * @param BetaContextManagementResponseShape|null $contextManagement
      */
     public function withContextManagement(
         BetaContextManagementResponse|array|null $contextManagement
@@ -434,8 +308,10 @@ final class BetaMessage implements BaseModel
 
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     *
+     * @param Model|value-of<Model> $model
      */
-    public function withModel(string|Model $model): self
+    public function withModel(Model|string $model): self
     {
         $self = clone $this;
         $self['model'] = $model;
@@ -490,15 +366,7 @@ final class BetaMessage implements BaseModel
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      *
-     * @param BetaUsage|array{
-     *   cacheCreation: BetaCacheCreation|null,
-     *   cacheCreationInputTokens: int|null,
-     *   cacheReadInputTokens: int|null,
-     *   inputTokens: int,
-     *   outputTokens: int,
-     *   serverToolUse: BetaServerToolUsage|null,
-     *   serviceTier: value-of<ServiceTier>|null,
-     * } $usage
+     * @param BetaUsageShape $usage
      */
     public function withUsage(BetaUsage|array $usage): self
     {

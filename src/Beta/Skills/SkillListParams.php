@@ -16,10 +16,10 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\SkillsService::list()
  *
  * @phpstan-type SkillListParamsShape = array{
- *   limit?: int,
+ *   limit?: int|null,
  *   page?: string|null,
  *   source?: string|null,
- *   betas?: list<string|AnthropicBeta>,
+ *   betas?: list<AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
 final class SkillListParams implements BaseModel
@@ -57,7 +57,7 @@ final class SkillListParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var list<string|value-of<AnthropicBeta>>|null $betas
+     * @var list<value-of<AnthropicBeta>>|null $betas
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
@@ -72,7 +72,7 @@ final class SkillListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
      */
     public static function with(
         ?int $limit = null,
@@ -134,7 +134,7 @@ final class SkillListParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
      */
     public function withBetas(array $betas): self
     {

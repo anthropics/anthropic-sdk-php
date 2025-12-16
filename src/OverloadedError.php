@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type OverloadedErrorShape = array{
- *   message: string, type?: 'overloaded_error'
+ *   message: string, type: 'overloaded_error'
  * }
  */
 final class OverloadedError implements BaseModel

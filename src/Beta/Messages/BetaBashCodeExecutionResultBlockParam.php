@@ -9,12 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaBashCodeExecutionOutputBlockParamShape from \Anthropic\Beta\Messages\BetaBashCodeExecutionOutputBlockParam
+ *
  * @phpstan-type BetaBashCodeExecutionResultBlockParamShape = array{
- *   content: list<BetaBashCodeExecutionOutputBlockParam>,
+ *   content: list<BetaBashCodeExecutionOutputBlockParamShape>,
  *   returnCode: int,
  *   stderr: string,
  *   stdout: string,
- *   type?: 'bash_code_execution_result',
+ *   type: 'bash_code_execution_result',
  * }
  */
 final class BetaBashCodeExecutionResultBlockParam implements BaseModel
@@ -69,9 +71,7 @@ final class BetaBashCodeExecutionResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaBashCodeExecutionOutputBlockParam|array{
-     *   fileID: string, type?: 'bash_code_execution_output'
-     * }> $content
+     * @param list<BetaBashCodeExecutionOutputBlockParamShape> $content
      */
     public static function with(
         array $content,
@@ -90,9 +90,7 @@ final class BetaBashCodeExecutionResultBlockParam implements BaseModel
     }
 
     /**
-     * @param list<BetaBashCodeExecutionOutputBlockParam|array{
-     *   fileID: string, type?: 'bash_code_execution_output'
-     * }> $content
+     * @param list<BetaBashCodeExecutionOutputBlockParamShape> $content
      */
     public function withContent(array $content): self
     {

@@ -11,7 +11,7 @@ use Anthropic\Messages\Base64ImageSource\MediaType;
 
 /**
  * @phpstan-type Base64ImageSourceShape = array{
- *   data: string, mediaType: value-of<MediaType>, type?: 'base64'
+ *   data: string, mediaType: MediaType|value-of<MediaType>, type: 'base64'
  * }
  */
 final class Base64ImageSource implements BaseModel

@@ -9,10 +9,12 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type RawContentBlockDeltaShape from \Anthropic\Messages\RawContentBlockDelta
+ *
  * @phpstan-type RawContentBlockDeltaEventShape = array{
- *   delta: TextDelta|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta,
+ *   delta: TextDelta|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta|RawContentBlockDeltaShape,
  *   index: int,
- *   type?: 'content_block_delta',
+ *   type: 'content_block_delta',
  * }
  */
 final class RawContentBlockDeltaEvent implements BaseModel
@@ -54,14 +56,7 @@ final class RawContentBlockDeltaEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param TextDelta|array{text: string, type?: 'text_delta'}|InputJSONDelta|array{
-     *   partialJSON: string, type?: 'input_json_delta'
-     * }|CitationsDelta|array{
-     *   citation: CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation,
-     *   type?: 'citations_delta',
-     * }|ThinkingDelta|array{
-     *   thinking: string, type?: 'thinking_delta'
-     * }|SignatureDelta|array{signature: string, type?: 'signature_delta'} $delta
+     * @param RawContentBlockDeltaShape $delta
      */
     public static function with(
         TextDelta|array|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta $delta,
@@ -76,14 +71,7 @@ final class RawContentBlockDeltaEvent implements BaseModel
     }
 
     /**
-     * @param TextDelta|array{text: string, type?: 'text_delta'}|InputJSONDelta|array{
-     *   partialJSON: string, type?: 'input_json_delta'
-     * }|CitationsDelta|array{
-     *   citation: CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation,
-     *   type?: 'citations_delta',
-     * }|ThinkingDelta|array{
-     *   thinking: string, type?: 'thinking_delta'
-     * }|SignatureDelta|array{signature: string, type?: 'signature_delta'} $delta
+     * @param RawContentBlockDeltaShape $delta
      */
     public function withDelta(
         TextDelta|array|InputJSONDelta|CitationsDelta|ThinkingDelta|SignatureDelta $delta,

@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-type BetaTextEditorCodeExecutionViewResultBlockParamShape = array{
  *   content: string,
- *   fileType: value-of<FileType>,
- *   type?: 'text_editor_code_execution_view_result',
+ *   fileType: FileType|value-of<FileType>,
+ *   type: 'text_editor_code_execution_view_result',
  *   numLines?: int|null,
  *   startLine?: int|null,
  *   totalLines?: int|null,

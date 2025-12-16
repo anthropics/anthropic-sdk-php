@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaToolSearchToolRegex20251119\AllowedCaller;
 use Anthropic\Beta\Messages\BetaToolSearchToolRegex20251119\Type;
 use Anthropic\Core\Attributes\Optional;
@@ -13,11 +12,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ *
  * @phpstan-type BetaToolSearchToolRegex20251119Shape = array{
- *   name?: 'tool_search_tool_regex',
- *   type: value-of<Type>,
- *   allowedCallers?: list<value-of<AllowedCaller>>|null,
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   name: 'tool_search_tool_regex',
+ *   type: Type|value-of<Type>,
+ *   allowedCallers?: list<AllowedCaller|value-of<AllowedCaller>>|null,
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   deferLoading?: bool|null,
  *   strict?: bool|null,
  * }
@@ -86,9 +87,7 @@ final class BetaToolSearchToolRegex20251119 implements BaseModel
      *
      * @param Type|value-of<Type> $type
      * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         Type|string $type,
@@ -134,9 +133,7 @@ final class BetaToolSearchToolRegex20251119 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl

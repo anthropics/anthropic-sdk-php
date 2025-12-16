@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaWebSearchTool20250305\AllowedCaller;
 use Anthropic\Beta\Messages\BetaWebSearchTool20250305\UserLocation;
 use Anthropic\Core\Attributes\Optional;
@@ -13,17 +12,20 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type UserLocationShape from \Anthropic\Beta\Messages\BetaWebSearchTool20250305\UserLocation
+ *
  * @phpstan-type BetaWebSearchTool20250305Shape = array{
- *   name?: 'web_search',
- *   type?: 'web_search_20250305',
- *   allowedCallers?: list<value-of<AllowedCaller>>|null,
+ *   name: 'web_search',
+ *   type: 'web_search_20250305',
+ *   allowedCallers?: list<AllowedCaller|value-of<AllowedCaller>>|null,
  *   allowedDomains?: list<string>|null,
  *   blockedDomains?: list<string>|null,
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   deferLoading?: bool|null,
  *   maxUses?: int|null,
  *   strict?: bool|null,
- *   userLocation?: UserLocation|null,
+ *   userLocation?: null|UserLocation|UserLocationShape,
  * }
  */
 final class BetaWebSearchTool20250305 implements BaseModel
@@ -105,16 +107,8 @@ final class BetaWebSearchTool20250305 implements BaseModel
      * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
      * @param list<string>|null $allowedDomains
      * @param list<string>|null $blockedDomains
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
-     * @param UserLocation|array{
-     *   type?: 'approximate',
-     *   city?: string|null,
-     *   country?: string|null,
-     *   region?: string|null,
-     *   timezone?: string|null,
-     * }|null $userLocation
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param UserLocationShape|null $userLocation
      */
     public static function with(
         ?array $allowedCallers = null,
@@ -180,9 +174,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
@@ -226,13 +218,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
     /**
      * Parameters for the user's location. Used to provide more relevant search results.
      *
-     * @param UserLocation|array{
-     *   type?: 'approximate',
-     *   city?: string|null,
-     *   country?: string|null,
-     *   region?: string|null,
-     *   timezone?: string|null,
-     * }|null $userLocation
+     * @param UserLocationShape|null $userLocation
      */
     public function withUserLocation(
         UserLocation|array|null $userLocation

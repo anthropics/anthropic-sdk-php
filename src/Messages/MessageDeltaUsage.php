@@ -9,12 +9,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type ServerToolUsageShape from \Anthropic\Messages\ServerToolUsage
+ *
  * @phpstan-type MessageDeltaUsageShape = array{
  *   cacheCreationInputTokens: int|null,
  *   cacheReadInputTokens: int|null,
  *   inputTokens: int|null,
  *   outputTokens: int,
- *   serverToolUse: ServerToolUsage|null,
+ *   serverToolUse: null|ServerToolUsage|ServerToolUsageShape,
  * }
  */
 final class MessageDeltaUsage implements BaseModel
@@ -87,7 +89,7 @@ final class MessageDeltaUsage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ServerToolUsage|array{webSearchRequests: int}|null $serverToolUse
+     * @param ServerToolUsageShape|null $serverToolUse
      */
     public static function with(
         ?int $cacheCreationInputTokens,
@@ -155,7 +157,7 @@ final class MessageDeltaUsage implements BaseModel
     /**
      * The number of server tool requests.
      *
-     * @param ServerToolUsage|array{webSearchRequests: int}|null $serverToolUse
+     * @param ServerToolUsageShape|null $serverToolUse
      */
     public function withServerToolUse(
         ServerToolUsage|array|null $serverToolUse

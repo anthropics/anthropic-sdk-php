@@ -11,10 +11,6 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Messages\MessageCreateParams\System;
-use Anthropic\Messages\MessageParam\Role;
-use Anthropic\Messages\Tool\InputSchema;
-use Anthropic\Messages\Tool\Type;
-use Anthropic\Messages\WebSearchTool20250305\UserLocation;
 
 /**
  * Send a structured list of input messages with text and/or image content, and the model will generate the next message in the conversation.
@@ -25,67 +21,27 @@ use Anthropic\Messages\WebSearchTool20250305\UserLocation;
  *
  * @see Anthropic\Services\MessagesService::create()
  *
+ * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
+ * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
+ * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCreateParams\System
+ * @phpstan-import-type ThinkingConfigParamShape from \Anthropic\Messages\ThinkingConfigParam
+ * @phpstan-import-type ToolChoiceShape from \Anthropic\Messages\ToolChoice
+ * @phpstan-import-type ToolUnionShape from \Anthropic\Messages\ToolUnion
+ *
  * @phpstan-type MessageCreateParamsShape = array{
  *   maxTokens: int,
- *   messages: list<MessageParam|array{
- *     content: string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam>,
- *     role: value-of<Role>,
- *   }>,
- *   model: string|Model,
- *   metadata?: Metadata|array{userID?: string|null},
- *   serviceTier?: ServiceTier|value-of<ServiceTier>,
- *   stopSequences?: list<string>,
- *   system?: string|list<TextBlockParam|array{
- *     text: string,
- *     type?: 'text',
- *     cacheControl?: CacheControlEphemeral|null,
- *     citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
- *   }>,
- *   temperature?: float,
- *   thinking?: ThinkingConfigEnabled|array{
- *     budgetTokens: int, type?: 'enabled'
- *   }|ThinkingConfigDisabled|array{type?: 'disabled'},
- *   toolChoice?: ToolChoiceAuto|array{
- *     type?: 'auto', disableParallelToolUse?: bool|null
- *   }|ToolChoiceAny|array{
- *     type?: 'any', disableParallelToolUse?: bool|null
- *   }|ToolChoiceTool|array{
- *     name: string, type?: 'tool', disableParallelToolUse?: bool|null
- *   }|ToolChoiceNone|array{type?: 'none'},
- *   tools?: list<Tool|array{
- *     inputSchema: InputSchema,
- *     name: string,
- *     cacheControl?: CacheControlEphemeral|null,
- *     description?: string|null,
- *     type?: value-of<Type>|null,
- *   }|ToolBash20250124|array{
- *     name?: 'bash',
- *     type?: 'bash_20250124',
- *     cacheControl?: CacheControlEphemeral|null,
- *   }|ToolTextEditor20250124|array{
- *     name?: 'str_replace_editor',
- *     type?: 'text_editor_20250124',
- *     cacheControl?: CacheControlEphemeral|null,
- *   }|ToolTextEditor20250429|array{
- *     name?: 'str_replace_based_edit_tool',
- *     type?: 'text_editor_20250429',
- *     cacheControl?: CacheControlEphemeral|null,
- *   }|ToolTextEditor20250728|array{
- *     name?: 'str_replace_based_edit_tool',
- *     type?: 'text_editor_20250728',
- *     cacheControl?: CacheControlEphemeral|null,
- *     maxCharacters?: int|null,
- *   }|WebSearchTool20250305|array{
- *     name?: 'web_search',
- *     type?: 'web_search_20250305',
- *     allowedDomains?: list<string>|null,
- *     blockedDomains?: list<string>|null,
- *     cacheControl?: CacheControlEphemeral|null,
- *     maxUses?: int|null,
- *     userLocation?: UserLocation|null,
- *   }>,
- *   topK?: int,
- *   topP?: float,
+ *   messages: list<MessageParamShape>,
+ *   model: Model|value-of<Model>,
+ *   metadata?: MetadataShape|null,
+ *   serviceTier?: null|ServiceTier|value-of<ServiceTier>,
+ *   stopSequences?: list<string>|null,
+ *   system?: SystemShape|null,
+ *   temperature?: float|null,
+ *   thinking?: ThinkingConfigParamShape|null,
+ *   toolChoice?: ToolChoiceShape|null,
+ *   tools?: list<ToolUnionShape>|null,
+ *   topK?: int|null,
+ *   topP?: float|null,
  * }
  */
 final class MessageCreateParams implements BaseModel
@@ -162,7 +118,7 @@ final class MessageCreateParams implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var string|value-of<Model> $model
+     * @var value-of<Model> $model
      */
     #[Required(enum: Model::class)]
     public string $model;
@@ -343,66 +299,20 @@ final class MessageCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<MessageParam|array{
-     *   content: string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam>,
-     *   role: value-of<Role>,
-     * }> $messages
-     * @param Metadata|array{userID?: string|null} $metadata
+     * @param list<MessageParamShape> $messages
+     * @param Model|value-of<Model> $model
+     * @param MetadataShape $metadata
      * @param ServiceTier|value-of<ServiceTier> $serviceTier
      * @param list<string> $stopSequences
-     * @param string|list<TextBlockParam|array{
-     *   text: string,
-     *   type?: 'text',
-     *   cacheControl?: CacheControlEphemeral|null,
-     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
-     * }> $system
-     * @param ThinkingConfigEnabled|array{
-     *   budgetTokens: int, type?: 'enabled'
-     * }|ThinkingConfigDisabled|array{type?: 'disabled'} $thinking
-     * @param ToolChoiceAuto|array{
-     *   type?: 'auto', disableParallelToolUse?: bool|null
-     * }|ToolChoiceAny|array{
-     *   type?: 'any', disableParallelToolUse?: bool|null
-     * }|ToolChoiceTool|array{
-     *   name: string, type?: 'tool', disableParallelToolUse?: bool|null
-     * }|ToolChoiceNone|array{type?: 'none'} $toolChoice
-     * @param list<Tool|array{
-     *   inputSchema: InputSchema,
-     *   name: string,
-     *   cacheControl?: CacheControlEphemeral|null,
-     *   description?: string|null,
-     *   type?: value-of<Type>|null,
-     * }|ToolBash20250124|array{
-     *   name?: 'bash',
-     *   type?: 'bash_20250124',
-     *   cacheControl?: CacheControlEphemeral|null,
-     * }|ToolTextEditor20250124|array{
-     *   name?: 'str_replace_editor',
-     *   type?: 'text_editor_20250124',
-     *   cacheControl?: CacheControlEphemeral|null,
-     * }|ToolTextEditor20250429|array{
-     *   name?: 'str_replace_based_edit_tool',
-     *   type?: 'text_editor_20250429',
-     *   cacheControl?: CacheControlEphemeral|null,
-     * }|ToolTextEditor20250728|array{
-     *   name?: 'str_replace_based_edit_tool',
-     *   type?: 'text_editor_20250728',
-     *   cacheControl?: CacheControlEphemeral|null,
-     *   maxCharacters?: int|null,
-     * }|WebSearchTool20250305|array{
-     *   name?: 'web_search',
-     *   type?: 'web_search_20250305',
-     *   allowedDomains?: list<string>|null,
-     *   blockedDomains?: list<string>|null,
-     *   cacheControl?: CacheControlEphemeral|null,
-     *   maxUses?: int|null,
-     *   userLocation?: UserLocation|null,
-     * }> $tools
+     * @param SystemShape $system
+     * @param ThinkingConfigParamShape $thinking
+     * @param ToolChoiceShape $toolChoice
+     * @param list<ToolUnionShape> $tools
      */
     public static function with(
         int $maxTokens,
         array $messages,
-        string|Model $model,
+        Model|string $model,
         Metadata|array|null $metadata = null,
         ServiceTier|string|null $serviceTier = null,
         ?array $stopSequences = null,
@@ -499,10 +409,7 @@ final class MessageCreateParams implements BaseModel
      *
      * There is a limit of 100,000 messages in a single request.
      *
-     * @param list<MessageParam|array{
-     *   content: string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam>,
-     *   role: value-of<Role>,
-     * }> $messages
+     * @param list<MessageParamShape> $messages
      */
     public function withMessages(array $messages): self
     {
@@ -514,8 +421,10 @@ final class MessageCreateParams implements BaseModel
 
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     *
+     * @param Model|value-of<Model> $model
      */
-    public function withModel(string|Model $model): self
+    public function withModel(Model|string $model): self
     {
         $self = clone $this;
         $self['model'] = $model;
@@ -526,7 +435,7 @@ final class MessageCreateParams implements BaseModel
     /**
      * An object describing metadata about the request.
      *
-     * @param Metadata|array{userID?: string|null} $metadata
+     * @param MetadataShape $metadata
      */
     public function withMetadata(Metadata|array $metadata): self
     {
@@ -573,12 +482,7 @@ final class MessageCreateParams implements BaseModel
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.claude.com/en/docs/system-prompts).
      *
-     * @param string|list<TextBlockParam|array{
-     *   text: string,
-     *   type?: 'text',
-     *   cacheControl?: CacheControlEphemeral|null,
-     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
-     * }> $system
+     * @param SystemShape $system
      */
     public function withSystem(string|array $system): self
     {
@@ -610,9 +514,7 @@ final class MessageCreateParams implements BaseModel
      *
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      *
-     * @param ThinkingConfigEnabled|array{
-     *   budgetTokens: int, type?: 'enabled'
-     * }|ThinkingConfigDisabled|array{type?: 'disabled'} $thinking
+     * @param ThinkingConfigParamShape $thinking
      */
     public function withThinking(
         ThinkingConfigEnabled|array|ThinkingConfigDisabled $thinking
@@ -626,13 +528,7 @@ final class MessageCreateParams implements BaseModel
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      *
-     * @param ToolChoiceAuto|array{
-     *   type?: 'auto', disableParallelToolUse?: bool|null
-     * }|ToolChoiceAny|array{
-     *   type?: 'any', disableParallelToolUse?: bool|null
-     * }|ToolChoiceTool|array{
-     *   name: string, type?: 'tool', disableParallelToolUse?: bool|null
-     * }|ToolChoiceNone|array{type?: 'none'} $toolChoice
+     * @param ToolChoiceShape $toolChoice
      */
     public function withToolChoice(
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone $toolChoice
@@ -706,38 +602,7 @@ final class MessageCreateParams implements BaseModel
      *
      * See our [guide](https://docs.claude.com/en/docs/tool-use) for more details.
      *
-     * @param list<Tool|array{
-     *   inputSchema: InputSchema,
-     *   name: string,
-     *   cacheControl?: CacheControlEphemeral|null,
-     *   description?: string|null,
-     *   type?: value-of<Type>|null,
-     * }|ToolBash20250124|array{
-     *   name?: 'bash',
-     *   type?: 'bash_20250124',
-     *   cacheControl?: CacheControlEphemeral|null,
-     * }|ToolTextEditor20250124|array{
-     *   name?: 'str_replace_editor',
-     *   type?: 'text_editor_20250124',
-     *   cacheControl?: CacheControlEphemeral|null,
-     * }|ToolTextEditor20250429|array{
-     *   name?: 'str_replace_based_edit_tool',
-     *   type?: 'text_editor_20250429',
-     *   cacheControl?: CacheControlEphemeral|null,
-     * }|ToolTextEditor20250728|array{
-     *   name?: 'str_replace_based_edit_tool',
-     *   type?: 'text_editor_20250728',
-     *   cacheControl?: CacheControlEphemeral|null,
-     *   maxCharacters?: int|null,
-     * }|WebSearchTool20250305|array{
-     *   name?: 'web_search',
-     *   type?: 'web_search_20250305',
-     *   allowedDomains?: list<string>|null,
-     *   blockedDomains?: list<string>|null,
-     *   cacheControl?: CacheControlEphemeral|null,
-     *   maxUses?: int|null,
-     *   userLocation?: UserLocation|null,
-     * }> $tools
+     * @param list<ToolUnionShape> $tools
      */
     public function withTools(array $tools): self
     {

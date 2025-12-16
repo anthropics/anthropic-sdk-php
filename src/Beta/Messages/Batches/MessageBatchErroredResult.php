@@ -4,23 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\Batches;
 
-use Anthropic\Beta\BetaAPIError;
-use Anthropic\Beta\BetaAuthenticationError;
-use Anthropic\Beta\BetaBillingError;
 use Anthropic\Beta\BetaErrorResponse;
-use Anthropic\Beta\BetaGatewayTimeoutError;
-use Anthropic\Beta\BetaInvalidRequestError;
-use Anthropic\Beta\BetaNotFoundError;
-use Anthropic\Beta\BetaOverloadedError;
-use Anthropic\Beta\BetaPermissionError;
-use Anthropic\Beta\BetaRateLimitError;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaErrorResponseShape from \Anthropic\Beta\BetaErrorResponse
+ *
  * @phpstan-type MessageBatchErroredResultShape = array{
- *   error: BetaErrorResponse, type?: 'errored'
+ *   error: BetaErrorResponse|BetaErrorResponseShape, type: 'errored'
  * }
  */
 final class MessageBatchErroredResult implements BaseModel
@@ -59,11 +52,7 @@ final class MessageBatchErroredResult implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaErrorResponse|array{
-     *   error: BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError,
-     *   requestID: string|null,
-     *   type?: 'error',
-     * } $error
+     * @param BetaErrorResponseShape $error
      */
     public static function with(BetaErrorResponse|array $error): self
     {
@@ -75,11 +64,7 @@ final class MessageBatchErroredResult implements BaseModel
     }
 
     /**
-     * @param BetaErrorResponse|array{
-     *   error: BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError,
-     *   requestID: string|null,
-     *   type?: 'error',
-     * } $error
+     * @param BetaErrorResponseShape $error
      */
     public function withError(BetaErrorResponse|array $error): self
     {

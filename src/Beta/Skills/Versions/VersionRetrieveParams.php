@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\Skills\VersionsService::retrieve()
  *
  * @phpstan-type VersionRetrieveParamsShape = array{
- *   skillID: string, betas?: list<string|AnthropicBeta>
+ *   skillID: string, betas?: list<AnthropicBeta|value-of<AnthropicBeta>>|null
  * }
  */
 final class VersionRetrieveParams implements BaseModel
@@ -37,7 +37,7 @@ final class VersionRetrieveParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var list<string|value-of<AnthropicBeta>>|null $betas
+     * @var list<value-of<AnthropicBeta>>|null $betas
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
@@ -66,7 +66,7 @@ final class VersionRetrieveParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
      */
     public static function with(string $skillID, ?array $betas = null): self
     {
@@ -95,7 +95,7 @@ final class VersionRetrieveParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
      */
     public function withBetas(array $betas): self
     {

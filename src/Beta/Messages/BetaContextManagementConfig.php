@@ -10,8 +10,10 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type EditShape from \Anthropic\Beta\Messages\BetaContextManagementConfig\Edit
+ *
  * @phpstan-type BetaContextManagementConfigShape = array{
- *   edits?: list<BetaClearToolUses20250919Edit|BetaClearThinking20251015Edit>|null
+ *   edits?: list<EditShape>|null
  * }
  */
 final class BetaContextManagementConfig implements BaseModel
@@ -37,17 +39,7 @@ final class BetaContextManagementConfig implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaClearToolUses20250919Edit|array{
-     *   type?: 'clear_tool_uses_20250919',
-     *   clearAtLeast?: BetaInputTokensClearAtLeast|null,
-     *   clearToolInputs?: bool|list<string>|null,
-     *   excludeTools?: list<string>|null,
-     *   keep?: BetaToolUsesKeep|null,
-     *   trigger?: BetaInputTokensTrigger|BetaToolUsesTrigger|null,
-     * }|BetaClearThinking20251015Edit|array{
-     *   type?: 'clear_thinking_20251015',
-     *   keep?: 'all'|BetaThinkingTurns|BetaAllThinkingTurns|null,
-     * }> $edits
+     * @param list<EditShape> $edits
      */
     public static function with(?array $edits = null): self
     {
@@ -61,17 +53,7 @@ final class BetaContextManagementConfig implements BaseModel
     /**
      * List of context management edits to apply.
      *
-     * @param list<BetaClearToolUses20250919Edit|array{
-     *   type?: 'clear_tool_uses_20250919',
-     *   clearAtLeast?: BetaInputTokensClearAtLeast|null,
-     *   clearToolInputs?: bool|list<string>|null,
-     *   excludeTools?: list<string>|null,
-     *   keep?: BetaToolUsesKeep|null,
-     *   trigger?: BetaInputTokensTrigger|BetaToolUsesTrigger|null,
-     * }|BetaClearThinking20251015Edit|array{
-     *   type?: 'clear_thinking_20251015',
-     *   keep?: 'all'|BetaThinkingTurns|BetaAllThinkingTurns|null,
-     * }> $edits
+     * @param list<EditShape> $edits
      */
     public function withEdits(array $edits): self
     {

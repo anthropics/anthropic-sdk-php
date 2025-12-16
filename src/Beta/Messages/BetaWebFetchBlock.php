@@ -9,10 +9,12 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaDocumentBlockShape from \Anthropic\Beta\Messages\BetaDocumentBlock
+ *
  * @phpstan-type BetaWebFetchBlockShape = array{
- *   content: BetaDocumentBlock,
+ *   content: BetaDocumentBlock|BetaDocumentBlockShape,
  *   retrievedAt: string|null,
- *   type?: 'web_fetch_result',
+ *   type: 'web_fetch_result',
  *   url: string,
  * }
  */
@@ -64,12 +66,7 @@ final class BetaWebFetchBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaDocumentBlock|array{
-     *   citations: BetaCitationConfig|null,
-     *   source: BetaBase64PDFSource|BetaPlainTextSource,
-     *   title: string|null,
-     *   type?: 'document',
-     * } $content
+     * @param BetaDocumentBlockShape $content
      */
     public static function with(
         BetaDocumentBlock|array $content,
@@ -86,12 +83,7 @@ final class BetaWebFetchBlock implements BaseModel
     }
 
     /**
-     * @param BetaDocumentBlock|array{
-     *   citations: BetaCitationConfig|null,
-     *   source: BetaBase64PDFSource|BetaPlainTextSource,
-     *   title: string|null,
-     *   type?: 'document',
-     * } $content
+     * @param BetaDocumentBlockShape $content
      */
     public function withContent(BetaDocumentBlock|array $content): self
     {

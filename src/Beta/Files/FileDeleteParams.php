@@ -15,7 +15,9 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Beta\FilesService::delete()
  *
- * @phpstan-type FileDeleteParamsShape = array{betas?: list<string|AnthropicBeta>}
+ * @phpstan-type FileDeleteParamsShape = array{
+ *   betas?: list<AnthropicBeta|value-of<AnthropicBeta>>|null
+ * }
  */
 final class FileDeleteParams implements BaseModel
 {
@@ -26,7 +28,7 @@ final class FileDeleteParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var list<string|value-of<AnthropicBeta>>|null $betas
+     * @var list<value-of<AnthropicBeta>>|null $betas
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
@@ -41,7 +43,7 @@ final class FileDeleteParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
      */
     public static function with(?array $betas = null): self
     {
@@ -55,7 +57,7 @@ final class FileDeleteParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
      */
     public function withBetas(array $betas): self
     {

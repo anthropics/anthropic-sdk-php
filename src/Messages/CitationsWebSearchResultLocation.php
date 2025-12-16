@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   citedText: string,
  *   encryptedIndex: string,
  *   title: string|null,
- *   type?: 'web_search_result_location',
+ *   type: 'web_search_result_location',
  *   url: string,
  * }
  */

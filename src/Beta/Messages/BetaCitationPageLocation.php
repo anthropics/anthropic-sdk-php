@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   endPageNumber: int,
  *   fileID: string|null,
  *   startPageNumber: int,
- *   type?: 'page_location',
+ *   type: 'page_location',
  * }
  */
 final class BetaCitationPageLocation implements BaseModel

@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * This defines the shape of the `input` that your tool accepts and that the model will produce.
  *
  * @phpstan-type InputSchemaShape = array{
- *   type?: 'object',
+ *   type: 'object',
  *   properties?: array<string,mixed>|null,
  *   required?: list<string>|null,
  * }

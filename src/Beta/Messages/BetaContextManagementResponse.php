@@ -10,8 +10,10 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type AppliedEditShape from \Anthropic\Beta\Messages\BetaContextManagementResponse\AppliedEdit
+ *
  * @phpstan-type BetaContextManagementResponseShape = array{
- *   appliedEdits: list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse>,
+ *   appliedEdits: list<AppliedEditShape>
  * }
  */
 final class BetaContextManagementResponse implements BaseModel
@@ -51,15 +53,7 @@ final class BetaContextManagementResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaClearToolUses20250919EditResponse|array{
-     *   clearedInputTokens: int,
-     *   clearedToolUses: int,
-     *   type?: 'clear_tool_uses_20250919',
-     * }|BetaClearThinking20251015EditResponse|array{
-     *   clearedInputTokens: int,
-     *   clearedThinkingTurns: int,
-     *   type?: 'clear_thinking_20251015',
-     * }> $appliedEdits
+     * @param list<AppliedEditShape> $appliedEdits
      */
     public static function with(array $appliedEdits): self
     {
@@ -73,15 +67,7 @@ final class BetaContextManagementResponse implements BaseModel
     /**
      * List of context management edits that were applied.
      *
-     * @param list<BetaClearToolUses20250919EditResponse|array{
-     *   clearedInputTokens: int,
-     *   clearedToolUses: int,
-     *   type?: 'clear_tool_uses_20250919',
-     * }|BetaClearThinking20251015EditResponse|array{
-     *   clearedInputTokens: int,
-     *   clearedThinkingTurns: int,
-     *   type?: 'clear_thinking_20251015',
-     * }> $appliedEdits
+     * @param list<AppliedEditShape> $appliedEdits
      */
     public function withAppliedEdits(array $appliedEdits): self
     {

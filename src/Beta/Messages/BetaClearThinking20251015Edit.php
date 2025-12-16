@@ -10,9 +10,10 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type KeepShape from \Anthropic\Beta\Messages\BetaClearThinking20251015Edit\Keep
+ *
  * @phpstan-type BetaClearThinking20251015EditShape = array{
- *   type?: 'clear_thinking_20251015',
- *   keep?: null|'all'|BetaThinkingTurns|BetaAllThinkingTurns,
+ *   type: 'clear_thinking_20251015', keep?: KeepShape|null
  * }
  */
 final class BetaClearThinking20251015Edit implements BaseModel
@@ -42,9 +43,7 @@ final class BetaClearThinking20251015Edit implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param 'all'|BetaThinkingTurns|array{
-     *   type?: 'thinking_turns', value: int
-     * }|BetaAllThinkingTurns|array{type?: 'all'} $keep
+     * @param KeepShape $keep
      */
     public static function with(
         string|BetaThinkingTurns|array|BetaAllThinkingTurns|null $keep = null
@@ -59,9 +58,7 @@ final class BetaClearThinking20251015Edit implements BaseModel
     /**
      * Number of most recent assistant turns to keep thinking blocks for. Older turns will have their thinking blocks removed.
      *
-     * @param 'all'|BetaThinkingTurns|array{
-     *   type?: 'thinking_turns', value: int
-     * }|BetaAllThinkingTurns|array{type?: 'all'} $keep
+     * @param KeepShape $keep
      */
     public function withKeep(
         string|BetaThinkingTurns|array|BetaAllThinkingTurns $keep

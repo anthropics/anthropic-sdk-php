@@ -9,8 +9,10 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaCountTokensContextManagementResponseShape from \Anthropic\Beta\Messages\BetaCountTokensContextManagementResponse
+ *
  * @phpstan-type BetaMessageTokensCountShape = array{
- *   contextManagement: BetaCountTokensContextManagementResponse|null,
+ *   contextManagement: null|BetaCountTokensContextManagementResponse|BetaCountTokensContextManagementResponseShape,
  *   inputTokens: int,
  * }
  */
@@ -55,9 +57,7 @@ final class BetaMessageTokensCount implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaCountTokensContextManagementResponse|array{
-     *   originalInputTokens: int
-     * }|null $contextManagement
+     * @param BetaCountTokensContextManagementResponseShape|null $contextManagement
      */
     public static function with(
         BetaCountTokensContextManagementResponse|array|null $contextManagement,
@@ -74,9 +74,7 @@ final class BetaMessageTokensCount implements BaseModel
     /**
      * Information about context management applied to the message.
      *
-     * @param BetaCountTokensContextManagementResponse|array{
-     *   originalInputTokens: int
-     * }|null $contextManagement
+     * @param BetaCountTokensContextManagementResponseShape|null $contextManagement
      */
     public function withContextManagement(
         BetaCountTokensContextManagementResponse|array|null $contextManagement

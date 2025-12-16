@@ -11,7 +11,7 @@ use Anthropic\Messages\WebSearchToolRequestError\ErrorCode;
 
 /**
  * @phpstan-type WebSearchToolRequestErrorShape = array{
- *   errorCode: value-of<ErrorCode>, type?: 'web_search_tool_result_error'
+ *   errorCode: ErrorCode|value-of<ErrorCode>, type: 'web_search_tool_result_error'
  * }
  */
 final class WebSearchToolRequestError implements BaseModel

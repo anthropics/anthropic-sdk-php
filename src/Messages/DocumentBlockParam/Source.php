@@ -12,6 +12,14 @@ use Anthropic\Messages\ContentBlockSource;
 use Anthropic\Messages\PlainTextSource;
 use Anthropic\Messages\URLPDFSource;
 
+/**
+ * @phpstan-import-type Base64PDFSourceShape from \Anthropic\Messages\Base64PDFSource
+ * @phpstan-import-type PlainTextSourceShape from \Anthropic\Messages\PlainTextSource
+ * @phpstan-import-type ContentBlockSourceShape from \Anthropic\Messages\ContentBlockSource
+ * @phpstan-import-type URLPDFSourceShape from \Anthropic\Messages\URLPDFSource
+ *
+ * @phpstan-type SourceShape = Base64PDFSourceShape|PlainTextSourceShape|ContentBlockSourceShape|URLPDFSourceShape
+ */
 final class Source implements ConverterSource
 {
     use SdkUnion;

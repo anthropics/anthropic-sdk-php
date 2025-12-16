@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   endCharIndex: int,
  *   fileID: string|null,
  *   startCharIndex: int,
- *   type?: 'char_location',
+ *   type: 'char_location',
  * }
  */
 final class CitationCharLocation implements BaseModel

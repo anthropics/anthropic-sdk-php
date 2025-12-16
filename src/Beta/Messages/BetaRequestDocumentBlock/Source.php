@@ -13,6 +13,15 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-import-type BetaBase64PDFSourceShape from \Anthropic\Beta\Messages\BetaBase64PDFSource
+ * @phpstan-import-type BetaPlainTextSourceShape from \Anthropic\Beta\Messages\BetaPlainTextSource
+ * @phpstan-import-type BetaContentBlockSourceShape from \Anthropic\Beta\Messages\BetaContentBlockSource
+ * @phpstan-import-type BetaURLPDFSourceShape from \Anthropic\Beta\Messages\BetaURLPDFSource
+ * @phpstan-import-type BetaFileDocumentSourceShape from \Anthropic\Beta\Messages\BetaFileDocumentSource
+ *
+ * @phpstan-type SourceShape = BetaBase64PDFSourceShape|BetaPlainTextSourceShape|BetaContentBlockSourceShape|BetaURLPDFSourceShape|BetaFileDocumentSourceShape
+ */
 final class Source implements ConverterSource
 {
     use SdkUnion;

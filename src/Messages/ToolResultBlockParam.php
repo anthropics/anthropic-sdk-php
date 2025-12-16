@@ -8,15 +8,17 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\CacheControlEphemeral\TTL;
 use Anthropic\Messages\ToolResultBlockParam\Content;
 
 /**
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ * @phpstan-import-type ContentShape from \Anthropic\Messages\ToolResultBlockParam\Content
+ *
  * @phpstan-type ToolResultBlockParamShape = array{
  *   toolUseID: string,
- *   type?: 'tool_result',
- *   cacheControl?: CacheControlEphemeral|null,
- *   content?: string|null|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam>,
+ *   type: 'tool_result',
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
+ *   content?: ContentShape|null,
  *   isError?: bool|null,
  * }
  */
@@ -71,33 +73,8 @@ final class ToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
-     * @param string|list<TextBlockParam|array{
-     *   text: string,
-     *   type?: 'text',
-     *   cacheControl?: CacheControlEphemeral|null,
-     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
-     * }|ImageBlockParam|array{
-     *   source: Base64ImageSource|URLImageSource,
-     *   type?: 'image',
-     *   cacheControl?: CacheControlEphemeral|null,
-     * }|SearchResultBlockParam|array{
-     *   content: list<TextBlockParam>,
-     *   source: string,
-     *   title: string,
-     *   type?: 'search_result',
-     *   cacheControl?: CacheControlEphemeral|null,
-     *   citations?: CitationsConfigParam|null,
-     * }|DocumentBlockParam|array{
-     *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
-     *   type?: 'document',
-     *   cacheControl?: CacheControlEphemeral|null,
-     *   citations?: CitationsConfigParam|null,
-     *   context?: string|null,
-     *   title?: string|null,
-     * }> $content
+     * @param CacheControlEphemeralShape|null $cacheControl
+     * @param ContentShape $content
      */
     public static function with(
         string $toolUseID,
@@ -127,9 +104,7 @@ final class ToolResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param CacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl
@@ -141,30 +116,7 @@ final class ToolResultBlockParam implements BaseModel
     }
 
     /**
-     * @param string|list<TextBlockParam|array{
-     *   text: string,
-     *   type?: 'text',
-     *   cacheControl?: CacheControlEphemeral|null,
-     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
-     * }|ImageBlockParam|array{
-     *   source: Base64ImageSource|URLImageSource,
-     *   type?: 'image',
-     *   cacheControl?: CacheControlEphemeral|null,
-     * }|SearchResultBlockParam|array{
-     *   content: list<TextBlockParam>,
-     *   source: string,
-     *   title: string,
-     *   type?: 'search_result',
-     *   cacheControl?: CacheControlEphemeral|null,
-     *   citations?: CitationsConfigParam|null,
-     * }|DocumentBlockParam|array{
-     *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
-     *   type?: 'document',
-     *   cacheControl?: CacheControlEphemeral|null,
-     *   citations?: CitationsConfigParam|null,
-     *   context?: string|null,
-     *   title?: string|null,
-     * }> $content
+     * @param ContentShape $content
      */
     public function withContent(string|array $content): self
     {

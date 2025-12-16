@@ -10,8 +10,10 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\ContentBlockSource\Content;
 
 /**
+ * @phpstan-import-type ContentShape from \Anthropic\Messages\ContentBlockSource\Content
+ *
  * @phpstan-type ContentBlockSourceShape = array{
- *   content: string|list<TextBlockParam|ImageBlockParam>, type?: 'content'
+ *   content: ContentShape, type: 'content'
  * }
  */
 final class ContentBlockSource implements BaseModel
@@ -51,16 +53,7 @@ final class ContentBlockSource implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|list<TextBlockParam|array{
-     *   text: string,
-     *   type?: 'text',
-     *   cacheControl?: CacheControlEphemeral|null,
-     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
-     * }|ImageBlockParam|array{
-     *   source: Base64ImageSource|URLImageSource,
-     *   type?: 'image',
-     *   cacheControl?: CacheControlEphemeral|null,
-     * }> $content
+     * @param ContentShape $content
      */
     public static function with(string|array $content): self
     {
@@ -72,16 +65,7 @@ final class ContentBlockSource implements BaseModel
     }
 
     /**
-     * @param string|list<TextBlockParam|array{
-     *   text: string,
-     *   type?: 'text',
-     *   cacheControl?: CacheControlEphemeral|null,
-     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
-     * }|ImageBlockParam|array{
-     *   source: Base64ImageSource|URLImageSource,
-     *   type?: 'image',
-     *   cacheControl?: CacheControlEphemeral|null,
-     * }> $content
+     * @param ContentShape $content
      */
     public function withContent(string|array $content): self
     {

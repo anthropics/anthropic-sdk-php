@@ -10,9 +10,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaRequestDocumentBlockShape from \Anthropic\Beta\Messages\BetaRequestDocumentBlock
+ *
  * @phpstan-type BetaWebFetchBlockParamShape = array{
- *   content: BetaRequestDocumentBlock,
- *   type?: 'web_fetch_result',
+ *   content: BetaRequestDocumentBlock|BetaRequestDocumentBlockShape,
+ *   type: 'web_fetch_result',
  *   url: string,
  *   retrievedAt?: string|null,
  * }
@@ -65,14 +67,7 @@ final class BetaWebFetchBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaRequestDocumentBlock|array{
-     *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource,
-     *   type?: 'document',
-     *   cacheControl?: BetaCacheControlEphemeral|null,
-     *   citations?: BetaCitationsConfigParam|null,
-     *   context?: string|null,
-     *   title?: string|null,
-     * } $content
+     * @param BetaRequestDocumentBlockShape $content
      */
     public static function with(
         BetaRequestDocumentBlock|array $content,
@@ -90,14 +85,7 @@ final class BetaWebFetchBlockParam implements BaseModel
     }
 
     /**
-     * @param BetaRequestDocumentBlock|array{
-     *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource,
-     *   type?: 'document',
-     *   cacheControl?: BetaCacheControlEphemeral|null,
-     *   citations?: BetaCitationsConfigParam|null,
-     *   context?: string|null,
-     *   title?: string|null,
-     * } $content
+     * @param BetaRequestDocumentBlockShape $content
      */
     public function withContent(BetaRequestDocumentBlock|array $content): self
     {

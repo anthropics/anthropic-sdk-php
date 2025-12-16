@@ -18,7 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type SkillCreateParamsShape = array{
  *   displayTitle?: string|null,
  *   files?: list<string>|null,
- *   betas?: list<string|AnthropicBeta>,
+ *   betas?: list<AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
 final class SkillCreateParams implements BaseModel
@@ -48,7 +48,7 @@ final class SkillCreateParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var list<string|value-of<AnthropicBeta>>|null $betas
+     * @var list<value-of<AnthropicBeta>>|null $betas
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
@@ -64,7 +64,7 @@ final class SkillCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string>|null $files
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
      */
     public static function with(
         ?string $displayTitle = null,
@@ -111,7 +111,7 @@ final class SkillCreateParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
      */
     public function withBetas(array $betas): self
     {

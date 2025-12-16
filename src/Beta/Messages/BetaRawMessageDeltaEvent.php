@@ -10,11 +10,15 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaContextManagementResponseShape from \Anthropic\Beta\Messages\BetaContextManagementResponse
+ * @phpstan-import-type DeltaShape from \Anthropic\Beta\Messages\BetaRawMessageDeltaEvent\Delta
+ * @phpstan-import-type BetaMessageDeltaUsageShape from \Anthropic\Beta\Messages\BetaMessageDeltaUsage
+ *
  * @phpstan-type BetaRawMessageDeltaEventShape = array{
- *   contextManagement: BetaContextManagementResponse|null,
- *   delta: Delta,
- *   type?: 'message_delta',
- *   usage: BetaMessageDeltaUsage,
+ *   contextManagement: null|BetaContextManagementResponse|BetaContextManagementResponseShape,
+ *   delta: Delta|DeltaShape,
+ *   type: 'message_delta',
+ *   usage: BetaMessageDeltaUsage|BetaMessageDeltaUsageShape,
  * }
  */
 final class BetaRawMessageDeltaEvent implements BaseModel
@@ -76,21 +80,9 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaContextManagementResponse|array{
-     *   appliedEdits: list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse>,
-     * }|null $contextManagement
-     * @param Delta|array{
-     *   container: BetaContainer|null,
-     *   stopReason: value-of<BetaStopReason>|null,
-     *   stopSequence: string|null,
-     * } $delta
-     * @param BetaMessageDeltaUsage|array{
-     *   cacheCreationInputTokens: int|null,
-     *   cacheReadInputTokens: int|null,
-     *   inputTokens: int|null,
-     *   outputTokens: int,
-     *   serverToolUse: BetaServerToolUsage|null,
-     * } $usage
+     * @param BetaContextManagementResponseShape|null $contextManagement
+     * @param DeltaShape $delta
+     * @param BetaMessageDeltaUsageShape $usage
      */
     public static function with(
         BetaContextManagementResponse|array|null $contextManagement,
@@ -109,9 +101,7 @@ final class BetaRawMessageDeltaEvent implements BaseModel
     /**
      * Information about context management strategies applied during the request.
      *
-     * @param BetaContextManagementResponse|array{
-     *   appliedEdits: list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse>,
-     * }|null $contextManagement
+     * @param BetaContextManagementResponseShape|null $contextManagement
      */
     public function withContextManagement(
         BetaContextManagementResponse|array|null $contextManagement
@@ -123,11 +113,7 @@ final class BetaRawMessageDeltaEvent implements BaseModel
     }
 
     /**
-     * @param Delta|array{
-     *   container: BetaContainer|null,
-     *   stopReason: value-of<BetaStopReason>|null,
-     *   stopSequence: string|null,
-     * } $delta
+     * @param DeltaShape $delta
      */
     public function withDelta(Delta|array $delta): self
     {
@@ -148,13 +134,7 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      *
-     * @param BetaMessageDeltaUsage|array{
-     *   cacheCreationInputTokens: int|null,
-     *   cacheReadInputTokens: int|null,
-     *   inputTokens: int|null,
-     *   outputTokens: int,
-     *   serverToolUse: BetaServerToolUsage|null,
-     * } $usage
+     * @param BetaMessageDeltaUsageShape $usage
      */
     public function withUsage(BetaMessageDeltaUsage|array $usage): self
     {

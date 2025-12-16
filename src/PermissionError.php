@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type PermissionErrorShape = array{
- *   message: string, type?: 'permission_error'
+ *   message: string, type: 'permission_error'
  * }
  */
 final class PermissionError implements BaseModel

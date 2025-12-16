@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * Parameters for the user's location. Used to provide more relevant search results.
  *
  * @phpstan-type UserLocationShape = array{
- *   type?: 'approximate',
+ *   type: 'approximate',
  *   city?: string|null,
  *   country?: string|null,
  *   region?: string|null,

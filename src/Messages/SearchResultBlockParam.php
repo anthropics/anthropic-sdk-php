@@ -8,16 +8,19 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\CacheControlEphemeral\TTL;
 
 /**
+ * @phpstan-import-type TextBlockParamShape from \Anthropic\Messages\TextBlockParam
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ * @phpstan-import-type CitationsConfigParamShape from \Anthropic\Messages\CitationsConfigParam
+ *
  * @phpstan-type SearchResultBlockParamShape = array{
- *   content: list<TextBlockParam>,
+ *   content: list<TextBlockParamShape>,
  *   source: string,
  *   title: string,
- *   type?: 'search_result',
- *   cacheControl?: CacheControlEphemeral|null,
- *   citations?: CitationsConfigParam|null,
+ *   type: 'search_result',
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
+ *   citations?: null|CitationsConfigParam|CitationsConfigParamShape,
  * }
  */
 final class SearchResultBlockParam implements BaseModel
@@ -72,16 +75,9 @@ final class SearchResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<TextBlockParam|array{
-     *   text: string,
-     *   type?: 'text',
-     *   cacheControl?: CacheControlEphemeral|null,
-     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
-     * }> $content
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
-     * @param CitationsConfigParam|array{enabled?: bool|null} $citations
+     * @param list<TextBlockParamShape> $content
+     * @param CacheControlEphemeralShape|null $cacheControl
+     * @param CitationsConfigParamShape $citations
      */
     public static function with(
         array $content,
@@ -103,12 +99,7 @@ final class SearchResultBlockParam implements BaseModel
     }
 
     /**
-     * @param list<TextBlockParam|array{
-     *   text: string,
-     *   type?: 'text',
-     *   cacheControl?: CacheControlEphemeral|null,
-     *   citations?: list<CitationCharLocationParam|CitationPageLocationParam|CitationContentBlockLocationParam|CitationWebSearchResultLocationParam|CitationSearchResultLocationParam>|null,
-     * }> $content
+     * @param list<TextBlockParamShape> $content
      */
     public function withContent(array $content): self
     {
@@ -137,9 +128,7 @@ final class SearchResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param CacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param CacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl
@@ -151,7 +140,7 @@ final class SearchResultBlockParam implements BaseModel
     }
 
     /**
-     * @param CitationsConfigParam|array{enabled?: bool|null} $citations
+     * @param CitationsConfigParamShape $citations
      */
     public function withCitations(CitationsConfigParam|array $citations): self
     {

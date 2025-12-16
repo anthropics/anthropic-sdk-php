@@ -11,12 +11,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type CallerShape from \Anthropic\Beta\Messages\BetaServerToolUseBlock\Caller
+ *
  * @phpstan-type BetaServerToolUseBlockShape = array{
  *   id: string,
- *   caller: BetaDirectCaller|BetaServerToolCaller,
+ *   caller: BetaDirectCaller|BetaServerToolCaller|CallerShape,
  *   input: array<string,mixed>,
- *   name: value-of<Name>,
- *   type?: 'server_tool_use',
+ *   name: Name|value-of<Name>,
+ *   type: 'server_tool_use',
  * }
  */
 final class BetaServerToolUseBlock implements BaseModel
@@ -75,9 +77,7 @@ final class BetaServerToolUseBlock implements BaseModel
      *
      * @param array<string,mixed> $input
      * @param Name|value-of<Name> $name
-     * @param BetaDirectCaller|array{type?: 'direct'}|BetaServerToolCaller|array{
-     *   toolID: string, type?: 'code_execution_20250825'
-     * } $caller
+     * @param CallerShape $caller
      */
     public static function with(
         string $id,
@@ -106,9 +106,7 @@ final class BetaServerToolUseBlock implements BaseModel
     /**
      * Tool invocation directly from the model.
      *
-     * @param BetaDirectCaller|array{type?: 'direct'}|BetaServerToolCaller|array{
-     *   toolID: string, type?: 'code_execution_20250825'
-     * } $caller
+     * @param CallerShape $caller
      */
     public function withCaller(
         BetaDirectCaller|array|BetaServerToolCaller $caller

@@ -7,11 +7,12 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\Model;
 
 /**
+ * @phpstan-import-type BetaMessageShape from \Anthropic\Beta\Messages\BetaMessage
+ *
  * @phpstan-type BetaRawMessageStartEventShape = array{
- *   message: BetaMessage, type?: 'message_start'
+ *   message: BetaMessage|BetaMessageShape, type: 'message_start'
  * }
  */
 final class BetaRawMessageStartEvent implements BaseModel
@@ -50,18 +51,7 @@ final class BetaRawMessageStartEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaMessage|array{
-     *   id: string,
-     *   container: BetaContainer|null,
-     *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
-     *   contextManagement: BetaContextManagementResponse|null,
-     *   model: string|value-of<Model>,
-     *   role?: 'assistant',
-     *   stopReason: value-of<BetaStopReason>|null,
-     *   stopSequence: string|null,
-     *   type?: 'message',
-     *   usage: BetaUsage,
-     * } $message
+     * @param BetaMessageShape $message
      */
     public static function with(BetaMessage|array $message): self
     {
@@ -73,18 +63,7 @@ final class BetaRawMessageStartEvent implements BaseModel
     }
 
     /**
-     * @param BetaMessage|array{
-     *   id: string,
-     *   container: BetaContainer|null,
-     *   content: list<BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock>,
-     *   contextManagement: BetaContextManagementResponse|null,
-     *   model: string|value-of<Model>,
-     *   role?: 'assistant',
-     *   stopReason: value-of<BetaStopReason>|null,
-     *   stopSequence: string|null,
-     *   type?: 'message',
-     *   usage: BetaUsage,
-     * } $message
+     * @param BetaMessageShape $message
      */
     public function withMessage(BetaMessage|array $message): self
     {

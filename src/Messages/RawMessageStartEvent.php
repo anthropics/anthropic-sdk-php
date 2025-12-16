@@ -9,8 +9,10 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type MessageShape from \Anthropic\Messages\Message
+ *
  * @phpstan-type RawMessageStartEventShape = array{
- *   message: Message, type?: 'message_start'
+ *   message: Message|MessageShape, type: 'message_start'
  * }
  */
 final class RawMessageStartEvent implements BaseModel
@@ -49,16 +51,7 @@ final class RawMessageStartEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Message|array{
-     *   id: string,
-     *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
-     *   model: string|value-of<Model>,
-     *   role?: 'assistant',
-     *   stopReason: value-of<StopReason>|null,
-     *   stopSequence: string|null,
-     *   type?: 'message',
-     *   usage: Usage,
-     * } $message
+     * @param MessageShape $message
      */
     public static function with(Message|array $message): self
     {
@@ -70,16 +63,7 @@ final class RawMessageStartEvent implements BaseModel
     }
 
     /**
-     * @param Message|array{
-     *   id: string,
-     *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
-     *   model: string|value-of<Model>,
-     *   role?: 'assistant',
-     *   stopReason: value-of<StopReason>|null,
-     *   stopSequence: string|null,
-     *   type?: 'message',
-     *   usage: Usage,
-     * } $message
+     * @param MessageShape $message
      */
     public function withMessage(Message|array $message): self
     {

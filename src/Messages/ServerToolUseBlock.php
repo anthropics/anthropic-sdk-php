@@ -12,8 +12,8 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type ServerToolUseBlockShape = array{
  *   id: string,
  *   input: array<string,mixed>,
- *   name?: 'web_search',
- *   type?: 'server_tool_use',
+ *   name: 'web_search',
+ *   type: 'server_tool_use',
  * }
  */
 final class ServerToolUseBlock implements BaseModel

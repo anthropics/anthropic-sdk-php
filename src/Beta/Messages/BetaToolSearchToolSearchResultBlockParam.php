@@ -9,9 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaToolReferenceBlockParamShape from \Anthropic\Beta\Messages\BetaToolReferenceBlockParam
+ *
  * @phpstan-type BetaToolSearchToolSearchResultBlockParamShape = array{
- *   toolReferences: list<BetaToolReferenceBlockParam>,
- *   type?: 'tool_search_tool_search_result',
+ *   toolReferences: list<BetaToolReferenceBlockParamShape>,
+ *   type: 'tool_search_tool_search_result',
  * }
  */
 final class BetaToolSearchToolSearchResultBlockParam implements BaseModel
@@ -51,11 +53,7 @@ final class BetaToolSearchToolSearchResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaToolReferenceBlockParam|array{
-     *   toolName: string,
-     *   type?: 'tool_reference',
-     *   cacheControl?: BetaCacheControlEphemeral|null,
-     * }> $toolReferences
+     * @param list<BetaToolReferenceBlockParamShape> $toolReferences
      */
     public static function with(array $toolReferences): self
     {
@@ -67,11 +65,7 @@ final class BetaToolSearchToolSearchResultBlockParam implements BaseModel
     }
 
     /**
-     * @param list<BetaToolReferenceBlockParam|array{
-     *   toolName: string,
-     *   type?: 'tool_reference',
-     *   cacheControl?: BetaCacheControlEphemeral|null,
-     * }> $toolReferences
+     * @param list<BetaToolReferenceBlockParamShape> $toolReferences
      */
     public function withToolReferences(array $toolReferences): self
     {

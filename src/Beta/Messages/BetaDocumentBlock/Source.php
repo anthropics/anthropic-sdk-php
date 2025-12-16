@@ -10,6 +10,12 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-import-type BetaBase64PDFSourceShape from \Anthropic\Beta\Messages\BetaBase64PDFSource
+ * @phpstan-import-type BetaPlainTextSourceShape from \Anthropic\Beta\Messages\BetaPlainTextSource
+ *
+ * @phpstan-type SourceShape = BetaBase64PDFSourceShape|BetaPlainTextSourceShape
+ */
 final class Source implements ConverterSource
 {
     use SdkUnion;

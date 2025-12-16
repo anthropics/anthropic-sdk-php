@@ -10,11 +10,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaCitationConfigShape from \Anthropic\Beta\Messages\BetaCitationConfig
+ * @phpstan-import-type SourceShape from \Anthropic\Beta\Messages\BetaDocumentBlock\Source
+ *
  * @phpstan-type BetaDocumentBlockShape = array{
- *   citations: BetaCitationConfig|null,
- *   source: BetaBase64PDFSource|BetaPlainTextSource,
+ *   citations: null|BetaCitationConfig|BetaCitationConfigShape,
+ *   source: BetaBase64PDFSource|BetaPlainTextSource|SourceShape,
  *   title: string|null,
- *   type?: 'document',
+ *   type: 'document',
  * }
  */
 final class BetaDocumentBlock implements BaseModel
@@ -65,12 +68,8 @@ final class BetaDocumentBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaCitationConfig|array{enabled: bool}|null $citations
-     * @param BetaBase64PDFSource|array{
-     *   data: string, mediaType?: 'application/pdf', type?: 'base64'
-     * }|BetaPlainTextSource|array{
-     *   data: string, mediaType?: 'text/plain', type?: 'text'
-     * } $source
+     * @param BetaCitationConfigShape|null $citations
+     * @param SourceShape $source
      */
     public static function with(
         BetaCitationConfig|array|null $citations,
@@ -89,7 +88,7 @@ final class BetaDocumentBlock implements BaseModel
     /**
      * Citation configuration for the document.
      *
-     * @param BetaCitationConfig|array{enabled: bool}|null $citations
+     * @param BetaCitationConfigShape|null $citations
      */
     public function withCitations(
         BetaCitationConfig|array|null $citations
@@ -101,11 +100,7 @@ final class BetaDocumentBlock implements BaseModel
     }
 
     /**
-     * @param BetaBase64PDFSource|array{
-     *   data: string, mediaType?: 'application/pdf', type?: 'base64'
-     * }|BetaPlainTextSource|array{
-     *   data: string, mediaType?: 'text/plain', type?: 'text'
-     * } $source
+     * @param SourceShape $source
      */
     public function withSource(
         BetaBase64PDFSource|array|BetaPlainTextSource $source

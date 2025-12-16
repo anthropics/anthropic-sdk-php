@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type MessageBatchCanceledResultShape = array{type?: 'canceled'}
+ * @phpstan-type MessageBatchCanceledResultShape = array{type: 'canceled'}
  */
 final class MessageBatchCanceledResult implements BaseModel
 {

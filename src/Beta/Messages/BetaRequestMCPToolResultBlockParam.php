@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaRequestMCPToolResultBlockParam\Content;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
@@ -12,11 +11,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaRequestMCPToolResultBlockParam\Content
+ *
  * @phpstan-type BetaRequestMCPToolResultBlockParamShape = array{
  *   toolUseID: string,
- *   type?: 'mcp_tool_result',
- *   cacheControl?: BetaCacheControlEphemeral|null,
- *   content?: string|null|list<BetaTextBlockParam>,
+ *   type: 'mcp_tool_result',
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
+ *   content?: ContentShape|null,
  *   isError?: bool|null,
  * }
  */
@@ -69,15 +71,8 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
-     * @param string|list<BetaTextBlockParam|array{
-     *   text: string,
-     *   type?: 'text',
-     *   cacheControl?: BetaCacheControlEphemeral|null,
-     *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
-     * }> $content
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param ContentShape $content
      */
     public static function with(
         string $toolUseID,
@@ -107,9 +102,7 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
@@ -121,12 +114,7 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
     }
 
     /**
-     * @param string|list<BetaTextBlockParam|array{
-     *   text: string,
-     *   type?: 'text',
-     *   cacheControl?: BetaCacheControlEphemeral|null,
-     *   citations?: list<BetaCitationCharLocationParam|BetaCitationPageLocationParam|BetaCitationContentBlockLocationParam|BetaCitationWebSearchResultLocationParam|BetaCitationSearchResultLocationParam>|null,
-     * }> $content
+     * @param ContentShape $content
      */
     public function withContent(string|array $content): self
     {

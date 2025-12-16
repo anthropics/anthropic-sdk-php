@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type ThinkingConfigEnabledShape = array{
- *   budgetTokens: int, type?: 'enabled'
+ *   budgetTokens: int, type: 'enabled'
  * }
  */
 final class ThinkingConfigEnabled implements BaseModel

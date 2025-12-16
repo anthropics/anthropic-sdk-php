@@ -24,7 +24,7 @@ interface MessagesRawContract
     /**
      * @api
      *
-     * @param array<mixed>|MessageCreateParams $params
+     * @param array<string,mixed>|MessageCreateParams $params
      *
      * @return BaseResponse<BetaMessage>
      *
@@ -38,7 +38,7 @@ interface MessagesRawContract
     /**
      * @api
      *
-     * @param array<mixed>|MessageCreateParams $params
+     * @param array<string,mixed>|MessageCreateParams $params
      *
      * @return BaseResponse<BaseStream<BetaRawMessageStartEvent|BetaRawMessageDeltaEvent|BetaRawMessageStopEvent|BetaRawContentBlockStartEvent|BetaRawContentBlockDeltaEvent|BetaRawContentBlockStopEvent,>,>
      *
@@ -52,7 +52,7 @@ interface MessagesRawContract
     /**
      * @api
      *
-     * @param array<mixed>|MessageCountTokensParams $params
+     * @param array<string,mixed>|MessageCountTokensParams $params
      *
      * @return BaseResponse<BetaMessageTokensCount>
      *

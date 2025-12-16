@@ -14,6 +14,10 @@ use Anthropic\Core\Conversion\ListOf;
  * System prompt.
  *
  * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.claude.com/en/docs/system-prompts).
+ *
+ * @phpstan-import-type BetaTextBlockParamShape from \Anthropic\Beta\Messages\BetaTextBlockParam
+ *
+ * @phpstan-type SystemShape = string|list<BetaTextBlockParamShape>
  */
 final class System implements ConverterSource
 {

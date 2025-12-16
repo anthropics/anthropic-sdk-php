@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Tool invocation directly from the model.
  *
- * @phpstan-type BetaDirectCallerShape = array{type?: 'direct'}
+ * @phpstan-type BetaDirectCallerShape = array{type: 'direct'}
  */
 final class BetaDirectCaller implements BaseModel
 {

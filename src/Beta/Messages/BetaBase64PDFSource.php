@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaBase64PDFSourceShape = array{
- *   data: string, mediaType?: 'application/pdf', type?: 'base64'
+ *   data: string, mediaType: 'application/pdf', type: 'base64'
  * }
  */
 final class BetaBase64PDFSource implements BaseModel

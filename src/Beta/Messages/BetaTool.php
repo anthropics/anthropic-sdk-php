@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
 use Anthropic\Beta\Messages\BetaTool\AllowedCaller;
 use Anthropic\Beta\Messages\BetaTool\InputSchema;
 use Anthropic\Beta\Messages\BetaTool\Type;
@@ -15,16 +14,19 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\MapOf;
 
 /**
+ * @phpstan-import-type InputSchemaShape from \Anthropic\Beta\Messages\BetaTool\InputSchema
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ *
  * @phpstan-type BetaToolShape = array{
- *   inputSchema: InputSchema,
+ *   inputSchema: InputSchema|InputSchemaShape,
  *   name: string,
- *   allowedCallers?: list<value-of<AllowedCaller>>|null,
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   allowedCallers?: list<AllowedCaller|value-of<AllowedCaller>>|null,
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   deferLoading?: bool|null,
  *   description?: string|null,
  *   inputExamples?: list<array<string,mixed>>|null,
  *   strict?: bool|null,
- *   type?: value-of<Type>|null,
+ *   type?: null|Type|value-of<Type>,
  * }
  */
 final class BetaTool implements BaseModel
@@ -107,15 +109,9 @@ final class BetaTool implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param InputSchema|array{
-     *   type?: 'object',
-     *   properties?: array<string,mixed>|null,
-     *   required?: list<string>|null,
-     * } $inputSchema
+     * @param InputSchemaShape $inputSchema
      * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      * @param list<array<string,mixed>> $inputExamples
      * @param Type|value-of<Type>|null $type
      */
@@ -151,11 +147,7 @@ final class BetaTool implements BaseModel
      *
      * This defines the shape of the `input` that your tool accepts and that the model will produce.
      *
-     * @param InputSchema|array{
-     *   type?: 'object',
-     *   properties?: array<string,mixed>|null,
-     *   required?: list<string>|null,
-     * } $inputSchema
+     * @param InputSchemaShape $inputSchema
      */
     public function withInputSchema(InputSchema|array $inputSchema): self
     {
@@ -192,9 +184,7 @@ final class BetaTool implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl

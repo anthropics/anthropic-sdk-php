@@ -20,7 +20,7 @@ interface BatchesRawContract
     /**
      * @api
      *
-     * @param array<mixed>|BatchCreateParams $params
+     * @param array<string,mixed>|BatchCreateParams $params
      *
      * @return BaseResponse<MessageBatch>
      *
@@ -48,7 +48,7 @@ interface BatchesRawContract
     /**
      * @api
      *
-     * @param array<mixed>|BatchListParams $params
+     * @param array<string,mixed>|BatchListParams $params
      *
      * @return BaseResponse<Page<MessageBatch>>
      *

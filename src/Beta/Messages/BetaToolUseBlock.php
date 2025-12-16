@@ -11,12 +11,14 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type CallerShape from \Anthropic\Beta\Messages\BetaToolUseBlock\Caller
+ *
  * @phpstan-type BetaToolUseBlockShape = array{
  *   id: string,
  *   input: array<string,mixed>,
  *   name: string,
- *   type?: 'tool_use',
- *   caller?: null|BetaDirectCaller|BetaServerToolCaller,
+ *   type: 'tool_use',
+ *   caller?: null|CallerShape|BetaDirectCaller|BetaServerToolCaller,
  * }
  */
 final class BetaToolUseBlock implements BaseModel
@@ -69,9 +71,7 @@ final class BetaToolUseBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,mixed> $input
-     * @param BetaDirectCaller|array{type?: 'direct'}|BetaServerToolCaller|array{
-     *   toolID: string, type?: 'code_execution_20250825'
-     * } $caller
+     * @param CallerShape $caller
      */
     public static function with(
         string $id,
@@ -120,9 +120,7 @@ final class BetaToolUseBlock implements BaseModel
     /**
      * Tool invocation directly from the model.
      *
-     * @param BetaDirectCaller|array{type?: 'direct'}|BetaServerToolCaller|array{
-     *   toolID: string, type?: 'code_execution_20250825'
-     * } $caller
+     * @param CallerShape $caller
      */
     public function withCaller(
         BetaDirectCaller|array|BetaServerToolCaller $caller

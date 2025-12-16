@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaBase64ImageSourceShape = array{
- *   data: string, mediaType: value-of<MediaType>, type?: 'base64'
+ *   data: string, mediaType: MediaType|value-of<MediaType>, type: 'base64'
  * }
  */
 final class BetaBase64ImageSource implements BaseModel

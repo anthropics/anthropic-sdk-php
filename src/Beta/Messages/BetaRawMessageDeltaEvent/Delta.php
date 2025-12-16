@@ -5,16 +5,17 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages\BetaRawMessageDeltaEvent;
 
 use Anthropic\Beta\Messages\BetaContainer;
-use Anthropic\Beta\Messages\BetaSkill;
 use Anthropic\Beta\Messages\BetaStopReason;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaContainerShape from \Anthropic\Beta\Messages\BetaContainer
+ *
  * @phpstan-type DeltaShape = array{
- *   container: BetaContainer|null,
- *   stopReason: value-of<BetaStopReason>|null,
+ *   container: null|BetaContainer|BetaContainerShape,
+ *   stopReason: null|BetaStopReason|value-of<BetaStopReason>,
  *   stopSequence: string|null,
  * }
  */
@@ -60,9 +61,7 @@ final class Delta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaContainer|array{
-     *   id: string, expiresAt: \DateTimeInterface, skills: list<BetaSkill>|null
-     * }|null $container
+     * @param BetaContainerShape|null $container
      * @param BetaStopReason|value-of<BetaStopReason>|null $stopReason
      */
     public static function with(
@@ -82,9 +81,7 @@ final class Delta implements BaseModel
     /**
      * Information about the container used in the request (for the code execution tool).
      *
-     * @param BetaContainer|array{
-     *   id: string, expiresAt: \DateTimeInterface, skills: list<BetaSkill>|null
-     * }|null $container
+     * @param BetaContainerShape|null $container
      */
     public function withContainer(BetaContainer|array|null $container): self
     {

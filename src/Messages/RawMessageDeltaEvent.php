@@ -10,8 +10,13 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\RawMessageDeltaEvent\Delta;
 
 /**
+ * @phpstan-import-type DeltaShape from \Anthropic\Messages\RawMessageDeltaEvent\Delta
+ * @phpstan-import-type MessageDeltaUsageShape from \Anthropic\Messages\MessageDeltaUsage
+ *
  * @phpstan-type RawMessageDeltaEventShape = array{
- *   delta: Delta, type?: 'message_delta', usage: MessageDeltaUsage
+ *   delta: Delta|DeltaShape,
+ *   type: 'message_delta',
+ *   usage: MessageDeltaUsage|MessageDeltaUsageShape,
  * }
  */
 final class RawMessageDeltaEvent implements BaseModel
@@ -64,16 +69,8 @@ final class RawMessageDeltaEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Delta|array{
-     *   stopReason: value-of<StopReason>|null, stopSequence: string|null
-     * } $delta
-     * @param MessageDeltaUsage|array{
-     *   cacheCreationInputTokens: int|null,
-     *   cacheReadInputTokens: int|null,
-     *   inputTokens: int|null,
-     *   outputTokens: int,
-     *   serverToolUse: ServerToolUsage|null,
-     * } $usage
+     * @param DeltaShape $delta
+     * @param MessageDeltaUsageShape $usage
      */
     public static function with(
         Delta|array $delta,
@@ -88,9 +85,7 @@ final class RawMessageDeltaEvent implements BaseModel
     }
 
     /**
-     * @param Delta|array{
-     *   stopReason: value-of<StopReason>|null, stopSequence: string|null
-     * } $delta
+     * @param DeltaShape $delta
      */
     public function withDelta(Delta|array $delta): self
     {
@@ -111,13 +106,7 @@ final class RawMessageDeltaEvent implements BaseModel
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      *
-     * @param MessageDeltaUsage|array{
-     *   cacheCreationInputTokens: int|null,
-     *   cacheReadInputTokens: int|null,
-     *   inputTokens: int|null,
-     *   outputTokens: int,
-     *   serverToolUse: ServerToolUsage|null,
-     * } $usage
+     * @param MessageDeltaUsageShape $usage
      */
     public function withUsage(MessageDeltaUsage|array $usage): self
     {

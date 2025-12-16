@@ -7,18 +7,20 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\Usage\ServiceTier;
 
 /**
+ * @phpstan-import-type ContentBlockShape from \Anthropic\Messages\ContentBlock
+ * @phpstan-import-type UsageShape from \Anthropic\Messages\Usage
+ *
  * @phpstan-type MessageShape = array{
  *   id: string,
- *   content: list<TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock>,
- *   model: string|value-of<Model>,
- *   role?: 'assistant',
- *   stopReason: value-of<StopReason>|null,
+ *   content: list<ContentBlockShape>,
+ *   model: Model|value-of<Model>,
+ *   role: 'assistant',
+ *   stopReason: null|StopReason|value-of<StopReason>,
  *   stopSequence: string|null,
- *   type?: 'message',
- *   usage: Usage,
+ *   type: 'message',
+ *   usage: Usage|UsageShape,
  * }
  */
 final class Message implements BaseModel
@@ -89,7 +91,7 @@ final class Message implements BaseModel
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var string|value-of<Model> $model
+     * @var value-of<Model> $model
      */
     #[Required(enum: Model::class)]
     public string $model;
@@ -171,41 +173,15 @@ final class Message implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<TextBlock|array{
-     *   citations: list<CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation>|null,
-     *   text: string,
-     *   type?: 'text',
-     * }|ThinkingBlock|array{
-     *   signature: string, thinking: string, type?: 'thinking'
-     * }|RedactedThinkingBlock|array{
-     *   data: string, type?: 'redacted_thinking'
-     * }|ToolUseBlock|array{
-     *   id: string, input: array<string,mixed>, name: string, type?: 'tool_use'
-     * }|ServerToolUseBlock|array{
-     *   id: string,
-     *   input: array<string,mixed>,
-     *   name?: 'web_search',
-     *   type?: 'server_tool_use',
-     * }|WebSearchToolResultBlock|array{
-     *   content: WebSearchToolResultError|list<WebSearchResultBlock>,
-     *   toolUseID: string,
-     *   type?: 'web_search_tool_result',
-     * }> $content
+     * @param list<ContentBlockShape> $content
+     * @param Model|value-of<Model> $model
      * @param StopReason|value-of<StopReason>|null $stopReason
-     * @param Usage|array{
-     *   cacheCreation: CacheCreation|null,
-     *   cacheCreationInputTokens: int|null,
-     *   cacheReadInputTokens: int|null,
-     *   inputTokens: int,
-     *   outputTokens: int,
-     *   serverToolUse: ServerToolUsage|null,
-     *   serviceTier: value-of<ServiceTier>|null,
-     * } $usage
+     * @param UsageShape $usage
      */
     public static function with(
         string $id,
         array $content,
-        string|Model $model,
+        Model|string $model,
         StopReason|string|null $stopReason,
         ?string $stopSequence,
         Usage|array $usage,
@@ -262,26 +238,7 @@ final class Message implements BaseModel
      * [{"type": "text", "text": "B)"}]
      * ```
      *
-     * @param list<TextBlock|array{
-     *   citations: list<CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation>|null,
-     *   text: string,
-     *   type?: 'text',
-     * }|ThinkingBlock|array{
-     *   signature: string, thinking: string, type?: 'thinking'
-     * }|RedactedThinkingBlock|array{
-     *   data: string, type?: 'redacted_thinking'
-     * }|ToolUseBlock|array{
-     *   id: string, input: array<string,mixed>, name: string, type?: 'tool_use'
-     * }|ServerToolUseBlock|array{
-     *   id: string,
-     *   input: array<string,mixed>,
-     *   name?: 'web_search',
-     *   type?: 'server_tool_use',
-     * }|WebSearchToolResultBlock|array{
-     *   content: WebSearchToolResultError|list<WebSearchResultBlock>,
-     *   toolUseID: string,
-     *   type?: 'web_search_tool_result',
-     * }> $content
+     * @param list<ContentBlockShape> $content
      */
     public function withContent(array $content): self
     {
@@ -293,8 +250,10 @@ final class Message implements BaseModel
 
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     *
+     * @param Model|value-of<Model> $model
      */
-    public function withModel(string|Model $model): self
+    public function withModel(Model|string $model): self
     {
         $self = clone $this;
         $self['model'] = $model;
@@ -349,15 +308,7 @@ final class Message implements BaseModel
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      *
-     * @param Usage|array{
-     *   cacheCreation: CacheCreation|null,
-     *   cacheCreationInputTokens: int|null,
-     *   cacheReadInputTokens: int|null,
-     *   inputTokens: int,
-     *   outputTokens: int,
-     *   serverToolUse: ServerToolUsage|null,
-     *   serviceTier: value-of<ServiceTier>|null,
-     * } $usage
+     * @param UsageShape $usage
      */
     public function withUsage(Usage|array $usage): self
     {

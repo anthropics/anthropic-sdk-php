@@ -9,10 +9,12 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaWebSearchToolResultBlockContentShape from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlockContent
+ *
  * @phpstan-type BetaWebSearchToolResultBlockShape = array{
- *   content: BetaWebSearchToolResultError|list<BetaWebSearchResultBlock>,
+ *   content: BetaWebSearchToolResultBlockContentShape,
  *   toolUseID: string,
- *   type?: 'web_search_tool_result',
+ *   type: 'web_search_tool_result',
  * }
  */
 final class BetaWebSearchToolResultBlock implements BaseModel
@@ -55,16 +57,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaWebSearchToolResultError|array{
-     *   errorCode: value-of<BetaWebSearchToolResultErrorCode>,
-     *   type?: 'web_search_tool_result_error',
-     * }|list<BetaWebSearchResultBlock|array{
-     *   encryptedContent: string,
-     *   pageAge: string|null,
-     *   title: string,
-     *   type?: 'web_search_result',
-     *   url: string,
-     * }> $content
+     * @param BetaWebSearchToolResultBlockContentShape $content
      */
     public static function with(
         BetaWebSearchToolResultError|array $content,
@@ -79,16 +72,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     }
 
     /**
-     * @param BetaWebSearchToolResultError|array{
-     *   errorCode: value-of<BetaWebSearchToolResultErrorCode>,
-     *   type?: 'web_search_tool_result_error',
-     * }|list<BetaWebSearchResultBlock|array{
-     *   encryptedContent: string,
-     *   pageAge: string|null,
-     *   title: string,
-     *   type?: 'web_search_result',
-     *   url: string,
-     * }> $content
+     * @param BetaWebSearchToolResultBlockContentShape $content
      */
     public function withContent(
         BetaWebSearchToolResultError|array $content

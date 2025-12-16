@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCodeExecutionOutputBlockParamShape = array{
- *   fileID: string, type?: 'code_execution_output'
+ *   fileID: string, type: 'code_execution_output'
  * }
  */
 final class BetaCodeExecutionOutputBlockParam implements BaseModel

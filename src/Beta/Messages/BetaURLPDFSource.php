@@ -9,11 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaUrlpdfSourceShape = array{type?: 'url', url: string}
+ * @phpstan-type BetaURLPDFSourceShape = array{type: 'url', url: string}
  */
 final class BetaURLPDFSource implements BaseModel
 {
-    /** @use SdkModel<BetaUrlpdfSourceShape> */
+    /** @use SdkModel<BetaURLPDFSourceShape> */
     use SdkModel;
 
     /** @var 'url' $type */

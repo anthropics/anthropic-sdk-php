@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
-use Anthropic\Beta\Messages\BetaTextEditorCodeExecutionToolResultErrorParam\ErrorCode;
-use Anthropic\Beta\Messages\BetaTextEditorCodeExecutionViewResultBlockParam\FileType;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaTextEditorCodeExecutionToolResultBlockParam\Content
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ *
  * @phpstan-type BetaTextEditorCodeExecutionToolResultBlockParamShape = array{
- *   content: BetaTextEditorCodeExecutionToolResultErrorParam|BetaTextEditorCodeExecutionViewResultBlockParam|BetaTextEditorCodeExecutionCreateResultBlockParam|BetaTextEditorCodeExecutionStrReplaceResultBlockParam,
+ *   content: BetaTextEditorCodeExecutionToolResultErrorParam|BetaTextEditorCodeExecutionViewResultBlockParam|BetaTextEditorCodeExecutionCreateResultBlockParam|BetaTextEditorCodeExecutionStrReplaceResultBlockParam|ContentShape,
  *   toolUseID: string,
- *   type?: 'text_editor_code_execution_tool_result',
- *   cacheControl?: BetaCacheControlEphemeral|null,
+ *   type: 'text_editor_code_execution_tool_result',
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  * }
  */
 final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
@@ -69,30 +69,8 @@ final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaTextEditorCodeExecutionToolResultErrorParam|array{
-     *   errorCode: value-of<ErrorCode>,
-     *   type?: 'text_editor_code_execution_tool_result_error',
-     *   errorMessage?: string|null,
-     * }|BetaTextEditorCodeExecutionViewResultBlockParam|array{
-     *   content: string,
-     *   fileType: value-of<FileType>,
-     *   type?: 'text_editor_code_execution_view_result',
-     *   numLines?: int|null,
-     *   startLine?: int|null,
-     *   totalLines?: int|null,
-     * }|BetaTextEditorCodeExecutionCreateResultBlockParam|array{
-     *   isFileUpdate: bool, type?: 'text_editor_code_execution_create_result'
-     * }|BetaTextEditorCodeExecutionStrReplaceResultBlockParam|array{
-     *   type?: 'text_editor_code_execution_str_replace_result',
-     *   lines?: list<string>|null,
-     *   newLines?: int|null,
-     *   newStart?: int|null,
-     *   oldLines?: int|null,
-     *   oldStart?: int|null,
-     * } $content
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param ContentShape $content
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         BetaTextEditorCodeExecutionToolResultErrorParam|array|BetaTextEditorCodeExecutionViewResultBlockParam|BetaTextEditorCodeExecutionCreateResultBlockParam|BetaTextEditorCodeExecutionStrReplaceResultBlockParam $content,
@@ -110,27 +88,7 @@ final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
     }
 
     /**
-     * @param BetaTextEditorCodeExecutionToolResultErrorParam|array{
-     *   errorCode: value-of<ErrorCode>,
-     *   type?: 'text_editor_code_execution_tool_result_error',
-     *   errorMessage?: string|null,
-     * }|BetaTextEditorCodeExecutionViewResultBlockParam|array{
-     *   content: string,
-     *   fileType: value-of<FileType>,
-     *   type?: 'text_editor_code_execution_view_result',
-     *   numLines?: int|null,
-     *   startLine?: int|null,
-     *   totalLines?: int|null,
-     * }|BetaTextEditorCodeExecutionCreateResultBlockParam|array{
-     *   isFileUpdate: bool, type?: 'text_editor_code_execution_create_result'
-     * }|BetaTextEditorCodeExecutionStrReplaceResultBlockParam|array{
-     *   type?: 'text_editor_code_execution_str_replace_result',
-     *   lines?: list<string>|null,
-     *   newLines?: int|null,
-     *   newStart?: int|null,
-     *   oldLines?: int|null,
-     *   oldStart?: int|null,
-     * } $content
+     * @param ContentShape $content
      */
     public function withContent(
         BetaTextEditorCodeExecutionToolResultErrorParam|array|BetaTextEditorCodeExecutionViewResultBlockParam|BetaTextEditorCodeExecutionCreateResultBlockParam|BetaTextEditorCodeExecutionStrReplaceResultBlockParam $content,
@@ -152,9 +110,7 @@ final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeral|array{
-     *   type?: 'ephemeral', ttl?: value-of<TTL>|null
-     * }|null $cacheControl
+     * @param BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl

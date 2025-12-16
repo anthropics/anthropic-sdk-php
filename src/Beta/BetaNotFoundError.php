@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaNotFoundErrorShape = array{
- *   message: string, type?: 'not_found_error'
+ *   message: string, type: 'not_found_error'
  * }
  */
 final class BetaNotFoundError implements BaseModel

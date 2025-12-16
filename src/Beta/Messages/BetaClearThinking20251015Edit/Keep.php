@@ -12,6 +12,11 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * Number of most recent assistant turns to keep thinking blocks for. Older turns will have their thinking blocks removed.
+ *
+ * @phpstan-import-type BetaThinkingTurnsShape from \Anthropic\Beta\Messages\BetaThinkingTurns
+ * @phpstan-import-type BetaAllThinkingTurnsShape from \Anthropic\Beta\Messages\BetaAllThinkingTurns
+ *
+ * @phpstan-type KeepShape = 'all'|BetaThinkingTurnsShape|BetaAllThinkingTurnsShape
  */
 final class Keep implements ConverterSource
 {
