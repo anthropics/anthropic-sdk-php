@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   name: string,
  *   type: 'tool_use',
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
- *   caller?: null|CallerShape|BetaDirectCaller|BetaServerToolCaller,
+ *   caller?: CallerShape|null,
  * }
  */
 final class BetaToolUseBlockParam implements BaseModel
@@ -79,8 +79,8 @@ final class BetaToolUseBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,mixed> $input
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
-     * @param CallerShape $caller
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param CallerShape|null $caller
      */
     public static function with(
         string $id,
@@ -131,7 +131,7 @@ final class BetaToolUseBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl

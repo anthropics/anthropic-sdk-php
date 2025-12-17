@@ -36,10 +36,10 @@ use Anthropic\Messages\Model;
  * @phpstan-type MessageCountTokensParamsShape = array{
  *   messages: list<BetaMessageParamShape>,
  *   model: Model|value-of<Model>,
- *   contextManagement?: BetaContextManagementConfigShape|null,
+ *   contextManagement?: null|BetaContextManagementConfig|BetaContextManagementConfigShape,
  *   mcpServers?: list<BetaRequestMCPServerURLDefinitionShape>|null,
- *   outputConfig?: BetaOutputConfigShape|null,
- *   outputFormat?: BetaJSONOutputFormatShape|null,
+ *   outputConfig?: null|BetaOutputConfig|BetaOutputConfigShape,
+ *   outputFormat?: null|BetaJSONOutputFormat|BetaJSONOutputFormatShape,
  *   system?: SystemShape|null,
  *   thinking?: BetaThinkingConfigParamShape|null,
  *   toolChoice?: BetaToolChoiceShape|null,
@@ -272,15 +272,15 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param list<BetaMessageParamShape> $messages
      * @param Model|value-of<Model> $model
-     * @param BetaContextManagementConfigShape|null $contextManagement
-     * @param list<BetaRequestMCPServerURLDefinitionShape> $mcpServers
-     * @param BetaOutputConfigShape $outputConfig
-     * @param BetaJSONOutputFormatShape|null $outputFormat
-     * @param SystemShape $system
-     * @param BetaThinkingConfigParamShape $thinking
-     * @param BetaToolChoiceShape $toolChoice
-     * @param list<ToolShape> $tools
-     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
+     * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement
+     * @param list<BetaRequestMCPServerURLDefinitionShape>|null $mcpServers
+     * @param BetaOutputConfig|BetaOutputConfigShape|null $outputConfig
+     * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat
+     * @param SystemShape|null $system
+     * @param BetaThinkingConfigParamShape|null $thinking
+     * @param BetaToolChoiceShape|null $toolChoice
+     * @param list<ToolShape>|null $tools
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
         array $messages,
@@ -391,7 +391,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
      *
-     * @param BetaContextManagementConfigShape|null $contextManagement
+     * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement
      */
     public function withContextManagement(
         BetaContextManagementConfig|array|null $contextManagement
@@ -418,7 +418,7 @@ final class MessageCountTokensParams implements BaseModel
     /**
      * Configuration options for the model's output. Controls aspects like how much effort the model puts into its response.
      *
-     * @param BetaOutputConfigShape $outputConfig
+     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig
      */
     public function withOutputConfig(BetaOutputConfig|array $outputConfig): self
     {
@@ -431,7 +431,7 @@ final class MessageCountTokensParams implements BaseModel
     /**
      * A schema to specify Claude's output format in responses.
      *
-     * @param BetaJSONOutputFormatShape|null $outputFormat
+     * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat
      */
     public function withOutputFormat(
         BetaJSONOutputFormat|array|null $outputFormat

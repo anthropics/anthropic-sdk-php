@@ -65,7 +65,7 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaRequestMCPServerToolConfigurationShape|null $toolConfiguration
+     * @param BetaRequestMCPServerToolConfiguration|BetaRequestMCPServerToolConfigurationShape|null $toolConfiguration
      */
     public static function with(
         string $name,
@@ -109,7 +109,7 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
     }
 
     /**
-     * @param BetaRequestMCPServerToolConfigurationShape|null $toolConfiguration
+     * @param BetaRequestMCPServerToolConfiguration|BetaRequestMCPServerToolConfigurationShape|null $toolConfiguration
      */
     public function withToolConfiguration(
         BetaRequestMCPServerToolConfiguration|array|null $toolConfiguration

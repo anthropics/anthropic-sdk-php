@@ -40,11 +40,11 @@ use Anthropic\Messages\Model;
  *   messages: list<BetaMessageParamShape>,
  *   model: Model|value-of<Model>,
  *   container?: ContainerShape|null,
- *   contextManagement?: BetaContextManagementConfigShape|null,
+ *   contextManagement?: null|BetaContextManagementConfig|BetaContextManagementConfigShape,
  *   mcpServers?: list<BetaRequestMCPServerURLDefinitionShape>|null,
- *   metadata?: BetaMetadataShape|null,
- *   outputConfig?: BetaOutputConfigShape|null,
- *   outputFormat?: BetaJSONOutputFormatShape|null,
+ *   metadata?: null|BetaMetadata|BetaMetadataShape,
+ *   outputConfig?: null|BetaOutputConfig|BetaOutputConfigShape,
+ *   outputFormat?: null|BetaJSONOutputFormat|BetaJSONOutputFormatShape,
  *   serviceTier?: null|ServiceTier|value-of<ServiceTier>,
  *   stopSequences?: list<string>|null,
  *   system?: SystemShape|null,
@@ -357,18 +357,18 @@ final class MessageCreateParams implements BaseModel
      * @param list<BetaMessageParamShape> $messages
      * @param Model|value-of<Model> $model
      * @param ContainerShape|null $container
-     * @param BetaContextManagementConfigShape|null $contextManagement
-     * @param list<BetaRequestMCPServerURLDefinitionShape> $mcpServers
-     * @param BetaMetadataShape $metadata
-     * @param BetaOutputConfigShape $outputConfig
-     * @param BetaJSONOutputFormatShape|null $outputFormat
-     * @param ServiceTier|value-of<ServiceTier> $serviceTier
-     * @param list<string> $stopSequences
-     * @param SystemShape $system
-     * @param BetaThinkingConfigParamShape $thinking
-     * @param BetaToolChoiceShape $toolChoice
-     * @param list<BetaToolUnionShape> $tools
-     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
+     * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement
+     * @param list<BetaRequestMCPServerURLDefinitionShape>|null $mcpServers
+     * @param BetaMetadata|BetaMetadataShape|null $metadata
+     * @param BetaOutputConfig|BetaOutputConfigShape|null $outputConfig
+     * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat
+     * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
+     * @param list<string>|null $stopSequences
+     * @param SystemShape|null $system
+     * @param BetaThinkingConfigParamShape|null $thinking
+     * @param BetaToolChoiceShape|null $toolChoice
+     * @param list<BetaToolUnionShape>|null $tools
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
         int $maxTokens,
@@ -524,7 +524,7 @@ final class MessageCreateParams implements BaseModel
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
      *
-     * @param BetaContextManagementConfigShape|null $contextManagement
+     * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement
      */
     public function withContextManagement(
         BetaContextManagementConfig|array|null $contextManagement
@@ -551,7 +551,7 @@ final class MessageCreateParams implements BaseModel
     /**
      * An object describing metadata about the request.
      *
-     * @param BetaMetadataShape $metadata
+     * @param BetaMetadata|BetaMetadataShape $metadata
      */
     public function withMetadata(BetaMetadata|array $metadata): self
     {
@@ -564,7 +564,7 @@ final class MessageCreateParams implements BaseModel
     /**
      * Configuration options for the model's output. Controls aspects like how much effort the model puts into its response.
      *
-     * @param BetaOutputConfigShape $outputConfig
+     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig
      */
     public function withOutputConfig(BetaOutputConfig|array $outputConfig): self
     {
@@ -577,7 +577,7 @@ final class MessageCreateParams implements BaseModel
     /**
      * A schema to specify Claude's output format in responses.
      *
-     * @param BetaJSONOutputFormatShape|null $outputFormat
+     * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat
      */
     public function withOutputFormat(
         BetaJSONOutputFormat|array|null $outputFormat

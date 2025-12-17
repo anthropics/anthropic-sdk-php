@@ -39,7 +39,7 @@ final class BetaContextManagementConfig implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<EditShape> $edits
+     * @param list<EditShape>|null $edits
      */
     public static function with(?array $edits = null): self
     {

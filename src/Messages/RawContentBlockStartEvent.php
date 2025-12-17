@@ -13,9 +13,7 @@ use Anthropic\Messages\RawContentBlockStartEvent\ContentBlock;
  * @phpstan-import-type ContentBlockShape from \Anthropic\Messages\RawContentBlockStartEvent\ContentBlock
  *
  * @phpstan-type RawContentBlockStartEventShape = array{
- *   contentBlock: TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock|ContentBlockShape,
- *   index: int,
- *   type: 'content_block_start',
+ *   contentBlock: ContentBlockShape, index: int, type: 'content_block_start'
  * }
  */
 final class RawContentBlockStartEvent implements BaseModel

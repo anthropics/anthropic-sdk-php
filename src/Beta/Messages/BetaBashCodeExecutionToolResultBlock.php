@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultBlock\Content
  *
  * @phpstan-type BetaBashCodeExecutionToolResultBlockShape = array{
- *   content: BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock|ContentShape,
+ *   content: ContentShape,
  *   toolUseID: string,
  *   type: 'bash_code_execution_tool_result',
  * }

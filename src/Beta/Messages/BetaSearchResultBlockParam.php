@@ -79,8 +79,8 @@ final class BetaSearchResultBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaTextBlockParamShape> $content
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
-     * @param BetaCitationsConfigParamShape $citations
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCitationsConfigParam|BetaCitationsConfigParamShape|null $citations
      */
     public static function with(
         array $content,
@@ -131,7 +131,7 @@ final class BetaSearchResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
@@ -143,7 +143,7 @@ final class BetaSearchResultBlockParam implements BaseModel
     }
 
     /**
-     * @param BetaCitationsConfigParamShape $citations
+     * @param BetaCitationsConfigParam|BetaCitationsConfigParamShape $citations
      */
     public function withCitations(
         BetaCitationsConfigParam|array $citations

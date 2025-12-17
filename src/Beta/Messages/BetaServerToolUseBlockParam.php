@@ -21,7 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   name: Name|value-of<Name>,
  *   type: 'server_tool_use',
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
- *   caller?: null|CallerShape|BetaDirectCaller|BetaServerToolCaller,
+ *   caller?: CallerShape|null,
  * }
  */
 final class BetaServerToolUseBlockParam implements BaseModel
@@ -82,8 +82,8 @@ final class BetaServerToolUseBlockParam implements BaseModel
      *
      * @param array<string,mixed> $input
      * @param Name|value-of<Name> $name
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
-     * @param CallerShape $caller
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param CallerShape|null $caller
      */
     public static function with(
         string $id,
@@ -137,7 +137,7 @@ final class BetaServerToolUseBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl

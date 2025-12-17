@@ -59,7 +59,7 @@ final class Request implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ParamsShape $params
+     * @param Params|ParamsShape $params
      */
     public static function with(string $customID, Params|array $params): self
     {
@@ -89,7 +89,7 @@ final class Request implements BaseModel
      *
      * See the [Messages API reference](https://docs.claude.com/en/api/messages) for full documentation on available parameters.
      *
-     * @param ParamsShape $params
+     * @param Params|ParamsShape $params
      */
     public function withParams(Params|array $params): self
     {

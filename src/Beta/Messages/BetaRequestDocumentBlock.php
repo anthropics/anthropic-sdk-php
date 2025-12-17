@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type BetaCitationsConfigParamShape from \Anthropic\Beta\Messages\BetaCitationsConfigParam
  *
  * @phpstan-type BetaRequestDocumentBlockShape = array{
- *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource|SourceShape,
+ *   source: SourceShape,
  *   type: 'document',
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   citations?: null|BetaCitationsConfigParam|BetaCitationsConfigParamShape,
@@ -76,8 +76,8 @@ final class BetaRequestDocumentBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param SourceShape $source
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
-     * @param BetaCitationsConfigParamShape|null $citations
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCitationsConfigParam|BetaCitationsConfigParamShape|null $citations
      */
     public static function with(
         BetaBase64PDFSource|array|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource $source,
@@ -113,7 +113,7 @@ final class BetaRequestDocumentBlock implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
@@ -125,7 +125,7 @@ final class BetaRequestDocumentBlock implements BaseModel
     }
 
     /**
-     * @param BetaCitationsConfigParamShape|null $citations
+     * @param BetaCitationsConfigParam|BetaCitationsConfigParamShape|null $citations
      */
     public function withCitations(
         BetaCitationsConfigParam|array|null $citations

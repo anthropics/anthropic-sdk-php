@@ -89,7 +89,7 @@ final class MessageDeltaUsage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ServerToolUsageShape|null $serverToolUse
+     * @param ServerToolUsage|ServerToolUsageShape|null $serverToolUse
      */
     public static function with(
         ?int $cacheCreationInputTokens,
@@ -157,7 +157,7 @@ final class MessageDeltaUsage implements BaseModel
     /**
      * The number of server tool requests.
      *
-     * @param ServerToolUsageShape|null $serverToolUse
+     * @param ServerToolUsage|ServerToolUsageShape|null $serverToolUse
      */
     public function withServerToolUse(
         ServerToolUsage|array|null $serverToolUse

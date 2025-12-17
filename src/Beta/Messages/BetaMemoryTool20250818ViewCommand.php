@@ -65,7 +65,7 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<int> $viewRange
+     * @param list<int>|null $viewRange
      */
     public static function with(string $path, ?array $viewRange = null): self
     {

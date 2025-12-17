@@ -62,7 +62,7 @@ final class BetaToolReferenceBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         string $toolName,
@@ -88,7 +88,7 @@ final class BetaToolReferenceBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl

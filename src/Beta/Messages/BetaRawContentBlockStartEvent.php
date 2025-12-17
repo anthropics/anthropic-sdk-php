@@ -13,9 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type ContentBlockShape from \Anthropic\Beta\Messages\BetaRawContentBlockStartEvent\ContentBlock
  *
  * @phpstan-type BetaRawContentBlockStartEventShape = array{
- *   contentBlock: BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock|ContentBlockShape,
- *   index: int,
- *   type: 'content_block_start',
+ *   contentBlock: ContentBlockShape, index: int, type: 'content_block_start'
  * }
  */
 final class BetaRawContentBlockStartEvent implements BaseModel

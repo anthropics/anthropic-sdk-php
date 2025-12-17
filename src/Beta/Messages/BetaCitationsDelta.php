@@ -13,8 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type CitationShape from \Anthropic\Beta\Messages\BetaCitationsDelta\Citation
  *
  * @phpstan-type BetaCitationsDeltaShape = array{
- *   citation: BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation|CitationShape,
- *   type: 'citations_delta',
+ *   citation: CitationShape, type: 'citations_delta'
  * }
  */
 final class BetaCitationsDelta implements BaseModel

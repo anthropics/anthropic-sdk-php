@@ -52,8 +52,8 @@ use Anthropic\Messages\WebSearchTool20250305;
  *   stream?: bool|null,
  *   system?: SystemShape|null,
  *   temperature?: float|null,
- *   thinking?: null|ThinkingConfigParamShape|ThinkingConfigEnabled|ThinkingConfigDisabled,
- *   toolChoice?: null|ToolChoiceShape|ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
+ *   thinking?: ThinkingConfigParamShape|null,
+ *   toolChoice?: ToolChoiceShape|null,
  *   tools?: list<ToolUnionShape>|null,
  *   topK?: int|null,
  *   topP?: float|null,
@@ -323,13 +323,13 @@ final class Params implements BaseModel
      *
      * @param list<MessageParamShape> $messages
      * @param Model|value-of<Model> $model
-     * @param MetadataShape $metadata
-     * @param ServiceTier|value-of<ServiceTier> $serviceTier
-     * @param list<string> $stopSequences
-     * @param SystemShape $system
-     * @param ThinkingConfigParamShape $thinking
-     * @param ToolChoiceShape $toolChoice
-     * @param list<ToolUnionShape> $tools
+     * @param Metadata|MetadataShape|null $metadata
+     * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
+     * @param list<string>|null $stopSequences
+     * @param SystemShape|null $system
+     * @param ThinkingConfigParamShape|null $thinking
+     * @param ToolChoiceShape|null $toolChoice
+     * @param list<ToolUnionShape>|null $tools
      */
     public static function with(
         int $maxTokens,
@@ -459,7 +459,7 @@ final class Params implements BaseModel
     /**
      * An object describing metadata about the request.
      *
-     * @param MetadataShape $metadata
+     * @param Metadata|MetadataShape $metadata
      */
     public function withMetadata(Metadata|array $metadata): self
     {

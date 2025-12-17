@@ -89,8 +89,8 @@ final class WebSearchTool20250305 implements BaseModel
      *
      * @param list<string>|null $allowedDomains
      * @param list<string>|null $blockedDomains
-     * @param CacheControlEphemeralShape|null $cacheControl
-     * @param UserLocationShape|null $userLocation
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
+     * @param UserLocation|UserLocationShape|null $userLocation
      */
     public static function with(
         ?array $allowedDomains = null,
@@ -139,7 +139,7 @@ final class WebSearchTool20250305 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param CacheControlEphemeralShape|null $cacheControl
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl
@@ -164,7 +164,7 @@ final class WebSearchTool20250305 implements BaseModel
     /**
      * Parameters for the user's location. Used to provide more relevant search results.
      *
-     * @param UserLocationShape|null $userLocation
+     * @param UserLocation|UserLocationShape|null $userLocation
      */
     public function withUserLocation(
         UserLocation|array|null $userLocation

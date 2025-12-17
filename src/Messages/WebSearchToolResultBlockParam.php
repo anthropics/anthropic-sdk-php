@@ -67,7 +67,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param WebSearchToolResultBlockParamContentShape $content
-     * @param CacheControlEphemeralShape|null $cacheControl
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         array|WebSearchToolRequestError $content,
@@ -106,7 +106,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param CacheControlEphemeralShape|null $cacheControl
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl

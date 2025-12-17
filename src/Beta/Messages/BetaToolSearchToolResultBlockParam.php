@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  *
  * @phpstan-type BetaToolSearchToolResultBlockParamShape = array{
- *   content: BetaToolSearchToolResultErrorParam|BetaToolSearchToolSearchResultBlockParam|ContentShape,
+ *   content: ContentShape,
  *   toolUseID: string,
  *   type: 'tool_search_tool_result',
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
@@ -66,7 +66,7 @@ final class BetaToolSearchToolResultBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ContentShape $content
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         BetaToolSearchToolResultErrorParam|array|BetaToolSearchToolSearchResultBlockParam $content,
@@ -106,7 +106,7 @@ final class BetaToolSearchToolResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl

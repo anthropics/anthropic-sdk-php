@@ -45,7 +45,7 @@ final class BatchRetrieveParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(?array $betas = null): self
     {

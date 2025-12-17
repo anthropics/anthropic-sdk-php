@@ -61,7 +61,7 @@ final class Delta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaContainerShape|null $container
+     * @param BetaContainer|BetaContainerShape|null $container
      * @param BetaStopReason|value-of<BetaStopReason>|null $stopReason
      */
     public static function with(
@@ -81,7 +81,7 @@ final class Delta implements BaseModel
     /**
      * Information about the container used in the request (for the code execution tool).
      *
-     * @param BetaContainerShape|null $container
+     * @param BetaContainer|BetaContainerShape|null $container
      */
     public function withContainer(BetaContainer|array|null $container): self
     {

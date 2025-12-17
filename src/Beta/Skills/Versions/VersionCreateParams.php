@@ -55,7 +55,7 @@ final class VersionCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string>|null $files
-     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(?array $files = null, ?array $betas = null): self
     {

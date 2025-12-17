@@ -68,7 +68,7 @@ final class TextBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CacheControlEphemeralShape|null $cacheControl
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      * @param list<TextCitationParamShape>|null $citations
      */
     public static function with(
@@ -97,7 +97,7 @@ final class TextBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param CacheControlEphemeralShape|null $cacheControl
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl

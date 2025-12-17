@@ -176,7 +176,7 @@ final class Message implements BaseModel
      * @param list<ContentBlockShape> $content
      * @param Model|value-of<Model> $model
      * @param StopReason|value-of<StopReason>|null $stopReason
-     * @param UsageShape $usage
+     * @param Usage|UsageShape $usage
      */
     public static function with(
         string $id,
@@ -308,7 +308,7 @@ final class Message implements BaseModel
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      *
-     * @param UsageShape $usage
+     * @param Usage|UsageShape $usage
      */
     public function withUsage(Usage|array $usage): self
     {

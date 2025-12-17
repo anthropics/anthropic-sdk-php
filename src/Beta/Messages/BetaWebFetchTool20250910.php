@@ -110,11 +110,11 @@ final class BetaWebFetchTool20250910 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
+     * @param list<AllowedCaller|value-of<AllowedCaller>>|null $allowedCallers
      * @param list<string>|null $allowedDomains
      * @param list<string>|null $blockedDomains
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
-     * @param BetaCitationsConfigParamShape|null $citations
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCitationsConfigParam|BetaCitationsConfigParamShape|null $citations
      */
     public static function with(
         ?array $allowedCallers = null,
@@ -182,7 +182,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
@@ -196,7 +196,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     /**
      * Citations configuration for fetched documents. Citations are disabled by default.
      *
-     * @param BetaCitationsConfigParamShape|null $citations
+     * @param BetaCitationsConfigParam|BetaCitationsConfigParamShape|null $citations
      */
     public function withCitations(
         BetaCitationsConfigParam|array|null $citations

@@ -73,8 +73,8 @@ final class ToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CacheControlEphemeralShape|null $cacheControl
-     * @param ContentShape $content
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
+     * @param ContentShape|null $content
      */
     public static function with(
         string $toolUseID,
@@ -104,7 +104,7 @@ final class ToolResultBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param CacheControlEphemeralShape|null $cacheControl
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl

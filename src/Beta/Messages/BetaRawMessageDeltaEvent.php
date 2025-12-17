@@ -80,9 +80,9 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaContextManagementResponseShape|null $contextManagement
-     * @param DeltaShape $delta
-     * @param BetaMessageDeltaUsageShape $usage
+     * @param BetaContextManagementResponse|BetaContextManagementResponseShape|null $contextManagement
+     * @param Delta|DeltaShape $delta
+     * @param BetaMessageDeltaUsage|BetaMessageDeltaUsageShape $usage
      */
     public static function with(
         BetaContextManagementResponse|array|null $contextManagement,
@@ -101,7 +101,7 @@ final class BetaRawMessageDeltaEvent implements BaseModel
     /**
      * Information about context management strategies applied during the request.
      *
-     * @param BetaContextManagementResponseShape|null $contextManagement
+     * @param BetaContextManagementResponse|BetaContextManagementResponseShape|null $contextManagement
      */
     public function withContextManagement(
         BetaContextManagementResponse|array|null $contextManagement
@@ -113,7 +113,7 @@ final class BetaRawMessageDeltaEvent implements BaseModel
     }
 
     /**
-     * @param DeltaShape $delta
+     * @param Delta|DeltaShape $delta
      */
     public function withDelta(Delta|array $delta): self
     {
@@ -134,7 +134,7 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      *
-     * @param BetaMessageDeltaUsageShape $usage
+     * @param BetaMessageDeltaUsage|BetaMessageDeltaUsageShape $usage
      */
     public function withUsage(BetaMessageDeltaUsage|array $usage): self
     {

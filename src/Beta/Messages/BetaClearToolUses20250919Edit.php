@@ -23,7 +23,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   clearToolInputs?: ClearToolInputsShape|null,
  *   excludeTools?: list<string>|null,
  *   keep?: null|BetaToolUsesKeep|BetaToolUsesKeepShape,
- *   trigger?: null|TriggerShape|BetaInputTokensTrigger|BetaToolUsesTrigger,
+ *   trigger?: TriggerShape|null,
  * }
  */
 final class BetaClearToolUses20250919Edit implements BaseModel
@@ -83,11 +83,11 @@ final class BetaClearToolUses20250919Edit implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaInputTokensClearAtLeastShape|null $clearAtLeast
+     * @param BetaInputTokensClearAtLeast|BetaInputTokensClearAtLeastShape|null $clearAtLeast
      * @param ClearToolInputsShape|null $clearToolInputs
      * @param list<string>|null $excludeTools
-     * @param BetaToolUsesKeepShape $keep
-     * @param TriggerShape $trigger
+     * @param BetaToolUsesKeep|BetaToolUsesKeepShape|null $keep
+     * @param TriggerShape|null $trigger
      */
     public static function with(
         BetaInputTokensClearAtLeast|array|null $clearAtLeast = null,
@@ -110,7 +110,7 @@ final class BetaClearToolUses20250919Edit implements BaseModel
     /**
      * Minimum number of tokens that must be cleared when triggered. Context will only be modified if at least this many tokens can be removed.
      *
-     * @param BetaInputTokensClearAtLeastShape|null $clearAtLeast
+     * @param BetaInputTokensClearAtLeast|BetaInputTokensClearAtLeastShape|null $clearAtLeast
      */
     public function withClearAtLeast(
         BetaInputTokensClearAtLeast|array|null $clearAtLeast
@@ -150,7 +150,7 @@ final class BetaClearToolUses20250919Edit implements BaseModel
     /**
      * Number of tool uses to retain in the conversation.
      *
-     * @param BetaToolUsesKeepShape $keep
+     * @param BetaToolUsesKeep|BetaToolUsesKeepShape $keep
      */
     public function withKeep(BetaToolUsesKeep|array $keep): self
     {

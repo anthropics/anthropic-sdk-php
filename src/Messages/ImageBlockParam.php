@@ -15,7 +15,7 @@ use Anthropic\Messages\ImageBlockParam\Source;
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  *
  * @phpstan-type ImageBlockParamShape = array{
- *   source: Base64ImageSource|URLImageSource|SourceShape,
+ *   source: SourceShape,
  *   type: 'image',
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  * }
@@ -63,7 +63,7 @@ final class ImageBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param SourceShape $source
-     * @param CacheControlEphemeralShape|null $cacheControl
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         Base64ImageSource|array|URLImageSource $source,
@@ -93,7 +93,7 @@ final class ImageBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param CacheControlEphemeralShape|null $cacheControl
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl

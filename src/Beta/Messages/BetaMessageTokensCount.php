@@ -57,7 +57,7 @@ final class BetaMessageTokensCount implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaCountTokensContextManagementResponseShape|null $contextManagement
+     * @param BetaCountTokensContextManagementResponse|BetaCountTokensContextManagementResponseShape|null $contextManagement
      */
     public static function with(
         BetaCountTokensContextManagementResponse|array|null $contextManagement,
@@ -74,7 +74,7 @@ final class BetaMessageTokensCount implements BaseModel
     /**
      * Information about context management applied to the message.
      *
-     * @param BetaCountTokensContextManagementResponseShape|null $contextManagement
+     * @param BetaCountTokensContextManagementResponse|BetaCountTokensContextManagementResponseShape|null $contextManagement
      */
     public function withContextManagement(
         BetaCountTokensContextManagementResponse|array|null $contextManagement

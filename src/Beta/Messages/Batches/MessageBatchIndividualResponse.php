@@ -14,8 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type MessageBatchResultShape from \Anthropic\Beta\Messages\Batches\MessageBatchResult
  *
  * @phpstan-type MessageBatchIndividualResponseShape = array{
- *   customID: string,
- *   result: MessageBatchSucceededResult|MessageBatchErroredResult|MessageBatchCanceledResult|MessageBatchExpiredResult|MessageBatchResultShape,
+ *   customID: string, result: MessageBatchResultShape
  * }
  */
 final class MessageBatchIndividualResponse implements BaseModel

@@ -66,7 +66,7 @@ final class BetaWebFetchBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaDocumentBlockShape $content
+     * @param BetaDocumentBlock|BetaDocumentBlockShape $content
      */
     public static function with(
         BetaDocumentBlock|array $content,
@@ -83,7 +83,7 @@ final class BetaWebFetchBlock implements BaseModel
     }
 
     /**
-     * @param BetaDocumentBlockShape $content
+     * @param BetaDocumentBlock|BetaDocumentBlockShape $content
      */
     public function withContent(BetaDocumentBlock|array $content): self
     {
