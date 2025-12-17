@@ -12,9 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type BetaRawContentBlockDeltaShape from \Anthropic\Beta\Messages\BetaRawContentBlockDelta
  *
  * @phpstan-type BetaRawContentBlockDeltaEventShape = array{
- *   delta: BetaTextDelta|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta|BetaRawContentBlockDeltaShape,
- *   index: int,
- *   type: 'content_block_delta',
+ *   delta: BetaRawContentBlockDeltaShape, index: int, type: 'content_block_delta'
  * }
  */
 final class BetaRawContentBlockDeltaEvent implements BaseModel

@@ -109,10 +109,10 @@ final class BetaTool implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param InputSchemaShape $inputSchema
-     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
-     * @param list<array<string,mixed>> $inputExamples
+     * @param InputSchema|InputSchemaShape $inputSchema
+     * @param list<AllowedCaller|value-of<AllowedCaller>>|null $allowedCallers
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param list<array<string,mixed>>|null $inputExamples
      * @param Type|value-of<Type>|null $type
      */
     public static function with(
@@ -147,7 +147,7 @@ final class BetaTool implements BaseModel
      *
      * This defines the shape of the `input` that your tool accepts and that the model will produce.
      *
-     * @param InputSchemaShape $inputSchema
+     * @param InputSchema|InputSchemaShape $inputSchema
      */
     public function withInputSchema(InputSchema|array $inputSchema): self
     {
@@ -184,7 +184,7 @@ final class BetaTool implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl

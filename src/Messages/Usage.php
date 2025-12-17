@@ -111,8 +111,8 @@ final class Usage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CacheCreationShape|null $cacheCreation
-     * @param ServerToolUsageShape|null $serverToolUse
+     * @param CacheCreation|CacheCreationShape|null $cacheCreation
+     * @param ServerToolUsage|ServerToolUsageShape|null $serverToolUse
      * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
      */
     public static function with(
@@ -140,7 +140,7 @@ final class Usage implements BaseModel
     /**
      * Breakdown of cached tokens by TTL.
      *
-     * @param CacheCreationShape|null $cacheCreation
+     * @param CacheCreation|CacheCreationShape|null $cacheCreation
      */
     public function withCacheCreation(
         CacheCreation|array|null $cacheCreation
@@ -199,7 +199,7 @@ final class Usage implements BaseModel
     /**
      * The number of server tool requests.
      *
-     * @param ServerToolUsageShape|null $serverToolUse
+     * @param ServerToolUsage|ServerToolUsageShape|null $serverToolUse
      */
     public function withServerToolUse(
         ServerToolUsage|array|null $serverToolUse

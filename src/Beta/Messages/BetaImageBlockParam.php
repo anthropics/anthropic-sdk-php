@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  *
  * @phpstan-type BetaImageBlockParamShape = array{
- *   source: BetaBase64ImageSource|BetaURLImageSource|BetaFileImageSource|SourceShape,
+ *   source: SourceShape,
  *   type: 'image',
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  * }
@@ -63,7 +63,7 @@ final class BetaImageBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param SourceShape $source
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         BetaBase64ImageSource|array|BetaURLImageSource|BetaFileImageSource $source,
@@ -93,7 +93,7 @@ final class BetaImageBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl

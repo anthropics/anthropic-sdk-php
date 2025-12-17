@@ -111,8 +111,8 @@ final class BetaUsage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaCacheCreationShape|null $cacheCreation
-     * @param BetaServerToolUsageShape|null $serverToolUse
+     * @param BetaCacheCreation|BetaCacheCreationShape|null $cacheCreation
+     * @param BetaServerToolUsage|BetaServerToolUsageShape|null $serverToolUse
      * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
      */
     public static function with(
@@ -140,7 +140,7 @@ final class BetaUsage implements BaseModel
     /**
      * Breakdown of cached tokens by TTL.
      *
-     * @param BetaCacheCreationShape|null $cacheCreation
+     * @param BetaCacheCreation|BetaCacheCreationShape|null $cacheCreation
      */
     public function withCacheCreation(
         BetaCacheCreation|array|null $cacheCreation
@@ -199,7 +199,7 @@ final class BetaUsage implements BaseModel
     /**
      * The number of server tool requests.
      *
-     * @param BetaServerToolUsageShape|null $serverToolUse
+     * @param BetaServerToolUsage|BetaServerToolUsageShape|null $serverToolUse
      */
     public function withServerToolUse(
         BetaServerToolUsage|array|null $serverToolUse

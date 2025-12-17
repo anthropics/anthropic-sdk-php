@@ -52,7 +52,7 @@ final class MessageBatchErroredResult implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaErrorResponseShape $error
+     * @param BetaErrorResponse|BetaErrorResponseShape $error
      */
     public static function with(BetaErrorResponse|array $error): self
     {
@@ -64,7 +64,7 @@ final class MessageBatchErroredResult implements BaseModel
     }
 
     /**
-     * @param BetaErrorResponseShape $error
+     * @param BetaErrorResponse|BetaErrorResponseShape $error
      */
     public function withError(BetaErrorResponse|array $error): self
     {

@@ -196,12 +196,12 @@ final class BetaMessage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaContainerShape|null $container
+     * @param BetaContainer|BetaContainerShape|null $container
      * @param list<BetaContentBlockShape> $content
-     * @param BetaContextManagementResponseShape|null $contextManagement
+     * @param BetaContextManagementResponse|BetaContextManagementResponseShape|null $contextManagement
      * @param Model|value-of<Model> $model
      * @param BetaStopReason|value-of<BetaStopReason>|null $stopReason
-     * @param BetaUsageShape $usage
+     * @param BetaUsage|BetaUsageShape $usage
      */
     public static function with(
         string $id,
@@ -243,7 +243,7 @@ final class BetaMessage implements BaseModel
     /**
      * Information about the container used in the request (for the code execution tool).
      *
-     * @param BetaContainerShape|null $container
+     * @param BetaContainer|BetaContainerShape|null $container
      */
     public function withContainer(BetaContainer|array|null $container): self
     {
@@ -295,7 +295,7 @@ final class BetaMessage implements BaseModel
      *
      * Information about context management strategies applied during the request.
      *
-     * @param BetaContextManagementResponseShape|null $contextManagement
+     * @param BetaContextManagementResponse|BetaContextManagementResponseShape|null $contextManagement
      */
     public function withContextManagement(
         BetaContextManagementResponse|array|null $contextManagement
@@ -366,7 +366,7 @@ final class BetaMessage implements BaseModel
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      *
-     * @param BetaUsageShape $usage
+     * @param BetaUsage|BetaUsageShape $usage
      */
     public function withUsage(BetaUsage|array $usage): self
     {

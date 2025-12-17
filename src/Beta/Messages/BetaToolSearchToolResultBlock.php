@@ -12,9 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaToolSearchToolResultBlock\Content
  *
  * @phpstan-type BetaToolSearchToolResultBlockShape = array{
- *   content: BetaToolSearchToolResultError|BetaToolSearchToolSearchResultBlock|ContentShape,
- *   toolUseID: string,
- *   type: 'tool_search_tool_result',
+ *   content: ContentShape, toolUseID: string, type: 'tool_search_tool_result'
  * }
  */
 final class BetaToolSearchToolResultBlock implements BaseModel

@@ -86,8 +86,8 @@ final class Tool implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param InputSchemaShape $inputSchema
-     * @param CacheControlEphemeralShape|null $cacheControl
+     * @param InputSchema|InputSchemaShape $inputSchema
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      * @param Type|value-of<Type>|null $type
      */
     public static function with(
@@ -114,7 +114,7 @@ final class Tool implements BaseModel
      *
      * This defines the shape of the `input` that your tool accepts and that the model will produce.
      *
-     * @param InputSchemaShape $inputSchema
+     * @param InputSchema|InputSchemaShape $inputSchema
      */
     public function withInputSchema(InputSchema|array $inputSchema): self
     {
@@ -140,7 +140,7 @@ final class Tool implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param CacheControlEphemeralShape|null $cacheControl
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl

@@ -18,7 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   input: array<string,mixed>,
  *   name: string,
  *   type: 'tool_use',
- *   caller?: null|CallerShape|BetaDirectCaller|BetaServerToolCaller,
+ *   caller?: CallerShape|null,
  * }
  */
 final class BetaToolUseBlock implements BaseModel
@@ -71,7 +71,7 @@ final class BetaToolUseBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,mixed> $input
-     * @param CallerShape $caller
+     * @param CallerShape|null $caller
      */
     public static function with(
         string $id,

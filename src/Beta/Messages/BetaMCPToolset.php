@@ -86,9 +86,9 @@ final class BetaMCPToolset implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      * @param array<string,BetaMCPToolConfigShape>|null $configs
-     * @param BetaMCPToolDefaultConfigShape $defaultConfig
+     * @param BetaMCPToolDefaultConfig|BetaMCPToolDefaultConfigShape|null $defaultConfig
      */
     public static function with(
         string $mcpServerName,
@@ -121,7 +121,7 @@ final class BetaMCPToolset implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
@@ -148,7 +148,7 @@ final class BetaMCPToolset implements BaseModel
     /**
      * Default configuration applied to all tools from this server.
      *
-     * @param BetaMCPToolDefaultConfigShape $defaultConfig
+     * @param BetaMCPToolDefaultConfig|BetaMCPToolDefaultConfigShape $defaultConfig
      */
     public function withDefaultConfig(
         BetaMCPToolDefaultConfig|array $defaultConfig

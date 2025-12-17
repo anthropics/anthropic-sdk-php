@@ -69,8 +69,8 @@ final class RawMessageDeltaEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param DeltaShape $delta
-     * @param MessageDeltaUsageShape $usage
+     * @param Delta|DeltaShape $delta
+     * @param MessageDeltaUsage|MessageDeltaUsageShape $usage
      */
     public static function with(
         Delta|array $delta,
@@ -85,7 +85,7 @@ final class RawMessageDeltaEvent implements BaseModel
     }
 
     /**
-     * @param DeltaShape $delta
+     * @param Delta|DeltaShape $delta
      */
     public function withDelta(Delta|array $delta): self
     {
@@ -106,7 +106,7 @@ final class RawMessageDeltaEvent implements BaseModel
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      *
-     * @param MessageDeltaUsageShape $usage
+     * @param MessageDeltaUsage|MessageDeltaUsageShape $usage
      */
     public function withUsage(MessageDeltaUsage|array $usage): self
     {

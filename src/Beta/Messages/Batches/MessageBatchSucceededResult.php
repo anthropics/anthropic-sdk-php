@@ -52,7 +52,7 @@ final class MessageBatchSucceededResult implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaMessageShape $message
+     * @param BetaMessage|BetaMessageShape $message
      */
     public static function with(BetaMessage|array $message): self
     {
@@ -64,7 +64,7 @@ final class MessageBatchSucceededResult implements BaseModel
     }
 
     /**
-     * @param BetaMessageShape $message
+     * @param BetaMessage|BetaMessageShape $message
      */
     public function withMessage(BetaMessage|array $message): self
     {

@@ -16,7 +16,7 @@ use Anthropic\Messages\DocumentBlockParam\Source;
  * @phpstan-import-type CitationsConfigParamShape from \Anthropic\Messages\CitationsConfigParam
  *
  * @phpstan-type DocumentBlockParamShape = array{
- *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource|SourceShape,
+ *   source: SourceShape,
  *   type: 'document',
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   citations?: null|CitationsConfigParam|CitationsConfigParamShape,
@@ -76,8 +76,8 @@ final class DocumentBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param SourceShape $source
-     * @param CacheControlEphemeralShape|null $cacheControl
-     * @param CitationsConfigParamShape|null $citations
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
+     * @param CitationsConfigParam|CitationsConfigParamShape|null $citations
      */
     public static function with(
         Base64PDFSource|array|PlainTextSource|ContentBlockSource|URLPDFSource $source,
@@ -113,7 +113,7 @@ final class DocumentBlockParam implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param CacheControlEphemeralShape|null $cacheControl
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         CacheControlEphemeral|array|null $cacheControl
@@ -125,7 +125,7 @@ final class DocumentBlockParam implements BaseModel
     }
 
     /**
-     * @param CitationsConfigParamShape|null $citations
+     * @param CitationsConfigParam|CitationsConfigParamShape|null $citations
      */
     public function withCitations(
         CitationsConfigParam|array|null $citations

@@ -13,8 +13,7 @@ use Anthropic\Messages\CitationsDelta\Citation;
  * @phpstan-import-type CitationShape from \Anthropic\Messages\CitationsDelta\Citation
  *
  * @phpstan-type CitationsDeltaShape = array{
- *   citation: CitationCharLocation|CitationPageLocation|CitationContentBlockLocation|CitationsWebSearchResultLocation|CitationsSearchResultLocation|CitationShape,
- *   type: 'citations_delta',
+ *   citation: CitationShape, type: 'citations_delta'
  * }
  */
 final class CitationsDelta implements BaseModel

@@ -43,7 +43,7 @@ final class BetaClearThinking20251015Edit implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param KeepShape $keep
+     * @param KeepShape|null $keep
      */
     public static function with(
         string|BetaThinkingTurns|array|BetaAllThinkingTurns|null $keep = null

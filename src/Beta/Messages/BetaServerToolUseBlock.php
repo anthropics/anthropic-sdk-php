@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type BetaServerToolUseBlockShape = array{
  *   id: string,
- *   caller: BetaDirectCaller|BetaServerToolCaller|CallerShape,
+ *   caller: CallerShape,
  *   input: array<string,mixed>,
  *   name: Name|value-of<Name>,
  *   type: 'server_tool_use',

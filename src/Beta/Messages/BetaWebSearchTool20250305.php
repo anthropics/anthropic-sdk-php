@@ -104,11 +104,11 @@ final class BetaWebSearchTool20250305 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
+     * @param list<AllowedCaller|value-of<AllowedCaller>>|null $allowedCallers
      * @param list<string>|null $allowedDomains
      * @param list<string>|null $blockedDomains
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
-     * @param UserLocationShape|null $userLocation
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param UserLocation|UserLocationShape|null $userLocation
      */
     public static function with(
         ?array $allowedCallers = null,
@@ -174,7 +174,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
     /**
      * Create a cache control breakpoint at this content block.
      *
-     * @param BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
         BetaCacheControlEphemeral|array|null $cacheControl
@@ -218,7 +218,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
     /**
      * Parameters for the user's location. Used to provide more relevant search results.
      *
-     * @param UserLocationShape|null $userLocation
+     * @param UserLocation|UserLocationShape|null $userLocation
      */
     public function withUserLocation(
         UserLocation|array|null $userLocation

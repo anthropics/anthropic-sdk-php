@@ -224,10 +224,10 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param list<MessageParamShape> $messages
      * @param Model|value-of<Model> $model
-     * @param SystemShape $system
-     * @param ThinkingConfigParamShape $thinking
-     * @param ToolChoiceShape $toolChoice
-     * @param list<MessageCountTokensToolShape> $tools
+     * @param SystemShape|null $system
+     * @param ThinkingConfigParamShape|null $thinking
+     * @param ToolChoiceShape|null $toolChoice
+     * @param list<MessageCountTokensToolShape>|null $tools
      */
     public static function with(
         array $messages,

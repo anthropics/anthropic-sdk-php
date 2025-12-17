@@ -12,9 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type ErrorObjectShape from \Anthropic\ErrorObject
  *
  * @phpstan-type ErrorResponseShape = array{
- *   error: InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError|ErrorObjectShape,
- *   requestID: string|null,
- *   type: 'error',
+ *   error: ErrorObjectShape, requestID: string|null, type: 'error'
  * }
  */
 final class ErrorResponse implements BaseModel

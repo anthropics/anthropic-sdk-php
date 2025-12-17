@@ -148,7 +148,7 @@ final class MessageBatch implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ProcessingStatus|value-of<ProcessingStatus> $processingStatus
-     * @param MessageBatchRequestCountsShape $requestCounts
+     * @param MessageBatchRequestCounts|MessageBatchRequestCountsShape $requestCounts
      */
     public static function with(
         string $id,
@@ -266,7 +266,7 @@ final class MessageBatch implements BaseModel
      *
      * Requests start as `processing` and move to one of the other statuses only once processing of the entire batch ends. The sum of all values always matches the total number of requests in the batch.
      *
-     * @param MessageBatchRequestCountsShape $requestCounts
+     * @param MessageBatchRequestCounts|MessageBatchRequestCountsShape $requestCounts
      */
     public function withRequestCounts(
         MessageBatchRequestCounts|array $requestCounts

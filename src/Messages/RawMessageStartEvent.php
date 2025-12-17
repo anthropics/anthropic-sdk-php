@@ -51,7 +51,7 @@ final class RawMessageStartEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param MessageShape $message
+     * @param Message|MessageShape $message
      */
     public static function with(Message|array $message): self
     {
@@ -63,7 +63,7 @@ final class RawMessageStartEvent implements BaseModel
     }
 
     /**
-     * @param MessageShape $message
+     * @param Message|MessageShape $message
      */
     public function withMessage(Message|array $message): self
     {
