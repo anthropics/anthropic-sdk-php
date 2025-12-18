@@ -124,9 +124,9 @@ try {
 } catch (APIConnectionException $e) {
   echo "The server could not be reached", PHP_EOL;
   var_dump($e->getPrevious());
-} catch (RateLimitError $_) {
+} catch (RateLimitException $_) {
   echo "A 429 status code was received; we should back off a bit.", PHP_EOL;
-} catch (APIStatusError $e) {
+} catch (APIStatusException $e) {
   echo "Another non-200-range status code was received", PHP_EOL;
   echo $e->getMessage();
 }
