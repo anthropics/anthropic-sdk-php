@@ -10,6 +10,11 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
 
+/**
+ * @phpstan-import-type BetaTextBlockShape from \Anthropic\Beta\Messages\BetaTextBlock
+ *
+ * @phpstan-type ContentShape = string|list<BetaTextBlockShape>
+ */
 final class Content implements ConverterSource
 {
     use SdkUnion;

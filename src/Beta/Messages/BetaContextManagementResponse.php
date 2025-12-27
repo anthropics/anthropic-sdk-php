@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaContextManagementResponse\AppliedEdit;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type AppliedEditShape from \Anthropic\Beta\Messages\BetaContextManagementResponse\AppliedEdit
+ *
  * @phpstan-type BetaContextManagementResponseShape = array{
- *   applied_edits: list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse>,
+ *   appliedEdits: list<AppliedEditShape>
  * }
  */
 final class BetaContextManagementResponse implements BaseModel
@@ -22,17 +24,17 @@ final class BetaContextManagementResponse implements BaseModel
     /**
      * List of context management edits that were applied.
      *
-     * @var list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse> $applied_edits
+     * @var list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse> $appliedEdits
      */
-    #[Api(list: AppliedEdit::class)]
-    public array $applied_edits;
+    #[Required('applied_edits', list: AppliedEdit::class)]
+    public array $appliedEdits;
 
     /**
      * `new BetaContextManagementResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaContextManagementResponse::with(applied_edits: ...)
+     * BetaContextManagementResponse::with(appliedEdits: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -51,27 +53,27 @@ final class BetaContextManagementResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse> $applied_edits
+     * @param list<AppliedEditShape> $appliedEdits
      */
-    public static function with(array $applied_edits): self
+    public static function with(array $appliedEdits): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->applied_edits = $applied_edits;
+        $self['appliedEdits'] = $appliedEdits;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * List of context management edits that were applied.
      *
-     * @param list<BetaClearToolUses20250919EditResponse|BetaClearThinking20251015EditResponse> $appliedEdits
+     * @param list<AppliedEditShape> $appliedEdits
      */
     public function withAppliedEdits(array $appliedEdits): self
     {
-        $obj = clone $this;
-        $obj->applied_edits = $appliedEdits;
+        $self = clone $this;
+        $self['appliedEdits'] = $appliedEdits;
 
-        return $obj;
+        return $self;
     }
 }

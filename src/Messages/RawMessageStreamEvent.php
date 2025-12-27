@@ -8,6 +8,16 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-import-type RawMessageStartEventShape from \Anthropic\Messages\RawMessageStartEvent
+ * @phpstan-import-type RawMessageDeltaEventShape from \Anthropic\Messages\RawMessageDeltaEvent
+ * @phpstan-import-type RawMessageStopEventShape from \Anthropic\Messages\RawMessageStopEvent
+ * @phpstan-import-type RawContentBlockStartEventShape from \Anthropic\Messages\RawContentBlockStartEvent
+ * @phpstan-import-type RawContentBlockDeltaEventShape from \Anthropic\Messages\RawContentBlockDeltaEvent
+ * @phpstan-import-type RawContentBlockStopEventShape from \Anthropic\Messages\RawContentBlockStopEvent
+ *
+ * @phpstan-type RawMessageStreamEventShape = RawMessageStartEventShape|RawMessageDeltaEventShape|RawMessageStopEventShape|RawContentBlockStartEventShape|RawContentBlockDeltaEventShape|RawContentBlockStopEventShape
+ */
 final class RawMessageStreamEvent implements ConverterSource
 {
     use SdkUnion;

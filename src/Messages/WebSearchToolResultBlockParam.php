@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type WebSearchToolResultBlockParamContentShape from \Anthropic\Messages\WebSearchToolResultBlockParamContent
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ *
  * @phpstan-type WebSearchToolResultBlockParamShape = array{
- *   content: list<WebSearchResultBlockParam>|WebSearchToolRequestError,
- *   tool_use_id: string,
- *   type: "web_search_tool_result",
- *   cache_control?: CacheControlEphemeral|null,
+ *   content: WebSearchToolResultBlockParamContentShape,
+ *   toolUseID: string,
+ *   type: 'web_search_tool_result',
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  * }
  */
 final class WebSearchToolResultBlockParam implements BaseModel
@@ -21,29 +25,29 @@ final class WebSearchToolResultBlockParam implements BaseModel
     /** @use SdkModel<WebSearchToolResultBlockParamShape> */
     use SdkModel;
 
-    /** @var "web_search_tool_result" $type */
-    #[Api]
+    /** @var 'web_search_tool_result' $type */
+    #[Required]
     public string $type = 'web_search_tool_result';
 
     /** @var list<WebSearchResultBlockParam>|WebSearchToolRequestError $content */
-    #[Api(union: WebSearchToolResultBlockParamContent::class)]
+    #[Required(union: WebSearchToolResultBlockParamContent::class)]
     public array|WebSearchToolRequestError $content;
 
-    #[Api]
-    public string $tool_use_id;
+    #[Required('tool_use_id')]
+    public string $toolUseID;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
      * `new WebSearchToolResultBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * WebSearchToolResultBlockParam::with(content: ..., tool_use_id: ...)
+     * WebSearchToolResultBlockParam::with(content: ..., toolUseID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -62,50 +66,54 @@ final class WebSearchToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<WebSearchResultBlockParam>|WebSearchToolRequestError $content
+     * @param WebSearchToolResultBlockParamContentShape $content
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         array|WebSearchToolRequestError $content,
-        string $tool_use_id,
-        ?CacheControlEphemeral $cache_control = null,
+        string $toolUseID,
+        CacheControlEphemeral|array|null $cacheControl = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->content = $content;
-        $obj->tool_use_id = $tool_use_id;
+        $self['content'] = $content;
+        $self['toolUseID'] = $toolUseID;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
-     * @param list<WebSearchResultBlockParam>|WebSearchToolRequestError $content
+     * @param WebSearchToolResultBlockParamContentShape $content
      */
     public function withContent(array|WebSearchToolRequestError $content): self
     {
-        $obj = clone $this;
-        $obj->content = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     public function withToolUseID(string $toolUseID): self
     {
-        $obj = clone $this;
-        $obj->tool_use_id = $toolUseID;
+        $self = clone $this;
+        $self['toolUseID'] = $toolUseID;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
-    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
-    {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 }

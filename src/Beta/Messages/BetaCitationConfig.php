@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -16,7 +16,7 @@ final class BetaCitationConfig implements BaseModel
     /** @use SdkModel<BetaCitationConfigShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public bool $enabled;
 
     /**
@@ -45,18 +45,18 @@ final class BetaCitationConfig implements BaseModel
      */
     public static function with(bool $enabled = false): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->enabled = $enabled;
+        $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 
     public function withEnabled(bool $enabled): self
     {
-        $obj = clone $this;
-        $obj->enabled = $enabled;
+        $self = clone $this;
+        $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 }

@@ -9,6 +9,12 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
 
+/**
+ * @phpstan-import-type WebSearchToolResultErrorShape from \Anthropic\Messages\WebSearchToolResultError
+ * @phpstan-import-type WebSearchResultBlockShape from \Anthropic\Messages\WebSearchResultBlock
+ *
+ * @phpstan-type WebSearchToolResultBlockContentShape = WebSearchToolResultErrorShape|list<WebSearchResultBlockShape>
+ */
 final class WebSearchToolResultBlockContent implements ConverterSource
 {
     use SdkUnion;

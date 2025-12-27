@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type WebSearchToolResultBlockContentShape from \Anthropic\Messages\WebSearchToolResultBlockContent
+ *
  * @phpstan-type WebSearchToolResultBlockShape = array{
- *   content: WebSearchToolResultError|list<WebSearchResultBlock>,
- *   tool_use_id: string,
- *   type: "web_search_tool_result",
+ *   content: WebSearchToolResultBlockContentShape,
+ *   toolUseID: string,
+ *   type: 'web_search_tool_result',
  * }
  */
 final class WebSearchToolResultBlock implements BaseModel
@@ -20,23 +22,23 @@ final class WebSearchToolResultBlock implements BaseModel
     /** @use SdkModel<WebSearchToolResultBlockShape> */
     use SdkModel;
 
-    /** @var "web_search_tool_result" $type */
-    #[Api]
+    /** @var 'web_search_tool_result' $type */
+    #[Required]
     public string $type = 'web_search_tool_result';
 
     /** @var WebSearchToolResultError|list<WebSearchResultBlock> $content */
-    #[Api(union: WebSearchToolResultBlockContent::class)]
+    #[Required(union: WebSearchToolResultBlockContent::class)]
     public WebSearchToolResultError|array $content;
 
-    #[Api]
-    public string $tool_use_id;
+    #[Required('tool_use_id')]
+    public string $toolUseID;
 
     /**
      * `new WebSearchToolResultBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * WebSearchToolResultBlock::with(content: ..., tool_use_id: ...)
+     * WebSearchToolResultBlock::with(content: ..., toolUseID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -55,36 +57,36 @@ final class WebSearchToolResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param WebSearchToolResultError|list<WebSearchResultBlock> $content
+     * @param WebSearchToolResultBlockContentShape $content
      */
     public static function with(
         WebSearchToolResultError|array $content,
-        string $tool_use_id
+        string $toolUseID
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->content = $content;
-        $obj->tool_use_id = $tool_use_id;
+        $self['content'] = $content;
+        $self['toolUseID'] = $toolUseID;
 
-        return $obj;
+        return $self;
     }
 
     /**
-     * @param WebSearchToolResultError|list<WebSearchResultBlock> $content
+     * @param WebSearchToolResultBlockContentShape $content
      */
     public function withContent(WebSearchToolResultError|array $content): self
     {
-        $obj = clone $this;
-        $obj->content = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     public function withToolUseID(string $toolUseID): self
     {
-        $obj = clone $this;
-        $obj->tool_use_id = $toolUseID;
+        $self = clone $this;
+        $self['toolUseID'] = $toolUseID;
 
-        return $obj;
+        return $self;
     }
 }

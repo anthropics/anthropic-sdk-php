@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * The model will not be allowed to use tools.
  *
- * @phpstan-type ToolChoiceNoneShape = array{type: "none"}
+ * @phpstan-type ToolChoiceNoneShape = array{type: 'none'}
  */
 final class ToolChoiceNone implements BaseModel
 {
     /** @use SdkModel<ToolChoiceNoneShape> */
     use SdkModel;
 
-    /** @var "none" $type */
-    #[Api]
+    /** @var 'none' $type */
+    #[Required]
     public string $type = 'none';
 
     public function __construct()

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaGatewayTimeoutErrorShape = array{
- *   message: string, type: "timeout_error"
+ *   message: string, type: 'timeout_error'
  * }
  */
 final class BetaGatewayTimeoutError implements BaseModel
@@ -18,11 +18,11 @@ final class BetaGatewayTimeoutError implements BaseModel
     /** @use SdkModel<BetaGatewayTimeoutErrorShape> */
     use SdkModel;
 
-    /** @var "timeout_error" $type */
-    #[Api]
+    /** @var 'timeout_error' $type */
+    #[Required]
     public string $type = 'timeout_error';
 
-    #[Api]
+    #[Required]
     public string $message;
 
     /**
@@ -51,18 +51,18 @@ final class BetaGatewayTimeoutError implements BaseModel
      */
     public static function with(string $message = 'Request timeout'): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->message = $message;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 
     public function withMessage(string $message): self
     {
-        $obj = clone $this;
-        $obj->message = $message;
+        $self = clone $this;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 }

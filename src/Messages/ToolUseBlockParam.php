@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ *
  * @phpstan-type ToolUseBlockParamShape = array{
  *   id: string,
  *   input: array<string,mixed>,
  *   name: string,
- *   type: "tool_use",
- *   cache_control?: CacheControlEphemeral|null,
+ *   type: 'tool_use',
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  * }
  */
 final class ToolUseBlockParam implements BaseModel
@@ -22,25 +25,25 @@ final class ToolUseBlockParam implements BaseModel
     /** @use SdkModel<ToolUseBlockParamShape> */
     use SdkModel;
 
-    /** @var "tool_use" $type */
-    #[Api]
+    /** @var 'tool_use' $type */
+    #[Required]
     public string $type = 'tool_use';
 
-    #[Api]
+    #[Required]
     public string $id;
 
     /** @var array<string,mixed> $input */
-    #[Api(map: 'mixed')]
+    #[Required(map: 'mixed')]
     public array $input;
 
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
      * `new ToolUseBlockParam()` is missing required properties by the API.
@@ -67,30 +70,31 @@ final class ToolUseBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,mixed> $input
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         string $id,
         array $input,
         string $name,
-        ?CacheControlEphemeral $cache_control = null,
+        CacheControlEphemeral|array|null $cacheControl = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->id = $id;
-        $obj->input = $input;
-        $obj->name = $name;
+        $self['id'] = $id;
+        $self['input'] = $input;
+        $self['name'] = $name;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj->id = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -98,28 +102,31 @@ final class ToolUseBlockParam implements BaseModel
      */
     public function withInput(array $input): self
     {
-        $obj = clone $this;
-        $obj->input = $input;
+        $self = clone $this;
+        $self['input'] = $input;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj->name = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
-    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
-    {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 }

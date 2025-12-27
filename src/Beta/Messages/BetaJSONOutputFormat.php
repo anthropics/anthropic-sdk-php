@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaJSONOutputFormatShape = array{
- *   schema: array<string,mixed>, type: "json_schema"
+ *   schema: array<string,mixed>, type: 'json_schema'
  * }
  */
 final class BetaJSONOutputFormat implements BaseModel
@@ -18,8 +18,8 @@ final class BetaJSONOutputFormat implements BaseModel
     /** @use SdkModel<BetaJSONOutputFormatShape> */
     use SdkModel;
 
-    /** @var "json_schema" $type */
-    #[Api]
+    /** @var 'json_schema' $type */
+    #[Required]
     public string $type = 'json_schema';
 
     /**
@@ -27,7 +27,7 @@ final class BetaJSONOutputFormat implements BaseModel
      *
      * @var array<string,mixed> $schema
      */
-    #[Api(map: 'mixed')]
+    #[Required(map: 'mixed')]
     public array $schema;
 
     /**
@@ -58,11 +58,11 @@ final class BetaJSONOutputFormat implements BaseModel
      */
     public static function with(array $schema): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->schema = $schema;
+        $self['schema'] = $schema;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -72,9 +72,9 @@ final class BetaJSONOutputFormat implements BaseModel
      */
     public function withSchema(array $schema): self
     {
-        $obj = clone $this;
-        $obj->schema = $schema;
+        $self = clone $this;
+        $self['schema'] = $schema;
 
-        return $obj;
+        return $self;
     }
 }

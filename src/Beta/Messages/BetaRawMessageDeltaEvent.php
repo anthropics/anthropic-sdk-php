@@ -5,16 +5,20 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaRawMessageDeltaEvent\Delta;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaContextManagementResponseShape from \Anthropic\Beta\Messages\BetaContextManagementResponse
+ * @phpstan-import-type DeltaShape from \Anthropic\Beta\Messages\BetaRawMessageDeltaEvent\Delta
+ * @phpstan-import-type BetaMessageDeltaUsageShape from \Anthropic\Beta\Messages\BetaMessageDeltaUsage
+ *
  * @phpstan-type BetaRawMessageDeltaEventShape = array{
- *   context_management: BetaContextManagementResponse|null,
- *   delta: Delta,
- *   type: "message_delta",
- *   usage: BetaMessageDeltaUsage,
+ *   contextManagement: null|BetaContextManagementResponse|BetaContextManagementResponseShape,
+ *   delta: Delta|DeltaShape,
+ *   type: 'message_delta',
+ *   usage: BetaMessageDeltaUsage|BetaMessageDeltaUsageShape,
  * }
  */
 final class BetaRawMessageDeltaEvent implements BaseModel
@@ -22,17 +26,17 @@ final class BetaRawMessageDeltaEvent implements BaseModel
     /** @use SdkModel<BetaRawMessageDeltaEventShape> */
     use SdkModel;
 
-    /** @var "message_delta" $type */
-    #[Api]
+    /** @var 'message_delta' $type */
+    #[Required]
     public string $type = 'message_delta';
 
     /**
      * Information about context management strategies applied during the request.
      */
-    #[Api]
-    public ?BetaContextManagementResponse $context_management;
+    #[Required('context_management')]
+    public ?BetaContextManagementResponse $contextManagement;
 
-    #[Api]
+    #[Required]
     public Delta $delta;
 
     /**
@@ -46,7 +50,7 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      */
-    #[Api]
+    #[Required]
     public BetaMessageDeltaUsage $usage;
 
     /**
@@ -54,7 +58,7 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaRawMessageDeltaEvent::with(context_management: ..., delta: ..., usage: ...)
+     * BetaRawMessageDeltaEvent::with(contextManagement: ..., delta: ..., usage: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -75,39 +79,48 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaContextManagementResponse|BetaContextManagementResponseShape|null $contextManagement
+     * @param Delta|DeltaShape $delta
+     * @param BetaMessageDeltaUsage|BetaMessageDeltaUsageShape $usage
      */
     public static function with(
-        ?BetaContextManagementResponse $context_management,
-        Delta $delta,
-        BetaMessageDeltaUsage $usage,
+        BetaContextManagementResponse|array|null $contextManagement,
+        Delta|array $delta,
+        BetaMessageDeltaUsage|array $usage,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->context_management = $context_management;
-        $obj->delta = $delta;
-        $obj->usage = $usage;
+        $self['contextManagement'] = $contextManagement;
+        $self['delta'] = $delta;
+        $self['usage'] = $usage;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Information about context management strategies applied during the request.
+     *
+     * @param BetaContextManagementResponse|BetaContextManagementResponseShape|null $contextManagement
      */
     public function withContextManagement(
-        ?BetaContextManagementResponse $contextManagement
+        BetaContextManagementResponse|array|null $contextManagement
     ): self {
-        $obj = clone $this;
-        $obj->context_management = $contextManagement;
+        $self = clone $this;
+        $self['contextManagement'] = $contextManagement;
 
-        return $obj;
+        return $self;
     }
 
-    public function withDelta(Delta $delta): self
+    /**
+     * @param Delta|DeltaShape $delta
+     */
+    public function withDelta(Delta|array $delta): self
     {
-        $obj = clone $this;
-        $obj->delta = $delta;
+        $self = clone $this;
+        $self['delta'] = $delta;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -120,12 +133,14 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      * For example, `output_tokens` will be non-zero, even for an empty string response from Claude.
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
+     *
+     * @param BetaMessageDeltaUsage|BetaMessageDeltaUsageShape $usage
      */
-    public function withUsage(BetaMessageDeltaUsage $usage): self
+    public function withUsage(BetaMessageDeltaUsage|array $usage): self
     {
-        $obj = clone $this;
-        $obj->usage = $usage;
+        $self = clone $this;
+        $self['usage'] = $usage;
 
-        return $obj;
+        return $self;
     }
 }

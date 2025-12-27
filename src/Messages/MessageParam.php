@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\MessageParam\Content;
 use Anthropic\Messages\MessageParam\Role;
 
 /**
+ * @phpstan-import-type ContentShape from \Anthropic\Messages\MessageParam\Content
+ *
  * @phpstan-type MessageParamShape = array{
- *   content: string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam>,
- *   role: value-of<Role>,
+ *   content: ContentShape, role: Role|value-of<Role>
  * }
  */
 final class MessageParam implements BaseModel
@@ -24,11 +25,11 @@ final class MessageParam implements BaseModel
     /**
      * @var string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam> $content
      */
-    #[Api(union: Content::class)]
+    #[Required(union: Content::class)]
     public string|array $content;
 
     /** @var value-of<Role> $role */
-    #[Api(enum: Role::class)]
+    #[Required(enum: Role::class)]
     public string $role;
 
     /**
@@ -55,28 +56,28 @@ final class MessageParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam> $content
+     * @param ContentShape $content
      * @param Role|value-of<Role> $role
      */
     public static function with(string|array $content, Role|string $role): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->content = $content;
-        $obj['role'] = $role;
+        $self['content'] = $content;
+        $self['role'] = $role;
 
-        return $obj;
+        return $self;
     }
 
     /**
-     * @param string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam> $content
+     * @param ContentShape $content
      */
     public function withContent(string|array $content): self
     {
-        $obj = clone $this;
-        $obj->content = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -84,9 +85,9 @@ final class MessageParam implements BaseModel
      */
     public function withRole(Role|string $role): self
     {
-        $obj = clone $this;
-        $obj['role'] = $role;
+        $self = clone $this;
+        $self['role'] = $role;
 
-        return $obj;
+        return $self;
     }
 }

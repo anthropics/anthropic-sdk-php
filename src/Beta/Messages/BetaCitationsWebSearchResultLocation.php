@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCitationsWebSearchResultLocationShape = array{
- *   cited_text: string,
- *   encrypted_index: string,
+ *   citedText: string,
+ *   encryptedIndex: string,
  *   title: string|null,
- *   type: "web_search_result_location",
+ *   type: 'web_search_result_location',
  *   url: string,
  * }
  */
@@ -22,20 +22,20 @@ final class BetaCitationsWebSearchResultLocation implements BaseModel
     /** @use SdkModel<BetaCitationsWebSearchResultLocationShape> */
     use SdkModel;
 
-    /** @var "web_search_result_location" $type */
-    #[Api]
+    /** @var 'web_search_result_location' $type */
+    #[Required]
     public string $type = 'web_search_result_location';
 
-    #[Api]
-    public string $cited_text;
+    #[Required('cited_text')]
+    public string $citedText;
 
-    #[Api]
-    public string $encrypted_index;
+    #[Required('encrypted_index')]
+    public string $encryptedIndex;
 
-    #[Api]
+    #[Required]
     public ?string $title;
 
-    #[Api]
+    #[Required]
     public string $url;
 
     /**
@@ -44,7 +44,7 @@ final class BetaCitationsWebSearchResultLocation implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaCitationsWebSearchResultLocation::with(
-     *   cited_text: ..., encrypted_index: ..., title: ..., url: ...
+     *   citedText: ..., encryptedIndex: ..., title: ..., url: ...
      * )
      * ```
      *
@@ -69,50 +69,50 @@ final class BetaCitationsWebSearchResultLocation implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $cited_text,
-        string $encrypted_index,
+        string $citedText,
+        string $encryptedIndex,
         ?string $title,
         string $url
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->cited_text = $cited_text;
-        $obj->encrypted_index = $encrypted_index;
-        $obj->title = $title;
-        $obj->url = $url;
+        $self['citedText'] = $citedText;
+        $self['encryptedIndex'] = $encryptedIndex;
+        $self['title'] = $title;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 
     public function withCitedText(string $citedText): self
     {
-        $obj = clone $this;
-        $obj->cited_text = $citedText;
+        $self = clone $this;
+        $self['citedText'] = $citedText;
 
-        return $obj;
+        return $self;
     }
 
     public function withEncryptedIndex(string $encryptedIndex): self
     {
-        $obj = clone $this;
-        $obj->encrypted_index = $encryptedIndex;
+        $self = clone $this;
+        $self['encryptedIndex'] = $encryptedIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withTitle(?string $title): self
     {
-        $obj = clone $this;
-        $obj->title = $title;
+        $self = clone $this;
+        $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 
     public function withURL(string $url): self
     {
-        $obj = clone $this;
-        $obj->url = $url;
+        $self = clone $this;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 }

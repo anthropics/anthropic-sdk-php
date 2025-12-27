@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Batches;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Messages\BatchesService::list()
  *
  * @phpstan-type BatchListParamsShape = array{
- *   after_id?: string, before_id?: string, limit?: int
+ *   afterID?: string|null, beforeID?: string|null, limit?: int|null
  * }
  */
 final class BatchListParams implements BaseModel
@@ -29,21 +29,21 @@ final class BatchListParams implements BaseModel
     /**
      * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
      */
-    #[Api(optional: true)]
-    public ?string $after_id;
+    #[Optional]
+    public ?string $afterID;
 
     /**
      * ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
      */
-    #[Api(optional: true)]
-    public ?string $before_id;
+    #[Optional]
+    public ?string $beforeID;
 
     /**
      * Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $limit;
 
     public function __construct()
@@ -57,17 +57,17 @@ final class BatchListParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?string $after_id = null,
-        ?string $before_id = null,
+        ?string $afterID = null,
+        ?string $beforeID = null,
         ?int $limit = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $after_id && $obj->after_id = $after_id;
-        null !== $before_id && $obj->before_id = $before_id;
-        null !== $limit && $obj->limit = $limit;
+        null !== $afterID && $self['afterID'] = $afterID;
+        null !== $beforeID && $self['beforeID'] = $beforeID;
+        null !== $limit && $self['limit'] = $limit;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -75,10 +75,10 @@ final class BatchListParams implements BaseModel
      */
     public function withAfterID(string $afterID): self
     {
-        $obj = clone $this;
-        $obj->after_id = $afterID;
+        $self = clone $this;
+        $self['afterID'] = $afterID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -86,10 +86,10 @@ final class BatchListParams implements BaseModel
      */
     public function withBeforeID(string $beforeID): self
     {
-        $obj = clone $this;
-        $obj->before_id = $beforeID;
+        $self = clone $this;
+        $self['beforeID'] = $beforeID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -99,9 +99,9 @@ final class BatchListParams implements BaseModel
      */
     public function withLimit(int $limit): self
     {
-        $obj = clone $this;
-        $obj->limit = $limit;
+        $self = clone $this;
+        $self['limit'] = $limit;
 
-        return $obj;
+        return $self;
     }
 }

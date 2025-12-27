@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type ThinkingConfigEnabledShape = array{
- *   budget_tokens: int, type: "enabled"
+ *   budgetTokens: int, type: 'enabled'
  * }
  */
 final class ThinkingConfigEnabled implements BaseModel
@@ -18,8 +18,8 @@ final class ThinkingConfigEnabled implements BaseModel
     /** @use SdkModel<ThinkingConfigEnabledShape> */
     use SdkModel;
 
-    /** @var "enabled" $type */
-    #[Api]
+    /** @var 'enabled' $type */
+    #[Required]
     public string $type = 'enabled';
 
     /**
@@ -29,15 +29,15 @@ final class ThinkingConfigEnabled implements BaseModel
      *
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      */
-    #[Api]
-    public int $budget_tokens;
+    #[Required('budget_tokens')]
+    public int $budgetTokens;
 
     /**
      * `new ThinkingConfigEnabled()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ThinkingConfigEnabled::with(budget_tokens: ...)
+     * ThinkingConfigEnabled::with(budgetTokens: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -56,13 +56,13 @@ final class ThinkingConfigEnabled implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(int $budget_tokens): self
+    public static function with(int $budgetTokens): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->budget_tokens = $budget_tokens;
+        $self['budgetTokens'] = $budgetTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -74,9 +74,9 @@ final class ThinkingConfigEnabled implements BaseModel
      */
     public function withBudgetTokens(int $budgetTokens): self
     {
-        $obj = clone $this;
-        $obj->budget_tokens = $budgetTokens;
+        $self = clone $this;
+        $self['budgetTokens'] = $budgetTokens;
 
-        return $obj;
+        return $self;
     }
 }

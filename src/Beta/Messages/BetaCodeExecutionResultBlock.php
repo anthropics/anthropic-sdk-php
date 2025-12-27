@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaCodeExecutionOutputBlockShape from \Anthropic\Beta\Messages\BetaCodeExecutionOutputBlock
+ *
  * @phpstan-type BetaCodeExecutionResultBlockShape = array{
- *   content: list<BetaCodeExecutionOutputBlock>,
- *   return_code: int,
+ *   content: list<BetaCodeExecutionOutputBlockShape>,
+ *   returnCode: int,
  *   stderr: string,
  *   stdout: string,
- *   type: "code_execution_result",
+ *   type: 'code_execution_result',
  * }
  */
 final class BetaCodeExecutionResultBlock implements BaseModel
@@ -22,21 +24,21 @@ final class BetaCodeExecutionResultBlock implements BaseModel
     /** @use SdkModel<BetaCodeExecutionResultBlockShape> */
     use SdkModel;
 
-    /** @var "code_execution_result" $type */
-    #[Api]
+    /** @var 'code_execution_result' $type */
+    #[Required]
     public string $type = 'code_execution_result';
 
     /** @var list<BetaCodeExecutionOutputBlock> $content */
-    #[Api(list: BetaCodeExecutionOutputBlock::class)]
+    #[Required(list: BetaCodeExecutionOutputBlock::class)]
     public array $content;
 
-    #[Api]
-    public int $return_code;
+    #[Required('return_code')]
+    public int $returnCode;
 
-    #[Api]
+    #[Required]
     public string $stderr;
 
-    #[Api]
+    #[Required]
     public string $stdout;
 
     /**
@@ -45,7 +47,7 @@ final class BetaCodeExecutionResultBlock implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaCodeExecutionResultBlock::with(
-     *   content: ..., return_code: ..., stderr: ..., stdout: ...
+     *   content: ..., returnCode: ..., stderr: ..., stdout: ...
      * )
      * ```
      *
@@ -69,56 +71,56 @@ final class BetaCodeExecutionResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaCodeExecutionOutputBlock> $content
+     * @param list<BetaCodeExecutionOutputBlockShape> $content
      */
     public static function with(
         array $content,
-        int $return_code,
+        int $returnCode,
         string $stderr,
         string $stdout
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->content = $content;
-        $obj->return_code = $return_code;
-        $obj->stderr = $stderr;
-        $obj->stdout = $stdout;
+        $self['content'] = $content;
+        $self['returnCode'] = $returnCode;
+        $self['stderr'] = $stderr;
+        $self['stdout'] = $stdout;
 
-        return $obj;
+        return $self;
     }
 
     /**
-     * @param list<BetaCodeExecutionOutputBlock> $content
+     * @param list<BetaCodeExecutionOutputBlockShape> $content
      */
     public function withContent(array $content): self
     {
-        $obj = clone $this;
-        $obj->content = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     public function withReturnCode(int $returnCode): self
     {
-        $obj = clone $this;
-        $obj->return_code = $returnCode;
+        $self = clone $this;
+        $self['returnCode'] = $returnCode;
 
-        return $obj;
+        return $self;
     }
 
     public function withStderr(string $stderr): self
     {
-        $obj = clone $this;
-        $obj->stderr = $stderr;
+        $self = clone $this;
+        $self['stderr'] = $stderr;
 
-        return $obj;
+        return $self;
     }
 
     public function withStdout(string $stdout): self
     {
-        $obj = clone $this;
-        $obj->stdout = $stdout;
+        $self = clone $this;
+        $self['stdout'] = $stdout;
 
-        return $obj;
+        return $self;
     }
 }

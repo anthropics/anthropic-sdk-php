@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -12,8 +12,8 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type ServerToolUseBlockShape = array{
  *   id: string,
  *   input: array<string,mixed>,
- *   name: "web_search",
- *   type: "server_tool_use",
+ *   name: 'web_search',
+ *   type: 'server_tool_use',
  * }
  */
 final class ServerToolUseBlock implements BaseModel
@@ -21,19 +21,19 @@ final class ServerToolUseBlock implements BaseModel
     /** @use SdkModel<ServerToolUseBlockShape> */
     use SdkModel;
 
-    /** @var "web_search" $name */
-    #[Api]
+    /** @var 'web_search' $name */
+    #[Required]
     public string $name = 'web_search';
 
-    /** @var "server_tool_use" $type */
-    #[Api]
+    /** @var 'server_tool_use' $type */
+    #[Required]
     public string $type = 'server_tool_use';
 
-    #[Api]
+    #[Required]
     public string $id;
 
     /** @var array<string,mixed> $input */
-    #[Api(map: 'mixed')]
+    #[Required(map: 'mixed')]
     public array $input;
 
     /**
@@ -64,20 +64,20 @@ final class ServerToolUseBlock implements BaseModel
      */
     public static function with(string $id, array $input): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->id = $id;
-        $obj->input = $input;
+        $self['id'] = $id;
+        $self['input'] = $input;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj->id = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -85,9 +85,9 @@ final class ServerToolUseBlock implements BaseModel
      */
     public function withInput(array $input): self
     {
-        $obj = clone $this;
-        $obj->input = $input;
+        $self = clone $this;
+        $self['input'] = $input;
 
-        return $obj;
+        return $self;
     }
 }

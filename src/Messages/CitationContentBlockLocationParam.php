@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type CitationContentBlockLocationParamShape = array{
- *   cited_text: string,
- *   document_index: int,
- *   document_title: string|null,
- *   end_block_index: int,
- *   start_block_index: int,
- *   type: "content_block_location",
+ *   citedText: string,
+ *   documentIndex: int,
+ *   documentTitle: string|null,
+ *   endBlockIndex: int,
+ *   startBlockIndex: int,
+ *   type: 'content_block_location',
  * }
  */
 final class CitationContentBlockLocationParam implements BaseModel
@@ -23,24 +23,24 @@ final class CitationContentBlockLocationParam implements BaseModel
     /** @use SdkModel<CitationContentBlockLocationParamShape> */
     use SdkModel;
 
-    /** @var "content_block_location" $type */
-    #[Api]
+    /** @var 'content_block_location' $type */
+    #[Required]
     public string $type = 'content_block_location';
 
-    #[Api]
-    public string $cited_text;
+    #[Required('cited_text')]
+    public string $citedText;
 
-    #[Api]
-    public int $document_index;
+    #[Required('document_index')]
+    public int $documentIndex;
 
-    #[Api]
-    public ?string $document_title;
+    #[Required('document_title')]
+    public ?string $documentTitle;
 
-    #[Api]
-    public int $end_block_index;
+    #[Required('end_block_index')]
+    public int $endBlockIndex;
 
-    #[Api]
-    public int $start_block_index;
+    #[Required('start_block_index')]
+    public int $startBlockIndex;
 
     /**
      * `new CitationContentBlockLocationParam()` is missing required properties by the API.
@@ -48,11 +48,11 @@ final class CitationContentBlockLocationParam implements BaseModel
      * To enforce required parameters use
      * ```
      * CitationContentBlockLocationParam::with(
-     *   cited_text: ...,
-     *   document_index: ...,
-     *   document_title: ...,
-     *   end_block_index: ...,
-     *   start_block_index: ...,
+     *   citedText: ...,
+     *   documentIndex: ...,
+     *   documentTitle: ...,
+     *   endBlockIndex: ...,
+     *   startBlockIndex: ...,
      * )
      * ```
      *
@@ -78,60 +78,60 @@ final class CitationContentBlockLocationParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $cited_text,
-        int $document_index,
-        ?string $document_title,
-        int $end_block_index,
-        int $start_block_index,
+        string $citedText,
+        int $documentIndex,
+        ?string $documentTitle,
+        int $endBlockIndex,
+        int $startBlockIndex,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->cited_text = $cited_text;
-        $obj->document_index = $document_index;
-        $obj->document_title = $document_title;
-        $obj->end_block_index = $end_block_index;
-        $obj->start_block_index = $start_block_index;
+        $self['citedText'] = $citedText;
+        $self['documentIndex'] = $documentIndex;
+        $self['documentTitle'] = $documentTitle;
+        $self['endBlockIndex'] = $endBlockIndex;
+        $self['startBlockIndex'] = $startBlockIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withCitedText(string $citedText): self
     {
-        $obj = clone $this;
-        $obj->cited_text = $citedText;
+        $self = clone $this;
+        $self['citedText'] = $citedText;
 
-        return $obj;
+        return $self;
     }
 
     public function withDocumentIndex(int $documentIndex): self
     {
-        $obj = clone $this;
-        $obj->document_index = $documentIndex;
+        $self = clone $this;
+        $self['documentIndex'] = $documentIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withDocumentTitle(?string $documentTitle): self
     {
-        $obj = clone $this;
-        $obj->document_title = $documentTitle;
+        $self = clone $this;
+        $self['documentTitle'] = $documentTitle;
 
-        return $obj;
+        return $self;
     }
 
     public function withEndBlockIndex(int $endBlockIndex): self
     {
-        $obj = clone $this;
-        $obj->end_block_index = $endBlockIndex;
+        $self = clone $this;
+        $self['endBlockIndex'] = $endBlockIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withStartBlockIndex(int $startBlockIndex): self
     {
-        $obj = clone $this;
-        $obj->start_block_index = $startBlockIndex;
+        $self = clone $this;
+        $self['startBlockIndex'] = $startBlockIndex;
 
-        return $obj;
+        return $self;
     }
 }

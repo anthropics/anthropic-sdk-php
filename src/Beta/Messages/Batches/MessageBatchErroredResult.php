@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages\Batches;
 
 use Anthropic\Beta\BetaErrorResponse;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaErrorResponseShape from \Anthropic\Beta\BetaErrorResponse
+ *
  * @phpstan-type MessageBatchErroredResultShape = array{
- *   error: BetaErrorResponse, type: "errored"
+ *   error: BetaErrorResponse|BetaErrorResponseShape, type: 'errored'
  * }
  */
 final class MessageBatchErroredResult implements BaseModel
@@ -19,11 +21,11 @@ final class MessageBatchErroredResult implements BaseModel
     /** @use SdkModel<MessageBatchErroredResultShape> */
     use SdkModel;
 
-    /** @var "errored" $type */
-    #[Api]
+    /** @var 'errored' $type */
+    #[Required]
     public string $type = 'errored';
 
-    #[Api]
+    #[Required]
     public BetaErrorResponse $error;
 
     /**
@@ -49,21 +51,26 @@ final class MessageBatchErroredResult implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaErrorResponse|BetaErrorResponseShape $error
      */
-    public static function with(BetaErrorResponse $error): self
+    public static function with(BetaErrorResponse|array $error): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->error = $error;
+        $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 
-    public function withError(BetaErrorResponse $error): self
+    /**
+     * @param BetaErrorResponse|BetaErrorResponseShape $error
+     */
+    public function withError(BetaErrorResponse|array $error): self
     {
-        $obj = clone $this;
-        $obj->error = $error;
+        $self = clone $this;
+        $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 }

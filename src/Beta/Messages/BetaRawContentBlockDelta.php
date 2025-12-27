@@ -8,6 +8,15 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-import-type BetaTextDeltaShape from \Anthropic\Beta\Messages\BetaTextDelta
+ * @phpstan-import-type BetaInputJSONDeltaShape from \Anthropic\Beta\Messages\BetaInputJSONDelta
+ * @phpstan-import-type BetaCitationsDeltaShape from \Anthropic\Beta\Messages\BetaCitationsDelta
+ * @phpstan-import-type BetaThinkingDeltaShape from \Anthropic\Beta\Messages\BetaThinkingDelta
+ * @phpstan-import-type BetaSignatureDeltaShape from \Anthropic\Beta\Messages\BetaSignatureDelta
+ *
+ * @phpstan-type BetaRawContentBlockDeltaShape = BetaTextDeltaShape|BetaInputJSONDeltaShape|BetaCitationsDeltaShape|BetaThinkingDeltaShape|BetaSignatureDeltaShape
+ */
 final class BetaRawContentBlockDelta implements ConverterSource
 {
     use SdkUnion;

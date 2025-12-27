@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCodeExecutionOutputBlockParamShape = array{
- *   file_id: string, type: "code_execution_output"
+ *   fileID: string, type: 'code_execution_output'
  * }
  */
 final class BetaCodeExecutionOutputBlockParam implements BaseModel
@@ -18,19 +18,19 @@ final class BetaCodeExecutionOutputBlockParam implements BaseModel
     /** @use SdkModel<BetaCodeExecutionOutputBlockParamShape> */
     use SdkModel;
 
-    /** @var "code_execution_output" $type */
-    #[Api]
+    /** @var 'code_execution_output' $type */
+    #[Required]
     public string $type = 'code_execution_output';
 
-    #[Api]
-    public string $file_id;
+    #[Required('file_id')]
+    public string $fileID;
 
     /**
      * `new BetaCodeExecutionOutputBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaCodeExecutionOutputBlockParam::with(file_id: ...)
+     * BetaCodeExecutionOutputBlockParam::with(fileID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -49,20 +49,20 @@ final class BetaCodeExecutionOutputBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $file_id): self
+    public static function with(string $fileID): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->file_id = $file_id;
+        $self['fileID'] = $fileID;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileID(string $fileID): self
     {
-        $obj = clone $this;
-        $obj->file_id = $fileID;
+        $self = clone $this;
+        $self['fileID'] = $fileID;
 
-        return $obj;
+        return $self;
     }
 }

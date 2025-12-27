@@ -10,6 +10,19 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * Regular text content.
+ *
+ * @phpstan-import-type TextBlockParamShape from \Anthropic\Messages\TextBlockParam
+ * @phpstan-import-type ImageBlockParamShape from \Anthropic\Messages\ImageBlockParam
+ * @phpstan-import-type DocumentBlockParamShape from \Anthropic\Messages\DocumentBlockParam
+ * @phpstan-import-type SearchResultBlockParamShape from \Anthropic\Messages\SearchResultBlockParam
+ * @phpstan-import-type ThinkingBlockParamShape from \Anthropic\Messages\ThinkingBlockParam
+ * @phpstan-import-type RedactedThinkingBlockParamShape from \Anthropic\Messages\RedactedThinkingBlockParam
+ * @phpstan-import-type ToolUseBlockParamShape from \Anthropic\Messages\ToolUseBlockParam
+ * @phpstan-import-type ToolResultBlockParamShape from \Anthropic\Messages\ToolResultBlockParam
+ * @phpstan-import-type ServerToolUseBlockParamShape from \Anthropic\Messages\ServerToolUseBlockParam
+ * @phpstan-import-type WebSearchToolResultBlockParamShape from \Anthropic\Messages\WebSearchToolResultBlockParam
+ *
+ * @phpstan-type ContentBlockParamShape = TextBlockParamShape|ImageBlockParamShape|DocumentBlockParamShape|SearchResultBlockParamShape|ThinkingBlockParamShape|RedactedThinkingBlockParamShape|ToolUseBlockParamShape|ToolResultBlockParamShape|ServerToolUseBlockParamShape|WebSearchToolResultBlockParamShape
  */
 final class ContentBlockParam implements ConverterSource
 {

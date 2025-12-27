@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaOverloadedErrorShape = array{
- *   message: string, type: "overloaded_error"
+ *   message: string, type: 'overloaded_error'
  * }
  */
 final class BetaOverloadedError implements BaseModel
@@ -18,11 +18,11 @@ final class BetaOverloadedError implements BaseModel
     /** @use SdkModel<BetaOverloadedErrorShape> */
     use SdkModel;
 
-    /** @var "overloaded_error" $type */
-    #[Api]
+    /** @var 'overloaded_error' $type */
+    #[Required]
     public string $type = 'overloaded_error';
 
-    #[Api]
+    #[Required]
     public string $message;
 
     /**
@@ -51,18 +51,18 @@ final class BetaOverloadedError implements BaseModel
      */
     public static function with(string $message = 'Overloaded'): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->message = $message;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 
     public function withMessage(string $message): self
     {
-        $obj = clone $this;
-        $obj->message = $message;
+        $self = clone $this;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 }

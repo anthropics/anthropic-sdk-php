@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type ThinkingConfigDisabledShape = array{type: "disabled"}
+ * @phpstan-type ThinkingConfigDisabledShape = array{type: 'disabled'}
  */
 final class ThinkingConfigDisabled implements BaseModel
 {
     /** @use SdkModel<ThinkingConfigDisabledShape> */
     use SdkModel;
 
-    /** @var "disabled" $type */
-    #[Api]
+    /** @var 'disabled' $type */
+    #[Required]
     public string $type = 'disabled';
 
     public function __construct()

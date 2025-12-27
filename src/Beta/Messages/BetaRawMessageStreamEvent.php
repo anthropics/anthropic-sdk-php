@@ -8,6 +8,16 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-import-type BetaRawMessageStartEventShape from \Anthropic\Beta\Messages\BetaRawMessageStartEvent
+ * @phpstan-import-type BetaRawMessageDeltaEventShape from \Anthropic\Beta\Messages\BetaRawMessageDeltaEvent
+ * @phpstan-import-type BetaRawMessageStopEventShape from \Anthropic\Beta\Messages\BetaRawMessageStopEvent
+ * @phpstan-import-type BetaRawContentBlockStartEventShape from \Anthropic\Beta\Messages\BetaRawContentBlockStartEvent
+ * @phpstan-import-type BetaRawContentBlockDeltaEventShape from \Anthropic\Beta\Messages\BetaRawContentBlockDeltaEvent
+ * @phpstan-import-type BetaRawContentBlockStopEventShape from \Anthropic\Beta\Messages\BetaRawContentBlockStopEvent
+ *
+ * @phpstan-type BetaRawMessageStreamEventShape = BetaRawMessageStartEventShape|BetaRawMessageDeltaEventShape|BetaRawMessageStopEventShape|BetaRawContentBlockStartEventShape|BetaRawContentBlockDeltaEventShape|BetaRawContentBlockStopEventShape
+ */
 final class BetaRawMessageStreamEvent implements ConverterSource
 {
     use SdkUnion;

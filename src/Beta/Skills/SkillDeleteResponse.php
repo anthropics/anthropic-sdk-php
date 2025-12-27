@@ -4,28 +4,24 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Skills;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type SkillDeleteResponseShape = array{id: string, type: string}
  */
-final class SkillDeleteResponse implements BaseModel, ResponseConverter
+final class SkillDeleteResponse implements BaseModel
 {
     /** @use SdkModel<SkillDeleteResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Unique identifier for the skill.
      *
      * The format and length of IDs may change over time.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
@@ -33,7 +29,7 @@ final class SkillDeleteResponse implements BaseModel, ResponseConverter
      *
      * For Skills, this is always `"skill_deleted"`.
      */
-    #[Api]
+    #[Required]
     public string $type;
 
     /**
@@ -64,12 +60,12 @@ final class SkillDeleteResponse implements BaseModel, ResponseConverter
         string $id,
         string $type = 'skill_deleted'
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->id = $id;
-        $obj->type = $type;
+        $self['id'] = $id;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -79,10 +75,10 @@ final class SkillDeleteResponse implements BaseModel, ResponseConverter
      */
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj->id = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -92,9 +88,9 @@ final class SkillDeleteResponse implements BaseModel, ResponseConverter
      */
     public function withType(string $type): self
     {
-        $obj = clone $this;
-        $obj->type = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 }

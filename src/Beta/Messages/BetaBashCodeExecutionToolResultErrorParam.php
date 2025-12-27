@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultErrorParam\ErrorCode;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaBashCodeExecutionToolResultErrorParamShape = array{
- *   error_code: value-of<ErrorCode>, type: "bash_code_execution_tool_result_error"
+ *   errorCode: ErrorCode|value-of<ErrorCode>,
+ *   type: 'bash_code_execution_tool_result_error',
  * }
  */
 final class BetaBashCodeExecutionToolResultErrorParam implements BaseModel
@@ -19,20 +20,20 @@ final class BetaBashCodeExecutionToolResultErrorParam implements BaseModel
     /** @use SdkModel<BetaBashCodeExecutionToolResultErrorParamShape> */
     use SdkModel;
 
-    /** @var "bash_code_execution_tool_result_error" $type */
-    #[Api]
+    /** @var 'bash_code_execution_tool_result_error' $type */
+    #[Required]
     public string $type = 'bash_code_execution_tool_result_error';
 
-    /** @var value-of<ErrorCode> $error_code */
-    #[Api(enum: ErrorCode::class)]
-    public string $error_code;
+    /** @var value-of<ErrorCode> $errorCode */
+    #[Required('error_code', enum: ErrorCode::class)]
+    public string $errorCode;
 
     /**
      * `new BetaBashCodeExecutionToolResultErrorParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaBashCodeExecutionToolResultErrorParam::with(error_code: ...)
+     * BetaBashCodeExecutionToolResultErrorParam::with(errorCode: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -51,15 +52,15 @@ final class BetaBashCodeExecutionToolResultErrorParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ErrorCode|value-of<ErrorCode> $error_code
+     * @param ErrorCode|value-of<ErrorCode> $errorCode
      */
-    public static function with(ErrorCode|string $error_code): self
+    public static function with(ErrorCode|string $errorCode): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['error_code'] = $error_code;
+        $self['errorCode'] = $errorCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -67,9 +68,9 @@ final class BetaBashCodeExecutionToolResultErrorParam implements BaseModel
      */
     public function withErrorCode(ErrorCode|string $errorCode): self
     {
-        $obj = clone $this;
-        $obj['error_code'] = $errorCode;
+        $self = clone $this;
+        $self['errorCode'] = $errorCode;
 
-        return $obj;
+        return $self;
     }
 }

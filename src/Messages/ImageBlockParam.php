@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\ImageBlockParam\Source;
 
 /**
+ * @phpstan-import-type SourceShape from \Anthropic\Messages\ImageBlockParam\Source
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ *
  * @phpstan-type ImageBlockParamShape = array{
- *   source: Base64ImageSource|URLImageSource,
- *   type: "image",
- *   cache_control?: CacheControlEphemeral|null,
+ *   source: SourceShape,
+ *   type: 'image',
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  * }
  */
 final class ImageBlockParam implements BaseModel
@@ -21,18 +25,18 @@ final class ImageBlockParam implements BaseModel
     /** @use SdkModel<ImageBlockParamShape> */
     use SdkModel;
 
-    /** @var "image" $type */
-    #[Api]
+    /** @var 'image' $type */
+    #[Required]
     public string $type = 'image';
 
-    #[Api(union: Source::class)]
+    #[Required(union: Source::class)]
     public Base64ImageSource|URLImageSource $source;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
      * `new ImageBlockParam()` is missing required properties by the API.
@@ -57,36 +61,46 @@ final class ImageBlockParam implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param SourceShape $source
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
-        Base64ImageSource|URLImageSource $source,
-        ?CacheControlEphemeral $cache_control = null,
+        Base64ImageSource|array|URLImageSource $source,
+        CacheControlEphemeral|array|null $cacheControl = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->source = $source;
+        $self['source'] = $source;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
-    public function withSource(Base64ImageSource|URLImageSource $source): self
-    {
-        $obj = clone $this;
-        $obj->source = $source;
+    /**
+     * @param SourceShape $source
+     */
+    public function withSource(
+        Base64ImageSource|array|URLImageSource $source
+    ): self {
+        $self = clone $this;
+        $self['source'] = $source;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
-    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
-    {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 }

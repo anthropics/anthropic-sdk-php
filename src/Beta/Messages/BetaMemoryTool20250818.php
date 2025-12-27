@@ -5,19 +5,22 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaMemoryTool20250818\AllowedCaller;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\MapOf;
 
 /**
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ *
  * @phpstan-type BetaMemoryTool20250818Shape = array{
- *   name: "memory",
- *   type: "memory_20250818",
- *   allowed_callers?: list<value-of<AllowedCaller>>|null,
- *   cache_control?: BetaCacheControlEphemeral|null,
- *   defer_loading?: bool|null,
- *   input_examples?: list<array<string,mixed>>|null,
+ *   name: 'memory',
+ *   type: 'memory_20250818',
+ *   allowedCallers?: list<AllowedCaller|value-of<AllowedCaller>>|null,
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
+ *   deferLoading?: bool|null,
+ *   inputExamples?: list<array<string,mixed>>|null,
  *   strict?: bool|null,
  * }
  */
@@ -31,36 +34,36 @@ final class BetaMemoryTool20250818 implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      *
-     * @var "memory" $name
+     * @var 'memory' $name
      */
-    #[Api]
+    #[Required]
     public string $name = 'memory';
 
-    /** @var "memory_20250818" $type */
-    #[Api]
+    /** @var 'memory_20250818' $type */
+    #[Required]
     public string $type = 'memory_20250818';
 
-    /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
-    #[Api(list: AllowedCaller::class, optional: true)]
-    public ?array $allowed_callers;
+    /** @var list<value-of<AllowedCaller>>|null $allowedCallers */
+    #[Optional('allowed_callers', list: AllowedCaller::class)]
+    public ?array $allowedCallers;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
      */
-    #[Api(optional: true)]
-    public ?bool $defer_loading;
+    #[Optional('defer_loading')]
+    public ?bool $deferLoading;
 
-    /** @var list<array<string,mixed>>|null $input_examples */
-    #[Api(list: new MapOf('mixed'), optional: true)]
-    public ?array $input_examples;
+    /** @var list<array<string,mixed>>|null $inputExamples */
+    #[Optional('input_examples', list: new MapOf('mixed'))]
+    public ?array $inputExamples;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $strict;
 
     public function __construct()
@@ -73,25 +76,26 @@ final class BetaMemoryTool20250818 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
-     * @param list<array<string,mixed>> $input_examples
+     * @param list<AllowedCaller|value-of<AllowedCaller>>|null $allowedCallers
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param list<array<string,mixed>>|null $inputExamples
      */
     public static function with(
-        ?array $allowed_callers = null,
-        ?BetaCacheControlEphemeral $cache_control = null,
-        ?bool $defer_loading = null,
-        ?array $input_examples = null,
+        ?array $allowedCallers = null,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
+        ?bool $deferLoading = null,
+        ?array $inputExamples = null,
         ?bool $strict = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $allowed_callers && $obj['allowed_callers'] = $allowed_callers;
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $defer_loading && $obj->defer_loading = $defer_loading;
-        null !== $input_examples && $obj->input_examples = $input_examples;
-        null !== $strict && $obj->strict = $strict;
+        null !== $allowedCallers && $self['allowedCallers'] = $allowedCallers;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $deferLoading && $self['deferLoading'] = $deferLoading;
+        null !== $inputExamples && $self['inputExamples'] = $inputExamples;
+        null !== $strict && $self['strict'] = $strict;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -99,22 +103,24 @@ final class BetaMemoryTool20250818 implements BaseModel
      */
     public function withAllowedCallers(array $allowedCallers): self
     {
-        $obj = clone $this;
-        $obj['allowed_callers'] = $allowedCallers;
+        $self = clone $this;
+        $self['allowedCallers'] = $allowedCallers;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -122,10 +128,10 @@ final class BetaMemoryTool20250818 implements BaseModel
      */
     public function withDeferLoading(bool $deferLoading): self
     {
-        $obj = clone $this;
-        $obj->defer_loading = $deferLoading;
+        $self = clone $this;
+        $self['deferLoading'] = $deferLoading;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -133,17 +139,17 @@ final class BetaMemoryTool20250818 implements BaseModel
      */
     public function withInputExamples(array $inputExamples): self
     {
-        $obj = clone $this;
-        $obj->input_examples = $inputExamples;
+        $self = clone $this;
+        $self['inputExamples'] = $inputExamples;
 
-        return $obj;
+        return $self;
     }
 
     public function withStrict(bool $strict): self
     {
-        $obj = clone $this;
-        $obj->strict = $strict;
+        $self = clone $this;
+        $self['strict'] = $strict;
 
-        return $obj;
+        return $self;
     }
 }

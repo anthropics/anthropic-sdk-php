@@ -32,10 +32,11 @@ trait ArrayOf
         if (!is_array($value)) {
             return $value;
         }
+        ++$state->yes;
 
         $acc = [];
         foreach ($value as $k => $v) {
-            if ($this->nullable && null === $v) {
+            if ($this->nullable && is_null($v)) {
                 ++$state->yes;
                 $acc[$k] = null;
             } else {
@@ -51,15 +52,27 @@ trait ArrayOf
         if (!is_array($value)) {
             return Conversion::dump_unknown($value, state: $state);
         }
+        ++$state->yes;
 
         if (empty($value)) {
             return $this->empty();
         }
 
-        return array_map(fn ($v) => Conversion::dump($this->type, value: $v, state: $state), array: $value);
+        $acc = [];
+        foreach ($value as $k => $v) {
+            if ($this->nullable && is_null($v)) {
+                ++$state->yes;
+                $acc[$k] = null;
+            } else {
+                $acc[$k] = Conversion::dump($this->type, value: $v, state: $state);
+            }
+        }
+
+        return $acc;
     }
 
-    private function empty(): array|object // @phpstan-ignore-line
+    // @phpstan-ignore-next-line missingType.iterableValue
+    private function empty(): array|object
     {
         return (object) [];
     }

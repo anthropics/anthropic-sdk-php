@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaToolUsesKeepShape = array{type: "tool_uses", value: int}
+ * @phpstan-type BetaToolUsesKeepShape = array{type: 'tool_uses', value: int}
  */
 final class BetaToolUsesKeep implements BaseModel
 {
     /** @use SdkModel<BetaToolUsesKeepShape> */
     use SdkModel;
 
-    /** @var "tool_uses" $type */
-    #[Api]
+    /** @var 'tool_uses' $type */
+    #[Required]
     public string $type = 'tool_uses';
 
-    #[Api]
+    #[Required]
     public int $value;
 
     /**
@@ -49,18 +49,18 @@ final class BetaToolUsesKeep implements BaseModel
      */
     public static function with(int $value): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->value = $value;
+        $self['value'] = $value;
 
-        return $obj;
+        return $self;
     }
 
     public function withValue(int $value): self
     {
-        $obj = clone $this;
-        $obj->value = $value;
+        $self = clone $this;
+        $self['value'] = $value;
 
-        return $obj;
+        return $self;
     }
 }

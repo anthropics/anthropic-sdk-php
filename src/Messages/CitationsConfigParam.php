@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -16,7 +16,7 @@ final class CitationsConfigParam implements BaseModel
     /** @use SdkModel<CitationsConfigParamShape> */
     use SdkModel;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $enabled;
 
     public function __construct()
@@ -31,18 +31,18 @@ final class CitationsConfigParam implements BaseModel
      */
     public static function with(?bool $enabled = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        null !== $enabled && $obj->enabled = $enabled;
+        null !== $enabled && $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 
     public function withEnabled(bool $enabled): self
     {
-        $obj = clone $this;
-        $obj->enabled = $enabled;
+        $self = clone $this;
+        $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 }

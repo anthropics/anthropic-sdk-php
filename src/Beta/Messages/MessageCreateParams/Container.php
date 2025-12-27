@@ -11,6 +11,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * Container identifier for reuse across requests.
+ *
+ * @phpstan-import-type BetaContainerParamsShape from \Anthropic\Beta\Messages\BetaContainerParams
+ *
+ * @phpstan-type ContainerShape = string|BetaContainerParamsShape
  */
 final class Container implements ConverterSource
 {

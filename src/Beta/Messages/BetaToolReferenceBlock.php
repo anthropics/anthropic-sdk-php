@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaToolReferenceBlockShape = array{
- *   tool_name: string, type: "tool_reference"
+ *   toolName: string, type: 'tool_reference'
  * }
  */
 final class BetaToolReferenceBlock implements BaseModel
@@ -18,19 +18,19 @@ final class BetaToolReferenceBlock implements BaseModel
     /** @use SdkModel<BetaToolReferenceBlockShape> */
     use SdkModel;
 
-    /** @var "tool_reference" $type */
-    #[Api]
+    /** @var 'tool_reference' $type */
+    #[Required]
     public string $type = 'tool_reference';
 
-    #[Api]
-    public string $tool_name;
+    #[Required('tool_name')]
+    public string $toolName;
 
     /**
      * `new BetaToolReferenceBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaToolReferenceBlock::with(tool_name: ...)
+     * BetaToolReferenceBlock::with(toolName: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -49,20 +49,20 @@ final class BetaToolReferenceBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $tool_name): self
+    public static function with(string $toolName): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->tool_name = $tool_name;
+        $self['toolName'] = $toolName;
 
-        return $obj;
+        return $self;
     }
 
     public function withToolName(string $toolName): self
     {
-        $obj = clone $this;
-        $obj->tool_name = $toolName;
+        $self = clone $this;
+        $self['toolName'] = $toolName;
 
-        return $obj;
+        return $self;
     }
 }

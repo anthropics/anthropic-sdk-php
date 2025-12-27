@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Batches\BatchCreateParams;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Batches\BatchCreateParams\Request\Params;
 
 /**
- * @phpstan-type RequestShape = array{custom_id: string, params: Params}
+ * @phpstan-import-type ParamsShape from \Anthropic\Messages\Batches\BatchCreateParams\Request\Params
+ *
+ * @phpstan-type RequestShape = array{customID: string, params: Params|ParamsShape}
  */
 final class Request implements BaseModel
 {
@@ -22,15 +24,15 @@ final class Request implements BaseModel
      *
      * Must be unique for each request within the Message Batch.
      */
-    #[Api]
-    public string $custom_id;
+    #[Required('custom_id')]
+    public string $customID;
 
     /**
      * Messages API creation parameters for the individual request.
      *
      * See the [Messages API reference](https://docs.claude.com/en/api/messages) for full documentation on available parameters.
      */
-    #[Api]
+    #[Required]
     public Params $params;
 
     /**
@@ -38,7 +40,7 @@ final class Request implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Request::with(custom_id: ..., params: ...)
+     * Request::with(customID: ..., params: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -56,15 +58,17 @@ final class Request implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param Params|ParamsShape $params
      */
-    public static function with(string $custom_id, Params $params): self
+    public static function with(string $customID, Params|array $params): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->custom_id = $custom_id;
-        $obj->params = $params;
+        $self['customID'] = $customID;
+        $self['params'] = $params;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -74,22 +78,24 @@ final class Request implements BaseModel
      */
     public function withCustomID(string $customID): self
     {
-        $obj = clone $this;
-        $obj->custom_id = $customID;
+        $self = clone $this;
+        $self['customID'] = $customID;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Messages API creation parameters for the individual request.
      *
      * See the [Messages API reference](https://docs.claude.com/en/api/messages) for full documentation on available parameters.
+     *
+     * @param Params|ParamsShape $params
      */
-    public function withParams(Params $params): self
+    public function withParams(Params|array $params): self
     {
-        $obj = clone $this;
-        $obj->params = $params;
+        $self = clone $this;
+        $self['params'] = $params;
 
-        return $obj;
+        return $self;
     }
 }

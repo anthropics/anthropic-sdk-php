@@ -7,22 +7,26 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Beta\Messages\BetaTool\AllowedCaller;
 use Anthropic\Beta\Messages\BetaTool\InputSchema;
 use Anthropic\Beta\Messages\BetaTool\Type;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\MapOf;
 
 /**
+ * @phpstan-import-type InputSchemaShape from \Anthropic\Beta\Messages\BetaTool\InputSchema
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ *
  * @phpstan-type BetaToolShape = array{
- *   input_schema: InputSchema,
+ *   inputSchema: InputSchema|InputSchemaShape,
  *   name: string,
- *   allowed_callers?: list<value-of<AllowedCaller>>|null,
- *   cache_control?: BetaCacheControlEphemeral|null,
- *   defer_loading?: bool|null,
+ *   allowedCallers?: list<AllowedCaller|value-of<AllowedCaller>>|null,
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
+ *   deferLoading?: bool|null,
  *   description?: string|null,
- *   input_examples?: list<array<string,mixed>>|null,
+ *   inputExamples?: list<array<string,mixed>>|null,
  *   strict?: bool|null,
- *   type?: value-of<Type>|null,
+ *   type?: null|Type|value-of<Type>,
  * }
  */
 final class BetaTool implements BaseModel
@@ -35,50 +39,50 @@ final class BetaTool implements BaseModel
      *
      * This defines the shape of the `input` that your tool accepts and that the model will produce.
      */
-    #[Api]
-    public InputSchema $input_schema;
+    #[Required('input_schema')]
+    public InputSchema $inputSchema;
 
     /**
      * Name of the tool.
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      */
-    #[Api]
+    #[Required]
     public string $name;
 
-    /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
-    #[Api(list: AllowedCaller::class, optional: true)]
-    public ?array $allowed_callers;
+    /** @var list<value-of<AllowedCaller>>|null $allowedCallers */
+    #[Optional('allowed_callers', list: AllowedCaller::class)]
+    public ?array $allowedCallers;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
      */
-    #[Api(optional: true)]
-    public ?bool $defer_loading;
+    #[Optional('defer_loading')]
+    public ?bool $deferLoading;
 
     /**
      * Description of what this tool does.
      *
      * Tool descriptions should be as detailed as possible. The more information that the model has about what the tool is and how to use it, the better it will perform. You can use natural language descriptions to reinforce important aspects of the tool input JSON schema.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $description;
 
-    /** @var list<array<string,mixed>>|null $input_examples */
-    #[Api(list: new MapOf('mixed'), optional: true)]
-    public ?array $input_examples;
+    /** @var list<array<string,mixed>>|null $inputExamples */
+    #[Optional('input_examples', list: new MapOf('mixed'))]
+    public ?array $inputExamples;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $strict;
 
     /** @var value-of<Type>|null $type */
-    #[Api(enum: Type::class, nullable: true, optional: true)]
+    #[Optional(enum: Type::class, nullable: true)]
     public ?string $type;
 
     /**
@@ -86,7 +90,7 @@ final class BetaTool implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaTool::with(input_schema: ..., name: ...)
+     * BetaTool::with(inputSchema: ..., name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -105,48 +109,52 @@ final class BetaTool implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
-     * @param list<array<string,mixed>> $input_examples
+     * @param InputSchema|InputSchemaShape $inputSchema
+     * @param list<AllowedCaller|value-of<AllowedCaller>>|null $allowedCallers
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param list<array<string,mixed>>|null $inputExamples
      * @param Type|value-of<Type>|null $type
      */
     public static function with(
-        InputSchema $input_schema,
+        InputSchema|array $inputSchema,
         string $name,
-        ?array $allowed_callers = null,
-        ?BetaCacheControlEphemeral $cache_control = null,
-        ?bool $defer_loading = null,
+        ?array $allowedCallers = null,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
+        ?bool $deferLoading = null,
         ?string $description = null,
-        ?array $input_examples = null,
+        ?array $inputExamples = null,
         ?bool $strict = null,
         Type|string|null $type = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->input_schema = $input_schema;
-        $obj->name = $name;
+        $self['inputSchema'] = $inputSchema;
+        $self['name'] = $name;
 
-        null !== $allowed_callers && $obj['allowed_callers'] = $allowed_callers;
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $defer_loading && $obj->defer_loading = $defer_loading;
-        null !== $description && $obj->description = $description;
-        null !== $input_examples && $obj->input_examples = $input_examples;
-        null !== $strict && $obj->strict = $strict;
-        null !== $type && $obj['type'] = $type;
+        null !== $allowedCallers && $self['allowedCallers'] = $allowedCallers;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $deferLoading && $self['deferLoading'] = $deferLoading;
+        null !== $description && $self['description'] = $description;
+        null !== $inputExamples && $self['inputExamples'] = $inputExamples;
+        null !== $strict && $self['strict'] = $strict;
+        null !== $type && $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * [JSON schema](https://json-schema.org/draft/2020-12) for this tool's input.
      *
      * This defines the shape of the `input` that your tool accepts and that the model will produce.
+     *
+     * @param InputSchema|InputSchemaShape $inputSchema
      */
-    public function withInputSchema(InputSchema $inputSchema): self
+    public function withInputSchema(InputSchema|array $inputSchema): self
     {
-        $obj = clone $this;
-        $obj->input_schema = $inputSchema;
+        $self = clone $this;
+        $self['inputSchema'] = $inputSchema;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -156,10 +164,10 @@ final class BetaTool implements BaseModel
      */
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj->name = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -167,22 +175,24 @@ final class BetaTool implements BaseModel
      */
     public function withAllowedCallers(array $allowedCallers): self
     {
-        $obj = clone $this;
-        $obj['allowed_callers'] = $allowedCallers;
+        $self = clone $this;
+        $self['allowedCallers'] = $allowedCallers;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -190,10 +200,10 @@ final class BetaTool implements BaseModel
      */
     public function withDeferLoading(bool $deferLoading): self
     {
-        $obj = clone $this;
-        $obj->defer_loading = $deferLoading;
+        $self = clone $this;
+        $self['deferLoading'] = $deferLoading;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -203,10 +213,10 @@ final class BetaTool implements BaseModel
      */
     public function withDescription(string $description): self
     {
-        $obj = clone $this;
-        $obj->description = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -214,18 +224,18 @@ final class BetaTool implements BaseModel
      */
     public function withInputExamples(array $inputExamples): self
     {
-        $obj = clone $this;
-        $obj->input_examples = $inputExamples;
+        $self = clone $this;
+        $self['inputExamples'] = $inputExamples;
 
-        return $obj;
+        return $self;
     }
 
     public function withStrict(bool $strict): self
     {
-        $obj = clone $this;
-        $obj->strict = $strict;
+        $self = clone $this;
+        $self['strict'] = $strict;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -233,9 +243,9 @@ final class BetaTool implements BaseModel
      */
     public function withType(Type|string|null $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 }

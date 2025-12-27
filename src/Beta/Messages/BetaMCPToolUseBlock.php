@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
  *   id: string,
  *   input: array<string,mixed>,
  *   name: string,
- *   server_name: string,
- *   type: "mcp_tool_use",
+ *   serverName: string,
+ *   type: 'mcp_tool_use',
  * }
  */
 final class BetaMCPToolUseBlock implements BaseModel
@@ -22,35 +22,35 @@ final class BetaMCPToolUseBlock implements BaseModel
     /** @use SdkModel<BetaMCPToolUseBlockShape> */
     use SdkModel;
 
-    /** @var "mcp_tool_use" $type */
-    #[Api]
+    /** @var 'mcp_tool_use' $type */
+    #[Required]
     public string $type = 'mcp_tool_use';
 
-    #[Api]
+    #[Required]
     public string $id;
 
     /** @var array<string,mixed> $input */
-    #[Api(map: 'mixed')]
+    #[Required(map: 'mixed')]
     public array $input;
 
     /**
      * The name of the MCP tool.
      */
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
      * The name of the MCP server.
      */
-    #[Api]
-    public string $server_name;
+    #[Required('server_name')]
+    public string $serverName;
 
     /**
      * `new BetaMCPToolUseBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaMCPToolUseBlock::with(id: ..., input: ..., name: ..., server_name: ...)
+     * BetaMCPToolUseBlock::with(id: ..., input: ..., name: ..., serverName: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -79,24 +79,24 @@ final class BetaMCPToolUseBlock implements BaseModel
         string $id,
         array $input,
         string $name,
-        string $server_name
+        string $serverName
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->id = $id;
-        $obj->input = $input;
-        $obj->name = $name;
-        $obj->server_name = $server_name;
+        $self['id'] = $id;
+        $self['input'] = $input;
+        $self['name'] = $name;
+        $self['serverName'] = $serverName;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj->id = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -104,10 +104,10 @@ final class BetaMCPToolUseBlock implements BaseModel
      */
     public function withInput(array $input): self
     {
-        $obj = clone $this;
-        $obj->input = $input;
+        $self = clone $this;
+        $self['input'] = $input;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -115,10 +115,10 @@ final class BetaMCPToolUseBlock implements BaseModel
      */
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj->name = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -126,9 +126,9 @@ final class BetaMCPToolUseBlock implements BaseModel
      */
     public function withServerName(string $serverName): self
     {
-        $obj = clone $this;
-        $obj->server_name = $serverName;
+        $self = clone $this;
+        $self['serverName'] = $serverName;
 
-        return $obj;
+        return $self;
     }
 }

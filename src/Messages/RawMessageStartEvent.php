@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type MessageShape from \Anthropic\Messages\Message
+ *
  * @phpstan-type RawMessageStartEventShape = array{
- *   message: Message, type: "message_start"
+ *   message: Message|MessageShape, type: 'message_start'
  * }
  */
 final class RawMessageStartEvent implements BaseModel
@@ -18,11 +20,11 @@ final class RawMessageStartEvent implements BaseModel
     /** @use SdkModel<RawMessageStartEventShape> */
     use SdkModel;
 
-    /** @var "message_start" $type */
-    #[Api]
+    /** @var 'message_start' $type */
+    #[Required]
     public string $type = 'message_start';
 
-    #[Api]
+    #[Required]
     public Message $message;
 
     /**
@@ -48,21 +50,26 @@ final class RawMessageStartEvent implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param Message|MessageShape $message
      */
-    public static function with(Message $message): self
+    public static function with(Message|array $message): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->message = $message;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 
-    public function withMessage(Message $message): self
+    /**
+     * @param Message|MessageShape $message
+     */
+    public function withMessage(Message|array $message): self
     {
-        $obj = clone $this;
-        $obj->message = $message;
+        $self = clone $this;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 }

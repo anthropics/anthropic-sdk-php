@@ -6,14 +6,15 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaMessageParam\Content;
 use Anthropic\Beta\Messages\BetaMessageParam\Role;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaMessageParam\Content
+ *
  * @phpstan-type BetaMessageParamShape = array{
- *   content: string|list<BetaTextBlockParam|BetaImageBlockParam|BetaRequestDocumentBlock|BetaSearchResultBlockParam|BetaThinkingBlockParam|BetaRedactedThinkingBlockParam|BetaToolUseBlockParam|BetaToolResultBlockParam|BetaServerToolUseBlockParam|BetaWebSearchToolResultBlockParam|BetaWebFetchToolResultBlockParam|BetaCodeExecutionToolResultBlockParam|BetaBashCodeExecutionToolResultBlockParam|BetaTextEditorCodeExecutionToolResultBlockParam|BetaToolSearchToolResultBlockParam|BetaMCPToolUseBlockParam|BetaRequestMCPToolResultBlockParam|BetaContainerUploadBlockParam>,
- *   role: value-of<Role>,
+ *   content: ContentShape, role: Role|value-of<Role>
  * }
  */
 final class BetaMessageParam implements BaseModel
@@ -24,11 +25,11 @@ final class BetaMessageParam implements BaseModel
     /**
      * @var string|list<BetaTextBlockParam|BetaImageBlockParam|BetaRequestDocumentBlock|BetaSearchResultBlockParam|BetaThinkingBlockParam|BetaRedactedThinkingBlockParam|BetaToolUseBlockParam|BetaToolResultBlockParam|BetaServerToolUseBlockParam|BetaWebSearchToolResultBlockParam|BetaWebFetchToolResultBlockParam|BetaCodeExecutionToolResultBlockParam|BetaBashCodeExecutionToolResultBlockParam|BetaTextEditorCodeExecutionToolResultBlockParam|BetaToolSearchToolResultBlockParam|BetaMCPToolUseBlockParam|BetaRequestMCPToolResultBlockParam|BetaContainerUploadBlockParam> $content
      */
-    #[Api(union: Content::class)]
+    #[Required(union: Content::class)]
     public string|array $content;
 
     /** @var value-of<Role> $role */
-    #[Api(enum: Role::class)]
+    #[Required(enum: Role::class)]
     public string $role;
 
     /**
@@ -55,28 +56,28 @@ final class BetaMessageParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|list<BetaTextBlockParam|BetaImageBlockParam|BetaRequestDocumentBlock|BetaSearchResultBlockParam|BetaThinkingBlockParam|BetaRedactedThinkingBlockParam|BetaToolUseBlockParam|BetaToolResultBlockParam|BetaServerToolUseBlockParam|BetaWebSearchToolResultBlockParam|BetaWebFetchToolResultBlockParam|BetaCodeExecutionToolResultBlockParam|BetaBashCodeExecutionToolResultBlockParam|BetaTextEditorCodeExecutionToolResultBlockParam|BetaToolSearchToolResultBlockParam|BetaMCPToolUseBlockParam|BetaRequestMCPToolResultBlockParam|BetaContainerUploadBlockParam> $content
+     * @param ContentShape $content
      * @param Role|value-of<Role> $role
      */
     public static function with(string|array $content, Role|string $role): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->content = $content;
-        $obj['role'] = $role;
+        $self['content'] = $content;
+        $self['role'] = $role;
 
-        return $obj;
+        return $self;
     }
 
     /**
-     * @param string|list<BetaTextBlockParam|BetaImageBlockParam|BetaRequestDocumentBlock|BetaSearchResultBlockParam|BetaThinkingBlockParam|BetaRedactedThinkingBlockParam|BetaToolUseBlockParam|BetaToolResultBlockParam|BetaServerToolUseBlockParam|BetaWebSearchToolResultBlockParam|BetaWebFetchToolResultBlockParam|BetaCodeExecutionToolResultBlockParam|BetaBashCodeExecutionToolResultBlockParam|BetaTextEditorCodeExecutionToolResultBlockParam|BetaToolSearchToolResultBlockParam|BetaMCPToolUseBlockParam|BetaRequestMCPToolResultBlockParam|BetaContainerUploadBlockParam> $content
+     * @param ContentShape $content
      */
     public function withContent(string|array $content): self
     {
-        $obj = clone $this;
-        $obj->content = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -84,9 +85,9 @@ final class BetaMessageParam implements BaseModel
      */
     public function withRole(Role|string $role): self
     {
-        $obj = clone $this;
-        $obj['role'] = $role;
+        $self = clone $this;
+        $self['role'] = $role;
 
-        return $obj;
+        return $self;
     }
 }

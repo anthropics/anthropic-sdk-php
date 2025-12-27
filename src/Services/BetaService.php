@@ -16,6 +16,11 @@ final class BetaService implements BetaContract
     /**
      * @api
      */
+    public BetaRawService $raw;
+
+    /**
+     * @api
+     */
     public ModelsService $models;
 
     /**
@@ -38,6 +43,7 @@ final class BetaService implements BetaContract
      */
     public function __construct(private Client $client)
     {
+        $this->raw = new BetaRawService($client);
         $this->models = new ModelsService($client);
         $this->messages = new MessagesService($client);
         $this->files = new FilesService($client);

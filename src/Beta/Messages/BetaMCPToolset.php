@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -14,12 +15,16 @@ use Anthropic\Core\Contracts\BaseModel;
  * Allows configuring enabled status and defer_loading for all tools
  * from an MCP server, with optional per-tool overrides.
  *
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type BetaMCPToolConfigShape from \Anthropic\Beta\Messages\BetaMCPToolConfig
+ * @phpstan-import-type BetaMCPToolDefaultConfigShape from \Anthropic\Beta\Messages\BetaMCPToolDefaultConfig
+ *
  * @phpstan-type BetaMCPToolsetShape = array{
- *   mcp_server_name: string,
- *   type: "mcp_toolset",
- *   cache_control?: BetaCacheControlEphemeral|null,
- *   configs?: array<string,BetaMCPToolConfig>|null,
- *   default_config?: BetaMCPToolDefaultConfig|null,
+ *   mcpServerName: string,
+ *   type: 'mcp_toolset',
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
+ *   configs?: array<string,BetaMCPToolConfigShape>|null,
+ *   defaultConfig?: null|BetaMCPToolDefaultConfig|BetaMCPToolDefaultConfigShape,
  * }
  */
 final class BetaMCPToolset implements BaseModel
@@ -27,42 +32,42 @@ final class BetaMCPToolset implements BaseModel
     /** @use SdkModel<BetaMCPToolsetShape> */
     use SdkModel;
 
-    /** @var "mcp_toolset" $type */
-    #[Api]
+    /** @var 'mcp_toolset' $type */
+    #[Required]
     public string $type = 'mcp_toolset';
 
     /**
      * Name of the MCP server to configure tools for.
      */
-    #[Api]
-    public string $mcp_server_name;
+    #[Required('mcp_server_name')]
+    public string $mcpServerName;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * Configuration overrides for specific tools, keyed by tool name.
      *
      * @var array<string,BetaMCPToolConfig>|null $configs
      */
-    #[Api(map: BetaMCPToolConfig::class, nullable: true, optional: true)]
+    #[Optional(map: BetaMCPToolConfig::class, nullable: true)]
     public ?array $configs;
 
     /**
      * Default configuration applied to all tools from this server.
      */
-    #[Api(optional: true)]
-    public ?BetaMCPToolDefaultConfig $default_config;
+    #[Optional('default_config')]
+    public ?BetaMCPToolDefaultConfig $defaultConfig;
 
     /**
      * `new BetaMCPToolset()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaMCPToolset::with(mcp_server_name: ...)
+     * BetaMCPToolset::with(mcpServerName: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -81,23 +86,25 @@ final class BetaMCPToolset implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string,BetaMCPToolConfig>|null $configs
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param array<string,BetaMCPToolConfigShape>|null $configs
+     * @param BetaMCPToolDefaultConfig|BetaMCPToolDefaultConfigShape|null $defaultConfig
      */
     public static function with(
-        string $mcp_server_name,
-        ?BetaCacheControlEphemeral $cache_control = null,
+        string $mcpServerName,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
         ?array $configs = null,
-        ?BetaMCPToolDefaultConfig $default_config = null,
+        BetaMCPToolDefaultConfig|array|null $defaultConfig = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->mcp_server_name = $mcp_server_name;
+        $self['mcpServerName'] = $mcpServerName;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $configs && $obj->configs = $configs;
-        null !== $default_config && $obj->default_config = $default_config;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $configs && $self['configs'] = $configs;
+        null !== $defaultConfig && $self['defaultConfig'] = $defaultConfig;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -105,46 +112,50 @@ final class BetaMCPToolset implements BaseModel
      */
     public function withMCPServerName(string $mcpServerName): self
     {
-        $obj = clone $this;
-        $obj->mcp_server_name = $mcpServerName;
+        $self = clone $this;
+        $self['mcpServerName'] = $mcpServerName;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Configuration overrides for specific tools, keyed by tool name.
      *
-     * @param array<string,BetaMCPToolConfig>|null $configs
+     * @param array<string,BetaMCPToolConfigShape>|null $configs
      */
     public function withConfigs(?array $configs): self
     {
-        $obj = clone $this;
-        $obj->configs = $configs;
+        $self = clone $this;
+        $self['configs'] = $configs;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Default configuration applied to all tools from this server.
+     *
+     * @param BetaMCPToolDefaultConfig|BetaMCPToolDefaultConfigShape $defaultConfig
      */
     public function withDefaultConfig(
-        BetaMCPToolDefaultConfig $defaultConfig
+        BetaMCPToolDefaultConfig|array $defaultConfig
     ): self {
-        $obj = clone $this;
-        $obj->default_config = $defaultConfig;
+        $self = clone $this;
+        $self['defaultConfig'] = $defaultConfig;
 
-        return $obj;
+        return $self;
     }
 }

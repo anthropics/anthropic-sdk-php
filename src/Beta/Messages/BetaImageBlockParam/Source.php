@@ -11,6 +11,13 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-import-type BetaBase64ImageSourceShape from \Anthropic\Beta\Messages\BetaBase64ImageSource
+ * @phpstan-import-type BetaURLImageSourceShape from \Anthropic\Beta\Messages\BetaURLImageSource
+ * @phpstan-import-type BetaFileImageSourceShape from \Anthropic\Beta\Messages\BetaFileImageSource
+ *
+ * @phpstan-type SourceShape = BetaBase64ImageSourceShape|BetaURLImageSourceShape|BetaFileImageSourceShape
+ */
 final class Source implements ConverterSource
 {
     use SdkUnion;

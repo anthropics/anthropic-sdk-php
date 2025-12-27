@@ -10,6 +10,12 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-import-type BetaBashCodeExecutionToolResultErrorShape from \Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultError
+ * @phpstan-import-type BetaBashCodeExecutionResultBlockShape from \Anthropic\Beta\Messages\BetaBashCodeExecutionResultBlock
+ *
+ * @phpstan-type ContentShape = BetaBashCodeExecutionToolResultErrorShape|BetaBashCodeExecutionResultBlockShape
+ */
 final class Content implements ConverterSource
 {
     use SdkUnion;

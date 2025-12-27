@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaThinkingBlockShape = array{
- *   signature: string, thinking: string, type: "thinking"
+ *   signature: string, thinking: string, type: 'thinking'
  * }
  */
 final class BetaThinkingBlock implements BaseModel
@@ -18,14 +18,14 @@ final class BetaThinkingBlock implements BaseModel
     /** @use SdkModel<BetaThinkingBlockShape> */
     use SdkModel;
 
-    /** @var "thinking" $type */
-    #[Api]
+    /** @var 'thinking' $type */
+    #[Required]
     public string $type = 'thinking';
 
-    #[Api]
+    #[Required]
     public string $signature;
 
-    #[Api]
+    #[Required]
     public string $thinking;
 
     /**
@@ -54,27 +54,27 @@ final class BetaThinkingBlock implements BaseModel
      */
     public static function with(string $signature, string $thinking): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->signature = $signature;
-        $obj->thinking = $thinking;
+        $self['signature'] = $signature;
+        $self['thinking'] = $thinking;
 
-        return $obj;
+        return $self;
     }
 
     public function withSignature(string $signature): self
     {
-        $obj = clone $this;
-        $obj->signature = $signature;
+        $self = clone $this;
+        $self['signature'] = $signature;
 
-        return $obj;
+        return $self;
     }
 
     public function withThinking(string $thinking): self
     {
-        $obj = clone $this;
-        $obj->thinking = $thinking;
+        $self = clone $this;
+        $self['thinking'] = $thinking;
 
-        return $obj;
+        return $self;
     }
 }

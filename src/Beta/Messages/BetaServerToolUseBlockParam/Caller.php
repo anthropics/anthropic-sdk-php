@@ -12,6 +12,11 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * Tool invocation directly from the model.
+ *
+ * @phpstan-import-type BetaDirectCallerShape from \Anthropic\Beta\Messages\BetaDirectCaller
+ * @phpstan-import-type BetaServerToolCallerShape from \Anthropic\Beta\Messages\BetaServerToolCaller
+ *
+ * @phpstan-type CallerShape = BetaDirectCallerShape|BetaServerToolCallerShape
  */
 final class Caller implements ConverterSource
 {

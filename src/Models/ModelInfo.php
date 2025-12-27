@@ -4,61 +4,54 @@ declare(strict_types=1);
 
 namespace Anthropic\Models;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type ModelInfoShape = array{
- *   id: string,
- *   created_at: \DateTimeInterface,
- *   display_name: string,
- *   type: "model",
+ *   id: string, createdAt: \DateTimeInterface, displayName: string, type: 'model'
  * }
  */
-final class ModelInfo implements BaseModel, ResponseConverter
+final class ModelInfo implements BaseModel
 {
     /** @use SdkModel<ModelInfoShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Object type.
      *
      * For Models, this is always `"model"`.
      *
-     * @var "model" $type
+     * @var 'model' $type
      */
-    #[Api]
+    #[Required]
     public string $type = 'model';
 
     /**
      * Unique model identifier.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
      * RFC 3339 datetime string representing the time at which the model was released. May be set to an epoch value if the release date is unknown.
      */
-    #[Api]
-    public \DateTimeInterface $created_at;
+    #[Required('created_at')]
+    public \DateTimeInterface $createdAt;
 
     /**
      * A human-readable name for the model.
      */
-    #[Api]
-    public string $display_name;
+    #[Required('display_name')]
+    public string $displayName;
 
     /**
      * `new ModelInfo()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ModelInfo::with(id: ..., created_at: ..., display_name: ...)
+     * ModelInfo::with(id: ..., createdAt: ..., displayName: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -79,16 +72,16 @@ final class ModelInfo implements BaseModel, ResponseConverter
      */
     public static function with(
         string $id,
-        \DateTimeInterface $created_at,
-        string $display_name
+        \DateTimeInterface $createdAt,
+        string $displayName
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->id = $id;
-        $obj->created_at = $created_at;
-        $obj->display_name = $display_name;
+        $self['id'] = $id;
+        $self['createdAt'] = $createdAt;
+        $self['displayName'] = $displayName;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -96,10 +89,10 @@ final class ModelInfo implements BaseModel, ResponseConverter
      */
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj->id = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -107,10 +100,10 @@ final class ModelInfo implements BaseModel, ResponseConverter
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -118,9 +111,9 @@ final class ModelInfo implements BaseModel, ResponseConverter
      */
     public function withDisplayName(string $displayName): self
     {
-        $obj = clone $this;
-        $obj->display_name = $displayName;
+        $self = clone $this;
+        $self['displayName'] = $displayName;
 
-        return $obj;
+        return $self;
     }
 }

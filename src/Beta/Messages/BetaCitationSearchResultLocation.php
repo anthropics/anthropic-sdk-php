@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCitationSearchResultLocationShape = array{
- *   cited_text: string,
- *   end_block_index: int,
- *   search_result_index: int,
+ *   citedText: string,
+ *   endBlockIndex: int,
+ *   searchResultIndex: int,
  *   source: string,
- *   start_block_index: int,
+ *   startBlockIndex: int,
  *   title: string|null,
- *   type: "search_result_location",
+ *   type: 'search_result_location',
  * }
  */
 final class BetaCitationSearchResultLocation implements BaseModel
@@ -24,26 +24,26 @@ final class BetaCitationSearchResultLocation implements BaseModel
     /** @use SdkModel<BetaCitationSearchResultLocationShape> */
     use SdkModel;
 
-    /** @var "search_result_location" $type */
-    #[Api]
+    /** @var 'search_result_location' $type */
+    #[Required]
     public string $type = 'search_result_location';
 
-    #[Api]
-    public string $cited_text;
+    #[Required('cited_text')]
+    public string $citedText;
 
-    #[Api]
-    public int $end_block_index;
+    #[Required('end_block_index')]
+    public int $endBlockIndex;
 
-    #[Api]
-    public int $search_result_index;
+    #[Required('search_result_index')]
+    public int $searchResultIndex;
 
-    #[Api]
+    #[Required]
     public string $source;
 
-    #[Api]
-    public int $start_block_index;
+    #[Required('start_block_index')]
+    public int $startBlockIndex;
 
-    #[Api]
+    #[Required]
     public ?string $title;
 
     /**
@@ -52,11 +52,11 @@ final class BetaCitationSearchResultLocation implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaCitationSearchResultLocation::with(
-     *   cited_text: ...,
-     *   end_block_index: ...,
-     *   search_result_index: ...,
+     *   citedText: ...,
+     *   endBlockIndex: ...,
+     *   searchResultIndex: ...,
      *   source: ...,
-     *   start_block_index: ...,
+     *   startBlockIndex: ...,
      *   title: ...,
      * )
      * ```
@@ -84,70 +84,70 @@ final class BetaCitationSearchResultLocation implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $cited_text,
-        int $end_block_index,
-        int $search_result_index,
+        string $citedText,
+        int $endBlockIndex,
+        int $searchResultIndex,
         string $source,
-        int $start_block_index,
+        int $startBlockIndex,
         ?string $title,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->cited_text = $cited_text;
-        $obj->end_block_index = $end_block_index;
-        $obj->search_result_index = $search_result_index;
-        $obj->source = $source;
-        $obj->start_block_index = $start_block_index;
-        $obj->title = $title;
+        $self['citedText'] = $citedText;
+        $self['endBlockIndex'] = $endBlockIndex;
+        $self['searchResultIndex'] = $searchResultIndex;
+        $self['source'] = $source;
+        $self['startBlockIndex'] = $startBlockIndex;
+        $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 
     public function withCitedText(string $citedText): self
     {
-        $obj = clone $this;
-        $obj->cited_text = $citedText;
+        $self = clone $this;
+        $self['citedText'] = $citedText;
 
-        return $obj;
+        return $self;
     }
 
     public function withEndBlockIndex(int $endBlockIndex): self
     {
-        $obj = clone $this;
-        $obj->end_block_index = $endBlockIndex;
+        $self = clone $this;
+        $self['endBlockIndex'] = $endBlockIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withSearchResultIndex(int $searchResultIndex): self
     {
-        $obj = clone $this;
-        $obj->search_result_index = $searchResultIndex;
+        $self = clone $this;
+        $self['searchResultIndex'] = $searchResultIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withSource(string $source): self
     {
-        $obj = clone $this;
-        $obj->source = $source;
+        $self = clone $this;
+        $self['source'] = $source;
 
-        return $obj;
+        return $self;
     }
 
     public function withStartBlockIndex(int $startBlockIndex): self
     {
-        $obj = clone $this;
-        $obj->start_block_index = $startBlockIndex;
+        $self = clone $this;
+        $self['startBlockIndex'] = $startBlockIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withTitle(?string $title): self
     {
-        $obj = clone $this;
-        $obj->title = $title;
+        $self = clone $this;
+        $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 }

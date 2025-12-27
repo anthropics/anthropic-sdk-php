@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral\TTL;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCacheControlEphemeralShape = array{
- *   type: "ephemeral", ttl?: value-of<TTL>|null
+ *   type: 'ephemeral', ttl?: null|TTL|value-of<TTL>
  * }
  */
 final class BetaCacheControlEphemeral implements BaseModel
@@ -19,8 +20,8 @@ final class BetaCacheControlEphemeral implements BaseModel
     /** @use SdkModel<BetaCacheControlEphemeralShape> */
     use SdkModel;
 
-    /** @var "ephemeral" $type */
-    #[Api]
+    /** @var 'ephemeral' $type */
+    #[Required]
     public string $type = 'ephemeral';
 
     /**
@@ -34,7 +35,7 @@ final class BetaCacheControlEphemeral implements BaseModel
      *
      * @var value-of<TTL>|null $ttl
      */
-    #[Api(enum: TTL::class, optional: true)]
+    #[Optional(enum: TTL::class)]
     public ?string $ttl;
 
     public function __construct()
@@ -47,15 +48,15 @@ final class BetaCacheControlEphemeral implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param TTL|value-of<TTL> $ttl
+     * @param TTL|value-of<TTL>|null $ttl
      */
     public static function with(TTL|string|null $ttl = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        null !== $ttl && $obj['ttl'] = $ttl;
+        null !== $ttl && $self['ttl'] = $ttl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -71,9 +72,9 @@ final class BetaCacheControlEphemeral implements BaseModel
      */
     public function withTTL(TTL|string $ttl): self
     {
-        $obj = clone $this;
-        $obj['ttl'] = $ttl;
+        $self = clone $this;
+        $self['ttl'] = $ttl;
 
-        return $obj;
+        return $self;
     }
 }

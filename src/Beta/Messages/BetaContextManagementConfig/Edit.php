@@ -10,6 +10,12 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-import-type BetaClearToolUses20250919EditShape from \Anthropic\Beta\Messages\BetaClearToolUses20250919Edit
+ * @phpstan-import-type BetaClearThinking20251015EditShape from \Anthropic\Beta\Messages\BetaClearThinking20251015Edit
+ *
+ * @phpstan-type EditShape = BetaClearToolUses20250919EditShape|BetaClearThinking20251015EditShape
+ */
 final class Edit implements ConverterSource
 {
     use SdkUnion;

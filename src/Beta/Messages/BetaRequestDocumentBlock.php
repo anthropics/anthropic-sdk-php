@@ -5,16 +5,21 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaRequestDocumentBlock\Source;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type SourceShape from \Anthropic\Beta\Messages\BetaRequestDocumentBlock\Source
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type BetaCitationsConfigParamShape from \Anthropic\Beta\Messages\BetaCitationsConfigParam
+ *
  * @phpstan-type BetaRequestDocumentBlockShape = array{
- *   source: BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource,
- *   type: "document",
- *   cache_control?: BetaCacheControlEphemeral|null,
- *   citations?: BetaCitationsConfigParam|null,
+ *   source: SourceShape,
+ *   type: 'document',
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
+ *   citations?: null|BetaCitationsConfigParam|BetaCitationsConfigParamShape,
  *   context?: string|null,
  *   title?: string|null,
  * }
@@ -24,26 +29,26 @@ final class BetaRequestDocumentBlock implements BaseModel
     /** @use SdkModel<BetaRequestDocumentBlockShape> */
     use SdkModel;
 
-    /** @var "document" $type */
-    #[Api]
+    /** @var 'document' $type */
+    #[Required]
     public string $type = 'document';
 
-    #[Api(union: Source::class)]
+    #[Required(union: Source::class)]
     public BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource $source;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BetaCitationsConfigParam $citations;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $context;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $title;
 
     /**
@@ -69,68 +74,81 @@ final class BetaRequestDocumentBlock implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param SourceShape $source
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCitationsConfigParam|BetaCitationsConfigParamShape|null $citations
      */
     public static function with(
-        BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource $source,
-        ?BetaCacheControlEphemeral $cache_control = null,
-        ?BetaCitationsConfigParam $citations = null,
+        BetaBase64PDFSource|array|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource $source,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
+        BetaCitationsConfigParam|array|null $citations = null,
         ?string $context = null,
         ?string $title = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->source = $source;
+        $self['source'] = $source;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $citations && $obj->citations = $citations;
-        null !== $context && $obj->context = $context;
-        null !== $title && $obj->title = $title;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $citations && $self['citations'] = $citations;
+        null !== $context && $self['context'] = $context;
+        null !== $title && $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 
+    /**
+     * @param SourceShape $source
+     */
     public function withSource(
-        BetaBase64PDFSource|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource $source,
+        BetaBase64PDFSource|array|BetaPlainTextSource|BetaContentBlockSource|BetaURLPDFSource|BetaFileDocumentSource $source,
     ): self {
-        $obj = clone $this;
-        $obj->source = $source;
+        $self = clone $this;
+        $self['source'] = $source;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
-    public function withCitations(?BetaCitationsConfigParam $citations): self
-    {
-        $obj = clone $this;
-        $obj->citations = $citations;
+    /**
+     * @param BetaCitationsConfigParam|BetaCitationsConfigParamShape|null $citations
+     */
+    public function withCitations(
+        BetaCitationsConfigParam|array|null $citations
+    ): self {
+        $self = clone $this;
+        $self['citations'] = $citations;
 
-        return $obj;
+        return $self;
     }
 
     public function withContext(?string $context): self
     {
-        $obj = clone $this;
-        $obj->context = $context;
+        $self = clone $this;
+        $self['context'] = $context;
 
-        return $obj;
+        return $self;
     }
 
     public function withTitle(?string $title): self
     {
-        $obj = clone $this;
-        $obj->title = $title;
+        $self = clone $this;
+        $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 }

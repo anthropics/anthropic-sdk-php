@@ -4,38 +4,34 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\Batches;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type DeletedMessageBatchShape = array{
- *   id: string, type: "message_batch_deleted"
+ *   id: string, type: 'message_batch_deleted'
  * }
  */
-final class DeletedMessageBatch implements BaseModel, ResponseConverter
+final class DeletedMessageBatch implements BaseModel
 {
     /** @use SdkModel<DeletedMessageBatchShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Deleted object type.
      *
      * For Message Batches, this is always `"message_batch_deleted"`.
      *
-     * @var "message_batch_deleted" $type
+     * @var 'message_batch_deleted' $type
      */
-    #[Api]
+    #[Required]
     public string $type = 'message_batch_deleted';
 
     /**
      * ID of the Message Batch.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
@@ -64,11 +60,11 @@ final class DeletedMessageBatch implements BaseModel, ResponseConverter
      */
     public static function with(string $id): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->id = $id;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -76,9 +72,9 @@ final class DeletedMessageBatch implements BaseModel, ResponseConverter
      */
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj->id = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 }

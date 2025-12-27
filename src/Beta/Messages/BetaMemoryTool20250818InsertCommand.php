@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818InsertCommandShape = array{
- *   command: "insert", insert_line: int, insert_text: string, path: string
+ *   command: 'insert', insertLine: int, insertText: string, path: string
  * }
  */
 final class BetaMemoryTool20250818InsertCommand implements BaseModel
@@ -21,27 +21,27 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
     /**
      * Command type identifier.
      *
-     * @var "insert" $command
+     * @var 'insert' $command
      */
-    #[Api]
+    #[Required]
     public string $command = 'insert';
 
     /**
      * Line number where text should be inserted.
      */
-    #[Api]
-    public int $insert_line;
+    #[Required('insert_line')]
+    public int $insertLine;
 
     /**
      * Text to insert at the specified line.
      */
-    #[Api]
-    public string $insert_text;
+    #[Required('insert_text')]
+    public string $insertText;
 
     /**
      * Path to the file where text should be inserted.
      */
-    #[Api]
+    #[Required]
     public string $path;
 
     /**
@@ -50,7 +50,7 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaMemoryTool20250818InsertCommand::with(
-     *   insert_line: ..., insert_text: ..., path: ...
+     *   insertLine: ..., insertText: ..., path: ...
      * )
      * ```
      *
@@ -74,17 +74,17 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        int $insert_line,
-        string $insert_text,
+        int $insertLine,
+        string $insertText,
         string $path
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->insert_line = $insert_line;
-        $obj->insert_text = $insert_text;
-        $obj->path = $path;
+        $self['insertLine'] = $insertLine;
+        $self['insertText'] = $insertText;
+        $self['path'] = $path;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -92,10 +92,10 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
      */
     public function withInsertLine(int $insertLine): self
     {
-        $obj = clone $this;
-        $obj->insert_line = $insertLine;
+        $self = clone $this;
+        $self['insertLine'] = $insertLine;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -103,10 +103,10 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
      */
     public function withInsertText(string $insertText): self
     {
-        $obj = clone $this;
-        $obj->insert_text = $insertText;
+        $self = clone $this;
+        $self['insertText'] = $insertText;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -114,9 +114,9 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
      */
     public function withPath(string $path): self
     {
-        $obj = clone $this;
-        $obj->path = $path;
+        $self = clone $this;
+        $self['path'] = $path;
 
-        return $obj;
+        return $self;
     }
 }

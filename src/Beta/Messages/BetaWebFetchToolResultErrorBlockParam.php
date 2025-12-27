@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaWebFetchToolResultErrorBlockParamShape = array{
- *   error_code: value-of<BetaWebFetchToolResultErrorCode>,
- *   type: "web_fetch_tool_result_error",
+ *   errorCode: BetaWebFetchToolResultErrorCode|value-of<BetaWebFetchToolResultErrorCode>,
+ *   type: 'web_fetch_tool_result_error',
  * }
  */
 final class BetaWebFetchToolResultErrorBlockParam implements BaseModel
@@ -19,20 +19,20 @@ final class BetaWebFetchToolResultErrorBlockParam implements BaseModel
     /** @use SdkModel<BetaWebFetchToolResultErrorBlockParamShape> */
     use SdkModel;
 
-    /** @var "web_fetch_tool_result_error" $type */
-    #[Api]
+    /** @var 'web_fetch_tool_result_error' $type */
+    #[Required]
     public string $type = 'web_fetch_tool_result_error';
 
-    /** @var value-of<BetaWebFetchToolResultErrorCode> $error_code */
-    #[Api(enum: BetaWebFetchToolResultErrorCode::class)]
-    public string $error_code;
+    /** @var value-of<BetaWebFetchToolResultErrorCode> $errorCode */
+    #[Required('error_code', enum: BetaWebFetchToolResultErrorCode::class)]
+    public string $errorCode;
 
     /**
      * `new BetaWebFetchToolResultErrorBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaWebFetchToolResultErrorBlockParam::with(error_code: ...)
+     * BetaWebFetchToolResultErrorBlockParam::with(errorCode: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -51,16 +51,16 @@ final class BetaWebFetchToolResultErrorBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaWebFetchToolResultErrorCode|value-of<BetaWebFetchToolResultErrorCode> $error_code
+     * @param BetaWebFetchToolResultErrorCode|value-of<BetaWebFetchToolResultErrorCode> $errorCode
      */
     public static function with(
-        BetaWebFetchToolResultErrorCode|string $error_code
+        BetaWebFetchToolResultErrorCode|string $errorCode
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['error_code'] = $error_code;
+        $self['errorCode'] = $errorCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -69,9 +69,9 @@ final class BetaWebFetchToolResultErrorBlockParam implements BaseModel
     public function withErrorCode(
         BetaWebFetchToolResultErrorCode|string $errorCode
     ): self {
-        $obj = clone $this;
-        $obj['error_code'] = $errorCode;
+        $self = clone $this;
+        $self['errorCode'] = $errorCode;
 
-        return $obj;
+        return $self;
     }
 }

@@ -5,20 +5,23 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaToolTextEditor20250728\AllowedCaller;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\MapOf;
 
 /**
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ *
  * @phpstan-type BetaToolTextEditor20250728Shape = array{
- *   name: "str_replace_based_edit_tool",
- *   type: "text_editor_20250728",
- *   allowed_callers?: list<value-of<AllowedCaller>>|null,
- *   cache_control?: BetaCacheControlEphemeral|null,
- *   defer_loading?: bool|null,
- *   input_examples?: list<array<string,mixed>>|null,
- *   max_characters?: int|null,
+ *   name: 'str_replace_based_edit_tool',
+ *   type: 'text_editor_20250728',
+ *   allowedCallers?: list<AllowedCaller|value-of<AllowedCaller>>|null,
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
+ *   deferLoading?: bool|null,
+ *   inputExamples?: list<array<string,mixed>>|null,
+ *   maxCharacters?: int|null,
  *   strict?: bool|null,
  * }
  */
@@ -32,42 +35,42 @@ final class BetaToolTextEditor20250728 implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      *
-     * @var "str_replace_based_edit_tool" $name
+     * @var 'str_replace_based_edit_tool' $name
      */
-    #[Api]
+    #[Required]
     public string $name = 'str_replace_based_edit_tool';
 
-    /** @var "text_editor_20250728" $type */
-    #[Api]
+    /** @var 'text_editor_20250728' $type */
+    #[Required]
     public string $type = 'text_editor_20250728';
 
-    /** @var list<value-of<AllowedCaller>>|null $allowed_callers */
-    #[Api(list: AllowedCaller::class, optional: true)]
-    public ?array $allowed_callers;
+    /** @var list<value-of<AllowedCaller>>|null $allowedCallers */
+    #[Optional('allowed_callers', list: AllowedCaller::class)]
+    public ?array $allowedCallers;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
      */
-    #[Api(optional: true)]
-    public ?bool $defer_loading;
+    #[Optional('defer_loading')]
+    public ?bool $deferLoading;
 
-    /** @var list<array<string,mixed>>|null $input_examples */
-    #[Api(list: new MapOf('mixed'), optional: true)]
-    public ?array $input_examples;
+    /** @var list<array<string,mixed>>|null $inputExamples */
+    #[Optional('input_examples', list: new MapOf('mixed'))]
+    public ?array $inputExamples;
 
     /**
      * Maximum number of characters to display when viewing a file. If not specified, defaults to displaying the full file.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?int $max_characters;
+    #[Optional('max_characters', nullable: true)]
+    public ?int $maxCharacters;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $strict;
 
     public function __construct()
@@ -80,27 +83,28 @@ final class BetaToolTextEditor20250728 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowed_callers
-     * @param list<array<string,mixed>> $input_examples
+     * @param list<AllowedCaller|value-of<AllowedCaller>>|null $allowedCallers
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param list<array<string,mixed>>|null $inputExamples
      */
     public static function with(
-        ?array $allowed_callers = null,
-        ?BetaCacheControlEphemeral $cache_control = null,
-        ?bool $defer_loading = null,
-        ?array $input_examples = null,
-        ?int $max_characters = null,
+        ?array $allowedCallers = null,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
+        ?bool $deferLoading = null,
+        ?array $inputExamples = null,
+        ?int $maxCharacters = null,
         ?bool $strict = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $allowed_callers && $obj['allowed_callers'] = $allowed_callers;
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $defer_loading && $obj->defer_loading = $defer_loading;
-        null !== $input_examples && $obj->input_examples = $input_examples;
-        null !== $max_characters && $obj->max_characters = $max_characters;
-        null !== $strict && $obj->strict = $strict;
+        null !== $allowedCallers && $self['allowedCallers'] = $allowedCallers;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $deferLoading && $self['deferLoading'] = $deferLoading;
+        null !== $inputExamples && $self['inputExamples'] = $inputExamples;
+        null !== $maxCharacters && $self['maxCharacters'] = $maxCharacters;
+        null !== $strict && $self['strict'] = $strict;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -108,22 +112,24 @@ final class BetaToolTextEditor20250728 implements BaseModel
      */
     public function withAllowedCallers(array $allowedCallers): self
     {
-        $obj = clone $this;
-        $obj['allowed_callers'] = $allowedCallers;
+        $self = clone $this;
+        $self['allowedCallers'] = $allowedCallers;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -131,10 +137,10 @@ final class BetaToolTextEditor20250728 implements BaseModel
      */
     public function withDeferLoading(bool $deferLoading): self
     {
-        $obj = clone $this;
-        $obj->defer_loading = $deferLoading;
+        $self = clone $this;
+        $self['deferLoading'] = $deferLoading;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -142,10 +148,10 @@ final class BetaToolTextEditor20250728 implements BaseModel
      */
     public function withInputExamples(array $inputExamples): self
     {
-        $obj = clone $this;
-        $obj->input_examples = $inputExamples;
+        $self = clone $this;
+        $self['inputExamples'] = $inputExamples;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -153,17 +159,17 @@ final class BetaToolTextEditor20250728 implements BaseModel
      */
     public function withMaxCharacters(?int $maxCharacters): self
     {
-        $obj = clone $this;
-        $obj->max_characters = $maxCharacters;
+        $self = clone $this;
+        $self['maxCharacters'] = $maxCharacters;
 
-        return $obj;
+        return $self;
     }
 
     public function withStrict(bool $strict): self
     {
-        $obj = clone $this;
-        $obj->strict = $strict;
+        $self = clone $this;
+        $self['strict'] = $strict;
 
-        return $obj;
+        return $self;
     }
 }

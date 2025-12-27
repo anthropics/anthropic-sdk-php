@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaWebSearchToolResultBlockContentShape from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlockContent
+ *
  * @phpstan-type BetaWebSearchToolResultBlockShape = array{
- *   content: BetaWebSearchToolResultError|list<BetaWebSearchResultBlock>,
- *   tool_use_id: string,
- *   type: "web_search_tool_result",
+ *   content: BetaWebSearchToolResultBlockContentShape,
+ *   toolUseID: string,
+ *   type: 'web_search_tool_result',
  * }
  */
 final class BetaWebSearchToolResultBlock implements BaseModel
@@ -20,23 +22,23 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     /** @use SdkModel<BetaWebSearchToolResultBlockShape> */
     use SdkModel;
 
-    /** @var "web_search_tool_result" $type */
-    #[Api]
+    /** @var 'web_search_tool_result' $type */
+    #[Required]
     public string $type = 'web_search_tool_result';
 
     /** @var BetaWebSearchToolResultError|list<BetaWebSearchResultBlock> $content */
-    #[Api(union: BetaWebSearchToolResultBlockContent::class)]
+    #[Required(union: BetaWebSearchToolResultBlockContent::class)]
     public BetaWebSearchToolResultError|array $content;
 
-    #[Api]
-    public string $tool_use_id;
+    #[Required('tool_use_id')]
+    public string $toolUseID;
 
     /**
      * `new BetaWebSearchToolResultBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaWebSearchToolResultBlock::with(content: ..., tool_use_id: ...)
+     * BetaWebSearchToolResultBlock::with(content: ..., toolUseID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -55,37 +57,37 @@ final class BetaWebSearchToolResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaWebSearchToolResultError|list<BetaWebSearchResultBlock> $content
+     * @param BetaWebSearchToolResultBlockContentShape $content
      */
     public static function with(
         BetaWebSearchToolResultError|array $content,
-        string $tool_use_id
+        string $toolUseID
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->content = $content;
-        $obj->tool_use_id = $tool_use_id;
+        $self['content'] = $content;
+        $self['toolUseID'] = $toolUseID;
 
-        return $obj;
+        return $self;
     }
 
     /**
-     * @param BetaWebSearchToolResultError|list<BetaWebSearchResultBlock> $content
+     * @param BetaWebSearchToolResultBlockContentShape $content
      */
     public function withContent(
         BetaWebSearchToolResultError|array $content
     ): self {
-        $obj = clone $this;
-        $obj->content = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     public function withToolUseID(string $toolUseID): self
     {
-        $obj = clone $this;
-        $obj->tool_use_id = $toolUseID;
+        $self = clone $this;
+        $self['toolUseID'] = $toolUseID;
 
-        return $obj;
+        return $self;
     }
 }

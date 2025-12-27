@@ -6,18 +6,24 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaClearToolUses20250919Edit\ClearToolInputs;
 use Anthropic\Beta\Messages\BetaClearToolUses20250919Edit\Trigger;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaInputTokensClearAtLeastShape from \Anthropic\Beta\Messages\BetaInputTokensClearAtLeast
+ * @phpstan-import-type ClearToolInputsShape from \Anthropic\Beta\Messages\BetaClearToolUses20250919Edit\ClearToolInputs
+ * @phpstan-import-type BetaToolUsesKeepShape from \Anthropic\Beta\Messages\BetaToolUsesKeep
+ * @phpstan-import-type TriggerShape from \Anthropic\Beta\Messages\BetaClearToolUses20250919Edit\Trigger
+ *
  * @phpstan-type BetaClearToolUses20250919EditShape = array{
- *   type: "clear_tool_uses_20250919",
- *   clear_at_least?: BetaInputTokensClearAtLeast|null,
- *   clear_tool_inputs?: bool|null|list<string>,
- *   exclude_tools?: list<string>|null,
- *   keep?: BetaToolUsesKeep|null,
- *   trigger?: null|BetaInputTokensTrigger|BetaToolUsesTrigger,
+ *   type: 'clear_tool_uses_20250919',
+ *   clearAtLeast?: null|BetaInputTokensClearAtLeast|BetaInputTokensClearAtLeastShape,
+ *   clearToolInputs?: ClearToolInputsShape|null,
+ *   excludeTools?: list<string>|null,
+ *   keep?: null|BetaToolUsesKeep|BetaToolUsesKeepShape,
+ *   trigger?: TriggerShape|null,
  * }
  */
 final class BetaClearToolUses20250919Edit implements BaseModel
@@ -25,42 +31,46 @@ final class BetaClearToolUses20250919Edit implements BaseModel
     /** @use SdkModel<BetaClearToolUses20250919EditShape> */
     use SdkModel;
 
-    /** @var "clear_tool_uses_20250919" $type */
-    #[Api]
+    /** @var 'clear_tool_uses_20250919' $type */
+    #[Required]
     public string $type = 'clear_tool_uses_20250919';
 
     /**
      * Minimum number of tokens that must be cleared when triggered. Context will only be modified if at least this many tokens can be removed.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaInputTokensClearAtLeast $clear_at_least;
+    #[Optional('clear_at_least', nullable: true)]
+    public ?BetaInputTokensClearAtLeast $clearAtLeast;
 
     /**
      * Whether to clear all tool inputs (bool) or specific tool inputs to clear (list).
      *
-     * @var bool|list<string>|null $clear_tool_inputs
+     * @var bool|list<string>|null $clearToolInputs
      */
-    #[Api(union: ClearToolInputs::class, nullable: true, optional: true)]
-    public bool|array|null $clear_tool_inputs;
+    #[Optional(
+        'clear_tool_inputs',
+        union: ClearToolInputs::class,
+        nullable: true
+    )]
+    public bool|array|null $clearToolInputs;
 
     /**
      * Tool names whose uses are preserved from clearing.
      *
-     * @var list<string>|null $exclude_tools
+     * @var list<string>|null $excludeTools
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
-    public ?array $exclude_tools;
+    #[Optional('exclude_tools', list: 'string', nullable: true)]
+    public ?array $excludeTools;
 
     /**
      * Number of tool uses to retain in the conversation.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?BetaToolUsesKeep $keep;
 
     /**
      * Condition that triggers the context management strategy.
      */
-    #[Api(union: Trigger::class, optional: true)]
+    #[Optional(union: Trigger::class)]
     public BetaInputTokensTrigger|BetaToolUsesTrigger|null $trigger;
 
     public function __construct()
@@ -73,50 +83,55 @@ final class BetaClearToolUses20250919Edit implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param bool|list<string>|null $clear_tool_inputs
-     * @param list<string>|null $exclude_tools
+     * @param BetaInputTokensClearAtLeast|BetaInputTokensClearAtLeastShape|null $clearAtLeast
+     * @param ClearToolInputsShape|null $clearToolInputs
+     * @param list<string>|null $excludeTools
+     * @param BetaToolUsesKeep|BetaToolUsesKeepShape|null $keep
+     * @param TriggerShape|null $trigger
      */
     public static function with(
-        ?BetaInputTokensClearAtLeast $clear_at_least = null,
-        bool|array|null $clear_tool_inputs = null,
-        ?array $exclude_tools = null,
-        ?BetaToolUsesKeep $keep = null,
-        BetaInputTokensTrigger|BetaToolUsesTrigger|null $trigger = null,
+        BetaInputTokensClearAtLeast|array|null $clearAtLeast = null,
+        bool|array|null $clearToolInputs = null,
+        ?array $excludeTools = null,
+        BetaToolUsesKeep|array|null $keep = null,
+        BetaInputTokensTrigger|array|BetaToolUsesTrigger|null $trigger = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $clear_at_least && $obj->clear_at_least = $clear_at_least;
-        null !== $clear_tool_inputs && $obj->clear_tool_inputs = $clear_tool_inputs;
-        null !== $exclude_tools && $obj->exclude_tools = $exclude_tools;
-        null !== $keep && $obj->keep = $keep;
-        null !== $trigger && $obj->trigger = $trigger;
+        null !== $clearAtLeast && $self['clearAtLeast'] = $clearAtLeast;
+        null !== $clearToolInputs && $self['clearToolInputs'] = $clearToolInputs;
+        null !== $excludeTools && $self['excludeTools'] = $excludeTools;
+        null !== $keep && $self['keep'] = $keep;
+        null !== $trigger && $self['trigger'] = $trigger;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Minimum number of tokens that must be cleared when triggered. Context will only be modified if at least this many tokens can be removed.
+     *
+     * @param BetaInputTokensClearAtLeast|BetaInputTokensClearAtLeastShape|null $clearAtLeast
      */
     public function withClearAtLeast(
-        ?BetaInputTokensClearAtLeast $clearAtLeast
+        BetaInputTokensClearAtLeast|array|null $clearAtLeast
     ): self {
-        $obj = clone $this;
-        $obj->clear_at_least = $clearAtLeast;
+        $self = clone $this;
+        $self['clearAtLeast'] = $clearAtLeast;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Whether to clear all tool inputs (bool) or specific tool inputs to clear (list).
      *
-     * @param bool|list<string>|null $clearToolInputs
+     * @param ClearToolInputsShape|null $clearToolInputs
      */
     public function withClearToolInputs(bool|array|null $clearToolInputs): self
     {
-        $obj = clone $this;
-        $obj->clear_tool_inputs = $clearToolInputs;
+        $self = clone $this;
+        $self['clearToolInputs'] = $clearToolInputs;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -126,32 +141,36 @@ final class BetaClearToolUses20250919Edit implements BaseModel
      */
     public function withExcludeTools(?array $excludeTools): self
     {
-        $obj = clone $this;
-        $obj->exclude_tools = $excludeTools;
+        $self = clone $this;
+        $self['excludeTools'] = $excludeTools;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Number of tool uses to retain in the conversation.
+     *
+     * @param BetaToolUsesKeep|BetaToolUsesKeepShape $keep
      */
-    public function withKeep(BetaToolUsesKeep $keep): self
+    public function withKeep(BetaToolUsesKeep|array $keep): self
     {
-        $obj = clone $this;
-        $obj->keep = $keep;
+        $self = clone $this;
+        $self['keep'] = $keep;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Condition that triggers the context management strategy.
+     *
+     * @param TriggerShape $trigger
      */
     public function withTrigger(
-        BetaInputTokensTrigger|BetaToolUsesTrigger $trigger
+        BetaInputTokensTrigger|array|BetaToolUsesTrigger $trigger
     ): self {
-        $obj = clone $this;
-        $obj->trigger = $trigger;
+        $self = clone $this;
+        $self['trigger'] = $trigger;
 
-        return $obj;
+        return $self;
     }
 }

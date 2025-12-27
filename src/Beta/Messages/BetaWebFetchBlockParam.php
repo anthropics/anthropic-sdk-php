@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaRequestDocumentBlockShape from \Anthropic\Beta\Messages\BetaRequestDocumentBlock
+ *
  * @phpstan-type BetaWebFetchBlockParamShape = array{
- *   content: BetaRequestDocumentBlock,
- *   type: "web_fetch_result",
+ *   content: BetaRequestDocumentBlock|BetaRequestDocumentBlockShape,
+ *   type: 'web_fetch_result',
  *   url: string,
- *   retrieved_at?: string|null,
+ *   retrievedAt?: string|null,
  * }
  */
 final class BetaWebFetchBlockParam implements BaseModel
@@ -21,24 +24,24 @@ final class BetaWebFetchBlockParam implements BaseModel
     /** @use SdkModel<BetaWebFetchBlockParamShape> */
     use SdkModel;
 
-    /** @var "web_fetch_result" $type */
-    #[Api]
+    /** @var 'web_fetch_result' $type */
+    #[Required]
     public string $type = 'web_fetch_result';
 
-    #[Api]
+    #[Required]
     public BetaRequestDocumentBlock $content;
 
     /**
      * Fetched content URL.
      */
-    #[Api]
+    #[Required]
     public string $url;
 
     /**
      * ISO 8601 timestamp when the content was retrieved.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?string $retrieved_at;
+    #[Optional('retrieved_at', nullable: true)]
+    public ?string $retrievedAt;
 
     /**
      * `new BetaWebFetchBlockParam()` is missing required properties by the API.
@@ -63,28 +66,33 @@ final class BetaWebFetchBlockParam implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaRequestDocumentBlock|BetaRequestDocumentBlockShape $content
      */
     public static function with(
-        BetaRequestDocumentBlock $content,
+        BetaRequestDocumentBlock|array $content,
         string $url,
-        ?string $retrieved_at = null
+        ?string $retrievedAt = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->content = $content;
-        $obj->url = $url;
+        $self['content'] = $content;
+        $self['url'] = $url;
 
-        null !== $retrieved_at && $obj->retrieved_at = $retrieved_at;
+        null !== $retrievedAt && $self['retrievedAt'] = $retrievedAt;
 
-        return $obj;
+        return $self;
     }
 
-    public function withContent(BetaRequestDocumentBlock $content): self
+    /**
+     * @param BetaRequestDocumentBlock|BetaRequestDocumentBlockShape $content
+     */
+    public function withContent(BetaRequestDocumentBlock|array $content): self
     {
-        $obj = clone $this;
-        $obj->content = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -92,10 +100,10 @@ final class BetaWebFetchBlockParam implements BaseModel
      */
     public function withURL(string $url): self
     {
-        $obj = clone $this;
-        $obj->url = $url;
+        $self = clone $this;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -103,9 +111,9 @@ final class BetaWebFetchBlockParam implements BaseModel
      */
     public function withRetrievedAt(?string $retrievedAt): self
     {
-        $obj = clone $this;
-        $obj->retrieved_at = $retrievedAt;
+        $self = clone $this;
+        $self['retrievedAt'] = $retrievedAt;
 
-        return $obj;
+        return $self;
     }
 }

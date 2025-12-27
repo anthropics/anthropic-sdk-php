@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ *
  * @phpstan-type ToolTextEditor20250728Shape = array{
- *   name: "str_replace_based_edit_tool",
- *   type: "text_editor_20250728",
- *   cache_control?: CacheControlEphemeral|null,
- *   max_characters?: int|null,
+ *   name: 'str_replace_based_edit_tool',
+ *   type: 'text_editor_20250728',
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
+ *   maxCharacters?: int|null,
  * }
  */
 final class ToolTextEditor20250728 implements BaseModel
@@ -26,26 +29,26 @@ final class ToolTextEditor20250728 implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      *
-     * @var "str_replace_based_edit_tool" $name
+     * @var 'str_replace_based_edit_tool' $name
      */
-    #[Api]
+    #[Required]
     public string $name = 'str_replace_based_edit_tool';
 
-    /** @var "text_editor_20250728" $type */
-    #[Api]
+    /** @var 'text_editor_20250728' $type */
+    #[Required]
     public string $type = 'text_editor_20250728';
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
      * Maximum number of characters to display when viewing a file. If not specified, defaults to displaying the full file.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?int $max_characters;
+    #[Optional('max_characters', nullable: true)]
+    public ?int $maxCharacters;
 
     public function __construct()
     {
@@ -56,28 +59,33 @@ final class ToolTextEditor20250728 implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
-        ?CacheControlEphemeral $cache_control = null,
-        ?int $max_characters = null
+        CacheControlEphemeral|array|null $cacheControl = null,
+        ?int $maxCharacters = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $max_characters && $obj->max_characters = $max_characters;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $maxCharacters && $self['maxCharacters'] = $maxCharacters;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
-    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
-    {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -85,9 +93,9 @@ final class ToolTextEditor20250728 implements BaseModel
      */
     public function withMaxCharacters(?int $maxCharacters): self
     {
-        $obj = clone $this;
-        $obj->max_characters = $maxCharacters;
+        $self = clone $this;
+        $self['maxCharacters'] = $maxCharacters;
 
-        return $obj;
+        return $self;
     }
 }

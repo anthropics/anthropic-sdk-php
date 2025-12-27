@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * Tool reference block that can be included in tool_result content.
  *
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ *
  * @phpstan-type BetaToolReferenceBlockParamShape = array{
- *   tool_name: string,
- *   type: "tool_reference",
- *   cache_control?: BetaCacheControlEphemeral|null,
+ *   toolName: string,
+ *   type: 'tool_reference',
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  * }
  */
 final class BetaToolReferenceBlockParam implements BaseModel
@@ -22,25 +25,25 @@ final class BetaToolReferenceBlockParam implements BaseModel
     /** @use SdkModel<BetaToolReferenceBlockParamShape> */
     use SdkModel;
 
-    /** @var "tool_reference" $type */
-    #[Api]
+    /** @var 'tool_reference' $type */
+    #[Required]
     public string $type = 'tool_reference';
 
-    #[Api]
-    public string $tool_name;
+    #[Required('tool_name')]
+    public string $toolName;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * `new BetaToolReferenceBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaToolReferenceBlockParam::with(tool_name: ...)
+     * BetaToolReferenceBlockParam::with(toolName: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -58,37 +61,41 @@ final class BetaToolReferenceBlockParam implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
-        string $tool_name,
-        ?BetaCacheControlEphemeral $cache_control = null
+        string $toolName,
+        BetaCacheControlEphemeral|array|null $cacheControl = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->tool_name = $tool_name;
+        $self['toolName'] = $toolName;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     public function withToolName(string $toolName): self
     {
-        $obj = clone $this;
-        $obj->tool_name = $toolName;
+        $self = clone $this;
+        $self['toolName'] = $toolName;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 }

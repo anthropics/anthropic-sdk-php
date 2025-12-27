@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaErrorShape from \Anthropic\Beta\BetaError
+ *
  * @phpstan-type BetaErrorResponseShape = array{
- *   error: BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError,
- *   request_id: string|null,
- *   type: "error",
+ *   error: BetaErrorShape, requestID: string|null, type: 'error'
  * }
  */
 final class BetaErrorResponse implements BaseModel
@@ -20,22 +20,22 @@ final class BetaErrorResponse implements BaseModel
     /** @use SdkModel<BetaErrorResponseShape> */
     use SdkModel;
 
-    /** @var "error" $type */
-    #[Api]
+    /** @var 'error' $type */
+    #[Required]
     public string $type = 'error';
 
-    #[Api(union: BetaError::class)]
+    #[Required(union: BetaError::class)]
     public BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error;
 
-    #[Api]
-    public ?string $request_id;
+    #[Required('request_id')]
+    public ?string $requestID;
 
     /**
      * `new BetaErrorResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaErrorResponse::with(error: ..., request_id: ...)
+     * BetaErrorResponse::with(error: ..., requestID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -53,33 +53,38 @@ final class BetaErrorResponse implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaErrorShape $error
      */
     public static function with(
-        BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error,
-        ?string $request_id,
+        BetaInvalidRequestError|array|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error,
+        ?string $requestID,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->error = $error;
-        $obj->request_id = $request_id;
+        $self['error'] = $error;
+        $self['requestID'] = $requestID;
 
-        return $obj;
+        return $self;
     }
 
+    /**
+     * @param BetaErrorShape $error
+     */
     public function withError(
-        BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error,
+        BetaInvalidRequestError|array|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error,
     ): self {
-        $obj = clone $this;
-        $obj->error = $error;
+        $self = clone $this;
+        $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 
     public function withRequestID(?string $requestID): self
     {
-        $obj = clone $this;
-        $obj->request_id = $requestID;
+        $self = clone $this;
+        $self['requestID'] = $requestID;
 
-        return $obj;
+        return $self;
     }
 }

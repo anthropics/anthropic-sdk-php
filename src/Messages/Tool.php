@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Tool\InputSchema;
 use Anthropic\Messages\Tool\Type;
 
 /**
+ * @phpstan-import-type InputSchemaShape from \Anthropic\Messages\Tool\InputSchema
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ *
  * @phpstan-type ToolShape = array{
- *   input_schema: InputSchema,
+ *   inputSchema: InputSchema|InputSchemaShape,
  *   name: string,
- *   cache_control?: CacheControlEphemeral|null,
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   description?: string|null,
- *   type?: value-of<Type>|null,
+ *   type?: null|Type|value-of<Type>,
  * }
  */
 final class Tool implements BaseModel
@@ -29,33 +33,33 @@ final class Tool implements BaseModel
      *
      * This defines the shape of the `input` that your tool accepts and that the model will produce.
      */
-    #[Api]
-    public InputSchema $input_schema;
+    #[Required('input_schema')]
+    public InputSchema $inputSchema;
 
     /**
      * Name of the tool.
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      */
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
      * Description of what this tool does.
      *
      * Tool descriptions should be as detailed as possible. The more information that the model has about what the tool is and how to use it, the better it will perform. You can use natural language descriptions to reinforce important aspects of the tool input JSON schema.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $description;
 
     /** @var value-of<Type>|null $type */
-    #[Api(enum: Type::class, nullable: true, optional: true)]
+    #[Optional(enum: Type::class, nullable: true)]
     public ?string $type;
 
     /**
@@ -63,7 +67,7 @@ final class Tool implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Tool::with(input_schema: ..., name: ...)
+     * Tool::with(inputSchema: ..., name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -82,38 +86,42 @@ final class Tool implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param InputSchema|InputSchemaShape $inputSchema
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      * @param Type|value-of<Type>|null $type
      */
     public static function with(
-        InputSchema $input_schema,
+        InputSchema|array $inputSchema,
         string $name,
-        ?CacheControlEphemeral $cache_control = null,
+        CacheControlEphemeral|array|null $cacheControl = null,
         ?string $description = null,
         Type|string|null $type = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->input_schema = $input_schema;
-        $obj->name = $name;
+        $self['inputSchema'] = $inputSchema;
+        $self['name'] = $name;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $description && $obj->description = $description;
-        null !== $type && $obj['type'] = $type;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $description && $self['description'] = $description;
+        null !== $type && $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * [JSON schema](https://json-schema.org/draft/2020-12) for this tool's input.
      *
      * This defines the shape of the `input` that your tool accepts and that the model will produce.
+     *
+     * @param InputSchema|InputSchemaShape $inputSchema
      */
-    public function withInputSchema(InputSchema $inputSchema): self
+    public function withInputSchema(InputSchema|array $inputSchema): self
     {
-        $obj = clone $this;
-        $obj->input_schema = $inputSchema;
+        $self = clone $this;
+        $self['inputSchema'] = $inputSchema;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -123,21 +131,24 @@ final class Tool implements BaseModel
      */
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj->name = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
-    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
-    {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -147,10 +158,10 @@ final class Tool implements BaseModel
      */
     public function withDescription(string $description): self
     {
-        $obj = clone $this;
-        $obj->description = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -158,9 +169,9 @@ final class Tool implements BaseModel
      */
     public function withType(Type|string|null $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 }

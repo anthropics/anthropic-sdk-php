@@ -8,6 +8,16 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-import-type TextBlockShape from \Anthropic\Messages\TextBlock
+ * @phpstan-import-type ThinkingBlockShape from \Anthropic\Messages\ThinkingBlock
+ * @phpstan-import-type RedactedThinkingBlockShape from \Anthropic\Messages\RedactedThinkingBlock
+ * @phpstan-import-type ToolUseBlockShape from \Anthropic\Messages\ToolUseBlock
+ * @phpstan-import-type ServerToolUseBlockShape from \Anthropic\Messages\ServerToolUseBlock
+ * @phpstan-import-type WebSearchToolResultBlockShape from \Anthropic\Messages\WebSearchToolResultBlock
+ *
+ * @phpstan-type ContentBlockShape = TextBlockShape|ThinkingBlockShape|RedactedThinkingBlockShape|ToolUseBlockShape|ServerToolUseBlockShape|WebSearchToolResultBlockShape
+ */
 final class ContentBlock implements ConverterSource
 {
     use SdkUnion;
