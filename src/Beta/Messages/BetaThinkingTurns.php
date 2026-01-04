@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaThinkingTurnsShape = array{type: "thinking_turns", value: int}
+ * @phpstan-type BetaThinkingTurnsShape = array{type: 'thinking_turns', value: int}
  */
 final class BetaThinkingTurns implements BaseModel
 {
     /** @use SdkModel<BetaThinkingTurnsShape> */
     use SdkModel;
 
-    /** @var "thinking_turns" $type */
-    #[Api]
+    /** @var 'thinking_turns' $type */
+    #[Required]
     public string $type = 'thinking_turns';
 
-    #[Api]
+    #[Required]
     public int $value;
 
     /**
@@ -49,18 +49,18 @@ final class BetaThinkingTurns implements BaseModel
      */
     public static function with(int $value): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->value = $value;
+        $self['value'] = $value;
 
-        return $obj;
+        return $self;
     }
 
     public function withValue(int $value): self
     {
-        $obj = clone $this;
-        $obj->value = $value;
+        $self = clone $this;
+        $self['value'] = $value;
 
-        return $obj;
+        return $self;
     }
 }

@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaRawContentBlockStartEvent\ContentBlock;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type ContentBlockShape from \Anthropic\Beta\Messages\BetaRawContentBlockStartEvent\ContentBlock
+ *
  * @phpstan-type BetaRawContentBlockStartEventShape = array{
- *   content_block: BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock,
- *   index: int,
- *   type: "content_block_start",
+ *   contentBlock: ContentBlockShape, index: int, type: 'content_block_start'
  * }
  */
 final class BetaRawContentBlockStartEvent implements BaseModel
@@ -21,17 +21,17 @@ final class BetaRawContentBlockStartEvent implements BaseModel
     /** @use SdkModel<BetaRawContentBlockStartEventShape> */
     use SdkModel;
 
-    /** @var "content_block_start" $type */
-    #[Api]
+    /** @var 'content_block_start' $type */
+    #[Required]
     public string $type = 'content_block_start';
 
     /**
      * Response model for a file uploaded to the container.
      */
-    #[Api(union: ContentBlock::class)]
-    public BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock $content_block;
+    #[Required('content_block', union: ContentBlock::class)]
+    public BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock $contentBlock;
 
-    #[Api]
+    #[Required]
     public int $index;
 
     /**
@@ -39,7 +39,7 @@ final class BetaRawContentBlockStartEvent implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaRawContentBlockStartEvent::with(content_block: ..., index: ...)
+     * BetaRawContentBlockStartEvent::with(contentBlock: ..., index: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -57,36 +57,40 @@ final class BetaRawContentBlockStartEvent implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param ContentBlockShape $contentBlock
      */
     public static function with(
-        BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock $content_block,
+        BetaTextBlock|array|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock $contentBlock,
         int $index,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->content_block = $content_block;
-        $obj->index = $index;
+        $self['contentBlock'] = $contentBlock;
+        $self['index'] = $index;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Response model for a file uploaded to the container.
+     *
+     * @param ContentBlockShape $contentBlock
      */
     public function withContentBlock(
-        BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock $contentBlock,
+        BetaTextBlock|array|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock $contentBlock,
     ): self {
-        $obj = clone $this;
-        $obj->content_block = $contentBlock;
+        $self = clone $this;
+        $self['contentBlock'] = $contentBlock;
 
-        return $obj;
+        return $self;
     }
 
     public function withIndex(int $index): self
     {
-        $obj = clone $this;
-        $obj->index = $index;
+        $self = clone $this;
+        $self['index'] = $index;
 
-        return $obj;
+        return $self;
     }
 }

@@ -41,7 +41,8 @@ use Anthropic\Beta\Messages\BetaToolTextEditor20250728;
 use Anthropic\Beta\Messages\BetaToolUnion;
 use Anthropic\Beta\Messages\BetaWebFetchTool20250910;
 use Anthropic\Beta\Messages\BetaWebSearchTool20250305;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Model;
@@ -51,26 +52,38 @@ use Anthropic\Messages\Model;
  *
  * See the [Messages API reference](https://docs.claude.com/en/api/messages) for full documentation on available parameters.
  *
+ * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
+ * @phpstan-import-type ContainerShape from \Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\Container
+ * @phpstan-import-type BetaContextManagementConfigShape from \Anthropic\Beta\Messages\BetaContextManagementConfig
+ * @phpstan-import-type BetaRequestMCPServerURLDefinitionShape from \Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition
+ * @phpstan-import-type BetaMetadataShape from \Anthropic\Beta\Messages\BetaMetadata
+ * @phpstan-import-type BetaOutputConfigShape from \Anthropic\Beta\Messages\BetaOutputConfig
+ * @phpstan-import-type BetaJSONOutputFormatShape from \Anthropic\Beta\Messages\BetaJSONOutputFormat
+ * @phpstan-import-type SystemShape from \Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\System
+ * @phpstan-import-type BetaThinkingConfigParamShape from \Anthropic\Beta\Messages\BetaThinkingConfigParam
+ * @phpstan-import-type BetaToolChoiceShape from \Anthropic\Beta\Messages\BetaToolChoice
+ * @phpstan-import-type BetaToolUnionShape from \Anthropic\Beta\Messages\BetaToolUnion
+ *
  * @phpstan-type ParamsShape = array{
- *   max_tokens: int,
- *   messages: list<BetaMessageParam>,
- *   model: string|value-of<Model>,
- *   container?: string|null|BetaContainerParams,
- *   context_management?: BetaContextManagementConfig|null,
- *   mcp_servers?: list<BetaRequestMCPServerURLDefinition>|null,
- *   metadata?: BetaMetadata|null,
- *   output_config?: BetaOutputConfig|null,
- *   output_format?: BetaJSONOutputFormat|null,
- *   service_tier?: value-of<ServiceTier>|null,
- *   stop_sequences?: list<string>|null,
+ *   maxTokens: int,
+ *   messages: list<BetaMessageParamShape>,
+ *   model: Model|value-of<Model>,
+ *   container?: ContainerShape|null,
+ *   contextManagement?: null|BetaContextManagementConfig|BetaContextManagementConfigShape,
+ *   mcpServers?: list<BetaRequestMCPServerURLDefinitionShape>|null,
+ *   metadata?: null|BetaMetadata|BetaMetadataShape,
+ *   outputConfig?: null|BetaOutputConfig|BetaOutputConfigShape,
+ *   outputFormat?: null|BetaJSONOutputFormat|BetaJSONOutputFormatShape,
+ *   serviceTier?: null|ServiceTier|value-of<ServiceTier>,
+ *   stopSequences?: list<string>|null,
  *   stream?: bool|null,
- *   system?: string|null|list<BetaTextBlockParam>,
+ *   system?: SystemShape|null,
  *   temperature?: float|null,
- *   thinking?: null|BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
- *   tool_choice?: null|BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
- *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset>|null,
- *   top_k?: int|null,
- *   top_p?: float|null,
+ *   thinking?: BetaThinkingConfigParamShape|null,
+ *   toolChoice?: BetaToolChoiceShape|null,
+ *   tools?: list<BetaToolUnionShape>|null,
+ *   topK?: int|null,
+ *   topP?: float|null,
  * }
  */
 final class Params implements BaseModel
@@ -85,8 +98,8 @@ final class Params implements BaseModel
      *
      * Different models have different maximum values for this parameter.  See [models](https://docs.claude.com/en/docs/models-overview) for details.
      */
-    #[Api]
-    public int $max_tokens;
+    #[Required('max_tokens')]
+    public int $maxTokens;
 
     /**
      * Input messages.
@@ -140,21 +153,21 @@ final class Params implements BaseModel
      *
      * @var list<BetaMessageParam> $messages
      */
-    #[Api(list: BetaMessageParam::class)]
+    #[Required(list: BetaMessageParam::class)]
     public array $messages;
 
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var string|value-of<Model> $model
+     * @var value-of<Model> $model
      */
-    #[Api(enum: Model::class)]
+    #[Required(enum: Model::class)]
     public string $model;
 
     /**
      * Container identifier for reuse across requests.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public string|BetaContainerParams|null $container;
 
     /**
@@ -162,44 +175,44 @@ final class Params implements BaseModel
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaContextManagementConfig $context_management;
+    #[Optional('context_management', nullable: true)]
+    public ?BetaContextManagementConfig $contextManagement;
 
     /**
      * MCP servers to be utilized in this request.
      *
-     * @var list<BetaRequestMCPServerURLDefinition>|null $mcp_servers
+     * @var list<BetaRequestMCPServerURLDefinition>|null $mcpServers
      */
-    #[Api(list: BetaRequestMCPServerURLDefinition::class, optional: true)]
-    public ?array $mcp_servers;
+    #[Optional('mcp_servers', list: BetaRequestMCPServerURLDefinition::class)]
+    public ?array $mcpServers;
 
     /**
      * An object describing metadata about the request.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?BetaMetadata $metadata;
 
     /**
      * Configuration options for the model's output. Controls aspects like how much effort the model puts into its response.
      */
-    #[Api(optional: true)]
-    public ?BetaOutputConfig $output_config;
+    #[Optional('output_config')]
+    public ?BetaOutputConfig $outputConfig;
 
     /**
      * A schema to specify Claude's output format in responses.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaJSONOutputFormat $output_format;
+    #[Optional('output_format', nullable: true)]
+    public ?BetaJSONOutputFormat $outputFormat;
 
     /**
      * Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.claude.com/en/api/service-tiers) for details.
      *
-     * @var value-of<ServiceTier>|null $service_tier
+     * @var value-of<ServiceTier>|null $serviceTier
      */
-    #[Api(enum: ServiceTier::class, optional: true)]
-    public ?string $service_tier;
+    #[Optional('service_tier', enum: ServiceTier::class)]
+    public ?string $serviceTier;
 
     /**
      * Custom text sequences that will cause the model to stop generating.
@@ -208,17 +221,17 @@ final class Params implements BaseModel
      *
      * If you want the model to stop generating when it encounters custom strings of text, you can use the `stop_sequences` parameter. If the model encounters one of the custom sequences, the response `stop_reason` value will be `"stop_sequence"` and the response `stop_sequence` value will contain the matched stop sequence.
      *
-     * @var list<string>|null $stop_sequences
+     * @var list<string>|null $stopSequences
      */
-    #[Api(list: 'string', optional: true)]
-    public ?array $stop_sequences;
+    #[Optional('stop_sequences', list: 'string')]
+    public ?array $stopSequences;
 
     /**
      * Whether to incrementally stream the response using server-sent events.
      *
      * See [streaming](https://docs.claude.com/en/api/messages-streaming) for details.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $stream;
 
     /**
@@ -228,7 +241,7 @@ final class Params implements BaseModel
      *
      * @var string|list<BetaTextBlockParam>|null $system
      */
-    #[Api(union: System::class, optional: true)]
+    #[Optional(union: System::class)]
     public string|array|null $system;
 
     /**
@@ -238,7 +251,7 @@ final class Params implements BaseModel
      *
      * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?float $temperature;
 
     /**
@@ -248,14 +261,14 @@ final class Params implements BaseModel
      *
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      */
-    #[Api(union: BetaThinkingConfigParam::class, optional: true)]
+    #[Optional(union: BetaThinkingConfigParam::class)]
     public BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null $thinking;
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
-    #[Api(union: BetaToolChoice::class, optional: true)]
-    public BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $tool_choice;
+    #[Optional('tool_choice', union: BetaToolChoice::class)]
+    public BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice;
 
     /**
      * Definitions of tools that the model may use.
@@ -322,7 +335,7 @@ final class Params implements BaseModel
      *
      * @var list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset>|null $tools
      */
-    #[Api(list: BetaToolUnion::class, optional: true)]
+    #[Optional(list: BetaToolUnion::class)]
     public ?array $tools;
 
     /**
@@ -332,8 +345,8 @@ final class Params implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    #[Api(optional: true)]
-    public ?int $top_k;
+    #[Optional('top_k')]
+    public ?int $topK;
 
     /**
      * Use nucleus sampling.
@@ -342,15 +355,15 @@ final class Params implements BaseModel
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
      */
-    #[Api(optional: true)]
-    public ?float $top_p;
+    #[Optional('top_p')]
+    public ?float $topP;
 
     /**
      * `new Params()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Params::with(max_tokens: ..., messages: ..., model: ...)
+     * Params::with(maxTokens: ..., messages: ..., model: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -369,58 +382,66 @@ final class Params implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaMessageParam> $messages
-     * @param list<BetaRequestMCPServerURLDefinition> $mcp_servers
-     * @param ServiceTier|value-of<ServiceTier> $service_tier
-     * @param list<string> $stop_sequences
-     * @param string|list<BetaTextBlockParam> $system
-     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset> $tools
+     * @param list<BetaMessageParamShape> $messages
+     * @param Model|value-of<Model> $model
+     * @param ContainerShape|null $container
+     * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement
+     * @param list<BetaRequestMCPServerURLDefinitionShape>|null $mcpServers
+     * @param BetaMetadata|BetaMetadataShape|null $metadata
+     * @param BetaOutputConfig|BetaOutputConfigShape|null $outputConfig
+     * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat
+     * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
+     * @param list<string>|null $stopSequences
+     * @param SystemShape|null $system
+     * @param BetaThinkingConfigParamShape|null $thinking
+     * @param BetaToolChoiceShape|null $toolChoice
+     * @param list<BetaToolUnionShape>|null $tools
      */
     public static function with(
-        int $max_tokens,
+        int $maxTokens,
         array $messages,
-        string|Model $model,
-        string|BetaContainerParams|null $container = null,
-        ?BetaContextManagementConfig $context_management = null,
-        ?array $mcp_servers = null,
-        ?BetaMetadata $metadata = null,
-        ?BetaOutputConfig $output_config = null,
-        ?BetaJSONOutputFormat $output_format = null,
-        ServiceTier|string|null $service_tier = null,
-        ?array $stop_sequences = null,
+        Model|string $model,
+        string|BetaContainerParams|array|null $container = null,
+        BetaContextManagementConfig|array|null $contextManagement = null,
+        ?array $mcpServers = null,
+        BetaMetadata|array|null $metadata = null,
+        BetaOutputConfig|array|null $outputConfig = null,
+        BetaJSONOutputFormat|array|null $outputFormat = null,
+        ServiceTier|string|null $serviceTier = null,
+        ?array $stopSequences = null,
         ?bool $stream = null,
         string|array|null $system = null,
         ?float $temperature = null,
-        BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null $thinking = null,
-        BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $tool_choice = null,
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|null $thinking = null,
+        BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
-        ?int $top_k = null,
-        ?float $top_p = null,
+        ?int $topK = null,
+        ?float $topP = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->max_tokens = $max_tokens;
-        $obj->messages = $messages;
-        $obj->model = $model instanceof Model ? $model->value : $model;
+        $self['maxTokens'] = $maxTokens;
+        $self['messages'] = $messages;
+        $self['model'] = $model;
 
-        null !== $container && $obj->container = $container;
-        null !== $context_management && $obj->context_management = $context_management;
-        null !== $mcp_servers && $obj->mcp_servers = $mcp_servers;
-        null !== $metadata && $obj->metadata = $metadata;
-        null !== $output_config && $obj->output_config = $output_config;
-        null !== $output_format && $obj->output_format = $output_format;
-        null !== $service_tier && $obj['service_tier'] = $service_tier;
-        null !== $stop_sequences && $obj->stop_sequences = $stop_sequences;
-        null !== $stream && $obj->stream = $stream;
-        null !== $system && $obj->system = $system;
-        null !== $temperature && $obj->temperature = $temperature;
-        null !== $thinking && $obj->thinking = $thinking;
-        null !== $tool_choice && $obj->tool_choice = $tool_choice;
-        null !== $tools && $obj->tools = $tools;
-        null !== $top_k && $obj->top_k = $top_k;
-        null !== $top_p && $obj->top_p = $top_p;
+        null !== $container && $self['container'] = $container;
+        null !== $contextManagement && $self['contextManagement'] = $contextManagement;
+        null !== $mcpServers && $self['mcpServers'] = $mcpServers;
+        null !== $metadata && $self['metadata'] = $metadata;
+        null !== $outputConfig && $self['outputConfig'] = $outputConfig;
+        null !== $outputFormat && $self['outputFormat'] = $outputFormat;
+        null !== $serviceTier && $self['serviceTier'] = $serviceTier;
+        null !== $stopSequences && $self['stopSequences'] = $stopSequences;
+        null !== $stream && $self['stream'] = $stream;
+        null !== $system && $self['system'] = $system;
+        null !== $temperature && $self['temperature'] = $temperature;
+        null !== $thinking && $self['thinking'] = $thinking;
+        null !== $toolChoice && $self['toolChoice'] = $toolChoice;
+        null !== $tools && $self['tools'] = $tools;
+        null !== $topK && $self['topK'] = $topK;
+        null !== $topP && $self['topP'] = $topP;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -432,10 +453,10 @@ final class Params implements BaseModel
      */
     public function withMaxTokens(int $maxTokens): self
     {
-        $obj = clone $this;
-        $obj->max_tokens = $maxTokens;
+        $self = clone $this;
+        $self['maxTokens'] = $maxTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -488,97 +509,110 @@ final class Params implements BaseModel
      *
      * There is a limit of 100,000 messages in a single request.
      *
-     * @param list<BetaMessageParam> $messages
+     * @param list<BetaMessageParamShape> $messages
      */
     public function withMessages(array $messages): self
     {
-        $obj = clone $this;
-        $obj->messages = $messages;
+        $self = clone $this;
+        $self['messages'] = $messages;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     *
+     * @param Model|value-of<Model> $model
      */
-    public function withModel(string|Model $model): self
+    public function withModel(Model|string $model): self
     {
-        $obj = clone $this;
-        $obj->model = $model instanceof Model ? $model->value : $model;
+        $self = clone $this;
+        $self['model'] = $model;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Container identifier for reuse across requests.
+     *
+     * @param ContainerShape|null $container
      */
     public function withContainer(
-        string|BetaContainerParams|null $container
+        string|BetaContainerParams|array|null $container
     ): self {
-        $obj = clone $this;
-        $obj->container = $container;
+        $self = clone $this;
+        $self['container'] = $container;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Context management configuration.
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
+     *
+     * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement
      */
     public function withContextManagement(
-        ?BetaContextManagementConfig $contextManagement
+        BetaContextManagementConfig|array|null $contextManagement
     ): self {
-        $obj = clone $this;
-        $obj->context_management = $contextManagement;
+        $self = clone $this;
+        $self['contextManagement'] = $contextManagement;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * MCP servers to be utilized in this request.
      *
-     * @param list<BetaRequestMCPServerURLDefinition> $mcpServers
+     * @param list<BetaRequestMCPServerURLDefinitionShape> $mcpServers
      */
     public function withMCPServers(array $mcpServers): self
     {
-        $obj = clone $this;
-        $obj->mcp_servers = $mcpServers;
+        $self = clone $this;
+        $self['mcpServers'] = $mcpServers;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * An object describing metadata about the request.
+     *
+     * @param BetaMetadata|BetaMetadataShape $metadata
      */
-    public function withMetadata(BetaMetadata $metadata): self
+    public function withMetadata(BetaMetadata|array $metadata): self
     {
-        $obj = clone $this;
-        $obj->metadata = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Configuration options for the model's output. Controls aspects like how much effort the model puts into its response.
+     *
+     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig
      */
-    public function withOutputConfig(BetaOutputConfig $outputConfig): self
+    public function withOutputConfig(BetaOutputConfig|array $outputConfig): self
     {
-        $obj = clone $this;
-        $obj->output_config = $outputConfig;
+        $self = clone $this;
+        $self['outputConfig'] = $outputConfig;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * A schema to specify Claude's output format in responses.
+     *
+     * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat
      */
-    public function withOutputFormat(?BetaJSONOutputFormat $outputFormat): self
-    {
-        $obj = clone $this;
-        $obj->output_format = $outputFormat;
+    public function withOutputFormat(
+        BetaJSONOutputFormat|array|null $outputFormat
+    ): self {
+        $self = clone $this;
+        $self['outputFormat'] = $outputFormat;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -590,10 +624,10 @@ final class Params implements BaseModel
      */
     public function withServiceTier(ServiceTier|string $serviceTier): self
     {
-        $obj = clone $this;
-        $obj['service_tier'] = $serviceTier;
+        $self = clone $this;
+        $self['serviceTier'] = $serviceTier;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -607,10 +641,10 @@ final class Params implements BaseModel
      */
     public function withStopSequences(array $stopSequences): self
     {
-        $obj = clone $this;
-        $obj->stop_sequences = $stopSequences;
+        $self = clone $this;
+        $self['stopSequences'] = $stopSequences;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -620,10 +654,10 @@ final class Params implements BaseModel
      */
     public function withStream(bool $stream): self
     {
-        $obj = clone $this;
-        $obj->stream = $stream;
+        $self = clone $this;
+        $self['stream'] = $stream;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -631,14 +665,14 @@ final class Params implements BaseModel
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.claude.com/en/docs/system-prompts).
      *
-     * @param string|list<BetaTextBlockParam> $system
+     * @param SystemShape $system
      */
     public function withSystem(string|array $system): self
     {
-        $obj = clone $this;
-        $obj->system = $system;
+        $self = clone $this;
+        $self['system'] = $system;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -650,10 +684,10 @@ final class Params implements BaseModel
      */
     public function withTemperature(float $temperature): self
     {
-        $obj = clone $this;
-        $obj->temperature = $temperature;
+        $self = clone $this;
+        $self['temperature'] = $temperature;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -662,26 +696,30 @@ final class Params implements BaseModel
      * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
      *
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
+     *
+     * @param BetaThinkingConfigParamShape $thinking
      */
     public function withThinking(
-        BetaThinkingConfigEnabled|BetaThinkingConfigDisabled $thinking
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled $thinking
     ): self {
-        $obj = clone $this;
-        $obj->thinking = $thinking;
+        $self = clone $this;
+        $self['thinking'] = $thinking;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
+     *
+     * @param BetaToolChoiceShape $toolChoice
      */
     public function withToolChoice(
-        BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone $toolChoice,
+        BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone $toolChoice,
     ): self {
-        $obj = clone $this;
-        $obj->tool_choice = $toolChoice;
+        $self = clone $this;
+        $self['toolChoice'] = $toolChoice;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -747,14 +785,14 @@ final class Params implements BaseModel
      *
      * See our [guide](https://docs.claude.com/en/docs/tool-use) for more details.
      *
-     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset> $tools
+     * @param list<BetaToolUnionShape> $tools
      */
     public function withTools(array $tools): self
     {
-        $obj = clone $this;
-        $obj->tools = $tools;
+        $self = clone $this;
+        $self['tools'] = $tools;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -766,10 +804,10 @@ final class Params implements BaseModel
      */
     public function withTopK(int $topK): self
     {
-        $obj = clone $this;
-        $obj->top_k = $topK;
+        $self = clone $this;
+        $self['topK'] = $topK;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -781,9 +819,9 @@ final class Params implements BaseModel
      */
     public function withTopP(float $topP): self
     {
-        $obj = clone $this;
-        $obj->top_p = $topP;
+        $self = clone $this;
+        $self['topP'] = $topP;
 
-        return $obj;
+        return $self;
     }
 }

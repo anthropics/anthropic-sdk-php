@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages\Batches;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -19,7 +19,9 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Beta\Messages\BatchesService::delete()
  *
- * @phpstan-type BatchDeleteParamsShape = array{betas?: list<string|AnthropicBeta>}
+ * @phpstan-type BatchDeleteParamsShape = array{
+ *   betas?: list<AnthropicBeta|value-of<AnthropicBeta>>|null
+ * }
  */
 final class BatchDeleteParams implements BaseModel
 {
@@ -30,9 +32,9 @@ final class BatchDeleteParams implements BaseModel
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var list<string|value-of<AnthropicBeta>>|null $betas
+     * @var list<value-of<AnthropicBeta>>|null $betas
      */
-    #[Api(list: AnthropicBeta::class, optional: true)]
+    #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
     public function __construct()
@@ -45,27 +47,27 @@ final class BatchDeleteParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(?array $betas = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        null !== $betas && $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
      */
     public function withBetas(array $betas): self
     {
-        $obj = clone $this;
-        $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        $self = clone $this;
+        $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 }

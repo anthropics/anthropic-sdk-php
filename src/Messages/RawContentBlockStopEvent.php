@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type RawContentBlockStopEventShape = array{
- *   index: int, type: "content_block_stop"
+ *   index: int, type: 'content_block_stop'
  * }
  */
 final class RawContentBlockStopEvent implements BaseModel
@@ -18,11 +18,11 @@ final class RawContentBlockStopEvent implements BaseModel
     /** @use SdkModel<RawContentBlockStopEventShape> */
     use SdkModel;
 
-    /** @var "content_block_stop" $type */
-    #[Api]
+    /** @var 'content_block_stop' $type */
+    #[Required]
     public string $type = 'content_block_stop';
 
-    #[Api]
+    #[Required]
     public int $index;
 
     /**
@@ -51,18 +51,18 @@ final class RawContentBlockStopEvent implements BaseModel
      */
     public static function with(int $index): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->index = $index;
+        $self['index'] = $index;
 
-        return $obj;
+        return $self;
     }
 
     public function withIndex(int $index): self
     {
-        $obj = clone $this;
-        $obj->index = $index;
+        $self = clone $this;
+        $self['index'] = $index;
 
-        return $obj;
+        return $self;
     }
 }

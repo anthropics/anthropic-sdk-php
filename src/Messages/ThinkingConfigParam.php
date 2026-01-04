@@ -14,6 +14,11 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
  *
  * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
+ *
+ * @phpstan-import-type ThinkingConfigEnabledShape from \Anthropic\Messages\ThinkingConfigEnabled
+ * @phpstan-import-type ThinkingConfigDisabledShape from \Anthropic\Messages\ThinkingConfigDisabled
+ *
+ * @phpstan-type ThinkingConfigParamShape = ThinkingConfigEnabledShape|ThinkingConfigDisabledShape
  */
 final class ThinkingConfigParam implements ConverterSource
 {

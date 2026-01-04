@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type InvalidRequestErrorShape = array{
- *   message: string, type: "invalid_request_error"
+ *   message: string, type: 'invalid_request_error'
  * }
  */
 final class InvalidRequestError implements BaseModel
@@ -18,11 +18,11 @@ final class InvalidRequestError implements BaseModel
     /** @use SdkModel<InvalidRequestErrorShape> */
     use SdkModel;
 
-    /** @var "invalid_request_error" $type */
-    #[Api]
+    /** @var 'invalid_request_error' $type */
+    #[Required]
     public string $type = 'invalid_request_error';
 
-    #[Api]
+    #[Required]
     public string $message;
 
     /**
@@ -51,18 +51,18 @@ final class InvalidRequestError implements BaseModel
      */
     public static function with(string $message = 'Invalid request'): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->message = $message;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 
     public function withMessage(string $message): self
     {
-        $obj = clone $this;
-        $obj->message = $message;
+        $self = clone $this;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 }

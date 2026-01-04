@@ -8,6 +8,19 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-import-type InvalidRequestErrorShape from \Anthropic\InvalidRequestError
+ * @phpstan-import-type AuthenticationErrorShape from \Anthropic\AuthenticationError
+ * @phpstan-import-type BillingErrorShape from \Anthropic\BillingError
+ * @phpstan-import-type PermissionErrorShape from \Anthropic\PermissionError
+ * @phpstan-import-type NotFoundErrorShape from \Anthropic\NotFoundError
+ * @phpstan-import-type RateLimitErrorShape from \Anthropic\RateLimitError
+ * @phpstan-import-type GatewayTimeoutErrorShape from \Anthropic\GatewayTimeoutError
+ * @phpstan-import-type APIErrorObjectShape from \Anthropic\APIErrorObject
+ * @phpstan-import-type OverloadedErrorShape from \Anthropic\OverloadedError
+ *
+ * @phpstan-type ErrorObjectShape = InvalidRequestErrorShape|AuthenticationErrorShape|BillingErrorShape|PermissionErrorShape|NotFoundErrorShape|RateLimitErrorShape|GatewayTimeoutErrorShape|APIErrorObjectShape|OverloadedErrorShape
+ */
 final class ErrorObject implements ConverterSource
 {
     use SdkUnion;

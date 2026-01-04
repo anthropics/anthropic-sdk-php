@@ -4,20 +4,24 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\WebSearchTool20250305\UserLocation;
 
 /**
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ * @phpstan-import-type UserLocationShape from \Anthropic\Messages\WebSearchTool20250305\UserLocation
+ *
  * @phpstan-type WebSearchTool20250305Shape = array{
- *   name: "web_search",
- *   type: "web_search_20250305",
- *   allowed_domains?: list<string>|null,
- *   blocked_domains?: list<string>|null,
- *   cache_control?: CacheControlEphemeral|null,
- *   max_uses?: int|null,
- *   user_location?: UserLocation|null,
+ *   name: 'web_search',
+ *   type: 'web_search_20250305',
+ *   allowedDomains?: list<string>|null,
+ *   blockedDomains?: list<string>|null,
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
+ *   maxUses?: int|null,
+ *   userLocation?: null|UserLocation|UserLocationShape,
  * }
  */
 final class WebSearchTool20250305 implements BaseModel
@@ -30,48 +34,48 @@ final class WebSearchTool20250305 implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      *
-     * @var "web_search" $name
+     * @var 'web_search' $name
      */
-    #[Api]
+    #[Required]
     public string $name = 'web_search';
 
-    /** @var "web_search_20250305" $type */
-    #[Api]
+    /** @var 'web_search_20250305' $type */
+    #[Required]
     public string $type = 'web_search_20250305';
 
     /**
      * If provided, only these domains will be included in results. Cannot be used alongside `blocked_domains`.
      *
-     * @var list<string>|null $allowed_domains
+     * @var list<string>|null $allowedDomains
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
-    public ?array $allowed_domains;
+    #[Optional('allowed_domains', list: 'string', nullable: true)]
+    public ?array $allowedDomains;
 
     /**
      * If provided, these domains will never appear in results. Cannot be used alongside `allowed_domains`.
      *
-     * @var list<string>|null $blocked_domains
+     * @var list<string>|null $blockedDomains
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
-    public ?array $blocked_domains;
+    #[Optional('blocked_domains', list: 'string', nullable: true)]
+    public ?array $blockedDomains;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
      * Maximum number of times the tool can be used in the API request.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?int $max_uses;
+    #[Optional('max_uses', nullable: true)]
+    public ?int $maxUses;
 
     /**
      * Parameters for the user's location. Used to provide more relevant search results.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?UserLocation $user_location;
+    #[Optional('user_location', nullable: true)]
+    public ?UserLocation $userLocation;
 
     public function __construct()
     {
@@ -83,25 +87,27 @@ final class WebSearchTool20250305 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string>|null $allowed_domains
-     * @param list<string>|null $blocked_domains
+     * @param list<string>|null $allowedDomains
+     * @param list<string>|null $blockedDomains
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
+     * @param UserLocation|UserLocationShape|null $userLocation
      */
     public static function with(
-        ?array $allowed_domains = null,
-        ?array $blocked_domains = null,
-        ?CacheControlEphemeral $cache_control = null,
-        ?int $max_uses = null,
-        ?UserLocation $user_location = null,
+        ?array $allowedDomains = null,
+        ?array $blockedDomains = null,
+        CacheControlEphemeral|array|null $cacheControl = null,
+        ?int $maxUses = null,
+        UserLocation|array|null $userLocation = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $allowed_domains && $obj->allowed_domains = $allowed_domains;
-        null !== $blocked_domains && $obj->blocked_domains = $blocked_domains;
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $max_uses && $obj->max_uses = $max_uses;
-        null !== $user_location && $obj->user_location = $user_location;
+        null !== $allowedDomains && $self['allowedDomains'] = $allowedDomains;
+        null !== $blockedDomains && $self['blockedDomains'] = $blockedDomains;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $maxUses && $self['maxUses'] = $maxUses;
+        null !== $userLocation && $self['userLocation'] = $userLocation;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -111,10 +117,10 @@ final class WebSearchTool20250305 implements BaseModel
      */
     public function withAllowedDomains(?array $allowedDomains): self
     {
-        $obj = clone $this;
-        $obj->allowed_domains = $allowedDomains;
+        $self = clone $this;
+        $self['allowedDomains'] = $allowedDomains;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -124,21 +130,24 @@ final class WebSearchTool20250305 implements BaseModel
      */
     public function withBlockedDomains(?array $blockedDomains): self
     {
-        $obj = clone $this;
-        $obj->blocked_domains = $blockedDomains;
+        $self = clone $this;
+        $self['blockedDomains'] = $blockedDomains;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
-    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
-    {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -146,20 +155,23 @@ final class WebSearchTool20250305 implements BaseModel
      */
     public function withMaxUses(?int $maxUses): self
     {
-        $obj = clone $this;
-        $obj->max_uses = $maxUses;
+        $self = clone $this;
+        $self['maxUses'] = $maxUses;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Parameters for the user's location. Used to provide more relevant search results.
+     *
+     * @param UserLocation|UserLocationShape|null $userLocation
      */
-    public function withUserLocation(?UserLocation $userLocation): self
-    {
-        $obj = clone $this;
-        $obj->user_location = $userLocation;
+    public function withUserLocation(
+        UserLocation|array|null $userLocation
+    ): self {
+        $self = clone $this;
+        $self['userLocation'] = $userLocation;
 
-        return $obj;
+        return $self;
     }
 }

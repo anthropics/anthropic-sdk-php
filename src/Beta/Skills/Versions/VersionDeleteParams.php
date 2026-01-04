@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Skills\Versions;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -16,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\Skills\VersionsService::delete()
  *
  * @phpstan-type VersionDeleteParamsShape = array{
- *   skill_id: string, betas?: list<string|AnthropicBeta>
+ *   skillID: string, betas?: list<AnthropicBeta|value-of<AnthropicBeta>>|null
  * }
  */
 final class VersionDeleteParams implements BaseModel
@@ -30,15 +31,15 @@ final class VersionDeleteParams implements BaseModel
      *
      * The format and length of IDs may change over time.
      */
-    #[Api]
-    public string $skill_id;
+    #[Required]
+    public string $skillID;
 
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var list<string|value-of<AnthropicBeta>>|null $betas
+     * @var list<value-of<AnthropicBeta>>|null $betas
      */
-    #[Api(list: AnthropicBeta::class, optional: true)]
+    #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
     /**
@@ -46,7 +47,7 @@ final class VersionDeleteParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * VersionDeleteParams::with(skill_id: ...)
+     * VersionDeleteParams::with(skillID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -65,17 +66,17 @@ final class VersionDeleteParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
-    public static function with(string $skill_id, ?array $betas = null): self
+    public static function with(string $skillID, ?array $betas = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->skill_id = $skill_id;
+        $self['skillID'] = $skillID;
 
-        null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        null !== $betas && $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -85,22 +86,22 @@ final class VersionDeleteParams implements BaseModel
      */
     public function withSkillID(string $skillID): self
     {
-        $obj = clone $this;
-        $obj->skill_id = $skillID;
+        $self = clone $this;
+        $self['skillID'] = $skillID;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
      */
     public function withBetas(array $betas): self
     {
-        $obj = clone $this;
-        $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        $self = clone $this;
+        $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 }

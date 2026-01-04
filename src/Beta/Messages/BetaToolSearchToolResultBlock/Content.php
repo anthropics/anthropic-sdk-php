@@ -10,6 +10,12 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-import-type BetaToolSearchToolResultErrorShape from \Anthropic\Beta\Messages\BetaToolSearchToolResultError
+ * @phpstan-import-type BetaToolSearchToolSearchResultBlockShape from \Anthropic\Beta\Messages\BetaToolSearchToolSearchResultBlock
+ *
+ * @phpstan-type ContentShape = BetaToolSearchToolResultErrorShape|BetaToolSearchToolSearchResultBlockShape
+ */
 final class Content implements ConverterSource
 {
     use SdkUnion;

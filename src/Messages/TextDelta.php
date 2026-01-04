@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type TextDeltaShape = array{text: string, type: "text_delta"}
+ * @phpstan-type TextDeltaShape = array{text: string, type: 'text_delta'}
  */
 final class TextDelta implements BaseModel
 {
     /** @use SdkModel<TextDeltaShape> */
     use SdkModel;
 
-    /** @var "text_delta" $type */
-    #[Api]
+    /** @var 'text_delta' $type */
+    #[Required]
     public string $type = 'text_delta';
 
-    #[Api]
+    #[Required]
     public string $text;
 
     /**
@@ -49,18 +49,18 @@ final class TextDelta implements BaseModel
      */
     public static function with(string $text): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->text = $text;
+        $self['text'] = $text;
 
-        return $obj;
+        return $self;
     }
 
     public function withText(string $text): self
     {
-        $obj = clone $this;
-        $obj->text = $text;
+        $self = clone $this;
+        $self['text'] = $text;
 
-        return $obj;
+        return $self;
     }
 }

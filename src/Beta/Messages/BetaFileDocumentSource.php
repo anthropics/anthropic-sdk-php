@@ -4,31 +4,31 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaFileDocumentSourceShape = array{file_id: string, type: "file"}
+ * @phpstan-type BetaFileDocumentSourceShape = array{fileID: string, type: 'file'}
  */
 final class BetaFileDocumentSource implements BaseModel
 {
     /** @use SdkModel<BetaFileDocumentSourceShape> */
     use SdkModel;
 
-    /** @var "file" $type */
-    #[Api]
+    /** @var 'file' $type */
+    #[Required]
     public string $type = 'file';
 
-    #[Api]
-    public string $file_id;
+    #[Required('file_id')]
+    public string $fileID;
 
     /**
      * `new BetaFileDocumentSource()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaFileDocumentSource::with(file_id: ...)
+     * BetaFileDocumentSource::with(fileID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -47,20 +47,20 @@ final class BetaFileDocumentSource implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $file_id): self
+    public static function with(string $fileID): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->file_id = $file_id;
+        $self['fileID'] = $fileID;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileID(string $fileID): self
     {
-        $obj = clone $this;
-        $obj->file_id = $fileID;
+        $self = clone $this;
+        $self['fileID'] = $fileID;
 
-        return $obj;
+        return $self;
     }
 }

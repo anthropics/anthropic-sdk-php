@@ -3,6 +3,10 @@
 namespace Tests\Services\Messages;
 
 use Anthropic\Client;
+use Anthropic\Messages\Batches\DeletedMessageBatch;
+use Anthropic\Messages\Batches\MessageBatch;
+use Anthropic\Messages\Batches\MessageBatchIndividualResponse;
+use Anthropic\Page;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -29,78 +33,82 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->messages->batches->create([
-            'requests' => [
+        $result = $this->client->messages->batches->create(
+            requests: [
                 [
-                    'custom_id' => 'my-custom-id-1',
+                    'customID' => 'my-custom-id-1',
                     'params' => [
-                        'max_tokens' => 1024,
+                        'maxTokens' => 1024,
                         'messages' => [['content' => 'Hello, world', 'role' => 'user']],
                         'model' => 'claude-sonnet-4-5-20250929',
                     ],
                 ],
             ],
-        ]);
+        );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(MessageBatch::class, $result);
     }
 
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->messages->batches->create([
-            'requests' => [
+        $result = $this->client->messages->batches->create(
+            requests: [
                 [
-                    'custom_id' => 'my-custom-id-1',
+                    'customID' => 'my-custom-id-1',
                     'params' => [
-                        'max_tokens' => 1024,
+                        'maxTokens' => 1024,
                         'messages' => [['content' => 'Hello, world', 'role' => 'user']],
                         'model' => 'claude-sonnet-4-5-20250929',
-                        'metadata' => ['user_id' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
-                        'service_tier' => 'auto',
-                        'stop_sequences' => ['string'],
+                        'metadata' => ['userID' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
+                        'serviceTier' => 'auto',
+                        'stopSequences' => ['string'],
                         'stream' => true,
                         'system' => [
                             [
-                                'text' => "Today's date is 2024-06-01.",
+                                'text' => 'Today\'s date is 2024-06-01.',
                                 'type' => 'text',
-                                'cache_control' => ['type' => 'ephemeral', 'ttl' => '5m'],
+                                'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                                 'citations' => [
                                     [
-                                        'cited_text' => 'cited_text',
-                                        'document_index' => 0,
-                                        'document_title' => 'x',
-                                        'end_char_index' => 0,
-                                        'start_char_index' => 0,
+                                        'citedText' => 'cited_text',
+                                        'documentIndex' => 0,
+                                        'documentTitle' => 'x',
+                                        'endCharIndex' => 0,
+                                        'startCharIndex' => 0,
                                         'type' => 'char_location',
                                     ],
                                 ],
                             ],
                         ],
                         'temperature' => 1,
-                        'thinking' => ['budget_tokens' => 1024, 'type' => 'enabled'],
-                        'tool_choice' => [
-                            'type' => 'auto', 'disable_parallel_tool_use' => true,
+                        'thinking' => ['budgetTokens' => 1024, 'type' => 'enabled'],
+                        'toolChoice' => [
+                            'type' => 'auto', 'disableParallelToolUse' => true,
                         ],
                         'tools' => [
                             [
-                                'input_schema' => [
+                                'inputSchema' => [
                                     'type' => 'object',
                                     'properties' => ['location' => 'bar', 'unit' => 'bar'],
                                     'required' => ['location'],
                                 ],
                                 'name' => 'name',
-                                'cache_control' => ['type' => 'ephemeral', 'ttl' => '5m'],
+                                'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                                 'description' => 'Get the current weather in a given location',
                                 'type' => 'custom',
                             ],
                         ],
+                        'topK' => 5,
+                        'topP' => 0.7,
                     ],
                 ],
             ],
-        ]);
+        );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(MessageBatch::class, $result);
     }
 
     #[Test]
@@ -108,19 +116,22 @@ final class BatchesTest extends TestCase
     {
         $result = $this->client->messages->batches->retrieve('message_batch_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(MessageBatch::class, $result);
     }
 
     #[Test]
     public function testList(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: currently unsupported');
+        $page = $this->client->messages->batches->list();
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Page::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(MessageBatch::class, $item);
         }
-
-        $result = $this->client->messages->batches->list([]);
-
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -128,7 +139,8 @@ final class BatchesTest extends TestCase
     {
         $result = $this->client->messages->batches->delete('message_batch_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DeletedMessageBatch::class, $result);
     }
 
     #[Test]
@@ -136,18 +148,20 @@ final class BatchesTest extends TestCase
     {
         $result = $this->client->messages->batches->cancel('message_batch_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(MessageBatch::class, $result);
     }
 
     #[Test]
     public function testResults(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped("Prism doesn't support application/x-jsonl responses");
+            $this->markTestSkipped('Prism doesn\'t support application/x-jsonl responses');
         }
 
         $result = $this->client->messages->batches->results('message_batch_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(MessageBatchIndividualResponse::class, $result);
     }
 }

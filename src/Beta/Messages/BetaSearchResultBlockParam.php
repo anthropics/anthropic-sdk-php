@@ -4,18 +4,23 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaTextBlockParamShape from \Anthropic\Beta\Messages\BetaTextBlockParam
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type BetaCitationsConfigParamShape from \Anthropic\Beta\Messages\BetaCitationsConfigParam
+ *
  * @phpstan-type BetaSearchResultBlockParamShape = array{
- *   content: list<BetaTextBlockParam>,
+ *   content: list<BetaTextBlockParamShape>,
  *   source: string,
  *   title: string,
- *   type: "search_result",
- *   cache_control?: BetaCacheControlEphemeral|null,
- *   citations?: BetaCitationsConfigParam|null,
+ *   type: 'search_result',
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
+ *   citations?: null|BetaCitationsConfigParam|BetaCitationsConfigParamShape,
  * }
  */
 final class BetaSearchResultBlockParam implements BaseModel
@@ -23,27 +28,27 @@ final class BetaSearchResultBlockParam implements BaseModel
     /** @use SdkModel<BetaSearchResultBlockParamShape> */
     use SdkModel;
 
-    /** @var "search_result" $type */
-    #[Api]
+    /** @var 'search_result' $type */
+    #[Required]
     public string $type = 'search_result';
 
     /** @var list<BetaTextBlockParam> $content */
-    #[Api(list: BetaTextBlockParam::class)]
+    #[Required(list: BetaTextBlockParam::class)]
     public array $content;
 
-    #[Api]
+    #[Required]
     public string $source;
 
-    #[Api]
+    #[Required]
     public string $title;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?BetaCitationsConfigParam $citations;
 
     /**
@@ -73,71 +78,79 @@ final class BetaSearchResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaTextBlockParam> $content
+     * @param list<BetaTextBlockParamShape> $content
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCitationsConfigParam|BetaCitationsConfigParamShape|null $citations
      */
     public static function with(
         array $content,
         string $source,
         string $title,
-        ?BetaCacheControlEphemeral $cache_control = null,
-        ?BetaCitationsConfigParam $citations = null,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
+        BetaCitationsConfigParam|array|null $citations = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->content = $content;
-        $obj->source = $source;
-        $obj->title = $title;
+        $self['content'] = $content;
+        $self['source'] = $source;
+        $self['title'] = $title;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $citations && $obj->citations = $citations;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $citations && $self['citations'] = $citations;
 
-        return $obj;
+        return $self;
     }
 
     /**
-     * @param list<BetaTextBlockParam> $content
+     * @param list<BetaTextBlockParamShape> $content
      */
     public function withContent(array $content): self
     {
-        $obj = clone $this;
-        $obj->content = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     public function withSource(string $source): self
     {
-        $obj = clone $this;
-        $obj->source = $source;
+        $self = clone $this;
+        $self['source'] = $source;
 
-        return $obj;
+        return $self;
     }
 
     public function withTitle(string $title): self
     {
-        $obj = clone $this;
-        $obj->title = $title;
+        $self = clone $this;
+        $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
-    public function withCitations(BetaCitationsConfigParam $citations): self
-    {
-        $obj = clone $this;
-        $obj->citations = $citations;
+    /**
+     * @param BetaCitationsConfigParam|BetaCitationsConfigParamShape $citations
+     */
+    public function withCitations(
+        BetaCitationsConfigParam|array $citations
+    ): self {
+        $self = clone $this;
+        $self['citations'] = $citations;
 
-        return $obj;
+        return $self;
     }
 }

@@ -4,17 +4,22 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\DocumentBlockParam\Source;
 
 /**
+ * @phpstan-import-type SourceShape from \Anthropic\Messages\DocumentBlockParam\Source
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ * @phpstan-import-type CitationsConfigParamShape from \Anthropic\Messages\CitationsConfigParam
+ *
  * @phpstan-type DocumentBlockParamShape = array{
- *   source: Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource,
- *   type: "document",
- *   cache_control?: CacheControlEphemeral|null,
- *   citations?: CitationsConfigParam|null,
+ *   source: SourceShape,
+ *   type: 'document',
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
+ *   citations?: null|CitationsConfigParam|CitationsConfigParamShape,
  *   context?: string|null,
  *   title?: string|null,
  * }
@@ -24,26 +29,26 @@ final class DocumentBlockParam implements BaseModel
     /** @use SdkModel<DocumentBlockParamShape> */
     use SdkModel;
 
-    /** @var "document" $type */
-    #[Api]
+    /** @var 'document' $type */
+    #[Required]
     public string $type = 'document';
 
-    #[Api(union: Source::class)]
+    #[Required(union: Source::class)]
     public Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource $source;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?CacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?CitationsConfigParam $citations;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $context;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $title;
 
     /**
@@ -69,67 +74,81 @@ final class DocumentBlockParam implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param SourceShape $source
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
+     * @param CitationsConfigParam|CitationsConfigParamShape|null $citations
      */
     public static function with(
-        Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource $source,
-        ?CacheControlEphemeral $cache_control = null,
-        ?CitationsConfigParam $citations = null,
+        Base64PDFSource|array|PlainTextSource|ContentBlockSource|URLPDFSource $source,
+        CacheControlEphemeral|array|null $cacheControl = null,
+        CitationsConfigParam|array|null $citations = null,
         ?string $context = null,
         ?string $title = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->source = $source;
+        $self['source'] = $source;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $citations && $obj->citations = $citations;
-        null !== $context && $obj->context = $context;
-        null !== $title && $obj->title = $title;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $citations && $self['citations'] = $citations;
+        null !== $context && $self['context'] = $context;
+        null !== $title && $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 
+    /**
+     * @param SourceShape $source
+     */
     public function withSource(
-        Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource $source
+        Base64PDFSource|array|PlainTextSource|ContentBlockSource|URLPDFSource $source,
     ): self {
-        $obj = clone $this;
-        $obj->source = $source;
+        $self = clone $this;
+        $self['source'] = $source;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      */
-    public function withCacheControl(?CacheControlEphemeral $cacheControl): self
-    {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
-    public function withCitations(?CitationsConfigParam $citations): self
-    {
-        $obj = clone $this;
-        $obj->citations = $citations;
+    /**
+     * @param CitationsConfigParam|CitationsConfigParamShape|null $citations
+     */
+    public function withCitations(
+        CitationsConfigParam|array|null $citations
+    ): self {
+        $self = clone $this;
+        $self['citations'] = $citations;
 
-        return $obj;
+        return $self;
     }
 
     public function withContext(?string $context): self
     {
-        $obj = clone $this;
-        $obj->context = $context;
+        $self = clone $this;
+        $self['context'] = $context;
 
-        return $obj;
+        return $self;
     }
 
     public function withTitle(?string $title): self
     {
-        $obj = clone $this;
-        $obj->title = $title;
+        $self = clone $this;
+        $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 }

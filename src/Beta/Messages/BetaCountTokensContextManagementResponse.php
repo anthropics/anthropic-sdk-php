@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCountTokensContextManagementResponseShape = array{
- *   original_input_tokens: int
+ *   originalInputTokens: int
  * }
  */
 final class BetaCountTokensContextManagementResponse implements BaseModel
@@ -21,15 +21,15 @@ final class BetaCountTokensContextManagementResponse implements BaseModel
     /**
      * The original token count before context management was applied.
      */
-    #[Api]
-    public int $original_input_tokens;
+    #[Required('original_input_tokens')]
+    public int $originalInputTokens;
 
     /**
      * `new BetaCountTokensContextManagementResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaCountTokensContextManagementResponse::with(original_input_tokens: ...)
+     * BetaCountTokensContextManagementResponse::with(originalInputTokens: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -48,13 +48,13 @@ final class BetaCountTokensContextManagementResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(int $original_input_tokens): self
+    public static function with(int $originalInputTokens): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->original_input_tokens = $original_input_tokens;
+        $self['originalInputTokens'] = $originalInputTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -62,9 +62,9 @@ final class BetaCountTokensContextManagementResponse implements BaseModel
      */
     public function withOriginalInputTokens(int $originalInputTokens): self
     {
-        $obj = clone $this;
-        $obj->original_input_tokens = $originalInputTokens;
+        $self = clone $this;
+        $self['originalInputTokens'] = $originalInputTokens;
 
-        return $obj;
+        return $self;
     }
 }

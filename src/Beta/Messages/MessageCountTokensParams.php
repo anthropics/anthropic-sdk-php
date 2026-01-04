@@ -7,7 +7,8 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\MessageCountTokensParams\System;
 use Anthropic\Beta\Messages\MessageCountTokensParams\Tool;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -22,18 +23,28 @@ use Anthropic\Messages\Model;
  *
  * @see Anthropic\Services\Beta\MessagesService::countTokens()
  *
+ * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
+ * @phpstan-import-type BetaContextManagementConfigShape from \Anthropic\Beta\Messages\BetaContextManagementConfig
+ * @phpstan-import-type BetaRequestMCPServerURLDefinitionShape from \Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition
+ * @phpstan-import-type BetaOutputConfigShape from \Anthropic\Beta\Messages\BetaOutputConfig
+ * @phpstan-import-type BetaJSONOutputFormatShape from \Anthropic\Beta\Messages\BetaJSONOutputFormat
+ * @phpstan-import-type SystemShape from \Anthropic\Beta\Messages\MessageCountTokensParams\System
+ * @phpstan-import-type BetaThinkingConfigParamShape from \Anthropic\Beta\Messages\BetaThinkingConfigParam
+ * @phpstan-import-type BetaToolChoiceShape from \Anthropic\Beta\Messages\BetaToolChoice
+ * @phpstan-import-type ToolShape from \Anthropic\Beta\Messages\MessageCountTokensParams\Tool
+ *
  * @phpstan-type MessageCountTokensParamsShape = array{
- *   messages: list<BetaMessageParam>,
- *   model: string|Model,
- *   context_management?: BetaContextManagementConfig|null,
- *   mcp_servers?: list<BetaRequestMCPServerURLDefinition>,
- *   output_config?: BetaOutputConfig,
- *   output_format?: BetaJSONOutputFormat|null,
- *   system?: string|list<BetaTextBlockParam>,
- *   thinking?: BetaThinkingConfigEnabled|BetaThinkingConfigDisabled,
- *   tool_choice?: BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone,
- *   tools?: list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset>,
- *   betas?: list<string|AnthropicBeta>,
+ *   messages: list<BetaMessageParamShape>,
+ *   model: Model|value-of<Model>,
+ *   contextManagement?: null|BetaContextManagementConfig|BetaContextManagementConfigShape,
+ *   mcpServers?: list<BetaRequestMCPServerURLDefinitionShape>|null,
+ *   outputConfig?: null|BetaOutputConfig|BetaOutputConfigShape,
+ *   outputFormat?: null|BetaJSONOutputFormat|BetaJSONOutputFormatShape,
+ *   system?: SystemShape|null,
+ *   thinking?: BetaThinkingConfigParamShape|null,
+ *   toolChoice?: BetaToolChoiceShape|null,
+ *   tools?: list<ToolShape>|null,
+ *   betas?: list<AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
 final class MessageCountTokensParams implements BaseModel
@@ -94,15 +105,15 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @var list<BetaMessageParam> $messages
      */
-    #[Api(list: BetaMessageParam::class)]
+    #[Required(list: BetaMessageParam::class)]
     public array $messages;
 
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var string|value-of<Model> $model
+     * @var value-of<Model> $model
      */
-    #[Api(enum: Model::class)]
+    #[Required(enum: Model::class)]
     public string $model;
 
     /**
@@ -110,28 +121,28 @@ final class MessageCountTokensParams implements BaseModel
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaContextManagementConfig $context_management;
+    #[Optional('context_management', nullable: true)]
+    public ?BetaContextManagementConfig $contextManagement;
 
     /**
      * MCP servers to be utilized in this request.
      *
-     * @var list<BetaRequestMCPServerURLDefinition>|null $mcp_servers
+     * @var list<BetaRequestMCPServerURLDefinition>|null $mcpServers
      */
-    #[Api(list: BetaRequestMCPServerURLDefinition::class, optional: true)]
-    public ?array $mcp_servers;
+    #[Optional('mcp_servers', list: BetaRequestMCPServerURLDefinition::class)]
+    public ?array $mcpServers;
 
     /**
      * Configuration options for the model's output. Controls aspects like how much effort the model puts into its response.
      */
-    #[Api(optional: true)]
-    public ?BetaOutputConfig $output_config;
+    #[Optional('output_config')]
+    public ?BetaOutputConfig $outputConfig;
 
     /**
      * A schema to specify Claude's output format in responses.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaJSONOutputFormat $output_format;
+    #[Optional('output_format', nullable: true)]
+    public ?BetaJSONOutputFormat $outputFormat;
 
     /**
      * System prompt.
@@ -140,7 +151,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @var string|list<BetaTextBlockParam>|null $system
      */
-    #[Api(union: System::class, optional: true)]
+    #[Optional(union: System::class)]
     public string|array|null $system;
 
     /**
@@ -150,14 +161,14 @@ final class MessageCountTokensParams implements BaseModel
      *
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      */
-    #[Api(union: BetaThinkingConfigParam::class, optional: true)]
+    #[Optional(union: BetaThinkingConfigParam::class)]
     public BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null $thinking;
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
-    #[Api(union: BetaToolChoice::class, optional: true)]
-    public BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $tool_choice;
+    #[Optional('tool_choice', union: BetaToolChoice::class)]
+    public BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice;
 
     /**
      * Definitions of tools that the model may use.
@@ -224,15 +235,15 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @var list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset>|null $tools
      */
-    #[Api(list: Tool::class, optional: true)]
+    #[Optional(list: Tool::class)]
     public ?array $tools;
 
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var list<string|value-of<AnthropicBeta>>|null $betas
+     * @var list<value-of<AnthropicBeta>>|null $betas
      */
-    #[Api(list: AnthropicBeta::class, optional: true)]
+    #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
     /**
@@ -259,41 +270,47 @@ final class MessageCountTokensParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaMessageParam> $messages
-     * @param list<BetaRequestMCPServerURLDefinition> $mcp_servers
-     * @param string|list<BetaTextBlockParam> $system
-     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset> $tools
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<BetaMessageParamShape> $messages
+     * @param Model|value-of<Model> $model
+     * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement
+     * @param list<BetaRequestMCPServerURLDefinitionShape>|null $mcpServers
+     * @param BetaOutputConfig|BetaOutputConfigShape|null $outputConfig
+     * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat
+     * @param SystemShape|null $system
+     * @param BetaThinkingConfigParamShape|null $thinking
+     * @param BetaToolChoiceShape|null $toolChoice
+     * @param list<ToolShape>|null $tools
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
         array $messages,
-        string|Model $model,
-        ?BetaContextManagementConfig $context_management = null,
-        ?array $mcp_servers = null,
-        ?BetaOutputConfig $output_config = null,
-        ?BetaJSONOutputFormat $output_format = null,
+        Model|string $model,
+        BetaContextManagementConfig|array|null $contextManagement = null,
+        ?array $mcpServers = null,
+        BetaOutputConfig|array|null $outputConfig = null,
+        BetaJSONOutputFormat|array|null $outputFormat = null,
         string|array|null $system = null,
-        BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null $thinking = null,
-        BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $tool_choice = null,
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|null $thinking = null,
+        BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?array $betas = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->messages = $messages;
-        $obj->model = $model instanceof Model ? $model->value : $model;
+        $self['messages'] = $messages;
+        $self['model'] = $model;
 
-        null !== $context_management && $obj->context_management = $context_management;
-        null !== $mcp_servers && $obj->mcp_servers = $mcp_servers;
-        null !== $output_config && $obj->output_config = $output_config;
-        null !== $output_format && $obj->output_format = $output_format;
-        null !== $system && $obj->system = $system;
-        null !== $thinking && $obj->thinking = $thinking;
-        null !== $tool_choice && $obj->tool_choice = $tool_choice;
-        null !== $tools && $obj->tools = $tools;
-        null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        null !== $contextManagement && $self['contextManagement'] = $contextManagement;
+        null !== $mcpServers && $self['mcpServers'] = $mcpServers;
+        null !== $outputConfig && $self['outputConfig'] = $outputConfig;
+        null !== $outputFormat && $self['outputFormat'] = $outputFormat;
+        null !== $system && $self['system'] = $system;
+        null !== $thinking && $self['thinking'] = $thinking;
+        null !== $toolChoice && $self['toolChoice'] = $toolChoice;
+        null !== $tools && $self['tools'] = $tools;
+        null !== $betas && $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -346,74 +363,83 @@ final class MessageCountTokensParams implements BaseModel
      *
      * There is a limit of 100,000 messages in a single request.
      *
-     * @param list<BetaMessageParam> $messages
+     * @param list<BetaMessageParamShape> $messages
      */
     public function withMessages(array $messages): self
     {
-        $obj = clone $this;
-        $obj->messages = $messages;
+        $self = clone $this;
+        $self['messages'] = $messages;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     *
+     * @param Model|value-of<Model> $model
      */
-    public function withModel(string|Model $model): self
+    public function withModel(Model|string $model): self
     {
-        $obj = clone $this;
-        $obj->model = $model instanceof Model ? $model->value : $model;
+        $self = clone $this;
+        $self['model'] = $model;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Context management configuration.
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
+     *
+     * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement
      */
     public function withContextManagement(
-        ?BetaContextManagementConfig $contextManagement
+        BetaContextManagementConfig|array|null $contextManagement
     ): self {
-        $obj = clone $this;
-        $obj->context_management = $contextManagement;
+        $self = clone $this;
+        $self['contextManagement'] = $contextManagement;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * MCP servers to be utilized in this request.
      *
-     * @param list<BetaRequestMCPServerURLDefinition> $mcpServers
+     * @param list<BetaRequestMCPServerURLDefinitionShape> $mcpServers
      */
     public function withMCPServers(array $mcpServers): self
     {
-        $obj = clone $this;
-        $obj->mcp_servers = $mcpServers;
+        $self = clone $this;
+        $self['mcpServers'] = $mcpServers;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Configuration options for the model's output. Controls aspects like how much effort the model puts into its response.
+     *
+     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig
      */
-    public function withOutputConfig(BetaOutputConfig $outputConfig): self
+    public function withOutputConfig(BetaOutputConfig|array $outputConfig): self
     {
-        $obj = clone $this;
-        $obj->output_config = $outputConfig;
+        $self = clone $this;
+        $self['outputConfig'] = $outputConfig;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * A schema to specify Claude's output format in responses.
+     *
+     * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat
      */
-    public function withOutputFormat(?BetaJSONOutputFormat $outputFormat): self
-    {
-        $obj = clone $this;
-        $obj->output_format = $outputFormat;
+    public function withOutputFormat(
+        BetaJSONOutputFormat|array|null $outputFormat
+    ): self {
+        $self = clone $this;
+        $self['outputFormat'] = $outputFormat;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -421,14 +447,14 @@ final class MessageCountTokensParams implements BaseModel
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.claude.com/en/docs/system-prompts).
      *
-     * @param string|list<BetaTextBlockParam> $system
+     * @param SystemShape $system
      */
     public function withSystem(string|array $system): self
     {
-        $obj = clone $this;
-        $obj->system = $system;
+        $self = clone $this;
+        $self['system'] = $system;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -437,26 +463,30 @@ final class MessageCountTokensParams implements BaseModel
      * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
      *
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
+     *
+     * @param BetaThinkingConfigParamShape $thinking
      */
     public function withThinking(
-        BetaThinkingConfigEnabled|BetaThinkingConfigDisabled $thinking
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled $thinking
     ): self {
-        $obj = clone $this;
-        $obj->thinking = $thinking;
+        $self = clone $this;
+        $self['thinking'] = $thinking;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
+     *
+     * @param BetaToolChoiceShape $toolChoice
      */
     public function withToolChoice(
-        BetaToolChoiceAuto|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone $toolChoice,
+        BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone $toolChoice,
     ): self {
-        $obj = clone $this;
-        $obj->tool_choice = $toolChoice;
+        $self = clone $this;
+        $self['toolChoice'] = $toolChoice;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -522,26 +552,26 @@ final class MessageCountTokensParams implements BaseModel
      *
      * See our [guide](https://docs.claude.com/en/docs/tool-use) for more details.
      *
-     * @param list<BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset> $tools
+     * @param list<ToolShape> $tools
      */
     public function withTools(array $tools): self
     {
-        $obj = clone $this;
-        $obj->tools = $tools;
+        $self = clone $this;
+        $self['tools'] = $tools;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
      */
     public function withBetas(array $betas): self
     {
-        $obj = clone $this;
-        $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        $self = clone $this;
+        $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 }

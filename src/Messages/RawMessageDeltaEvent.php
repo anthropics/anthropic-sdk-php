@@ -4,14 +4,19 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\RawMessageDeltaEvent\Delta;
 
 /**
+ * @phpstan-import-type DeltaShape from \Anthropic\Messages\RawMessageDeltaEvent\Delta
+ * @phpstan-import-type MessageDeltaUsageShape from \Anthropic\Messages\MessageDeltaUsage
+ *
  * @phpstan-type RawMessageDeltaEventShape = array{
- *   delta: Delta, type: "message_delta", usage: MessageDeltaUsage
+ *   delta: Delta|DeltaShape,
+ *   type: 'message_delta',
+ *   usage: MessageDeltaUsage|MessageDeltaUsageShape,
  * }
  */
 final class RawMessageDeltaEvent implements BaseModel
@@ -19,11 +24,11 @@ final class RawMessageDeltaEvent implements BaseModel
     /** @use SdkModel<RawMessageDeltaEventShape> */
     use SdkModel;
 
-    /** @var "message_delta" $type */
-    #[Api]
+    /** @var 'message_delta' $type */
+    #[Required]
     public string $type = 'message_delta';
 
-    #[Api]
+    #[Required]
     public Delta $delta;
 
     /**
@@ -37,7 +42,7 @@ final class RawMessageDeltaEvent implements BaseModel
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
      */
-    #[Api]
+    #[Required]
     public MessageDeltaUsage $usage;
 
     /**
@@ -63,23 +68,31 @@ final class RawMessageDeltaEvent implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param Delta|DeltaShape $delta
+     * @param MessageDeltaUsage|MessageDeltaUsageShape $usage
      */
-    public static function with(Delta $delta, MessageDeltaUsage $usage): self
-    {
-        $obj = new self;
+    public static function with(
+        Delta|array $delta,
+        MessageDeltaUsage|array $usage
+    ): self {
+        $self = new self;
 
-        $obj->delta = $delta;
-        $obj->usage = $usage;
+        $self['delta'] = $delta;
+        $self['usage'] = $usage;
 
-        return $obj;
+        return $self;
     }
 
-    public function withDelta(Delta $delta): self
+    /**
+     * @param Delta|DeltaShape $delta
+     */
+    public function withDelta(Delta|array $delta): self
     {
-        $obj = clone $this;
-        $obj->delta = $delta;
+        $self = clone $this;
+        $self['delta'] = $delta;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -92,12 +105,14 @@ final class RawMessageDeltaEvent implements BaseModel
      * For example, `output_tokens` will be non-zero, even for an empty string response from Claude.
      *
      * Total input tokens in a request is the summation of `input_tokens`, `cache_creation_input_tokens`, and `cache_read_input_tokens`.
+     *
+     * @param MessageDeltaUsage|MessageDeltaUsageShape $usage
      */
-    public function withUsage(MessageDeltaUsage $usage): self
+    public function withUsage(MessageDeltaUsage|array $usage): self
     {
-        $obj = clone $this;
-        $obj->usage = $usage;
+        $self = clone $this;
+        $self['usage'] = $usage;
 
-        return $obj;
+        return $self;
     }
 }

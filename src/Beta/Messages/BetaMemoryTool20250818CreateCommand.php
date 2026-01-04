@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818CreateCommandShape = array{
- *   command: "create", file_text: string, path: string
+ *   command: 'create', fileText: string, path: string
  * }
  */
 final class BetaMemoryTool20250818CreateCommand implements BaseModel
@@ -21,21 +21,21 @@ final class BetaMemoryTool20250818CreateCommand implements BaseModel
     /**
      * Command type identifier.
      *
-     * @var "create" $command
+     * @var 'create' $command
      */
-    #[Api]
+    #[Required]
     public string $command = 'create';
 
     /**
      * Content to write to the file.
      */
-    #[Api]
-    public string $file_text;
+    #[Required('file_text')]
+    public string $fileText;
 
     /**
      * Path where the file should be created.
      */
-    #[Api]
+    #[Required]
     public string $path;
 
     /**
@@ -43,7 +43,7 @@ final class BetaMemoryTool20250818CreateCommand implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaMemoryTool20250818CreateCommand::with(file_text: ..., path: ...)
+     * BetaMemoryTool20250818CreateCommand::with(fileText: ..., path: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -62,14 +62,14 @@ final class BetaMemoryTool20250818CreateCommand implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $file_text, string $path): self
+    public static function with(string $fileText, string $path): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->file_text = $file_text;
-        $obj->path = $path;
+        $self['fileText'] = $fileText;
+        $self['path'] = $path;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -77,10 +77,10 @@ final class BetaMemoryTool20250818CreateCommand implements BaseModel
      */
     public function withFileText(string $fileText): self
     {
-        $obj = clone $this;
-        $obj->file_text = $fileText;
+        $self = clone $this;
+        $self['fileText'] = $fileText;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -88,9 +88,9 @@ final class BetaMemoryTool20250818CreateCommand implements BaseModel
      */
     public function withPath(string $path): self
     {
-        $obj = clone $this;
-        $obj->path = $path;
+        $self = clone $this;
+        $self['path'] = $path;
 
-        return $obj;
+        return $self;
     }
 }

@@ -5,26 +5,25 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Files;
 
 use Anthropic\Beta\Files\DeletedFile\Type;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Concerns\SdkResponse;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type DeletedFileShape = array{id: string, type?: value-of<Type>|null}
+ * @phpstan-type DeletedFileShape = array{
+ *   id: string, type?: null|Type|value-of<Type>
+ * }
  */
-final class DeletedFile implements BaseModel, ResponseConverter
+final class DeletedFile implements BaseModel
 {
     /** @use SdkModel<DeletedFileShape> */
     use SdkModel;
 
-    use SdkResponse;
-
     /**
      * ID of the deleted file.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
@@ -34,7 +33,7 @@ final class DeletedFile implements BaseModel, ResponseConverter
      *
      * @var value-of<Type>|null $type
      */
-    #[Api(enum: Type::class, optional: true)]
+    #[Optional(enum: Type::class)]
     public ?string $type;
 
     /**
@@ -61,17 +60,17 @@ final class DeletedFile implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type|value-of<Type> $type
+     * @param Type|value-of<Type>|null $type
      */
     public static function with(string $id, Type|string|null $type = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->id = $id;
+        $self['id'] = $id;
 
-        null !== $type && $obj['type'] = $type;
+        null !== $type && $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -79,10 +78,10 @@ final class DeletedFile implements BaseModel, ResponseConverter
      */
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj->id = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -94,9 +93,9 @@ final class DeletedFile implements BaseModel, ResponseConverter
      */
     public function withType(Type|string $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 }

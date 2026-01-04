@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -19,13 +20,19 @@ use Anthropic\Messages\MessageCountTokensParams\System;
  *
  * @see Anthropic\Services\MessagesService::countTokens()
  *
+ * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
+ * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCountTokensParams\System
+ * @phpstan-import-type ThinkingConfigParamShape from \Anthropic\Messages\ThinkingConfigParam
+ * @phpstan-import-type ToolChoiceShape from \Anthropic\Messages\ToolChoice
+ * @phpstan-import-type MessageCountTokensToolShape from \Anthropic\Messages\MessageCountTokensTool
+ *
  * @phpstan-type MessageCountTokensParamsShape = array{
- *   messages: list<MessageParam>,
- *   model: string|Model,
- *   system?: string|list<TextBlockParam>,
- *   thinking?: ThinkingConfigEnabled|ThinkingConfigDisabled,
- *   tool_choice?: ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone,
- *   tools?: list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>,
+ *   messages: list<MessageParamShape>,
+ *   model: Model|value-of<Model>,
+ *   system?: SystemShape|null,
+ *   thinking?: ThinkingConfigParamShape|null,
+ *   toolChoice?: ToolChoiceShape|null,
+ *   tools?: list<MessageCountTokensToolShape>|null,
  * }
  */
 final class MessageCountTokensParams implements BaseModel
@@ -86,15 +93,15 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @var list<MessageParam> $messages
      */
-    #[Api(list: MessageParam::class)]
+    #[Required(list: MessageParam::class)]
     public array $messages;
 
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var string|value-of<Model> $model
+     * @var value-of<Model> $model
      */
-    #[Api(enum: Model::class)]
+    #[Required(enum: Model::class)]
     public string $model;
 
     /**
@@ -104,7 +111,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @var string|list<TextBlockParam>|null $system
      */
-    #[Api(union: System::class, optional: true)]
+    #[Optional(union: System::class)]
     public string|array|null $system;
 
     /**
@@ -114,14 +121,14 @@ final class MessageCountTokensParams implements BaseModel
      *
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
      */
-    #[Api(union: ThinkingConfigParam::class, optional: true)]
+    #[Optional(union: ThinkingConfigParam::class)]
     public ThinkingConfigEnabled|ThinkingConfigDisabled|null $thinking;
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      */
-    #[Api(union: ToolChoice::class, optional: true)]
-    public ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $tool_choice;
+    #[Optional('tool_choice', union: ToolChoice::class)]
+    public ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice;
 
     /**
      * Definitions of tools that the model may use.
@@ -188,7 +195,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @var list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305>|null $tools
      */
-    #[Api(list: MessageCountTokensTool::class, optional: true)]
+    #[Optional(list: MessageCountTokensTool::class)]
     public ?array $tools;
 
     /**
@@ -215,29 +222,32 @@ final class MessageCountTokensParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<MessageParam> $messages
-     * @param string|list<TextBlockParam> $system
-     * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
+     * @param list<MessageParamShape> $messages
+     * @param Model|value-of<Model> $model
+     * @param SystemShape|null $system
+     * @param ThinkingConfigParamShape|null $thinking
+     * @param ToolChoiceShape|null $toolChoice
+     * @param list<MessageCountTokensToolShape>|null $tools
      */
     public static function with(
         array $messages,
-        string|Model $model,
+        Model|string $model,
         string|array|null $system = null,
-        ThinkingConfigEnabled|ThinkingConfigDisabled|null $thinking = null,
-        ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $tool_choice = null,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|null $thinking = null,
+        ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->messages = $messages;
-        $obj->model = $model instanceof Model ? $model->value : $model;
+        $self['messages'] = $messages;
+        $self['model'] = $model;
 
-        null !== $system && $obj->system = $system;
-        null !== $thinking && $obj->thinking = $thinking;
-        null !== $tool_choice && $obj->tool_choice = $tool_choice;
-        null !== $tools && $obj->tools = $tools;
+        null !== $system && $self['system'] = $system;
+        null !== $thinking && $self['thinking'] = $thinking;
+        null !== $toolChoice && $self['toolChoice'] = $toolChoice;
+        null !== $tools && $self['tools'] = $tools;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -290,25 +300,27 @@ final class MessageCountTokensParams implements BaseModel
      *
      * There is a limit of 100,000 messages in a single request.
      *
-     * @param list<MessageParam> $messages
+     * @param list<MessageParamShape> $messages
      */
     public function withMessages(array $messages): self
     {
-        $obj = clone $this;
-        $obj->messages = $messages;
+        $self = clone $this;
+        $self['messages'] = $messages;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     *
+     * @param Model|value-of<Model> $model
      */
-    public function withModel(string|Model $model): self
+    public function withModel(Model|string $model): self
     {
-        $obj = clone $this;
-        $obj->model = $model instanceof Model ? $model->value : $model;
+        $self = clone $this;
+        $self['model'] = $model;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -316,14 +328,14 @@ final class MessageCountTokensParams implements BaseModel
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.claude.com/en/docs/system-prompts).
      *
-     * @param string|list<TextBlockParam> $system
+     * @param SystemShape $system
      */
     public function withSystem(string|array $system): self
     {
-        $obj = clone $this;
-        $obj->system = $system;
+        $self = clone $this;
+        $self['system'] = $system;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -332,26 +344,30 @@ final class MessageCountTokensParams implements BaseModel
      * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
      *
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
+     *
+     * @param ThinkingConfigParamShape $thinking
      */
     public function withThinking(
-        ThinkingConfigEnabled|ThinkingConfigDisabled $thinking
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled $thinking
     ): self {
-        $obj = clone $this;
-        $obj->thinking = $thinking;
+        $self = clone $this;
+        $self['thinking'] = $thinking;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
+     *
+     * @param ToolChoiceShape $toolChoice
      */
     public function withToolChoice(
-        ToolChoiceAuto|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone $toolChoice
+        ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone $toolChoice
     ): self {
-        $obj = clone $this;
-        $obj->tool_choice = $toolChoice;
+        $self = clone $this;
+        $self['toolChoice'] = $toolChoice;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -417,13 +433,13 @@ final class MessageCountTokensParams implements BaseModel
      *
      * See our [guide](https://docs.claude.com/en/docs/tool-use) for more details.
      *
-     * @param list<Tool|ToolBash20250124|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305> $tools
+     * @param list<MessageCountTokensToolShape> $tools
      */
     public function withTools(array $tools): self
     {
-        $obj = clone $this;
-        $obj->tools = $tools;
+        $self = clone $this;
+        $self['tools'] = $tools;
 
-        return $obj;
+        return $self;
     }
 }

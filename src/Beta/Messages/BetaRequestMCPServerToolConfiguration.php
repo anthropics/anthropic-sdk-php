@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaRequestMCPServerToolConfigurationShape = array{
- *   allowed_tools?: list<string>|null, enabled?: bool|null
+ *   allowedTools?: list<string>|null, enabled?: bool|null
  * }
  */
 final class BetaRequestMCPServerToolConfiguration implements BaseModel
@@ -18,11 +18,11 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
     /** @use SdkModel<BetaRequestMCPServerToolConfigurationShape> */
     use SdkModel;
 
-    /** @var list<string>|null $allowed_tools */
-    #[Api(list: 'string', nullable: true, optional: true)]
-    public ?array $allowed_tools;
+    /** @var list<string>|null $allowedTools */
+    #[Optional('allowed_tools', list: 'string', nullable: true)]
+    public ?array $allowedTools;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $enabled;
 
     public function __construct()
@@ -35,18 +35,18 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string>|null $allowed_tools
+     * @param list<string>|null $allowedTools
      */
     public static function with(
-        ?array $allowed_tools = null,
+        ?array $allowedTools = null,
         ?bool $enabled = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $allowed_tools && $obj->allowed_tools = $allowed_tools;
-        null !== $enabled && $obj->enabled = $enabled;
+        null !== $allowedTools && $self['allowedTools'] = $allowedTools;
+        null !== $enabled && $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -54,17 +54,17 @@ final class BetaRequestMCPServerToolConfiguration implements BaseModel
      */
     public function withAllowedTools(?array $allowedTools): self
     {
-        $obj = clone $this;
-        $obj->allowed_tools = $allowedTools;
+        $self = clone $this;
+        $self['allowedTools'] = $allowedTools;
 
-        return $obj;
+        return $self;
     }
 
     public function withEnabled(?bool $enabled): self
     {
-        $obj = clone $this;
-        $obj->enabled = $enabled;
+        $self = clone $this;
+        $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 }

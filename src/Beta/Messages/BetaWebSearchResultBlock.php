@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaWebSearchResultBlockShape = array{
- *   encrypted_content: string,
- *   page_age: string|null,
+ *   encryptedContent: string,
+ *   pageAge: string|null,
  *   title: string,
- *   type: "web_search_result",
+ *   type: 'web_search_result',
  *   url: string,
  * }
  */
@@ -22,20 +22,20 @@ final class BetaWebSearchResultBlock implements BaseModel
     /** @use SdkModel<BetaWebSearchResultBlockShape> */
     use SdkModel;
 
-    /** @var "web_search_result" $type */
-    #[Api]
+    /** @var 'web_search_result' $type */
+    #[Required]
     public string $type = 'web_search_result';
 
-    #[Api]
-    public string $encrypted_content;
+    #[Required('encrypted_content')]
+    public string $encryptedContent;
 
-    #[Api]
-    public ?string $page_age;
+    #[Required('page_age')]
+    public ?string $pageAge;
 
-    #[Api]
+    #[Required]
     public string $title;
 
-    #[Api]
+    #[Required]
     public string $url;
 
     /**
@@ -44,7 +44,7 @@ final class BetaWebSearchResultBlock implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaWebSearchResultBlock::with(
-     *   encrypted_content: ..., page_age: ..., title: ..., url: ...
+     *   encryptedContent: ..., pageAge: ..., title: ..., url: ...
      * )
      * ```
      *
@@ -69,50 +69,50 @@ final class BetaWebSearchResultBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $encrypted_content,
-        ?string $page_age,
+        string $encryptedContent,
+        ?string $pageAge,
         string $title,
         string $url
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->encrypted_content = $encrypted_content;
-        $obj->page_age = $page_age;
-        $obj->title = $title;
-        $obj->url = $url;
+        $self['encryptedContent'] = $encryptedContent;
+        $self['pageAge'] = $pageAge;
+        $self['title'] = $title;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 
     public function withEncryptedContent(string $encryptedContent): self
     {
-        $obj = clone $this;
-        $obj->encrypted_content = $encryptedContent;
+        $self = clone $this;
+        $self['encryptedContent'] = $encryptedContent;
 
-        return $obj;
+        return $self;
     }
 
     public function withPageAge(?string $pageAge): self
     {
-        $obj = clone $this;
-        $obj->page_age = $pageAge;
+        $self = clone $this;
+        $self['pageAge'] = $pageAge;
 
-        return $obj;
+        return $self;
     }
 
     public function withTitle(string $title): self
     {
-        $obj = clone $this;
-        $obj->title = $title;
+        $self = clone $this;
+        $self['title'] = $title;
 
-        return $obj;
+        return $self;
     }
 
     public function withURL(string $url): self
     {
-        $obj = clone $this;
-        $obj->url = $url;
+        $self = clone $this;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 }

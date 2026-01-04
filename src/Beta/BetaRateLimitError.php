@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaRateLimitErrorShape = array{
- *   message: string, type: "rate_limit_error"
+ *   message: string, type: 'rate_limit_error'
  * }
  */
 final class BetaRateLimitError implements BaseModel
@@ -18,11 +18,11 @@ final class BetaRateLimitError implements BaseModel
     /** @use SdkModel<BetaRateLimitErrorShape> */
     use SdkModel;
 
-    /** @var "rate_limit_error" $type */
-    #[Api]
+    /** @var 'rate_limit_error' $type */
+    #[Required]
     public string $type = 'rate_limit_error';
 
-    #[Api]
+    #[Required]
     public string $message;
 
     /**
@@ -51,18 +51,18 @@ final class BetaRateLimitError implements BaseModel
      */
     public static function with(string $message = 'Rate limited'): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->message = $message;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 
     public function withMessage(string $message): self
     {
-        $obj = clone $this;
-        $obj->message = $message;
+        $self = clone $this;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 }

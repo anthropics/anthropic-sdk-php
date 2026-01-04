@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ *
  * @phpstan-type BetaMCPToolUseBlockParamShape = array{
  *   id: string,
  *   input: array<string,mixed>,
  *   name: string,
- *   server_name: string,
- *   type: "mcp_tool_use",
- *   cache_control?: BetaCacheControlEphemeral|null,
+ *   serverName: string,
+ *   type: 'mcp_tool_use',
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  * }
  */
 final class BetaMCPToolUseBlockParam implements BaseModel
@@ -23,38 +26,38 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     /** @use SdkModel<BetaMCPToolUseBlockParamShape> */
     use SdkModel;
 
-    /** @var "mcp_tool_use" $type */
-    #[Api]
+    /** @var 'mcp_tool_use' $type */
+    #[Required]
     public string $type = 'mcp_tool_use';
 
-    #[Api]
+    #[Required]
     public string $id;
 
     /** @var array<string,mixed> $input */
-    #[Api(map: 'mixed')]
+    #[Required(map: 'mixed')]
     public array $input;
 
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
      * The name of the MCP server.
      */
-    #[Api]
-    public string $server_name;
+    #[Required('server_name')]
+    public string $serverName;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * `new BetaMCPToolUseBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaMCPToolUseBlockParam::with(id: ..., input: ..., name: ..., server_name: ...)
+     * BetaMCPToolUseBlockParam::with(id: ..., input: ..., name: ..., serverName: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -78,32 +81,33 @@ final class BetaMCPToolUseBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,mixed> $input
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
         string $id,
         array $input,
         string $name,
-        string $server_name,
-        ?BetaCacheControlEphemeral $cache_control = null,
+        string $serverName,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->id = $id;
-        $obj->input = $input;
-        $obj->name = $name;
-        $obj->server_name = $server_name;
+        $self['id'] = $id;
+        $self['input'] = $input;
+        $self['name'] = $name;
+        $self['serverName'] = $serverName;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj->id = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -111,18 +115,18 @@ final class BetaMCPToolUseBlockParam implements BaseModel
      */
     public function withInput(array $input): self
     {
-        $obj = clone $this;
-        $obj->input = $input;
+        $self = clone $this;
+        $self['input'] = $input;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj->name = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -130,21 +134,23 @@ final class BetaMCPToolUseBlockParam implements BaseModel
      */
     public function withServerName(string $serverName): self
     {
-        $obj = clone $this;
-        $obj->server_name = $serverName;
+        $self = clone $this;
+        $self['serverName'] = $serverName;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 }

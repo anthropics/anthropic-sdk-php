@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -12,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * The model will use the specified tool with `tool_choice.name`.
  *
  * @phpstan-type ToolChoiceToolShape = array{
- *   name: string, type: "tool", disable_parallel_tool_use?: bool|null
+ *   name: string, type: 'tool', disableParallelToolUse?: bool|null
  * }
  */
 final class ToolChoiceTool implements BaseModel
@@ -20,14 +21,14 @@ final class ToolChoiceTool implements BaseModel
     /** @use SdkModel<ToolChoiceToolShape> */
     use SdkModel;
 
-    /** @var "tool" $type */
-    #[Api]
+    /** @var 'tool' $type */
+    #[Required]
     public string $type = 'tool';
 
     /**
      * The name of the tool to use.
      */
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
@@ -35,8 +36,8 @@ final class ToolChoiceTool implements BaseModel
      *
      * Defaults to `false`. If set to `true`, the model will output exactly one tool use.
      */
-    #[Api(optional: true)]
-    public ?bool $disable_parallel_tool_use;
+    #[Optional('disable_parallel_tool_use')]
+    public ?bool $disableParallelToolUse;
 
     /**
      * `new ToolChoiceTool()` is missing required properties by the API.
@@ -64,15 +65,15 @@ final class ToolChoiceTool implements BaseModel
      */
     public static function with(
         string $name,
-        ?bool $disable_parallel_tool_use = null
+        ?bool $disableParallelToolUse = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->name = $name;
+        $self['name'] = $name;
 
-        null !== $disable_parallel_tool_use && $obj->disable_parallel_tool_use = $disable_parallel_tool_use;
+        null !== $disableParallelToolUse && $self['disableParallelToolUse'] = $disableParallelToolUse;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -80,10 +81,10 @@ final class ToolChoiceTool implements BaseModel
      */
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj->name = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -94,9 +95,9 @@ final class ToolChoiceTool implements BaseModel
     public function withDisableParallelToolUse(
         bool $disableParallelToolUse
     ): self {
-        $obj = clone $this;
-        $obj->disable_parallel_tool_use = $disableParallelToolUse;
+        $self = clone $this;
+        $self['disableParallelToolUse'] = $disableParallelToolUse;
 
-        return $obj;
+        return $self;
     }
 }

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818DeleteCommandShape = array{
- *   command: "delete", path: string
+ *   command: 'delete', path: string
  * }
  */
 final class BetaMemoryTool20250818DeleteCommand implements BaseModel
@@ -21,15 +21,15 @@ final class BetaMemoryTool20250818DeleteCommand implements BaseModel
     /**
      * Command type identifier.
      *
-     * @var "delete" $command
+     * @var 'delete' $command
      */
-    #[Api]
+    #[Required]
     public string $command = 'delete';
 
     /**
      * Path to the file or directory to delete.
      */
-    #[Api]
+    #[Required]
     public string $path;
 
     /**
@@ -58,11 +58,11 @@ final class BetaMemoryTool20250818DeleteCommand implements BaseModel
      */
     public static function with(string $path): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->path = $path;
+        $self['path'] = $path;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -70,9 +70,9 @@ final class BetaMemoryTool20250818DeleteCommand implements BaseModel
      */
     public function withPath(string $path): self
     {
-        $obj = clone $this;
-        $obj->path = $path;
+        $self = clone $this;
+        $self['path'] = $path;
 
-        return $obj;
+        return $self;
     }
 }

@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCitationPageLocationShape = array{
- *   cited_text: string,
- *   document_index: int,
- *   document_title: string|null,
- *   end_page_number: int,
- *   file_id: string|null,
- *   start_page_number: int,
- *   type: "page_location",
+ *   citedText: string,
+ *   documentIndex: int,
+ *   documentTitle: string|null,
+ *   endPageNumber: int,
+ *   fileID: string|null,
+ *   startPageNumber: int,
+ *   type: 'page_location',
  * }
  */
 final class BetaCitationPageLocation implements BaseModel
@@ -24,27 +24,27 @@ final class BetaCitationPageLocation implements BaseModel
     /** @use SdkModel<BetaCitationPageLocationShape> */
     use SdkModel;
 
-    /** @var "page_location" $type */
-    #[Api]
+    /** @var 'page_location' $type */
+    #[Required]
     public string $type = 'page_location';
 
-    #[Api]
-    public string $cited_text;
+    #[Required('cited_text')]
+    public string $citedText;
 
-    #[Api]
-    public int $document_index;
+    #[Required('document_index')]
+    public int $documentIndex;
 
-    #[Api]
-    public ?string $document_title;
+    #[Required('document_title')]
+    public ?string $documentTitle;
 
-    #[Api]
-    public int $end_page_number;
+    #[Required('end_page_number')]
+    public int $endPageNumber;
 
-    #[Api]
-    public ?string $file_id;
+    #[Required('file_id')]
+    public ?string $fileID;
 
-    #[Api]
-    public int $start_page_number;
+    #[Required('start_page_number')]
+    public int $startPageNumber;
 
     /**
      * `new BetaCitationPageLocation()` is missing required properties by the API.
@@ -52,12 +52,12 @@ final class BetaCitationPageLocation implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaCitationPageLocation::with(
-     *   cited_text: ...,
-     *   document_index: ...,
-     *   document_title: ...,
-     *   end_page_number: ...,
-     *   file_id: ...,
-     *   start_page_number: ...,
+     *   citedText: ...,
+     *   documentIndex: ...,
+     *   documentTitle: ...,
+     *   endPageNumber: ...,
+     *   fileID: ...,
+     *   startPageNumber: ...,
      * )
      * ```
      *
@@ -84,70 +84,70 @@ final class BetaCitationPageLocation implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $cited_text,
-        int $document_index,
-        ?string $document_title,
-        int $end_page_number,
-        ?string $file_id,
-        int $start_page_number,
+        string $citedText,
+        int $documentIndex,
+        ?string $documentTitle,
+        int $endPageNumber,
+        ?string $fileID,
+        int $startPageNumber,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->cited_text = $cited_text;
-        $obj->document_index = $document_index;
-        $obj->document_title = $document_title;
-        $obj->end_page_number = $end_page_number;
-        $obj->file_id = $file_id;
-        $obj->start_page_number = $start_page_number;
+        $self['citedText'] = $citedText;
+        $self['documentIndex'] = $documentIndex;
+        $self['documentTitle'] = $documentTitle;
+        $self['endPageNumber'] = $endPageNumber;
+        $self['fileID'] = $fileID;
+        $self['startPageNumber'] = $startPageNumber;
 
-        return $obj;
+        return $self;
     }
 
     public function withCitedText(string $citedText): self
     {
-        $obj = clone $this;
-        $obj->cited_text = $citedText;
+        $self = clone $this;
+        $self['citedText'] = $citedText;
 
-        return $obj;
+        return $self;
     }
 
     public function withDocumentIndex(int $documentIndex): self
     {
-        $obj = clone $this;
-        $obj->document_index = $documentIndex;
+        $self = clone $this;
+        $self['documentIndex'] = $documentIndex;
 
-        return $obj;
+        return $self;
     }
 
     public function withDocumentTitle(?string $documentTitle): self
     {
-        $obj = clone $this;
-        $obj->document_title = $documentTitle;
+        $self = clone $this;
+        $self['documentTitle'] = $documentTitle;
 
-        return $obj;
+        return $self;
     }
 
     public function withEndPageNumber(int $endPageNumber): self
     {
-        $obj = clone $this;
-        $obj->end_page_number = $endPageNumber;
+        $self = clone $this;
+        $self['endPageNumber'] = $endPageNumber;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileID(?string $fileID): self
     {
-        $obj = clone $this;
-        $obj->file_id = $fileID;
+        $self = clone $this;
+        $self['fileID'] = $fileID;
 
-        return $obj;
+        return $self;
     }
 
     public function withStartPageNumber(int $startPageNumber): self
     {
-        $obj = clone $this;
-        $obj->start_page_number = $startPageNumber;
+        $self = clone $this;
+        $self['startPageNumber'] = $startPageNumber;
 
-        return $obj;
+        return $self;
     }
 }

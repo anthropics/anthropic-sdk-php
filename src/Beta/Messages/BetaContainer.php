@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * Information about the container used in the request (for the code execution tool).
  *
+ * @phpstan-import-type BetaSkillShape from \Anthropic\Beta\Messages\BetaSkill
+ *
  * @phpstan-type BetaContainerShape = array{
- *   id: string, expires_at: \DateTimeInterface, skills: list<BetaSkill>|null
+ *   id: string, expiresAt: \DateTimeInterface, skills: list<BetaSkillShape>|null
  * }
  */
 final class BetaContainer implements BaseModel
@@ -23,21 +25,21 @@ final class BetaContainer implements BaseModel
     /**
      * Identifier for the container used in this request.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
      * The time at which the container will expire.
      */
-    #[Api]
-    public \DateTimeInterface $expires_at;
+    #[Required('expires_at')]
+    public \DateTimeInterface $expiresAt;
 
     /**
      * Skills loaded in the container.
      *
      * @var list<BetaSkill>|null $skills
      */
-    #[Api(list: BetaSkill::class)]
+    #[Required(list: BetaSkill::class)]
     public ?array $skills;
 
     /**
@@ -45,7 +47,7 @@ final class BetaContainer implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaContainer::with(id: ..., expires_at: ..., skills: ...)
+     * BetaContainer::with(id: ..., expiresAt: ..., skills: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -64,20 +66,20 @@ final class BetaContainer implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaSkill>|null $skills
+     * @param list<BetaSkillShape>|null $skills
      */
     public static function with(
         string $id,
-        \DateTimeInterface $expires_at,
+        \DateTimeInterface $expiresAt,
         ?array $skills
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->id = $id;
-        $obj->expires_at = $expires_at;
-        $obj->skills = $skills;
+        $self['id'] = $id;
+        $self['expiresAt'] = $expiresAt;
+        $self['skills'] = $skills;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -85,10 +87,10 @@ final class BetaContainer implements BaseModel
      */
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj->id = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -96,22 +98,22 @@ final class BetaContainer implements BaseModel
      */
     public function withExpiresAt(\DateTimeInterface $expiresAt): self
     {
-        $obj = clone $this;
-        $obj->expires_at = $expiresAt;
+        $self = clone $this;
+        $self['expiresAt'] = $expiresAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Skills loaded in the container.
      *
-     * @param list<BetaSkill>|null $skills
+     * @param list<BetaSkillShape>|null $skills
      */
     public function withSkills(?array $skills): self
     {
-        $obj = clone $this;
-        $obj->skills = $skills;
+        $self = clone $this;
+        $self['skills'] = $skills;
 
-        return $obj;
+        return $self;
     }
 }

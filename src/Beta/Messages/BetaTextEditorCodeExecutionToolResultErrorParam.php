@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaTextEditorCodeExecutionToolResultErrorParam\ErrorCode;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaTextEditorCodeExecutionToolResultErrorParamShape = array{
- *   error_code: value-of<ErrorCode>,
- *   type: "text_editor_code_execution_tool_result_error",
- *   error_message?: string|null,
+ *   errorCode: ErrorCode|value-of<ErrorCode>,
+ *   type: 'text_editor_code_execution_tool_result_error',
+ *   errorMessage?: string|null,
  * }
  */
 final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
@@ -21,23 +22,23 @@ final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
     /** @use SdkModel<BetaTextEditorCodeExecutionToolResultErrorParamShape> */
     use SdkModel;
 
-    /** @var "text_editor_code_execution_tool_result_error" $type */
-    #[Api]
+    /** @var 'text_editor_code_execution_tool_result_error' $type */
+    #[Required]
     public string $type = 'text_editor_code_execution_tool_result_error';
 
-    /** @var value-of<ErrorCode> $error_code */
-    #[Api(enum: ErrorCode::class)]
-    public string $error_code;
+    /** @var value-of<ErrorCode> $errorCode */
+    #[Required('error_code', enum: ErrorCode::class)]
+    public string $errorCode;
 
-    #[Api(nullable: true, optional: true)]
-    public ?string $error_message;
+    #[Optional('error_message', nullable: true)]
+    public ?string $errorMessage;
 
     /**
      * `new BetaTextEditorCodeExecutionToolResultErrorParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaTextEditorCodeExecutionToolResultErrorParam::with(error_code: ...)
+     * BetaTextEditorCodeExecutionToolResultErrorParam::with(errorCode: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -56,19 +57,19 @@ final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ErrorCode|value-of<ErrorCode> $error_code
+     * @param ErrorCode|value-of<ErrorCode> $errorCode
      */
     public static function with(
-        ErrorCode|string $error_code,
-        ?string $error_message = null
+        ErrorCode|string $errorCode,
+        ?string $errorMessage = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['error_code'] = $error_code;
+        $self['errorCode'] = $errorCode;
 
-        null !== $error_message && $obj->error_message = $error_message;
+        null !== $errorMessage && $self['errorMessage'] = $errorMessage;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -76,17 +77,17 @@ final class BetaTextEditorCodeExecutionToolResultErrorParam implements BaseModel
      */
     public function withErrorCode(ErrorCode|string $errorCode): self
     {
-        $obj = clone $this;
-        $obj['error_code'] = $errorCode;
+        $self = clone $this;
+        $self['errorCode'] = $errorCode;
 
-        return $obj;
+        return $self;
     }
 
     public function withErrorMessage(?string $errorMessage): self
     {
-        $obj = clone $this;
-        $obj->error_message = $errorMessage;
+        $self = clone $this;
+        $self['errorMessage'] = $errorMessage;
 
-        return $obj;
+        return $self;
     }
 }

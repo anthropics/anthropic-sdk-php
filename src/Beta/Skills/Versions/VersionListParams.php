@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Skills\Versions;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -16,7 +16,9 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\Skills\VersionsService::list()
  *
  * @phpstan-type VersionListParamsShape = array{
- *   limit?: int|null, page?: string|null, betas?: list<string|AnthropicBeta>
+ *   limit?: int|null,
+ *   page?: string|null,
+ *   betas?: list<AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
 final class VersionListParams implements BaseModel
@@ -30,21 +32,21 @@ final class VersionListParams implements BaseModel
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $limit;
 
     /**
      * Optionally set to the `next_page` token from the previous response.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $page;
 
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var list<string|value-of<AnthropicBeta>>|null $betas
+     * @var list<value-of<AnthropicBeta>>|null $betas
      */
-    #[Api(list: AnthropicBeta::class, optional: true)]
+    #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
     public function __construct()
@@ -57,20 +59,20 @@ final class VersionListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
         ?int $limit = null,
         ?string $page = null,
         ?array $betas = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $limit && $obj->limit = $limit;
-        null !== $page && $obj->page = $page;
-        null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        null !== $limit && $self['limit'] = $limit;
+        null !== $page && $self['page'] = $page;
+        null !== $betas && $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -80,10 +82,10 @@ final class VersionListParams implements BaseModel
      */
     public function withLimit(?int $limit): self
     {
-        $obj = clone $this;
-        $obj->limit = $limit;
+        $self = clone $this;
+        $self['limit'] = $limit;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -91,22 +93,22 @@ final class VersionListParams implements BaseModel
      */
     public function withPage(?string $page): self
     {
-        $obj = clone $this;
-        $obj->page = $page;
+        $self = clone $this;
+        $self['page'] = $page;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
      */
     public function withBetas(array $betas): self
     {
-        $obj = clone $this;
-        $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        $self = clone $this;
+        $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 }

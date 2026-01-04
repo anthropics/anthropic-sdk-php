@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaCodeExecutionToolResultErrorParamShape = array{
- *   error_code: value-of<BetaCodeExecutionToolResultErrorCode>,
- *   type: "code_execution_tool_result_error",
+ *   errorCode: BetaCodeExecutionToolResultErrorCode|value-of<BetaCodeExecutionToolResultErrorCode>,
+ *   type: 'code_execution_tool_result_error',
  * }
  */
 final class BetaCodeExecutionToolResultErrorParam implements BaseModel
@@ -19,20 +19,20 @@ final class BetaCodeExecutionToolResultErrorParam implements BaseModel
     /** @use SdkModel<BetaCodeExecutionToolResultErrorParamShape> */
     use SdkModel;
 
-    /** @var "code_execution_tool_result_error" $type */
-    #[Api]
+    /** @var 'code_execution_tool_result_error' $type */
+    #[Required]
     public string $type = 'code_execution_tool_result_error';
 
-    /** @var value-of<BetaCodeExecutionToolResultErrorCode> $error_code */
-    #[Api(enum: BetaCodeExecutionToolResultErrorCode::class)]
-    public string $error_code;
+    /** @var value-of<BetaCodeExecutionToolResultErrorCode> $errorCode */
+    #[Required('error_code', enum: BetaCodeExecutionToolResultErrorCode::class)]
+    public string $errorCode;
 
     /**
      * `new BetaCodeExecutionToolResultErrorParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaCodeExecutionToolResultErrorParam::with(error_code: ...)
+     * BetaCodeExecutionToolResultErrorParam::with(errorCode: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -51,16 +51,16 @@ final class BetaCodeExecutionToolResultErrorParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaCodeExecutionToolResultErrorCode|value-of<BetaCodeExecutionToolResultErrorCode> $error_code
+     * @param BetaCodeExecutionToolResultErrorCode|value-of<BetaCodeExecutionToolResultErrorCode> $errorCode
      */
     public static function with(
-        BetaCodeExecutionToolResultErrorCode|string $error_code
+        BetaCodeExecutionToolResultErrorCode|string $errorCode
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['error_code'] = $error_code;
+        $self['errorCode'] = $errorCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -69,9 +69,9 @@ final class BetaCodeExecutionToolResultErrorParam implements BaseModel
     public function withErrorCode(
         BetaCodeExecutionToolResultErrorCode|string $errorCode
     ): self {
-        $obj = clone $this;
-        $obj['error_code'] = $errorCode;
+        $self = clone $this;
+        $self['errorCode'] = $errorCode;
 
-        return $obj;
+        return $self;
     }
 }

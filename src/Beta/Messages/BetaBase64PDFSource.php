@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaBase64PDFSourceShape = array{
- *   data: string, media_type: "application/pdf", type: "base64"
+ *   data: string, mediaType: 'application/pdf', type: 'base64'
  * }
  */
 final class BetaBase64PDFSource implements BaseModel
@@ -18,15 +18,15 @@ final class BetaBase64PDFSource implements BaseModel
     /** @use SdkModel<BetaBase64PDFSourceShape> */
     use SdkModel;
 
-    /** @var "application/pdf" $media_type */
-    #[Api]
-    public string $media_type = 'application/pdf';
+    /** @var 'application/pdf' $mediaType */
+    #[Required('media_type')]
+    public string $mediaType = 'application/pdf';
 
-    /** @var "base64" $type */
-    #[Api]
+    /** @var 'base64' $type */
+    #[Required]
     public string $type = 'base64';
 
-    #[Api]
+    #[Required]
     public string $data;
 
     /**
@@ -55,18 +55,18 @@ final class BetaBase64PDFSource implements BaseModel
      */
     public static function with(string $data): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->data = $data;
+        $self['data'] = $data;
 
-        return $obj;
+        return $self;
     }
 
     public function withData(string $data): self
     {
-        $obj = clone $this;
-        $obj->data = $data;
+        $self = clone $this;
+        $self['data'] = $data;
 
-        return $obj;
+        return $self;
     }
 }

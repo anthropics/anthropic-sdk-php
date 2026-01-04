@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaTextEditorCodeExecutionStrReplaceResultBlockParamShape = array{
- *   type: "text_editor_code_execution_str_replace_result",
+ *   type: 'text_editor_code_execution_str_replace_result',
  *   lines?: list<string>|null,
- *   new_lines?: int|null,
- *   new_start?: int|null,
- *   old_lines?: int|null,
- *   old_start?: int|null,
+ *   newLines?: int|null,
+ *   newStart?: int|null,
+ *   oldLines?: int|null,
+ *   oldStart?: int|null,
  * }
  */
 final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements BaseModel
@@ -23,25 +24,25 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
     /** @use SdkModel<BetaTextEditorCodeExecutionStrReplaceResultBlockParamShape> */
     use SdkModel;
 
-    /** @var "text_editor_code_execution_str_replace_result" $type */
-    #[Api]
+    /** @var 'text_editor_code_execution_str_replace_result' $type */
+    #[Required]
     public string $type = 'text_editor_code_execution_str_replace_result';
 
     /** @var list<string>|null $lines */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $lines;
 
-    #[Api(nullable: true, optional: true)]
-    public ?int $new_lines;
+    #[Optional('new_lines', nullable: true)]
+    public ?int $newLines;
 
-    #[Api(nullable: true, optional: true)]
-    public ?int $new_start;
+    #[Optional('new_start', nullable: true)]
+    public ?int $newStart;
 
-    #[Api(nullable: true, optional: true)]
-    public ?int $old_lines;
+    #[Optional('old_lines', nullable: true)]
+    public ?int $oldLines;
 
-    #[Api(nullable: true, optional: true)]
-    public ?int $old_start;
+    #[Optional('old_start', nullable: true)]
+    public ?int $oldStart;
 
     public function __construct()
     {
@@ -57,20 +58,20 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
      */
     public static function with(
         ?array $lines = null,
-        ?int $new_lines = null,
-        ?int $new_start = null,
-        ?int $old_lines = null,
-        ?int $old_start = null,
+        ?int $newLines = null,
+        ?int $newStart = null,
+        ?int $oldLines = null,
+        ?int $oldStart = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $lines && $obj->lines = $lines;
-        null !== $new_lines && $obj->new_lines = $new_lines;
-        null !== $new_start && $obj->new_start = $new_start;
-        null !== $old_lines && $obj->old_lines = $old_lines;
-        null !== $old_start && $obj->old_start = $old_start;
+        null !== $lines && $self['lines'] = $lines;
+        null !== $newLines && $self['newLines'] = $newLines;
+        null !== $newStart && $self['newStart'] = $newStart;
+        null !== $oldLines && $self['oldLines'] = $oldLines;
+        null !== $oldStart && $self['oldStart'] = $oldStart;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -78,41 +79,41 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
      */
     public function withLines(?array $lines): self
     {
-        $obj = clone $this;
-        $obj->lines = $lines;
+        $self = clone $this;
+        $self['lines'] = $lines;
 
-        return $obj;
+        return $self;
     }
 
     public function withNewLines(?int $newLines): self
     {
-        $obj = clone $this;
-        $obj->new_lines = $newLines;
+        $self = clone $this;
+        $self['newLines'] = $newLines;
 
-        return $obj;
+        return $self;
     }
 
     public function withNewStart(?int $newStart): self
     {
-        $obj = clone $this;
-        $obj->new_start = $newStart;
+        $self = clone $this;
+        $self['newStart'] = $newStart;
 
-        return $obj;
+        return $self;
     }
 
     public function withOldLines(?int $oldLines): self
     {
-        $obj = clone $this;
-        $obj->old_lines = $oldLines;
+        $self = clone $this;
+        $self['oldLines'] = $oldLines;
 
-        return $obj;
+        return $self;
     }
 
     public function withOldStart(?int $oldStart): self
     {
-        $obj = clone $this;
-        $obj->old_start = $oldStart;
+        $self = clone $this;
+        $self['oldStart'] = $oldStart;
 
-        return $obj;
+        return $self;
     }
 }

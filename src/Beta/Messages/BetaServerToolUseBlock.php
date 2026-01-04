@@ -6,17 +6,19 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaServerToolUseBlock\Caller;
 use Anthropic\Beta\Messages\BetaServerToolUseBlock\Name;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type CallerShape from \Anthropic\Beta\Messages\BetaServerToolUseBlock\Caller
+ *
  * @phpstan-type BetaServerToolUseBlockShape = array{
  *   id: string,
- *   caller: BetaDirectCaller|BetaServerToolCaller,
+ *   caller: CallerShape,
  *   input: array<string,mixed>,
- *   name: value-of<Name>,
- *   type: "server_tool_use",
+ *   name: Name|value-of<Name>,
+ *   type: 'server_tool_use',
  * }
  */
 final class BetaServerToolUseBlock implements BaseModel
@@ -24,25 +26,25 @@ final class BetaServerToolUseBlock implements BaseModel
     /** @use SdkModel<BetaServerToolUseBlockShape> */
     use SdkModel;
 
-    /** @var "server_tool_use" $type */
-    #[Api]
+    /** @var 'server_tool_use' $type */
+    #[Required]
     public string $type = 'server_tool_use';
 
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
      * Tool invocation directly from the model.
      */
-    #[Api(union: Caller::class)]
+    #[Required(union: Caller::class)]
     public BetaDirectCaller|BetaServerToolCaller $caller;
 
     /** @var array<string,mixed> $input */
-    #[Api(map: 'mixed')]
+    #[Required(map: 'mixed')]
     public array $input;
 
     /** @var value-of<Name> $name */
-    #[Api(enum: Name::class)]
+    #[Required(enum: Name::class)]
     public string $name;
 
     /**
@@ -75,41 +77,44 @@ final class BetaServerToolUseBlock implements BaseModel
      *
      * @param array<string,mixed> $input
      * @param Name|value-of<Name> $name
+     * @param CallerShape $caller
      */
     public static function with(
         string $id,
         array $input,
         Name|string $name,
-        BetaDirectCaller|BetaServerToolCaller $caller = ['type' => 'direct'],
+        BetaDirectCaller|array|BetaServerToolCaller $caller = ['type' => 'direct'],
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->id = $id;
-        $obj->caller = $caller;
-        $obj->input = $input;
-        $obj['name'] = $name;
+        $self['id'] = $id;
+        $self['caller'] = $caller;
+        $self['input'] = $input;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj->id = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Tool invocation directly from the model.
+     *
+     * @param CallerShape $caller
      */
     public function withCaller(
-        BetaDirectCaller|BetaServerToolCaller $caller
+        BetaDirectCaller|array|BetaServerToolCaller $caller
     ): self {
-        $obj = clone $this;
-        $obj->caller = $caller;
+        $self = clone $this;
+        $self['caller'] = $caller;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -117,10 +122,10 @@ final class BetaServerToolUseBlock implements BaseModel
      */
     public function withInput(array $input): self
     {
-        $obj = clone $this;
-        $obj->input = $input;
+        $self = clone $this;
+        $self['input'] = $input;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -128,9 +133,9 @@ final class BetaServerToolUseBlock implements BaseModel
      */
     public function withName(Name|string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 }

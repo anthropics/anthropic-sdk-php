@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Batches;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type MessageBatchCanceledResultShape = array{type: "canceled"}
+ * @phpstan-type MessageBatchCanceledResultShape = array{type: 'canceled'}
  */
 final class MessageBatchCanceledResult implements BaseModel
 {
     /** @use SdkModel<MessageBatchCanceledResultShape> */
     use SdkModel;
 
-    /** @var "canceled" $type */
-    #[Api]
+    /** @var 'canceled' $type */
+    #[Required]
     public string $type = 'canceled';
 
     public function __construct()

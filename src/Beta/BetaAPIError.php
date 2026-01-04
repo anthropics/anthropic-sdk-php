@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaAPIErrorShape = array{message: string, type: "api_error"}
+ * @phpstan-type BetaAPIErrorShape = array{message: string, type: 'api_error'}
  */
 final class BetaAPIError implements BaseModel
 {
     /** @use SdkModel<BetaAPIErrorShape> */
     use SdkModel;
 
-    /** @var "api_error" $type */
-    #[Api]
+    /** @var 'api_error' $type */
+    #[Required]
     public string $type = 'api_error';
 
-    #[Api]
+    #[Required]
     public string $message;
 
     /**
@@ -49,18 +49,18 @@ final class BetaAPIError implements BaseModel
      */
     public static function with(string $message = 'Internal server error'): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->message = $message;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 
     public function withMessage(string $message): self
     {
-        $obj = clone $this;
-        $obj->message = $message;
+        $self = clone $this;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 }

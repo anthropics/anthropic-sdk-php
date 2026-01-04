@@ -12,6 +12,13 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * Processing result for this request.
  *
  * Contains a Message output if processing was successful, an error response if processing failed, or the reason why processing was not attempted, such as cancellation or expiration.
+ *
+ * @phpstan-import-type MessageBatchSucceededResultShape from \Anthropic\Messages\Batches\MessageBatchSucceededResult
+ * @phpstan-import-type MessageBatchErroredResultShape from \Anthropic\Messages\Batches\MessageBatchErroredResult
+ * @phpstan-import-type MessageBatchCanceledResultShape from \Anthropic\Messages\Batches\MessageBatchCanceledResult
+ * @phpstan-import-type MessageBatchExpiredResultShape from \Anthropic\Messages\Batches\MessageBatchExpiredResult
+ *
+ * @phpstan-type MessageBatchResultShape = MessageBatchSucceededResultShape|MessageBatchErroredResultShape|MessageBatchCanceledResultShape|MessageBatchExpiredResultShape
  */
 final class MessageBatchResult implements ConverterSource
 {

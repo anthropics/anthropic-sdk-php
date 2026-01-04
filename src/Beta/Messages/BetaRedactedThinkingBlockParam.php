@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaRedactedThinkingBlockParamShape = array{
- *   data: string, type: "redacted_thinking"
+ *   data: string, type: 'redacted_thinking'
  * }
  */
 final class BetaRedactedThinkingBlockParam implements BaseModel
@@ -18,11 +18,11 @@ final class BetaRedactedThinkingBlockParam implements BaseModel
     /** @use SdkModel<BetaRedactedThinkingBlockParamShape> */
     use SdkModel;
 
-    /** @var "redacted_thinking" $type */
-    #[Api]
+    /** @var 'redacted_thinking' $type */
+    #[Required]
     public string $type = 'redacted_thinking';
 
-    #[Api]
+    #[Required]
     public string $data;
 
     /**
@@ -51,18 +51,18 @@ final class BetaRedactedThinkingBlockParam implements BaseModel
      */
     public static function with(string $data): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->data = $data;
+        $self['data'] = $data;
 
-        return $obj;
+        return $self;
     }
 
     public function withData(string $data): self
     {
-        $obj = clone $this;
-        $obj->data = $data;
+        $self = clone $this;
+        $self['data'] = $data;
 
-        return $obj;
+        return $self;
     }
 }

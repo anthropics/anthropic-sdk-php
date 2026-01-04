@@ -33,6 +33,32 @@ final class Util
         return get_object_vars($object);
     }
 
+    public static function machtype(): string
+    {
+        $arch = php_uname('m');
+
+        return match (true) {
+            str_contains($arch, 'aarch64'), str_contains($arch, 'arm64') => 'arm64',
+            str_contains($arch, 'x86_64'), str_contains($arch, 'amd64') => 'x64',
+            str_contains($arch, 'i386'), str_contains($arch, 'i686') => 'x32',
+            str_contains($arch, 'arm') => 'arm',
+            default => 'unknown',
+        };
+    }
+
+    public static function ostype(): string
+    {
+        return match ($os = strtolower(PHP_OS_FAMILY)) {
+            'linux' => 'Linux',
+            'darwin' => 'MacOS',
+            'windows' => 'Windows',
+            'solaris' => 'Solaris',
+            // @phpstan-ignore-next-line match.alwaysFalse
+            'bsd', 'freebsd', 'openbsd' => 'BSD',
+            default => "Other:{$os}",
+        };
+    }
+
     /**
      * @template T
      *
@@ -59,6 +85,43 @@ final class Util
     public static function array_filter_omit(array $arr): array
     {
         return array_filter($arr, fn ($v, $_) => OMIT !== $v, mode: ARRAY_FILTER_USE_BOTH);
+    }
+
+    public static function strVal(mixed $value): string
+    {
+        if (is_bool($value)) {
+            return $value ? 'true' : 'false';
+        }
+
+        if (is_object($value) && is_a($value, class: \DateTimeInterface::class)) {
+            return date_format($value, format: \DateTimeInterface::RFC3339);
+        }
+
+        // @phpstan-ignore-next-line argument.type
+        return strval($value);
+    }
+
+    /**
+     * @param callable $callback
+     */
+    public static function mapRecursive(mixed $callback, mixed $value): mixed
+    {
+        $mapped = match (true) {
+            is_array($value) => array_map(static fn ($v) => self::mapRecursive($callback, value: $v), $value),
+            default => $value,
+        };
+
+        return $callback($mapped);
+    }
+
+    public static function removeNulls(mixed $value): mixed
+    {
+        $mapped = self::mapRecursive(
+            static fn ($vs) => is_array($vs) && !array_is_list($vs) ? array_filter($vs, callback: static fn ($v) => !is_null($v)) : $vs,
+            value: $value
+        );
+
+        return $mapped;
     }
 
     /**
@@ -101,8 +164,9 @@ final class Util
         }
 
         [$template] = $path;
+        $mapped = array_map(static fn ($s) => rawurlencode(self::strVal($s)), array: array_slice($path, 1));
 
-        return sprintf($template, ...array_map('rawurlencode', array: array_slice($path, 1)));
+        return sprintf($template, ...$mapped);
     }
 
     /**
@@ -134,8 +198,14 @@ final class Util
         parse_str($base->getQuery(), $q1);
         parse_str($parsed['query'] ?? '', $q2);
 
-        $merged_query = array_merge_recursive($q1, $q2, $query);
-        $qs = http_build_query($merged_query, encoding_type: PHP_QUERY_RFC3986);
+        $mergedQuery = array_merge_recursive($q1, $q2, $query);
+
+        /** @var array<string,mixed> */
+        $normalizedQuery = self::mapRecursive(
+            static fn ($v) => is_bool($v) || is_numeric($v) ? self::strVal($v) : $v,
+            value: $mergedQuery
+        );
+        $qs = http_build_query($normalizedQuery, encoding_type: PHP_QUERY_RFC3986);
 
         return $base->withQuery($qs);
     }
@@ -152,11 +222,7 @@ final class Util
                 /** @var RequestInterface */
                 $req = $req->withoutHeader($name);
             } else {
-                $value = is_int($value)
-                            ? (string) $value
-                            : (is_array($value)
-                            ? array_map(static fn ($v) => (string) $v, array: $value)
-                            : $value);
+                $value = is_array($value) ? array_map(static fn ($v) => self::strVal($v), array: $value) : self::strVal($value);
 
                 /** @var RequestInterface */
                 $req = $req->withHeader($name, $value);
@@ -219,6 +285,13 @@ final class Util
 
         if (is_resource($body)) {
             $stream = $factory->createStreamFromResource($body);
+
+            // @var RequestInterface
+            return $req->withBody($stream);
+        }
+
+        if (is_string($body)) {
+            $stream = $factory->createStream($body);
 
             // @var RequestInterface
             return $req->withBody($stream);
@@ -377,7 +450,7 @@ final class Util
         } elseif (is_string($val) || is_numeric($val) || is_bool($val)) {
             yield sprintf($contentLine, $contentType ?? 'text/plain');
 
-            yield (string) $val;
+            yield self::strVal($val);
         } else {
             yield sprintf($contentLine, $contentType ?? 'application/json');
 
@@ -403,7 +476,7 @@ final class Util
         yield 'Content-Disposition: form-data';
 
         if (!is_null($key)) {
-            $name = rawurlencode($key);
+            $name = rawurlencode(self::strVal($key));
 
             yield "; name=\"{$name}\"";
         }

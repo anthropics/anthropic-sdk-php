@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818StrReplaceCommandShape = array{
- *   command: "str_replace", new_str: string, old_str: string, path: string
+ *   command: 'str_replace', newStr: string, oldStr: string, path: string
  * }
  */
 final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
@@ -21,27 +21,27 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
     /**
      * Command type identifier.
      *
-     * @var "str_replace" $command
+     * @var 'str_replace' $command
      */
-    #[Api]
+    #[Required]
     public string $command = 'str_replace';
 
     /**
      * Text to replace with.
      */
-    #[Api]
-    public string $new_str;
+    #[Required('new_str')]
+    public string $newStr;
 
     /**
      * Text to search for and replace.
      */
-    #[Api]
-    public string $old_str;
+    #[Required('old_str')]
+    public string $oldStr;
 
     /**
      * Path to the file where text should be replaced.
      */
-    #[Api]
+    #[Required]
     public string $path;
 
     /**
@@ -50,7 +50,7 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaMemoryTool20250818StrReplaceCommand::with(
-     *   new_str: ..., old_str: ..., path: ...
+     *   newStr: ..., oldStr: ..., path: ...
      * )
      * ```
      *
@@ -74,17 +74,17 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $new_str,
-        string $old_str,
+        string $newStr,
+        string $oldStr,
         string $path
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->new_str = $new_str;
-        $obj->old_str = $old_str;
-        $obj->path = $path;
+        $self['newStr'] = $newStr;
+        $self['oldStr'] = $oldStr;
+        $self['path'] = $path;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -92,10 +92,10 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
      */
     public function withNewStr(string $newStr): self
     {
-        $obj = clone $this;
-        $obj->new_str = $newStr;
+        $self = clone $this;
+        $self['newStr'] = $newStr;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -103,10 +103,10 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
      */
     public function withOldStr(string $oldStr): self
     {
-        $obj = clone $this;
-        $obj->old_str = $oldStr;
+        $self = clone $this;
+        $self['oldStr'] = $oldStr;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -114,9 +114,9 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
      */
     public function withPath(string $path): self
     {
-        $obj = clone $this;
-        $obj->path = $path;
+        $self = clone $this;
+        $self['path'] = $path;
 
-        return $obj;
+        return $self;
     }
 }

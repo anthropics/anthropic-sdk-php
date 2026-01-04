@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type NotFoundErrorShape = array{
- *   message: string, type: "not_found_error"
+ *   message: string, type: 'not_found_error'
  * }
  */
 final class NotFoundError implements BaseModel
@@ -18,11 +18,11 @@ final class NotFoundError implements BaseModel
     /** @use SdkModel<NotFoundErrorShape> */
     use SdkModel;
 
-    /** @var "not_found_error" $type */
-    #[Api]
+    /** @var 'not_found_error' $type */
+    #[Required]
     public string $type = 'not_found_error';
 
-    #[Api]
+    #[Required]
     public string $message;
 
     /**
@@ -51,18 +51,18 @@ final class NotFoundError implements BaseModel
      */
     public static function with(string $message = 'Not found'): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->message = $message;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 
     public function withMessage(string $message): self
     {
-        $obj = clone $this;
-        $obj->message = $message;
+        $self = clone $this;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 }

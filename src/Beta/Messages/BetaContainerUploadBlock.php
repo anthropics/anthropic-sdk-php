@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * Response model for a file uploaded to the container.
  *
  * @phpstan-type BetaContainerUploadBlockShape = array{
- *   file_id: string, type: "container_upload"
+ *   fileID: string, type: 'container_upload'
  * }
  */
 final class BetaContainerUploadBlock implements BaseModel
@@ -20,19 +20,19 @@ final class BetaContainerUploadBlock implements BaseModel
     /** @use SdkModel<BetaContainerUploadBlockShape> */
     use SdkModel;
 
-    /** @var "container_upload" $type */
-    #[Api]
+    /** @var 'container_upload' $type */
+    #[Required]
     public string $type = 'container_upload';
 
-    #[Api]
-    public string $file_id;
+    #[Required('file_id')]
+    public string $fileID;
 
     /**
      * `new BetaContainerUploadBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaContainerUploadBlock::with(file_id: ...)
+     * BetaContainerUploadBlock::with(fileID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -51,20 +51,20 @@ final class BetaContainerUploadBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $file_id): self
+    public static function with(string $fileID): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->file_id = $file_id;
+        $self['fileID'] = $fileID;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileID(string $fileID): self
     {
-        $obj = clone $this;
-        $obj->file_id = $fileID;
+        $self = clone $this;
+        $self['fileID'] = $fileID;
 
-        return $obj;
+        return $self;
     }
 }

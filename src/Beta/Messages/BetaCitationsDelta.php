@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaCitationsDelta\Citation;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type CitationShape from \Anthropic\Beta\Messages\BetaCitationsDelta\Citation
+ *
  * @phpstan-type BetaCitationsDeltaShape = array{
- *   citation: BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation,
- *   type: "citations_delta",
+ *   citation: CitationShape, type: 'citations_delta'
  * }
  */
 final class BetaCitationsDelta implements BaseModel
@@ -20,11 +21,11 @@ final class BetaCitationsDelta implements BaseModel
     /** @use SdkModel<BetaCitationsDeltaShape> */
     use SdkModel;
 
-    /** @var "citations_delta" $type */
-    #[Api]
+    /** @var 'citations_delta' $type */
+    #[Required]
     public string $type = 'citations_delta';
 
-    #[Api(union: Citation::class)]
+    #[Required(union: Citation::class)]
     public BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation $citation;
 
     /**
@@ -50,23 +51,28 @@ final class BetaCitationsDelta implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param CitationShape $citation
      */
     public static function with(
-        BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation $citation,
+        BetaCitationCharLocation|array|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation $citation,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->citation = $citation;
+        $self['citation'] = $citation;
 
-        return $obj;
+        return $self;
     }
 
+    /**
+     * @param CitationShape $citation
+     */
     public function withCitation(
-        BetaCitationCharLocation|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation $citation,
+        BetaCitationCharLocation|array|BetaCitationPageLocation|BetaCitationContentBlockLocation|BetaCitationsWebSearchResultLocation|BetaCitationSearchResultLocation $citation,
     ): self {
-        $obj = clone $this;
-        $obj->citation = $citation;
+        $self = clone $this;
+        $self['citation'] = $citation;
 
-        return $obj;
+        return $self;
     }
 }

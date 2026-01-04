@@ -15,7 +15,7 @@ trait SdkUnion
 {
     private static Converter $converter;
 
-    public static function discriminator(): ?string // @phpstan-ignore-line
+    public static function discriminator(): ?string
     {
         return null;
     }
@@ -34,7 +34,6 @@ trait SdkUnion
             return static::$converter;
         }
 
-        // @phpstan-ignore-next-line
         return static::$converter = new UnionOf(discriminator: static::discriminator(), variants: static::variants());
     }
 }

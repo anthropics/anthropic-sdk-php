@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Anthropic;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type ErrorObjectShape from \Anthropic\ErrorObject
+ *
  * @phpstan-type ErrorResponseShape = array{
- *   error: InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError,
- *   request_id: string|null,
- *   type: "error",
+ *   error: ErrorObjectShape, requestID: string|null, type: 'error'
  * }
  */
 final class ErrorResponse implements BaseModel
@@ -20,22 +20,22 @@ final class ErrorResponse implements BaseModel
     /** @use SdkModel<ErrorResponseShape> */
     use SdkModel;
 
-    /** @var "error" $type */
-    #[Api]
+    /** @var 'error' $type */
+    #[Required]
     public string $type = 'error';
 
-    #[Api(union: ErrorObject::class)]
+    #[Required(union: ErrorObject::class)]
     public InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error;
 
-    #[Api]
-    public ?string $request_id;
+    #[Required('request_id')]
+    public ?string $requestID;
 
     /**
      * `new ErrorResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ErrorResponse::with(error: ..., request_id: ...)
+     * ErrorResponse::with(error: ..., requestID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -53,33 +53,38 @@ final class ErrorResponse implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param ErrorObjectShape $error
      */
     public static function with(
-        InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error,
-        ?string $request_id,
+        InvalidRequestError|array|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error,
+        ?string $requestID,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->error = $error;
-        $obj->request_id = $request_id;
+        $self['error'] = $error;
+        $self['requestID'] = $requestID;
 
-        return $obj;
+        return $self;
     }
 
+    /**
+     * @param ErrorObjectShape $error
+     */
     public function withError(
-        InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error,
+        InvalidRequestError|array|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error,
     ): self {
-        $obj = clone $this;
-        $obj->error = $error;
+        $self = clone $this;
+        $self['error'] = $error;
 
-        return $obj;
+        return $self;
     }
 
     public function withRequestID(?string $requestID): self
     {
-        $obj = clone $this;
-        $obj->request_id = $requestID;
+        $self = clone $this;
+        $self['requestID'] = $requestID;
 
-        return $obj;
+        return $self;
     }
 }

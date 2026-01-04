@@ -14,7 +14,8 @@ final class ListOf implements Converter
 {
     use ArrayOf;
 
-    private function empty(): array|object // @phpstan-ignore-line
+    // @phpstan-ignore-next-line missingType.iterableValue
+    private function empty(): array|object
     {
         return [];
     }

@@ -5,17 +5,21 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaRequestMCPToolResultBlockParam\Content;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaRequestMCPToolResultBlockParam\Content
+ *
  * @phpstan-type BetaRequestMCPToolResultBlockParamShape = array{
- *   tool_use_id: string,
- *   type: "mcp_tool_result",
- *   cache_control?: BetaCacheControlEphemeral|null,
- *   content?: string|null|list<BetaTextBlockParam>,
- *   is_error?: bool|null,
+ *   toolUseID: string,
+ *   type: 'mcp_tool_result',
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
+ *   content?: ContentShape|null,
+ *   isError?: bool|null,
  * }
  */
 final class BetaRequestMCPToolResultBlockParam implements BaseModel
@@ -23,32 +27,32 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
     /** @use SdkModel<BetaRequestMCPToolResultBlockParamShape> */
     use SdkModel;
 
-    /** @var "mcp_tool_result" $type */
-    #[Api]
+    /** @var 'mcp_tool_result' $type */
+    #[Required]
     public string $type = 'mcp_tool_result';
 
-    #[Api]
-    public string $tool_use_id;
+    #[Required('tool_use_id')]
+    public string $toolUseID;
 
     /**
      * Create a cache control breakpoint at this content block.
      */
-    #[Api(nullable: true, optional: true)]
-    public ?BetaCacheControlEphemeral $cache_control;
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /** @var string|list<BetaTextBlockParam>|null $content */
-    #[Api(union: Content::class, optional: true)]
+    #[Optional(union: Content::class)]
     public string|array|null $content;
 
-    #[Api(optional: true)]
-    public ?bool $is_error;
+    #[Optional('is_error')]
+    public ?bool $isError;
 
     /**
      * `new BetaRequestMCPToolResultBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaRequestMCPToolResultBlockParam::with(tool_use_id: ...)
+     * BetaRequestMCPToolResultBlockParam::with(toolUseID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -67,61 +71,64 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|list<BetaTextBlockParam> $content
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param ContentShape|null $content
      */
     public static function with(
-        string $tool_use_id,
-        ?BetaCacheControlEphemeral $cache_control = null,
+        string $toolUseID,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
         string|array|null $content = null,
-        ?bool $is_error = null,
+        ?bool $isError = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->tool_use_id = $tool_use_id;
+        $self['toolUseID'] = $toolUseID;
 
-        null !== $cache_control && $obj->cache_control = $cache_control;
-        null !== $content && $obj->content = $content;
-        null !== $is_error && $obj->is_error = $is_error;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $content && $self['content'] = $content;
+        null !== $isError && $self['isError'] = $isError;
 
-        return $obj;
+        return $self;
     }
 
     public function withToolUseID(string $toolUseID): self
     {
-        $obj = clone $this;
-        $obj->tool_use_id = $toolUseID;
+        $self = clone $this;
+        $self['toolUseID'] = $toolUseID;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Create a cache control breakpoint at this content block.
+     *
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public function withCacheControl(
-        ?BetaCacheControlEphemeral $cacheControl
+        BetaCacheControlEphemeral|array|null $cacheControl
     ): self {
-        $obj = clone $this;
-        $obj->cache_control = $cacheControl;
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
-        return $obj;
+        return $self;
     }
 
     /**
-     * @param string|list<BetaTextBlockParam> $content
+     * @param ContentShape $content
      */
     public function withContent(string|array $content): self
     {
-        $obj = clone $this;
-        $obj->content = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     public function withIsError(bool $isError): self
     {
-        $obj = clone $this;
-        $obj->is_error = $isError;
+        $self = clone $this;
+        $self['isError'] = $isError;
 
-        return $obj;
+        return $self;
     }
 }

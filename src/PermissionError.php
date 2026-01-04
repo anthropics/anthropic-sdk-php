@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type PermissionErrorShape = array{
- *   message: string, type: "permission_error"
+ *   message: string, type: 'permission_error'
  * }
  */
 final class PermissionError implements BaseModel
@@ -18,11 +18,11 @@ final class PermissionError implements BaseModel
     /** @use SdkModel<PermissionErrorShape> */
     use SdkModel;
 
-    /** @var "permission_error" $type */
-    #[Api]
+    /** @var 'permission_error' $type */
+    #[Required]
     public string $type = 'permission_error';
 
-    #[Api]
+    #[Required]
     public string $message;
 
     /**
@@ -51,18 +51,18 @@ final class PermissionError implements BaseModel
      */
     public static function with(string $message = 'Permission denied'): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->message = $message;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 
     public function withMessage(string $message): self
     {
-        $obj = clone $this;
-        $obj->message = $message;
+        $self = clone $this;
+        $self['message'] = $message;
 
-        return $obj;
+        return $self;
     }
 }

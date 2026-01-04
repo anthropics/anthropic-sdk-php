@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaMemoryTool20250818ViewCommandShape = array{
- *   command: "view", path: string, view_range?: list<int>|null
+ *   command: 'view', path: string, viewRange?: list<int>|null
  * }
  */
 final class BetaMemoryTool20250818ViewCommand implements BaseModel
@@ -21,24 +22,24 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
     /**
      * Command type identifier.
      *
-     * @var "view" $command
+     * @var 'view' $command
      */
-    #[Api]
+    #[Required]
     public string $command = 'view';
 
     /**
      * Path to directory or file to view.
      */
-    #[Api]
+    #[Required]
     public string $path;
 
     /**
      * Optional line range for viewing specific lines.
      *
-     * @var list<int>|null $view_range
+     * @var list<int>|null $viewRange
      */
-    #[Api(list: 'int', optional: true)]
-    public ?array $view_range;
+    #[Optional('view_range', list: 'int')]
+    public ?array $viewRange;
 
     /**
      * `new BetaMemoryTool20250818ViewCommand()` is missing required properties by the API.
@@ -64,17 +65,17 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<int> $view_range
+     * @param list<int>|null $viewRange
      */
-    public static function with(string $path, ?array $view_range = null): self
+    public static function with(string $path, ?array $viewRange = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->path = $path;
+        $self['path'] = $path;
 
-        null !== $view_range && $obj->view_range = $view_range;
+        null !== $viewRange && $self['viewRange'] = $viewRange;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -82,10 +83,10 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
      */
     public function withPath(string $path): self
     {
-        $obj = clone $this;
-        $obj->path = $path;
+        $self = clone $this;
+        $self['path'] = $path;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -95,9 +96,9 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
      */
     public function withViewRange(array $viewRange): self
     {
-        $obj = clone $this;
-        $obj->view_range = $viewRange;
+        $self = clone $this;
+        $self['viewRange'] = $viewRange;
 
-        return $obj;
+        return $self;
     }
 }

@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaTextEditorCodeExecutionViewResultBlock\FileType;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaTextEditorCodeExecutionViewResultBlockShape = array{
  *   content: string,
- *   file_type: value-of<FileType>,
- *   num_lines: int|null,
- *   start_line: int|null,
- *   total_lines: int|null,
- *   type: "text_editor_code_execution_view_result",
+ *   fileType: FileType|value-of<FileType>,
+ *   numLines: int|null,
+ *   startLine: int|null,
+ *   totalLines: int|null,
+ *   type: 'text_editor_code_execution_view_result',
  * }
  */
 final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
@@ -24,25 +24,25 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
     /** @use SdkModel<BetaTextEditorCodeExecutionViewResultBlockShape> */
     use SdkModel;
 
-    /** @var "text_editor_code_execution_view_result" $type */
-    #[Api]
+    /** @var 'text_editor_code_execution_view_result' $type */
+    #[Required]
     public string $type = 'text_editor_code_execution_view_result';
 
-    #[Api]
+    #[Required]
     public string $content;
 
-    /** @var value-of<FileType> $file_type */
-    #[Api(enum: FileType::class)]
-    public string $file_type;
+    /** @var value-of<FileType> $fileType */
+    #[Required('file_type', enum: FileType::class)]
+    public string $fileType;
 
-    #[Api]
-    public ?int $num_lines;
+    #[Required('num_lines')]
+    public ?int $numLines;
 
-    #[Api]
-    public ?int $start_line;
+    #[Required('start_line')]
+    public ?int $startLine;
 
-    #[Api]
-    public ?int $total_lines;
+    #[Required('total_lines')]
+    public ?int $totalLines;
 
     /**
      * `new BetaTextEditorCodeExecutionViewResultBlock()` is missing required properties by the API.
@@ -50,11 +50,7 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaTextEditorCodeExecutionViewResultBlock::with(
-     *   content: ...,
-     *   file_type: ...,
-     *   num_lines: ...,
-     *   start_line: ...,
-     *   total_lines: ...,
+     *   content: ..., fileType: ..., numLines: ..., startLine: ..., totalLines: ...
      * )
      * ```
      *
@@ -79,32 +75,32 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param FileType|value-of<FileType> $file_type
+     * @param FileType|value-of<FileType> $fileType
      */
     public static function with(
         string $content,
-        FileType|string $file_type,
-        ?int $num_lines,
-        ?int $start_line,
-        ?int $total_lines,
+        FileType|string $fileType,
+        ?int $numLines,
+        ?int $startLine,
+        ?int $totalLines,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->content = $content;
-        $obj['file_type'] = $file_type;
-        $obj->num_lines = $num_lines;
-        $obj->start_line = $start_line;
-        $obj->total_lines = $total_lines;
+        $self['content'] = $content;
+        $self['fileType'] = $fileType;
+        $self['numLines'] = $numLines;
+        $self['startLine'] = $startLine;
+        $self['totalLines'] = $totalLines;
 
-        return $obj;
+        return $self;
     }
 
     public function withContent(string $content): self
     {
-        $obj = clone $this;
-        $obj->content = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -112,33 +108,33 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
      */
     public function withFileType(FileType|string $fileType): self
     {
-        $obj = clone $this;
-        $obj['file_type'] = $fileType;
+        $self = clone $this;
+        $self['fileType'] = $fileType;
 
-        return $obj;
+        return $self;
     }
 
     public function withNumLines(?int $numLines): self
     {
-        $obj = clone $this;
-        $obj->num_lines = $numLines;
+        $self = clone $this;
+        $self['numLines'] = $numLines;
 
-        return $obj;
+        return $self;
     }
 
     public function withStartLine(?int $startLine): self
     {
-        $obj = clone $this;
-        $obj->start_line = $startLine;
+        $self = clone $this;
+        $self['startLine'] = $startLine;
 
-        return $obj;
+        return $self;
     }
 
     public function withTotalLines(?int $totalLines): self
     {
-        $obj = clone $this;
-        $obj->total_lines = $totalLines;
+        $self = clone $this;
+        $self['totalLines'] = $totalLines;
 
-        return $obj;
+        return $self;
     }
 }

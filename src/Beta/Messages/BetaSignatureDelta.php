@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaSignatureDeltaShape = array{
- *   signature: string, type: "signature_delta"
+ *   signature: string, type: 'signature_delta'
  * }
  */
 final class BetaSignatureDelta implements BaseModel
@@ -18,11 +18,11 @@ final class BetaSignatureDelta implements BaseModel
     /** @use SdkModel<BetaSignatureDeltaShape> */
     use SdkModel;
 
-    /** @var "signature_delta" $type */
-    #[Api]
+    /** @var 'signature_delta' $type */
+    #[Required]
     public string $type = 'signature_delta';
 
-    #[Api]
+    #[Required]
     public string $signature;
 
     /**
@@ -51,18 +51,18 @@ final class BetaSignatureDelta implements BaseModel
      */
     public static function with(string $signature): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->signature = $signature;
+        $self['signature'] = $signature;
 
-        return $obj;
+        return $self;
     }
 
     public function withSignature(string $signature): self
     {
-        $obj = clone $this;
-        $obj->signature = $signature;
+        $self = clone $this;
+        $self['signature'] = $signature;
 
-        return $obj;
+        return $self;
     }
 }

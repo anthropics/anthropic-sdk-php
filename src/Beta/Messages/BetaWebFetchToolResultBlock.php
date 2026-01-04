@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaWebFetchToolResultBlock\Content
+ *
  * @phpstan-type BetaWebFetchToolResultBlockShape = array{
- *   content: BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock,
- *   tool_use_id: string,
- *   type: "web_fetch_tool_result",
+ *   content: ContentShape, toolUseID: string, type: 'web_fetch_tool_result'
  * }
  */
 final class BetaWebFetchToolResultBlock implements BaseModel
@@ -20,22 +20,22 @@ final class BetaWebFetchToolResultBlock implements BaseModel
     /** @use SdkModel<BetaWebFetchToolResultBlockShape> */
     use SdkModel;
 
-    /** @var "web_fetch_tool_result" $type */
-    #[Api]
+    /** @var 'web_fetch_tool_result' $type */
+    #[Required]
     public string $type = 'web_fetch_tool_result';
 
-    #[Api]
+    #[Required]
     public BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock $content;
 
-    #[Api]
-    public string $tool_use_id;
+    #[Required('tool_use_id')]
+    public string $toolUseID;
 
     /**
      * `new BetaWebFetchToolResultBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaWebFetchToolResultBlock::with(content: ..., tool_use_id: ...)
+     * BetaWebFetchToolResultBlock::with(content: ..., toolUseID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -53,33 +53,38 @@ final class BetaWebFetchToolResultBlock implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param ContentShape $content
      */
     public static function with(
-        BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock $content,
-        string $tool_use_id,
+        BetaWebFetchToolResultErrorBlock|array|BetaWebFetchBlock $content,
+        string $toolUseID,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->content = $content;
-        $obj->tool_use_id = $tool_use_id;
+        $self['content'] = $content;
+        $self['toolUseID'] = $toolUseID;
 
-        return $obj;
+        return $self;
     }
 
+    /**
+     * @param ContentShape $content
+     */
     public function withContent(
-        BetaWebFetchToolResultErrorBlock|BetaWebFetchBlock $content
+        BetaWebFetchToolResultErrorBlock|array|BetaWebFetchBlock $content
     ): self {
-        $obj = clone $this;
-        $obj->content = $content;
+        $self = clone $this;
+        $self['content'] = $content;
 
-        return $obj;
+        return $self;
     }
 
     public function withToolUseID(string $toolUseID): self
     {
-        $obj = clone $this;
-        $obj->tool_use_id = $toolUseID;
+        $self = clone $this;
+        $self['toolUseID'] = $toolUseID;
 
-        return $obj;
+        return $self;
     }
 }

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Tool;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -14,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * This defines the shape of the `input` that your tool accepts and that the model will produce.
  *
  * @phpstan-type InputSchemaShape = array{
- *   type: "object",
+ *   type: 'object',
  *   properties?: array<string,mixed>|null,
  *   required?: list<string>|null,
  * }
@@ -24,16 +25,16 @@ final class InputSchema implements BaseModel
     /** @use SdkModel<InputSchemaShape> */
     use SdkModel;
 
-    /** @var "object" $type */
-    #[Api]
+    /** @var 'object' $type */
+    #[Required]
     public string $type = 'object';
 
     /** @var array<string,mixed>|null $properties */
-    #[Api(map: 'mixed', nullable: true, optional: true)]
+    #[Optional(map: 'mixed', nullable: true)]
     public ?array $properties;
 
     /** @var list<string>|null $required */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $required;
 
     public function __construct()
@@ -53,12 +54,12 @@ final class InputSchema implements BaseModel
         ?array $properties = null,
         ?array $required = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $properties && $obj->properties = $properties;
-        null !== $required && $obj->required = $required;
+        null !== $properties && $self['properties'] = $properties;
+        null !== $required && $self['required'] = $required;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -66,10 +67,10 @@ final class InputSchema implements BaseModel
      */
     public function withProperties(?array $properties): self
     {
-        $obj = clone $this;
-        $obj->properties = $properties;
+        $self = clone $this;
+        $self['properties'] = $properties;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -77,9 +78,9 @@ final class InputSchema implements BaseModel
      */
     public function withRequired(?array $required): self
     {
-        $obj = clone $this;
-        $obj->required = $required;
+        $self = clone $this;
+        $self['required'] = $required;
 
-        return $obj;
+        return $self;
     }
 }

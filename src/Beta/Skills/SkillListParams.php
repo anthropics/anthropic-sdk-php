@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Skills;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -16,10 +16,10 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\SkillsService::list()
  *
  * @phpstan-type SkillListParamsShape = array{
- *   limit?: int,
+ *   limit?: int|null,
  *   page?: string|null,
  *   source?: string|null,
- *   betas?: list<string|AnthropicBeta>,
+ *   betas?: list<AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
 final class SkillListParams implements BaseModel
@@ -33,7 +33,7 @@ final class SkillListParams implements BaseModel
      *
      * Maximum value is 100. Defaults to 20.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $limit;
 
     /**
@@ -41,7 +41,7 @@ final class SkillListParams implements BaseModel
      *
      * Pass the value from a previous response's `next_page` field to get the next page of results.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $page;
 
     /**
@@ -51,15 +51,15 @@ final class SkillListParams implements BaseModel
      * * `"custom"`: only return user-created skills
      * * `"anthropic"`: only return Anthropic-created skills
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $source;
 
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @var list<string|value-of<AnthropicBeta>>|null $betas
+     * @var list<value-of<AnthropicBeta>>|null $betas
      */
-    #[Api(list: AnthropicBeta::class, optional: true)]
+    #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
     public function __construct()
@@ -72,7 +72,7 @@ final class SkillListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
         ?int $limit = null,
@@ -80,14 +80,14 @@ final class SkillListParams implements BaseModel
         ?string $source = null,
         ?array $betas = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $limit && $obj->limit = $limit;
-        null !== $page && $obj->page = $page;
-        null !== $source && $obj->source = $source;
-        null !== $betas && $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        null !== $limit && $self['limit'] = $limit;
+        null !== $page && $self['page'] = $page;
+        null !== $source && $self['source'] = $source;
+        null !== $betas && $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -97,10 +97,10 @@ final class SkillListParams implements BaseModel
      */
     public function withLimit(int $limit): self
     {
-        $obj = clone $this;
-        $obj->limit = $limit;
+        $self = clone $this;
+        $self['limit'] = $limit;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -110,10 +110,10 @@ final class SkillListParams implements BaseModel
      */
     public function withPage(?string $page): self
     {
-        $obj = clone $this;
-        $obj->page = $page;
+        $self = clone $this;
+        $self['page'] = $page;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -125,22 +125,22 @@ final class SkillListParams implements BaseModel
      */
     public function withSource(?string $source): self
     {
-        $obj = clone $this;
-        $obj->source = $source;
+        $self = clone $this;
+        $self['source'] = $source;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Optional header to specify the beta version(s) you want to use.
      *
-     * @param list<string|AnthropicBeta> $betas
+     * @param list<AnthropicBeta|value-of<AnthropicBeta>> $betas
      */
     public function withBetas(array $betas): self
     {
-        $obj = clone $this;
-        $obj->betas = array_map(fn ($v) => $v instanceof AnthropicBeta ? $v->value : $v, $betas);
+        $self = clone $this;
+        $self['betas'] = $betas;
 
-        return $obj;
+        return $self;
     }
 }

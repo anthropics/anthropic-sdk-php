@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaSkill\Type;
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * A skill that was loaded in a container (response model).
  *
  * @phpstan-type BetaSkillShape = array{
- *   skill_id: string, type: value-of<Type>, version: string
+ *   skillID: string, type: Type|value-of<Type>, version: string
  * }
  */
 final class BetaSkill implements BaseModel
@@ -24,21 +24,21 @@ final class BetaSkill implements BaseModel
     /**
      * Skill ID.
      */
-    #[Api]
-    public string $skill_id;
+    #[Required('skill_id')]
+    public string $skillID;
 
     /**
      * Type of skill - either 'anthropic' (built-in) or 'custom' (user-defined).
      *
      * @var value-of<Type> $type
      */
-    #[Api(enum: Type::class)]
+    #[Required(enum: Type::class)]
     public string $type;
 
     /**
      * Skill version or 'latest' for most recent version.
      */
-    #[Api]
+    #[Required]
     public string $version;
 
     /**
@@ -46,7 +46,7 @@ final class BetaSkill implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaSkill::with(skill_id: ..., type: ..., version: ...)
+     * BetaSkill::with(skillID: ..., type: ..., version: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -68,17 +68,17 @@ final class BetaSkill implements BaseModel
      * @param Type|value-of<Type> $type
      */
     public static function with(
-        string $skill_id,
+        string $skillID,
         Type|string $type,
         string $version
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->skill_id = $skill_id;
-        $obj['type'] = $type;
-        $obj->version = $version;
+        $self['skillID'] = $skillID;
+        $self['type'] = $type;
+        $self['version'] = $version;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -86,10 +86,10 @@ final class BetaSkill implements BaseModel
      */
     public function withSkillID(string $skillID): self
     {
-        $obj = clone $this;
-        $obj->skill_id = $skillID;
+        $self = clone $this;
+        $self['skillID'] = $skillID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -99,10 +99,10 @@ final class BetaSkill implements BaseModel
      */
     public function withType(Type|string $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -110,9 +110,9 @@ final class BetaSkill implements BaseModel
      */
     public function withVersion(string $version): self
     {
-        $obj = clone $this;
-        $obj->version = $version;
+        $self = clone $this;
+        $self['version'] = $version;
 
-        return $obj;
+        return $self;
     }
 }

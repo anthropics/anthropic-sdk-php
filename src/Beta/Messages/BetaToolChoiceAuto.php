@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -12,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * The model will automatically decide whether to use tools.
  *
  * @phpstan-type BetaToolChoiceAutoShape = array{
- *   type: "auto", disable_parallel_tool_use?: bool|null
+ *   type: 'auto', disableParallelToolUse?: bool|null
  * }
  */
 final class BetaToolChoiceAuto implements BaseModel
@@ -20,8 +21,8 @@ final class BetaToolChoiceAuto implements BaseModel
     /** @use SdkModel<BetaToolChoiceAutoShape> */
     use SdkModel;
 
-    /** @var "auto" $type */
-    #[Api]
+    /** @var 'auto' $type */
+    #[Required]
     public string $type = 'auto';
 
     /**
@@ -29,8 +30,8 @@ final class BetaToolChoiceAuto implements BaseModel
      *
      * Defaults to `false`. If set to `true`, the model will output at most one tool use.
      */
-    #[Api(optional: true)]
-    public ?bool $disable_parallel_tool_use;
+    #[Optional('disable_parallel_tool_use')]
+    public ?bool $disableParallelToolUse;
 
     public function __construct()
     {
@@ -42,13 +43,13 @@ final class BetaToolChoiceAuto implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(?bool $disable_parallel_tool_use = null): self
+    public static function with(?bool $disableParallelToolUse = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        null !== $disable_parallel_tool_use && $obj->disable_parallel_tool_use = $disable_parallel_tool_use;
+        null !== $disableParallelToolUse && $self['disableParallelToolUse'] = $disableParallelToolUse;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -59,9 +60,9 @@ final class BetaToolChoiceAuto implements BaseModel
     public function withDisableParallelToolUse(
         bool $disableParallelToolUse
     ): self {
-        $obj = clone $this;
-        $obj->disable_parallel_tool_use = $disableParallelToolUse;
+        $self = clone $this;
+        $self['disableParallelToolUse'] = $disableParallelToolUse;
 
-        return $obj;
+        return $self;
     }
 }

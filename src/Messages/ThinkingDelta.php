@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type ThinkingDeltaShape = array{
- *   thinking: string, type: "thinking_delta"
+ *   thinking: string, type: 'thinking_delta'
  * }
  */
 final class ThinkingDelta implements BaseModel
@@ -18,11 +18,11 @@ final class ThinkingDelta implements BaseModel
     /** @use SdkModel<ThinkingDeltaShape> */
     use SdkModel;
 
-    /** @var "thinking_delta" $type */
-    #[Api]
+    /** @var 'thinking_delta' $type */
+    #[Required]
     public string $type = 'thinking_delta';
 
-    #[Api]
+    #[Required]
     public string $thinking;
 
     /**
@@ -51,18 +51,18 @@ final class ThinkingDelta implements BaseModel
      */
     public static function with(string $thinking): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->thinking = $thinking;
+        $self['thinking'] = $thinking;
 
-        return $obj;
+        return $self;
     }
 
     public function withThinking(string $thinking): self
     {
-        $obj = clone $this;
-        $obj->thinking = $thinking;
+        $self = clone $this;
+        $self['thinking'] = $thinking;
 
-        return $obj;
+        return $self;
     }
 }

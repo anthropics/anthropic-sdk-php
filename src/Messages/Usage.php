@@ -4,20 +4,23 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Usage\ServiceTier;
 
 /**
+ * @phpstan-import-type CacheCreationShape from \Anthropic\Messages\CacheCreation
+ * @phpstan-import-type ServerToolUsageShape from \Anthropic\Messages\ServerToolUsage
+ *
  * @phpstan-type UsageShape = array{
- *   cache_creation: CacheCreation|null,
- *   cache_creation_input_tokens: int|null,
- *   cache_read_input_tokens: int|null,
- *   input_tokens: int,
- *   output_tokens: int,
- *   server_tool_use: ServerToolUsage|null,
- *   service_tier: value-of<ServiceTier>|null,
+ *   cacheCreation: null|CacheCreation|CacheCreationShape,
+ *   cacheCreationInputTokens: int|null,
+ *   cacheReadInputTokens: int|null,
+ *   inputTokens: int,
+ *   outputTokens: int,
+ *   serverToolUse: null|ServerToolUsage|ServerToolUsageShape,
+ *   serviceTier: null|ServiceTier|value-of<ServiceTier>,
  * }
  */
 final class Usage implements BaseModel
@@ -28,46 +31,46 @@ final class Usage implements BaseModel
     /**
      * Breakdown of cached tokens by TTL.
      */
-    #[Api]
-    public ?CacheCreation $cache_creation;
+    #[Required('cache_creation')]
+    public ?CacheCreation $cacheCreation;
 
     /**
      * The number of input tokens used to create the cache entry.
      */
-    #[Api]
-    public ?int $cache_creation_input_tokens;
+    #[Required('cache_creation_input_tokens')]
+    public ?int $cacheCreationInputTokens;
 
     /**
      * The number of input tokens read from the cache.
      */
-    #[Api]
-    public ?int $cache_read_input_tokens;
+    #[Required('cache_read_input_tokens')]
+    public ?int $cacheReadInputTokens;
 
     /**
      * The number of input tokens which were used.
      */
-    #[Api]
-    public int $input_tokens;
+    #[Required('input_tokens')]
+    public int $inputTokens;
 
     /**
      * The number of output tokens which were used.
      */
-    #[Api]
-    public int $output_tokens;
+    #[Required('output_tokens')]
+    public int $outputTokens;
 
     /**
      * The number of server tool requests.
      */
-    #[Api]
-    public ?ServerToolUsage $server_tool_use;
+    #[Required('server_tool_use')]
+    public ?ServerToolUsage $serverToolUse;
 
     /**
      * If the request used the priority, standard, or batch tier.
      *
-     * @var value-of<ServiceTier>|null $service_tier
+     * @var value-of<ServiceTier>|null $serviceTier
      */
-    #[Api(enum: ServiceTier::class)]
-    public ?string $service_tier;
+    #[Required('service_tier', enum: ServiceTier::class)]
+    public ?string $serviceTier;
 
     /**
      * `new Usage()` is missing required properties by the API.
@@ -75,13 +78,13 @@ final class Usage implements BaseModel
      * To enforce required parameters use
      * ```
      * Usage::with(
-     *   cache_creation: ...,
-     *   cache_creation_input_tokens: ...,
-     *   cache_read_input_tokens: ...,
-     *   input_tokens: ...,
-     *   output_tokens: ...,
-     *   server_tool_use: ...,
-     *   service_tier: ...,
+     *   cacheCreation: ...,
+     *   cacheCreationInputTokens: ...,
+     *   cacheReadInputTokens: ...,
+     *   inputTokens: ...,
+     *   outputTokens: ...,
+     *   serverToolUse: ...,
+     *   serviceTier: ...,
      * )
      * ```
      *
@@ -108,39 +111,44 @@ final class Usage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ServiceTier|value-of<ServiceTier>|null $service_tier
+     * @param CacheCreation|CacheCreationShape|null $cacheCreation
+     * @param ServerToolUsage|ServerToolUsageShape|null $serverToolUse
+     * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
      */
     public static function with(
-        ?CacheCreation $cache_creation,
-        ?int $cache_creation_input_tokens,
-        ?int $cache_read_input_tokens,
-        int $input_tokens,
-        int $output_tokens,
-        ?ServerToolUsage $server_tool_use,
-        ServiceTier|string|null $service_tier,
+        CacheCreation|array|null $cacheCreation,
+        ?int $cacheCreationInputTokens,
+        ?int $cacheReadInputTokens,
+        int $inputTokens,
+        int $outputTokens,
+        ServerToolUsage|array|null $serverToolUse,
+        ServiceTier|string|null $serviceTier,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj->cache_creation = $cache_creation;
-        $obj->cache_creation_input_tokens = $cache_creation_input_tokens;
-        $obj->cache_read_input_tokens = $cache_read_input_tokens;
-        $obj->input_tokens = $input_tokens;
-        $obj->output_tokens = $output_tokens;
-        $obj->server_tool_use = $server_tool_use;
-        $obj['service_tier'] = $service_tier;
+        $self['cacheCreation'] = $cacheCreation;
+        $self['cacheCreationInputTokens'] = $cacheCreationInputTokens;
+        $self['cacheReadInputTokens'] = $cacheReadInputTokens;
+        $self['inputTokens'] = $inputTokens;
+        $self['outputTokens'] = $outputTokens;
+        $self['serverToolUse'] = $serverToolUse;
+        $self['serviceTier'] = $serviceTier;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * Breakdown of cached tokens by TTL.
+     *
+     * @param CacheCreation|CacheCreationShape|null $cacheCreation
      */
-    public function withCacheCreation(?CacheCreation $cacheCreation): self
-    {
-        $obj = clone $this;
-        $obj->cache_creation = $cacheCreation;
+    public function withCacheCreation(
+        CacheCreation|array|null $cacheCreation
+    ): self {
+        $self = clone $this;
+        $self['cacheCreation'] = $cacheCreation;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -149,10 +157,10 @@ final class Usage implements BaseModel
     public function withCacheCreationInputTokens(
         ?int $cacheCreationInputTokens
     ): self {
-        $obj = clone $this;
-        $obj->cache_creation_input_tokens = $cacheCreationInputTokens;
+        $self = clone $this;
+        $self['cacheCreationInputTokens'] = $cacheCreationInputTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -160,10 +168,10 @@ final class Usage implements BaseModel
      */
     public function withCacheReadInputTokens(?int $cacheReadInputTokens): self
     {
-        $obj = clone $this;
-        $obj->cache_read_input_tokens = $cacheReadInputTokens;
+        $self = clone $this;
+        $self['cacheReadInputTokens'] = $cacheReadInputTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -171,10 +179,10 @@ final class Usage implements BaseModel
      */
     public function withInputTokens(int $inputTokens): self
     {
-        $obj = clone $this;
-        $obj->input_tokens = $inputTokens;
+        $self = clone $this;
+        $self['inputTokens'] = $inputTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -182,21 +190,24 @@ final class Usage implements BaseModel
      */
     public function withOutputTokens(int $outputTokens): self
     {
-        $obj = clone $this;
-        $obj->output_tokens = $outputTokens;
+        $self = clone $this;
+        $self['outputTokens'] = $outputTokens;
 
-        return $obj;
+        return $self;
     }
 
     /**
      * The number of server tool requests.
+     *
+     * @param ServerToolUsage|ServerToolUsageShape|null $serverToolUse
      */
-    public function withServerToolUse(?ServerToolUsage $serverToolUse): self
-    {
-        $obj = clone $this;
-        $obj->server_tool_use = $serverToolUse;
+    public function withServerToolUse(
+        ServerToolUsage|array|null $serverToolUse
+    ): self {
+        $self = clone $this;
+        $self['serverToolUse'] = $serverToolUse;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -206,9 +217,9 @@ final class Usage implements BaseModel
      */
     public function withServiceTier(ServiceTier|string|null $serviceTier): self
     {
-        $obj = clone $this;
-        $obj['service_tier'] = $serviceTier;
+        $self = clone $this;
+        $self['serviceTier'] = $serviceTier;
 
-        return $obj;
+        return $self;
     }
 }

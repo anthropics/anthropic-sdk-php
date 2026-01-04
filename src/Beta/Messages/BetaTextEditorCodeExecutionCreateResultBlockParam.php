@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaTextEditorCodeExecutionCreateResultBlockParamShape = array{
- *   is_file_update: bool, type: "text_editor_code_execution_create_result"
+ *   isFileUpdate: bool, type: 'text_editor_code_execution_create_result'
  * }
  */
 final class BetaTextEditorCodeExecutionCreateResultBlockParam implements BaseModel
@@ -18,19 +18,19 @@ final class BetaTextEditorCodeExecutionCreateResultBlockParam implements BaseMod
     /** @use SdkModel<BetaTextEditorCodeExecutionCreateResultBlockParamShape> */
     use SdkModel;
 
-    /** @var "text_editor_code_execution_create_result" $type */
-    #[Api]
+    /** @var 'text_editor_code_execution_create_result' $type */
+    #[Required]
     public string $type = 'text_editor_code_execution_create_result';
 
-    #[Api]
-    public bool $is_file_update;
+    #[Required('is_file_update')]
+    public bool $isFileUpdate;
 
     /**
      * `new BetaTextEditorCodeExecutionCreateResultBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaTextEditorCodeExecutionCreateResultBlockParam::with(is_file_update: ...)
+     * BetaTextEditorCodeExecutionCreateResultBlockParam::with(isFileUpdate: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -49,20 +49,20 @@ final class BetaTextEditorCodeExecutionCreateResultBlockParam implements BaseMod
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(bool $is_file_update): self
+    public static function with(bool $isFileUpdate): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj->is_file_update = $is_file_update;
+        $self['isFileUpdate'] = $isFileUpdate;
 
-        return $obj;
+        return $self;
     }
 
     public function withIsFileUpdate(bool $isFileUpdate): self
     {
-        $obj = clone $this;
-        $obj->is_file_update = $isFileUpdate;
+        $self = clone $this;
+        $self['isFileUpdate'] = $isFileUpdate;
 
-        return $obj;
+        return $self;
     }
 }

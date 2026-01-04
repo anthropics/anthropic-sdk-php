@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\WebSearchTool20250305;
 
-use Anthropic\Core\Attributes\Api;
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -12,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * Parameters for the user's location. Used to provide more relevant search results.
  *
  * @phpstan-type UserLocationShape = array{
- *   type: "approximate",
+ *   type: 'approximate',
  *   city?: string|null,
  *   country?: string|null,
  *   region?: string|null,
@@ -24,32 +25,32 @@ final class UserLocation implements BaseModel
     /** @use SdkModel<UserLocationShape> */
     use SdkModel;
 
-    /** @var "approximate" $type */
-    #[Api]
+    /** @var 'approximate' $type */
+    #[Required]
     public string $type = 'approximate';
 
     /**
      * The city of the user.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $city;
 
     /**
      * The two letter [ISO country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the user.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $country;
 
     /**
      * The region of the user.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $region;
 
     /**
      * The [IANA timezone](https://nodatime.org/TimeZones) of the user.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $timezone;
 
     public function __construct()
@@ -68,14 +69,14 @@ final class UserLocation implements BaseModel
         ?string $region = null,
         ?string $timezone = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $city && $obj->city = $city;
-        null !== $country && $obj->country = $country;
-        null !== $region && $obj->region = $region;
-        null !== $timezone && $obj->timezone = $timezone;
+        null !== $city && $self['city'] = $city;
+        null !== $country && $self['country'] = $country;
+        null !== $region && $self['region'] = $region;
+        null !== $timezone && $self['timezone'] = $timezone;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -83,10 +84,10 @@ final class UserLocation implements BaseModel
      */
     public function withCity(?string $city): self
     {
-        $obj = clone $this;
-        $obj->city = $city;
+        $self = clone $this;
+        $self['city'] = $city;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -94,10 +95,10 @@ final class UserLocation implements BaseModel
      */
     public function withCountry(?string $country): self
     {
-        $obj = clone $this;
-        $obj->country = $country;
+        $self = clone $this;
+        $self['country'] = $country;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -105,10 +106,10 @@ final class UserLocation implements BaseModel
      */
     public function withRegion(?string $region): self
     {
-        $obj = clone $this;
-        $obj->region = $region;
+        $self = clone $this;
+        $self['region'] = $region;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -116,9 +117,9 @@ final class UserLocation implements BaseModel
      */
     public function withTimezone(?string $timezone): self
     {
-        $obj = clone $this;
-        $obj->timezone = $timezone;
+        $self = clone $this;
+        $self['timezone'] = $timezone;
 
-        return $obj;
+        return $self;
     }
 }
