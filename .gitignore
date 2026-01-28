@@ -3,6 +3,7 @@ docs/
 .php-cs-fixer.cache
 .php-cs-fixer.php
 .phpunit.cache
+composer.lock
 phpunit.xml
 playground/
 *.swo
