@@ -87,7 +87,6 @@ abstract class BaseClient
 
         $request = $opts->requestFactory->createRequest($method, uri: $uri);
         $request = Util::withSetHeaders($request, headers: $headers);
-        $request = $this->transformRequest($request);
 
         // @phpstan-ignore-next-line argument.type
         $rsp = $this->sendRequest($opts, req: $request, data: $data, redirectCount: 0, retryCount: 0);
@@ -151,6 +150,13 @@ abstract class BaseClient
         return [$req, $options];
     }
 
+    /**
+     * Transforms the request before it is sent.
+     *
+     * This method must be idempotent as it may be called multiple times during
+     * request retries. Use withHeader() to replace existing headers rather than
+     * addHeader() to prevent header accumulation.
+     */
     protected function transformRequest(
         RequestInterface $request
     ): RequestInterface {
@@ -240,6 +246,7 @@ abstract class BaseClient
         /** @var RequestInterface */
         $req = $req->withHeader('X-Stainless-Retry-Count', strval($retryCount));
         $req = Util::withSetBody($opts->streamFactory, req: $req, body: $data);
+        $req = $this->transformRequest($req);
 
         $rsp = null;
         $err = null;
