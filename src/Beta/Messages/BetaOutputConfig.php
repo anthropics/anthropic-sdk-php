@@ -23,7 +23,9 @@ final class BetaOutputConfig implements BaseModel
     use SdkModel;
 
     /**
-     * All possible effort levels.
+     * How much effort the model should put into its response. Higher effort levels may result in more thorough analysis but take longer.
+     *
+     * Valid values are `low`, `medium`, or `high`.
      *
      * @var value-of<Effort>|null $effort
      */
@@ -62,7 +64,9 @@ final class BetaOutputConfig implements BaseModel
     }
 
     /**
-     * All possible effort levels.
+     * How much effort the model should put into its response. Higher effort levels may result in more thorough analysis but take longer.
+     *
+     * Valid values are `low`, `medium`, or `high`.
      *
      * @param Effort|value-of<Effort>|null $effort
      */

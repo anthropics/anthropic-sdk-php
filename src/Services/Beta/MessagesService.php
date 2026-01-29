@@ -142,7 +142,7 @@ final class MessagesService implements MessagesContract
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers Body param: MCP servers to be utilized in this request
      * @param BetaMetadata|BetaMetadataShape $metadata body param: An object describing metadata about the request
-     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig Body param: Configuration options for the model's output. Controls aspects like output format or how much effort the model puts into its response.
+     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
      * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat Body param: Deprecated: Use `output_config.format` instead. See [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
      *
      * A schema to specify Claude's output format in responses. This parameter will be removed in a future release.
@@ -359,7 +359,7 @@ final class MessagesService implements MessagesContract
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers Body param: MCP servers to be utilized in this request
      * @param BetaMetadata|BetaMetadataShape $metadata body param: An object describing metadata about the request
-     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig Body param: Configuration options for the model's output. Controls aspects like output format or how much effort the model puts into its response.
+     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
      * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat Body param: Deprecated: Use `output_config.format` instead. See [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
      *
      * A schema to specify Claude's output format in responses. This parameter will be removed in a future release.
@@ -577,7 +577,7 @@ final class MessagesService implements MessagesContract
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers Body param: MCP servers to be utilized in this request
-     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig Body param: Configuration options for the model's output. Controls aspects like output format or how much effort the model puts into its response.
+     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
      * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat Body param: Deprecated: Use `output_config.format` instead. See [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
      *
      * A schema to specify Claude's output format in responses. This parameter will be removed in a future release.

@@ -58,6 +58,9 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
     #[Optional('defer_loading')]
     public ?bool $deferLoading;
 
+    /**
+     * When true, guarantees schema validation on tool names and inputs.
+     */
     #[Optional]
     public ?bool $strict;
 
@@ -155,6 +158,9 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
         return $self;
     }
 
+    /**
+     * When true, guarantees schema validation on tool names and inputs.
+     */
     public function withStrict(bool $strict): self
     {
         $self = clone $this;

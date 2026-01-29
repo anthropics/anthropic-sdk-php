@@ -78,6 +78,9 @@ final class BetaTool implements BaseModel
     #[Optional('input_examples', list: new MapOf('mixed'))]
     public ?array $inputExamples;
 
+    /**
+     * When true, guarantees schema validation on tool names and inputs.
+     */
     #[Optional]
     public ?bool $strict;
 
@@ -230,6 +233,9 @@ final class BetaTool implements BaseModel
         return $self;
     }
 
+    /**
+     * When true, guarantees schema validation on tool names and inputs.
+     */
     public function withStrict(bool $strict): self
     {
         $self = clone $this;

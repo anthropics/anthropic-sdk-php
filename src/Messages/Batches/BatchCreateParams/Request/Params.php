@@ -13,6 +13,7 @@ use Anthropic\Messages\Batches\BatchCreateParams\Request\Params\System;
 use Anthropic\Messages\MessageParam;
 use Anthropic\Messages\Metadata;
 use Anthropic\Messages\Model;
+use Anthropic\Messages\OutputConfig;
 use Anthropic\Messages\ThinkingConfigDisabled;
 use Anthropic\Messages\ThinkingConfigEnabled;
 use Anthropic\Messages\ThinkingConfigParam;
@@ -34,6 +35,7 @@ use Anthropic\Messages\ToolUnion;
  * @phpstan-import-type ToolUnionVariants from \Anthropic\Messages\ToolUnion
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
  * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
+ * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
  * @phpstan-import-type SystemShape from \Anthropic\Messages\Batches\BatchCreateParams\Request\Params\System
  * @phpstan-import-type ThinkingConfigParamShape from \Anthropic\Messages\ThinkingConfigParam
  * @phpstan-import-type ToolChoiceShape from \Anthropic\Messages\ToolChoice
@@ -44,6 +46,7 @@ use Anthropic\Messages\ToolUnion;
  *   messages: list<MessageParam|MessageParamShape>,
  *   model: string|Model|value-of<Model>,
  *   metadata?: null|Metadata|MetadataShape,
+ *   outputConfig?: null|OutputConfig|OutputConfigShape,
  *   serviceTier?: null|ServiceTier|value-of<ServiceTier>,
  *   stopSequences?: list<string>|null,
  *   stream?: bool|null,
@@ -139,6 +142,12 @@ final class Params implements BaseModel
      */
     #[Optional]
     public ?Metadata $metadata;
+
+    /**
+     * Configuration options for the model's output, such as the output format.
+     */
+    #[Optional('output_config')]
+    public ?OutputConfig $outputConfig;
 
     /**
      * Determines whether to use priority capacity (if available) or standard capacity for this request.
@@ -325,6 +334,7 @@ final class Params implements BaseModel
      * @param list<MessageParam|MessageParamShape> $messages
      * @param string|Model|value-of<Model> $model
      * @param Metadata|MetadataShape|null $metadata
+     * @param OutputConfig|OutputConfigShape|null $outputConfig
      * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
      * @param list<string>|null $stopSequences
      * @param SystemShape|null $system
@@ -337,6 +347,7 @@ final class Params implements BaseModel
         array $messages,
         Model|string $model,
         Metadata|array|null $metadata = null,
+        OutputConfig|array|null $outputConfig = null,
         ServiceTier|string|null $serviceTier = null,
         ?array $stopSequences = null,
         ?bool $stream = null,
@@ -355,6 +366,7 @@ final class Params implements BaseModel
         $self['model'] = $model;
 
         null !== $metadata && $self['metadata'] = $metadata;
+        null !== $outputConfig && $self['outputConfig'] = $outputConfig;
         null !== $serviceTier && $self['serviceTier'] = $serviceTier;
         null !== $stopSequences && $self['stopSequences'] = $stopSequences;
         null !== $stream && $self['stream'] = $stream;
@@ -466,6 +478,19 @@ final class Params implements BaseModel
     {
         $self = clone $this;
         $self['metadata'] = $metadata;
+
+        return $self;
+    }
+
+    /**
+     * Configuration options for the model's output, such as the output format.
+     *
+     * @param OutputConfig|OutputConfigShape $outputConfig
+     */
+    public function withOutputConfig(OutputConfig|array $outputConfig): self
+    {
+        $self = clone $this;
+        $self['outputConfig'] = $outputConfig;
 
         return $self;
     }

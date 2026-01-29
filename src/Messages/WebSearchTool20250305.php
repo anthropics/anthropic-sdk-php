@@ -21,6 +21,7 @@ use Anthropic\Messages\WebSearchTool20250305\UserLocation;
  *   blockedDomains?: list<string>|null,
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   maxUses?: int|null,
+ *   strict?: bool|null,
  *   userLocation?: null|UserLocation|UserLocationShape,
  * }
  */
@@ -72,6 +73,12 @@ final class WebSearchTool20250305 implements BaseModel
     public ?int $maxUses;
 
     /**
+     * When true, guarantees schema validation on tool names and inputs.
+     */
+    #[Optional]
+    public ?bool $strict;
+
+    /**
      * Parameters for the user's location. Used to provide more relevant search results.
      */
     #[Optional('user_location', nullable: true)]
@@ -97,6 +104,7 @@ final class WebSearchTool20250305 implements BaseModel
         ?array $blockedDomains = null,
         CacheControlEphemeral|array|null $cacheControl = null,
         ?int $maxUses = null,
+        ?bool $strict = null,
         UserLocation|array|null $userLocation = null,
     ): self {
         $self = new self;
@@ -105,6 +113,7 @@ final class WebSearchTool20250305 implements BaseModel
         null !== $blockedDomains && $self['blockedDomains'] = $blockedDomains;
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $maxUses && $self['maxUses'] = $maxUses;
+        null !== $strict && $self['strict'] = $strict;
         null !== $userLocation && $self['userLocation'] = $userLocation;
 
         return $self;
@@ -157,6 +166,17 @@ final class WebSearchTool20250305 implements BaseModel
     {
         $self = clone $this;
         $self['maxUses'] = $maxUses;
+
+        return $self;
+    }
+
+    /**
+     * When true, guarantees schema validation on tool names and inputs.
+     */
+    public function withStrict(bool $strict): self
+    {
+        $self = clone $this;
+        $self['strict'] = $strict;
 
         return $self;
     }

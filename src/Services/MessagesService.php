@@ -14,6 +14,7 @@ use Anthropic\Messages\MessageParam;
 use Anthropic\Messages\MessageTokensCount;
 use Anthropic\Messages\Metadata;
 use Anthropic\Messages\Model;
+use Anthropic\Messages\OutputConfig;
 use Anthropic\Messages\RawContentBlockDeltaEvent;
 use Anthropic\Messages\RawContentBlockStartEvent;
 use Anthropic\Messages\RawContentBlockStopEvent;
@@ -35,6 +36,7 @@ use Anthropic\Services\Messages\BatchesService;
  * @phpstan-import-type MessageCountTokensToolShape from \Anthropic\Messages\MessageCountTokensTool
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
  * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
+ * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
  * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCreateParams\System as SystemShape1
  * @phpstan-import-type ThinkingConfigParamShape from \Anthropic\Messages\ThinkingConfigParam
  * @phpstan-import-type ToolChoiceShape from \Anthropic\Messages\ToolChoice
@@ -126,6 +128,7 @@ final class MessagesService implements MessagesContract
      * There is a limit of 100,000 messages in a single request.
      * @param string|Model|value-of<Model> $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param Metadata|MetadataShape $metadata an object describing metadata about the request
+     * @param OutputConfig|OutputConfigShape $outputConfig configuration options for the model's output, such as the output format
      * @param ServiceTier|value-of<ServiceTier> $serviceTier Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.claude.com/en/api/service-tiers) for details.
@@ -228,6 +231,7 @@ final class MessagesService implements MessagesContract
         array $messages,
         Model|string $model,
         Metadata|array|null $metadata = null,
+        OutputConfig|array|null $outputConfig = null,
         ServiceTier|string|null $serviceTier = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
@@ -245,6 +249,7 @@ final class MessagesService implements MessagesContract
                 'messages' => $messages,
                 'model' => $model,
                 'metadata' => $metadata,
+                'outputConfig' => $outputConfig,
                 'serviceTier' => $serviceTier,
                 'stopSequences' => $stopSequences,
                 'system' => $system,
@@ -321,6 +326,7 @@ final class MessagesService implements MessagesContract
      * There is a limit of 100,000 messages in a single request.
      * @param string|Model|value-of<Model> $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param Metadata|MetadataShape $metadata an object describing metadata about the request
+     * @param OutputConfig|OutputConfigShape $outputConfig configuration options for the model's output, such as the output format
      * @param ServiceTier|value-of<ServiceTier> $serviceTier Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.claude.com/en/api/service-tiers) for details.
@@ -425,6 +431,7 @@ final class MessagesService implements MessagesContract
         array $messages,
         Model|string $model,
         Metadata|array|null $metadata = null,
+        OutputConfig|array|null $outputConfig = null,
         ServiceTier|string|null $serviceTier = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
@@ -442,6 +449,7 @@ final class MessagesService implements MessagesContract
                 'messages' => $messages,
                 'model' => $model,
                 'metadata' => $metadata,
+                'outputConfig' => $outputConfig,
                 'serviceTier' => $serviceTier,
                 'stopSequences' => $stopSequences,
                 'system' => $system,
@@ -518,6 +526,7 @@ final class MessagesService implements MessagesContract
      *
      * There is a limit of 100,000 messages in a single request.
      * @param string|Model|value-of<Model> $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * @param OutputConfig|OutputConfigShape $outputConfig configuration options for the model's output, such as the output format
      * @param SystemShape $system System prompt.
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.claude.com/en/docs/system-prompts).
@@ -595,6 +604,7 @@ final class MessagesService implements MessagesContract
     public function countTokens(
         array $messages,
         Model|string $model,
+        OutputConfig|array|null $outputConfig = null,
         string|array|null $system = null,
         ThinkingConfigEnabled|array|ThinkingConfigDisabled|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
@@ -605,6 +615,7 @@ final class MessagesService implements MessagesContract
             [
                 'messages' => $messages,
                 'model' => $model,
+                'outputConfig' => $outputConfig,
                 'system' => $system,
                 'thinking' => $thinking,
                 'toolChoice' => $toolChoice,

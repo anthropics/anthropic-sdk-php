@@ -97,6 +97,9 @@ final class BetaWebFetchTool20250910 implements BaseModel
     #[Optional('max_uses', nullable: true)]
     public ?int $maxUses;
 
+    /**
+     * When true, guarantees schema validation on tool names and inputs.
+     */
     #[Optional]
     public ?bool $strict;
 
@@ -240,6 +243,9 @@ final class BetaWebFetchTool20250910 implements BaseModel
         return $self;
     }
 
+    /**
+     * When true, guarantees schema validation on tool names and inputs.
+     */
     public function withStrict(bool $strict): self
     {
         $self = clone $this;
