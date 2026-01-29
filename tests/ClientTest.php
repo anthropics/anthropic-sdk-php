@@ -2,10 +2,12 @@
 
 namespace Tests;
 
+use Anthropic\Client;
 use Anthropic\Core\Util;
 use Http\Discovery\Psr17FactoryDiscovery;
-use Http\Mock\Client;
+use Http\Mock\Client as MockClient;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @internal
@@ -14,9 +16,12 @@ use PHPUnit\Framework\TestCase;
  */
 class ClientTest extends TestCase
 {
-    public function testDefaultHeaders(): void
+    private MockClient $transporter;
+
+    protected function setUp(): void
     {
-        $transporter = new Client;
+        $this->transporter = new MockClient;
+
         $mockRsp = Psr17FactoryDiscovery::findResponseFactory()
             ->createResponse()
             ->withStatus(200)
@@ -24,25 +29,93 @@ class ClientTest extends TestCase
             ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(json_encode([], flags: Util::JSON_ENCODE_FLAGS) ?: ''))
         ;
 
-        $transporter->setDefaultResponse($mockRsp);
+        $this->transporter->setDefaultResponse($mockRsp);
+    }
 
-        $client = new \Anthropic\Client(
-            baseUrl: 'http://localhost',
+    public function testApiKeyAuth(): void
+    {
+        $client = new Client(
             apiKey: 'my-anthropic-api-key',
-            requestOptions: ['transporter' => $transporter],
+            requestOptions: ['transporter' => $this->transporter],
         );
 
-        $client->messages->create(
-            maxTokens: 1024,
-            messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-sonnet-4-5-20250929',
+        $client->messages->create(1024, [], 'claude-haiku-4-5');
+
+        $request = $this->getLastRequest();
+
+        $this->assertSame('my-anthropic-api-key', $request->getHeaderLine('x-api-key'));
+    }
+
+    public function testAuthTokenAuth(): void
+    {
+        $client = new Client(
+            authToken: 'my-anthropic-auth-token',
+            requestOptions: ['transporter' => $this->transporter],
         );
 
-        $this->assertNotFalse($requested = $transporter->getRequests()[0] ?? false);
+        $client->messages->create(1024, [], 'claude-haiku-4-5');
 
-        foreach (['accept', 'content-type'] as $header) {
-            $sent = $requested->getHeaderLine($header);
-            $this->assertNotEmpty($sent);
+        $request = $this->getLastRequest();
+
+        $this->assertSame('Bearer my-anthropic-auth-token', $request->getHeaderLine('Authorization'));
+    }
+
+    public function testDefaultBaseUrl(): void
+    {
+        $client = new Client(
+            requestOptions: ['transporter' => $this->transporter],
+        );
+
+        $client->messages->create(1024, [], 'claude-haiku-4-5');
+
+        $request = $this->getLastRequest();
+
+        $this->assertSame('api.anthropic.com', $request->getUri()->getHost());
+    }
+
+    public function testCustomBaseUrlInConstructor(): void
+    {
+        $client = new Client(
+            baseUrl: 'https://example.com',
+            requestOptions: ['transporter' => $this->transporter],
+        );
+
+        $client->messages->create(1024, [], 'claude-haiku-4-5');
+
+        $request = $this->getLastRequest();
+
+        $this->assertSame('example.com', $request->getUri()->getHost());
+    }
+
+    public function testCustomBaseUrlAsEnvironmentVariable(): void
+    {
+        $originalBaseUrl = getenv('ANTHROPIC_BASE_URL');
+        putenv('ANTHROPIC_BASE_URL=https://example.com');
+
+        $client = new Client(
+            requestOptions: ['transporter' => $this->transporter],
+        );
+
+        $client->messages->create(1024, [], 'claude-haiku-4-5');
+
+        $request = $this->getLastRequest();
+
+        try {
+            $this->assertSame('example.com', $request->getUri()->getHost());
+        } finally {
+            if (false !== $originalBaseUrl) {
+                putenv('ANTHROPIC_BASE_URL='.$originalBaseUrl);
+            } else {
+                putenv('ANTHROPIC_BASE_URL');
+            }
         }
+    }
+
+    private function getLastRequest(): RequestInterface
+    {
+        $request = $this->transporter->getLastRequest();
+        assert($request instanceof RequestInterface);
+
+        return $request;
     }
 }

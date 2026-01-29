@@ -31,7 +31,7 @@ use Psr\Http\Message\UriInterface;
  */
 abstract class BaseClient
 {
-    protected UriInterface $baseUrl;
+    private UriInterface $baseUrl;
 
     /**
      * @internal
@@ -96,6 +96,19 @@ abstract class BaseClient
     }
 
     /**
+     * Returns the base URL for API requests.
+     *
+     * Subclasses can override this to provide dynamic URLs based on
+     * configuration (e.g., region-specific endpoints for Bedrock/Vertex).
+     *
+     * @internal
+     */
+    protected function getBaseUrl(): UriInterface
+    {
+        return $this->baseUrl;
+    }
+
+    /**
      * @internal
      */
     protected function generateIdempotencyKey(): string
@@ -132,7 +145,7 @@ abstract class BaseClient
             $query,
             $options->extraQueryParams ?? []
         );
-        $uri = Util::joinUri($this->baseUrl, path: $parsedPath, query: $mergedQuery)->__toString();
+        $uri = Util::joinUri($this->getBaseUrl(), path: $parsedPath, query: $mergedQuery)->__toString();
         $idempotencyHeaders = $this->idempotencyHeader && !array_key_exists($this->idempotencyHeader, array: $headers)
             ? [$this->idempotencyHeader => $this->generateIdempotencyKey()]
             : [];
