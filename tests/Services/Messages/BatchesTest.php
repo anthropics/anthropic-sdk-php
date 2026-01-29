@@ -62,6 +62,11 @@ final class BatchesTest extends TestCase
                         'messages' => [['content' => 'Hello, world', 'role' => 'user']],
                         'model' => 'claude-sonnet-4-5-20250929',
                         'metadata' => ['userID' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
+                        'outputConfig' => [
+                            'format' => [
+                                'schema' => ['foo' => 'bar'], 'type' => 'json_schema',
+                            ],
+                        ],
                         'serviceTier' => 'auto',
                         'stopSequences' => ['string'],
                         'stream' => true,
@@ -97,6 +102,7 @@ final class BatchesTest extends TestCase
                                 'name' => 'name',
                                 'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                                 'description' => 'Get the current weather in a given location',
+                                'strict' => true,
                                 'type' => 'custom',
                             ],
                         ],

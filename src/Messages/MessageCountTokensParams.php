@@ -25,6 +25,7 @@ use Anthropic\Messages\MessageCountTokensParams\System;
  * @phpstan-import-type ToolChoiceVariants from \Anthropic\Messages\ToolChoice
  * @phpstan-import-type MessageCountTokensToolVariants from \Anthropic\Messages\MessageCountTokensTool
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
+ * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
  * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCountTokensParams\System
  * @phpstan-import-type ThinkingConfigParamShape from \Anthropic\Messages\ThinkingConfigParam
  * @phpstan-import-type ToolChoiceShape from \Anthropic\Messages\ToolChoice
@@ -33,6 +34,7 @@ use Anthropic\Messages\MessageCountTokensParams\System;
  * @phpstan-type MessageCountTokensParamsShape = array{
  *   messages: list<MessageParam|MessageParamShape>,
  *   model: string|Model|value-of<Model>,
+ *   outputConfig?: null|OutputConfig|OutputConfigShape,
  *   system?: SystemShape|null,
  *   thinking?: ThinkingConfigParamShape|null,
  *   toolChoice?: ToolChoiceShape|null,
@@ -107,6 +109,12 @@ final class MessageCountTokensParams implements BaseModel
      */
     #[Required(enum: Model::class)]
     public string $model;
+
+    /**
+     * Configuration options for the model's output, such as the output format.
+     */
+    #[Optional('output_config')]
+    public ?OutputConfig $outputConfig;
 
     /**
      * System prompt.
@@ -232,6 +240,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param list<MessageParam|MessageParamShape> $messages
      * @param string|Model|value-of<Model> $model
+     * @param OutputConfig|OutputConfigShape|null $outputConfig
      * @param SystemShape|null $system
      * @param ThinkingConfigParamShape|null $thinking
      * @param ToolChoiceShape|null $toolChoice
@@ -240,6 +249,7 @@ final class MessageCountTokensParams implements BaseModel
     public static function with(
         array $messages,
         Model|string $model,
+        OutputConfig|array|null $outputConfig = null,
         string|array|null $system = null,
         ThinkingConfigEnabled|array|ThinkingConfigDisabled|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
@@ -250,6 +260,7 @@ final class MessageCountTokensParams implements BaseModel
         $self['messages'] = $messages;
         $self['model'] = $model;
 
+        null !== $outputConfig && $self['outputConfig'] = $outputConfig;
         null !== $system && $self['system'] = $system;
         null !== $thinking && $self['thinking'] = $thinking;
         null !== $toolChoice && $self['toolChoice'] = $toolChoice;
@@ -327,6 +338,19 @@ final class MessageCountTokensParams implements BaseModel
     {
         $self = clone $this;
         $self['model'] = $model;
+
+        return $self;
+    }
+
+    /**
+     * Configuration options for the model's output, such as the output format.
+     *
+     * @param OutputConfig|OutputConfigShape $outputConfig
+     */
+    public function withOutputConfig(OutputConfig|array $outputConfig): self
+    {
+        $self = clone $this;
+        $self['outputConfig'] = $outputConfig;
 
         return $self;
     }

@@ -17,6 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   type: 'text_editor_20250728',
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   maxCharacters?: int|null,
+ *   strict?: bool|null,
  * }
  */
 final class ToolTextEditor20250728 implements BaseModel
@@ -50,6 +51,12 @@ final class ToolTextEditor20250728 implements BaseModel
     #[Optional('max_characters', nullable: true)]
     public ?int $maxCharacters;
 
+    /**
+     * When true, guarantees schema validation on tool names and inputs.
+     */
+    #[Optional]
+    public ?bool $strict;
+
     public function __construct()
     {
         $this->initialize();
@@ -65,11 +72,13 @@ final class ToolTextEditor20250728 implements BaseModel
     public static function with(
         CacheControlEphemeral|array|null $cacheControl = null,
         ?int $maxCharacters = null,
+        ?bool $strict = null,
     ): self {
         $self = new self;
 
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $maxCharacters && $self['maxCharacters'] = $maxCharacters;
+        null !== $strict && $self['strict'] = $strict;
 
         return $self;
     }
@@ -95,6 +104,17 @@ final class ToolTextEditor20250728 implements BaseModel
     {
         $self = clone $this;
         $self['maxCharacters'] = $maxCharacters;
+
+        return $self;
+    }
+
+    /**
+     * When true, guarantees schema validation on tool names and inputs.
+     */
+    public function withStrict(bool $strict): self
+    {
+        $self = clone $this;
+        $self['strict'] = $strict;
 
         return $self;
     }

@@ -48,6 +48,9 @@ final class MessagesTest extends TestCase
             messages: [['content' => 'Hello, world', 'role' => 'user']],
             model: 'claude-sonnet-4-5-20250929',
             metadata: ['userID' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
+            outputConfig: [
+                'format' => ['schema' => ['foo' => 'bar'], 'type' => 'json_schema'],
+            ],
             serviceTier: 'auto',
             stopSequences: ['string'],
             system: [
@@ -80,6 +83,7 @@ final class MessagesTest extends TestCase
                     'name' => 'name',
                     'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                     'description' => 'Get the current weather in a given location',
+                    'strict' => true,
                     'type' => 'custom',
                 ],
             ],
@@ -109,6 +113,9 @@ final class MessagesTest extends TestCase
         $result = $this->client->messages->countTokens(
             messages: [['content' => 'string', 'role' => 'user']],
             model: 'claude-opus-4-5-20251101',
+            outputConfig: [
+                'format' => ['schema' => ['foo' => 'bar'], 'type' => 'json_schema'],
+            ],
             system: [
                 [
                     'text' => 'Today\'s date is 2024-06-01.',
@@ -138,6 +145,7 @@ final class MessagesTest extends TestCase
                     'name' => 'name',
                     'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                     'description' => 'Get the current weather in a given location',
+                    'strict' => true,
                     'type' => 'custom',
                 ],
             ],

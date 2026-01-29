@@ -137,7 +137,7 @@ final class MessageCountTokensParams implements BaseModel
     public ?array $mcpServers;
 
     /**
-     * Configuration options for the model's output. Controls aspects like output format or how much effort the model puts into its response.
+     * Configuration options for the model's output, such as the output format.
      */
     #[Optional('output_config')]
     public ?BetaOutputConfig $outputConfig;
@@ -428,7 +428,7 @@ final class MessageCountTokensParams implements BaseModel
     }
 
     /**
-     * Configuration options for the model's output. Controls aspects like output format or how much effort the model puts into its response.
+     * Configuration options for the model's output, such as the output format.
      *
      * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig
      */

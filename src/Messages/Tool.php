@@ -20,6 +20,7 @@ use Anthropic\Messages\Tool\Type;
  *   name: string,
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   description?: string|null,
+ *   strict?: bool|null,
  *   type?: null|Type|value-of<Type>,
  * }
  */
@@ -58,6 +59,12 @@ final class Tool implements BaseModel
     #[Optional]
     public ?string $description;
 
+    /**
+     * When true, guarantees schema validation on tool names and inputs.
+     */
+    #[Optional]
+    public ?bool $strict;
+
     /** @var value-of<Type>|null $type */
     #[Optional(enum: Type::class, nullable: true)]
     public ?string $type;
@@ -95,6 +102,7 @@ final class Tool implements BaseModel
         string $name,
         CacheControlEphemeral|array|null $cacheControl = null,
         ?string $description = null,
+        ?bool $strict = null,
         Type|string|null $type = null,
     ): self {
         $self = new self;
@@ -104,6 +112,7 @@ final class Tool implements BaseModel
 
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $description && $self['description'] = $description;
+        null !== $strict && $self['strict'] = $strict;
         null !== $type && $self['type'] = $type;
 
         return $self;
@@ -160,6 +169,17 @@ final class Tool implements BaseModel
     {
         $self = clone $this;
         $self['description'] = $description;
+
+        return $self;
+    }
+
+    /**
+     * When true, guarantees schema validation on tool names and inputs.
+     */
+    public function withStrict(bool $strict): self
+    {
+        $self = clone $this;
+        $self['strict'] = $strict;
 
         return $self;
     }

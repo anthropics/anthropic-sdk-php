@@ -70,6 +70,9 @@ final class BetaToolTextEditor20250728 implements BaseModel
     #[Optional('max_characters', nullable: true)]
     public ?int $maxCharacters;
 
+    /**
+     * When true, guarantees schema validation on tool names and inputs.
+     */
     #[Optional]
     public ?bool $strict;
 
@@ -165,6 +168,9 @@ final class BetaToolTextEditor20250728 implements BaseModel
         return $self;
     }
 
+    /**
+     * When true, guarantees schema validation on tool names and inputs.
+     */
     public function withStrict(bool $strict): self
     {
         $self = clone $this;

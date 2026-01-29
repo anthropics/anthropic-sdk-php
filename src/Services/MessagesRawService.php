@@ -16,6 +16,7 @@ use Anthropic\Messages\MessageParam;
 use Anthropic\Messages\MessageTokensCount;
 use Anthropic\Messages\Metadata;
 use Anthropic\Messages\Model;
+use Anthropic\Messages\OutputConfig;
 use Anthropic\Messages\RawContentBlockDeltaEvent;
 use Anthropic\Messages\RawContentBlockStartEvent;
 use Anthropic\Messages\RawContentBlockStopEvent;
@@ -32,6 +33,7 @@ use Anthropic\SSEStream;
  * @phpstan-import-type MessageCountTokensToolShape from \Anthropic\Messages\MessageCountTokensTool
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
  * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
+ * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
  * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCreateParams\System as SystemShape1
  * @phpstan-import-type ThinkingConfigParamShape from \Anthropic\Messages\ThinkingConfigParam
  * @phpstan-import-type ToolChoiceShape from \Anthropic\Messages\ToolChoice
@@ -60,6 +62,7 @@ final class MessagesRawService implements MessagesRawContract
      *   messages: list<MessageParam|MessageParamShape>,
      *   model: string|Model|value-of<Model>,
      *   metadata?: Metadata|MetadataShape,
+     *   outputConfig?: OutputConfig|OutputConfigShape,
      *   serviceTier?: ServiceTier|value-of<ServiceTier>,
      *   stopSequences?: list<string>,
      *   system?: SystemShape1,
@@ -103,6 +106,7 @@ final class MessagesRawService implements MessagesRawContract
      *   messages: list<MessageParam|MessageParamShape>,
      *   model: string|Model|value-of<Model>,
      *   metadata?: Metadata|MetadataShape,
+     *   outputConfig?: OutputConfig|OutputConfigShape,
      *   serviceTier?: ServiceTier|value-of<ServiceTier>,
      *   stopSequences?: list<string>,
      *   system?: SystemShape1,
@@ -153,6 +157,7 @@ final class MessagesRawService implements MessagesRawContract
      * @param array{
      *   messages: list<MessageParam|MessageParamShape>,
      *   model: string|Model|value-of<Model>,
+     *   outputConfig?: OutputConfig|OutputConfigShape,
      *   system?: SystemShape,
      *   thinking?: ThinkingConfigParamShape,
      *   toolChoice?: ToolChoiceShape,

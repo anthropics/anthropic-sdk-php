@@ -27,6 +27,7 @@ use Anthropic\Messages\MessageCreateParams\System;
  * @phpstan-import-type ToolUnionVariants from \Anthropic\Messages\ToolUnion
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
  * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
+ * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
  * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCreateParams\System
  * @phpstan-import-type ThinkingConfigParamShape from \Anthropic\Messages\ThinkingConfigParam
  * @phpstan-import-type ToolChoiceShape from \Anthropic\Messages\ToolChoice
@@ -37,6 +38,7 @@ use Anthropic\Messages\MessageCreateParams\System;
  *   messages: list<MessageParam|MessageParamShape>,
  *   model: string|Model|value-of<Model>,
  *   metadata?: null|Metadata|MetadataShape,
+ *   outputConfig?: null|OutputConfig|OutputConfigShape,
  *   serviceTier?: null|ServiceTier|value-of<ServiceTier>,
  *   stopSequences?: list<string>|null,
  *   system?: SystemShape|null,
@@ -132,6 +134,12 @@ final class MessageCreateParams implements BaseModel
      */
     #[Optional]
     public ?Metadata $metadata;
+
+    /**
+     * Configuration options for the model's output, such as the output format.
+     */
+    #[Optional('output_config')]
+    public ?OutputConfig $outputConfig;
 
     /**
      * Determines whether to use priority capacity (if available) or standard capacity for this request.
@@ -310,6 +318,7 @@ final class MessageCreateParams implements BaseModel
      * @param list<MessageParam|MessageParamShape> $messages
      * @param string|Model|value-of<Model> $model
      * @param Metadata|MetadataShape|null $metadata
+     * @param OutputConfig|OutputConfigShape|null $outputConfig
      * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
      * @param list<string>|null $stopSequences
      * @param SystemShape|null $system
@@ -322,6 +331,7 @@ final class MessageCreateParams implements BaseModel
         array $messages,
         Model|string $model,
         Metadata|array|null $metadata = null,
+        OutputConfig|array|null $outputConfig = null,
         ServiceTier|string|null $serviceTier = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
@@ -339,6 +349,7 @@ final class MessageCreateParams implements BaseModel
         $self['model'] = $model;
 
         null !== $metadata && $self['metadata'] = $metadata;
+        null !== $outputConfig && $self['outputConfig'] = $outputConfig;
         null !== $serviceTier && $self['serviceTier'] = $serviceTier;
         null !== $stopSequences && $self['stopSequences'] = $stopSequences;
         null !== $system && $self['system'] = $system;
@@ -449,6 +460,19 @@ final class MessageCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['metadata'] = $metadata;
+
+        return $self;
+    }
+
+    /**
+     * Configuration options for the model's output, such as the output format.
+     *
+     * @param OutputConfig|OutputConfigShape $outputConfig
+     */
+    public function withOutputConfig(OutputConfig|array $outputConfig): self
+    {
+        $self = clone $this;
+        $self['outputConfig'] = $outputConfig;
 
         return $self;
     }
