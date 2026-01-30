@@ -7,6 +7,7 @@ use Anthropic\Beta\Skills\Versions\VersionGetResponse;
 use Anthropic\Beta\Skills\Versions\VersionListResponse;
 use Anthropic\Beta\Skills\Versions\VersionNewResponse;
 use Anthropic\Client;
+use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -25,7 +26,7 @@ final class VersionsTest extends TestCase
     {
         parent::setUp();
 
-        $testUrl = getenv('TEST_API_BASE_URL') ?: 'http://127.0.0.1:4010';
+        $testUrl = Util::getenvWithFallback('TEST_API_BASE_URL', 'http://127.0.0.1:4010');
         $client = new Client(apiKey: 'my-anthropic-api-key', baseUrl: $testUrl);
 
         $this->client = $client;

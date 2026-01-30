@@ -419,6 +419,34 @@ final class Util
     }
 
     /**
+     * @param non-empty-string $key
+     *
+     * @return non-empty-string
+     */
+    public static function getenv(string $key): string
+    {
+        $value = $_ENV[$key] ?? getenv($key);
+
+        if (is_string($value) && '' !== $value) {
+            return $value;
+        }
+
+        throw new \InvalidArgumentException("Environment variable `{$key}` must be a non-empty string");
+    }
+
+    /**
+     * @param non-empty-string $key
+     *
+     * @phpstan-return ($default is string ? string : non-empty-string|null)
+     */
+    public static function getenvWithFallback(string $key, ?string $default = null): ?string
+    {
+        $value = $_ENV[$key] ?? getenv($key);
+
+        return is_string($value) && '' !== $value ? $value : $default;
+    }
+
+    /**
      * @param list<callable> $closing
      *
      * @return \Generator<string>

@@ -6,6 +6,7 @@ use Anthropic\Beta\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Client;
+use Anthropic\Core\Util;
 use Anthropic\Page;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -24,7 +25,7 @@ final class BatchesTest extends TestCase
     {
         parent::setUp();
 
-        $testUrl = getenv('TEST_API_BASE_URL') ?: 'http://127.0.0.1:4010';
+        $testUrl = Util::getenvWithFallback('TEST_API_BASE_URL', 'http://127.0.0.1:4010');
         $client = new Client(apiKey: 'my-anthropic-api-key', baseUrl: $testUrl);
 
         $this->client = $client;
