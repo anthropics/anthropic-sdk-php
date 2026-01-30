@@ -1,5 +1,74 @@
 # Changelog
 
+## 0.5.0 (2026-01-30)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.4.0...v0.5.0)
+
+### ⚠ BREAKING CHANGES
+
+* replace special flag type `omittable` with just `null`
+* use camel casing for all class properties
+
+### Features
+
+* add `BaseResponse` class for accessing raw responses ([b803fb8](https://github.com/anthropics/anthropic-sdk-php/commit/b803fb85712bc5cd686bc7939b8b1447060be5cb))
+* add idempotency header support ([113b79f](https://github.com/anthropics/anthropic-sdk-php/commit/113b79f994c437eb5b739a7e4cde1d6cb8b54e4d))
+* add setters to constant parameters ([a476273](https://github.com/anthropics/anthropic-sdk-php/commit/a47627345b4905d846ff8227f9646e7f7a61a5ce))
+* allow both model class instances and arrays in setters ([71aa7fc](https://github.com/anthropics/anthropic-sdk-php/commit/71aa7fcf3e610a024e407edc0fc77cf7a9050f9c))
+* **api:** add support for Structured Outputs in the Messages API ([9fd43ce](https://github.com/anthropics/anthropic-sdk-php/commit/9fd43ceedda53a49059465e2077dd73029a9cafb))
+* **api:** migrate sending message format in output_config rather than output_format ([d334157](https://github.com/anthropics/anthropic-sdk-php/commit/d334157f4949bd963401e274ae90a029477764de))
+* better support for pagination mechanisms ([829ee6e](https://github.com/anthropics/anthropic-sdk-php/commit/829ee6eddf267729c0f78b9422433d8ecec2ed90))
+* improved phpstan type annotations ([cc981bb](https://github.com/anthropics/anthropic-sdk-php/commit/cc981bb99a71dfad9ba113504c144102962348fc))
+* replace special flag type `omittable` with just `null` ([e1137de](https://github.com/anthropics/anthropic-sdk-php/commit/e1137deadaa6405f4a993f1cfc977bc2e5d132f6))
+* simplify and make the phpstan types more consistent ([9f536fe](https://github.com/anthropics/anthropic-sdk-php/commit/9f536fea8c01e5b9e225da7ef56b87afe1cc3c58))
+* split out services into normal & raw types ([5ba5dbf](https://github.com/anthropics/anthropic-sdk-php/commit/5ba5dbfce8f949df59af69e2994bac0d248dc65a))
+* support unwrapping envelopes ([0ed53db](https://github.com/anthropics/anthropic-sdk-php/commit/0ed53dbcfb82ff00bcdfb37055d00604cd361e08))
+* use camel casing for all class properties ([90f0805](https://github.com/anthropics/anthropic-sdk-php/commit/90f0805040304e1469f056d640b7dc19e5172f1c))
+
+
+### Bug Fixes
+
+* a number of serialization errors ([e318451](https://github.com/anthropics/anthropic-sdk-php/commit/e318451cbed8f7811f0aec828458df76894ccd9f))
+* correctly serialize dates ([af8260d](https://github.com/anthropics/anthropic-sdk-php/commit/af8260d59b4bdf51740ae27621ccd344842d7b31))
+* support arrays in query param construction ([779413f](https://github.com/anthropics/anthropic-sdk-php/commit/779413fa74d5c3db05f60b19e98c479a257ea6ff))
+* typos in README.md ([cb61dee](https://github.com/anthropics/anthropic-sdk-php/commit/cb61dee0b67dfe15b1078de8472f026a53e7e3a4))
+
+
+### Chores
+
+* add git attributes and composer lock file ([006c7c2](https://github.com/anthropics/anthropic-sdk-php/commit/006c7c20159234b46bfb12b72f24c24112fab190))
+* be more targeted in suppressing superfluous linter warnings ([4b8cbf5](https://github.com/anthropics/anthropic-sdk-php/commit/4b8cbf5aa58f27965e28830089d144f724774866))
+* **ci:** Add Claude Code GitHub Workflow ([#240](https://github.com/anthropics/anthropic-sdk-php/issues/240)) ([4fd215b](https://github.com/anthropics/anthropic-sdk-php/commit/4fd215b4bab6b4fa7a61ecb2283cc257b74ecbd0))
+* ensure constant values are marked as optional in array types ([66cf88c](https://github.com/anthropics/anthropic-sdk-php/commit/66cf88c69f3df0ff214d58e34aa3ab122140eacd))
+* formatting ([5878c16](https://github.com/anthropics/anthropic-sdk-php/commit/5878c16d13731b6680e415b897928ecfaf3d6059))
+* **internal:** add a basic client test ([8835b21](https://github.com/anthropics/anthropic-sdk-php/commit/8835b216e57256f0fb0fbeb51a76c5d63f224ec1))
+* **internal:** codegen related update ([1c218af](https://github.com/anthropics/anthropic-sdk-php/commit/1c218af6e5c5b3d697ee4643b98eb9fbb78c73b4))
+* **internal:** codegen related update ([7240372](https://github.com/anthropics/anthropic-sdk-php/commit/72403726a0d825d21b34324dfc0fdb2f52a1a3af))
+* **internal:** codegen related update ([9557a1c](https://github.com/anthropics/anthropic-sdk-php/commit/9557a1cbeb0dc5cceca7d174facf463910fe6fe5))
+* **internal:** codegen related update ([a8a13ec](https://github.com/anthropics/anthropic-sdk-php/commit/a8a13ec47930ca97bde4cb4d9b788817a0e940fe))
+* **internal:** codegen related update ([e2bebf6](https://github.com/anthropics/anthropic-sdk-php/commit/e2bebf6b08b81068d0f06f0885e0153d6f8af315))
+* **internal:** codegen related update ([213c670](https://github.com/anthropics/anthropic-sdk-php/commit/213c67045189aebd26cbfa0382d9503127a591a4))
+* **internal:** codegen related update ([2d460ff](https://github.com/anthropics/anthropic-sdk-php/commit/2d460ff29ac56f8c748010843a0196052abd8ff3))
+* **internal:** codegen related update ([6087933](https://github.com/anthropics/anthropic-sdk-php/commit/6087933682bcfe4c24fbe85add2d10e59ae8b80b))
+* **internal:** codegen related update ([3e5e21a](https://github.com/anthropics/anthropic-sdk-php/commit/3e5e21a70e6764467231a62959f60372f4c1003c))
+* **internal:** codegen related update ([ee26b2b](https://github.com/anthropics/anthropic-sdk-php/commit/ee26b2b888cac9f95c4e3b3415794d79fc87284c))
+* **internal:** codegen related update ([b3411dd](https://github.com/anthropics/anthropic-sdk-php/commit/b3411dd6fe189fbd2ed577e16e9985cd40cfe1b3))
+* **internal:** codegen related update ([e98bd62](https://github.com/anthropics/anthropic-sdk-php/commit/e98bd62e30a1eb28db272cc2b64b72bca71c9ab5))
+* **internal:** codegen related update ([94d88c4](https://github.com/anthropics/anthropic-sdk-php/commit/94d88c4acc707723aa49130832709b3d9f3fb830))
+* **internal:** ignore stainless-internal artifacts ([b144935](https://github.com/anthropics/anthropic-sdk-php/commit/b1449355e374463a1e38c0991919782f1697baff))
+* **internal:** improve pagination tests ([94f8bc8](https://github.com/anthropics/anthropic-sdk-php/commit/94f8bc822a87bd2c15c12951ac23227b958ae85b))
+* **internal:** minor test script reformatting ([e27d068](https://github.com/anthropics/anthropic-sdk-php/commit/e27d068e737cbb6c9c6616ccf57cf187fbd1c093))
+* **internal:** refactor auth by moving concern from base client into client ([af7b192](https://github.com/anthropics/anthropic-sdk-php/commit/af7b192201e0ba1bddffeedbbaa84f0abb5a2c75))
+* **internal:** update `actions/checkout` version ([212b762](https://github.com/anthropics/anthropic-sdk-php/commit/212b762f9446793d19766b2519306d77e7cc5aee))
+* **internal:** update phpstan comments ([f0f7ddf](https://github.com/anthropics/anthropic-sdk-php/commit/f0f7ddf3d16c70c844e3c85e548c1c110d0a4dd8))
+* **readme:** remove beta warning now that we're in ga ([ca60a4b](https://github.com/anthropics/anthropic-sdk-php/commit/ca60a4bb724751871e2377ba84022670825d81d1))
+* support jsonl streaming ([b350cbc](https://github.com/anthropics/anthropic-sdk-php/commit/b350cbc9373cdcb0b55449e73f394cc7c02236ae))
+* switch from `#[Api(optional: true|false)]` to `#[Required]|#[Optional]` for annotations ([f938919](https://github.com/anthropics/anthropic-sdk-php/commit/f938919409d5ade7d8afaf5b4dcb6de50b4a14ea))
+* update examples ([eef6daf](https://github.com/anthropics/anthropic-sdk-php/commit/eef6dafb14bffb4ee842764465c049b75fbb9111))
+* use `$self = clone $this;` instead of `$obj = clone $this;` ([1607f76](https://github.com/anthropics/anthropic-sdk-php/commit/1607f76433d8b02c03a61f84c422fe06f652661b))
+* use non-trivial test assertions ([c223976](https://github.com/anthropics/anthropic-sdk-php/commit/c223976e6b6540e7389799ac1428a321119365b2))
+* use single quote strings ([441785c](https://github.com/anthropics/anthropic-sdk-php/commit/441785c73c427e4b7f60fdf6f5e0562b7ede94e6))
+
 ## 0.4.0 (2025-11-24)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.3.0...v0.4.0)
