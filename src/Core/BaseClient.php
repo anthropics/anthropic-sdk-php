@@ -271,7 +271,7 @@ abstract class BaseClient
                 throw $exn;
             }
 
-            $seconds = $this->retryDelay($opts, retryCount: $redirectCount, rsp: $rsp);
+            $seconds = $this->retryDelay($opts, retryCount: $retryCount, rsp: $rsp);
             $floor = floor($seconds);
             time_nanosleep((int) $floor, nanoseconds: (int) ($seconds - $floor) * 10 ** 9);
 
