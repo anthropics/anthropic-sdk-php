@@ -65,4 +65,15 @@ final class BetaGatewayTimeoutError implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'timeout_error' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

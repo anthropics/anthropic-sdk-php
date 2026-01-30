@@ -124,6 +124,17 @@ final class BetaRawMessageDeltaEvent implements BaseModel
     }
 
     /**
+     * @param 'message_delta' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
      * Billing and rate-limit usage.
      *
      * Anthropic's API bills and rate-limits by token counts, as tokens represent the underlying cost to our systems.

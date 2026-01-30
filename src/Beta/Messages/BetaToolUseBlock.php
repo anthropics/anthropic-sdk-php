@@ -121,6 +121,17 @@ final class BetaToolUseBlock implements BaseModel
     }
 
     /**
+     * @param 'tool_use' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
      * Tool invocation directly from the model.
      *
      * @param CallerShape $caller

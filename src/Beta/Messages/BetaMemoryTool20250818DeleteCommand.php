@@ -66,6 +66,19 @@ final class BetaMemoryTool20250818DeleteCommand implements BaseModel
     }
 
     /**
+     * Command type identifier.
+     *
+     * @param 'delete' $command
+     */
+    public function withCommand(string $command): self
+    {
+        $self = clone $this;
+        $self['command'] = $command;
+
+        return $self;
+    }
+
+    /**
      * Path to the file or directory to delete.
      */
     public function withPath(string $path): self

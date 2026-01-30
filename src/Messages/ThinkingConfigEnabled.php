@@ -79,4 +79,15 @@ final class ThinkingConfigEnabled implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'enabled' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

@@ -146,6 +146,32 @@ final class BetaWebFetchTool20250910 implements BaseModel
     }
 
     /**
+     * Name of the tool.
+     *
+     * This is how the tool will be called by the model and in `tool_use` blocks.
+     *
+     * @param 'web_fetch' $name
+     */
+    public function withName(string $name): self
+    {
+        $self = clone $this;
+        $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * @param 'web_fetch_20250910' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
      * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
      */
     public function withAllowedCallers(array $allowedCallers): self

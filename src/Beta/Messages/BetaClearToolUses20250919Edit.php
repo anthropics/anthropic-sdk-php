@@ -112,6 +112,17 @@ final class BetaClearToolUses20250919Edit implements BaseModel
     }
 
     /**
+     * @param 'clear_tool_uses_20250919' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
      * Minimum number of tokens that must be cleared when triggered. Context will only be modified if at least this many tokens can be removed.
      *
      * @param BetaInputTokensClearAtLeast|BetaInputTokensClearAtLeastShape|null $clearAtLeast

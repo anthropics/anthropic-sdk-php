@@ -56,6 +56,17 @@ final class BetaToolUsesKeep implements BaseModel
         return $self;
     }
 
+    /**
+     * @param 'tool_uses' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
     public function withValue(int $value): self
     {
         $self = clone $this;

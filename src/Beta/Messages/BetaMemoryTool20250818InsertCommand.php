@@ -88,6 +88,19 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
     }
 
     /**
+     * Command type identifier.
+     *
+     * @param 'insert' $command
+     */
+    public function withCommand(string $command): self
+    {
+        $self = clone $this;
+        $self['command'] = $command;
+
+        return $self;
+    }
+
+    /**
      * Line number where text should be inserted.
      */
     public function withInsertLine(int $insertLine): self

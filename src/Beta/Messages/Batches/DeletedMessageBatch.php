@@ -77,4 +77,19 @@ final class DeletedMessageBatch implements BaseModel
 
         return $self;
     }
+
+    /**
+     * Deleted object type.
+     *
+     * For Message Batches, this is always `"message_batch_deleted"`.
+     *
+     * @param 'message_batch_deleted' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

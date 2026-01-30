@@ -73,4 +73,15 @@ final class BetaToolSearchToolResultErrorParam implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'tool_search_tool_result_error' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

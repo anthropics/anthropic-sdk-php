@@ -77,4 +77,15 @@ final class ThinkingBlockParam implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'thinking' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

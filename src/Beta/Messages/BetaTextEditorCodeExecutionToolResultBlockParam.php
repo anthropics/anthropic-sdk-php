@@ -110,6 +110,17 @@ final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
     }
 
     /**
+     * @param 'text_editor_code_execution_tool_result' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
      * Create a cache control breakpoint at this content block.
      *
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl

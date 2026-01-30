@@ -34,4 +34,15 @@ final class MessageBatchCanceledResult implements BaseModel
     {
         return new self;
     }
+
+    /**
+     * @param 'canceled' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

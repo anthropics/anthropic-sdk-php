@@ -36,4 +36,15 @@ final class BetaToolChoiceNone implements BaseModel
     {
         return new self;
     }
+
+    /**
+     * @param 'none' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

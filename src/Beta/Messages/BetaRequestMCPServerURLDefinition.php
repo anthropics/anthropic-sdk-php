@@ -92,6 +92,17 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
         return $self;
     }
 
+    /**
+     * @param 'url' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
     public function withURL(string $url): self
     {
         $self = clone $this;

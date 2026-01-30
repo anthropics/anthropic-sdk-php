@@ -289,4 +289,19 @@ final class MessageBatch implements BaseModel
 
         return $self;
     }
+
+    /**
+     * Object type.
+     *
+     * For Message Batches, this is always `"message_batch"`.
+     *
+     * @param 'message_batch' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

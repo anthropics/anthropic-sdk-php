@@ -74,4 +74,15 @@ final class BetaWebFetchToolResultErrorBlock implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'web_fetch_tool_result_error' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

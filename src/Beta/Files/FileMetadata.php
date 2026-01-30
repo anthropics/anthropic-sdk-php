@@ -183,6 +183,21 @@ final class FileMetadata implements BaseModel
     }
 
     /**
+     * Object type.
+     *
+     * For files, this is always `"file"`.
+     *
+     * @param 'file' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
      * Whether the file can be downloaded.
      */
     public function withDownloadable(bool $downloadable): self

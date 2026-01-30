@@ -72,4 +72,15 @@ final class WebSearchToolRequestError implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'web_search_tool_result_error' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

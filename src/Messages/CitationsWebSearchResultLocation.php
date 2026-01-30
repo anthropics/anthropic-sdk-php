@@ -108,6 +108,17 @@ final class CitationsWebSearchResultLocation implements BaseModel
         return $self;
     }
 
+    /**
+     * @param 'web_search_result_location' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
     public function withURL(string $url): self
     {
         $self = clone $this;

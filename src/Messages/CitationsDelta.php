@@ -77,4 +77,15 @@ final class CitationsDelta implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'citations_delta' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

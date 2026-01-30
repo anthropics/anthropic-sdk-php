@@ -65,4 +65,15 @@ final class BetaRedactedThinkingBlockParam implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'redacted_thinking' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

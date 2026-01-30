@@ -84,4 +84,15 @@ final class Base64ImageSource implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'base64' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

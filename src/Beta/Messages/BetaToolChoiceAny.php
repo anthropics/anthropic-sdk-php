@@ -53,6 +53,17 @@ final class BetaToolChoiceAny implements BaseModel
     }
 
     /**
+     * @param 'any' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
      * Whether to disable parallel tool use.
      *
      * Defaults to `false`. If set to `true`, the model will output exactly one tool use.

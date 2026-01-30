@@ -69,4 +69,26 @@ final class BetaBase64PDFSource implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'application/pdf' $mediaType
+     */
+    public function withMediaType(string $mediaType): self
+    {
+        $self = clone $this;
+        $self['mediaType'] = $mediaType;
+
+        return $self;
+    }
+
+    /**
+     * @param 'base64' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

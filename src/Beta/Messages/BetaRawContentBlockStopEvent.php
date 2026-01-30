@@ -65,4 +65,15 @@ final class BetaRawContentBlockStopEvent implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'content_block_stop' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

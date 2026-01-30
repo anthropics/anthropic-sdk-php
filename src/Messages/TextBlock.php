@@ -96,4 +96,15 @@ final class TextBlock implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'text' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

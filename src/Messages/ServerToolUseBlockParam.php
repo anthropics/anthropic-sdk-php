@@ -108,6 +108,28 @@ final class ServerToolUseBlockParam implements BaseModel
     }
 
     /**
+     * @param 'web_search' $name
+     */
+    public function withName(string $name): self
+    {
+        $self = clone $this;
+        $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * @param 'server_tool_use' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
      * Create a cache control breakpoint at this content block.
      *
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl

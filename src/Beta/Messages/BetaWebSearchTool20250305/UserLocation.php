@@ -80,6 +80,17 @@ final class UserLocation implements BaseModel
     }
 
     /**
+     * @param 'approximate' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
      * The city of the user.
      */
     public function withCity(?string $city): self

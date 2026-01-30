@@ -108,4 +108,15 @@ final class BetaMCPToolResultBlock implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'mcp_tool_result' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

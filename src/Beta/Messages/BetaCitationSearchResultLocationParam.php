@@ -150,4 +150,15 @@ final class BetaCitationSearchResultLocationParam implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'search_result_location' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

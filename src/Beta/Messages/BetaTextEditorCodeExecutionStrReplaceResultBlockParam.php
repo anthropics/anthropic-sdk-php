@@ -75,6 +75,17 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlockParam implements Bas
     }
 
     /**
+     * @param 'text_editor_code_execution_str_replace_result' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
      * @param list<string>|null $lines
      */
     public function withLines(?array $lines): self
