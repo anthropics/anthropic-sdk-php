@@ -95,4 +95,15 @@ final class ToolUseBlock implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'tool_use' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

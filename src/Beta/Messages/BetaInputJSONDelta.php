@@ -65,4 +65,15 @@ final class BetaInputJSONDelta implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'input_json_delta' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

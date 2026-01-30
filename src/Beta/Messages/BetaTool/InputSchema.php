@@ -63,6 +63,17 @@ final class InputSchema implements BaseModel
     }
 
     /**
+     * @param 'object' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
      * @param array<string,mixed>|null $properties
      */
     public function withProperties(?array $properties): self

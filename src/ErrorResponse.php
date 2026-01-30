@@ -89,4 +89,15 @@ final class ErrorResponse implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'error' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

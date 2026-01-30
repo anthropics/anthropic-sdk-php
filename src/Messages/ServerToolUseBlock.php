@@ -90,4 +90,26 @@ final class ServerToolUseBlock implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'web_search' $name
+     */
+    public function withName(string $name): self
+    {
+        $self = clone $this;
+        $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * @param 'server_tool_use' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

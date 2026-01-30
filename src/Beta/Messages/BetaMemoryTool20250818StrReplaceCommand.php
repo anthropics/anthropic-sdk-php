@@ -88,6 +88,19 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
     }
 
     /**
+     * Command type identifier.
+     *
+     * @param 'str_replace' $command
+     */
+    public function withCommand(string $command): self
+    {
+        $self = clone $this;
+        $self['command'] = $command;
+
+        return $self;
+    }
+
+    /**
      * Text to replace with.
      */
     public function withNewStr(string $newStr): self

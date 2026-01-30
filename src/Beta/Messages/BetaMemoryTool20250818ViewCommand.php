@@ -79,6 +79,19 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
     }
 
     /**
+     * Command type identifier.
+     *
+     * @param 'view' $command
+     */
+    public function withCommand(string $command): self
+    {
+        $self = clone $this;
+        $self['command'] = $command;
+
+        return $self;
+    }
+
+    /**
      * Path to directory or file to view.
      */
     public function withPath(string $path): self

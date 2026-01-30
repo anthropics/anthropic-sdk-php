@@ -60,6 +60,17 @@ final class BetaCacheControlEphemeral implements BaseModel
     }
 
     /**
+     * @param 'ephemeral' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
      * The time-to-live for the cache control breakpoint.
      *
      * This may be one the following values:

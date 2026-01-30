@@ -34,4 +34,15 @@ final class RawMessageStopEvent implements BaseModel
     {
         return new self;
     }
+
+    /**
+     * @param 'message_stop' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

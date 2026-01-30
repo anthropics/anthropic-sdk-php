@@ -73,4 +73,15 @@ final class MessageBatchErroredResult implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'errored' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

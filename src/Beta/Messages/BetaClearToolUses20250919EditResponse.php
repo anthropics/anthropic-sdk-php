@@ -101,4 +101,17 @@ final class BetaClearToolUses20250919EditResponse implements BaseModel
 
         return $self;
     }
+
+    /**
+     * The type of context management edit applied.
+     *
+     * @param 'clear_tool_uses_20250919' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

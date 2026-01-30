@@ -58,6 +58,17 @@ final class BetaInputTokensTrigger implements BaseModel
         return $self;
     }
 
+    /**
+     * @param 'input_tokens' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
     public function withValue(int $value): self
     {
         $self = clone $this;

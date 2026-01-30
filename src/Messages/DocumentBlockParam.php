@@ -113,6 +113,17 @@ final class DocumentBlockParam implements BaseModel
     }
 
     /**
+     * @param 'document' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
      * Create a cache control breakpoint at this content block.
      *
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl

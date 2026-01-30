@@ -65,4 +65,15 @@ final class BetaBashCodeExecutionOutputBlockParam implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'bash_code_execution_output' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

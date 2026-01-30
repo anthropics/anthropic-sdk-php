@@ -93,4 +93,15 @@ final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'text_editor_code_execution_tool_result' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

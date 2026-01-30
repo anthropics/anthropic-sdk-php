@@ -150,4 +150,15 @@ final class BetaCitationContentBlockLocation implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'content_block_location' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

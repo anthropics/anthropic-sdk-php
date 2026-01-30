@@ -57,6 +57,17 @@ final class BetaClearThinking20251015Edit implements BaseModel
     }
 
     /**
+     * @param 'clear_thinking_20251015' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
      * Number of most recent assistant turns to keep thinking blocks for. Older turns will have their thinking blocks removed.
      *
      * @param KeepShape $keep

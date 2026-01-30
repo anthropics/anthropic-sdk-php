@@ -102,6 +102,32 @@ final class BetaToolTextEditor20241022 implements BaseModel
     }
 
     /**
+     * Name of the tool.
+     *
+     * This is how the tool will be called by the model and in `tool_use` blocks.
+     *
+     * @param 'str_replace_editor' $name
+     */
+    public function withName(string $name): self
+    {
+        $self = clone $this;
+        $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * @param 'text_editor_20241022' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
      * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
      */
     public function withAllowedCallers(array $allowedCallers): self

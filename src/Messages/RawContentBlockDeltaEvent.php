@@ -89,4 +89,15 @@ final class RawContentBlockDeltaEvent implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'content_block_delta' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

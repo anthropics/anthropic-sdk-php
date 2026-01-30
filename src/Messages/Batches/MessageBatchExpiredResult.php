@@ -34,4 +34,15 @@ final class MessageBatchExpiredResult implements BaseModel
     {
         return new self;
     }
+
+    /**
+     * @param 'expired' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

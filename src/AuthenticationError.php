@@ -65,4 +65,15 @@ final class AuthenticationError implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'authentication_error' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

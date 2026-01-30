@@ -116,4 +116,19 @@ final class BetaModelInfo implements BaseModel
 
         return $self;
     }
+
+    /**
+     * Object type.
+     *
+     * For Models, this is always `"model"`.
+     *
+     * @param 'model' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

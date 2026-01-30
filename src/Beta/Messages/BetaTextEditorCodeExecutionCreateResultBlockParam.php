@@ -65,4 +65,15 @@ final class BetaTextEditorCodeExecutionCreateResultBlockParam implements BaseMod
 
         return $self;
     }
+
+    /**
+     * @param 'text_editor_code_execution_create_result' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

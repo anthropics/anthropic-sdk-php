@@ -112,6 +112,21 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
     }
 
     /**
+     * Name of the tool.
+     *
+     * This is how the tool will be called by the model and in `tool_use` blocks.
+     *
+     * @param 'tool_search_tool_bm25' $name
+     */
+    public function withName(string $name): self
+    {
+        $self = clone $this;
+        $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
      * @param Type|value-of<Type> $type
      */
     public function withType(Type|string $type): self

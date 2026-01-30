@@ -65,4 +65,15 @@ final class BetaSignatureDelta implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'signature_delta' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

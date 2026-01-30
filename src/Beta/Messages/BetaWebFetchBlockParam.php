@@ -96,6 +96,17 @@ final class BetaWebFetchBlockParam implements BaseModel
     }
 
     /**
+     * @param 'web_fetch_result' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
      * Fetched content URL.
      */
     public function withURL(string $url): self

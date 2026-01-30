@@ -69,4 +69,26 @@ final class PlainTextSource implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'text/plain' $mediaType
+     */
+    public function withMediaType(string $mediaType): self
+    {
+        $self = clone $this;
+        $self['mediaType'] = $mediaType;
+
+        return $self;
+    }
+
+    /**
+     * @param 'text' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

@@ -150,4 +150,15 @@ final class BetaCitationCharLocation implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'char_location' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

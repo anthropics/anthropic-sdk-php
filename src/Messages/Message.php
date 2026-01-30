@@ -263,6 +263,21 @@ final class Message implements BaseModel
     }
 
     /**
+     * Conversational role of the generated message.
+     *
+     * This will always be `"assistant"`.
+     *
+     * @param 'assistant' $role
+     */
+    public function withRole(string $role): self
+    {
+        $self = clone $this;
+        $self['role'] = $role;
+
+        return $self;
+    }
+
+    /**
      * The reason that we stopped.
      *
      * This may be one the following values:
@@ -294,6 +309,21 @@ final class Message implements BaseModel
     {
         $self = clone $this;
         $self['stopSequence'] = $stopSequence;
+
+        return $self;
+    }
+
+    /**
+     * Object type.
+     *
+     * For Messages, this is always `"message"`.
+     *
+     * @param 'message' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
 
         return $self;
     }

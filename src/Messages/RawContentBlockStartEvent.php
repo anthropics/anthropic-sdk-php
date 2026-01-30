@@ -93,4 +93,15 @@ final class RawContentBlockStartEvent implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'content_block_start' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

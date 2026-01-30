@@ -65,4 +65,15 @@ final class ThinkingDelta implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'thinking_delta' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

@@ -73,6 +73,19 @@ final class BetaMemoryTool20250818CreateCommand implements BaseModel
     }
 
     /**
+     * Command type identifier.
+     *
+     * @param 'create' $command
+     */
+    public function withCommand(string $command): self
+    {
+        $self = clone $this;
+        $self['command'] = $command;
+
+        return $self;
+    }
+
+    /**
      * Content to write to the file.
      */
     public function withFileText(string $fileText): self

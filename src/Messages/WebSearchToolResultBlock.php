@@ -90,4 +90,15 @@ final class WebSearchToolResultBlock implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'web_search_tool_result' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

@@ -73,4 +73,15 @@ final class BetaBashCodeExecutionToolResultErrorParam implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'bash_code_execution_tool_result_error' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

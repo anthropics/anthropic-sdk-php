@@ -34,4 +34,15 @@ final class BetaAllThinkingTurns implements BaseModel
     {
         return new self;
     }
+
+    /**
+     * @param 'all' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

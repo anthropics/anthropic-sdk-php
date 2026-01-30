@@ -63,4 +63,15 @@ final class BetaTextDelta implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'text_delta' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

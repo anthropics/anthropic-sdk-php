@@ -72,4 +72,15 @@ final class RawMessageStartEvent implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'message_start' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

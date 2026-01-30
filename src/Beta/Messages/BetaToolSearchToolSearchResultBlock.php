@@ -74,4 +74,15 @@ final class BetaToolSearchToolSearchResultBlock implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'tool_search_tool_search_result' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

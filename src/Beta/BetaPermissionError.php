@@ -65,4 +65,15 @@ final class BetaPermissionError implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'permission_error' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

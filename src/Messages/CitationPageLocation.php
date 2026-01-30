@@ -150,4 +150,15 @@ final class CitationPageLocation implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'page_location' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

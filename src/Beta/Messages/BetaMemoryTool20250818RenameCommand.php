@@ -73,6 +73,19 @@ final class BetaMemoryTool20250818RenameCommand implements BaseModel
     }
 
     /**
+     * Command type identifier.
+     *
+     * @param 'rename' $command
+     */
+    public function withCommand(string $command): self
+    {
+        $self = clone $this;
+        $self['command'] = $command;
+
+        return $self;
+    }
+
+    /**
      * New path for the file or directory.
      */
     public function withNewPath(string $newPath): self

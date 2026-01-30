@@ -123,4 +123,15 @@ final class BetaCodeExecutionResultBlock implements BaseModel
 
         return $self;
     }
+
+    /**
+     * @param 'code_execution_result' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
 }

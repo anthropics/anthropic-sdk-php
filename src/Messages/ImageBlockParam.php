@@ -93,6 +93,17 @@ final class ImageBlockParam implements BaseModel
     }
 
     /**
+     * @param 'image' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
      * Create a cache control breakpoint at this content block.
      *
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
