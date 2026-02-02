@@ -4,6 +4,8 @@ use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
 
+ini_set('memory_limit', -1);
+
 return (new Config)
     ->setParallelConfig(ParallelConfigFactory::detect())
     ->setFinder(Finder::create()->in([__DIR__.'/src', __DIR__.'/tests']))
