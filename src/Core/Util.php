@@ -25,6 +25,23 @@ final class Util
 
     public const JSONL_CONTENT_TYPE = '/^application\/(:?x-(?:n|l)djson)|(:?(?:x-)?jsonl)/';
 
+    public static function getenv(string $key): ?string
+    {
+        if (array_key_exists($key, array: $_ENV)) {
+            if (!is_string($value = $_ENV[$key])) {
+                throw new \InvalidArgumentException();
+            }
+
+            return $value;
+        }
+
+        if (is_string($value = getenv($key))) {
+            return $value;
+        }
+
+        return null;
+    }
+
     /**
      * @return array<string,mixed>
      */
@@ -416,34 +433,6 @@ final class Util
     public static function prettyEncodeJson(mixed $obj): string
     {
         return json_encode($obj, flags: JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
-    }
-
-    /**
-     * @param non-empty-string $key
-     *
-     * @return non-empty-string
-     */
-    public static function getenv(string $key): string
-    {
-        $value = $_ENV[$key] ?? getenv($key);
-
-        if (is_string($value) && '' !== $value) {
-            return $value;
-        }
-
-        throw new \InvalidArgumentException("Environment variable `{$key}` must be a non-empty string");
-    }
-
-    /**
-     * @param non-empty-string $key
-     *
-     * @phpstan-return ($default is string ? string : non-empty-string|null)
-     */
-    public static function getenvWithFallback(string $key, ?string $default = null): ?string
-    {
-        $value = $_ENV[$key] ?? getenv($key);
-
-        return is_string($value) && '' !== $value ? $value : $default;
     }
 
     /**

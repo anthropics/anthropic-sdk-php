@@ -89,7 +89,7 @@ class ClientTest extends TestCase
 
     public function testCustomBaseUrlAsEnvironmentVariable(): void
     {
-        $originalBaseUrl = Util::getenvWithFallback('ANTHROPIC_BASE_URL');
+        $originalBaseUrl = Util::getenv('ANTHROPIC_BASE_URL');
         putenv('ANTHROPIC_BASE_URL=https://example.com');
 
         $client = new Client(
