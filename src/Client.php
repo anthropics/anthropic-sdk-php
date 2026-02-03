@@ -46,10 +46,14 @@ class Client extends BaseClient
         ?string $baseUrl = null,
         RequestOptions|array|null $requestOptions = null,
     ) {
-        $this->apiKey = (string) ($apiKey ?? getenv('ANTHROPIC_API_KEY'));
-        $this->authToken = (string) ($authToken ?? getenv('ANTHROPIC_AUTH_TOKEN'));
+        $this->apiKey = (string) ($apiKey ?? Util::getenv('ANTHROPIC_API_KEY'));
+        $this->authToken = (string) ($authToken ?? Util::getenv(
+            'ANTHROPIC_AUTH_TOKEN'
+        ));
 
-        $baseUrl ??= getenv('ANTHROPIC_BASE_URL') ?: 'https://api.anthropic.com';
+        $baseUrl ??= Util::getenv(
+            'ANTHROPIC_BASE_URL'
+        ) ?: 'https://api.anthropic.com';
 
         $options = RequestOptions::parse(
             RequestOptions::with(

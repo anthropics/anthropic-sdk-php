@@ -25,6 +25,23 @@ final class Util
 
     public const JSONL_CONTENT_TYPE = '/^application\/(:?x-(?:n|l)djson)|(:?(?:x-)?jsonl)/';
 
+    public static function getenv(string $key): ?string
+    {
+        if (array_key_exists($key, array: $_ENV)) {
+            if (!is_string($value = $_ENV[$key])) {
+                throw new \InvalidArgumentException;
+            }
+
+            return $value;
+        }
+
+        if (is_string($value = getenv($key))) {
+            return $value;
+        }
+
+        return null;
+    }
+
     /**
      * @return array<string,mixed>
      */
