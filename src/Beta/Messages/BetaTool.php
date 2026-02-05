@@ -24,6 +24,7 @@ use Anthropic\Core\Conversion\MapOf;
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   deferLoading?: bool|null,
  *   description?: string|null,
+ *   eagerInputStreaming?: bool|null,
  *   inputExamples?: list<array<string,mixed>>|null,
  *   strict?: bool|null,
  *   type?: null|Type|value-of<Type>,
@@ -73,6 +74,12 @@ final class BetaTool implements BaseModel
      */
     #[Optional]
     public ?string $description;
+
+    /**
+     * Enable eager input streaming for this tool. When true, tool input parameters will be streamed incrementally as they are generated, and types will be inferred on-the-fly rather than buffering the full JSON output. When false, streaming is disabled for this tool even if the fine-grained-tool-streaming beta is active. When null (default), uses the default behavior based on beta headers.
+     */
+    #[Optional('eager_input_streaming', nullable: true)]
+    public ?bool $eagerInputStreaming;
 
     /** @var list<array<string,mixed>>|null $inputExamples */
     #[Optional('input_examples', list: new MapOf('mixed'))]
@@ -125,6 +132,7 @@ final class BetaTool implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl = null,
         ?bool $deferLoading = null,
         ?string $description = null,
+        ?bool $eagerInputStreaming = null,
         ?array $inputExamples = null,
         ?bool $strict = null,
         Type|string|null $type = null,
@@ -138,6 +146,7 @@ final class BetaTool implements BaseModel
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $deferLoading && $self['deferLoading'] = $deferLoading;
         null !== $description && $self['description'] = $description;
+        null !== $eagerInputStreaming && $self['eagerInputStreaming'] = $eagerInputStreaming;
         null !== $inputExamples && $self['inputExamples'] = $inputExamples;
         null !== $strict && $self['strict'] = $strict;
         null !== $type && $self['type'] = $type;
@@ -218,6 +227,17 @@ final class BetaTool implements BaseModel
     {
         $self = clone $this;
         $self['description'] = $description;
+
+        return $self;
+    }
+
+    /**
+     * Enable eager input streaming for this tool. When true, tool input parameters will be streamed incrementally as they are generated, and types will be inferred on-the-fly rather than buffering the full JSON output. When false, streaming is disabled for this tool even if the fine-grained-tool-streaming beta is active. When null (default), uses the default behavior based on beta headers.
+     */
+    public function withEagerInputStreaming(?bool $eagerInputStreaming): self
+    {
+        $self = clone $this;
+        $self['eagerInputStreaming'] = $eagerInputStreaming;
 
         return $self;
     }

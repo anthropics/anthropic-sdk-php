@@ -14,6 +14,8 @@ enum Model: string
 {
     // Anthropic model identifiers
 
+    case CLAUDE_OPUS_4_6 = 'claude-opus-4-6';
+
     case CLAUDE_OPUS_4_5_20251101 = 'claude-opus-4-5-20251101';
 
     case CLAUDE_OPUS_4_5 = 'claude-opus-4-5';

@@ -39,7 +39,7 @@ class ClientTest extends TestCase
             requestOptions: ['transporter' => $this->transporter],
         );
 
-        $client->messages->create(1024, [], 'claude-haiku-4-5');
+        $client->messages->create(1024, [], 'claude-opus-4-6');
 
         $request = $this->getLastRequest();
 

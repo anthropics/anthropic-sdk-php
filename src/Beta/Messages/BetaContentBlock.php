@@ -25,9 +25,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type BetaMCPToolUseBlockShape from \Anthropic\Beta\Messages\BetaMCPToolUseBlock
  * @phpstan-import-type BetaMCPToolResultBlockShape from \Anthropic\Beta\Messages\BetaMCPToolResultBlock
  * @phpstan-import-type BetaContainerUploadBlockShape from \Anthropic\Beta\Messages\BetaContainerUploadBlock
+ * @phpstan-import-type BetaCompactionBlockShape from \Anthropic\Beta\Messages\BetaCompactionBlock
  *
- * @phpstan-type BetaContentBlockVariants = BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock
- * @phpstan-type BetaContentBlockShape = BetaContentBlockVariants|BetaTextBlockShape|BetaThinkingBlockShape|BetaRedactedThinkingBlockShape|BetaToolUseBlockShape|BetaServerToolUseBlockShape|BetaWebSearchToolResultBlockShape|BetaWebFetchToolResultBlockShape|BetaCodeExecutionToolResultBlockShape|BetaBashCodeExecutionToolResultBlockShape|BetaTextEditorCodeExecutionToolResultBlockShape|BetaToolSearchToolResultBlockShape|BetaMCPToolUseBlockShape|BetaMCPToolResultBlockShape|BetaContainerUploadBlockShape
+ * @phpstan-type BetaContentBlockVariants = BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock|BetaCompactionBlock
+ * @phpstan-type BetaContentBlockShape = BetaContentBlockVariants|BetaTextBlockShape|BetaThinkingBlockShape|BetaRedactedThinkingBlockShape|BetaToolUseBlockShape|BetaServerToolUseBlockShape|BetaWebSearchToolResultBlockShape|BetaWebFetchToolResultBlockShape|BetaCodeExecutionToolResultBlockShape|BetaBashCodeExecutionToolResultBlockShape|BetaTextEditorCodeExecutionToolResultBlockShape|BetaToolSearchToolResultBlockShape|BetaMCPToolUseBlockShape|BetaMCPToolResultBlockShape|BetaContainerUploadBlockShape|BetaCompactionBlockShape
  */
 final class BetaContentBlock implements ConverterSource
 {
@@ -58,6 +59,7 @@ final class BetaContentBlock implements ConverterSource
             'mcp_tool_use' => BetaMCPToolUseBlock::class,
             'mcp_tool_result' => BetaMCPToolResultBlock::class,
             'container_upload' => BetaContainerUploadBlock::class,
+            'compaction' => BetaCompactionBlock::class,
         ];
     }
 }

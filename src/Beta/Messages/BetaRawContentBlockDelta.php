@@ -14,9 +14,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type BetaCitationsDeltaShape from \Anthropic\Beta\Messages\BetaCitationsDelta
  * @phpstan-import-type BetaThinkingDeltaShape from \Anthropic\Beta\Messages\BetaThinkingDelta
  * @phpstan-import-type BetaSignatureDeltaShape from \Anthropic\Beta\Messages\BetaSignatureDelta
+ * @phpstan-import-type BetaCompactionContentBlockDeltaShape from \Anthropic\Beta\Messages\BetaCompactionContentBlockDelta
  *
- * @phpstan-type BetaRawContentBlockDeltaVariants = BetaTextDelta|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta
- * @phpstan-type BetaRawContentBlockDeltaShape = BetaRawContentBlockDeltaVariants|BetaTextDeltaShape|BetaInputJSONDeltaShape|BetaCitationsDeltaShape|BetaThinkingDeltaShape|BetaSignatureDeltaShape
+ * @phpstan-type BetaRawContentBlockDeltaVariants = BetaTextDelta|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta|BetaCompactionContentBlockDelta
+ * @phpstan-type BetaRawContentBlockDeltaShape = BetaRawContentBlockDeltaVariants|BetaTextDeltaShape|BetaInputJSONDeltaShape|BetaCitationsDeltaShape|BetaThinkingDeltaShape|BetaSignatureDeltaShape|BetaCompactionContentBlockDeltaShape
  */
 final class BetaRawContentBlockDelta implements ConverterSource
 {
@@ -38,6 +39,7 @@ final class BetaRawContentBlockDelta implements ConverterSource
             'citations_delta' => BetaCitationsDelta::class,
             'thinking_delta' => BetaThinkingDelta::class,
             'signature_delta' => BetaSignatureDelta::class,
+            'compaction_delta' => BetaCompactionContentBlockDelta::class,
         ];
     }
 }

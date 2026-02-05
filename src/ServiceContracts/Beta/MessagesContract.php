@@ -20,6 +20,7 @@ use Anthropic\Beta\Messages\BetaRawMessageDeltaEvent;
 use Anthropic\Beta\Messages\BetaRawMessageStartEvent;
 use Anthropic\Beta\Messages\BetaRawMessageStopEvent;
 use Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition;
+use Anthropic\Beta\Messages\BetaThinkingConfigAdaptive;
 use Anthropic\Beta\Messages\BetaThinkingConfigDisabled;
 use Anthropic\Beta\Messages\BetaThinkingConfigEnabled;
 use Anthropic\Beta\Messages\BetaToolChoiceAny;
@@ -111,6 +112,7 @@ interface MessagesContract
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement Body param: Context management configuration.
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
+     * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers Body param: MCP servers to be utilized in this request
      * @param BetaMetadata|BetaMetadataShape $metadata body param: An object describing metadata about the request
      * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
@@ -221,6 +223,7 @@ interface MessagesContract
         Model|string $model,
         string|BetaContainerParams|array|null $container = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
+        ?string $inferenceGeo = null,
         ?array $mcpServers = null,
         BetaMetadata|array|null $metadata = null,
         BetaOutputConfig|array|null $outputConfig = null,
@@ -229,7 +232,7 @@ interface MessagesContract
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
-        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|null $thinking = null,
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking = null,
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?int $topK = null,
@@ -299,6 +302,7 @@ interface MessagesContract
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement Body param: Context management configuration.
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
+     * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers Body param: MCP servers to be utilized in this request
      * @param BetaMetadata|BetaMetadataShape $metadata body param: An object describing metadata about the request
      * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
@@ -411,6 +415,7 @@ interface MessagesContract
         Model|string $model,
         string|BetaContainerParams|array|null $container = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
+        ?string $inferenceGeo = null,
         ?array $mcpServers = null,
         BetaMetadata|array|null $metadata = null,
         BetaOutputConfig|array|null $outputConfig = null,
@@ -419,7 +424,7 @@ interface MessagesContract
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
-        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|null $thinking = null,
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking = null,
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?int $topK = null,
@@ -571,7 +576,7 @@ interface MessagesContract
         BetaOutputConfig|array|null $outputConfig = null,
         BetaJSONOutputFormat|array|null $outputFormat = null,
         string|array|null $system = null,
-        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|null $thinking = null,
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking = null,
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?array $betas = null,

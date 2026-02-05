@@ -9,12 +9,15 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaIterationsUsageItemVariants from \Anthropic\Beta\Messages\BetaIterationsUsageItem
+ * @phpstan-import-type BetaIterationsUsageItemShape from \Anthropic\Beta\Messages\BetaIterationsUsageItem
  * @phpstan-import-type BetaServerToolUsageShape from \Anthropic\Beta\Messages\BetaServerToolUsage
  *
  * @phpstan-type BetaMessageDeltaUsageShape = array{
  *   cacheCreationInputTokens: int|null,
  *   cacheReadInputTokens: int|null,
  *   inputTokens: int|null,
+ *   iterations: list<BetaIterationsUsageItemShape>|null,
  *   outputTokens: int,
  *   serverToolUse: null|BetaServerToolUsage|BetaServerToolUsageShape,
  * }
@@ -43,6 +46,19 @@ final class BetaMessageDeltaUsage implements BaseModel
     public ?int $inputTokens;
 
     /**
+     * Per-iteration token usage breakdown.
+     *
+     * Each entry represents one sampling iteration, with its own input/output token counts and cache statistics. This allows you to:
+     * - Determine which iterations exceeded long context thresholds (>=200k tokens)
+     * - Calculate the true context window size from the last iteration
+     * - Understand token accumulation across server-side tool use loops
+     *
+     * @var list<BetaIterationsUsageItemVariants>|null $iterations
+     */
+    #[Required(list: BetaIterationsUsageItem::class)]
+    public ?array $iterations;
+
+    /**
      * The cumulative number of output tokens which were used.
      */
     #[Required('output_tokens')]
@@ -63,6 +79,7 @@ final class BetaMessageDeltaUsage implements BaseModel
      *   cacheCreationInputTokens: ...,
      *   cacheReadInputTokens: ...,
      *   inputTokens: ...,
+     *   iterations: ...,
      *   outputTokens: ...,
      *   serverToolUse: ...,
      * )
@@ -75,6 +92,7 @@ final class BetaMessageDeltaUsage implements BaseModel
      *   ->withCacheCreationInputTokens(...)
      *   ->withCacheReadInputTokens(...)
      *   ->withInputTokens(...)
+     *   ->withIterations(...)
      *   ->withOutputTokens(...)
      *   ->withServerToolUse(...)
      * ```
@@ -89,12 +107,14 @@ final class BetaMessageDeltaUsage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param list<BetaIterationsUsageItemShape>|null $iterations
      * @param BetaServerToolUsage|BetaServerToolUsageShape|null $serverToolUse
      */
     public static function with(
         ?int $cacheCreationInputTokens,
         ?int $cacheReadInputTokens,
         ?int $inputTokens,
+        ?array $iterations,
         int $outputTokens,
         BetaServerToolUsage|array|null $serverToolUse,
     ): self {
@@ -103,6 +123,7 @@ final class BetaMessageDeltaUsage implements BaseModel
         $self['cacheCreationInputTokens'] = $cacheCreationInputTokens;
         $self['cacheReadInputTokens'] = $cacheReadInputTokens;
         $self['inputTokens'] = $inputTokens;
+        $self['iterations'] = $iterations;
         $self['outputTokens'] = $outputTokens;
         $self['serverToolUse'] = $serverToolUse;
 
@@ -139,6 +160,24 @@ final class BetaMessageDeltaUsage implements BaseModel
     {
         $self = clone $this;
         $self['inputTokens'] = $inputTokens;
+
+        return $self;
+    }
+
+    /**
+     * Per-iteration token usage breakdown.
+     *
+     * Each entry represents one sampling iteration, with its own input/output token counts and cache statistics. This allows you to:
+     * - Determine which iterations exceeded long context thresholds (>=200k tokens)
+     * - Calculate the true context window size from the last iteration
+     * - Understand token accumulation across server-side tool use loops
+     *
+     * @param list<BetaIterationsUsageItemShape>|null $iterations
+     */
+    public function withIterations(?array $iterations): self
+    {
+        $self = clone $this;
+        $self['iterations'] = $iterations;
 
         return $self;
     }

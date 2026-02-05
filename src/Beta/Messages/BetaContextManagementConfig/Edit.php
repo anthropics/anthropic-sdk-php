@@ -6,16 +6,20 @@ namespace Anthropic\Beta\Messages\BetaContextManagementConfig;
 
 use Anthropic\Beta\Messages\BetaClearThinking20251015Edit;
 use Anthropic\Beta\Messages\BetaClearToolUses20250919Edit;
+use Anthropic\Beta\Messages\BetaCompact20260112Edit;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
+ * Automatically compact older context when reaching the configured trigger threshold.
+ *
  * @phpstan-import-type BetaClearToolUses20250919EditShape from \Anthropic\Beta\Messages\BetaClearToolUses20250919Edit
  * @phpstan-import-type BetaClearThinking20251015EditShape from \Anthropic\Beta\Messages\BetaClearThinking20251015Edit
+ * @phpstan-import-type BetaCompact20260112EditShape from \Anthropic\Beta\Messages\BetaCompact20260112Edit
  *
- * @phpstan-type EditVariants = BetaClearToolUses20250919Edit|BetaClearThinking20251015Edit
- * @phpstan-type EditShape = EditVariants|BetaClearToolUses20250919EditShape|BetaClearThinking20251015EditShape
+ * @phpstan-type EditVariants = BetaClearToolUses20250919Edit|BetaClearThinking20251015Edit|BetaCompact20260112Edit
+ * @phpstan-type EditShape = EditVariants|BetaClearToolUses20250919EditShape|BetaClearThinking20251015EditShape|BetaCompact20260112EditShape
  */
 final class Edit implements ConverterSource
 {
@@ -34,6 +38,7 @@ final class Edit implements ConverterSource
         return [
             'clear_tool_uses_20250919' => BetaClearToolUses20250919Edit::class,
             'clear_thinking_20251015' => BetaClearThinking20251015Edit::class,
+            'compact_20260112' => BetaCompact20260112Edit::class,
         ];
     }
 }

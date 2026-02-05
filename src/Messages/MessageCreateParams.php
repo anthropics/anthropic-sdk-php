@@ -37,6 +37,7 @@ use Anthropic\Messages\MessageCreateParams\System;
  *   maxTokens: int,
  *   messages: list<MessageParam|MessageParamShape>,
  *   model: string|Model|value-of<Model>,
+ *   inferenceGeo?: string|null,
  *   metadata?: null|Metadata|MetadataShape,
  *   outputConfig?: null|OutputConfig|OutputConfigShape,
  *   serviceTier?: null|ServiceTier|value-of<ServiceTier>,
@@ -130,6 +131,12 @@ final class MessageCreateParams implements BaseModel
     public string $model;
 
     /**
+     * Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
+     */
+    #[Optional('inference_geo', nullable: true)]
+    public ?string $inferenceGeo;
+
+    /**
      * An object describing metadata about the request.
      */
     #[Optional]
@@ -193,7 +200,7 @@ final class MessageCreateParams implements BaseModel
      * @var ThinkingConfigParamVariants|null $thinking
      */
     #[Optional(union: ThinkingConfigParam::class)]
-    public ThinkingConfigEnabled|ThinkingConfigDisabled|null $thinking;
+    public ThinkingConfigEnabled|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking;
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
@@ -330,13 +337,14 @@ final class MessageCreateParams implements BaseModel
         int $maxTokens,
         array $messages,
         Model|string $model,
+        ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
         ServiceTier|string|null $serviceTier = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
-        ThinkingConfigEnabled|array|ThinkingConfigDisabled|null $thinking = null,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?int $topK = null,
@@ -348,6 +356,7 @@ final class MessageCreateParams implements BaseModel
         $self['messages'] = $messages;
         $self['model'] = $model;
 
+        null !== $inferenceGeo && $self['inferenceGeo'] = $inferenceGeo;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $outputConfig && $self['outputConfig'] = $outputConfig;
         null !== $serviceTier && $self['serviceTier'] = $serviceTier;
@@ -452,6 +461,17 @@ final class MessageCreateParams implements BaseModel
     }
 
     /**
+     * Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
+     */
+    public function withInferenceGeo(?string $inferenceGeo): self
+    {
+        $self = clone $this;
+        $self['inferenceGeo'] = $inferenceGeo;
+
+        return $self;
+    }
+
+    /**
      * An object describing metadata about the request.
      *
      * @param Metadata|MetadataShape $metadata
@@ -549,7 +569,7 @@ final class MessageCreateParams implements BaseModel
      * @param ThinkingConfigParamShape $thinking
      */
     public function withThinking(
-        ThinkingConfigEnabled|array|ThinkingConfigDisabled $thinking
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive $thinking,
     ): self {
         $self = clone $this;
         $self['thinking'] = $thinking;

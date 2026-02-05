@@ -39,7 +39,7 @@ final class MessagesTest extends TestCase
         $result = $this->client->beta->messages->create(
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-sonnet-4-5-20250929',
+            model: 'claude-opus-4-6',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -56,7 +56,7 @@ final class MessagesTest extends TestCase
         $result = $this->client->beta->messages->create(
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-sonnet-4-5-20250929',
+            model: 'claude-opus-4-6',
             container: [
                 'id' => 'id',
                 'skills' => [
@@ -75,6 +75,7 @@ final class MessagesTest extends TestCase
                     ],
                 ],
             ],
+            inferenceGeo: 'inference_geo',
             mcpServers: [
                 [
                     'name' => 'name',
@@ -126,6 +127,7 @@ final class MessagesTest extends TestCase
                     'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                     'deferLoading' => true,
                     'description' => 'Get the current weather in a given location',
+                    'eagerInputStreaming' => true,
                     'inputExamples' => [['foo' => 'bar']],
                     'strict' => true,
                     'type' => 'custom',
@@ -149,7 +151,7 @@ final class MessagesTest extends TestCase
 
         $result = $this->client->beta->messages->countTokens(
             messages: [['content' => 'string', 'role' => 'user']],
-            model: 'claude-opus-4-5-20251101',
+            model: 'claude-opus-4-6',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -165,7 +167,7 @@ final class MessagesTest extends TestCase
 
         $result = $this->client->beta->messages->countTokens(
             messages: [['content' => 'string', 'role' => 'user']],
-            model: 'claude-opus-4-5-20251101',
+            model: 'claude-opus-4-6',
             contextManagement: [
                 'edits' => [
                     [
@@ -225,6 +227,7 @@ final class MessagesTest extends TestCase
                     'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                     'deferLoading' => true,
                     'description' => 'Get the current weather in a given location',
+                    'eagerInputStreaming' => true,
                     'inputExamples' => [['foo' => 'bar']],
                     'strict' => true,
                     'type' => 'custom',

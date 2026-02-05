@@ -27,7 +27,7 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
 
     /** @var BetaRawContentBlockDeltaVariants $delta */
     #[Required(union: BetaRawContentBlockDelta::class)]
-    public BetaTextDelta|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta $delta;
+    public BetaTextDelta|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta|BetaCompactionContentBlockDelta $delta;
 
     #[Required]
     public int $index;
@@ -59,7 +59,7 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
      * @param BetaRawContentBlockDeltaShape $delta
      */
     public static function with(
-        BetaTextDelta|array|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta $delta,
+        BetaTextDelta|array|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta|BetaCompactionContentBlockDelta $delta,
         int $index,
     ): self {
         $self = new self;
@@ -74,7 +74,7 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
      * @param BetaRawContentBlockDeltaShape $delta
      */
     public function withDelta(
-        BetaTextDelta|array|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta $delta,
+        BetaTextDelta|array|BetaInputJSONDelta|BetaCitationsDelta|BetaThinkingDelta|BetaSignatureDelta|BetaCompactionContentBlockDelta $delta,
     ): self {
         $self = clone $this;
         $self['delta'] = $delta;
