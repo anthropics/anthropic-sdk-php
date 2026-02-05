@@ -35,7 +35,7 @@ class ClientTest extends TestCase
         $client->messages->create(
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-sonnet-4-5-20250929',
+            model: 'claude-opus-4-6',
         );
 
         $this->assertNotFalse($requested = $transporter->getRequests()[0] ?? false);

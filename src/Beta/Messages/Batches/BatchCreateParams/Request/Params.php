@@ -13,6 +13,7 @@ use Anthropic\Beta\Messages\BetaMessageParam;
 use Anthropic\Beta\Messages\BetaMetadata;
 use Anthropic\Beta\Messages\BetaOutputConfig;
 use Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition;
+use Anthropic\Beta\Messages\BetaThinkingConfigAdaptive;
 use Anthropic\Beta\Messages\BetaThinkingConfigDisabled;
 use Anthropic\Beta\Messages\BetaThinkingConfigEnabled;
 use Anthropic\Beta\Messages\BetaThinkingConfigParam;
@@ -56,6 +57,7 @@ use Anthropic\Messages\Model;
  *   model: string|Model|value-of<Model>,
  *   container?: ContainerShape|null,
  *   contextManagement?: null|BetaContextManagementConfig|BetaContextManagementConfigShape,
+ *   inferenceGeo?: string|null,
  *   mcpServers?: list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape>|null,
  *   metadata?: null|BetaMetadata|BetaMetadataShape,
  *   outputConfig?: null|BetaOutputConfig|BetaOutputConfigShape,
@@ -167,6 +169,12 @@ final class Params implements BaseModel
     public ?BetaContextManagementConfig $contextManagement;
 
     /**
+     * Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
+     */
+    #[Optional('inference_geo', nullable: true)]
+    public ?string $inferenceGeo;
+
+    /**
      * MCP servers to be utilized in this request.
      *
      * @var list<BetaRequestMCPServerURLDefinition>|null $mcpServers
@@ -256,7 +264,7 @@ final class Params implements BaseModel
      * @var BetaThinkingConfigParamVariants|null $thinking
      */
     #[Optional(union: BetaThinkingConfigParam::class)]
-    public BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|null $thinking;
+    public BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking;
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
@@ -399,6 +407,7 @@ final class Params implements BaseModel
         Model|string $model,
         string|BetaContainerParams|array|null $container = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
+        ?string $inferenceGeo = null,
         ?array $mcpServers = null,
         BetaMetadata|array|null $metadata = null,
         BetaOutputConfig|array|null $outputConfig = null,
@@ -408,7 +417,7 @@ final class Params implements BaseModel
         ?bool $stream = null,
         string|array|null $system = null,
         ?float $temperature = null,
-        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|null $thinking = null,
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking = null,
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?int $topK = null,
@@ -422,6 +431,7 @@ final class Params implements BaseModel
 
         null !== $container && $self['container'] = $container;
         null !== $contextManagement && $self['contextManagement'] = $contextManagement;
+        null !== $inferenceGeo && $self['inferenceGeo'] = $inferenceGeo;
         null !== $mcpServers && $self['mcpServers'] = $mcpServers;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $outputConfig && $self['outputConfig'] = $outputConfig;
@@ -554,6 +564,17 @@ final class Params implements BaseModel
     ): self {
         $self = clone $this;
         $self['contextManagement'] = $contextManagement;
+
+        return $self;
+    }
+
+    /**
+     * Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
+     */
+    public function withInferenceGeo(?string $inferenceGeo): self
+    {
+        $self = clone $this;
+        $self['inferenceGeo'] = $inferenceGeo;
 
         return $self;
     }
@@ -698,7 +719,7 @@ final class Params implements BaseModel
      * @param BetaThinkingConfigParamShape $thinking
      */
     public function withThinking(
-        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled $thinking
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive $thinking,
     ): self {
         $self = clone $this;
         $self['thinking'] = $thinking;

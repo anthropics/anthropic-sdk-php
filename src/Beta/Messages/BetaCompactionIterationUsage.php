@@ -2,56 +2,56 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Messages;
+namespace Anthropic\Beta\Messages;
 
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\Usage\ServiceTier;
 
 /**
- * @phpstan-import-type CacheCreationShape from \Anthropic\Messages\CacheCreation
- * @phpstan-import-type ServerToolUsageShape from \Anthropic\Messages\ServerToolUsage
+ * Token usage for a compaction iteration.
  *
- * @phpstan-type UsageShape = array{
- *   cacheCreation: null|CacheCreation|CacheCreationShape,
- *   cacheCreationInputTokens: int|null,
- *   cacheReadInputTokens: int|null,
- *   inferenceGeo: string|null,
+ * @phpstan-import-type BetaCacheCreationShape from \Anthropic\Beta\Messages\BetaCacheCreation
+ *
+ * @phpstan-type BetaCompactionIterationUsageShape = array{
+ *   cacheCreation: null|BetaCacheCreation|BetaCacheCreationShape,
+ *   cacheCreationInputTokens: int,
+ *   cacheReadInputTokens: int,
  *   inputTokens: int,
  *   outputTokens: int,
- *   serverToolUse: null|ServerToolUsage|ServerToolUsageShape,
- *   serviceTier: null|ServiceTier|value-of<ServiceTier>,
+ *   type: 'compaction',
  * }
  */
-final class Usage implements BaseModel
+final class BetaCompactionIterationUsage implements BaseModel
 {
-    /** @use SdkModel<UsageShape> */
+    /** @use SdkModel<BetaCompactionIterationUsageShape> */
     use SdkModel;
+
+    /**
+     * Usage for a compaction iteration.
+     *
+     * @var 'compaction' $type
+     */
+    #[Required]
+    public string $type = 'compaction';
 
     /**
      * Breakdown of cached tokens by TTL.
      */
     #[Required('cache_creation')]
-    public ?CacheCreation $cacheCreation;
+    public ?BetaCacheCreation $cacheCreation;
 
     /**
      * The number of input tokens used to create the cache entry.
      */
     #[Required('cache_creation_input_tokens')]
-    public ?int $cacheCreationInputTokens;
+    public int $cacheCreationInputTokens;
 
     /**
      * The number of input tokens read from the cache.
      */
     #[Required('cache_read_input_tokens')]
-    public ?int $cacheReadInputTokens;
-
-    /**
-     * The geographic region where inference was performed for this request.
-     */
-    #[Required('inference_geo')]
-    public ?string $inferenceGeo;
+    public int $cacheReadInputTokens;
 
     /**
      * The number of input tokens which were used.
@@ -66,48 +66,28 @@ final class Usage implements BaseModel
     public int $outputTokens;
 
     /**
-     * The number of server tool requests.
-     */
-    #[Required('server_tool_use')]
-    public ?ServerToolUsage $serverToolUse;
-
-    /**
-     * If the request used the priority, standard, or batch tier.
-     *
-     * @var value-of<ServiceTier>|null $serviceTier
-     */
-    #[Required('service_tier', enum: ServiceTier::class)]
-    public ?string $serviceTier;
-
-    /**
-     * `new Usage()` is missing required properties by the API.
+     * `new BetaCompactionIterationUsage()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Usage::with(
+     * BetaCompactionIterationUsage::with(
      *   cacheCreation: ...,
      *   cacheCreationInputTokens: ...,
      *   cacheReadInputTokens: ...,
-     *   inferenceGeo: ...,
      *   inputTokens: ...,
      *   outputTokens: ...,
-     *   serverToolUse: ...,
-     *   serviceTier: ...,
      * )
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Usage)
+     * (new BetaCompactionIterationUsage)
      *   ->withCacheCreation(...)
      *   ->withCacheCreationInputTokens(...)
      *   ->withCacheReadInputTokens(...)
-     *   ->withInferenceGeo(...)
      *   ->withInputTokens(...)
      *   ->withOutputTokens(...)
-     *   ->withServerToolUse(...)
-     *   ->withServiceTier(...)
      * ```
      */
     public function __construct()
@@ -120,30 +100,22 @@ final class Usage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CacheCreation|CacheCreationShape|null $cacheCreation
-     * @param ServerToolUsage|ServerToolUsageShape|null $serverToolUse
-     * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
+     * @param BetaCacheCreation|BetaCacheCreationShape|null $cacheCreation
      */
     public static function with(
-        CacheCreation|array|null $cacheCreation,
-        ?int $cacheCreationInputTokens,
-        ?int $cacheReadInputTokens,
-        ?string $inferenceGeo,
+        BetaCacheCreation|array|null $cacheCreation,
         int $inputTokens,
         int $outputTokens,
-        ServerToolUsage|array|null $serverToolUse,
-        ServiceTier|string|null $serviceTier,
+        int $cacheCreationInputTokens = 0,
+        int $cacheReadInputTokens = 0,
     ): self {
         $self = new self;
 
         $self['cacheCreation'] = $cacheCreation;
         $self['cacheCreationInputTokens'] = $cacheCreationInputTokens;
         $self['cacheReadInputTokens'] = $cacheReadInputTokens;
-        $self['inferenceGeo'] = $inferenceGeo;
         $self['inputTokens'] = $inputTokens;
         $self['outputTokens'] = $outputTokens;
-        $self['serverToolUse'] = $serverToolUse;
-        $self['serviceTier'] = $serviceTier;
 
         return $self;
     }
@@ -151,10 +123,10 @@ final class Usage implements BaseModel
     /**
      * Breakdown of cached tokens by TTL.
      *
-     * @param CacheCreation|CacheCreationShape|null $cacheCreation
+     * @param BetaCacheCreation|BetaCacheCreationShape|null $cacheCreation
      */
     public function withCacheCreation(
-        CacheCreation|array|null $cacheCreation
+        BetaCacheCreation|array|null $cacheCreation
     ): self {
         $self = clone $this;
         $self['cacheCreation'] = $cacheCreation;
@@ -166,7 +138,7 @@ final class Usage implements BaseModel
      * The number of input tokens used to create the cache entry.
      */
     public function withCacheCreationInputTokens(
-        ?int $cacheCreationInputTokens
+        int $cacheCreationInputTokens
     ): self {
         $self = clone $this;
         $self['cacheCreationInputTokens'] = $cacheCreationInputTokens;
@@ -177,21 +149,10 @@ final class Usage implements BaseModel
     /**
      * The number of input tokens read from the cache.
      */
-    public function withCacheReadInputTokens(?int $cacheReadInputTokens): self
+    public function withCacheReadInputTokens(int $cacheReadInputTokens): self
     {
         $self = clone $this;
         $self['cacheReadInputTokens'] = $cacheReadInputTokens;
-
-        return $self;
-    }
-
-    /**
-     * The geographic region where inference was performed for this request.
-     */
-    public function withInferenceGeo(?string $inferenceGeo): self
-    {
-        $self = clone $this;
-        $self['inferenceGeo'] = $inferenceGeo;
 
         return $self;
     }
@@ -219,28 +180,14 @@ final class Usage implements BaseModel
     }
 
     /**
-     * The number of server tool requests.
+     * Usage for a compaction iteration.
      *
-     * @param ServerToolUsage|ServerToolUsageShape|null $serverToolUse
+     * @param 'compaction' $type
      */
-    public function withServerToolUse(
-        ServerToolUsage|array|null $serverToolUse
-    ): self {
-        $self = clone $this;
-        $self['serverToolUse'] = $serverToolUse;
-
-        return $self;
-    }
-
-    /**
-     * If the request used the priority, standard, or batch tier.
-     *
-     * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
-     */
-    public function withServiceTier(ServiceTier|string|null $serviceTier): self
+    public function withType(string $type): self
     {
         $self = clone $this;
-        $self['serviceTier'] = $serviceTier;
+        $self['type'] = $type;
 
         return $self;
     }

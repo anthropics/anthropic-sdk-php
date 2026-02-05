@@ -41,7 +41,7 @@ final class BatchesTest extends TestCase
                     'params' => [
                         'maxTokens' => 1024,
                         'messages' => [['content' => 'Hello, world', 'role' => 'user']],
-                        'model' => 'claude-sonnet-4-5-20250929',
+                        'model' => 'claude-opus-4-6',
                     ],
                 ],
             ],
@@ -61,9 +61,11 @@ final class BatchesTest extends TestCase
                     'params' => [
                         'maxTokens' => 1024,
                         'messages' => [['content' => 'Hello, world', 'role' => 'user']],
-                        'model' => 'claude-sonnet-4-5-20250929',
+                        'model' => 'claude-opus-4-6',
+                        'inferenceGeo' => 'inference_geo',
                         'metadata' => ['userID' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
                         'outputConfig' => [
+                            'effort' => 'low',
                             'format' => [
                                 'schema' => ['foo' => 'bar'], 'type' => 'json_schema',
                             ],
@@ -103,6 +105,7 @@ final class BatchesTest extends TestCase
                                 'name' => 'name',
                                 'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                                 'description' => 'Get the current weather in a given location',
+                                'eagerInputStreaming' => true,
                                 'strict' => true,
                                 'type' => 'custom',
                             ],

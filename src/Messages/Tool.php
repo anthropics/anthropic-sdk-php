@@ -20,6 +20,7 @@ use Anthropic\Messages\Tool\Type;
  *   name: string,
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   description?: string|null,
+ *   eagerInputStreaming?: bool|null,
  *   strict?: bool|null,
  *   type?: null|Type|value-of<Type>,
  * }
@@ -58,6 +59,12 @@ final class Tool implements BaseModel
      */
     #[Optional]
     public ?string $description;
+
+    /**
+     * Enable eager input streaming for this tool. When true, tool input parameters will be streamed incrementally as they are generated, and types will be inferred on-the-fly rather than buffering the full JSON output. When false, streaming is disabled for this tool even if the fine-grained-tool-streaming beta is active. When null (default), uses the default behavior based on beta headers.
+     */
+    #[Optional('eager_input_streaming', nullable: true)]
+    public ?bool $eagerInputStreaming;
 
     /**
      * When true, guarantees schema validation on tool names and inputs.
@@ -102,6 +109,7 @@ final class Tool implements BaseModel
         string $name,
         CacheControlEphemeral|array|null $cacheControl = null,
         ?string $description = null,
+        ?bool $eagerInputStreaming = null,
         ?bool $strict = null,
         Type|string|null $type = null,
     ): self {
@@ -112,6 +120,7 @@ final class Tool implements BaseModel
 
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $description && $self['description'] = $description;
+        null !== $eagerInputStreaming && $self['eagerInputStreaming'] = $eagerInputStreaming;
         null !== $strict && $self['strict'] = $strict;
         null !== $type && $self['type'] = $type;
 
@@ -169,6 +178,17 @@ final class Tool implements BaseModel
     {
         $self = clone $this;
         $self['description'] = $description;
+
+        return $self;
+    }
+
+    /**
+     * Enable eager input streaming for this tool. When true, tool input parameters will be streamed incrementally as they are generated, and types will be inferred on-the-fly rather than buffering the full JSON output. When false, streaming is disabled for this tool even if the fine-grained-tool-streaming beta is active. When null (default), uses the default behavior based on beta headers.
+     */
+    public function withEagerInputStreaming(?bool $eagerInputStreaming): self
+    {
+        $self = clone $this;
+        $self['eagerInputStreaming'] = $eagerInputStreaming;
 
         return $self;
     }

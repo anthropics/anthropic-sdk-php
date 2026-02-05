@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Messages\BetaOutputConfig;
+namespace Anthropic\Messages\OutputConfig;
 
 /**
  * All possible effort levels.

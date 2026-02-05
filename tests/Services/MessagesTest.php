@@ -34,7 +34,7 @@ final class MessagesTest extends TestCase
         $result = $this->client->messages->create(
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-sonnet-4-5-20250929',
+            model: 'claude-opus-4-6',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -47,9 +47,11 @@ final class MessagesTest extends TestCase
         $result = $this->client->messages->create(
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-sonnet-4-5-20250929',
+            model: 'claude-opus-4-6',
+            inferenceGeo: 'inference_geo',
             metadata: ['userID' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
             outputConfig: [
+                'effort' => 'low',
                 'format' => ['schema' => ['foo' => 'bar'], 'type' => 'json_schema'],
             ],
             serviceTier: 'auto',
@@ -84,6 +86,7 @@ final class MessagesTest extends TestCase
                     'name' => 'name',
                     'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                     'description' => 'Get the current weather in a given location',
+                    'eagerInputStreaming' => true,
                     'strict' => true,
                     'type' => 'custom',
                 ],
@@ -101,7 +104,7 @@ final class MessagesTest extends TestCase
     {
         $result = $this->client->messages->countTokens(
             messages: [['content' => 'string', 'role' => 'user']],
-            model: 'claude-opus-4-5-20251101',
+            model: 'claude-opus-4-6',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -113,8 +116,9 @@ final class MessagesTest extends TestCase
     {
         $result = $this->client->messages->countTokens(
             messages: [['content' => 'string', 'role' => 'user']],
-            model: 'claude-opus-4-5-20251101',
+            model: 'claude-opus-4-6',
             outputConfig: [
+                'effort' => 'low',
                 'format' => ['schema' => ['foo' => 'bar'], 'type' => 'json_schema'],
             ],
             system: [
@@ -146,6 +150,7 @@ final class MessagesTest extends TestCase
                     'name' => 'name',
                     'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                     'description' => 'Get the current weather in a given location',
+                    'eagerInputStreaming' => true,
                     'strict' => true,
                     'type' => 'custom',
                 ],

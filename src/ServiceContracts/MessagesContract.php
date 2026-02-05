@@ -19,6 +19,7 @@ use Anthropic\Messages\RawContentBlockStopEvent;
 use Anthropic\Messages\RawMessageDeltaEvent;
 use Anthropic\Messages\RawMessageStartEvent;
 use Anthropic\Messages\RawMessageStopEvent;
+use Anthropic\Messages\ThinkingConfigAdaptive;
 use Anthropic\Messages\ThinkingConfigDisabled;
 use Anthropic\Messages\ThinkingConfigEnabled;
 use Anthropic\Messages\ToolChoiceAny;
@@ -98,6 +99,7 @@ interface MessagesContract
      *
      * There is a limit of 100,000 messages in a single request.
      * @param string|Model|value-of<Model> $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * @param string|null $inferenceGeo Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param Metadata|MetadataShape $metadata an object describing metadata about the request
      * @param OutputConfig|OutputConfigShape $outputConfig configuration options for the model's output, such as the output format
      * @param ServiceTier|value-of<ServiceTier> $serviceTier Determines whether to use priority capacity (if available) or standard capacity for this request.
@@ -201,13 +203,14 @@ interface MessagesContract
         int $maxTokens,
         array $messages,
         Model|string $model,
+        ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
         ServiceTier|string|null $serviceTier = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
-        ThinkingConfigEnabled|array|ThinkingConfigDisabled|null $thinking = null,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?int $topK = null,
@@ -272,6 +275,7 @@ interface MessagesContract
      *
      * There is a limit of 100,000 messages in a single request.
      * @param string|Model|value-of<Model> $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * @param string|null $inferenceGeo Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param Metadata|MetadataShape $metadata an object describing metadata about the request
      * @param OutputConfig|OutputConfigShape $outputConfig configuration options for the model's output, such as the output format
      * @param ServiceTier|value-of<ServiceTier> $serviceTier Determines whether to use priority capacity (if available) or standard capacity for this request.
@@ -377,13 +381,14 @@ interface MessagesContract
         int $maxTokens,
         array $messages,
         Model|string $model,
+        ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
         ServiceTier|string|null $serviceTier = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
-        ThinkingConfigEnabled|array|ThinkingConfigDisabled|null $thinking = null,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?int $topK = null,
@@ -523,7 +528,7 @@ interface MessagesContract
         Model|string $model,
         OutputConfig|array|null $outputConfig = null,
         string|array|null $system = null,
-        ThinkingConfigEnabled|array|ThinkingConfigDisabled|null $thinking = null,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         RequestOptions|array|null $requestOptions = null,

@@ -17,9 +17,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  *
  * @phpstan-import-type ThinkingConfigEnabledShape from \Anthropic\Messages\ThinkingConfigEnabled
  * @phpstan-import-type ThinkingConfigDisabledShape from \Anthropic\Messages\ThinkingConfigDisabled
+ * @phpstan-import-type ThinkingConfigAdaptiveShape from \Anthropic\Messages\ThinkingConfigAdaptive
  *
- * @phpstan-type ThinkingConfigParamVariants = ThinkingConfigEnabled|ThinkingConfigDisabled
- * @phpstan-type ThinkingConfigParamShape = ThinkingConfigParamVariants|ThinkingConfigEnabledShape|ThinkingConfigDisabledShape
+ * @phpstan-type ThinkingConfigParamVariants = ThinkingConfigEnabled|ThinkingConfigDisabled|ThinkingConfigAdaptive
+ * @phpstan-type ThinkingConfigParamShape = ThinkingConfigParamVariants|ThinkingConfigEnabledShape|ThinkingConfigDisabledShape|ThinkingConfigAdaptiveShape
  */
 final class ThinkingConfigParam implements ConverterSource
 {
@@ -38,6 +39,7 @@ final class ThinkingConfigParam implements ConverterSource
         return [
             'enabled' => ThinkingConfigEnabled::class,
             'disabled' => ThinkingConfigDisabled::class,
+            'adaptive' => ThinkingConfigAdaptive::class,
         ];
     }
 }

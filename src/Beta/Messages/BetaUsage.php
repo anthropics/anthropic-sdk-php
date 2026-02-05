@@ -10,14 +10,18 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaIterationsUsageItemVariants from \Anthropic\Beta\Messages\BetaIterationsUsageItem
  * @phpstan-import-type BetaCacheCreationShape from \Anthropic\Beta\Messages\BetaCacheCreation
+ * @phpstan-import-type BetaIterationsUsageItemShape from \Anthropic\Beta\Messages\BetaIterationsUsageItem
  * @phpstan-import-type BetaServerToolUsageShape from \Anthropic\Beta\Messages\BetaServerToolUsage
  *
  * @phpstan-type BetaUsageShape = array{
  *   cacheCreation: null|BetaCacheCreation|BetaCacheCreationShape,
  *   cacheCreationInputTokens: int|null,
  *   cacheReadInputTokens: int|null,
+ *   inferenceGeo: string|null,
  *   inputTokens: int,
+ *   iterations: list<BetaIterationsUsageItemShape>|null,
  *   outputTokens: int,
  *   serverToolUse: null|BetaServerToolUsage|BetaServerToolUsageShape,
  *   serviceTier: null|ServiceTier|value-of<ServiceTier>,
@@ -47,10 +51,29 @@ final class BetaUsage implements BaseModel
     public ?int $cacheReadInputTokens;
 
     /**
+     * The geographic region where inference was performed for this request.
+     */
+    #[Required('inference_geo')]
+    public ?string $inferenceGeo;
+
+    /**
      * The number of input tokens which were used.
      */
     #[Required('input_tokens')]
     public int $inputTokens;
+
+    /**
+     * Per-iteration token usage breakdown.
+     *
+     * Each entry represents one sampling iteration, with its own input/output token counts and cache statistics. This allows you to:
+     * - Determine which iterations exceeded long context thresholds (>=200k tokens)
+     * - Calculate the true context window size from the last iteration
+     * - Understand token accumulation across server-side tool use loops
+     *
+     * @var list<BetaIterationsUsageItemVariants>|null $iterations
+     */
+    #[Required(list: BetaIterationsUsageItem::class)]
+    public ?array $iterations;
 
     /**
      * The number of output tokens which were used.
@@ -81,7 +104,9 @@ final class BetaUsage implements BaseModel
      *   cacheCreation: ...,
      *   cacheCreationInputTokens: ...,
      *   cacheReadInputTokens: ...,
+     *   inferenceGeo: ...,
      *   inputTokens: ...,
+     *   iterations: ...,
      *   outputTokens: ...,
      *   serverToolUse: ...,
      *   serviceTier: ...,
@@ -95,7 +120,9 @@ final class BetaUsage implements BaseModel
      *   ->withCacheCreation(...)
      *   ->withCacheCreationInputTokens(...)
      *   ->withCacheReadInputTokens(...)
+     *   ->withInferenceGeo(...)
      *   ->withInputTokens(...)
+     *   ->withIterations(...)
      *   ->withOutputTokens(...)
      *   ->withServerToolUse(...)
      *   ->withServiceTier(...)
@@ -112,6 +139,7 @@ final class BetaUsage implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaCacheCreation|BetaCacheCreationShape|null $cacheCreation
+     * @param list<BetaIterationsUsageItemShape>|null $iterations
      * @param BetaServerToolUsage|BetaServerToolUsageShape|null $serverToolUse
      * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
      */
@@ -119,7 +147,9 @@ final class BetaUsage implements BaseModel
         BetaCacheCreation|array|null $cacheCreation,
         ?int $cacheCreationInputTokens,
         ?int $cacheReadInputTokens,
+        ?string $inferenceGeo,
         int $inputTokens,
+        ?array $iterations,
         int $outputTokens,
         BetaServerToolUsage|array|null $serverToolUse,
         ServiceTier|string|null $serviceTier,
@@ -129,7 +159,9 @@ final class BetaUsage implements BaseModel
         $self['cacheCreation'] = $cacheCreation;
         $self['cacheCreationInputTokens'] = $cacheCreationInputTokens;
         $self['cacheReadInputTokens'] = $cacheReadInputTokens;
+        $self['inferenceGeo'] = $inferenceGeo;
         $self['inputTokens'] = $inputTokens;
+        $self['iterations'] = $iterations;
         $self['outputTokens'] = $outputTokens;
         $self['serverToolUse'] = $serverToolUse;
         $self['serviceTier'] = $serviceTier;
@@ -175,12 +207,41 @@ final class BetaUsage implements BaseModel
     }
 
     /**
+     * The geographic region where inference was performed for this request.
+     */
+    public function withInferenceGeo(?string $inferenceGeo): self
+    {
+        $self = clone $this;
+        $self['inferenceGeo'] = $inferenceGeo;
+
+        return $self;
+    }
+
+    /**
      * The number of input tokens which were used.
      */
     public function withInputTokens(int $inputTokens): self
     {
         $self = clone $this;
         $self['inputTokens'] = $inputTokens;
+
+        return $self;
+    }
+
+    /**
+     * Per-iteration token usage breakdown.
+     *
+     * Each entry represents one sampling iteration, with its own input/output token counts and cache statistics. This allows you to:
+     * - Determine which iterations exceeded long context thresholds (>=200k tokens)
+     * - Calculate the true context window size from the last iteration
+     * - Understand token accumulation across server-side tool use loops
+     *
+     * @param list<BetaIterationsUsageItemShape>|null $iterations
+     */
+    public function withIterations(?array $iterations): self
+    {
+        $self = clone $this;
+        $self['iterations'] = $iterations;
 
         return $self;
     }
