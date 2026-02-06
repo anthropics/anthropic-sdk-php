@@ -168,6 +168,100 @@ $result = $client->messages->create(
 );
 ```
 
+## AWS Bedrock
+
+This library also provides support for the [Anthropic Bedrock API](https://aws.amazon.com/bedrock/claude/) if you
+install this library with the [`aws/aws-sdk-php`](https://packagist.org/packages/aws/aws-sdk-php) package.
+
+### Installation
+
+Install the AWS SDK for PHP alongside this package:
+
+```
+composer require aws/aws-sdk-php
+```
+
+### Usage
+
+Create a Bedrock client and configure AWS credentials using the standard AWS SDK mechanisms
+(environment variables, shared config files, or instance/role-based credentials):
+
+```php
+<?php
+
+use Anthropic\Bedrock;
+
+// Discover and create a Bedrock client from the current environment.
+$client = Bedrock\Client::fromEnvironment();
+
+// Or provide explicit credentials and region.
+// $client = Bedrock\Client::withCredentials(
+//   accessKeyId: 'YOUR_ACCESS_KEY_ID',
+//   secretAccessKey: 'YOUR_AWS_SECRET',
+//   region: 'us-east-1',
+// );
+
+$message = $client->messages->create(
+  model: 'anthropic.claude-3-haiku-20240307-v1:0',
+  maxTokens: 1024,
+  messages: [['role' => 'user', 'content' => 'Hello, Claude']],
+);
+
+var_dump($message->content);
+```
+
+Note that Bedrock uses AWS-specific model identifiers or inference profile IDs, which differ from the
+standard Anthropic API model IDs.
+
+For AWS credential configuration details, see the AWS SDK for PHP documentation on the
+[default credential provider chain](https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/guide_credentials_default_chain.html).
+
+For more examples, see [`examples/bedrock`](examples/bedrock).
+
+## Google Vertex
+
+This library also provides support for the [Anthropic Vertex API](https://cloud.google.com/vertex-ai?hl=en) if you
+install this library with the [`google/auth`](https://packagist.org/packages/google/auth) package.
+
+### Installation
+
+Install the Google Auth library alongside this package:
+
+```
+composer require google/auth
+```
+
+### Usage
+
+Create a Vertex client with Application Default Credentials and your project/location:
+
+```php
+<?php
+
+use Anthropic\Vertex;
+
+$client = Vertex\Client::fromEnvironment(location: 'us-east5', projectId: 'my-project-id');
+
+$message = $client->messages->create(
+  model: 'claude-3-5-haiku@20241022',
+  maxTokens: 1024,
+  messages: [['role' => 'user', 'content' => 'Hello, Claude']],
+);
+
+var_dump($message->content);
+```
+
+If you omit `projectId`, the client will try to resolve it from standard Google Cloud environment
+variables or your credentials.
+
+Note that Vertex uses Vertex-specific model identifiers or inference profile IDs, which differ from the
+standard Anthropic API model IDs.
+
+For setting up Application Default Credentials, see
+[Set up ADC for a local development environment](https://cloud.google.com/docs/authentication/set-up-adc-local-dev-environment).
+
+For more examples, see [`examples/vertex`](examples/vertex).
+
 ## Advanced concepts
 
 ### Making custom or undocumented requests
