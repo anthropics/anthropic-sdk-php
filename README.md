@@ -2,7 +2,7 @@
 
 [![Packagist Version](https://img.shields.io/packagist/v/anthropic-ai/sdk.svg)](https://packagist.org/packages/anthropic-ai/sdk)
 
-The Anthropic PHP library provides access to the [Anthropic API](https://docs.anthropic.com/en/api/) from PHP applications.
+The Anthropic PHP library provides access to the [Claude API](https://docs.anthropic.com/en/api/) from PHP applications.
 
 ## Documentation
 
