@@ -87,4 +87,42 @@ class UtilTest extends TestCase
             $this->assertEquals($expected, $actual);
         }
     }
+
+    #[Test]
+    public function testGetenvFromGlobalEnv(): void
+    {
+        $_ENV[__FUNCTION__] = __FUNCTION__;
+
+        try {
+            $this->assertSame(__FUNCTION__, Util::getenv(__FUNCTION__));
+        } finally {
+            unset($_ENV[__FUNCTION__]);
+        }
+    }
+
+    #[Test]
+    public function testGetenvAfterPutEnv(): void
+    {
+        putenv(__FUNCTION__.'='.__FUNCTION__);
+
+        try {
+            $this->assertSame(__FUNCTION__, Util::getenv(__FUNCTION__));
+        } finally {
+            putenv(__FUNCTION__);
+        }
+    }
+
+    #[Test]
+    public function testGetenvThrowsWithMessageForInvalidEnv(): void
+    {
+        $_ENV[__FUNCTION__] = 123;
+
+        $this->expectException(\InvalidArgumentException::class);
+
+        try {
+            Util::getenv(__FUNCTION__);
+        } finally {
+            unset($_ENV[__FUNCTION__]);
+        }
+    }
 }

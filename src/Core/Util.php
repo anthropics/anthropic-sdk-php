@@ -29,7 +29,7 @@ final class Util
     {
         if (array_key_exists($key, array: $_ENV)) {
             if (!is_string($value = $_ENV[$key])) {
-                throw new \InvalidArgumentException();
+                throw new \InvalidArgumentException("Environment variable {$key} must be set and a string.");
             }
 
             return $value;
