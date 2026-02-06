@@ -12,6 +12,7 @@ use Anthropic\Messages\MessageTokensCount;
 use Anthropic\Messages\Metadata;
 use Anthropic\Messages\Model;
 use Anthropic\Messages\OutputConfig;
+use Anthropic\Messages\ThinkingConfigAdaptive;
 use Anthropic\Messages\ThinkingConfigDisabled;
 use Anthropic\Messages\ThinkingConfigEnabled;
 use Anthropic\Messages\ToolChoiceAny;
@@ -34,17 +35,19 @@ class MessagesService implements MessagesContract
      */
     public function __construct(private MessagesRawService $raw) {}
 
+    // @phpstan-ignore-next-line
     public function create(
         int $maxTokens,
         array $messages,
         Model|string $model,
+        ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
         ServiceTier|string|null $serviceTier = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
-        ThinkingConfigEnabled|array|ThinkingConfigDisabled|null $thinking = null,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?int $topK = null,
@@ -76,17 +79,19 @@ class MessagesService implements MessagesContract
         return $response->parse();
     }
 
+    // @phpstan-ignore-next-line
     public function createStream(
         int $maxTokens,
         array $messages,
         Model|string $model,
+        ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
         ServiceTier|string|null $serviceTier = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
-        ThinkingConfigEnabled|array|ThinkingConfigDisabled|null $thinking = null,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?int $topK = null,
@@ -118,12 +123,13 @@ class MessagesService implements MessagesContract
         return $response->parse();
     }
 
+    // @phpstan-ignore-next-line
     public function countTokens(
         array $messages,
         Model|string $model,
         OutputConfig|array|null $outputConfig = null,
         string|array|null $system = null,
-        ThinkingConfigEnabled|array|ThinkingConfigDisabled|null $thinking = null,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         RequestOptions|array|null $requestOptions = null,
