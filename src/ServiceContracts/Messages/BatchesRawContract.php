@@ -101,7 +101,7 @@ interface BatchesRawContract
      * @param string $messageBatchID ID of the Message Batch
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<MessageBatchIndividualResponse>
+     * @return BaseResponse<BaseStream<MessageBatchIndividualResponse>>
      *
      * @throws APIException
      */

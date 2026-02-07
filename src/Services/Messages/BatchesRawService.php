@@ -203,7 +203,7 @@ final class BatchesRawService implements BatchesRawContract
      * @param string $messageBatchID ID of the Message Batch
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<MessageBatchIndividualResponse>
+     * @return BaseResponse<BaseStream<MessageBatchIndividualResponse>>
      *
      * @throws APIException
      */
@@ -218,6 +218,7 @@ final class BatchesRawService implements BatchesRawContract
             headers: ['Accept' => 'application/x-jsonl'],
             options: $requestOptions,
             convert: MessageBatchIndividualResponse::class,
+            stream: JsonLStream::class,
         );
     }
 

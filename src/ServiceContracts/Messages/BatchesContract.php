@@ -98,12 +98,14 @@ interface BatchesContract
      * @param string $messageBatchID ID of the Message Batch
      * @param RequestOpts|null $requestOptions
      *
+     * @return BaseStream<MessageBatchIndividualResponse>
+     *
      * @throws APIException
      */
     public function results(
         string $messageBatchID,
         RequestOptions|array|null $requestOptions = null
-    ): MessageBatchIndividualResponse;
+    ): BaseStream;
 
     /**
      * @api

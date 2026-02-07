@@ -110,13 +110,15 @@ interface BatchesContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
+     * @return BaseStream<MessageBatchIndividualResponse>
+     *
      * @throws APIException
      */
     public function results(
         string $messageBatchID,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
-    ): MessageBatchIndividualResponse;
+    ): BaseStream;
 
     /**
      * @api
