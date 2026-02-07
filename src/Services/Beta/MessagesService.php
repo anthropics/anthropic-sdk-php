@@ -28,6 +28,7 @@ use Anthropic\Beta\Messages\BetaToolChoiceAuto;
 use Anthropic\Beta\Messages\BetaToolChoiceNone;
 use Anthropic\Beta\Messages\BetaToolChoiceTool;
 use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
+use Anthropic\Beta\Messages\MessageCreateParams\Speed;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
@@ -151,6 +152,7 @@ final class MessagesService implements MessagesContract
      * @param ServiceTier|value-of<ServiceTier> $serviceTier Body param: Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.claude.com/en/api/service-tiers) for details.
+     * @param Speed|value-of<Speed>|null $speed Body param: The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
      * @param list<string> $stopSequences Body param: Custom text sequences that will cause the model to stop generating.
      *
      * Our models will normally stop when they have naturally completed their turn, which will result in a response `stop_reason` of `"end_turn"`.
@@ -258,6 +260,7 @@ final class MessagesService implements MessagesContract
         BetaOutputConfig|array|null $outputConfig = null,
         BetaJSONOutputFormat|array|null $outputFormat = null,
         ServiceTier|string|null $serviceTier = null,
+        Speed|string|null $speed = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
@@ -284,6 +287,7 @@ final class MessagesService implements MessagesContract
                 'outputConfig' => $outputConfig,
                 'outputFormat' => $outputFormat,
                 'serviceTier' => $serviceTier,
+                'speed' => $speed,
                 'stopSequences' => $stopSequences,
                 'system' => $system,
                 'temperature' => $temperature,
@@ -373,6 +377,7 @@ final class MessagesService implements MessagesContract
      * @param ServiceTier|value-of<ServiceTier> $serviceTier Body param: Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.claude.com/en/api/service-tiers) for details.
+     * @param Speed|value-of<Speed>|null $speed Body param: The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
      * @param list<string> $stopSequences Body param: Custom text sequences that will cause the model to stop generating.
      *
      * Our models will normally stop when they have naturally completed their turn, which will result in a response `stop_reason` of `"end_turn"`.
@@ -482,6 +487,7 @@ final class MessagesService implements MessagesContract
         BetaOutputConfig|array|null $outputConfig = null,
         BetaJSONOutputFormat|array|null $outputFormat = null,
         ServiceTier|string|null $serviceTier = null,
+        Speed|string|null $speed = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
@@ -508,6 +514,7 @@ final class MessagesService implements MessagesContract
                 'outputConfig' => $outputConfig,
                 'outputFormat' => $outputFormat,
                 'serviceTier' => $serviceTier,
+                'speed' => $speed,
                 'stopSequences' => $stopSequences,
                 'system' => $system,
                 'temperature' => $temperature,
@@ -592,6 +599,7 @@ final class MessagesService implements MessagesContract
      * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat Body param: Deprecated: Use `output_config.format` instead. See [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
      *
      * A schema to specify Claude's output format in responses. This parameter will be removed in a future release.
+     * @param \Anthropic\Beta\Messages\MessageCountTokensParams\Speed|value-of<\Anthropic\Beta\Messages\MessageCountTokensParams\Speed>|null $speed Body param: The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
      * @param SystemShape $system Body param: System prompt.
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.claude.com/en/docs/system-prompts).
@@ -674,6 +682,7 @@ final class MessagesService implements MessagesContract
         ?array $mcpServers = null,
         BetaOutputConfig|array|null $outputConfig = null,
         BetaJSONOutputFormat|array|null $outputFormat = null,
+        \Anthropic\Beta\Messages\MessageCountTokensParams\Speed|string|null $speed = null,
         string|array|null $system = null,
         BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking = null,
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
@@ -691,6 +700,7 @@ final class MessagesService implements MessagesContract
                 'mcpServers' => $mcpServers,
                 'outputConfig' => $outputConfig,
                 'outputFormat' => $outputFormat,
+                'speed' => $speed,
                 'system' => $system,
                 'thinking' => $thinking,
                 'toolChoice' => $toolChoice,

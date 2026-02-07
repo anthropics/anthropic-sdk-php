@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaUsage\ServiceTier;
+use Anthropic\Beta\Messages\BetaUsage\Speed;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -25,6 +26,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   outputTokens: int,
  *   serverToolUse: null|BetaServerToolUsage|BetaServerToolUsageShape,
  *   serviceTier: null|ServiceTier|value-of<ServiceTier>,
+ *   speed: null|Speed|value-of<Speed>,
  * }
  */
 final class BetaUsage implements BaseModel
@@ -96,6 +98,14 @@ final class BetaUsage implements BaseModel
     public ?string $serviceTier;
 
     /**
+     * The inference speed mode used for this request.
+     *
+     * @var value-of<Speed>|null $speed
+     */
+    #[Required(enum: Speed::class)]
+    public ?string $speed;
+
+    /**
      * `new BetaUsage()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -110,6 +120,7 @@ final class BetaUsage implements BaseModel
      *   outputTokens: ...,
      *   serverToolUse: ...,
      *   serviceTier: ...,
+     *   speed: ...,
      * )
      * ```
      *
@@ -126,6 +137,7 @@ final class BetaUsage implements BaseModel
      *   ->withOutputTokens(...)
      *   ->withServerToolUse(...)
      *   ->withServiceTier(...)
+     *   ->withSpeed(...)
      * ```
      */
     public function __construct()
@@ -142,6 +154,7 @@ final class BetaUsage implements BaseModel
      * @param list<BetaIterationsUsageItemShape>|null $iterations
      * @param BetaServerToolUsage|BetaServerToolUsageShape|null $serverToolUse
      * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
+     * @param Speed|value-of<Speed>|null $speed
      */
     public static function with(
         BetaCacheCreation|array|null $cacheCreation,
@@ -153,6 +166,7 @@ final class BetaUsage implements BaseModel
         int $outputTokens,
         BetaServerToolUsage|array|null $serverToolUse,
         ServiceTier|string|null $serviceTier,
+        Speed|string|null $speed,
     ): self {
         $self = new self;
 
@@ -165,6 +179,7 @@ final class BetaUsage implements BaseModel
         $self['outputTokens'] = $outputTokens;
         $self['serverToolUse'] = $serverToolUse;
         $self['serviceTier'] = $serviceTier;
+        $self['speed'] = $speed;
 
         return $self;
     }
@@ -280,6 +295,19 @@ final class BetaUsage implements BaseModel
     {
         $self = clone $this;
         $self['serviceTier'] = $serviceTier;
+
+        return $self;
+    }
+
+    /**
+     * The inference speed mode used for this request.
+     *
+     * @param Speed|value-of<Speed>|null $speed
+     */
+    public function withSpeed(Speed|string|null $speed): self
+    {
+        $self = clone $this;
+        $self['speed'] = $speed;
 
         return $self;
     }

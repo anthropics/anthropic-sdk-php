@@ -23,6 +23,7 @@ use Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition;
 use Anthropic\Beta\Messages\MessageCountTokensParams;
 use Anthropic\Beta\Messages\MessageCreateParams;
 use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
+use Anthropic\Beta\Messages\MessageCreateParams\Speed;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
@@ -78,6 +79,7 @@ final class MessagesRawService implements MessagesRawContract
      *   outputConfig?: BetaOutputConfig|BetaOutputConfigShape,
      *   outputFormat?: BetaJSONOutputFormat|BetaJSONOutputFormatShape|null,
      *   serviceTier?: ServiceTier|value-of<ServiceTier>,
+     *   speed?: Speed|value-of<Speed>|null,
      *   stopSequences?: list<string>,
      *   system?: SystemShape1,
      *   temperature?: float,
@@ -136,6 +138,7 @@ final class MessagesRawService implements MessagesRawContract
      *   outputConfig?: BetaOutputConfig|BetaOutputConfigShape,
      *   outputFormat?: BetaJSONOutputFormat|BetaJSONOutputFormatShape|null,
      *   serviceTier?: ServiceTier|value-of<ServiceTier>,
+     *   speed?: Speed|value-of<Speed>|null,
      *   stopSequences?: list<string>,
      *   system?: SystemShape1,
      *   temperature?: float,
@@ -203,6 +206,7 @@ final class MessagesRawService implements MessagesRawContract
      *   mcpServers?: list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape>,
      *   outputConfig?: BetaOutputConfig|BetaOutputConfigShape,
      *   outputFormat?: BetaJSONOutputFormat|BetaJSONOutputFormatShape|null,
+     *   speed?: MessageCountTokensParams\Speed|value-of<MessageCountTokensParams\Speed>|null,
      *   system?: SystemShape,
      *   thinking?: BetaThinkingConfigParamShape,
      *   toolChoice?: BetaToolChoiceShape,
