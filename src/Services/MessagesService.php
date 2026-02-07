@@ -246,6 +246,8 @@ final class MessagesService implements MessagesContract
         ?float $topP = null,
         RequestOptions|array|null $requestOptions = null,
     ): Message {
+        self::warnIfDeprecatedThinkingConfig($model, $thinking);
+
         $params = Util::removeNulls(
             [
                 'maxTokens' => $maxTokens,
@@ -449,6 +451,8 @@ final class MessagesService implements MessagesContract
         ?float $topP = null,
         RequestOptions|array|null $requestOptions = null,
     ): BaseStream {
+        self::warnIfDeprecatedThinkingConfig($model, $thinking);
+
         $params = Util::removeNulls(
             [
                 'maxTokens' => $maxTokens,
@@ -618,6 +622,8 @@ final class MessagesService implements MessagesContract
         ?array $tools = null,
         RequestOptions|array|null $requestOptions = null,
     ): MessageTokensCount {
+        self::warnIfDeprecatedThinkingConfig($model, $thinking);
+
         $params = Util::removeNulls(
             [
                 'messages' => $messages,
@@ -634,5 +640,38 @@ final class MessagesService implements MessagesContract
         $response = $this->raw->countTokens(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
+    }
+
+    /**
+     * Emits a warning if using claude-opus-4-6 with thinking.type=enabled.
+     *
+     * @param array<string, mixed>|ThinkingConfigParamShape $thinking
+     *
+     * @internal
+     */
+    private static function warnIfDeprecatedThinkingConfig(
+        Model|string $model,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking,
+    ): void {
+        // Check if model is claude-opus-4-6
+        $modelString = $model instanceof Model ? $model->value : $model;
+        if ('claude-opus-4-6' !== $modelString) {
+            return;
+        }
+
+        // Check if thinking type is "enabled"
+        $isEnabledType = false;
+        if ($thinking instanceof ThinkingConfigEnabled) {
+            $isEnabledType = true;
+        } elseif (is_array($thinking) && isset($thinking['type']) && 'enabled' === $thinking['type']) {
+            $isEnabledType = true;
+        }
+
+        if ($isEnabledType) {
+            trigger_error(
+                "WARNING: Using Claude with {$modelString} and 'thinking.type=enabled' is deprecated. Use thinking.type=adaptive instead which results in better model performance in our testing: https://platform.claude.com/docs/en/build-with-claude/adaptive-thinking",
+                E_USER_WARNING,
+            );
+        }
     }
 }
