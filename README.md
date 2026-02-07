@@ -39,6 +39,34 @@ $message = $client->messages->create(
 var_dump($message->content);
 ```
 
+### Foundry
+
+You can use the Foundry client to access Anthropic models via Azure AI Foundry endpoints.
+
+```php
+<?php
+
+use Anthropic\Foundry;
+
+$client = Foundry\Client::fromEnvironment(
+  baseUrl: 'https://example-resource.services.ai.azure.com/anthropic'
+);
+
+$message = $client->messages->create(
+  maxTokens: 1024,
+  messages: [['role' => 'user', 'content' => 'Hello, Claude']],
+  model: 'claude-haiku-4-5',
+);
+
+var_dump($message->content);
+```
+
+The client reads the following environment variables by default:
+
+- `ANTHROPIC_FOUNDRY_API_KEY`
+- `ANTHROPIC_FOUNDRY_BASE_URL`
+- `ANTHROPIC_FOUNDRY_RESOURCE`
+
 ### Value Objects
 
 It is recommended to use the static `with` constructor `Base64ImageSource::with(data: 'U3RhaW5sZXNzIHJvY2tz', ...)`
@@ -89,7 +117,7 @@ $page = $client->beta->messages->batches->list(limit: 20);
 
 var_dump($page);
 
-// fetch items from the current page
+// fetch items from the current page    
 foreach ($page->getItems() as $item) {
   var_dump($item->id);
 }
@@ -261,6 +289,52 @@ For setting up Application Default Credentials, see
 [Set up ADC for a local development environment](https://cloud.google.com/docs/authentication/set-up-adc-local-dev-environment).
 
 For more examples, see [`examples/vertex`](examples/vertex).
+
+## Azure AI Foundry
+
+This library also provides support for Anthropic models via Azure AI Foundry endpoints.
+
+### Usage
+
+Create a Foundry client and configure credentials using environment variables or explicit parameters:
+
+```php
+<?php
+
+use Anthropic\Foundry;
+
+$client = Foundry\Client::fromEnvironment(
+  baseUrl: 'https://example-resource.services.ai.azure.com/anthropic'
+);
+
+// Or provide explicit credentials.
+// $client = Foundry\Client::withCredentials(
+//   apiKey: 'YOUR_API_KEY',
+//   baseUrl: 'https://example-resource.services.ai.azure.com/anthropic',
+// );
+
+// Or use an access token instead of an API key.
+// $client = Foundry\Client::withCredentials(
+//   authToken: 'YOUR_ACCESS_TOKEN',
+//   baseUrl: 'https://example-resource.services.ai.azure.com/anthropic',
+// );
+
+$message = $client->messages->create(
+  model: 'claude-haiku-4-5',
+  maxTokens: 1024,
+  messages: [['role' => 'user', 'content' => 'Hello, Claude']],
+);
+
+var_dump($message->content);
+```
+
+The client reads the following environment variables by default:
+
+- `ANTHROPIC_FOUNDRY_API_KEY`
+- `ANTHROPIC_FOUNDRY_BASE_URL`
+- `ANTHROPIC_FOUNDRY_RESOURCE`
+
+For more examples, see [`examples/foundry`](examples/foundry).
 
 ## Advanced concepts
 

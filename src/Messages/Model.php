@@ -9,6 +9,7 @@ namespace Anthropic\Messages;
  *
  * @see https://platform.claude.com/docs/en/build-with-claude/claude-on-amazon-bedrock AWS Bedrock model identifiers
  * @see https://platform.claude.com/docs/en/build-with-claude/claude-on-vertex-ai List of supported Vertex AI models
+ * @see https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry#api-model-ids-and-deployments List of supported Foundry AI models
  */
 enum Model: string
 {
