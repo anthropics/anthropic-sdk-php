@@ -94,6 +94,7 @@ final class MessagesTest extends TestCase
             ],
             outputFormat: ['schema' => ['foo' => 'bar'], 'type' => 'json_schema'],
             serviceTier: 'auto',
+            speed: 'standard',
             stopSequences: ['string'],
             system: [
                 [
@@ -196,6 +197,7 @@ final class MessagesTest extends TestCase
                 'format' => ['schema' => ['foo' => 'bar'], 'type' => 'json_schema'],
             ],
             outputFormat: ['schema' => ['foo' => 'bar'], 'type' => 'json_schema'],
+            speed: 'standard',
             system: [
                 [
                     'text' => 'Today\'s date is 2024-06-01.',

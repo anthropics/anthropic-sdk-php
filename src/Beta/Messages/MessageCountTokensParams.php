@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Messages\MessageCountTokensParams\Speed;
 use Anthropic\Beta\Messages\MessageCountTokensParams\System;
 use Anthropic\Beta\Messages\MessageCountTokensParams\Tool;
 use Anthropic\Core\Attributes\Optional;
@@ -44,6 +45,7 @@ use Anthropic\Messages\Model;
  *   mcpServers?: list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape>|null,
  *   outputConfig?: null|BetaOutputConfig|BetaOutputConfigShape,
  *   outputFormat?: null|BetaJSONOutputFormat|BetaJSONOutputFormatShape,
+ *   speed?: null|Speed|value-of<Speed>,
  *   system?: SystemShape|null,
  *   thinking?: BetaThinkingConfigParamShape|null,
  *   toolChoice?: BetaToolChoiceShape|null,
@@ -151,6 +153,14 @@ final class MessageCountTokensParams implements BaseModel
      */
     #[Optional('output_format', nullable: true)]
     public ?BetaJSONOutputFormat $outputFormat;
+
+    /**
+     * The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
+     *
+     * @var value-of<Speed>|null $speed
+     */
+    #[Optional(enum: Speed::class, nullable: true)]
+    public ?string $speed;
 
     /**
      * System prompt.
@@ -288,6 +298,7 @@ final class MessageCountTokensParams implements BaseModel
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape>|null $mcpServers
      * @param BetaOutputConfig|BetaOutputConfigShape|null $outputConfig
      * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat
+     * @param Speed|value-of<Speed>|null $speed
      * @param SystemShape|null $system
      * @param BetaThinkingConfigParamShape|null $thinking
      * @param BetaToolChoiceShape|null $toolChoice
@@ -301,6 +312,7 @@ final class MessageCountTokensParams implements BaseModel
         ?array $mcpServers = null,
         BetaOutputConfig|array|null $outputConfig = null,
         BetaJSONOutputFormat|array|null $outputFormat = null,
+        Speed|string|null $speed = null,
         string|array|null $system = null,
         BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking = null,
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
@@ -316,6 +328,7 @@ final class MessageCountTokensParams implements BaseModel
         null !== $mcpServers && $self['mcpServers'] = $mcpServers;
         null !== $outputConfig && $self['outputConfig'] = $outputConfig;
         null !== $outputFormat && $self['outputFormat'] = $outputFormat;
+        null !== $speed && $self['speed'] = $speed;
         null !== $system && $self['system'] = $system;
         null !== $thinking && $self['thinking'] = $thinking;
         null !== $toolChoice && $self['toolChoice'] = $toolChoice;
@@ -452,6 +465,19 @@ final class MessageCountTokensParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['outputFormat'] = $outputFormat;
+
+        return $self;
+    }
+
+    /**
+     * The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
+     *
+     * @param Speed|value-of<Speed>|null $speed
+     */
+    public function withSpeed(Speed|string|null $speed): self
+    {
+        $self = clone $this;
+        $self['speed'] = $speed;
 
         return $self;
     }

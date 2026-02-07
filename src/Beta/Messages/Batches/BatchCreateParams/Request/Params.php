@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages\Batches\BatchCreateParams\Request;
 
 use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\ServiceTier;
+use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\Speed;
 use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\System;
 use Anthropic\Beta\Messages\BetaContainerParams;
 use Anthropic\Beta\Messages\BetaContextManagementConfig;
@@ -63,6 +64,7 @@ use Anthropic\Messages\Model;
  *   outputConfig?: null|BetaOutputConfig|BetaOutputConfigShape,
  *   outputFormat?: null|BetaJSONOutputFormat|BetaJSONOutputFormatShape,
  *   serviceTier?: null|ServiceTier|value-of<ServiceTier>,
+ *   speed?: null|Speed|value-of<Speed>,
  *   stopSequences?: list<string>|null,
  *   stream?: bool|null,
  *   system?: SystemShape|null,
@@ -213,6 +215,14 @@ final class Params implements BaseModel
      */
     #[Optional('service_tier', enum: ServiceTier::class)]
     public ?string $serviceTier;
+
+    /**
+     * The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
+     *
+     * @var value-of<Speed>|null $speed
+     */
+    #[Optional(enum: Speed::class, nullable: true)]
+    public ?string $speed;
 
     /**
      * Custom text sequences that will cause the model to stop generating.
@@ -395,6 +405,7 @@ final class Params implements BaseModel
      * @param BetaOutputConfig|BetaOutputConfigShape|null $outputConfig
      * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat
      * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
+     * @param Speed|value-of<Speed>|null $speed
      * @param list<string>|null $stopSequences
      * @param SystemShape|null $system
      * @param BetaThinkingConfigParamShape|null $thinking
@@ -413,6 +424,7 @@ final class Params implements BaseModel
         BetaOutputConfig|array|null $outputConfig = null,
         BetaJSONOutputFormat|array|null $outputFormat = null,
         ServiceTier|string|null $serviceTier = null,
+        Speed|string|null $speed = null,
         ?array $stopSequences = null,
         ?bool $stream = null,
         string|array|null $system = null,
@@ -437,6 +449,7 @@ final class Params implements BaseModel
         null !== $outputConfig && $self['outputConfig'] = $outputConfig;
         null !== $outputFormat && $self['outputFormat'] = $outputFormat;
         null !== $serviceTier && $self['serviceTier'] = $serviceTier;
+        null !== $speed && $self['speed'] = $speed;
         null !== $stopSequences && $self['stopSequences'] = $stopSequences;
         null !== $stream && $self['stream'] = $stream;
         null !== $system && $self['system'] = $system;
@@ -645,6 +658,19 @@ final class Params implements BaseModel
     {
         $self = clone $this;
         $self['serviceTier'] = $serviceTier;
+
+        return $self;
+    }
+
+    /**
+     * The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
+     *
+     * @param Speed|value-of<Speed>|null $speed
+     */
+    public function withSpeed(Speed|string|null $speed): self
+    {
+        $self = clone $this;
+        $self['speed'] = $speed;
 
         return $self;
     }
