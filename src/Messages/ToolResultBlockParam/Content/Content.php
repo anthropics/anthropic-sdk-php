@@ -18,10 +18,10 @@ use Anthropic\Messages\TextBlockParam;
  * @phpstan-import-type SearchResultBlockParamShape from \Anthropic\Messages\SearchResultBlockParam
  * @phpstan-import-type DocumentBlockParamShape from \Anthropic\Messages\DocumentBlockParam
  *
- * @phpstan-type UnionMember1Variants = TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam
- * @phpstan-type UnionMember1Shape = UnionMember1Variants|TextBlockParamShape|ImageBlockParamShape|SearchResultBlockParamShape|DocumentBlockParamShape
+ * @phpstan-type ContentVariants = TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam
+ * @phpstan-type ContentShape = ContentVariants|TextBlockParamShape|ImageBlockParamShape|SearchResultBlockParamShape|DocumentBlockParamShape
  */
-final class UnionMember1 implements ConverterSource
+final class Content implements ConverterSource
 {
     use SdkUnion;
 

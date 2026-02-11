@@ -12,13 +12,12 @@ use Anthropic\Messages\DocumentBlockParam;
 use Anthropic\Messages\ImageBlockParam;
 use Anthropic\Messages\SearchResultBlockParam;
 use Anthropic\Messages\TextBlockParam;
-use Anthropic\Messages\ToolResultBlockParam\Content\UnionMember1;
 
 /**
- * @phpstan-import-type UnionMember1Shape from \Anthropic\Messages\ToolResultBlockParam\Content\UnionMember1
+ * @phpstan-import-type ContentShape from \Anthropic\Messages\ToolResultBlockParam\Content\Content as ContentShape1
  *
  * @phpstan-type ContentVariants = string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam>
- * @phpstan-type ContentShape = ContentVariants|list<UnionMember1Shape>
+ * @phpstan-type ContentShape = ContentVariants|list<ContentShape1>
  */
 final class Content implements ConverterSource
 {
@@ -29,6 +28,11 @@ final class Content implements ConverterSource
      */
     public static function variants(): array
     {
-        return ['string', new ListOf(UnionMember1::class)];
+        return [
+            'string',
+            new ListOf(
+                Content\Content::class
+            ),
+        ];
     }
 }
