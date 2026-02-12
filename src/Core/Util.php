@@ -47,6 +47,7 @@ final class Util
      */
     public static function get_object_vars(object $object): array
     {
+        /** @var array<string,mixed> */
         return get_object_vars($object);
     }
 
