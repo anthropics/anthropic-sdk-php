@@ -72,7 +72,6 @@ final class BatchesTest extends TestCase
                             ],
                         ],
                         'serviceTier' => 'auto',
-                        'speed' => 'standard',
                         'stopSequences' => ['string'],
                         'stream' => true,
                         'system' => [
