@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Batches\BatchCreateParams\Request\Params\ServiceTier;
+use Anthropic\Messages\Batches\BatchCreateParams\Request\Params\Speed;
 use Anthropic\Messages\Batches\BatchCreateParams\Request\Params\System;
 use Anthropic\Messages\MessageParam;
 use Anthropic\Messages\Metadata;
@@ -46,10 +47,12 @@ use Anthropic\Messages\ToolUnion;
  *   maxTokens: int,
  *   messages: list<MessageParam|MessageParamShape>,
  *   model: string|Model|value-of<Model>,
+ *   container?: string|null,
  *   inferenceGeo?: string|null,
  *   metadata?: null|Metadata|MetadataShape,
  *   outputConfig?: null|OutputConfig|OutputConfigShape,
  *   serviceTier?: null|ServiceTier|value-of<ServiceTier>,
+ *   speed?: null|Speed|value-of<Speed>,
  *   stopSequences?: list<string>|null,
  *   stream?: bool|null,
  *   system?: SystemShape|null,
@@ -140,6 +143,12 @@ final class Params implements BaseModel
     public string $model;
 
     /**
+     * Container identifier for reuse across requests.
+     */
+    #[Optional(nullable: true)]
+    public ?string $container;
+
+    /**
      * Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      */
     #[Optional('inference_geo', nullable: true)]
@@ -166,6 +175,14 @@ final class Params implements BaseModel
      */
     #[Optional('service_tier', enum: ServiceTier::class)]
     public ?string $serviceTier;
+
+    /**
+     * The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
+     *
+     * @var value-of<Speed>|null $speed
+     */
+    #[Optional(enum: Speed::class, nullable: true)]
+    public ?string $speed;
 
     /**
      * Custom text sequences that will cause the model to stop generating.
@@ -344,6 +361,7 @@ final class Params implements BaseModel
      * @param Metadata|MetadataShape|null $metadata
      * @param OutputConfig|OutputConfigShape|null $outputConfig
      * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
+     * @param Speed|value-of<Speed>|null $speed
      * @param list<string>|null $stopSequences
      * @param SystemShape|null $system
      * @param ThinkingConfigParamShape|null $thinking
@@ -354,10 +372,12 @@ final class Params implements BaseModel
         int $maxTokens,
         array $messages,
         Model|string $model,
+        ?string $container = null,
         ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
         ServiceTier|string|null $serviceTier = null,
+        Speed|string|null $speed = null,
         ?array $stopSequences = null,
         ?bool $stream = null,
         string|array|null $system = null,
@@ -374,10 +394,12 @@ final class Params implements BaseModel
         $self['messages'] = $messages;
         $self['model'] = $model;
 
+        null !== $container && $self['container'] = $container;
         null !== $inferenceGeo && $self['inferenceGeo'] = $inferenceGeo;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $outputConfig && $self['outputConfig'] = $outputConfig;
         null !== $serviceTier && $self['serviceTier'] = $serviceTier;
+        null !== $speed && $self['speed'] = $speed;
         null !== $stopSequences && $self['stopSequences'] = $stopSequences;
         null !== $stream && $self['stream'] = $stream;
         null !== $system && $self['system'] = $system;
@@ -480,6 +502,17 @@ final class Params implements BaseModel
     }
 
     /**
+     * Container identifier for reuse across requests.
+     */
+    public function withContainer(?string $container): self
+    {
+        $self = clone $this;
+        $self['container'] = $container;
+
+        return $self;
+    }
+
+    /**
      * Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      */
     public function withInferenceGeo(?string $inferenceGeo): self
@@ -527,6 +560,19 @@ final class Params implements BaseModel
     {
         $self = clone $this;
         $self['serviceTier'] = $serviceTier;
+
+        return $self;
+    }
+
+    /**
+     * The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
+     *
+     * @param Speed|value-of<Speed>|null $speed
+     */
+    public function withSpeed(Speed|string|null $speed): self
+    {
+        $self = clone $this;
+        $self['speed'] = $speed;
 
         return $self;
     }

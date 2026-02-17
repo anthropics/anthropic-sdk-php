@@ -8,9 +8,13 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\ToolUseBlockParam\Caller;
+use Anthropic\Messages\ToolUseBlockParam\Caller\ServerToolCaller20260120;
 
 /**
+ * @phpstan-import-type CallerVariants from \Anthropic\Messages\ToolUseBlockParam\Caller
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ * @phpstan-import-type CallerShape from \Anthropic\Messages\ToolUseBlockParam\Caller
  *
  * @phpstan-type ToolUseBlockParamShape = array{
  *   id: string,
@@ -18,6 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   name: string,
  *   type: 'tool_use',
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
+ *   caller?: CallerShape|null,
  * }
  */
 final class ToolUseBlockParam implements BaseModel
@@ -46,6 +51,14 @@ final class ToolUseBlockParam implements BaseModel
     public ?CacheControlEphemeral $cacheControl;
 
     /**
+     * Tool invocation directly from the model.
+     *
+     * @var CallerVariants|null $caller
+     */
+    #[Optional(union: Caller::class)]
+    public DirectCaller|ServerToolCaller|ServerToolCaller20260120|null $caller;
+
+    /**
      * `new ToolUseBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -71,12 +84,14 @@ final class ToolUseBlockParam implements BaseModel
      *
      * @param array<string,mixed> $input
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
+     * @param CallerShape|null $caller
      */
     public static function with(
         string $id,
         array $input,
         string $name,
         CacheControlEphemeral|array|null $cacheControl = null,
+        DirectCaller|array|ServerToolCaller|ServerToolCaller20260120|null $caller = null,
     ): self {
         $self = new self;
 
@@ -85,6 +100,7 @@ final class ToolUseBlockParam implements BaseModel
         $self['name'] = $name;
 
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $caller && $self['caller'] = $caller;
 
         return $self;
     }
@@ -137,6 +153,20 @@ final class ToolUseBlockParam implements BaseModel
     ): self {
         $self = clone $this;
         $self['cacheControl'] = $cacheControl;
+
+        return $self;
+    }
+
+    /**
+     * Tool invocation directly from the model.
+     *
+     * @param CallerShape $caller
+     */
+    public function withCaller(
+        DirectCaller|array|ServerToolCaller|ServerToolCaller20260120 $caller
+    ): self {
+        $self = clone $this;
+        $self['caller'] = $caller;
 
         return $self;
     }

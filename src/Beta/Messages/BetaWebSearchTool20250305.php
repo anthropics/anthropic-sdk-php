@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaWebSearchTool20250305\AllowedCaller;
-use Anthropic\Beta\Messages\BetaWebSearchTool20250305\UserLocation;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -13,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
- * @phpstan-import-type UserLocationShape from \Anthropic\Beta\Messages\BetaWebSearchTool20250305\UserLocation
+ * @phpstan-import-type BetaUserLocationShape from \Anthropic\Beta\Messages\BetaUserLocation
  *
  * @phpstan-type BetaWebSearchTool20250305Shape = array{
  *   name: 'web_search',
@@ -25,7 +24,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   deferLoading?: bool|null,
  *   maxUses?: int|null,
  *   strict?: bool|null,
- *   userLocation?: null|UserLocation|UserLocationShape,
+ *   userLocation?: null|BetaUserLocation|BetaUserLocationShape,
  * }
  */
 final class BetaWebSearchTool20250305 implements BaseModel
@@ -95,7 +94,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
      * Parameters for the user's location. Used to provide more relevant search results.
      */
     #[Optional('user_location', nullable: true)]
-    public ?UserLocation $userLocation;
+    public ?BetaUserLocation $userLocation;
 
     public function __construct()
     {
@@ -111,7 +110,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
      * @param list<string>|null $allowedDomains
      * @param list<string>|null $blockedDomains
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
-     * @param UserLocation|UserLocationShape|null $userLocation
+     * @param BetaUserLocation|BetaUserLocationShape|null $userLocation
      */
     public static function with(
         ?array $allowedCallers = null,
@@ -121,7 +120,7 @@ final class BetaWebSearchTool20250305 implements BaseModel
         ?bool $deferLoading = null,
         ?int $maxUses = null,
         ?bool $strict = null,
-        UserLocation|array|null $userLocation = null,
+        BetaUserLocation|array|null $userLocation = null,
     ): self {
         $self = new self;
 
@@ -250,10 +249,10 @@ final class BetaWebSearchTool20250305 implements BaseModel
     /**
      * Parameters for the user's location. Used to provide more relevant search results.
      *
-     * @param UserLocation|UserLocationShape|null $userLocation
+     * @param BetaUserLocation|BetaUserLocationShape|null $userLocation
      */
     public function withUserLocation(
-        UserLocation|array|null $userLocation
+        BetaUserLocation|array|null $userLocation
     ): self {
         $self = clone $this;
         $self['userLocation'] = $userLocation;

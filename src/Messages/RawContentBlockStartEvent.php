@@ -26,12 +26,16 @@ final class RawContentBlockStartEvent implements BaseModel
     #[Required]
     public string $type = 'content_block_start';
 
-    /** @var ContentBlockVariants $contentBlock */
+    /**
+     * Response model for a file uploaded to the container.
+     *
+     * @var ContentBlockVariants $contentBlock
+     */
     #[Required(
         'content_block',
         union: ContentBlock::class,
     )]
-    public TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $contentBlock;
+    public TextBlock|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock|WebFetchToolResultBlock|CodeExecutionToolResultBlock|BashCodeExecutionToolResultBlock|TextEditorCodeExecutionToolResultBlock|ToolSearchToolResultBlock|ContainerUploadBlock $contentBlock;
 
     #[Required]
     public int $index;
@@ -63,7 +67,7 @@ final class RawContentBlockStartEvent implements BaseModel
      * @param ContentBlockShape $contentBlock
      */
     public static function with(
-        TextBlock|array|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $contentBlock,
+        TextBlock|array|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock|WebFetchToolResultBlock|CodeExecutionToolResultBlock|BashCodeExecutionToolResultBlock|TextEditorCodeExecutionToolResultBlock|ToolSearchToolResultBlock|ContainerUploadBlock $contentBlock,
         int $index,
     ): self {
         $self = new self;
@@ -75,10 +79,12 @@ final class RawContentBlockStartEvent implements BaseModel
     }
 
     /**
+     * Response model for a file uploaded to the container.
+     *
      * @param ContentBlockShape $contentBlock
      */
     public function withContentBlock(
-        TextBlock|array|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock $contentBlock,
+        TextBlock|array|ThinkingBlock|RedactedThinkingBlock|ToolUseBlock|ServerToolUseBlock|WebSearchToolResultBlock|WebFetchToolResultBlock|CodeExecutionToolResultBlock|BashCodeExecutionToolResultBlock|TextEditorCodeExecutionToolResultBlock|ToolSearchToolResultBlock|ContainerUploadBlock $contentBlock,
     ): self {
         $self = clone $this;
         $self['contentBlock'] = $contentBlock;

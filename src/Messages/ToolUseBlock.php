@@ -7,10 +7,19 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\ToolUseBlock\Caller;
+use Anthropic\Messages\ToolUseBlock\Caller\ServerToolCaller20260120;
 
 /**
+ * @phpstan-import-type CallerVariants from \Anthropic\Messages\ToolUseBlock\Caller
+ * @phpstan-import-type CallerShape from \Anthropic\Messages\ToolUseBlock\Caller
+ *
  * @phpstan-type ToolUseBlockShape = array{
- *   id: string, input: array<string,mixed>, name: string, type: 'tool_use'
+ *   id: string,
+ *   caller: CallerShape,
+ *   input: array<string,mixed>,
+ *   name: string,
+ *   type: 'tool_use',
  * }
  */
 final class ToolUseBlock implements BaseModel
@@ -25,6 +34,14 @@ final class ToolUseBlock implements BaseModel
     #[Required]
     public string $id;
 
+    /**
+     * Tool invocation directly from the model.
+     *
+     * @var CallerVariants $caller
+     */
+    #[Required(union: Caller::class)]
+    public DirectCaller|ServerToolCaller|ServerToolCaller20260120 $caller;
+
     /** @var array<string,mixed> $input */
     #[Required(map: 'mixed')]
     public array $input;
@@ -37,13 +54,13 @@ final class ToolUseBlock implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ToolUseBlock::with(id: ..., input: ..., name: ...)
+     * ToolUseBlock::with(id: ..., caller: ..., input: ..., name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ToolUseBlock)->withID(...)->withInput(...)->withName(...)
+     * (new ToolUseBlock)->withID(...)->withCaller(...)->withInput(...)->withName(...)
      * ```
      */
     public function __construct()
@@ -57,12 +74,20 @@ final class ToolUseBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,mixed> $input
+     * @param CallerShape $caller
      */
-    public static function with(string $id, array $input, string $name): self
-    {
+    public static function with(
+        string $id,
+        array $input,
+        string $name,
+        DirectCaller|array|ServerToolCaller|ServerToolCaller20260120 $caller = [
+            'type' => 'direct',
+        ],
+    ): self {
         $self = new self;
 
         $self['id'] = $id;
+        $self['caller'] = $caller;
         $self['input'] = $input;
         $self['name'] = $name;
 
@@ -73,6 +98,20 @@ final class ToolUseBlock implements BaseModel
     {
         $self = clone $this;
         $self['id'] = $id;
+
+        return $self;
+    }
+
+    /**
+     * Tool invocation directly from the model.
+     *
+     * @param CallerShape $caller
+     */
+    public function withCaller(
+        DirectCaller|array|ServerToolCaller|ServerToolCaller20260120 $caller
+    ): self {
+        $self = clone $this;
+        $self['caller'] = $caller;
 
         return $self;
     }

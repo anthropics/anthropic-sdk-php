@@ -8,6 +8,8 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\MapOf;
+use Anthropic\Messages\ToolTextEditor20250728\AllowedCaller;
 
 /**
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
@@ -15,7 +17,10 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type ToolTextEditor20250728Shape = array{
  *   name: 'str_replace_based_edit_tool',
  *   type: 'text_editor_20250728',
+ *   allowedCallers?: list<AllowedCaller|value-of<AllowedCaller>>|null,
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
+ *   deferLoading?: bool|null,
+ *   inputExamples?: list<array<string,mixed>>|null,
  *   maxCharacters?: int|null,
  *   strict?: bool|null,
  * }
@@ -39,11 +44,25 @@ final class ToolTextEditor20250728 implements BaseModel
     #[Required]
     public string $type = 'text_editor_20250728';
 
+    /** @var list<value-of<AllowedCaller>>|null $allowedCallers */
+    #[Optional('allowed_callers', list: AllowedCaller::class)]
+    public ?array $allowedCallers;
+
     /**
      * Create a cache control breakpoint at this content block.
      */
     #[Optional('cache_control', nullable: true)]
     public ?CacheControlEphemeral $cacheControl;
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    #[Optional('defer_loading')]
+    public ?bool $deferLoading;
+
+    /** @var list<array<string,mixed>>|null $inputExamples */
+    #[Optional('input_examples', list: new MapOf('mixed'))]
+    public ?array $inputExamples;
 
     /**
      * Maximum number of characters to display when viewing a file. If not specified, defaults to displaying the full file.
@@ -67,16 +86,24 @@ final class ToolTextEditor20250728 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param list<AllowedCaller|value-of<AllowedCaller>>|null $allowedCallers
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
+     * @param list<array<string,mixed>>|null $inputExamples
      */
     public static function with(
+        ?array $allowedCallers = null,
         CacheControlEphemeral|array|null $cacheControl = null,
+        ?bool $deferLoading = null,
+        ?array $inputExamples = null,
         ?int $maxCharacters = null,
         ?bool $strict = null,
     ): self {
         $self = new self;
 
+        null !== $allowedCallers && $self['allowedCallers'] = $allowedCallers;
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $deferLoading && $self['deferLoading'] = $deferLoading;
+        null !== $inputExamples && $self['inputExamples'] = $inputExamples;
         null !== $maxCharacters && $self['maxCharacters'] = $maxCharacters;
         null !== $strict && $self['strict'] = $strict;
 
@@ -110,6 +137,17 @@ final class ToolTextEditor20250728 implements BaseModel
     }
 
     /**
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
+     */
+    public function withAllowedCallers(array $allowedCallers): self
+    {
+        $self = clone $this;
+        $self['allowedCallers'] = $allowedCallers;
+
+        return $self;
+    }
+
+    /**
      * Create a cache control breakpoint at this content block.
      *
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
@@ -119,6 +157,28 @@ final class ToolTextEditor20250728 implements BaseModel
     ): self {
         $self = clone $this;
         $self['cacheControl'] = $cacheControl;
+
+        return $self;
+    }
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    public function withDeferLoading(bool $deferLoading): self
+    {
+        $self = clone $this;
+        $self['deferLoading'] = $deferLoading;
+
+        return $self;
+    }
+
+    /**
+     * @param list<array<string,mixed>> $inputExamples
+     */
+    public function withInputExamples(array $inputExamples): self
+    {
+        $self = clone $this;
+        $self['inputExamples'] = $inputExamples;
 
         return $self;
     }

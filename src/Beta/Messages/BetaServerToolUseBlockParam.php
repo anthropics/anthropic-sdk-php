@@ -57,7 +57,7 @@ final class BetaServerToolUseBlockParam implements BaseModel
      * @var CallerVariants|null $caller
      */
     #[Optional(union: Caller::class)]
-    public BetaDirectCaller|BetaServerToolCaller|null $caller;
+    public BetaDirectCaller|BetaServerToolCaller|BetaServerToolCaller20260120|null $caller;
 
     /**
      * `new BetaServerToolUseBlockParam()` is missing required properties by the API.
@@ -93,7 +93,7 @@ final class BetaServerToolUseBlockParam implements BaseModel
         array $input,
         Name|string $name,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
-        BetaDirectCaller|array|BetaServerToolCaller|null $caller = null,
+        BetaDirectCaller|array|BetaServerToolCaller|BetaServerToolCaller20260120|null $caller = null,
     ): self {
         $self = new self;
 
@@ -168,7 +168,7 @@ final class BetaServerToolUseBlockParam implements BaseModel
      * @param CallerShape $caller
      */
     public function withCaller(
-        BetaDirectCaller|array|BetaServerToolCaller $caller
+        BetaDirectCaller|array|BetaServerToolCaller|BetaServerToolCaller20260120 $caller,
     ): self {
         $self = clone $this;
         $self['caller'] = $caller;

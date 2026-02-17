@@ -30,9 +30,13 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
     #[Required]
     public string $type = 'code_execution_tool_result';
 
-    /** @var BetaCodeExecutionToolResultBlockParamContentVariants $content */
+    /**
+     * Code execution result with encrypted stdout for PFC + web_search results.
+     *
+     * @var BetaCodeExecutionToolResultBlockParamContentVariants $content
+     */
     #[Required]
-    public BetaCodeExecutionToolResultErrorParam|BetaCodeExecutionResultBlockParam $content;
+    public BetaCodeExecutionToolResultErrorParam|BetaCodeExecutionResultBlockParam|BetaEncryptedCodeExecutionResultBlockParam $content;
 
     #[Required('tool_use_id')]
     public string $toolUseID;
@@ -73,7 +77,7 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
-        BetaCodeExecutionToolResultErrorParam|array|BetaCodeExecutionResultBlockParam $content,
+        BetaCodeExecutionToolResultErrorParam|array|BetaCodeExecutionResultBlockParam|BetaEncryptedCodeExecutionResultBlockParam $content,
         string $toolUseID,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
     ): self {
@@ -88,10 +92,12 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
     }
 
     /**
+     * Code execution result with encrypted stdout for PFC + web_search results.
+     *
      * @param BetaCodeExecutionToolResultBlockParamContentShape $content
      */
     public function withContent(
-        BetaCodeExecutionToolResultErrorParam|array|BetaCodeExecutionResultBlockParam $content,
+        BetaCodeExecutionToolResultErrorParam|array|BetaCodeExecutionResultBlockParam|BetaEncryptedCodeExecutionResultBlockParam $content,
     ): self {
         $self = clone $this;
         $self['content'] = $content;

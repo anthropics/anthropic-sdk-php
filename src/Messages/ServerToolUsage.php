@@ -9,12 +9,20 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type ServerToolUsageShape = array{webSearchRequests: int}
+ * @phpstan-type ServerToolUsageShape = array{
+ *   webFetchRequests: int, webSearchRequests: int
+ * }
  */
 final class ServerToolUsage implements BaseModel
 {
     /** @use SdkModel<ServerToolUsageShape> */
     use SdkModel;
+
+    /**
+     * The number of web fetch tool requests.
+     */
+    #[Required('web_fetch_requests')]
+    public int $webFetchRequests;
 
     /**
      * The number of web search tool requests.
@@ -27,13 +35,13 @@ final class ServerToolUsage implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ServerToolUsage::with(webSearchRequests: ...)
+     * ServerToolUsage::with(webFetchRequests: ..., webSearchRequests: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ServerToolUsage)->withWebSearchRequests(...)
+     * (new ServerToolUsage)->withWebFetchRequests(...)->withWebSearchRequests(...)
      * ```
      */
     public function __construct()
@@ -46,11 +54,25 @@ final class ServerToolUsage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(int $webSearchRequests = 0): self
-    {
+    public static function with(
+        int $webFetchRequests = 0,
+        int $webSearchRequests = 0
+    ): self {
         $self = new self;
 
+        $self['webFetchRequests'] = $webFetchRequests;
         $self['webSearchRequests'] = $webSearchRequests;
+
+        return $self;
+    }
+
+    /**
+     * The number of web fetch tool requests.
+     */
+    public function withWebFetchRequests(int $webFetchRequests): self
+    {
+        $self = clone $this;
+        $self['webFetchRequests'] = $webFetchRequests;
 
         return $self;
     }

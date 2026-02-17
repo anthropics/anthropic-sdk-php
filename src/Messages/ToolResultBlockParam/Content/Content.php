@@ -11,15 +11,19 @@ use Anthropic\Messages\DocumentBlockParam;
 use Anthropic\Messages\ImageBlockParam;
 use Anthropic\Messages\SearchResultBlockParam;
 use Anthropic\Messages\TextBlockParam;
+use Anthropic\Messages\ToolReferenceBlockParam;
 
 /**
+ * Tool reference block that can be included in tool_result content.
+ *
  * @phpstan-import-type TextBlockParamShape from \Anthropic\Messages\TextBlockParam
  * @phpstan-import-type ImageBlockParamShape from \Anthropic\Messages\ImageBlockParam
  * @phpstan-import-type SearchResultBlockParamShape from \Anthropic\Messages\SearchResultBlockParam
  * @phpstan-import-type DocumentBlockParamShape from \Anthropic\Messages\DocumentBlockParam
+ * @phpstan-import-type ToolReferenceBlockParamShape from \Anthropic\Messages\ToolReferenceBlockParam
  *
- * @phpstan-type ContentVariants = TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam
- * @phpstan-type ContentShape = ContentVariants|TextBlockParamShape|ImageBlockParamShape|SearchResultBlockParamShape|DocumentBlockParamShape
+ * @phpstan-type ContentVariants = TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam|ToolReferenceBlockParam
+ * @phpstan-type ContentShape = ContentVariants|TextBlockParamShape|ImageBlockParamShape|SearchResultBlockParamShape|DocumentBlockParamShape|ToolReferenceBlockParamShape
  */
 final class Content implements ConverterSource
 {
@@ -40,6 +44,7 @@ final class Content implements ConverterSource
             'image' => ImageBlockParam::class,
             'search_result' => SearchResultBlockParam::class,
             'document' => DocumentBlockParam::class,
+            'tool_reference' => ToolReferenceBlockParam::class,
         ];
     }
 }

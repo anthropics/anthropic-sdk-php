@@ -8,6 +8,8 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\MapOf;
+use Anthropic\Messages\Tool\AllowedCaller;
 use Anthropic\Messages\Tool\InputSchema;
 use Anthropic\Messages\Tool\Type;
 
@@ -18,9 +20,12 @@ use Anthropic\Messages\Tool\Type;
  * @phpstan-type ToolShape = array{
  *   inputSchema: InputSchema|InputSchemaShape,
  *   name: string,
+ *   allowedCallers?: list<AllowedCaller|value-of<AllowedCaller>>|null,
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
+ *   deferLoading?: bool|null,
  *   description?: string|null,
  *   eagerInputStreaming?: bool|null,
+ *   inputExamples?: list<array<string,mixed>>|null,
  *   strict?: bool|null,
  *   type?: null|Type|value-of<Type>,
  * }
@@ -46,11 +51,21 @@ final class Tool implements BaseModel
     #[Required]
     public string $name;
 
+    /** @var list<value-of<AllowedCaller>>|null $allowedCallers */
+    #[Optional('allowed_callers', list: AllowedCaller::class)]
+    public ?array $allowedCallers;
+
     /**
      * Create a cache control breakpoint at this content block.
      */
     #[Optional('cache_control', nullable: true)]
     public ?CacheControlEphemeral $cacheControl;
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    #[Optional('defer_loading')]
+    public ?bool $deferLoading;
 
     /**
      * Description of what this tool does.
@@ -65,6 +80,10 @@ final class Tool implements BaseModel
      */
     #[Optional('eager_input_streaming', nullable: true)]
     public ?bool $eagerInputStreaming;
+
+    /** @var list<array<string,mixed>>|null $inputExamples */
+    #[Optional('input_examples', list: new MapOf('mixed'))]
+    public ?array $inputExamples;
 
     /**
      * When true, guarantees schema validation on tool names and inputs.
@@ -101,15 +120,20 @@ final class Tool implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param InputSchema|InputSchemaShape $inputSchema
+     * @param list<AllowedCaller|value-of<AllowedCaller>>|null $allowedCallers
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
+     * @param list<array<string,mixed>>|null $inputExamples
      * @param Type|value-of<Type>|null $type
      */
     public static function with(
         InputSchema|array $inputSchema,
         string $name,
+        ?array $allowedCallers = null,
         CacheControlEphemeral|array|null $cacheControl = null,
+        ?bool $deferLoading = null,
         ?string $description = null,
         ?bool $eagerInputStreaming = null,
+        ?array $inputExamples = null,
         ?bool $strict = null,
         Type|string|null $type = null,
     ): self {
@@ -118,9 +142,12 @@ final class Tool implements BaseModel
         $self['inputSchema'] = $inputSchema;
         $self['name'] = $name;
 
+        null !== $allowedCallers && $self['allowedCallers'] = $allowedCallers;
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $deferLoading && $self['deferLoading'] = $deferLoading;
         null !== $description && $self['description'] = $description;
         null !== $eagerInputStreaming && $self['eagerInputStreaming'] = $eagerInputStreaming;
+        null !== $inputExamples && $self['inputExamples'] = $inputExamples;
         null !== $strict && $self['strict'] = $strict;
         null !== $type && $self['type'] = $type;
 
@@ -156,6 +183,17 @@ final class Tool implements BaseModel
     }
 
     /**
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
+     */
+    public function withAllowedCallers(array $allowedCallers): self
+    {
+        $self = clone $this;
+        $self['allowedCallers'] = $allowedCallers;
+
+        return $self;
+    }
+
+    /**
      * Create a cache control breakpoint at this content block.
      *
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
@@ -165,6 +203,17 @@ final class Tool implements BaseModel
     ): self {
         $self = clone $this;
         $self['cacheControl'] = $cacheControl;
+
+        return $self;
+    }
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    public function withDeferLoading(bool $deferLoading): self
+    {
+        $self = clone $this;
+        $self['deferLoading'] = $deferLoading;
 
         return $self;
     }
@@ -189,6 +238,17 @@ final class Tool implements BaseModel
     {
         $self = clone $this;
         $self['eagerInputStreaming'] = $eagerInputStreaming;
+
+        return $self;
+    }
+
+    /**
+     * @param list<array<string,mixed>> $inputExamples
+     */
+    public function withInputExamples(array $inputExamples): self
+    {
+        $self = clone $this;
+        $self['inputExamples'] = $inputExamples;
 
         return $self;
     }

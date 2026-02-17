@@ -4,18 +4,23 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaWebSearchToolResultBlock\Caller;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-import-type BetaWebSearchToolResultBlockContentVariants from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlockContent
+ * @phpstan-import-type CallerVariants from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlock\Caller
  * @phpstan-import-type BetaWebSearchToolResultBlockContentShape from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlockContent
+ * @phpstan-import-type CallerShape from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlock\Caller
  *
  * @phpstan-type BetaWebSearchToolResultBlockShape = array{
  *   content: BetaWebSearchToolResultBlockContentShape,
  *   toolUseID: string,
  *   type: 'web_search_tool_result',
+ *   caller?: CallerShape|null,
  * }
  */
 final class BetaWebSearchToolResultBlock implements BaseModel
@@ -33,6 +38,14 @@ final class BetaWebSearchToolResultBlock implements BaseModel
 
     #[Required('tool_use_id')]
     public string $toolUseID;
+
+    /**
+     * Tool invocation directly from the model.
+     *
+     * @var CallerVariants|null $caller
+     */
+    #[Optional(union: Caller::class)]
+    public BetaDirectCaller|BetaServerToolCaller|BetaServerToolCaller20260120|null $caller;
 
     /**
      * `new BetaWebSearchToolResultBlock()` is missing required properties by the API.
@@ -59,15 +72,19 @@ final class BetaWebSearchToolResultBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaWebSearchToolResultBlockContentShape $content
+     * @param CallerShape|null $caller
      */
     public static function with(
         BetaWebSearchToolResultError|array $content,
-        string $toolUseID
+        string $toolUseID,
+        BetaDirectCaller|array|BetaServerToolCaller|BetaServerToolCaller20260120|null $caller = null,
     ): self {
         $self = new self;
 
         $self['content'] = $content;
         $self['toolUseID'] = $toolUseID;
+
+        null !== $caller && $self['caller'] = $caller;
 
         return $self;
     }
@@ -99,6 +116,20 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * Tool invocation directly from the model.
+     *
+     * @param CallerShape $caller
+     */
+    public function withCaller(
+        BetaDirectCaller|array|BetaServerToolCaller|BetaServerToolCaller20260120 $caller,
+    ): self {
+        $self = clone $this;
+        $self['caller'] = $caller;
 
         return $self;
     }
