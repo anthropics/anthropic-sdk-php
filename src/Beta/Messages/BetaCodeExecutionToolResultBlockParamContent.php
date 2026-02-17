@@ -9,11 +9,14 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
+ * Code execution result with encrypted stdout for PFC + web_search results.
+ *
  * @phpstan-import-type BetaCodeExecutionToolResultErrorParamShape from \Anthropic\Beta\Messages\BetaCodeExecutionToolResultErrorParam
  * @phpstan-import-type BetaCodeExecutionResultBlockParamShape from \Anthropic\Beta\Messages\BetaCodeExecutionResultBlockParam
+ * @phpstan-import-type BetaEncryptedCodeExecutionResultBlockParamShape from \Anthropic\Beta\Messages\BetaEncryptedCodeExecutionResultBlockParam
  *
- * @phpstan-type BetaCodeExecutionToolResultBlockParamContentVariants = BetaCodeExecutionToolResultErrorParam|BetaCodeExecutionResultBlockParam
- * @phpstan-type BetaCodeExecutionToolResultBlockParamContentShape = BetaCodeExecutionToolResultBlockParamContentVariants|BetaCodeExecutionToolResultErrorParamShape|BetaCodeExecutionResultBlockParamShape
+ * @phpstan-type BetaCodeExecutionToolResultBlockParamContentVariants = BetaCodeExecutionToolResultErrorParam|BetaCodeExecutionResultBlockParam|BetaEncryptedCodeExecutionResultBlockParam
+ * @phpstan-type BetaCodeExecutionToolResultBlockParamContentShape = BetaCodeExecutionToolResultBlockParamContentVariants|BetaCodeExecutionToolResultErrorParamShape|BetaCodeExecutionResultBlockParamShape|BetaEncryptedCodeExecutionResultBlockParamShape
  */
 final class BetaCodeExecutionToolResultBlockParamContent implements ConverterSource
 {
@@ -27,6 +30,7 @@ final class BetaCodeExecutionToolResultBlockParamContent implements ConverterSou
         return [
             BetaCodeExecutionToolResultErrorParam::class,
             BetaCodeExecutionResultBlockParam::class,
+            BetaEncryptedCodeExecutionResultBlockParam::class,
         ];
     }
 }

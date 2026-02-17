@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaWebFetchToolResultBlockParam\Caller;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -11,14 +12,17 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-import-type ContentVariants from \Anthropic\Beta\Messages\BetaWebFetchToolResultBlockParam\Content
+ * @phpstan-import-type CallerVariants from \Anthropic\Beta\Messages\BetaWebFetchToolResultBlockParam\Caller
  * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaWebFetchToolResultBlockParam\Content
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type CallerShape from \Anthropic\Beta\Messages\BetaWebFetchToolResultBlockParam\Caller
  *
  * @phpstan-type BetaWebFetchToolResultBlockParamShape = array{
  *   content: ContentShape,
  *   toolUseID: string,
  *   type: 'web_fetch_tool_result',
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
+ *   caller?: CallerShape|null,
  * }
  */
 final class BetaWebFetchToolResultBlockParam implements BaseModel
@@ -42,6 +46,14 @@ final class BetaWebFetchToolResultBlockParam implements BaseModel
      */
     #[Optional('cache_control', nullable: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
+
+    /**
+     * Tool invocation directly from the model.
+     *
+     * @var CallerVariants|null $caller
+     */
+    #[Optional(union: Caller::class)]
+    public BetaDirectCaller|BetaServerToolCaller|BetaServerToolCaller20260120|null $caller;
 
     /**
      * `new BetaWebFetchToolResultBlockParam()` is missing required properties by the API.
@@ -69,11 +81,13 @@ final class BetaWebFetchToolResultBlockParam implements BaseModel
      *
      * @param ContentShape $content
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param CallerShape|null $caller
      */
     public static function with(
         BetaWebFetchToolResultErrorBlockParam|array|BetaWebFetchBlockParam $content,
         string $toolUseID,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
+        BetaDirectCaller|array|BetaServerToolCaller|BetaServerToolCaller20260120|null $caller = null,
     ): self {
         $self = new self;
 
@@ -81,6 +95,7 @@ final class BetaWebFetchToolResultBlockParam implements BaseModel
         $self['toolUseID'] = $toolUseID;
 
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $caller && $self['caller'] = $caller;
 
         return $self;
     }
@@ -126,6 +141,20 @@ final class BetaWebFetchToolResultBlockParam implements BaseModel
     ): self {
         $self = clone $this;
         $self['cacheControl'] = $cacheControl;
+
+        return $self;
+    }
+
+    /**
+     * Tool invocation directly from the model.
+     *
+     * @param CallerShape $caller
+     */
+    public function withCaller(
+        BetaDirectCaller|array|BetaServerToolCaller|BetaServerToolCaller20260120 $caller,
+    ): self {
+        $self = clone $this;
+        $self['caller'] = $caller;
 
         return $self;
     }

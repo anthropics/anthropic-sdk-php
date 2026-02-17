@@ -8,17 +8,22 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\WebSearchToolResultBlockParam\Caller;
+use Anthropic\Messages\WebSearchToolResultBlockParam\Caller\ServerToolCaller20260120;
 
 /**
  * @phpstan-import-type WebSearchToolResultBlockParamContentVariants from \Anthropic\Messages\WebSearchToolResultBlockParamContent
+ * @phpstan-import-type CallerVariants from \Anthropic\Messages\WebSearchToolResultBlockParam\Caller
  * @phpstan-import-type WebSearchToolResultBlockParamContentShape from \Anthropic\Messages\WebSearchToolResultBlockParamContent
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ * @phpstan-import-type CallerShape from \Anthropic\Messages\WebSearchToolResultBlockParam\Caller
  *
  * @phpstan-type WebSearchToolResultBlockParamShape = array{
  *   content: WebSearchToolResultBlockParamContentShape,
  *   toolUseID: string,
  *   type: 'web_search_tool_result',
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
+ *   caller?: CallerShape|null,
  * }
  */
 final class WebSearchToolResultBlockParam implements BaseModel
@@ -42,6 +47,14 @@ final class WebSearchToolResultBlockParam implements BaseModel
      */
     #[Optional('cache_control', nullable: true)]
     public ?CacheControlEphemeral $cacheControl;
+
+    /**
+     * Tool invocation directly from the model.
+     *
+     * @var CallerVariants|null $caller
+     */
+    #[Optional(union: Caller::class)]
+    public DirectCaller|ServerToolCaller|ServerToolCaller20260120|null $caller;
 
     /**
      * `new WebSearchToolResultBlockParam()` is missing required properties by the API.
@@ -69,11 +82,13 @@ final class WebSearchToolResultBlockParam implements BaseModel
      *
      * @param WebSearchToolResultBlockParamContentShape $content
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
+     * @param CallerShape|null $caller
      */
     public static function with(
         array|WebSearchToolRequestError $content,
         string $toolUseID,
         CacheControlEphemeral|array|null $cacheControl = null,
+        DirectCaller|array|ServerToolCaller|ServerToolCaller20260120|null $caller = null,
     ): self {
         $self = new self;
 
@@ -81,6 +96,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
         $self['toolUseID'] = $toolUseID;
 
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $caller && $self['caller'] = $caller;
 
         return $self;
     }
@@ -125,6 +141,20 @@ final class WebSearchToolResultBlockParam implements BaseModel
     ): self {
         $self = clone $this;
         $self['cacheControl'] = $cacheControl;
+
+        return $self;
+    }
+
+    /**
+     * Tool invocation directly from the model.
+     *
+     * @param CallerShape $caller
+     */
+    public function withCaller(
+        DirectCaller|array|ServerToolCaller|ServerToolCaller20260120 $caller
+    ): self {
+        $self = clone $this;
+        $self['caller'] = $caller;
 
         return $self;
     }

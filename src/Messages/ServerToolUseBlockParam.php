@@ -8,26 +8,28 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\ServerToolUseBlockParam\Caller;
+use Anthropic\Messages\ServerToolUseBlockParam\Caller\ServerToolCaller20260120;
+use Anthropic\Messages\ServerToolUseBlockParam\Name;
 
 /**
+ * @phpstan-import-type CallerVariants from \Anthropic\Messages\ServerToolUseBlockParam\Caller
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ * @phpstan-import-type CallerShape from \Anthropic\Messages\ServerToolUseBlockParam\Caller
  *
  * @phpstan-type ServerToolUseBlockParamShape = array{
  *   id: string,
  *   input: array<string,mixed>,
- *   name: 'web_search',
+ *   name: Name|value-of<Name>,
  *   type: 'server_tool_use',
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
+ *   caller?: CallerShape|null,
  * }
  */
 final class ServerToolUseBlockParam implements BaseModel
 {
     /** @use SdkModel<ServerToolUseBlockParamShape> */
     use SdkModel;
-
-    /** @var 'web_search' $name */
-    #[Required]
-    public string $name = 'web_search';
 
     /** @var 'server_tool_use' $type */
     #[Required]
@@ -40,6 +42,10 @@ final class ServerToolUseBlockParam implements BaseModel
     #[Required(map: 'mixed')]
     public array $input;
 
+    /** @var value-of<Name> $name */
+    #[Required(enum: Name::class)]
+    public string $name;
+
     /**
      * Create a cache control breakpoint at this content block.
      */
@@ -47,17 +53,25 @@ final class ServerToolUseBlockParam implements BaseModel
     public ?CacheControlEphemeral $cacheControl;
 
     /**
+     * Tool invocation directly from the model.
+     *
+     * @var CallerVariants|null $caller
+     */
+    #[Optional(union: Caller::class)]
+    public DirectCaller|ServerToolCaller|ServerToolCaller20260120|null $caller;
+
+    /**
      * `new ServerToolUseBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ServerToolUseBlockParam::with(id: ..., input: ...)
+     * ServerToolUseBlockParam::with(id: ..., input: ..., name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ServerToolUseBlockParam)->withID(...)->withInput(...)
+     * (new ServerToolUseBlockParam)->withID(...)->withInput(...)->withName(...)
      * ```
      */
     public function __construct()
@@ -71,19 +85,25 @@ final class ServerToolUseBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,mixed> $input
+     * @param Name|value-of<Name> $name
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
+     * @param CallerShape|null $caller
      */
     public static function with(
         string $id,
         array $input,
+        Name|string $name,
         CacheControlEphemeral|array|null $cacheControl = null,
+        DirectCaller|array|ServerToolCaller|ServerToolCaller20260120|null $caller = null,
     ): self {
         $self = new self;
 
         $self['id'] = $id;
         $self['input'] = $input;
+        $self['name'] = $name;
 
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $caller && $self['caller'] = $caller;
 
         return $self;
     }
@@ -108,9 +128,9 @@ final class ServerToolUseBlockParam implements BaseModel
     }
 
     /**
-     * @param 'web_search' $name
+     * @param Name|value-of<Name> $name
      */
-    public function withName(string $name): self
+    public function withName(Name|string $name): self
     {
         $self = clone $this;
         $self['name'] = $name;
@@ -139,6 +159,20 @@ final class ServerToolUseBlockParam implements BaseModel
     ): self {
         $self = clone $this;
         $self['cacheControl'] = $cacheControl;
+
+        return $self;
+    }
+
+    /**
+     * Tool invocation directly from the model.
+     *
+     * @param CallerShape $caller
+     */
+    public function withCaller(
+        DirectCaller|array|ServerToolCaller|ServerToolCaller20260120 $caller
+    ): self {
+        $self = clone $this;
+        $self['caller'] = $caller;
 
         return $self;
     }

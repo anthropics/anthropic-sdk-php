@@ -48,6 +48,7 @@ final class MessagesTest extends TestCase
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
             model: 'claude-opus-4-6',
+            container: 'container',
             inferenceGeo: 'inference_geo',
             metadata: ['userID' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
             outputConfig: [
@@ -55,6 +56,7 @@ final class MessagesTest extends TestCase
                 'format' => ['schema' => ['foo' => 'bar'], 'type' => 'json_schema'],
             ],
             serviceTier: 'auto',
+            speed: 'standard',
             stopSequences: ['string'],
             system: [
                 [
@@ -84,9 +86,12 @@ final class MessagesTest extends TestCase
                         'required' => ['location'],
                     ],
                     'name' => 'name',
+                    'allowedCallers' => ['direct'],
                     'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
+                    'deferLoading' => true,
                     'description' => 'Get the current weather in a given location',
                     'eagerInputStreaming' => true,
+                    'inputExamples' => [['foo' => 'bar']],
                     'strict' => true,
                     'type' => 'custom',
                 ],
@@ -121,6 +126,7 @@ final class MessagesTest extends TestCase
                 'effort' => 'low',
                 'format' => ['schema' => ['foo' => 'bar'], 'type' => 'json_schema'],
             ],
+            speed: 'standard',
             system: [
                 [
                     'text' => 'Today\'s date is 2024-06-01.',
@@ -148,9 +154,12 @@ final class MessagesTest extends TestCase
                         'required' => ['location'],
                     ],
                     'name' => 'name',
+                    'allowedCallers' => ['direct'],
                     'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
+                    'deferLoading' => true,
                     'description' => 'Get the current weather in a given location',
                     'eagerInputStreaming' => true,
+                    'inputExamples' => [['foo' => 'bar']],
                     'strict' => true,
                     'type' => 'custom',
                 ],

@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\WebSearchTool20250305\AllowedCaller;
 use Anthropic\Messages\WebSearchTool20250305\UserLocation;
 
 /**
@@ -17,9 +18,11 @@ use Anthropic\Messages\WebSearchTool20250305\UserLocation;
  * @phpstan-type WebSearchTool20250305Shape = array{
  *   name: 'web_search',
  *   type: 'web_search_20250305',
+ *   allowedCallers?: list<AllowedCaller|value-of<AllowedCaller>>|null,
  *   allowedDomains?: list<string>|null,
  *   blockedDomains?: list<string>|null,
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
+ *   deferLoading?: bool|null,
  *   maxUses?: int|null,
  *   strict?: bool|null,
  *   userLocation?: null|UserLocation|UserLocationShape,
@@ -44,6 +47,10 @@ final class WebSearchTool20250305 implements BaseModel
     #[Required]
     public string $type = 'web_search_20250305';
 
+    /** @var list<value-of<AllowedCaller>>|null $allowedCallers */
+    #[Optional('allowed_callers', list: AllowedCaller::class)]
+    public ?array $allowedCallers;
+
     /**
      * If provided, only these domains will be included in results. Cannot be used alongside `blocked_domains`.
      *
@@ -65,6 +72,12 @@ final class WebSearchTool20250305 implements BaseModel
      */
     #[Optional('cache_control', nullable: true)]
     public ?CacheControlEphemeral $cacheControl;
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    #[Optional('defer_loading')]
+    public ?bool $deferLoading;
 
     /**
      * Maximum number of times the tool can be used in the API request.
@@ -94,24 +107,29 @@ final class WebSearchTool20250305 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param list<AllowedCaller|value-of<AllowedCaller>>|null $allowedCallers
      * @param list<string>|null $allowedDomains
      * @param list<string>|null $blockedDomains
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      * @param UserLocation|UserLocationShape|null $userLocation
      */
     public static function with(
+        ?array $allowedCallers = null,
         ?array $allowedDomains = null,
         ?array $blockedDomains = null,
         CacheControlEphemeral|array|null $cacheControl = null,
+        ?bool $deferLoading = null,
         ?int $maxUses = null,
         ?bool $strict = null,
         UserLocation|array|null $userLocation = null,
     ): self {
         $self = new self;
 
+        null !== $allowedCallers && $self['allowedCallers'] = $allowedCallers;
         null !== $allowedDomains && $self['allowedDomains'] = $allowedDomains;
         null !== $blockedDomains && $self['blockedDomains'] = $blockedDomains;
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $deferLoading && $self['deferLoading'] = $deferLoading;
         null !== $maxUses && $self['maxUses'] = $maxUses;
         null !== $strict && $self['strict'] = $strict;
         null !== $userLocation && $self['userLocation'] = $userLocation;
@@ -141,6 +159,17 @@ final class WebSearchTool20250305 implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
+     */
+    public function withAllowedCallers(array $allowedCallers): self
+    {
+        $self = clone $this;
+        $self['allowedCallers'] = $allowedCallers;
 
         return $self;
     }
@@ -181,6 +210,17 @@ final class WebSearchTool20250305 implements BaseModel
     ): self {
         $self = clone $this;
         $self['cacheControl'] = $cacheControl;
+
+        return $self;
+    }
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    public function withDeferLoading(bool $deferLoading): self
+    {
+        $self = clone $this;
+        $self['deferLoading'] = $deferLoading;
 
         return $self;
     }

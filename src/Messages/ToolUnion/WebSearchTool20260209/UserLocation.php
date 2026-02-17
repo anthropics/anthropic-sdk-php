@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Messages\BetaWebSearchTool20250305;
+namespace Anthropic\Messages\ToolUnion\WebSearchTool20260209;
 
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;

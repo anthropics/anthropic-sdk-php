@@ -49,7 +49,7 @@ final class BetaServerToolUseBlock implements BaseModel
      * @var CallerVariants|null $caller
      */
     #[Optional(union: Caller::class)]
-    public BetaDirectCaller|BetaServerToolCaller|null $caller;
+    public BetaDirectCaller|BetaServerToolCaller|BetaServerToolCaller20260120|null $caller;
 
     /**
      * `new BetaServerToolUseBlock()` is missing required properties by the API.
@@ -83,7 +83,7 @@ final class BetaServerToolUseBlock implements BaseModel
         string $id,
         array $input,
         Name|string $name,
-        BetaDirectCaller|array|BetaServerToolCaller|null $caller = null,
+        BetaDirectCaller|array|BetaServerToolCaller|BetaServerToolCaller20260120|null $caller = null,
     ): self {
         $self = new self;
 
@@ -143,7 +143,7 @@ final class BetaServerToolUseBlock implements BaseModel
      * @param CallerShape $caller
      */
     public function withCaller(
-        BetaDirectCaller|array|BetaServerToolCaller $caller
+        BetaDirectCaller|array|BetaServerToolCaller|BetaServerToolCaller20260120 $caller,
     ): self {
         $self = clone $this;
         $self['caller'] = $caller;

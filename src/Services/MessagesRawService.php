@@ -12,6 +12,7 @@ use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCountTokensParams;
 use Anthropic\Messages\MessageCreateParams;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
+use Anthropic\Messages\MessageCreateParams\Speed;
 use Anthropic\Messages\MessageParam;
 use Anthropic\Messages\MessageTokensCount;
 use Anthropic\Messages\Metadata;
@@ -61,10 +62,12 @@ final class MessagesRawService implements MessagesRawContract
      *   maxTokens: int,
      *   messages: list<MessageParam|MessageParamShape>,
      *   model: string|Model|value-of<Model>,
+     *   container?: string|null,
      *   inferenceGeo?: string|null,
      *   metadata?: Metadata|MetadataShape,
      *   outputConfig?: OutputConfig|OutputConfigShape,
      *   serviceTier?: ServiceTier|value-of<ServiceTier>,
+     *   speed?: Speed|value-of<Speed>|null,
      *   stopSequences?: list<string>,
      *   system?: SystemShape1,
      *   temperature?: float,
@@ -106,10 +109,12 @@ final class MessagesRawService implements MessagesRawContract
      *   maxTokens: int,
      *   messages: list<MessageParam|MessageParamShape>,
      *   model: string|Model|value-of<Model>,
+     *   container?: string|null,
      *   inferenceGeo?: string|null,
      *   metadata?: Metadata|MetadataShape,
      *   outputConfig?: OutputConfig|OutputConfigShape,
      *   serviceTier?: ServiceTier|value-of<ServiceTier>,
+     *   speed?: Speed|value-of<Speed>|null,
      *   stopSequences?: list<string>,
      *   system?: SystemShape1,
      *   temperature?: float,
@@ -160,6 +165,7 @@ final class MessagesRawService implements MessagesRawContract
      *   messages: list<MessageParam|MessageParamShape>,
      *   model: string|Model|value-of<Model>,
      *   outputConfig?: OutputConfig|OutputConfigShape,
+     *   speed?: MessageCountTokensParams\Speed|value-of<MessageCountTokensParams\Speed>|null,
      *   system?: SystemShape,
      *   thinking?: ThinkingConfigParamShape,
      *   toolChoice?: ToolChoiceShape,

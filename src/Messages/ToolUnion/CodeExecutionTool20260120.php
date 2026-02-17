@@ -1,0 +1,170 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\Messages\ToolUnion;
+
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\CacheControlEphemeral;
+use Anthropic\Messages\ToolUnion\CodeExecutionTool20260120\AllowedCaller;
+
+/**
+ * Code execution tool with REPL state persistence (daemon mode + gVisor checkpoint).
+ *
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ *
+ * @phpstan-type CodeExecutionTool20260120Shape = array{
+ *   name: 'code_execution',
+ *   type: 'code_execution_20260120',
+ *   allowedCallers?: list<AllowedCaller|value-of<AllowedCaller>>|null,
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
+ *   deferLoading?: bool|null,
+ *   strict?: bool|null,
+ * }
+ */
+final class CodeExecutionTool20260120 implements BaseModel
+{
+    /** @use SdkModel<CodeExecutionTool20260120Shape> */
+    use SdkModel;
+
+    /**
+     * Name of the tool.
+     *
+     * This is how the tool will be called by the model and in `tool_use` blocks.
+     *
+     * @var 'code_execution' $name
+     */
+    #[Required]
+    public string $name = 'code_execution';
+
+    /** @var 'code_execution_20260120' $type */
+    #[Required]
+    public string $type = 'code_execution_20260120';
+
+    /** @var list<value-of<AllowedCaller>>|null $allowedCallers */
+    #[Optional('allowed_callers', list: AllowedCaller::class)]
+    public ?array $allowedCallers;
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     */
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    #[Optional('defer_loading')]
+    public ?bool $deferLoading;
+
+    /**
+     * When true, guarantees schema validation on tool names and inputs.
+     */
+    #[Optional]
+    public ?bool $strict;
+
+    public function __construct()
+    {
+        $this->initialize();
+    }
+
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param list<AllowedCaller|value-of<AllowedCaller>>|null $allowedCallers
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
+     */
+    public static function with(
+        ?array $allowedCallers = null,
+        CacheControlEphemeral|array|null $cacheControl = null,
+        ?bool $deferLoading = null,
+        ?bool $strict = null,
+    ): self {
+        $self = new self;
+
+        null !== $allowedCallers && $self['allowedCallers'] = $allowedCallers;
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $deferLoading && $self['deferLoading'] = $deferLoading;
+        null !== $strict && $self['strict'] = $strict;
+
+        return $self;
+    }
+
+    /**
+     * Name of the tool.
+     *
+     * This is how the tool will be called by the model and in `tool_use` blocks.
+     *
+     * @param 'code_execution' $name
+     */
+    public function withName(string $name): self
+    {
+        $self = clone $this;
+        $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * @param 'code_execution_20260120' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
+     */
+    public function withAllowedCallers(array $allowedCallers): self
+    {
+        $self = clone $this;
+        $self['allowedCallers'] = $allowedCallers;
+
+        return $self;
+    }
+
+    /**
+     * Create a cache control breakpoint at this content block.
+     *
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
+     */
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
+
+        return $self;
+    }
+
+    /**
+     * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
+     */
+    public function withDeferLoading(bool $deferLoading): self
+    {
+        $self = clone $this;
+        $self['deferLoading'] = $deferLoading;
+
+        return $self;
+    }
+
+    /**
+     * When true, guarantees schema validation on tool names and inputs.
+     */
+    public function withStrict(bool $strict): self
+    {
+        $self = clone $this;
+        $self['strict'] = $strict;
+
+        return $self;
+    }
+}

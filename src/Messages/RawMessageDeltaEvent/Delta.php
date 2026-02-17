@@ -7,17 +7,28 @@ namespace Anthropic\Messages\RawMessageDeltaEvent;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\Container;
 use Anthropic\Messages\StopReason;
 
 /**
+ * @phpstan-import-type ContainerShape from \Anthropic\Messages\Container
+ *
  * @phpstan-type DeltaShape = array{
- *   stopReason: null|StopReason|value-of<StopReason>, stopSequence: string|null
+ *   container: null|Container|ContainerShape,
+ *   stopReason: null|StopReason|value-of<StopReason>,
+ *   stopSequence: string|null,
  * }
  */
 final class Delta implements BaseModel
 {
     /** @use SdkModel<DeltaShape> */
     use SdkModel;
+
+    /**
+     * Information about the container used in the request (for the code execution tool).
+     */
+    #[Required]
+    public ?Container $container;
 
     /** @var value-of<StopReason>|null $stopReason */
     #[Required('stop_reason', enum: StopReason::class)]
@@ -31,13 +42,13 @@ final class Delta implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Delta::with(stopReason: ..., stopSequence: ...)
+     * Delta::with(container: ..., stopReason: ..., stopSequence: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Delta)->withStopReason(...)->withStopSequence(...)
+     * (new Delta)->withContainer(...)->withStopReason(...)->withStopSequence(...)
      * ```
      */
     public function __construct()
@@ -50,16 +61,32 @@ final class Delta implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param Container|ContainerShape|null $container
      * @param StopReason|value-of<StopReason>|null $stopReason
      */
     public static function with(
+        Container|array|null $container,
         StopReason|string|null $stopReason,
-        ?string $stopSequence
+        ?string $stopSequence,
     ): self {
         $self = new self;
 
+        $self['container'] = $container;
         $self['stopReason'] = $stopReason;
         $self['stopSequence'] = $stopSequence;
+
+        return $self;
+    }
+
+    /**
+     * Information about the container used in the request (for the code execution tool).
+     *
+     * @param Container|ContainerShape|null $container
+     */
+    public function withContainer(Container|array|null $container): self
+    {
+        $self = clone $this;
+        $self['container'] = $container;
 
         return $self;
     }
