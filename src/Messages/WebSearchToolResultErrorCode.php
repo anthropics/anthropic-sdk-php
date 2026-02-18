@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Messages\WebSearchToolRequestError;
+namespace Anthropic\Messages;
 
-enum ErrorCode: string
+enum WebSearchToolResultErrorCode: string
 {
     case INVALID_TOOL_INPUT = 'invalid_tool_input';
 

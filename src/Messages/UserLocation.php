@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Messages\WebSearchTool20250305;
+namespace Anthropic\Messages;
 
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
@@ -10,8 +10,6 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Parameters for the user's location. Used to provide more relevant search results.
- *
  * @phpstan-type UserLocationShape = array{
  *   type: 'approximate',
  *   city?: string|null,
