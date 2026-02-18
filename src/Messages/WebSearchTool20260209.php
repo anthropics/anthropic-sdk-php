@@ -2,37 +2,35 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Messages\MessageCountTokensTool;
+namespace Anthropic\Messages;
 
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\CacheControlEphemeral;
-use Anthropic\Messages\CitationsConfigParam;
-use Anthropic\Messages\MessageCountTokensTool\WebFetchTool20260209\AllowedCaller;
+use Anthropic\Messages\WebSearchTool20260209\AllowedCaller;
+use Anthropic\Messages\WebSearchTool20260209\UserLocation;
 
 /**
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
- * @phpstan-import-type CitationsConfigParamShape from \Anthropic\Messages\CitationsConfigParam
+ * @phpstan-import-type UserLocationShape from \Anthropic\Messages\WebSearchTool20260209\UserLocation
  *
- * @phpstan-type WebFetchTool20260209Shape = array{
- *   name: 'web_fetch',
- *   type: 'web_fetch_20260209',
+ * @phpstan-type WebSearchTool20260209Shape = array{
+ *   name: 'web_search',
+ *   type: 'web_search_20260209',
  *   allowedCallers?: list<AllowedCaller|value-of<AllowedCaller>>|null,
  *   allowedDomains?: list<string>|null,
  *   blockedDomains?: list<string>|null,
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
- *   citations?: null|CitationsConfigParam|CitationsConfigParamShape,
  *   deferLoading?: bool|null,
- *   maxContentTokens?: int|null,
  *   maxUses?: int|null,
  *   strict?: bool|null,
+ *   userLocation?: null|UserLocation|UserLocationShape,
  * }
  */
-final class WebFetchTool20260209 implements BaseModel
+final class WebSearchTool20260209 implements BaseModel
 {
-    /** @use SdkModel<WebFetchTool20260209Shape> */
+    /** @use SdkModel<WebSearchTool20260209Shape> */
     use SdkModel;
 
     /**
@@ -40,21 +38,21 @@ final class WebFetchTool20260209 implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      *
-     * @var 'web_fetch' $name
+     * @var 'web_search' $name
      */
     #[Required]
-    public string $name = 'web_fetch';
+    public string $name = 'web_search';
 
-    /** @var 'web_fetch_20260209' $type */
+    /** @var 'web_search_20260209' $type */
     #[Required]
-    public string $type = 'web_fetch_20260209';
+    public string $type = 'web_search_20260209';
 
     /** @var list<value-of<AllowedCaller>>|null $allowedCallers */
     #[Optional('allowed_callers', list: AllowedCaller::class)]
     public ?array $allowedCallers;
 
     /**
-     * List of domains to allow fetching from.
+     * If provided, only these domains will be included in results. Cannot be used alongside `blocked_domains`.
      *
      * @var list<string>|null $allowedDomains
      */
@@ -62,7 +60,7 @@ final class WebFetchTool20260209 implements BaseModel
     public ?array $allowedDomains;
 
     /**
-     * List of domains to block fetching from.
+     * If provided, these domains will never appear in results. Cannot be used alongside `allowed_domains`.
      *
      * @var list<string>|null $blockedDomains
      */
@@ -76,22 +74,10 @@ final class WebFetchTool20260209 implements BaseModel
     public ?CacheControlEphemeral $cacheControl;
 
     /**
-     * Citations configuration for fetched documents. Citations are disabled by default.
-     */
-    #[Optional(nullable: true)]
-    public ?CitationsConfigParam $citations;
-
-    /**
      * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
      */
     #[Optional('defer_loading')]
     public ?bool $deferLoading;
-
-    /**
-     * Maximum number of tokens used by including web page text content in the context. The limit is approximate and does not apply to binary content such as PDFs.
-     */
-    #[Optional('max_content_tokens', nullable: true)]
-    public ?int $maxContentTokens;
 
     /**
      * Maximum number of times the tool can be used in the API request.
@@ -104,6 +90,12 @@ final class WebFetchTool20260209 implements BaseModel
      */
     #[Optional]
     public ?bool $strict;
+
+    /**
+     * Parameters for the user's location. Used to provide more relevant search results.
+     */
+    #[Optional('user_location', nullable: true)]
+    public ?UserLocation $userLocation;
 
     public function __construct()
     {
@@ -119,18 +111,17 @@ final class WebFetchTool20260209 implements BaseModel
      * @param list<string>|null $allowedDomains
      * @param list<string>|null $blockedDomains
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
-     * @param CitationsConfigParam|CitationsConfigParamShape|null $citations
+     * @param UserLocation|UserLocationShape|null $userLocation
      */
     public static function with(
         ?array $allowedCallers = null,
         ?array $allowedDomains = null,
         ?array $blockedDomains = null,
         CacheControlEphemeral|array|null $cacheControl = null,
-        CitationsConfigParam|array|null $citations = null,
         ?bool $deferLoading = null,
-        ?int $maxContentTokens = null,
         ?int $maxUses = null,
         ?bool $strict = null,
+        UserLocation|array|null $userLocation = null,
     ): self {
         $self = new self;
 
@@ -138,11 +129,10 @@ final class WebFetchTool20260209 implements BaseModel
         null !== $allowedDomains && $self['allowedDomains'] = $allowedDomains;
         null !== $blockedDomains && $self['blockedDomains'] = $blockedDomains;
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
-        null !== $citations && $self['citations'] = $citations;
         null !== $deferLoading && $self['deferLoading'] = $deferLoading;
-        null !== $maxContentTokens && $self['maxContentTokens'] = $maxContentTokens;
         null !== $maxUses && $self['maxUses'] = $maxUses;
         null !== $strict && $self['strict'] = $strict;
+        null !== $userLocation && $self['userLocation'] = $userLocation;
 
         return $self;
     }
@@ -152,7 +142,7 @@ final class WebFetchTool20260209 implements BaseModel
      *
      * This is how the tool will be called by the model and in `tool_use` blocks.
      *
-     * @param 'web_fetch' $name
+     * @param 'web_search' $name
      */
     public function withName(string $name): self
     {
@@ -163,7 +153,7 @@ final class WebFetchTool20260209 implements BaseModel
     }
 
     /**
-     * @param 'web_fetch_20260209' $type
+     * @param 'web_search_20260209' $type
      */
     public function withType(string $type): self
     {
@@ -185,7 +175,7 @@ final class WebFetchTool20260209 implements BaseModel
     }
 
     /**
-     * List of domains to allow fetching from.
+     * If provided, only these domains will be included in results. Cannot be used alongside `blocked_domains`.
      *
      * @param list<string>|null $allowedDomains
      */
@@ -198,7 +188,7 @@ final class WebFetchTool20260209 implements BaseModel
     }
 
     /**
-     * List of domains to block fetching from.
+     * If provided, these domains will never appear in results. Cannot be used alongside `allowed_domains`.
      *
      * @param list<string>|null $blockedDomains
      */
@@ -225,37 +215,12 @@ final class WebFetchTool20260209 implements BaseModel
     }
 
     /**
-     * Citations configuration for fetched documents. Citations are disabled by default.
-     *
-     * @param CitationsConfigParam|CitationsConfigParamShape|null $citations
-     */
-    public function withCitations(
-        CitationsConfigParam|array|null $citations
-    ): self {
-        $self = clone $this;
-        $self['citations'] = $citations;
-
-        return $self;
-    }
-
-    /**
      * If true, tool will not be included in initial system prompt. Only loaded when returned via tool_reference from tool search.
      */
     public function withDeferLoading(bool $deferLoading): self
     {
         $self = clone $this;
         $self['deferLoading'] = $deferLoading;
-
-        return $self;
-    }
-
-    /**
-     * Maximum number of tokens used by including web page text content in the context. The limit is approximate and does not apply to binary content such as PDFs.
-     */
-    public function withMaxContentTokens(?int $maxContentTokens): self
-    {
-        $self = clone $this;
-        $self['maxContentTokens'] = $maxContentTokens;
 
         return $self;
     }
@@ -278,6 +243,20 @@ final class WebFetchTool20260209 implements BaseModel
     {
         $self = clone $this;
         $self['strict'] = $strict;
+
+        return $self;
+    }
+
+    /**
+     * Parameters for the user's location. Used to provide more relevant search results.
+     *
+     * @param UserLocation|UserLocationShape|null $userLocation
+     */
+    public function withUserLocation(
+        UserLocation|array|null $userLocation
+    ): self {
+        $self = clone $this;
+        $self['userLocation'] = $userLocation;
 
         return $self;
     }

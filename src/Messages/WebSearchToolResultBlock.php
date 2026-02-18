@@ -8,7 +8,6 @@ use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\WebSearchToolResultBlock\Caller;
-use Anthropic\Messages\WebSearchToolResultBlock\Caller\ServerToolCaller20260120;
 
 /**
  * @phpstan-import-type CallerVariants from \Anthropic\Messages\WebSearchToolResultBlock\Caller

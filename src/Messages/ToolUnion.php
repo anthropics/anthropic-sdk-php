@@ -7,9 +7,6 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
-use Anthropic\Messages\ToolUnion\CodeExecutionTool20260120;
-use Anthropic\Messages\ToolUnion\WebFetchTool20260209;
-use Anthropic\Messages\ToolUnion\WebSearchTool20260209;
 
 /**
  * Code execution tool with REPL state persistence (daemon mode + gVisor checkpoint).
@@ -18,15 +15,15 @@ use Anthropic\Messages\ToolUnion\WebSearchTool20260209;
  * @phpstan-import-type ToolBash20250124Shape from \Anthropic\Messages\ToolBash20250124
  * @phpstan-import-type CodeExecutionTool20250522Shape from \Anthropic\Messages\CodeExecutionTool20250522
  * @phpstan-import-type CodeExecutionTool20250825Shape from \Anthropic\Messages\CodeExecutionTool20250825
- * @phpstan-import-type CodeExecutionTool20260120Shape from \Anthropic\Messages\ToolUnion\CodeExecutionTool20260120
+ * @phpstan-import-type CodeExecutionTool20260120Shape from \Anthropic\Messages\CodeExecutionTool20260120
  * @phpstan-import-type MemoryTool20250818Shape from \Anthropic\Messages\MemoryTool20250818
  * @phpstan-import-type ToolTextEditor20250124Shape from \Anthropic\Messages\ToolTextEditor20250124
  * @phpstan-import-type ToolTextEditor20250429Shape from \Anthropic\Messages\ToolTextEditor20250429
  * @phpstan-import-type ToolTextEditor20250728Shape from \Anthropic\Messages\ToolTextEditor20250728
  * @phpstan-import-type WebSearchTool20250305Shape from \Anthropic\Messages\WebSearchTool20250305
  * @phpstan-import-type WebFetchTool20250910Shape from \Anthropic\Messages\WebFetchTool20250910
- * @phpstan-import-type WebSearchTool20260209Shape from \Anthropic\Messages\ToolUnion\WebSearchTool20260209
- * @phpstan-import-type WebFetchTool20260209Shape from \Anthropic\Messages\ToolUnion\WebFetchTool20260209
+ * @phpstan-import-type WebSearchTool20260209Shape from \Anthropic\Messages\WebSearchTool20260209
+ * @phpstan-import-type WebFetchTool20260209Shape from \Anthropic\Messages\WebFetchTool20260209
  * @phpstan-import-type ToolSearchToolBm25_20251119Shape from \Anthropic\Messages\ToolSearchToolBm25_20251119
  * @phpstan-import-type ToolSearchToolRegex20251119Shape from \Anthropic\Messages\ToolSearchToolRegex20251119
  *
