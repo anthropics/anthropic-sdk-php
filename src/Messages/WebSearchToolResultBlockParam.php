@@ -9,7 +9,6 @@ use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\WebSearchToolResultBlockParam\Caller;
-use Anthropic\Messages\WebSearchToolResultBlockParam\Caller\ServerToolCaller20260120;
 
 /**
  * @phpstan-import-type WebSearchToolResultBlockParamContentVariants from \Anthropic\Messages\WebSearchToolResultBlockParamContent

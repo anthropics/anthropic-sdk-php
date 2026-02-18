@@ -9,7 +9,6 @@ use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\ServerToolUseBlockParam\Caller;
-use Anthropic\Messages\ServerToolUseBlockParam\Caller\ServerToolCaller20260120;
 use Anthropic\Messages\ServerToolUseBlockParam\Name;
 
 /**

@@ -9,7 +9,6 @@ use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\WebFetchToolResultBlockParam\Caller;
-use Anthropic\Messages\WebFetchToolResultBlockParam\Caller\ServerToolCaller20260120;
 
 /**
  * @phpstan-import-type ContentVariants from \Anthropic\Messages\WebFetchToolResultBlockParam\Content

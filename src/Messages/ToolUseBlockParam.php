@@ -9,7 +9,6 @@ use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\ToolUseBlockParam\Caller;
-use Anthropic\Messages\ToolUseBlockParam\Caller\ServerToolCaller20260120;
 
 /**
  * @phpstan-import-type CallerVariants from \Anthropic\Messages\ToolUseBlockParam\Caller

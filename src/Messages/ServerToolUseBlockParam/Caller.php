@@ -9,14 +9,14 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Messages\DirectCaller;
 use Anthropic\Messages\ServerToolCaller;
-use Anthropic\Messages\ServerToolUseBlockParam\Caller\ServerToolCaller20260120;
+use Anthropic\Messages\ServerToolCaller20260120;
 
 /**
  * Tool invocation directly from the model.
  *
  * @phpstan-import-type DirectCallerShape from \Anthropic\Messages\DirectCaller
  * @phpstan-import-type ServerToolCallerShape from \Anthropic\Messages\ServerToolCaller
- * @phpstan-import-type ServerToolCaller20260120Shape from \Anthropic\Messages\ServerToolUseBlockParam\Caller\ServerToolCaller20260120
+ * @phpstan-import-type ServerToolCaller20260120Shape from \Anthropic\Messages\ServerToolCaller20260120
  *
  * @phpstan-type CallerVariants = DirectCaller|ServerToolCaller|ServerToolCaller20260120
  * @phpstan-type CallerShape = CallerVariants|DirectCallerShape|ServerToolCallerShape|ServerToolCaller20260120Shape

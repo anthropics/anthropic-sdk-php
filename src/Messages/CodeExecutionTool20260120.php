@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Messages\MessageCountTokensTool;
+namespace Anthropic\Messages;
 
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\CacheControlEphemeral;
-use Anthropic\Messages\MessageCountTokensTool\CodeExecutionTool20260120\AllowedCaller;
+use Anthropic\Messages\CodeExecutionTool20260120\AllowedCaller;
 
 /**
  * Code execution tool with REPL state persistence (daemon mode + gVisor checkpoint).
