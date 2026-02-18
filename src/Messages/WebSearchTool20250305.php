@@ -9,11 +9,10 @@ use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\WebSearchTool20250305\AllowedCaller;
-use Anthropic\Messages\WebSearchTool20250305\UserLocation;
 
 /**
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
- * @phpstan-import-type UserLocationShape from \Anthropic\Messages\WebSearchTool20250305\UserLocation
+ * @phpstan-import-type UserLocationShape from \Anthropic\Messages\UserLocation
  *
  * @phpstan-type WebSearchTool20250305Shape = array{
  *   name: 'web_search',
