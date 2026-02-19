@@ -26,6 +26,7 @@ use Anthropic\Messages\MessageCreateParams\System;
  * @phpstan-import-type ToolChoiceVariants from \Anthropic\Messages\ToolChoice
  * @phpstan-import-type ToolUnionVariants from \Anthropic\Messages\ToolUnion
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
  * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
  * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCreateParams\System
@@ -37,6 +38,7 @@ use Anthropic\Messages\MessageCreateParams\System;
  *   maxTokens: int,
  *   messages: list<MessageParam|MessageParamShape>,
  *   model: string|Model|value-of<Model>,
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   container?: string|null,
  *   inferenceGeo?: string|null,
  *   metadata?: null|Metadata|MetadataShape,
@@ -130,6 +132,12 @@ final class MessageCreateParams implements BaseModel
      */
     #[Required(enum: Model::class)]
     public string $model;
+
+    /**
+     * Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
+     */
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
      * Container identifier for reuse across requests.
@@ -331,6 +339,7 @@ final class MessageCreateParams implements BaseModel
      *
      * @param list<MessageParam|MessageParamShape> $messages
      * @param string|Model|value-of<Model> $model
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      * @param Metadata|MetadataShape|null $metadata
      * @param OutputConfig|OutputConfigShape|null $outputConfig
      * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
@@ -344,6 +353,7 @@ final class MessageCreateParams implements BaseModel
         int $maxTokens,
         array $messages,
         Model|string $model,
+        CacheControlEphemeral|array|null $cacheControl = null,
         ?string $container = null,
         ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
@@ -364,6 +374,7 @@ final class MessageCreateParams implements BaseModel
         $self['messages'] = $messages;
         $self['model'] = $model;
 
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $container && $self['container'] = $container;
         null !== $inferenceGeo && $self['inferenceGeo'] = $inferenceGeo;
         null !== $metadata && $self['metadata'] = $metadata;
@@ -465,6 +476,20 @@ final class MessageCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['model'] = $model;
+
+        return $self;
+    }
+
+    /**
+     * Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
+     *
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
+     */
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
         return $self;
     }

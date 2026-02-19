@@ -25,6 +25,7 @@ use Anthropic\Messages\MessageCountTokensParams\System;
  * @phpstan-import-type ToolChoiceVariants from \Anthropic\Messages\ToolChoice
  * @phpstan-import-type MessageCountTokensToolVariants from \Anthropic\Messages\MessageCountTokensTool
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
  * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCountTokensParams\System
  * @phpstan-import-type ThinkingConfigParamShape from \Anthropic\Messages\ThinkingConfigParam
@@ -34,6 +35,7 @@ use Anthropic\Messages\MessageCountTokensParams\System;
  * @phpstan-type MessageCountTokensParamsShape = array{
  *   messages: list<MessageParam|MessageParamShape>,
  *   model: string|Model|value-of<Model>,
+ *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   outputConfig?: null|OutputConfig|OutputConfigShape,
  *   system?: SystemShape|null,
  *   thinking?: ThinkingConfigParamShape|null,
@@ -109,6 +111,12 @@ final class MessageCountTokensParams implements BaseModel
      */
     #[Required(enum: Model::class)]
     public string $model;
+
+    /**
+     * Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
+     */
+    #[Optional('cache_control', nullable: true)]
+    public ?CacheControlEphemeral $cacheControl;
 
     /**
      * Configuration options for the model's output, such as the output format.
@@ -240,6 +248,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param list<MessageParam|MessageParamShape> $messages
      * @param string|Model|value-of<Model> $model
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      * @param OutputConfig|OutputConfigShape|null $outputConfig
      * @param SystemShape|null $system
      * @param ThinkingConfigParamShape|null $thinking
@@ -249,6 +258,7 @@ final class MessageCountTokensParams implements BaseModel
     public static function with(
         array $messages,
         Model|string $model,
+        CacheControlEphemeral|array|null $cacheControl = null,
         OutputConfig|array|null $outputConfig = null,
         string|array|null $system = null,
         ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking = null,
@@ -260,6 +270,7 @@ final class MessageCountTokensParams implements BaseModel
         $self['messages'] = $messages;
         $self['model'] = $model;
 
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $outputConfig && $self['outputConfig'] = $outputConfig;
         null !== $system && $self['system'] = $system;
         null !== $thinking && $self['thinking'] = $thinking;
@@ -338,6 +349,20 @@ final class MessageCountTokensParams implements BaseModel
     {
         $self = clone $this;
         $self['model'] = $model;
+
+        return $self;
+    }
+
+    /**
+     * Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
+     *
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
+     */
+    public function withCacheControl(
+        CacheControlEphemeral|array|null $cacheControl
+    ): self {
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
         return $self;
     }

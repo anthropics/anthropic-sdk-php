@@ -13,6 +13,7 @@ use Anthropic\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Messages\MessageParam;
 use Anthropic\Messages\MessageTokensCount;
 use Anthropic\Messages\Metadata;
+use Anthropic\Messages\CacheControlEphemeral;
 use Anthropic\Messages\Model;
 use Anthropic\Messages\OutputConfig;
 use Anthropic\Messages\RawContentBlockDeltaEvent;
@@ -77,6 +78,8 @@ final class MessagesService implements MessagesContract
         int $maxTokens,
         array $messages,
         Model|string $model,
+        CacheControlEphemeral|array|null $cacheControl = null,
+        ?string $container = null,
         ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
@@ -96,6 +99,8 @@ final class MessagesService implements MessagesContract
                 'maxTokens' => $maxTokens,
                 'messages' => $messages,
                 'model' => $model,
+                'cacheControl' => $cacheControl,
+                'container' => $container,
                 'metadata' => $metadata,
                 'outputConfig' => $outputConfig,
                 'serviceTier' => $serviceTier,
@@ -138,6 +143,8 @@ final class MessagesService implements MessagesContract
         int $maxTokens,
         array $messages,
         Model|string $model,
+        CacheControlEphemeral|array|null $cacheControl = null,
+        ?string $container = null,
         ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
@@ -157,6 +164,8 @@ final class MessagesService implements MessagesContract
                 'maxTokens' => $maxTokens,
                 'messages' => $messages,
                 'model' => $model,
+                'cacheControl' => $cacheControl,
+                'container' => $container,
                 'metadata' => $metadata,
                 'outputConfig' => $outputConfig,
                 'serviceTier' => $serviceTier,
@@ -194,6 +203,7 @@ final class MessagesService implements MessagesContract
     public function countTokens(
         array $messages,
         Model|string $model,
+        CacheControlEphemeral|array|null $cacheControl = null,
         OutputConfig|array|null $outputConfig = null,
         string|array|null $system = null,
         ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking = null,
@@ -205,6 +215,7 @@ final class MessagesService implements MessagesContract
             [
                 'messages' => $messages,
                 'model' => $model,
+                'cacheControl' => $cacheControl,
                 'outputConfig' => $outputConfig,
                 'system' => $system,
                 'thinking' => $thinking,

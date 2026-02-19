@@ -62,6 +62,7 @@ final class BatchesTest extends TestCase
                         'maxTokens' => 1024,
                         'messages' => [['content' => 'Hello, world', 'role' => 'user']],
                         'model' => 'claude-opus-4-6',
+                        'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                         'container' => 'container',
                         'inferenceGeo' => 'inference_geo',
                         'metadata' => ['userID' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],

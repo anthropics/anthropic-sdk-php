@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Messages\BetaCacheControlEphemeral;
 use Anthropic\Beta\Messages\BetaContainerParams;
 use Anthropic\Beta\Messages\BetaContextManagementConfig;
 use Anthropic\Beta\Messages\BetaJSONOutputFormat;
@@ -42,6 +43,7 @@ use Anthropic\Services\Beta\Messages\BatchesService;
  * @phpstan-import-type SystemShape from \Anthropic\Beta\Messages\MessageCountTokensParams\System
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Messages\MessageCountTokensParams\Tool
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type ContainerShape from \Anthropic\Beta\Messages\MessageCreateParams\Container
  * @phpstan-import-type BetaContextManagementConfigShape from \Anthropic\Beta\Messages\BetaContextManagementConfig
  * @phpstan-import-type BetaRequestMCPServerURLDefinitionShape from \Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition
@@ -138,6 +140,7 @@ final class MessagesService implements MessagesContract
      *
      * There is a limit of 100,000 messages in a single request.
      * @param string|Model|value-of<Model> $model Body param: The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
      * @param ContainerShape|null $container body param: Container identifier for reuse across requests
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement Body param: Context management configuration.
      *
@@ -252,6 +255,7 @@ final class MessagesService implements MessagesContract
         int $maxTokens,
         array $messages,
         Model|string $model,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
         string|BetaContainerParams|array|null $container = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
         ?string $inferenceGeo = null,
@@ -279,6 +283,7 @@ final class MessagesService implements MessagesContract
                 'maxTokens' => $maxTokens,
                 'messages' => $messages,
                 'model' => $model,
+                'cacheControl' => $cacheControl,
                 'container' => $container,
                 'contextManagement' => $contextManagement,
                 'inferenceGeo' => $inferenceGeo,
@@ -363,6 +368,7 @@ final class MessagesService implements MessagesContract
      *
      * There is a limit of 100,000 messages in a single request.
      * @param string|Model|value-of<Model> $model Body param: The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
      * @param ContainerShape|null $container body param: Container identifier for reuse across requests
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement Body param: Context management configuration.
      *
@@ -479,6 +485,7 @@ final class MessagesService implements MessagesContract
         int $maxTokens,
         array $messages,
         Model|string $model,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
         string|BetaContainerParams|array|null $container = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
         ?string $inferenceGeo = null,
@@ -506,6 +513,7 @@ final class MessagesService implements MessagesContract
                 'maxTokens' => $maxTokens,
                 'messages' => $messages,
                 'model' => $model,
+                'cacheControl' => $cacheControl,
                 'container' => $container,
                 'contextManagement' => $contextManagement,
                 'inferenceGeo' => $inferenceGeo,
@@ -591,6 +599,7 @@ final class MessagesService implements MessagesContract
      *
      * There is a limit of 100,000 messages in a single request.
      * @param string|Model|value-of<Model> $model Body param: The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement Body param: Context management configuration.
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
@@ -678,6 +687,7 @@ final class MessagesService implements MessagesContract
     public function countTokens(
         array $messages,
         Model|string $model,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
         ?array $mcpServers = null,
         BetaOutputConfig|array|null $outputConfig = null,
@@ -696,6 +706,7 @@ final class MessagesService implements MessagesContract
             [
                 'messages' => $messages,
                 'model' => $model,
+                'cacheControl' => $cacheControl,
                 'contextManagement' => $contextManagement,
                 'mcpServers' => $mcpServers,
                 'outputConfig' => $outputConfig,

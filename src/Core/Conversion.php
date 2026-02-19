@@ -8,6 +8,7 @@ use Anthropic\Core\Conversion\CoerceState;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\DumpState;
+use Anthropic\Core\Conversion\EnumOf;
 
 /**
  * @internal
@@ -61,6 +62,10 @@ final class Conversion
             return $target->coerce($value, state: $state);
         }
 
+        if (is_a($target, class: \BackedEnum::class, allow_string: true)) {
+            return (new EnumOf(array_column($target::cases(), 'value')))->coerce($value, state: $state);
+        }
+
         return self::tryConvert($target, value: $value, state: $state);
     }
 
@@ -72,6 +77,10 @@ final class Conversion
 
         if (is_a($target, class: ConverterSource::class, allow_string: true)) {
             return $target::converter()->dump($value, state: $state);
+        }
+
+        if (is_a($target, class: \BackedEnum::class, allow_string: true)) {
+            return (new EnumOf(array_column($target::cases(), 'value')))->dump($value, state: $state);
         }
 
         self::tryConvert($target, value: $value, state: $state);

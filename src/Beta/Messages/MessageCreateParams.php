@@ -30,6 +30,7 @@ use Anthropic\Messages\Model;
  * @phpstan-import-type BetaToolChoiceVariants from \Anthropic\Beta\Messages\BetaToolChoice
  * @phpstan-import-type BetaToolUnionVariants from \Anthropic\Beta\Messages\BetaToolUnion
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type ContainerShape from \Anthropic\Beta\Messages\MessageCreateParams\Container
  * @phpstan-import-type BetaContextManagementConfigShape from \Anthropic\Beta\Messages\BetaContextManagementConfig
  * @phpstan-import-type BetaRequestMCPServerURLDefinitionShape from \Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition
@@ -45,6 +46,7 @@ use Anthropic\Messages\Model;
  *   maxTokens: int,
  *   messages: list<BetaMessageParam|BetaMessageParamShape>,
  *   model: string|Model|value-of<Model>,
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   container?: ContainerShape|null,
  *   contextManagement?: null|BetaContextManagementConfig|BetaContextManagementConfigShape,
  *   inferenceGeo?: string|null,
@@ -143,6 +145,12 @@ final class MessageCreateParams implements BaseModel
      */
     #[Required(enum: Model::class)]
     public string $model;
+
+    /**
+     * Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
+     */
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * Container identifier for reuse across requests.
@@ -388,6 +396,7 @@ final class MessageCreateParams implements BaseModel
      *
      * @param list<BetaMessageParam|BetaMessageParamShape> $messages
      * @param string|Model|value-of<Model> $model
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      * @param ContainerShape|null $container
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape>|null $mcpServers
@@ -407,6 +416,7 @@ final class MessageCreateParams implements BaseModel
         int $maxTokens,
         array $messages,
         Model|string $model,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
         string|BetaContainerParams|array|null $container = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
         ?string $inferenceGeo = null,
@@ -432,6 +442,7 @@ final class MessageCreateParams implements BaseModel
         $self['messages'] = $messages;
         $self['model'] = $model;
 
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $container && $self['container'] = $container;
         null !== $contextManagement && $self['contextManagement'] = $contextManagement;
         null !== $inferenceGeo && $self['inferenceGeo'] = $inferenceGeo;
@@ -538,6 +549,20 @@ final class MessageCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['model'] = $model;
+
+        return $self;
+    }
+
+    /**
+     * Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
+     *
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     */
+    public function withCacheControl(
+        BetaCacheControlEphemeral|array|null $cacheControl
+    ): self {
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
         return $self;
     }

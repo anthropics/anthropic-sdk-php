@@ -57,6 +57,7 @@ final class MessagesTest extends TestCase
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
             model: 'claude-opus-4-6',
+            cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             container: [
                 'id' => 'id',
                 'skills' => [
@@ -169,6 +170,7 @@ final class MessagesTest extends TestCase
         $result = $this->client->beta->messages->countTokens(
             messages: [['content' => 'string', 'role' => 'user']],
             model: 'claude-opus-4-6',
+            cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             contextManagement: [
                 'edits' => [
                     [
