@@ -1,5 +1,47 @@
 # Changelog
 
+## 0.6.0 (2026-02-19)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* add Bedrock client ([#273](https://github.com/anthropics/anthropic-sdk-php/issues/273)) ([cf8b733](https://github.com/anthropics/anthropic-sdk-php/commit/cf8b733cc3638572183631566e1b8e167fb6de5b))
+* add Foundry client ([#307](https://github.com/anthropics/anthropic-sdk-php/issues/307)) ([8ccd093](https://github.com/anthropics/anthropic-sdk-php/commit/8ccd093ce391621b94ff8686455eae77d77152b8))
+* add Vertex client ([#264](https://github.com/anthropics/anthropic-sdk-php/issues/264)) ([d7d87ad](https://github.com/anthropics/anthropic-sdk-php/commit/d7d87adb9a8b62744ac9bbc0eda20d5177fee4c6))
+* **api:** add support for speed mode ([955855c](https://github.com/anthropics/anthropic-sdk-php/commit/955855cae8dedd6f9b29e8c55e1f365f25c8f7b2))
+* **api:** Add top-level cache control (automatic caching) ([b98536b](https://github.com/anthropics/anthropic-sdk-php/commit/b98536b1953036009de812052d653ee4e8637d1b))
+* **api:** fix shared UserLocation and error code types ([db15b55](https://github.com/anthropics/anthropic-sdk-php/commit/db15b55eea9760033e8348f9a23db4002270424e))
+* **api:** manual updates ([3ce2054](https://github.com/anthropics/anthropic-sdk-php/commit/3ce2054d3a41b5cebe5b55821d2d39294c74fba1))
+* **api:** Release Claude Opus 4.6, adaptive thinking, and other features ([439fcf8](https://github.com/anthropics/anthropic-sdk-php/commit/439fcf800d8c958b6b2b293147a5d4f8d7d3e6bd))
+* **api:** Releasing claude-sonnet-4-6 ([78fda97](https://github.com/anthropics/anthropic-sdk-php/commit/78fda973fd0026fa6a27ef8a88e720ce8ebc3273))
+* use `$_ENV` aware getenv helper ([c40668b](https://github.com/anthropics/anthropic-sdk-php/commit/c40668b3ba2d4bbfd1038ff2d47d56af6fdc5c73))
+* warn when thinking is enabled for certain models ([#305](https://github.com/anthropics/anthropic-sdk-php/issues/305)) ([e306169](https://github.com/anthropics/anthropic-sdk-php/commit/e30616997dd28f9b5e567fa5ef7bf786ee777e89))
+
+
+### Bug Fixes
+
+* add backward-compat class_alias stubs for renamed UserLocation and ErrorCode types ([#319](https://github.com/anthropics/anthropic-sdk-php/issues/319)) ([e470d01](https://github.com/anthropics/anthropic-sdk-php/commit/e470d0131fac244fd3257a5d2c3afd98c0fb6d83))
+* add type declaration to avoid lint error ([#311](https://github.com/anthropics/anthropic-sdk-php/issues/311)) ([2b8765d](https://github.com/anthropics/anthropic-sdk-php/commit/2b8765d2ae250c32b735034ffb26b4166f78489e))
+* **api:** fix spec errors ([f57e850](https://github.com/anthropics/anthropic-sdk-php/commit/f57e850db50d15b9544a60358b6790cb36651741))
+* **ci:** use correct GitHub URL for Packagist notification ([#14](https://github.com/anthropics/anthropic-sdk-php/issues/14)) ([ef0a1dc](https://github.com/anthropics/anthropic-sdk-php/commit/ef0a1dc0d2ca1c2b11dfb8c8ac35a27cf23f0c86))
+
+
+### Chores
+
+* add exception message to `Util::getenv()` and add tests ([#309](https://github.com/anthropics/anthropic-sdk-php/issues/309)) ([451a3d4](https://github.com/anthropics/anthropic-sdk-php/commit/451a3d41c2cded89249b3c1a3f6de28c928fa3f6))
+* add usage sections for the Bedrock and Vertex clients ([#303](https://github.com/anthropics/anthropic-sdk-php/issues/303)) ([a8b5419](https://github.com/anthropics/anthropic-sdk-php/commit/a8b5419793964f368e6cfe0aa64620fe4a233ed1))
+* **ci:** Remove claude code review ([#17](https://github.com/anthropics/anthropic-sdk-php/issues/17)) ([df06300](https://github.com/anthropics/anthropic-sdk-php/commit/df06300936f51577d7485e826d789749518d0d7e))
+* **client:** update model name ([dac28a0](https://github.com/anthropics/anthropic-sdk-php/commit/dac28a05ab8e2bd8ee6feb7f78cec4ae75fa31ed))
+* integrate latest API updates into Bedrock and Vertex clients ([#308](https://github.com/anthropics/anthropic-sdk-php/issues/308)) ([0f33eec](https://github.com/anthropics/anthropic-sdk-php/commit/0f33eec06c53c3d0d643743c2a1ef0540839cdaa))
+* **internal:** php cs fixer should not be memory limited ([cbc55ad](https://github.com/anthropics/anthropic-sdk-php/commit/cbc55ad459328e9e57c8ebd1076b66a0588db940))
+* update mock server docs ([13e0170](https://github.com/anthropics/anthropic-sdk-php/commit/13e0170da1c95a5db53265d936f727392e2cf42e))
+
+
+### Documentation
+
+* streamline and standardize docs ([#313](https://github.com/anthropics/anthropic-sdk-php/issues/313)) ([efc3d16](https://github.com/anthropics/anthropic-sdk-php/commit/efc3d167562ae610406cbd4e2b6053f1a703c287))
+
 ## 0.5.0 (2026-01-30)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.4.0...v0.5.0)
