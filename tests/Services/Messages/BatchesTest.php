@@ -170,7 +170,7 @@ final class BatchesTest extends TestCase
     public function testResults(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism doesn\'t support application/x-jsonl responses');
+            $this->markTestSkipped('Mock server doesn\'t support application/x-jsonl responses');
         }
 
         $result = $this->client->messages->batches->results('message_batch_id');
