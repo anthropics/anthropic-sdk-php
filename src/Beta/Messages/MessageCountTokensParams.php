@@ -29,6 +29,7 @@ use Anthropic\Messages\Model;
  * @phpstan-import-type BetaToolChoiceVariants from \Anthropic\Beta\Messages\BetaToolChoice
  * @phpstan-import-type ToolVariants from \Anthropic\Beta\Messages\MessageCountTokensParams\Tool
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
+ * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type BetaContextManagementConfigShape from \Anthropic\Beta\Messages\BetaContextManagementConfig
  * @phpstan-import-type BetaRequestMCPServerURLDefinitionShape from \Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition
  * @phpstan-import-type BetaOutputConfigShape from \Anthropic\Beta\Messages\BetaOutputConfig
@@ -41,6 +42,7 @@ use Anthropic\Messages\Model;
  * @phpstan-type MessageCountTokensParamsShape = array{
  *   messages: list<BetaMessageParam|BetaMessageParamShape>,
  *   model: string|Model|value-of<Model>,
+ *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   contextManagement?: null|BetaContextManagementConfig|BetaContextManagementConfigShape,
  *   mcpServers?: list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape>|null,
  *   outputConfig?: null|BetaOutputConfig|BetaOutputConfigShape,
@@ -121,6 +123,12 @@ final class MessageCountTokensParams implements BaseModel
      */
     #[Required(enum: Model::class)]
     public string $model;
+
+    /**
+     * Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
+     */
+    #[Optional('cache_control', nullable: true)]
+    public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
      * Context management configuration.
@@ -294,6 +302,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param list<BetaMessageParam|BetaMessageParamShape> $messages
      * @param string|Model|value-of<Model> $model
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape>|null $mcpServers
      * @param BetaOutputConfig|BetaOutputConfigShape|null $outputConfig
@@ -308,6 +317,7 @@ final class MessageCountTokensParams implements BaseModel
     public static function with(
         array $messages,
         Model|string $model,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
         ?array $mcpServers = null,
         BetaOutputConfig|array|null $outputConfig = null,
@@ -324,6 +334,7 @@ final class MessageCountTokensParams implements BaseModel
         $self['messages'] = $messages;
         $self['model'] = $model;
 
+        null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $contextManagement && $self['contextManagement'] = $contextManagement;
         null !== $mcpServers && $self['mcpServers'] = $mcpServers;
         null !== $outputConfig && $self['outputConfig'] = $outputConfig;
@@ -407,6 +418,20 @@ final class MessageCountTokensParams implements BaseModel
     {
         $self = clone $this;
         $self['model'] = $model;
+
+        return $self;
+    }
+
+    /**
+     * Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
+     *
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     */
+    public function withCacheControl(
+        BetaCacheControlEphemeral|array|null $cacheControl
+    ): self {
+        $self = clone $this;
+        $self['cacheControl'] = $cacheControl;
 
         return $self;
     }

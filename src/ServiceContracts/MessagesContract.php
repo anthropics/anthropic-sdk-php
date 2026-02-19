@@ -6,6 +6,7 @@ namespace Anthropic\ServiceContracts;
 
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Messages\CacheControlEphemeral;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Messages\MessageParam;
@@ -32,6 +33,7 @@ use Anthropic\RequestOptions;
  * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCountTokensParams\System
  * @phpstan-import-type MessageCountTokensToolShape from \Anthropic\Messages\MessageCountTokensTool
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
  * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
  * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCreateParams\System as SystemShape1
@@ -99,6 +101,7 @@ interface MessagesContract
      *
      * There is a limit of 100,000 messages in a single request.
      * @param string|Model|value-of<Model> $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
      * @param string|null $container container identifier for reuse across requests
      * @param string|null $inferenceGeo Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param Metadata|MetadataShape $metadata an object describing metadata about the request
@@ -204,6 +207,7 @@ interface MessagesContract
         int $maxTokens,
         array $messages,
         Model|string $model,
+        CacheControlEphemeral|array|null $cacheControl = null,
         ?string $container = null,
         ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
@@ -277,6 +281,7 @@ interface MessagesContract
      *
      * There is a limit of 100,000 messages in a single request.
      * @param string|Model|value-of<Model> $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
      * @param string|null $container container identifier for reuse across requests
      * @param string|null $inferenceGeo Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param Metadata|MetadataShape $metadata an object describing metadata about the request
@@ -384,6 +389,7 @@ interface MessagesContract
         int $maxTokens,
         array $messages,
         Model|string $model,
+        CacheControlEphemeral|array|null $cacheControl = null,
         ?string $container = null,
         ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
@@ -452,6 +458,7 @@ interface MessagesContract
      *
      * There is a limit of 100,000 messages in a single request.
      * @param string|Model|value-of<Model> $model The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
      * @param OutputConfig|OutputConfigShape $outputConfig configuration options for the model's output, such as the output format
      * @param SystemShape $system System prompt.
      *
@@ -530,6 +537,7 @@ interface MessagesContract
     public function countTokens(
         array $messages,
         Model|string $model,
+        CacheControlEphemeral|array|null $cacheControl = null,
         OutputConfig|array|null $outputConfig = null,
         string|array|null $system = null,
         ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking = null,

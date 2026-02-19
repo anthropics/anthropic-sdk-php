@@ -8,6 +8,7 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Messages\CacheControlEphemeral;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCountTokensParams;
 use Anthropic\Messages\MessageCreateParams;
@@ -32,6 +33,7 @@ use Anthropic\SSEStream;
  * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCountTokensParams\System
  * @phpstan-import-type MessageCountTokensToolShape from \Anthropic\Messages\MessageCountTokensTool
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
+ * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
  * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
  * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCreateParams\System as SystemShape1
@@ -61,6 +63,7 @@ final class MessagesRawService implements MessagesRawContract
      *   maxTokens: int,
      *   messages: list<MessageParam|MessageParamShape>,
      *   model: string|Model|value-of<Model>,
+     *   cacheControl?: CacheControlEphemeral|CacheControlEphemeralShape|null,
      *   container?: string|null,
      *   inferenceGeo?: string|null,
      *   metadata?: Metadata|MetadataShape,
@@ -107,6 +110,7 @@ final class MessagesRawService implements MessagesRawContract
      *   maxTokens: int,
      *   messages: list<MessageParam|MessageParamShape>,
      *   model: string|Model|value-of<Model>,
+     *   cacheControl?: CacheControlEphemeral|CacheControlEphemeralShape|null,
      *   container?: string|null,
      *   inferenceGeo?: string|null,
      *   metadata?: Metadata|MetadataShape,
@@ -161,6 +165,7 @@ final class MessagesRawService implements MessagesRawContract
      * @param array{
      *   messages: list<MessageParam|MessageParamShape>,
      *   model: string|Model|value-of<Model>,
+     *   cacheControl?: CacheControlEphemeral|CacheControlEphemeralShape|null,
      *   outputConfig?: OutputConfig|OutputConfigShape,
      *   system?: SystemShape,
      *   thinking?: ThinkingConfigParamShape,
