@@ -112,7 +112,7 @@ interface BatchesRawContract
      * @param array<string,mixed>|BatchResultsParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<MessageBatchIndividualResponse>
+     * @return BaseResponse<BaseStream<MessageBatchIndividualResponse>>
      *
      * @throws APIException
      */

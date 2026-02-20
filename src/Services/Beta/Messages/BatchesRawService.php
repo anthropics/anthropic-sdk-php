@@ -287,7 +287,7 @@ final class BatchesRawService implements BatchesRawContract
      * }|BatchResultsParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<MessageBatchIndividualResponse>
+     * @return BaseResponse<BaseStream<MessageBatchIndividualResponse>>
      *
      * @throws APIException
      */
@@ -314,6 +314,7 @@ final class BatchesRawService implements BatchesRawContract
                 $options,
             ),
             convert: MessageBatchIndividualResponse::class,
+            stream: JsonLStream::class,
         );
     }
 
