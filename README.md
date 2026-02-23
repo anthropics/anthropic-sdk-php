@@ -10,9 +10,13 @@ Full documentation is available at **[platform.claude.com/docs/en/api/sdks/php](
 
 ## Installation
 
+<!-- x-release-please-start-version -->
+
 ```sh
-composer require "anthropic-ai/sdk"
+composer require "anthropic-ai/sdk:^0.6.0"
 ```
+
+<!-- x-release-please-end -->
 
 ## Getting started
 
