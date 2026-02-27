@@ -170,6 +170,37 @@ final class Conversion
 
                 return $value;
 
+            case 'DateTimeInterface':
+            case 'DateTimeImmutable':
+                if (is_string($value)) {
+                    try {
+                        ++$state->maybe;
+
+                        return new \DateTimeImmutable($value);
+                    } catch (\Exception) {
+                        --$state->maybe;
+                    }
+                }
+
+                ++$state->no;
+
+                return $value;
+
+            case 'DateTime':
+                if (is_string($value)) {
+                    try {
+                        ++$state->maybe;
+
+                        return new \DateTime($value);
+                    } catch (\Exception) {
+                        --$state->maybe;
+                    }
+                }
+
+                ++$state->no;
+
+                return $value;
+
             default:
                 ++$state->no;
 
