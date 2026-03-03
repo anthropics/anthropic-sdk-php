@@ -13,23 +13,27 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
 final class Optional extends Required
 {
+    public readonly mixed $default;
+
     /**
-     * @param class-string<ConverterSource>|Converter|string|null $type
-     * @param class-string<\BackedEnum>|Converter|null            $enum
-     * @param class-string<ConverterSource>|Converter|null        $union
-     * @param class-string<ConverterSource>|Converter|string|null $list
-     * @param class-string<ConverterSource>|Converter|string|null $map
+     * @param class-string<ConverterSource>|Converter|string|null                       $type
+     * @param class-string<\BackedEnum>|Converter|list<bool|float|int|string|null>|null $enum
+     * @param class-string<ConverterSource>|Converter|null                              $union
+     * @param class-string<ConverterSource>|Converter|string|null                       $list
+     * @param class-string<ConverterSource>|Converter|string|null                       $map
      */
     public function __construct(
         ?string $apiName = null,
         Converter|string|null $type = null,
-        Converter|string|null $enum = null,
+        Converter|string|array|null $enum = null,
         Converter|string|null $union = null,
         Converter|string|null $list = null,
         Converter|string|null $map = null,
         bool $nullable = false,
+        mixed $default = null,
     ) {
         parent::__construct(apiName: $apiName, type: $type, enum: $enum, union: $union, list: $list, map: $map, nullable: $nullable);
         $this->optional = true;
+        $this->default = $default;
     }
 }

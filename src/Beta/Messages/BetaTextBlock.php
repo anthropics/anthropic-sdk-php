@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Lib\Contracts\StructuredOutputModel;
 
 /**
  * @phpstan-import-type BetaTextCitationVariants from \Anthropic\Beta\Messages\BetaTextCitation
@@ -37,6 +38,17 @@ final class BetaTextBlock implements BaseModel
 
     #[Required]
     public string $text;
+
+    /**
+     * Parsed value of the text when a structured output schema has been specified.
+     *
+     * When using output_config with a StructuredOutputModel class, this property
+     * will contain the parsed model instance. If parsing fails, it contains an
+     * array with an 'error' key.
+     *
+     * @var StructuredOutputModel|array{error: string}|null
+     */
+    public mixed $parsed = null;
 
     /**
      * `new BetaTextBlock()` is missing required properties by the API.
