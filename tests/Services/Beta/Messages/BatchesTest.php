@@ -217,10 +217,6 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testResults(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Mock server doesn\'t support application/x-jsonl responses');
-        }
-
         $result = $this->client->beta->messages->batches->results(
             'message_batch_id'
         );

@@ -11,7 +11,6 @@ use Anthropic\Page;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -170,10 +169,6 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testResults(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Mock server doesn\'t support application/x-jsonl responses');
-        }
-
         $result = $this->client->messages->batches->results('message_batch_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
