@@ -34,6 +34,8 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
+use Anthropic\Lib\Tools\BetaRunnableTool;
+use Anthropic\Lib\Tools\BetaToolRunner;
 use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\MessagesContract;
@@ -724,6 +726,40 @@ final class MessagesService implements MessagesContract
         $response = $this->raw->countTokens(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * Create a tool runner that automatically handles the tool execution loop.
+     *
+     * The runner makes repeated API calls, executing any tools the model requests,
+     * until the model produces a final response with no tool calls.
+     *
+     * @param int $maxTokens body param: The maximum number of tokens to generate before stopping
+     * @param list<array<string, mixed>> $messages body param: Initial input messages
+     * @param string|Model|value-of<Model> $model body param: The model to use
+     * @param list<BetaRunnableTool|BetaToolUnionShape> $tools Tools available to the model. Pass BetaRunnableTool instances for client-side execution, or any BetaToolUnion variant for server-side tools.
+     * @param int|null $maxIterations maximum number of API calls before stopping the loop
+     * @param array<string, mixed> $extraParams Additional parameters forwarded to each create() call (e.g. system, temperature, betas).
+     */
+    public function toolRunner(
+        int $maxTokens,
+        array $messages,
+        Model|string $model,
+        array $tools = [],
+        ?int $maxIterations = null,
+        array $extraParams = [],
+    ): BetaToolRunner {
+        return new BetaToolRunner(
+            client: $this->client,
+            maxTokens: $maxTokens,
+            messages: $messages,
+            model: $model,
+            tools: $tools,
+            maxIterations: $maxIterations,
+            extraParams: $extraParams,
+        );
     }
 
     /**
