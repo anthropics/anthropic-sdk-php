@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Lib\Contracts\StructuredOutputModel;
 
 /**
  * @phpstan-import-type ContentBlockVariants from \Anthropic\Messages\ContentBlock
@@ -177,6 +178,26 @@ final class Message implements BaseModel
     public function __construct()
     {
         $this->initialize();
+    }
+
+    /**
+     * Gets the parsed structured output from the message content.
+     *
+     * When using output_config with a StructuredOutputModel class, this method
+     * returns the parsed model instance from the first content block that has
+     * a parsed value. If no parsed content is found, returns null.
+     *
+     * @return StructuredOutputModel|array{error: string}|null
+     */
+    public function parsedOutput(): mixed
+    {
+        foreach ($this->content as $block) {
+            if ($block instanceof TextBlock && null !== $block->parsed) {
+                return $block->parsed;
+            }
+        }
+
+        return null;
     }
 
     /**

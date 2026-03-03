@@ -7,6 +7,7 @@ namespace Anthropic\Services;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Lib\Helpers\StructuredOutput;
 use Anthropic\Core\Util;
 use Anthropic\Messages\CacheControlEphemeral;
 use Anthropic\Messages\Message;
@@ -23,6 +24,7 @@ use Anthropic\Messages\RawMessageDeltaEvent;
 use Anthropic\Messages\RawMessageStartEvent;
 use Anthropic\Messages\RawMessageStopEvent;
 use Anthropic\Messages\ThinkingConfigAdaptive;
+use Anthropic\Messages\TextBlock;
 use Anthropic\Messages\ThinkingConfigDisabled;
 use Anthropic\Messages\ThinkingConfigEnabled;
 use Anthropic\Messages\ToolChoiceAny;
@@ -254,6 +256,7 @@ final class MessagesService implements MessagesContract
     ): Message {
         self::warnIfDeprecatedThinkingConfig($model, $thinking);
 
+        /** @var array<string, mixed> $params */
         $params = Util::removeNulls(
             [
                 'maxTokens' => $maxTokens,
@@ -276,10 +279,37 @@ final class MessagesService implements MessagesContract
             ],
         );
 
+        // Extract and convert structured output models to JSON schemas
+        $modelClass = StructuredOutput::distillInputSchemas($params);
+
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
 
-        return $response->parse();
+        $message = $response->parse();
+
+        // Parse the response content if a model class was provided
+        if (null !== $modelClass) {
+            $content = &$message->content;
+            /** @var list<array<string, mixed>> $contentArray */
+            $contentArray = [];
+            foreach ($content as $block) {
+                $contentArray[] = (array) $block;
+            }
+            // @phpstan-ignore argument.type (parseResponseContent modifies array in place with integer keys)
+            StructuredOutput::parseResponseContent($contentArray, $modelClass);
+
+            // Update the content blocks with parsed data
+            foreach ($content as $index => $block) {
+                // @phpstan-ignore offsetAccess.notFound (array is list, but PHPStan loses type after by-ref modification)
+                $parsedBlock = $contentArray[$index];
+                if ($block instanceof TextBlock && is_array($parsedBlock) && isset($parsedBlock['parsed'])) {
+                    // @phpstan-ignore assign.propertyType (namespace mismatch: Core vs Core\Helpers)
+                    $block->parsed = $parsedBlock['parsed'];
+                }
+            }
+        }
+
+        return $message;
     }
 
     /**
@@ -465,6 +495,7 @@ final class MessagesService implements MessagesContract
     ): BaseStream {
         self::warnIfDeprecatedThinkingConfig($model, $thinking);
 
+        /** @var array<string, mixed> $params */
         $params = Util::removeNulls(
             [
                 'maxTokens' => $maxTokens,
@@ -486,6 +517,9 @@ final class MessagesService implements MessagesContract
                 'topP' => $topP,
             ],
         );
+
+        // Extract and convert structured output models to JSON schemas
+        StructuredOutput::distillInputSchemas($params);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->createStream(params: $params, requestOptions: $requestOptions);
@@ -640,6 +674,7 @@ final class MessagesService implements MessagesContract
     ): MessageTokensCount {
         self::warnIfDeprecatedThinkingConfig($model, $thinking);
 
+        /** @var array<string, mixed> $params */
         $params = Util::removeNulls(
             [
                 'messages' => $messages,
@@ -652,6 +687,9 @@ final class MessagesService implements MessagesContract
                 'tools' => $tools,
             ],
         );
+
+        // Extract and convert structured output models to JSON schemas
+        StructuredOutput::distillInputSchemas($params);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->countTokens(params: $params, requestOptions: $requestOptions);

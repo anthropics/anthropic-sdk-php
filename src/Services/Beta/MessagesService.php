@@ -22,6 +22,7 @@ use Anthropic\Beta\Messages\BetaRawMessageStartEvent;
 use Anthropic\Beta\Messages\BetaRawMessageStopEvent;
 use Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition;
 use Anthropic\Beta\Messages\BetaThinkingConfigAdaptive;
+use Anthropic\Beta\Messages\BetaTextBlock;
 use Anthropic\Beta\Messages\BetaThinkingConfigDisabled;
 use Anthropic\Beta\Messages\BetaThinkingConfigEnabled;
 use Anthropic\Beta\Messages\BetaToolChoiceAny;
@@ -33,6 +34,7 @@ use Anthropic\Beta\Messages\MessageCreateParams\Speed;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Lib\Helpers\StructuredOutput;
 use Anthropic\Core\Util;
 use Anthropic\Lib\Tools\BetaRunnableTool;
 use Anthropic\Lib\Tools\BetaToolRunner;
@@ -280,6 +282,7 @@ final class MessagesService implements MessagesContract
     ): BetaMessage {
         self::warnIfDeprecatedThinkingConfig($model, $thinking);
 
+        /** @var array<string, mixed> $params */
         $params = Util::removeNulls(
             [
                 'maxTokens' => $maxTokens,
@@ -307,10 +310,37 @@ final class MessagesService implements MessagesContract
             ],
         );
 
+        // Extract and convert structured output models to JSON schemas
+        $modelClass = StructuredOutput::distillInputSchemas($params);
+
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
 
-        return $response->parse();
+        $message = $response->parse();
+
+        // Parse the response content if a model class was provided
+        if (null !== $modelClass) {
+            $content = &$message->content;
+            /** @var list<array<string, mixed>> $contentArray */
+            $contentArray = [];
+            foreach ($content as $block) {
+                $contentArray[] = (array) $block;
+            }
+            // @phpstan-ignore argument.type (parseResponseContent modifies array in place with integer keys)
+            StructuredOutput::parseResponseContent($contentArray, $modelClass);
+
+            // Update the content blocks with parsed data
+            foreach ($content as $index => $block) {
+                // @phpstan-ignore offsetAccess.notFound (array is list, but PHPStan loses type after by-ref modification)
+                $parsedBlock = $contentArray[$index];
+                if ($block instanceof BetaTextBlock && is_array($parsedBlock) && isset($parsedBlock['parsed'])) {
+                    // @phpstan-ignore assign.propertyType (namespace mismatch: Core vs Core\Helpers)
+                    $block->parsed = $parsedBlock['parsed'];
+                }
+            }
+        }
+
+        return $message;
     }
 
     /**
@@ -510,6 +540,7 @@ final class MessagesService implements MessagesContract
     ): BaseStream {
         self::warnIfDeprecatedThinkingConfig($model, $thinking);
 
+        /** @var array<string, mixed> $params */
         $params = Util::removeNulls(
             [
                 'maxTokens' => $maxTokens,
@@ -536,6 +567,9 @@ final class MessagesService implements MessagesContract
                 'betas' => $betas,
             ],
         );
+
+        // Extract and convert structured output models to JSON schemas
+        StructuredOutput::distillInputSchemas($params);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->createStream(params: $params, requestOptions: $requestOptions);
@@ -704,6 +738,7 @@ final class MessagesService implements MessagesContract
     ): BetaMessageTokensCount {
         self::warnIfDeprecatedThinkingConfig($model, $thinking);
 
+        /** @var array<string, mixed> $params */
         $params = Util::removeNulls(
             [
                 'messages' => $messages,
@@ -721,6 +756,9 @@ final class MessagesService implements MessagesContract
                 'betas' => $betas,
             ],
         );
+
+        // Extract and convert structured output models to JSON schemas
+        StructuredOutput::distillInputSchemas($params);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->countTokens(params: $params, requestOptions: $requestOptions);
