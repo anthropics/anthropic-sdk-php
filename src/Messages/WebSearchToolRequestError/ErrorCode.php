@@ -2,5 +2,7 @@
 
 namespace Anthropic\Messages\WebSearchToolRequestError;
 
+use Anthropic\Messages\WebSearchToolResultErrorCode;
+
 // backward compat alias
-class_alias(\Anthropic\Messages\WebSearchToolResultErrorCode::class, 'Anthropic\Messages\WebSearchToolRequestError\ErrorCode');
+class_alias(WebSearchToolResultErrorCode::class, 'Anthropic\Messages\WebSearchToolRequestError\ErrorCode');

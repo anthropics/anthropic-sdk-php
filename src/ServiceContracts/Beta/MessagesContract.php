@@ -32,6 +32,8 @@ use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Beta\Messages\MessageCreateParams\Speed;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Lib\Tools\BetaRunnableTool;
+use Anthropic\Lib\Tools\BetaToolRunner;
 use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
 
@@ -597,4 +599,25 @@ interface MessagesContract
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaMessageTokensCount;
+
+    /**
+     * @api
+     *
+     * Create a tool runner that automatically handles the tool execution loop.
+     *
+     * @param int $maxTokens body param: The maximum number of tokens to generate before stopping
+     * @param list<array<string, mixed>> $messages body param: Initial input messages
+     * @param string|Model|value-of<Model> $model body param: The model to use
+     * @param list<BetaRunnableTool|BetaToolUnionShape> $tools tools available to the model
+     * @param int|null $maxIterations maximum number of API calls before stopping the loop
+     * @param array<string, mixed> $extraParams additional parameters forwarded to each create() call
+     */
+    public function toolRunner(
+        int $maxTokens,
+        array $messages,
+        Model|string $model,
+        array $tools = [],
+        ?int $maxIterations = null,
+        array $extraParams = [],
+    ): BetaToolRunner;
 }

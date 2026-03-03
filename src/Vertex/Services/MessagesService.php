@@ -6,11 +6,11 @@ namespace Anthropic\Vertex\Services;
 
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Util;
+use Anthropic\Messages\CacheControlEphemeral;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Messages\MessageTokensCount;
 use Anthropic\Messages\Metadata;
-use Anthropic\Messages\CacheControlEphemeral;
 use Anthropic\Messages\Model;
 use Anthropic\Messages\OutputConfig;
 use Anthropic\Messages\ThinkingConfigAdaptive;
