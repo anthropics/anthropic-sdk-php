@@ -12,7 +12,6 @@ use Anthropic\PageCursor;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -35,10 +34,6 @@ final class VersionsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('prism binary unsupported');
-        }
-
         $result = $this->client->beta->skills->versions->create('skill_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
