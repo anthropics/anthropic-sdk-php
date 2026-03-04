@@ -34,10 +34,6 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('prism validates based on the non-beta endpoint');
-        }
-
         $result = $this->client->beta->messages->batches->create(
             requests: [
                 [
@@ -58,10 +54,6 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('prism validates based on the non-beta endpoint');
-        }
-
         $result = $this->client->beta->messages->batches->create(
             requests: [
                 [

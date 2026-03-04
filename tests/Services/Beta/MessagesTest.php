@@ -9,7 +9,6 @@ use Anthropic\Core\Util;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -32,10 +31,6 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('prism validates based on the non-beta endpoint');
-        }
-
         $result = $this->client->beta->messages->create(
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
@@ -49,10 +44,6 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('prism validates based on the non-beta endpoint');
-        }
-
         $result = $this->client->beta->messages->create(
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
@@ -147,10 +138,6 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCountTokens(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('prism validates based on the non-beta endpoint');
-        }
-
         $result = $this->client->beta->messages->countTokens(
             messages: [['content' => 'string', 'role' => 'user']],
             model: 'claude-opus-4-6',
@@ -163,10 +150,6 @@ final class MessagesTest extends TestCase
     #[Test]
     public function testCountTokensWithOptionalParams(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('prism validates based on the non-beta endpoint');
-        }
-
         $result = $this->client->beta->messages->countTokens(
             messages: [['content' => 'string', 'role' => 'user']],
             model: 'claude-opus-4-6',
