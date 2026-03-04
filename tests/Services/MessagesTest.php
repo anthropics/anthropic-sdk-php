@@ -76,7 +76,7 @@ final class MessagesTest extends TestCase
                 ],
             ],
             temperature: 1,
-            thinking: ['budgetTokens' => 1024, 'type' => 'enabled'],
+            thinking: ['type' => 'adaptive'],
             toolChoice: ['type' => 'auto', 'disableParallelToolUse' => true],
             tools: [
                 [
@@ -144,7 +144,7 @@ final class MessagesTest extends TestCase
                     ],
                 ],
             ],
-            thinking: ['budgetTokens' => 1024, 'type' => 'enabled'],
+            thinking: ['type' => 'adaptive'],
             toolChoice: ['type' => 'auto', 'disableParallelToolUse' => true],
             tools: [
                 [

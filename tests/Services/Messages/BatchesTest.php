@@ -93,7 +93,7 @@ final class BatchesTest extends TestCase
                             ],
                         ],
                         'temperature' => 1,
-                        'thinking' => ['budgetTokens' => 1024, 'type' => 'enabled'],
+                        'thinking' => ['type' => 'adaptive'],
                         'toolChoice' => [
                             'type' => 'auto', 'disableParallelToolUse' => true,
                         ],
