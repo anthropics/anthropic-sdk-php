@@ -275,51 +275,6 @@ final class BatchesRawService implements BatchesRawContract
     /**
      * @api
      *
-     * Streams the results of a Message Batch as a `.jsonl` file.
-     *
-     * Each line in the file is a JSON object containing the result of a single request in the Message Batch. Results are not guaranteed to be in the same order as requests. Use the `custom_id` field to match results to requests.
-     *
-     * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
-     *
-     * @param string $messageBatchID ID of the Message Batch
-     * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
-     * }|BatchResultsParams $params
-     * @param RequestOpts|null $requestOptions
-     *
-     * @return BaseResponse<MessageBatchIndividualResponse>
-     *
-     * @throws APIException
-     */
-    public function results(
-        string $messageBatchID,
-        array|BatchResultsParams $params,
-        RequestOptions|array|null $requestOptions = null,
-    ): BaseResponse {
-        [$parsed, $options] = BatchResultsParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
-
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
-            method: 'get',
-            path: ['v1/messages/batches/%1$s/results?beta=true', $messageBatchID],
-            headers: Util::array_transform_keys(
-                ['Accept' => 'application/x-jsonl', ...$parsed],
-                ['betas' => 'anthropic-beta'],
-            ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
-                $options,
-            ),
-            convert: MessageBatchIndividualResponse::class,
-        );
-    }
-
-    /**
-     * @api
-     *
      * @param string $messageBatchID ID of the Message Batch
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>

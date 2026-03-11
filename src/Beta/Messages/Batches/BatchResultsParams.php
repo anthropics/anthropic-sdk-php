@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
  *
- * @see Anthropic\Services\Beta\Messages\BatchesService::results()
+ * @see Anthropic\Services\Beta\Messages\BatchesService::resultsStream()
  *
  * @phpstan-type BatchResultsParamsShape = array{
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null

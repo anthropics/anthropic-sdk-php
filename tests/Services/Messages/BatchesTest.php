@@ -6,7 +6,6 @@ use Anthropic\Client;
 use Anthropic\Core\Util;
 use Anthropic\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Messages\Batches\MessageBatch;
-use Anthropic\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Page;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -164,14 +163,5 @@ final class BatchesTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(MessageBatch::class, $result);
-    }
-
-    #[Test]
-    public function testResults(): void
-    {
-        $result = $this->client->messages->batches->results('message_batch_id');
-
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(MessageBatchIndividualResponse::class, $result);
     }
 }
