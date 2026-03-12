@@ -190,34 +190,6 @@ final class BatchesService implements BatchesContract
     /**
      * @api
      *
-     * Streams the results of a Message Batch as a `.jsonl` file.
-     *
-     * Each line in the file is a JSON object containing the result of a single request in the Message Batch. Results are not guaranteed to be in the same order as requests. Use the `custom_id` field to match results to requests.
-     *
-     * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
-     *
-     * @param string $messageBatchID ID of the Message Batch
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
-     * @param RequestOpts|null $requestOptions
-     *
-     * @throws APIException
-     */
-    public function results(
-        string $messageBatchID,
-        ?array $betas = null,
-        RequestOptions|array|null $requestOptions = null,
-    ): MessageBatchIndividualResponse {
-        $params = Util::removeNulls(['betas' => $betas]);
-
-        // @phpstan-ignore-next-line argument.type
-        $response = $this->raw->results($messageBatchID, params: $params, requestOptions: $requestOptions);
-
-        return $response->parse();
-    }
-
-    /**
-     * @api
-     *
      * @param string $messageBatchID ID of the Message Batch
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions

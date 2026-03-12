@@ -4,7 +4,6 @@ namespace Tests\Services\Beta\Messages;
 
 use Anthropic\Beta\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatch;
-use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\Client;
 use Anthropic\Core\Util;
 use Anthropic\Page;
@@ -204,20 +203,5 @@ final class BatchesTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(MessageBatch::class, $result);
-    }
-
-    #[Test]
-    public function testResults(): void
-    {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Invalid return type');
-        }
-
-        $result = $this->client->beta->messages->batches->results(
-            'message_batch_id'
-        );
-
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(MessageBatchIndividualResponse::class, $result);
     }
 }
