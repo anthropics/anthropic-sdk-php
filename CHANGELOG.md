@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.7.0 (2026-03-16)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* add beta tool runner ([#324](https://github.com/anthropics/anthropic-sdk-php/issues/324)) ([57a3df6](https://github.com/anthropics/anthropic-sdk-php/commit/57a3df6fdbb45df3c9097bc1ec544500f76f3a7d))
+* add structured output helpers for messages ([#302](https://github.com/anthropics/anthropic-sdk-php/issues/302)) ([a8685fc](https://github.com/anthropics/anthropic-sdk-php/commit/a8685fc777bc54fe64eaec404611f044a94294fd))
+* **api:** chore(config): clean up model enum list ([#31](https://github.com/anthropics/anthropic-sdk-php/issues/31)) ([c9b776b](https://github.com/anthropics/anthropic-sdk-php/commit/c9b776bdc1b7e9787a7fde9b9eaee0e7a0badfca))
+* **api:** GA thinking-display-setting ([00fc5a5](https://github.com/anthropics/anthropic-sdk-php/commit/00fc5a5afa5ce01c938cc17865880b8568976853))
+* **tests:** update mock server ([97fdd5b](https://github.com/anthropics/anthropic-sdk-php/commit/97fdd5b955d7feb9e65f298c2d5cc4f86e420681))
+
+
+### Bug Fixes
+
+* **client:** update thinking config from enabled to adaptive and remove budgetTokens ([#401](https://github.com/anthropics/anthropic-sdk-php/issues/401)) ([12e8e41](https://github.com/anthropics/anthropic-sdk-php/commit/12e8e41ff808c1ed578aa7a40cd31cca62f0b363))
+* remove broken methods ([13776b6](https://github.com/anthropics/anthropic-sdk-php/commit/13776b6821de60a00b462f69e649642b0dfbf353))
+* restore x-release-please-start-version markers in README ([#320](https://github.com/anthropics/anthropic-sdk-php/issues/320)) ([1052efc](https://github.com/anthropics/anthropic-sdk-php/commit/1052efc876d121da52d95cdd8d51bf719008d466))
+
+
+### Chores
+
+* **internal:** codegen related update ([9e16dc8](https://github.com/anthropics/anthropic-sdk-php/commit/9e16dc80e308aa06a91135d5ee8f4dac05daf70b))
+* **internal:** codegen related update ([03f7bb7](https://github.com/anthropics/anthropic-sdk-php/commit/03f7bb7f621aa6394671162f76dabf4789422cf3))
+* **internal:** upgrade phpunit ([ac75d97](https://github.com/anthropics/anthropic-sdk-php/commit/ac75d971ac75d8be5c8cc3dcf867284ae7489b3d))
+* **tests:** unskip tests that are now supported in steady ([319997a](https://github.com/anthropics/anthropic-sdk-php/commit/319997aaee4e072623e2b00e00fc0bece7d03a5b))
+
 ## 0.6.0 (2026-02-19)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.5.0...v0.6.0)
