@@ -24,11 +24,12 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type WebFetchTool20250910Shape from \Anthropic\Messages\WebFetchTool20250910
  * @phpstan-import-type WebSearchTool20260209Shape from \Anthropic\Messages\WebSearchTool20260209
  * @phpstan-import-type WebFetchTool20260209Shape from \Anthropic\Messages\WebFetchTool20260209
+ * @phpstan-import-type WebFetchTool20260309Shape from \Anthropic\Messages\WebFetchTool20260309
  * @phpstan-import-type ToolSearchToolBm25_20251119Shape from \Anthropic\Messages\ToolSearchToolBm25_20251119
  * @phpstan-import-type ToolSearchToolRegex20251119Shape from \Anthropic\Messages\ToolSearchToolRegex20251119
  *
- * @phpstan-type ToolUnionVariants = Tool|ToolBash20250124|CodeExecutionTool20250522|CodeExecutionTool20250825|CodeExecutionTool20260120|MemoryTool20250818|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305|WebFetchTool20250910|WebSearchTool20260209|WebFetchTool20260209|ToolSearchToolBm25_20251119|ToolSearchToolRegex20251119
- * @phpstan-type ToolUnionShape = ToolUnionVariants|ToolShape|ToolBash20250124Shape|CodeExecutionTool20250522Shape|CodeExecutionTool20250825Shape|CodeExecutionTool20260120Shape|MemoryTool20250818Shape|ToolTextEditor20250124Shape|ToolTextEditor20250429Shape|ToolTextEditor20250728Shape|WebSearchTool20250305Shape|WebFetchTool20250910Shape|WebSearchTool20260209Shape|WebFetchTool20260209Shape|ToolSearchToolBm25_20251119Shape|ToolSearchToolRegex20251119Shape
+ * @phpstan-type ToolUnionVariants = Tool|ToolBash20250124|CodeExecutionTool20250522|CodeExecutionTool20250825|CodeExecutionTool20260120|MemoryTool20250818|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305|WebFetchTool20250910|WebSearchTool20260209|WebFetchTool20260209|WebFetchTool20260309|ToolSearchToolBm25_20251119|ToolSearchToolRegex20251119
+ * @phpstan-type ToolUnionShape = ToolUnionVariants|ToolShape|ToolBash20250124Shape|CodeExecutionTool20250522Shape|CodeExecutionTool20250825Shape|CodeExecutionTool20260120Shape|MemoryTool20250818Shape|ToolTextEditor20250124Shape|ToolTextEditor20250429Shape|ToolTextEditor20250728Shape|WebSearchTool20250305Shape|WebFetchTool20250910Shape|WebSearchTool20260209Shape|WebFetchTool20260209Shape|WebFetchTool20260309Shape|ToolSearchToolBm25_20251119Shape|ToolSearchToolRegex20251119Shape
  */
 final class ToolUnion implements ConverterSource
 {
@@ -53,6 +54,7 @@ final class ToolUnion implements ConverterSource
             WebFetchTool20250910::class,
             WebSearchTool20260209::class,
             WebFetchTool20260209::class,
+            WebFetchTool20260309::class,
             ToolSearchToolBm25_20251119::class,
             ToolSearchToolRegex20251119::class,
         ];

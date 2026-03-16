@@ -106,7 +106,7 @@ final class MessagesTest extends TestCase
                 ],
             ],
             temperature: 1,
-            thinking: ['type' => 'adaptive'],
+            thinking: ['type' => 'adaptive', 'display' => 'summarized'],
             toolChoice: ['type' => 'auto', 'disableParallelToolUse' => true],
             tools: [
                 [
@@ -200,7 +200,7 @@ final class MessagesTest extends TestCase
                     ],
                 ],
             ],
-            thinking: ['type' => 'adaptive'],
+            thinking: ['type' => 'adaptive', 'display' => 'summarized'],
             toolChoice: ['type' => 'auto', 'disableParallelToolUse' => true],
             tools: [
                 [
