@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaThinkingConfigAdaptive\Display;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaThinkingConfigAdaptiveShape = array{type: 'adaptive'}
+ * @phpstan-type BetaThinkingConfigAdaptiveShape = array{
+ *   type: 'adaptive', display?: null|Display|value-of<Display>
+ * }
  */
 final class BetaThinkingConfigAdaptive implements BaseModel
 {
@@ -20,6 +24,14 @@ final class BetaThinkingConfigAdaptive implements BaseModel
     #[Required]
     public string $type = 'adaptive';
 
+    /**
+     * Controls how thinking content appears in the response. When set to `summarized`, thinking is returned normally. When set to `omitted`, thinking content is redacted but a signature is returned for multi-turn continuity. Defaults to `summarized`.
+     *
+     * @var value-of<Display>|null $display
+     */
+    #[Optional(enum: Display::class, nullable: true)]
+    public ?string $display;
+
     public function __construct()
     {
         $this->initialize();
@@ -29,10 +41,16 @@ final class BetaThinkingConfigAdaptive implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param Display|value-of<Display>|null $display
      */
-    public static function with(): self
+    public static function with(Display|string|null $display = null): self
     {
-        return new self;
+        $self = new self;
+
+        null !== $display && $self['display'] = $display;
+
+        return $self;
     }
 
     /**
@@ -42,6 +60,19 @@ final class BetaThinkingConfigAdaptive implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * Controls how thinking content appears in the response. When set to `summarized`, thinking is returned normally. When set to `omitted`, thinking content is redacted but a signature is returned for multi-turn continuity. Defaults to `summarized`.
+     *
+     * @param Display|value-of<Display>|null $display
+     */
+    public function withDisplay(Display|string|null $display): self
+    {
+        $self = clone $this;
+        $self['display'] = $display;
 
         return $self;
     }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Messages\BetaToolComputerUse20251124;
+namespace Anthropic\Beta\Messages\BetaWebFetchTool20260309;
 
 /**
  * Specifies who can invoke a tool.
