@@ -172,7 +172,10 @@ final class Conversion
                 }
 
                 if ($value instanceof \Generator) {
-                    return implode('', iterator_to_array($value));
+                    /** @var array<string> $parts */
+                    $parts = iterator_to_array($value);
+
+                    return implode('', $parts);
                 }
 
                 ++$state->no;
