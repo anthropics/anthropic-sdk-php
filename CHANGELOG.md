@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.8.0 (2026-03-18)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* **api:** manual updates ([7267a19](https://github.com/anthropics/anthropic-sdk-php/commit/7267a19b9c6e3fd15e997d924aa0d68ebdd90ff9))
+
+
+### Bug Fixes
+
+* resolve lint error ([#452](https://github.com/anthropics/anthropic-sdk-php/issues/452)) ([9564625](https://github.com/anthropics/anthropic-sdk-php/commit/9564625f711fb6c4d8de7ca4f9dc309aabbdf174))
+
+
+### Chores
+
+* **internal:** remove Bedrock/Vertex/Foundry clients, structured output, update model capabilities ([2fae870](https://github.com/anthropics/anthropic-sdk-php/commit/2fae870526bc7b93babbd9ad215b4e85ebc7ef66))
+* **internal:** tweak CI branches ([05c72ad](https://github.com/anthropics/anthropic-sdk-php/commit/05c72adfc1163efd0a50f5cc0075110e13b289f8))
+
 ## 0.7.0 (2026-03-16)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.6.0...v0.7.0)
