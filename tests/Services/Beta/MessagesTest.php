@@ -52,7 +52,7 @@ final class MessagesTest extends TestCase
             container: [
                 'id' => 'id',
                 'skills' => [
-                    ['skillID' => 'x', 'type' => 'anthropic', 'version' => 'x'],
+                    ['skillID' => 'pdf', 'type' => 'anthropic', 'version' => 'latest'],
                 ],
             ],
             contextManagement: [

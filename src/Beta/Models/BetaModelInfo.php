@@ -9,8 +9,16 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaModelCapabilitiesShape from \Anthropic\Beta\Models\BetaModelCapabilities
+ *
  * @phpstan-type BetaModelInfoShape = array{
- *   id: string, createdAt: \DateTimeInterface, displayName: string, type: 'model'
+ *   id: string,
+ *   capabilities: null|BetaModelCapabilities|BetaModelCapabilitiesShape,
+ *   createdAt: \DateTimeInterface,
+ *   displayName: string,
+ *   maxInputTokens: int|null,
+ *   maxTokens: int|null,
+ *   type: 'model',
  * }
  */
 final class BetaModelInfo implements BaseModel
@@ -35,6 +43,12 @@ final class BetaModelInfo implements BaseModel
     public string $id;
 
     /**
+     * Model capability information.
+     */
+    #[Required]
+    public ?BetaModelCapabilities $capabilities;
+
+    /**
      * RFC 3339 datetime string representing the time at which the model was released. May be set to an epoch value if the release date is unknown.
      */
     #[Required('created_at')]
@@ -47,17 +61,42 @@ final class BetaModelInfo implements BaseModel
     public string $displayName;
 
     /**
+     * Maximum input context window size in tokens for this model.
+     */
+    #[Required('max_input_tokens')]
+    public ?int $maxInputTokens;
+
+    /**
+     * Maximum value for the `max_tokens` parameter when using this model.
+     */
+    #[Required('max_tokens')]
+    public ?int $maxTokens;
+
+    /**
      * `new BetaModelInfo()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaModelInfo::with(id: ..., createdAt: ..., displayName: ...)
+     * BetaModelInfo::with(
+     *   id: ...,
+     *   capabilities: ...,
+     *   createdAt: ...,
+     *   displayName: ...,
+     *   maxInputTokens: ...,
+     *   maxTokens: ...,
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaModelInfo)->withID(...)->withCreatedAt(...)->withDisplayName(...)
+     * (new BetaModelInfo)
+     *   ->withID(...)
+     *   ->withCapabilities(...)
+     *   ->withCreatedAt(...)
+     *   ->withDisplayName(...)
+     *   ->withMaxInputTokens(...)
+     *   ->withMaxTokens(...)
      * ```
      */
     public function __construct()
@@ -69,17 +108,25 @@ final class BetaModelInfo implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaModelCapabilities|BetaModelCapabilitiesShape|null $capabilities
      */
     public static function with(
         string $id,
+        BetaModelCapabilities|array|null $capabilities,
         \DateTimeInterface $createdAt,
-        string $displayName
+        string $displayName,
+        ?int $maxInputTokens,
+        ?int $maxTokens,
     ): self {
         $self = new self;
 
         $self['id'] = $id;
+        $self['capabilities'] = $capabilities;
         $self['createdAt'] = $createdAt;
         $self['displayName'] = $displayName;
+        $self['maxInputTokens'] = $maxInputTokens;
+        $self['maxTokens'] = $maxTokens;
 
         return $self;
     }
@@ -91,6 +138,20 @@ final class BetaModelInfo implements BaseModel
     {
         $self = clone $this;
         $self['id'] = $id;
+
+        return $self;
+    }
+
+    /**
+     * Model capability information.
+     *
+     * @param BetaModelCapabilities|BetaModelCapabilitiesShape|null $capabilities
+     */
+    public function withCapabilities(
+        BetaModelCapabilities|array|null $capabilities
+    ): self {
+        $self = clone $this;
+        $self['capabilities'] = $capabilities;
 
         return $self;
     }
@@ -113,6 +174,28 @@ final class BetaModelInfo implements BaseModel
     {
         $self = clone $this;
         $self['displayName'] = $displayName;
+
+        return $self;
+    }
+
+    /**
+     * Maximum input context window size in tokens for this model.
+     */
+    public function withMaxInputTokens(?int $maxInputTokens): self
+    {
+        $self = clone $this;
+        $self['maxInputTokens'] = $maxInputTokens;
+
+        return $self;
+    }
+
+    /**
+     * Maximum value for the `max_tokens` parameter when using this model.
+     */
+    public function withMaxTokens(?int $maxTokens): self
+    {
+        $self = clone $this;
+        $self['maxTokens'] = $maxTokens;
 
         return $self;
     }
