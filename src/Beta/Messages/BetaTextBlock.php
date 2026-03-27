@@ -51,6 +51,21 @@ final class BetaTextBlock implements BaseModel
     public mixed $parsed = null;
 
     /**
+     * Exclude `parsed` from serialization — it's a client-side property populated
+     * by the structured-outputs layer and must not be sent back to the API, which
+     * rejects it with "Extra inputs are not permitted".
+     *
+     * @return array<string, mixed>
+     */
+    public function toProperties(): array
+    {
+        $properties = [...\Anthropic\Core\Util::get_object_vars($this), ...$this->_data];
+        unset($properties['parsed']);
+
+        return $properties;
+    }
+
+    /**
      * `new BetaTextBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
