@@ -3,6 +3,7 @@
 namespace Anthropic\Core\Exceptions;
 
 use Anthropic\Core\Util;
+use Anthropic\ErrorType;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -13,16 +14,28 @@ class APIStatusException extends APIException
 
     public ?int $status;
 
+    public readonly ?ErrorType $type;
+
     public function __construct(
         public RequestInterface $request,
         ResponseInterface $response,
         ?\Throwable $previous = null,
         string $message = '',
+        ?ErrorType $type = null,
     ) {
         $this->response = $response;
         $this->status = $response->getStatusCode();
 
-        $summary = Util::prettyEncodeJson(['status' => $this->status, 'body' => Util::decodeJson($response->getBody())]);
+        try {
+            $body = Util::decodeJson($response->getBody());
+        } catch (\JsonException) {
+            $body = null;
+        }
+
+        $summary = Util::prettyEncodeJson(['status' => $this->status, 'body' => $body]);
+
+        $errorType = Util::dig(Util::dig($body, 'error'), 'type');
+        $this->type = $type ?? (is_string($errorType) ? ErrorType::tryFrom($errorType) : null);
 
         if ('' != $message) {
             $summary .= $message.PHP_EOL.$summary;
@@ -34,7 +47,8 @@ class APIStatusException extends APIException
     public static function from(
         RequestInterface $request,
         ResponseInterface $response,
-        string $message = ''
+        string $message = '',
+        ?ErrorType $type = null,
     ): self {
         $status = $response->getStatusCode();
 
@@ -50,6 +64,6 @@ class APIStatusException extends APIException
             default => APIStatusException::class
         };
 
-        return new $cls(request: $request, response: $response, message: $message);
+        return new $cls(request: $request, response: $response, message: $message, type: $type);
     }
 }
