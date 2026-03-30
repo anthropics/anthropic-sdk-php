@@ -3,7 +3,10 @@
 namespace Tests;
 
 use Anthropic\Client;
+use Anthropic\Core\Exceptions\APIStatusException;
+use Anthropic\Core\Exceptions\BadRequestException;
 use Anthropic\Core\Util;
+use Anthropic\ErrorType;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
 use PHPUnit\Framework\TestCase;
@@ -108,6 +111,53 @@ class ClientTest extends TestCase
             } else {
                 putenv('ANTHROPIC_BASE_URL');
             }
+        }
+    }
+
+    public function testStatusErrorTypeField(): void
+    {
+        $e = $this->makeErrorRequest([
+            'type' => 'error',
+            'error' => ['type' => 'invalid_request_error', 'message' => 'Bad request'],
+        ]);
+
+        $this->assertInstanceOf(BadRequestException::class, $e);
+        $this->assertSame(400, $e->status);
+        $this->assertSame(ErrorType::INVALID_REQUEST_ERROR, $e->type);
+    }
+
+    public function testStatusErrorTypeFieldAbsent(): void
+    {
+        $e = $this->makeErrorRequest(['message' => 'Bad request']);
+
+        $this->assertSame(400, $e->status);
+        $this->assertNull($e->type);
+    }
+
+    /**
+     * @param array<mixed> $body
+     */
+    private function makeErrorRequest(array $body, int $status = 400): APIStatusException
+    {
+        $mockRsp = Psr17FactoryDiscovery::findResponseFactory()
+            ->createResponse()
+            ->withStatus($status)
+            ->withHeader('Content-Type', 'application/json')
+            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(json_encode($body, flags: Util::JSON_ENCODE_FLAGS) ?: ''))
+        ;
+
+        $this->transporter->setDefaultResponse($mockRsp);
+
+        $client = new Client(
+            apiKey: 'my-anthropic-api-key',
+            requestOptions: ['transporter' => $this->transporter],
+        );
+
+        try {
+            $client->messages->create(1024, [], 'claude-opus-4-6');
+            $this->fail('Expected APIStatusException to be thrown');
+        } catch (APIStatusException $e) {
+            return $e;
         }
     }
 
