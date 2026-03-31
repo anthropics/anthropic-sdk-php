@@ -10,5 +10,6 @@ parameters:
         - identifier: parameter.defaultValue
         - identifier: trait.unused
         - identifier: property.onlyWritten
+        - identifier: isset.property
 
     reportUnmatchedIgnoredErrors: false
