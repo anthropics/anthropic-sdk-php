@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.9.0 (2026-04-01)
+
+Full Changelog: [v0.8.0...v0.9.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.8.0...v0.9.0)
+
+### Features
+
+* add error type field to APIStatusException ([#457](https://github.com/anthropics/anthropic-sdk-php/issues/457)) ([c889d8e](https://github.com/anthropics/anthropic-sdk-php/commit/c889d8eecf7d30f2aac3bc5f28b8dac432c0df80))
+* **api:** add structured stop_details to message responses ([80151ce](https://github.com/anthropics/anthropic-sdk-php/commit/80151cebf02ab18420bc4f4044846df1db8087cf))
+* prepare aws package ([#471](https://github.com/anthropics/anthropic-sdk-php/issues/471)) ([de64488](https://github.com/anthropics/anthropic-sdk-php/commit/de64488644f3b45d27bb2939e97ac022365f149e))
+* support API key auth in Bedrock ([#490](https://github.com/anthropics/anthropic-sdk-php/issues/490)) ([ee2528d](https://github.com/anthropics/anthropic-sdk-php/commit/ee2528d911f74d4f36350721b942631c0c5677cf))
+
+
+### Bug Fixes
+
+* exclude `parsed` from TextBlock serialization ([#466](https://github.com/anthropics/anthropic-sdk-php/issues/466)) ([f3053e5](https://github.com/anthropics/anthropic-sdk-php/commit/f3053e5f176af541cc99cdd350b7ae0b290285d4)), closes [#465](https://github.com/anthropics/anthropic-sdk-php/issues/465)
+
+
+### Chores
+
+* **internal:** update multipart form array serialization ([12b1028](https://github.com/anthropics/anthropic-sdk-php/commit/12b1028e833591f5f6200ef270b10b3ccd516520))
+* **tests:** bump steady to v0.19.4 ([f257675](https://github.com/anthropics/anthropic-sdk-php/commit/f2576756157ef641eabde7ca7fd29e2bbb07c6d0))
+* **tests:** bump steady to v0.19.5 ([dea677e](https://github.com/anthropics/anthropic-sdk-php/commit/dea677e19633ec6dd470cd549ea08aca0c550043))
+* **tests:** bump steady to v0.19.6 ([c708ab5](https://github.com/anthropics/anthropic-sdk-php/commit/c708ab5a667e0ada2b013a7d942c87aed7cf67c0))
+* **tests:** bump steady to v0.19.7 ([88d31c8](https://github.com/anthropics/anthropic-sdk-php/commit/88d31c86b45d33b6144bb8c4097270a0eff24ffb))
+* **tests:** bump steady to v0.20.1 ([e9324d3](https://github.com/anthropics/anthropic-sdk-php/commit/e9324d32a329a8c629ebe7e584c66d5dcdf51c5b))
+* **tests:** bump steady to v0.20.2 ([0f9de36](https://github.com/anthropics/anthropic-sdk-php/commit/0f9de36e291580262f1ddc30d36209c4f4f2bda1))
+
 ## 0.8.0 (2026-03-18)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.7.0...v0.8.0)
