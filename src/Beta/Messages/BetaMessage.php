@@ -15,6 +15,7 @@ use Anthropic\Messages\Model;
  * @phpstan-import-type BetaContainerShape from \Anthropic\Beta\Messages\BetaContainer
  * @phpstan-import-type BetaContentBlockShape from \Anthropic\Beta\Messages\BetaContentBlock
  * @phpstan-import-type BetaContextManagementResponseShape from \Anthropic\Beta\Messages\BetaContextManagementResponse
+ * @phpstan-import-type BetaRefusalStopDetailsShape from \Anthropic\Beta\Messages\BetaRefusalStopDetails
  * @phpstan-import-type BetaUsageShape from \Anthropic\Beta\Messages\BetaUsage
  *
  * @phpstan-type BetaMessageShape = array{
@@ -24,6 +25,7 @@ use Anthropic\Messages\Model;
  *   contextManagement: null|BetaContextManagementResponse|BetaContextManagementResponseShape,
  *   model: string|Model|value-of<Model>,
  *   role: 'assistant',
+ *   stopDetails: null|BetaRefusalStopDetails|BetaRefusalStopDetailsShape,
  *   stopReason: null|BetaStopReason|value-of<BetaStopReason>,
  *   stopSequence: string|null,
  *   type: 'message',
@@ -118,6 +120,12 @@ final class BetaMessage implements BaseModel
     public string $model;
 
     /**
+     * Structured information about a refusal.
+     */
+    #[Required('stop_details')]
+    public ?BetaRefusalStopDetails $stopDetails;
+
+    /**
      * The reason that we stopped.
      *
      * This may be one the following values:
@@ -168,6 +176,7 @@ final class BetaMessage implements BaseModel
      *   content: ...,
      *   contextManagement: ...,
      *   model: ...,
+     *   stopDetails: ...,
      *   stopReason: ...,
      *   stopSequence: ...,
      *   usage: ...,
@@ -183,6 +192,7 @@ final class BetaMessage implements BaseModel
      *   ->withContent(...)
      *   ->withContextManagement(...)
      *   ->withModel(...)
+     *   ->withStopDetails(...)
      *   ->withStopReason(...)
      *   ->withStopSequence(...)
      *   ->withUsage(...)
@@ -222,6 +232,7 @@ final class BetaMessage implements BaseModel
      * @param list<BetaContentBlockShape> $content
      * @param BetaContextManagementResponse|BetaContextManagementResponseShape|null $contextManagement
      * @param string|Model|value-of<Model> $model
+     * @param BetaRefusalStopDetails|BetaRefusalStopDetailsShape|null $stopDetails
      * @param BetaStopReason|value-of<BetaStopReason>|null $stopReason
      * @param BetaUsage|BetaUsageShape $usage
      */
@@ -231,6 +242,7 @@ final class BetaMessage implements BaseModel
         array $content,
         BetaContextManagementResponse|array|null $contextManagement,
         Model|string $model,
+        BetaRefusalStopDetails|array|null $stopDetails,
         BetaStopReason|string|null $stopReason,
         ?string $stopSequence,
         BetaUsage|array $usage,
@@ -242,6 +254,7 @@ final class BetaMessage implements BaseModel
         $self['content'] = $content;
         $self['contextManagement'] = $contextManagement;
         $self['model'] = $model;
+        $self['stopDetails'] = $stopDetails;
         $self['stopReason'] = $stopReason;
         $self['stopSequence'] = $stopSequence;
         $self['usage'] = $usage;
@@ -352,6 +365,20 @@ final class BetaMessage implements BaseModel
     {
         $self = clone $this;
         $self['role'] = $role;
+
+        return $self;
+    }
+
+    /**
+     * Structured information about a refusal.
+     *
+     * @param BetaRefusalStopDetails|BetaRefusalStopDetailsShape|null $stopDetails
+     */
+    public function withStopDetails(
+        BetaRefusalStopDetails|array|null $stopDetails
+    ): self {
+        $self = clone $this;
+        $self['stopDetails'] = $stopDetails;
 
         return $self;
     }

@@ -8,13 +8,16 @@ use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Container;
+use Anthropic\Messages\RefusalStopDetails;
 use Anthropic\Messages\StopReason;
 
 /**
  * @phpstan-import-type ContainerShape from \Anthropic\Messages\Container
+ * @phpstan-import-type RefusalStopDetailsShape from \Anthropic\Messages\RefusalStopDetails
  *
  * @phpstan-type DeltaShape = array{
  *   container: null|Container|ContainerShape,
+ *   stopDetails: null|RefusalStopDetails|RefusalStopDetailsShape,
  *   stopReason: null|StopReason|value-of<StopReason>,
  *   stopSequence: string|null,
  * }
@@ -30,6 +33,12 @@ final class Delta implements BaseModel
     #[Required]
     public ?Container $container;
 
+    /**
+     * Structured information about a refusal.
+     */
+    #[Required('stop_details')]
+    public ?RefusalStopDetails $stopDetails;
+
     /** @var value-of<StopReason>|null $stopReason */
     #[Required('stop_reason', enum: StopReason::class)]
     public ?string $stopReason;
@@ -42,13 +51,19 @@ final class Delta implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Delta::with(container: ..., stopReason: ..., stopSequence: ...)
+     * Delta::with(
+     *   container: ..., stopDetails: ..., stopReason: ..., stopSequence: ...
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Delta)->withContainer(...)->withStopReason(...)->withStopSequence(...)
+     * (new Delta)
+     *   ->withContainer(...)
+     *   ->withStopDetails(...)
+     *   ->withStopReason(...)
+     *   ->withStopSequence(...)
      * ```
      */
     public function __construct()
@@ -62,16 +77,19 @@ final class Delta implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Container|ContainerShape|null $container
+     * @param RefusalStopDetails|RefusalStopDetailsShape|null $stopDetails
      * @param StopReason|value-of<StopReason>|null $stopReason
      */
     public static function with(
         Container|array|null $container,
+        RefusalStopDetails|array|null $stopDetails,
         StopReason|string|null $stopReason,
         ?string $stopSequence,
     ): self {
         $self = new self;
 
         $self['container'] = $container;
+        $self['stopDetails'] = $stopDetails;
         $self['stopReason'] = $stopReason;
         $self['stopSequence'] = $stopSequence;
 
@@ -87,6 +105,20 @@ final class Delta implements BaseModel
     {
         $self = clone $this;
         $self['container'] = $container;
+
+        return $self;
+    }
+
+    /**
+     * Structured information about a refusal.
+     *
+     * @param RefusalStopDetails|RefusalStopDetailsShape|null $stopDetails
+     */
+    public function withStopDetails(
+        RefusalStopDetails|array|null $stopDetails
+    ): self {
+        $self = clone $this;
+        $self['stopDetails'] = $stopDetails;
 
         return $self;
     }
