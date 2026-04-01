@@ -55,7 +55,7 @@
     "test": "./scripts/test"
   },
   "suggest": {
-    "aws/aws-sdk-php": "Allows using the AWS Bedrock SDK",
+    "aws/aws-sdk-php": "Allows using the AWS Bedrock, AWS gateway, and Bedrock Mantle SDKs",
     "google/auth": "Allows using the Google Vertex SDK"
   }
 }
