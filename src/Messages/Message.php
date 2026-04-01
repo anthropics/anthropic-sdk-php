@@ -12,6 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type ContentBlockVariants from \Anthropic\Messages\ContentBlock
  * @phpstan-import-type ContainerShape from \Anthropic\Messages\Container
  * @phpstan-import-type ContentBlockShape from \Anthropic\Messages\ContentBlock
+ * @phpstan-import-type RefusalStopDetailsShape from \Anthropic\Messages\RefusalStopDetails
  * @phpstan-import-type UsageShape from \Anthropic\Messages\Usage
  *
  * @phpstan-type MessageShape = array{
@@ -20,6 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   content: list<ContentBlockShape>,
  *   model: string|Model|value-of<Model>,
  *   role: 'assistant',
+ *   stopDetails: null|RefusalStopDetails|RefusalStopDetailsShape,
  *   stopReason: null|StopReason|value-of<StopReason>,
  *   stopSequence: string|null,
  *   type: 'message',
@@ -106,6 +108,12 @@ final class Message implements BaseModel
     public string $model;
 
     /**
+     * Structured information about a refusal.
+     */
+    #[Required('stop_details')]
+    public ?RefusalStopDetails $stopDetails;
+
+    /**
      * The reason that we stopped.
      *
      * This may be one the following values:
@@ -155,6 +163,7 @@ final class Message implements BaseModel
      *   container: ...,
      *   content: ...,
      *   model: ...,
+     *   stopDetails: ...,
      *   stopReason: ...,
      *   stopSequence: ...,
      *   usage: ...,
@@ -169,6 +178,7 @@ final class Message implements BaseModel
      *   ->withContainer(...)
      *   ->withContent(...)
      *   ->withModel(...)
+     *   ->withStopDetails(...)
      *   ->withStopReason(...)
      *   ->withStopSequence(...)
      *   ->withUsage(...)
@@ -187,6 +197,7 @@ final class Message implements BaseModel
      * @param Container|ContainerShape|null $container
      * @param list<ContentBlockShape> $content
      * @param string|Model|value-of<Model> $model
+     * @param RefusalStopDetails|RefusalStopDetailsShape|null $stopDetails
      * @param StopReason|value-of<StopReason>|null $stopReason
      * @param Usage|UsageShape $usage
      */
@@ -195,6 +206,7 @@ final class Message implements BaseModel
         Container|array|null $container,
         array $content,
         Model|string $model,
+        RefusalStopDetails|array|null $stopDetails,
         StopReason|string|null $stopReason,
         ?string $stopSequence,
         Usage|array $usage,
@@ -205,6 +217,7 @@ final class Message implements BaseModel
         $self['container'] = $container;
         $self['content'] = $content;
         $self['model'] = $model;
+        $self['stopDetails'] = $stopDetails;
         $self['stopReason'] = $stopReason;
         $self['stopSequence'] = $stopSequence;
         $self['usage'] = $usage;
@@ -299,6 +312,20 @@ final class Message implements BaseModel
     {
         $self = clone $this;
         $self['role'] = $role;
+
+        return $self;
+    }
+
+    /**
+     * Structured information about a refusal.
+     *
+     * @param RefusalStopDetails|RefusalStopDetailsShape|null $stopDetails
+     */
+    public function withStopDetails(
+        RefusalStopDetails|array|null $stopDetails
+    ): self {
+        $self = clone $this;
+        $self['stopDetails'] = $stopDetails;
 
         return $self;
     }
