@@ -10,7 +10,7 @@ use Psr\Http\Message\RequestInterface;
 /**
  * Anthropic AWS gateway client.
  *
- * Connects to the Anthropic AWS gateway at https://gateway.{region}.api.aws
+ * Connects to the Anthropic AWS gateway at https://aws-external-anthropic.{region}.api.aws
  * with support for x-api-key auth and AWS SigV4 signing.
  *
  * Auth is resolved by precedence:
@@ -44,7 +44,7 @@ class Client extends \Anthropic\Client
     ) {
         $this->auth = new AwsAuth(
             serviceName: 'aws-external-anthropic',
-            baseUrlPattern: 'https://gateway.{region}.api.aws',
+            baseUrlPattern: 'https://aws-external-anthropic.{region}.api.aws',
             apiKeyEnvVar: 'ANTHROPIC_AWS_API_KEY',
             baseUrlEnvVar: 'ANTHROPIC_AWS_BASE_URL',
             workspaceIdEnvVar: 'ANTHROPIC_AWS_WORKSPACE_ID',

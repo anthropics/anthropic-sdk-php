@@ -243,7 +243,7 @@ class ClientTest extends TestCase
         $client->messages->create(1024, [], 'claude-haiku-4-5');
         $request = $this->getLastRequest();
 
-        $this->assertSame('gateway.eu-west-1.api.aws', $request->getUri()->getHost());
+        $this->assertSame('aws-external-anthropic.eu-west-1.api.aws', $request->getUri()->getHost());
     }
 
     public function testRegionFromAwsDefaultRegionEnv(): void
@@ -259,7 +259,7 @@ class ClientTest extends TestCase
         $client->messages->create(1024, [], 'claude-haiku-4-5');
         $request = $this->getLastRequest();
 
-        $this->assertSame('gateway.ap-southeast-1.api.aws', $request->getUri()->getHost());
+        $this->assertSame('aws-external-anthropic.ap-southeast-1.api.aws', $request->getUri()->getHost());
     }
 
     public function testAwsRegionEnvTakesPrecedenceOverDefault(): void
@@ -276,7 +276,7 @@ class ClientTest extends TestCase
         $client->messages->create(1024, [], 'claude-haiku-4-5');
         $request = $this->getLastRequest();
 
-        $this->assertSame('gateway.us-east-1.api.aws', $request->getUri()->getHost());
+        $this->assertSame('aws-external-anthropic.us-east-1.api.aws', $request->getUri()->getHost());
     }
 
     public function testExplicitRegionOverridesEnv(): void
@@ -293,7 +293,7 @@ class ClientTest extends TestCase
         $client->messages->create(1024, [], 'claude-haiku-4-5');
         $request = $this->getLastRequest();
 
-        $this->assertSame('gateway.us-west-2.api.aws', $request->getUri()->getHost());
+        $this->assertSame('aws-external-anthropic.us-west-2.api.aws', $request->getUri()->getHost());
     }
 
     // ── Base URL resolution ─────────────────────────────────────────
@@ -305,7 +305,7 @@ class ClientTest extends TestCase
         $client->messages->create(1024, [], 'claude-haiku-4-5');
         $request = $this->getLastRequest();
 
-        $this->assertSame('gateway.us-east-1.api.aws', $request->getUri()->getHost());
+        $this->assertSame('aws-external-anthropic.us-east-1.api.aws', $request->getUri()->getHost());
     }
 
     public function testExplicitBaseUrlOverridesRegion(): void
