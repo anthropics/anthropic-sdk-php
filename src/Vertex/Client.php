@@ -55,7 +55,11 @@ final class Client extends BaseClient
         );
 
         // @see https://docs.cloud.google.com/vertex-ai/docs/reference/rest#rest_endpoints
-        $baseUrl = 'https://'.$location.'-aiplatform.googleapis.com';
+        $baseUrl = match ($location) {
+            'global' => 'https://aiplatform.googleapis.com',
+            'us' => 'https://aiplatform.us.rep.googleapis.com',
+            default => 'https://'.$location.'-aiplatform.googleapis.com',
+        };
 
         parent::__construct(
             headers: [],
