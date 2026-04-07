@@ -109,7 +109,7 @@ final class MessagesTest extends TestCase
     {
         $result = $this->client->messages->countTokens(
             messages: [['content' => 'string', 'role' => 'user']],
-            model: 'claude-opus-4-6',
+            model: 'claude-mythos-preview',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -121,7 +121,7 @@ final class MessagesTest extends TestCase
     {
         $result = $this->client->messages->countTokens(
             messages: [['content' => 'string', 'role' => 'user']],
-            model: 'claude-opus-4-6',
+            model: 'claude-mythos-preview',
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             outputConfig: [
                 'effort' => 'low',
