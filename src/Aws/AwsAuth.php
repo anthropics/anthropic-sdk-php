@@ -37,8 +37,6 @@ final class AwsAuth
 
     private ?string $resolvedRegion;
 
-    private ?string $resolvedWorkspaceId;
-
     private string $resolvedBaseUrl;
 
     /** @var (callable(): PromiseInterface)|null */
@@ -49,25 +47,20 @@ final class AwsAuth
      * @param string $baseUrlPattern    URL template with {region} placeholder
      * @param string $apiKeyEnvVar      Primary API key env var name
      * @param string $baseUrlEnvVar     Base URL env var name
-     * @param string $workspaceIdEnvVar Primary workspace ID env var name
      * @param string|null $apiKeyFallbackEnvVar      Fallback API key env var
-     * @param string|null $workspaceIdFallbackEnvVar Fallback workspace ID env var
      */
     public function __construct(
         private string $serviceName,
         string $baseUrlPattern,
         string $apiKeyEnvVar,
         string $baseUrlEnvVar,
-        string $workspaceIdEnvVar,
         ?string $apiKeyFallbackEnvVar = null,
-        ?string $workspaceIdFallbackEnvVar = null,
         ?string $apiKey = null,
         private ?string $awsAccessKey = null,
         private ?string $awsSecretAccessKey = null,
         private ?string $awsSessionToken = null,
         private ?string $awsProfile = null,
         ?string $awsRegion = null,
-        ?string $workspaceId = null,
         ?string $baseUrl = null,
         private bool $skipAuth = false,
     ) {
@@ -76,54 +69,12 @@ final class AwsAuth
             ?? Util::getenv('AWS_REGION')
             ?? Util::getenv('AWS_DEFAULT_REGION');
 
-        // WorkspaceID: arg > primary env > fallback env, required (unless skipAuth)
-        $this->resolvedWorkspaceId = $workspaceId
-            ?? Util::getenv($workspaceIdEnvVar)
-            ?? (null !== $workspaceIdFallbackEnvVar ? Util::getenv($workspaceIdFallbackEnvVar) : null);
-
-        if (!$this->skipAuth && null === $this->resolvedWorkspaceId) {
-            throw new \InvalidArgumentException(
-                "No workspace ID found; set \$workspaceId or {$workspaceIdEnvVar}"
-            );
-        }
-
         // Base URL: arg > env var > derived from region + pattern
         if (null === $baseUrl) {
             $baseUrl = Util::getenv($baseUrlEnvVar);
         }
         if (null === $baseUrl && null !== $this->resolvedRegion) {
             $baseUrl = str_replace('{region}', $this->resolvedRegion, $baseUrlPattern);
-        }
-
-        // Auth mode resolution
-        $this->resolvedApiKey = null;
-        $this->useSigV4 = false;
-
-        if (!$this->skipAuth) {
-            $hasExplicitApiKey = null !== $apiKey;
-            $hasExplicitAwsCreds = null !== $awsAccessKey && null !== $awsSecretAccessKey;
-            $hasAwsProfile = null !== $awsProfile;
-
-            if ($hasExplicitApiKey) {
-                $this->resolvedApiKey = $apiKey;
-            } elseif ($hasExplicitAwsCreds || $hasAwsProfile) {
-                $this->useSigV4 = true;
-            } else {
-                $envKey = Util::getenv($apiKeyEnvVar)
-                    ?? (null !== $apiKeyFallbackEnvVar ? Util::getenv($apiKeyFallbackEnvVar) : null);
-
-                if (null !== $envKey) {
-                    $this->resolvedApiKey = $envKey;
-                } else {
-                    $this->useSigV4 = true;
-                }
-            }
-
-            if ($this->useSigV4 && null === $this->resolvedRegion) {
-                throw new \InvalidArgumentException(
-                    'No AWS region found; set $awsRegion, AWS_REGION, or AWS_DEFAULT_REGION'
-                );
-            }
         }
 
         // Base URL or region is always required, regardless of auth mode
@@ -134,6 +85,39 @@ final class AwsAuth
         }
 
         $this->resolvedBaseUrl = $baseUrl;
+
+        // Auth mode resolution
+        $this->resolvedApiKey = null;
+        $this->useSigV4 = false;
+
+        if ($this->skipAuth) {
+            return;
+        }
+
+        $hasExplicitApiKey = null !== $apiKey;
+        $hasExplicitAwsCreds = null !== $awsAccessKey && null !== $awsSecretAccessKey;
+        $hasAwsProfile = null !== $awsProfile;
+
+        if ($hasExplicitApiKey) {
+            $this->resolvedApiKey = $apiKey;
+        } elseif ($hasExplicitAwsCreds || $hasAwsProfile) {
+            $this->useSigV4 = true;
+        } else {
+            $envKey = Util::getenv($apiKeyEnvVar)
+                ?? (null !== $apiKeyFallbackEnvVar ? Util::getenv($apiKeyFallbackEnvVar) : null);
+
+            if (null !== $envKey) {
+                $this->resolvedApiKey = $envKey;
+            } else {
+                $this->useSigV4 = true;
+            }
+        }
+
+        if ($this->useSigV4 && null === $this->resolvedRegion) {
+            throw new \InvalidArgumentException(
+                'No AWS region found; set $awsRegion, AWS_REGION, or AWS_DEFAULT_REGION'
+            );
+        }
     }
 
     public function getBaseUrl(): string
@@ -166,16 +150,10 @@ final class AwsAuth
     }
 
     /**
-     * Applies workspace-id header (not overridable by user headers) and
-     * signs the request with SigV4 if configured.
+     * Signs the request with SigV4 if configured.
      */
     public function signRequest(RequestInterface $request): RequestInterface
     {
-        if (!$this->skipAuth) {
-            assert(null !== $this->resolvedWorkspaceId);
-            $request = $request->withHeader('anthropic-workspace-id', $this->resolvedWorkspaceId);
-        }
-
         if ($this->skipAuth || !$this->useSigV4) {
             return $request;
         }
