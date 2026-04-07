@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Aws;
 
+use Anthropic\Core\Util;
 use Anthropic\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 
@@ -27,6 +28,8 @@ class Client extends \Anthropic\Client
 {
     private AwsAuth $auth;
 
+    private ?string $resolvedWorkspaceId;
+
     /**
      * @param RequestOpts|null $requestOptions
      */
@@ -42,19 +45,26 @@ class Client extends \Anthropic\Client
         bool $skipAuth = false,
         RequestOptions|array|null $requestOptions = null,
     ) {
+        // WorkspaceID: arg > env, required (unless skipAuth)
+        $this->resolvedWorkspaceId = $workspaceId ?? Util::getenv('ANTHROPIC_AWS_WORKSPACE_ID');
+
+        if (!$skipAuth && null === $this->resolvedWorkspaceId) {
+            throw new \InvalidArgumentException(
+                'No workspace ID found; set $workspaceId or ANTHROPIC_AWS_WORKSPACE_ID'
+            );
+        }
+
         $this->auth = new AwsAuth(
             serviceName: 'aws-external-anthropic',
             baseUrlPattern: 'https://aws-external-anthropic.{region}.api.aws',
             apiKeyEnvVar: 'ANTHROPIC_AWS_API_KEY',
             baseUrlEnvVar: 'ANTHROPIC_AWS_BASE_URL',
-            workspaceIdEnvVar: 'ANTHROPIC_AWS_WORKSPACE_ID',
             apiKey: $apiKey,
             awsAccessKey: $awsAccessKey,
             awsSecretAccessKey: $awsSecretAccessKey,
             awsSessionToken: $awsSessionToken,
             awsProfile: $awsProfile,
             awsRegion: $awsRegion,
-            workspaceId: $workspaceId,
             baseUrl: $baseUrl,
             skipAuth: $skipAuth,
         );
@@ -86,6 +96,10 @@ class Client extends \Anthropic\Client
      */
     protected function transformRequest(RequestInterface $request): RequestInterface
     {
+        if (null !== $this->resolvedWorkspaceId) {
+            $request = $request->withHeader('anthropic-workspace-id', $this->resolvedWorkspaceId);
+        }
+
         return $this->auth->signRequest($request);
     }
 }
