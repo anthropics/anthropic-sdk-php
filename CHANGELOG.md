@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.10.0 (2026-04-07)
+
+Full Changelog: [v0.9.0...v0.10.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.9.0...v0.10.0)
+
+### Features
+
+* **api:** Add support for claude-mythos-preview ([140ef63](https://github.com/anthropics/anthropic-sdk-php/commit/140ef63deb83be8c2b787e4b0c5a3275e61a1ed1))
+* **vertex:** add support for US multi-region endpoint ([347a703](https://github.com/anthropics/anthropic-sdk-php/commit/347a703e1ee910668eac06b3f6fdffa44c20ecbc))
+
+
+### Chores
+
+* **client:** internal updates ([553ec56](https://github.com/anthropics/anthropic-sdk-php/commit/553ec5616546f1d1fdeeb5b23d10c8c58855998c))
+
 ## 0.9.0 (2026-04-01)
 
 Full Changelog: [v0.8.0...v0.9.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.8.0...v0.9.0)
