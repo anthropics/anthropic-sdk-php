@@ -9,6 +9,8 @@ namespace Anthropic\Messages;
  */
 enum Model: string
 {
+    case CLAUDE_MYTHOS_PREVIEW = 'claude-mythos-preview';
+
     case CLAUDE_OPUS_4_6 = 'claude-opus-4-6';
 
     case CLAUDE_SONNET_4_6 = 'claude-sonnet-4-6';
