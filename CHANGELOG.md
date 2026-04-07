@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.11.0 (2026-04-07)
+
+Full Changelog: [v0.10.0...v0.11.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.10.0...v0.11.0)
+
+### Features
+
+* **bedrock:** Create Bedrock Mantle client ([#472](https://github.com/anthropics/anthropic-sdk-php/issues/472)) ([89578cb](https://github.com/anthropics/anthropic-sdk-php/commit/89578cb3b8570645b718a6874fdb7e2d0c954adb))
+
 ## 0.10.0 (2026-04-07)
 
 Full Changelog: [v0.9.0...v0.10.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.9.0...v0.10.0)
