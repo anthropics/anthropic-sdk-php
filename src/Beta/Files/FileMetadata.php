@@ -10,6 +10,8 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaFileScopeShape from \Anthropic\Beta\Files\BetaFileScope
+ *
  * @phpstan-type FileMetadataShape = array{
  *   id: string,
  *   createdAt: \DateTimeInterface,
@@ -18,6 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   sizeBytes: int,
  *   type: 'file',
  *   downloadable?: bool|null,
+ *   scope?: null|BetaFileScope|BetaFileScopeShape,
  * }
  */
 final class FileMetadata implements BaseModel
@@ -74,6 +77,12 @@ final class FileMetadata implements BaseModel
     public ?bool $downloadable;
 
     /**
+     * The scope of this file, indicating the context in which it was created (e.g., a session).
+     */
+    #[Optional(nullable: true)]
+    public ?BetaFileScope $scope;
+
+    /**
      * `new FileMetadata()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -103,6 +112,8 @@ final class FileMetadata implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param BetaFileScope|BetaFileScopeShape|null $scope
      */
     public static function with(
         string $id,
@@ -111,6 +122,7 @@ final class FileMetadata implements BaseModel
         string $mimeType,
         int $sizeBytes,
         ?bool $downloadable = null,
+        BetaFileScope|array|null $scope = null,
     ): self {
         $self = new self;
 
@@ -121,6 +133,7 @@ final class FileMetadata implements BaseModel
         $self['sizeBytes'] = $sizeBytes;
 
         null !== $downloadable && $self['downloadable'] = $downloadable;
+        null !== $scope && $self['scope'] = $scope;
 
         return $self;
     }
@@ -204,6 +217,19 @@ final class FileMetadata implements BaseModel
     {
         $self = clone $this;
         $self['downloadable'] = $downloadable;
+
+        return $self;
+    }
+
+    /**
+     * The scope of this file, indicating the context in which it was created (e.g., a session).
+     *
+     * @param BetaFileScope|BetaFileScopeShape|null $scope
+     */
+    public function withScope(BetaFileScope|array|null $scope): self
+    {
+        $self = clone $this;
+        $self['scope'] = $scope;
 
         return $self;
     }

@@ -38,6 +38,7 @@ final class FilesRawService implements FilesRawContract
      *   afterID?: string,
      *   beforeID?: string,
      *   limit?: int,
+     *   scopeID?: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|FileListParams $params
      * @param RequestOpts|null $requestOptions
@@ -54,7 +55,7 @@ final class FilesRawService implements FilesRawContract
             $params,
             $requestOptions,
         );
-        $query_params = array_flip(['afterID', 'beforeID', 'limit']);
+        $query_params = array_flip(['afterID', 'beforeID', 'limit', 'scopeID']);
 
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);
@@ -65,7 +66,11 @@ final class FilesRawService implements FilesRawContract
             path: 'v1/files?beta=true',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
-                ['afterID' => 'after_id', 'beforeID' => 'before_id'],
+                [
+                    'afterID' => 'after_id',
+                    'beforeID' => 'before_id',
+                    'scopeID' => 'scope_id',
+                ],
             ),
             headers: Util::array_transform_keys(
                 $header_params,
