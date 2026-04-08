@@ -19,6 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   afterID?: string|null,
  *   beforeID?: string|null,
  *   limit?: int|null,
+ *   scopeID?: string|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
@@ -49,6 +50,12 @@ final class FileListParams implements BaseModel
     public ?int $limit;
 
     /**
+     * Filter by scope ID. Only returns files associated with the specified scope (e.g., a session ID).
+     */
+    #[Optional]
+    public ?string $scopeID;
+
+    /**
      * Optional header to specify the beta version(s) you want to use.
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
@@ -72,6 +79,7 @@ final class FileListParams implements BaseModel
         ?string $afterID = null,
         ?string $beforeID = null,
         ?int $limit = null,
+        ?string $scopeID = null,
         ?array $betas = null,
     ): self {
         $self = new self;
@@ -79,6 +87,7 @@ final class FileListParams implements BaseModel
         null !== $afterID && $self['afterID'] = $afterID;
         null !== $beforeID && $self['beforeID'] = $beforeID;
         null !== $limit && $self['limit'] = $limit;
+        null !== $scopeID && $self['scopeID'] = $scopeID;
         null !== $betas && $self['betas'] = $betas;
 
         return $self;
@@ -115,6 +124,17 @@ final class FileListParams implements BaseModel
     {
         $self = clone $this;
         $self['limit'] = $limit;
+
+        return $self;
+    }
+
+    /**
+     * Filter by scope ID. Only returns files associated with the specified scope (e.g., a session ID).
+     */
+    public function withScopeID(string $scopeID): self
+    {
+        $self = clone $this;
+        $self['scopeID'] = $scopeID;
 
         return $self;
     }
