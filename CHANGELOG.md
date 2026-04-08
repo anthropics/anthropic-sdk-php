@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.12.0 (2026-04-08)
+
+Full Changelog: [v0.11.0...v0.12.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.11.0...v0.12.0)
+
+### Features
+
+* **api:** add support for Claude Managed Agents ([e3d510b](https://github.com/anthropics/anthropic-sdk-php/commit/e3d510b4355fc584f7c95c820a95e2a614d6d8ba))
+
 ## 0.11.0 (2026-04-07)
 
 Full Changelog: [v0.10.0...v0.11.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.10.0...v0.11.0)
