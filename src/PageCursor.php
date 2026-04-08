@@ -15,7 +15,7 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * @phpstan-type PageCursorShape = array{
- *   data?: list<mixed>|null, hasMore?: bool|null, nextPage?: string|null
+ *   data?: list<mixed>|null, nextPage?: string|null
  * }
  *
  * @template TItem
@@ -33,9 +33,6 @@ final class PageCursor implements BaseModel, BasePage
     /** @var list<TItem>|null $data */
     #[Optional(list: 'mixed')]
     public ?array $data;
-
-    #[Optional('has_more')]
-    public ?bool $hasMore;
 
     #[Optional('next_page', nullable: true)]
     public ?string $nextPage;
@@ -98,7 +95,7 @@ final class PageCursor implements BaseModel, BasePage
      */
     public function nextRequest(): ?array
     {
-        if (!($this->hasMore ?? null) || !count($this->getItems())) {
+        if (!count($this->getItems())) {
             return null;
         }
 

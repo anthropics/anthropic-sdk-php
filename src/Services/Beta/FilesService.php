@@ -42,6 +42,7 @@ final class FilesService implements FilesContract
      * @param int $limit Query param: Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
+     * @param string $scopeID Query param: Filter by scope ID. Only returns files associated with the specified scope (e.g., a session ID).
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
@@ -53,6 +54,7 @@ final class FilesService implements FilesContract
         ?string $afterID = null,
         ?string $beforeID = null,
         int $limit = 20,
+        ?string $scopeID = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page {
@@ -61,6 +63,7 @@ final class FilesService implements FilesContract
                 'afterID' => $afterID,
                 'beforeID' => $beforeID,
                 'limit' => $limit,
+                'scopeID' => $scopeID,
                 'betas' => $betas,
             ],
         );

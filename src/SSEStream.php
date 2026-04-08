@@ -39,6 +39,7 @@ final class SSEStream implements BaseStream
                 case 'content_block_start':
                 case 'content_block_delta':
                 case 'content_block_stop':
+                case 'message':
                     if ($data = $row['data'] ?? '') {
                         $decoded = Util::decodeJson($data);
 
