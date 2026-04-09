@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.13.0 (2026-04-09)
+
+Full Changelog: [v0.12.0...v0.13.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.12.0...v0.13.0)
+
+### Features
+
+* **api:** Add beta advisor tool ([041ee5f](https://github.com/anthropics/anthropic-sdk-php/commit/041ee5fba5389b78862345a6682ec9b1564fa4c3))
+
 ## 0.12.0 (2026-04-08)
 
 Full Changelog: [v0.11.0...v0.12.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.11.0...v0.12.0)
