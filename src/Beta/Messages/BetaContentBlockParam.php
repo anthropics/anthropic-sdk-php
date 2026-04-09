@@ -22,6 +22,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type BetaServerToolUseBlockParamShape from \Anthropic\Beta\Messages\BetaServerToolUseBlockParam
  * @phpstan-import-type BetaWebSearchToolResultBlockParamShape from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlockParam
  * @phpstan-import-type BetaWebFetchToolResultBlockParamShape from \Anthropic\Beta\Messages\BetaWebFetchToolResultBlockParam
+ * @phpstan-import-type BetaAdvisorToolResultBlockParamShape from \Anthropic\Beta\Messages\BetaAdvisorToolResultBlockParam
  * @phpstan-import-type BetaCodeExecutionToolResultBlockParamShape from \Anthropic\Beta\Messages\BetaCodeExecutionToolResultBlockParam
  * @phpstan-import-type BetaBashCodeExecutionToolResultBlockParamShape from \Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultBlockParam
  * @phpstan-import-type BetaTextEditorCodeExecutionToolResultBlockParamShape from \Anthropic\Beta\Messages\BetaTextEditorCodeExecutionToolResultBlockParam
@@ -31,8 +32,8 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type BetaContainerUploadBlockParamShape from \Anthropic\Beta\Messages\BetaContainerUploadBlockParam
  * @phpstan-import-type BetaCompactionBlockParamShape from \Anthropic\Beta\Messages\BetaCompactionBlockParam
  *
- * @phpstan-type BetaContentBlockParamVariants = BetaTextBlockParam|BetaImageBlockParam|BetaRequestDocumentBlock|BetaSearchResultBlockParam|BetaThinkingBlockParam|BetaRedactedThinkingBlockParam|BetaToolUseBlockParam|BetaToolResultBlockParam|BetaServerToolUseBlockParam|BetaWebSearchToolResultBlockParam|BetaWebFetchToolResultBlockParam|BetaCodeExecutionToolResultBlockParam|BetaBashCodeExecutionToolResultBlockParam|BetaTextEditorCodeExecutionToolResultBlockParam|BetaToolSearchToolResultBlockParam|BetaMCPToolUseBlockParam|BetaRequestMCPToolResultBlockParam|BetaContainerUploadBlockParam|BetaCompactionBlockParam
- * @phpstan-type BetaContentBlockParamShape = BetaContentBlockParamVariants|BetaTextBlockParamShape|BetaImageBlockParamShape|BetaRequestDocumentBlockShape|BetaSearchResultBlockParamShape|BetaThinkingBlockParamShape|BetaRedactedThinkingBlockParamShape|BetaToolUseBlockParamShape|BetaToolResultBlockParamShape|BetaServerToolUseBlockParamShape|BetaWebSearchToolResultBlockParamShape|BetaWebFetchToolResultBlockParamShape|BetaCodeExecutionToolResultBlockParamShape|BetaBashCodeExecutionToolResultBlockParamShape|BetaTextEditorCodeExecutionToolResultBlockParamShape|BetaToolSearchToolResultBlockParamShape|BetaMCPToolUseBlockParamShape|BetaRequestMCPToolResultBlockParamShape|BetaContainerUploadBlockParamShape|BetaCompactionBlockParamShape
+ * @phpstan-type BetaContentBlockParamVariants = BetaTextBlockParam|BetaImageBlockParam|BetaRequestDocumentBlock|BetaSearchResultBlockParam|BetaThinkingBlockParam|BetaRedactedThinkingBlockParam|BetaToolUseBlockParam|BetaToolResultBlockParam|BetaServerToolUseBlockParam|BetaWebSearchToolResultBlockParam|BetaWebFetchToolResultBlockParam|BetaAdvisorToolResultBlockParam|BetaCodeExecutionToolResultBlockParam|BetaBashCodeExecutionToolResultBlockParam|BetaTextEditorCodeExecutionToolResultBlockParam|BetaToolSearchToolResultBlockParam|BetaMCPToolUseBlockParam|BetaRequestMCPToolResultBlockParam|BetaContainerUploadBlockParam|BetaCompactionBlockParam
+ * @phpstan-type BetaContentBlockParamShape = BetaContentBlockParamVariants|BetaTextBlockParamShape|BetaImageBlockParamShape|BetaRequestDocumentBlockShape|BetaSearchResultBlockParamShape|BetaThinkingBlockParamShape|BetaRedactedThinkingBlockParamShape|BetaToolUseBlockParamShape|BetaToolResultBlockParamShape|BetaServerToolUseBlockParamShape|BetaWebSearchToolResultBlockParamShape|BetaWebFetchToolResultBlockParamShape|BetaAdvisorToolResultBlockParamShape|BetaCodeExecutionToolResultBlockParamShape|BetaBashCodeExecutionToolResultBlockParamShape|BetaTextEditorCodeExecutionToolResultBlockParamShape|BetaToolSearchToolResultBlockParamShape|BetaMCPToolUseBlockParamShape|BetaRequestMCPToolResultBlockParamShape|BetaContainerUploadBlockParamShape|BetaCompactionBlockParamShape
  */
 final class BetaContentBlockParam implements ConverterSource
 {
@@ -60,6 +61,7 @@ final class BetaContentBlockParam implements ConverterSource
             'server_tool_use' => BetaServerToolUseBlockParam::class,
             'web_search_tool_result' => BetaWebSearchToolResultBlockParam::class,
             'web_fetch_tool_result' => BetaWebFetchToolResultBlockParam::class,
+            'advisor_tool_result' => BetaAdvisorToolResultBlockParam::class,
             'code_execution_tool_result' => BetaCodeExecutionToolResultBlockParam::class,
             'bash_code_execution_tool_result' => BetaBashCodeExecutionToolResultBlockParam::class,
             'text_editor_code_execution_tool_result' => BetaTextEditorCodeExecutionToolResultBlockParam::class,

@@ -6,6 +6,8 @@ namespace Anthropic\Beta\Messages\BetaServerToolUseBlockParam;
 
 enum Name: string
 {
+    case ADVISOR = 'advisor';
+
     case WEB_SEARCH = 'web_search';
 
     case WEB_FETCH = 'web_fetch';
