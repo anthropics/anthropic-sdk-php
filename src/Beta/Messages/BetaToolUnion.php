@@ -30,12 +30,13 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type BetaWebSearchTool20260209Shape from \Anthropic\Beta\Messages\BetaWebSearchTool20260209
  * @phpstan-import-type BetaWebFetchTool20260209Shape from \Anthropic\Beta\Messages\BetaWebFetchTool20260209
  * @phpstan-import-type BetaWebFetchTool20260309Shape from \Anthropic\Beta\Messages\BetaWebFetchTool20260309
+ * @phpstan-import-type BetaAdvisorTool20260301Shape from \Anthropic\Beta\Messages\BetaAdvisorTool20260301
  * @phpstan-import-type BetaToolSearchToolBm25_20251119Shape from \Anthropic\Beta\Messages\BetaToolSearchToolBm25_20251119
  * @phpstan-import-type BetaToolSearchToolRegex20251119Shape from \Anthropic\Beta\Messages\BetaToolSearchToolRegex20251119
  * @phpstan-import-type BetaMCPToolsetShape from \Anthropic\Beta\Messages\BetaMCPToolset
  *
- * @phpstan-type BetaToolUnionVariants = BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaCodeExecutionTool20260120|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaWebSearchTool20260209|BetaWebFetchTool20260209|BetaWebFetchTool20260309|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset
- * @phpstan-type BetaToolUnionShape = BetaToolUnionVariants|BetaToolShape|BetaToolBash20241022Shape|BetaToolBash20250124Shape|BetaCodeExecutionTool20250522Shape|BetaCodeExecutionTool20250825Shape|BetaCodeExecutionTool20260120Shape|BetaToolComputerUse20241022Shape|BetaMemoryTool20250818Shape|BetaToolComputerUse20250124Shape|BetaToolTextEditor20241022Shape|BetaToolComputerUse20251124Shape|BetaToolTextEditor20250124Shape|BetaToolTextEditor20250429Shape|BetaToolTextEditor20250728Shape|BetaWebSearchTool20250305Shape|BetaWebFetchTool20250910Shape|BetaWebSearchTool20260209Shape|BetaWebFetchTool20260209Shape|BetaWebFetchTool20260309Shape|BetaToolSearchToolBm25_20251119Shape|BetaToolSearchToolRegex20251119Shape|BetaMCPToolsetShape
+ * @phpstan-type BetaToolUnionVariants = BetaTool|BetaToolBash20241022|BetaToolBash20250124|BetaCodeExecutionTool20250522|BetaCodeExecutionTool20250825|BetaCodeExecutionTool20260120|BetaToolComputerUse20241022|BetaMemoryTool20250818|BetaToolComputerUse20250124|BetaToolTextEditor20241022|BetaToolComputerUse20251124|BetaToolTextEditor20250124|BetaToolTextEditor20250429|BetaToolTextEditor20250728|BetaWebSearchTool20250305|BetaWebFetchTool20250910|BetaWebSearchTool20260209|BetaWebFetchTool20260209|BetaWebFetchTool20260309|BetaAdvisorTool20260301|BetaToolSearchToolBm25_20251119|BetaToolSearchToolRegex20251119|BetaMCPToolset
+ * @phpstan-type BetaToolUnionShape = BetaToolUnionVariants|BetaToolShape|BetaToolBash20241022Shape|BetaToolBash20250124Shape|BetaCodeExecutionTool20250522Shape|BetaCodeExecutionTool20250825Shape|BetaCodeExecutionTool20260120Shape|BetaToolComputerUse20241022Shape|BetaMemoryTool20250818Shape|BetaToolComputerUse20250124Shape|BetaToolTextEditor20241022Shape|BetaToolComputerUse20251124Shape|BetaToolTextEditor20250124Shape|BetaToolTextEditor20250429Shape|BetaToolTextEditor20250728Shape|BetaWebSearchTool20250305Shape|BetaWebFetchTool20250910Shape|BetaWebSearchTool20260209Shape|BetaWebFetchTool20260209Shape|BetaWebFetchTool20260309Shape|BetaAdvisorTool20260301Shape|BetaToolSearchToolBm25_20251119Shape|BetaToolSearchToolRegex20251119Shape|BetaMCPToolsetShape
  */
 final class BetaToolUnion implements ConverterSource
 {
@@ -66,6 +67,7 @@ final class BetaToolUnion implements ConverterSource
             BetaWebSearchTool20260209::class,
             BetaWebFetchTool20260209::class,
             BetaWebFetchTool20260309::class,
+            BetaAdvisorTool20260301::class,
             BetaToolSearchToolBm25_20251119::class,
             BetaToolSearchToolRegex20251119::class,
             BetaMCPToolset::class,

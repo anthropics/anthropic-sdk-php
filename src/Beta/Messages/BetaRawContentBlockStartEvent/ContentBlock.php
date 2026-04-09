@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\BetaRawContentBlockStartEvent;
 
+use Anthropic\Beta\Messages\BetaAdvisorToolResultBlock;
 use Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultBlock;
 use Anthropic\Beta\Messages\BetaCodeExecutionToolResultBlock;
 use Anthropic\Beta\Messages\BetaCompactionBlock;
@@ -33,6 +34,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type BetaServerToolUseBlockShape from \Anthropic\Beta\Messages\BetaServerToolUseBlock
  * @phpstan-import-type BetaWebSearchToolResultBlockShape from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlock
  * @phpstan-import-type BetaWebFetchToolResultBlockShape from \Anthropic\Beta\Messages\BetaWebFetchToolResultBlock
+ * @phpstan-import-type BetaAdvisorToolResultBlockShape from \Anthropic\Beta\Messages\BetaAdvisorToolResultBlock
  * @phpstan-import-type BetaCodeExecutionToolResultBlockShape from \Anthropic\Beta\Messages\BetaCodeExecutionToolResultBlock
  * @phpstan-import-type BetaBashCodeExecutionToolResultBlockShape from \Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultBlock
  * @phpstan-import-type BetaTextEditorCodeExecutionToolResultBlockShape from \Anthropic\Beta\Messages\BetaTextEditorCodeExecutionToolResultBlock
@@ -42,8 +44,8 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type BetaContainerUploadBlockShape from \Anthropic\Beta\Messages\BetaContainerUploadBlock
  * @phpstan-import-type BetaCompactionBlockShape from \Anthropic\Beta\Messages\BetaCompactionBlock
  *
- * @phpstan-type ContentBlockVariants = BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock|BetaCompactionBlock
- * @phpstan-type ContentBlockShape = ContentBlockVariants|BetaTextBlockShape|BetaThinkingBlockShape|BetaRedactedThinkingBlockShape|BetaToolUseBlockShape|BetaServerToolUseBlockShape|BetaWebSearchToolResultBlockShape|BetaWebFetchToolResultBlockShape|BetaCodeExecutionToolResultBlockShape|BetaBashCodeExecutionToolResultBlockShape|BetaTextEditorCodeExecutionToolResultBlockShape|BetaToolSearchToolResultBlockShape|BetaMCPToolUseBlockShape|BetaMCPToolResultBlockShape|BetaContainerUploadBlockShape|BetaCompactionBlockShape
+ * @phpstan-type ContentBlockVariants = BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaAdvisorToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock|BetaCompactionBlock
+ * @phpstan-type ContentBlockShape = ContentBlockVariants|BetaTextBlockShape|BetaThinkingBlockShape|BetaRedactedThinkingBlockShape|BetaToolUseBlockShape|BetaServerToolUseBlockShape|BetaWebSearchToolResultBlockShape|BetaWebFetchToolResultBlockShape|BetaAdvisorToolResultBlockShape|BetaCodeExecutionToolResultBlockShape|BetaBashCodeExecutionToolResultBlockShape|BetaTextEditorCodeExecutionToolResultBlockShape|BetaToolSearchToolResultBlockShape|BetaMCPToolUseBlockShape|BetaMCPToolResultBlockShape|BetaContainerUploadBlockShape|BetaCompactionBlockShape
  */
 final class ContentBlock implements ConverterSource
 {
@@ -67,6 +69,7 @@ final class ContentBlock implements ConverterSource
             'server_tool_use' => BetaServerToolUseBlock::class,
             'web_search_tool_result' => BetaWebSearchToolResultBlock::class,
             'web_fetch_tool_result' => BetaWebFetchToolResultBlock::class,
+            'advisor_tool_result' => BetaAdvisorToolResultBlock::class,
             'code_execution_tool_result' => BetaCodeExecutionToolResultBlock::class,
             'bash_code_execution_tool_result' => BetaBashCodeExecutionToolResultBlock::class,
             'text_editor_code_execution_tool_result' => BetaTextEditorCodeExecutionToolResultBlock::class,
