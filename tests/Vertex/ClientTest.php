@@ -37,6 +37,8 @@ class ClientTest extends TestCase
 
         yield 'us-central1 region' => ['us-central1', 'https://us-central1-aiplatform.googleapis.com'];
 
+        yield 'eu region' => ['eu', 'https://aiplatform.eu.rep.googleapis.com'];
+
         yield 'europe-west1 region' => ['europe-west1', 'https://europe-west1-aiplatform.googleapis.com'];
 
         yield 'asia-southeast1 region' => ['asia-southeast1', 'https://asia-southeast1-aiplatform.googleapis.com'];
