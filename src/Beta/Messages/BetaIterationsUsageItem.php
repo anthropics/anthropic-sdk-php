@@ -13,9 +13,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  *
  * @phpstan-import-type BetaMessageIterationUsageShape from \Anthropic\Beta\Messages\BetaMessageIterationUsage
  * @phpstan-import-type BetaCompactionIterationUsageShape from \Anthropic\Beta\Messages\BetaCompactionIterationUsage
+ * @phpstan-import-type BetaAdvisorMessageIterationUsageShape from \Anthropic\Beta\Messages\BetaAdvisorMessageIterationUsage
  *
- * @phpstan-type BetaIterationsUsageItemVariants = BetaMessageIterationUsage|BetaCompactionIterationUsage
- * @phpstan-type BetaIterationsUsageItemShape = BetaIterationsUsageItemVariants|BetaMessageIterationUsageShape|BetaCompactionIterationUsageShape
+ * @phpstan-type BetaIterationsUsageItemVariants = BetaMessageIterationUsage|BetaCompactionIterationUsage|BetaAdvisorMessageIterationUsage
+ * @phpstan-type BetaIterationsUsageItemShape = BetaIterationsUsageItemVariants|BetaMessageIterationUsageShape|BetaCompactionIterationUsageShape|BetaAdvisorMessageIterationUsageShape
  */
 final class BetaIterationsUsageItem implements ConverterSource
 {
@@ -34,6 +35,7 @@ final class BetaIterationsUsageItem implements ConverterSource
         return [
             'message' => BetaMessageIterationUsage::class,
             'compaction' => BetaCompactionIterationUsage::class,
+            'advisor_message' => BetaAdvisorMessageIterationUsage::class,
         ];
     }
 }
