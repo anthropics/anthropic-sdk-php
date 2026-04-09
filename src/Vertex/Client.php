@@ -58,6 +58,7 @@ final class Client extends BaseClient
         $baseUrl = match ($location) {
             'global' => 'https://aiplatform.googleapis.com',
             'us' => 'https://aiplatform.us.rep.googleapis.com',
+            'eu' => 'https://aiplatform.eu.rep.googleapis.com',
             default => 'https://'.$location.'-aiplatform.googleapis.com',
         };
 
