@@ -16,6 +16,7 @@ use Anthropic\Beta\Skills\SkillRetrieveParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\FileParam;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -39,7 +40,7 @@ final class SkillsRawService implements SkillsRawContract
      *
      * @param array{
      *   displayTitle?: string|null,
-     *   files?: list<string>|null,
+     *   files?: list<string|FileParam>|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|SkillCreateParams $params
      * @param RequestOpts|null $requestOptions

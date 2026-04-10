@@ -11,6 +11,7 @@ use Anthropic\Beta\Skills\SkillListResponse;
 use Anthropic\Beta\Skills\SkillNewResponse;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\FileParam;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -49,7 +50,7 @@ final class SkillsService implements SkillsContract
      * @param string|null $displayTitle Body param: Display title for the skill.
      *
      * This is a human-readable label that is not included in the prompt sent to the model.
-     * @param list<string>|null $files Body param: Files to upload for the skill.
+     * @param list<string|FileParam>|null $files Body param: Files to upload for the skill.
      *
      * All files must be in the same top-level directory and must include a SKILL.md file at the root of that directory.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
