@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.14.0 (2026-04-10)
+
+Full Changelog: [v0.13.0...v0.14.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.13.0...v0.14.0)
+
+### Features
+
+* vertex eu region ([#517](https://github.com/anthropics/anthropic-sdk-php/issues/517)) ([49c60d2](https://github.com/anthropics/anthropic-sdk-php/commit/49c60d20c9b6d8f3284399134f5f4427fd1bc3cc))
+
+
+### Bug Fixes
+
+* **client:** properly generate file params ([3866f0e](https://github.com/anthropics/anthropic-sdk-php/commit/3866f0e7d95d3458997723a8d7148cb82f03be23))
+
+
+### Documentation
+
+* improve examples ([dc4c545](https://github.com/anthropics/anthropic-sdk-php/commit/dc4c5452adf4bf37e71a091c2aa3666e324d3908))
+* update examples ([8f1c3b3](https://github.com/anthropics/anthropic-sdk-php/commit/8f1c3b35d0195db6202871b927dcbe7404d6db29))
+
 ## 0.13.0 (2026-04-09)
 
 Full Changelog: [v0.12.0...v0.13.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.12.0...v0.13.0)
