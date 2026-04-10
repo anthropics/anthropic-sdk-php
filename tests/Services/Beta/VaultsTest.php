@@ -45,7 +45,7 @@ final class VaultsTest extends TestCase
         $result = $this->client->beta->vaults->create(
             displayName: 'Example vault',
             metadata: ['environment' => 'production'],
-            betas: ['string'],
+            betas: ['message-batches-2024-09-24'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

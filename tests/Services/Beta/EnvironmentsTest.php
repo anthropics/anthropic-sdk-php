@@ -65,7 +65,7 @@ final class EnvironmentsTest extends TestCase
             ],
             description: 'Python environment with data-analysis packages.',
             metadata: ['foo' => 'string'],
-            betas: ['string'],
+            betas: ['message-batches-2024-09-24'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

@@ -128,7 +128,7 @@ final class MessagesTest extends TestCase
             ],
             topK: 5,
             topP: 0.7,
-            betas: ['string'],
+            betas: ['message-batches-2024-09-24'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -139,7 +139,12 @@ final class MessagesTest extends TestCase
     public function testCountTokens(): void
     {
         $result = $this->client->beta->messages->countTokens(
-            messages: [['content' => 'string', 'role' => 'user']],
+            messages: [
+                [
+                    'content' => [['text' => 'What is a quaternion?', 'type' => 'text']],
+                    'role' => 'user',
+                ],
+            ],
             model: 'claude-mythos-preview',
         );
 
@@ -151,7 +156,28 @@ final class MessagesTest extends TestCase
     public function testCountTokensWithOptionalParams(): void
     {
         $result = $this->client->beta->messages->countTokens(
-            messages: [['content' => 'string', 'role' => 'user']],
+            messages: [
+                [
+                    'content' => [
+                        [
+                            'text' => 'What is a quaternion?',
+                            'type' => 'text',
+                            'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
+                            'citations' => [
+                                [
+                                    'citedText' => 'cited_text',
+                                    'documentIndex' => 0,
+                                    'documentTitle' => 'x',
+                                    'endCharIndex' => 0,
+                                    'startCharIndex' => 0,
+                                    'type' => 'char_location',
+                                ],
+                            ],
+                        ],
+                    ],
+                    'role' => 'user',
+                ],
+            ],
             model: 'claude-mythos-preview',
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             contextManagement: [
@@ -220,7 +246,7 @@ final class MessagesTest extends TestCase
                     'type' => 'custom',
                 ],
             ],
-            betas: ['string'],
+            betas: ['message-batches-2024-09-24'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
