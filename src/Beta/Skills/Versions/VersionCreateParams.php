@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\FileParam;
 
 /**
  * Create Skill Version.
@@ -16,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\Skills\VersionsService::create()
  *
  * @phpstan-type VersionCreateParamsShape = array{
- *   files?: list<string>|null,
+ *   files?: list<string|FileParam>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
@@ -33,7 +34,7 @@ final class VersionCreateParams implements BaseModel
      *
      * @var list<string>|null $files
      */
-    #[Optional(list: 'string', nullable: true)]
+    #[Optional(list: FileParam::class, nullable: true)]
     public ?array $files;
 
     /**
@@ -54,7 +55,7 @@ final class VersionCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string>|null $files
+     * @param list<string|FileParam>|null $files
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(?array $files = null, ?array $betas = null): self
@@ -72,7 +73,7 @@ final class VersionCreateParams implements BaseModel
      *
      * All files must be in the same top-level directory and must include a SKILL.md file at the root of that directory.
      *
-     * @param list<string>|null $files
+     * @param list<string|FileParam>|null $files
      */
     public function withFiles(?array $files): self
     {
