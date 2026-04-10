@@ -58,7 +58,7 @@ final class SessionsTest extends TestCase
             ],
             title: 'Order #1234 inquiry',
             vaultIDs: ['string'],
-            betas: ['string'],
+            betas: ['message-batches-2024-09-24'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

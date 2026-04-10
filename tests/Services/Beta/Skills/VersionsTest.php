@@ -58,7 +58,7 @@ final class VersionsTest extends TestCase
         $result = $this->client->beta->skills->versions->retrieve(
             'version',
             skillID: 'skill_id',
-            betas: ['string']
+            betas: ['message-batches-2024-09-24']
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -97,7 +97,7 @@ final class VersionsTest extends TestCase
         $result = $this->client->beta->skills->versions->delete(
             'version',
             skillID: 'skill_id',
-            betas: ['string']
+            betas: ['message-batches-2024-09-24']
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

@@ -155,7 +155,7 @@ final class BatchesTest extends TestCase
                     ],
                 ],
             ],
-            betas: ['string'],
+            betas: ['message-batches-2024-09-24'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
