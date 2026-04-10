@@ -21,6 +21,10 @@ final class Conversion
         }
 
         if (is_object($value)) {
+            if ($value instanceof FileParam) {
+                return $value;
+            }
+
             if (is_a($value, class: ConverterSource::class)) {
                 return $value::converter()->dump($value, state: $state);
             }

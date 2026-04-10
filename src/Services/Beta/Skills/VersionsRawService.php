@@ -16,6 +16,7 @@ use Anthropic\Beta\Skills\Versions\VersionRetrieveParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\FileParam;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -41,7 +42,7 @@ final class VersionsRawService implements VersionsRawContract
      *
      * The format and length of IDs may change over time.
      * @param array{
-     *   files?: list<string>|null,
+     *   files?: list<string|FileParam>|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|VersionCreateParams $params
      * @param RequestOpts|null $requestOptions
