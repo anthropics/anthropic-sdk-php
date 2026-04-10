@@ -81,7 +81,7 @@ final class EventsTest extends TestCase
                     'type' => 'user.message',
                 ],
             ],
-            betas: ['string'],
+            betas: ['message-batches-2024-09-24'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

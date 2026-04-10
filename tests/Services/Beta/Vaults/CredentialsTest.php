@@ -58,7 +58,7 @@ final class CredentialsTest extends TestCase
             ],
             displayName: 'Example credential',
             metadata: ['environment' => 'production'],
-            betas: ['string'],
+            betas: ['message-batches-2024-09-24'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -83,7 +83,7 @@ final class CredentialsTest extends TestCase
         $result = $this->client->beta->vaults->credentials->retrieve(
             'vcrd_011CZkZEMt8gZan2iYOQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
-            betas: ['string'],
+            betas: ['message-batches-2024-09-24'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -122,7 +122,7 @@ final class CredentialsTest extends TestCase
             ],
             displayName: 'Example credential',
             metadata: ['environment' => 'production'],
-            betas: ['string'],
+            betas: ['message-batches-2024-09-24'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -167,7 +167,7 @@ final class CredentialsTest extends TestCase
         $result = $this->client->beta->vaults->credentials->delete(
             'vcrd_011CZkZEMt8gZan2iYOQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
-            betas: ['string'],
+            betas: ['message-batches-2024-09-24'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -192,7 +192,7 @@ final class CredentialsTest extends TestCase
         $result = $this->client->beta->vaults->credentials->archive(
             'vcrd_011CZkZEMt8gZan2iYOQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
-            betas: ['string'],
+            betas: ['message-batches-2024-09-24'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

@@ -73,7 +73,7 @@ final class AgentsTest extends TestCase
                     ],
                 ],
             ],
-            betas: ['string'],
+            betas: ['message-batches-2024-09-24'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -122,7 +122,7 @@ final class AgentsTest extends TestCase
                 ],
             ],
             metadata: ['foo' => 'string'],
-            model: 'claude-opus-4-6',
+            model: ['id' => 'claude-opus-4-6', 'speed' => 'standard'],
             name: 'name',
             skills: [['skillID' => 'xlsx', 'type' => 'anthropic', 'version' => '1']],
             system: 'You are a general-purpose agent that can research, write code, run commands, and use connected tools to complete the user\'s task end to end.',
@@ -141,7 +141,7 @@ final class AgentsTest extends TestCase
                     ],
                 ],
             ],
-            betas: ['string'],
+            betas: ['message-batches-2024-09-24'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
