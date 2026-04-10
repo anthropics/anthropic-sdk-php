@@ -139,13 +139,8 @@ final class MessagesTest extends TestCase
     public function testCountTokens(): void
     {
         $result = $this->client->beta->messages->countTokens(
-            messages: [
-                [
-                    'content' => [['text' => 'What is a quaternion?', 'type' => 'text']],
-                    'role' => 'user',
-                ],
-            ],
-            model: 'claude-mythos-preview',
+            messages: [['content' => 'Hello, world', 'role' => 'user']],
+            model: 'claude-opus-4-6',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -156,29 +151,8 @@ final class MessagesTest extends TestCase
     public function testCountTokensWithOptionalParams(): void
     {
         $result = $this->client->beta->messages->countTokens(
-            messages: [
-                [
-                    'content' => [
-                        [
-                            'text' => 'What is a quaternion?',
-                            'type' => 'text',
-                            'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
-                            'citations' => [
-                                [
-                                    'citedText' => 'cited_text',
-                                    'documentIndex' => 0,
-                                    'documentTitle' => 'x',
-                                    'endCharIndex' => 0,
-                                    'startCharIndex' => 0,
-                                    'type' => 'char_location',
-                                ],
-                            ],
-                        ],
-                    ],
-                    'role' => 'user',
-                ],
-            ],
-            model: 'claude-mythos-preview',
+            messages: [['content' => 'Hello, world', 'role' => 'user']],
+            model: 'claude-opus-4-6',
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             contextManagement: [
                 'edits' => [
