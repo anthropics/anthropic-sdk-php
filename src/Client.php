@@ -72,7 +72,7 @@ class Client extends BaseClient
                 'Accept' => 'application/json',
                 'User-Agent' => sprintf('anthropic/PHP %s', VERSION),
                 'X-Stainless-Lang' => 'php',
-                'X-Stainless-Package-Version' => '0.13.0',
+                'X-Stainless-Package-Version' => '0.14.0',
                 'X-Stainless-Arch' => Util::machtype(),
                 'X-Stainless-OS' => Util::ostype(),
                 'X-Stainless-Runtime' => php_sapi_name(),
