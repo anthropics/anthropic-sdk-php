@@ -39,6 +39,8 @@ final class AwsAuth
 
     private string $resolvedBaseUrl;
 
+    private bool $useBearerAuth;
+
     /** @var (callable(): PromiseInterface)|null */
     private $credentialProvider;
 
@@ -48,6 +50,7 @@ final class AwsAuth
      * @param string $apiKeyEnvVar      Primary API key env var name
      * @param string $baseUrlEnvVar     Base URL env var name
      * @param string|null $apiKeyFallbackEnvVar      Fallback API key env var
+     * @param bool $useBearerAuth       When true, send API key as Authorization: Bearer instead of X-Api-Key
      */
     public function __construct(
         private string $serviceName,
@@ -63,7 +66,9 @@ final class AwsAuth
         ?string $awsRegion = null,
         ?string $baseUrl = null,
         private bool $skipAuth = false,
+        bool $useBearerAuth = false,
     ) {
+        $this->useBearerAuth = $useBearerAuth;
         // Region: arg > AWS_REGION env > AWS_DEFAULT_REGION env
         $this->resolvedRegion = $awsRegion
             ?? Util::getenv('AWS_REGION')
@@ -143,6 +148,9 @@ final class AwsAuth
         }
 
         if (!$this->useSigV4 && null !== $this->resolvedApiKey) {
+            if ($this->useBearerAuth) {
+                return ['Authorization' => 'Bearer ' . $this->resolvedApiKey];
+            }
             return ['X-Api-Key' => $this->resolvedApiKey];
         }
 
