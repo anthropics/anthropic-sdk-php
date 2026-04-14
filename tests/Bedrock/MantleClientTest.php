@@ -92,8 +92,8 @@ class MantleClientTest extends TestCase
         $client->messages->create(1024, [], 'claude-haiku-4-5');
         $request = $this->getLastRequest();
 
-        $this->assertSame('my-mantle-key', $request->getHeaderLine('X-Api-Key'));
-        $this->assertSame('', $request->getHeaderLine('Authorization'));
+        $this->assertSame('Bearer my-mantle-key', $request->getHeaderLine('Authorization'));
+        $this->assertSame('', $request->getHeaderLine('X-Api-Key'));
     }
 
     public function testApiKeyFromMantleEnvVar(): void
@@ -108,7 +108,7 @@ class MantleClientTest extends TestCase
         $client->messages->create(1024, [], 'claude-haiku-4-5');
         $request = $this->getLastRequest();
 
-        $this->assertSame('mantle-env-key', $request->getHeaderLine('X-Api-Key'));
+        $this->assertSame('Bearer mantle-env-key', $request->getHeaderLine('Authorization'));
     }
 
     public function testApiKeyFallbackToAwsEnvVar(): void
@@ -123,7 +123,7 @@ class MantleClientTest extends TestCase
         $client->messages->create(1024, [], 'claude-haiku-4-5');
         $request = $this->getLastRequest();
 
-        $this->assertSame('aws-fallback-key', $request->getHeaderLine('X-Api-Key'));
+        $this->assertSame('Bearer aws-fallback-key', $request->getHeaderLine('Authorization'));
     }
 
     public function testMantleApiKeyEnvTakesPrecedenceOverAwsFallback(): void
@@ -139,7 +139,7 @@ class MantleClientTest extends TestCase
         $client->messages->create(1024, [], 'claude-haiku-4-5');
         $request = $this->getLastRequest();
 
-        $this->assertSame('mantle-key', $request->getHeaderLine('X-Api-Key'));
+        $this->assertSame('Bearer mantle-key', $request->getHeaderLine('Authorization'));
     }
 
     public function testExplicitApiKeyOverridesAllEnvVars(): void
@@ -152,7 +152,7 @@ class MantleClientTest extends TestCase
         $client->messages->create(1024, [], 'claude-haiku-4-5');
         $request = $this->getLastRequest();
 
-        $this->assertSame('explicit-key', $request->getHeaderLine('X-Api-Key'));
+        $this->assertSame('Bearer explicit-key', $request->getHeaderLine('Authorization'));
     }
 
     // ── SigV4 mode ──────────────────────────────────────────────────

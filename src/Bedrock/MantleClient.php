@@ -72,6 +72,7 @@ final class MantleClient extends BaseClient
             awsRegion: $awsRegion,
             baseUrl: $baseUrl,
             skipAuth: $skipAuth,
+            useBearerAuth: true,
         );
 
         $options = RequestOptions::parse(
