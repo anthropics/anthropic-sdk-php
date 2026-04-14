@@ -273,8 +273,6 @@ abstract class BaseClient
         $code = $rsp?->getStatusCode();
 
         if ($code >= 300 && $code < 400) {
-            assert(!is_null($rsp));
-
             if ($redirectCount >= 20) {
                 throw new APIConnectionException($req, message: 'Maximum redirects exceeded');
             }

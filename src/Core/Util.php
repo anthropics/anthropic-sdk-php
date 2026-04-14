@@ -449,7 +449,7 @@ final class Util
         $contentLine = "Content-Type: %s\r\n\r\n";
 
         if ($val instanceof FileParam) {
-            $ct = $val->contentType ?? $contentType;
+            $ct = $val->contentType;
 
             yield sprintf($contentLine, $ct);
             $data = $val->data;
