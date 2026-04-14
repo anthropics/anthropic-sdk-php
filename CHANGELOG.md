@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.15.0 (2026-04-14)
+
+Full Changelog: [v0.14.0...v0.15.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.14.0...v0.15.0)
+
+### Features
+
+* **bedrock:** use auth header for mantle client ([#511](https://github.com/anthropics/anthropic-sdk-php/issues/511)) ([b2bb5f9](https://github.com/anthropics/anthropic-sdk-php/commit/b2bb5f960f1f46755736accc4044fa3011959f9d))
+* **client:** enable upload methods ([5a65b0f](https://github.com/anthropics/anthropic-sdk-php/commit/5a65b0f2dc96f83881f24b07913d011a0abd8f40))
+
+
+### Bug Fixes
+
+* **lint:** remove dead code flagged by PHPStan 2.1.47 ([#534](https://github.com/anthropics/anthropic-sdk-php/issues/534)) ([0393a38](https://github.com/anthropics/anthropic-sdk-php/commit/0393a38158533349c81e87549c15d208eb80e548))
+* **streaming:** add missing events ([e06bf16](https://github.com/anthropics/anthropic-sdk-php/commit/e06bf166e8216036abbec19da54e8af865bff136))
+
+
+### Chores
+
+* **ci:** remove release-doctor workflow ([c444c6f](https://github.com/anthropics/anthropic-sdk-php/commit/c444c6fae28e408b4a230c4753414d5a121c7882))
+* deprecate sonnet 4 and opus 4 models ([#540](https://github.com/anthropics/anthropic-sdk-php/issues/540)) ([30b12fa](https://github.com/anthropics/anthropic-sdk-php/commit/30b12fad64a49ca5212e32606341039a7b47970e))
+* **docs:** add 2 more examples on how to use the agents API ([#537](https://github.com/anthropics/anthropic-sdk-php/issues/537)) ([b234398](https://github.com/anthropics/anthropic-sdk-php/commit/b234398c5db973159f0ef0e19f0d2fb3a3c0852a))
+
 ## 0.14.0 (2026-04-10)
 
 Full Changelog: [v0.13.0...v0.14.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.13.0...v0.14.0)
