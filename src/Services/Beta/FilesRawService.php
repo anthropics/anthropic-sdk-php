@@ -7,12 +7,15 @@ namespace Anthropic\Services\Beta;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Files\DeletedFile;
 use Anthropic\Beta\Files\FileDeleteParams;
+use Anthropic\Beta\Files\FileDownloadParams;
 use Anthropic\Beta\Files\FileListParams;
 use Anthropic\Beta\Files\FileMetadata;
 use Anthropic\Beta\Files\FileRetrieveMetadataParams;
+use Anthropic\Beta\Files\FileUploadParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\FileParam;
 use Anthropic\Core\Util;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
@@ -129,6 +132,47 @@ final class FilesRawService implements FilesRawContract
     /**
      * @api
      *
+     * Download File
+     *
+     * @param string $fileID ID of the File
+     * @param array{
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     * }|FileDownloadParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<string>
+     *
+     * @throws APIException
+     */
+    public function download(
+        string $fileID,
+        array|FileDownloadParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = FileDownloadParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: ['v1/files/%1$s/content?beta=true', $fileID],
+            headers: Util::array_transform_keys(
+                ['Accept' => 'application/binary', ...$parsed],
+                ['betas' => 'anthropic-beta'],
+            ),
+            options: RequestOptions::parse(
+                ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
+                $options,
+            ),
+            convert: 'string',
+        );
+    }
+
+    /**
+     * @api
+     *
      * Get File Metadata
      *
      * @param string $fileID ID of the File
@@ -158,6 +202,57 @@ final class FilesRawService implements FilesRawContract
             headers: Util::array_transform_keys(
                 $parsed,
                 ['betas' => 'anthropic-beta']
+            ),
+            options: RequestOptions::parse(
+                ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
+                $options,
+            ),
+            convert: FileMetadata::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Upload File
+     *
+     * @param array{
+     *   file: string|FileParam,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     * }|FileUploadParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<FileMetadata>
+     *
+     * @throws APIException
+     */
+    public function upload(
+        array|FileUploadParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = FileUploadParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+        $header_params = ['betas' => 'anthropic-beta'];
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: 'v1/files?beta=true',
+            headers: Util::array_transform_keys(
+                [
+                    'Content-Type' => 'multipart/form-data',
+                    ...array_intersect_key(
+                        $parsed,
+                        array_flip(array_keys($header_params))
+                    ),
+                ],
+                $header_params,
+            ),
+            body: (object) array_diff_key(
+                $parsed,
+                array_flip(array_keys($header_params))
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],

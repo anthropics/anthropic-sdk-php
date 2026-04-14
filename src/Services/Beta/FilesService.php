@@ -9,6 +9,7 @@ use Anthropic\Beta\Files\DeletedFile;
 use Anthropic\Beta\Files\FileMetadata;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\FileParam;
 use Anthropic\Core\Util;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
@@ -101,6 +102,30 @@ final class FilesService implements FilesContract
     /**
      * @api
      *
+     * Download File
+     *
+     * @param string $fileID ID of the File
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function download(
+        string $fileID,
+        ?array $betas = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): string {
+        $params = Util::removeNulls(['betas' => $betas]);
+
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->download($fileID, params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
      * Get File Metadata
      *
      * @param string $fileID ID of the File
@@ -118,6 +143,30 @@ final class FilesService implements FilesContract
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieveMetadata($fileID, params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * Upload File
+     *
+     * @param string|FileParam $file Body param: The file to upload
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function upload(
+        string|FileParam $file,
+        ?array $betas = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): FileMetadata {
+        $params = Util::removeNulls(['file' => $file, 'betas' => $betas]);
+
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->upload(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
