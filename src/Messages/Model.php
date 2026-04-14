@@ -37,32 +37,20 @@ enum Model: string
 
     case CLAUDE_OPUS_4_1_20250805 = 'claude-opus-4-1-20250805';
 
-    case CLAUDE_OPUS_4_0 = 'claude-opus-4-0';
-
-    case CLAUDE_OPUS_4_20250514 = 'claude-opus-4-20250514';
-
-    case CLAUDE_SONNET_4_0 = 'claude-sonnet-4-0';
-
-    case CLAUDE_SONNET_4_20250514 = 'claude-sonnet-4-20250514';
-
     case CLAUDE_3_HAIKU_20240307 = 'claude-3-haiku-20240307';
 
     // AWS Bedrock model identifiers
 
     case BEDROCK_CLAUDE_SONNET_4_5_20250929 = 'anthropic.claude-sonnet-4-5-20250929-v1:0';
 
-    case BEDROCK_CLAUDE_SONNET_4_20250514 = 'anthropic.claude-sonnet-4-20250514-v1:0';
-
     /**
-     * @deprecated Model is deprecated. Migrate to anthropic.claude-sonnet-4-20250514-v1:0.
+     * @deprecated Model is deprecated. Migrate to anthropic.claude-sonnet-4-5-20250929-v1:0.
      */
     case BEDROCK_CLAUDE_3_7_SONNET_20250219 = 'anthropic.claude-3-7-sonnet-20250219-v1:0';
 
     case BEDROCK_CLAUDE_OPUS_4_5_20251101 = 'anthropic.claude-opus-4-5-20251101-v1:0';
 
     case BEDROCK_CLAUDE_OPUS_4_1_20250805 = 'anthropic.claude-opus-4-1-20250805-v1:0';
-
-    case BEDROCK_CLAUDE_OPUS_4_20250514 = 'anthropic.claude-opus-4-20250514-v1:0';
 
     case BEDROCK_CLAUDE_HAIKU_4_5_20251001 = 'anthropic.claude-haiku-4-5-20251001-v1:0';
 
@@ -78,11 +66,7 @@ enum Model: string
 
     case VERTEX_CLAUDE_OPUS_4_1_20250805 = 'claude-opus-4-1@20250805';
 
-    case VERTEX_CLAUDE_OPUS_4_20250514 = 'claude-opus-4@20250514';
-
     case VERTEX_CLAUDE_SONNET_4_5_20250929 = 'claude-sonnet-4-5@20250929';
-
-    case VERTEX_CLAUDE_SONNET_4_20250514 = 'claude-sonnet-4@20250514';
 
     /**
      * @deprecated Model is deprecated. Migrate to claude-sonnet-4@20250514.

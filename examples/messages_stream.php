@@ -18,7 +18,7 @@ $client = new Client(
 $stream = $client->messages->createStream(
     maxTokens: 1024,
     messages: [['role' => 'user', 'content' => 'Hello, Claude']],
-    model: 'claude-sonnet-4-20250514'
+    model: 'claude-sonnet-4-5'
 );
 
 foreach ($stream as $event) {

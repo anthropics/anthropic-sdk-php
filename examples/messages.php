@@ -13,7 +13,7 @@ $client = new Client(
 $message = $client->messages->create(
     maxTokens: 1024,
     messages: [['role' => 'user', 'content' => 'Hello, Claude']],
-    model: 'claude-sonnet-4-20250514'
+    model: 'claude-sonnet-4-5'
 );
 
 var_dump($message->content);
