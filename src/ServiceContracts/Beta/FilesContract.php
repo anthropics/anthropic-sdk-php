@@ -8,6 +8,7 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Files\DeletedFile;
 use Anthropic\Beta\Files\FileMetadata;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\FileParam;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 
@@ -65,8 +66,38 @@ interface FilesContract
      *
      * @throws APIException
      */
+    public function download(
+        string $fileID,
+        ?array $betas = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): string;
+
+    /**
+     * @api
+     *
+     * @param string $fileID ID of the File
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
     public function retrieveMetadata(
         string $fileID,
+        ?array $betas = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): FileMetadata;
+
+    /**
+     * @api
+     *
+     * @param string|FileParam $file Body param: The file to upload
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function upload(
+        string|FileParam $file,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): FileMetadata;
