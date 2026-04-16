@@ -14,7 +14,9 @@ namespace Anthropic\Messages;
 enum Model: string
 {
     // Anthropic model identifiers
-  
+
+    case CLAUDE_OPUS_4_7 = 'claude-opus-4-7';
+
     case CLAUDE_MYTHOS_PREVIEW = 'claude-mythos-preview';
 
     case CLAUDE_OPUS_4_6 = 'claude-opus-4-6';
