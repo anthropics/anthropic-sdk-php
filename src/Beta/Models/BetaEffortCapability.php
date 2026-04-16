@@ -19,6 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   max: BetaCapabilitySupport|BetaCapabilitySupportShape,
  *   medium: BetaCapabilitySupport|BetaCapabilitySupportShape,
  *   supported: bool,
+ *   xhigh: null|BetaCapabilitySupport|BetaCapabilitySupportShape,
  * }
  */
 final class BetaEffortCapability implements BaseModel
@@ -57,12 +58,18 @@ final class BetaEffortCapability implements BaseModel
     public bool $supported;
 
     /**
+     * Indicates whether a capability is supported.
+     */
+    #[Required]
+    public ?BetaCapabilitySupport $xhigh;
+
+    /**
      * `new BetaEffortCapability()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
      * BetaEffortCapability::with(
-     *   high: ..., low: ..., max: ..., medium: ..., supported: ...
+     *   high: ..., low: ..., max: ..., medium: ..., supported: ..., xhigh: ...
      * )
      * ```
      *
@@ -75,6 +82,7 @@ final class BetaEffortCapability implements BaseModel
      *   ->withMax(...)
      *   ->withMedium(...)
      *   ->withSupported(...)
+     *   ->withXhigh(...)
      * ```
      */
     public function __construct()
@@ -91,6 +99,7 @@ final class BetaEffortCapability implements BaseModel
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $low
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $max
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $medium
+     * @param BetaCapabilitySupport|BetaCapabilitySupportShape|null $xhigh
      */
     public static function with(
         BetaCapabilitySupport|array $high,
@@ -98,6 +107,7 @@ final class BetaEffortCapability implements BaseModel
         BetaCapabilitySupport|array $max,
         BetaCapabilitySupport|array $medium,
         bool $supported,
+        BetaCapabilitySupport|array|null $xhigh,
     ): self {
         $self = new self;
 
@@ -106,6 +116,7 @@ final class BetaEffortCapability implements BaseModel
         $self['max'] = $max;
         $self['medium'] = $medium;
         $self['supported'] = $supported;
+        $self['xhigh'] = $xhigh;
 
         return $self;
     }
@@ -169,6 +180,19 @@ final class BetaEffortCapability implements BaseModel
     {
         $self = clone $this;
         $self['supported'] = $supported;
+
+        return $self;
+    }
+
+    /**
+     * Indicates whether a capability is supported.
+     *
+     * @param BetaCapabilitySupport|BetaCapabilitySupportShape|null $xhigh
+     */
+    public function withXhigh(BetaCapabilitySupport|array|null $xhigh): self
+    {
+        $self = clone $this;
+        $self['xhigh'] = $xhigh;
 
         return $self;
     }

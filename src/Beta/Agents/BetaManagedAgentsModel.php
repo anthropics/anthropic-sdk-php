@@ -9,6 +9,8 @@ namespace Anthropic\Beta\Agents;
  */
 enum BetaManagedAgentsModel: string
 {
+    case CLAUDE_OPUS_4_7 = 'claude-opus-4-7';
+
     case CLAUDE_OPUS_4_6 = 'claude-opus-4-6';
 
     case CLAUDE_SONNET_4_6 = 'claude-sonnet-4-6';

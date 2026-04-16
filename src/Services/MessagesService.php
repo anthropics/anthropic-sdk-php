@@ -708,9 +708,10 @@ final class MessagesService implements MessagesContract
         Model|string $model,
         ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking,
     ): void {
-        // Check if model is claude-opus-4-6
+        // Check if model is in the list of models that should warn on thinking.type=enabled
         $modelString = $model instanceof Model ? $model->value : $model;
-        if ('claude-opus-4-6' !== $modelString) {
+        $modelsToWarn = ['claude-opus-4-6', 'claude-mythos-preview'];
+        if (!in_array($modelString, $modelsToWarn, true)) {
             return;
         }
 
