@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.16.0 (2026-04-16)
+
+Full Changelog: [v0.15.0...v0.16.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.15.0...v0.16.0)
+
+### Features
+
+* **api:** add claude-opus-4-7, token budgets and user_profiles ([88f42ab](https://github.com/anthropics/anthropic-sdk-php/commit/88f42abee3fac47ca986864b36bb0816b199deb7))
+
 ## 0.15.0 (2026-04-14)
 
 Full Changelog: [v0.14.0...v0.15.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.14.0...v0.15.0)
