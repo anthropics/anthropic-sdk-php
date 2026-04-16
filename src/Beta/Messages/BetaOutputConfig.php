@@ -11,10 +11,12 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-import-type BetaJSONOutputFormatShape from \Anthropic\Beta\Messages\BetaJSONOutputFormat
+ * @phpstan-import-type BetaTokenTaskBudgetShape from \Anthropic\Beta\Messages\BetaTokenTaskBudget
  *
  * @phpstan-type BetaOutputConfigShape = array{
  *   effort?: null|Effort|value-of<Effort>,
  *   format?: null|BetaJSONOutputFormat|BetaJSONOutputFormatShape,
+ *   taskBudget?: null|BetaTokenTaskBudget|BetaTokenTaskBudgetShape,
  * }
  */
 final class BetaOutputConfig implements BaseModel
@@ -36,6 +38,12 @@ final class BetaOutputConfig implements BaseModel
     #[Optional(nullable: true)]
     public ?BetaJSONOutputFormat $format;
 
+    /**
+     * User-configurable total token budget across contexts.
+     */
+    #[Optional('task_budget', nullable: true)]
+    public ?BetaTokenTaskBudget $taskBudget;
+
     public function __construct()
     {
         $this->initialize();
@@ -48,15 +56,18 @@ final class BetaOutputConfig implements BaseModel
      *
      * @param Effort|value-of<Effort>|null $effort
      * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $format
+     * @param BetaTokenTaskBudget|BetaTokenTaskBudgetShape|null $taskBudget
      */
     public static function with(
         Effort|string|null $effort = null,
         BetaJSONOutputFormat|array|null $format = null,
+        BetaTokenTaskBudget|array|null $taskBudget = null,
     ): self {
         $self = new self;
 
         null !== $effort && $self['effort'] = $effort;
         null !== $format && $self['format'] = $format;
+        null !== $taskBudget && $self['taskBudget'] = $taskBudget;
 
         return $self;
     }
@@ -83,6 +94,20 @@ final class BetaOutputConfig implements BaseModel
     {
         $self = clone $this;
         $self['format'] = $format;
+
+        return $self;
+    }
+
+    /**
+     * User-configurable total token budget across contexts.
+     *
+     * @param BetaTokenTaskBudget|BetaTokenTaskBudgetShape|null $taskBudget
+     */
+    public function withTaskBudget(
+        BetaTokenTaskBudget|array|null $taskBudget
+    ): self {
+        $self = clone $this;
+        $self['taskBudget'] = $taskBudget;
 
         return $self;
     }

@@ -83,6 +83,7 @@ final class MessagesTest extends TestCase
             outputConfig: [
                 'effort' => 'low',
                 'format' => ['schema' => ['foo' => 'bar'], 'type' => 'json_schema'],
+                'taskBudget' => ['total' => 1024, 'type' => 'tokens', 'remaining' => 0],
             ],
             outputFormat: ['schema' => ['foo' => 'bar'], 'type' => 'json_schema'],
             serviceTier: 'auto',
@@ -128,6 +129,7 @@ final class MessagesTest extends TestCase
             ],
             topK: 5,
             topP: 0.7,
+            userProfileID: 'user_profile_id',
             betas: ['message-batches-2024-09-24'],
         );
 
@@ -180,6 +182,7 @@ final class MessagesTest extends TestCase
             outputConfig: [
                 'effort' => 'low',
                 'format' => ['schema' => ['foo' => 'bar'], 'type' => 'json_schema'],
+                'taskBudget' => ['total' => 1024, 'type' => 'tokens', 'remaining' => 0],
             ],
             outputFormat: ['schema' => ['foo' => 'bar'], 'type' => 'json_schema'],
             speed: 'standard',

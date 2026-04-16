@@ -246,6 +246,7 @@ final class MessagesService implements MessagesContract
      * In nucleus sampling, we compute the cumulative distribution over all the options for each subsequent token in decreasing probability order and cut it off once it reaches a particular probability specified by `top_p`. You should either alter `temperature` or `top_p`, but not both.
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
+     * @param string|null $userProfileID Body param: The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
@@ -273,6 +274,7 @@ final class MessagesService implements MessagesContract
         ?array $tools = null,
         ?int $topK = null,
         ?float $topP = null,
+        ?string $userProfileID = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaMessage {
@@ -299,6 +301,7 @@ final class MessagesService implements MessagesContract
                 'tools' => $tools,
                 'topK' => $topK,
                 'topP' => $topP,
+                'userProfileID' => $userProfileID,
                 'betas' => $betas,
             ],
         );
@@ -472,6 +475,7 @@ final class MessagesService implements MessagesContract
      * In nucleus sampling, we compute the cumulative distribution over all the options for each subsequent token in decreasing probability order and cut it off once it reaches a particular probability specified by `top_p`. You should either alter `temperature` or `top_p`, but not both.
      *
      * Recommended for advanced use cases only. You usually only need to use `temperature`.
+     * @param string|null $userProfileID Body param: The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
@@ -501,6 +505,7 @@ final class MessagesService implements MessagesContract
         ?array $tools = null,
         ?int $topK = null,
         ?float $topP = null,
+        ?string $userProfileID = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): BaseStream {
@@ -527,6 +532,7 @@ final class MessagesService implements MessagesContract
                 'tools' => $tools,
                 'topK' => $topK,
                 'topP' => $topP,
+                'userProfileID' => $userProfileID,
                 'betas' => $betas,
             ],
         );

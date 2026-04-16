@@ -101,6 +101,9 @@ final class BatchesTest extends TestCase
                             'format' => [
                                 'schema' => ['foo' => 'bar'], 'type' => 'json_schema',
                             ],
+                            'taskBudget' => [
+                                'total' => 1024, 'type' => 'tokens', 'remaining' => 0,
+                            ],
                         ],
                         'outputFormat' => [
                             'schema' => ['foo' => 'bar'], 'type' => 'json_schema',
@@ -151,6 +154,7 @@ final class BatchesTest extends TestCase
                         ],
                         'topK' => 5,
                         'topP' => 0.7,
+                        'userProfileID' => 'user_profile_id',
                     ],
                 ],
             ],

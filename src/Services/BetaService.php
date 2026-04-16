@@ -13,6 +13,7 @@ use Anthropic\Services\Beta\MessagesService;
 use Anthropic\Services\Beta\ModelsService;
 use Anthropic\Services\Beta\SessionsService;
 use Anthropic\Services\Beta\SkillsService;
+use Anthropic\Services\Beta\UserProfilesService;
 use Anthropic\Services\Beta\VaultsService;
 
 final class BetaService implements BetaContract
@@ -63,6 +64,11 @@ final class BetaService implements BetaContract
     public SkillsService $skills;
 
     /**
+     * @api
+     */
+    public UserProfilesService $userProfiles;
+
+    /**
      * @internal
      */
     public function __construct(private Client $client)
@@ -76,5 +82,6 @@ final class BetaService implements BetaContract
         $this->vaults = new VaultsService($client);
         $this->files = new FilesService($client);
         $this->skills = new SkillsService($client);
+        $this->userProfiles = new UserProfilesService($client);
     }
 }
