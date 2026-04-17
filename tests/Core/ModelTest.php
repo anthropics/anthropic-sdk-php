@@ -47,6 +47,30 @@ class Dog implements BaseModel
     }
 }
 
+enum TicketPriority: string
+{
+    case Low = 'low';
+    case High = 'high';
+}
+
+class Ticket implements BaseModel
+{
+    /** @use SdkModel<array<string, mixed>> */
+    use SdkModel;
+
+    #[Required(enum: TicketPriority::class)]
+    public TicketPriority $priority;
+
+    /** @var list<TicketPriority> */
+    #[Required(list: TicketPriority::class)]
+    public array $labels;
+
+    public function __construct()
+    {
+        $this->initialize();
+    }
+}
+
 /**
  * @internal
  *
@@ -140,5 +164,43 @@ class ModelTest extends TestCase
             '{"name":"Bob","age_years":12,"friends":null,"owner":null}',
             json_encode($model)
         );
+    }
+
+    #[Test]
+    public function testScalarEnumCoercesToInstance(): void
+    {
+        $model = Ticket::fromArray(['priority' => 'low', 'labels' => []]);
+        $this->assertSame(TicketPriority::Low, $model->priority);
+    }
+
+    #[Test]
+    public function testListOfEnumCoercesElementsToInstances(): void
+    {
+        $model = Ticket::fromArray(['priority' => 'low', 'labels' => ['low', 'high']]);
+        $this->assertCount(2, $model->labels);
+        $this->assertSame(TicketPriority::Low, $model->labels[0]);
+        $this->assertSame(TicketPriority::High, $model->labels[1]);
+    }
+
+    #[Test]
+    public function testEnumInstancePassesThrough(): void
+    {
+        $model = Ticket::fromArray(['priority' => TicketPriority::High, 'labels' => []]);
+        $this->assertSame(TicketPriority::High, $model->priority);
+    }
+
+    #[Test]
+    public function testInvalidEnumScalarFallsBackToData(): void
+    {
+        $model = Ticket::fromArray(['priority' => 'urgent', 'labels' => []]);
+        $this->assertSame('urgent', $model['priority']);
+    }
+
+    #[Test]
+    public function testEnumWireFormatStableAcrossConstruction(): void
+    {
+        $fromScalar = Ticket::fromArray(['priority' => 'low', 'labels' => ['high']]);
+        $fromInstance = Ticket::fromArray(['priority' => TicketPriority::Low, 'labels' => [TicketPriority::High]]);
+        $this->assertSame(json_encode($fromScalar), json_encode($fromInstance));
     }
 }
