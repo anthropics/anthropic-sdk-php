@@ -25,9 +25,6 @@ class Required
 
     public readonly bool $nullable;
 
-    /** @var array<string,Converter> */
-    private static array $enumConverters = [];
-
     /**
      * @param class-string<ConverterSource>|Converter|string|null $type
      * @param class-string<\BackedEnum>|Converter|null            $enum
@@ -52,24 +49,12 @@ class Required
             $type ??= new MapOf($map);
         }
         if (null !== $enum) {
-            $type ??= $enum instanceof Converter ? $enum : self::enumConverter($enum);
+            $type ??= $enum instanceof Converter ? $enum : EnumOf::fromBackedEnum($enum);
         }
 
         $this->apiName = $apiName;
         $this->type = $type;
         $this->optional = false;
         $this->nullable = $nullable;
-    }
-
-    /** @property class-string<\BackedEnum> $enum */
-    private static function enumConverter(string $enum): Converter
-    {
-        if (!isset(self::$enumConverters[$enum])) {
-            // @phpstan-ignore-next-line argument.type
-            $converter = new EnumOf(array_column($enum::cases(), column_key: 'value'));
-            self::$enumConverters[$enum] = $converter;
-        }
-
-        return self::$enumConverters[$enum];
     }
 }
