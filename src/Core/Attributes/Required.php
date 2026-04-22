@@ -34,9 +34,6 @@ class Required
      */
     public readonly ?array $enumValues;
 
-    /** @var array<string,Converter> */
-    private static array $enumConverters = [];
-
     /**
      * @param class-string<ConverterSource>|Converter|string|null                       $type
      * @param class-string<\BackedEnum>|Converter|list<bool|float|int|string|null>|null $enum
@@ -65,15 +62,13 @@ class Required
                 // Literal values array — used directly for schema enum constraint
                 $this->enumValues = $enum;
                 $type ??= new EnumOf($enum);
+            } elseif ($enum instanceof Converter) {
+                $type ??= $enum;
+                $this->enumValues = null;
             } else {
-                $type ??= $enum instanceof Converter ? $enum : self::enumConverter($enum);
-                // Extract backing values from a BackedEnum class for schema generation
-                if (is_string($enum)) {
-                    // @phpstan-ignore-next-line argument.type
-                    $this->enumValues = array_column($enum::cases(), 'value');
-                } else {
-                    $this->enumValues = null;
-                }
+                $type ??= EnumOf::fromBackedEnum($enum);
+                // @phpstan-ignore-next-line argument.type
+                $this->enumValues = array_column($enum::cases(), 'value');
             }
         } else {
             $this->enumValues = null;
@@ -83,17 +78,5 @@ class Required
         $this->type = $type;
         $this->optional = false;
         $this->nullable = $nullable;
-    }
-
-    /** @property class-string<\BackedEnum> $enum */
-    private static function enumConverter(string $enum): Converter
-    {
-        if (!isset(self::$enumConverters[$enum])) {
-            // @phpstan-ignore-next-line argument.type
-            $converter = new EnumOf(array_column($enum::cases(), column_key: 'value'));
-            self::$enumConverters[$enum] = $converter;
-        }
-
-        return self::$enumConverters[$enum];
     }
 }
