@@ -66,8 +66,11 @@ final class Conversion
             return $target->coerce($value, state: $state);
         }
 
+        // BackedEnum class-name targets: wrap in EnumOf so enum values are scored
+        // against the enum's cases. Without this, tryConvert's default case scores
+        // any class-name target as `no`, even when the value is a valid enum member.
         if (is_a($target, class: \BackedEnum::class, allow_string: true)) {
-            return (new EnumOf(array_column($target::cases(), 'value')))->coerce($value, state: $state);
+            return EnumOf::fromBackedEnum($target)->coerce($value, state: $state);
         }
 
         return self::tryConvert($target, value: $value, state: $state);
@@ -83,8 +86,11 @@ final class Conversion
             return $target::converter()->dump($value, state: $state);
         }
 
+        // BackedEnum class-name targets: wrap in EnumOf so enum values are scored
+        // against the enum's cases. Without this, tryConvert's default case scores
+        // any class-name target as `no`, even when the value is a valid enum member.
         if (is_a($target, class: \BackedEnum::class, allow_string: true)) {
-            return (new EnumOf(array_column($target::cases(), 'value')))->dump($value, state: $state);
+            return EnumOf::fromBackedEnum($target)->dump($value, state: $state);
         }
 
         self::tryConvert($target, value: $value, state: $state);
