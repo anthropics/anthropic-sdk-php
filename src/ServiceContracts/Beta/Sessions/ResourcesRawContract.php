@@ -7,6 +7,7 @@ namespace Anthropic\ServiceContracts\Beta\Sessions;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsDeleteSessionResource;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsFileResource;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsGitHubRepositoryResource;
+use Anthropic\Beta\Sessions\Resources\ManagedAgentsMemoryStoreResource;
 use Anthropic\Beta\Sessions\Resources\ResourceAddParams;
 use Anthropic\Beta\Sessions\Resources\ResourceDeleteParams;
 use Anthropic\Beta\Sessions\Resources\ResourceListParams;
@@ -29,7 +30,7 @@ interface ResourcesRawContract
      * @param array<string,mixed>|ResourceRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource,>
+     * @return BaseResponse<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource,>
      *
      * @throws APIException
      */
@@ -46,7 +47,7 @@ interface ResourcesRawContract
      * @param array<string,mixed>|ResourceUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource,>
+     * @return BaseResponse<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource,>
      *
      * @throws APIException
      */
@@ -63,7 +64,7 @@ interface ResourcesRawContract
      * @param array<string,mixed>|ResourceListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<PageCursor<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource,>,>
+     * @return BaseResponse<PageCursor<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource,>,>
      *
      * @throws APIException
      */

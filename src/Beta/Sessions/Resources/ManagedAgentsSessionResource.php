@@ -9,11 +9,14 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
+ * A memory store attached to an agent session.
+ *
  * @phpstan-import-type ManagedAgentsGitHubRepositoryResourceShape from \Anthropic\Beta\Sessions\Resources\ManagedAgentsGitHubRepositoryResource
  * @phpstan-import-type ManagedAgentsFileResourceShape from \Anthropic\Beta\Sessions\Resources\ManagedAgentsFileResource
+ * @phpstan-import-type ManagedAgentsMemoryStoreResourceShape from \Anthropic\Beta\Sessions\Resources\ManagedAgentsMemoryStoreResource
  *
- * @phpstan-type ManagedAgentsSessionResourceVariants = ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource
- * @phpstan-type ManagedAgentsSessionResourceShape = ManagedAgentsSessionResourceVariants|ManagedAgentsGitHubRepositoryResourceShape|ManagedAgentsFileResourceShape
+ * @phpstan-type ManagedAgentsSessionResourceVariants = ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource
+ * @phpstan-type ManagedAgentsSessionResourceShape = ManagedAgentsSessionResourceVariants|ManagedAgentsGitHubRepositoryResourceShape|ManagedAgentsFileResourceShape|ManagedAgentsMemoryStoreResourceShape
  */
 final class ManagedAgentsSessionResource implements ConverterSource
 {
@@ -32,6 +35,7 @@ final class ManagedAgentsSessionResource implements ConverterSource
         return [
             'github_repository' => ManagedAgentsGitHubRepositoryResource::class,
             'file' => ManagedAgentsFileResource::class,
+            'memory_store' => ManagedAgentsMemoryStoreResource::class,
         ];
     }
 }

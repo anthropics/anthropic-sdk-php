@@ -8,6 +8,7 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsDeleteSessionResource;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsFileResource;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsGitHubRepositoryResource;
+use Anthropic\Beta\Sessions\Resources\ManagedAgentsMemoryStoreResource;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsSessionResource;
 use Anthropic\Beta\Sessions\Resources\ResourceAddParams;
 use Anthropic\Beta\Sessions\Resources\ResourceAddParams\Type;
@@ -47,7 +48,7 @@ final class ResourcesRawService implements ResourcesRawContract
      * }|ResourceRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource,>
+     * @return BaseResponse<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource,>
      *
      * @throws APIException
      */
@@ -94,7 +95,7 @@ final class ResourcesRawService implements ResourcesRawContract
      * }|ResourceUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource,>
+     * @return BaseResponse<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource,>
      *
      * @throws APIException
      */
@@ -146,7 +147,7 @@ final class ResourcesRawService implements ResourcesRawContract
      * }|ResourceListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<PageCursor<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource,>,>
+     * @return BaseResponse<PageCursor<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource,>,>
      *
      * @throws APIException
      */
