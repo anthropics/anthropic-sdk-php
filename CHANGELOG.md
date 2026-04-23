@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.17.0 (2026-04-23)
+
+Full Changelog: [v0.16.0...v0.17.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.16.0...v0.17.0)
+
+### Features
+
+* **api:** CMA Memory public beta ([b313ec0](https://github.com/anthropics/anthropic-sdk-php/commit/b313ec0576188632a8fa85ce55e6d530b4c9e0c9))
+
+
+### Bug Fixes
+
+* **api:** fix errors in api spec ([a4e0699](https://github.com/anthropics/anthropic-sdk-php/commit/a4e0699c216f9f5a33d92f7549fed9203d330266))
+* **api:** restore missing features ([34e585e](https://github.com/anthropics/anthropic-sdk-php/commit/34e585e58abbbf9da88e05230fae823324cdc970))
+* **client:** resolve serialization issue with unions and enums ([c9795cd](https://github.com/anthropics/anthropic-sdk-php/commit/c9795cd8ef35c96ff6f9f8007852e2883ca704f5))
+* populate enum-typed properties with enum instances ([6c0d3de](https://github.com/anthropics/anthropic-sdk-php/commit/6c0d3de80d9d384ccb18f398b28312bca0e99e59))
+
+
+### Chores
+
+* **tests:** bump steady to v0.22.1 ([fe9a8f0](https://github.com/anthropics/anthropic-sdk-php/commit/fe9a8f0a7ff1e9e62e7d75584241397d21414cee))
+
 ## 0.16.0 (2026-04-16)
 
 Full Changelog: [v0.15.0...v0.16.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.15.0...v0.16.0)
