@@ -64,6 +64,7 @@ use Anthropic\Messages\Model;
  *   tools?: list<BetaToolUnionShape>|null,
  *   topK?: int|null,
  *   topP?: float|null,
+ *   userProfileID?: string|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
@@ -369,6 +370,12 @@ final class MessageCreateParams implements BaseModel
     public ?float $topP;
 
     /**
+     * The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization.
+     */
+    #[Optional('user_profile_id', nullable: true)]
+    public ?string $userProfileID;
+
+    /**
      * Optional header to specify the beta version(s) you want to use.
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
@@ -440,6 +447,7 @@ final class MessageCreateParams implements BaseModel
         ?array $tools = null,
         ?int $topK = null,
         ?float $topP = null,
+        ?string $userProfileID = null,
         ?array $betas = null,
     ): self {
         $self = new self;
@@ -466,6 +474,7 @@ final class MessageCreateParams implements BaseModel
         null !== $tools && $self['tools'] = $tools;
         null !== $topK && $self['topK'] = $topK;
         null !== $topP && $self['topP'] = $topP;
+        null !== $userProfileID && $self['userProfileID'] = $userProfileID;
         null !== $betas && $self['betas'] = $betas;
 
         return $self;
@@ -875,6 +884,17 @@ final class MessageCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['topP'] = $topP;
+
+        return $self;
+    }
+
+    /**
+     * The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization.
+     */
+    public function withUserProfileID(?string $userProfileID): self
+    {
+        $self = clone $this;
+        $self['userProfileID'] = $userProfileID;
 
         return $self;
     }

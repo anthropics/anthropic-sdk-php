@@ -48,5 +48,7 @@ enum AnthropicBeta: string
 
     case OUTPUT_300K_2026_03_24 = 'output-300k-2026-03-24';
 
+    case USER_PROFILES_2026_03_24 = 'user-profiles-2026-03-24';
+
     case ADVISOR_TOOL_2026_03_01 = 'advisor-tool-2026-03-01';
 }

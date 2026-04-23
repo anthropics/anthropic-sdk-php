@@ -24,6 +24,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   content: string|null,
  *   type: 'compaction',
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
+ *   encryptedContent?: string|null,
  * }
  */
 final class BetaCompactionBlockParam implements BaseModel
@@ -46,6 +47,12 @@ final class BetaCompactionBlockParam implements BaseModel
      */
     #[Optional('cache_control', nullable: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
+
+    /**
+     * Opaque metadata from prior compaction, to be round-tripped verbatim.
+     */
+    #[Optional('encrypted_content', nullable: true)]
+    public ?string $encryptedContent;
 
     /**
      * `new BetaCompactionBlockParam()` is missing required properties by the API.
@@ -75,13 +82,15 @@ final class BetaCompactionBlockParam implements BaseModel
      */
     public static function with(
         ?string $content,
-        BetaCacheControlEphemeral|array|null $cacheControl = null
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
+        ?string $encryptedContent = null,
     ): self {
         $self = new self;
 
         $self['content'] = $content;
 
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $encryptedContent && $self['encryptedContent'] = $encryptedContent;
 
         return $self;
     }
@@ -118,6 +127,17 @@ final class BetaCompactionBlockParam implements BaseModel
     ): self {
         $self = clone $this;
         $self['cacheControl'] = $cacheControl;
+
+        return $self;
+    }
+
+    /**
+     * Opaque metadata from prior compaction, to be round-tripped verbatim.
+     */
+    public function withEncryptedContent(?string $encryptedContent): self
+    {
+        $self = clone $this;
+        $self['encryptedContent'] = $encryptedContent;
 
         return $self;
     }
