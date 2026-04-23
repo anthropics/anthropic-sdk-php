@@ -8,6 +8,7 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsDeleteSessionResource;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsFileResource;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsGitHubRepositoryResource;
+use Anthropic\Beta\Sessions\Resources\ManagedAgentsMemoryStoreResource;
 use Anthropic\Beta\Sessions\Resources\ResourceAddParams\Type;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
@@ -33,7 +34,7 @@ interface ResourcesContract
         string $sessionID,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
-    ): ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource;
+    ): ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource;
 
     /**
      * @api
@@ -52,7 +53,7 @@ interface ResourcesContract
         string $authorizationToken,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
-    ): ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource;
+    ): ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource;
 
     /**
      * @api
@@ -63,7 +64,7 @@ interface ResourcesContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
-     * @return PageCursor<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource,>
+     * @return PageCursor<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource,>
      *
      * @throws APIException
      */

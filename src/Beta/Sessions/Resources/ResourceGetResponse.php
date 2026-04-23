@@ -13,9 +13,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  *
  * @phpstan-import-type ManagedAgentsGitHubRepositoryResourceShape from \Anthropic\Beta\Sessions\Resources\ManagedAgentsGitHubRepositoryResource
  * @phpstan-import-type ManagedAgentsFileResourceShape from \Anthropic\Beta\Sessions\Resources\ManagedAgentsFileResource
+ * @phpstan-import-type ManagedAgentsMemoryStoreResourceShape from \Anthropic\Beta\Sessions\Resources\ManagedAgentsMemoryStoreResource
  *
- * @phpstan-type ResourceGetResponseVariants = ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource
- * @phpstan-type ResourceGetResponseShape = ResourceGetResponseVariants|ManagedAgentsGitHubRepositoryResourceShape|ManagedAgentsFileResourceShape
+ * @phpstan-type ResourceGetResponseVariants = ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource
+ * @phpstan-type ResourceGetResponseShape = ResourceGetResponseVariants|ManagedAgentsGitHubRepositoryResourceShape|ManagedAgentsFileResourceShape|ManagedAgentsMemoryStoreResourceShape
  */
 final class ResourceGetResponse implements ConverterSource
 {
@@ -34,6 +35,7 @@ final class ResourceGetResponse implements ConverterSource
         return [
             'github_repository' => ManagedAgentsGitHubRepositoryResource::class,
             'file' => ManagedAgentsFileResource::class,
+            'memory_store' => ManagedAgentsMemoryStoreResource::class,
         ];
     }
 }

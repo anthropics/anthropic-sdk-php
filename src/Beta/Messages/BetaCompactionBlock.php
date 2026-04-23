@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * compaction blocks with null content; the server treats them as no-ops.
  *
  * @phpstan-type BetaCompactionBlockShape = array{
- *   content: string|null, encryptedContent: string|null, type: 'compaction'
+ *   content: string|null, type: 'compaction'
  * }
  */
 final class BetaCompactionBlock implements BaseModel
@@ -35,23 +35,17 @@ final class BetaCompactionBlock implements BaseModel
     public ?string $content;
 
     /**
-     * Opaque metadata from prior compaction, to be round-tripped verbatim.
-     */
-    #[Required('encrypted_content')]
-    public ?string $encryptedContent;
-
-    /**
      * `new BetaCompactionBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaCompactionBlock::with(content: ..., encryptedContent: ...)
+     * BetaCompactionBlock::with(content: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCompactionBlock)->withContent(...)->withEncryptedContent(...)
+     * (new BetaCompactionBlock)->withContent(...)
      * ```
      */
     public function __construct()
@@ -64,14 +58,11 @@ final class BetaCompactionBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(
-        ?string $content,
-        ?string $encryptedContent
-    ): self {
+    public static function with(?string $content): self
+    {
         $self = new self;
 
         $self['content'] = $content;
-        $self['encryptedContent'] = $encryptedContent;
 
         return $self;
     }
@@ -83,17 +74,6 @@ final class BetaCompactionBlock implements BaseModel
     {
         $self = clone $this;
         $self['content'] = $content;
-
-        return $self;
-    }
-
-    /**
-     * Opaque metadata from prior compaction, to be round-tripped verbatim.
-     */
-    public function withEncryptedContent(?string $encryptedContent): self
-    {
-        $self = clone $this;
-        $self['encryptedContent'] = $encryptedContent;
 
         return $self;
     }

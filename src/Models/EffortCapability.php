@@ -19,7 +19,6 @@ use Anthropic\Core\Contracts\BaseModel;
  *   max: CapabilitySupport|CapabilitySupportShape,
  *   medium: CapabilitySupport|CapabilitySupportShape,
  *   supported: bool,
- *   xhigh: null|CapabilitySupport|CapabilitySupportShape,
  * }
  */
 final class EffortCapability implements BaseModel
@@ -58,18 +57,12 @@ final class EffortCapability implements BaseModel
     public bool $supported;
 
     /**
-     * Indicates whether a capability is supported.
-     */
-    #[Required]
-    public ?CapabilitySupport $xhigh;
-
-    /**
      * `new EffortCapability()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
      * EffortCapability::with(
-     *   high: ..., low: ..., max: ..., medium: ..., supported: ..., xhigh: ...
+     *   high: ..., low: ..., max: ..., medium: ..., supported: ...
      * )
      * ```
      *
@@ -82,7 +75,6 @@ final class EffortCapability implements BaseModel
      *   ->withMax(...)
      *   ->withMedium(...)
      *   ->withSupported(...)
-     *   ->withXhigh(...)
      * ```
      */
     public function __construct()
@@ -99,7 +91,6 @@ final class EffortCapability implements BaseModel
      * @param CapabilitySupport|CapabilitySupportShape $low
      * @param CapabilitySupport|CapabilitySupportShape $max
      * @param CapabilitySupport|CapabilitySupportShape $medium
-     * @param CapabilitySupport|CapabilitySupportShape|null $xhigh
      */
     public static function with(
         CapabilitySupport|array $high,
@@ -107,7 +98,6 @@ final class EffortCapability implements BaseModel
         CapabilitySupport|array $max,
         CapabilitySupport|array $medium,
         bool $supported,
-        CapabilitySupport|array|null $xhigh,
     ): self {
         $self = new self;
 
@@ -116,7 +106,6 @@ final class EffortCapability implements BaseModel
         $self['max'] = $max;
         $self['medium'] = $medium;
         $self['supported'] = $supported;
-        $self['xhigh'] = $xhigh;
 
         return $self;
     }
@@ -180,19 +169,6 @@ final class EffortCapability implements BaseModel
     {
         $self = clone $this;
         $self['supported'] = $supported;
-
-        return $self;
-    }
-
-    /**
-     * Indicates whether a capability is supported.
-     *
-     * @param CapabilitySupport|CapabilitySupportShape|null $xhigh
-     */
-    public function withXhigh(CapabilitySupport|array|null $xhigh): self
-    {
-        $self = clone $this;
-        $self['xhigh'] = $xhigh;
 
         return $self;
     }

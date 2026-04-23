@@ -8,6 +8,7 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsDeleteSessionResource;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsFileResource;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsGitHubRepositoryResource;
+use Anthropic\Beta\Sessions\Resources\ManagedAgentsMemoryStoreResource;
 use Anthropic\Beta\Sessions\Resources\ResourceAddParams\Type;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
@@ -51,7 +52,7 @@ final class ResourcesService implements ResourcesContract
         string $sessionID,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
-    ): ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource {
+    ): ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource {
         $params = Util::removeNulls(['sessionID' => $sessionID, 'betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type
@@ -79,7 +80,7 @@ final class ResourcesService implements ResourcesContract
         string $authorizationToken,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
-    ): ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource {
+    ): ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource {
         $params = Util::removeNulls(
             [
                 'sessionID' => $sessionID,
@@ -105,7 +106,7 @@ final class ResourcesService implements ResourcesContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
-     * @return PageCursor<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource,>
+     * @return PageCursor<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource,>
      *
      * @throws APIException
      */
