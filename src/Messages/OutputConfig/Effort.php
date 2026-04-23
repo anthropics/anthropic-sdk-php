@@ -15,7 +15,5 @@ enum Effort: string
 
     case HIGH = 'high';
 
-    case XHIGH = 'xhigh';
-
     case MAX = 'max';
 }

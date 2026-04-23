@@ -6,6 +6,7 @@ namespace Anthropic\Beta\Sessions\SessionCreateParams;
 
 use Anthropic\Beta\Sessions\BetaManagedAgentsFileResourceParams;
 use Anthropic\Beta\Sessions\BetaManagedAgentsGitHubRepositoryResourceParams;
+use Anthropic\Beta\Sessions\BetaManagedAgentsMemoryStoreResourceParam;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -15,9 +16,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  *
  * @phpstan-import-type BetaManagedAgentsGitHubRepositoryResourceParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsGitHubRepositoryResourceParams
  * @phpstan-import-type BetaManagedAgentsFileResourceParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsFileResourceParams
+ * @phpstan-import-type BetaManagedAgentsMemoryStoreResourceParamShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMemoryStoreResourceParam
  *
- * @phpstan-type ResourceVariants = BetaManagedAgentsGitHubRepositoryResourceParams|BetaManagedAgentsFileResourceParams
- * @phpstan-type ResourceShape = ResourceVariants|BetaManagedAgentsGitHubRepositoryResourceParamsShape|BetaManagedAgentsFileResourceParamsShape
+ * @phpstan-type ResourceVariants = BetaManagedAgentsGitHubRepositoryResourceParams|BetaManagedAgentsFileResourceParams|BetaManagedAgentsMemoryStoreResourceParam
+ * @phpstan-type ResourceShape = ResourceVariants|BetaManagedAgentsGitHubRepositoryResourceParamsShape|BetaManagedAgentsFileResourceParamsShape|BetaManagedAgentsMemoryStoreResourceParamShape
  */
 final class Resource implements ConverterSource
 {
@@ -36,6 +38,7 @@ final class Resource implements ConverterSource
         return [
             'github_repository' => BetaManagedAgentsGitHubRepositoryResourceParams::class,
             'file' => BetaManagedAgentsFileResourceParams::class,
+            'memory_store' => BetaManagedAgentsMemoryStoreResourceParam::class,
         ];
     }
 }

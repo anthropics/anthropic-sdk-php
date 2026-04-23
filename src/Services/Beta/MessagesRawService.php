@@ -91,7 +91,6 @@ final class MessagesRawService implements MessagesRawContract
      *   tools?: list<BetaToolUnionShape>,
      *   topK?: int,
      *   topP?: float,
-     *   userProfileID?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|MessageCreateParams $params
      * @param RequestOpts|null $requestOptions
@@ -152,7 +151,6 @@ final class MessagesRawService implements MessagesRawContract
      *   tools?: list<BetaToolUnionShape>,
      *   topK?: int,
      *   topP?: float,
-     *   userProfileID?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|MessageCreateParams $params
      * @param RequestOpts|null $requestOptions
