@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * ArchiveMemoryStore.
+ * Archive a memory store.
  *
  * @see Anthropic\Services\Beta\MemoryStoresService::archive()
  *

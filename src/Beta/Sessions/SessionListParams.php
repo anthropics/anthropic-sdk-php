@@ -25,6 +25,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   createdAtLte?: \DateTimeInterface|null,
  *   includeArchived?: bool|null,
  *   limit?: int|null,
+ *   memoryStoreID?: string|null,
  *   order?: null|Order|value-of<Order>,
  *   page?: string|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
@@ -85,6 +86,12 @@ final class SessionListParams implements BaseModel
     public ?int $limit;
 
     /**
+     * Filter sessions whose resources contain a memory_store with this memory store ID.
+     */
+    #[Optional]
+    public ?string $memoryStoreID;
+
+    /**
      * Sort direction for results, ordered by created_at. Defaults to desc (newest first).
      *
      * @var value-of<Order>|null $order
@@ -128,6 +135,7 @@ final class SessionListParams implements BaseModel
         ?\DateTimeInterface $createdAtLte = null,
         ?bool $includeArchived = null,
         ?int $limit = null,
+        ?string $memoryStoreID = null,
         Order|string|null $order = null,
         ?string $page = null,
         ?array $betas = null,
@@ -142,6 +150,7 @@ final class SessionListParams implements BaseModel
         null !== $createdAtLte && $self['createdAtLte'] = $createdAtLte;
         null !== $includeArchived && $self['includeArchived'] = $includeArchived;
         null !== $limit && $self['limit'] = $limit;
+        null !== $memoryStoreID && $self['memoryStoreID'] = $memoryStoreID;
         null !== $order && $self['order'] = $order;
         null !== $page && $self['page'] = $page;
         null !== $betas && $self['betas'] = $betas;
@@ -233,6 +242,17 @@ final class SessionListParams implements BaseModel
     {
         $self = clone $this;
         $self['limit'] = $limit;
+
+        return $self;
+    }
+
+    /**
+     * Filter sessions whose resources contain a memory_store with this memory store ID.
+     */
+    public function withMemoryStoreID(string $memoryStoreID): self
+    {
+        $self = clone $this;
+        $self['memoryStoreID'] = $memoryStoreID;
 
         return $self;
     }
