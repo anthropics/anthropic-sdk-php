@@ -35,7 +35,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
     /**
      * @api
      *
-     * CreateMemoryStore
+     * Create a memory store
      *
      * @param array{
      *   name: string,
@@ -82,7 +82,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
     /**
      * @api
      *
-     * GetMemoryStore
+     * Retrieve a memory store
      *
      * @param string $memoryStoreID Path parameter memory_store_id
      * @param array{
@@ -123,7 +123,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
     /**
      * @api
      *
-     * UpdateMemoryStore
+     * Update a memory store
      *
      * @param string $memoryStoreID Path param: Path parameter memory_store_id
      * @param array{
@@ -172,7 +172,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
     /**
      * @api
      *
-     * ListMemoryStores
+     * List memory stores
      *
      * @param array{
      *   createdAtGte?: \DateTimeInterface,
@@ -231,7 +231,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
     /**
      * @api
      *
-     * DeleteMemoryStore
+     * Delete a memory store
      *
      * @param string $memoryStoreID Path parameter memory_store_id
      * @param array{
@@ -272,7 +272,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
     /**
      * @api
      *
-     * ArchiveMemoryStore
+     * Archive a memory store
      *
      * @param string $memoryStoreID Path parameter memory_store_id
      * @param array{

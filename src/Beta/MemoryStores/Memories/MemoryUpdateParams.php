@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * UpdateMemory.
+ * Update a memory.
  *
  * @see Anthropic\Services\Beta\MemoryStores\MemoriesService::update()
  *
@@ -44,12 +44,21 @@ final class MemoryUpdateParams implements BaseModel
     #[Optional(enum: ManagedAgentsMemoryView::class)]
     public ?string $view;
 
+    /**
+     * New UTF-8 text content for the memory. Maximum 100 kB (102,400 bytes). Omit to leave the content unchanged (e.g., for a rename-only update).
+     */
     #[Optional(nullable: true)]
     public ?string $content;
 
+    /**
+     * New path for the memory (a rename). Must start with `/`, contain at least one non-empty segment, and be at most 1,024 bytes. Must not contain empty segments, `.` or `..` segments, control or format characters, and must be NFC-normalized. Paths are case-sensitive. The memory's `id` is preserved across renames. Omit to leave the path unchanged.
+     */
     #[Optional(nullable: true)]
     public ?string $path;
 
+    /**
+     * Optimistic-concurrency precondition: the update applies only if the memory's stored `content_sha256` equals the supplied value. On mismatch, the request returns `memory_precondition_failed_error` (HTTP 409); re-read the memory and retry against the fresh state. If the precondition fails but the stored state already exactly matches the requested `content` and `path`, the server returns 200 instead of 409.
+     */
     #[Optional]
     public ?ManagedAgentsPrecondition $precondition;
 
@@ -131,6 +140,9 @@ final class MemoryUpdateParams implements BaseModel
         return $self;
     }
 
+    /**
+     * New UTF-8 text content for the memory. Maximum 100 kB (102,400 bytes). Omit to leave the content unchanged (e.g., for a rename-only update).
+     */
     public function withContent(?string $content): self
     {
         $self = clone $this;
@@ -139,6 +151,9 @@ final class MemoryUpdateParams implements BaseModel
         return $self;
     }
 
+    /**
+     * New path for the memory (a rename). Must start with `/`, contain at least one non-empty segment, and be at most 1,024 bytes. Must not contain empty segments, `.` or `..` segments, control or format characters, and must be NFC-normalized. Paths are case-sensitive. The memory's `id` is preserved across renames. Omit to leave the path unchanged.
+     */
     public function withPath(?string $path): self
     {
         $self = clone $this;
@@ -148,6 +163,8 @@ final class MemoryUpdateParams implements BaseModel
     }
 
     /**
+     * Optimistic-concurrency precondition: the update applies only if the memory's stored `content_sha256` equals the supplied value. On mismatch, the request returns `memory_precondition_failed_error` (HTTP 409); re-read the memory and retry against the fresh state. If the precondition fails but the stored state already exactly matches the requested `content` and `path`, the server returns 200 instead of 409.
+     *
      * @param ManagedAgentsPrecondition|ManagedAgentsPreconditionShape $precondition
      */
     public function withPrecondition(

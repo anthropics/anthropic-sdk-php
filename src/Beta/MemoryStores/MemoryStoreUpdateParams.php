@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\MapOf;
 
 /**
- * UpdateMemoryStore.
+ * Update a memory store.
  *
  * @see Anthropic\Services\Beta\MemoryStoresService::update()
  *
@@ -29,6 +29,9 @@ final class MemoryStoreUpdateParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
+    /**
+     * New description for the store, up to 1024 characters. Pass an empty string to clear it.
+     */
     #[Optional(nullable: true)]
     public ?string $description;
 
@@ -40,6 +43,9 @@ final class MemoryStoreUpdateParams implements BaseModel
     #[Optional(type: new MapOf('string', nullable: true), nullable: true)]
     public ?array $metadata;
 
+    /**
+     * New human-readable name for the store. 1–255 characters; no control characters. Renaming changes the slug used for the store's `mount_path` in sessions created after the update.
+     */
     #[Optional(nullable: true)]
     public ?string $name;
 
@@ -80,6 +86,9 @@ final class MemoryStoreUpdateParams implements BaseModel
         return $self;
     }
 
+    /**
+     * New description for the store, up to 1024 characters. Pass an empty string to clear it.
+     */
     public function withDescription(?string $description): self
     {
         $self = clone $this;
@@ -101,6 +110,9 @@ final class MemoryStoreUpdateParams implements BaseModel
         return $self;
     }
 
+    /**
+     * New human-readable name for the store. 1–255 characters; no control characters. Renaming changes the slug used for the store's `mount_path` in sessions created after the update.
+     */
     public function withName(?string $name): self
     {
         $self = clone $this;

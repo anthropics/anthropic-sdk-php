@@ -40,11 +40,11 @@ final class MemoriesService implements MemoriesContract
     /**
      * @api
      *
-     * CreateMemory
+     * Create a memory
      *
      * @param string $memoryStoreID Path param: Path parameter memory_store_id
-     * @param string|null $content Body param
-     * @param string $path Body param
+     * @param string|null $content Body param: UTF-8 text content for the new memory. Maximum 100 kB (102,400 bytes). Required; pass `""` explicitly to create an empty memory.
+     * @param string $path Body param: Hierarchical path for the new memory, e.g. `/projects/foo/notes.md`. Must start with `/`, contain at least one non-empty segment, and be at most 1,024 bytes. Must not contain empty segments, `.` or `..` segments, control or format characters, and must be NFC-normalized. Paths are case-sensitive.
      * @param ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView> $view Query param: Query parameter for view
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
@@ -77,7 +77,7 @@ final class MemoriesService implements MemoriesContract
     /**
      * @api
      *
-     * GetMemory
+     * Retrieve a memory
      *
      * @param string $memoryID Path param: Path parameter memory_id
      * @param string $memoryStoreID Path param: Path parameter memory_store_id
@@ -107,14 +107,14 @@ final class MemoriesService implements MemoriesContract
     /**
      * @api
      *
-     * UpdateMemory
+     * Update a memory
      *
      * @param string $memoryID Path param: Path parameter memory_id
      * @param string $memoryStoreID Path param: Path parameter memory_store_id
      * @param ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView> $view Query param: Query parameter for view
-     * @param string|null $content Body param
-     * @param string|null $path Body param
-     * @param ManagedAgentsPrecondition|ManagedAgentsPreconditionShape $precondition Body param
+     * @param string|null $content Body param: New UTF-8 text content for the memory. Maximum 100 kB (102,400 bytes). Omit to leave the content unchanged (e.g., for a rename-only update).
+     * @param string|null $path Body param: New path for the memory (a rename). Must start with `/`, contain at least one non-empty segment, and be at most 1,024 bytes. Must not contain empty segments, `.` or `..` segments, control or format characters, and must be NFC-normalized. Paths are case-sensitive. The memory's `id` is preserved across renames. Omit to leave the path unchanged.
+     * @param ManagedAgentsPrecondition|ManagedAgentsPreconditionShape $precondition Body param: Optimistic-concurrency precondition: the update applies only if the memory's stored `content_sha256` equals the supplied value. On mismatch, the request returns `memory_precondition_failed_error` (HTTP 409); re-read the memory and retry against the fresh state. If the precondition fails but the stored state already exactly matches the requested `content` and `path`, the server returns 200 instead of 409.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
@@ -150,7 +150,7 @@ final class MemoriesService implements MemoriesContract
     /**
      * @api
      *
-     * ListMemories
+     * List memories
      *
      * @param string $memoryStoreID Path param: Path parameter memory_store_id
      * @param int $depth Query param: Query parameter for depth
@@ -201,7 +201,7 @@ final class MemoriesService implements MemoriesContract
     /**
      * @api
      *
-     * DeleteMemory
+     * Delete a memory
      *
      * @param string $memoryID Path param: Path parameter memory_id
      * @param string $memoryStoreID Path param: Path parameter memory_store_id

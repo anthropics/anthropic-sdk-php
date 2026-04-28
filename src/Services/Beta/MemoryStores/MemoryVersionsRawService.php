@@ -33,7 +33,7 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
     /**
      * @api
      *
-     * GetMemoryVersion
+     * Retrieve a memory version
      *
      * @param string $memoryVersionID Path param: Path parameter memory_version_id
      * @param array{
@@ -87,7 +87,7 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
     /**
      * @api
      *
-     * ListMemoryVersions
+     * List memory versions
      *
      * @param string $memoryStoreID Path param: Path parameter memory_store_id
      * @param array{
@@ -164,7 +164,7 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
     /**
      * @api
      *
-     * RedactMemoryVersion
+     * Redact a memory version
      *
      * @param string $memoryVersionID Path param: Path parameter memory_version_id
      * @param array{

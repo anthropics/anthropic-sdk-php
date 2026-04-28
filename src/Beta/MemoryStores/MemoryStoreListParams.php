@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * ListMemoryStores.
+ * List memory stores.
  *
  * @see Anthropic\Services\Beta\MemoryStoresService::list()
  *
@@ -31,31 +31,31 @@ final class MemoryStoreListParams implements BaseModel
     use SdkParams;
 
     /**
-     * Return stores created at or after this time (inclusive).
+     * Return only stores whose `created_at` is at or after this time (inclusive). Sent on the wire as `created_at[gte]`.
      */
     #[Optional]
     public ?\DateTimeInterface $createdAtGte;
 
     /**
-     * Return stores created at or before this time (inclusive).
+     * Return only stores whose `created_at` is at or before this time (inclusive). Sent on the wire as `created_at[lte]`.
      */
     #[Optional]
     public ?\DateTimeInterface $createdAtLte;
 
     /**
-     * Query parameter for include_archived.
+     * When `true`, archived stores are included in the results. Defaults to `false` (archived stores are excluded).
      */
     #[Optional]
     public ?bool $includeArchived;
 
     /**
-     * Query parameter for limit.
+     * Maximum number of stores to return per page. Must be between 1 and 100. Defaults to 20 when omitted.
      */
     #[Optional]
     public ?int $limit;
 
     /**
-     * Query parameter for page.
+     * Opaque pagination cursor (a `page_...` value). Pass the `next_page` value from a previous response to fetch the next page; omit for the first page.
      */
     #[Optional]
     public ?string $page;
@@ -101,7 +101,7 @@ final class MemoryStoreListParams implements BaseModel
     }
 
     /**
-     * Return stores created at or after this time (inclusive).
+     * Return only stores whose `created_at` is at or after this time (inclusive). Sent on the wire as `created_at[gte]`.
      */
     public function withCreatedAtGte(\DateTimeInterface $createdAtGte): self
     {
@@ -112,7 +112,7 @@ final class MemoryStoreListParams implements BaseModel
     }
 
     /**
-     * Return stores created at or before this time (inclusive).
+     * Return only stores whose `created_at` is at or before this time (inclusive). Sent on the wire as `created_at[lte]`.
      */
     public function withCreatedAtLte(\DateTimeInterface $createdAtLte): self
     {
@@ -123,7 +123,7 @@ final class MemoryStoreListParams implements BaseModel
     }
 
     /**
-     * Query parameter for include_archived.
+     * When `true`, archived stores are included in the results. Defaults to `false` (archived stores are excluded).
      */
     public function withIncludeArchived(bool $includeArchived): self
     {
@@ -134,7 +134,7 @@ final class MemoryStoreListParams implements BaseModel
     }
 
     /**
-     * Query parameter for limit.
+     * Maximum number of stores to return per page. Must be between 1 and 100. Defaults to 20 when omitted.
      */
     public function withLimit(int $limit): self
     {
@@ -145,7 +145,7 @@ final class MemoryStoreListParams implements BaseModel
     }
 
     /**
-     * Query parameter for page.
+     * Opaque pagination cursor (a `page_...` value). Pass the `next_page` value from a previous response to fetch the next page; omit for the first page.
      */
     public function withPage(string $page): self
     {

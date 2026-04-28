@@ -10,6 +10,8 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * Confirmation that a `memory_store` was deleted.
+ *
  * @phpstan-type BetaManagedAgentsDeletedMemoryStoreShape = array{
  *   id: string, type: Type|value-of<Type>
  * }
@@ -19,6 +21,9 @@ final class BetaManagedAgentsDeletedMemoryStore implements BaseModel
     /** @use SdkModel<BetaManagedAgentsDeletedMemoryStoreShape> */
     use SdkModel;
 
+    /**
+     * ID of the deleted memory store (a `memstore_...` identifier). The store and all its memories and versions are no longer retrievable.
+     */
     #[Required]
     public string $id;
 
@@ -62,6 +67,9 @@ final class BetaManagedAgentsDeletedMemoryStore implements BaseModel
         return $self;
     }
 
+    /**
+     * ID of the deleted memory store (a `memstore_...` identifier). The store and all its memories and versions are no longer retrievable.
+     */
     public function withID(string $id): self
     {
         $self = clone $this;
