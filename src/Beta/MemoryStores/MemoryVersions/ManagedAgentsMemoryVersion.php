@@ -11,6 +11,8 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * A `memory_version` object: one immutable, attributed row in a memory's append-only history. Every non-no-op mutation to a memory produces a new version. Versions belong to the store (not the individual memory) and persist after the memory is deleted. Retrieving a redacted version returns 200 with `content`, `path`, `content_size_bytes`, and `content_sha256` set to `null`; branch on `redacted_at`, not HTTP status.
+ *
  * @phpstan-import-type ManagedAgentsActorShape from \Anthropic\Beta\MemoryStores\MemoryVersions\ManagedAgentsActor
  * @phpstan-import-type ManagedAgentsActorVariants from \Anthropic\Beta\MemoryStores\MemoryVersions\ManagedAgentsActor
  *
@@ -35,6 +37,9 @@ final class ManagedAgentsMemoryVersion implements BaseModel
     /** @use SdkModel<ManagedAgentsMemoryVersionShape> */
     use SdkModel;
 
+    /**
+     * Unique identifier for this version (a `memver_...` value).
+     */
     #[Required]
     public string $id;
 
@@ -44,14 +49,20 @@ final class ManagedAgentsMemoryVersion implements BaseModel
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
 
+    /**
+     * ID of the memory this version snapshots (a `mem_...` value). Remains valid after the memory is deleted; pass it as `memory_id` to [List memory versions](/en/api/beta/memory_stores/memory_versions/list) to retrieve the full lineage including the `deleted` row.
+     */
     #[Required('memory_id')]
     public string $memoryID;
 
+    /**
+     * ID of the memory store this version belongs to (a `memstore_...` value).
+     */
     #[Required('memory_store_id')]
     public string $memoryStoreID;
 
     /**
-     * MemoryVersionOperation enum.
+     * The kind of mutation a `memory_version` records. Every non-no-op mutation to a memory appends exactly one version row with one of these values.
      *
      * @var value-of<ManagedAgentsMemoryVersionOperation> $operation
      */
@@ -62,19 +73,35 @@ final class ManagedAgentsMemoryVersion implements BaseModel
     #[Required(enum: Type::class)]
     public string $type;
 
+    /**
+     * The memory's UTF-8 text content as of this version. `null` when `view=basic`, when `operation` is `deleted`, or when `redacted_at` is set.
+     */
     #[Optional(nullable: true)]
     public ?string $content;
 
+    /**
+     * Lowercase hex SHA-256 digest of `content` as of this version (64 characters). `null` when `redacted_at` is set or `operation` is `deleted`. Populated regardless of `view` otherwise.
+     */
     #[Optional('content_sha256', nullable: true)]
     public ?string $contentSha256;
 
+    /**
+     * Size of `content` in bytes as of this version. `null` when `redacted_at` is set or `operation` is `deleted`. Populated regardless of `view` otherwise.
+     */
     #[Optional('content_size_bytes', nullable: true)]
     public ?int $contentSizeBytes;
 
-    /** @var ManagedAgentsActorVariants|null $createdBy */
+    /**
+     * Identifies who performed a write or redact operation. Captured at write time on the `memory_version` row. The API key that created a session is not recorded on agent writes; attribution answers who made the write, not who is ultimately responsible. Look up session provenance separately via the [Sessions API](/en/api/sessions-retrieve).
+     *
+     * @var ManagedAgentsActorVariants|null $createdBy
+     */
     #[Optional('created_by', union: ManagedAgentsActor::class)]
     public ManagedAgentsSessionActor|ManagedAgentsAPIActor|ManagedAgentsUserActor|null $createdBy;
 
+    /**
+     * The memory's path at the time of this write. `null` if and only if `redacted_at` is set.
+     */
     #[Optional(nullable: true)]
     public ?string $path;
 
@@ -84,7 +111,11 @@ final class ManagedAgentsMemoryVersion implements BaseModel
     #[Optional('redacted_at', nullable: true)]
     public ?\DateTimeInterface $redactedAt;
 
-    /** @var ManagedAgentsActorVariants|null $redactedBy */
+    /**
+     * Identifies who performed a write or redact operation. Captured at write time on the `memory_version` row. The API key that created a session is not recorded on agent writes; attribution answers who made the write, not who is ultimately responsible. Look up session provenance separately via the [Sessions API](/en/api/sessions-retrieve).
+     *
+     * @var ManagedAgentsActorVariants|null $redactedBy
+     */
     #[Optional('redacted_by', union: ManagedAgentsActor::class)]
     public ManagedAgentsSessionActor|ManagedAgentsAPIActor|ManagedAgentsUserActor|null $redactedBy;
 
@@ -165,6 +196,9 @@ final class ManagedAgentsMemoryVersion implements BaseModel
         return $self;
     }
 
+    /**
+     * Unique identifier for this version (a `memver_...` value).
+     */
     public function withID(string $id): self
     {
         $self = clone $this;
@@ -184,6 +218,9 @@ final class ManagedAgentsMemoryVersion implements BaseModel
         return $self;
     }
 
+    /**
+     * ID of the memory this version snapshots (a `mem_...` value). Remains valid after the memory is deleted; pass it as `memory_id` to [List memory versions](/en/api/beta/memory_stores/memory_versions/list) to retrieve the full lineage including the `deleted` row.
+     */
     public function withMemoryID(string $memoryID): self
     {
         $self = clone $this;
@@ -192,6 +229,9 @@ final class ManagedAgentsMemoryVersion implements BaseModel
         return $self;
     }
 
+    /**
+     * ID of the memory store this version belongs to (a `memstore_...` value).
+     */
     public function withMemoryStoreID(string $memoryStoreID): self
     {
         $self = clone $this;
@@ -201,7 +241,7 @@ final class ManagedAgentsMemoryVersion implements BaseModel
     }
 
     /**
-     * MemoryVersionOperation enum.
+     * The kind of mutation a `memory_version` records. Every non-no-op mutation to a memory appends exactly one version row with one of these values.
      *
      * @param ManagedAgentsMemoryVersionOperation|value-of<ManagedAgentsMemoryVersionOperation> $operation
      */
@@ -225,6 +265,9 @@ final class ManagedAgentsMemoryVersion implements BaseModel
         return $self;
     }
 
+    /**
+     * The memory's UTF-8 text content as of this version. `null` when `view=basic`, when `operation` is `deleted`, or when `redacted_at` is set.
+     */
     public function withContent(?string $content): self
     {
         $self = clone $this;
@@ -233,6 +276,9 @@ final class ManagedAgentsMemoryVersion implements BaseModel
         return $self;
     }
 
+    /**
+     * Lowercase hex SHA-256 digest of `content` as of this version (64 characters). `null` when `redacted_at` is set or `operation` is `deleted`. Populated regardless of `view` otherwise.
+     */
     public function withContentSha256(?string $contentSha256): self
     {
         $self = clone $this;
@@ -241,6 +287,9 @@ final class ManagedAgentsMemoryVersion implements BaseModel
         return $self;
     }
 
+    /**
+     * Size of `content` in bytes as of this version. `null` when `redacted_at` is set or `operation` is `deleted`. Populated regardless of `view` otherwise.
+     */
     public function withContentSizeBytes(?int $contentSizeBytes): self
     {
         $self = clone $this;
@@ -250,6 +299,8 @@ final class ManagedAgentsMemoryVersion implements BaseModel
     }
 
     /**
+     * Identifies who performed a write or redact operation. Captured at write time on the `memory_version` row. The API key that created a session is not recorded on agent writes; attribution answers who made the write, not who is ultimately responsible. Look up session provenance separately via the [Sessions API](/en/api/sessions-retrieve).
+     *
      * @param ManagedAgentsActorShape $createdBy
      */
     public function withCreatedBy(
@@ -261,6 +312,9 @@ final class ManagedAgentsMemoryVersion implements BaseModel
         return $self;
     }
 
+    /**
+     * The memory's path at the time of this write. `null` if and only if `redacted_at` is set.
+     */
     public function withPath(?string $path): self
     {
         $self = clone $this;
@@ -281,6 +335,8 @@ final class ManagedAgentsMemoryVersion implements BaseModel
     }
 
     /**
+     * Identifies who performed a write or redact operation. Captured at write time on the `memory_version` row. The API key that created a session is not recorded on agent writes; attribution answers who made the write, not who is ultimately responsible. Look up session provenance separately via the [Sessions API](/en/api/sessions-retrieve).
+     *
      * @param ManagedAgentsActorShape $redactedBy
      */
     public function withRedactedBy(

@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * DeleteMemory.
+ * Delete a memory.
  *
  * @see Anthropic\Services\Beta\MemoryStores\MemoriesService::delete()
  *

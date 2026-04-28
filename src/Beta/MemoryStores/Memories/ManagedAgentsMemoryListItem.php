@@ -9,6 +9,8 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
+ * One item in a [List memories](/en/api/beta/memory_stores/memories/list) response: either a `memory` object or, when `depth` is set, a `memory_prefix` rollup marker.
+ *
  * @phpstan-import-type ManagedAgentsMemoryShape from \Anthropic\Beta\MemoryStores\Memories\ManagedAgentsMemory
  * @phpstan-import-type ManagedAgentsMemoryPrefixShape from \Anthropic\Beta\MemoryStores\Memories\ManagedAgentsMemoryPrefix
  *

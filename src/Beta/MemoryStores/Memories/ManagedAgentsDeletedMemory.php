@@ -10,6 +10,8 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * Tombstone returned by [Delete a memory](/en/api/beta/memory_stores/memories/delete). The memory's version history persists and remains listable via [List memory versions](/en/api/beta/memory_stores/memory_versions/list) until the store itself is deleted.
+ *
  * @phpstan-type ManagedAgentsDeletedMemoryShape = array{
  *   id: string, type: Type|value-of<Type>
  * }
@@ -19,6 +21,9 @@ final class ManagedAgentsDeletedMemory implements BaseModel
     /** @use SdkModel<ManagedAgentsDeletedMemoryShape> */
     use SdkModel;
 
+    /**
+     * ID of the deleted memory (a `mem_...` value).
+     */
     #[Required]
     public string $id;
 
@@ -62,6 +67,9 @@ final class ManagedAgentsDeletedMemory implements BaseModel
         return $self;
     }
 
+    /**
+     * ID of the deleted memory (a `mem_...` value).
+     */
     public function withID(string $id): self
     {
         $self = clone $this;

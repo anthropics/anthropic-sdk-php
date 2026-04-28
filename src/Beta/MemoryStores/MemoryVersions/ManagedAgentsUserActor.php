@@ -10,6 +10,8 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * Attribution for a write made by a human user through the Anthropic Console.
+ *
  * @phpstan-type ManagedAgentsUserActorShape = array{
  *   type: Type|value-of<Type>, userID: string
  * }
@@ -23,6 +25,9 @@ final class ManagedAgentsUserActor implements BaseModel
     #[Required(enum: Type::class)]
     public string $type;
 
+    /**
+     * ID of the user who performed the write (a `user_...` value).
+     */
     #[Required('user_id')]
     public string $userID;
 
@@ -73,6 +78,9 @@ final class ManagedAgentsUserActor implements BaseModel
         return $self;
     }
 
+    /**
+     * ID of the user who performed the write (a `user_...` value).
+     */
     public function withUserID(string $userID): self
     {
         $self = clone $this;

@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * ListMemoryVersions.
+ * List memory versions.
  *
  * @see Anthropic\Services\Beta\MemoryStores\MemoryVersionsService::list()
  *

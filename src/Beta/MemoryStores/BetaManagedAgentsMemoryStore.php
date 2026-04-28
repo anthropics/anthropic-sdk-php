@@ -11,6 +11,8 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * A `memory_store`: a named container for agent memories, scoped to a workspace. Attach a store to a session via `resources[]` to mount it as a directory the agent can read and write.
+ *
  * @phpstan-type BetaManagedAgentsMemoryStoreShape = array{
  *   id: string,
  *   createdAt: \DateTimeInterface,
@@ -27,6 +29,9 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
     /** @use SdkModel<BetaManagedAgentsMemoryStoreShape> */
     use SdkModel;
 
+    /**
+     * Unique identifier for the memory store (a `memstore_...` tagged ID). Use this when attaching the store to a session, or in the `{memory_store_id}` path parameter of subsequent calls.
+     */
     #[Required]
     public string $id;
 
@@ -36,6 +41,9 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
 
+    /**
+     * Human-readable name for the store. 1–255 characters. The store's mount-path slug under `/mnt/memory/` is derived from this name.
+     */
     #[Required]
     public string $name;
 
@@ -55,10 +63,17 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
     #[Optional('archived_at', nullable: true)]
     public ?\DateTimeInterface $archivedAt;
 
+    /**
+     * Free-text description of what the store contains, up to 1024 characters. Included in the agent's system prompt when the store is attached, so word it to be useful to the agent. Empty string when unset.
+     */
     #[Optional]
     public ?string $description;
 
-    /** @var array<string,string>|null $metadata */
+    /**
+     * Arbitrary key-value tags for your own bookkeeping (such as the end user a store belongs to). Up to 16 pairs; keys 1–64 characters; values up to 512 characters. Returned on retrieve/list but not filterable.
+     *
+     * @var array<string,string>|null $metadata
+     */
     #[Optional(map: 'string')]
     public ?array $metadata;
 
@@ -121,6 +136,9 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
         return $self;
     }
 
+    /**
+     * Unique identifier for the memory store (a `memstore_...` tagged ID). Use this when attaching the store to a session, or in the `{memory_store_id}` path parameter of subsequent calls.
+     */
     public function withID(string $id): self
     {
         $self = clone $this;
@@ -140,6 +158,9 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
         return $self;
     }
 
+    /**
+     * Human-readable name for the store. 1–255 characters. The store's mount-path slug under `/mnt/memory/` is derived from this name.
+     */
     public function withName(string $name): self
     {
         $self = clone $this;
@@ -181,6 +202,9 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
         return $self;
     }
 
+    /**
+     * Free-text description of what the store contains, up to 1024 characters. Included in the agent's system prompt when the store is attached, so word it to be useful to the agent. Empty string when unset.
+     */
     public function withDescription(string $description): self
     {
         $self = clone $this;
@@ -190,6 +214,8 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
     }
 
     /**
+     * Arbitrary key-value tags for your own bookkeeping (such as the end user a store belongs to). Up to 16 pairs; keys 1–64 characters; values up to 512 characters. Returned on retrieve/list but not filterable.
+     *
      * @param array<string,string> $metadata
      */
     public function withMetadata(array $metadata): self

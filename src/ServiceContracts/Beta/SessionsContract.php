@@ -92,6 +92,7 @@ interface SessionsContract
      * @param \DateTimeInterface $createdAtLte query param: Return sessions created at or before this time (inclusive)
      * @param bool $includeArchived Query param: When true, includes archived sessions. Default: false (exclude archived).
      * @param int $limit query param: Maximum number of results to return
+     * @param string $memoryStoreID query param: Filter sessions whose resources contain a memory_store with this memory store ID
      * @param Order|value-of<Order> $order Query param: Sort direction for results, ordered by created_at. Defaults to desc (newest first).
      * @param string $page query param: Opaque pagination cursor from a previous response's next_page
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
@@ -110,6 +111,7 @@ interface SessionsContract
         ?\DateTimeInterface $createdAtLte = null,
         ?bool $includeArchived = null,
         ?int $limit = null,
+        ?string $memoryStoreID = null,
         Order|string|null $order = null,
         ?string $page = null,
         ?array $betas = null,
