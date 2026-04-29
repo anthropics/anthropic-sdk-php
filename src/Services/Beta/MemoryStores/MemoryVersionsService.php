@@ -36,7 +36,7 @@ final class MemoryVersionsService implements MemoryVersionsContract
     /**
      * @api
      *
-     * GetMemoryVersion
+     * Retrieve a memory version
      *
      * @param string $memoryVersionID Path param: Path parameter memory_version_id
      * @param string $memoryStoreID Path param: Path parameter memory_store_id
@@ -66,7 +66,7 @@ final class MemoryVersionsService implements MemoryVersionsContract
     /**
      * @api
      *
-     * ListMemoryVersions
+     * List memory versions
      *
      * @param string $memoryStoreID Path param: Path parameter memory_store_id
      * @param string $apiKeyID Query param: Query parameter for api_key_id
@@ -123,7 +123,7 @@ final class MemoryVersionsService implements MemoryVersionsContract
     /**
      * @api
      *
-     * RedactMemoryVersion
+     * Redact a memory version
      *
      * @param string $memoryVersionID Path param: Path parameter memory_version_id
      * @param string $memoryStoreID Path param: Path parameter memory_store_id

@@ -63,6 +63,8 @@ interface MessagesContract
      *
      * Note that our models may stop _before_ reaching this maximum. This parameter only specifies the absolute maximum number of tokens to generate.
      *
+     * Set to `0` to populate the [prompt cache](https://docs.claude.com/en/docs/build-with-claude/prompt-caching#pre-warming-the-cache) without generating a response.
+     *
      * Different models have different maximum values for this parameter.  See [models](https://docs.claude.com/en/docs/models-overview) for details.
      * @param list<BetaMessageParam|BetaMessageParamShape> $messages Body param: Input messages.
      *
@@ -258,6 +260,8 @@ interface MessagesContract
      * @param int $maxTokens Body param: The maximum number of tokens to generate before stopping.
      *
      * Note that our models may stop _before_ reaching this maximum. This parameter only specifies the absolute maximum number of tokens to generate.
+     *
+     * Set to `0` to populate the [prompt cache](https://docs.claude.com/en/docs/build-with-claude/prompt-caching#pre-warming-the-cache) without generating a response.
      *
      * Different models have different maximum values for this parameter.  See [models](https://docs.claude.com/en/docs/models-overview) for details.
      * @param list<BetaMessageParam|BetaMessageParamShape> $messages Body param: Input messages.

@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Unified Environment resource for both cloud and BYOC environments.
+ * Unified Environment resource for both cloud and self-hosted environments.
  *
  * @phpstan-import-type BetaCloudConfigShape from \Anthropic\Beta\Environments\BetaCloudConfig
  *

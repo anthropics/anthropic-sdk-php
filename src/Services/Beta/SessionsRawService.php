@@ -189,6 +189,7 @@ final class SessionsRawService implements SessionsRawContract
      *   createdAtLte?: \DateTimeInterface,
      *   includeArchived?: bool,
      *   limit?: int,
+     *   memoryStoreID?: string,
      *   order?: Order|value-of<Order>,
      *   page?: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -217,6 +218,7 @@ final class SessionsRawService implements SessionsRawContract
                 'createdAtLte',
                 'includeArchived',
                 'limit',
+                'memoryStoreID',
                 'order',
                 'page',
             ],
@@ -239,6 +241,7 @@ final class SessionsRawService implements SessionsRawContract
                     'createdAtLt' => 'created_at[lt]',
                     'createdAtLte' => 'created_at[lte]',
                     'includeArchived' => 'include_archived',
+                    'memoryStoreID' => 'memory_store_id',
                 ],
             ),
             headers: Util::array_transform_keys(

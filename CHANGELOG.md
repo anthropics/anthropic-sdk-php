@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.18.0 (2026-04-29)
+
+Full Changelog: [v0.17.1...v0.18.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.17.1...v0.18.0)
+
+### Features
+
+* **api:** improve Managed Agents APIs ([56c1d24](https://github.com/anthropics/anthropic-sdk-php/commit/56c1d2448258882e1c1d8bcbb8ce1194b70657a8))
+* support setting headers via env ([51490da](https://github.com/anthropics/anthropic-sdk-php/commit/51490dae8bea7a1efbb48e82cbaf50921363c915))
+
 ## 0.17.1 (2026-04-27)
 
 Full Changelog: [v0.17.0...v0.17.1](https://github.com/anthropics/anthropic-sdk-php/compare/v0.17.0...v0.17.1)

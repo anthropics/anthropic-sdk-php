@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\MemoryStores\MemoryVersions;
 
 /**
- * MemoryVersionOperation enum.
+ * The kind of mutation a `memory_version` records. Every non-no-op mutation to a memory appends exactly one version row with one of these values.
  */
 enum ManagedAgentsMemoryVersionOperation: string
 {

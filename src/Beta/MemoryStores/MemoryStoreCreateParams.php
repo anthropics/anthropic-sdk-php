@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * CreateMemoryStore.
+ * Create a memory store.
  *
  * @see Anthropic\Services\Beta\MemoryStoresService::create()
  *
@@ -29,13 +29,23 @@ final class MemoryStoreCreateParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
+    /**
+     * Human-readable name for the store. Required; 1–255 characters; no control characters. The mount-path slug under `/mnt/memory/` is derived from this name (lowercased, non-alphanumeric runs collapsed to a hyphen). Names need not be unique within a workspace.
+     */
     #[Required]
     public string $name;
 
+    /**
+     * Free-text description of what the store contains, up to 1024 characters. Included in the agent's system prompt when the store is attached, so word it to be useful to the agent.
+     */
     #[Optional]
     public ?string $description;
 
-    /** @var array<string,string>|null $metadata */
+    /**
+     * Arbitrary key-value tags for your own bookkeeping (such as the end user a store belongs to). Up to 16 pairs; keys 1–64 characters; values up to 512 characters. Not visible to the agent.
+     *
+     * @var array<string,string>|null $metadata
+     */
     #[Optional(map: 'string')]
     public ?array $metadata;
 
@@ -91,6 +101,9 @@ final class MemoryStoreCreateParams implements BaseModel
         return $self;
     }
 
+    /**
+     * Human-readable name for the store. Required; 1–255 characters; no control characters. The mount-path slug under `/mnt/memory/` is derived from this name (lowercased, non-alphanumeric runs collapsed to a hyphen). Names need not be unique within a workspace.
+     */
     public function withName(string $name): self
     {
         $self = clone $this;
@@ -99,6 +112,9 @@ final class MemoryStoreCreateParams implements BaseModel
         return $self;
     }
 
+    /**
+     * Free-text description of what the store contains, up to 1024 characters. Included in the agent's system prompt when the store is attached, so word it to be useful to the agent.
+     */
     public function withDescription(string $description): self
     {
         $self = clone $this;
@@ -108,6 +124,8 @@ final class MemoryStoreCreateParams implements BaseModel
     }
 
     /**
+     * Arbitrary key-value tags for your own bookkeeping (such as the end user a store belongs to). Up to 16 pairs; keys 1–64 characters; values up to 512 characters. Not visible to the agent.
+     *
      * @param array<string,string> $metadata
      */
     public function withMetadata(array $metadata): self

@@ -40,7 +40,7 @@ final class MemoriesRawService implements MemoriesRawContract
     /**
      * @api
      *
-     * CreateMemory
+     * Create a memory
      *
      * @param string $memoryStoreID Path param: Path parameter memory_store_id
      * @param array{
@@ -91,7 +91,7 @@ final class MemoriesRawService implements MemoriesRawContract
     /**
      * @api
      *
-     * GetMemory
+     * Retrieve a memory
      *
      * @param string $memoryID Path param: Path parameter memory_id
      * @param array{
@@ -145,7 +145,7 @@ final class MemoriesRawService implements MemoriesRawContract
     /**
      * @api
      *
-     * UpdateMemory
+     * Update a memory
      *
      * @param string $memoryID Path param: Path parameter memory_id
      * @param array{
@@ -207,7 +207,7 @@ final class MemoriesRawService implements MemoriesRawContract
     /**
      * @api
      *
-     * ListMemories
+     * List memories
      *
      * @param string $memoryStoreID Path param: Path parameter memory_store_id
      * @param array{
@@ -266,7 +266,7 @@ final class MemoriesRawService implements MemoriesRawContract
     /**
      * @api
      *
-     * DeleteMemory
+     * Delete a memory
      *
      * @param string $memoryID Path param: Path parameter memory_id
      * @param array{
