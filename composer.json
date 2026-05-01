@@ -40,6 +40,7 @@
     "aws/aws-sdk-php": "^3.368",
     "friendsofphp/php-cs-fixer": "^3",
     "google/auth": "^1.49",
+    "mcp/sdk": "^0.5",
     "nyholm/psr7": "^1",
     "pestphp/pest": "^3",
     "php-http/mock-client": "^1",
@@ -56,6 +57,7 @@
   },
   "suggest": {
     "aws/aws-sdk-php": "Allows using the AWS Bedrock, AWS gateway, and Bedrock Mantle SDKs",
-    "google/auth": "Allows using the Google Vertex SDK"
+    "google/auth": "Allows using the Google Vertex SDK",
+    "mcp/sdk": "Required to use the BetaMcp helpers for integrating MCP servers with the Anthropic SDK"
   }
 }
