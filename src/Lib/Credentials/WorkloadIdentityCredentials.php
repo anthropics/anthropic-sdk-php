@@ -26,8 +26,7 @@ final class WorkloadIdentityCredentials implements AccessTokenProvider, Closeabl
     private StreamFactoryInterface $streamFactory;
 
     /**
-     * @param string $organizationId the organization's raw UUID string (organizations
-     *                               do not use tagged IDs)
+     * @param string $organizationId the organization's ID
      * @param ?string $workspaceId Optional `wrkspc_*` tagged ID, or the literal
      *                             `"default"` to scope the token to the organization's
      *                             default workspace. When omitted the server picks the
