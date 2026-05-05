@@ -34,7 +34,8 @@
     "psr/http-client": "^1",
     "psr/http-client-implementation": "^1",
     "psr/http-factory-implementation": "^1",
-    "psr/http-message": "^1|^2"
+    "psr/http-message": "^1|^2",
+    "standard-webhooks/standard-webhooks": "^1"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3",

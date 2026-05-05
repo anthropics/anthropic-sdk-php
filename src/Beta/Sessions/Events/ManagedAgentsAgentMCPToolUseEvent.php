@@ -22,6 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   processedAt: \DateTimeInterface,
  *   type: Type|value-of<Type>,
  *   evaluatedPermission?: null|EvaluatedPermission|value-of<EvaluatedPermission>,
+ *   sessionThreadID?: string|null,
  * }
  */
 final class ManagedAgentsAgentMCPToolUseEvent implements BaseModel
@@ -74,6 +75,12 @@ final class ManagedAgentsAgentMCPToolUseEvent implements BaseModel
     public ?string $evaluatedPermission;
 
     /**
+     * When set, this event was cross-posted from a subagent's thread to surface its permission request on the primary thread's stream. Empty on the thread's own events. Echo this on a `user.tool_confirmation` event to route the approval back.
+     */
+    #[Optional('session_thread_id', nullable: true)]
+    public ?string $sessionThreadID;
+
+    /**
      * `new ManagedAgentsAgentMCPToolUseEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -122,6 +129,7 @@ final class ManagedAgentsAgentMCPToolUseEvent implements BaseModel
         \DateTimeInterface $processedAt,
         Type|string $type,
         EvaluatedPermission|string|null $evaluatedPermission = null,
+        ?string $sessionThreadID = null,
     ): self {
         $self = new self;
 
@@ -133,6 +141,7 @@ final class ManagedAgentsAgentMCPToolUseEvent implements BaseModel
         $self['type'] = $type;
 
         null !== $evaluatedPermission && $self['evaluatedPermission'] = $evaluatedPermission;
+        null !== $sessionThreadID && $self['sessionThreadID'] = $sessionThreadID;
 
         return $self;
     }
@@ -215,6 +224,17 @@ final class ManagedAgentsAgentMCPToolUseEvent implements BaseModel
     ): self {
         $self = clone $this;
         $self['evaluatedPermission'] = $evaluatedPermission;
+
+        return $self;
+    }
+
+    /**
+     * When set, this event was cross-posted from a subagent's thread to surface its permission request on the primary thread's stream. Empty on the thread's own events. Echo this on a `user.tool_confirmation` event to route the approval back.
+     */
+    public function withSessionThreadID(?string $sessionThreadID): self
+    {
+        $self = clone $this;
+        $self['sessionThreadID'] = $sessionThreadID;
 
         return $self;
     }

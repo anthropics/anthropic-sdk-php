@@ -9,9 +9,11 @@ use Anthropic\Beta\Vaults\Credentials\CredentialArchiveParams;
 use Anthropic\Beta\Vaults\Credentials\CredentialCreateParams;
 use Anthropic\Beta\Vaults\Credentials\CredentialDeleteParams;
 use Anthropic\Beta\Vaults\Credentials\CredentialListParams;
+use Anthropic\Beta\Vaults\Credentials\CredentialMCPOAuthValidateParams;
 use Anthropic\Beta\Vaults\Credentials\CredentialRetrieveParams;
 use Anthropic\Beta\Vaults\Credentials\CredentialUpdateParams;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredential;
+use Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredentialValidation;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsDeletedCredential;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
@@ -324,6 +326,53 @@ final class CredentialsRawService implements CredentialsRawContract
                 $options,
             ),
             convert: ManagedAgentsCredential::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Validate Credential
+     *
+     * @param string $credentialID Path param: Path parameter credential_id
+     * @param array{
+     *   vaultID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     * }|CredentialMCPOAuthValidateParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<ManagedAgentsCredentialValidation>
+     *
+     * @throws APIException
+     */
+    public function mcpOAuthValidate(
+        string $credentialID,
+        array|CredentialMCPOAuthValidateParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = CredentialMCPOAuthValidateParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+        $vaultID = $parsed['vaultID'];
+        unset($parsed['vaultID']);
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: [
+                'v1/vaults/%1$s/credentials/%2$s/mcp_oauth_validate?beta=true',
+                $vaultID,
+                $credentialID,
+            ],
+            headers: Util::array_transform_keys(
+                $parsed,
+                ['betas' => 'anthropic-beta']
+            ),
+            options: RequestOptions::parse(
+                ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
+                $options,
+            ),
+            convert: ManagedAgentsCredentialValidation::class,
         );
     }
 }

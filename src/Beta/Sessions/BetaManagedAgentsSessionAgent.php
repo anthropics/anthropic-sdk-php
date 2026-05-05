@@ -20,6 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type ToolVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent\Tool
  * @phpstan-import-type BetaManagedAgentsMCPServerURLDefinitionShape from \Anthropic\Beta\Agents\BetaManagedAgentsMCPServerURLDefinition
  * @phpstan-import-type BetaManagedAgentsModelConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfig
+ * @phpstan-import-type BetaManagedAgentsSessionMultiagentCoordinatorShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionMultiagentCoordinator
  * @phpstan-import-type SkillShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent\Skill
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent\Tool
  *
@@ -28,6 +29,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   description: string|null,
  *   mcpServers: list<BetaManagedAgentsMCPServerURLDefinition|BetaManagedAgentsMCPServerURLDefinitionShape>,
  *   model: BetaManagedAgentsModelConfig|BetaManagedAgentsModelConfigShape,
+ *   multiagent: null|BetaManagedAgentsSessionMultiagentCoordinator|BetaManagedAgentsSessionMultiagentCoordinatorShape,
  *   name: string,
  *   skills: list<SkillShape>,
  *   system: string|null,
@@ -60,6 +62,12 @@ final class BetaManagedAgentsSessionAgent implements BaseModel
     #[Required]
     public BetaManagedAgentsModelConfig $model;
 
+    /**
+     * Resolved coordinator topology with full agent definitions for each roster member.
+     */
+    #[Required]
+    public ?BetaManagedAgentsSessionMultiagentCoordinator $multiagent;
+
     #[Required]
     public string $name;
 
@@ -91,6 +99,7 @@ final class BetaManagedAgentsSessionAgent implements BaseModel
      *   description: ...,
      *   mcpServers: ...,
      *   model: ...,
+     *   multiagent: ...,
      *   name: ...,
      *   skills: ...,
      *   system: ...,
@@ -108,6 +117,7 @@ final class BetaManagedAgentsSessionAgent implements BaseModel
      *   ->withDescription(...)
      *   ->withMCPServers(...)
      *   ->withModel(...)
+     *   ->withMultiagent(...)
      *   ->withName(...)
      *   ->withSkills(...)
      *   ->withSystem(...)
@@ -128,6 +138,7 @@ final class BetaManagedAgentsSessionAgent implements BaseModel
      *
      * @param list<BetaManagedAgentsMCPServerURLDefinition|BetaManagedAgentsMCPServerURLDefinitionShape> $mcpServers
      * @param BetaManagedAgentsModelConfig|BetaManagedAgentsModelConfigShape $model
+     * @param BetaManagedAgentsSessionMultiagentCoordinator|BetaManagedAgentsSessionMultiagentCoordinatorShape|null $multiagent
      * @param list<SkillShape> $skills
      * @param list<ToolShape> $tools
      * @param Type|value-of<Type> $type
@@ -137,6 +148,7 @@ final class BetaManagedAgentsSessionAgent implements BaseModel
         ?string $description,
         array $mcpServers,
         BetaManagedAgentsModelConfig|array $model,
+        BetaManagedAgentsSessionMultiagentCoordinator|array|null $multiagent,
         string $name,
         array $skills,
         ?string $system,
@@ -150,6 +162,7 @@ final class BetaManagedAgentsSessionAgent implements BaseModel
         $self['description'] = $description;
         $self['mcpServers'] = $mcpServers;
         $self['model'] = $model;
+        $self['multiagent'] = $multiagent;
         $self['name'] = $name;
         $self['skills'] = $skills;
         $self['system'] = $system;
@@ -196,6 +209,20 @@ final class BetaManagedAgentsSessionAgent implements BaseModel
     {
         $self = clone $this;
         $self['model'] = $model;
+
+        return $self;
+    }
+
+    /**
+     * Resolved coordinator topology with full agent definitions for each roster member.
+     *
+     * @param BetaManagedAgentsSessionMultiagentCoordinator|BetaManagedAgentsSessionMultiagentCoordinatorShape|null $multiagent
+     */
+    public function withMultiagent(
+        BetaManagedAgentsSessionMultiagentCoordinator|array|null $multiagent
+    ): self {
+        $self = clone $this;
+        $self['multiagent'] = $multiagent;
 
         return $self;
     }

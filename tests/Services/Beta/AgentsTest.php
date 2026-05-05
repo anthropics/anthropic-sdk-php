@@ -56,6 +56,10 @@ final class AgentsTest extends TestCase
                 ],
             ],
             metadata: ['foo' => 'bar'],
+            multiagent: [
+                'agents' => ['agent_011CZkYqphY8vELVzwCUpqiQ', ['type' => 'self']],
+                'type' => 'coordinator',
+            ],
             skills: [['skillID' => 'xlsx', 'type' => 'anthropic', 'version' => '1']],
             system: 'You are a general-purpose agent that can research, write code, run commands, and use connected tools to complete the user\'s task end to end.',
             tools: [
@@ -123,6 +127,10 @@ final class AgentsTest extends TestCase
             ],
             metadata: ['foo' => 'string'],
             model: ['id' => 'claude-opus-4-6', 'speed' => 'standard'],
+            multiagent: [
+                'agents' => ['agent_011CZkYqphY8vELVzwCUpqiQ', ['type' => 'self']],
+                'type' => 'coordinator',
+            ],
             name: 'name',
             skills: [['skillID' => 'xlsx', 'type' => 'anthropic', 'version' => '1']],
             system: 'You are a general-purpose agent that can research, write code, run commands, and use connected tools to complete the user\'s task end to end.',

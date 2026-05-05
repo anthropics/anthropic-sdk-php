@@ -4,7 +4,7 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "ffa287ea8babf60e021f37e62c6c207a",
+  "content-hash": "70cc3a7109763fc87a44dd54d75f7387",
   "packages": [
     {
       "name": "php-http/discovery",
@@ -189,6 +189,51 @@
         "source": "https://github.com/php-fig/http-message/tree/2.0"
       },
       "time": "2023-04-04T09:54:51+00:00"
+    },
+    {
+      "name": "standard-webhooks/standard-webhooks",
+      "version": "v1.0.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/standard-webhooks/standard-webhooks.git",
+        "reference": "b03a68fe8b1904de92ba1df669dc8bd9c8226df3"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/standard-webhooks/standard-webhooks/zipball/b03a68fe8b1904de92ba1df669dc8bd9c8226df3",
+        "reference": "b03a68fe8b1904de92ba1df669dc8bd9c8226df3",
+        "shasum": ""
+      },
+      "require": {
+        "php": "^8.0"
+      },
+      "require-dev": {
+        "phpunit/phpunit": "^9.0 || ^10.0"
+      },
+      "type": "library",
+      "autoload": {
+        "psr-4": {
+          "StandardWebhooks\\": "libraries/php/src/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "description": "Standard Webhooks - Open source tools and guidelines for sending webhooks easily, securely, and reliably",
+      "homepage": "https://www.standardwebhooks.com",
+      "keywords": [
+        "hmac",
+        "signature",
+        "standard-webhooks",
+        "verification",
+        "webhooks"
+      ],
+      "support": {
+        "issues": "https://github.com/standard-webhooks/standard-webhooks/issues",
+        "source": "https://github.com/standard-webhooks/standard-webhooks/tree/v1.0.0"
+      },
+      "time": "2025-12-10T17:57:04+00:00"
     }
   ],
   "packages-dev": [

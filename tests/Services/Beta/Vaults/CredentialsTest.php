@@ -3,6 +3,7 @@
 namespace Tests\Services\Beta\Vaults;
 
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredential;
+use Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredentialValidation;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsDeletedCredential;
 use Anthropic\Client;
 use Anthropic\Core\Util;
@@ -197,5 +198,38 @@ final class CredentialsTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(ManagedAgentsCredential::class, $result);
+    }
+
+    #[Test]
+    public function testMCPOAuthValidate(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('prism can\'t find endpoint with beta only tag');
+        }
+
+        $result = $this->client->beta->vaults->credentials->mcpOAuthValidate(
+            'vcrd_011CZkZEMt8gZan2iYOQfSkw',
+            vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(ManagedAgentsCredentialValidation::class, $result);
+    }
+
+    #[Test]
+    public function testMCPOAuthValidateWithOptionalParams(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('prism can\'t find endpoint with beta only tag');
+        }
+
+        $result = $this->client->beta->vaults->credentials->mcpOAuthValidate(
+            'vcrd_011CZkZEMt8gZan2iYOQfSkw',
+            vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
+            betas: ['message-batches-2024-09-24'],
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(ManagedAgentsCredentialValidation::class, $result);
     }
 }

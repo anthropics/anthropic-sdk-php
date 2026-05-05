@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Agents;
 use Anthropic\Beta\Agents\BetaManagedAgentsAgent\Skill;
 use Anthropic\Beta\Agents\BetaManagedAgentsAgent\Tool;
 use Anthropic\Beta\Agents\BetaManagedAgentsAgent\Type;
+use Anthropic\Beta\Sessions\BetaManagedAgentsMultiagent;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -18,6 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgent\Tool
  * @phpstan-import-type BetaManagedAgentsMCPServerURLDefinitionShape from \Anthropic\Beta\Agents\BetaManagedAgentsMCPServerURLDefinition
  * @phpstan-import-type BetaManagedAgentsModelConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfig
+ * @phpstan-import-type BetaManagedAgentsMultiagentShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagent
  * @phpstan-import-type SkillShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgent\Skill
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgent\Tool
  *
@@ -29,6 +31,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   mcpServers: list<BetaManagedAgentsMCPServerURLDefinition|BetaManagedAgentsMCPServerURLDefinitionShape>,
  *   metadata: array<string,string>,
  *   model: BetaManagedAgentsModelConfig|BetaManagedAgentsModelConfigShape,
+ *   multiagent: null|BetaManagedAgentsMultiagent|BetaManagedAgentsMultiagentShape,
  *   name: string,
  *   skills: list<SkillShape>,
  *   system: string|null,
@@ -78,6 +81,12 @@ final class BetaManagedAgentsAgent implements BaseModel
     #[Required]
     public BetaManagedAgentsModelConfig $model;
 
+    /**
+     * Resolved coordinator topology with a concrete agent roster.
+     */
+    #[Required]
+    public ?BetaManagedAgentsMultiagent $multiagent;
+
     #[Required]
     public string $name;
 
@@ -121,6 +130,7 @@ final class BetaManagedAgentsAgent implements BaseModel
      *   mcpServers: ...,
      *   metadata: ...,
      *   model: ...,
+     *   multiagent: ...,
      *   name: ...,
      *   skills: ...,
      *   system: ...,
@@ -142,6 +152,7 @@ final class BetaManagedAgentsAgent implements BaseModel
      *   ->withMCPServers(...)
      *   ->withMetadata(...)
      *   ->withModel(...)
+     *   ->withMultiagent(...)
      *   ->withName(...)
      *   ->withSkills(...)
      *   ->withSystem(...)
@@ -164,6 +175,7 @@ final class BetaManagedAgentsAgent implements BaseModel
      * @param list<BetaManagedAgentsMCPServerURLDefinition|BetaManagedAgentsMCPServerURLDefinitionShape> $mcpServers
      * @param array<string,string> $metadata
      * @param BetaManagedAgentsModelConfig|BetaManagedAgentsModelConfigShape $model
+     * @param BetaManagedAgentsMultiagent|BetaManagedAgentsMultiagentShape|null $multiagent
      * @param list<SkillShape> $skills
      * @param list<ToolShape> $tools
      * @param Type|value-of<Type> $type
@@ -176,6 +188,7 @@ final class BetaManagedAgentsAgent implements BaseModel
         array $mcpServers,
         array $metadata,
         BetaManagedAgentsModelConfig|array $model,
+        BetaManagedAgentsMultiagent|array|null $multiagent,
         string $name,
         array $skills,
         ?string $system,
@@ -193,6 +206,7 @@ final class BetaManagedAgentsAgent implements BaseModel
         $self['mcpServers'] = $mcpServers;
         $self['metadata'] = $metadata;
         $self['model'] = $model;
+        $self['multiagent'] = $multiagent;
         $self['name'] = $name;
         $self['skills'] = $skills;
         $self['system'] = $system;
@@ -273,6 +287,20 @@ final class BetaManagedAgentsAgent implements BaseModel
     {
         $self = clone $this;
         $self['model'] = $model;
+
+        return $self;
+    }
+
+    /**
+     * Resolved coordinator topology with a concrete agent roster.
+     *
+     * @param BetaManagedAgentsMultiagent|BetaManagedAgentsMultiagentShape|null $multiagent
+     */
+    public function withMultiagent(
+        BetaManagedAgentsMultiagent|array|null $multiagent
+    ): self {
+        $self = clone $this;
+        $self['multiagent'] = $multiagent;
 
         return $self;
     }

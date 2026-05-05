@@ -7,6 +7,7 @@ namespace Anthropic\Services\Beta;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\UserProfiles\BetaUserProfile;
 use Anthropic\Beta\UserProfiles\BetaUserProfileEnrollmentURL;
+use Anthropic\Beta\UserProfiles\UserProfileCreateParams\Relationship;
 use Anthropic\Beta\UserProfiles\UserProfileListParams\Order;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
@@ -40,6 +41,8 @@ final class UserProfilesService implements UserProfilesContract
      *
      * @param string|null $externalID Body param: Platform's own identifier for this user. Not enforced unique. Maximum 255 characters.
      * @param array<string,string> $metadata Body param: Free-form key-value data to attach to this user profile. Maximum 16 keys, with keys up to 64 characters and values up to 512 characters. Values must be non-empty strings.
+     * @param string|null $name Body param: Display name of the entity this profile represents. Required when relationship is `resold` (the resold-to company's name); optional otherwise. Maximum 255 characters.
+     * @param Relationship|value-of<Relationship> $relationship Body param: How the entity behind a user profile relates to the platform that owns the API key. `external`: an individual end-user of the platform. `resold`: a company the platform resells Claude access to. `internal`: the platform's own usage.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
@@ -48,11 +51,19 @@ final class UserProfilesService implements UserProfilesContract
     public function create(
         ?string $externalID = null,
         ?array $metadata = null,
+        ?string $name = null,
+        Relationship|string|null $relationship = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaUserProfile {
         $params = Util::removeNulls(
-            ['externalID' => $externalID, 'metadata' => $metadata, 'betas' => $betas]
+            [
+                'externalID' => $externalID,
+                'metadata' => $metadata,
+                'name' => $name,
+                'relationship' => $relationship,
+                'betas' => $betas,
+            ],
         );
 
         // @phpstan-ignore-next-line argument.type
@@ -93,6 +104,8 @@ final class UserProfilesService implements UserProfilesContract
      * @param string $userProfileID Path param: Path parameter user_profile_id
      * @param string|null $externalID Body param: If present, replaces the stored external_id. Omit to leave unchanged. Maximum 255 characters.
      * @param array<string,string> $metadata Body param: Key-value pairs to merge into the stored metadata. Keys provided overwrite existing values. To remove a key, set its value to an empty string. Keys not provided are left unchanged. Maximum 16 keys, with keys up to 64 characters and values up to 512 characters.
+     * @param string|null $name Body param: If present, replaces the stored name. Omit to leave unchanged. Maximum 255 characters.
+     * @param \Anthropic\Beta\UserProfiles\UserProfileUpdateParams\Relationship|value-of<\Anthropic\Beta\UserProfiles\UserProfileUpdateParams\Relationship>|null $relationship Body param: How the entity behind a user profile relates to the platform that owns the API key. `external`: an individual end-user of the platform. `resold`: a company the platform resells Claude access to. `internal`: the platform's own usage.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
@@ -102,11 +115,19 @@ final class UserProfilesService implements UserProfilesContract
         string $userProfileID,
         ?string $externalID = null,
         ?array $metadata = null,
+        ?string $name = null,
+        \Anthropic\Beta\UserProfiles\UserProfileUpdateParams\Relationship|string|null $relationship = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaUserProfile {
         $params = Util::removeNulls(
-            ['externalID' => $externalID, 'metadata' => $metadata, 'betas' => $betas]
+            [
+                'externalID' => $externalID,
+                'metadata' => $metadata,
+                'name' => $name,
+                'relationship' => $relationship,
+                'betas' => $betas,
+            ],
         );
 
         // @phpstan-ignore-next-line argument.type

@@ -6,6 +6,7 @@ namespace Anthropic\Beta\Sessions;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Sessions\SessionListParams\Order;
+use Anthropic\Beta\Sessions\SessionListParams\Status;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
@@ -28,6 +29,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   memoryStoreID?: string|null,
  *   order?: null|Order|value-of<Order>,
  *   page?: string|null,
+ *   statuses?: list<Status|value-of<Status>>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
@@ -106,6 +108,14 @@ final class SessionListParams implements BaseModel
     public ?string $page;
 
     /**
+     * Filter by session status. Repeat the parameter to match any of multiple statuses.
+     *
+     * @var list<value-of<Status>>|null $statuses
+     */
+    #[Optional(list: Status::class)]
+    public ?array $statuses;
+
+    /**
      * Optional header to specify the beta version(s) you want to use.
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
@@ -124,6 +134,7 @@ final class SessionListParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Order|value-of<Order>|null $order
+     * @param list<Status|value-of<Status>>|null $statuses
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
@@ -138,6 +149,7 @@ final class SessionListParams implements BaseModel
         ?string $memoryStoreID = null,
         Order|string|null $order = null,
         ?string $page = null,
+        ?array $statuses = null,
         ?array $betas = null,
     ): self {
         $self = new self;
@@ -153,6 +165,7 @@ final class SessionListParams implements BaseModel
         null !== $memoryStoreID && $self['memoryStoreID'] = $memoryStoreID;
         null !== $order && $self['order'] = $order;
         null !== $page && $self['page'] = $page;
+        null !== $statuses && $self['statuses'] = $statuses;
         null !== $betas && $self['betas'] = $betas;
 
         return $self;
@@ -277,6 +290,19 @@ final class SessionListParams implements BaseModel
     {
         $self = clone $this;
         $self['page'] = $page;
+
+        return $self;
+    }
+
+    /**
+     * Filter by session status. Repeat the parameter to match any of multiple statuses.
+     *
+     * @param list<Status|value-of<Status>> $statuses
+     */
+    public function withStatuses(array $statuses): self
+    {
+        $self = clone $this;
+        $self['statuses'] = $statuses;
 
         return $self;
     }

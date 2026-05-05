@@ -15,9 +15,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type ManagedAgentsUserInterruptEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserInterruptEventParams
  * @phpstan-import-type ManagedAgentsUserToolConfirmationEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserToolConfirmationEventParams
  * @phpstan-import-type ManagedAgentsUserCustomToolResultEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserCustomToolResultEventParams
+ * @phpstan-import-type ManagedAgentsUserDefineOutcomeEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserDefineOutcomeEventParams
  *
- * @phpstan-type ManagedAgentsEventParamsVariants = ManagedAgentsUserMessageEventParams|ManagedAgentsUserInterruptEventParams|ManagedAgentsUserToolConfirmationEventParams|ManagedAgentsUserCustomToolResultEventParams
- * @phpstan-type ManagedAgentsEventParamsShape = ManagedAgentsEventParamsVariants|ManagedAgentsUserMessageEventParamsShape|ManagedAgentsUserInterruptEventParamsShape|ManagedAgentsUserToolConfirmationEventParamsShape|ManagedAgentsUserCustomToolResultEventParamsShape
+ * @phpstan-type ManagedAgentsEventParamsVariants = ManagedAgentsUserMessageEventParams|ManagedAgentsUserInterruptEventParams|ManagedAgentsUserToolConfirmationEventParams|ManagedAgentsUserCustomToolResultEventParams|ManagedAgentsUserDefineOutcomeEventParams
+ * @phpstan-type ManagedAgentsEventParamsShape = ManagedAgentsEventParamsVariants|ManagedAgentsUserMessageEventParamsShape|ManagedAgentsUserInterruptEventParamsShape|ManagedAgentsUserToolConfirmationEventParamsShape|ManagedAgentsUserCustomToolResultEventParamsShape|ManagedAgentsUserDefineOutcomeEventParamsShape
  */
 final class ManagedAgentsEventParams implements ConverterSource
 {
@@ -38,6 +39,7 @@ final class ManagedAgentsEventParams implements ConverterSource
             'user.interrupt' => ManagedAgentsUserInterruptEventParams::class,
             'user.tool_confirmation' => ManagedAgentsUserToolConfirmationEventParams::class,
             'user.custom_tool_result' => ManagedAgentsUserCustomToolResultEventParams::class,
+            'user.define_outcome' => ManagedAgentsUserDefineOutcomeEventParams::class,
         ];
     }
 }

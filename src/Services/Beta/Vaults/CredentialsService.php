@@ -6,6 +6,7 @@ namespace Anthropic\Services\Beta\Vaults;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredential;
+use Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredentialValidation;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsDeletedCredential;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsMCPOAuthCreateParams;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsMCPOAuthUpdateParams;
@@ -228,6 +229,32 @@ final class CredentialsService implements CredentialsContract
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->archive($credentialID, params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * Validate Credential
+     *
+     * @param string $credentialID Path param: Path parameter credential_id
+     * @param string $vaultID Path param: Path parameter vault_id
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function mcpOAuthValidate(
+        string $credentialID,
+        string $vaultID,
+        ?array $betas = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): ManagedAgentsCredentialValidation {
+        $params = Util::removeNulls(['vaultID' => $vaultID, 'betas' => $betas]);
+
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->mcpOAuthValidate($credentialID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
