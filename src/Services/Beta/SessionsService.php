@@ -9,6 +9,7 @@ use Anthropic\Beta\Sessions\BetaManagedAgentsAgentParams;
 use Anthropic\Beta\Sessions\BetaManagedAgentsDeletedSession;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSession;
 use Anthropic\Beta\Sessions\SessionListParams\Order;
+use Anthropic\Beta\Sessions\SessionListParams\Status;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
@@ -17,6 +18,7 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\SessionsContract;
 use Anthropic\Services\Beta\Sessions\EventsService;
 use Anthropic\Services\Beta\Sessions\ResourcesService;
+use Anthropic\Services\Beta\Sessions\ThreadsService;
 
 /**
  * @phpstan-import-type AgentShape from \Anthropic\Beta\Sessions\SessionCreateParams\Agent
@@ -41,6 +43,11 @@ final class SessionsService implements SessionsContract
     public ResourcesService $resources;
 
     /**
+     * @api
+     */
+    public ThreadsService $threads;
+
+    /**
      * @internal
      */
     public function __construct(private Client $client)
@@ -48,6 +55,7 @@ final class SessionsService implements SessionsContract
         $this->raw = new SessionsRawService($client);
         $this->events = new EventsService($client);
         $this->resources = new ResourcesService($client);
+        $this->threads = new ThreadsService($client);
     }
 
     /**
@@ -171,6 +179,7 @@ final class SessionsService implements SessionsContract
      * @param string $memoryStoreID query param: Filter sessions whose resources contain a memory_store with this memory store ID
      * @param Order|value-of<Order> $order Query param: Sort direction for results, ordered by created_at. Defaults to desc (newest first).
      * @param string $page query param: Opaque pagination cursor from a previous response's next_page
+     * @param list<Status|value-of<Status>> $statuses Query param: Filter by session status. Repeat the parameter to match any of multiple statuses.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
@@ -190,6 +199,7 @@ final class SessionsService implements SessionsContract
         ?string $memoryStoreID = null,
         Order|string|null $order = null,
         ?string $page = null,
+        ?array $statuses = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): PageCursor {
@@ -206,6 +216,7 @@ final class SessionsService implements SessionsContract
                 'memoryStoreID' => $memoryStoreID,
                 'order' => $order,
                 'page' => $page,
+                'statuses' => $statuses,
                 'betas' => $betas,
             ],
         );

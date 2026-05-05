@@ -21,6 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   type: Type|value-of<Type>,
  *   denyMessage?: string|null,
  *   processedAt?: \DateTimeInterface|null,
+ *   sessionThreadID?: string|null,
  * }
  */
 final class ManagedAgentsUserToolConfirmationEvent implements BaseModel
@@ -65,6 +66,12 @@ final class ManagedAgentsUserToolConfirmationEvent implements BaseModel
     public ?\DateTimeInterface $processedAt;
 
     /**
+     * When set, the confirmation routes to this subagent's thread rather than the primary. Echo this from the `session_thread_id` on the `agent.tool_use` or `agent.mcp_tool_use` event that prompted the approval.
+     */
+    #[Optional('session_thread_id', nullable: true)]
+    public ?string $sessionThreadID;
+
+    /**
      * `new ManagedAgentsUserToolConfirmationEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -104,6 +111,7 @@ final class ManagedAgentsUserToolConfirmationEvent implements BaseModel
         Type|string $type,
         ?string $denyMessage = null,
         ?\DateTimeInterface $processedAt = null,
+        ?string $sessionThreadID = null,
     ): self {
         $self = new self;
 
@@ -114,6 +122,7 @@ final class ManagedAgentsUserToolConfirmationEvent implements BaseModel
 
         null !== $denyMessage && $self['denyMessage'] = $denyMessage;
         null !== $processedAt && $self['processedAt'] = $processedAt;
+        null !== $sessionThreadID && $self['sessionThreadID'] = $sessionThreadID;
 
         return $self;
     }
@@ -182,6 +191,17 @@ final class ManagedAgentsUserToolConfirmationEvent implements BaseModel
     {
         $self = clone $this;
         $self['processedAt'] = $processedAt;
+
+        return $self;
+    }
+
+    /**
+     * When set, the confirmation routes to this subagent's thread rather than the primary. Echo this from the `session_thread_id` on the `agent.tool_use` or `agent.mcp_tool_use` event that prompted the approval.
+     */
+    public function withSessionThreadID(?string $sessionThreadID): self
+    {
+        $self = clone $this;
+        $self['sessionThreadID'] = $sessionThreadID;
 
         return $self;
     }

@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Agents;
 use Anthropic\Beta\Agents\AgentCreateParams\Model;
 use Anthropic\Beta\Agents\AgentCreateParams\Tool;
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -23,6 +24,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\AgentCreateParams\Tool
  * @phpstan-import-type ModelShape from \Anthropic\Beta\Agents\AgentCreateParams\Model
  * @phpstan-import-type BetaManagedAgentsURLMCPServerParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams
+ * @phpstan-import-type BetaManagedAgentsMultiagentParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams
  * @phpstan-import-type BetaManagedAgentsSkillParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Agents\AgentCreateParams\Tool
  *
@@ -32,6 +34,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   description?: string|null,
  *   mcpServers?: list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null,
  *   metadata?: array<string,string>|null,
+ *   multiagent?: null|BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape,
  *   skills?: list<BetaManagedAgentsSkillParamsShape>|null,
  *   system?: string|null,
  *   tools?: list<ToolShape>|null,
@@ -79,6 +82,12 @@ final class AgentCreateParams implements BaseModel
      */
     #[Optional(map: 'string')]
     public ?array $metadata;
+
+    /**
+     * A coordinator topology: the session's primary thread orchestrates work by spawning session threads, each running an agent drawn from the `agents` roster.
+     */
+    #[Optional(nullable: true)]
+    public ?BetaManagedAgentsMultiagentParams $multiagent;
 
     /**
      * Skills available to the agent. Maximum 20.
@@ -137,6 +146,7 @@ final class AgentCreateParams implements BaseModel
      * @param ModelShape $model
      * @param list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null $mcpServers
      * @param array<string,string>|null $metadata
+     * @param BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null $multiagent
      * @param list<BetaManagedAgentsSkillParamsShape>|null $skills
      * @param list<ToolShape>|null $tools
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
@@ -147,6 +157,7 @@ final class AgentCreateParams implements BaseModel
         ?string $description = null,
         ?array $mcpServers = null,
         ?array $metadata = null,
+        BetaManagedAgentsMultiagentParams|array|null $multiagent = null,
         ?array $skills = null,
         ?string $system = null,
         ?array $tools = null,
@@ -160,6 +171,7 @@ final class AgentCreateParams implements BaseModel
         null !== $description && $self['description'] = $description;
         null !== $mcpServers && $self['mcpServers'] = $mcpServers;
         null !== $metadata && $self['metadata'] = $metadata;
+        null !== $multiagent && $self['multiagent'] = $multiagent;
         null !== $skills && $self['skills'] = $skills;
         null !== $system && $self['system'] = $system;
         null !== $tools && $self['tools'] = $tools;
@@ -226,6 +238,20 @@ final class AgentCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['metadata'] = $metadata;
+
+        return $self;
+    }
+
+    /**
+     * A coordinator topology: the session's primary thread orchestrates work by spawning session threads, each running an agent drawn from the `agents` roster.
+     *
+     * @param BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null $multiagent
+     */
+    public function withMultiagent(
+        BetaManagedAgentsMultiagentParams|array|null $multiagent
+    ): self {
+        $self = clone $this;
+        $self['multiagent'] = $multiagent;
 
         return $self;
     }

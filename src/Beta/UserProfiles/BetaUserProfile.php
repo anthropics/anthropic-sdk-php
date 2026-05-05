@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\UserProfiles;
 
+use Anthropic\Beta\UserProfiles\BetaUserProfile\Relationship;
 use Anthropic\Beta\UserProfiles\BetaUserProfile\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
@@ -17,10 +18,12 @@ use Anthropic\Core\Contracts\BaseModel;
  *   id: string,
  *   createdAt: \DateTimeInterface,
  *   metadata: array<string,string>,
+ *   relationship: Relationship|value-of<Relationship>,
  *   trustGrants: array<string,BetaUserProfileTrustGrant|BetaUserProfileTrustGrantShape>,
  *   type: Type|value-of<Type>,
  *   updatedAt: \DateTimeInterface,
  *   externalID?: string|null,
+ *   name?: string|null,
  * }
  */
 final class BetaUserProfile implements BaseModel
@@ -47,6 +50,14 @@ final class BetaUserProfile implements BaseModel
      */
     #[Required(map: 'string')]
     public array $metadata;
+
+    /**
+     * How the entity behind a user profile relates to the platform that owns the API key. `external`: an individual end-user of the platform. `resold`: a company the platform resells Claude access to. `internal`: the platform's own usage.
+     *
+     * @var value-of<Relationship> $relationship
+     */
+    #[Required(enum: Relationship::class)]
+    public string $relationship;
 
     /**
      * Trust grants for this profile, keyed by grant name. Key omitted when no grant is active or in flight.
@@ -77,6 +88,12 @@ final class BetaUserProfile implements BaseModel
     public ?string $externalID;
 
     /**
+     * Display name of the entity this profile represents. For `resold` this is the resold-to company's name.
+     */
+    #[Optional(nullable: true)]
+    public ?string $name;
+
+    /**
      * `new BetaUserProfile()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -85,6 +102,7 @@ final class BetaUserProfile implements BaseModel
      *   id: ...,
      *   createdAt: ...,
      *   metadata: ...,
+     *   relationship: ...,
      *   trustGrants: ...,
      *   type: ...,
      *   updatedAt: ...,
@@ -98,6 +116,7 @@ final class BetaUserProfile implements BaseModel
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withMetadata(...)
+     *   ->withRelationship(...)
      *   ->withTrustGrants(...)
      *   ->withType(...)
      *   ->withUpdatedAt(...)
@@ -114,6 +133,7 @@ final class BetaUserProfile implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,string> $metadata
+     * @param Relationship|value-of<Relationship> $relationship
      * @param array<string,BetaUserProfileTrustGrant|BetaUserProfileTrustGrantShape> $trustGrants
      * @param Type|value-of<Type> $type
      */
@@ -121,21 +141,25 @@ final class BetaUserProfile implements BaseModel
         string $id,
         \DateTimeInterface $createdAt,
         array $metadata,
+        Relationship|string $relationship,
         array $trustGrants,
         Type|string $type,
         \DateTimeInterface $updatedAt,
         ?string $externalID = null,
+        ?string $name = null,
     ): self {
         $self = new self;
 
         $self['id'] = $id;
         $self['createdAt'] = $createdAt;
         $self['metadata'] = $metadata;
+        $self['relationship'] = $relationship;
         $self['trustGrants'] = $trustGrants;
         $self['type'] = $type;
         $self['updatedAt'] = $updatedAt;
 
         null !== $externalID && $self['externalID'] = $externalID;
+        null !== $name && $self['name'] = $name;
 
         return $self;
     }
@@ -171,6 +195,19 @@ final class BetaUserProfile implements BaseModel
     {
         $self = clone $this;
         $self['metadata'] = $metadata;
+
+        return $self;
+    }
+
+    /**
+     * How the entity behind a user profile relates to the platform that owns the API key. `external`: an individual end-user of the platform. `resold`: a company the platform resells Claude access to. `internal`: the platform's own usage.
+     *
+     * @param Relationship|value-of<Relationship> $relationship
+     */
+    public function withRelationship(Relationship|string $relationship): self
+    {
+        $self = clone $this;
+        $self['relationship'] = $relationship;
 
         return $self;
     }
@@ -219,6 +256,17 @@ final class BetaUserProfile implements BaseModel
     {
         $self = clone $this;
         $self['externalID'] = $externalID;
+
+        return $self;
+    }
+
+    /**
+     * Display name of the entity this profile represents. For `resold` this is the resold-to company's name.
+     */
+    public function withName(?string $name): self
+    {
+        $self = clone $this;
+        $self['name'] = $name;
 
         return $self;
     }

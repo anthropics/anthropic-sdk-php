@@ -9,6 +9,7 @@ use Anthropic\Beta\Agents\BetaManagedAgentsModel;
 use Anthropic\Beta\Agents\BetaManagedAgentsModelConfigParams;
 use Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams;
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
@@ -23,6 +24,7 @@ use Anthropic\Services\Beta\Agents\VersionsService;
  * @phpstan-import-type ModelShape from \Anthropic\Beta\Agents\AgentUpdateParams\Model as ModelShape1
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Agents\AgentUpdateParams\Tool as ToolShape1
  * @phpstan-import-type BetaManagedAgentsURLMCPServerParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams
+ * @phpstan-import-type BetaManagedAgentsMultiagentParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams
  * @phpstan-import-type BetaManagedAgentsSkillParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
@@ -57,6 +59,7 @@ final class AgentsService implements AgentsContract
      * @param string|null $description Body param: Description of what the agent does. Up to 2048 characters.
      * @param list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape> $mcpServers Body param: MCP servers this agent connects to. Maximum 20. Names must be unique within the array.
      * @param array<string,string> $metadata Body param: Arbitrary key-value metadata. Maximum 16 pairs, keys up to 64 chars, values up to 512 chars.
+     * @param BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null $multiagent body param: A coordinator topology: the session's primary thread orchestrates work by spawning session threads, each running an agent drawn from the `agents` roster
      * @param list<BetaManagedAgentsSkillParamsShape> $skills Body param: Skills available to the agent. Maximum 20.
      * @param string|null $system Body param: System prompt for the agent. Up to 100,000 characters.
      * @param list<ToolShape> $tools Body param: Tool configurations available to the agent. Maximum of 128 tools across all toolsets allowed.
@@ -71,6 +74,7 @@ final class AgentsService implements AgentsContract
         ?string $description = null,
         ?array $mcpServers = null,
         ?array $metadata = null,
+        BetaManagedAgentsMultiagentParams|array|null $multiagent = null,
         ?array $skills = null,
         ?string $system = null,
         ?array $tools = null,
@@ -84,6 +88,7 @@ final class AgentsService implements AgentsContract
                 'description' => $description,
                 'mcpServers' => $mcpServers,
                 'metadata' => $metadata,
+                'multiagent' => $multiagent,
                 'skills' => $skills,
                 'system' => $system,
                 'tools' => $tools,
@@ -134,6 +139,7 @@ final class AgentsService implements AgentsContract
      * @param list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null $mcpServers Body param: MCP servers. Full replacement. Omit to preserve; send empty array or null to clear. Names must be unique. Maximum 20.
      * @param array<string,string|null>|null $metadata Body param: Metadata patch. Set a key to a string to upsert it, or to null to delete it. Omit the field to preserve. The stored bag is limited to 16 keys (up to 64 chars each) with values up to 512 chars.
      * @param ModelShape1 $model Body param: Model identifier. Accepts the [model string](https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison), e.g. `claude-opus-4-6`, or a `model_config` object for additional configuration control. Omit to preserve. Cannot be cleared.
+     * @param BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null $multiagent body param: A coordinator topology: the session's primary thread orchestrates work by spawning session threads, each running an agent drawn from the `agents` roster
      * @param string $name Body param: Human-readable name. 1-256 characters. Omit to preserve. Cannot be cleared.
      * @param list<BetaManagedAgentsSkillParamsShape>|null $skills Body param: Skills. Full replacement. Omit to preserve; send empty array or null to clear. Maximum 20.
      * @param string|null $system Body param: System prompt. Up to 100,000 characters. Omit to preserve; send empty string or null to clear.
@@ -150,6 +156,7 @@ final class AgentsService implements AgentsContract
         ?array $mcpServers = null,
         ?array $metadata = null,
         BetaManagedAgentsModel|BetaManagedAgentsModelConfigParams|array|string|null $model = null,
+        BetaManagedAgentsMultiagentParams|array|null $multiagent = null,
         ?string $name = null,
         ?array $skills = null,
         ?string $system = null,
@@ -164,6 +171,7 @@ final class AgentsService implements AgentsContract
                 'mcpServers' => $mcpServers,
                 'metadata' => $metadata,
                 'model' => $model,
+                'multiagent' => $multiagent,
                 'name' => $name,
                 'skills' => $skills,
                 'system' => $system,

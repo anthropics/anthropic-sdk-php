@@ -16,6 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-import-type ManagedAgentsSessionResourceVariants from \Anthropic\Beta\Sessions\Resources\ManagedAgentsSessionResource
  * @phpstan-import-type BetaManagedAgentsSessionAgentShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent
+ * @phpstan-import-type BetaManagedAgentsOutcomeEvaluationResourceShape from \Anthropic\Beta\Sessions\BetaManagedAgentsOutcomeEvaluationResource
  * @phpstan-import-type ManagedAgentsSessionResourceShape from \Anthropic\Beta\Sessions\Resources\ManagedAgentsSessionResource
  * @phpstan-import-type BetaManagedAgentsSessionStatsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionStats
  * @phpstan-import-type BetaManagedAgentsSessionUsageShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionUsage
@@ -27,6 +28,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   createdAt: \DateTimeInterface,
  *   environmentID: string,
  *   metadata: array<string,string>,
+ *   outcomeEvaluations: list<BetaManagedAgentsOutcomeEvaluationResource|BetaManagedAgentsOutcomeEvaluationResourceShape>,
  *   resources: list<ManagedAgentsSessionResourceShape>,
  *   stats: BetaManagedAgentsSessionStats|BetaManagedAgentsSessionStatsShape,
  *   status: Status|value-of<Status>,
@@ -69,6 +71,17 @@ final class BetaManagedAgentsSession implements BaseModel
     /** @var array<string,string> $metadata */
     #[Required(map: 'string')]
     public array $metadata;
+
+    /**
+     * Per-outcome evaluation state. One entry per define_outcome event sent to the session.
+     *
+     * @var list<BetaManagedAgentsOutcomeEvaluationResource> $outcomeEvaluations
+     */
+    #[Required(
+        'outcome_evaluations',
+        list: BetaManagedAgentsOutcomeEvaluationResource::class,
+    )]
+    public array $outcomeEvaluations;
 
     /** @var list<ManagedAgentsSessionResourceVariants> $resources */
     #[Required(list: ManagedAgentsSessionResource::class)]
@@ -127,6 +140,7 @@ final class BetaManagedAgentsSession implements BaseModel
      *   createdAt: ...,
      *   environmentID: ...,
      *   metadata: ...,
+     *   outcomeEvaluations: ...,
      *   resources: ...,
      *   stats: ...,
      *   status: ...,
@@ -148,6 +162,7 @@ final class BetaManagedAgentsSession implements BaseModel
      *   ->withCreatedAt(...)
      *   ->withEnvironmentID(...)
      *   ->withMetadata(...)
+     *   ->withOutcomeEvaluations(...)
      *   ->withResources(...)
      *   ->withStats(...)
      *   ->withStatus(...)
@@ -170,6 +185,7 @@ final class BetaManagedAgentsSession implements BaseModel
      *
      * @param BetaManagedAgentsSessionAgent|BetaManagedAgentsSessionAgentShape $agent
      * @param array<string,string> $metadata
+     * @param list<BetaManagedAgentsOutcomeEvaluationResource|BetaManagedAgentsOutcomeEvaluationResourceShape> $outcomeEvaluations
      * @param list<ManagedAgentsSessionResourceShape> $resources
      * @param BetaManagedAgentsSessionStats|BetaManagedAgentsSessionStatsShape $stats
      * @param Status|value-of<Status> $status
@@ -184,6 +200,7 @@ final class BetaManagedAgentsSession implements BaseModel
         \DateTimeInterface $createdAt,
         string $environmentID,
         array $metadata,
+        array $outcomeEvaluations,
         array $resources,
         BetaManagedAgentsSessionStats|array $stats,
         Status|string $status,
@@ -201,6 +218,7 @@ final class BetaManagedAgentsSession implements BaseModel
         $self['createdAt'] = $createdAt;
         $self['environmentID'] = $environmentID;
         $self['metadata'] = $metadata;
+        $self['outcomeEvaluations'] = $outcomeEvaluations;
         $self['resources'] = $resources;
         $self['stats'] = $stats;
         $self['status'] = $status;
@@ -271,6 +289,19 @@ final class BetaManagedAgentsSession implements BaseModel
     {
         $self = clone $this;
         $self['metadata'] = $metadata;
+
+        return $self;
+    }
+
+    /**
+     * Per-outcome evaluation state. One entry per define_outcome event sent to the session.
+     *
+     * @param list<BetaManagedAgentsOutcomeEvaluationResource|BetaManagedAgentsOutcomeEvaluationResourceShape> $outcomeEvaluations
+     */
+    public function withOutcomeEvaluations(array $outcomeEvaluations): self
+    {
+        $self = clone $this;
+        $self['outcomeEvaluations'] = $outcomeEvaluations;
 
         return $self;
     }

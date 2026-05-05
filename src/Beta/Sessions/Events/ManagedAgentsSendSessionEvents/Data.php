@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events\ManagedAgentsSendSessionEvents;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsUserCustomToolResultEvent;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsUserDefineOutcomeEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsUserInterruptEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsUserMessageEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsUserToolConfirmationEvent;
@@ -19,9 +20,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type ManagedAgentsUserInterruptEventShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserInterruptEvent
  * @phpstan-import-type ManagedAgentsUserToolConfirmationEventShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserToolConfirmationEvent
  * @phpstan-import-type ManagedAgentsUserCustomToolResultEventShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserCustomToolResultEvent
+ * @phpstan-import-type ManagedAgentsUserDefineOutcomeEventShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserDefineOutcomeEvent
  *
- * @phpstan-type DataVariants = ManagedAgentsUserMessageEvent|ManagedAgentsUserInterruptEvent|ManagedAgentsUserToolConfirmationEvent|ManagedAgentsUserCustomToolResultEvent
- * @phpstan-type DataShape = DataVariants|ManagedAgentsUserMessageEventShape|ManagedAgentsUserInterruptEventShape|ManagedAgentsUserToolConfirmationEventShape|ManagedAgentsUserCustomToolResultEventShape
+ * @phpstan-type DataVariants = ManagedAgentsUserMessageEvent|ManagedAgentsUserInterruptEvent|ManagedAgentsUserToolConfirmationEvent|ManagedAgentsUserCustomToolResultEvent|ManagedAgentsUserDefineOutcomeEvent
+ * @phpstan-type DataShape = DataVariants|ManagedAgentsUserMessageEventShape|ManagedAgentsUserInterruptEventShape|ManagedAgentsUserToolConfirmationEventShape|ManagedAgentsUserCustomToolResultEventShape|ManagedAgentsUserDefineOutcomeEventShape
  */
 final class Data implements ConverterSource
 {
@@ -42,6 +44,7 @@ final class Data implements ConverterSource
             'user.interrupt' => ManagedAgentsUserInterruptEvent::class,
             'user.tool_confirmation' => ManagedAgentsUserToolConfirmationEvent::class,
             'user.custom_tool_result' => ManagedAgentsUserCustomToolResultEvent::class,
+            'user.define_outcome' => ManagedAgentsUserDefineOutcomeEvent::class,
         ];
     }
 }

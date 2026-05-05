@@ -12,6 +12,7 @@ use Anthropic\Beta\Sessions\SessionCreateParams;
 use Anthropic\Beta\Sessions\SessionDeleteParams;
 use Anthropic\Beta\Sessions\SessionListParams;
 use Anthropic\Beta\Sessions\SessionListParams\Order;
+use Anthropic\Beta\Sessions\SessionListParams\Status;
 use Anthropic\Beta\Sessions\SessionRetrieveParams;
 use Anthropic\Beta\Sessions\SessionUpdateParams;
 use Anthropic\Client;
@@ -192,6 +193,7 @@ final class SessionsRawService implements SessionsRawContract
      *   memoryStoreID?: string,
      *   order?: Order|value-of<Order>,
      *   page?: string,
+     *   statuses?: list<Status|value-of<Status>>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|SessionListParams $params
      * @param RequestOpts|null $requestOptions
@@ -221,6 +223,7 @@ final class SessionsRawService implements SessionsRawContract
                 'memoryStoreID',
                 'order',
                 'page',
+                'statuses',
             ],
         );
 

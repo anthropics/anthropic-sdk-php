@@ -28,6 +28,11 @@ final class CitationContentBlockLocation implements BaseModel
     #[Required]
     public string $type = 'content_block_location';
 
+    /**
+     * The full text of the cited block range, concatenated.
+     *
+     * Always equals the contents of `content[start_block_index:end_block_index]` joined together. The text block is the minimal citable unit; this field is never a substring of a single block. Not counted toward output tokens, and not counted toward input tokens when sent back in subsequent turns.
+     */
     #[Required('cited_text')]
     public string $citedText;
 
@@ -37,12 +42,20 @@ final class CitationContentBlockLocation implements BaseModel
     #[Required('document_title')]
     public ?string $documentTitle;
 
+    /**
+     * Exclusive 0-based end index of the cited block range in the source's `content` array.
+     *
+     * Always greater than `start_block_index`; a single-block citation has `end_block_index = start_block_index + 1`.
+     */
     #[Required('end_block_index')]
     public int $endBlockIndex;
 
     #[Required('file_id')]
     public ?string $fileID;
 
+    /**
+     * 0-based index of the first cited block in the source's `content` array.
+     */
     #[Required('start_block_index')]
     public int $startBlockIndex;
 
@@ -103,6 +116,11 @@ final class CitationContentBlockLocation implements BaseModel
         return $self;
     }
 
+    /**
+     * The full text of the cited block range, concatenated.
+     *
+     * Always equals the contents of `content[start_block_index:end_block_index]` joined together. The text block is the minimal citable unit; this field is never a substring of a single block. Not counted toward output tokens, and not counted toward input tokens when sent back in subsequent turns.
+     */
     public function withCitedText(string $citedText): self
     {
         $self = clone $this;
@@ -127,6 +145,11 @@ final class CitationContentBlockLocation implements BaseModel
         return $self;
     }
 
+    /**
+     * Exclusive 0-based end index of the cited block range in the source's `content` array.
+     *
+     * Always greater than `start_block_index`; a single-block citation has `end_block_index = start_block_index + 1`.
+     */
     public function withEndBlockIndex(int $endBlockIndex): self
     {
         $self = clone $this;
@@ -143,6 +166,9 @@ final class CitationContentBlockLocation implements BaseModel
         return $self;
     }
 
+    /**
+     * 0-based index of the first cited block in the source's `content` array.
+     */
     public function withStartBlockIndex(int $startBlockIndex): self
     {
         $self = clone $this;

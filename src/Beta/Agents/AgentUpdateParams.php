@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Agents;
 use Anthropic\Beta\Agents\AgentUpdateParams\Model;
 use Anthropic\Beta\Agents\AgentUpdateParams\Tool;
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -24,6 +25,7 @@ use Anthropic\Core\Conversion\MapOf;
  * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\AgentUpdateParams\Tool
  * @phpstan-import-type BetaManagedAgentsURLMCPServerParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams
  * @phpstan-import-type ModelShape from \Anthropic\Beta\Agents\AgentUpdateParams\Model
+ * @phpstan-import-type BetaManagedAgentsMultiagentParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams
  * @phpstan-import-type BetaManagedAgentsSkillParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Agents\AgentUpdateParams\Tool
  *
@@ -33,6 +35,7 @@ use Anthropic\Core\Conversion\MapOf;
  *   mcpServers?: list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null,
  *   metadata?: array<string,string|null>|null,
  *   model?: ModelShape|null,
+ *   multiagent?: null|BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape,
  *   name?: string|null,
  *   skills?: list<BetaManagedAgentsSkillParamsShape>|null,
  *   system?: string|null,
@@ -85,6 +88,12 @@ final class AgentUpdateParams implements BaseModel
      */
     #[Optional(union: Model::class)]
     public BetaManagedAgentsModelConfigParams|string|null $model;
+
+    /**
+     * A coordinator topology: the session's primary thread orchestrates work by spawning session threads, each running an agent drawn from the `agents` roster.
+     */
+    #[Optional(nullable: true)]
+    public ?BetaManagedAgentsMultiagentParams $multiagent;
 
     /**
      * Human-readable name. 1-256 characters. Omit to preserve. Cannot be cleared.
@@ -149,6 +158,7 @@ final class AgentUpdateParams implements BaseModel
      * @param list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null $mcpServers
      * @param array<string,string|null>|null $metadata
      * @param ModelShape|null $model
+     * @param BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null $multiagent
      * @param list<BetaManagedAgentsSkillParamsShape>|null $skills
      * @param list<ToolShape>|null $tools
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
@@ -159,6 +169,7 @@ final class AgentUpdateParams implements BaseModel
         ?array $mcpServers = null,
         ?array $metadata = null,
         BetaManagedAgentsModel|BetaManagedAgentsModelConfigParams|array|string|null $model = null,
+        BetaManagedAgentsMultiagentParams|array|null $multiagent = null,
         ?string $name = null,
         ?array $skills = null,
         ?string $system = null,
@@ -173,6 +184,7 @@ final class AgentUpdateParams implements BaseModel
         null !== $mcpServers && $self['mcpServers'] = $mcpServers;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $model && $self['model'] = $model;
+        null !== $multiagent && $self['multiagent'] = $multiagent;
         null !== $name && $self['name'] = $name;
         null !== $skills && $self['skills'] = $skills;
         null !== $system && $self['system'] = $system;
@@ -240,6 +252,20 @@ final class AgentUpdateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['model'] = $model;
+
+        return $self;
+    }
+
+    /**
+     * A coordinator topology: the session's primary thread orchestrates work by spawning session threads, each running an agent drawn from the `agents` roster.
+     *
+     * @param BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null $multiagent
+     */
+    public function withMultiagent(
+        BetaManagedAgentsMultiagentParams|array|null $multiagent
+    ): self {
+        $self = clone $this;
+        $self['multiagent'] = $multiagent;
 
         return $self;
     }
