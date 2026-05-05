@@ -99,11 +99,19 @@ final class DefaultCredentials
             $serviceAccountId = null;
         }
 
+        // Coerce empty string to null so a defaulted-but-empty CI variable
+        // doesn't put `"workspace_id": ""` on the wire.
+        $workspaceId = Util::getenv('ANTHROPIC_WORKSPACE_ID');
+        if ('' === $workspaceId) {
+            $workspaceId = null;
+        }
+
         $provider = new WorkloadIdentityCredentials(
             identityProvider: $identityProvider,
             federationRuleId: $federationRule,
             organizationId: $organizationId,
             serviceAccountId: $serviceAccountId,
+            workspaceId: $workspaceId,
         );
 
         return new CredentialResult(

@@ -51,18 +51,19 @@ final class CredentialsFile
         $baseUrl = is_string($config['base_url'] ?? null) ? $config['base_url'] : 'https://api.anthropic.com';
         $extraHeaders = [];
 
+        $type = $auth['type'] ?? null;
+
         $workspaceId = $config['workspace_id'] ?? null;
-        if (is_string($workspaceId) && '' !== $workspaceId) {
+        // For federation profiles workspace_id is sent in the jwt-bearer exchange body, not as a request header (the minted token is already workspace-scoped, so the header would be ignored).
+        if ('oidc_federation' !== $type && is_string($workspaceId) && '' !== $workspaceId) {
             $extraHeaders['anthropic-workspace-id'] = $workspaceId;
         }
 
         $organizationId = $config['organization_id'] ?? null;
 
-        $type = $auth['type'] ?? null;
-
         switch ($type) {
             case 'oidc_federation':
-                $provider = $this->buildOidcFederationProvider($auth, $organizationId, $baseUrl);
+                $provider = $this->buildOidcFederationProvider($auth, $organizationId, $workspaceId, $baseUrl);
 
                 break;
 
@@ -91,6 +92,7 @@ final class CredentialsFile
     private function buildOidcFederationProvider(
         array $auth,
         mixed $organizationId,
+        mixed $workspaceId,
         string $baseUrl,
     ): ?AccessTokenProvider {
         $federationRuleId = $auth['federation_rule_id'] ?? null;
@@ -107,6 +109,14 @@ final class CredentialsFile
             $serviceAccountId = null;
         }
 
+        // workspace_id lives at the top-level config (alongside base_url and
+        // organization_id), not under the authentication block — it is the same
+        // key used for the anthropic-workspace-id header on non-federation
+        // profiles. Here it is forwarded into the jwt-bearer exchange body.
+        if (!is_string($workspaceId) || '' === $workspaceId) {
+            $workspaceId = null;
+        }
+
         $identityProvider = $this->buildIdentityTokenProvider($auth);
         if (null === $identityProvider) {
             return null;
@@ -117,6 +127,7 @@ final class CredentialsFile
             federationRuleId: $federationRuleId,
             organizationId: $organizationId,
             serviceAccountId: $serviceAccountId,
+            workspaceId: $workspaceId,
             tokenEndpointBaseUrl: $baseUrl,
         );
     }
