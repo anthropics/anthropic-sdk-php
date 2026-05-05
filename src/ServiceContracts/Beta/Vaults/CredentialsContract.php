@@ -6,6 +6,7 @@ namespace Anthropic\ServiceContracts\Beta\Vaults;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredential;
+use Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredentialValidation;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsDeletedCredential;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsMCPOAuthCreateParams;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsMCPOAuthUpdateParams;
@@ -139,4 +140,21 @@ interface CredentialsContract
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): ManagedAgentsCredential;
+
+    /**
+     * @api
+     *
+     * @param string $credentialID Path param: Path parameter credential_id
+     * @param string $vaultID Path param: Path parameter vault_id
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function mcpOAuthValidate(
+        string $credentialID,
+        string $vaultID,
+        ?array $betas = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): ManagedAgentsCredentialValidation;
 }

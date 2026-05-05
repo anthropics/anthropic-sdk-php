@@ -12,6 +12,7 @@ use Anthropic\Beta\Agents\AgentUpdateParams;
 use Anthropic\Beta\Agents\BetaManagedAgentsAgent;
 use Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams;
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
@@ -26,6 +27,7 @@ use Anthropic\ServiceContracts\Beta\AgentsRawContract;
  * @phpstan-import-type ModelShape from \Anthropic\Beta\Agents\AgentUpdateParams\Model as ModelShape1
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Agents\AgentUpdateParams\Tool as ToolShape1
  * @phpstan-import-type BetaManagedAgentsURLMCPServerParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams
+ * @phpstan-import-type BetaManagedAgentsMultiagentParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams
  * @phpstan-import-type BetaManagedAgentsSkillParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
@@ -48,6 +50,7 @@ final class AgentsRawService implements AgentsRawContract
      *   description?: string|null,
      *   mcpServers?: list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>,
      *   metadata?: array<string,string>,
+     *   multiagent?: BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null,
      *   skills?: list<BetaManagedAgentsSkillParamsShape>,
      *   system?: string|null,
      *   tools?: list<ToolShape>,
@@ -147,6 +150,7 @@ final class AgentsRawService implements AgentsRawContract
      *   mcpServers?: list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null,
      *   metadata?: array<string,string|null>|null,
      *   model?: ModelShape1,
+     *   multiagent?: BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null,
      *   name?: string,
      *   skills?: list<BetaManagedAgentsSkillParamsShape>|null,
      *   system?: string|null,

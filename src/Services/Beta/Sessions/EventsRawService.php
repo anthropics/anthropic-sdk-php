@@ -15,6 +15,8 @@ use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentMCPToolUseEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentMessageEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentThinkingEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentThreadContextCompactedEvent;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentThreadMessageReceivedEvent;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentThreadMessageSentEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolResultEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolUseEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSendSessionEvents;
@@ -25,10 +27,19 @@ use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusIdleEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusRescheduledEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusRunningEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusTerminatedEvent;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionThreadCreatedEvent;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionThreadStatusIdleEvent;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionThreadStatusRescheduledEvent;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionThreadStatusRunningEvent;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionThreadStatusTerminatedEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSpanModelRequestEndEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSpanModelRequestStartEvent;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsSpanOutcomeEvaluationEndEvent;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsSpanOutcomeEvaluationOngoingEvent;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsSpanOutcomeEvaluationStartEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsStreamSessionEvents;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsUserCustomToolResultEvent;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsUserDefineOutcomeEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsUserInterruptEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsUserMessageEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsUserToolConfirmationEvent;
@@ -61,14 +72,19 @@ final class EventsRawService implements EventsRawContract
      *
      * @param string $sessionID Path param: Path parameter session_id
      * @param array{
+     *   createdAtGt?: \DateTimeInterface,
+     *   createdAtGte?: \DateTimeInterface,
+     *   createdAtLt?: \DateTimeInterface,
+     *   createdAtLte?: \DateTimeInterface,
      *   limit?: int,
      *   order?: Order|value-of<Order>,
      *   page?: string,
+     *   types?: list<string>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|EventListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<PageCursor<ManagedAgentsUserMessageEvent|ManagedAgentsUserInterruptEvent|ManagedAgentsUserToolConfirmationEvent|ManagedAgentsUserCustomToolResultEvent|ManagedAgentsAgentCustomToolUseEvent|ManagedAgentsAgentMessageEvent|ManagedAgentsAgentThinkingEvent|ManagedAgentsAgentMCPToolUseEvent|ManagedAgentsAgentMCPToolResultEvent|ManagedAgentsAgentToolUseEvent|ManagedAgentsAgentToolResultEvent|ManagedAgentsAgentThreadContextCompactedEvent|ManagedAgentsSessionErrorEvent|ManagedAgentsSessionStatusRescheduledEvent|ManagedAgentsSessionStatusRunningEvent|ManagedAgentsSessionStatusIdleEvent|ManagedAgentsSessionStatusTerminatedEvent|ManagedAgentsSpanModelRequestStartEvent|ManagedAgentsSpanModelRequestEndEvent|ManagedAgentsSessionDeletedEvent,>,>
+     * @return BaseResponse<PageCursor<ManagedAgentsUserMessageEvent|ManagedAgentsUserInterruptEvent|ManagedAgentsUserToolConfirmationEvent|ManagedAgentsUserCustomToolResultEvent|ManagedAgentsAgentCustomToolUseEvent|ManagedAgentsAgentMessageEvent|ManagedAgentsAgentThinkingEvent|ManagedAgentsAgentMCPToolUseEvent|ManagedAgentsAgentMCPToolResultEvent|ManagedAgentsAgentToolUseEvent|ManagedAgentsAgentToolResultEvent|ManagedAgentsAgentThreadMessageReceivedEvent|ManagedAgentsAgentThreadMessageSentEvent|ManagedAgentsAgentThreadContextCompactedEvent|ManagedAgentsSessionErrorEvent|ManagedAgentsSessionStatusRescheduledEvent|ManagedAgentsSessionStatusRunningEvent|ManagedAgentsSessionStatusIdleEvent|ManagedAgentsSessionStatusTerminatedEvent|ManagedAgentsSessionThreadCreatedEvent|ManagedAgentsSpanOutcomeEvaluationStartEvent|ManagedAgentsSpanOutcomeEvaluationEndEvent|ManagedAgentsSpanModelRequestStartEvent|ManagedAgentsSpanModelRequestEndEvent|ManagedAgentsSpanOutcomeEvaluationOngoingEvent|ManagedAgentsUserDefineOutcomeEvent|ManagedAgentsSessionDeletedEvent|ManagedAgentsSessionThreadStatusRunningEvent|ManagedAgentsSessionThreadStatusIdleEvent|ManagedAgentsSessionThreadStatusTerminatedEvent|ManagedAgentsSessionThreadStatusRescheduledEvent,>,>
      *
      * @throws APIException
      */
@@ -81,7 +97,18 @@ final class EventsRawService implements EventsRawContract
             $params,
             $requestOptions,
         );
-        $query_params = array_flip(['limit', 'order', 'page']);
+        $query_params = array_flip(
+            [
+                'createdAtGt',
+                'createdAtGte',
+                'createdAtLt',
+                'createdAtLte',
+                'limit',
+                'order',
+                'page',
+                'types',
+            ],
+        );
 
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);
@@ -90,7 +117,15 @@ final class EventsRawService implements EventsRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/sessions/%1$s/events?beta=true', $sessionID],
-            query: array_intersect_key($parsed, $query_params),
+            query: Util::array_transform_keys(
+                array_intersect_key($parsed, $query_params),
+                [
+                    'createdAtGt' => 'created_at[gt]',
+                    'createdAtGte' => 'created_at[gte]',
+                    'createdAtLt' => 'created_at[lt]',
+                    'createdAtLte' => 'created_at[lte]',
+                ],
+            ),
             headers: Util::array_transform_keys(
                 $header_params,
                 ['betas' => 'anthropic-beta']
@@ -160,7 +195,7 @@ final class EventsRawService implements EventsRawContract
      * }|EventStreamParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<BaseStream<ManagedAgentsUserMessageEvent|ManagedAgentsUserInterruptEvent|ManagedAgentsUserToolConfirmationEvent|ManagedAgentsUserCustomToolResultEvent|ManagedAgentsAgentCustomToolUseEvent|ManagedAgentsAgentMessageEvent|ManagedAgentsAgentThinkingEvent|ManagedAgentsAgentMCPToolUseEvent|ManagedAgentsAgentMCPToolResultEvent|ManagedAgentsAgentToolUseEvent|ManagedAgentsAgentToolResultEvent|ManagedAgentsAgentThreadContextCompactedEvent|ManagedAgentsSessionErrorEvent|ManagedAgentsSessionStatusRescheduledEvent|ManagedAgentsSessionStatusRunningEvent|ManagedAgentsSessionStatusIdleEvent|ManagedAgentsSessionStatusTerminatedEvent|ManagedAgentsSpanModelRequestStartEvent|ManagedAgentsSpanModelRequestEndEvent|ManagedAgentsSessionDeletedEvent,>,>
+     * @return BaseResponse<BaseStream<ManagedAgentsUserMessageEvent|ManagedAgentsUserInterruptEvent|ManagedAgentsUserToolConfirmationEvent|ManagedAgentsUserCustomToolResultEvent|ManagedAgentsAgentCustomToolUseEvent|ManagedAgentsAgentMessageEvent|ManagedAgentsAgentThinkingEvent|ManagedAgentsAgentMCPToolUseEvent|ManagedAgentsAgentMCPToolResultEvent|ManagedAgentsAgentToolUseEvent|ManagedAgentsAgentToolResultEvent|ManagedAgentsAgentThreadMessageReceivedEvent|ManagedAgentsAgentThreadMessageSentEvent|ManagedAgentsAgentThreadContextCompactedEvent|ManagedAgentsSessionErrorEvent|ManagedAgentsSessionStatusRescheduledEvent|ManagedAgentsSessionStatusRunningEvent|ManagedAgentsSessionStatusIdleEvent|ManagedAgentsSessionStatusTerminatedEvent|ManagedAgentsSessionThreadCreatedEvent|ManagedAgentsSpanOutcomeEvaluationStartEvent|ManagedAgentsSpanOutcomeEvaluationEndEvent|ManagedAgentsSpanModelRequestStartEvent|ManagedAgentsSpanModelRequestEndEvent|ManagedAgentsSpanOutcomeEvaluationOngoingEvent|ManagedAgentsUserDefineOutcomeEvent|ManagedAgentsSessionDeletedEvent|ManagedAgentsSessionThreadStatusRunningEvent|ManagedAgentsSessionThreadStatusIdleEvent|ManagedAgentsSessionThreadStatusTerminatedEvent|ManagedAgentsSessionThreadStatusRescheduledEvent,>,>
      *
      * @throws APIException
      */

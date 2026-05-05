@@ -14,7 +14,10 @@ use Anthropic\Core\Contracts\BaseModel;
  * An interrupt event that pauses agent execution and returns control to the user.
  *
  * @phpstan-type ManagedAgentsUserInterruptEventShape = array{
- *   id: string, type: Type|value-of<Type>, processedAt?: \DateTimeInterface|null
+ *   id: string,
+ *   type: Type|value-of<Type>,
+ *   processedAt?: \DateTimeInterface|null,
+ *   sessionThreadID?: string|null,
  * }
  */
 final class ManagedAgentsUserInterruptEvent implements BaseModel
@@ -37,6 +40,12 @@ final class ManagedAgentsUserInterruptEvent implements BaseModel
      */
     #[Optional('processed_at', nullable: true)]
     public ?\DateTimeInterface $processedAt;
+
+    /**
+     * If absent, interrupts every non-archived thread in a multiagent session (or the primary alone in a single-agent session). If present, interrupts only the named thread.
+     */
+    #[Optional('session_thread_id', nullable: true)]
+    public ?string $sessionThreadID;
 
     /**
      * `new ManagedAgentsUserInterruptEvent()` is missing required properties by the API.
@@ -67,7 +76,8 @@ final class ManagedAgentsUserInterruptEvent implements BaseModel
     public static function with(
         string $id,
         Type|string $type,
-        ?\DateTimeInterface $processedAt = null
+        ?\DateTimeInterface $processedAt = null,
+        ?string $sessionThreadID = null,
     ): self {
         $self = new self;
 
@@ -75,6 +85,7 @@ final class ManagedAgentsUserInterruptEvent implements BaseModel
         $self['type'] = $type;
 
         null !== $processedAt && $self['processedAt'] = $processedAt;
+        null !== $sessionThreadID && $self['sessionThreadID'] = $sessionThreadID;
 
         return $self;
     }
@@ -108,6 +119,17 @@ final class ManagedAgentsUserInterruptEvent implements BaseModel
     {
         $self = clone $this;
         $self['processedAt'] = $processedAt;
+
+        return $self;
+    }
+
+    /**
+     * If absent, interrupts every non-archived thread in a multiagent session (or the primary alone in a single-agent session). If present, interrupts only the named thread.
+     */
+    public function withSessionThreadID(?string $sessionThreadID): self
+    {
+        $self = clone $this;
+        $self['sessionThreadID'] = $sessionThreadID;
 
         return $self;
     }

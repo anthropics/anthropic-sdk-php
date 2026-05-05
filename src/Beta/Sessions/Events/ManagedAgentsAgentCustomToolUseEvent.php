@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentCustomToolUseEvent\Type;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -18,6 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   name: string,
  *   processedAt: \DateTimeInterface,
  *   type: Type|value-of<Type>,
+ *   sessionThreadID?: string|null,
  * }
  */
 final class ManagedAgentsAgentCustomToolUseEvent implements BaseModel
@@ -54,6 +56,12 @@ final class ManagedAgentsAgentCustomToolUseEvent implements BaseModel
     /** @var value-of<Type> $type */
     #[Required(enum: Type::class)]
     public string $type;
+
+    /**
+     * When set, this event was cross-posted from a subagent's thread to surface its custom tool use on the primary thread's stream. Empty on the thread's own events. Echo this on a `user.custom_tool_result` event to route the result back.
+     */
+    #[Optional('session_thread_id', nullable: true)]
+    public ?string $sessionThreadID;
 
     /**
      * `new ManagedAgentsAgentCustomToolUseEvent()` is missing required properties by the API.
@@ -95,6 +103,7 @@ final class ManagedAgentsAgentCustomToolUseEvent implements BaseModel
         string $name,
         \DateTimeInterface $processedAt,
         Type|string $type,
+        ?string $sessionThreadID = null,
     ): self {
         $self = new self;
 
@@ -103,6 +112,8 @@ final class ManagedAgentsAgentCustomToolUseEvent implements BaseModel
         $self['name'] = $name;
         $self['processedAt'] = $processedAt;
         $self['type'] = $type;
+
+        null !== $sessionThreadID && $self['sessionThreadID'] = $sessionThreadID;
 
         return $self;
     }
@@ -160,6 +171,17 @@ final class ManagedAgentsAgentCustomToolUseEvent implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * When set, this event was cross-posted from a subagent's thread to surface its custom tool use on the primary thread's stream. Empty on the thread's own events. Echo this on a `user.custom_tool_result` event to route the result back.
+     */
+    public function withSessionThreadID(?string $sessionThreadID): self
+    {
+        $self = clone $this;
+        $self['sessionThreadID'] = $sessionThreadID;
 
         return $self;
     }

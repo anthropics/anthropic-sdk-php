@@ -9,6 +9,7 @@ use Anthropic\Beta\UserProfiles\BetaUserProfile;
 use Anthropic\Beta\UserProfiles\BetaUserProfileEnrollmentURL;
 use Anthropic\Beta\UserProfiles\UserProfileCreateEnrollmentURLParams;
 use Anthropic\Beta\UserProfiles\UserProfileCreateParams;
+use Anthropic\Beta\UserProfiles\UserProfileCreateParams\Relationship;
 use Anthropic\Beta\UserProfiles\UserProfileListParams;
 use Anthropic\Beta\UserProfiles\UserProfileListParams\Order;
 use Anthropic\Beta\UserProfiles\UserProfileRetrieveParams;
@@ -40,6 +41,8 @@ final class UserProfilesRawService implements UserProfilesRawContract
      * @param array{
      *   externalID?: string|null,
      *   metadata?: array<string,string>,
+     *   name?: string|null,
+     *   relationship?: Relationship|value-of<Relationship>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|UserProfileCreateParams $params
      * @param RequestOpts|null $requestOptions
@@ -128,6 +131,8 @@ final class UserProfilesRawService implements UserProfilesRawContract
      * @param array{
      *   externalID?: string|null,
      *   metadata?: array<string,string>,
+     *   name?: string|null,
+     *   relationship?: UserProfileUpdateParams\Relationship|value-of<UserProfileUpdateParams\Relationship>|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|UserProfileUpdateParams $params
      * @param RequestOpts|null $requestOptions

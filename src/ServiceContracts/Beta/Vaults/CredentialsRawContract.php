@@ -8,9 +8,11 @@ use Anthropic\Beta\Vaults\Credentials\CredentialArchiveParams;
 use Anthropic\Beta\Vaults\Credentials\CredentialCreateParams;
 use Anthropic\Beta\Vaults\Credentials\CredentialDeleteParams;
 use Anthropic\Beta\Vaults\Credentials\CredentialListParams;
+use Anthropic\Beta\Vaults\Credentials\CredentialMCPOAuthValidateParams;
 use Anthropic\Beta\Vaults\Credentials\CredentialRetrieveParams;
 use Anthropic\Beta\Vaults\Credentials\CredentialUpdateParams;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredential;
+use Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredentialValidation;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsDeletedCredential;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
@@ -121,6 +123,23 @@ interface CredentialsRawContract
     public function archive(
         string $credentialID,
         array|CredentialArchiveParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $credentialID Path param: Path parameter credential_id
+     * @param array<string,mixed>|CredentialMCPOAuthValidateParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<ManagedAgentsCredentialValidation>
+     *
+     * @throws APIException
+     */
+    public function mcpOAuthValidate(
+        string $credentialID,
+        array|CredentialMCPOAuthValidateParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

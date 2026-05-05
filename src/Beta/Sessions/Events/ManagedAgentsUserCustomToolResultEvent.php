@@ -24,6 +24,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   content?: list<ContentShape>|null,
  *   isError?: bool|null,
  *   processedAt?: \DateTimeInterface|null,
+ *   sessionThreadID?: string|null,
  * }
  */
 final class ManagedAgentsUserCustomToolResultEvent implements BaseModel
@@ -68,6 +69,12 @@ final class ManagedAgentsUserCustomToolResultEvent implements BaseModel
     public ?\DateTimeInterface $processedAt;
 
     /**
+     * Routes this result to a subagent thread. Copy from the `agent.custom_tool_use` event's `session_thread_id`.
+     */
+    #[Optional('session_thread_id', nullable: true)]
+    public ?string $sessionThreadID;
+
+    /**
      * `new ManagedAgentsUserCustomToolResultEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -106,6 +113,7 @@ final class ManagedAgentsUserCustomToolResultEvent implements BaseModel
         ?array $content = null,
         ?bool $isError = null,
         ?\DateTimeInterface $processedAt = null,
+        ?string $sessionThreadID = null,
     ): self {
         $self = new self;
 
@@ -116,6 +124,7 @@ final class ManagedAgentsUserCustomToolResultEvent implements BaseModel
         null !== $content && $self['content'] = $content;
         null !== $isError && $self['isError'] = $isError;
         null !== $processedAt && $self['processedAt'] = $processedAt;
+        null !== $sessionThreadID && $self['sessionThreadID'] = $sessionThreadID;
 
         return $self;
     }
@@ -184,6 +193,17 @@ final class ManagedAgentsUserCustomToolResultEvent implements BaseModel
     {
         $self = clone $this;
         $self['processedAt'] = $processedAt;
+
+        return $self;
+    }
+
+    /**
+     * Routes this result to a subagent thread. Copy from the `agent.custom_tool_use` event's `session_thread_id`.
+     */
+    public function withSessionThreadID(?string $sessionThreadID): self
+    {
+        $self = clone $this;
+        $self['sessionThreadID'] = $sessionThreadID;
 
         return $self;
     }

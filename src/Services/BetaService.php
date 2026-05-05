@@ -16,6 +16,7 @@ use Anthropic\Services\Beta\SessionsService;
 use Anthropic\Services\Beta\SkillsService;
 use Anthropic\Services\Beta\UserProfilesService;
 use Anthropic\Services\Beta\VaultsService;
+use Anthropic\Services\Beta\WebhooksService;
 
 final class BetaService implements BetaContract
 {
@@ -72,6 +73,11 @@ final class BetaService implements BetaContract
     /**
      * @api
      */
+    public WebhooksService $webhooks;
+
+    /**
+     * @api
+     */
     public UserProfilesService $userProfiles;
 
     /**
@@ -89,6 +95,7 @@ final class BetaService implements BetaContract
         $this->memoryStores = new MemoryStoresService($client);
         $this->files = new FilesService($client);
         $this->skills = new SkillsService($client);
+        $this->webhooks = new WebhooksService($client);
         $this->userProfiles = new UserProfilesService($client);
     }
 }

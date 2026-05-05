@@ -27,6 +27,8 @@ class Client extends BaseClient
 
     public string $authToken;
 
+    public string $webhookKey;
+
     /**
      * @api
      */
@@ -52,12 +54,16 @@ class Client extends BaseClient
     public function __construct(
         ?string $apiKey = null,
         ?string $authToken = null,
+        ?string $webhookKey = null,
         ?string $baseUrl = null,
         RequestOptions|array|null $requestOptions = null,
         ?CredentialResult $credentials = null,
     ) {
         $this->apiKey = (string) ($apiKey ?? getenv('ANTHROPIC_API_KEY'));
         $this->authToken = (string) ($authToken ?? getenv('ANTHROPIC_AUTH_TOKEN'));
+        $this->webhookKey = (string) ($webhookKey ?? getenv(
+            'ANTHROPIC_WEBHOOK_SIGNING_KEY'
+        ));
 
         $baseUrl ??= Util::getenv(
             'ANTHROPIC_BASE_URL'

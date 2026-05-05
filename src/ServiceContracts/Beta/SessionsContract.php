@@ -9,6 +9,7 @@ use Anthropic\Beta\Sessions\BetaManagedAgentsAgentParams;
 use Anthropic\Beta\Sessions\BetaManagedAgentsDeletedSession;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSession;
 use Anthropic\Beta\Sessions\SessionListParams\Order;
+use Anthropic\Beta\Sessions\SessionListParams\Status;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -95,6 +96,7 @@ interface SessionsContract
      * @param string $memoryStoreID query param: Filter sessions whose resources contain a memory_store with this memory store ID
      * @param Order|value-of<Order> $order Query param: Sort direction for results, ordered by created_at. Defaults to desc (newest first).
      * @param string $page query param: Opaque pagination cursor from a previous response's next_page
+     * @param list<Status|value-of<Status>> $statuses Query param: Filter by session status. Repeat the parameter to match any of multiple statuses.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
@@ -114,6 +116,7 @@ interface SessionsContract
         ?string $memoryStoreID = null,
         Order|string|null $order = null,
         ?string $page = null,
+        ?array $statuses = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): PageCursor;
