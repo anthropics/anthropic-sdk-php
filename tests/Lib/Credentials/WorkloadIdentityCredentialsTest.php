@@ -70,6 +70,7 @@ class WorkloadIdentityCredentialsTest extends TestCase
         $this->assertSame('fdrl_01abc', $body['federation_rule_id']);
         $this->assertSame('org-uuid-123', $body['organization_id']);
         $this->assertSame('svac_01def', $body['service_account_id']);
+        $this->assertArrayNotHasKey('workspace_id', $body);
     }
 
     public function testTokenExchangeBetaHeaders(): void
@@ -158,6 +159,59 @@ class WorkloadIdentityCredentialsTest extends TestCase
         }
     }
 
+    public function test401WithoutWorkspaceIdIncludesHint(): void
+    {
+        // No workspaceId — the hint should include the federation-rule guidance,
+        // the workspace-id remedy, and the auth-events pointer.
+        $this->setMockResponse(401, ['error' => 'unauthorized']);
+
+        $provider = $this->makeProvider(workspaceId: null);
+
+        try {
+            $provider->fetchToken();
+            $this->fail('Expected OAuthException');
+        } catch (OAuthException $e) {
+            $this->assertStringContainsString('Ensure your federation rule matches your identity token', $e->getMessage());
+            $this->assertStringContainsString('ANTHROPIC_WORKSPACE_ID', $e->getMessage());
+            $this->assertStringContainsString('View your authentication events', $e->getMessage());
+        }
+    }
+
+    public function test401WithWorkspaceIdSetOmitsWorkspaceHint(): void
+    {
+        // workspaceId already set — the workspace-id remedy is noise, but the
+        // federation-rule and auth-events guidance still applies.
+        $this->setMockResponse(401, ['error' => 'unauthorized']);
+
+        $provider = $this->makeProvider(workspaceId: 'wrkspc_x');
+
+        try {
+            $provider->fetchToken();
+            $this->fail('Expected OAuthException');
+        } catch (OAuthException $e) {
+            $this->assertStringContainsString('Ensure your federation rule', $e->getMessage());
+            $this->assertStringContainsString('View your authentication events', $e->getMessage());
+            $this->assertStringNotContainsString('ANTHROPIC_WORKSPACE_ID', $e->getMessage());
+        }
+    }
+
+    public function testNon401WithoutWorkspaceIdOmitsHint(): void
+    {
+        // The hint is 401-specific; a 5xx or 400 shouldn't suggest a config change.
+        $this->setMockResponse(500, ['error' => 'server_error']);
+
+        $provider = $this->makeProvider(workspaceId: null);
+
+        try {
+            $provider->fetchToken();
+            $this->fail('Expected OAuthException');
+        } catch (OAuthException $e) {
+            $this->assertStringNotContainsString('Ensure your federation rule', $e->getMessage());
+            $this->assertStringNotContainsString('ANTHROPIC_WORKSPACE_ID', $e->getMessage());
+            $this->assertStringNotContainsString('View your authentication events', $e->getMessage());
+        }
+    }
+
     public function testMissingAccessTokenThrows(): void
     {
         $this->setMockResponse(200, ['token_type' => 'Bearer', 'expires_in' => 300]);
@@ -243,18 +297,55 @@ class WorkloadIdentityCredentialsTest extends TestCase
         $body = json_decode((string) $request->getBody(), true);
 
         $this->assertArrayNotHasKey('service_account_id', $body);
+        $this->assertArrayNotHasKey('workspace_id', $body);
+    }
+
+    public function testWorkspaceIdIncluded(): void
+    {
+        $this->setMockResponse(200, [
+            'access_token' => 'tok',
+            'token_type' => 'Bearer',
+            'expires_in' => 300,
+        ]);
+
+        $this->makeProvider(workspaceId: 'wrkspc_01abc')->fetchToken();
+        $request = $this->getLastRequest();
+
+        /** @var array<string,mixed> $body */
+        $body = json_decode((string) $request->getBody(), true);
+
+        $this->assertSame('wrkspc_01abc', $body['workspace_id']);
+    }
+
+    public function testWorkspaceIdDefaultSentinel(): void
+    {
+        $this->setMockResponse(200, [
+            'access_token' => 'tok',
+            'token_type' => 'Bearer',
+            'expires_in' => 300,
+        ]);
+
+        $this->makeProvider(workspaceId: 'default')->fetchToken();
+        $request = $this->getLastRequest();
+
+        /** @var array<string,mixed> $body */
+        $body = json_decode((string) $request->getBody(), true);
+
+        $this->assertSame('default', $body['workspace_id']);
     }
 
     private function makeProvider(
         string $federationRuleId = 'fdrl_01test',
         string $organizationId = 'org-test-uuid',
         ?string $serviceAccountId = null,
+        ?string $workspaceId = null,
     ): WorkloadIdentityCredentials {
         return new WorkloadIdentityCredentials(
             identityProvider: new IdentityTokenLiteral('test-jwt-assertion'),
             federationRuleId: $federationRuleId,
             organizationId: $organizationId,
             serviceAccountId: $serviceAccountId,
+            workspaceId: $workspaceId,
             tokenEndpointBaseUrl: 'https://api.anthropic.com',
             httpClient: $this->httpClient,
             requestFactory: Psr17FactoryDiscovery::findRequestFactory(),

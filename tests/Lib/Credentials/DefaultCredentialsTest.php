@@ -6,6 +6,7 @@ namespace Tests\Lib\Credentials;
 
 use Anthropic\Lib\Credentials\DefaultCredentials;
 use Anthropic\Lib\Credentials\TokenCache;
+use Anthropic\Lib\Credentials\WorkloadIdentityCredentials;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -25,6 +26,7 @@ class DefaultCredentialsTest extends TestCase
         'ANTHROPIC_FEDERATION_RULE_ID',
         'ANTHROPIC_ORGANIZATION_ID',
         'ANTHROPIC_SERVICE_ACCOUNT_ID',
+        'ANTHROPIC_WORKSPACE_ID',
     ];
 
     /** @var array<string,string|false> */
@@ -120,6 +122,47 @@ class DefaultCredentialsTest extends TestCase
 
         $this->assertNotNull($result);
         $this->assertInstanceOf(TokenCache::class, $result->provider);
+    }
+
+    public function testWorkloadIdentityWorkspaceIdEnv(): void
+    {
+        putenv('ANTHROPIC_IDENTITY_TOKEN=literal-jwt-here');
+        putenv('ANTHROPIC_FEDERATION_RULE_ID=fdrl_01test');
+        putenv('ANTHROPIC_ORGANIZATION_ID=org-uuid-test');
+        putenv('ANTHROPIC_WORKSPACE_ID=wrkspc_01abc');
+
+        $result = DefaultCredentials::resolve();
+
+        $this->assertNotNull($result);
+        $this->assertInstanceOf(TokenCache::class, $result->provider);
+
+        $inner = (new \ReflectionProperty(TokenCache::class, 'inner'))->getValue($result->provider);
+        $this->assertInstanceOf(WorkloadIdentityCredentials::class, $inner);
+        $this->assertSame(
+            'wrkspc_01abc',
+            (new \ReflectionProperty(WorkloadIdentityCredentials::class, 'workspaceId'))->getValue($inner),
+        );
+    }
+
+    public function testWorkloadIdentityWorkspaceIdEnvEmptyTreatedUnset(): void
+    {
+        // ANTHROPIC_WORKSPACE_ID="" (a defaulted-but-empty CI variable) is
+        // treated as unset — never put `"workspace_id": ""` on the wire.
+        putenv('ANTHROPIC_IDENTITY_TOKEN=literal-jwt-here');
+        putenv('ANTHROPIC_FEDERATION_RULE_ID=fdrl_01test');
+        putenv('ANTHROPIC_ORGANIZATION_ID=org-uuid-test');
+        putenv('ANTHROPIC_WORKSPACE_ID=');
+
+        $result = DefaultCredentials::resolve();
+
+        $this->assertNotNull($result);
+        $this->assertInstanceOf(TokenCache::class, $result->provider);
+
+        $inner = (new \ReflectionProperty(TokenCache::class, 'inner'))->getValue($result->provider);
+        $this->assertInstanceOf(WorkloadIdentityCredentials::class, $inner);
+        $this->assertNull(
+            (new \ReflectionProperty(WorkloadIdentityCredentials::class, 'workspaceId'))->getValue($inner),
+        );
     }
 
     public function testWorkloadIdentityRequiresAllEnvVars(): void

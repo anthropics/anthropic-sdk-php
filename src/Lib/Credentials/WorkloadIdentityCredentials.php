@@ -25,6 +25,22 @@ final class WorkloadIdentityCredentials implements AccessTokenProvider, Closeabl
     private RequestFactoryInterface $requestFactory;
     private StreamFactoryInterface $streamFactory;
 
+    /**
+     * @param string $organizationId the organization's raw UUID string (organizations
+     *                               do not use tagged IDs)
+     * @param ?string $workspaceId Optional `wrkspc_*` tagged ID, or the literal
+     *                             `"default"` to scope the token to the organization's
+     *                             default workspace. When omitted the server picks the
+     *                             rule's sole enabled workspace, else the org default
+     *                             if the rule covers it. Required when the rule enables
+     *                             more than one non-default workspace, or to target a
+     *                             specific workspace other than the one the server would
+     *                             pick. The minted token is workspace-scoped: per-request
+     *                             workspace selection (the `anthropic-workspace-id`
+     *                             header) is not supported for federation tokens —
+     *                             switching workspaces requires a new token exchange with
+     *                             a different `$workspaceId`.
+     */
     public function __construct(
         private readonly IdentityTokenProvider $identityProvider,
         private readonly string $federationRuleId,
@@ -34,6 +50,9 @@ final class WorkloadIdentityCredentials implements AccessTokenProvider, Closeabl
         ?ClientInterface $httpClient = null,
         ?RequestFactoryInterface $requestFactory = null,
         ?StreamFactoryInterface $streamFactory = null,
+        // Appended last (rather than alongside other identity inputs) so positional
+        // callers from before this parameter was introduced are unaffected.
+        private readonly ?string $workspaceId = null,
     ) {
         self::validateEndpointUrl($tokenEndpointBaseUrl);
         $this->httpClient = $httpClient ?? Psr18ClientDiscovery::find();
@@ -56,6 +75,10 @@ final class WorkloadIdentityCredentials implements AccessTokenProvider, Closeabl
             $body['service_account_id'] = $this->serviceAccountId;
         }
 
+        if (!is_null($this->workspaceId)) {
+            $body['workspace_id'] = $this->workspaceId;
+        }
+
         $jsonBody = json_encode($body, flags: Util::JSON_ENCODE_FLAGS);
         $url = rtrim($this->tokenEndpointBaseUrl, '/').self::TOKEN_PATH;
 
@@ -74,7 +97,23 @@ final class WorkloadIdentityCredentials implements AccessTokenProvider, Closeabl
         $responseBody = (string) $response->getBody();
 
         if ($statusCode < 200 || $statusCode >= 300) {
-            throw new OAuthException($statusCode, self::redactErrorBody($statusCode, $responseBody));
+            $message = self::redactErrorBody($statusCode, $responseBody);
+            // A 401 from the token exchange usually traces back to a federation
+            // rule mismatch. Surface the fix and where to dig further in the
+            // error rather than making the user hunt through docs.
+            if (401 === $statusCode) {
+                $hints = ['Ensure your federation rule matches your identity token'];
+                if (is_null($this->workspaceId)) {
+                    $hints[] = 'If your federation rule is scoped to multiple workspaces,'
+                        ." set the ANTHROPIC_WORKSPACE_ID environment variable, the 'workspace_id'"
+                        .' config key, or the workspaceId constructor parameter';
+                }
+                $hints[] = 'View your authentication events in the Workload identity page'
+                    .' of Claude Console for more details';
+                $message .= ' '.implode('. ', $hints).'.';
+            }
+
+            throw new OAuthException($statusCode, $message);
         }
 
         try {
