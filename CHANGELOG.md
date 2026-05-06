@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.20.0 (2026-05-06)
+
+Full Changelog: [v0.19.0...v0.20.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.19.0...v0.20.0)
+
+### Features
+
+* **api:** add support for Managed Agents multiagents and outcomes, webhooks, vault validation ([99047bc](https://github.com/anthropics/anthropic-sdk-php/commit/99047bcfcc45231702c5786cdd84f4de0d906028))
+
+
+### Bug Fixes
+
+* **api:** Adjust webhook configuration ([9b0bd4f](https://github.com/anthropics/anthropic-sdk-php/commit/9b0bd4f37a8e0abfc254f00fe760f818c28efdf8))
+
 ## 0.19.0 (2026-05-05)
 
 Full Changelog: [v0.18.0...v0.19.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.18.0...v0.19.0)
