@@ -9,21 +9,21 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BetaWebhookSessionStatusScheduledEventDataShape = array{
+ * @phpstan-type BetaWebhookSessionStatusRescheduledEventDataShape = array{
  *   id: string,
  *   organizationID: string,
- *   type: 'session.status_scheduled',
+ *   type: 'session.status_rescheduled',
  *   workspaceID: string,
  * }
  */
-final class BetaWebhookSessionStatusScheduledEventData implements BaseModel
+final class BetaWebhookSessionStatusRescheduledEventData implements BaseModel
 {
-    /** @use SdkModel<BetaWebhookSessionStatusScheduledEventDataShape> */
+    /** @use SdkModel<BetaWebhookSessionStatusRescheduledEventDataShape> */
     use SdkModel;
 
-    /** @var 'session.status_scheduled' $type */
+    /** @var 'session.status_rescheduled' $type */
     #[Required]
-    public string $type = 'session.status_scheduled';
+    public string $type = 'session.status_rescheduled';
 
     /**
      * ID of the resource that triggered the event.
@@ -38,11 +38,11 @@ final class BetaWebhookSessionStatusScheduledEventData implements BaseModel
     public string $workspaceID;
 
     /**
-     * `new BetaWebhookSessionStatusScheduledEventData()` is missing required properties by the API.
+     * `new BetaWebhookSessionStatusRescheduledEventData()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaWebhookSessionStatusScheduledEventData::with(
+     * BetaWebhookSessionStatusRescheduledEventData::with(
      *   id: ..., organizationID: ..., workspaceID: ...
      * )
      * ```
@@ -50,7 +50,7 @@ final class BetaWebhookSessionStatusScheduledEventData implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookSessionStatusScheduledEventData)
+     * (new BetaWebhookSessionStatusRescheduledEventData)
      *   ->withID(...)
      *   ->withOrganizationID(...)
      *   ->withWorkspaceID(...)
@@ -100,7 +100,7 @@ final class BetaWebhookSessionStatusScheduledEventData implements BaseModel
     }
 
     /**
-     * @param 'session.status_scheduled' $type
+     * @param 'session.status_rescheduled' $type
      */
     public function withType(string $type): self
     {
