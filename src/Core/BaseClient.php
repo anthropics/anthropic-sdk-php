@@ -150,11 +150,21 @@ abstract class BaseClient
             ? [$this->idempotencyHeader => $this->generateIdempotencyKey()]
             : [];
 
+        // Generated services place their per-endpoint default `anthropic-beta`
+        // header in `$options->extraHeaders` (so callers can override it via
+        // request options), while the user-supplied `betas:` request param is
+        // translated into `$headers['anthropic-beta']`. Because `extraHeaders`
+        // is spread last below it would silently replace a caller's `betas:`.
+        // Combine the two instead so both the caller's betas and the
+        // per-endpoint default are sent, matching other Anthropic SDKs.
+        $betaHeaders = self::mergeBetaHeaders($headers, extraHeaders: $options->extraHeaders ?? []);
+
         /** @var array<string,string|list<string>|null> $mergedHeaders */
         $mergedHeaders = [
             ...$this->headers,
             ...$headers,
             ...($options->extraHeaders ?? []),
+            ...$betaHeaders,
             ...$idempotencyHeaders,
         ];
 
@@ -297,5 +307,45 @@ abstract class BaseClient
         }
 
         return $rsp;
+    }
+
+    /**
+     * Combine `anthropic-beta` values from request headers (derived from the
+     * `betas:` request param) with those in `extraHeaders` (per-endpoint
+     * defaults and/or caller overrides). Returns an array containing a single
+     * merged `anthropic-beta` entry when both sources provide a value;
+     * otherwise an empty array so the standard merge order applies unchanged.
+     *
+     * @internal
+     *
+     * @param array<string,string|int|list<string|int>|null> $headers
+     * @param array<string,string|int|list<string|int>|null> $extraHeaders
+     *
+     * @return array<string,list<string>>
+     */
+    private static function mergeBetaHeaders(array $headers, array $extraHeaders): array
+    {
+        $key = 'anthropic-beta';
+        if (!array_key_exists($key, $headers) || !array_key_exists($key, $extraHeaders)) {
+            return [];
+        }
+
+        $normalize = static function (string|int|array|null $value): array {
+            if (is_null($value)) {
+                return [];
+            }
+            $values = is_array($value) ? $value : [$value];
+
+            return array_merge(
+                ...array_map(static fn ($v) => array_map('trim', explode(',', Util::strVal($v))), $values),
+            );
+        };
+
+        $merged = array_values(array_unique([
+            ...$normalize($headers[$key]),
+            ...$normalize($extraHeaders[$key]),
+        ]));
+
+        return [] === $merged ? [] : [$key => $merged];
     }
 }
