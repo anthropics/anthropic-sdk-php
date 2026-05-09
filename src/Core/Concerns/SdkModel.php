@@ -44,7 +44,24 @@ trait SdkModel
      */
     public function __unserialize(array $data): void
     {
+        // Map API field names (e.g. `next_page`) to PHP property names
+        // (e.g. `nextPage`) so that callers may pass either form. Page
+        // models hydrate directly from the raw API payload via this method.
+        $apiToProperty = [];
+        foreach (self::$converter->properties as $name => $info) {
+            if ($info->apiName !== $name) {
+                $apiToProperty[$info->apiName] = $name;
+            }
+        }
+
         foreach ($data as $key => $value) {
+            if (
+                !array_key_exists($key, array: self::$converter->properties)
+                && array_key_exists($key, array: $apiToProperty)
+            ) {
+                $key = $apiToProperty[$key];
+            }
+
             // @phpstan-ignore-next-line argument.type
             $this->offsetSet($key, value: $value);
         }
