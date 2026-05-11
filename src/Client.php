@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic;
 
 use Anthropic\Core\BaseClient;
+use Anthropic\Core\Implementation\StreamingHttpClient;
 use Anthropic\Core\Util;
 use Anthropic\Services\BetaService;
 use Anthropic\Services\MessagesService;
@@ -70,6 +71,11 @@ class Client extends BaseClient
             ),
             $requestOptions,
         );
+
+        if (is_null($options->streamingTransporter)) {
+            assert(!is_null($options->transporter));
+            $options->streamingTransporter = new StreamingHttpClient($options->transporter);
+        }
 
         /** @var array<string, string|null> $headers */
         $headers = [

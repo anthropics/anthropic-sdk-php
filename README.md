@@ -70,6 +70,15 @@ foreach ($stream as $message) {
 }
 ```
 
+Streaming requests are dispatched through a separate `streamingTransporter` PSR-18 HTTP client. When unset, the SDK uses the configured `transporter`.
+Some PSR-18 HTTP clients will by default try to read the entire response, so you may need to specify a streaming capable implementation.
+
+```php
+$client = new Anthropic\Client(
+    requestOptions: Anthropic\RequestOptions::with(streamingTransporter: $myStreamingClient),
+);
+```
+
 ### Pagination
 
 List methods in the Anthropic API are paginated.

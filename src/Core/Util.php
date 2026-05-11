@@ -25,6 +25,8 @@ final class Util
 
     public const JSONL_CONTENT_TYPE = '/^application\/(:?x-(?:n|l)djson)|(:?(?:x-)?jsonl)/';
 
+    public const STREAMING_CONTENT_TYPE = ['/^text\/event-stream/', self::JSONL_CONTENT_TYPE];
+
     public static function getenv(string $key): ?string
     {
         if (array_key_exists($key, array: $_ENV)) {
@@ -215,6 +217,16 @@ final class Util
         $qs = http_build_query($normalizedQuery, encoding_type: PHP_QUERY_RFC3986);
 
         return $base->withQuery($qs);
+    }
+
+    public static function isStreamingRequest(RequestInterface $request): bool
+    {
+        $accept = $request->getHeaderLine('Accept');
+
+        return !empty(array_filter(
+            self::STREAMING_CONTENT_TYPE,
+            static fn (string $pattern) => (bool) preg_match($pattern, subject: $accept),
+        ));
     }
 
     /**

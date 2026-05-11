@@ -39,6 +39,7 @@
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3",
+    "guzzlehttp/guzzle": "^7",
     "nyholm/psr7": "^1",
     "pestphp/pest": "^3",
     "php-http/mock-client": "^1",

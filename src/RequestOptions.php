@@ -23,6 +23,7 @@ use Psr\Http\Message\UriFactoryInterface;
  *   extraQueryParams?: array<string,mixed>|null,
  *   extraBodyParams?: mixed,
  *   transporter?: ClientInterface|null,
+ *   streamingTransporter?: ClientInterface|null,
  *   uriFactory?: UriFactoryInterface|null,
  *   streamFactory?: StreamFactoryInterface|null,
  *   requestFactory?: RequestFactoryInterface|null,
@@ -59,6 +60,9 @@ final class RequestOptions implements BaseModel
 
     #[Optional]
     public ?ClientInterface $transporter;
+
+    #[Optional]
+    public ?ClientInterface $streamingTransporter;
 
     #[Optional]
     public ?UriFactoryInterface $uriFactory;
@@ -98,6 +102,7 @@ final class RequestOptions implements BaseModel
         ?array $extraQueryParams = null,
         mixed $extraBodyParams = null,
         ?ClientInterface $transporter = null,
+        ?ClientInterface $streamingTransporter = null,
         ?UriFactoryInterface $uriFactory = null,
         ?StreamFactoryInterface $streamFactory = null,
         ?RequestFactoryInterface $requestFactory = null,
@@ -114,6 +119,9 @@ final class RequestOptions implements BaseModel
         null !== $extraQueryParams && $self->extraQueryParams = $extraQueryParams;
         null !== $extraBodyParams && $self->extraBodyParams = $extraBodyParams;
         null !== $transporter && $self->transporter = $transporter;
+        null !== $streamingTransporter && $self
+            ->streamingTransporter = $streamingTransporter
+        ;
         null !== $uriFactory && $self->uriFactory = $uriFactory;
         null !== $streamFactory && $self->streamFactory = $streamFactory;
         null !== $requestFactory && $self->requestFactory = $requestFactory;
@@ -187,6 +195,15 @@ final class RequestOptions implements BaseModel
     {
         $self = clone $this;
         $self->transporter = $transporter;
+
+        return $self;
+    }
+
+    public function withStreamingTransporter(
+        ClientInterface $streamingTransporter
+    ): self {
+        $self = clone $this;
+        $self->streamingTransporter = $streamingTransporter;
 
         return $self;
     }

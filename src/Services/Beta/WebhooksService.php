@@ -42,9 +42,9 @@ final class WebhooksService implements WebhooksContract
         ?array $headers = null,
         ?string $secret = null
     ): UnwrapWebhookEvent {
-        if (null !== $headers) {
+        if (!is_null($headers)) {
             $secret = $secret ?? ($this->client->webhookKey ?: null);
-            if (null === $secret) {
+            if (is_null($secret)) {
                 throw new WebhookException('Webhook key must not be null in order to unwrap');
             }
 
