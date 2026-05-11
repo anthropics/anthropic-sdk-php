@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.21.0 (2026-05-11)
+
+Full Changelog: [v0.20.0...v0.21.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.20.0...v0.21.0)
+
+### Features
+
+* **aws:** Add AWS client for Claude Platform on AWS ([c56e7ad](https://github.com/anthropics/anthropic-sdk-php/commit/c56e7ad2ec0e477fbf4d2f185f8720b109605729))
+
+
+### Bug Fixes
+
+* **client:** address bug with PageCursor not advancing past first page ([#613](https://github.com/anthropics/anthropic-sdk-php/issues/613)) ([6e9982f](https://github.com/anthropics/anthropic-sdk-php/commit/6e9982f3ef0d833be0db9875a95f4e31d7cb2740))
+* **client:** prevent betas request param being silently overridden by per-endpoint extraHeaders default ([#615](https://github.com/anthropics/anthropic-sdk-php/issues/615)) ([cacb6da](https://github.com/anthropics/anthropic-sdk-php/commit/cacb6daa78b62d8f04c08efc4ba3e33c6cf4c194))
+
+
+### Chores
+
+* **ci:** Pin GitHub Actions to commit SHAs ([#37](https://github.com/anthropics/anthropic-sdk-php/issues/37)) ([0d232d4](https://github.com/anthropics/anthropic-sdk-php/commit/0d232d43cd6ee75ca301b8e3c3492e0db0153a6e))
+
 ## 0.20.0 (2026-05-06)
 
 Full Changelog: [v0.19.0...v0.20.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.19.0...v0.20.0)
@@ -452,4 +471,3 @@ Full Changelog: [v0.0.1...v0.1.0](https://github.com/anthropics/anthropic-sdk-ph
 
 * **doc:** small improvement to pagination example ([57afba6](https://github.com/anthropics/anthropic-sdk-php/commit/57afba64fd45f08491f8d42a034837715704333c))
 * sync repo ([d6cb59a](https://github.com/anthropics/anthropic-sdk-php/commit/d6cb59a225f573ddd6275381cd4b7401a3c8f4cd))
-
