@@ -452,3 +452,4 @@ Full Changelog: [v0.0.1...v0.1.0](https://github.com/anthropics/anthropic-sdk-ph
 
 * **doc:** small improvement to pagination example ([57afba6](https://github.com/anthropics/anthropic-sdk-php/commit/57afba64fd45f08491f8d42a034837715704333c))
 * sync repo ([d6cb59a](https://github.com/anthropics/anthropic-sdk-php/commit/d6cb59a225f573ddd6275381cd4b7401a3c8f4cd))
+
