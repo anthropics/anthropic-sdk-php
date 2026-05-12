@@ -41,6 +41,7 @@
     "aws/aws-sdk-php": "^3.368",
     "friendsofphp/php-cs-fixer": "^3",
     "google/auth": "^1.49",
+    "guzzlehttp/guzzle": "^7",
     "mcp/sdk": "^0.5",
     "nyholm/psr7": "^1",
     "pestphp/pest": "^3",
