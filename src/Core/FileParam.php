@@ -41,7 +41,7 @@ final class FileParam
             throw new \InvalidArgumentException('Expected a resource, got '.get_debug_type($resource));
         }
 
-        if (null === $filename) {
+        if (is_null($filename)) {
             $meta = stream_get_meta_data($resource);
             $filename = basename($meta['uri'] ?? 'upload');
         }

@@ -271,11 +271,15 @@ abstract class BaseClient
         $req = Util::withSetBody($opts->streamFactory, req: $req, body: $data);
         $req = $this->transformRequest($req);
 
+        $transporter = Util::isStreamingRequest($req)
+            ? ($opts->streamingTransporter ?? $opts->transporter)
+            : $opts->transporter;
+
         $rsp = null;
         $err = null;
 
         try {
-            $rsp = $opts->transporter->sendRequest($req);
+            $rsp = $transporter->sendRequest($req);
         } catch (ClientExceptionInterface $e) {
             $err = $e;
         }

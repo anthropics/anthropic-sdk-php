@@ -69,6 +69,15 @@ foreach ($stream as $message) {
 }
 ```
 
+Streaming requests are dispatched through a separate `streamingTransporter` PSR-18 HTTP client. When unset, the SDK uses the configured `transporter`.
+Some PSR-18 HTTP clients will by default try to read the entire response, so you may need to specify a streaming capable implementation.
+
+```php
+$client = new Anthropic\Client(
+    requestOptions: Anthropic\RequestOptions::with(streamingTransporter: $myStreamingClient),
+);
+```
+
 ### Structured Output
 
 You can use PHP classes to define structured output schemas. The SDK will automatically convert your class to a JSON schema and parse responses back into typed objects.
@@ -98,7 +107,6 @@ echo $article->title;
 ```
 
 See [examples/messages_structured_output.php](examples/messages_structured_output.php) for more examples including constraints, nested models, and streaming.
-
 ### Pagination
 
 List methods in the Anthropic API are paginated.
