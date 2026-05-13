@@ -14,6 +14,7 @@ use Anthropic\Messages\Model;
  * @phpstan-import-type BetaContainerShape from \Anthropic\Beta\Messages\BetaContainer
  * @phpstan-import-type BetaContentBlockShape from \Anthropic\Beta\Messages\BetaContentBlock
  * @phpstan-import-type BetaContextManagementResponseShape from \Anthropic\Beta\Messages\BetaContextManagementResponse
+ * @phpstan-import-type BetaDiagnosticsShape from \Anthropic\Beta\Messages\BetaDiagnostics
  * @phpstan-import-type BetaRefusalStopDetailsShape from \Anthropic\Beta\Messages\BetaRefusalStopDetails
  * @phpstan-import-type BetaUsageShape from \Anthropic\Beta\Messages\BetaUsage
  *
@@ -22,6 +23,7 @@ use Anthropic\Messages\Model;
  *   container: null|BetaContainer|BetaContainerShape,
  *   content: list<BetaContentBlockShape>,
  *   contextManagement: null|BetaContextManagementResponse|BetaContextManagementResponseShape,
+ *   diagnostics: null|BetaDiagnostics|BetaDiagnosticsShape,
  *   model: string|Model|value-of<Model>,
  *   role: 'assistant',
  *   stopDetails: null|BetaRefusalStopDetails|BetaRefusalStopDetailsShape,
@@ -111,6 +113,13 @@ final class BetaMessage implements BaseModel
     public ?BetaContextManagementResponse $contextManagement;
 
     /**
+     * Response envelope for request-level diagnostics. Present (possibly
+     * null) whenever the caller supplied `diagnostics` on the request.
+     */
+    #[Required]
+    public ?BetaDiagnostics $diagnostics;
+
+    /**
      * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
      * @var string|value-of<Model> $model
@@ -174,6 +183,7 @@ final class BetaMessage implements BaseModel
      *   container: ...,
      *   content: ...,
      *   contextManagement: ...,
+     *   diagnostics: ...,
      *   model: ...,
      *   stopDetails: ...,
      *   stopReason: ...,
@@ -190,6 +200,7 @@ final class BetaMessage implements BaseModel
      *   ->withContainer(...)
      *   ->withContent(...)
      *   ->withContextManagement(...)
+     *   ->withDiagnostics(...)
      *   ->withModel(...)
      *   ->withStopDetails(...)
      *   ->withStopReason(...)
@@ -210,6 +221,7 @@ final class BetaMessage implements BaseModel
      * @param BetaContainer|BetaContainerShape|null $container
      * @param list<BetaContentBlockShape> $content
      * @param BetaContextManagementResponse|BetaContextManagementResponseShape|null $contextManagement
+     * @param BetaDiagnostics|BetaDiagnosticsShape|null $diagnostics
      * @param string|Model|value-of<Model> $model
      * @param BetaRefusalStopDetails|BetaRefusalStopDetailsShape|null $stopDetails
      * @param BetaStopReason|value-of<BetaStopReason>|null $stopReason
@@ -220,6 +232,7 @@ final class BetaMessage implements BaseModel
         BetaContainer|array|null $container,
         array $content,
         BetaContextManagementResponse|array|null $contextManagement,
+        BetaDiagnostics|array|null $diagnostics,
         Model|string $model,
         BetaRefusalStopDetails|array|null $stopDetails,
         BetaStopReason|string|null $stopReason,
@@ -232,6 +245,7 @@ final class BetaMessage implements BaseModel
         $self['container'] = $container;
         $self['content'] = $content;
         $self['contextManagement'] = $contextManagement;
+        $self['diagnostics'] = $diagnostics;
         $self['model'] = $model;
         $self['stopDetails'] = $stopDetails;
         $self['stopReason'] = $stopReason;
@@ -316,6 +330,21 @@ final class BetaMessage implements BaseModel
     ): self {
         $self = clone $this;
         $self['contextManagement'] = $contextManagement;
+
+        return $self;
+    }
+
+    /**
+     * Response envelope for request-level diagnostics. Present (possibly
+     * null) whenever the caller supplied `diagnostics` on the request.
+     *
+     * @param BetaDiagnostics|BetaDiagnosticsShape|null $diagnostics
+     */
+    public function withDiagnostics(
+        BetaDiagnostics|array|null $diagnostics
+    ): self {
+        $self = clone $this;
+        $self['diagnostics'] = $diagnostics;
 
         return $self;
     }
