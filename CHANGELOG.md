@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.22.0 (2026-05-13)
+
+Full Changelog: [v0.21.0...v0.22.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.21.0...v0.22.0)
+
+### Features
+
+* **api:** Add BetaManagedAgentsSearchResultBlock types ([f29c016](https://github.com/anthropics/anthropic-sdk-php/commit/f29c016d6817abd6d9c43367ad839f4f914e88cb))
+* **api:** Add support for cache diagnostics beta ([c47486d](https://github.com/anthropics/anthropic-sdk-php/commit/c47486d4b5cd3040d6cce98903172e4967dd15ea))
+
+
+### Bug Fixes
+
+* guzzle requires special handling to enable streaming ([248a5aa](https://github.com/anthropics/anthropic-sdk-php/commit/248a5aa64c5510efd96c9e8d009b9f59474f46f0))
+
+
+### Chores
+
+* **api:** spec updates ([32638ec](https://github.com/anthropics/anthropic-sdk-php/commit/32638ec297fcad831f31b5d2d4f8ae0498bffd1f))
+* **ci:** resolve pin conflict from stainless[#18197](https://github.com/anthropics/anthropic-sdk-php/issues/18197) ([#626](https://github.com/anthropics/anthropic-sdk-php/issues/626)) ([550410c](https://github.com/anthropics/anthropic-sdk-php/commit/550410cc7e6e9d102b70d26c535ca0914dcf58d8))
+
 ## 0.21.0 (2026-05-11)
 
 Full Changelog: [v0.20.0...v0.21.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.20.0...v0.21.0)
