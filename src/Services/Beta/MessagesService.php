@@ -8,6 +8,7 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral;
 use Anthropic\Beta\Messages\BetaContainerParams;
 use Anthropic\Beta\Messages\BetaContextManagementConfig;
+use Anthropic\Beta\Messages\BetaDiagnosticsParam;
 use Anthropic\Beta\Messages\BetaJSONOutputFormat;
 use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Beta\Messages\BetaMessageParam;
@@ -50,6 +51,7 @@ use Anthropic\Services\Beta\Messages\BatchesService;
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type ContainerShape from \Anthropic\Beta\Messages\MessageCreateParams\Container
  * @phpstan-import-type BetaContextManagementConfigShape from \Anthropic\Beta\Messages\BetaContextManagementConfig
+ * @phpstan-import-type BetaDiagnosticsParamShape from \Anthropic\Beta\Messages\BetaDiagnosticsParam
  * @phpstan-import-type BetaRequestMCPServerURLDefinitionShape from \Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition
  * @phpstan-import-type BetaMetadataShape from \Anthropic\Beta\Messages\BetaMetadata
  * @phpstan-import-type BetaOutputConfigShape from \Anthropic\Beta\Messages\BetaOutputConfig
@@ -151,6 +153,8 @@ final class MessagesService implements MessagesContract
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement Body param: Context management configuration.
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
+     * @param BetaDiagnosticsParam|BetaDiagnosticsParamShape|null $diagnostics Body param: Request-level diagnostics. Currently carries the previous response
+     * id for prompt-cache divergence reporting.
      * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers Body param: MCP servers to be utilized in this request
      * @param BetaMetadata|BetaMetadataShape $metadata body param: An object describing metadata about the request
@@ -265,6 +269,7 @@ final class MessagesService implements MessagesContract
         BetaCacheControlEphemeral|array|null $cacheControl = null,
         string|BetaContainerParams|array|null $container = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
+        BetaDiagnosticsParam|array|null $diagnostics = null,
         ?string $inferenceGeo = null,
         ?array $mcpServers = null,
         BetaMetadata|array|null $metadata = null,
@@ -295,6 +300,7 @@ final class MessagesService implements MessagesContract
                 'cacheControl' => $cacheControl,
                 'container' => $container,
                 'contextManagement' => $contextManagement,
+                'diagnostics' => $diagnostics,
                 'inferenceGeo' => $inferenceGeo,
                 'mcpServers' => $mcpServers,
                 'metadata' => $metadata,
@@ -412,6 +418,8 @@ final class MessagesService implements MessagesContract
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement Body param: Context management configuration.
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
+     * @param BetaDiagnosticsParam|BetaDiagnosticsParamShape|null $diagnostics Body param: Request-level diagnostics. Currently carries the previous response
+     * id for prompt-cache divergence reporting.
      * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers Body param: MCP servers to be utilized in this request
      * @param BetaMetadata|BetaMetadataShape $metadata body param: An object describing metadata about the request
@@ -528,6 +536,7 @@ final class MessagesService implements MessagesContract
         BetaCacheControlEphemeral|array|null $cacheControl = null,
         string|BetaContainerParams|array|null $container = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
+        BetaDiagnosticsParam|array|null $diagnostics = null,
         ?string $inferenceGeo = null,
         ?array $mcpServers = null,
         BetaMetadata|array|null $metadata = null,
@@ -558,6 +567,7 @@ final class MessagesService implements MessagesContract
                 'cacheControl' => $cacheControl,
                 'container' => $container,
                 'contextManagement' => $contextManagement,
+                'diagnostics' => $diagnostics,
                 'inferenceGeo' => $inferenceGeo,
                 'mcpServers' => $mcpServers,
                 'metadata' => $metadata,

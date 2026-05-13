@@ -7,6 +7,7 @@ namespace Anthropic\Services\Beta;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral;
 use Anthropic\Beta\Messages\BetaContextManagementConfig;
+use Anthropic\Beta\Messages\BetaDiagnosticsParam;
 use Anthropic\Beta\Messages\BetaJSONOutputFormat;
 use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Beta\Messages\BetaMessageParam;
@@ -42,6 +43,7 @@ use Anthropic\SSEStream;
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type ContainerShape from \Anthropic\Beta\Messages\MessageCreateParams\Container
  * @phpstan-import-type BetaContextManagementConfigShape from \Anthropic\Beta\Messages\BetaContextManagementConfig
+ * @phpstan-import-type BetaDiagnosticsParamShape from \Anthropic\Beta\Messages\BetaDiagnosticsParam
  * @phpstan-import-type BetaRequestMCPServerURLDefinitionShape from \Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition
  * @phpstan-import-type BetaMetadataShape from \Anthropic\Beta\Messages\BetaMetadata
  * @phpstan-import-type BetaOutputConfigShape from \Anthropic\Beta\Messages\BetaOutputConfig
@@ -76,6 +78,7 @@ final class MessagesRawService implements MessagesRawContract
      *   cacheControl?: BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null,
      *   container?: ContainerShape|null,
      *   contextManagement?: BetaContextManagementConfig|BetaContextManagementConfigShape|null,
+     *   diagnostics?: BetaDiagnosticsParam|BetaDiagnosticsParamShape|null,
      *   inferenceGeo?: string|null,
      *   mcpServers?: list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape>,
      *   metadata?: BetaMetadata|BetaMetadataShape,
@@ -137,6 +140,7 @@ final class MessagesRawService implements MessagesRawContract
      *   cacheControl?: BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null,
      *   container?: ContainerShape|null,
      *   contextManagement?: BetaContextManagementConfig|BetaContextManagementConfigShape|null,
+     *   diagnostics?: BetaDiagnosticsParam|BetaDiagnosticsParamShape|null,
      *   inferenceGeo?: string|null,
      *   mcpServers?: list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape>,
      *   metadata?: BetaMetadata|BetaMetadataShape,

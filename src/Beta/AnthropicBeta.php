@@ -53,4 +53,6 @@ enum AnthropicBeta: string
     case ADVISOR_TOOL_2026_03_01 = 'advisor-tool-2026-03-01';
 
     case MANAGED_AGENTS_2026_04_01 = 'managed-agents-2026-04-01';
+
+    case CACHE_DIAGNOSIS_2026_04_07 = 'cache-diagnosis-2026-04-07';
 }
