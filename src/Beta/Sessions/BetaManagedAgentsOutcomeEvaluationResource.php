@@ -58,7 +58,7 @@ final class BetaManagedAgentsOutcomeEvaluationResource implements BaseModel
     public string $outcomeID;
 
     /**
-     * Current evaluation state. 'pending' before the agent begins work; 'running' while producing or revising; 'evaluating' while the grader scores; 'satisfied'/'max_iterations_reached'/'failed'/'interrupted' are terminal.
+     * Current evaluation state. `pending` before the agent begins work; `running` while producing or revising; `evaluating` while the grader scores; `satisfied`/`max_iterations_reached`/`failed`/`interrupted` are terminal.
      */
     #[Required]
     public string $result;
@@ -186,7 +186,7 @@ final class BetaManagedAgentsOutcomeEvaluationResource implements BaseModel
     }
 
     /**
-     * Current evaluation state. 'pending' before the agent begins work; 'running' while producing or revising; 'evaluating' while the grader scores; 'satisfied'/'max_iterations_reached'/'failed'/'interrupted' are terminal.
+     * Current evaluation state. `pending` before the agent begins work; `running` while producing or revising; `evaluating` while the grader scores; `satisfied`/`max_iterations_reached`/`failed`/`interrupted` are terminal.
      */
     public function withResult(string $result): self
     {
