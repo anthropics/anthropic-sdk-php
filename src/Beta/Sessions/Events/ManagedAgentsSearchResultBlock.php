@@ -20,7 +20,6 @@ use Anthropic\Core\Contracts\BaseModel;
  *   content: list<ManagedAgentsSearchResultContent|ManagedAgentsSearchResultContentShape>,
  *   source: string,
  *   title: string,
- *   toolUseID: string,
  *   type: Type|value-of<Type>,
  * }
  */
@@ -55,12 +54,6 @@ final class ManagedAgentsSearchResultBlock implements BaseModel
     #[Required]
     public string $title;
 
-    /**
-     * The ID of the tool use that produced this search result.
-     */
-    #[Required('tool_use_id')]
-    public string $toolUseID;
-
     /** @var value-of<Type> $type */
     #[Required(enum: Type::class)]
     public string $type;
@@ -71,12 +64,7 @@ final class ManagedAgentsSearchResultBlock implements BaseModel
      * To enforce required parameters use
      * ```
      * ManagedAgentsSearchResultBlock::with(
-     *   citations: ...,
-     *   content: ...,
-     *   source: ...,
-     *   title: ...,
-     *   toolUseID: ...,
-     *   type: ...,
+     *   citations: ..., content: ..., source: ..., title: ..., type: ...
      * )
      * ```
      *
@@ -88,7 +76,6 @@ final class ManagedAgentsSearchResultBlock implements BaseModel
      *   ->withContent(...)
      *   ->withSource(...)
      *   ->withTitle(...)
-     *   ->withToolUseID(...)
      *   ->withType(...)
      * ```
      */
@@ -111,7 +98,6 @@ final class ManagedAgentsSearchResultBlock implements BaseModel
         array $content,
         string $source,
         string $title,
-        string $toolUseID,
         Type|string $type,
     ): self {
         $self = new self;
@@ -120,7 +106,6 @@ final class ManagedAgentsSearchResultBlock implements BaseModel
         $self['content'] = $content;
         $self['source'] = $source;
         $self['title'] = $title;
-        $self['toolUseID'] = $toolUseID;
         $self['type'] = $type;
 
         return $self;
@@ -171,17 +156,6 @@ final class ManagedAgentsSearchResultBlock implements BaseModel
     {
         $self = clone $this;
         $self['title'] = $title;
-
-        return $self;
-    }
-
-    /**
-     * The ID of the tool use that produced this search result.
-     */
-    public function withToolUseID(string $toolUseID): self
-    {
-        $self = clone $this;
-        $self['toolUseID'] = $toolUseID;
 
         return $self;
     }
