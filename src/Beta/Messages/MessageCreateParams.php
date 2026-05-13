@@ -33,6 +33,7 @@ use Anthropic\Messages\Model;
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type ContainerShape from \Anthropic\Beta\Messages\MessageCreateParams\Container
  * @phpstan-import-type BetaContextManagementConfigShape from \Anthropic\Beta\Messages\BetaContextManagementConfig
+ * @phpstan-import-type BetaDiagnosticsParamShape from \Anthropic\Beta\Messages\BetaDiagnosticsParam
  * @phpstan-import-type BetaRequestMCPServerURLDefinitionShape from \Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition
  * @phpstan-import-type BetaMetadataShape from \Anthropic\Beta\Messages\BetaMetadata
  * @phpstan-import-type BetaOutputConfigShape from \Anthropic\Beta\Messages\BetaOutputConfig
@@ -49,6 +50,7 @@ use Anthropic\Messages\Model;
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   container?: ContainerShape|null,
  *   contextManagement?: null|BetaContextManagementConfig|BetaContextManagementConfigShape,
+ *   diagnostics?: null|BetaDiagnosticsParam|BetaDiagnosticsParamShape,
  *   inferenceGeo?: string|null,
  *   mcpServers?: list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape>|null,
  *   metadata?: null|BetaMetadata|BetaMetadataShape,
@@ -170,6 +172,13 @@ final class MessageCreateParams implements BaseModel
      */
     #[Optional('context_management', nullable: true)]
     public ?BetaContextManagementConfig $contextManagement;
+
+    /**
+     * Request-level diagnostics. Currently carries the previous response
+     * id for prompt-cache divergence reporting.
+     */
+    #[Optional(nullable: true)]
+    public ?BetaDiagnosticsParam $diagnostics;
 
     /**
      * Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
@@ -414,6 +423,7 @@ final class MessageCreateParams implements BaseModel
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      * @param ContainerShape|null $container
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement
+     * @param BetaDiagnosticsParam|BetaDiagnosticsParamShape|null $diagnostics
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape>|null $mcpServers
      * @param BetaMetadata|BetaMetadataShape|null $metadata
      * @param BetaOutputConfig|BetaOutputConfigShape|null $outputConfig
@@ -434,6 +444,7 @@ final class MessageCreateParams implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl = null,
         string|BetaContainerParams|array|null $container = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
+        BetaDiagnosticsParam|array|null $diagnostics = null,
         ?string $inferenceGeo = null,
         ?array $mcpServers = null,
         BetaMetadata|array|null $metadata = null,
@@ -461,6 +472,7 @@ final class MessageCreateParams implements BaseModel
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $container && $self['container'] = $container;
         null !== $contextManagement && $self['contextManagement'] = $contextManagement;
+        null !== $diagnostics && $self['diagnostics'] = $diagnostics;
         null !== $inferenceGeo && $self['inferenceGeo'] = $inferenceGeo;
         null !== $mcpServers && $self['mcpServers'] = $mcpServers;
         null !== $metadata && $self['metadata'] = $metadata;
@@ -612,6 +624,21 @@ final class MessageCreateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['contextManagement'] = $contextManagement;
+
+        return $self;
+    }
+
+    /**
+     * Request-level diagnostics. Currently carries the previous response
+     * id for prompt-cache divergence reporting.
+     *
+     * @param BetaDiagnosticsParam|BetaDiagnosticsParamShape|null $diagnostics
+     */
+    public function withDiagnostics(
+        BetaDiagnosticsParam|array|null $diagnostics
+    ): self {
+        $self = clone $this;
+        $self['diagnostics'] = $diagnostics;
 
         return $self;
     }

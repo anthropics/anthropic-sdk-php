@@ -67,6 +67,7 @@ final class MessagesTest extends TestCase
                     ],
                 ],
             ],
+            diagnostics: ['previousMessageID' => 'previous_message_id'],
             inferenceGeo: 'inference_geo',
             mcpServers: [
                 [
