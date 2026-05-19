@@ -103,4 +103,29 @@ final class VersionsTest extends TestCase
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(VersionDeleteResponse::class, $result);
     }
+
+    #[Test]
+    public function testDownload(): void
+    {
+        $result = $this->client->beta->skills->versions->download(
+            'version',
+            skillID: 'skill_id'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertIsString($result);
+    }
+
+    #[Test]
+    public function testDownloadWithOptionalParams(): void
+    {
+        $result = $this->client->beta->skills->versions->download(
+            'version',
+            skillID: 'skill_id',
+            betas: ['message-batches-2024-09-24']
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertIsString($result);
+    }
 }

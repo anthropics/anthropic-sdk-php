@@ -21,9 +21,9 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  *
  * @phpstan-type BetaCompactionBlockParamShape = array{
- *   content: string|null,
  *   type: 'compaction',
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
+ *   content?: string|null,
  *   encryptedContent?: string|null,
  * }
  */
@@ -37,16 +37,16 @@ final class BetaCompactionBlockParam implements BaseModel
     public string $type = 'compaction';
 
     /**
-     * Summary of previously compacted content, or null if compaction failed.
-     */
-    #[Required]
-    public ?string $content;
-
-    /**
      * Create a cache control breakpoint at this content block.
      */
     #[Optional('cache_control', nullable: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
+
+    /**
+     * Summary of previously compacted content, or null if compaction failed.
+     */
+    #[Optional(nullable: true)]
+    public ?string $content;
 
     /**
      * Opaque metadata from prior compaction, to be round-tripped verbatim.
@@ -54,20 +54,6 @@ final class BetaCompactionBlockParam implements BaseModel
     #[Optional('encrypted_content', nullable: true)]
     public ?string $encryptedContent;
 
-    /**
-     * `new BetaCompactionBlockParam()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * BetaCompactionBlockParam::with(content: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new BetaCompactionBlockParam)->withContent(...)
-     * ```
-     */
     public function __construct()
     {
         $this->initialize();
@@ -81,27 +67,15 @@ final class BetaCompactionBlockParam implements BaseModel
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
-        ?string $content,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
+        ?string $content = null,
         ?string $encryptedContent = null,
     ): self {
         $self = new self;
 
-        $self['content'] = $content;
-
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $content && $self['content'] = $content;
         null !== $encryptedContent && $self['encryptedContent'] = $encryptedContent;
-
-        return $self;
-    }
-
-    /**
-     * Summary of previously compacted content, or null if compaction failed.
-     */
-    public function withContent(?string $content): self
-    {
-        $self = clone $this;
-        $self['content'] = $content;
 
         return $self;
     }
@@ -127,6 +101,17 @@ final class BetaCompactionBlockParam implements BaseModel
     ): self {
         $self = clone $this;
         $self['cacheControl'] = $cacheControl;
+
+        return $self;
+    }
+
+    /**
+     * Summary of previously compacted content, or null if compaction failed.
+     */
+    public function withContent(?string $content): self
+    {
+        $self = clone $this;
+        $self['content'] = $content;
 
         return $self;
     }

@@ -16,7 +16,10 @@ use Anthropic\Core\Conversion\MapOf;
  *
  * @see Anthropic\Services\Beta\SessionsService::update()
  *
+ * @phpstan-import-type BetaManagedAgentsSessionAgentUpdateShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgentUpdate
+ *
  * @phpstan-type SessionUpdateParamsShape = array{
+ *   agent?: null|BetaManagedAgentsSessionAgentUpdate|BetaManagedAgentsSessionAgentUpdateShape,
  *   metadata?: array<string,string|null>|null,
  *   title?: string|null,
  *   vaultIDs?: list<string>|null,
@@ -28,6 +31,12 @@ final class SessionUpdateParams implements BaseModel
     /** @use SdkModel<SessionUpdateParamsShape> */
     use SdkModel;
     use SdkParams;
+
+    /**
+     * Mid-session agent configuration update. Only `tools` and `mcp_servers` are updatable. Full replacement: the provided array becomes the new value. To preserve existing entries, GET the session, modify the array, and POST it back.
+     */
+    #[Optional]
+    public ?BetaManagedAgentsSessionAgentUpdate $agent;
 
     /**
      * Metadata patch. Set a key to a string to upsert it, or to null to delete it. Omit the field to preserve.
@@ -69,11 +78,13 @@ final class SessionUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param BetaManagedAgentsSessionAgentUpdate|BetaManagedAgentsSessionAgentUpdateShape|null $agent
      * @param array<string,string|null>|null $metadata
      * @param list<string>|null $vaultIDs
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
+        BetaManagedAgentsSessionAgentUpdate|array|null $agent = null,
         ?array $metadata = null,
         ?string $title = null,
         ?array $vaultIDs = null,
@@ -81,10 +92,25 @@ final class SessionUpdateParams implements BaseModel
     ): self {
         $self = new self;
 
+        null !== $agent && $self['agent'] = $agent;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $title && $self['title'] = $title;
         null !== $vaultIDs && $self['vaultIDs'] = $vaultIDs;
         null !== $betas && $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    /**
+     * Mid-session agent configuration update. Only `tools` and `mcp_servers` are updatable. Full replacement: the provided array becomes the new value. To preserve existing entries, GET the session, modify the array, and POST it back.
+     *
+     * @param BetaManagedAgentsSessionAgentUpdate|BetaManagedAgentsSessionAgentUpdateShape $agent
+     */
+    public function withAgent(
+        BetaManagedAgentsSessionAgentUpdate|array $agent
+    ): self {
+        $self = clone $this;
+        $self['agent'] = $agent;
 
         return $self;
     }
