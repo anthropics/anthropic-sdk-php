@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Beta\Environments\BetaCloudConfigParams;
 use Anthropic\Beta\Environments\BetaEnvironment;
 use Anthropic\Beta\Environments\BetaEnvironmentDeleteResponse;
 use Anthropic\Beta\Environments\EnvironmentArchiveParams;
 use Anthropic\Beta\Environments\EnvironmentCreateParams;
+use Anthropic\Beta\Environments\EnvironmentCreateParams\Scope;
 use Anthropic\Beta\Environments\EnvironmentDeleteParams;
 use Anthropic\Beta\Environments\EnvironmentListParams;
 use Anthropic\Beta\Environments\EnvironmentRetrieveParams;
@@ -23,7 +23,8 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\EnvironmentsRawContract;
 
 /**
- * @phpstan-import-type BetaCloudConfigParamsShape from \Anthropic\Beta\Environments\BetaCloudConfigParams
+ * @phpstan-import-type ConfigShape from \Anthropic\Beta\Environments\EnvironmentCreateParams\Config
+ * @phpstan-import-type ConfigShape from \Anthropic\Beta\Environments\EnvironmentUpdateParams\Config as ConfigShape1
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
 final class EnvironmentsRawService implements EnvironmentsRawContract
@@ -41,9 +42,10 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
      *
      * @param array{
      *   name: string,
-     *   config?: BetaCloudConfigParams|BetaCloudConfigParamsShape|null,
+     *   config?: ConfigShape|null,
      *   description?: string|null,
      *   metadata?: array<string,string>,
+     *   scope?: Scope|value-of<Scope>|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|EnvironmentCreateParams $params
      * @param RequestOpts|null $requestOptions
@@ -129,10 +131,11 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
      *
      * @param string $environmentID Path param
      * @param array{
-     *   config?: BetaCloudConfigParams|BetaCloudConfigParamsShape|null,
+     *   config?: ConfigShape1|null,
      *   description?: string|null,
      *   metadata?: array<string,string|null>,
      *   name?: string|null,
+     *   scope?: EnvironmentUpdateParams\Scope|value-of<EnvironmentUpdateParams\Scope>|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|EnvironmentUpdateParams $params
      * @param RequestOpts|null $requestOptions

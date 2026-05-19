@@ -43,6 +43,7 @@ final class SSEStream implements BaseStream
                 case 'user.interrupt':
                 case 'user.tool_confirmation':
                 case 'user.custom_tool_result':
+                case 'user.tool_result':
                 case 'agent.message':
                 case 'agent.thinking':
                 case 'agent.tool_use':
@@ -57,6 +58,7 @@ final class SSEStream implements BaseStream
                 case 'session.status_terminated':
                 case 'session.error':
                 case 'session.deleted':
+                case 'session.updated':
                 case 'span.model_request_start':
                 case 'span.model_request_end':
                 case 'span.outcome_evaluation_start':

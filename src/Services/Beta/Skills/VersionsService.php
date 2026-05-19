@@ -160,4 +160,34 @@ final class VersionsService implements VersionsContract
 
         return $response->parse();
     }
+
+    /**
+     * @api
+     *
+     * Download a skill version's content as a zip archive.
+     *
+     * @param string $version Path param: Version identifier for the skill.
+     *
+     * Each version is identified by a Unix epoch timestamp (e.g., "1759178010641129").
+     * @param string $skillID Path param: Unique identifier for the skill.
+     *
+     * The format and length of IDs may change over time.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function download(
+        string $version,
+        string $skillID,
+        ?array $betas = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): string {
+        $params = Util::removeNulls(['skillID' => $skillID, 'betas' => $betas]);
+
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->download($version, params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
 }

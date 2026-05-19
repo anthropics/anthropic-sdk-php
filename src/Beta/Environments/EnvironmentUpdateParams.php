@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Environments;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Environments\EnvironmentUpdateParams\Config;
+use Anthropic\Beta\Environments\EnvironmentUpdateParams\Scope;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
@@ -16,13 +18,15 @@ use Anthropic\Core\Conversion\MapOf;
  *
  * @see Anthropic\Services\Beta\EnvironmentsService::update()
  *
- * @phpstan-import-type BetaCloudConfigParamsShape from \Anthropic\Beta\Environments\BetaCloudConfigParams
+ * @phpstan-import-type ConfigVariants from \Anthropic\Beta\Environments\EnvironmentUpdateParams\Config
+ * @phpstan-import-type ConfigShape from \Anthropic\Beta\Environments\EnvironmentUpdateParams\Config
  *
  * @phpstan-type EnvironmentUpdateParamsShape = array{
- *   config?: null|BetaCloudConfigParams|BetaCloudConfigParamsShape,
+ *   config?: ConfigShape|null,
  *   description?: string|null,
  *   metadata?: array<string,string|null>|null,
  *   name?: string|null,
+ *   scope?: null|Scope|value-of<Scope>,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
@@ -33,13 +37,12 @@ final class EnvironmentUpdateParams implements BaseModel
     use SdkParams;
 
     /**
-     * Request params for `cloud` environment configuration.
+     * Updated environment configuration.
      *
-     * Fields default to null; on update, omitted fields preserve the
-     * existing value.
+     * @var ConfigVariants|null $config
      */
-    #[Optional(nullable: true)]
-    public ?BetaCloudConfigParams $config;
+    #[Optional(union: Config::class, nullable: true)]
+    public BetaCloudConfigParams|BetaSelfHostedConfigParams|null $config;
 
     /**
      * Updated description of the environment.
@@ -62,6 +65,14 @@ final class EnvironmentUpdateParams implements BaseModel
     public ?string $name;
 
     /**
+     * The visibility scope for this environment. 'organization' makes the environment visible to all accounts. 'account' restricts visibility to the owning account only.
+     *
+     * @var value-of<Scope>|null $scope
+     */
+    #[Optional(enum: Scope::class, nullable: true)]
+    public ?string $scope;
+
+    /**
      * Optional header to specify the beta version(s) you want to use.
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
@@ -79,15 +90,17 @@ final class EnvironmentUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaCloudConfigParams|BetaCloudConfigParamsShape|null $config
+     * @param ConfigShape|null $config
      * @param array<string,string|null>|null $metadata
+     * @param Scope|value-of<Scope>|null $scope
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
-        BetaCloudConfigParams|array|null $config = null,
+        BetaCloudConfigParams|array|BetaSelfHostedConfigParams|null $config = null,
         ?string $description = null,
         ?array $metadata = null,
         ?string $name = null,
+        Scope|string|null $scope = null,
         ?array $betas = null,
     ): self {
         $self = new self;
@@ -96,21 +109,20 @@ final class EnvironmentUpdateParams implements BaseModel
         null !== $description && $self['description'] = $description;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $name && $self['name'] = $name;
+        null !== $scope && $self['scope'] = $scope;
         null !== $betas && $self['betas'] = $betas;
 
         return $self;
     }
 
     /**
-     * Request params for `cloud` environment configuration.
+     * Updated environment configuration.
      *
-     * Fields default to null; on update, omitted fields preserve the
-     * existing value.
-     *
-     * @param BetaCloudConfigParams|BetaCloudConfigParamsShape|null $config
+     * @param ConfigShape|null $config
      */
-    public function withConfig(BetaCloudConfigParams|array|null $config): self
-    {
+    public function withConfig(
+        BetaCloudConfigParams|array|BetaSelfHostedConfigParams|null $config
+    ): self {
         $self = clone $this;
         $self['config'] = $config;
 
@@ -148,6 +160,19 @@ final class EnvironmentUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * The visibility scope for this environment. 'organization' makes the environment visible to all accounts. 'account' restricts visibility to the owning account only.
+     *
+     * @param Scope|value-of<Scope>|null $scope
+     */
+    public function withScope(Scope|string|null $scope): self
+    {
+        $self = clone $this;
+        $self['scope'] = $scope;
 
         return $self;
     }

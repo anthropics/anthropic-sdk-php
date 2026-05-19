@@ -7,6 +7,7 @@ namespace Anthropic\ServiceContracts\Beta\Skills;
 use Anthropic\Beta\Skills\Versions\VersionCreateParams;
 use Anthropic\Beta\Skills\Versions\VersionDeleteParams;
 use Anthropic\Beta\Skills\Versions\VersionDeleteResponse;
+use Anthropic\Beta\Skills\Versions\VersionDownloadParams;
 use Anthropic\Beta\Skills\Versions\VersionGetResponse;
 use Anthropic\Beta\Skills\Versions\VersionListParams;
 use Anthropic\Beta\Skills\Versions\VersionListResponse;
@@ -95,6 +96,25 @@ interface VersionsRawContract
     public function delete(
         string $version,
         array|VersionDeleteParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $version Path param: Version identifier for the skill.
+     *
+     * Each version is identified by a Unix epoch timestamp (e.g., "1759178010641129").
+     * @param array<string,mixed>|VersionDownloadParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<string>
+     *
+     * @throws APIException
+     */
+    public function download(
+        string $version,
+        array|VersionDownloadParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

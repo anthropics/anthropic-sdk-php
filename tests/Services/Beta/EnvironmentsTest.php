@@ -65,6 +65,7 @@ final class EnvironmentsTest extends TestCase
             ],
             description: 'Python environment with data-analysis packages.',
             metadata: ['foo' => 'string'],
+            scope: 'organization',
             betas: ['message-batches-2024-09-24'],
         );
 

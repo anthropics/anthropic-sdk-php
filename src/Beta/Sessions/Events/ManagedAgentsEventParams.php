@@ -16,9 +16,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type ManagedAgentsUserToolConfirmationEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserToolConfirmationEventParams
  * @phpstan-import-type ManagedAgentsUserCustomToolResultEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserCustomToolResultEventParams
  * @phpstan-import-type ManagedAgentsUserDefineOutcomeEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserDefineOutcomeEventParams
+ * @phpstan-import-type ManagedAgentsUserToolResultEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserToolResultEventParams
  *
- * @phpstan-type ManagedAgentsEventParamsVariants = ManagedAgentsUserMessageEventParams|ManagedAgentsUserInterruptEventParams|ManagedAgentsUserToolConfirmationEventParams|ManagedAgentsUserCustomToolResultEventParams|ManagedAgentsUserDefineOutcomeEventParams
- * @phpstan-type ManagedAgentsEventParamsShape = ManagedAgentsEventParamsVariants|ManagedAgentsUserMessageEventParamsShape|ManagedAgentsUserInterruptEventParamsShape|ManagedAgentsUserToolConfirmationEventParamsShape|ManagedAgentsUserCustomToolResultEventParamsShape|ManagedAgentsUserDefineOutcomeEventParamsShape
+ * @phpstan-type ManagedAgentsEventParamsVariants = ManagedAgentsUserMessageEventParams|ManagedAgentsUserInterruptEventParams|ManagedAgentsUserToolConfirmationEventParams|ManagedAgentsUserCustomToolResultEventParams|ManagedAgentsUserDefineOutcomeEventParams|ManagedAgentsUserToolResultEventParams
+ * @phpstan-type ManagedAgentsEventParamsShape = ManagedAgentsEventParamsVariants|ManagedAgentsUserMessageEventParamsShape|ManagedAgentsUserInterruptEventParamsShape|ManagedAgentsUserToolConfirmationEventParamsShape|ManagedAgentsUserCustomToolResultEventParamsShape|ManagedAgentsUserDefineOutcomeEventParamsShape|ManagedAgentsUserToolResultEventParamsShape
  */
 final class ManagedAgentsEventParams implements ConverterSource
 {
@@ -40,6 +41,7 @@ final class ManagedAgentsEventParams implements ConverterSource
             'user.tool_confirmation' => ManagedAgentsUserToolConfirmationEventParams::class,
             'user.custom_tool_result' => ManagedAgentsUserCustomToolResultEventParams::class,
             'user.define_outcome' => ManagedAgentsUserDefineOutcomeEventParams::class,
+            'user.tool_result' => ManagedAgentsUserToolResultEventParams::class,
         ];
     }
 }

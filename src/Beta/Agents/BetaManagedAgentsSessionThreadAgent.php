@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Sessions\Threads;
+namespace Anthropic\Beta\Agents;
 
-use Anthropic\Beta\Agents\BetaManagedAgentsMCPServerURLDefinition;
-use Anthropic\Beta\Agents\BetaManagedAgentsModelConfig;
-use Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThreadAgent\Skill;
-use Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThreadAgent\Tool;
-use Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThreadAgent\Type;
+use Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Skill;
+use Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Tool;
+use Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -16,14 +14,14 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Resolved `agent` definition for a single `session_thread`. Snapshot of the agent at thread creation time. The multiagent roster is not repeated here; read it from `Session.agent`.
  *
- * @phpstan-import-type SkillVariants from \Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThreadAgent\Skill
- * @phpstan-import-type ToolVariants from \Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThreadAgent\Tool
+ * @phpstan-import-type SkillVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Skill
+ * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Tool
  * @phpstan-import-type BetaManagedAgentsMCPServerURLDefinitionShape from \Anthropic\Beta\Agents\BetaManagedAgentsMCPServerURLDefinition
  * @phpstan-import-type BetaManagedAgentsModelConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfig
- * @phpstan-import-type SkillShape from \Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThreadAgent\Skill
- * @phpstan-import-type ToolShape from \Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThreadAgent\Tool
+ * @phpstan-import-type SkillShape from \Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Skill
+ * @phpstan-import-type ToolShape from \Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Tool
  *
- * @phpstan-type ManagedAgentsSessionThreadAgentShape = array{
+ * @phpstan-type BetaManagedAgentsSessionThreadAgentShape = array{
  *   id: string,
  *   description: string|null,
  *   mcpServers: list<BetaManagedAgentsMCPServerURLDefinition|BetaManagedAgentsMCPServerURLDefinitionShape>,
@@ -36,9 +34,9 @@ use Anthropic\Core\Contracts\BaseModel;
  *   version: int,
  * }
  */
-final class ManagedAgentsSessionThreadAgent implements BaseModel
+final class BetaManagedAgentsSessionThreadAgent implements BaseModel
 {
-    /** @use SdkModel<ManagedAgentsSessionThreadAgentShape> */
+    /** @use SdkModel<BetaManagedAgentsSessionThreadAgentShape> */
     use SdkModel;
 
     #[Required]
@@ -82,11 +80,11 @@ final class ManagedAgentsSessionThreadAgent implements BaseModel
     public int $version;
 
     /**
-     * `new ManagedAgentsSessionThreadAgent()` is missing required properties by the API.
+     * `new BetaManagedAgentsSessionThreadAgent()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsSessionThreadAgent::with(
+     * BetaManagedAgentsSessionThreadAgent::with(
      *   id: ...,
      *   description: ...,
      *   mcpServers: ...,
@@ -103,7 +101,7 @@ final class ManagedAgentsSessionThreadAgent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSessionThreadAgent)
+     * (new BetaManagedAgentsSessionThreadAgent)
      *   ->withID(...)
      *   ->withDescription(...)
      *   ->withMCPServers(...)
