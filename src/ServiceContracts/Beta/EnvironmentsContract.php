@@ -8,12 +8,15 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Environments\BetaCloudConfigParams;
 use Anthropic\Beta\Environments\BetaEnvironment;
 use Anthropic\Beta\Environments\BetaEnvironmentDeleteResponse;
+use Anthropic\Beta\Environments\BetaSelfHostedConfigParams;
+use Anthropic\Beta\Environments\EnvironmentCreateParams\Scope;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
 /**
- * @phpstan-import-type BetaCloudConfigParamsShape from \Anthropic\Beta\Environments\BetaCloudConfigParams
+ * @phpstan-import-type ConfigShape from \Anthropic\Beta\Environments\EnvironmentCreateParams\Config
+ * @phpstan-import-type ConfigShape from \Anthropic\Beta\Environments\EnvironmentUpdateParams\Config as ConfigShape1
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
 interface EnvironmentsContract
@@ -22,12 +25,10 @@ interface EnvironmentsContract
      * @api
      *
      * @param string $name Body param: Human-readable name for the environment
-     * @param BetaCloudConfigParams|BetaCloudConfigParamsShape|null $config Body param: Request params for `cloud` environment configuration.
-     *
-     * Fields default to null; on update, omitted fields preserve the
-     * existing value.
+     * @param ConfigShape|null $config Body param: Environment configuration
      * @param string|null $description Body param: Optional description of the environment
      * @param array<string,string> $metadata Body param: User-provided metadata key-value pairs
+     * @param Scope|value-of<Scope>|null $scope Body param: The visibility scope for this environment. 'organization' makes the environment visible to all accounts. 'account' restricts visibility to the owning account only. Only applicable for self-hosted environments. If not specified, defaults based on organization type.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
@@ -35,9 +36,10 @@ interface EnvironmentsContract
      */
     public function create(
         string $name,
-        BetaCloudConfigParams|array|null $config = null,
+        BetaCloudConfigParams|array|BetaSelfHostedConfigParams|null $config = null,
         ?string $description = null,
         ?array $metadata = null,
+        Scope|string|null $scope = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaEnvironment;
@@ -60,13 +62,11 @@ interface EnvironmentsContract
      * @api
      *
      * @param string $environmentID Path param
-     * @param BetaCloudConfigParams|BetaCloudConfigParamsShape|null $config Body param: Request params for `cloud` environment configuration.
-     *
-     * Fields default to null; on update, omitted fields preserve the
-     * existing value.
+     * @param ConfigShape1|null $config Body param: Updated environment configuration
      * @param string|null $description Body param: Updated description of the environment
      * @param array<string,string|null> $metadata Body param: User-provided metadata key-value pairs. Set a value to null or empty string to delete the key.
      * @param string|null $name Body param: Updated name for the environment
+     * @param \Anthropic\Beta\Environments\EnvironmentUpdateParams\Scope|value-of<\Anthropic\Beta\Environments\EnvironmentUpdateParams\Scope>|null $scope Body param: The visibility scope for this environment. 'organization' makes the environment visible to all accounts. 'account' restricts visibility to the owning account only.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
@@ -74,10 +74,11 @@ interface EnvironmentsContract
      */
     public function update(
         string $environmentID,
-        BetaCloudConfigParams|array|null $config = null,
+        BetaCloudConfigParams|array|BetaSelfHostedConfigParams|null $config = null,
         ?string $description = null,
         ?array $metadata = null,
         ?string $name = null,
+        \Anthropic\Beta\Environments\EnvironmentUpdateParams\Scope|string|null $scope = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaEnvironment;

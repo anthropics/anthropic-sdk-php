@@ -8,6 +8,7 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Skills\Versions\VersionCreateParams;
 use Anthropic\Beta\Skills\Versions\VersionDeleteParams;
 use Anthropic\Beta\Skills\Versions\VersionDeleteResponse;
+use Anthropic\Beta\Skills\Versions\VersionDownloadParams;
 use Anthropic\Beta\Skills\Versions\VersionGetResponse;
 use Anthropic\Beta\Skills\Versions\VersionListParams;
 use Anthropic\Beta\Skills\Versions\VersionListResponse;
@@ -226,6 +227,53 @@ final class VersionsRawService implements VersionsRawContract
                 $options
             ),
             convert: VersionDeleteResponse::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Download a skill version's content as a zip archive.
+     *
+     * @param string $version Path param: Version identifier for the skill.
+     *
+     * Each version is identified by a Unix epoch timestamp (e.g., "1759178010641129").
+     * @param array{
+     *   skillID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     * }|VersionDownloadParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<string>
+     *
+     * @throws APIException
+     */
+    public function download(
+        string $version,
+        array|VersionDownloadParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = VersionDownloadParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+        $skillID = $parsed['skillID'];
+        unset($parsed['skillID']);
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: [
+                'v1/skills/%1$s/versions/%2$s/content?beta=true', $skillID, $version,
+            ],
+            headers: Util::array_transform_keys(
+                ['Accept' => 'application/binary', ...$parsed],
+                ['betas' => 'anthropic-beta'],
+            ),
+            options: RequestOptions::parse(
+                ['extraHeaders' => ['anthropic-beta' => 'skills-2025-10-02']],
+                $options
+            ),
+            convert: 'string',
         );
     }
 }

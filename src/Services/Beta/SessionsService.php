@@ -8,6 +8,7 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Sessions\BetaManagedAgentsAgentParams;
 use Anthropic\Beta\Sessions\BetaManagedAgentsDeletedSession;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSession;
+use Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgentUpdate;
 use Anthropic\Beta\Sessions\SessionListParams\Order;
 use Anthropic\Beta\Sessions\SessionListParams\Status;
 use Anthropic\Client;
@@ -23,6 +24,7 @@ use Anthropic\Services\Beta\Sessions\ThreadsService;
 /**
  * @phpstan-import-type AgentShape from \Anthropic\Beta\Sessions\SessionCreateParams\Agent
  * @phpstan-import-type ResourceShape from \Anthropic\Beta\Sessions\SessionCreateParams\Resource
+ * @phpstan-import-type BetaManagedAgentsSessionAgentUpdateShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgentUpdate
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
 final class SessionsService implements SessionsContract
@@ -132,6 +134,7 @@ final class SessionsService implements SessionsContract
      * Update Session
      *
      * @param string $sessionID Path param: Path parameter session_id
+     * @param BetaManagedAgentsSessionAgentUpdate|BetaManagedAgentsSessionAgentUpdateShape $agent Body param: Mid-session agent configuration update. Only `tools` and `mcp_servers` are updatable. Full replacement: the provided array becomes the new value. To preserve existing entries, GET the session, modify the array, and POST it back.
      * @param array<string,string|null>|null $metadata Body param: Metadata patch. Set a key to a string to upsert it, or to null to delete it. Omit the field to preserve.
      * @param string|null $title body param: Human-readable session title
      * @param list<string> $vaultIDs Body param: Vault IDs (`vlt_*`) to attach to the session. Not yet supported; requests setting this field are rejected. Reserved for future use.
@@ -142,6 +145,7 @@ final class SessionsService implements SessionsContract
      */
     public function update(
         string $sessionID,
+        BetaManagedAgentsSessionAgentUpdate|array|null $agent = null,
         ?array $metadata = null,
         ?string $title = null,
         ?array $vaultIDs = null,
@@ -150,6 +154,7 @@ final class SessionsService implements SessionsContract
     ): BetaManagedAgentsSession {
         $params = Util::removeNulls(
             [
+                'agent' => $agent,
                 'metadata' => $metadata,
                 'title' => $title,
                 'vaultIDs' => $vaultIDs,
