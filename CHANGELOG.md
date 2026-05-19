@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.23.0 (2026-05-19)
+
+Full Changelog: [v0.22.0...v0.23.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.22.0...v0.23.0)
+
+### Features
+
+* **client:** Add support for self-hosted sandboxes in CMA with sandbox helpers ([974eb58](https://github.com/anthropics/anthropic-sdk-php/commit/974eb58ae937e14136bea48c5f8d3e0e93b5854c))
+
 ## 0.22.0 (2026-05-13)
 
 Full Changelog: [v0.21.0...v0.22.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.21.0...v0.22.0)
