@@ -11,7 +11,7 @@ The REST API documentation can be found on [docs.anthropic.com](https://docs.ant
 <!-- x-release-please-start-version -->
 
 ```
-composer require "anthropic-ai/sdk 0.23.0"
+composer require "anthropic-ai/sdk 0.24.0"
 ```
 
 <!-- x-release-please-end -->
