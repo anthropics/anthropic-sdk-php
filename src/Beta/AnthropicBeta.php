@@ -55,4 +55,6 @@ enum AnthropicBeta: string
     case MANAGED_AGENTS_2026_04_01 = 'managed-agents-2026-04-01';
 
     case CACHE_DIAGNOSIS_2026_04_07 = 'cache-diagnosis-2026-04-07';
+
+    case THINKING_TOKEN_COUNT_2026_05_13 = 'thinking-token-count-2026-05-13';
 }
