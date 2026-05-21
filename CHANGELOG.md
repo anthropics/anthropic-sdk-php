@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.24.0 (2026-05-21)
+
+Full Changelog: [v0.23.0...v0.24.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.23.0...v0.24.0)
+
+### Features
+
+* **api:** Add support for thinking-token-count beta for estimated tokens in thinking block deltas when streaming ([2bbd614](https://github.com/anthropics/anthropic-sdk-php/commit/2bbd6142b1a90081f0a3efa5811bd4ea440ceca4))
+
 ## 0.23.0 (2026-05-19)
 
 Full Changelog: [v0.22.0...v0.23.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.22.0...v0.23.0)
