@@ -85,10 +85,13 @@ You can use PHP classes to define structured output schemas. The SDK will automa
 ```php
 <?php
 
-use Anthropic\Core\Helpers\StructuredOutputModel;
+use Anthropic\Lib\Concerns\StructuredOutputModelTrait;
+use Anthropic\Lib\Contracts\StructuredOutputModel;
 
-class Article extends StructuredOutputModel
+class Article implements StructuredOutputModel
 {
+    use StructuredOutputModelTrait;
+
     public string $title;
     public string $summary;
     /** @var string[] */
@@ -102,11 +105,12 @@ $message = $client->messages->create(
   outputConfig: ['format' => Article::class],
 );
 
-$article = $message->content[0]->parsed; // Article instance
+$article = $message->parsedOutput(); // Article instance
 echo $article->title;
 ```
 
 See [examples/messages_structured_output.php](examples/messages_structured_output.php) for more examples including constraints, nested models, and streaming.
+
 ### Pagination
 
 List methods in the Anthropic API are paginated.
