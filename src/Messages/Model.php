@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Anthropic\Messages;
 
 /**
- * The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+ * The model that will complete your prompt.
+ *
+ * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
  */
 enum Model: string
 {

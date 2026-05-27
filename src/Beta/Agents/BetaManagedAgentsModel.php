@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Agents;
 
 /**
- * The model that will power your agent.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+ * The model that will power your agent.
+ *
+ * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
  */
 enum BetaManagedAgentsModel: string
 {
