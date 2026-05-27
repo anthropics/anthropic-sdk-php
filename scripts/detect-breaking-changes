@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+echo "==> Detecting breaking changes"
+
+# Restore the previous versions of the generated service tests (the API-surface
+# tests, which mirror the public SDK methods) so static analysis checks them
+# against the current SDK. If a public method was removed or its signature
+# changed incompatibly, PHPStan (level: max, configured to analyse tests/) will
+# flag the old tests, surfacing the breaking change.
+git checkout "$1" -- tests/Services 2>/dev/null || true
+
+# Instead of running the tests, use the linter (PHPStan) to check whether an
+# older test is no longer compatible with the latest SDK.
+./scripts/lint
