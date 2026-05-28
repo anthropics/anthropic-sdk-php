@@ -12,6 +12,8 @@ enum WebFetchToolResultErrorCode: string
 
     case URL_NOT_ALLOWED = 'url_not_allowed';
 
+    case URL_NOT_IN_PRIOR_CONTEXT = 'url_not_in_prior_context';
+
     case URL_NOT_ACCESSIBLE = 'url_not_accessible';
 
     case UNSUPPORTED_CONTENT_TYPE = 'unsupported_content_type';

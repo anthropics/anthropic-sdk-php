@@ -27,9 +27,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type TextEditorCodeExecutionToolResultBlockParamShape from \Anthropic\Messages\TextEditorCodeExecutionToolResultBlockParam
  * @phpstan-import-type ToolSearchToolResultBlockParamShape from \Anthropic\Messages\ToolSearchToolResultBlockParam
  * @phpstan-import-type ContainerUploadBlockParamShape from \Anthropic\Messages\ContainerUploadBlockParam
+ * @phpstan-import-type MidConversationSystemBlockParamShape from \Anthropic\Messages\MidConversationSystemBlockParam
  *
- * @phpstan-type ContentBlockParamVariants = TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam|WebFetchToolResultBlockParam|CodeExecutionToolResultBlockParam|BashCodeExecutionToolResultBlockParam|TextEditorCodeExecutionToolResultBlockParam|ToolSearchToolResultBlockParam|ContainerUploadBlockParam
- * @phpstan-type ContentBlockParamShape = ContentBlockParamVariants|TextBlockParamShape|ImageBlockParamShape|DocumentBlockParamShape|SearchResultBlockParamShape|ThinkingBlockParamShape|RedactedThinkingBlockParamShape|ToolUseBlockParamShape|ToolResultBlockParamShape|ServerToolUseBlockParamShape|WebSearchToolResultBlockParamShape|WebFetchToolResultBlockParamShape|CodeExecutionToolResultBlockParamShape|BashCodeExecutionToolResultBlockParamShape|TextEditorCodeExecutionToolResultBlockParamShape|ToolSearchToolResultBlockParamShape|ContainerUploadBlockParamShape
+ * @phpstan-type ContentBlockParamVariants = TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam|WebFetchToolResultBlockParam|CodeExecutionToolResultBlockParam|BashCodeExecutionToolResultBlockParam|TextEditorCodeExecutionToolResultBlockParam|ToolSearchToolResultBlockParam|ContainerUploadBlockParam|MidConversationSystemBlockParam
+ * @phpstan-type ContentBlockParamShape = ContentBlockParamVariants|TextBlockParamShape|ImageBlockParamShape|DocumentBlockParamShape|SearchResultBlockParamShape|ThinkingBlockParamShape|RedactedThinkingBlockParamShape|ToolUseBlockParamShape|ToolResultBlockParamShape|ServerToolUseBlockParamShape|WebSearchToolResultBlockParamShape|WebFetchToolResultBlockParamShape|CodeExecutionToolResultBlockParamShape|BashCodeExecutionToolResultBlockParamShape|TextEditorCodeExecutionToolResultBlockParamShape|ToolSearchToolResultBlockParamShape|ContainerUploadBlockParamShape|MidConversationSystemBlockParamShape
  */
 final class ContentBlockParam implements ConverterSource
 {
@@ -62,6 +63,7 @@ final class ContentBlockParam implements ConverterSource
             'text_editor_code_execution_tool_result' => TextEditorCodeExecutionToolResultBlockParam::class,
             'tool_search_tool_result' => ToolSearchToolResultBlockParam::class,
             'container_upload' => ContainerUploadBlockParam::class,
+            'mid_conv_system' => MidConversationSystemBlockParam::class,
         ];
     }
 }
