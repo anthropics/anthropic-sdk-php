@@ -11,6 +11,7 @@ use Anthropic\Messages\Usage\ServiceTier;
 
 /**
  * @phpstan-import-type CacheCreationShape from \Anthropic\Messages\CacheCreation
+ * @phpstan-import-type OutputTokensDetailsShape from \Anthropic\Messages\OutputTokensDetails
  * @phpstan-import-type ServerToolUsageShape from \Anthropic\Messages\ServerToolUsage
  *
  * @phpstan-type UsageShape = array{
@@ -20,6 +21,7 @@ use Anthropic\Messages\Usage\ServiceTier;
  *   inferenceGeo: string|null,
  *   inputTokens: int,
  *   outputTokens: int,
+ *   outputTokensDetails: null|OutputTokensDetails|OutputTokensDetailsShape,
  *   serverToolUse: null|ServerToolUsage|ServerToolUsageShape,
  *   serviceTier: null|ServiceTier|value-of<ServiceTier>,
  * }
@@ -66,6 +68,17 @@ final class Usage implements BaseModel
     public int $outputTokens;
 
     /**
+     * Breakdown of output tokens by category.
+     *
+     * `output_tokens` remains the inclusive, authoritative total used for billing.
+     * This object provides a read-only decomposition for observability — for example,
+     * how many of the billed output tokens were spent on internal reasoning that may
+     * have been summarized before being returned to you.
+     */
+    #[Required('output_tokens_details')]
+    public ?OutputTokensDetails $outputTokensDetails;
+
+    /**
      * The number of server tool requests.
      */
     #[Required('server_tool_use')]
@@ -91,6 +104,7 @@ final class Usage implements BaseModel
      *   inferenceGeo: ...,
      *   inputTokens: ...,
      *   outputTokens: ...,
+     *   outputTokensDetails: ...,
      *   serverToolUse: ...,
      *   serviceTier: ...,
      * )
@@ -106,6 +120,7 @@ final class Usage implements BaseModel
      *   ->withInferenceGeo(...)
      *   ->withInputTokens(...)
      *   ->withOutputTokens(...)
+     *   ->withOutputTokensDetails(...)
      *   ->withServerToolUse(...)
      *   ->withServiceTier(...)
      * ```
@@ -121,6 +136,7 @@ final class Usage implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param CacheCreation|CacheCreationShape|null $cacheCreation
+     * @param OutputTokensDetails|OutputTokensDetailsShape|null $outputTokensDetails
      * @param ServerToolUsage|ServerToolUsageShape|null $serverToolUse
      * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
      */
@@ -131,6 +147,7 @@ final class Usage implements BaseModel
         ?string $inferenceGeo,
         int $inputTokens,
         int $outputTokens,
+        OutputTokensDetails|array|null $outputTokensDetails,
         ServerToolUsage|array|null $serverToolUse,
         ServiceTier|string|null $serviceTier,
     ): self {
@@ -142,6 +159,7 @@ final class Usage implements BaseModel
         $self['inferenceGeo'] = $inferenceGeo;
         $self['inputTokens'] = $inputTokens;
         $self['outputTokens'] = $outputTokens;
+        $self['outputTokensDetails'] = $outputTokensDetails;
         $self['serverToolUse'] = $serverToolUse;
         $self['serviceTier'] = $serviceTier;
 
@@ -214,6 +232,25 @@ final class Usage implements BaseModel
     {
         $self = clone $this;
         $self['outputTokens'] = $outputTokens;
+
+        return $self;
+    }
+
+    /**
+     * Breakdown of output tokens by category.
+     *
+     * `output_tokens` remains the inclusive, authoritative total used for billing.
+     * This object provides a read-only decomposition for observability — for example,
+     * how many of the billed output tokens were spent on internal reasoning that may
+     * have been summarized before being returned to you.
+     *
+     * @param OutputTokensDetails|OutputTokensDetailsShape|null $outputTokensDetails
+     */
+    public function withOutputTokensDetails(
+        OutputTokensDetails|array|null $outputTokensDetails
+    ): self {
+        $self = clone $this;
+        $self['outputTokensDetails'] = $outputTokensDetails;
 
         return $self;
     }

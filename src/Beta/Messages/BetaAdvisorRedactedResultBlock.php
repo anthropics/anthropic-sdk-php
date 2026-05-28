@@ -10,7 +10,9 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaAdvisorRedactedResultBlockShape = array{
- *   encryptedContent: string, type: 'advisor_redacted_result'
+ *   encryptedContent: string,
+ *   stopReason: string|null,
+ *   type: 'advisor_redacted_result',
  * }
  */
 final class BetaAdvisorRedactedResultBlock implements BaseModel
@@ -29,17 +31,25 @@ final class BetaAdvisorRedactedResultBlock implements BaseModel
     public string $encryptedContent;
 
     /**
+     * The advisor sub-inference's stop reason (same values as the top-level message `stop_reason`).
+     */
+    #[Required('stop_reason')]
+    public ?string $stopReason;
+
+    /**
      * `new BetaAdvisorRedactedResultBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaAdvisorRedactedResultBlock::with(encryptedContent: ...)
+     * BetaAdvisorRedactedResultBlock::with(encryptedContent: ..., stopReason: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaAdvisorRedactedResultBlock)->withEncryptedContent(...)
+     * (new BetaAdvisorRedactedResultBlock)
+     *   ->withEncryptedContent(...)
+     *   ->withStopReason(...)
      * ```
      */
     public function __construct()
@@ -52,11 +62,14 @@ final class BetaAdvisorRedactedResultBlock implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $encryptedContent): self
-    {
+    public static function with(
+        string $encryptedContent,
+        ?string $stopReason
+    ): self {
         $self = new self;
 
         $self['encryptedContent'] = $encryptedContent;
+        $self['stopReason'] = $stopReason;
 
         return $self;
     }
@@ -68,6 +81,17 @@ final class BetaAdvisorRedactedResultBlock implements BaseModel
     {
         $self = clone $this;
         $self['encryptedContent'] = $encryptedContent;
+
+        return $self;
+    }
+
+    /**
+     * The advisor sub-inference's stop reason (same values as the top-level message `stop_reason`).
+     */
+    public function withStopReason(?string $stopReason): self
+    {
+        $self = clone $this;
+        $self['stopReason'] = $stopReason;
 
         return $self;
     }

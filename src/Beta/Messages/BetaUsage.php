@@ -14,6 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type BetaIterationsUsageItemVariants from \Anthropic\Beta\Messages\BetaIterationsUsageItem
  * @phpstan-import-type BetaCacheCreationShape from \Anthropic\Beta\Messages\BetaCacheCreation
  * @phpstan-import-type BetaIterationsUsageItemShape from \Anthropic\Beta\Messages\BetaIterationsUsageItem
+ * @phpstan-import-type BetaOutputTokensDetailsShape from \Anthropic\Beta\Messages\BetaOutputTokensDetails
  * @phpstan-import-type BetaServerToolUsageShape from \Anthropic\Beta\Messages\BetaServerToolUsage
  *
  * @phpstan-type BetaUsageShape = array{
@@ -24,6 +25,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   inputTokens: int,
  *   iterations: list<BetaIterationsUsageItemShape>|null,
  *   outputTokens: int,
+ *   outputTokensDetails: null|BetaOutputTokensDetails|BetaOutputTokensDetailsShape,
  *   serverToolUse: null|BetaServerToolUsage|BetaServerToolUsageShape,
  *   serviceTier: null|ServiceTier|value-of<ServiceTier>,
  *   speed: null|Speed|value-of<Speed>,
@@ -84,6 +86,17 @@ final class BetaUsage implements BaseModel
     public int $outputTokens;
 
     /**
+     * Breakdown of output tokens by category.
+     *
+     * `output_tokens` remains the inclusive, authoritative total used for billing.
+     * This object provides a read-only decomposition for observability — for example,
+     * how many of the billed output tokens were spent on internal reasoning that may
+     * have been summarized before being returned to you.
+     */
+    #[Required('output_tokens_details')]
+    public ?BetaOutputTokensDetails $outputTokensDetails;
+
+    /**
      * The number of server tool requests.
      */
     #[Required('server_tool_use')]
@@ -118,6 +131,7 @@ final class BetaUsage implements BaseModel
      *   inputTokens: ...,
      *   iterations: ...,
      *   outputTokens: ...,
+     *   outputTokensDetails: ...,
      *   serverToolUse: ...,
      *   serviceTier: ...,
      *   speed: ...,
@@ -135,6 +149,7 @@ final class BetaUsage implements BaseModel
      *   ->withInputTokens(...)
      *   ->withIterations(...)
      *   ->withOutputTokens(...)
+     *   ->withOutputTokensDetails(...)
      *   ->withServerToolUse(...)
      *   ->withServiceTier(...)
      *   ->withSpeed(...)
@@ -152,6 +167,7 @@ final class BetaUsage implements BaseModel
      *
      * @param BetaCacheCreation|BetaCacheCreationShape|null $cacheCreation
      * @param list<BetaIterationsUsageItemShape>|null $iterations
+     * @param BetaOutputTokensDetails|BetaOutputTokensDetailsShape|null $outputTokensDetails
      * @param BetaServerToolUsage|BetaServerToolUsageShape|null $serverToolUse
      * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
      * @param Speed|value-of<Speed>|null $speed
@@ -164,6 +180,7 @@ final class BetaUsage implements BaseModel
         int $inputTokens,
         ?array $iterations,
         int $outputTokens,
+        BetaOutputTokensDetails|array|null $outputTokensDetails,
         BetaServerToolUsage|array|null $serverToolUse,
         ServiceTier|string|null $serviceTier,
         Speed|string|null $speed,
@@ -177,6 +194,7 @@ final class BetaUsage implements BaseModel
         $self['inputTokens'] = $inputTokens;
         $self['iterations'] = $iterations;
         $self['outputTokens'] = $outputTokens;
+        $self['outputTokensDetails'] = $outputTokensDetails;
         $self['serverToolUse'] = $serverToolUse;
         $self['serviceTier'] = $serviceTier;
         $self['speed'] = $speed;
@@ -268,6 +286,25 @@ final class BetaUsage implements BaseModel
     {
         $self = clone $this;
         $self['outputTokens'] = $outputTokens;
+
+        return $self;
+    }
+
+    /**
+     * Breakdown of output tokens by category.
+     *
+     * `output_tokens` remains the inclusive, authoritative total used for billing.
+     * This object provides a read-only decomposition for observability — for example,
+     * how many of the billed output tokens were spent on internal reasoning that may
+     * have been summarized before being returned to you.
+     *
+     * @param BetaOutputTokensDetails|BetaOutputTokensDetailsShape|null $outputTokensDetails
+     */
+    public function withOutputTokensDetails(
+        BetaOutputTokensDetails|array|null $outputTokensDetails
+    ): self {
+        $self = clone $this;
+        $self['outputTokensDetails'] = $outputTokensDetails;
 
         return $self;
     }
