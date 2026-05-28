@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.25.0 (2026-05-28)
+
+Full Changelog: [v0.24.0...v0.25.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.24.0...v0.25.0)
+
+### Features
+
+* **api:** Add support for claude-opus-4-8, mid-conversation system blocks, and usage.output_tokens_details ([80e5ce5](https://github.com/anthropics/anthropic-sdk-php/commit/80e5ce5239e77824b1922762e6b650c84672a03c))
+
+
+### Documentation
+
+* replace literal newlines ([6a98894](https://github.com/anthropics/anthropic-sdk-php/commit/6a9889475f07b6f07f942831d8b1757d98e61c33))
+
 ## 0.24.0 (2026-05-21)
 
 Full Changelog: [v0.23.0...v0.24.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.23.0...v0.24.0)
