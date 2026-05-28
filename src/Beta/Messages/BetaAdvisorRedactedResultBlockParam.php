@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BetaAdvisorRedactedResultBlockParamShape = array{
- *   encryptedContent: string, type: 'advisor_redacted_result'
+ *   encryptedContent: string,
+ *   type: 'advisor_redacted_result',
+ *   stopReason?: string|null,
  * }
  */
 final class BetaAdvisorRedactedResultBlockParam implements BaseModel
@@ -27,6 +30,9 @@ final class BetaAdvisorRedactedResultBlockParam implements BaseModel
      */
     #[Required('encrypted_content')]
     public string $encryptedContent;
+
+    #[Optional('stop_reason', nullable: true)]
+    public ?string $stopReason;
 
     /**
      * `new BetaAdvisorRedactedResultBlockParam()` is missing required properties by the API.
@@ -52,11 +58,15 @@ final class BetaAdvisorRedactedResultBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $encryptedContent): self
-    {
+    public static function with(
+        string $encryptedContent,
+        ?string $stopReason = null
+    ): self {
         $self = new self;
 
         $self['encryptedContent'] = $encryptedContent;
+
+        null !== $stopReason && $self['stopReason'] = $stopReason;
 
         return $self;
     }
@@ -79,6 +89,14 @@ final class BetaAdvisorRedactedResultBlockParam implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    public function withStopReason(?string $stopReason): self
+    {
+        $self = clone $this;
+        $self['stopReason'] = $stopReason;
 
         return $self;
     }

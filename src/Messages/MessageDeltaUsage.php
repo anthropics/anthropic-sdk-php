@@ -9,6 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type OutputTokensDetailsShape from \Anthropic\Messages\OutputTokensDetails
  * @phpstan-import-type ServerToolUsageShape from \Anthropic\Messages\ServerToolUsage
  *
  * @phpstan-type MessageDeltaUsageShape = array{
@@ -16,6 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   cacheReadInputTokens: int|null,
  *   inputTokens: int|null,
  *   outputTokens: int,
+ *   outputTokensDetails: null|OutputTokensDetails|OutputTokensDetailsShape,
  *   serverToolUse: null|ServerToolUsage|ServerToolUsageShape,
  * }
  */
@@ -49,6 +51,17 @@ final class MessageDeltaUsage implements BaseModel
     public int $outputTokens;
 
     /**
+     * Breakdown of output tokens by category.
+     *
+     * `output_tokens` remains the inclusive, authoritative total used for billing.
+     * This object provides a read-only decomposition for observability — for example,
+     * how many of the billed output tokens were spent on internal reasoning that may
+     * have been summarized before being returned to you.
+     */
+    #[Required('output_tokens_details')]
+    public ?OutputTokensDetails $outputTokensDetails;
+
+    /**
      * The number of server tool requests.
      */
     #[Required('server_tool_use')]
@@ -64,6 +77,7 @@ final class MessageDeltaUsage implements BaseModel
      *   cacheReadInputTokens: ...,
      *   inputTokens: ...,
      *   outputTokens: ...,
+     *   outputTokensDetails: ...,
      *   serverToolUse: ...,
      * )
      * ```
@@ -76,6 +90,7 @@ final class MessageDeltaUsage implements BaseModel
      *   ->withCacheReadInputTokens(...)
      *   ->withInputTokens(...)
      *   ->withOutputTokens(...)
+     *   ->withOutputTokensDetails(...)
      *   ->withServerToolUse(...)
      * ```
      */
@@ -89,6 +104,7 @@ final class MessageDeltaUsage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param OutputTokensDetails|OutputTokensDetailsShape|null $outputTokensDetails
      * @param ServerToolUsage|ServerToolUsageShape|null $serverToolUse
      */
     public static function with(
@@ -96,6 +112,7 @@ final class MessageDeltaUsage implements BaseModel
         ?int $cacheReadInputTokens,
         ?int $inputTokens,
         int $outputTokens,
+        OutputTokensDetails|array|null $outputTokensDetails,
         ServerToolUsage|array|null $serverToolUse,
     ): self {
         $self = new self;
@@ -104,6 +121,7 @@ final class MessageDeltaUsage implements BaseModel
         $self['cacheReadInputTokens'] = $cacheReadInputTokens;
         $self['inputTokens'] = $inputTokens;
         $self['outputTokens'] = $outputTokens;
+        $self['outputTokensDetails'] = $outputTokensDetails;
         $self['serverToolUse'] = $serverToolUse;
 
         return $self;
@@ -150,6 +168,25 @@ final class MessageDeltaUsage implements BaseModel
     {
         $self = clone $this;
         $self['outputTokens'] = $outputTokens;
+
+        return $self;
+    }
+
+    /**
+     * Breakdown of output tokens by category.
+     *
+     * `output_tokens` remains the inclusive, authoritative total used for billing.
+     * This object provides a read-only decomposition for observability — for example,
+     * how many of the billed output tokens were spent on internal reasoning that may
+     * have been summarized before being returned to you.
+     *
+     * @param OutputTokensDetails|OutputTokensDetailsShape|null $outputTokensDetails
+     */
+    public function withOutputTokensDetails(
+        OutputTokensDetails|array|null $outputTokensDetails
+    ): self {
+        $self = clone $this;
+        $self['outputTokensDetails'] = $outputTokensDetails;
 
         return $self;
     }
