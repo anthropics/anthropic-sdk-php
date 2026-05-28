@@ -24,7 +24,9 @@ final class BetaManagedAgentsModelConfigParams implements BaseModel
     use SdkModel;
 
     /**
-     * The model that will power your agent.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * The model that will power your agent.
+     *
+     * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
      * @var string|value-of<BetaManagedAgentsModel> $id
      */
@@ -80,7 +82,9 @@ final class BetaManagedAgentsModelConfigParams implements BaseModel
     }
 
     /**
-     * The model that will power your agent.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * The model that will power your agent.
+     *
+     * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
      * @param string|BetaManagedAgentsModel|value-of<BetaManagedAgentsModel> $id
      */
