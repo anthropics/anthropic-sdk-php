@@ -407,13 +407,16 @@ final class Util
         return json_decode($json, associative: true, flags: JSON_THROW_ON_ERROR);
     }
 
-    public static function decodeContent(ResponseInterface $rsp): mixed
+    public static function decodeContent(ResponseInterface $rsp, ?RequestInterface $request = null): mixed
     {
         if (204 == $rsp->getStatusCode()) {
             return null;
         }
 
         $content_type = $rsp->getHeaderLine('Content-Type');
+        if ('' === $content_type && !is_null($request)) {
+            $content_type = $request->getHeaderLine('Accept');
+        }
         $body = $rsp->getBody();
 
         if (preg_match(self::JSON_CONTENT_TYPE, subject: $content_type)) {

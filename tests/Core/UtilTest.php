@@ -89,6 +89,26 @@ class UtilTest extends TestCase
     }
 
     #[Test]
+    public function testDecodeContentFallsBackToRequestAccept(): void
+    {
+        $request = Psr17FactoryDiscovery::findRequestFactory()
+            ->createRequest('GET', 'http://localhost')
+            ->withHeader('Accept', 'application/x-jsonl')
+        ;
+        $response = Psr17FactoryDiscovery::findResponseFactory()
+            ->createResponse(200)
+            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream("{\"id\":1}\n{\"id\":2}\n"))
+        ;
+
+        /** @var \Generator $decoded */
+        $decoded = Util::decodeContent($response, request: $request);
+        $this->assertSame(
+            [['id' => 1], ['id' => 2]],
+            iterator_to_array($decoded),
+        );
+    }
+
+    #[Test]
     public function testGetenvFromGlobalEnv(): void
     {
         $_ENV[__FUNCTION__] = __FUNCTION__;
