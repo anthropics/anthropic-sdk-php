@@ -47,7 +47,7 @@
     "pestphp/pest": "^3",
     "php-http/mock-client": "^1",
     "phpstan/extension-installer": "^1",
-    "phpstan/phpstan": "^2",
+    "phpstan/phpstan": "2.2.1",
     "phpstan/phpstan-phpunit": "^2",
     "phpunit/phpunit": "^11",
     "symfony/http-client": "^7"
