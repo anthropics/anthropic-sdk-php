@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.26.0 (2026-06-05)
+
+Full Changelog: [v0.25.0...v0.26.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.25.0...v0.26.0)
+
+### Features
+
+* **api:** mark Claude Opus 4.1 as deprecated ([a9ddf0b](https://github.com/anthropics/anthropic-sdk-php/commit/a9ddf0b4337b90739de960555160079b74224cf5))
+
+
+### Chores
+
+* **internal:** update private repo name ([02d07c0](https://github.com/anthropics/anthropic-sdk-php/commit/02d07c0e6e8b4ced873cb303b711cef1eac023d5))
+* pin phpstan to 2.2.1 ([#16](https://github.com/anthropics/anthropic-sdk-php/issues/16)) ([f99bcb4](https://github.com/anthropics/anthropic-sdk-php/commit/f99bcb4cfc39dc9490511357d8ec3eaffc93313d))
+
+
+### Documentation
+
+* point security reports to Anthropic's HackerOne program ([#7](https://github.com/anthropics/anthropic-sdk-php/issues/7)) ([d219722](https://github.com/anthropics/anthropic-sdk-php/commit/d219722dd63b2c29cf107426eaa3b6ba540547ee))
+
 ## 0.25.0 (2026-05-28)
 
 Full Changelog: [v0.24.0...v0.25.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.24.0...v0.25.0)
