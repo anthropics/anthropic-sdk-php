@@ -13,7 +13,7 @@ Full documentation is available at **[platform.claude.com/docs/en/api/sdks/php](
 <!-- x-release-please-start-version -->
 
 ```sh
-composer require "anthropic-ai/sdk:^0.26.0"
+composer require "anthropic-ai/sdk:^0.27.0"
 ```
 
 <!-- x-release-please-end -->
