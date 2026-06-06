@@ -56,13 +56,13 @@ final class AgentCreateParams implements BaseModel
     public BetaManagedAgentsModelConfigParams|string $model;
 
     /**
-     * Human-readable name for the agent. 1-256 characters.
+     * Human-readable name for the agent.
      */
     #[Required]
     public string $name;
 
     /**
-     * Description of what the agent does. Up to 2048 characters.
+     * Description of what the agent does.
      */
     #[Optional(nullable: true)]
     public ?string $description;
@@ -90,7 +90,7 @@ final class AgentCreateParams implements BaseModel
     public ?BetaManagedAgentsMultiagentParams $multiagent;
 
     /**
-     * Skills available to the agent. Maximum 20.
+     * Skills available to the agent.
      *
      * @var list<BetaManagedAgentsSkillParamsVariants>|null $skills
      */
@@ -98,7 +98,7 @@ final class AgentCreateParams implements BaseModel
     public ?array $skills;
 
     /**
-     * System prompt for the agent. Up to 100,000 characters.
+     * System prompt for the agent.
      */
     #[Optional(nullable: true)]
     public ?string $system;
@@ -195,7 +195,7 @@ final class AgentCreateParams implements BaseModel
     }
 
     /**
-     * Human-readable name for the agent. 1-256 characters.
+     * Human-readable name for the agent.
      */
     public function withName(string $name): self
     {
@@ -206,7 +206,7 @@ final class AgentCreateParams implements BaseModel
     }
 
     /**
-     * Description of what the agent does. Up to 2048 characters.
+     * Description of what the agent does.
      */
     public function withDescription(?string $description): self
     {
@@ -257,7 +257,7 @@ final class AgentCreateParams implements BaseModel
     }
 
     /**
-     * Skills available to the agent. Maximum 20.
+     * Skills available to the agent.
      *
      * @param list<BetaManagedAgentsSkillParamsShape> $skills
      */
@@ -270,7 +270,7 @@ final class AgentCreateParams implements BaseModel
     }
 
     /**
-     * System prompt for the agent. Up to 100,000 characters.
+     * System prompt for the agent.
      */
     public function withSystem(?string $system): self
     {

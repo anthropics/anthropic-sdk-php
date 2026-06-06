@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Agents;
 
-use Anthropic\Beta\Agents\BetaManagedAgentsCustomToolInputSchema\Type;
 use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
@@ -13,9 +13,9 @@ use Anthropic\Core\Contracts\BaseModel;
  * JSON Schema for custom tool input parameters.
  *
  * @phpstan-type BetaManagedAgentsCustomToolInputSchemaShape = array{
+ *   type: 'object',
  *   properties?: array<string,mixed>|null,
  *   required?: list<string>|null,
- *   type?: null|Type|value-of<Type>,
  * }
  */
 final class BetaManagedAgentsCustomToolInputSchema implements BaseModel
@@ -23,29 +23,17 @@ final class BetaManagedAgentsCustomToolInputSchema implements BaseModel
     /** @use SdkModel<BetaManagedAgentsCustomToolInputSchemaShape> */
     use SdkModel;
 
-    /**
-     * JSON Schema properties defining the tool's input parameters.
-     *
-     * @var array<string,mixed>|null $properties
-     */
+    /** @var 'object' $type */
+    #[Required]
+    public string $type = 'object';
+
+    /** @var array<string,mixed>|null $properties */
     #[Optional(map: 'mixed', nullable: true)]
     public ?array $properties;
 
-    /**
-     * List of required property names.
-     *
-     * @var list<string>|null $required
-     */
-    #[Optional(list: 'string')]
+    /** @var list<string>|null $required */
+    #[Optional(list: 'string', nullable: true)]
     public ?array $required;
-
-    /**
-     * Must be 'object' for tool input schemas.
-     *
-     * @var value-of<Type>|null $type
-     */
-    #[Optional(enum: Type::class)]
-    public ?string $type;
 
     public function __construct()
     {
@@ -59,25 +47,31 @@ final class BetaManagedAgentsCustomToolInputSchema implements BaseModel
      *
      * @param array<string,mixed>|null $properties
      * @param list<string>|null $required
-     * @param Type|value-of<Type>|null $type
      */
     public static function with(
         ?array $properties = null,
-        ?array $required = null,
-        Type|string|null $type = null
+        ?array $required = null
     ): self {
         $self = new self;
 
         null !== $properties && $self['properties'] = $properties;
         null !== $required && $self['required'] = $required;
-        null !== $type && $self['type'] = $type;
 
         return $self;
     }
 
     /**
-     * JSON Schema properties defining the tool's input parameters.
-     *
+     * @param 'object' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
      * @param array<string,mixed>|null $properties
      */
     public function withProperties(?array $properties): self
@@ -89,27 +83,12 @@ final class BetaManagedAgentsCustomToolInputSchema implements BaseModel
     }
 
     /**
-     * List of required property names.
-     *
-     * @param list<string> $required
+     * @param list<string>|null $required
      */
-    public function withRequired(array $required): self
+    public function withRequired(?array $required): self
     {
         $self = clone $this;
         $self['required'] = $required;
-
-        return $self;
-    }
-
-    /**
-     * Must be 'object' for tool input schemas.
-     *
-     * @param Type|value-of<Type> $type
-     */
-    public function withType(Type|string $type): self
-    {
-        $self = clone $this;
-        $self['type'] = $type;
 
         return $self;
     }

@@ -30,13 +30,13 @@ interface AgentsContract
      * @api
      *
      * @param ModelShape $model Body param: Model identifier. Accepts the [model string](https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison), e.g. `claude-opus-4-6`, or a `model_config` object for additional configuration control
-     * @param string $name Body param: Human-readable name for the agent. 1-256 characters.
-     * @param string|null $description Body param: Description of what the agent does. Up to 2048 characters.
+     * @param string $name body param: Human-readable name for the agent
+     * @param string|null $description body param: Description of what the agent does
      * @param list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape> $mcpServers Body param: MCP servers this agent connects to. Maximum 20. Names must be unique within the array.
      * @param array<string,string> $metadata Body param: Arbitrary key-value metadata. Maximum 16 pairs, keys up to 64 chars, values up to 512 chars.
      * @param BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null $multiagent body param: A coordinator topology: the session's primary thread orchestrates work by spawning session threads, each running an agent drawn from the `agents` roster
-     * @param list<BetaManagedAgentsSkillParamsShape> $skills Body param: Skills available to the agent. Maximum 20.
-     * @param string|null $system Body param: System prompt for the agent. Up to 100,000 characters.
+     * @param list<BetaManagedAgentsSkillParamsShape> $skills body param: Skills available to the agent
+     * @param string|null $system body param: System prompt for the agent
      * @param list<ToolShape> $tools Body param: Tool configurations available to the agent. Maximum of 128 tools across all toolsets allowed.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
@@ -79,14 +79,14 @@ interface AgentsContract
      *
      * @param string $agentID Path param: Path parameter agent_id
      * @param int $version Body param: The agent's current version, used to prevent concurrent overwrites. Obtain this value from a create or retrieve response. The request fails if this does not match the server's current version.
-     * @param string|null $description Body param: Description. Up to 2048 characters. Omit to preserve; send empty string or null to clear.
+     * @param string|null $description Body param: Description. Omit to preserve; send empty string or null to clear.
      * @param list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null $mcpServers Body param: MCP servers. Full replacement. Omit to preserve; send empty array or null to clear. Names must be unique. Maximum 20.
      * @param array<string,string|null>|null $metadata Body param: Metadata patch. Set a key to a string to upsert it, or to null to delete it. Omit the field to preserve. The stored bag is limited to 16 keys (up to 64 chars each) with values up to 512 chars.
      * @param ModelShape1 $model Body param: Model identifier. Accepts the [model string](https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison), e.g. `claude-opus-4-6`, or a `model_config` object for additional configuration control. Omit to preserve. Cannot be cleared.
      * @param BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null $multiagent body param: A coordinator topology: the session's primary thread orchestrates work by spawning session threads, each running an agent drawn from the `agents` roster
-     * @param string $name Body param: Human-readable name. 1-256 characters. Omit to preserve. Cannot be cleared.
-     * @param list<BetaManagedAgentsSkillParamsShape>|null $skills Body param: Skills. Full replacement. Omit to preserve; send empty array or null to clear. Maximum 20.
-     * @param string|null $system Body param: System prompt. Up to 100,000 characters. Omit to preserve; send empty string or null to clear.
+     * @param string $name Body param: Human-readable name. Must be non-empty. Omit to preserve. Cannot be cleared.
+     * @param list<BetaManagedAgentsSkillParamsShape>|null $skills Body param: Skills. Full replacement. Omit to preserve; send empty array or null to clear.
+     * @param string|null $system Body param: System prompt. Omit to preserve; send empty string or null to clear.
      * @param list<ToolShape1>|null $tools Body param: Tool configurations available to the agent. Full replacement. Omit to preserve; send empty array or null to clear. Maximum of 128 tools across all toolsets allowed.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions

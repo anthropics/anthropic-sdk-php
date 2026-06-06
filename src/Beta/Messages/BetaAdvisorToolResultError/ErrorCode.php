@@ -17,4 +17,6 @@ enum ErrorCode: string
     case UNAVAILABLE = 'unavailable';
 
     case EXECUTION_TIME_EXCEEDED = 'execution_time_exceeded';
+
+    case MODEL_NOT_FOUND = 'model_not_found';
 }
