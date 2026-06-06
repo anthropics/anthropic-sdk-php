@@ -26,7 +26,7 @@ final class BetaWebhookVaultArchivedEventData implements BaseModel
     public string $type = 'vault.archived';
 
     /**
-     * ID of the resource that triggered the event.
+     * ID of the vault that triggered the event.
      */
     #[Required]
     public string $id;
@@ -81,7 +81,7 @@ final class BetaWebhookVaultArchivedEventData implements BaseModel
     }
 
     /**
-     * ID of the resource that triggered the event.
+     * ID of the vault that triggered the event.
      */
     public function withID(string $id): self
     {

@@ -56,7 +56,7 @@ final class AgentUpdateParams implements BaseModel
     public int $version;
 
     /**
-     * Description. Up to 2048 characters. Omit to preserve; send empty string or null to clear.
+     * Description. Omit to preserve; send empty string or null to clear.
      */
     #[Optional(nullable: true)]
     public ?string $description;
@@ -96,13 +96,13 @@ final class AgentUpdateParams implements BaseModel
     public ?BetaManagedAgentsMultiagentParams $multiagent;
 
     /**
-     * Human-readable name. 1-256 characters. Omit to preserve. Cannot be cleared.
+     * Human-readable name. Must be non-empty. Omit to preserve. Cannot be cleared.
      */
     #[Optional]
     public ?string $name;
 
     /**
-     * Skills. Full replacement. Omit to preserve; send empty array or null to clear. Maximum 20.
+     * Skills. Full replacement. Omit to preserve; send empty array or null to clear.
      *
      * @var list<BetaManagedAgentsSkillParamsVariants>|null $skills
      */
@@ -110,7 +110,7 @@ final class AgentUpdateParams implements BaseModel
     public ?array $skills;
 
     /**
-     * System prompt. Up to 100,000 characters. Omit to preserve; send empty string or null to clear.
+     * System prompt. Omit to preserve; send empty string or null to clear.
      */
     #[Optional(nullable: true)]
     public ?string $system;
@@ -206,7 +206,7 @@ final class AgentUpdateParams implements BaseModel
     }
 
     /**
-     * Description. Up to 2048 characters. Omit to preserve; send empty string or null to clear.
+     * Description. Omit to preserve; send empty string or null to clear.
      */
     public function withDescription(?string $description): self
     {
@@ -271,7 +271,7 @@ final class AgentUpdateParams implements BaseModel
     }
 
     /**
-     * Human-readable name. 1-256 characters. Omit to preserve. Cannot be cleared.
+     * Human-readable name. Must be non-empty. Omit to preserve. Cannot be cleared.
      */
     public function withName(string $name): self
     {
@@ -282,7 +282,7 @@ final class AgentUpdateParams implements BaseModel
     }
 
     /**
-     * Skills. Full replacement. Omit to preserve; send empty array or null to clear. Maximum 20.
+     * Skills. Full replacement. Omit to preserve; send empty array or null to clear.
      *
      * @param list<BetaManagedAgentsSkillParamsShape>|null $skills
      */
@@ -295,7 +295,7 @@ final class AgentUpdateParams implements BaseModel
     }
 
     /**
-     * System prompt. Up to 100,000 characters. Omit to preserve; send empty string or null to clear.
+     * System prompt. Omit to preserve; send empty string or null to clear.
      */
     public function withSystem(?string $system): self
     {

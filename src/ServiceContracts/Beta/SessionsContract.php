@@ -99,7 +99,7 @@ interface SessionsContract
      * @param int $limit query param: Maximum number of results to return
      * @param string $memoryStoreID query param: Filter sessions whose resources contain a memory_store with this memory store ID
      * @param Order|value-of<Order> $order Query param: Sort direction for results, ordered by created_at. Defaults to desc (newest first).
-     * @param string $page query param: Opaque pagination cursor from a previous response's next_page
+     * @param string $page query param: Opaque pagination cursor from a previous response
      * @param list<Status|value-of<Status>> $statuses Query param: Filter by session status. Repeat the parameter to match any of multiple statuses.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions

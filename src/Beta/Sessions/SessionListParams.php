@@ -102,7 +102,7 @@ final class SessionListParams implements BaseModel
     public ?string $order;
 
     /**
-     * Opaque pagination cursor from a previous response's next_page.
+     * Opaque pagination cursor from a previous response.
      */
     #[Optional]
     public ?string $page;
@@ -284,7 +284,7 @@ final class SessionListParams implements BaseModel
     }
 
     /**
-     * Opaque pagination cursor from a previous response's next_page.
+     * Opaque pagination cursor from a previous response.
      */
     public function withPage(string $page): self
     {

@@ -23,7 +23,7 @@ final class BetaWebhookSessionIdledEventData implements BaseModel
     public string $type = 'session.idled';
 
     /**
-     * ID of the resource that triggered the event.
+     * ID of the session that triggered the event.
      */
     #[Required]
     public string $id;
@@ -78,7 +78,7 @@ final class BetaWebhookSessionIdledEventData implements BaseModel
     }
 
     /**
-     * ID of the resource that triggered the event.
+     * ID of the session that triggered the event.
      */
     public function withID(string $id): self
     {
