@@ -27,7 +27,7 @@ final class BetaWebhookVaultCredentialDeletedEventData implements BaseModel
     public string $type = 'vault_credential.deleted';
 
     /**
-     * ID of the resource that triggered the event.
+     * ID of the vault credential that triggered the event.
      */
     #[Required]
     public string $id;
@@ -91,7 +91,7 @@ final class BetaWebhookVaultCredentialDeletedEventData implements BaseModel
     }
 
     /**
-     * ID of the resource that triggered the event.
+     * ID of the vault credential that triggered the event.
      */
     public function withID(string $id): self
     {

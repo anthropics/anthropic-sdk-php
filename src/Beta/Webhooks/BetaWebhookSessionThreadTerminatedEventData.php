@@ -26,7 +26,7 @@ final class BetaWebhookSessionThreadTerminatedEventData implements BaseModel
     public string $type = 'session.thread_terminated';
 
     /**
-     * ID of the resource that triggered the event.
+     * ID of the session that triggered the event.
      */
     #[Required]
     public string $id;
@@ -81,7 +81,7 @@ final class BetaWebhookSessionThreadTerminatedEventData implements BaseModel
     }
 
     /**
-     * ID of the resource that triggered the event.
+     * ID of the session that triggered the event.
      */
     public function withID(string $id): self
     {

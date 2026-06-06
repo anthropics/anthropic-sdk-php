@@ -26,7 +26,7 @@ final class BetaWebhookSessionStatusRunStartedEventData implements BaseModel
     public string $type = 'session.status_run_started';
 
     /**
-     * ID of the resource that triggered the event.
+     * ID of the session that triggered the event.
      */
     #[Required]
     public string $id;
@@ -81,7 +81,7 @@ final class BetaWebhookSessionStatusRunStartedEventData implements BaseModel
     }
 
     /**
-     * ID of the resource that triggered the event.
+     * ID of the session that triggered the event.
      */
     public function withID(string $id): self
     {

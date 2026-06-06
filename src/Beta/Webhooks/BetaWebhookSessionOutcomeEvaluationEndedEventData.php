@@ -26,7 +26,7 @@ final class BetaWebhookSessionOutcomeEvaluationEndedEventData implements BaseMod
     public string $type = 'session.outcome_evaluation_ended';
 
     /**
-     * ID of the resource that triggered the event.
+     * ID of the session that triggered the event.
      */
     #[Required]
     public string $id;
@@ -81,7 +81,7 @@ final class BetaWebhookSessionOutcomeEvaluationEndedEventData implements BaseMod
     }
 
     /**
-     * ID of the resource that triggered the event.
+     * ID of the session that triggered the event.
      */
     public function withID(string $id): self
     {

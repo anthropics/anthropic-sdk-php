@@ -22,6 +22,7 @@ use Anthropic\Messages\Model;
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   caching?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   deferLoading?: bool|null,
+ *   maxTokens?: int|null,
  *   maxUses?: int|null,
  *   strict?: bool|null,
  * }
@@ -78,6 +79,12 @@ final class BetaAdvisorTool20260301 implements BaseModel
     public ?bool $deferLoading;
 
     /**
+     * Bounds the advisor's total output (thinking + text) per call. When the advisor hits this cap, the returned advisor_result or advisor_redacted_result block carries stop_reason='max_tokens', and a truncation note is appended to the advice text the worker model sees (inside the encrypted blob in redacted mode). When set, the server also emits a remaining-tokens budget block in the advisor's prompt so the advisor self-shapes toward the cap. When omitted, the advisor model's default output cap applies and no budget block is emitted.
+     */
+    #[Optional('max_tokens', nullable: true)]
+    public ?int $maxTokens;
+
+    /**
      * Maximum number of times the tool can be used in the API request.
      */
     #[Optional('max_uses', nullable: true)]
@@ -124,6 +131,7 @@ final class BetaAdvisorTool20260301 implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl = null,
         BetaCacheControlEphemeral|array|null $caching = null,
         ?bool $deferLoading = null,
+        ?int $maxTokens = null,
         ?int $maxUses = null,
         ?bool $strict = null,
     ): self {
@@ -135,6 +143,7 @@ final class BetaAdvisorTool20260301 implements BaseModel
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $caching && $self['caching'] = $caching;
         null !== $deferLoading && $self['deferLoading'] = $deferLoading;
+        null !== $maxTokens && $self['maxTokens'] = $maxTokens;
         null !== $maxUses && $self['maxUses'] = $maxUses;
         null !== $strict && $self['strict'] = $strict;
 
@@ -228,6 +237,17 @@ final class BetaAdvisorTool20260301 implements BaseModel
     {
         $self = clone $this;
         $self['deferLoading'] = $deferLoading;
+
+        return $self;
+    }
+
+    /**
+     * Bounds the advisor's total output (thinking + text) per call. When the advisor hits this cap, the returned advisor_result or advisor_redacted_result block carries stop_reason='max_tokens', and a truncation note is appended to the advice text the worker model sees (inside the encrypted blob in redacted mode). When set, the server also emits a remaining-tokens budget block in the advisor's prompt so the advisor self-shapes toward the cap. When omitted, the advisor model's default output cap applies and no budget block is emitted.
+     */
+    public function withMaxTokens(?int $maxTokens): self
+    {
+        $self = clone $this;
+        $self['maxTokens'] = $maxTokens;
 
         return $self;
     }

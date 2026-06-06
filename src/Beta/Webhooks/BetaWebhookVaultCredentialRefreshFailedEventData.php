@@ -27,7 +27,7 @@ final class BetaWebhookVaultCredentialRefreshFailedEventData implements BaseMode
     public string $type = 'vault_credential.refresh_failed';
 
     /**
-     * ID of the resource that triggered the event.
+     * ID of the vault credential that triggered the event.
      */
     #[Required]
     public string $id;
@@ -91,7 +91,7 @@ final class BetaWebhookVaultCredentialRefreshFailedEventData implements BaseMode
     }
 
     /**
-     * ID of the resource that triggered the event.
+     * ID of the vault credential that triggered the event.
      */
     public function withID(string $id): self
     {
