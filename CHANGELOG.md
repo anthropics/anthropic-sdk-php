@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.27.0 (2026-06-06)
+
+Full Changelog: [v0.26.0...v0.27.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.26.0...v0.27.0)
+
+### Features
+
+* **api:** small updates to Managed Agents types ([b4e74d4](https://github.com/anthropics/anthropic-sdk-php/commit/b4e74d4e4493b288a1f75e8b67ff07c55b2e3f34))
+
 ## 0.26.0 (2026-06-05)
 
 Full Changelog: [v0.25.0...v0.26.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.25.0...v0.26.0)
