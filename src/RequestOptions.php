@@ -10,10 +10,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 
 /**
+ * @phpstan-type MiddlewareItem = Middleware|callable(RequestInterface, \Closure(RequestInterface): ResponseInterface): ResponseInterface
  * @phpstan-type RequestOptionShape = array{
  *   timeout?: float|null,
  *   maxRetries?: int|null,
@@ -27,6 +30,7 @@ use Psr\Http\Message\UriFactoryInterface;
  *   uriFactory?: UriFactoryInterface|null,
  *   streamFactory?: StreamFactoryInterface|null,
  *   requestFactory?: RequestFactoryInterface|null,
+ *   middleware?: list<MiddlewareItem>|null,
  * }
  * @phpstan-type RequestOpts = null|RequestOptions|RequestOptionShape
  */
@@ -73,6 +77,10 @@ final class RequestOptions implements BaseModel
     #[Optional]
     public ?RequestFactoryInterface $requestFactory;
 
+    /** @var list<MiddlewareItem>|null $middleware */
+    #[Optional]
+    public ?array $middleware;
+
     public function __construct()
     {
         $this->initialize();
@@ -92,6 +100,7 @@ final class RequestOptions implements BaseModel
     /**
      * @param array<string,string|int|list<string|int>|null>|null $extraHeaders
      * @param array<string,mixed>|null $extraQueryParams
+     * @param list<MiddlewareItem>|null $middleware
      */
     public static function with(
         ?float $timeout = null,
@@ -106,6 +115,7 @@ final class RequestOptions implements BaseModel
         ?UriFactoryInterface $uriFactory = null,
         ?StreamFactoryInterface $streamFactory = null,
         ?RequestFactoryInterface $requestFactory = null,
+        ?array $middleware = null,
     ): self {
         $self = new self;
 
@@ -125,6 +135,7 @@ final class RequestOptions implements BaseModel
         null !== $uriFactory && $self->uriFactory = $uriFactory;
         null !== $streamFactory && $self->streamFactory = $streamFactory;
         null !== $requestFactory && $self->requestFactory = $requestFactory;
+        null !== $middleware && $self->middleware = $middleware;
 
         return $self;
     }
@@ -230,6 +241,17 @@ final class RequestOptions implements BaseModel
     ): self {
         $self = clone $this;
         $self->requestFactory = $requestFactory;
+
+        return $self;
+    }
+
+    /**
+     * @param list<MiddlewareItem> $middleware
+     */
+    public function withMiddleware(array $middleware): self
+    {
+        $self = clone $this;
+        $self->middleware = $middleware;
 
         return $self;
     }

@@ -16,6 +16,7 @@ use const Anthropic\VERSION;
 /**
  * @phpstan-import-type NormalizedRequest from \Anthropic\Core\BaseClient
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type MiddlewareItem from \Anthropic\RequestOptions
  */
 final class Client extends BaseClient
 {
@@ -30,12 +31,14 @@ final class Client extends BaseClient
 
     /**
      * @param RequestOpts|null $requestOptions
+     * @param list<MiddlewareItem> $middleware
      */
     private function __construct(
         string $baseUrl,
         string $apiKey,
         ?string $authToken,
         RequestOptions|array|null $requestOptions = null,
+        array $middleware = [],
     ) {
         $this->apiKey = $apiKey;
         $this->authToken = $authToken;
@@ -49,6 +52,10 @@ final class Client extends BaseClient
             ),
             $requestOptions,
         );
+
+        if ([] !== $middleware) {
+            $options->middleware = array_merge($options->middleware ?? [], $middleware);
+        }
 
         parent::__construct(
             headers: [
@@ -70,6 +77,12 @@ final class Client extends BaseClient
         $this->messages = new MessagesService($this);
     }
 
+    public function __clone(): void
+    {
+        $this->options = clone $this->options;
+        $this->messages = new MessagesService($this);
+    }
+
     /**
      * Create a Foundry client using environment configuration.
      *
@@ -80,10 +93,15 @@ final class Client extends BaseClient
      *
      * @param RequestOpts|null $requestOptions
      */
+    /**
+     * @param RequestOpts|null $requestOptions
+     * @param list<MiddlewareItem> $middleware
+     */
     public static function fromEnvironment(
         ?string $baseUrl = null,
         ?string $resource = null,
         RequestOptions|array|null $requestOptions = null,
+        array $middleware = [],
     ): self {
         $baseUrl ??= Util::getenv('ANTHROPIC_FOUNDRY_BASE_URL');
         $resource ??= Util::getenv('ANTHROPIC_FOUNDRY_RESOURCE');
@@ -95,6 +113,7 @@ final class Client extends BaseClient
             baseUrl: $baseUrl,
             resource: $resource,
             requestOptions: $requestOptions,
+            middleware: $middleware,
         );
     }
 
@@ -102,6 +121,7 @@ final class Client extends BaseClient
      * Create a Foundry client using explicit credentials.
      *
      * @param RequestOpts|null $requestOptions
+     * @param list<MiddlewareItem> $middleware
      */
     public static function withCredentials(
         ?string $apiKey = null,
@@ -109,6 +129,7 @@ final class Client extends BaseClient
         ?string $baseUrl = null,
         ?string $resource = null,
         RequestOptions|array|null $requestOptions = null,
+        array $middleware = [],
     ): self {
         $baseUrl ??= Util::getenv('ANTHROPIC_FOUNDRY_BASE_URL');
         $resource ??= Util::getenv('ANTHROPIC_FOUNDRY_RESOURCE');
@@ -119,6 +140,7 @@ final class Client extends BaseClient
             baseUrl: $baseUrl,
             resource: $resource,
             requestOptions: $requestOptions,
+            middleware: $middleware,
         );
     }
 
@@ -172,6 +194,7 @@ final class Client extends BaseClient
 
     /**
      * @param RequestOpts|null $requestOptions
+     * @param list<MiddlewareItem> $middleware
      */
     private static function build(
         ?string $apiKey,
@@ -179,6 +202,7 @@ final class Client extends BaseClient
         ?string $baseUrl,
         ?string $resource,
         RequestOptions|array|null $requestOptions,
+        array $middleware = [],
     ): self {
         $apiKey = (string) ($apiKey ?? '');
         if ('' === $authToken) {
@@ -204,6 +228,7 @@ final class Client extends BaseClient
             apiKey: $apiKey,
             authToken: $authToken,
             requestOptions: $requestOptions,
+            middleware: $middleware,
         );
     }
 

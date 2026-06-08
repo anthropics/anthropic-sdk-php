@@ -35,6 +35,7 @@ use const Anthropic\VERSION;
  *
  * @phpstan-import-type NormalizedRequest from \Anthropic\Core\BaseClient
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type MiddlewareItem from \Anthropic\RequestOptions
  */
 final class MantleClient extends BaseClient
 {
@@ -46,6 +47,7 @@ final class MantleClient extends BaseClient
 
     /**
      * @param RequestOpts|null $requestOptions
+     * @param list<MiddlewareItem> $middleware
      */
     public function __construct(
         ?string $apiKey = null,
@@ -57,6 +59,7 @@ final class MantleClient extends BaseClient
         ?string $baseUrl = null,
         bool $skipAuth = false,
         RequestOptions|array|null $requestOptions = null,
+        array $middleware = [],
     ) {
         $this->auth = new AwsAuth(
             serviceName: 'bedrock-mantle',
@@ -85,6 +88,10 @@ final class MantleClient extends BaseClient
             $requestOptions,
         );
 
+        if ([] !== $middleware) {
+            $options->middleware = array_merge($options->middleware ?? [], $middleware);
+        }
+
         parent::__construct(
             headers: [
                 'anthropic-version' => '2023-06-01',
@@ -102,6 +109,12 @@ final class MantleClient extends BaseClient
             options: $options,
         );
 
+        $this->messages = new MantleMessagesService($this);
+    }
+
+    public function __clone(): void
+    {
+        $this->options = clone $this->options;
         $this->messages = new MantleMessagesService($this);
     }
 

@@ -416,6 +416,13 @@ final class Util
         $content_type = $rsp->getHeaderLine('Content-Type');
         $body = $rsp->getBody();
 
+        // Middleware may have already read the body (e.g. for logging). Rewind
+        // so the SDK can still decode it. Non-seekable bodies (live streaming
+        // responses) can't be rewound — middleware must not consume those.
+        if ($body->isSeekable()) {
+            $body->rewind();
+        }
+
         if (preg_match(self::JSON_CONTENT_TYPE, subject: $content_type)) {
             $json = $body->getContents();
 

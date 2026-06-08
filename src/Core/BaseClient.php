@@ -12,6 +12,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Exceptions\APIConnectionException;
 use Anthropic\Core\Exceptions\APIStatusException;
 use Anthropic\Core\Implementation\RawResponse;
+use Anthropic\Middleware;
 use Anthropic\RequestOptions;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
@@ -93,6 +94,42 @@ abstract class BaseClient
 
         // @phpstan-ignore-next-line argument.type
         return new RawResponse(client: $this, request: $request, response: $rsp, options: $opts, requestInfo: $req, unwrap: $unwrap, stream: $stream, page: $page, convert: $convert ?? 'null');
+    }
+
+    /**
+     * The middleware configured on this client, in outermost-first order
+     * (the first entry wraps all the others).
+     *
+     * @return list<Middleware|callable(RequestInterface, \Closure(RequestInterface): ResponseInterface): ResponseInterface>
+     */
+    public function middleware(): array
+    {
+        return $this->options->middleware ?? [];
+    }
+
+    /**
+     * Derive a copy of this client with additional middleware appended after
+     * (i.e. running inside) the client's existing middleware — the same
+     * placement as request-level middleware. The original client is unchanged.
+     *
+     * Note: passing `middleware` through per-request `RequestOptions` instead
+     * *replaces* the client's middleware (consistent with every other option),
+     * silently dropping client-level middleware such as logging or tracing —
+     * prefer `withMiddleware()` to append.
+     *
+     * Relies on each concrete client's `__clone()` to give the copy its own
+     * options and to rewire its services to dispatch through the copy.
+     *
+     * @param Middleware|callable(RequestInterface, \Closure(RequestInterface): ResponseInterface): ResponseInterface ...$middleware
+     */
+    public function withMiddleware(Middleware|callable ...$middleware): static
+    {
+        $self = clone $this;
+        $self->options->middleware = array_values(
+            array_merge($this->options->middleware ?? [], $middleware),
+        );
+
+        return $self;
     }
 
     /**
@@ -269,17 +306,40 @@ abstract class BaseClient
         /** @var RequestInterface */
         $req = $req->withHeader('X-Stainless-Retry-Count', strval($retryCount));
         $req = Util::withSetBody($opts->streamFactory, req: $req, body: $data);
-        $req = $this->transformRequest($req);
 
-        $transporter = Util::isStreamingRequest($req)
-            ? ($opts->streamingTransporter ?? $opts->transporter)
-            : $opts->transporter;
+        // The innermost handler: per-backend request signing / URL-rewriting
+        // and the actual HTTP send. Middleware wraps *around* this, so it sees
+        // the canonical request shape, and any request modifications it makes
+        // (e.g. `withHeader(...)`) are signed by `transformRequest()` here, per
+        // attempt. `callNext` returns the response for every HTTP status; only
+        // a transport-level failure raises.
+        $callNext = function (RequestInterface $req) use ($opts): ResponseInterface {
+            // Rewind the (seekable) body before each invocation so a custom-retry
+            // middleware that calls callNext more than once re-sends the full
+            // body, and so per-attempt signing in transformRequest() hashes it
+            // from the start. Non-seekable bodies can't be rewound (and aren't
+            // re-sendable); that limitation is fundamental.
+            $body = $req->getBody();
+            if ($body->isSeekable()) {
+                $body->rewind();
+            }
+
+            $req = $this->transformRequest($req);
+
+            $transporter = Util::isStreamingRequest($req)
+                ? ($opts->streamingTransporter ?? $opts->transporter)
+                : $opts->transporter;
+
+            return $transporter->sendRequest($req);
+        };
+
+        $handler = $this->applyMiddleware($callNext, $opts->middleware ?? []);
 
         $rsp = null;
         $err = null;
 
         try {
-            $rsp = $transporter->sendRequest($req);
+            $rsp = $handler($req);
         } catch (ClientExceptionInterface $e) {
             $err = $e;
         }
@@ -311,6 +371,30 @@ abstract class BaseClient
         }
 
         return $rsp;
+    }
+
+    /**
+     * Wrap the core request handler with the configured middleware so that the
+     * first middleware in the list runs outermost and the last runs closest to
+     * the transport.
+     *
+     * @internal
+     *
+     * @param \Closure(RequestInterface): ResponseInterface $handler
+     * @param list<Middleware|callable(RequestInterface, \Closure(RequestInterface): ResponseInterface): ResponseInterface> $middleware
+     *
+     * @return \Closure(RequestInterface): ResponseInterface
+     */
+    private function applyMiddleware(\Closure $handler, array $middleware): \Closure
+    {
+        foreach (array_reverse($middleware) as $mw) {
+            $next = $handler;
+            $handler = static fn (RequestInterface $req): ResponseInterface => $mw instanceof Middleware
+                ? $mw->handle($req, $next)
+                : $mw($req, $next);
+        }
+
+        return $handler;
     }
 
     /**

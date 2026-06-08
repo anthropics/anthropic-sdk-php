@@ -51,6 +51,7 @@ class Client extends BaseClient
 
     /**
      * @param RequestOpts|null $requestOptions
+     * @param list<Middleware|callable(RequestInterface, \Closure(RequestInterface): ResponseInterface): ResponseInterface> $middleware applied to every request made by this client, outermost-first
      */
     public function __construct(
         ?string $apiKey = null,
@@ -59,6 +60,7 @@ class Client extends BaseClient
         ?string $baseUrl = null,
         RequestOptions|array|null $requestOptions = null,
         ?CredentialResult $credentials = null,
+        array $middleware = [],
     ) {
         $this->apiKey = (string) ($apiKey ?? getenv('ANTHROPIC_API_KEY'));
         $this->authToken = (string) ($authToken ?? getenv('ANTHROPIC_AUTH_TOKEN'));
@@ -83,6 +85,10 @@ class Client extends BaseClient
         if (is_null($options->streamingTransporter)) {
             assert(!is_null($options->transporter));
             $options->streamingTransporter = new StreamingHttpClient($options->transporter);
+        }
+
+        if ([] !== $middleware) {
+            $options->middleware = array_merge($options->middleware ?? [], $middleware);
         }
 
         /** @var array<string, string|null> $headers */
@@ -127,6 +133,19 @@ class Client extends BaseClient
             }
         }
 
+        $this->messages = new MessagesService($this);
+        $this->models = new ModelsService($this);
+        $this->beta = new BetaService($this);
+    }
+
+    /**
+     * Rebuild per-client state when the client is cloned (e.g. via
+     * {@see self::withMiddleware()}) so that the copy gets its own options and
+     * its services dispatch through the copy rather than the original.
+     */
+    public function __clone(): void
+    {
+        $this->options = clone $this->options;
         $this->messages = new MessagesService($this);
         $this->models = new ModelsService($this);
         $this->beta = new BetaService($this);

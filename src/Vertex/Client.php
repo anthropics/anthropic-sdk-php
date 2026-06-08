@@ -17,6 +17,9 @@ use Http\Discovery\Psr18ClientDiscovery;
 use Psr\Http\Message\RequestInterface;
 
 /**
+ * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type MiddlewareItem from \Anthropic\RequestOptions
+ *
  * @phpstan-type GoogleAuthTokenShape = array{access_token: non-empty-string, expires_at: positive-int|null}
  */
 final class Client extends BaseClient
@@ -41,18 +44,29 @@ final class Client extends BaseClient
      * @param \Closure(): FetchAuthTokenInterface $credentialsProvider
      * @param non-empty-string $location
      * @param non-empty-string|null $projectId
+     * @param RequestOpts|null $requestOptions
+     * @param list<MiddlewareItem> $middleware
      */
     private function __construct(
         private \Closure $credentialsProvider,
         private string $location,
         private ?string $projectId,
+        RequestOptions|array|null $requestOptions = null,
+        array $middleware = [],
     ) {
-        $options = RequestOptions::with(
-            uriFactory: Psr17FactoryDiscovery::findUriFactory(),
-            streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
-            requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
-            transporter: Psr18ClientDiscovery::find(),
+        $options = RequestOptions::parse(
+            RequestOptions::with(
+                uriFactory: Psr17FactoryDiscovery::findUriFactory(),
+                streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
+                requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
+                transporter: Psr18ClientDiscovery::find(),
+            ),
+            $requestOptions,
         );
+
+        if ([] !== $middleware) {
+            $options->middleware = array_merge($options->middleware ?? [], $middleware);
+        }
 
         // @see https://docs.cloud.google.com/vertex-ai/docs/reference/rest#rest_endpoints
         $baseUrl = match ($location) {
@@ -71,11 +85,23 @@ final class Client extends BaseClient
         $this->messages = new MessagesService(new MessagesRawService($this));
     }
 
+    public function __clone(): void
+    {
+        $this->options = clone $this->options;
+        $this->messages = new MessagesService(new MessagesRawService($this));
+    }
+
     /**
      * @param non-empty-string $location
      * @param non-empty-string|null $projectId
      */
-    public static function fromEnvironment(string $location, ?string $projectId = null): self
+    /**
+     * @param non-empty-string $location
+     * @param non-empty-string|null $projectId
+     * @param RequestOpts|null $requestOptions
+     * @param list<MiddlewareItem> $middleware
+     */
+    public static function fromEnvironment(string $location, ?string $projectId = null, RequestOptions|array|null $requestOptions = null, array $middleware = []): self
     {
         self::ensureGoogleAuthLibraryIsInstalled();
 
@@ -89,6 +115,8 @@ final class Client extends BaseClient
             credentialsProvider: $credentialsProvider,
             location: $location,
             projectId: $projectId,
+            requestOptions: $requestOptions,
+            middleware: $middleware,
         );
     }
 

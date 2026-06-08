@@ -25,6 +25,7 @@ use Psr\Http\Message\UriInterface;
  *
  * @phpstan-import-type NormalizedRequest from \Anthropic\Core\BaseClient
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type MiddlewareItem from \Anthropic\RequestOptions
  */
 final class Client extends BaseClient
 {
@@ -44,6 +45,7 @@ final class Client extends BaseClient
     /**
      * @param non-empty-string $region
      * @param RequestOpts|null $requestOptions
+     * @param list<MiddlewareItem> $middleware
      */
     private function __construct(
         private ?\Closure $signatureProvider,
@@ -51,6 +53,7 @@ final class Client extends BaseClient
         private string $region,
         ?string $apiKey = null,
         RequestOptions|array|null $requestOptions = null,
+        array $middleware = [],
     ) {
         $this->apiKey = $apiKey ?? '';
 
@@ -80,6 +83,10 @@ final class Client extends BaseClient
             $requestOptions,
         );
 
+        if ([] !== $middleware) {
+            $options->middleware = array_merge($options->middleware ?? [], $middleware);
+        }
+
         parent::__construct(
             headers: [],
             baseUrl: '',
@@ -89,11 +96,18 @@ final class Client extends BaseClient
         $this->messages = new MessagesService($this);
     }
 
+    public function __clone(): void
+    {
+        $this->options = clone $this->options;
+        $this->messages = new MessagesService($this);
+    }
+
     /**
      * @param RequestOpts|null $requestOptions
      * @param non-empty-string|null $region
+     * @param list<MiddlewareItem> $middleware
      */
-    public static function fromEnvironment(?string $region = null, RequestOptions|array|null $requestOptions = null): self
+    public static function fromEnvironment(?string $region = null, RequestOptions|array|null $requestOptions = null, array $middleware = []): self
     {
         $region = self::resolveRegion($region);
         $apiKey = Util::getenv('AWS_BEARER_TOKEN_BEDROCK');
@@ -105,6 +119,7 @@ final class Client extends BaseClient
                 region: $region,
                 apiKey: $apiKey,
                 requestOptions: $requestOptions,
+                middleware: $middleware,
             );
         }
 
@@ -114,7 +129,7 @@ final class Client extends BaseClient
         $signatureProvider = SignatureProvider::defaultProvider()(...);
 
         // @phpstan-ignore-next-line argument.type
-        return new self($signatureProvider, $credentialProvider, $region, requestOptions: $requestOptions);
+        return new self($signatureProvider, $credentialProvider, $region, requestOptions: $requestOptions, middleware: $middleware);
     }
 
     /**
@@ -123,6 +138,7 @@ final class Client extends BaseClient
      * @param non-empty-string|null $region
      * @param non-empty-string|null $securityToken
      * @param RequestOpts|null $requestOptions
+     * @param list<MiddlewareItem> $middleware
      */
     public static function withCredentials(
         string $accessKeyId,
@@ -130,6 +146,7 @@ final class Client extends BaseClient
         ?string $region = null,
         ?string $securityToken = null,
         RequestOptions|array|null $requestOptions = null,
+        array $middleware = [],
     ): self
     {
         self::ensureAwsSdkIsInstalled();
@@ -140,15 +157,16 @@ final class Client extends BaseClient
         $signatureProvider = SignatureProvider::defaultProvider()(...);
 
         // @phpstan-ignore-next-line argument.type
-        return new self($signatureProvider, $credentialProvider, $region, requestOptions: $requestOptions);
+        return new self($signatureProvider, $credentialProvider, $region, requestOptions: $requestOptions, middleware: $middleware);
     }
 
     /**
      * @param non-empty-string $apiKey
      * @param non-empty-string|null $region
      * @param RequestOpts|null $requestOptions
+     * @param list<MiddlewareItem> $middleware
      */
-    public static function withApiKey(string $apiKey, ?string $region = null, RequestOptions|array|null $requestOptions = null): self
+    public static function withApiKey(string $apiKey, ?string $region = null, RequestOptions|array|null $requestOptions = null, array $middleware = []): self
     {
         $region = self::resolveRegion($region);
 
@@ -158,6 +176,7 @@ final class Client extends BaseClient
             region: $region,
             apiKey: $apiKey,
             requestOptions: $requestOptions,
+            middleware: $middleware,
         );
     }
 
