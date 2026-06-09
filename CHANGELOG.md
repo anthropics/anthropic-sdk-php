@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.29.1 (2026-06-09)
+
+Full Changelog: [v0.29.0...v0.29.1](https://github.com/anthropics/anthropic-sdk-php/compare/v0.29.0...v0.29.1)
+
+### Bug Fixes
+
+* **api:** add `frontier_llm` refusal category ([3c8293f](https://github.com/anthropics/anthropic-sdk-php/commit/3c8293fd15dfe3f7dc6c3b4321e54ba28b5ab327))
+
 ## 0.29.0 (2026-06-09)
 
 Full Changelog: [v0.28.0...v0.29.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.28.0...v0.29.0)
