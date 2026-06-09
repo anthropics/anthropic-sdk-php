@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events\ManagedAgentsSessionErrorEvent;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsBillingError;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsCredentialHostUnreachableError;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsMCPAuthenticationFailedError;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsMCPConnectionFailedError;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsModelOverloadedError;
@@ -25,9 +26,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type ManagedAgentsMCPConnectionFailedErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsMCPConnectionFailedError
  * @phpstan-import-type ManagedAgentsMCPAuthenticationFailedErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsMCPAuthenticationFailedError
  * @phpstan-import-type ManagedAgentsBillingErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsBillingError
+ * @phpstan-import-type ManagedAgentsCredentialHostUnreachableErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsCredentialHostUnreachableError
  *
- * @phpstan-type ErrorVariants = ManagedAgentsUnknownError|ManagedAgentsModelOverloadedError|ManagedAgentsModelRateLimitedError|ManagedAgentsModelRequestFailedError|ManagedAgentsMCPConnectionFailedError|ManagedAgentsMCPAuthenticationFailedError|ManagedAgentsBillingError
- * @phpstan-type ErrorShape = ErrorVariants|ManagedAgentsUnknownErrorShape|ManagedAgentsModelOverloadedErrorShape|ManagedAgentsModelRateLimitedErrorShape|ManagedAgentsModelRequestFailedErrorShape|ManagedAgentsMCPConnectionFailedErrorShape|ManagedAgentsMCPAuthenticationFailedErrorShape|ManagedAgentsBillingErrorShape
+ * @phpstan-type ErrorVariants = ManagedAgentsUnknownError|ManagedAgentsModelOverloadedError|ManagedAgentsModelRateLimitedError|ManagedAgentsModelRequestFailedError|ManagedAgentsMCPConnectionFailedError|ManagedAgentsMCPAuthenticationFailedError|ManagedAgentsBillingError|ManagedAgentsCredentialHostUnreachableError
+ * @phpstan-type ErrorShape = ErrorVariants|ManagedAgentsUnknownErrorShape|ManagedAgentsModelOverloadedErrorShape|ManagedAgentsModelRateLimitedErrorShape|ManagedAgentsModelRequestFailedErrorShape|ManagedAgentsMCPConnectionFailedErrorShape|ManagedAgentsMCPAuthenticationFailedErrorShape|ManagedAgentsBillingErrorShape|ManagedAgentsCredentialHostUnreachableErrorShape
  */
 final class Error implements ConverterSource
 {
@@ -51,6 +53,7 @@ final class Error implements ConverterSource
             'mcp_connection_failed_error' => ManagedAgentsMCPConnectionFailedError::class,
             'mcp_authentication_failed_error' => ManagedAgentsMCPAuthenticationFailedError::class,
             'billing_error' => ManagedAgentsBillingError::class,
+            'credential_host_unreachable_error' => ManagedAgentsCredentialHostUnreachableError::class,
         ];
     }
 }

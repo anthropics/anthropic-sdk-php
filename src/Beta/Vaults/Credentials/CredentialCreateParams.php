@@ -39,7 +39,7 @@ final class CredentialCreateParams implements BaseModel
      * @var AuthVariants $auth
      */
     #[Required(union: Auth::class)]
-    public ManagedAgentsMCPOAuthCreateParams|ManagedAgentsStaticBearerCreateParams $auth;
+    public ManagedAgentsMCPOAuthCreateParams|ManagedAgentsStaticBearerCreateParams|ManagedAgentsEnvironmentVariableCreateParams $auth;
 
     /**
      * Human-readable name for the credential. Up to 255 characters.
@@ -92,7 +92,7 @@ final class CredentialCreateParams implements BaseModel
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
-        ManagedAgentsMCPOAuthCreateParams|array|ManagedAgentsStaticBearerCreateParams $auth,
+        ManagedAgentsMCPOAuthCreateParams|array|ManagedAgentsStaticBearerCreateParams|ManagedAgentsEnvironmentVariableCreateParams $auth,
         ?string $displayName = null,
         ?array $metadata = null,
         ?array $betas = null,
@@ -114,7 +114,7 @@ final class CredentialCreateParams implements BaseModel
      * @param AuthShape $auth
      */
     public function withAuth(
-        ManagedAgentsMCPOAuthCreateParams|array|ManagedAgentsStaticBearerCreateParams $auth,
+        ManagedAgentsMCPOAuthCreateParams|array|ManagedAgentsStaticBearerCreateParams|ManagedAgentsEnvironmentVariableCreateParams $auth,
     ): self {
         $self = clone $this;
         $self['auth'] = $auth;

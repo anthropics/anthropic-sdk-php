@@ -17,9 +17,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type ManagedAgentsUserCustomToolResultEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserCustomToolResultEventParams
  * @phpstan-import-type ManagedAgentsUserDefineOutcomeEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserDefineOutcomeEventParams
  * @phpstan-import-type ManagedAgentsUserToolResultEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserToolResultEventParams
+ * @phpstan-import-type ManagedAgentsSystemMessageEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSystemMessageEventParams
  *
- * @phpstan-type ManagedAgentsEventParamsVariants = ManagedAgentsUserMessageEventParams|ManagedAgentsUserInterruptEventParams|ManagedAgentsUserToolConfirmationEventParams|ManagedAgentsUserCustomToolResultEventParams|ManagedAgentsUserDefineOutcomeEventParams|ManagedAgentsUserToolResultEventParams
- * @phpstan-type ManagedAgentsEventParamsShape = ManagedAgentsEventParamsVariants|ManagedAgentsUserMessageEventParamsShape|ManagedAgentsUserInterruptEventParamsShape|ManagedAgentsUserToolConfirmationEventParamsShape|ManagedAgentsUserCustomToolResultEventParamsShape|ManagedAgentsUserDefineOutcomeEventParamsShape|ManagedAgentsUserToolResultEventParamsShape
+ * @phpstan-type ManagedAgentsEventParamsVariants = ManagedAgentsUserMessageEventParams|ManagedAgentsUserInterruptEventParams|ManagedAgentsUserToolConfirmationEventParams|ManagedAgentsUserCustomToolResultEventParams|ManagedAgentsUserDefineOutcomeEventParams|ManagedAgentsUserToolResultEventParams|ManagedAgentsSystemMessageEventParams
+ * @phpstan-type ManagedAgentsEventParamsShape = ManagedAgentsEventParamsVariants|ManagedAgentsUserMessageEventParamsShape|ManagedAgentsUserInterruptEventParamsShape|ManagedAgentsUserToolConfirmationEventParamsShape|ManagedAgentsUserCustomToolResultEventParamsShape|ManagedAgentsUserDefineOutcomeEventParamsShape|ManagedAgentsUserToolResultEventParamsShape|ManagedAgentsSystemMessageEventParamsShape
  */
 final class ManagedAgentsEventParams implements ConverterSource
 {
@@ -42,6 +43,7 @@ final class ManagedAgentsEventParams implements ConverterSource
             'user.custom_tool_result' => ManagedAgentsUserCustomToolResultEventParams::class,
             'user.define_outcome' => ManagedAgentsUserDefineOutcomeEventParams::class,
             'user.tool_result' => ManagedAgentsUserToolResultEventParams::class,
+            'system.message' => ManagedAgentsSystemMessageEventParams::class,
         ];
     }
 }

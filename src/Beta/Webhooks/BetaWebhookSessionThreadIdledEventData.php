@@ -12,6 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaWebhookSessionThreadIdledEventDataShape = array{
  *   id: string,
  *   organizationID: string,
+ *   sessionThreadID: string,
  *   type: 'session.thread_idled',
  *   workspaceID: string,
  * }
@@ -34,6 +35,12 @@ final class BetaWebhookSessionThreadIdledEventData implements BaseModel
     #[Required('organization_id')]
     public string $organizationID;
 
+    /**
+     * ID of the session thread this event refers to.
+     */
+    #[Required('session_thread_id')]
+    public string $sessionThreadID;
+
     #[Required('workspace_id')]
     public string $workspaceID;
 
@@ -43,7 +50,7 @@ final class BetaWebhookSessionThreadIdledEventData implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaWebhookSessionThreadIdledEventData::with(
-     *   id: ..., organizationID: ..., workspaceID: ...
+     *   id: ..., organizationID: ..., sessionThreadID: ..., workspaceID: ...
      * )
      * ```
      *
@@ -53,6 +60,7 @@ final class BetaWebhookSessionThreadIdledEventData implements BaseModel
      * (new BetaWebhookSessionThreadIdledEventData)
      *   ->withID(...)
      *   ->withOrganizationID(...)
+     *   ->withSessionThreadID(...)
      *   ->withWorkspaceID(...)
      * ```
      */
@@ -69,12 +77,14 @@ final class BetaWebhookSessionThreadIdledEventData implements BaseModel
     public static function with(
         string $id,
         string $organizationID,
-        string $workspaceID
+        string $sessionThreadID,
+        string $workspaceID,
     ): self {
         $self = new self;
 
         $self['id'] = $id;
         $self['organizationID'] = $organizationID;
+        $self['sessionThreadID'] = $sessionThreadID;
         $self['workspaceID'] = $workspaceID;
 
         return $self;
@@ -95,6 +105,17 @@ final class BetaWebhookSessionThreadIdledEventData implements BaseModel
     {
         $self = clone $this;
         $self['organizationID'] = $organizationID;
+
+        return $self;
+    }
+
+    /**
+     * ID of the session thread this event refers to.
+     */
+    public function withSessionThreadID(string $sessionThreadID): self
+    {
+        $self = clone $this;
+        $self['sessionThreadID'] = $sessionThreadID;
 
         return $self;
     }
