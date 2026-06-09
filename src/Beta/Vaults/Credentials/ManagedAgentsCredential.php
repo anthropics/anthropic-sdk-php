@@ -52,7 +52,7 @@ final class ManagedAgentsCredential implements BaseModel
      * @var AuthVariants $auth
      */
     #[Required(union: Auth::class)]
-    public ManagedAgentsMCPOAuthAuthResponse|ManagedAgentsStaticBearerAuthResponse $auth;
+    public ManagedAgentsMCPOAuthAuthResponse|ManagedAgentsStaticBearerAuthResponse|ManagedAgentsEnvironmentVariableAuthResponse $auth;
 
     /**
      * A timestamp in RFC 3339 format.
@@ -138,7 +138,7 @@ final class ManagedAgentsCredential implements BaseModel
     public static function with(
         string $id,
         ?\DateTimeInterface $archivedAt,
-        ManagedAgentsMCPOAuthAuthResponse|array|ManagedAgentsStaticBearerAuthResponse $auth,
+        ManagedAgentsMCPOAuthAuthResponse|array|ManagedAgentsStaticBearerAuthResponse|ManagedAgentsEnvironmentVariableAuthResponse $auth,
         \DateTimeInterface $createdAt,
         array $metadata,
         Type|string $type,
@@ -190,7 +190,7 @@ final class ManagedAgentsCredential implements BaseModel
      * @param AuthShape $auth
      */
     public function withAuth(
-        ManagedAgentsMCPOAuthAuthResponse|array|ManagedAgentsStaticBearerAuthResponse $auth,
+        ManagedAgentsMCPOAuthAuthResponse|array|ManagedAgentsStaticBearerAuthResponse|ManagedAgentsEnvironmentVariableAuthResponse $auth,
     ): self {
         $self = clone $this;
         $self['auth'] = $auth;

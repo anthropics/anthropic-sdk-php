@@ -7,6 +7,8 @@ namespace Anthropic\Services;
 use Anthropic\Client;
 use Anthropic\ServiceContracts\BetaContract;
 use Anthropic\Services\Beta\AgentsService;
+use Anthropic\Services\Beta\DeploymentRunsService;
+use Anthropic\Services\Beta\DeploymentsService;
 use Anthropic\Services\Beta\EnvironmentsService;
 use Anthropic\Services\Beta\FilesService;
 use Anthropic\Services\Beta\MemoryStoresService;
@@ -53,6 +55,16 @@ final class BetaService implements BetaContract
     /**
      * @api
      */
+    public DeploymentsService $deployments;
+
+    /**
+     * @api
+     */
+    public DeploymentRunsService $deploymentRuns;
+
+    /**
+     * @api
+     */
     public VaultsService $vaults;
 
     /**
@@ -91,6 +103,8 @@ final class BetaService implements BetaContract
         $this->agents = new AgentsService($client);
         $this->environments = new EnvironmentsService($client);
         $this->sessions = new SessionsService($client);
+        $this->deployments = new DeploymentsService($client);
+        $this->deploymentRuns = new DeploymentRunsService($client);
         $this->vaults = new VaultsService($client);
         $this->memoryStores = new MemoryStoresService($client);
         $this->files = new FilesService($client);

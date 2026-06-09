@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Vaults\Credentials\CredentialCreateParams;
 
+use Anthropic\Beta\Vaults\Credentials\ManagedAgentsEnvironmentVariableCreateParams;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsMCPOAuthCreateParams;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsStaticBearerCreateParams;
 use Anthropic\Core\Concerns\SdkUnion;
@@ -15,9 +16,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  *
  * @phpstan-import-type ManagedAgentsMCPOAuthCreateParamsShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsMCPOAuthCreateParams
  * @phpstan-import-type ManagedAgentsStaticBearerCreateParamsShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsStaticBearerCreateParams
+ * @phpstan-import-type ManagedAgentsEnvironmentVariableCreateParamsShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsEnvironmentVariableCreateParams
  *
- * @phpstan-type AuthVariants = ManagedAgentsMCPOAuthCreateParams|ManagedAgentsStaticBearerCreateParams
- * @phpstan-type AuthShape = AuthVariants|ManagedAgentsMCPOAuthCreateParamsShape|ManagedAgentsStaticBearerCreateParamsShape
+ * @phpstan-type AuthVariants = ManagedAgentsMCPOAuthCreateParams|ManagedAgentsStaticBearerCreateParams|ManagedAgentsEnvironmentVariableCreateParams
+ * @phpstan-type AuthShape = AuthVariants|ManagedAgentsMCPOAuthCreateParamsShape|ManagedAgentsStaticBearerCreateParamsShape|ManagedAgentsEnvironmentVariableCreateParamsShape
  */
 final class Auth implements ConverterSource
 {
@@ -36,6 +38,7 @@ final class Auth implements ConverterSource
         return [
             'mcp_oauth' => ManagedAgentsMCPOAuthCreateParams::class,
             'static_bearer' => ManagedAgentsStaticBearerCreateParams::class,
+            'environment_variable' => ManagedAgentsEnvironmentVariableCreateParams::class,
         ];
     }
 }

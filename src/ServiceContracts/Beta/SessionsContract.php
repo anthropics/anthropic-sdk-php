@@ -95,6 +95,7 @@ interface SessionsContract
      * @param \DateTimeInterface $createdAtGte query param: Return sessions created at or after this time (inclusive)
      * @param \DateTimeInterface $createdAtLt query param: Return sessions created before this time (exclusive)
      * @param \DateTimeInterface $createdAtLte query param: Return sessions created at or before this time (inclusive)
+     * @param string $deploymentID query param: Filter sessions created by this deployment ID
      * @param bool $includeArchived Query param: When true, includes archived sessions. Default: false (exclude archived).
      * @param int $limit query param: Maximum number of results to return
      * @param string $memoryStoreID query param: Filter sessions whose resources contain a memory_store with this memory store ID
@@ -115,6 +116,7 @@ interface SessionsContract
         ?\DateTimeInterface $createdAtGte = null,
         ?\DateTimeInterface $createdAtLt = null,
         ?\DateTimeInterface $createdAtLte = null,
+        ?string $deploymentID = null,
         ?bool $includeArchived = null,
         ?int $limit = null,
         ?string $memoryStoreID = null,

@@ -44,7 +44,7 @@ final class CredentialUpdateParams implements BaseModel
      * @var AuthVariants|null $auth
      */
     #[Optional(union: Auth::class)]
-    public ManagedAgentsMCPOAuthUpdateParams|ManagedAgentsStaticBearerUpdateParams|null $auth;
+    public ManagedAgentsMCPOAuthUpdateParams|ManagedAgentsStaticBearerUpdateParams|ManagedAgentsEnvironmentVariableUpdateParams|null $auth;
 
     /**
      * Updated human-readable name for the credential. 1-255 characters.
@@ -98,7 +98,7 @@ final class CredentialUpdateParams implements BaseModel
      */
     public static function with(
         string $vaultID,
-        ManagedAgentsMCPOAuthUpdateParams|array|ManagedAgentsStaticBearerUpdateParams|null $auth = null,
+        ManagedAgentsMCPOAuthUpdateParams|array|ManagedAgentsStaticBearerUpdateParams|ManagedAgentsEnvironmentVariableUpdateParams|null $auth = null,
         ?string $displayName = null,
         ?array $metadata = null,
         ?array $betas = null,
@@ -129,7 +129,7 @@ final class CredentialUpdateParams implements BaseModel
      * @param AuthShape $auth
      */
     public function withAuth(
-        ManagedAgentsMCPOAuthUpdateParams|array|ManagedAgentsStaticBearerUpdateParams $auth,
+        ManagedAgentsMCPOAuthUpdateParams|array|ManagedAgentsStaticBearerUpdateParams|ManagedAgentsEnvironmentVariableUpdateParams $auth,
     ): self {
         $self = clone $this;
         $self['auth'] = $auth;

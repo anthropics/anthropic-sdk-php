@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Sessions;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSession\Status;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSession\Type;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsSessionResource;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -37,6 +38,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   updatedAt: \DateTimeInterface,
  *   usage: BetaManagedAgentsSessionUsage|BetaManagedAgentsSessionUsageShape,
  *   vaultIDs: list<string>,
+ *   deploymentID?: string|null,
  * }
  */
 final class BetaManagedAgentsSession implements BaseModel
@@ -129,6 +131,12 @@ final class BetaManagedAgentsSession implements BaseModel
     public array $vaultIDs;
 
     /**
+     * Deployment ID when the session was created from a deployment reference. Null otherwise.
+     */
+    #[Optional('deployment_id', nullable: true)]
+    public ?string $deploymentID;
+
+    /**
      * `new BetaManagedAgentsSession()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -209,6 +217,7 @@ final class BetaManagedAgentsSession implements BaseModel
         \DateTimeInterface $updatedAt,
         BetaManagedAgentsSessionUsage|array $usage,
         array $vaultIDs,
+        ?string $deploymentID = null,
     ): self {
         $self = new self;
 
@@ -227,6 +236,8 @@ final class BetaManagedAgentsSession implements BaseModel
         $self['updatedAt'] = $updatedAt;
         $self['usage'] = $usage;
         $self['vaultIDs'] = $vaultIDs;
+
+        null !== $deploymentID && $self['deploymentID'] = $deploymentID;
 
         return $self;
     }
@@ -395,6 +406,17 @@ final class BetaManagedAgentsSession implements BaseModel
     {
         $self = clone $this;
         $self['vaultIDs'] = $vaultIDs;
+
+        return $self;
+    }
+
+    /**
+     * Deployment ID when the session was created from a deployment reference. Null otherwise.
+     */
+    public function withDeploymentID(?string $deploymentID): self
+    {
+        $self = clone $this;
+        $self['deploymentID'] = $deploymentID;
 
         return $self;
     }

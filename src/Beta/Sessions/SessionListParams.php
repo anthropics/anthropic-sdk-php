@@ -24,6 +24,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   createdAtGte?: \DateTimeInterface|null,
  *   createdAtLt?: \DateTimeInterface|null,
  *   createdAtLte?: \DateTimeInterface|null,
+ *   deploymentID?: string|null,
  *   includeArchived?: bool|null,
  *   limit?: int|null,
  *   memoryStoreID?: string|null,
@@ -74,6 +75,12 @@ final class SessionListParams implements BaseModel
      */
     #[Optional]
     public ?\DateTimeInterface $createdAtLte;
+
+    /**
+     * Filter sessions created by this deployment ID.
+     */
+    #[Optional]
+    public ?string $deploymentID;
 
     /**
      * When true, includes archived sessions. Default: false (exclude archived).
@@ -144,6 +151,7 @@ final class SessionListParams implements BaseModel
         ?\DateTimeInterface $createdAtGte = null,
         ?\DateTimeInterface $createdAtLt = null,
         ?\DateTimeInterface $createdAtLte = null,
+        ?string $deploymentID = null,
         ?bool $includeArchived = null,
         ?int $limit = null,
         ?string $memoryStoreID = null,
@@ -160,6 +168,7 @@ final class SessionListParams implements BaseModel
         null !== $createdAtGte && $self['createdAtGte'] = $createdAtGte;
         null !== $createdAtLt && $self['createdAtLt'] = $createdAtLt;
         null !== $createdAtLte && $self['createdAtLte'] = $createdAtLte;
+        null !== $deploymentID && $self['deploymentID'] = $deploymentID;
         null !== $includeArchived && $self['includeArchived'] = $includeArchived;
         null !== $limit && $self['limit'] = $limit;
         null !== $memoryStoreID && $self['memoryStoreID'] = $memoryStoreID;
@@ -233,6 +242,17 @@ final class SessionListParams implements BaseModel
     {
         $self = clone $this;
         $self['createdAtLte'] = $createdAtLte;
+
+        return $self;
+    }
+
+    /**
+     * Filter sessions created by this deployment ID.
+     */
+    public function withDeploymentID(string $deploymentID): self
+    {
+        $self = clone $this;
+        $self['deploymentID'] = $deploymentID;
 
         return $self;
     }

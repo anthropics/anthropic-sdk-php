@@ -8,6 +8,8 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredential;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredentialValidation;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsDeletedCredential;
+use Anthropic\Beta\Vaults\Credentials\ManagedAgentsEnvironmentVariableCreateParams;
+use Anthropic\Beta\Vaults\Credentials\ManagedAgentsEnvironmentVariableUpdateParams;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsMCPOAuthCreateParams;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsMCPOAuthUpdateParams;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsStaticBearerCreateParams;
@@ -55,7 +57,7 @@ final class CredentialsService implements CredentialsContract
      */
     public function create(
         string $vaultID,
-        ManagedAgentsMCPOAuthCreateParams|array|ManagedAgentsStaticBearerCreateParams $auth,
+        ManagedAgentsMCPOAuthCreateParams|array|ManagedAgentsStaticBearerCreateParams|ManagedAgentsEnvironmentVariableCreateParams $auth,
         ?string $displayName = null,
         ?array $metadata = null,
         ?array $betas = null,
@@ -120,7 +122,7 @@ final class CredentialsService implements CredentialsContract
     public function update(
         string $credentialID,
         string $vaultID,
-        ManagedAgentsMCPOAuthUpdateParams|array|ManagedAgentsStaticBearerUpdateParams|null $auth = null,
+        ManagedAgentsMCPOAuthUpdateParams|array|ManagedAgentsStaticBearerUpdateParams|ManagedAgentsEnvironmentVariableUpdateParams|null $auth = null,
         ?string $displayName = null,
         ?array $metadata = null,
         ?array $betas = null,
