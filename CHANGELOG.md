@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.28.0 (2026-06-09)
+
+Full Changelog: [v0.27.0...v0.28.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.27.0...v0.28.0)
+
+### Features
+
+* **api:** add support for claude-mythos-5 and claude-fable-5, with support for server-side fallbacks on refusal ([e10ba6f](https://github.com/anthropics/anthropic-sdk-php/commit/e10ba6fa5b35db6d2fcf16ad929f2d65847a09ae))
+* **client:** adds client-side fallbacks middleware for API providers that do not support server-side fallbacks ([e10ba6f](https://github.com/anthropics/anthropic-sdk-php/commit/e10ba6fa5b35db6d2fcf16ad929f2d65847a09ae))
+
 ## 0.27.0 (2026-06-06)
 
 Full Changelog: [v0.26.0...v0.27.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.26.0...v0.27.0)
