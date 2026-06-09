@@ -13,6 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type BetaModelInfoShape = array{
  *   id: string,
+ *   allowedFallbackModels: list<string>|null,
  *   capabilities: null|BetaModelCapabilities|BetaModelCapabilitiesShape,
  *   createdAt: \DateTimeInterface,
  *   displayName: string,
@@ -41,6 +42,14 @@ final class BetaModelInfo implements BaseModel
      */
     #[Required]
     public string $id;
+
+    /**
+     * Model IDs this model accepts as `fallbacks[i].model` on the Messages API. An empty list means the `fallbacks` parameter is not supported for this model as primary.
+     *
+     * @var list<string>|null $allowedFallbackModels
+     */
+    #[Required('allowed_fallback_models', list: 'string')]
+    public ?array $allowedFallbackModels;
 
     /**
      * Model capability information.
@@ -79,6 +88,7 @@ final class BetaModelInfo implements BaseModel
      * ```
      * BetaModelInfo::with(
      *   id: ...,
+     *   allowedFallbackModels: ...,
      *   capabilities: ...,
      *   createdAt: ...,
      *   displayName: ...,
@@ -92,6 +102,7 @@ final class BetaModelInfo implements BaseModel
      * ```
      * (new BetaModelInfo)
      *   ->withID(...)
+     *   ->withAllowedFallbackModels(...)
      *   ->withCapabilities(...)
      *   ->withCreatedAt(...)
      *   ->withDisplayName(...)
@@ -109,10 +120,12 @@ final class BetaModelInfo implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param list<string>|null $allowedFallbackModels
      * @param BetaModelCapabilities|BetaModelCapabilitiesShape|null $capabilities
      */
     public static function with(
         string $id,
+        ?array $allowedFallbackModels,
         BetaModelCapabilities|array|null $capabilities,
         \DateTimeInterface $createdAt,
         string $displayName,
@@ -122,6 +135,7 @@ final class BetaModelInfo implements BaseModel
         $self = new self;
 
         $self['id'] = $id;
+        $self['allowedFallbackModels'] = $allowedFallbackModels;
         $self['capabilities'] = $capabilities;
         $self['createdAt'] = $createdAt;
         $self['displayName'] = $displayName;
@@ -138,6 +152,20 @@ final class BetaModelInfo implements BaseModel
     {
         $self = clone $this;
         $self['id'] = $id;
+
+        return $self;
+    }
+
+    /**
+     * Model IDs this model accepts as `fallbacks[i].model` on the Messages API. An empty list means the `fallbacks` parameter is not supported for this model as primary.
+     *
+     * @param list<string>|null $allowedFallbackModels
+     */
+    public function withAllowedFallbackModels(
+        ?array $allowedFallbackModels
+    ): self {
+        $self = clone $this;
+        $self['allowedFallbackModels'] = $allowedFallbackModels;
 
         return $self;
     }

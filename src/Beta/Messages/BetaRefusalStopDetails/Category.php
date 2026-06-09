@@ -14,4 +14,6 @@ enum Category: string
     case CYBER = 'cyber';
 
     case BIO = 'bio';
+
+    case REASONING_EXTRACTION = 'reasoning_extraction';
 }

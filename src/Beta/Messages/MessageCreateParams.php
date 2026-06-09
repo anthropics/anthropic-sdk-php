@@ -34,6 +34,7 @@ use Anthropic\Messages\Model;
  * @phpstan-import-type ContainerShape from \Anthropic\Beta\Messages\MessageCreateParams\Container
  * @phpstan-import-type BetaContextManagementConfigShape from \Anthropic\Beta\Messages\BetaContextManagementConfig
  * @phpstan-import-type BetaDiagnosticsParamShape from \Anthropic\Beta\Messages\BetaDiagnosticsParam
+ * @phpstan-import-type BetaFallbackParamShape from \Anthropic\Beta\Messages\BetaFallbackParam
  * @phpstan-import-type BetaRequestMCPServerURLDefinitionShape from \Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition
  * @phpstan-import-type BetaMetadataShape from \Anthropic\Beta\Messages\BetaMetadata
  * @phpstan-import-type BetaOutputConfigShape from \Anthropic\Beta\Messages\BetaOutputConfig
@@ -51,6 +52,8 @@ use Anthropic\Messages\Model;
  *   container?: ContainerShape|null,
  *   contextManagement?: null|BetaContextManagementConfig|BetaContextManagementConfigShape,
  *   diagnostics?: null|BetaDiagnosticsParam|BetaDiagnosticsParamShape,
+ *   fallbackCreditToken?: string|null,
+ *   fallbacks?: list<BetaFallbackParam|BetaFallbackParamShape>|null,
  *   inferenceGeo?: string|null,
  *   mcpServers?: list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape>|null,
  *   metadata?: null|BetaMetadata|BetaMetadataShape,
@@ -181,6 +184,39 @@ final class MessageCreateParams implements BaseModel
      */
     #[Optional(nullable: true)]
     public ?BetaDiagnosticsParam $diagnostics;
+
+    /**
+     * The `fallback_credit_token` from a prior refusal's `stop_details`.
+     *
+     * When a preceding request was refused and returned a `fallback_credit_token`,
+     * pass that code here on the retry to have the retry's cache-creation tokens
+     * for the prefix that was warm on the refused model billed at the cache-read
+     * rate. Must be redeemed by the same organization and workspace, with the same
+     * request body (optionally extended by one appended `assistant` message whose
+     * content is the partial text — with any trailing whitespace stripped from
+     * the final text block — and paired server-tool blocks streamed before the
+     * refusal; the appended-assistant form is not available for requests with
+     * `output_format` set or forced `tool_choice`), on an eligible fallback
+     * model, on the same platform,
+     * and within 5 minutes of the refusal; a mismatch is a 400. A token minted
+     * mid-server-tool-loop whose partial content was continuable may only be
+     * redeemed with the appended-assistant form — if an exact-body retry is
+     * rejected with a 400 saying the token must be redeemed by continuing the
+     * partial response, retry with the appended-assistant form instead.
+     *
+     * When the appended-assistant form is used on a model that otherwise disallows
+     * assistant-turn prefill, this token also authorizes that one prefill.
+     */
+    #[Optional('fallback_credit_token', nullable: true)]
+    public ?string $fallbackCreditToken;
+
+    /**
+     * Opt-in server-side retry on one or more substitute models when the requested model declines for policy reasons. Tried in order: if the first entry also declines, the second is tried, and so on.
+     *
+     * @var list<BetaFallbackParam>|null $fallbacks
+     */
+    #[Optional(list: BetaFallbackParam::class, nullable: true)]
+    public ?array $fallbacks;
 
     /**
      * Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
@@ -426,6 +462,7 @@ final class MessageCreateParams implements BaseModel
      * @param ContainerShape|null $container
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement
      * @param BetaDiagnosticsParam|BetaDiagnosticsParamShape|null $diagnostics
+     * @param list<BetaFallbackParam|BetaFallbackParamShape>|null $fallbacks
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape>|null $mcpServers
      * @param BetaMetadata|BetaMetadataShape|null $metadata
      * @param BetaOutputConfig|BetaOutputConfigShape|null $outputConfig
@@ -447,6 +484,8 @@ final class MessageCreateParams implements BaseModel
         string|BetaContainerParams|array|null $container = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
         BetaDiagnosticsParam|array|null $diagnostics = null,
+        ?string $fallbackCreditToken = null,
+        ?array $fallbacks = null,
         ?string $inferenceGeo = null,
         ?array $mcpServers = null,
         BetaMetadata|array|null $metadata = null,
@@ -475,6 +514,8 @@ final class MessageCreateParams implements BaseModel
         null !== $container && $self['container'] = $container;
         null !== $contextManagement && $self['contextManagement'] = $contextManagement;
         null !== $diagnostics && $self['diagnostics'] = $diagnostics;
+        null !== $fallbackCreditToken && $self['fallbackCreditToken'] = $fallbackCreditToken;
+        null !== $fallbacks && $self['fallbacks'] = $fallbacks;
         null !== $inferenceGeo && $self['inferenceGeo'] = $inferenceGeo;
         null !== $mcpServers && $self['mcpServers'] = $mcpServers;
         null !== $metadata && $self['metadata'] = $metadata;
@@ -643,6 +684,49 @@ final class MessageCreateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['diagnostics'] = $diagnostics;
+
+        return $self;
+    }
+
+    /**
+     * The `fallback_credit_token` from a prior refusal's `stop_details`.
+     *
+     * When a preceding request was refused and returned a `fallback_credit_token`,
+     * pass that code here on the retry to have the retry's cache-creation tokens
+     * for the prefix that was warm on the refused model billed at the cache-read
+     * rate. Must be redeemed by the same organization and workspace, with the same
+     * request body (optionally extended by one appended `assistant` message whose
+     * content is the partial text — with any trailing whitespace stripped from
+     * the final text block — and paired server-tool blocks streamed before the
+     * refusal; the appended-assistant form is not available for requests with
+     * `output_format` set or forced `tool_choice`), on an eligible fallback
+     * model, on the same platform,
+     * and within 5 minutes of the refusal; a mismatch is a 400. A token minted
+     * mid-server-tool-loop whose partial content was continuable may only be
+     * redeemed with the appended-assistant form — if an exact-body retry is
+     * rejected with a 400 saying the token must be redeemed by continuing the
+     * partial response, retry with the appended-assistant form instead.
+     *
+     * When the appended-assistant form is used on a model that otherwise disallows
+     * assistant-turn prefill, this token also authorizes that one prefill.
+     */
+    public function withFallbackCreditToken(?string $fallbackCreditToken): self
+    {
+        $self = clone $this;
+        $self['fallbackCreditToken'] = $fallbackCreditToken;
+
+        return $self;
+    }
+
+    /**
+     * Opt-in server-side retry on one or more substitute models when the requested model declines for policy reasons. Tried in order: if the first entry also declines, the second is tried, and so on.
+     *
+     * @param list<BetaFallbackParam|BetaFallbackParamShape>|null $fallbacks
+     */
+    public function withFallbacks(?array $fallbacks): self
+    {
+        $self = clone $this;
+        $self['fallbacks'] = $fallbacks;
 
         return $self;
     }
