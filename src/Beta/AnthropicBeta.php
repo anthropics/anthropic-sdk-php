@@ -57,4 +57,8 @@ enum AnthropicBeta: string
     case CACHE_DIAGNOSIS_2026_04_07 = 'cache-diagnosis-2026-04-07';
 
     case THINKING_TOKEN_COUNT_2026_05_13 = 'thinking-token-count-2026-05-13';
+
+    case SERVER_SIDE_FALLBACK_2026_06_01 = 'server-side-fallback-2026-06-01';
+
+    case FALLBACK_CREDIT_2026_06_01 = 'fallback-credit-2026-06-01';
 }
