@@ -15,5 +15,7 @@ enum Category: string
 
     case BIO = 'bio';
 
+    case FRONTIER_LLM = 'frontier_llm';
+
     case REASONING_EXTRACTION = 'reasoning_extraction';
 }
