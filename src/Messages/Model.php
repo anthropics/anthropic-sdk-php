@@ -16,10 +16,19 @@ namespace Anthropic\Messages;
 enum Model: string
 {
     // Anthropic model identifiers
+
+    case CLAUDE_FABLE_5 = 'claude-fable-5';
+
+    case CLAUDE_MYTHOS_5 = 'claude-mythos-5';
+
     case CLAUDE_OPUS_4_8 = 'claude-opus-4-8';
 
     case CLAUDE_OPUS_4_7 = 'claude-opus-4-7';
 
+    /**
+     * @deprecated Will reach end-of-life on June 30, 2026. Please migrate to claude-mythos-5.
+     * Visit https://docs.anthropic.com/en/docs/resources/model-deprecations for more information.
+     */
     case CLAUDE_MYTHOS_PREVIEW = 'claude-mythos-preview';
 
     case CLAUDE_OPUS_4_6 = 'claude-opus-4-6';

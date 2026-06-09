@@ -10,32 +10,37 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\Model;
 
 /**
- * Token usage for a sampling iteration.
+ * Token usage for the fallback-model attempt of a server-side fallback request.
+ *
+ * Produced in place of a `message` entry for whichever hop served the
+ * response. A declined hop produces the existing `message` entry. Whether
+ * a fallback model served the response is signalled by the presence of this
+ * entry in `usage.iterations`.
  *
  * @phpstan-import-type BetaCacheCreationShape from \Anthropic\Beta\Messages\BetaCacheCreation
  *
- * @phpstan-type BetaMessageIterationUsageShape = array{
+ * @phpstan-type BetaFallbackMessageIterationUsageShape = array{
  *   cacheCreation: null|BetaCacheCreation|BetaCacheCreationShape,
  *   cacheCreationInputTokens: int,
  *   cacheReadInputTokens: int,
  *   inputTokens: int,
  *   model: string|Model|value-of<Model>,
  *   outputTokens: int,
- *   type: 'message',
+ *   type: 'fallback_message',
  * }
  */
-final class BetaMessageIterationUsage implements BaseModel
+final class BetaFallbackMessageIterationUsage implements BaseModel
 {
-    /** @use SdkModel<BetaMessageIterationUsageShape> */
+    /** @use SdkModel<BetaFallbackMessageIterationUsageShape> */
     use SdkModel;
 
     /**
-     * Usage for a sampling iteration.
+     * Usage for the fallback-model attempt that served the response.
      *
-     * @var 'message' $type
+     * @var 'fallback_message' $type
      */
     #[Required]
-    public string $type = 'message';
+    public string $type = 'fallback_message';
 
     /**
      * Breakdown of cached tokens by TTL.
@@ -78,11 +83,11 @@ final class BetaMessageIterationUsage implements BaseModel
     public int $outputTokens;
 
     /**
-     * `new BetaMessageIterationUsage()` is missing required properties by the API.
+     * `new BetaFallbackMessageIterationUsage()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaMessageIterationUsage::with(
+     * BetaFallbackMessageIterationUsage::with(
      *   cacheCreation: ...,
      *   cacheCreationInputTokens: ...,
      *   cacheReadInputTokens: ...,
@@ -95,7 +100,7 @@ final class BetaMessageIterationUsage implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMessageIterationUsage)
+     * (new BetaFallbackMessageIterationUsage)
      *   ->withCacheCreation(...)
      *   ->withCacheCreationInputTokens(...)
      *   ->withCacheReadInputTokens(...)
@@ -212,9 +217,9 @@ final class BetaMessageIterationUsage implements BaseModel
     }
 
     /**
-     * Usage for a sampling iteration.
+     * Usage for the fallback-model attempt that served the response.
      *
-     * @param 'message' $type
+     * @param 'fallback_message' $type
      */
     public function withType(string $type): self
     {

@@ -9,6 +9,7 @@ use Anthropic\Beta\Messages\BetaCacheControlEphemeral;
 use Anthropic\Beta\Messages\BetaContainerParams;
 use Anthropic\Beta\Messages\BetaContextManagementConfig;
 use Anthropic\Beta\Messages\BetaDiagnosticsParam;
+use Anthropic\Beta\Messages\BetaFallbackParam;
 use Anthropic\Beta\Messages\BetaJSONOutputFormat;
 use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Beta\Messages\BetaMessageParam;
@@ -52,6 +53,7 @@ use Anthropic\Services\Beta\Messages\BatchesService;
  * @phpstan-import-type ContainerShape from \Anthropic\Beta\Messages\MessageCreateParams\Container
  * @phpstan-import-type BetaContextManagementConfigShape from \Anthropic\Beta\Messages\BetaContextManagementConfig
  * @phpstan-import-type BetaDiagnosticsParamShape from \Anthropic\Beta\Messages\BetaDiagnosticsParam
+ * @phpstan-import-type BetaFallbackParamShape from \Anthropic\Beta\Messages\BetaFallbackParam
  * @phpstan-import-type BetaRequestMCPServerURLDefinitionShape from \Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition
  * @phpstan-import-type BetaMetadataShape from \Anthropic\Beta\Messages\BetaMetadata
  * @phpstan-import-type BetaOutputConfigShape from \Anthropic\Beta\Messages\BetaOutputConfig
@@ -157,6 +159,27 @@ final class MessagesService implements MessagesContract
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
      * @param BetaDiagnosticsParam|BetaDiagnosticsParamShape|null $diagnostics Body param: Request-level diagnostics. Currently carries the previous response
      * id for prompt-cache divergence reporting.
+     * @param string|null $fallbackCreditToken Body param: The `fallback_credit_token` from a prior refusal's `stop_details`.
+     *
+     * When a preceding request was refused and returned a `fallback_credit_token`,
+     * pass that code here on the retry to have the retry's cache-creation tokens
+     * for the prefix that was warm on the refused model billed at the cache-read
+     * rate. Must be redeemed by the same organization and workspace, with the same
+     * request body (optionally extended by one appended `assistant` message whose
+     * content is the partial text — with any trailing whitespace stripped from
+     * the final text block — and paired server-tool blocks streamed before the
+     * refusal; the appended-assistant form is not available for requests with
+     * `output_format` set or forced `tool_choice`), on an eligible fallback
+     * model, on the same platform,
+     * and within 5 minutes of the refusal; a mismatch is a 400. A token minted
+     * mid-server-tool-loop whose partial content was continuable may only be
+     * redeemed with the appended-assistant form — if an exact-body retry is
+     * rejected with a 400 saying the token must be redeemed by continuing the
+     * partial response, retry with the appended-assistant form instead.
+     *
+     * When the appended-assistant form is used on a model that otherwise disallows
+     * assistant-turn prefill, this token also authorizes that one prefill.
+     * @param list<BetaFallbackParam|BetaFallbackParamShape>|null $fallbacks Body param: Opt-in server-side retry on one or more substitute models when the requested model declines for policy reasons. Tried in order: if the first entry also declines, the second is tried, and so on.
      * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers Body param: MCP servers to be utilized in this request
      * @param BetaMetadata|BetaMetadataShape $metadata body param: An object describing metadata about the request
@@ -272,6 +295,8 @@ final class MessagesService implements MessagesContract
         string|BetaContainerParams|array|null $container = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
         BetaDiagnosticsParam|array|null $diagnostics = null,
+        ?string $fallbackCreditToken = null,
+        ?array $fallbacks = null,
         ?string $inferenceGeo = null,
         ?array $mcpServers = null,
         BetaMetadata|array|null $metadata = null,
@@ -303,6 +328,8 @@ final class MessagesService implements MessagesContract
                 'container' => $container,
                 'contextManagement' => $contextManagement,
                 'diagnostics' => $diagnostics,
+                'fallbackCreditToken' => $fallbackCreditToken,
+                'fallbacks' => $fallbacks,
                 'inferenceGeo' => $inferenceGeo,
                 'mcpServers' => $mcpServers,
                 'metadata' => $metadata,
@@ -424,6 +451,27 @@ final class MessagesService implements MessagesContract
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
      * @param BetaDiagnosticsParam|BetaDiagnosticsParamShape|null $diagnostics Body param: Request-level diagnostics. Currently carries the previous response
      * id for prompt-cache divergence reporting.
+     * @param string|null $fallbackCreditToken Body param: The `fallback_credit_token` from a prior refusal's `stop_details`.
+     *
+     * When a preceding request was refused and returned a `fallback_credit_token`,
+     * pass that code here on the retry to have the retry's cache-creation tokens
+     * for the prefix that was warm on the refused model billed at the cache-read
+     * rate. Must be redeemed by the same organization and workspace, with the same
+     * request body (optionally extended by one appended `assistant` message whose
+     * content is the partial text — with any trailing whitespace stripped from
+     * the final text block — and paired server-tool blocks streamed before the
+     * refusal; the appended-assistant form is not available for requests with
+     * `output_format` set or forced `tool_choice`), on an eligible fallback
+     * model, on the same platform,
+     * and within 5 minutes of the refusal; a mismatch is a 400. A token minted
+     * mid-server-tool-loop whose partial content was continuable may only be
+     * redeemed with the appended-assistant form — if an exact-body retry is
+     * rejected with a 400 saying the token must be redeemed by continuing the
+     * partial response, retry with the appended-assistant form instead.
+     *
+     * When the appended-assistant form is used on a model that otherwise disallows
+     * assistant-turn prefill, this token also authorizes that one prefill.
+     * @param list<BetaFallbackParam|BetaFallbackParamShape>|null $fallbacks Body param: Opt-in server-side retry on one or more substitute models when the requested model declines for policy reasons. Tried in order: if the first entry also declines, the second is tried, and so on.
      * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers Body param: MCP servers to be utilized in this request
      * @param BetaMetadata|BetaMetadataShape $metadata body param: An object describing metadata about the request
@@ -541,6 +589,8 @@ final class MessagesService implements MessagesContract
         string|BetaContainerParams|array|null $container = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
         BetaDiagnosticsParam|array|null $diagnostics = null,
+        ?string $fallbackCreditToken = null,
+        ?array $fallbacks = null,
         ?string $inferenceGeo = null,
         ?array $mcpServers = null,
         BetaMetadata|array|null $metadata = null,
@@ -572,6 +622,8 @@ final class MessagesService implements MessagesContract
                 'container' => $container,
                 'contextManagement' => $contextManagement,
                 'diagnostics' => $diagnostics,
+                'fallbackCreditToken' => $fallbackCreditToken,
+                'fallbacks' => $fallbacks,
                 'inferenceGeo' => $inferenceGeo,
                 'mcpServers' => $mcpServers,
                 'metadata' => $metadata,
