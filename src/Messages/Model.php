@@ -59,8 +59,6 @@ enum Model: string
      */
     case CLAUDE_OPUS_4_1_20250805 = 'claude-opus-4-1-20250805';
 
-    case CLAUDE_3_HAIKU_20240307 = 'claude-3-haiku-20240307';
-
     // AWS Bedrock model identifiers
 
     case BEDROCK_CLAUDE_SONNET_4_5_20250929 = 'anthropic.claude-sonnet-4-5-20250929-v1:0';
