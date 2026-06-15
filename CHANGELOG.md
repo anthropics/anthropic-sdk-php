@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.29.2 (2026-06-15)
+
+Full Changelog: [v0.29.1...v0.29.2](https://github.com/anthropics/anthropic-sdk-php/compare/v0.29.1...v0.29.2)
+
+### Chores
+
+* **api:** remove retired models from API and SDKs ([01459e8](https://github.com/anthropics/anthropic-sdk-php/commit/01459e8891aa9468539506f3e455c7f6861953b0))
+
 ## 0.29.1 (2026-06-09)
 
 Full Changelog: [v0.29.0...v0.29.1](https://github.com/anthropics/anthropic-sdk-php/compare/v0.29.0...v0.29.1)
