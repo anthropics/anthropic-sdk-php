@@ -40,14 +40,4 @@ enum Model: string
     case CLAUDE_OPUS_4_1 = 'claude-opus-4-1';
 
     case CLAUDE_OPUS_4_1_20250805 = 'claude-opus-4-1-20250805';
-
-    case CLAUDE_OPUS_4_0 = 'claude-opus-4-0';
-
-    case CLAUDE_OPUS_4_20250514 = 'claude-opus-4-20250514';
-
-    case CLAUDE_SONNET_4_0 = 'claude-sonnet-4-0';
-
-    case CLAUDE_SONNET_4_20250514 = 'claude-sonnet-4-20250514';
-
-    case CLAUDE_3_HAIKU_20240307 = 'claude-3-haiku-20240307';
 }
