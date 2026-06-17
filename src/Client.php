@@ -193,6 +193,7 @@ class Client extends BaseClient
         RequestOptions $opts,
         int $retryCount,
         ?ResponseInterface $rsp,
+        bool $wantsRetryFromException = false,
     ): bool {
         // On 401 with OAuth credentials, invalidate the token cache and retry once.
         if (401 === $rsp?->getStatusCode() && !is_null($this->tokenCache)) {
@@ -201,7 +202,7 @@ class Client extends BaseClient
             return $retryCount < 1;
         }
 
-        return parent::shouldRetry($opts, $retryCount, $rsp);
+        return parent::shouldRetry($opts, $retryCount, $rsp, $wantsRetryFromException);
     }
 
     /**

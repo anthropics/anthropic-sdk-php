@@ -10,10 +10,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 
 /**
+ * @phpstan-type MiddlewareItem = Middleware|callable(RequestInterface, \Closure(RequestInterface): ResponseInterface): ResponseInterface
  * @phpstan-type RequestOptionShape = array{
  *   timeout?: float|null,
  *   maxRetries?: int|null,
@@ -22,6 +25,7 @@ use Psr\Http\Message\UriFactoryInterface;
  *   extraHeaders?: array<string,string|int|null|list<string|int>>|null,
  *   extraQueryParams?: array<string,mixed>|null,
  *   extraBodyParams?: mixed,
+ *   middleware?: list<MiddlewareItem>|null,
  *   transporter?: ClientInterface|null,
  *   streamingTransporter?: ClientInterface|null,
  *   uriFactory?: UriFactoryInterface|null,
@@ -58,6 +62,19 @@ final class RequestOptions implements BaseModel
     #[Optional]
     public mixed $extraBodyParams;
 
+    /**
+     * Middleware to run around each HTTP attempt, outermost first. Each
+     * entry is a callable `(RequestInterface $request, callable $next):
+     * ResponseInterface` — a class implementing {@see Middleware} works
+     * anywhere a callable does — where `$next` invokes the rest of the
+     * chain. Request-level middleware run inside (after) client-level
+     * middleware.
+     *
+     * @var list<MiddlewareItem>|null $middleware
+     */
+    #[Optional]
+    public ?array $middleware;
+
     #[Optional]
     public ?ClientInterface $transporter;
 
@@ -92,6 +109,7 @@ final class RequestOptions implements BaseModel
     /**
      * @param array<string,string|int|list<string|int>|null>|null $extraHeaders
      * @param array<string,mixed>|null $extraQueryParams
+     * @param list<MiddlewareItem>|null $middleware
      */
     public static function with(
         ?float $timeout = null,
@@ -101,6 +119,7 @@ final class RequestOptions implements BaseModel
         ?array $extraHeaders = null,
         ?array $extraQueryParams = null,
         mixed $extraBodyParams = null,
+        ?array $middleware = null,
         ?ClientInterface $transporter = null,
         ?ClientInterface $streamingTransporter = null,
         ?UriFactoryInterface $uriFactory = null,
@@ -118,6 +137,7 @@ final class RequestOptions implements BaseModel
         null !== $extraHeaders && $self->extraHeaders = $extraHeaders;
         null !== $extraQueryParams && $self->extraQueryParams = $extraQueryParams;
         null !== $extraBodyParams && $self->extraBodyParams = $extraBodyParams;
+        null !== $middleware && $self->middleware = $middleware;
         null !== $transporter && $self->transporter = $transporter;
         null !== $streamingTransporter && $self
             ->streamingTransporter = $streamingTransporter
