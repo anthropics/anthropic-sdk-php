@@ -280,6 +280,56 @@ $response = $client->request(
 );
 ```
 
+### Middleware
+
+You can intercept every HTTP request the client makes — to log, add headers, short-circuit with a cached response, or issue follow-up requests — by passing middleware: an array of callables of shape
+
+```php
+callable(RequestInterface $request, callable $next): ResponseInterface
+```
+
+where `$next` invokes the rest of the chain (it may be called zero, one, or several times). A class implementing `Anthropic\Middleware` — the same signature, as `handle()` — works anywhere a callable does.
+
+```php
+<?php
+
+use Anthropic\Client;
+use Anthropic\Middleware;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+
+$logger = function (RequestInterface $request, callable $next): ResponseInterface {
+    error_log("-> {$request->getMethod()} {$request->getUri()}");
+    $response = $next($request);
+    error_log("<- {$response->getStatusCode()}");
+
+    return $response;
+};
+
+final class TracingMiddleware implements Middleware
+{
+    public function handle(RequestInterface $request, \Closure $next): ResponseInterface
+    {
+        return $next($request->withHeader('x-trace-id', bin2hex(random_bytes(8))));
+    }
+}
+
+// client-level: applies to every request made by this client
+$client = new Client(requestOptions: ['middleware' => [$logger, new TracingMiddleware]]);
+
+// request-level: applies to this call only, and runs after (inside) client middleware
+$client->messages->create(
+  maxTokens: 1024,
+  messages: [['role' => 'user', 'content' => 'Hello, Claude']],
+  model: 'claude-sonnet-4-5-20250929',
+  requestOptions: ['middleware' => [$logger]],
+);
+```
+
+Middleware runs once per HTTP attempt, inside the SDK's retry loop. `$next` returns a response for every HTTP status — the SDK raises its typed exceptions only after the chain returns. Errors thrown by middleware propagate to the caller as-is. Backend adaptation (OAuth token refresh, Bedrock/Vertex request signing) runs inside the innermost `$next`, so a request mutated or re-issued by middleware is re-signed on every call.
+
+A middleware that reads a response body must rewind it (or return a replacement via `$response->withBody(...)`) so the SDK can still decode it.
+
 ## Versioning
 
 This package follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions. As the library is in initial development and has a major version of `0`, APIs may change at any time.

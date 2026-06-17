@@ -11,6 +11,7 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Exceptions\APIConnectionException;
 use Anthropic\Core\Exceptions\APIStatusException;
+use Anthropic\Core\Exceptions\RetryableException;
 use Anthropic\Core\Implementation\RawResponse;
 use Anthropic\RequestOptions;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -209,10 +210,17 @@ abstract class BaseClient
     protected function shouldRetry(
         RequestOptions $opts,
         int $retryCount,
-        ?ResponseInterface $rsp
+        ?ResponseInterface $rsp,
+        bool $wantsRetryFromException = false,
     ): bool {
         if ($retryCount >= $opts->maxRetries) {
             return false;
+        }
+
+        // A middleware threw RetryableException to opt this attempt back
+        // into the retry policy; only maxRetries gates it (no response).
+        if ($wantsRetryFromException) {
+            return true;
         }
 
         $code = $rsp?->getStatusCode();
@@ -264,22 +272,52 @@ abstract class BaseClient
         int $retryCount,
         int $redirectCount,
     ): ResponseInterface {
-        assert(null !== $opts->streamFactory && null !== $opts->transporter);
+        $defaultTransporter = $opts->transporter;
+        $streamingTransporter = $opts->streamingTransporter ?? $defaultTransporter;
+        assert(null !== $opts->streamFactory && null !== $defaultTransporter && null !== $streamingTransporter);
 
         /** @var RequestInterface */
         $req = $req->withHeader('X-Stainless-Retry-Count', strval($retryCount));
         $req = Util::withSetBody($opts->streamFactory, req: $req, body: $data);
-        $req = $this->transformRequest($req);
 
-        $transporter = Util::isStreamingRequest($req)
-            ? ($opts->streamingTransporter ?? $opts->transporter)
-            : $opts->transporter;
+        // The innermost step: per-backend signing and the actual HTTP
+        // send. Middleware wraps around this, so request modifications it
+        // makes are signed by transformRequest() here, per attempt.
+        $sendRequest = function (RequestInterface $req) use ($defaultTransporter, $streamingTransporter): ResponseInterface {
+            // Rewind the request body when a prior send consumed it — a
+            // custom-retry middleware calling callNext more than once, or
+            // stream reuse across SDK retries/redirects — so the full body
+            // is re-sent and per-attempt signing hashes it from the start.
+            $body = $req->getBody();
+            if ($body->isSeekable() && 0 !== $body->tell()) {
+                $body->rewind();
+            }
+
+            $req = $this->transformRequest($req);
+
+            $transporter = Util::isStreamingRequest($req) ? $streamingTransporter : $defaultTransporter;
+
+            return $transporter->sendRequest($req);
+        };
+
+        // RequestOptions::parse merges by replacement, but middleware
+        // stacks compose: request-level middleware runs inside (after)
+        // client-level middleware rather than replacing it.
+        $middleware = $opts->middleware ?? [];
+        $clientMiddleware = $this->options->middleware ?? [];
+        if ($middleware !== $clientMiddleware && [] !== $clientMiddleware) {
+            $middleware = [...$clientMiddleware, ...$middleware];
+        }
+        $sendRequest = $this->applyMiddleware($sendRequest, middleware: $middleware);
 
         $rsp = null;
         $err = null;
+        $middlewareRetry = null;
 
         try {
-            $rsp = $transporter->sendRequest($req);
+            $rsp = $sendRequest($req);
+        } catch (RetryableException $e) {
+            $middlewareRetry = $e;
         } catch (ClientExceptionInterface $e) {
             $err = $e;
         }
@@ -296,13 +334,7 @@ abstract class BaseClient
             return $this->sendRequest($opts, req: $req, data: $data, retryCount: $retryCount, redirectCount: ++$redirectCount);
         }
 
-        if ($code >= 400 || is_null($rsp)) {
-            if (!$this->shouldRetry($opts, retryCount: $retryCount, rsp: $rsp)) {
-                $exn = is_null($rsp) ? new APIConnectionException($req, previous: $err) : APIStatusException::from(request: $req, response: $rsp);
-
-                throw $exn;
-            }
-
+        if ($this->shouldRetry($opts, retryCount: $retryCount, rsp: $rsp, wantsRetryFromException: null !== $middlewareRetry)) {
             $seconds = $this->retryDelay($opts, retryCount: $retryCount, rsp: $rsp);
             $floor = floor($seconds);
             time_nanosleep((int) $floor, nanoseconds: (int) ($seconds - $floor) * 10 ** 9);
@@ -310,7 +342,44 @@ abstract class BaseClient
             return $this->sendRequest($opts, req: $req, data: $data, retryCount: ++$retryCount, redirectCount: $redirectCount);
         }
 
+        // Not retrying: a middleware RetryableException surfaces as-is, a
+        // connection failure as APIConnectionException, an error status as
+        // APIStatusException.
+        if (null !== $middlewareRetry) {
+            throw $middlewareRetry;
+        }
+
+        if ($code >= 400 || is_null($rsp)) {
+            throw is_null($rsp)
+                ? new APIConnectionException($req, previous: $err)
+                : APIStatusException::from(request: $req, response: $rsp);
+        }
+
         return $rsp;
+    }
+
+    /**
+     * Wrap the core send step with the configured middleware so that
+     * the first entry in the list runs outermost and the last runs closest
+     * to the transport.
+     *
+     * @internal
+     *
+     * @param \Closure(RequestInterface): ResponseInterface $sendRequest
+     * @param list<\Anthropic\Middleware|callable(RequestInterface, \Closure(RequestInterface): ResponseInterface): ResponseInterface> $middleware
+     *
+     * @return \Closure(RequestInterface): ResponseInterface
+     */
+    private function applyMiddleware(\Closure $sendRequest, array $middleware): \Closure
+    {
+        foreach (array_reverse($middleware) as $mw) {
+            $next = $sendRequest;
+            $sendRequest = $mw instanceof \Anthropic\Middleware
+                ? static fn (RequestInterface $req): ResponseInterface => $mw->handle($req, $next)
+                : static fn (RequestInterface $req): ResponseInterface => $mw($req, $next);
+        }
+
+        return $sendRequest;
     }
 
     /**
