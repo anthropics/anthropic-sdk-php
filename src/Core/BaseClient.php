@@ -215,7 +215,7 @@ abstract class BaseClient
         ?ResponseInterface $rsp,
         bool $wantsRetryFromException = false,
     ): bool {
-        if ($retryCount >= $opts->maxRetries) {
+        if ($retryCount >= ($opts->maxRetries ?? RequestOptions::DEFAULT_MAX_RETRIES)) {
             return false;
         }
 
@@ -257,9 +257,9 @@ abstract class BaseClient
 
         $scale = $retryCount ** 2;
         $jitter = 1 - (0.25 * mt_rand() / mt_getrandmax());
-        $naive = $opts->initialRetryDelay * $scale * $jitter;
+        $naive = ($opts->initialRetryDelay ?? RequestOptions::DEFAULT_INITIAL_RETRY_DELAY) * $scale * $jitter;
 
-        return max(0.0, min($naive, $opts->maxRetryDelay));
+        return max(0.0, min($naive, $opts->maxRetryDelay ?? RequestOptions::DEFAULT_MAX_RETRY_DELAY));
     }
 
     /**

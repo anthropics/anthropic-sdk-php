@@ -114,6 +114,33 @@ class ClientTest extends TestCase
         }
     }
 
+
+    public function testClientLevelMaxRetriesAppliesToEveryRequest(): void
+    {
+        $mockRsp = Psr17FactoryDiscovery::findResponseFactory()
+            ->createResponse()
+            ->withStatus(500)
+            ->withHeader('Content-Type', 'application/json')
+            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream('{}'))
+        ;
+        $this->transporter->setDefaultResponse($mockRsp);
+
+        $client = new Client(
+            apiKey: 'my-anthropic-api-key',
+            requestOptions: ['transporter' => $this->transporter, 'maxRetries' => 0],
+        );
+
+        try {
+            $client->messages->create(1024, [], 'claude-opus-4-6');
+            $this->fail('Expected APIStatusException to be thrown');
+        } catch (APIStatusException) {
+        }
+
+        // maxRetries 0 at the client level means exactly one attempt; the
+        // per-request defaults must not override an explicit client option
+        $this->assertCount(1, $this->transporter->getRequests());
+    }
+
     public function testStatusErrorTypeField(): void
     {
         $e = $this->makeErrorRequest([
