@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.30.0 (2026-06-18)
+
+Full Changelog: [v0.29.2...v0.30.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.29.2...v0.30.0)
+
+### Features
+
+* **api:** add support for new code_execution_20260120 tool ([08d80b7](https://github.com/anthropics/anthropic-sdk-php/commit/08d80b7944f88390941c3b525a9230a8866bc3e5))
+* **client:** request middleware ([#35](https://github.com/anthropics/anthropic-sdk-php/issues/35)) ([0a05e5c](https://github.com/anthropics/anthropic-sdk-php/commit/0a05e5ce9af640c46a7fd0b38a1f6dcc72bea228))
+
+
+### Bug Fixes
+
+* **client:** merge extraBodyParams into the request body ([#53](https://github.com/anthropics/anthropic-sdk-php/issues/53)) ([08035a9](https://github.com/anthropics/anthropic-sdk-php/commit/08035a973e9b2964338891701f04be5933ab191a))
+* **client:** preserve client-level options over request-level defaults ([a8c61c4](https://github.com/anthropics/anthropic-sdk-php/commit/a8c61c4cac345c7f59ea6bb480145a48e4049ba1))
+* Merge extraBodyParams into the body with the same precedence as extraHeaders (extras win on collision). Lives in Util::mergeBody because the body at that layer is one of four shapes (assoc array, stdClass, list, null) and only map-shaped bodies are merged into; lists and scalars pass through. Five unit tests pin the shape matrix. ([08035a9](https://github.com/anthropics/anthropic-sdk-php/commit/08035a973e9b2964338891701f04be5933ab191a))
+* **streaming:** return error statuses instead of throwing ([4e1d617](https://github.com/anthropics/anthropic-sdk-php/commit/4e1d61729f94a152498bb31f2118bf03c10953f3))
+* **vertex:** do not send stream: false ([c38340e](https://github.com/anthropics/anthropic-sdk-php/commit/c38340ee19b4cab3d024b0c811ab5905955b8f27))
+
+
+### Chores
+
+* **client:** add early return when no extraBody is specified ([d79eb94](https://github.com/anthropics/anthropic-sdk-php/commit/d79eb9428c6fc0cb64268155549253e2b7cf18bb))
+
 ## 0.29.2 (2026-06-15)
 
 Full Changelog: [v0.29.1...v0.29.2](https://github.com/anthropics/anthropic-sdk-php/compare/v0.29.1...v0.29.2)
