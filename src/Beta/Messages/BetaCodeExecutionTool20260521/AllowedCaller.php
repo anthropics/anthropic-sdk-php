@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Messages\BetaCodeExecutionTool20250825;
+namespace Anthropic\Beta\Messages\BetaCodeExecutionTool20260521;
 
 /**
  * Specifies who can invoke a tool.

@@ -12,9 +12,9 @@ use Anthropic\Core\Contracts\BaseModel;
  * Marks the point in `content` where one model's output gives way to the next.
  *
  * One block appears per hop where a preceding model actually ran this turn and
- * declined. A turn routed directly by the sticky decision has no such boundary
- * and carries no block — the signal for whether a fallback model served the
- * response is the presence of a `fallback_message` entry in
+ * declined. A turn where no preceding model ran and declined has no such
+ * boundary and carries no block — the signal for whether a fallback model
+ * served the response is the presence of a `fallback_message` entry in
  * `usage.iterations`, not this block.
  *
  * The block is treated like a server-tool content block for streaming: it
@@ -22,10 +22,12 @@ use Anthropic\Core\Contracts\BaseModel;
  * pair and carries no deltas.
  *
  * @phpstan-import-type BetaFallbackInfoShape from \Anthropic\Beta\Messages\BetaFallbackInfo
+ * @phpstan-import-type BetaFallbackRefusalTriggerShape from \Anthropic\Beta\Messages\BetaFallbackRefusalTrigger
  *
  * @phpstan-type BetaFallbackBlockShape = array{
  *   from: BetaFallbackInfo|BetaFallbackInfoShape,
  *   to: BetaFallbackInfo|BetaFallbackInfoShape,
+ *   trigger: BetaFallbackRefusalTrigger|BetaFallbackRefusalTriggerShape,
  *   type: 'fallback',
  * }
  */
@@ -51,17 +53,23 @@ final class BetaFallbackBlock implements BaseModel
     public BetaFallbackInfo $to;
 
     /**
+     * What caused the `from` model to hand over at this hop.
+     */
+    #[Required]
+    public BetaFallbackRefusalTrigger $trigger;
+
+    /**
      * `new BetaFallbackBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaFallbackBlock::with(from: ..., to: ...)
+     * BetaFallbackBlock::with(from: ..., to: ..., trigger: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaFallbackBlock)->withFrom(...)->withTo(...)
+     * (new BetaFallbackBlock)->withFrom(...)->withTo(...)->withTrigger(...)
      * ```
      */
     public function __construct()
@@ -76,15 +84,18 @@ final class BetaFallbackBlock implements BaseModel
      *
      * @param BetaFallbackInfo|BetaFallbackInfoShape $from
      * @param BetaFallbackInfo|BetaFallbackInfoShape $to
+     * @param BetaFallbackRefusalTrigger|BetaFallbackRefusalTriggerShape $trigger
      */
     public static function with(
         BetaFallbackInfo|array $from,
-        BetaFallbackInfo|array $to
+        BetaFallbackInfo|array $to,
+        BetaFallbackRefusalTrigger|array $trigger,
     ): self {
         $self = new self;
 
         $self['from'] = $from;
         $self['to'] = $to;
+        $self['trigger'] = $trigger;
 
         return $self;
     }
@@ -111,6 +122,19 @@ final class BetaFallbackBlock implements BaseModel
     {
         $self = clone $this;
         $self['to'] = $to;
+
+        return $self;
+    }
+
+    /**
+     * What caused the `from` model to hand over at this hop.
+     *
+     * @param BetaFallbackRefusalTrigger|BetaFallbackRefusalTriggerShape $trigger
+     */
+    public function withTrigger(BetaFallbackRefusalTrigger|array $trigger): self
+    {
+        $self = clone $this;
+        $self['trigger'] = $trigger;
 
         return $self;
     }
