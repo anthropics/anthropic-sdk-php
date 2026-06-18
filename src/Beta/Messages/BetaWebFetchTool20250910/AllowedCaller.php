@@ -11,6 +11,7 @@ namespace Anthropic\Beta\Messages\BetaWebFetchTool20250910;
  *     direct: The model can call this tool directly.
  *     code_execution_20250825: The tool can be called from the code execution environment (v1).
  *     code_execution_20260120: The tool can be called from the code execution environment (v2 with persistence).
+ *     code_execution_20260521: The tool can be called from the code execution environment (v2 with persistence).
  */
 enum AllowedCaller: string
 {
@@ -19,4 +20,6 @@ enum AllowedCaller: string
     case CODE_EXECUTION_20250825 = 'code_execution_20250825';
 
     case CODE_EXECUTION_20260120 = 'code_execution_20260120';
+
+    case CODE_EXECUTION_20260521 = 'code_execution_20260521';
 }

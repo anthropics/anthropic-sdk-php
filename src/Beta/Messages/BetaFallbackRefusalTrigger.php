@@ -2,25 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Messages;
+namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaFallbackRefusalTrigger\Category;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\RefusalStopDetails\Category;
 
 /**
- * Structured information about a refusal.
+ * The `from` model declined for policy reasons.
  *
- * @phpstan-type RefusalStopDetailsShape = array{
- *   category: null|Category|value-of<Category>,
- *   explanation: string|null,
- *   type: 'refusal',
+ * @phpstan-type BetaFallbackRefusalTriggerShape = array{
+ *   category: null|Category|value-of<Category>, type: 'refusal'
  * }
  */
-final class RefusalStopDetails implements BaseModel
+final class BetaFallbackRefusalTrigger implements BaseModel
 {
-    /** @use SdkModel<RefusalStopDetailsShape> */
+    /** @use SdkModel<BetaFallbackRefusalTriggerShape> */
     use SdkModel;
 
     /** @var 'refusal' $type */
@@ -36,25 +34,17 @@ final class RefusalStopDetails implements BaseModel
     public ?string $category;
 
     /**
-     * Human-readable explanation of the refusal.
-     *
-     * This text is not guaranteed to be stable. `null` when no explanation is available for the category.
-     */
-    #[Required]
-    public ?string $explanation;
-
-    /**
-     * `new RefusalStopDetails()` is missing required properties by the API.
+     * `new BetaFallbackRefusalTrigger()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * RefusalStopDetails::with(category: ..., explanation: ...)
+     * BetaFallbackRefusalTrigger::with(category: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new RefusalStopDetails)->withCategory(...)->withExplanation(...)
+     * (new BetaFallbackRefusalTrigger)->withCategory(...)
      * ```
      */
     public function __construct()
@@ -69,14 +59,11 @@ final class RefusalStopDetails implements BaseModel
      *
      * @param Category|value-of<Category>|null $category
      */
-    public static function with(
-        Category|string|null $category,
-        ?string $explanation
-    ): self {
+    public static function with(Category|string|null $category): self
+    {
         $self = new self;
 
         $self['category'] = $category;
-        $self['explanation'] = $explanation;
 
         return $self;
     }
@@ -90,19 +77,6 @@ final class RefusalStopDetails implements BaseModel
     {
         $self = clone $this;
         $self['category'] = $category;
-
-        return $self;
-    }
-
-    /**
-     * Human-readable explanation of the refusal.
-     *
-     * This text is not guaranteed to be stable. `null` when no explanation is available for the category.
-     */
-    public function withExplanation(?string $explanation): self
-    {
-        $self = clone $this;
-        $self['explanation'] = $explanation;
 
         return $self;
     }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Messages\RefusalStopDetails;
+namespace Anthropic\Beta\Messages\BetaFallbackRefusalTrigger;
 
 /**
  * The policy category that triggered a refusal.
