@@ -176,8 +176,12 @@ final class Util
      */
     public static function mergeBody(mixed $body, mixed $extraBody): mixed
     {
+        if (null === $extraBody || [] === $extraBody) {
+            return $body;
+        }
+
         $extra = $extraBody instanceof \stdClass ? get_object_vars($extraBody) : $extraBody;
-        if (!is_array($extra) || [] === $extra || array_is_list($extra)) {
+        if (!is_array($extra) || array_is_list($extra)) {
             return $body;
         }
 
