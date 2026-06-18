@@ -161,6 +161,39 @@ final class Util
     }
 
     /**
+     * Merges extra body params into a request body, with the extras winning
+     * on key collisions (mirroring how extraHeaders merge into headers).
+     *
+     * At this layer a JSON body can arrive in several shapes: builders and
+     * literals produce associative arrays, `json_decode` round-trips produce
+     * stdClass, and some endpoints send lists, scalars, streams, or no body
+     * at all. The extras can likewise be a map-shaped array or stdClass.
+     * Both sides are normalized to arrays before merging.
+     *
+     * Only map-shaped bodies are merged into; a null body is replaced by the
+     * extras, and lists, scalars, and streams pass through untouched — there
+     * is nothing to merge into. Empty or list-shaped extras are a no-op.
+     */
+    public static function mergeBody(mixed $body, mixed $extraBody): mixed
+    {
+        $extra = $extraBody instanceof \stdClass ? get_object_vars($extraBody) : $extraBody;
+        if (!is_array($extra) || [] === $extra || array_is_list($extra)) {
+            return $body;
+        }
+
+        $base = $body instanceof \stdClass ? get_object_vars($body) : $body;
+        if (is_null($base)) {
+            return $extra;
+        }
+
+        if (is_array($base) && !array_is_list($base)) {
+            return [...$base, ...$extra];
+        }
+
+        return $body;
+    }
+
+    /**
      * @param string|list<string> $path
      */
     public static function parsePath(string|array $path): string

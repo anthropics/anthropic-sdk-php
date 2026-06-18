@@ -89,6 +89,49 @@ class UtilTest extends TestCase
     }
 
     #[Test]
+    public function testMergeBodyStdClassBaseWithArrayExtra(): void
+    {
+        $body = (object) ['model' => 'claude-sonnet-4-5', 'max_tokens' => 1];
+        $actual = Util::mergeBody($body, extraBody: ['max_tokens' => 2, 'extra' => 'yes']);
+
+        $this->assertSame(
+            ['model' => 'claude-sonnet-4-5', 'max_tokens' => 2, 'extra' => 'yes'],
+            $actual,
+        );
+    }
+
+    #[Test]
+    public function testMergeBodyStdClassExtraIntoArrayBase(): void
+    {
+        $actual = Util::mergeBody(['a' => 1], extraBody: (object) ['b' => 2]);
+
+        $this->assertSame(['a' => 1, 'b' => 2], $actual);
+    }
+
+    #[Test]
+    public function testMergeBodyNullBaseTakesExtras(): void
+    {
+        $this->assertSame(['a' => 1], Util::mergeBody(null, extraBody: ['a' => 1]));
+    }
+
+    #[Test]
+    public function testMergeBodyListBaseUntouched(): void
+    {
+        $body = [1, 2, 3];
+
+        $this->assertSame($body, Util::mergeBody($body, extraBody: ['a' => 1]));
+    }
+
+    #[Test]
+    public function testMergeBodyEmptyOrNullExtraIsNoOp(): void
+    {
+        $body = ['a' => 1];
+
+        $this->assertSame($body, Util::mergeBody($body, extraBody: []));
+        $this->assertSame($body, Util::mergeBody($body, extraBody: null));
+    }
+
+    #[Test]
     public function testGetenvFromGlobalEnv(): void
     {
         $_ENV[__FUNCTION__] = __FUNCTION__;
