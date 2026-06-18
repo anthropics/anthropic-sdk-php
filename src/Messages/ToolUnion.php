@@ -16,6 +16,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type CodeExecutionTool20250522Shape from \Anthropic\Messages\CodeExecutionTool20250522
  * @phpstan-import-type CodeExecutionTool20250825Shape from \Anthropic\Messages\CodeExecutionTool20250825
  * @phpstan-import-type CodeExecutionTool20260120Shape from \Anthropic\Messages\CodeExecutionTool20260120
+ * @phpstan-import-type CodeExecutionTool20260521Shape from \Anthropic\Messages\CodeExecutionTool20260521
  * @phpstan-import-type MemoryTool20250818Shape from \Anthropic\Messages\MemoryTool20250818
  * @phpstan-import-type ToolTextEditor20250124Shape from \Anthropic\Messages\ToolTextEditor20250124
  * @phpstan-import-type ToolTextEditor20250429Shape from \Anthropic\Messages\ToolTextEditor20250429
@@ -28,8 +29,8 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type ToolSearchToolBm25_20251119Shape from \Anthropic\Messages\ToolSearchToolBm25_20251119
  * @phpstan-import-type ToolSearchToolRegex20251119Shape from \Anthropic\Messages\ToolSearchToolRegex20251119
  *
- * @phpstan-type ToolUnionVariants = Tool|ToolBash20250124|CodeExecutionTool20250522|CodeExecutionTool20250825|CodeExecutionTool20260120|MemoryTool20250818|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305|WebFetchTool20250910|WebSearchTool20260209|WebFetchTool20260209|WebFetchTool20260309|ToolSearchToolBm25_20251119|ToolSearchToolRegex20251119
- * @phpstan-type ToolUnionShape = ToolUnionVariants|ToolShape|ToolBash20250124Shape|CodeExecutionTool20250522Shape|CodeExecutionTool20250825Shape|CodeExecutionTool20260120Shape|MemoryTool20250818Shape|ToolTextEditor20250124Shape|ToolTextEditor20250429Shape|ToolTextEditor20250728Shape|WebSearchTool20250305Shape|WebFetchTool20250910Shape|WebSearchTool20260209Shape|WebFetchTool20260209Shape|WebFetchTool20260309Shape|ToolSearchToolBm25_20251119Shape|ToolSearchToolRegex20251119Shape
+ * @phpstan-type ToolUnionVariants = Tool|ToolBash20250124|CodeExecutionTool20250522|CodeExecutionTool20250825|CodeExecutionTool20260120|CodeExecutionTool20260521|MemoryTool20250818|ToolTextEditor20250124|ToolTextEditor20250429|ToolTextEditor20250728|WebSearchTool20250305|WebFetchTool20250910|WebSearchTool20260209|WebFetchTool20260209|WebFetchTool20260309|ToolSearchToolBm25_20251119|ToolSearchToolRegex20251119
+ * @phpstan-type ToolUnionShape = ToolUnionVariants|ToolShape|ToolBash20250124Shape|CodeExecutionTool20250522Shape|CodeExecutionTool20250825Shape|CodeExecutionTool20260120Shape|CodeExecutionTool20260521Shape|MemoryTool20250818Shape|ToolTextEditor20250124Shape|ToolTextEditor20250429Shape|ToolTextEditor20250728Shape|WebSearchTool20250305Shape|WebFetchTool20250910Shape|WebSearchTool20260209Shape|WebFetchTool20260209Shape|WebFetchTool20260309Shape|ToolSearchToolBm25_20251119Shape|ToolSearchToolRegex20251119Shape
  */
 final class ToolUnion implements ConverterSource
 {
@@ -46,6 +47,7 @@ final class ToolUnion implements ConverterSource
             CodeExecutionTool20250522::class,
             CodeExecutionTool20250825::class,
             CodeExecutionTool20260120::class,
+            CodeExecutionTool20260521::class,
             MemoryTool20250818::class,
             ToolTextEditor20250124::class,
             ToolTextEditor20250429::class,
