@@ -120,7 +120,10 @@ class MessagesRawService implements MessagesRawContract
         unset($parsed['model']);
 
         $parsed['anthropic_version'] = self::ANTHROPIC_VERSION;
-        $parsed['stream'] = $stream;
+
+        if ($stream) {
+            $parsed['stream'] = true;
+        }
 
         $specifier = $stream ? 'streamRawPredict' : 'rawPredict';
 
