@@ -27,7 +27,7 @@ trait SdkParams
         $opts = RequestOptions::parse($options);
 
         if (!$state->canRetry) {
-            $opts->maxRetries = 0;
+            $opts = $opts->withMaxRetries(0);
         }
 
         // @phpstan-ignore-next-line return.type

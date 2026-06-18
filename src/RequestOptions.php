@@ -39,17 +39,28 @@ final class RequestOptions implements BaseModel
     /** @use SdkModel<RequestOptionShape> */
     use SdkModel;
 
-    #[Property]
-    public float $timeout = 600;
+    public const DEFAULT_MAX_RETRIES = 2;
 
-    #[Property]
-    public int $maxRetries = 2;
+    public const DEFAULT_INITIAL_RETRY_DELAY = 0.5;
 
-    #[Property]
-    public float $initialRetryDelay = 0.5;
+    public const DEFAULT_MAX_RETRY_DELAY = 8.0;
 
-    #[Property]
-    public float $maxRetryDelay = 8.0;
+    /**
+     * Request timeout in seconds. When unset the intended default is 600s,
+     * but that is advisory only: the timeout is enforced by the
+     * caller-supplied transport, not by this SDK, so nothing in src reads it.
+     */
+    #[Optional]
+    public ?float $timeout;
+
+    #[Optional]
+    public ?int $maxRetries;
+
+    #[Optional]
+    public ?float $initialRetryDelay;
+
+    #[Optional]
+    public ?float $maxRetryDelay;
 
     /** @var array<string,string|int|list<string|int>|null>|null $extraHeaders */
     #[Optional]
@@ -130,9 +141,7 @@ final class RequestOptions implements BaseModel
 
         null !== $timeout && $self->timeout = $timeout;
         null !== $maxRetries && $self->maxRetries = $maxRetries;
-        null !== $initialRetryDelay && $self
-            ->initialRetryDelay = $initialRetryDelay
-        ;
+        null !== $initialRetryDelay && $self->initialRetryDelay = $initialRetryDelay;
         null !== $maxRetryDelay && $self->maxRetryDelay = $maxRetryDelay;
         null !== $extraHeaders && $self->extraHeaders = $extraHeaders;
         null !== $extraQueryParams && $self->extraQueryParams = $extraQueryParams;
