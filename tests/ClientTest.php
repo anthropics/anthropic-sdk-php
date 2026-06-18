@@ -168,4 +168,62 @@ class ClientTest extends TestCase
 
         return $request;
     }
+    public function testExtraBodyParamsReachTheWire(): void
+    {
+        $transporter = new \Http\Mock\Client;
+        $transporter->setDefaultResponse(
+            (new \Nyholm\Psr7\Factory\Psr17Factory)->createResponse(200)
+                ->withHeader('Content-Type', 'application/json')
+                ->withBody((new \Nyholm\Psr7\Factory\Psr17Factory)->createStream('{}'))
+        );
+        $client = new Client(
+            apiKey: 'my-anthropic-api-key',
+            requestOptions: ['transporter' => $transporter],
+        );
+
+        $client->messages->create(
+            maxTokens: 1024,
+            messages: [['role' => 'user', 'content' => 'Hello']],
+            model: 'claude-sonnet-4-5',
+            requestOptions: ['extraBodyParams' => ['service_tier' => 'standard_only']],
+        );
+
+        $requests = $transporter->getRequests();
+        $this->assertCount(1, $requests);
+        $sent = json_decode((string) $requests[0]->getBody(), associative: true);
+        $this->assertIsArray($sent);
+        // the documented contract: extra body params merge into the encoded body
+        $this->assertSame('standard_only', $sent['service_tier'] ?? null);
+        // and never clobber the typed params they ride alongside
+        $this->assertSame('claude-sonnet-4-5', $sent['model'] ?? null);
+    }
+
+    public function testExtraBodyParamsOverrideTypedParams(): void
+    {
+        $transporter = new \Http\Mock\Client;
+        $transporter->setDefaultResponse(
+            (new \Nyholm\Psr7\Factory\Psr17Factory)->createResponse(200)
+                ->withHeader('Content-Type', 'application/json')
+                ->withBody((new \Nyholm\Psr7\Factory\Psr17Factory)->createStream('{}'))
+        );
+        $client = new Client(
+            apiKey: 'my-anthropic-api-key',
+            requestOptions: ['transporter' => $transporter],
+        );
+
+        $client->messages->create(
+            maxTokens: 1024,
+            messages: [['role' => 'user', 'content' => 'Hello']],
+            model: 'claude-sonnet-4-5',
+            requestOptions: ['extraBodyParams' => ['model' => 'claude-opus-4-8']],
+        );
+
+        $requests = $transporter->getRequests();
+        $this->assertCount(1, $requests);
+        $sent = json_decode((string) $requests[0]->getBody(), associative: true);
+        $this->assertIsArray($sent);
+        // extras are the caller's last word, like extraHeaders: they win
+        $this->assertSame('claude-opus-4-8', $sent['model'] ?? null);
+    }
+
 }

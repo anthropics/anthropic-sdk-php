@@ -139,6 +139,8 @@ abstract class BaseClient
     ): array {
         $options = RequestOptions::parse($this->options, $opts);
 
+        $body = Util::mergeBody($body, extraBody: $options->extraBodyParams);
+
         $parsedPath = Util::parsePath($path);
 
         /** @var array<string,mixed> $mergedQuery */
