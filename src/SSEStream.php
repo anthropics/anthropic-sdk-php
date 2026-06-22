@@ -75,6 +75,7 @@ final class SSEStream implements BaseStream
                 case 'session.thread_status_idle':
                 case 'session.thread_status_rescheduled':
                 case 'session.thread_status_terminated':
+                case 'system.message':
                     if ($data = $row['data'] ?? '') {
                         $decoded = Util::decodeJson($data);
 
