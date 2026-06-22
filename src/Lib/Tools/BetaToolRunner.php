@@ -9,6 +9,7 @@ use Anthropic\Beta\Messages\BetaMessageParam;
 use Anthropic\Beta\Messages\BetaToolUseBlock;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Lib\Helpers\StainlessHelperHeader;
 use Anthropic\Messages\Model;
 
 /**
@@ -236,6 +237,12 @@ final class BetaToolRunner implements \IteratorAggregate
                 ),
                 fn ($v) => null !== $v,
             );
+
+            $params['requestOptions'] = [
+                'extraHeaders' => [
+                    StainlessHelperHeader::HEADER => StainlessHelperHeader::BETA_TOOL_RUNNER,
+                ],
+            ];
 
             // @phpstan-ignore argument.type
             $message = $this->client->beta->messages->create(...$params);
