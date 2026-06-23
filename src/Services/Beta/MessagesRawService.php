@@ -98,8 +98,8 @@ final class MessagesRawService implements MessagesRawContract
      *   tools?: list<BetaToolUnionShape>,
      *   topK?: int,
      *   topP?: float,
-     *   userProfileID?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   userProfileID?: string,
      * }|MessageCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -115,7 +115,10 @@ final class MessagesRawService implements MessagesRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta',
+            'userProfileID' => 'anthropic-user-profile-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -162,8 +165,8 @@ final class MessagesRawService implements MessagesRawContract
      *   tools?: list<BetaToolUnionShape>,
      *   topK?: int,
      *   topP?: float,
-     *   userProfileID?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   userProfileID?: string,
      * }|MessageCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -180,7 +183,10 @@ final class MessagesRawService implements MessagesRawContract
             $requestOptions,
         );
         $parsed['stream'] = true;
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta',
+            'userProfileID' => 'anthropic-user-profile-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

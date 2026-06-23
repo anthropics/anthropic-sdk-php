@@ -84,7 +84,6 @@ use Anthropic\Messages\Model;
  *   tools?: list<BetaToolUnionShape>|null,
  *   topK?: int|null,
  *   topP?: float|null,
- *   userProfileID?: string|null,
  * }
  */
 final class Params implements BaseModel
@@ -440,12 +439,6 @@ final class Params implements BaseModel
     public ?float $topP;
 
     /**
-     * The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization.
-     */
-    #[Optional('user_profile_id', nullable: true)]
-    public ?string $userProfileID;
-
-    /**
      * `new Params()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -514,7 +507,6 @@ final class Params implements BaseModel
         ?array $tools = null,
         ?int $topK = null,
         ?float $topP = null,
-        ?string $userProfileID = null,
     ): self {
         $self = new self;
 
@@ -544,7 +536,6 @@ final class Params implements BaseModel
         null !== $tools && $self['tools'] = $tools;
         null !== $topK && $self['topK'] = $topK;
         null !== $topP && $self['topP'] = $topP;
-        null !== $userProfileID && $self['userProfileID'] = $userProfileID;
 
         return $self;
     }
@@ -1028,17 +1019,6 @@ final class Params implements BaseModel
     {
         $self = clone $this;
         $self['topP'] = $topP;
-
-        return $self;
-    }
-
-    /**
-     * The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization.
-     */
-    public function withUserProfileID(?string $userProfileID): self
-    {
-        $self = clone $this;
-        $self['userProfileID'] = $userProfileID;
 
         return $self;
     }

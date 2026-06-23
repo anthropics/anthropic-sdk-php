@@ -22,14 +22,16 @@ interface BatchesContract
     /**
      * @api
      *
-     * @param list<Request|RequestShape> $requests List of requests for prompt completion. Each is an individual request to create a Message.
+     * @param list<Request|RequestShape> $requests Body param: List of requests for prompt completion. Each is an individual request to create a Message.
+     * @param string $userProfileID Header param: The user profile ID to attribute the requests in this batch to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header. Applies to every request in the batch; an individual request whose `user_profile_id` body field conflicts with this header is errored.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function create(
         array $requests,
-        RequestOptions|array|null $requestOptions = null
+        ?string $userProfileID = null,
+        RequestOptions|array|null $requestOptions = null,
     ): MessageBatch;
 
     /**

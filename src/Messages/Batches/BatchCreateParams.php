@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages\Batches;
 
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
@@ -22,7 +23,7 @@ use Anthropic\Messages\Batches\BatchCreateParams\Request;
  * @phpstan-import-type RequestShape from \Anthropic\Messages\Batches\BatchCreateParams\Request
  *
  * @phpstan-type BatchCreateParamsShape = array{
- *   requests: list<Request|RequestShape>
+ *   requests: list<Request|RequestShape>, userProfileID?: string|null
  * }
  */
 final class BatchCreateParams implements BaseModel
@@ -38,6 +39,12 @@ final class BatchCreateParams implements BaseModel
      */
     #[Required(list: Request::class)]
     public array $requests;
+
+    /**
+     * The user profile ID to attribute the requests in this batch to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header. Applies to every request in the batch; an individual request whose `user_profile_id` body field conflicts with this header is errored.
+     */
+    #[Optional]
+    public ?string $userProfileID;
 
     /**
      * `new BatchCreateParams()` is missing required properties by the API.
@@ -65,11 +72,15 @@ final class BatchCreateParams implements BaseModel
      *
      * @param list<Request|RequestShape> $requests
      */
-    public static function with(array $requests): self
-    {
+    public static function with(
+        array $requests,
+        ?string $userProfileID = null
+    ): self {
         $self = new self;
 
         $self['requests'] = $requests;
+
+        null !== $userProfileID && $self['userProfileID'] = $userProfileID;
 
         return $self;
     }
@@ -83,6 +94,17 @@ final class BatchCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['requests'] = $requests;
+
+        return $self;
+    }
+
+    /**
+     * The user profile ID to attribute the requests in this batch to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header. Applies to every request in the batch; an individual request whose `user_profile_id` body field conflicts with this header is errored.
+     */
+    public function withUserProfileID(string $userProfileID): self
+    {
+        $self = clone $this;
+        $self['userProfileID'] = $userProfileID;
 
         return $self;
     }

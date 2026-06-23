@@ -72,7 +72,7 @@ final class BatchesTest extends TestCase
                         ],
                         'serviceTier' => 'auto',
                         'stopSequences' => ['string'],
-                        'stream' => true,
+                        'stream' => false,
                         'system' => [
                             [
                                 'text' => 'Today\'s date is 2024-06-01.',
@@ -118,6 +118,7 @@ final class BatchesTest extends TestCase
                     ],
                 ],
             ],
+            userProfileID: 'anthropic-user-profile-id',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
