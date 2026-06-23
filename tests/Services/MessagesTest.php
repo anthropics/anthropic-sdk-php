@@ -98,6 +98,7 @@ final class MessagesTest extends TestCase
             ],
             topK: 5,
             topP: 0.7,
+            userProfileID: 'anthropic-user-profile-id',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

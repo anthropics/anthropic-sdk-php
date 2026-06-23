@@ -47,14 +47,14 @@ interface MessagesContract
     /**
      * @api
      *
-     * @param int $maxTokens The maximum number of tokens to generate before stopping.
+     * @param int $maxTokens Body param: The maximum number of tokens to generate before stopping.
      *
      * Note that our models may stop _before_ reaching this maximum. This parameter only specifies the absolute maximum number of tokens to generate.
      *
      * Set to `0` to populate the [prompt cache](https://docs.claude.com/en/docs/build-with-claude/prompt-caching#pre-warming-the-cache) without generating a response.
      *
      * Different models have different maximum values for this parameter.  See [models](https://docs.claude.com/en/docs/models-overview) for details.
-     * @param list<MessageParam|MessageParamShape> $messages Input messages.
+     * @param list<MessageParam|MessageParamShape> $messages Body param: Input messages.
      *
      * Our models are trained to operate on alternating `user` and `assistant` conversational turns. When creating a new `Message`, you specify the prior conversational turns with the `messages` parameter, and the model then generates the next `Message` in the conversation. Consecutive `user` or `assistant` turns in your request will be combined into a single turn.
      *
@@ -102,37 +102,37 @@ interface MessagesContract
      * Note that if you want to include a [system prompt](https://docs.claude.com/en/docs/system-prompts), you can use the top-level `system` parameter — there is no `"system"` role for input messages in the Messages API.
      *
      * There is a limit of 100,000 messages in a single request.
-     * @param string|Model|value-of<Model> $model The model that will complete your prompt.
+     * @param string|Model|value-of<Model> $model Body param: The model that will complete your prompt.
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
-     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
-     * @param string|null $container container identifier for reuse across requests
-     * @param string|null $inferenceGeo Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
-     * @param Metadata|MetadataShape $metadata an object describing metadata about the request
-     * @param OutputConfig|OutputConfigShape $outputConfig configuration options for the model's output, such as the output format
-     * @param ServiceTier|value-of<ServiceTier> $serviceTier Determines whether to use priority capacity (if available) or standard capacity for this request.
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
+     * @param string|null $container body param: Container identifier for reuse across requests
+     * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
+     * @param Metadata|MetadataShape $metadata body param: An object describing metadata about the request
+     * @param OutputConfig|OutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
+     * @param ServiceTier|value-of<ServiceTier> $serviceTier Body param: Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.claude.com/en/api/service-tiers) for details.
-     * @param list<string> $stopSequences Custom text sequences that will cause the model to stop generating.
+     * @param list<string> $stopSequences Body param: Custom text sequences that will cause the model to stop generating.
      *
      * Our models will normally stop when they have naturally completed their turn, which will result in a response `stop_reason` of `"end_turn"`.
      *
      * If you want the model to stop generating when it encounters custom strings of text, you can use the `stop_sequences` parameter. If the model encounters one of the custom sequences, the response `stop_reason` value will be `"stop_sequence"` and the response `stop_sequence` value will contain the matched stop sequence.
-     * @param SystemShape1 $system System prompt.
+     * @param SystemShape1 $system Body param: System prompt.
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.claude.com/en/docs/system-prompts).
-     * @param float $temperature Amount of randomness injected into the response.
+     * @param float $temperature Body param: Amount of randomness injected into the response.
      *
      * Defaults to `1.0`. Ranges from `0.0` to `1.0`. Use `temperature` closer to `0.0` for analytical / multiple choice, and closer to `1.0` for creative and generative tasks.
      *
      * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
-     * @param ThinkingConfigParamShape $thinking Configuration for enabling Claude's extended thinking.
+     * @param ThinkingConfigParamShape $thinking Body param: Configuration for enabling Claude's extended thinking.
      *
      * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
      *
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
-     * @param ToolChoiceShape $toolChoice How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
-     * @param list<ToolUnionShape> $tools Definitions of tools that the model may use.
+     * @param ToolChoiceShape $toolChoice Body param: How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
+     * @param list<ToolUnionShape> $tools Body param: Definitions of tools that the model may use.
      *
      * If you include `tools` in your API request, the model may return `tool_use` content blocks that represent the model's use of those tools. You can then run those tools using the tool input generated by the model and then optionally return results back to the model using `tool_result` content blocks.
      *
@@ -193,16 +193,17 @@ interface MessagesContract
      * Tools can be used for workflows that include running client-side tools and functions, or more generally whenever you want the model to produce a particular JSON structure of output.
      *
      * See our [guide](https://docs.claude.com/en/docs/tool-use) for more details.
-     * @param int $topK Only sample from the top K options for each subsequent token.
+     * @param int $topK Body param: Only sample from the top K options for each subsequent token.
      *
      * Used to remove "long tail" low probability responses. [Learn more technical details here](https://towardsdatascience.com/how-to-sample-from-language-models-682bceb97277).
      *
      * Recommended for advanced use cases only.
-     * @param float $topP Use nucleus sampling.
+     * @param float $topP Body param: Use nucleus sampling.
      *
      * In nucleus sampling, we compute the cumulative distribution over all the options for each subsequent token in decreasing probability order and cut it off once it reaches a particular probability specified by `top_p`.
      *
      * Recommended for advanced use cases only.
+     * @param string $userProfileID Header param: The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -225,20 +226,21 @@ interface MessagesContract
         ?array $tools = null,
         ?int $topK = null,
         ?float $topP = null,
+        ?string $userProfileID = null,
         RequestOptions|array|null $requestOptions = null,
     ): Message;
 
     /**
      * @api
      *
-     * @param int $maxTokens The maximum number of tokens to generate before stopping.
+     * @param int $maxTokens Body param: The maximum number of tokens to generate before stopping.
      *
      * Note that our models may stop _before_ reaching this maximum. This parameter only specifies the absolute maximum number of tokens to generate.
      *
      * Set to `0` to populate the [prompt cache](https://docs.claude.com/en/docs/build-with-claude/prompt-caching#pre-warming-the-cache) without generating a response.
      *
      * Different models have different maximum values for this parameter.  See [models](https://docs.claude.com/en/docs/models-overview) for details.
-     * @param list<MessageParam|MessageParamShape> $messages Input messages.
+     * @param list<MessageParam|MessageParamShape> $messages Body param: Input messages.
      *
      * Our models are trained to operate on alternating `user` and `assistant` conversational turns. When creating a new `Message`, you specify the prior conversational turns with the `messages` parameter, and the model then generates the next `Message` in the conversation. Consecutive `user` or `assistant` turns in your request will be combined into a single turn.
      *
@@ -286,37 +288,37 @@ interface MessagesContract
      * Note that if you want to include a [system prompt](https://docs.claude.com/en/docs/system-prompts), you can use the top-level `system` parameter — there is no `"system"` role for input messages in the Messages API.
      *
      * There is a limit of 100,000 messages in a single request.
-     * @param string|Model|value-of<Model> $model The model that will complete your prompt.
+     * @param string|Model|value-of<Model> $model Body param: The model that will complete your prompt.
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
-     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
-     * @param string|null $container container identifier for reuse across requests
-     * @param string|null $inferenceGeo Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
-     * @param Metadata|MetadataShape $metadata an object describing metadata about the request
-     * @param OutputConfig|OutputConfigShape $outputConfig configuration options for the model's output, such as the output format
-     * @param ServiceTier|value-of<ServiceTier> $serviceTier Determines whether to use priority capacity (if available) or standard capacity for this request.
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
+     * @param string|null $container body param: Container identifier for reuse across requests
+     * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
+     * @param Metadata|MetadataShape $metadata body param: An object describing metadata about the request
+     * @param OutputConfig|OutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
+     * @param ServiceTier|value-of<ServiceTier> $serviceTier Body param: Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.claude.com/en/api/service-tiers) for details.
-     * @param list<string> $stopSequences Custom text sequences that will cause the model to stop generating.
+     * @param list<string> $stopSequences Body param: Custom text sequences that will cause the model to stop generating.
      *
      * Our models will normally stop when they have naturally completed their turn, which will result in a response `stop_reason` of `"end_turn"`.
      *
      * If you want the model to stop generating when it encounters custom strings of text, you can use the `stop_sequences` parameter. If the model encounters one of the custom sequences, the response `stop_reason` value will be `"stop_sequence"` and the response `stop_sequence` value will contain the matched stop sequence.
-     * @param SystemShape1 $system System prompt.
+     * @param SystemShape1 $system Body param: System prompt.
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://docs.claude.com/en/docs/system-prompts).
-     * @param float $temperature Amount of randomness injected into the response.
+     * @param float $temperature Body param: Amount of randomness injected into the response.
      *
      * Defaults to `1.0`. Ranges from `0.0` to `1.0`. Use `temperature` closer to `0.0` for analytical / multiple choice, and closer to `1.0` for creative and generative tasks.
      *
      * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
-     * @param ThinkingConfigParamShape $thinking Configuration for enabling Claude's extended thinking.
+     * @param ThinkingConfigParamShape $thinking Body param: Configuration for enabling Claude's extended thinking.
      *
      * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
      *
      * See [extended thinking](https://docs.claude.com/en/docs/build-with-claude/extended-thinking) for details.
-     * @param ToolChoiceShape $toolChoice How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
-     * @param list<ToolUnionShape> $tools Definitions of tools that the model may use.
+     * @param ToolChoiceShape $toolChoice Body param: How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
+     * @param list<ToolUnionShape> $tools Body param: Definitions of tools that the model may use.
      *
      * If you include `tools` in your API request, the model may return `tool_use` content blocks that represent the model's use of those tools. You can then run those tools using the tool input generated by the model and then optionally return results back to the model using `tool_result` content blocks.
      *
@@ -377,16 +379,17 @@ interface MessagesContract
      * Tools can be used for workflows that include running client-side tools and functions, or more generally whenever you want the model to produce a particular JSON structure of output.
      *
      * See our [guide](https://docs.claude.com/en/docs/tool-use) for more details.
-     * @param int $topK Only sample from the top K options for each subsequent token.
+     * @param int $topK Body param: Only sample from the top K options for each subsequent token.
      *
      * Used to remove "long tail" low probability responses. [Learn more technical details here](https://towardsdatascience.com/how-to-sample-from-language-models-682bceb97277).
      *
      * Recommended for advanced use cases only.
-     * @param float $topP Use nucleus sampling.
+     * @param float $topP Body param: Use nucleus sampling.
      *
      * In nucleus sampling, we compute the cumulative distribution over all the options for each subsequent token in decreasing probability order and cut it off once it reaches a particular probability specified by `top_p`.
      *
      * Recommended for advanced use cases only.
+     * @param string $userProfileID Header param: The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseStream<RawMessageStartEvent|RawMessageDeltaEvent|RawMessageStopEvent|RawContentBlockStartEvent|RawContentBlockDeltaEvent|RawContentBlockStopEvent,>
@@ -411,6 +414,7 @@ interface MessagesContract
         ?array $tools = null,
         ?int $topK = null,
         ?float $topP = null,
+        ?string $userProfileID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BaseStream;
 

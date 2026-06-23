@@ -41,7 +41,9 @@ final class BatchesRawService implements BatchesRawContract
      *
      * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
      *
-     * @param array{requests: list<Request|RequestShape>}|BatchCreateParams $params
+     * @param array{
+     *   requests: list<Request|RequestShape>, userProfileID?: string
+     * }|BatchCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<MessageBatch>
@@ -56,12 +58,20 @@ final class BatchesRawService implements BatchesRawContract
             $params,
             $requestOptions,
         );
+        $header_params = ['userProfileID' => 'anthropic-user-profile-id'];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'v1/messages/batches',
-            body: (object) $parsed,
+            headers: Util::array_transform_keys(
+                array_intersect_key($parsed, array_flip(array_keys($header_params))),
+                $header_params,
+            ),
+            body: (object) array_diff_key(
+                $parsed,
+                array_flip(array_keys($header_params))
+            ),
             options: $options,
             convert: MessageBatch::class,
         );

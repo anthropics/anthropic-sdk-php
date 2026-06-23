@@ -68,7 +68,7 @@ final class AgentCreateParams implements BaseModel
     public ?string $description;
 
     /**
-     * MCP servers this agent connects to. Maximum 20. Names must be unique within the array.
+     * MCP servers this agent connects to. Maximum 20. Names must be unique within the array. Every server must be referenced by an `mcp_toolset` in `tools`; unreferenced servers are rejected. See the [MCP connector guide](https://platform.claude.com/docs/en/managed-agents/mcp-connector).
      *
      * @var list<BetaManagedAgentsURLMCPServerParams>|null $mcpServers
      */
@@ -217,7 +217,7 @@ final class AgentCreateParams implements BaseModel
     }
 
     /**
-     * MCP servers this agent connects to. Maximum 20. Names must be unique within the array.
+     * MCP servers this agent connects to. Maximum 20. Names must be unique within the array. Every server must be referenced by an `mcp_toolset` in `tools`; unreferenced servers are rejected. See the [MCP connector guide](https://platform.claude.com/docs/en/managed-agents/mcp-connector).
      *
      * @param list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape> $mcpServers
      */

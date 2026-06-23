@@ -49,6 +49,7 @@ final class BatchesRawService implements BatchesRawContract
      * @param array{
      *   requests: list<Request|RequestShape>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   userProfileID?: string,
      * }|BatchCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -64,7 +65,10 @@ final class BatchesRawService implements BatchesRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta',
+            'userProfileID' => 'anthropic-user-profile-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

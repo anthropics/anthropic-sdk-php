@@ -8,6 +8,7 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Util;
 use Anthropic\Messages\CacheControlEphemeral;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCountTokensParams;
@@ -77,6 +78,7 @@ final class MessagesRawService implements MessagesRawContract
      *   tools?: list<ToolUnionShape>,
      *   topK?: int,
      *   topP?: float,
+     *   userProfileID?: string,
      * }|MessageCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -92,12 +94,20 @@ final class MessagesRawService implements MessagesRawContract
             $params,
             $requestOptions,
         );
+        $header_params = ['userProfileID' => 'anthropic-user-profile-id'];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'v1/messages',
-            body: (object) $parsed,
+            headers: Util::array_transform_keys(
+                array_intersect_key($parsed, array_flip(array_keys($header_params))),
+                $header_params,
+            ),
+            body: (object) array_diff_key(
+                $parsed,
+                array_flip(array_keys($header_params))
+            ),
             options: $options,
             convert: Message::class,
         );
@@ -124,6 +134,7 @@ final class MessagesRawService implements MessagesRawContract
      *   tools?: list<ToolUnionShape>,
      *   topK?: int,
      *   topP?: float,
+     *   userProfileID?: string,
      * }|MessageCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -140,13 +151,26 @@ final class MessagesRawService implements MessagesRawContract
             $requestOptions,
         );
         $parsed['stream'] = true;
+        $header_params = ['userProfileID' => 'anthropic-user-profile-id'];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'v1/messages',
-            headers: ['Accept' => 'text/event-stream'],
-            body: (object) $parsed,
+            headers: Util::array_transform_keys(
+                [
+                    'Accept' => 'text/event-stream',
+                    ...array_intersect_key(
+                        $parsed,
+                        array_flip(array_keys($header_params))
+                    ),
+                ],
+                $header_params,
+            ),
+            body: (object) array_diff_key(
+                $parsed,
+                array_flip(array_keys($header_params))
+            ),
             options: $options,
             convert: RawMessageStreamEvent::class,
             stream: SSEStream::class,

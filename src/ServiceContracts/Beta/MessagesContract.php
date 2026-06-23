@@ -250,8 +250,8 @@ interface MessagesContract
      * In nucleus sampling, we compute the cumulative distribution over all the options for each subsequent token in decreasing probability order and cut it off once it reaches a particular probability specified by `top_p`.
      *
      * Recommended for advanced use cases only.
-     * @param string|null $userProfileID Body param: The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $userProfileID Header param: The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -281,8 +281,8 @@ interface MessagesContract
         ?array $tools = null,
         ?int $topK = null,
         ?float $topP = null,
-        ?string $userProfileID = null,
         ?array $betas = null,
+        ?string $userProfileID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaMessage;
 
@@ -476,8 +476,8 @@ interface MessagesContract
      * In nucleus sampling, we compute the cumulative distribution over all the options for each subsequent token in decreasing probability order and cut it off once it reaches a particular probability specified by `top_p`.
      *
      * Recommended for advanced use cases only.
-     * @param string|null $userProfileID Body param: The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $userProfileID Header param: The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseStream<BetaRawMessageStartEvent|BetaRawMessageDeltaEvent|BetaRawMessageStopEvent|BetaRawContentBlockStartEvent|BetaRawContentBlockDeltaEvent|BetaRawContentBlockStopEvent,>
@@ -509,8 +509,8 @@ interface MessagesContract
         ?array $tools = null,
         ?int $topK = null,
         ?float $topP = null,
-        ?string $userProfileID = null,
         ?array $betas = null,
+        ?string $userProfileID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BaseStream;
 

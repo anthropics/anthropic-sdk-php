@@ -92,6 +92,7 @@ final class MessagesService implements MessagesContract
         ?array $tools = null,
         ?int $topK = null,
         ?float $topP = null,
+        ?string $userProfileID = null,
         RequestOptions|array|null $requestOptions = null,
     ): Message {
         $params = Util::removeNulls(
@@ -157,6 +158,7 @@ final class MessagesService implements MessagesContract
         ?array $tools = null,
         ?int $topK = null,
         ?float $topP = null,
+        ?string $userProfileID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BaseStream {
         $params = Util::removeNulls(
