@@ -26,6 +26,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BatchCreateParamsShape = array{
  *   requests: list<Request|RequestShape>,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   userProfileID?: string|null,
  * }
  */
 final class BatchCreateParams implements BaseModel
@@ -49,6 +50,12 @@ final class BatchCreateParams implements BaseModel
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
+
+    /**
+     * The user profile ID to attribute the requests in this batch to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header. Applies to every request in the batch; an individual request whose `user_profile_id` body field conflicts with this header is errored.
+     */
+    #[Optional]
+    public ?string $userProfileID;
 
     /**
      * `new BatchCreateParams()` is missing required properties by the API.
@@ -77,13 +84,17 @@ final class BatchCreateParams implements BaseModel
      * @param list<Request|RequestShape> $requests
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
-    public static function with(array $requests, ?array $betas = null): self
-    {
+    public static function with(
+        array $requests,
+        ?array $betas = null,
+        ?string $userProfileID = null
+    ): self {
         $self = new self;
 
         $self['requests'] = $requests;
 
         null !== $betas && $self['betas'] = $betas;
+        null !== $userProfileID && $self['userProfileID'] = $userProfileID;
 
         return $self;
     }
@@ -110,6 +121,17 @@ final class BatchCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    /**
+     * The user profile ID to attribute the requests in this batch to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header. Applies to every request in the batch; an individual request whose `user_profile_id` body field conflicts with this header is errored.
+     */
+    public function withUserProfileID(string $userProfileID): self
+    {
+        $self = clone $this;
+        $self['userProfileID'] = $userProfileID;
 
         return $self;
     }
