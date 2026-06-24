@@ -4,22 +4,18 @@ declare(strict_types=1);
 
 namespace Anthropic\Vertex;
 
-use Anthropic\Core\BaseClient;
 use Anthropic\Core\Util;
 use Anthropic\RequestOptions;
-use Anthropic\Vertex\Services\MessagesRawService;
-use Anthropic\Vertex\Services\MessagesService;
 use Google\Auth\ApplicationDefaultCredentials;
 use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\ProjectIdProviderInterface;
-use Http\Discovery\Psr17FactoryDiscovery;
-use Http\Discovery\Psr18ClientDiscovery;
 use Psr\Http\Message\RequestInterface;
 
 /**
  * @phpstan-type GoogleAuthTokenShape = array{access_token: non-empty-string, expires_at: positive-int|null}
+ * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
-final class Client extends BaseClient
+final class Client extends \Anthropic\Client
 {
     private const TOKEN_REFRESH_BUFFER_SECONDS = 300;
     private const PROJECT_ID_ENV_VARS = [
@@ -27,8 +23,6 @@ final class Client extends BaseClient
         'GCLOUD_PROJECT',
         'GOOGLE_CLOUD_PROJECT_ID',
     ];
-
-    public MessagesService $messages;
 
     private ?FetchAuthTokenInterface $credentials = null;
 
@@ -38,44 +32,46 @@ final class Client extends BaseClient
     private ?array $lastToken = null;
 
     /**
-     * @param \Closure(): FetchAuthTokenInterface $credentialsProvider
+     * @param (\Closure(): FetchAuthTokenInterface)|null $credentialsProvider
      * @param non-empty-string $location
      * @param non-empty-string|null $projectId
+     * @param non-empty-string|null $accessToken
+     * @param non-empty-string|null $baseUrl
+     * @param RequestOpts|null $requestOptions
      */
     private function __construct(
-        private \Closure $credentialsProvider,
+        private ?\Closure $credentialsProvider,
         private string $location,
         private ?string $projectId,
+        private ?string $accessToken = null,
+        ?string $baseUrl = null,
+        RequestOptions|array|null $requestOptions = null,
     ) {
-        $options = RequestOptions::with(
-            uriFactory: Psr17FactoryDiscovery::findUriFactory(),
-            streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
-            requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
-            transporter: Psr18ClientDiscovery::find(),
-        );
-
-        // @see https://docs.cloud.google.com/vertex-ai/docs/reference/rest#rest_endpoints
-        $baseUrl = match ($location) {
+        $baseUrl ??= Util::getenv('ANTHROPIC_VERTEX_BASE_URL') ?: match ($location) {
             'global' => 'https://aiplatform.googleapis.com',
             'us' => 'https://aiplatform.us.rep.googleapis.com',
             'eu' => 'https://aiplatform.eu.rep.googleapis.com',
             default => 'https://'.$location.'-aiplatform.googleapis.com',
         };
 
+        // Pass '' for apiKey/authToken to suppress ANTHROPIC_API_KEY and
+        // ANTHROPIC_AUTH_TOKEN env lookups; Vertex auth is handled entirely
+        // by the $authorize closure in backendMiddleware().
         parent::__construct(
-            headers: [],
+            apiKey: '',
+            authToken: '',
             baseUrl: $baseUrl,
-            options: $options
+            requestOptions: $requestOptions,
         );
-
-        $this->messages = new MessagesService(new MessagesRawService($this));
     }
 
     /**
      * @param non-empty-string $location
      * @param non-empty-string|null $projectId
+     * @param non-empty-string|null $baseUrl
+     * @param RequestOpts|null $requestOptions
      */
-    public static function fromEnvironment(string $location, ?string $projectId = null): self
+    public static function fromEnvironment(string $location, ?string $projectId = null, ?string $baseUrl = null, RequestOptions|array|null $requestOptions = null): self
     {
         self::ensureGoogleAuthLibraryIsInstalled();
 
@@ -89,42 +85,68 @@ final class Client extends BaseClient
             credentialsProvider: $credentialsProvider,
             location: $location,
             projectId: $projectId,
+            baseUrl: $baseUrl,
+            requestOptions: $requestOptions,
         );
     }
 
-    public function getApiEndpoint(): string
+    /**
+     * @param non-empty-string $accessToken
+     * @param non-empty-string $location
+     * @param non-empty-string|null $projectId
+     * @param non-empty-string|null $baseUrl
+     * @param RequestOpts|null $requestOptions
+     */
+    public static function withAccessToken(string $accessToken, string $location, ?string $projectId = null, ?string $baseUrl = null, RequestOptions|array|null $requestOptions = null): self
     {
-        $projectId = $this->resolveProjectId();
+        return new self(
+            credentialsProvider: null,
+            location: $location,
+            projectId: $projectId,
+            accessToken: $accessToken,
+            baseUrl: $baseUrl,
+            requestOptions: $requestOptions,
+        );
+    }
 
-        return "/v1/projects/{$projectId}/locations/{$this->location}/publishers/anthropic/models";
+    /** @return array<string,string> */
+    protected function authHeaders(): array
+    {
+        return [];
     }
 
     protected function transformRequest(RequestInterface $request): RequestInterface
     {
-        return $request->withHeader('Authorization', 'Bearer '.$this->authToken()['access_token']);
+        return $request;
     }
 
-    private function resolveCredentials(): FetchAuthTokenInterface
+    protected function backendMiddleware(): array
+    {
+        assert(null !== $this->options->streamFactory);
+
+        return [new VertexMiddleware(
+            $this->options->streamFactory,
+            $this->location,
+            $this->resolveProjectId(...),
+            fn (RequestInterface $request): RequestInterface => $request->hasHeader('Authorization')
+                ? $request
+                : $request->withHeader('Authorization', 'Bearer '.$this->authToken()['access_token']),
+        )];
+    }
+
+    private function resolveCredentials(): ?FetchAuthTokenInterface
     {
         if (null !== $this->credentials) {
             return $this->credentials;
+        }
+        if (null === $this->credentialsProvider) {
+            return null;
         }
 
         return $this->credentials = ($this->credentialsProvider)();
     }
 
     /**
-     * Resolve the project ID to be used for API requests.
-     *
-     * Project ID resolution precedence:
-     * 1. Explicit project ID provided to constructor
-     * 2. Environment variables (GOOGLE_CLOUD_PROJECT, GCLOUD_PROJECT, GOOGLE_CLOUD_PROJECT_ID)
-     * 3. Project ID from Google credentials provider
-     *
-     * This precedence ensures that explicit configuration takes priority over environment,
-     * and environment takes priority over credential discovery, allowing users to override
-     * the project ID when needed for testing or multi-project scenarios.
-     *
      * @return non-empty-string
      */
     private function resolveProjectId(): string
@@ -161,6 +183,10 @@ final class Client extends BaseClient
      */
     private function authToken(): array
     {
+        if (null !== $this->accessToken) {
+            return ['access_token' => $this->accessToken, 'expires_at' => null];
+        }
+
         if (null === $this->lastToken || $this->isTokenExpired($this->lastToken)) {
             $this->lastToken = $this->fetchAuthToken();
         }
@@ -186,7 +212,11 @@ final class Client extends BaseClient
      */
     private function fetchAuthToken(): array
     {
-        $token = $this->resolveCredentials()->fetchAuthToken();
+        $credentials = $this->resolveCredentials();
+        if (null === $credentials) {
+            throw new \RuntimeException('No access token or Google credentials configured.');
+        }
+        $token = $credentials->fetchAuthToken();
 
         $accessToken = $token['access_token'] ?? null;
         $expiresAt = $token['expires_at'] ?? null;
