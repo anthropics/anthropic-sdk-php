@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.31.0 (2026-06-24)
+
+Full Changelog: [v0.30.0...v0.31.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.30.0...v0.31.0)
+
+### Features
+
+* **client:** add support for system.message streaming events ([a665f06](https://github.com/anthropics/anthropic-sdk-php/commit/a665f0670243dd55ad185d53f01f4b75cecb4a94))
+* **helpers:** single source for x-stainless-helper + tag the BetaToolRunner ([#63](https://github.com/anthropics/anthropic-sdk-php/issues/63)) ([ba6ce02](https://github.com/anthropics/anthropic-sdk-php/commit/ba6ce026435ae7b8752fd73cf5c235299142bae5))
+
+
+### Bug Fixes
+
+* **bedrock,vertex:** run provider rewrites as middleware ([#60](https://github.com/anthropics/anthropic-sdk-php/issues/60)) ([2343067](https://github.com/anthropics/anthropic-sdk-php/commit/234306763d39d11771b3f48180b39b1708b25ff6))
+
+
+### Chores
+
+* **api:** add support for new refusal category ([ae875c2](https://github.com/anthropics/anthropic-sdk-php/commit/ae875c2283a50a23ed9543b286ac1643bce8df5f))
+* **api:** add support for sending User Profile ID in request headers ([521f220](https://github.com/anthropics/anthropic-sdk-php/commit/521f2203adfd1e555f631997df1e1d6909d69488))
+
 ## 0.30.0 (2026-06-18)
 
 Full Changelog: [v0.29.2...v0.30.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.29.2...v0.30.0)
