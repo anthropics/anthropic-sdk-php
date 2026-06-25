@@ -75,7 +75,11 @@ final class DeploymentsTest extends TestCase
                     'mountPath' => '/uploads/receipt.pdf',
                 ],
             ],
-            schedule: ['expression' => 'x', 'timezone' => 'x', 'type' => 'cron'],
+            schedule: [
+                'expression' => '0 9 * * 1-5',
+                'timezone' => 'America/Los_Angeles',
+                'type' => 'cron',
+            ],
             vaultIDs: ['string'],
             betas: ['message-batches-2024-09-24'],
         );
@@ -91,7 +95,9 @@ final class DeploymentsTest extends TestCase
             $this->markTestSkipped('buildURL drops path-level query params (SDK-4349)');
         }
 
-        $result = $this->client->beta->deployments->retrieve('deployment_id');
+        $result = $this->client->beta->deployments->retrieve(
+            'depl_011CZkZcDH3vPqd7xnEfwTai'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaManagedAgentsDeployment::class, $result);
@@ -100,7 +106,9 @@ final class DeploymentsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->beta->deployments->update('deployment_id');
+        $result = $this->client->beta->deployments->update(
+            'depl_011CZkZcDH3vPqd7xnEfwTai'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaManagedAgentsDeployment::class, $result);
@@ -127,7 +135,9 @@ final class DeploymentsTest extends TestCase
     #[Test]
     public function testArchive(): void
     {
-        $result = $this->client->beta->deployments->archive('deployment_id');
+        $result = $this->client->beta->deployments->archive(
+            'depl_011CZkZcDH3vPqd7xnEfwTai'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaManagedAgentsDeployment::class, $result);
@@ -136,7 +146,9 @@ final class DeploymentsTest extends TestCase
     #[Test]
     public function testPause(): void
     {
-        $result = $this->client->beta->deployments->pause('deployment_id');
+        $result = $this->client->beta->deployments->pause(
+            'depl_011CZkZcDH3vPqd7xnEfwTai'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaManagedAgentsDeployment::class, $result);
@@ -145,7 +157,9 @@ final class DeploymentsTest extends TestCase
     #[Test]
     public function testRun(): void
     {
-        $result = $this->client->beta->deployments->run('deployment_id');
+        $result = $this->client->beta->deployments->run(
+            'depl_011CZkZcDH3vPqd7xnEfwTai'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaManagedAgentsDeploymentRun::class, $result);
@@ -154,7 +168,9 @@ final class DeploymentsTest extends TestCase
     #[Test]
     public function testUnpause(): void
     {
-        $result = $this->client->beta->deployments->unpause('deployment_id');
+        $result = $this->client->beta->deployments->unpause(
+            'depl_011CZkZcDH3vPqd7xnEfwTai'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaManagedAgentsDeployment::class, $result);
