@@ -191,6 +191,16 @@ abstract class BaseClient
 
     /**
      * @internal
+     *
+     * @return list<\Anthropic\Middleware>
+     */
+    protected function backendMiddleware(): array
+    {
+        return [];
+    }
+
+    /**
+     * @internal
      */
     protected function followRedirect(
         ResponseInterface $rsp,
@@ -310,7 +320,7 @@ abstract class BaseClient
         if ($middleware !== $clientMiddleware && [] !== $clientMiddleware) {
             $middleware = [...$clientMiddleware, ...$middleware];
         }
-        $sendRequest = $this->applyMiddleware($sendRequest, middleware: $middleware);
+        $sendRequest = $this->applyMiddleware($sendRequest, middleware: [...$middleware, ...$this->backendMiddleware()]);
 
         $rsp = null;
         $err = null;
