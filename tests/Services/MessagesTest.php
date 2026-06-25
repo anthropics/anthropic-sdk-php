@@ -165,6 +165,7 @@ final class MessagesTest extends TestCase
                     'type' => 'custom',
                 ],
             ],
+            userProfileID: 'anthropic-user-profile-id',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
