@@ -41,6 +41,7 @@ use Anthropic\Messages\MessageCountTokensParams\System;
  *   thinking?: ThinkingConfigParamShape|null,
  *   toolChoice?: ToolChoiceShape|null,
  *   tools?: list<MessageCountTokensToolShape>|null,
+ *   userProfileID?: string|null,
  * }
  */
 final class MessageCountTokensParams implements BaseModel
@@ -225,6 +226,12 @@ final class MessageCountTokensParams implements BaseModel
     public ?array $tools;
 
     /**
+     * The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header.
+     */
+    #[Optional]
+    public ?string $userProfileID;
+
+    /**
      * `new MessageCountTokensParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -266,6 +273,7 @@ final class MessageCountTokensParams implements BaseModel
         ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
+        ?string $userProfileID = null,
     ): self {
         $self = new self;
 
@@ -278,6 +286,7 @@ final class MessageCountTokensParams implements BaseModel
         null !== $thinking && $self['thinking'] = $thinking;
         null !== $toolChoice && $self['toolChoice'] = $toolChoice;
         null !== $tools && $self['tools'] = $tools;
+        null !== $userProfileID && $self['userProfileID'] = $userProfileID;
 
         return $self;
     }
@@ -500,6 +509,17 @@ final class MessageCountTokensParams implements BaseModel
     {
         $self = clone $this;
         $self['tools'] = $tools;
+
+        return $self;
+    }
+
+    /**
+     * The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header.
+     */
+    public function withUserProfileID(string $userProfileID): self
+    {
+        $self = clone $this;
+        $self['userProfileID'] = $userProfileID;
 
         return $self;
     }

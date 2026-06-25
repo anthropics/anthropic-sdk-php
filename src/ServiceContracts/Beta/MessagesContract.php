@@ -647,6 +647,7 @@ interface MessagesContract
      *
      * See our [guide](https://docs.claude.com/en/docs/tool-use) for more details.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $userProfileID Header param: The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -665,6 +666,7 @@ interface MessagesContract
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?array $betas = null,
+        ?string $userProfileID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaMessageTokensCount;
 }

@@ -235,6 +235,7 @@ final class MessagesRawService implements MessagesRawContract
      *   toolChoice?: BetaToolChoiceShape,
      *   tools?: list<ToolShape>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   userProfileID?: string,
      * }|MessageCountTokensParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -250,7 +251,10 @@ final class MessagesRawService implements MessagesRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta',
+            'userProfileID' => 'anthropic-user-profile-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

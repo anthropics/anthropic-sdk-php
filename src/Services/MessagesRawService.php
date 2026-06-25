@@ -195,6 +195,7 @@ final class MessagesRawService implements MessagesRawContract
      *   thinking?: ThinkingConfigParamShape,
      *   toolChoice?: ToolChoiceShape,
      *   tools?: list<MessageCountTokensToolShape>,
+     *   userProfileID?: string,
      * }|MessageCountTokensParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -210,12 +211,20 @@ final class MessagesRawService implements MessagesRawContract
             $params,
             $requestOptions,
         );
+        $header_params = ['userProfileID' => 'anthropic-user-profile-id'];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'v1/messages/count_tokens',
-            body: (object) $parsed,
+            headers: Util::array_transform_keys(
+                array_intersect_key($parsed, array_flip(array_keys($header_params))),
+                $header_params,
+            ),
+            body: (object) array_diff_key(
+                $parsed,
+                array_flip(array_keys($header_params))
+            ),
             options: $options,
             convert: MessageTokensCount::class,
         );
