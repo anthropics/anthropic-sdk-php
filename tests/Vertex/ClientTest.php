@@ -31,17 +31,30 @@ class ClientTest extends TestCase
      */
     public static function locationBaseUrlProvider(): iterable
     {
-        yield 'global region' => ['global', 'https://aiplatform.googleapis.com'];
+        yield 'global region' => ['global', 'https://aiplatform.googleapis.com/v1'];
 
-        yield 'us region' => ['us', 'https://aiplatform.us.rep.googleapis.com'];
+        yield 'us region' => ['us', 'https://aiplatform.us.rep.googleapis.com/v1'];
 
-        yield 'us-central1 region' => ['us-central1', 'https://us-central1-aiplatform.googleapis.com'];
+        yield 'us-central1 region' => ['us-central1', 'https://us-central1-aiplatform.googleapis.com/v1'];
 
-        yield 'eu region' => ['eu', 'https://aiplatform.eu.rep.googleapis.com'];
+        yield 'eu region' => ['eu', 'https://aiplatform.eu.rep.googleapis.com/v1'];
 
-        yield 'europe-west1 region' => ['europe-west1', 'https://europe-west1-aiplatform.googleapis.com'];
+        yield 'europe-west1 region' => ['europe-west1', 'https://europe-west1-aiplatform.googleapis.com/v1'];
 
-        yield 'asia-southeast1 region' => ['asia-southeast1', 'https://asia-southeast1-aiplatform.googleapis.com'];
+        yield 'asia-southeast1 region' => ['asia-southeast1', 'https://asia-southeast1-aiplatform.googleapis.com/v1'];
+    }
+
+    public function testWithAccessTokenSetsBearerAuthorization(): void
+    {
+        $transporter = new \Http\Mock\Client();
+        $transporter->setDefaultResponse(new \GuzzleHttp\Psr7\Response(200, ['Content-Type' => 'application/json'], '{}'));
+
+        $client = Client::withAccessToken('static-token', location: 'us-east5', projectId: 'p', requestOptions: ['transporter' => $transporter]);
+        $client->messages->create(maxTokens: 1, messages: [], model: 'm@v');
+
+        $sent = $transporter->getLastRequest();
+        $this->assertInstanceOf(\Psr\Http\Message\RequestInterface::class, $sent);
+        $this->assertSame('Bearer static-token', $sent->getHeaderLine('Authorization'));
     }
 
     private function createClientWithLocation(string $location): Client

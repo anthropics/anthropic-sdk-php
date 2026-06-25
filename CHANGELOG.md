@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.31.1 (2026-06-25)
+
+Full Changelog: [v0.31.0...v0.31.1](https://github.com/anthropics/anthropic-sdk-php/compare/v0.31.0...v0.31.1)
+
+### Bug Fixes
+
+* **bedrock,vertex:** run provider rewrites as middleware (reapply) ([#77](https://github.com/anthropics/anthropic-sdk-php/issues/77)) ([0961a4d](https://github.com/anthropics/anthropic-sdk-php/commit/0961a4d9f1571ecde9b7799cefcfc406050258a8))
+
+
+### Chores
+
+* **api:** accept user profile ID's when counting tokens ([12154bd](https://github.com/anthropics/anthropic-sdk-php/commit/12154bd893bbd1790d5e087ddeb2b313f6007cb4))
+* **docs:** updates to descriptions and example values ([a0b6eb7](https://github.com/anthropics/anthropic-sdk-php/commit/a0b6eb764bfb2559fd6a7ece33e591ca51b41d49))
+
 ## 0.31.0 (2026-06-24)
 
 Full Changelog: [v0.30.0...v0.31.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.30.0...v0.31.0)

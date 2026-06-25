@@ -54,7 +54,7 @@ final class ClientTest extends TestCase
         $this->assertSame('Bearer test-bedrock-api-key', $request->getHeaderLine('authorization'));
         $this->assertSame('', $request->getHeaderLine('x-amz-date'));
         $this->assertSame('bedrock-runtime.us-east-1.amazonaws.com', $request->getUri()->getHost());
-        $this->assertSame('/model/anthropic.claude-3-5-sonnet-20241022-v2%3A0/invoke', $request->getUri()->getPath());
+        $this->assertSame('/model/anthropic.claude-3-5-sonnet-20241022-v2:0/invoke', $request->getUri()->getPath());
 
         $body = json_decode((string) $request->getBody(), associative: true, flags: JSON_THROW_ON_ERROR);
 

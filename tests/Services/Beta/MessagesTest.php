@@ -245,6 +245,7 @@ final class MessagesTest extends TestCase
                 ],
             ],
             betas: ['message-batches-2024-09-24'],
+            userProfileID: 'anthropic-user-profile-id',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
