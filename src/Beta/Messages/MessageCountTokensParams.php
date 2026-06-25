@@ -53,6 +53,7 @@ use Anthropic\Messages\Model;
  *   toolChoice?: BetaToolChoiceShape|null,
  *   tools?: list<ToolShape>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   userProfileID?: string|null,
  * }
  */
 final class MessageCountTokensParams implements BaseModel
@@ -279,6 +280,12 @@ final class MessageCountTokensParams implements BaseModel
     public ?array $betas;
 
     /**
+     * The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header.
+     */
+    #[Optional]
+    public ?string $userProfileID;
+
+    /**
      * `new MessageCountTokensParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -330,6 +337,7 @@ final class MessageCountTokensParams implements BaseModel
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?array $betas = null,
+        ?string $userProfileID = null,
     ): self {
         $self = new self;
 
@@ -347,6 +355,7 @@ final class MessageCountTokensParams implements BaseModel
         null !== $toolChoice && $self['toolChoice'] = $toolChoice;
         null !== $tools && $self['tools'] = $tools;
         null !== $betas && $self['betas'] = $betas;
+        null !== $userProfileID && $self['userProfileID'] = $userProfileID;
 
         return $self;
     }
@@ -640,6 +649,17 @@ final class MessageCountTokensParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    /**
+     * The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header.
+     */
+    public function withUserProfileID(string $userProfileID): self
+    {
+        $self = clone $this;
+        $self['userProfileID'] = $userProfileID;
 
         return $self;
     }

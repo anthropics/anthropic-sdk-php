@@ -144,6 +144,7 @@ class MessagesService implements MessagesContract
         ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
+        ?string $userProfileID = null,
         RequestOptions|array|null $requestOptions = null,
     ): MessageTokensCount {
         $params = Util::removeNulls(
