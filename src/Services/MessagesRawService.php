@@ -58,7 +58,7 @@ final class MessagesRawService implements MessagesRawContract
      *
      * The Messages API can be used for either single queries or stateless multi-turn conversations.
      *
-     * Learn more about the Messages API in our [user guide](https://docs.claude.com/en/docs/initial-setup)
+     * Learn more about the Messages API in our [user guide](https://platform.claude.com/docs/en/get-started)
      *
      * @param array{
      *   maxTokens: int,
@@ -184,7 +184,7 @@ final class MessagesRawService implements MessagesRawContract
      *
      * The Token Count API can be used to count the number of tokens in a Message, including tools, images, and documents, without creating it.
      *
-     * Learn more about token counting in our [user guide](https://docs.claude.com/en/docs/build-with-claude/token-counting)
+     * Learn more about token counting in our [user guide](https://platform.claude.com/docs/en/build-with-claude/token-counting)
      *
      * @param array{
      *   messages: list<MessageParam|MessageParamShape>,
