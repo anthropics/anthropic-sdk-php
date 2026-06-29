@@ -44,7 +44,7 @@ final class BatchesRawService implements BatchesRawContract
      *
      * The Message Batches API can be used to process multiple Messages API requests at once. Once a Message Batch is created, it begins processing immediately. Batches can take up to 24 hours to complete.
      *
-     * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
+     * Learn more about the Message Batches API in our [user guide](https://platform.claude.com/docs/en/build-with-claude/batch-processing)
      *
      * @param array{
      *   requests: list<Request|RequestShape>,
@@ -95,7 +95,7 @@ final class BatchesRawService implements BatchesRawContract
      *
      * This endpoint is idempotent and can be used to poll for Message Batch completion. To access the results of a Message Batch, make a request to the `results_url` field in the response.
      *
-     * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
+     * Learn more about the Message Batches API in our [user guide](https://platform.claude.com/docs/en/build-with-claude/batch-processing)
      *
      * @param string $messageBatchID ID of the Message Batch
      * @param array{
@@ -138,7 +138,7 @@ final class BatchesRawService implements BatchesRawContract
      *
      * List all Message Batches within a Workspace. Most recently created batches are returned first.
      *
-     * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
+     * Learn more about the Message Batches API in our [user guide](https://platform.claude.com/docs/en/build-with-claude/batch-processing)
      *
      * @param array{
      *   afterID?: string,
@@ -193,7 +193,7 @@ final class BatchesRawService implements BatchesRawContract
      *
      * Message Batches can only be deleted once they've finished processing. If you'd like to delete an in-progress batch, you must first cancel it.
      *
-     * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
+     * Learn more about the Message Batches API in our [user guide](https://platform.claude.com/docs/en/build-with-claude/batch-processing)
      *
      * @param string $messageBatchID ID of the Message Batch
      * @param array{
@@ -238,7 +238,7 @@ final class BatchesRawService implements BatchesRawContract
      *
      * The number of canceled requests is specified in `request_counts`. To determine which requests were canceled, check the individual results within the batch. Note that cancellation may not result in any canceled requests if they were non-interruptible.
      *
-     * Learn more about the Message Batches API in our [user guide](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
+     * Learn more about the Message Batches API in our [user guide](https://platform.claude.com/docs/en/build-with-claude/batch-processing)
      *
      * @param string $messageBatchID ID of the Message Batch
      * @param array{
