@@ -70,7 +70,7 @@ $environment = $client->beta->environments->create(
 echo "Created environment: {$environment->id}\n";
 
 $agent = $client->beta->agents->create(
-    model: 'claude-sonnet-4-6',
+    model: 'claude-sonnet-5',
     name: 'comprehensive-example-agent',
     system: 'You are a helpful assistant. When asked about the weather, always call the get_weather tool.',
     tools: [

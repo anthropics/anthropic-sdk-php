@@ -36,7 +36,7 @@ echo "=== Structured Output: Raw JSON Schema ===\n\n";
 $message = $client->messages->create(
     maxTokens: 1024,
     messages: [['role' => 'user', 'content' => 'Generate a profile for a 30-year-old software engineer named Alice.']],
-    model: 'claude-sonnet-4-5-20250929',
+    model: 'claude-sonnet-5',
     outputConfig: OutputConfig::with(format: JSONOutputFormat::with(schema: $schema))
 );
 

@@ -20,7 +20,7 @@ echo "Created environment: {$environment->id}\n";
 // Create an agent
 $agent = $client->beta->agents->create(
     name: 'files-example-agent',
-    model: 'claude-sonnet-4-6',
+    model: 'claude-sonnet-5',
     tools: [
         [
             'type' => 'agent_toolset_20260401',
