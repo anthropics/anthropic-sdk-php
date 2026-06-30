@@ -32,9 +32,29 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type BetaWebhookVaultCredentialDeletedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookVaultCredentialDeletedEventData
  * @phpstan-import-type BetaWebhookVaultCredentialRefreshFailedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookVaultCredentialRefreshFailedEventData
  * @phpstan-import-type BetaWebhookSessionUpdatedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookSessionUpdatedEventData
+ * @phpstan-import-type BetaWebhookAgentCreatedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookAgentCreatedEventData
+ * @phpstan-import-type BetaWebhookAgentArchivedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookAgentArchivedEventData
+ * @phpstan-import-type BetaWebhookAgentDeletedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookAgentDeletedEventData
+ * @phpstan-import-type BetaWebhookDeploymentPausedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookDeploymentPausedEventData
+ * @phpstan-import-type BetaWebhookDeploymentRunFailedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookDeploymentRunFailedEventData
+ * @phpstan-import-type BetaWebhookDeploymentCreatedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookDeploymentCreatedEventData
+ * @phpstan-import-type BetaWebhookDeploymentUpdatedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookDeploymentUpdatedEventData
+ * @phpstan-import-type BetaWebhookDeploymentUnpausedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookDeploymentUnpausedEventData
+ * @phpstan-import-type BetaWebhookAgentUpdatedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookAgentUpdatedEventData
+ * @phpstan-import-type BetaWebhookDeploymentArchivedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookDeploymentArchivedEventData
+ * @phpstan-import-type BetaWebhookDeploymentRunStartedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookDeploymentRunStartedEventData
+ * @phpstan-import-type BetaWebhookDeploymentDeletedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookDeploymentDeletedEventData
+ * @phpstan-import-type BetaWebhookDeploymentRunSucceededEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookDeploymentRunSucceededEventData
+ * @phpstan-import-type BetaWebhookEnvironmentCreatedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookEnvironmentCreatedEventData
+ * @phpstan-import-type BetaWebhookEnvironmentUpdatedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookEnvironmentUpdatedEventData
+ * @phpstan-import-type BetaWebhookEnvironmentArchivedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookEnvironmentArchivedEventData
+ * @phpstan-import-type BetaWebhookEnvironmentDeletedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookEnvironmentDeletedEventData
+ * @phpstan-import-type BetaWebhookMemoryStoreCreatedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookMemoryStoreCreatedEventData
+ * @phpstan-import-type BetaWebhookMemoryStoreArchivedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookMemoryStoreArchivedEventData
+ * @phpstan-import-type BetaWebhookMemoryStoreDeletedEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookMemoryStoreDeletedEventData
  *
- * @phpstan-type BetaWebhookEventDataVariants = BetaWebhookSessionCreatedEventData|BetaWebhookSessionPendingEventData|BetaWebhookSessionRunningEventData|BetaWebhookSessionIdledEventData|BetaWebhookSessionRequiresActionEventData|BetaWebhookSessionArchivedEventData|BetaWebhookSessionDeletedEventData|BetaWebhookSessionStatusRescheduledEventData|BetaWebhookSessionStatusRunStartedEventData|BetaWebhookSessionStatusIdledEventData|BetaWebhookSessionStatusTerminatedEventData|BetaWebhookSessionThreadCreatedEventData|BetaWebhookSessionThreadIdledEventData|BetaWebhookSessionThreadTerminatedEventData|BetaWebhookSessionOutcomeEvaluationEndedEventData|BetaWebhookVaultCreatedEventData|BetaWebhookVaultArchivedEventData|BetaWebhookVaultDeletedEventData|BetaWebhookVaultCredentialCreatedEventData|BetaWebhookVaultCredentialArchivedEventData|BetaWebhookVaultCredentialDeletedEventData|BetaWebhookVaultCredentialRefreshFailedEventData|BetaWebhookSessionUpdatedEventData
- * @phpstan-type BetaWebhookEventDataShape = BetaWebhookEventDataVariants|BetaWebhookSessionCreatedEventDataShape|BetaWebhookSessionPendingEventDataShape|BetaWebhookSessionRunningEventDataShape|BetaWebhookSessionIdledEventDataShape|BetaWebhookSessionRequiresActionEventDataShape|BetaWebhookSessionArchivedEventDataShape|BetaWebhookSessionDeletedEventDataShape|BetaWebhookSessionStatusRescheduledEventDataShape|BetaWebhookSessionStatusRunStartedEventDataShape|BetaWebhookSessionStatusIdledEventDataShape|BetaWebhookSessionStatusTerminatedEventDataShape|BetaWebhookSessionThreadCreatedEventDataShape|BetaWebhookSessionThreadIdledEventDataShape|BetaWebhookSessionThreadTerminatedEventDataShape|BetaWebhookSessionOutcomeEvaluationEndedEventDataShape|BetaWebhookVaultCreatedEventDataShape|BetaWebhookVaultArchivedEventDataShape|BetaWebhookVaultDeletedEventDataShape|BetaWebhookVaultCredentialCreatedEventDataShape|BetaWebhookVaultCredentialArchivedEventDataShape|BetaWebhookVaultCredentialDeletedEventDataShape|BetaWebhookVaultCredentialRefreshFailedEventDataShape|BetaWebhookSessionUpdatedEventDataShape
+ * @phpstan-type BetaWebhookEventDataVariants = BetaWebhookSessionCreatedEventData|BetaWebhookSessionPendingEventData|BetaWebhookSessionRunningEventData|BetaWebhookSessionIdledEventData|BetaWebhookSessionRequiresActionEventData|BetaWebhookSessionArchivedEventData|BetaWebhookSessionDeletedEventData|BetaWebhookSessionStatusRescheduledEventData|BetaWebhookSessionStatusRunStartedEventData|BetaWebhookSessionStatusIdledEventData|BetaWebhookSessionStatusTerminatedEventData|BetaWebhookSessionThreadCreatedEventData|BetaWebhookSessionThreadIdledEventData|BetaWebhookSessionThreadTerminatedEventData|BetaWebhookSessionOutcomeEvaluationEndedEventData|BetaWebhookVaultCreatedEventData|BetaWebhookVaultArchivedEventData|BetaWebhookVaultDeletedEventData|BetaWebhookVaultCredentialCreatedEventData|BetaWebhookVaultCredentialArchivedEventData|BetaWebhookVaultCredentialDeletedEventData|BetaWebhookVaultCredentialRefreshFailedEventData|BetaWebhookSessionUpdatedEventData|BetaWebhookAgentCreatedEventData|BetaWebhookAgentArchivedEventData|BetaWebhookAgentDeletedEventData|BetaWebhookDeploymentPausedEventData|BetaWebhookDeploymentRunFailedEventData|BetaWebhookDeploymentCreatedEventData|BetaWebhookDeploymentUpdatedEventData|BetaWebhookDeploymentUnpausedEventData|BetaWebhookAgentUpdatedEventData|BetaWebhookDeploymentArchivedEventData|BetaWebhookDeploymentRunStartedEventData|BetaWebhookDeploymentDeletedEventData|BetaWebhookDeploymentRunSucceededEventData|BetaWebhookEnvironmentCreatedEventData|BetaWebhookEnvironmentUpdatedEventData|BetaWebhookEnvironmentArchivedEventData|BetaWebhookEnvironmentDeletedEventData|BetaWebhookMemoryStoreCreatedEventData|BetaWebhookMemoryStoreArchivedEventData|BetaWebhookMemoryStoreDeletedEventData
+ * @phpstan-type BetaWebhookEventDataShape = BetaWebhookEventDataVariants|BetaWebhookSessionCreatedEventDataShape|BetaWebhookSessionPendingEventDataShape|BetaWebhookSessionRunningEventDataShape|BetaWebhookSessionIdledEventDataShape|BetaWebhookSessionRequiresActionEventDataShape|BetaWebhookSessionArchivedEventDataShape|BetaWebhookSessionDeletedEventDataShape|BetaWebhookSessionStatusRescheduledEventDataShape|BetaWebhookSessionStatusRunStartedEventDataShape|BetaWebhookSessionStatusIdledEventDataShape|BetaWebhookSessionStatusTerminatedEventDataShape|BetaWebhookSessionThreadCreatedEventDataShape|BetaWebhookSessionThreadIdledEventDataShape|BetaWebhookSessionThreadTerminatedEventDataShape|BetaWebhookSessionOutcomeEvaluationEndedEventDataShape|BetaWebhookVaultCreatedEventDataShape|BetaWebhookVaultArchivedEventDataShape|BetaWebhookVaultDeletedEventDataShape|BetaWebhookVaultCredentialCreatedEventDataShape|BetaWebhookVaultCredentialArchivedEventDataShape|BetaWebhookVaultCredentialDeletedEventDataShape|BetaWebhookVaultCredentialRefreshFailedEventDataShape|BetaWebhookSessionUpdatedEventDataShape|BetaWebhookAgentCreatedEventDataShape|BetaWebhookAgentArchivedEventDataShape|BetaWebhookAgentDeletedEventDataShape|BetaWebhookDeploymentPausedEventDataShape|BetaWebhookDeploymentRunFailedEventDataShape|BetaWebhookDeploymentCreatedEventDataShape|BetaWebhookDeploymentUpdatedEventDataShape|BetaWebhookDeploymentUnpausedEventDataShape|BetaWebhookAgentUpdatedEventDataShape|BetaWebhookDeploymentArchivedEventDataShape|BetaWebhookDeploymentRunStartedEventDataShape|BetaWebhookDeploymentDeletedEventDataShape|BetaWebhookDeploymentRunSucceededEventDataShape|BetaWebhookEnvironmentCreatedEventDataShape|BetaWebhookEnvironmentUpdatedEventDataShape|BetaWebhookEnvironmentArchivedEventDataShape|BetaWebhookEnvironmentDeletedEventDataShape|BetaWebhookMemoryStoreCreatedEventDataShape|BetaWebhookMemoryStoreArchivedEventDataShape|BetaWebhookMemoryStoreDeletedEventDataShape
  */
 final class BetaWebhookEventData implements ConverterSource
 {
@@ -74,6 +94,26 @@ final class BetaWebhookEventData implements ConverterSource
             'vault_credential.deleted' => BetaWebhookVaultCredentialDeletedEventData::class,
             'vault_credential.refresh_failed' => BetaWebhookVaultCredentialRefreshFailedEventData::class,
             'session.updated' => BetaWebhookSessionUpdatedEventData::class,
+            'agent.created' => BetaWebhookAgentCreatedEventData::class,
+            'agent.archived' => BetaWebhookAgentArchivedEventData::class,
+            'agent.deleted' => BetaWebhookAgentDeletedEventData::class,
+            'deployment.paused' => BetaWebhookDeploymentPausedEventData::class,
+            'deployment_run.failed' => BetaWebhookDeploymentRunFailedEventData::class,
+            'deployment.created' => BetaWebhookDeploymentCreatedEventData::class,
+            'deployment.updated' => BetaWebhookDeploymentUpdatedEventData::class,
+            'deployment.unpaused' => BetaWebhookDeploymentUnpausedEventData::class,
+            'agent.updated' => BetaWebhookAgentUpdatedEventData::class,
+            'deployment.archived' => BetaWebhookDeploymentArchivedEventData::class,
+            'deployment_run.started' => BetaWebhookDeploymentRunStartedEventData::class,
+            'deployment.deleted' => BetaWebhookDeploymentDeletedEventData::class,
+            'deployment_run.succeeded' => BetaWebhookDeploymentRunSucceededEventData::class,
+            'environment.created' => BetaWebhookEnvironmentCreatedEventData::class,
+            'environment.updated' => BetaWebhookEnvironmentUpdatedEventData::class,
+            'environment.archived' => BetaWebhookEnvironmentArchivedEventData::class,
+            'environment.deleted' => BetaWebhookEnvironmentDeletedEventData::class,
+            'memory_store.created' => BetaWebhookMemoryStoreCreatedEventData::class,
+            'memory_store.archived' => BetaWebhookMemoryStoreArchivedEventData::class,
+            'memory_store.deleted' => BetaWebhookMemoryStoreDeletedEventData::class,
         ];
     }
 }
