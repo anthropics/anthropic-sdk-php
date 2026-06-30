@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.34.0 (2026-06-30)
+
+Full Changelog: [v0.33.0...v0.34.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.33.0...v0.34.0)
+
+### Features
+
+* **api:** add support for Managed Agents event delta streaming, agent overrides, reverse pagination, vault credential injection scoping, and agent and deployment webhook events ([a0e1ba3](https://github.com/anthropics/anthropic-sdk-php/commit/a0e1ba3a8ce813c630877856887eb203008e8be3))
+* **api:** api update ([#90](https://github.com/anthropics/anthropic-sdk-php/issues/90)) ([17348ea](https://github.com/anthropics/anthropic-sdk-php/commit/17348ea838874b12e79cd542e103149c045634f4))
+
 ## 0.33.0 (2026-06-30)
 
 Full Changelog: [v0.32.0...v0.33.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.32.0...v0.33.0)
