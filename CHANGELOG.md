@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.33.0 (2026-06-30)
+
+Full Changelog: [v0.32.0...v0.33.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.32.0...v0.33.0)
+
+### Features
+
+* **api:** add support for claude-sonnet-5 ([e86ff3c](https://github.com/anthropics/anthropic-sdk-php/commit/e86ff3c25c412a81f6bdfedde651c84606a8cc5a))
+
 ## 0.32.0 (2026-06-29)
 
 Full Changelog: [v0.31.0...v0.32.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.31.0...v0.32.0)
