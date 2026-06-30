@@ -87,7 +87,7 @@ final class BatchesTest extends TestCase
                         'fallbackCreditToken' => 'x',
                         'fallbacks' => [
                             [
-                                'model' => 'claude-fable-5',
+                                'model' => 'claude-sonnet-5',
                                 'maxTokens' => 0,
                                 'outputConfig' => [
                                     'effort' => 'low',
