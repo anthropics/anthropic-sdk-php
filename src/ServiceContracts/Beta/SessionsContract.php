@@ -6,13 +6,14 @@ namespace Anthropic\ServiceContracts\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Sessions\BetaManagedAgentsAgentParams;
+use Anthropic\Beta\Sessions\BetaManagedAgentsAgentWithOverridesParams;
 use Anthropic\Beta\Sessions\BetaManagedAgentsDeletedSession;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSession;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgentUpdate;
 use Anthropic\Beta\Sessions\SessionListParams\Order;
 use Anthropic\Beta\Sessions\SessionListParams\Status;
+use Anthropic\BidirectionalPageCursor;
 use Anthropic\Core\Exceptions\APIException;
-use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
 /**
@@ -38,7 +39,7 @@ interface SessionsContract
      * @throws APIException
      */
     public function create(
-        string|BetaManagedAgentsAgentParams|array $agent,
+        string|BetaManagedAgentsAgentParams|array|BetaManagedAgentsAgentWithOverridesParams $agent,
         string $environmentID,
         ?array $metadata = null,
         ?array $resources = null,
@@ -105,7 +106,7 @@ interface SessionsContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
-     * @return PageCursor<BetaManagedAgentsSession>
+     * @return BidirectionalPageCursor<BetaManagedAgentsSession>
      *
      * @throws APIException
      */
@@ -125,7 +126,7 @@ interface SessionsContract
         ?array $statuses = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
-    ): PageCursor;
+    ): BidirectionalPageCursor;
 
     /**
      * @api

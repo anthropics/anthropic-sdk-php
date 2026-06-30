@@ -4,9 +4,9 @@ namespace Tests\Services\Beta;
 
 use Anthropic\Beta\Sessions\BetaManagedAgentsDeletedSession;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSession;
+use Anthropic\BidirectionalPageCursor;
 use Anthropic\Client;
 use Anthropic\Core\Util;
-use Anthropic\PageCursor;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -97,7 +97,7 @@ final class SessionsTest extends TestCase
         $page = $this->client->beta->sessions->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(PageCursor::class, $page);
+        $this->assertInstanceOf(BidirectionalPageCursor::class, $page);
 
         if ($item = $page->getItems()[0] ?? null) {
             // @phpstan-ignore-next-line method.alreadyNarrowedType

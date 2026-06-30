@@ -44,7 +44,7 @@ final class SessionCreateParams implements BaseModel
      * @var AgentVariants $agent
      */
     #[Required]
-    public string|BetaManagedAgentsAgentParams $agent;
+    public string|BetaManagedAgentsAgentParams|BetaManagedAgentsAgentWithOverridesParams $agent;
 
     /**
      * ID of the `environment` defining the container configuration for this session.
@@ -121,7 +121,7 @@ final class SessionCreateParams implements BaseModel
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
-        string|BetaManagedAgentsAgentParams|array $agent,
+        string|BetaManagedAgentsAgentParams|array|BetaManagedAgentsAgentWithOverridesParams $agent,
         string $environmentID,
         ?array $metadata = null,
         ?array $resources = null,
@@ -149,7 +149,7 @@ final class SessionCreateParams implements BaseModel
      * @param AgentShape $agent
      */
     public function withAgent(
-        string|BetaManagedAgentsAgentParams|array $agent
+        string|BetaManagedAgentsAgentParams|array|BetaManagedAgentsAgentWithOverridesParams $agent,
     ): self {
         $self = clone $this;
         $self['agent'] = $agent;

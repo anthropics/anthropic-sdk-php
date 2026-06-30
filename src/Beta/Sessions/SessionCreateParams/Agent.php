@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\SessionCreateParams;
 
 use Anthropic\Beta\Sessions\BetaManagedAgentsAgentParams;
+use Anthropic\Beta\Sessions\BetaManagedAgentsAgentWithOverridesParams;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -13,9 +14,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * Agent identifier. Accepts the `agent` ID string, which pins the latest version for the session, or an `agent` object with both id and version specified.
  *
  * @phpstan-import-type BetaManagedAgentsAgentParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsAgentParams
+ * @phpstan-import-type BetaManagedAgentsAgentWithOverridesParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsAgentWithOverridesParams
  *
- * @phpstan-type AgentVariants = string|BetaManagedAgentsAgentParams
- * @phpstan-type AgentShape = AgentVariants|BetaManagedAgentsAgentParamsShape
+ * @phpstan-type AgentVariants = string|BetaManagedAgentsAgentParams|BetaManagedAgentsAgentWithOverridesParams
+ * @phpstan-type AgentShape = AgentVariants|BetaManagedAgentsAgentParamsShape|BetaManagedAgentsAgentWithOverridesParamsShape
  */
 final class Agent implements ConverterSource
 {
@@ -26,6 +28,10 @@ final class Agent implements ConverterSource
      */
     public static function variants(): array
     {
-        return ['string', BetaManagedAgentsAgentParams::class];
+        return [
+            'string',
+            BetaManagedAgentsAgentParams::class,
+            BetaManagedAgentsAgentWithOverridesParams::class,
+        ];
     }
 }
