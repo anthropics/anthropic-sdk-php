@@ -12,9 +12,9 @@ use Anthropic\Beta\Sessions\SessionDeleteParams;
 use Anthropic\Beta\Sessions\SessionListParams;
 use Anthropic\Beta\Sessions\SessionRetrieveParams;
 use Anthropic\Beta\Sessions\SessionUpdateParams;
+use Anthropic\BidirectionalPageCursor;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
-use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
 /**
@@ -77,7 +77,7 @@ interface SessionsRawContract
      * @param array<string,mixed>|SessionListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<PageCursor<BetaManagedAgentsSession>>
+     * @return BaseResponse<BidirectionalPageCursor<BetaManagedAgentsSession>>
      *
      * @throws APIException
      */

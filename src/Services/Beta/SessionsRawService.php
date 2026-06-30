@@ -16,11 +16,11 @@ use Anthropic\Beta\Sessions\SessionListParams\Order;
 use Anthropic\Beta\Sessions\SessionListParams\Status;
 use Anthropic\Beta\Sessions\SessionRetrieveParams;
 use Anthropic\Beta\Sessions\SessionUpdateParams;
+use Anthropic\BidirectionalPageCursor;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
-use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\SessionsRawContract;
 
@@ -202,7 +202,7 @@ final class SessionsRawService implements SessionsRawContract
      * }|SessionListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<PageCursor<BetaManagedAgentsSession>>
+     * @return BaseResponse<BidirectionalPageCursor<BetaManagedAgentsSession>>
      *
      * @throws APIException
      */
@@ -262,7 +262,7 @@ final class SessionsRawService implements SessionsRawContract
                 $options,
             ),
             convert: BetaManagedAgentsSession::class,
-            page: PageCursor::class,
+            page: BidirectionalPageCursor::class,
         );
     }
 

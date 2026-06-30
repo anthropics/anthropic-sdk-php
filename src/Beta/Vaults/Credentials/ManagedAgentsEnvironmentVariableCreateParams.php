@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Vaults\Credentials;
 
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsEnvironmentVariableCreateParams\Type;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -14,12 +15,14 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-import-type ManagedAgentsCredentialNetworkingParamsVariants from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredentialNetworkingParams
  * @phpstan-import-type ManagedAgentsCredentialNetworkingParamsShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredentialNetworkingParams
+ * @phpstan-import-type ManagedAgentsInjectionLocationParamsShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsInjectionLocationParams
  *
  * @phpstan-type ManagedAgentsEnvironmentVariableCreateParamsShape = array{
  *   networking: ManagedAgentsCredentialNetworkingParamsShape,
  *   secretName: string,
  *   secretValue: string,
  *   type: Type|value-of<Type>,
+ *   injectionLocation?: null|ManagedAgentsInjectionLocationParams|ManagedAgentsInjectionLocationParamsShape,
  * }
  */
 final class ManagedAgentsEnvironmentVariableCreateParams implements BaseModel
@@ -50,6 +53,12 @@ final class ManagedAgentsEnvironmentVariableCreateParams implements BaseModel
     /** @var value-of<Type> $type */
     #[Required(enum: Type::class)]
     public string $type;
+
+    /**
+     * Where in the outbound request the secret value may be substituted.
+     */
+    #[Optional('injection_location')]
+    public ?ManagedAgentsInjectionLocationParams $injectionLocation;
 
     /**
      * `new ManagedAgentsEnvironmentVariableCreateParams()` is missing required properties by the API.
@@ -83,12 +92,14 @@ final class ManagedAgentsEnvironmentVariableCreateParams implements BaseModel
      *
      * @param ManagedAgentsCredentialNetworkingParamsShape $networking
      * @param Type|value-of<Type> $type
+     * @param ManagedAgentsInjectionLocationParams|ManagedAgentsInjectionLocationParamsShape|null $injectionLocation
      */
     public static function with(
         ManagedAgentsUnrestrictedCredentialNetworkingParams|array|ManagedAgentsLimitedCredentialNetworkingParams $networking,
         string $secretName,
         string $secretValue,
         Type|string $type,
+        ManagedAgentsInjectionLocationParams|array|null $injectionLocation = null,
     ): self {
         $self = new self;
 
@@ -96,6 +107,8 @@ final class ManagedAgentsEnvironmentVariableCreateParams implements BaseModel
         $self['secretName'] = $secretName;
         $self['secretValue'] = $secretValue;
         $self['type'] = $type;
+
+        null !== $injectionLocation && $self['injectionLocation'] = $injectionLocation;
 
         return $self;
     }
@@ -143,6 +156,20 @@ final class ManagedAgentsEnvironmentVariableCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * Where in the outbound request the secret value may be substituted.
+     *
+     * @param ManagedAgentsInjectionLocationParams|ManagedAgentsInjectionLocationParamsShape $injectionLocation
+     */
+    public function withInjectionLocation(
+        ManagedAgentsInjectionLocationParams|array $injectionLocation
+    ): self {
+        $self = clone $this;
+        $self['injectionLocation'] = $injectionLocation;
 
         return $self;
     }

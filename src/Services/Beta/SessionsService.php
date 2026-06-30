@@ -6,15 +6,16 @@ namespace Anthropic\Services\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Sessions\BetaManagedAgentsAgentParams;
+use Anthropic\Beta\Sessions\BetaManagedAgentsAgentWithOverridesParams;
 use Anthropic\Beta\Sessions\BetaManagedAgentsDeletedSession;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSession;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgentUpdate;
 use Anthropic\Beta\Sessions\SessionListParams\Order;
 use Anthropic\Beta\Sessions\SessionListParams\Status;
+use Anthropic\BidirectionalPageCursor;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
-use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\SessionsContract;
 use Anthropic\Services\Beta\Sessions\EventsService;
@@ -77,7 +78,7 @@ final class SessionsService implements SessionsContract
      * @throws APIException
      */
     public function create(
-        string|BetaManagedAgentsAgentParams|array $agent,
+        string|BetaManagedAgentsAgentParams|array|BetaManagedAgentsAgentWithOverridesParams $agent,
         string $environmentID,
         ?array $metadata = null,
         ?array $resources = null,
@@ -189,7 +190,7 @@ final class SessionsService implements SessionsContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
-     * @return PageCursor<BetaManagedAgentsSession>
+     * @return BidirectionalPageCursor<BetaManagedAgentsSession>
      *
      * @throws APIException
      */
@@ -209,7 +210,7 @@ final class SessionsService implements SessionsContract
         ?array $statuses = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
-    ): PageCursor {
+    ): BidirectionalPageCursor {
         $params = Util::removeNulls(
             [
                 'agentID' => $agentID,
