@@ -64,7 +64,7 @@ echo "=== Structured Output: Enums, Formats, and Constraineds ===\n\n";
 $message = $client->messages->create(
     maxTokens: 1024,
     messages: [['role' => 'user', 'content' => 'Generate a production server configuration for api.example.com']],
-    model: 'claude-sonnet-4-5-20250929',
+    model: 'claude-sonnet-5',
     outputConfig: ['format' => ServerConfig::class]
 );
 

@@ -44,7 +44,7 @@ echo "=== Structured Output: Type Inference ===\n\n";
 $message = $client->messages->create(
     maxTokens: 1024,
     messages: [['role' => 'user', 'content' => 'Generate a profile for a 28-year-old data scientist named Bob with email bob@example.com.']],
-    model: 'claude-sonnet-4-5-20250929',
+    model: 'claude-sonnet-5',
     outputConfig: ['format' => Person::class]  // Pass the class directly!
 );
 

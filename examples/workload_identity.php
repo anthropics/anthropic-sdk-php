@@ -66,7 +66,7 @@ $client = new Client(credentials: $result);
 $message = $client->messages->create(
     maxTokens: 2048,
     messages: [['role' => 'user', 'content' => 'Tell me a story about building the best SDK!']],
-    model: 'claude-sonnet-4-5',
+    model: 'claude-sonnet-5',
 );
 
 echo $message->content[0]->text ?? '';

@@ -73,7 +73,7 @@ echo "=== Structured Output: Nested Models and Arrays ===\n\n";
 $message = $client->messages->create(
     maxTokens: 1024,
     messages: [['role' => 'user', 'content' => 'Create an employee profile for a senior developer named Carol in San Francisco with 3 programming skills.']],
-    model: 'claude-sonnet-4-5-20250929',
+    model: 'claude-sonnet-5',
     outputConfig: ['format' => Employee::class]
 );
 

@@ -17,6 +17,7 @@ enum Model: string
 {
     // Anthropic model identifiers
 
+    case CLAUDE_SONNET_5 = 'claude-sonnet-5';
     case CLAUDE_FABLE_5 = 'claude-fable-5';
 
     case CLAUDE_MYTHOS_5 = 'claude-mythos-5';

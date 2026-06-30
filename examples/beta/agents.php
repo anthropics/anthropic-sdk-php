@@ -19,7 +19,7 @@ echo "Created environment: {$environment->id}\n";
 // Create an agent
 $agent = $client->beta->agents->create(
     name: 'simple-example-agent',
-    model: 'claude-sonnet-4-6'
+    model: 'claude-sonnet-5'
 );
 echo "Created agent: {$agent->id}\n";
 
