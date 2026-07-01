@@ -43,7 +43,7 @@ final class VersionsService implements VersionsContract
      * @param string $skillID Path param: Unique identifier for the skill.
      *
      * The format and length of IDs may change over time.
-     * @param list<string|FileParam>|null $files Body param: Files to upload for the skill.
+     * @param list<string|FileParam> $files Body param: Files to upload for the skill.
      *
      * All files must be in the same top-level directory and must include a SKILL.md file at the root of that directory.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
@@ -53,7 +53,7 @@ final class VersionsService implements VersionsContract
      */
     public function create(
         string $skillID,
-        ?array $files = null,
+        array $files,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): VersionNewResponse {

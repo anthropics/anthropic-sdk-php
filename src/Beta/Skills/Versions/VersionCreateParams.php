@@ -6,6 +6,7 @@ namespace Anthropic\Beta\Skills\Versions;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -17,7 +18,7 @@ use Anthropic\Core\FileParam;
  * @see Anthropic\Services\Beta\Skills\VersionsService::create()
  *
  * @phpstan-type VersionCreateParamsShape = array{
- *   files?: list<string|FileParam>|null,
+ *   files: list<string|FileParam>,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
@@ -32,10 +33,10 @@ final class VersionCreateParams implements BaseModel
      *
      * All files must be in the same top-level directory and must include a SKILL.md file at the root of that directory.
      *
-     * @var list<string>|null $files
+     * @var list<string> $files
      */
-    #[Optional(list: FileParam::class, nullable: true)]
-    public ?array $files;
+    #[Required(list: FileParam::class)]
+    public array $files;
 
     /**
      * Optional header to specify the beta version(s) you want to use.
@@ -45,6 +46,20 @@ final class VersionCreateParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    /**
+     * `new VersionCreateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * VersionCreateParams::with(files: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new VersionCreateParams)->withFiles(...)
+     * ```
+     */
     public function __construct()
     {
         $this->initialize();
@@ -55,14 +70,15 @@ final class VersionCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string|FileParam>|null $files
+     * @param list<string|FileParam> $files
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
-    public static function with(?array $files = null, ?array $betas = null): self
+    public static function with(array $files, ?array $betas = null): self
     {
         $self = new self;
 
-        null !== $files && $self['files'] = $files;
+        $self['files'] = $files;
+
         null !== $betas && $self['betas'] = $betas;
 
         return $self;
@@ -73,9 +89,9 @@ final class VersionCreateParams implements BaseModel
      *
      * All files must be in the same top-level directory and must include a SKILL.md file at the root of that directory.
      *
-     * @param list<string|FileParam>|null $files
+     * @param list<string|FileParam> $files
      */
-    public function withFiles(?array $files): self
+    public function withFiles(array $files): self
     {
         $self = clone $this;
         $self['files'] = $files;

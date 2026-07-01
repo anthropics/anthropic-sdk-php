@@ -6,6 +6,7 @@ namespace Anthropic\Beta\Skills;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -17,8 +18,8 @@ use Anthropic\Core\FileParam;
  * @see Anthropic\Services\Beta\SkillsService::create()
  *
  * @phpstan-type SkillCreateParamsShape = array{
+ *   files: list<string|FileParam>,
  *   displayTitle?: string|null,
- *   files?: list<string|FileParam>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
@@ -29,22 +30,22 @@ final class SkillCreateParams implements BaseModel
     use SdkParams;
 
     /**
+     * Files to upload for the skill.
+     *
+     * All files must be in the same top-level directory and must include a SKILL.md file at the root of that directory.
+     *
+     * @var list<string> $files
+     */
+    #[Required(list: FileParam::class)]
+    public array $files;
+
+    /**
      * Display title for the skill.
      *
      * This is a human-readable label that is not included in the prompt sent to the model.
      */
     #[Optional('display_title', nullable: true)]
     public ?string $displayTitle;
-
-    /**
-     * Files to upload for the skill.
-     *
-     * All files must be in the same top-level directory and must include a SKILL.md file at the root of that directory.
-     *
-     * @var list<string>|null $files
-     */
-    #[Optional(list: FileParam::class, nullable: true)]
-    public ?array $files;
 
     /**
      * Optional header to specify the beta version(s) you want to use.
@@ -54,6 +55,20 @@ final class SkillCreateParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    /**
+     * `new SkillCreateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * SkillCreateParams::with(files: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new SkillCreateParams)->withFiles(...)
+     * ```
+     */
     public function __construct()
     {
         $this->initialize();
@@ -64,19 +79,35 @@ final class SkillCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string|FileParam>|null $files
+     * @param list<string|FileParam> $files
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
+        array $files,
         ?string $displayTitle = null,
-        ?array $files = null,
         ?array $betas = null
     ): self {
         $self = new self;
 
+        $self['files'] = $files;
+
         null !== $displayTitle && $self['displayTitle'] = $displayTitle;
-        null !== $files && $self['files'] = $files;
         null !== $betas && $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    /**
+     * Files to upload for the skill.
+     *
+     * All files must be in the same top-level directory and must include a SKILL.md file at the root of that directory.
+     *
+     * @param list<string|FileParam> $files
+     */
+    public function withFiles(array $files): self
+    {
+        $self = clone $this;
+        $self['files'] = $files;
 
         return $self;
     }
@@ -90,21 +121,6 @@ final class SkillCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['displayTitle'] = $displayTitle;
-
-        return $self;
-    }
-
-    /**
-     * Files to upload for the skill.
-     *
-     * All files must be in the same top-level directory and must include a SKILL.md file at the root of that directory.
-     *
-     * @param list<string|FileParam>|null $files
-     */
-    public function withFiles(?array $files): self
-    {
-        $self = clone $this;
-        $self['files'] = $files;
 
         return $self;
     }

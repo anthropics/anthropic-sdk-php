@@ -153,13 +153,13 @@ final class MemoriesService implements MemoriesContract
      * List memories
      *
      * @param string $memoryStoreID Path param: Path parameter memory_store_id
-     * @param int $depth Query param: Query parameter for depth
-     * @param int $limit Query param: Query parameter for limit
+     * @param int $depth Query param: `0` (or omitted) returns all descendants below `path_prefix` (recursive). `1` returns immediate children only; deeper entries roll up as `memory_prefix` items. `depth=1` behaves like `ls`; omitting `depth` behaves like `find`.
+     * @param int $limit Query param: Maximum number of items to return per page. Must be between 1 and 100. Defaults to 20 when omitted. Capped at 20 when `view=full`. Both `memory` and `memory_prefix` items count toward the limit.
      * @param Order|value-of<Order> $order Query param: Query parameter for order
      * @param string $orderBy Query param: Query parameter for order_by
-     * @param string $page Query param: Query parameter for page
-     * @param string $pathPrefix Query param: Optional path prefix filter (raw string-prefix match; include a trailing slash for directory-scoped lists). This value appears in request URLs. Do not include secrets or personally identifiable information.
-     * @param ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView> $view Query param: Query parameter for view
+     * @param string $page Query param: Opaque pagination cursor (a `page_...` value). Pass the `next_page` value from a previous response to fetch the next page; omit for the first page.
+     * @param string $pathPrefix Query param: Optional path prefix filter. Must end with `/` (segment-aligned), e.g., `/notes/`. This value appears in request URLs. Do not include secrets or personally identifiable information.
+     * @param ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView> $view Query param: Which projection of each `memory` to return. Defaults to `basic` (content omitted). `full` populates `content` on each item and caps `limit` at 20; use this as the bulk-read path for export and sync.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *

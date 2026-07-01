@@ -26,7 +26,6 @@ use Anthropic\Core\Contracts\BaseModel;
  *   environmentID: string,
  *   latestHeartbeatAt: string|null,
  *   metadata: array<string,string>,
- *   secret: string|null,
  *   startedAt: string|null,
  *   state: State|value-of<State>,
  *   stopRequestedAt: string|null,
@@ -92,12 +91,6 @@ final class SelfHostedWork implements BaseModel
     public array $metadata;
 
     /**
-     * Credential payload used by the environment worker to execute this work item. May be populated when polling for work; null on all other retrieval paths.
-     */
-    #[Required]
-    public ?string $secret;
-
-    /**
      * RFC 3339 timestamp when work execution started.
      */
     #[Required('started_at')]
@@ -136,7 +129,6 @@ final class SelfHostedWork implements BaseModel
      *   environmentID: ...,
      *   latestHeartbeatAt: ...,
      *   metadata: ...,
-     *   secret: ...,
      *   startedAt: ...,
      *   state: ...,
      *   stopRequestedAt: ...,
@@ -155,7 +147,6 @@ final class SelfHostedWork implements BaseModel
      *   ->withEnvironmentID(...)
      *   ->withLatestHeartbeatAt(...)
      *   ->withMetadata(...)
-     *   ->withSecret(...)
      *   ->withStartedAt(...)
      *   ->withState(...)
      *   ->withStopRequestedAt(...)
@@ -184,7 +175,6 @@ final class SelfHostedWork implements BaseModel
         string $environmentID,
         ?string $latestHeartbeatAt,
         array $metadata,
-        ?string $secret,
         ?string $startedAt,
         State|string $state,
         ?string $stopRequestedAt,
@@ -199,7 +189,6 @@ final class SelfHostedWork implements BaseModel
         $self['environmentID'] = $environmentID;
         $self['latestHeartbeatAt'] = $latestHeartbeatAt;
         $self['metadata'] = $metadata;
-        $self['secret'] = $secret;
         $self['startedAt'] = $startedAt;
         $self['state'] = $state;
         $self['stopRequestedAt'] = $stopRequestedAt;
@@ -285,17 +274,6 @@ final class SelfHostedWork implements BaseModel
     {
         $self = clone $this;
         $self['metadata'] = $metadata;
-
-        return $self;
-    }
-
-    /**
-     * Credential payload used by the environment worker to execute this work item. May be populated when polling for work; null on all other retrieval paths.
-     */
-    public function withSecret(?string $secret): self
-    {
-        $self = clone $this;
-        $self['secret'] = $secret;
 
         return $self;
     }

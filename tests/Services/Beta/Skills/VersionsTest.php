@@ -7,6 +7,7 @@ use Anthropic\Beta\Skills\Versions\VersionGetResponse;
 use Anthropic\Beta\Skills\Versions\VersionListResponse;
 use Anthropic\Beta\Skills\Versions\VersionNewResponse;
 use Anthropic\Client;
+use Anthropic\Core\FileParam;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -34,7 +35,27 @@ final class VersionsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->beta->skills->versions->create('skill_id');
+        $result = $this->client->beta->skills->versions->create(
+            'skill_id',
+            files: [
+                FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
+            ],
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(VersionNewResponse::class, $result);
+    }
+
+    #[Test]
+    public function testCreateWithOptionalParams(): void
+    {
+        $result = $this->client->beta->skills->versions->create(
+            'skill_id',
+            files: [
+                FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
+            ],
+            betas: ['message-batches-2024-09-24'],
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(VersionNewResponse::class, $result);
