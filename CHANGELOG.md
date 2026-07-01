@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.35.1 (2026-07-01)
+
+Full Changelog: [v0.35.0...v0.35.1](https://github.com/anthropics/anthropic-sdk-php/compare/v0.35.0...v0.35.1)
+
+### Chores
+
+* **api:** remove some nonfunctional types from the SDKs ([3750760](https://github.com/anthropics/anthropic-sdk-php/commit/3750760ea1a628d04db04eb9880a8941c4cdd5a8))
+
 ## 0.35.0 (2026-07-01)
 
 Full Changelog: [v0.34.0...v0.35.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.34.0...v0.35.0)
