@@ -25,6 +25,7 @@ final class StainlessHelperHeader
     // hyphenated lowercase.
     public const BETA_TOOL_RUNNER = 'BetaToolRunner';
 
+    public const FALLBACK_REFUSAL_MIDDLEWARE = 'fallback-refusal-middleware';
 
     /**
      * The {@see HEADER} value to set after appending `$value` to whatever is

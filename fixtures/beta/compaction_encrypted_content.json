@@ -1,0 +1,12 @@
+{
+  "id": "msg_compaction_x",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-sonnet-4-5",
+  "content": [
+    {"type": "compaction", "content": "summary text", "encrypted_content": "EpwBCioIDxgC_opaque_payload"}
+  ],
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "usage": {"input_tokens": 1, "output_tokens": 12}
+}

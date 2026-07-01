@@ -1,0 +1,28 @@
+{
+  "id": "msg_citations_x",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-sonnet-4-5",
+  "content": [
+    {
+      "type": "text",
+      "text": "The grass is green",
+      "citations": [
+        {
+          "type": "char_location",
+          "cited_text": "grass is green",
+          "document_index": 0,
+          "document_title": "Nature Facts",
+          "start_char_index": 10,
+          "end_char_index": 24
+        }
+      ]
+    }
+  ],
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "usage": {
+    "input_tokens": 30,
+    "output_tokens": 12
+  }
+}

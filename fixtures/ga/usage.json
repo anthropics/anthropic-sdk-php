@@ -1,0 +1,25 @@
+{
+  "id": "msg_usage_x",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-sonnet-4-5",
+  "content": [
+    {
+      "type": "text",
+      "text": "Done."
+    }
+  ],
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "usage": {
+    "input_tokens": 100,
+    "output_tokens": 25,
+    "cache_read_input_tokens": 80,
+    "cache_creation_input_tokens": 0,
+    "service_tier": "standard",
+    "server_tool_use": {
+      "web_search_requests": 2,
+      "web_fetch_requests": 0
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "msg_refusal_midtext_x",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-sonnet-4-5",
+  "content": [
+    {
+      "type": "text",
+      "text": "I can help with that"
+    }
+  ],
+  "stop_reason": "refusal",
+  "stop_sequence": null,
+  "stop_details": {
+    "type": "refusal",
+    "category": "cyber",
+    "explanation": "This request was refused due to policy."
+  },
+  "usage": {
+    "input_tokens": 23,
+    "output_tokens": 8
+  }
+}

@@ -27,7 +27,7 @@ use Psr\Http\Message\ResponseInterface;
  *
  * The pipeline always invokes middleware with a third argument: the
  * attempt's fully merged {@see RequestOptions}. A middleware that reads
- * request-level options declares an optional third
+ * request-level options (e.g. `fallbackState`) declares an optional third
  * parameter — `?RequestOptions $options = null` — which is a compatible
  * implementation of this interface; one declared with two parameters simply
  * never sees the argument. A middleware whose third parameter serves any

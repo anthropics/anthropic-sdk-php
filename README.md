@@ -69,6 +69,24 @@ foreach ($stream as $message) {
 }
 ```
 
+To accumulate the streamed events into the message they build up to — text concatenated, tool inputs assembled from their JSON chunks, usage totals merged — fold them through a `MessageAccumulator`:
+
+```php
+<?php
+
+use Anthropic\Lib\Streaming\MessageAccumulator;
+
+$accumulator = MessageAccumulator::forMessages(); // or forBetaMessages()
+foreach ($stream as $event) {
+  $accumulator->accumulate($event);
+}
+
+$message = $accumulator->message(); // Anthropic\Messages\Message
+echo $message->content[0]->text;
+```
+
+`message()` can also be called mid-stream for a snapshot of what has arrived so far.
+
 Streaming requests are dispatched through a separate `streamingTransporter` PSR-18 HTTP client. When unset, the SDK uses the configured `transporter`.
 Some PSR-18 HTTP clients will by default try to read the entire response, so you may need to specify a streaming capable implementation.
 
@@ -288,7 +306,7 @@ You can intercept every HTTP request the client makes — to log, add headers, s
 callable(RequestInterface $request, callable $next): ResponseInterface
 ```
 
-where `$next` invokes the rest of the chain (it may be called zero, one, or several times). A class implementing `Anthropic\Middleware` — the same signature, as `handle()` — works anywhere a callable does. Every middleware is also invoked with the attempt's merged `RequestOptions` as a third argument — declare an optional third parameter (`?RequestOptions $options = null`) to read request-level options — treat it as read-only. Middleware whose third parameter already served another purpose must be rewritten: the pipeline now fills that slot on every invocation.
+where `$next` invokes the rest of the chain (it may be called zero, one, or several times). A class implementing `Anthropic\Middleware` — the same signature, as `handle()` — works anywhere a callable does. Every middleware is also invoked with the attempt's merged `RequestOptions` as a third argument — declare an optional third parameter (`?RequestOptions $options = null`) to read request-level options such as `fallbackState` — treat it as read-only. Middleware whose third parameter already served another purpose must be rewritten: the pipeline now fills that slot on every invocation.
 
 ```php
 <?php
