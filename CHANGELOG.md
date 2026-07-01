@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.35.0 (2026-07-01)
+
+Full Changelog: [v0.34.0...v0.35.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.34.0...v0.35.0)
+
+### Features
+
+* **client:** add client-side fallbacks middleware for API providers that do not support server-side fallbacks ([#54](https://github.com/anthropics/anthropic-sdk-php/issues/54)) ([bd05781](https://github.com/anthropics/anthropic-sdk-php/commit/bd05781e193c3a900fe4e6d7e8f4014d5a1b7dd7))
+* **client:** optionally pass the attempt's RequestOptions to middleware ([#97](https://github.com/anthropics/anthropic-sdk-php/issues/97)) ([64de73e](https://github.com/anthropics/anthropic-sdk-php/commit/64de73e39808ab6e00116e6a11a6c82253a06250))
+
 ## 0.34.0 (2026-06-30)
 
 Full Changelog: [v0.33.0...v0.34.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.33.0...v0.34.0)
