@@ -34,13 +34,13 @@ final class MemoryListParams implements BaseModel
     use SdkParams;
 
     /**
-     * Query parameter for depth.
+     * `0` (or omitted) returns all descendants below `path_prefix` (recursive). `1` returns immediate children only; deeper entries roll up as `memory_prefix` items. `depth=1` behaves like `ls`; omitting `depth` behaves like `find`.
      */
     #[Optional]
     public ?int $depth;
 
     /**
-     * Query parameter for limit.
+     * Maximum number of items to return per page. Must be between 1 and 100. Defaults to 20 when omitted. Capped at 20 when `view=full`. Both `memory` and `memory_prefix` items count toward the limit.
      */
     #[Optional]
     public ?int $limit;
@@ -60,19 +60,19 @@ final class MemoryListParams implements BaseModel
     public ?string $orderBy;
 
     /**
-     * Query parameter for page.
+     * Opaque pagination cursor (a `page_...` value). Pass the `next_page` value from a previous response to fetch the next page; omit for the first page.
      */
     #[Optional]
     public ?string $page;
 
     /**
-     * Optional path prefix filter (raw string-prefix match; include a trailing slash for directory-scoped lists). This value appears in request URLs. Do not include secrets or personally identifiable information.
+     * Optional path prefix filter. Must end with `/` (segment-aligned), e.g., `/notes/`. This value appears in request URLs. Do not include secrets or personally identifiable information.
      */
     #[Optional]
     public ?string $pathPrefix;
 
     /**
-     * Query parameter for view.
+     * Which projection of each `memory` to return. Defaults to `basic` (content omitted). `full` populates `content` on each item and caps `limit` at 20; use this as the bulk-read path for export and sync.
      *
      * @var value-of<ManagedAgentsMemoryView>|null $view
      */
@@ -126,7 +126,7 @@ final class MemoryListParams implements BaseModel
     }
 
     /**
-     * Query parameter for depth.
+     * `0` (or omitted) returns all descendants below `path_prefix` (recursive). `1` returns immediate children only; deeper entries roll up as `memory_prefix` items. `depth=1` behaves like `ls`; omitting `depth` behaves like `find`.
      */
     public function withDepth(int $depth): self
     {
@@ -137,7 +137,7 @@ final class MemoryListParams implements BaseModel
     }
 
     /**
-     * Query parameter for limit.
+     * Maximum number of items to return per page. Must be between 1 and 100. Defaults to 20 when omitted. Capped at 20 when `view=full`. Both `memory` and `memory_prefix` items count toward the limit.
      */
     public function withLimit(int $limit): self
     {
@@ -172,7 +172,7 @@ final class MemoryListParams implements BaseModel
     }
 
     /**
-     * Query parameter for page.
+     * Opaque pagination cursor (a `page_...` value). Pass the `next_page` value from a previous response to fetch the next page; omit for the first page.
      */
     public function withPage(string $page): self
     {
@@ -183,7 +183,7 @@ final class MemoryListParams implements BaseModel
     }
 
     /**
-     * Optional path prefix filter (raw string-prefix match; include a trailing slash for directory-scoped lists). This value appears in request URLs. Do not include secrets or personally identifiable information.
+     * Optional path prefix filter. Must end with `/` (segment-aligned), e.g., `/notes/`. This value appears in request URLs. Do not include secrets or personally identifiable information.
      */
     public function withPathPrefix(string $pathPrefix): self
     {
@@ -194,7 +194,7 @@ final class MemoryListParams implements BaseModel
     }
 
     /**
-     * Query parameter for view.
+     * Which projection of each `memory` to return. Defaults to `basic` (content omitted). `full` populates `content` on each item and caps `limit` at 20; use this as the bulk-read path for export and sync.
      *
      * @param ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView> $view
      */

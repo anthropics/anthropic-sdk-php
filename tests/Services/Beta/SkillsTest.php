@@ -7,6 +7,7 @@ use Anthropic\Beta\Skills\SkillGetResponse;
 use Anthropic\Beta\Skills\SkillListResponse;
 use Anthropic\Beta\Skills\SkillNewResponse;
 use Anthropic\Client;
+use Anthropic\Core\FileParam;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -34,7 +35,26 @@ final class SkillsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->beta->skills->create();
+        $result = $this->client->beta->skills->create(
+            files: [
+                FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
+            ],
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(SkillNewResponse::class, $result);
+    }
+
+    #[Test]
+    public function testCreateWithOptionalParams(): void
+    {
+        $result = $this->client->beta->skills->create(
+            files: [
+                FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
+            ],
+            displayTitle: 'display_title',
+            betas: ['message-batches-2024-09-24'],
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(SkillNewResponse::class, $result);

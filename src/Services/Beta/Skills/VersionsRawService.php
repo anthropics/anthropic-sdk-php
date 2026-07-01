@@ -43,7 +43,7 @@ final class VersionsRawService implements VersionsRawContract
      *
      * The format and length of IDs may change over time.
      * @param array{
-     *   files?: list<string|FileParam>|null,
+     *   files: list<string|FileParam>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|VersionCreateParams $params
      * @param RequestOpts|null $requestOptions
