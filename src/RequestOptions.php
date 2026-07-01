@@ -16,7 +16,7 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 
 /**
- * @phpstan-type MiddlewareItem = Middleware|callable(RequestInterface, \Closure(RequestInterface): ResponseInterface): ResponseInterface
+ * @phpstan-type MiddlewareItem = Middleware|callable(RequestInterface, \Closure(RequestInterface): ResponseInterface, RequestOptions=): ResponseInterface
  * @phpstan-type RequestOptionShape = array{
  *   timeout?: float|null,
  *   maxRetries?: int|null,

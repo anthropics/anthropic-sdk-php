@@ -55,6 +55,54 @@ final class MiddlewareTest extends TestCase
     }
 
     #[Test]
+    public function testMiddlewareReceivesTheAttemptsOptionsAsAThirdArgument(): void
+    {
+        // The pipeline invokes every middleware form with the attempt's
+        // merged RequestOptions third. Two- and three-parameter closures and
+        // class implementations coexist in one chain: the two-parameter
+        // forms never see the argument, the three-parameter forms receive
+        // the same options object the request was issued with — including
+        // per-request values layered over the client-level options.
+        $transporter = $this->transporter();
+        $seenByClosure = null;
+        $ran = ['closure2' => false];
+
+        $threeParamClosure = $this->mw(static function (RequestInterface $request, \Closure $callNext, ?RequestOptions $options = null) use (&$seenByClosure): ResponseInterface {
+            $seenByClosure = $options;
+
+            return $callNext($request);
+        });
+        $twoParamClosure = $this->mw(static function (RequestInterface $request, \Closure $callNext) use (&$ran): ResponseInterface {
+            $ran['closure2'] = true;
+
+            return $callNext($request);
+        });
+        $threeParamClass = new class() implements Middleware {
+            public ?RequestOptions $seen = null;
+
+            public function handle(RequestInterface $request, \Closure $callNext, ?RequestOptions $options = null): ResponseInterface
+            {
+                $this->seen = $options;
+
+                return $callNext($request);
+            }
+        };
+
+        $this
+            ->baseClient([$threeParamClosure, $twoParamClosure, $threeParamClass], $transporter)
+            ->request('GET', '/', options: ['extraHeaders' => ['X-Per-Request' => 'yes']])
+        ;
+
+        $this->assertTrue($ran['closure2']);
+        $this->assertInstanceOf(RequestOptions::class, $seenByClosure);
+        $this->assertSame($seenByClosure, $threeParamClass->seen);
+        // The options are the attempt's merged view: the per-request value
+        // is present alongside the client-level transporter.
+        $this->assertSame('yes', $seenByClosure->extraHeaders['X-Per-Request'] ?? null);
+        $this->assertSame($transporter, $seenByClosure->transporter);
+    }
+
+    #[Test]
     public function testShortCircuitSkipsTransport(): void
     {
         // Returning a response without calling callNext (e.g. a cache hit) means

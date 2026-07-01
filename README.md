@@ -288,7 +288,7 @@ You can intercept every HTTP request the client makes — to log, add headers, s
 callable(RequestInterface $request, callable $next): ResponseInterface
 ```
 
-where `$next` invokes the rest of the chain (it may be called zero, one, or several times). A class implementing `Anthropic\Middleware` — the same signature, as `handle()` — works anywhere a callable does.
+where `$next` invokes the rest of the chain (it may be called zero, one, or several times). A class implementing `Anthropic\Middleware` — the same signature, as `handle()` — works anywhere a callable does. Every middleware is also invoked with the attempt's merged `RequestOptions` as a third argument — declare an optional third parameter (`?RequestOptions $options = null`) to read request-level options — treat it as read-only. Middleware whose third parameter already served another purpose must be rewritten: the pipeline now fills that slot on every invocation.
 
 ```php
 <?php
