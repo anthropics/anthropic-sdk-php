@@ -47,25 +47,25 @@ final class SkillsService implements SkillsContract
      *
      * Create Skill
      *
+     * @param list<string|FileParam> $files Body param: Files to upload for the skill.
+     *
+     * All files must be in the same top-level directory and must include a SKILL.md file at the root of that directory.
      * @param string|null $displayTitle Body param: Display title for the skill.
      *
      * This is a human-readable label that is not included in the prompt sent to the model.
-     * @param list<string|FileParam>|null $files Body param: Files to upload for the skill.
-     *
-     * All files must be in the same top-level directory and must include a SKILL.md file at the root of that directory.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function create(
+        array $files,
         ?string $displayTitle = null,
-        ?array $files = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): SkillNewResponse {
         $params = Util::removeNulls(
-            ['displayTitle' => $displayTitle, 'files' => $files, 'betas' => $betas]
+            ['files' => $files, 'displayTitle' => $displayTitle, 'betas' => $betas]
         );
 
         // @phpstan-ignore-next-line argument.type

@@ -39,8 +39,8 @@ final class SkillsRawService implements SkillsRawContract
      * Create Skill
      *
      * @param array{
+     *   files: list<string|FileParam>,
      *   displayTitle?: string|null,
-     *   files?: list<string|FileParam>|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|SkillCreateParams $params
      * @param RequestOpts|null $requestOptions
