@@ -320,7 +320,7 @@ abstract class BaseClient
         if ($middleware !== $clientMiddleware && [] !== $clientMiddleware) {
             $middleware = [...$clientMiddleware, ...$middleware];
         }
-        $sendRequest = $this->applyMiddleware($sendRequest, middleware: [...$middleware, ...$this->backendMiddleware()]);
+        $sendRequest = $this->applyMiddleware($sendRequest, middleware: [...$middleware, ...$this->backendMiddleware()], options: $opts);
 
         $rsp = null;
         $err = null;
@@ -378,17 +378,22 @@ abstract class BaseClient
      * @internal
      *
      * @param \Closure(RequestInterface): ResponseInterface $sendRequest
-     * @param list<\Anthropic\Middleware|callable(RequestInterface, \Closure(RequestInterface): ResponseInterface): ResponseInterface> $middleware
+     * @param list<\Anthropic\Middleware|callable(RequestInterface, \Closure(RequestInterface): ResponseInterface, RequestOptions=): ResponseInterface> $middleware
      *
      * @return \Closure(RequestInterface): ResponseInterface
      */
-    private function applyMiddleware(\Closure $sendRequest, array $middleware): \Closure
+    private function applyMiddleware(\Closure $sendRequest, array $middleware, RequestOptions $options): \Closure
     {
         foreach (array_reverse($middleware) as $mw) {
             $next = $sendRequest;
             $sendRequest = $mw instanceof \Anthropic\Middleware
-                ? static fn (RequestInterface $req): ResponseInterface => $mw->handle($req, $next)
-                : static fn (RequestInterface $req): ResponseInterface => $mw($req, $next);
+                // The interface declares two parameters so existing
+                // implementations stay valid; the pipeline still passes the
+                // attempt's options third, and implementations opt in by
+                // declaring an optional third parameter (see Middleware).
+                // @phpstan-ignore arguments.count
+                ? static fn (RequestInterface $req): ResponseInterface => $mw->handle($req, $next, $options)
+                : static fn (RequestInterface $req): ResponseInterface => $mw($req, $next, $options);
         }
 
         return $sendRequest;

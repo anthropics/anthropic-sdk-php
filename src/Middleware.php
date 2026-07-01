@@ -25,6 +25,23 @@ use Psr\Http\Message\ResponseInterface;
  * accepted anywhere a `Middleware` is, so one-off middleware can be written
  * inline.
  *
+ * The pipeline always invokes middleware with a third argument: the
+ * attempt's fully merged {@see RequestOptions}. A middleware that reads
+ * request-level options declares an optional third
+ * parameter — `?RequestOptions $options = null` — which is a compatible
+ * implementation of this interface; one declared with two parameters simply
+ * never sees the argument. A middleware whose third parameter serves any
+ * other purpose must be rewritten: the pipeline fills that slot on every
+ * invocation (a mismatched type throws at request time). The argument list
+ * is frozen: future per-attempt context is added as new `RequestOptions`
+ * keys, never as another parameter.
+ *
+ * Treat the options object as read-only. It is the request's live options,
+ * shared by every middleware and every retry/redirect attempt: writes to
+ * fields the client still consults (e.g. `maxRetries`, `middleware`) change
+ * in-flight behavior, while writes to fields already consumed when the
+ * request was built (e.g. `extraHeaders`) are silently inert.
+ *
  * Contract:
  *
  *  - Credentials are visible: the request already carries `X-Api-Key` /
