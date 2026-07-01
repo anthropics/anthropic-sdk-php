@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required as Property;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Lib\Middleware\BetaFallbackState;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -26,6 +27,7 @@ use Psr\Http\Message\UriFactoryInterface;
  *   extraQueryParams?: array<string,mixed>|null,
  *   extraBodyParams?: mixed,
  *   middleware?: list<MiddlewareItem>|null,
+ *   fallbackState?: BetaFallbackState|null,
  *   transporter?: ClientInterface|null,
  *   streamingTransporter?: ClientInterface|null,
  *   uriFactory?: UriFactoryInterface|null,
@@ -86,6 +88,13 @@ final class RequestOptions implements BaseModel
     #[Optional]
     public ?array $middleware;
 
+    /**
+     * Shared pin consumed by {@see \Anthropic\Lib\Middleware\RefusalFallbackMiddleware};
+     * a request-level value overrides the middleware's constructor state.
+     */
+    #[Optional]
+    public ?BetaFallbackState $fallbackState;
+
     #[Optional]
     public ?ClientInterface $transporter;
 
@@ -131,6 +140,7 @@ final class RequestOptions implements BaseModel
         ?array $extraQueryParams = null,
         mixed $extraBodyParams = null,
         ?array $middleware = null,
+        ?BetaFallbackState $fallbackState = null,
         ?ClientInterface $transporter = null,
         ?ClientInterface $streamingTransporter = null,
         ?UriFactoryInterface $uriFactory = null,
@@ -147,6 +157,7 @@ final class RequestOptions implements BaseModel
         null !== $extraQueryParams && $self->extraQueryParams = $extraQueryParams;
         null !== $extraBodyParams && $self->extraBodyParams = $extraBodyParams;
         null !== $middleware && $self->middleware = $middleware;
+        null !== $fallbackState && $self->fallbackState = $fallbackState;
         null !== $transporter && $self->transporter = $transporter;
         null !== $streamingTransporter && $self
             ->streamingTransporter = $streamingTransporter

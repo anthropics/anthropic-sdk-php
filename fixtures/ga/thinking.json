@@ -1,0 +1,23 @@
+{
+  "id": "msg_thinking_x",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-sonnet-4-5",
+  "content": [
+    {
+      "type": "thinking",
+      "thinking": "Let me think. 2 + 2 = 4.",
+      "signature": "abc123sig=="
+    },
+    {
+      "type": "text",
+      "text": "The answer is 4."
+    }
+  ],
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "usage": {
+    "input_tokens": 15,
+    "output_tokens": 20
+  }
+}

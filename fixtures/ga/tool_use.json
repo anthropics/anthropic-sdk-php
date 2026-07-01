@@ -1,0 +1,13 @@
+{
+  "id": "msg_019Q1hrJbZG26Fb9BQhrkHEr",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-sonnet-4-5",
+  "content": [
+    {"type": "text", "text": "I'll check the current weather in Paris for you."},
+    {"type": "tool_use", "id": "toolu_01NRLabsLyVHZPKxbKvkfSMn", "name": "get_weather", "input": {"location": "Paris"}}
+  ],
+  "stop_reason": "tool_use",
+  "stop_sequence": null,
+  "usage": {"input_tokens": 377, "cache_creation_input_tokens": 0, "cache_read_input_tokens": 0, "output_tokens": 65, "service_tier": "standard"}
+}
