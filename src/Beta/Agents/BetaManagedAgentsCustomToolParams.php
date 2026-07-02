@@ -27,7 +27,7 @@ final class BetaManagedAgentsCustomToolParams implements BaseModel
     use SdkModel;
 
     /**
-     * Description of what the tool does, shown to the agent to help it decide when to use the tool. 1-1024 characters.
+     * Description of what the tool does, shown to the agent to help it decide when to use the tool. 1-4096 characters.
      */
     #[Required]
     public string $description;
@@ -98,7 +98,7 @@ final class BetaManagedAgentsCustomToolParams implements BaseModel
     }
 
     /**
-     * Description of what the tool does, shown to the agent to help it decide when to use the tool. 1-1024 characters.
+     * Description of what the tool does, shown to the agent to help it decide when to use the tool. 1-4096 characters.
      */
     public function withDescription(string $description): self
     {
