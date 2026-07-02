@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Anthropic\Beta\MemoryStores\Memories;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Beta\MemoryStores\Memories\MemoryListParams\Order;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
@@ -19,8 +18,6 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type MemoryListParamsShape = array{
  *   depth?: int|null,
  *   limit?: int|null,
- *   order?: null|Order|value-of<Order>,
- *   orderBy?: string|null,
  *   page?: string|null,
  *   pathPrefix?: string|null,
  *   view?: null|ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView>,
@@ -44,20 +41,6 @@ final class MemoryListParams implements BaseModel
      */
     #[Optional]
     public ?int $limit;
-
-    /**
-     * Query parameter for order.
-     *
-     * @var value-of<Order>|null $order
-     */
-    #[Optional(enum: Order::class)]
-    public ?string $order;
-
-    /**
-     * Query parameter for order_by.
-     */
-    #[Optional]
-    public ?string $orderBy;
 
     /**
      * Opaque pagination cursor (a `page_...` value). Pass the `next_page` value from a previous response to fetch the next page; omit for the first page.
@@ -97,15 +80,12 @@ final class MemoryListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Order|value-of<Order>|null $order
      * @param ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView>|null $view
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
         ?int $depth = null,
         ?int $limit = null,
-        Order|string|null $order = null,
-        ?string $orderBy = null,
         ?string $page = null,
         ?string $pathPrefix = null,
         ManagedAgentsMemoryView|string|null $view = null,
@@ -115,8 +95,6 @@ final class MemoryListParams implements BaseModel
 
         null !== $depth && $self['depth'] = $depth;
         null !== $limit && $self['limit'] = $limit;
-        null !== $order && $self['order'] = $order;
-        null !== $orderBy && $self['orderBy'] = $orderBy;
         null !== $page && $self['page'] = $page;
         null !== $pathPrefix && $self['pathPrefix'] = $pathPrefix;
         null !== $view && $self['view'] = $view;
@@ -143,30 +121,6 @@ final class MemoryListParams implements BaseModel
     {
         $self = clone $this;
         $self['limit'] = $limit;
-
-        return $self;
-    }
-
-    /**
-     * Query parameter for order.
-     *
-     * @param Order|value-of<Order> $order
-     */
-    public function withOrder(Order|string $order): self
-    {
-        $self = clone $this;
-        $self['order'] = $order;
-
-        return $self;
-    }
-
-    /**
-     * Query parameter for order_by.
-     */
-    public function withOrderBy(string $orderBy): self
-    {
-        $self = clone $this;
-        $self['orderBy'] = $orderBy;
 
         return $self;
     }

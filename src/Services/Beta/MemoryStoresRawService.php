@@ -72,7 +72,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
                 array_flip(array_keys($header_params))
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
+                ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
             ),
             convert: BetaManagedAgentsMemoryStore::class,
@@ -113,7 +113,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
                 ['betas' => 'anthropic-beta']
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
+                ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
             ),
             convert: BetaManagedAgentsMemoryStore::class,
@@ -162,7 +162,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
                 array_flip(array_keys($header_params))
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
+                ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
             ),
             convert: BetaManagedAgentsMemoryStore::class,
@@ -220,7 +220,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
                 ['betas' => 'anthropic-beta']
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
+                ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
             ),
             convert: BetaManagedAgentsMemoryStore::class,
@@ -262,7 +262,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
                 ['betas' => 'anthropic-beta']
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
+                ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
             ),
             convert: BetaManagedAgentsDeletedMemoryStore::class,
@@ -303,7 +303,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
                 ['betas' => 'anthropic-beta']
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
+                ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
             ),
             convert: BetaManagedAgentsMemoryStore::class,

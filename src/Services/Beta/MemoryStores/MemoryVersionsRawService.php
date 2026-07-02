@@ -77,7 +77,7 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
                 ['betas' => 'anthropic-beta']
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
+                ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
             ),
             convert: ManagedAgentsMemoryVersion::class,
@@ -153,7 +153,7 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
                 ['betas' => 'anthropic-beta']
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
+                ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
             ),
             convert: ManagedAgentsMemoryVersion::class,
@@ -202,7 +202,7 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
                 ['betas' => 'anthropic-beta']
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
+                ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
             ),
             convert: ManagedAgentsMemoryVersion::class,

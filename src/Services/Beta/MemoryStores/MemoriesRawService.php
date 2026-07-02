@@ -14,7 +14,6 @@ use Anthropic\Beta\MemoryStores\Memories\ManagedAgentsPrecondition;
 use Anthropic\Beta\MemoryStores\Memories\MemoryCreateParams;
 use Anthropic\Beta\MemoryStores\Memories\MemoryDeleteParams;
 use Anthropic\Beta\MemoryStores\Memories\MemoryListParams;
-use Anthropic\Beta\MemoryStores\Memories\MemoryListParams\Order;
 use Anthropic\Beta\MemoryStores\Memories\MemoryRetrieveParams;
 use Anthropic\Beta\MemoryStores\Memories\MemoryUpdateParams;
 use Anthropic\Client;
@@ -81,7 +80,7 @@ final class MemoriesRawService implements MemoriesRawContract
                 array_flip(array_keys([...$query_params, ...$header_params]))
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
+                ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
             ),
             convert: ManagedAgentsMemory::class,
@@ -135,7 +134,7 @@ final class MemoriesRawService implements MemoriesRawContract
                 ['betas' => 'anthropic-beta']
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
+                ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
             ),
             convert: ManagedAgentsMemory::class,
@@ -197,7 +196,7 @@ final class MemoriesRawService implements MemoriesRawContract
                 array_flip(['memoryStoreID']),
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
+                ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
             ),
             convert: ManagedAgentsMemory::class,
@@ -213,8 +212,6 @@ final class MemoriesRawService implements MemoriesRawContract
      * @param array{
      *   depth?: int,
      *   limit?: int,
-     *   order?: Order|value-of<Order>,
-     *   orderBy?: string,
      *   page?: string,
      *   pathPrefix?: string,
      *   view?: ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView>,
@@ -236,7 +233,7 @@ final class MemoriesRawService implements MemoriesRawContract
             $requestOptions,
         );
         $query_params = array_flip(
-            ['depth', 'limit', 'order', 'orderBy', 'page', 'pathPrefix', 'view']
+            ['depth', 'limit', 'page', 'pathPrefix', 'view']
         );
 
         /** @var array<string,string> */
@@ -248,14 +245,14 @@ final class MemoriesRawService implements MemoriesRawContract
             path: ['v1/memory_stores/%1$s/memories?beta=true', $memoryStoreID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
-                ['orderBy' => 'order_by', 'pathPrefix' => 'path_prefix'],
+                ['pathPrefix' => 'path_prefix'],
             ),
             headers: Util::array_transform_keys(
                 $header_params,
                 ['betas' => 'anthropic-beta']
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
+                ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
             ),
             convert: ManagedAgentsMemoryListItem::class,
@@ -313,7 +310,7 @@ final class MemoriesRawService implements MemoriesRawContract
                 ['betas' => 'anthropic-beta']
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
+                ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
             ),
             convert: ManagedAgentsDeletedMemory::class,
