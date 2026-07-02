@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.36.0 (2026-07-02)
+
+Full Changelog: [v0.35.1...v0.36.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.35.1...v0.36.0)
+
+### Features
+
+* **api:** add agent-memory-2026-07-22 beta header ([96ec8ca](https://github.com/anthropics/anthropic-sdk-php/commit/96ec8ca5dbacc91ff1123f44593a6439fd6a4be1))
+
 ## 0.35.1 (2026-07-01)
 
 Full Changelog: [v0.35.0...v0.35.1](https://github.com/anthropics/anthropic-sdk-php/compare/v0.35.0...v0.35.1)
