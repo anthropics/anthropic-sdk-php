@@ -61,4 +61,6 @@ enum AnthropicBeta: string
     case SERVER_SIDE_FALLBACK_2026_06_01 = 'server-side-fallback-2026-06-01';
 
     case FALLBACK_CREDIT_2026_06_01 = 'fallback-credit-2026-06-01';
+
+    case AGENT_MEMORY_2026_07_22 = 'agent-memory-2026-07-22';
 }
