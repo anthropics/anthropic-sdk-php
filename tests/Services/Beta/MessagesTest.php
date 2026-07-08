@@ -117,7 +117,7 @@ final class MessagesTest extends TestCase
                     'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                     'citations' => [
                         [
-                            'citedText' => 'cited_text',
+                            'citedText' => 'The grass is green. The sky is blue.',
                             'documentIndex' => 0,
                             'documentTitle' => 'x',
                             'endCharIndex' => 0,
@@ -214,7 +214,7 @@ final class MessagesTest extends TestCase
                     'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                     'citations' => [
                         [
-                            'citedText' => 'cited_text',
+                            'citedText' => 'The grass is green. The sky is blue.',
                             'documentIndex' => 0,
                             'documentTitle' => 'x',
                             'endCharIndex' => 0,
