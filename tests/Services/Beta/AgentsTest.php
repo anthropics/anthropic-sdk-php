@@ -126,7 +126,7 @@ final class AgentsTest extends TestCase
                 ],
             ],
             metadata: ['foo' => 'string'],
-            model: ['id' => 'claude-opus-4-6', 'speed' => 'standard'],
+            model: ['id' => 'claude-opus-4-8', 'speed' => 'standard'],
             multiagent: [
                 'agents' => ['agent_011CZkYqphY8vELVzwCUpqiQ', ['type' => 'self']],
                 'type' => 'coordinator',
