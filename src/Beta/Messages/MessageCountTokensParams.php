@@ -166,7 +166,7 @@ final class MessageCountTokensParams implements BaseModel
     public ?BetaJSONOutputFormat $outputFormat;
 
     /**
-     * The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
+     * Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Not all models support `fast`; invalid combinations are rejected at create time.
      *
      * @var value-of<Speed>|null $speed
      */
@@ -508,7 +508,7 @@ final class MessageCountTokensParams implements BaseModel
     }
 
     /**
-     * The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
+     * Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Not all models support `fast`; invalid combinations are rejected at create time.
      *
      * @param Speed|value-of<Speed>|null $speed
      */

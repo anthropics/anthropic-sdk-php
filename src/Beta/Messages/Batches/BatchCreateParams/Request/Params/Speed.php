@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params;
 
 /**
- * The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
+ * Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Not all models support `fast`; invalid combinations are rejected at create time.
  */
 enum Speed: string
 {

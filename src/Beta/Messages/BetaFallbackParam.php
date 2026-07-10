@@ -53,7 +53,11 @@ final class BetaFallbackParam implements BaseModel
     #[Optional('output_config', nullable: true)]
     public ?BetaOutputConfig $outputConfig;
 
-    /** @var value-of<Speed>|null $speed */
+    /**
+     * Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Not all models support `fast`; invalid combinations are rejected at create time.
+     *
+     * @var value-of<Speed>|null $speed
+     */
     #[Optional(enum: Speed::class, nullable: true)]
     public ?string $speed;
 
@@ -145,6 +149,8 @@ final class BetaFallbackParam implements BaseModel
     }
 
     /**
+     * Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Not all models support `fast`; invalid combinations are rejected at create time.
+     *
      * @param Speed|value-of<Speed>|null $speed
      */
     public function withSpeed(Speed|string|null $speed): self

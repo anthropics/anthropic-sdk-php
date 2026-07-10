@@ -9,6 +9,7 @@ use Anthropic\ServiceContracts\BetaContract;
 use Anthropic\Services\Beta\AgentsService;
 use Anthropic\Services\Beta\DeploymentRunsService;
 use Anthropic\Services\Beta\DeploymentsService;
+use Anthropic\Services\Beta\DreamsService;
 use Anthropic\Services\Beta\EnvironmentsService;
 use Anthropic\Services\Beta\FilesService;
 use Anthropic\Services\Beta\MemoryStoresService;
@@ -93,6 +94,11 @@ final class BetaService implements BetaContract
     public UserProfilesService $userProfiles;
 
     /**
+     * @api
+     */
+    public DreamsService $dreams;
+
+    /**
      * @internal
      */
     public function __construct(private Client $client)
@@ -111,5 +117,6 @@ final class BetaService implements BetaContract
         $this->skills = new SkillsService($client);
         $this->webhooks = new WebhooksService($client);
         $this->userProfiles = new UserProfilesService($client);
+        $this->dreams = new DreamsService($client);
     }
 }
