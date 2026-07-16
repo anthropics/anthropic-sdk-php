@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.37.0 (2026-07-16)
+
+Full Changelog: [v0.36.0...v0.37.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.36.0...v0.37.0)
+
+### Features
+
+* **api:** add support for dreaming ([68645d3](https://github.com/anthropics/anthropic-sdk-php/commit/68645d341b2197dd3fdb2c230b649be3a9a7889c))
+* **api:** add support for MCP Tunnels ([2214a96](https://github.com/anthropics/anthropic-sdk-php/commit/2214a9610d8d25b000e5fbbe3a6e10487fed8ed8))
+* **helpers:** add session delta accumulator for agent.message previews ([#94](https://github.com/anthropics/anthropic-sdk-php/issues/94)) ([52a6a82](https://github.com/anthropics/anthropic-sdk-php/commit/52a6a82c3a7d660dc3dc25edf80b4189240070f9))
+
+
+### Chores
+
+* **docs:** small updates to field descriptions ([3a331f9](https://github.com/anthropics/anthropic-sdk-php/commit/3a331f9e164ed54d1b160cc146c531823622ca6d))
+* **docs:** update model example ([1768ac3](https://github.com/anthropics/anthropic-sdk-php/commit/1768ac381dc9f2eba531a99e513f95a330bf417e))
+* **docs:** updates to descriptions and examples ([9f43c7c](https://github.com/anthropics/anthropic-sdk-php/commit/9f43c7c75ce9ef97e70e16d0d6f4ddb8ff5bda5c))
+
 ## 0.36.0 (2026-07-02)
 
 Full Changelog: [v0.35.1...v0.36.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.35.1...v0.36.0)
