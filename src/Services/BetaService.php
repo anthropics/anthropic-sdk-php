@@ -17,6 +17,7 @@ use Anthropic\Services\Beta\MessagesService;
 use Anthropic\Services\Beta\ModelsService;
 use Anthropic\Services\Beta\SessionsService;
 use Anthropic\Services\Beta\SkillsService;
+use Anthropic\Services\Beta\TunnelsService;
 use Anthropic\Services\Beta\UserProfilesService;
 use Anthropic\Services\Beta\VaultsService;
 use Anthropic\Services\Beta\WebhooksService;
@@ -99,6 +100,11 @@ final class BetaService implements BetaContract
     public DreamsService $dreams;
 
     /**
+     * @api
+     */
+    public TunnelsService $tunnels;
+
+    /**
      * @internal
      */
     public function __construct(private Client $client)
@@ -118,5 +124,6 @@ final class BetaService implements BetaContract
         $this->webhooks = new WebhooksService($client);
         $this->userProfiles = new UserProfilesService($client);
         $this->dreams = new DreamsService($client);
+        $this->tunnels = new TunnelsService($client);
     }
 }
