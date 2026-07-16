@@ -59,7 +59,7 @@
   },
   "suggest": {
     "aws/aws-sdk-php": "Allows using the AWS Bedrock, AWS gateway, and Bedrock Mantle SDKs",
-    "google/auth": "Allows using the Google Vertex SDK",
+    "google/auth": "Allows using the Google Vertex and Google Cloud gateway SDKs",
     "mcp/sdk": "Required to use the BetaMcp helpers for integrating MCP servers with the Anthropic SDK"
   }
 }
