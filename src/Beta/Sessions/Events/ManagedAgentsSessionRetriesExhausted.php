@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * The turn ended because repeated errors exhausted the automatic retry budget or the agent reached an internal execution limit.
+ * The turn ended because repeated errors exhausted the retry budget or an error escalated to `retry_status: 'exhausted'`.
  *
  * @phpstan-type ManagedAgentsSessionRetriesExhaustedShape = array{
  *   type: Type|value-of<Type>
