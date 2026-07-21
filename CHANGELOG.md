@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.37.1 (2026-07-21)
+
+Full Changelog: [v0.37.0...v0.37.1](https://github.com/anthropics/anthropic-sdk-php/compare/v0.37.0...v0.37.1)
+
+### Chores
+
+* **api:** add support for new refusal category ([0003be7](https://github.com/anthropics/anthropic-sdk-php/commit/0003be74d0b5fca590ea12565e04a7e14a5357c6))
+* **docs:** small updates ([8859a51](https://github.com/anthropics/anthropic-sdk-php/commit/8859a511e17898b871fdfb89d3a30cd4c279cc4f))
+* **docs:** small updates ([af82356](https://github.com/anthropics/anthropic-sdk-php/commit/af823561779316f99d87df0e11ed02717716cdec))
+* **internal:** codegen related update ([8d14139](https://github.com/anthropics/anthropic-sdk-php/commit/8d14139433a8c56645b6913f088c513b0bf186d1))
+
 ## 0.37.0 (2026-07-16)
 
 Full Changelog: [v0.36.0...v0.37.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.36.0...v0.37.0)
