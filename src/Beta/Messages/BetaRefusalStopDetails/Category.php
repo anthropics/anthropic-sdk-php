@@ -16,4 +16,6 @@ enum Category: string
     case FRONTIER_LLM = 'frontier_llm';
 
     case REASONING_EXTRACTION = 'reasoning_extraction';
+
+    case GENERAL_HARMS = 'general_harms';
 }
