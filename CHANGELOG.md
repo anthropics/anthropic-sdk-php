@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.38.0 (2026-07-22)
+
+Full Changelog: [v0.37.1...v0.38.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.37.1...v0.38.0)
+
+### Features
+
+* **api:** add support for Managed Agents model effort, initial session events, and threads delta streaming ([c39866c](https://github.com/anthropics/anthropic-sdk-php/commit/c39866c59f38cf18659c66588308431e8758acb9))
+
 ## 0.37.1 (2026-07-21)
 
 Full Changelog: [v0.37.0...v0.37.1](https://github.com/anthropics/anthropic-sdk-php/compare/v0.37.0...v0.37.1)
