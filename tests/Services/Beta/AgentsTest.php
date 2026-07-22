@@ -103,53 +103,7 @@ final class AgentsTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->beta->agents->update(
-            'agent_011CZkYpogX7uDKUyvBTophP',
-            version: 1
-        );
-
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(BetaManagedAgentsAgent::class, $result);
-    }
-
-    #[Test]
-    public function testUpdateWithOptionalParams(): void
-    {
-        $result = $this->client->beta->agents->update(
-            'agent_011CZkYpogX7uDKUyvBTophP',
-            version: 1,
-            description: 'description',
-            mcpServers: [
-                [
-                    'name' => 'example-mcp',
-                    'type' => 'url',
-                    'url' => 'https://example-server.modelcontextprotocol.io/sse',
-                ],
-            ],
-            metadata: ['foo' => 'string'],
-            model: ['id' => 'claude-opus-4-8', 'speed' => 'standard'],
-            multiagent: [
-                'agents' => ['agent_011CZkYqphY8vELVzwCUpqiQ', ['type' => 'self']],
-                'type' => 'coordinator',
-            ],
-            name: 'name',
-            skills: [['skillID' => 'xlsx', 'type' => 'anthropic', 'version' => '1']],
-            system: 'You are a general-purpose agent that can research, write code, run commands, and use connected tools to complete the user\'s task end to end.',
-            tools: [
-                [
-                    'type' => 'agent_toolset_20260401',
-                    'configs' => [
-                        [
-                            'name' => 'bash',
-                            'enabled' => true,
-                            'permissionPolicy' => ['type' => 'always_allow'],
-                        ],
-                    ],
-                    'defaultConfig' => [
-                        'enabled' => true, 'permissionPolicy' => ['type' => 'always_allow'],
-                    ],
-                ],
-            ],
-            betas: ['message-batches-2024-09-24'],
+            'agent_011CZkYpogX7uDKUyvBTophP'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Environments;
 
+use Anthropic\Beta\Environments\BetaEnvironmentDeleteResponse\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -12,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * Response after deleting an environment.
  *
  * @phpstan-type BetaEnvironmentDeleteResponseShape = array{
- *   id: string, type: 'environment_deleted'
+ *   id: string, type: Type|value-of<Type>
  * }
  */
 final class BetaEnvironmentDeleteResponse implements BaseModel
@@ -21,31 +22,31 @@ final class BetaEnvironmentDeleteResponse implements BaseModel
     use SdkModel;
 
     /**
-     * The type of response.
-     *
-     * @var 'environment_deleted' $type
-     */
-    #[Required]
-    public string $type = 'environment_deleted';
-
-    /**
      * Environment identifier.
      */
     #[Required]
     public string $id;
 
     /**
+     * The type of response.
+     *
+     * @var value-of<Type> $type
+     */
+    #[Required(enum: Type::class)]
+    public string $type;
+
+    /**
      * `new BetaEnvironmentDeleteResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaEnvironmentDeleteResponse::with(id: ...)
+     * BetaEnvironmentDeleteResponse::with(id: ..., type: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaEnvironmentDeleteResponse)->withID(...)
+     * (new BetaEnvironmentDeleteResponse)->withID(...)->withType(...)
      * ```
      */
     public function __construct()
@@ -57,12 +58,17 @@ final class BetaEnvironmentDeleteResponse implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param Type|value-of<Type> $type
      */
-    public static function with(string $id): self
-    {
+    public static function with(
+        string $id,
+        Type|string $type = 'environment_deleted'
+    ): self {
         $self = new self;
 
         $self['id'] = $id;
+        $self['type'] = $type;
 
         return $self;
     }
@@ -81,9 +87,9 @@ final class BetaEnvironmentDeleteResponse implements BaseModel
     /**
      * The type of response.
      *
-     * @param 'environment_deleted' $type
+     * @param Type|value-of<Type> $type
      */
-    public function withType(string $type): self
+    public function withType(Type|string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;
