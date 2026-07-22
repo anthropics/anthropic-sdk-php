@@ -6,6 +6,7 @@ namespace Anthropic\Services\Beta\Sessions\Threads;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Sessions\BetaManagedAgentsDeltaEvent;
+use Anthropic\Beta\Sessions\BetaManagedAgentsDeltaType;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSessionUpdatedEvent;
 use Anthropic\Beta\Sessions\BetaManagedAgentsStartEvent;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSystemMessageEvent;
@@ -125,7 +126,9 @@ final class EventsRawService implements EventsRawContract
      *
      * @param string $threadID Path param: Path parameter thread_id
      * @param array{
-     *   sessionID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   sessionID: string,
+     *   eventDeltas?: list<BetaManagedAgentsDeltaType|value-of<BetaManagedAgentsDeltaType>>,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|EventStreamParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -144,6 +147,10 @@ final class EventsRawService implements EventsRawContract
         );
         $sessionID = $parsed['sessionID'];
         unset($parsed['sessionID']);
+        $query_params = array_flip(['eventDeltas']);
+
+        /** @var array<string,string> */
+        $header_params = array_diff_key($parsed, $query_params);
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -151,8 +158,12 @@ final class EventsRawService implements EventsRawContract
             path: [
                 'v1/sessions/%1$s/threads/%2$s/stream?beta=true', $sessionID, $threadID,
             ],
+            query: Util::array_transform_keys(
+                array_intersect_key($parsed, $query_params),
+                ['eventDeltas' => 'event_deltas'],
+            ),
             headers: Util::array_transform_keys(
-                ['Accept' => 'text/event-stream', ...$parsed],
+                ['Accept' => 'text/event-stream', ...$header_params],
                 ['betas' => 'anthropic-beta'],
             ),
             options: RequestOptions::parse(

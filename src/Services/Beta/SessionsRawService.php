@@ -26,6 +26,7 @@ use Anthropic\ServiceContracts\Beta\SessionsRawContract;
 
 /**
  * @phpstan-import-type AgentShape from \Anthropic\Beta\Sessions\SessionCreateParams\Agent
+ * @phpstan-import-type InitialEventShape from \Anthropic\Beta\Sessions\SessionCreateParams\InitialEvent
  * @phpstan-import-type ResourceShape from \Anthropic\Beta\Sessions\SessionCreateParams\Resource
  * @phpstan-import-type BetaManagedAgentsSessionAgentUpdateShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgentUpdate
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -46,6 +47,7 @@ final class SessionsRawService implements SessionsRawContract
      * @param array{
      *   agent: AgentShape,
      *   environmentID: string,
+     *   initialEvents?: list<InitialEventShape>,
      *   metadata?: array<string,string>,
      *   resources?: list<ResourceShape>,
      *   title?: string|null,
