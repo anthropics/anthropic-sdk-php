@@ -18,6 +18,7 @@ use Anthropic\RequestOptions;
 
 /**
  * @phpstan-import-type AgentShape from \Anthropic\Beta\Sessions\SessionCreateParams\Agent
+ * @phpstan-import-type InitialEventShape from \Anthropic\Beta\Sessions\SessionCreateParams\InitialEvent
  * @phpstan-import-type ResourceShape from \Anthropic\Beta\Sessions\SessionCreateParams\Resource
  * @phpstan-import-type BetaManagedAgentsSessionAgentUpdateShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgentUpdate
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -29,6 +30,7 @@ interface SessionsContract
      *
      * @param AgentShape $agent Body param: Agent identifier. Accepts the `agent` ID string, which pins the latest version for the session, or an `agent` object with both id and version specified.
      * @param string $environmentID body param: ID of the `environment` defining the container configuration for this session
+     * @param list<InitialEventShape> $initialEvents Body param: Initial events to send to the `session` at creation, processed in order. Supports `user.message` and `user.define_outcome` events. Maximum 50 events.
      * @param array<string,string> $metadata Body param: Arbitrary key-value metadata attached to the session. Maximum 16 pairs, keys up to 64 chars, values up to 512 chars.
      * @param list<ResourceShape> $resources Body param: Resources (e.g. repositories, files) to mount into the session's container.
      * @param string|null $title body param: Human-readable session title
@@ -41,6 +43,7 @@ interface SessionsContract
     public function create(
         string|BetaManagedAgentsAgentParams|array|BetaManagedAgentsAgentWithOverridesParams $agent,
         string $environmentID,
+        ?array $initialEvents = null,
         ?array $metadata = null,
         ?array $resources = null,
         ?string $title = null,

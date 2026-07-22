@@ -9,7 +9,6 @@ use Anthropic\Beta\Agents\AgentUpdateParams\Tool;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams;
 use Anthropic\Core\Attributes\Optional;
-use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
@@ -30,7 +29,6 @@ use Anthropic\Core\Conversion\MapOf;
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Agents\AgentUpdateParams\Tool
  *
  * @phpstan-type AgentUpdateParamsShape = array{
- *   version: int,
  *   description?: string|null,
  *   mcpServers?: list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null,
  *   metadata?: array<string,string|null>|null,
@@ -40,6 +38,7 @@ use Anthropic\Core\Conversion\MapOf;
  *   skills?: list<BetaManagedAgentsSkillParamsShape>|null,
  *   system?: string|null,
  *   tools?: list<ToolShape>|null,
+ *   version?: int|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
@@ -48,12 +47,6 @@ final class AgentUpdateParams implements BaseModel
     /** @use SdkModel<AgentUpdateParamsShape> */
     use SdkModel;
     use SdkParams;
-
-    /**
-     * The agent's current version, used to prevent concurrent overwrites. Obtain this value from a create or retrieve response. The request fails if this does not match the server's current version.
-     */
-    #[Required]
-    public int $version;
 
     /**
      * Description. Omit to preserve; send empty string or null to clear.
@@ -124,6 +117,12 @@ final class AgentUpdateParams implements BaseModel
     public ?array $tools;
 
     /**
+     * The agent's current version, used to prevent concurrent overwrites. Obtain this value from a create or retrieve response. Must be at least 1 if specified. When supplied, the request fails if it does not match the server's current version; omit to apply the update unconditionally.
+     */
+    #[Optional]
+    public ?int $version;
+
+    /**
      * Optional header to specify the beta version(s) you want to use.
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
@@ -131,20 +130,6 @@ final class AgentUpdateParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
-    /**
-     * `new AgentUpdateParams()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * AgentUpdateParams::with(version: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new AgentUpdateParams)->withVersion(...)
-     * ```
-     */
     public function __construct()
     {
         $this->initialize();
@@ -164,7 +149,6 @@ final class AgentUpdateParams implements BaseModel
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
-        int $version,
         ?string $description = null,
         ?array $mcpServers = null,
         ?array $metadata = null,
@@ -174,11 +158,10 @@ final class AgentUpdateParams implements BaseModel
         ?array $skills = null,
         ?string $system = null,
         ?array $tools = null,
+        ?int $version = null,
         ?array $betas = null,
     ): self {
         $self = new self;
-
-        $self['version'] = $version;
 
         null !== $description && $self['description'] = $description;
         null !== $mcpServers && $self['mcpServers'] = $mcpServers;
@@ -189,18 +172,8 @@ final class AgentUpdateParams implements BaseModel
         null !== $skills && $self['skills'] = $skills;
         null !== $system && $self['system'] = $system;
         null !== $tools && $self['tools'] = $tools;
+        null !== $version && $self['version'] = $version;
         null !== $betas && $self['betas'] = $betas;
-
-        return $self;
-    }
-
-    /**
-     * The agent's current version, used to prevent concurrent overwrites. Obtain this value from a create or retrieve response. The request fails if this does not match the server's current version.
-     */
-    public function withVersion(int $version): self
-    {
-        $self = clone $this;
-        $self['version'] = $version;
 
         return $self;
     }
@@ -314,6 +287,17 @@ final class AgentUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['tools'] = $tools;
+
+        return $self;
+    }
+
+    /**
+     * The agent's current version, used to prevent concurrent overwrites. Obtain this value from a create or retrieve response. Must be at least 1 if specified. When supplied, the request fails if it does not match the server's current version; omit to apply the update unconditionally.
+     */
+    public function withVersion(int $version): self
+    {
+        $self = clone $this;
+        $self['version'] = $version;
 
         return $self;
     }

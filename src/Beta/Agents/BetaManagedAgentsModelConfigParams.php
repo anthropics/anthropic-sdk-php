@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Agents;
 
+use Anthropic\Beta\Agents\BetaManagedAgentsModelConfigParams\Effort;
+use Anthropic\Beta\Agents\BetaManagedAgentsModelConfigParams\Effort\BetaManagedAgentsEffortLevel;
 use Anthropic\Beta\Agents\BetaManagedAgentsModelConfigParams\Speed;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
@@ -13,8 +15,12 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * An object that defines additional configuration control over model use.
  *
+ * @phpstan-import-type EffortVariants from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfigParams\Effort
+ * @phpstan-import-type EffortShape from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfigParams\Effort
+ *
  * @phpstan-type BetaManagedAgentsModelConfigParamsShape = array{
  *   id: string|BetaManagedAgentsModel|value-of<BetaManagedAgentsModel>,
+ *   effort?: EffortShape|null,
  *   speed?: null|Speed|value-of<Speed>,
  * }
  */
@@ -32,6 +38,14 @@ final class BetaManagedAgentsModelConfigParams implements BaseModel
      */
     #[Required(enum: BetaManagedAgentsModel::class)]
     public string $id;
+
+    /**
+     * How hard Claude works on each inference call. Accepts a bare level string (`"high"`) or `{"type": "high"}`. On create, omitting it resolves the per-model default; on update, omitting it leaves the stored value unchanged.
+     *
+     * @var EffortVariants|null $effort
+     */
+    #[Optional(union: Effort::class, nullable: true)]
+    public BetaManagedAgentsEffortLow|BetaManagedAgentsEffortMedium|BetaManagedAgentsEffortHigh|BetaManagedAgentsEffortXhigh|BetaManagedAgentsEffortMax|string|null $effort;
 
     /**
      * Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Not all models support `fast`; invalid combinations are rejected at create time.
@@ -66,16 +80,19 @@ final class BetaManagedAgentsModelConfigParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param string|BetaManagedAgentsModel|value-of<BetaManagedAgentsModel> $id
+     * @param EffortShape|null $effort
      * @param Speed|value-of<Speed>|null $speed
      */
     public static function with(
         BetaManagedAgentsModel|string $id,
-        Speed|string|null $speed = null
+        BetaManagedAgentsEffortLevel|BetaManagedAgentsEffortLow|array|BetaManagedAgentsEffortMedium|BetaManagedAgentsEffortHigh|BetaManagedAgentsEffortXhigh|BetaManagedAgentsEffortMax|string|null $effort = null,
+        Speed|string|null $speed = null,
     ): self {
         $self = new self;
 
         $self['id'] = $id;
 
+        null !== $effort && $self['effort'] = $effort;
         null !== $speed && $self['speed'] = $speed;
 
         return $self;
@@ -92,6 +109,20 @@ final class BetaManagedAgentsModelConfigParams implements BaseModel
     {
         $self = clone $this;
         $self['id'] = $id;
+
+        return $self;
+    }
+
+    /**
+     * How hard Claude works on each inference call. Accepts a bare level string (`"high"`) or `{"type": "high"}`. On create, omitting it resolves the per-model default; on update, omitting it leaves the stored value unchanged.
+     *
+     * @param EffortShape|null $effort
+     */
+    public function withEffort(
+        BetaManagedAgentsEffortLevel|BetaManagedAgentsEffortLow|array|BetaManagedAgentsEffortMedium|BetaManagedAgentsEffortHigh|BetaManagedAgentsEffortXhigh|BetaManagedAgentsEffortMax|string|null $effort,
+    ): self {
+        $self = clone $this;
+        $self['effort'] = $effort;
 
         return $self;
     }

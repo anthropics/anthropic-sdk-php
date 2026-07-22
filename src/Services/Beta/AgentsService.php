@@ -134,7 +134,6 @@ final class AgentsService implements AgentsContract
      * Update Agent
      *
      * @param string $agentID Path param: Path parameter agent_id
-     * @param int $version Body param: The agent's current version, used to prevent concurrent overwrites. Obtain this value from a create or retrieve response. The request fails if this does not match the server's current version.
      * @param string|null $description Body param: Description. Omit to preserve; send empty string or null to clear.
      * @param list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null $mcpServers Body param: MCP servers. Full replacement. Omit to preserve; send empty array or `null` to clear. Names must be unique. Maximum 20. Every server must be referenced by an `mcp_toolset` in the agent's resulting `tools`; unreferenced servers are rejected. See the [MCP connector guide](https://platform.claude.com/docs/en/managed-agents/mcp-connector).
      * @param array<string,string|null>|null $metadata Body param: Metadata patch. Set a key to a string to upsert it, or to null to delete it. Omit the field to preserve. The stored bag is limited to 16 keys (up to 64 chars each) with values up to 512 chars.
@@ -144,6 +143,7 @@ final class AgentsService implements AgentsContract
      * @param list<BetaManagedAgentsSkillParamsShape>|null $skills Body param: Skills. Full replacement. Omit to preserve; send empty array or null to clear.
      * @param string|null $system Body param: System prompt. Omit to preserve; send empty string or null to clear.
      * @param list<ToolShape1>|null $tools Body param: Tool configurations available to the agent. Full replacement. Omit to preserve; send empty array or null to clear. Maximum of 128 tools across all toolsets allowed.
+     * @param int $version Body param: The agent's current version, used to prevent concurrent overwrites. Obtain this value from a create or retrieve response. Must be at least 1 if specified. When supplied, the request fails if it does not match the server's current version; omit to apply the update unconditionally.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
@@ -151,7 +151,6 @@ final class AgentsService implements AgentsContract
      */
     public function update(
         string $agentID,
-        int $version,
         ?string $description = null,
         ?array $mcpServers = null,
         ?array $metadata = null,
@@ -161,12 +160,12 @@ final class AgentsService implements AgentsContract
         ?array $skills = null,
         ?string $system = null,
         ?array $tools = null,
+        ?int $version = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsAgent {
         $params = Util::removeNulls(
             [
-                'version' => $version,
                 'description' => $description,
                 'mcpServers' => $mcpServers,
                 'metadata' => $metadata,
@@ -176,6 +175,7 @@ final class AgentsService implements AgentsContract
                 'skills' => $skills,
                 'system' => $system,
                 'tools' => $tools,
+                'version' => $version,
                 'betas' => $betas,
             ],
         );

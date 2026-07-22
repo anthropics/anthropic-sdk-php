@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Threads\Events;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Sessions\BetaManagedAgentsDeltaType;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -18,6 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type EventStreamParamsShape = array{
  *   sessionID: string,
+ *   eventDeltas?: list<BetaManagedAgentsDeltaType|value-of<BetaManagedAgentsDeltaType>>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
@@ -29,6 +31,14 @@ final class EventStreamParams implements BaseModel
 
     #[Required]
     public string $sessionID;
+
+    /**
+     * When set, this connection also receives streaming deltas (`event_start`, `event_delta`) while an event is being produced, before the event itself arrives. Deltas are best-effort; when the final event is produced it carries the complete content. A model request that ends early (an error or interrupt) produces no final event — its terminal `span.model_request_end` closes the preview. Accepts one or more event types to preview and may be repeated: `agent.message` streams `content_delta` fragments; `agent.thinking` is start-only — a signal that the agent has begun extended thinking, concluded by the `agent.thinking` event itself. Only previews of the requested event types are sent.
+     *
+     * @var list<value-of<BetaManagedAgentsDeltaType>>|null $eventDeltas
+     */
+    #[Optional(list: BetaManagedAgentsDeltaType::class)]
+    public ?array $eventDeltas;
 
     /**
      * Optional header to specify the beta version(s) you want to use.
@@ -62,14 +72,19 @@ final class EventStreamParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param list<BetaManagedAgentsDeltaType|value-of<BetaManagedAgentsDeltaType>>|null $eventDeltas
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
-    public static function with(string $sessionID, ?array $betas = null): self
-    {
+    public static function with(
+        string $sessionID,
+        ?array $eventDeltas = null,
+        ?array $betas = null
+    ): self {
         $self = new self;
 
         $self['sessionID'] = $sessionID;
 
+        null !== $eventDeltas && $self['eventDeltas'] = $eventDeltas;
         null !== $betas && $self['betas'] = $betas;
 
         return $self;
@@ -79,6 +94,19 @@ final class EventStreamParams implements BaseModel
     {
         $self = clone $this;
         $self['sessionID'] = $sessionID;
+
+        return $self;
+    }
+
+    /**
+     * When set, this connection also receives streaming deltas (`event_start`, `event_delta`) while an event is being produced, before the event itself arrives. Deltas are best-effort; when the final event is produced it carries the complete content. A model request that ends early (an error or interrupt) produces no final event — its terminal `span.model_request_end` closes the preview. Accepts one or more event types to preview and may be repeated: `agent.message` streams `content_delta` fragments; `agent.thinking` is start-only — a signal that the agent has begun extended thinking, concluded by the `agent.thinking` event itself. Only previews of the requested event types are sent.
+     *
+     * @param list<BetaManagedAgentsDeltaType|value-of<BetaManagedAgentsDeltaType>> $eventDeltas
+     */
+    public function withEventDeltas(array $eventDeltas): self
+    {
+        $self = clone $this;
+        $self['eventDeltas'] = $eventDeltas;
 
         return $self;
     }

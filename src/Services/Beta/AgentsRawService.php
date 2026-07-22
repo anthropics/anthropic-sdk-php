@@ -145,7 +145,6 @@ final class AgentsRawService implements AgentsRawContract
      *
      * @param string $agentID Path param: Path parameter agent_id
      * @param array{
-     *   version: int,
      *   description?: string|null,
      *   mcpServers?: list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null,
      *   metadata?: array<string,string|null>|null,
@@ -155,6 +154,7 @@ final class AgentsRawService implements AgentsRawContract
      *   skills?: list<BetaManagedAgentsSkillParamsShape>|null,
      *   system?: string|null,
      *   tools?: list<ToolShape1>|null,
+     *   version?: int,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|AgentUpdateParams $params
      * @param RequestOpts|null $requestOptions

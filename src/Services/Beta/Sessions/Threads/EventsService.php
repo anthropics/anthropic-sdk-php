@@ -6,6 +6,7 @@ namespace Anthropic\Services\Beta\Sessions\Threads;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Sessions\BetaManagedAgentsDeltaEvent;
+use Anthropic\Beta\Sessions\BetaManagedAgentsDeltaType;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSessionUpdatedEvent;
 use Anthropic\Beta\Sessions\BetaManagedAgentsStartEvent;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSystemMessageEvent;
@@ -111,6 +112,7 @@ final class EventsService implements EventsContract
      *
      * @param string $threadID Path param: Path parameter thread_id
      * @param string $sessionID Path param: Path parameter session_id
+     * @param list<BetaManagedAgentsDeltaType|value-of<BetaManagedAgentsDeltaType>> $eventDeltas Query param: When set, this connection also receives streaming deltas (`event_start`, `event_delta`) while an event is being produced, before the event itself arrives. Deltas are best-effort; when the final event is produced it carries the complete content. A model request that ends early (an error or interrupt) produces no final event — its terminal `span.model_request_end` closes the preview. Accepts one or more event types to preview and may be repeated: `agent.message` streams `content_delta` fragments; `agent.thinking` is start-only — a signal that the agent has begun extended thinking, concluded by the `agent.thinking` event itself. Only previews of the requested event types are sent.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
@@ -121,10 +123,17 @@ final class EventsService implements EventsContract
     public function streamStream(
         string $threadID,
         string $sessionID,
+        ?array $eventDeltas = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): BaseStream {
-        $params = Util::removeNulls(['sessionID' => $sessionID, 'betas' => $betas]);
+        $params = Util::removeNulls(
+            [
+                'sessionID' => $sessionID,
+                'eventDeltas' => $eventDeltas,
+                'betas' => $betas,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->streamStream($threadID, params: $params, requestOptions: $requestOptions);
