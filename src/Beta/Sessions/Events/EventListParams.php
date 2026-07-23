@@ -35,25 +35,25 @@ final class EventListParams implements BaseModel
     use SdkParams;
 
     /**
-     * Return events created after this time (exclusive).
+     * Return events created after this time (exclusive). Compared against the event's `processed_at` value.
      */
     #[Optional]
     public ?\DateTimeInterface $createdAtGt;
 
     /**
-     * Return events created at or after this time (inclusive).
+     * Return events created at or after this time (inclusive). Compared against the event's `processed_at` value.
      */
     #[Optional]
     public ?\DateTimeInterface $createdAtGte;
 
     /**
-     * Return events created before this time (exclusive).
+     * Return events created before this time (exclusive). Compared against the event's `processed_at` value.
      */
     #[Optional]
     public ?\DateTimeInterface $createdAtLt;
 
     /**
-     * Return events created at or before this time (inclusive).
+     * Return events created at or before this time (inclusive). Compared against the event's `processed_at` value.
      */
     #[Optional]
     public ?\DateTimeInterface $createdAtLte;
@@ -65,7 +65,7 @@ final class EventListParams implements BaseModel
     public ?int $limit;
 
     /**
-     * Sort direction for results, ordered by created_at. Defaults to asc (chronological).
+     * Sort direction for results, ordered by the event's `processed_at`. Defaults to asc (chronological).
      *
      * @var value-of<Order>|null $order
      */
@@ -135,7 +135,7 @@ final class EventListParams implements BaseModel
     }
 
     /**
-     * Return events created after this time (exclusive).
+     * Return events created after this time (exclusive). Compared against the event's `processed_at` value.
      */
     public function withCreatedAtGt(\DateTimeInterface $createdAtGt): self
     {
@@ -146,7 +146,7 @@ final class EventListParams implements BaseModel
     }
 
     /**
-     * Return events created at or after this time (inclusive).
+     * Return events created at or after this time (inclusive). Compared against the event's `processed_at` value.
      */
     public function withCreatedAtGte(\DateTimeInterface $createdAtGte): self
     {
@@ -157,7 +157,7 @@ final class EventListParams implements BaseModel
     }
 
     /**
-     * Return events created before this time (exclusive).
+     * Return events created before this time (exclusive). Compared against the event's `processed_at` value.
      */
     public function withCreatedAtLt(\DateTimeInterface $createdAtLt): self
     {
@@ -168,7 +168,7 @@ final class EventListParams implements BaseModel
     }
 
     /**
-     * Return events created at or before this time (inclusive).
+     * Return events created at or before this time (inclusive). Compared against the event's `processed_at` value.
      */
     public function withCreatedAtLte(\DateTimeInterface $createdAtLte): self
     {
@@ -190,7 +190,7 @@ final class EventListParams implements BaseModel
     }
 
     /**
-     * Sort direction for results, ordered by created_at. Defaults to asc (chronological).
+     * Sort direction for results, ordered by the event's `processed_at`. Defaults to asc (chronological).
      *
      * @param Order|value-of<Order> $order
      */
