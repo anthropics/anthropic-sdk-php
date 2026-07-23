@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.39.0 (2026-07-23)
+
+Full Changelog: [v0.38.0...v0.39.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.38.0...v0.39.0)
+
+### Features
+
+* **api:** add new stop reason 'model_context_window_exceeded' ([2b0fedf](https://github.com/anthropics/anthropic-sdk-php/commit/2b0fedf6d3c3c211d4ad3cf9cbf883e6035c6c5e))
+
 ## 0.38.0 (2026-07-22)
 
 Full Changelog: [v0.37.1...v0.38.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.37.1...v0.38.0)
