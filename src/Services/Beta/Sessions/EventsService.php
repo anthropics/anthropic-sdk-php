@@ -77,12 +77,12 @@ final class EventsService implements EventsContract
      * List Events
      *
      * @param string $sessionID Path param: Path parameter session_id
-     * @param \DateTimeInterface $createdAtGt query param: Return events created after this time (exclusive)
-     * @param \DateTimeInterface $createdAtGte query param: Return events created at or after this time (inclusive)
-     * @param \DateTimeInterface $createdAtLt query param: Return events created before this time (exclusive)
-     * @param \DateTimeInterface $createdAtLte query param: Return events created at or before this time (inclusive)
+     * @param \DateTimeInterface $createdAtGt Query param: Return events created after this time (exclusive). Compared against the event's `processed_at` value.
+     * @param \DateTimeInterface $createdAtGte Query param: Return events created at or after this time (inclusive). Compared against the event's `processed_at` value.
+     * @param \DateTimeInterface $createdAtLt Query param: Return events created before this time (exclusive). Compared against the event's `processed_at` value.
+     * @param \DateTimeInterface $createdAtLte Query param: Return events created at or before this time (inclusive). Compared against the event's `processed_at` value.
      * @param int $limit Query param: Query parameter for limit
-     * @param Order|value-of<Order> $order Query param: Sort direction for results, ordered by created_at. Defaults to asc (chronological).
+     * @param Order|value-of<Order> $order Query param: Sort direction for results, ordered by the event's `processed_at`. Defaults to asc (chronological).
      * @param string $page query param: Opaque pagination cursor from a previous response's next_page
      * @param list<string> $types Query param: Filter by event type. Values match the `type` field on returned events (for example, `user.message` or `agent.tool_use`). Omit to return all event types.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
