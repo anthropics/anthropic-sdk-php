@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Lib\Middleware;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Messages\BetaFallbackCreditTokenParam;
+use Anthropic\Beta\Messages\BetaFallbackCreditTokenParam\Mode as BetaFallbackCreditTokenMode;
 use Anthropic\Beta\Messages\BetaFallbackParam;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Exceptions\AnthropicException;
@@ -63,6 +65,12 @@ final class RefusalFallbackMiddleware implements Middleware
         'output_config' => true,
         'speed' => true,
     ];
+
+    /**
+     * Allowlisted keys whose array-valued overrides patch the original's
+     * subfields one level deep, rather than replacing the field wholesale.
+     */
+    private const NESTED_OVERRIDE_KEYS = ['output_config' => true];
 
     /** @var list<array<string,mixed>> the chain, dumped to wire shape */
     private array $fallbacks;
@@ -153,21 +161,6 @@ final class RefusalFallbackMiddleware implements Middleware
             return $sendRequest($request);
         }
 
-        foreach ($request->getHeader('anthropic-beta') as $line) {
-            if (in_array('server-side-fallback-2026-06-01', array_map(trim(...), explode(',', $line)), true)) {
-                // Two owners for one request is never resolved by guessing:
-                // silently stripping the caller's seams or arming both betas
-                // are equally wrong, so the conflict errors before any
-                // request reaches the wire — the header twin of the
-                // `fallbacks` body-param conflict below.
-                throw new AnthropicException(
-                    'Arming the `server-side-fallback-2026-06-01` beta is not supported when using the '
-                    .'RefusalFallbackMiddleware. Either remove the middleware to let the API handle refusal '
-                    .'fallbacks server-side, or drop the beta to let the middleware handle them client-side.',
-                );
-            }
-        }
-
         if (isset($body['fallbacks'])) {
             // Gaveled: the server-side chain and the client-side middleware
             // cannot both own a request — error before anything reaches the
@@ -175,7 +168,7 @@ final class RefusalFallbackMiddleware implements Middleware
             throw new AnthropicException(
                 'Sending the `fallbacks` request param is not supported when using the '
                 .'RefusalFallbackMiddleware. Either remove the middleware and send `fallbacks` with the '
-                .'`server-side-fallback-2026-06-01` beta header to let the API handle refusal fallbacks, '
+                .'`server-side-fallback-2026-07-01` beta header to let the API handle refusal fallbacks, '
                 .'or omit the `fallbacks` param to let the middleware handle them client-side.',
             );
         }
@@ -232,7 +225,13 @@ final class RefusalFallbackMiddleware implements Middleware
     }
 
     /**
-     * Merges a chain entry's allowlisted overrides over the original body.
+     * Patches a chain entry's allowlisted overrides over the original body:
+     * a set field overrides, an explicit null unsets (the field is absent
+     * from the retried request), an absent field keeps the original value.
+     * Array-valued {@see NESTED_OVERRIDE_KEYS} overrides apply the same
+     * set/null/absent rules to their subfields, one level deep, over the
+     * original's value; a nested field patched down to no subfields is
+     * dropped, never sent empty.
      *
      * @param array<string,mixed> $body
      * @param array<string,mixed> $entry
@@ -243,12 +242,74 @@ final class RefusalFallbackMiddleware implements Middleware
      */
     public static function mergeEntry(array $body, array $entry): array
     {
-        $overrides = array_filter(
-            array_intersect_key($entry, self::ENTRY_OVERRIDE_ALLOWLIST),
-            static fn ($v) => null !== $v, // null means "no override", as server-side
-        );
+        foreach (self::ENTRY_OVERRIDE_ALLOWLIST as $key => $_) {
+            if (!array_key_exists($key, $entry)) {
+                continue; // absent: the original top-level value stands
+            }
+            $value = $entry[$key];
+            if (null === $value) {
+                unset($body[$key]); // explicit null unsets the field
 
-        return [...$body, ...$overrides];
+                continue;
+            }
+            if (is_array($value) && isset(self::NESTED_OVERRIDE_KEYS[$key])) {
+                $current = $body[$key] ?? null;
+                $value = self::patch(is_array($current) ? $current : [], patch: $value);
+                if ([] === $value) {
+                    // patched down to no subfields: drop the field rather than
+                    // send an empty object
+                    unset($body[$key]);
+
+                    continue;
+                }
+            }
+            $body[$key] = $value; // set: overrides
+        }
+
+        return $body;
+    }
+
+    /**
+     * Applies a patch over a base array: set keys override, null keys are
+     * removed, absent keys keep the base value.
+     *
+     * Typed on `array<mixed>`, not `array<string,mixed>`: the nested
+     * `output_config` value arrives in wire shape where PHPStan cannot
+     * prove string keys, and the spread + unset-by-key logic never
+     * depends on the key type.
+     *
+     * @param array<mixed> $base
+     * @param array<mixed> $patch
+     *
+     * @return array<mixed>
+     */
+    private static function patch(array $base, array $patch): array
+    {
+        $patched = [...$base, ...$patch];
+        foreach ($patch as $key => $value) {
+            if (null === $value) {
+                unset($patched[$key]);
+            }
+        }
+
+        return $patched;
+    }
+
+    /**
+     * The object form of `fallback_credit_token` the middleware redeems with:
+     * `best_effort`, so a token-layer failure serves the retry at normal price
+     * instead of turning a recovered refusal into a 400.
+     *
+     * @return array<string,mixed>
+     *
+     * @internal shared with StreamSplicer — one redemption shape
+     */
+    public static function creditTokenParam(string $token): array
+    {
+        $param = BetaFallbackCreditTokenParam::with(token: $token, mode: BetaFallbackCreditTokenMode::BEST_EFFORT);
+
+        return self::bodyArray(Conversion::dump(BetaFallbackCreditTokenParam::class, value: $param))
+            ?? ['token' => $token, 'mode' => BetaFallbackCreditTokenMode::BEST_EFFORT->value];
     }
 
     /**
@@ -320,7 +381,7 @@ final class RefusalFallbackMiddleware implements Middleware
 
             $legBody = self::mergeEntry($body, entry: $entry);
             if (null !== $token) {
-                $legBody['fallback_credit_token'] = $token;
+                $legBody['fallback_credit_token'] = self::creditTokenParam($token);
             }
             $response->getBody()->close();
             $response = $next($this->withBody($request, body: $legBody));
@@ -807,7 +868,7 @@ final class RefusalFallbackMiddleware implements Middleware
                 $body = RefusalFallbackMiddleware::mergeEntry($this->body, entry: $entry);
                 unset($body['fallbacks'], $body['fallback'], $body['fallback_credit_token']);
                 if ('' !== $this->token) {
-                    $body['fallback_credit_token'] = $this->token;
+                    $body['fallback_credit_token'] = RefusalFallbackMiddleware::creditTokenParam($this->token);
                 }
                 if ([] !== $continuation) {
                     $messages = is_array($body['messages'] ?? null) ? $body['messages'] : [];
@@ -1503,7 +1564,7 @@ final class RefusalFallbackMiddleware implements Middleware
      */
     private static function withCreditBeta(RequestInterface $request): RequestInterface
     {
-        $flag = AnthropicBeta::FALLBACK_CREDIT_2026_06_01->value;
+        $flag = AnthropicBeta::FALLBACK_CREDIT_2026_07_01->value;
 
         $existing = $request->getHeaderLine('anthropic-beta');
         $values = '' === $existing ? [] : array_map('trim', explode(',', $existing));

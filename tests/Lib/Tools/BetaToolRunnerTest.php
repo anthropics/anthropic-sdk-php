@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Tests\Lib\Tools;
 
 use Anthropic\Beta\Messages\BetaMessage;
+use Anthropic\Beta\Messages\BetaRequestToolAdditionBlock;
+use Anthropic\Beta\Messages\BetaRequestToolRemovalBlock;
 use Anthropic\Beta\Messages\BetaTextBlock;
+use Anthropic\Beta\Messages\BetaToolChangeToolReference;
 use Anthropic\Beta\Messages\BetaToolUseBlock;
 use Anthropic\Client;
 use Anthropic\Core\Util;
@@ -204,6 +207,316 @@ final class BetaToolRunnerTest extends TestCase
         /** @var string $errContent */
         $errContent = $lastContent[0]['content'];
         $this->assertStringContainsString("'nonexistent_tool' not found", $errContent);
+    }
+
+    // -------------------------------------------------------------------------
+    // tool_removal: a call to a currently-removed tool behaves as if never defined
+    // -------------------------------------------------------------------------
+
+    #[Test]
+    public function testToolRemovedMidConversationIsTreatedAsNotFound(): void
+    {
+        $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF']));
+        $this->transporter->addResponse($this->textResponse('Cannot help.'));
+        // Baseline: the same tool called when it was never defined at all.
+        $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF']));
+        $this->transporter->addResponse($this->textResponse('Cannot help.'));
+
+        $called = false;
+        $tool = $this->makeWeatherTool(function () use (&$called): void {
+            $called = true;
+        });
+
+        foreach ($this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [
+                ['role' => 'user', 'content' => 'Weather?'],
+                ['role' => 'system', 'content' => [
+                    ['type' => 'tool_removal', 'tool' => ['type' => 'tool_reference', 'name' => 'get_weather']],
+                ]],
+            ],
+            model: 'claude-opus-4-6',
+            tools: [$tool],
+        ) as $_);
+
+        $this->assertFalse($called, 'Removed tool must not be executed');
+        $removedResult = $this->lastToolResult($this->requestBody(1));
+
+        foreach ($this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [['role' => 'user', 'content' => 'Weather?']],
+            model: 'claude-opus-4-6',
+            tools: [],
+        ) as $_);
+
+        $neverDefinedResult = $this->lastToolResult($this->requestBody(3));
+
+        $this->assertTrue($removedResult['is_error']);
+        $this->assertSame($neverDefinedResult['content'], $removedResult['content']);
+        $this->assertSame($neverDefinedResult['is_error'], $removedResult['is_error']);
+    }
+
+    #[Test]
+    public function testToolRemovalNestedInMidConvSystemBlockIsHonored(): void
+    {
+        $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF']));
+        $this->transporter->addResponse($this->textResponse('Cannot help.'));
+
+        $called = false;
+        $tool = $this->makeWeatherTool(function () use (&$called): void {
+            $called = true;
+        });
+
+        // The tool_removal rides one level down, inside a mid_conv_system
+        // block; the fold walks exactly that one level.
+        foreach ($this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [
+                ['role' => 'user', 'content' => 'Weather?'],
+                ['role' => 'system', 'content' => [
+                    ['type' => 'mid_conv_system', 'content' => [
+                        ['type' => 'text', 'text' => 'the weather tool is gone'],
+                        ['type' => 'tool_removal', 'tool' => ['type' => 'tool_reference', 'name' => 'get_weather']],
+                    ]],
+                ]],
+            ],
+            model: 'claude-opus-4-6',
+            tools: [$tool],
+        ) as $_);
+
+        $this->assertFalse($called, 'Tool removed inside a mid_conv_system block must not be executed');
+        $this->assertTrue($this->lastToolResult($this->requestBody(1))['is_error']);
+    }
+
+    #[Test]
+    public function testToolAddedBackAfterRemovalExecutesNormally(): void
+    {
+        $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF']));
+        $this->transporter->addResponse($this->textResponse('Sunny in SF.'));
+
+        $called = false;
+        $tool = $this->makeWeatherTool(function () use (&$called): void {
+            $called = true;
+        });
+
+        foreach ($this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [
+                ['role' => 'user', 'content' => 'Weather?'],
+                ['role' => 'system', 'content' => [
+                    BetaRequestToolRemovalBlock::with(tool: BetaToolChangeToolReference::with(name: 'get_weather')),
+                ]],
+                ['role' => 'system', 'content' => [
+                    BetaRequestToolAdditionBlock::with(tool: BetaToolChangeToolReference::with(name: 'get_weather')),
+                ]],
+            ],
+            model: 'claude-opus-4-6',
+            tools: [$tool],
+        ) as $_);
+
+        $this->assertTrue($called, 'Re-added tool must be executed');
+
+        $result = $this->lastToolResult($this->requestBody(1));
+        $this->assertArrayNotHasKey('is_error', $result);
+
+        /** @var string $content */
+        $content = $result['content'];
+        $this->assertStringContainsString('"temperature":72', $content);
+    }
+
+    // -------------------------------------------------------------------------
+    // tool_removal / tool_addition supplied through the param-mutation APIs
+    // (pushMessages / setMessagesParams) are honored, not just messages
+    // present in the initial params.
+    // -------------------------------------------------------------------------
+
+    #[Test]
+    public function testToolRemovalPushedBetweenTurnsIsHonoredOnNextToolUse(): void
+    {
+        $this->transporter->addResponse($this->textResponse('Let me check the weather.', 'msg_1'));
+        $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF'], 'msg_2'));
+        $this->transporter->addResponse($this->textResponse('Cannot help.', 'msg_3'));
+
+        $called = false;
+        $tool = $this->makeWeatherTool(function () use (&$called): void {
+            $called = true;
+        });
+
+        $runner = $this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [['role' => 'user', 'content' => 'Weather?']],
+            model: 'claude-opus-4-6',
+            tools: [$tool],
+        );
+
+        $retired = false;
+        foreach ($runner as $message) {
+            if (!$retired && $message->content[0] instanceof BetaTextBlock) {
+                // Between turns: retire the tool via pushMessages() before the
+                // model's follow-up tool_use for it.
+                $retired = true;
+                $runner->pushMessages(
+                    ['role' => 'assistant', 'content' => $message->content],
+                    ['role' => 'system', 'content' => [
+                        ['type' => 'tool_removal', 'tool' => ['type' => 'tool_reference', 'name' => 'get_weather']],
+                    ]],
+                );
+            }
+        }
+
+        $this->assertFalse($called, 'Tool removed via pushMessages() must not be executed');
+
+        $result = $this->lastToolResult($this->requestBody(2));
+        $this->assertTrue($result['is_error']);
+
+        /** @var string $content */
+        $content = $result['content'];
+        $this->assertStringContainsString("'get_weather' not found", $content);
+    }
+
+    #[Test]
+    public function testToolRemovalSetViaSetMessagesParamsBetweenTurnsIsHonored(): void
+    {
+        $this->transporter->addResponse($this->textResponse('Let me check the weather.', 'msg_1'));
+        $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF'], 'msg_2'));
+        $this->transporter->addResponse($this->textResponse('Cannot help.', 'msg_3'));
+
+        $called = false;
+        $tool = $this->makeWeatherTool(function () use (&$called): void {
+            $called = true;
+        });
+
+        $runner = $this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [['role' => 'user', 'content' => 'Weather?']],
+            model: 'claude-opus-4-6',
+            tools: [$tool],
+        );
+
+        $retired = false;
+        foreach ($runner as $message) {
+            if (!$retired && $message->content[0] instanceof BetaTextBlock) {
+                // Between turns: rewrite history via setMessagesParams() so it
+                // now carries a tool_removal for get_weather.
+                $retired = true;
+                $runner->setMessagesParams(
+                    /**
+                     * @param array<string, mixed> $params
+                     *
+                     * @return array<string, mixed>
+                     */
+                    function (array $params) use ($message): array {
+                        /** @var list<array<string, mixed>> $existing */
+                        $existing = $params['messages'];
+
+                        return array_merge($params, [
+                            'messages' => array_merge($existing, [
+                                ['role' => 'assistant', 'content' => $message->content],
+                                ['role' => 'system', 'content' => [
+                                    BetaRequestToolRemovalBlock::with(tool: BetaToolChangeToolReference::with(name: 'get_weather')),
+                                ]],
+                            ]),
+                        ]);
+                    }
+                );
+            }
+        }
+
+        $this->assertFalse($called, 'Tool removed via setMessagesParams() must not be executed');
+
+        $result = $this->lastToolResult($this->requestBody(2));
+        $this->assertTrue($result['is_error']);
+
+        /** @var string $content */
+        $content = $result['content'];
+        $this->assertStringContainsString("'get_weather' not found", $content);
+    }
+
+    #[Test]
+    public function testToolRemovalPushedInSameTurnAsToolUseIsHonored(): void
+    {
+        $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF']));
+        $this->transporter->addResponse($this->textResponse('Cannot help.'));
+
+        $called = false;
+        $tool = $this->makeWeatherTool(function () use (&$called): void {
+            $called = true;
+        });
+
+        $runner = $this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [['role' => 'user', 'content' => 'Weather?']],
+            model: 'claude-opus-4-6',
+            tools: [$tool],
+        );
+
+        foreach ($runner as $message) {
+            if ($message->content[0] instanceof BetaToolUseBlock) {
+                // Same turn: the pushed history ends with the assistant tool_use,
+                // so the runner still dispatches it — after applying the removal.
+                $runner->pushMessages(
+                    ['role' => 'system', 'content' => [
+                        ['type' => 'tool_removal', 'tool' => ['type' => 'tool_reference', 'name' => 'get_weather']],
+                    ]],
+                    ['role' => 'assistant', 'content' => $message->content],
+                );
+            }
+        }
+
+        $this->assertFalse($called, 'Tool removed in the same turn must not be executed');
+
+        $result = $this->lastToolResult($this->requestBody(1));
+        $this->assertTrue($result['is_error']);
+
+        /** @var string $content */
+        $content = $result['content'];
+        $this->assertStringContainsString("'get_weather' not found", $content);
+    }
+
+    #[Test]
+    public function testToolAdditionPushedInSameTurnReEnablesExecution(): void
+    {
+        $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF']));
+        $this->transporter->addResponse($this->textResponse('Sunny in SF.'));
+
+        $called = false;
+        $tool = $this->makeWeatherTool(function () use (&$called): void {
+            $called = true;
+        });
+
+        $runner = $this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [
+                ['role' => 'user', 'content' => 'Weather?'],
+                ['role' => 'system', 'content' => [
+                    ['type' => 'tool_removal', 'tool' => ['type' => 'tool_reference', 'name' => 'get_weather']],
+                ]],
+            ],
+            model: 'claude-opus-4-6',
+            tools: [$tool],
+        );
+
+        foreach ($runner as $message) {
+            if ($message->content[0] instanceof BetaToolUseBlock) {
+                // Re-add the previously removed tool via pushMessages() before
+                // this turn's tool_use is dispatched.
+                $runner->pushMessages(
+                    ['role' => 'system', 'content' => [
+                        BetaRequestToolAdditionBlock::with(tool: BetaToolChangeToolReference::with(name: 'get_weather')),
+                    ]],
+                    ['role' => 'assistant', 'content' => $message->content],
+                );
+            }
+        }
+
+        $this->assertTrue($called, 'Tool re-added via pushMessages() must be executed');
+
+        $result = $this->lastToolResult($this->requestBody(1));
+        $this->assertArrayNotHasKey('is_error', $result);
+
+        /** @var string $content */
+        $content = $result['content'];
+        $this->assertStringContainsString('"temperature":72', $content);
     }
 
     // -------------------------------------------------------------------------
@@ -632,6 +945,27 @@ final class BetaToolRunnerTest extends TestCase
                     return json_encode(['location' => $input['location'] ?? '', 'temperature' => 72]) ?: '';
                 },
         );
+    }
+
+    /**
+     * Returns the first content block of the last message in a request body.
+     *
+     * @param array<string, mixed> $body
+     *
+     * @return array<string, mixed>
+     */
+    private function lastToolResult(array $body): array
+    {
+        /** @var list<array<string, mixed>> $messages */
+        $messages = $body['messages'];
+
+        /** @var array<string, mixed> $lastMsg */
+        $lastMsg = end($messages);
+
+        /** @var list<array<string, mixed>> $content */
+        $content = $lastMsg['content'];
+
+        return $content[0];
     }
 
     /**

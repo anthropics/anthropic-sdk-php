@@ -86,27 +86,7 @@ final class BatchesTest extends TestCase
                         ],
                         'diagnostics' => ['previousMessageID' => 'previous_message_id'],
                         'fallbackCreditToken' => 'x',
-                        'fallbacks' => [
-                            [
-                                'model' => 'claude-sonnet-5',
-                                'maxTokens' => 0,
-                                'outputConfig' => [
-                                    'effort' => 'low',
-                                    'format' => [
-                                        'schema' => ['foo' => 'bar'], 'type' => 'json_schema',
-                                    ],
-                                    'taskBudget' => [
-                                        'total' => 1024, 'type' => 'tokens', 'remaining' => 0,
-                                    ],
-                                ],
-                                'speed' => 'standard',
-                                'thinking' => [
-                                    'budgetTokens' => 1024,
-                                    'type' => 'enabled',
-                                    'display' => 'summarized',
-                                ],
-                            ],
-                        ],
+                        'fallbacks' => 'default',
                         'inferenceGeo' => 'inference_geo',
                         'mcpServers' => [
                             [

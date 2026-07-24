@@ -24,7 +24,7 @@ $served = $client->beta->messages->create(
     messages: [['role' => 'user', 'content' => 'Some prompt that triggers a refusal']],
     model: 'claude-fable-5',
     fallbacks: [['model' => 'claude-opus-4-8']],
-    betas: ['server-side-fallback-2026-06-01'],
+    betas: ['server-side-fallback-2026-07-01'],
 );
 echo "server-side, served by: {$served->model}\n";
 

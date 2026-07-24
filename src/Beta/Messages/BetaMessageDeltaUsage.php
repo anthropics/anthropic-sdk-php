@@ -10,6 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-import-type BetaIterationsUsageItemVariants from \Anthropic\Beta\Messages\BetaIterationsUsageItem
+ * @phpstan-import-type BetaFallbackCreditUsageShape from \Anthropic\Beta\Messages\BetaFallbackCreditUsage
  * @phpstan-import-type BetaIterationsUsageItemShape from \Anthropic\Beta\Messages\BetaIterationsUsageItem
  * @phpstan-import-type BetaOutputTokensDetailsShape from \Anthropic\Beta\Messages\BetaOutputTokensDetails
  * @phpstan-import-type BetaServerToolUsageShape from \Anthropic\Beta\Messages\BetaServerToolUsage
@@ -17,6 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaMessageDeltaUsageShape = array{
  *   cacheCreationInputTokens: int|null,
  *   cacheReadInputTokens: int|null,
+ *   fallbackCredit: null|BetaFallbackCreditUsage|BetaFallbackCreditUsageShape,
  *   inputTokens: int|null,
  *   iterations: list<BetaIterationsUsageItemShape>|null,
  *   outputTokens: int,
@@ -40,6 +42,12 @@ final class BetaMessageDeltaUsage implements BaseModel
      */
     #[Required('cache_read_input_tokens')]
     public ?int $cacheReadInputTokens;
+
+    /**
+     * Outcome of the ``fallback_credit_token`` presented on this request.
+     */
+    #[Required('fallback_credit')]
+    public ?BetaFallbackCreditUsage $fallbackCredit;
 
     /**
      * The cumulative number of input tokens which were used.
@@ -91,6 +99,7 @@ final class BetaMessageDeltaUsage implements BaseModel
      * BetaMessageDeltaUsage::with(
      *   cacheCreationInputTokens: ...,
      *   cacheReadInputTokens: ...,
+     *   fallbackCredit: ...,
      *   inputTokens: ...,
      *   iterations: ...,
      *   outputTokens: ...,
@@ -105,6 +114,7 @@ final class BetaMessageDeltaUsage implements BaseModel
      * (new BetaMessageDeltaUsage)
      *   ->withCacheCreationInputTokens(...)
      *   ->withCacheReadInputTokens(...)
+     *   ->withFallbackCredit(...)
      *   ->withInputTokens(...)
      *   ->withIterations(...)
      *   ->withOutputTokens(...)
@@ -122,6 +132,7 @@ final class BetaMessageDeltaUsage implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param BetaFallbackCreditUsage|BetaFallbackCreditUsageShape|null $fallbackCredit
      * @param list<BetaIterationsUsageItemShape>|null $iterations
      * @param BetaOutputTokensDetails|BetaOutputTokensDetailsShape|null $outputTokensDetails
      * @param BetaServerToolUsage|BetaServerToolUsageShape|null $serverToolUse
@@ -129,6 +140,7 @@ final class BetaMessageDeltaUsage implements BaseModel
     public static function with(
         ?int $cacheCreationInputTokens,
         ?int $cacheReadInputTokens,
+        BetaFallbackCreditUsage|array|null $fallbackCredit,
         ?int $inputTokens,
         ?array $iterations,
         int $outputTokens,
@@ -139,6 +151,7 @@ final class BetaMessageDeltaUsage implements BaseModel
 
         $self['cacheCreationInputTokens'] = $cacheCreationInputTokens;
         $self['cacheReadInputTokens'] = $cacheReadInputTokens;
+        $self['fallbackCredit'] = $fallbackCredit;
         $self['inputTokens'] = $inputTokens;
         $self['iterations'] = $iterations;
         $self['outputTokens'] = $outputTokens;
@@ -167,6 +180,20 @@ final class BetaMessageDeltaUsage implements BaseModel
     {
         $self = clone $this;
         $self['cacheReadInputTokens'] = $cacheReadInputTokens;
+
+        return $self;
+    }
+
+    /**
+     * Outcome of the ``fallback_credit_token`` presented on this request.
+     *
+     * @param BetaFallbackCreditUsage|BetaFallbackCreditUsageShape|null $fallbackCredit
+     */
+    public function withFallbackCredit(
+        BetaFallbackCreditUsage|array|null $fallbackCredit
+    ): self {
+        $self = clone $this;
+        $self['fallbackCredit'] = $fallbackCredit;
 
         return $self;
     }
