@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaMidConversationSystemBlockParam\Content;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -15,11 +16,12 @@ use Anthropic\Core\Contracts\BaseModel;
  * Use this block to provide or update system-level instructions at a specific
  * point in the conversation, rather than only via the top-level `system` parameter.
  *
- * @phpstan-import-type BetaTextBlockParamShape from \Anthropic\Beta\Messages\BetaTextBlockParam
+ * @phpstan-import-type ContentVariants from \Anthropic\Beta\Messages\BetaMidConversationSystemBlockParam\Content
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaMidConversationSystemBlockParam\Content
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  *
  * @phpstan-type BetaMidConversationSystemBlockParamShape = array{
- *   content: list<BetaTextBlockParam|BetaTextBlockParamShape>,
+ *   content: list<ContentShape>,
  *   type: 'mid_conv_system',
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  * }
@@ -36,9 +38,9 @@ final class BetaMidConversationSystemBlockParam implements BaseModel
     /**
      * System instruction text blocks.
      *
-     * @var list<BetaTextBlockParam> $content
+     * @var list<ContentVariants> $content
      */
-    #[Required(list: BetaTextBlockParam::class)]
+    #[Required(list: Content::class)]
     public array $content;
 
     /**
@@ -71,7 +73,7 @@ final class BetaMidConversationSystemBlockParam implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaTextBlockParam|BetaTextBlockParamShape> $content
+     * @param list<ContentShape> $content
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
@@ -90,7 +92,7 @@ final class BetaMidConversationSystemBlockParam implements BaseModel
     /**
      * System instruction text blocks.
      *
-     * @param list<BetaTextBlockParam|BetaTextBlockParamShape> $content
+     * @param list<ContentShape> $content
      */
     public function withContent(array $content): self
     {

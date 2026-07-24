@@ -13,6 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-import-type BetaIterationsUsageItemVariants from \Anthropic\Beta\Messages\BetaIterationsUsageItem
  * @phpstan-import-type BetaCacheCreationShape from \Anthropic\Beta\Messages\BetaCacheCreation
+ * @phpstan-import-type BetaFallbackCreditUsageShape from \Anthropic\Beta\Messages\BetaFallbackCreditUsage
  * @phpstan-import-type BetaIterationsUsageItemShape from \Anthropic\Beta\Messages\BetaIterationsUsageItem
  * @phpstan-import-type BetaOutputTokensDetailsShape from \Anthropic\Beta\Messages\BetaOutputTokensDetails
  * @phpstan-import-type BetaServerToolUsageShape from \Anthropic\Beta\Messages\BetaServerToolUsage
@@ -21,6 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   cacheCreation: null|BetaCacheCreation|BetaCacheCreationShape,
  *   cacheCreationInputTokens: int|null,
  *   cacheReadInputTokens: int|null,
+ *   fallbackCredit: null|BetaFallbackCreditUsage|BetaFallbackCreditUsageShape,
  *   inferenceGeo: string|null,
  *   inputTokens: int,
  *   iterations: list<BetaIterationsUsageItemShape>|null,
@@ -53,6 +55,12 @@ final class BetaUsage implements BaseModel
      */
     #[Required('cache_read_input_tokens')]
     public ?int $cacheReadInputTokens;
+
+    /**
+     * Outcome of the ``fallback_credit_token`` presented on this request.
+     */
+    #[Required('fallback_credit')]
+    public ?BetaFallbackCreditUsage $fallbackCredit;
 
     /**
      * The geographic region where inference was performed for this request.
@@ -127,6 +135,7 @@ final class BetaUsage implements BaseModel
      *   cacheCreation: ...,
      *   cacheCreationInputTokens: ...,
      *   cacheReadInputTokens: ...,
+     *   fallbackCredit: ...,
      *   inferenceGeo: ...,
      *   inputTokens: ...,
      *   iterations: ...,
@@ -145,6 +154,7 @@ final class BetaUsage implements BaseModel
      *   ->withCacheCreation(...)
      *   ->withCacheCreationInputTokens(...)
      *   ->withCacheReadInputTokens(...)
+     *   ->withFallbackCredit(...)
      *   ->withInferenceGeo(...)
      *   ->withInputTokens(...)
      *   ->withIterations(...)
@@ -166,6 +176,7 @@ final class BetaUsage implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaCacheCreation|BetaCacheCreationShape|null $cacheCreation
+     * @param BetaFallbackCreditUsage|BetaFallbackCreditUsageShape|null $fallbackCredit
      * @param list<BetaIterationsUsageItemShape>|null $iterations
      * @param BetaOutputTokensDetails|BetaOutputTokensDetailsShape|null $outputTokensDetails
      * @param BetaServerToolUsage|BetaServerToolUsageShape|null $serverToolUse
@@ -176,6 +187,7 @@ final class BetaUsage implements BaseModel
         BetaCacheCreation|array|null $cacheCreation,
         ?int $cacheCreationInputTokens,
         ?int $cacheReadInputTokens,
+        BetaFallbackCreditUsage|array|null $fallbackCredit,
         ?string $inferenceGeo,
         int $inputTokens,
         ?array $iterations,
@@ -190,6 +202,7 @@ final class BetaUsage implements BaseModel
         $self['cacheCreation'] = $cacheCreation;
         $self['cacheCreationInputTokens'] = $cacheCreationInputTokens;
         $self['cacheReadInputTokens'] = $cacheReadInputTokens;
+        $self['fallbackCredit'] = $fallbackCredit;
         $self['inferenceGeo'] = $inferenceGeo;
         $self['inputTokens'] = $inputTokens;
         $self['iterations'] = $iterations;
@@ -235,6 +248,20 @@ final class BetaUsage implements BaseModel
     {
         $self = clone $this;
         $self['cacheReadInputTokens'] = $cacheReadInputTokens;
+
+        return $self;
+    }
+
+    /**
+     * Outcome of the ``fallback_credit_token`` presented on this request.
+     *
+     * @param BetaFallbackCreditUsage|BetaFallbackCreditUsageShape|null $fallbackCredit
+     */
+    public function withFallbackCredit(
+        BetaFallbackCreditUsage|array|null $fallbackCredit
+    ): self {
+        $self = clone $this;
+        $self['fallbackCredit'] = $fallbackCredit;
 
         return $self;
     }

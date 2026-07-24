@@ -17,6 +17,8 @@ enum Model: string
 
     case CLAUDE_MYTHOS_5 = 'claude-mythos-5';
 
+    case CLAUDE_OPUS_5 = 'claude-opus-5';
+
     case CLAUDE_OPUS_4_8 = 'claude-opus-4-8';
 
     case CLAUDE_OPUS_4_7 = 'claude-opus-4-7';
