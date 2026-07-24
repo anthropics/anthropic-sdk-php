@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.40.0 (2026-07-24)
+
+Full Changelog: [v0.39.0...v0.40.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.39.0...v0.40.0)
+
+### Features
+
+* **api:** add claude-opus-5 model ([950d91f](https://github.com/anthropics/anthropic-sdk-php/commit/950d91f2857f85facb6a81c19164be46f7735195))
+* **api:** add tool addition/removal blocks and tool_change events ([950d91f](https://github.com/anthropics/anthropic-sdk-php/commit/950d91f2857f85facb6a81c19164be46f7735195))
+* **api:** expand client-side fallback credit token types and add server-side fallbacks default option ([950d91f](https://github.com/anthropics/anthropic-sdk-php/commit/950d91f2857f85facb6a81c19164be46f7735195))
+
 ## 0.39.0 (2026-07-23)
 
 Full Changelog: [v0.38.0...v0.39.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.38.0...v0.39.0)
