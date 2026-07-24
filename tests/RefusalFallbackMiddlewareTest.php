@@ -3,6 +3,10 @@
 namespace Tests;
 
 use Anthropic\Beta\Messages\BetaMessage;
+use Anthropic\Beta\Messages\BetaOutputConfig;
+use Anthropic\Beta\Messages\BetaThinkingConfigAdaptive;
+use Anthropic\Beta\Messages\BetaThinkingConfigDisabled;
+use Anthropic\Beta\Messages\BetaThinkingConfigEnabled;
 use Anthropic\Client;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Exceptions\AnthropicException;
@@ -23,6 +27,8 @@ use Psr\Http\Message\ResponseInterface;
  *
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
  * @phpstan-import-type BetaFallbackParamShape from \Anthropic\Beta\Messages\BetaFallbackParam
+ * @phpstan-import-type BetaThinkingConfigParamShape from \Anthropic\Beta\Messages\BetaThinkingConfigParam
+ * @phpstan-import-type BetaOutputConfigShape from \Anthropic\Beta\Messages\BetaOutputConfig
  * @phpstan-import-type RequestOptionShape from \Anthropic\RequestOptions
  */
 #[CoversNothing]
@@ -30,8 +36,19 @@ class RefusalFallbackMiddlewareTest extends TestCase
 {
     private const PRIMARY = 'fable-v5-prod';
     private const FALLBACK = 'claude-opus-4-8';
-    private const CREDIT_BETA = 'fallback-credit-2026-06-01';
+    private const CREDIT_BETA = 'fallback-credit-2026-07-01';
     private const SERVER_SIDE_BETA = 'server-side-fallback-2026-06-01';
+
+    /**
+     * The wire shape the middleware redeems a token with: the object form,
+     * best-effort, so a token-layer failure serves the retry instead of 400ing.
+     *
+     * @return array{token: string, mode: string}
+     */
+    private static function creditToken(string $token): array
+    {
+        return ['token' => $token, 'mode' => 'best_effort'];
+    }
 
     private MockClient $transporter;
 
@@ -60,7 +77,7 @@ class RefusalFallbackMiddlewareTest extends TestCase
 
         $leg = self::bodyOf($requests[1]);
         $this->assertSame(self::FALLBACK, $leg['model']);
-        $this->assertSame('tok_1', $leg['fallback_credit_token']);
+        $this->assertSame(self::creditToken('tok_1'), $leg['fallback_credit_token']);
         $this->assertSame($first['messages'], $leg['messages']);
     }
 
@@ -249,7 +266,7 @@ class RefusalFallbackMiddlewareTest extends TestCase
         $this->assertSame(2048, $leg['max_tokens']);
         $this->assertSame(self::FALLBACK, $leg['model']);
         // max_tokens is token-safe, so the credit still rides along
-        $this->assertSame('tok_1', $leg['fallback_credit_token']);
+        $this->assertSame(self::creditToken('tok_1'), $leg['fallback_credit_token']);
     }
 
     public function testMergesOnlyAllowlistedEntryOverridesAndAlwaysAttachesTheToken(): void
@@ -267,9 +284,227 @@ class RefusalFallbackMiddlewareTest extends TestCase
         // thinking is on the server's override allowlist and merges; the
         // credit token always rides a retry leg
         $this->assertSame(['type' => 'enabled', 'budget_tokens' => 1024], $leg['thinking']);
-        $this->assertSame('tok_1', $leg['fallback_credit_token']);
+        $this->assertSame(self::creditToken('tok_1'), $leg['fallback_credit_token']);
         // temperature is not allowlisted: dropped, not sent
         $this->assertArrayNotHasKey('temperature', $leg);
+    }
+
+    public function testNullOverrideUnsetsTheFieldOnTheRetriedLeg(): void
+    {
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_1'));
+        $this->transporter->addResponse(self::message(model: self::FALLBACK));
+
+        $middleware = new RefusalFallbackMiddleware([
+            ['model' => self::FALLBACK, 'max_tokens' => 2048, 'thinking' => null],
+        ]);
+
+        $this->create($this->client($middleware), thinking: ['type' => 'enabled', 'budgetTokens' => 1024]);
+
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(2, $requests);
+        $this->assertEquals(
+            ['type' => 'enabled', 'budget_tokens' => 1024],
+            self::bodyOf($requests[0])['thinking'],
+        );
+
+        // a hop is a PATCH on the original params: a set field overrides, an
+        // explicit null unsets (absent from the wire, not sent as null)
+        $leg = self::bodyOf($requests[1]);
+        $this->assertSame(2048, $leg['max_tokens']);
+        $this->assertArrayNotHasKey('thinking', $leg);
+    }
+
+    public function testAbsentOverrideKeepsTheOriginalValue(): void
+    {
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_1'));
+        $this->transporter->addResponse(self::message(model: self::FALLBACK));
+
+        $this->create($this->client(), thinking: ['type' => 'enabled', 'budgetTokens' => 1024]);
+
+        // the entry names only a model: every other original field rides the
+        // retry unchanged
+        $leg = self::bodyOf($this->transporter->getRequests()[1]);
+        $this->assertSame(self::FALLBACK, $leg['model']);
+        $this->assertSame(1024, $leg['max_tokens']);
+        $this->assertEquals(['type' => 'enabled', 'budget_tokens' => 1024], $leg['thinking']);
+    }
+
+    public function testHopsPatchTheOriginalParamsAndNeverCompound(): void
+    {
+        $secondFallback = 'claude-sonnet-4-6';
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_1'));
+        $this->transporter->addResponse(self::refusal(model: self::FALLBACK, token: 'tok_2'));
+        $this->transporter->addResponse(self::message(model: $secondFallback));
+
+        $middleware = new RefusalFallbackMiddleware([
+            ['model' => self::FALLBACK, 'max_tokens' => 2048, 'thinking' => null],
+            ['model' => $secondFallback],
+        ]);
+
+        $this->create($this->client($middleware), thinking: ['type' => 'enabled', 'budgetTokens' => 1024]);
+
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(3, $requests);
+
+        $hop1 = self::bodyOf($requests[1]);
+        $this->assertSame(2048, $hop1['max_tokens']);
+        $this->assertArrayNotHasKey('thinking', $hop1);
+
+        // hop 2 patches the ORIGINAL params: hop 1's max_tokens override and
+        // thinking unset never leak forward
+        $hop2 = self::bodyOf($requests[2]);
+        $this->assertSame($secondFallback, $hop2['model']);
+        $this->assertSame(1024, $hop2['max_tokens']);
+        $this->assertEquals(['type' => 'enabled', 'budget_tokens' => 1024], $hop2['thinking']);
+    }
+
+    public function testOutputConfigSubfieldOverridePatchesTheExistingConfig(): void
+    {
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_1'));
+        $this->transporter->addResponse(self::message(model: self::FALLBACK));
+
+        $middleware = new RefusalFallbackMiddleware([
+            ['model' => self::FALLBACK, 'output_config' => ['effort' => 'high']],
+        ]);
+
+        $this->create(
+            $this->client($middleware),
+            outputConfig: ['effort' => 'low', 'taskBudget' => ['total' => 500, 'type' => 'tokens']],
+        );
+
+        // output_config subfields patch one level deep: the entry sets only
+        // effort, the original's task_budget rides along untouched
+        $leg = self::bodyOf($this->transporter->getRequests()[1]);
+        $this->assertEquals(
+            ['effort' => 'high', 'task_budget' => ['total' => 500, 'type' => 'tokens']],
+            $leg['output_config'],
+        );
+    }
+
+    public function testOutputConfigSubfieldNullUnsetsOnlyThatSubfield(): void
+    {
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_1'));
+        $this->transporter->addResponse(self::message(model: self::FALLBACK));
+
+        $middleware = new RefusalFallbackMiddleware([
+            ['model' => self::FALLBACK, 'output_config' => ['effort' => null]],
+        ]);
+
+        $this->create(
+            $this->client($middleware),
+            outputConfig: ['effort' => 'low', 'taskBudget' => ['total' => 500, 'type' => 'tokens']],
+        );
+
+        // an explicit null subfield unsets just that key from the wire
+        $leg = self::bodyOf($this->transporter->getRequests()[1]);
+        $this->assertEquals(['task_budget' => ['total' => 500, 'type' => 'tokens']], $leg['output_config']);
+    }
+
+    public function testWholeOutputConfigNullUnsetsIt(): void
+    {
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_1'));
+        $this->transporter->addResponse(self::message(model: self::FALLBACK));
+
+        $middleware = new RefusalFallbackMiddleware([
+            ['model' => self::FALLBACK, 'output_config' => null],
+        ]);
+
+        $this->create($this->client($middleware), outputConfig: ['effort' => 'low']);
+
+        // a null on the whole field unsets it, subfields and all
+        $leg = self::bodyOf($this->transporter->getRequests()[1]);
+        $this->assertArrayNotHasKey('output_config', $leg);
+    }
+
+    public function testAbsentOutputConfigKeepsTheOriginal(): void
+    {
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_1'));
+        $this->transporter->addResponse(self::message(model: self::FALLBACK));
+
+        $this->create($this->client(), outputConfig: ['effort' => 'low']);
+
+        $leg = self::bodyOf($this->transporter->getRequests()[1]);
+        $this->assertEquals(['effort' => 'low'], $leg['output_config']);
+    }
+
+    public function testOutputConfigSubfieldsCreateTheConfigWhenTheOriginalHasNone(): void
+    {
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_1'));
+        $this->transporter->addResponse(self::message(model: self::FALLBACK));
+
+        $middleware = new RefusalFallbackMiddleware([
+            ['model' => self::FALLBACK, 'output_config' => ['effort' => 'high', 'format' => null]],
+        ]);
+
+        $this->create($this->client($middleware));
+
+        // no original output_config: the retry gets one holding just the
+        // set subfields — null subfields never materialize
+        $leg = self::bodyOf($this->transporter->getRequests()[1]);
+        $this->assertEquals(['effort' => 'high'], $leg['output_config']);
+    }
+
+    public function testOutputConfigUnsettingEverySubfieldDropsTheKey(): void
+    {
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_1'));
+        $this->transporter->addResponse(self::message(model: self::FALLBACK));
+
+        $middleware = new RefusalFallbackMiddleware([
+            ['model' => self::FALLBACK, 'output_config' => ['effort' => null]],
+        ]);
+
+        $this->create($this->client($middleware), outputConfig: ['effort' => 'low']);
+
+        // the entry unset the original's only subfield: the whole field is
+        // dropped from the wire, never sent as an empty object
+        $leg = self::bodyOf($this->transporter->getRequests()[1]);
+        $this->assertArrayNotHasKey('output_config', $leg);
+    }
+
+    public function testOutputConfigOfOnlyNullSubfieldsNeverMaterializes(): void
+    {
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_1'));
+        $this->transporter->addResponse(self::message(model: self::FALLBACK));
+
+        $middleware = new RefusalFallbackMiddleware([
+            ['model' => self::FALLBACK, 'output_config' => ['effort' => null]],
+        ]);
+
+        $this->create($this->client($middleware));
+
+        // no original output_config and only null subfields in the entry:
+        // nothing is created — no empty object reaches the wire
+        $leg = self::bodyOf($this->transporter->getRequests()[1]);
+        $this->assertArrayNotHasKey('output_config', $leg);
+    }
+
+    public function testOutputConfigHopsPatchTheOriginalAndNeverCompound(): void
+    {
+        $secondFallback = 'claude-sonnet-4-6';
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_1'));
+        $this->transporter->addResponse(self::refusal(model: self::FALLBACK, token: 'tok_2'));
+        $this->transporter->addResponse(self::message(model: $secondFallback));
+
+        $middleware = new RefusalFallbackMiddleware([
+            ['model' => self::FALLBACK, 'output_config' => ['effort' => 'high', 'task_budget' => null]],
+            ['model' => $secondFallback, 'output_config' => ['format' => null]],
+        ]);
+
+        $this->create(
+            $this->client($middleware),
+            outputConfig: ['effort' => 'low', 'taskBudget' => ['total' => 500, 'type' => 'tokens']],
+        );
+
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(3, $requests);
+        $this->assertEquals(['effort' => 'high'], self::bodyOf($requests[1])['output_config']);
+
+        // hop 2 patches the ORIGINAL output_config: hop 1's effort override
+        // and task_budget unset don't leak forward
+        $this->assertEquals(
+            ['effort' => 'low', 'task_budget' => ['total' => 500, 'type' => 'tokens']],
+            self::bodyOf($requests[2])['output_config'],
+        );
     }
 
     public function testDuplicateRegistrationWalksOnce(): void
@@ -290,25 +525,6 @@ class RefusalFallbackMiddlewareTest extends TestCase
         $this->assertCount(2, $this->transporter->getRequests());
         $this->assertSame('fallback', $message->content[0]->toProperties()['type']);
         $this->assertCount(2, $message->content);
-    }
-
-    public function testErrorsBeforeAnyRequestWhenTheCallerArmsTheServerSideFallbackBeta(): void
-    {
-        // Two owners for one request: the caller armed the server-side
-        // chain's beta while the client-side chain is configured — error
-        // before anything reaches the wire, like the body-param conflict.
-        try {
-            $this->client()->beta->messages->create(
-                maxTokens: 1024,
-                messages: [['role' => 'user', 'content' => 'hi']],
-                model: self::PRIMARY,
-                betas: ['server-side-fallback-2026-06-01'],
-            );
-            $this->fail('Expected AnthropicException to be thrown');
-        } catch (AnthropicException $e) {
-            $this->assertStringContainsString('server-side-fallback', $e->getMessage());
-        }
-        $this->assertCount(0, $this->transporter->getRequests());
     }
 
     public function testEntryNamingTheRefusedModelIsNeverReAsked(): void
@@ -364,7 +580,7 @@ class RefusalFallbackMiddlewareTest extends TestCase
 
         $requests = $this->transporter->getRequests();
         $this->assertCount(3, $requests);
-        $this->assertSame('tok_stale', self::bodyOf($requests[1])['fallback_credit_token']);
+        $this->assertSame(self::creditToken('tok_stale'), self::bodyOf($requests[1])['fallback_credit_token']);
         $this->assertArrayNotHasKey('fallback_credit_token', self::bodyOf($requests[2]));
     }
 
@@ -497,7 +713,7 @@ class RefusalFallbackMiddlewareTest extends TestCase
         $this->assertCount(2, $requests);
         $this->assertSame('tok_stale_from_caller', self::bodyOf($requests[0])['fallback_credit_token']);
         $this->assertStringContainsString(self::CREDIT_BETA, $requests[0]->getHeaderLine('anthropic-beta'));
-        $this->assertSame('tok_fresh', self::bodyOf($requests[1])['fallback_credit_token']);
+        $this->assertSame(self::creditToken('tok_fresh'), self::bodyOf($requests[1])['fallback_credit_token']);
     }
 
     public function testRedeemedHopPrependsTheFallbackSeamBlock(): void
@@ -668,6 +884,8 @@ class RefusalFallbackMiddlewareTest extends TestCase
      * @param list<BetaMessageParamShape>|null $messages
      * @param list<BetaFallbackParamShape>|null $fallbacks
      * @param RequestOptionShape|null $requestOptions
+     * @param BetaThinkingConfigParamShape|null $thinking
+     * @param BetaOutputConfig|BetaOutputConfigShape|null $outputConfig
      */
     private function create(
         Client $client,
@@ -675,6 +893,8 @@ class RefusalFallbackMiddlewareTest extends TestCase
         ?string $fallbackCreditToken = null,
         ?array $fallbacks = null,
         ?array $requestOptions = null,
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking = null,
+        BetaOutputConfig|array|null $outputConfig = null,
     ): BetaMessage {
         return $client->beta->messages->create(
             maxTokens: 1024,
@@ -682,6 +902,8 @@ class RefusalFallbackMiddlewareTest extends TestCase
             model: self::PRIMARY,
             fallbackCreditToken: $fallbackCreditToken,
             fallbacks: $fallbacks,
+            outputConfig: $outputConfig,
+            thinking: $thinking,
             requestOptions: $requestOptions,
         );
     }

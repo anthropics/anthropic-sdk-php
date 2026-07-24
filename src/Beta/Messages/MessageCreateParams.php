@@ -25,6 +25,8 @@ use Anthropic\Messages\Model;
  * @see Anthropic\Services\Beta\MessagesService::create()
  *
  * @phpstan-import-type ContainerVariants from \Anthropic\Beta\Messages\MessageCreateParams\Container
+ * @phpstan-import-type FallbackCreditTokenVariants from \Anthropic\Beta\Messages\MessageCreateParams\FallbackCreditToken
+ * @phpstan-import-type BetaFallbacksParamVariants from \Anthropic\Beta\Messages\BetaFallbacksParam
  * @phpstan-import-type SystemVariants from \Anthropic\Beta\Messages\MessageCreateParams\System
  * @phpstan-import-type BetaThinkingConfigParamVariants from \Anthropic\Beta\Messages\BetaThinkingConfigParam
  * @phpstan-import-type BetaToolChoiceVariants from \Anthropic\Beta\Messages\BetaToolChoice
@@ -34,7 +36,8 @@ use Anthropic\Messages\Model;
  * @phpstan-import-type ContainerShape from \Anthropic\Beta\Messages\MessageCreateParams\Container
  * @phpstan-import-type BetaContextManagementConfigShape from \Anthropic\Beta\Messages\BetaContextManagementConfig
  * @phpstan-import-type BetaDiagnosticsParamShape from \Anthropic\Beta\Messages\BetaDiagnosticsParam
- * @phpstan-import-type BetaFallbackParamShape from \Anthropic\Beta\Messages\BetaFallbackParam
+ * @phpstan-import-type FallbackCreditTokenShape from \Anthropic\Beta\Messages\MessageCreateParams\FallbackCreditToken
+ * @phpstan-import-type BetaFallbacksParamShape from \Anthropic\Beta\Messages\BetaFallbacksParam
  * @phpstan-import-type BetaRequestMCPServerURLDefinitionShape from \Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition
  * @phpstan-import-type BetaMetadataShape from \Anthropic\Beta\Messages\BetaMetadata
  * @phpstan-import-type BetaOutputConfigShape from \Anthropic\Beta\Messages\BetaOutputConfig
@@ -52,8 +55,8 @@ use Anthropic\Messages\Model;
  *   container?: ContainerShape|null,
  *   contextManagement?: null|BetaContextManagementConfig|BetaContextManagementConfigShape,
  *   diagnostics?: null|BetaDiagnosticsParam|BetaDiagnosticsParamShape,
- *   fallbackCreditToken?: string|null,
- *   fallbacks?: list<BetaFallbackParam|BetaFallbackParamShape>|null,
+ *   fallbackCreditToken?: FallbackCreditTokenShape|null,
+ *   fallbacks?: BetaFallbacksParamShape|null,
  *   inferenceGeo?: string|null,
  *   mcpServers?: list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape>|null,
  *   metadata?: null|BetaMetadata|BetaMetadataShape,
@@ -206,17 +209,19 @@ final class MessageCreateParams implements BaseModel
      *
      * When the appended-assistant form is used on a model that otherwise disallows
      * assistant-turn prefill, this token also authorizes that one prefill.
+     *
+     * @var FallbackCreditTokenVariants|null $fallbackCreditToken
      */
     #[Optional('fallback_credit_token', nullable: true)]
-    public ?string $fallbackCreditToken;
+    public string|BetaFallbackCreditTokenParam|null $fallbackCreditToken;
 
     /**
-     * Opt-in server-side retry on one or more substitute models when the requested model declines for policy reasons. Tried in order: if the first entry also declines, the second is tried, and so on.
+     * Opt-in server-side retry on one or more substitute models when the requested model declines for policy reasons. Tried in order: if the first entry also declines, the second is tried, and so on. The string "default" requests the requested model's server-defined default fallback configuration.
      *
-     * @var list<BetaFallbackParam>|null $fallbacks
+     * @var BetaFallbacksParamVariants|null $fallbacks
      */
-    #[Optional(list: BetaFallbackParam::class, nullable: true)]
-    public ?array $fallbacks;
+    #[Optional(union: BetaFallbacksParam::class, nullable: true)]
+    public string|array|null $fallbacks;
 
     /**
      * Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
@@ -462,7 +467,8 @@ final class MessageCreateParams implements BaseModel
      * @param ContainerShape|null $container
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement
      * @param BetaDiagnosticsParam|BetaDiagnosticsParamShape|null $diagnostics
-     * @param list<BetaFallbackParam|BetaFallbackParamShape>|null $fallbacks
+     * @param FallbackCreditTokenShape|null $fallbackCreditToken
+     * @param BetaFallbacksParamShape|null $fallbacks
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape>|null $mcpServers
      * @param BetaMetadata|BetaMetadataShape|null $metadata
      * @param BetaOutputConfig|BetaOutputConfigShape|null $outputConfig
@@ -484,8 +490,8 @@ final class MessageCreateParams implements BaseModel
         string|BetaContainerParams|array|null $container = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
         BetaDiagnosticsParam|array|null $diagnostics = null,
-        ?string $fallbackCreditToken = null,
-        ?array $fallbacks = null,
+        string|BetaFallbackCreditTokenParam|array|null $fallbackCreditToken = null,
+        string|array|null $fallbacks = null,
         ?string $inferenceGeo = null,
         ?array $mcpServers = null,
         BetaMetadata|array|null $metadata = null,
@@ -709,9 +715,12 @@ final class MessageCreateParams implements BaseModel
      *
      * When the appended-assistant form is used on a model that otherwise disallows
      * assistant-turn prefill, this token also authorizes that one prefill.
+     *
+     * @param FallbackCreditTokenShape|null $fallbackCreditToken
      */
-    public function withFallbackCreditToken(?string $fallbackCreditToken): self
-    {
+    public function withFallbackCreditToken(
+        string|BetaFallbackCreditTokenParam|array|null $fallbackCreditToken
+    ): self {
         $self = clone $this;
         $self['fallbackCreditToken'] = $fallbackCreditToken;
 
@@ -719,11 +728,11 @@ final class MessageCreateParams implements BaseModel
     }
 
     /**
-     * Opt-in server-side retry on one or more substitute models when the requested model declines for policy reasons. Tried in order: if the first entry also declines, the second is tried, and so on.
+     * Opt-in server-side retry on one or more substitute models when the requested model declines for policy reasons. Tried in order: if the first entry also declines, the second is tried, and so on. The string "default" requests the requested model's server-defined default fallback configuration.
      *
-     * @param list<BetaFallbackParam|BetaFallbackParamShape>|null $fallbacks
+     * @param BetaFallbacksParamShape|null $fallbacks
      */
-    public function withFallbacks(?array $fallbacks): self
+    public function withFallbacks(string|array|null $fallbacks): self
     {
         $self = clone $this;
         $self['fallbacks'] = $fallbacks;

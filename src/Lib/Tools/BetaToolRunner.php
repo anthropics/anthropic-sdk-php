@@ -291,16 +291,151 @@ final class BetaToolRunner implements \IteratorAggregate
             return null;
         }
 
-        return array_map(fn ($toolUse) => $this->executeToolUse($toolUse), $toolUseBlocks);
+        $available = $this->availableToolNames();
+
+        return array_map(
+            fn ($toolUse) => $this->executeToolUse(
+                $toolUse,
+                isset($available[$toolUse->name]) ? ($this->runnableToolsByName[$toolUse->name] ?? null) : null,
+            ),
+            $toolUseBlocks,
+        );
     }
 
     /**
+     * Names of the tools the model may currently call, as a set.
+     *
+     * Folds tool_removal / tool_addition blocks from role "system" messages
+     * over the runner's runnable tool names. Removal is only a hint to the
+     * model, which can still emit a tool_use for a removed tool — such a call
+     * must behave exactly like a call to a tool that was never defined.
+     *
+     * @return array<string, true>
+     */
+    private function availableToolNames(): array
+    {
+        $available = array_fill_keys(array_keys($this->runnableToolsByName), true);
+
+        foreach ($this->messages as $message) {
+            $message = self::toArray($message);
+            if (!is_array($message) || 'system' !== ($message['role'] ?? null)) {
+                continue;
+            }
+
+            $content = $message['content'] ?? null;
+            if (!is_array($content)) {
+                continue;
+            }
+
+            foreach ($content as $block) {
+                $this->applyToolChange(self::toArray($block), $available);
+            }
+        }
+
+        return $available;
+    }
+
+    /**
+     * @param array<string, true> $available
+     */
+    private function applyToolChange(mixed $block, array &$available): void
+    {
+        if (!is_array($block)) {
+            return;
+        }
+
+        switch ($block['type'] ?? null) {
+            case 'tool_removal':
+            case 'tool_addition':
+                self::applyToolReferenceChange($block, $available);
+
+                break;
+
+            case 'mid_conv_system':
+                // The API schema limits mid_conv_system content to text /
+                // tool_addition / tool_removal, so exactly one level is walked:
+                // only its tool_addition / tool_removal inner blocks fold in,
+                // and any other inner type is a no-op — no recursion.
+                foreach ((array) ($block['content'] ?? []) as $inner) {
+                    self::applyToolReferenceChange(self::toArray($inner), $available);
+                }
+
+                break;
+
+            default:
+                // Other and unknown/newer block types leave the set untouched
+                // (forward compatibility) — never raise.
+                break;
+        }
+    }
+
+    /**
+     * Folds one tool_removal / tool_addition block over the available set;
+     * any other block type leaves the set untouched.
+     *
+     * @param array<string, true> $available
+     */
+    private static function applyToolReferenceChange(mixed $block, array &$available): void
+    {
+        if (!is_array($block)) {
+            return;
+        }
+
+        switch ($block['type'] ?? null) {
+            case 'tool_removal':
+                if (null !== ($name = self::referencedToolName($block['tool'] ?? null))) {
+                    unset($available[$name]);
+                }
+
+                break;
+
+            case 'tool_addition':
+                if (null !== ($name = self::referencedToolName($block['tool'] ?? null))) {
+                    $available[$name] = true;
+                }
+
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Only tool_reference names a locally runnable tool; MCP references are
+     * executed server-side and unknown/newer types are ignored.
+     */
+    private static function referencedToolName(mixed $tool): ?string
+    {
+        $tool = self::toArray($tool);
+        if (!is_array($tool)) {
+            return null;
+        }
+
+        switch ($tool['type'] ?? null) {
+            case 'tool_reference':
+                return is_string($tool['name'] ?? null) ? $tool['name'] : null;
+
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * History may hold typed SDK params/models as well as plain arrays; normalize to the API shape.
+     */
+    private static function toArray(mixed $value): mixed
+    {
+        return $value instanceof \JsonSerializable ? $value->jsonSerialize() : $value;
+    }
+
+    /**
+     * @param BetaRunnableTool|null $tool The currently-available tool matching the call, if any
+     *
      * @return array<string, mixed>
      */
-    private function executeToolUse(BetaToolUseBlock $toolUse): array
+    private function executeToolUse(BetaToolUseBlock $toolUse, ?BetaRunnableTool $tool): array
     {
-        $tool = $this->runnableToolsByName[$toolUse->name] ?? null;
-
         if (null === $tool) {
             return [
                 'type' => 'tool_result',

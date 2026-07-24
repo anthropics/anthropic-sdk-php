@@ -8,7 +8,6 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral;
 use Anthropic\Beta\Messages\BetaContextManagementConfig;
 use Anthropic\Beta\Messages\BetaDiagnosticsParam;
-use Anthropic\Beta\Messages\BetaFallbackParam;
 use Anthropic\Beta\Messages\BetaJSONOutputFormat;
 use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Beta\Messages\BetaMessageParam;
@@ -45,7 +44,8 @@ use Anthropic\SSEStream;
  * @phpstan-import-type ContainerShape from \Anthropic\Beta\Messages\MessageCreateParams\Container
  * @phpstan-import-type BetaContextManagementConfigShape from \Anthropic\Beta\Messages\BetaContextManagementConfig
  * @phpstan-import-type BetaDiagnosticsParamShape from \Anthropic\Beta\Messages\BetaDiagnosticsParam
- * @phpstan-import-type BetaFallbackParamShape from \Anthropic\Beta\Messages\BetaFallbackParam
+ * @phpstan-import-type FallbackCreditTokenShape from \Anthropic\Beta\Messages\MessageCreateParams\FallbackCreditToken
+ * @phpstan-import-type BetaFallbacksParamShape from \Anthropic\Beta\Messages\BetaFallbacksParam
  * @phpstan-import-type BetaRequestMCPServerURLDefinitionShape from \Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition
  * @phpstan-import-type BetaMetadataShape from \Anthropic\Beta\Messages\BetaMetadata
  * @phpstan-import-type BetaOutputConfigShape from \Anthropic\Beta\Messages\BetaOutputConfig
@@ -81,8 +81,8 @@ final class MessagesRawService implements MessagesRawContract
      *   container?: ContainerShape|null,
      *   contextManagement?: BetaContextManagementConfig|BetaContextManagementConfigShape|null,
      *   diagnostics?: BetaDiagnosticsParam|BetaDiagnosticsParamShape|null,
-     *   fallbackCreditToken?: string|null,
-     *   fallbacks?: list<BetaFallbackParam|BetaFallbackParamShape>|null,
+     *   fallbackCreditToken?: FallbackCreditTokenShape|null,
+     *   fallbacks?: BetaFallbacksParamShape|null,
      *   inferenceGeo?: string|null,
      *   mcpServers?: list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape>,
      *   metadata?: BetaMetadata|BetaMetadataShape,
@@ -148,8 +148,8 @@ final class MessagesRawService implements MessagesRawContract
      *   container?: ContainerShape|null,
      *   contextManagement?: BetaContextManagementConfig|BetaContextManagementConfigShape|null,
      *   diagnostics?: BetaDiagnosticsParam|BetaDiagnosticsParamShape|null,
-     *   fallbackCreditToken?: string|null,
-     *   fallbacks?: list<BetaFallbackParam|BetaFallbackParamShape>|null,
+     *   fallbackCreditToken?: FallbackCreditTokenShape|null,
+     *   fallbacks?: BetaFallbacksParamShape|null,
      *   inferenceGeo?: string|null,
      *   mcpServers?: list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape>,
      *   metadata?: BetaMetadata|BetaMetadataShape,
