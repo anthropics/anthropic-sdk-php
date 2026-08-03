@@ -6,6 +6,7 @@ namespace Anthropic\Lib\Credentials;
 
 use Anthropic\Core\Util;
 use Anthropic\Lib\Credentials\Contracts\Closeable;
+use Http\Discovery\Exception\NotFoundException;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -54,9 +55,14 @@ final class WorkloadIdentityCredentials implements AccessTokenProvider, Closeabl
         private readonly ?string $workspaceId = null,
     ) {
         self::validateEndpointUrl($tokenEndpointBaseUrl);
-        $this->httpClient = $httpClient ?? Psr18ClientDiscovery::find();
-        $this->requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
-        $this->streamFactory = $streamFactory ?? Psr17FactoryDiscovery::findStreamFactory();
+
+        try {
+            $this->httpClient = $httpClient ?? Psr18ClientDiscovery::find();
+            $this->requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
+            $this->streamFactory = $streamFactory ?? Psr17FactoryDiscovery::findStreamFactory();
+        } catch (NotFoundException $e) {
+            throw new NotFoundException("No PSR-18 HTTP client or PSR-17 factory found. If you don't have one in your project, run `composer require guzzlehttp/guzzle`.", previous: $e);
+        }
     }
 
     public function fetchToken(): AccessToken

@@ -14,6 +14,7 @@ use Anthropic\Core\Util;
 use Anthropic\Lib\Helpers\StainlessHelperHeader;
 use Anthropic\Middleware;
 use Anthropic\RequestOptions;
+use Http\Discovery\Exception\NotFoundException;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
@@ -130,7 +131,11 @@ final class RefusalFallbackMiddleware implements Middleware
         );
         $this->onFallback = $onFallback;
         $this->state = $state;
-        $this->streamFactory = $streamFactory ?? Psr17FactoryDiscovery::findStreamFactory();
+        try {
+            $this->streamFactory = $streamFactory ?? Psr17FactoryDiscovery::findStreamFactory();
+        } catch (NotFoundException $e) {
+            throw new NotFoundException("No PSR-18 HTTP client or PSR-17 factory found. If you don't have one in your project, run `composer require guzzlehttp/guzzle`.", previous: $e);
+        }
         $this->reentryToken = bin2hex(random_bytes(16));
     }
 
