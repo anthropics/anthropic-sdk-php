@@ -8,6 +8,7 @@ use Anthropic\Core\BaseClient;
 use Anthropic\Core\Util;
 use Anthropic\Foundry\Services\MessagesService;
 use Anthropic\RequestOptions;
+use Http\Discovery\Exception\NotFoundException;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 
@@ -40,15 +41,19 @@ final class Client extends BaseClient
         $this->apiKey = $apiKey;
         $this->authToken = $authToken;
 
-        $options = RequestOptions::parse(
-            RequestOptions::with(
-                uriFactory: Psr17FactoryDiscovery::findUriFactory(),
-                streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
-                requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
-                transporter: Psr18ClientDiscovery::find(),
-            ),
-            $requestOptions,
-        );
+        try {
+            $options = RequestOptions::parse(
+                RequestOptions::with(
+                    uriFactory: Psr17FactoryDiscovery::findUriFactory(),
+                    streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
+                    requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
+                    transporter: Psr18ClientDiscovery::find(),
+                ),
+                $requestOptions,
+            );
+        } catch (NotFoundException $e) {
+            throw new NotFoundException("No PSR-18 HTTP client or PSR-17 factory found. If you don't have one in your project, run `composer require guzzlehttp/guzzle`.", previous: $e);
+        }
 
         parent::__construct(
             headers: [

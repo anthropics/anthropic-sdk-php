@@ -18,6 +18,12 @@ composer require "anthropic-ai/sdk:^0.40.0"
 
 <!-- x-release-please-end -->
 
+The SDK needs a [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP client. If you don't have one installed, add Guzzle:
+
+```sh
+composer require guzzlehttp/guzzle
+```
+
 ## Getting started
 
 ```php
