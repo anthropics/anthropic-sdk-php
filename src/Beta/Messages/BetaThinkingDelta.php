@@ -28,6 +28,9 @@ final class BetaThinkingDelta implements BaseModel
     #[Required('estimated_tokens')]
     public ?int $estimatedTokens;
 
+    /**
+     * The incremental `thinking` text for this content block. Concatenate the `thinking` values of successive `thinking_delta` events to assemble the block's full `thinking` value.
+     */
     #[Required]
     public string $thinking;
 
@@ -76,6 +79,9 @@ final class BetaThinkingDelta implements BaseModel
         return $self;
     }
 
+    /**
+     * The incremental `thinking` text for this content block. Concatenate the `thinking` values of successive `thinking_delta` events to assemble the block's full `thinking` value.
+     */
     public function withThinking(string $thinking): self
     {
         $self = clone $this;
