@@ -22,6 +22,9 @@ final class BetaRedactedThinkingBlockParam implements BaseModel
     #[Required]
     public string $type = 'redacted_thinking';
 
+    /**
+     * The `data` value of this redacted thinking block, exactly as returned by the API in a previous response. Opaque and encrypted; pass it back unchanged.
+     */
     #[Required]
     public string $data;
 
@@ -58,6 +61,9 @@ final class BetaRedactedThinkingBlockParam implements BaseModel
         return $self;
     }
 
+    /**
+     * The `data` value of this redacted thinking block, exactly as returned by the API in a previous response. Opaque and encrypted; pass it back unchanged.
+     */
     public function withData(string $data): self
     {
         $self = clone $this;
