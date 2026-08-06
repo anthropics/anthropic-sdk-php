@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta;
 
+use Anthropic\Beta\BetaCurrency;
 use Anthropic\Beta\DeploymentRuns\BetaManagedAgentsDeploymentRun;
 use Anthropic\Beta\Deployments\BetaManagedAgentsDeployment;
 use Anthropic\Client;
@@ -66,6 +67,10 @@ final class DeploymentsTest extends TestCase
                 ],
             ],
             name: 'x',
+            budget: [
+                'maxListCost' => ['amount' => '2500', 'currency' => BetaCurrency::USD],
+                'type' => 'limit',
+            ],
             description: 'description',
             metadata: ['foo' => 'string'],
             resources: [

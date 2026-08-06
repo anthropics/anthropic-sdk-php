@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Deployments;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Deployments\DeploymentUpdateParams\Resource;
 use Anthropic\Beta\Sessions\BetaManagedAgentsAgentParams;
+use Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
@@ -22,12 +23,14 @@ use Anthropic\Core\Conversion\MapOf;
  * @phpstan-import-type BetaManagedAgentsDeploymentInitialEventParamsVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentInitialEventParams
  * @phpstan-import-type ResourceVariants from \Anthropic\Beta\Deployments\DeploymentUpdateParams\Resource
  * @phpstan-import-type AgentShape from \Anthropic\Beta\Deployments\DeploymentUpdateParams\Agent
+ * @phpstan-import-type BetaManagedAgentsBudgetLimitShape from \Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit
  * @phpstan-import-type BetaManagedAgentsDeploymentInitialEventParamsShape from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentInitialEventParams
  * @phpstan-import-type ResourceShape from \Anthropic\Beta\Deployments\DeploymentUpdateParams\Resource
  * @phpstan-import-type BetaManagedAgentsScheduleParamsShape from \Anthropic\Beta\Deployments\BetaManagedAgentsScheduleParams
  *
  * @phpstan-type DeploymentUpdateParamsShape = array{
  *   agent?: AgentShape|null,
+ *   budget?: null|BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape,
  *   description?: string|null,
  *   environmentID?: string|null,
  *   initialEvents?: list<BetaManagedAgentsDeploymentInitialEventParamsShape>|null,
@@ -52,6 +55,12 @@ final class DeploymentUpdateParams implements BaseModel
      */
     #[Optional]
     public string|BetaManagedAgentsAgentParams|null $agent;
+
+    /**
+     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     */
+    #[Optional(nullable: true)]
+    public ?BetaManagedAgentsBudgetLimit $budget;
 
     /**
      * Description. Omit to preserve; send empty string or null to clear.
@@ -131,6 +140,7 @@ final class DeploymentUpdateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param AgentShape|null $agent
+     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
      * @param list<BetaManagedAgentsDeploymentInitialEventParamsShape>|null $initialEvents
      * @param array<string,string|null>|null $metadata
      * @param list<ResourceShape>|null $resources
@@ -140,6 +150,7 @@ final class DeploymentUpdateParams implements BaseModel
      */
     public static function with(
         string|BetaManagedAgentsAgentParams|array|null $agent = null,
+        BetaManagedAgentsBudgetLimit|array|null $budget = null,
         ?string $description = null,
         ?string $environmentID = null,
         ?array $initialEvents = null,
@@ -153,6 +164,7 @@ final class DeploymentUpdateParams implements BaseModel
         $self = new self;
 
         null !== $agent && $self['agent'] = $agent;
+        null !== $budget && $self['budget'] = $budget;
         null !== $description && $self['description'] = $description;
         null !== $environmentID && $self['environmentID'] = $environmentID;
         null !== $initialEvents && $self['initialEvents'] = $initialEvents;
@@ -176,6 +188,20 @@ final class DeploymentUpdateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['agent'] = $agent;
+
+        return $self;
+    }
+
+    /**
+     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     *
+     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
+     */
+    public function withBudget(
+        BetaManagedAgentsBudgetLimit|array|null $budget
+    ): self {
+        $self = clone $this;
+        $self['budget'] = $budget;
 
         return $self;
     }

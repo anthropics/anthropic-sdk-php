@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
+use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentMessageEvent\Content;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentMessageEvent\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -12,11 +13,12 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * An agent response event in the session conversation.
  *
- * @phpstan-import-type ManagedAgentsTextBlockShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsTextBlock
+ * @phpstan-import-type ContentVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentMessageEvent\Content
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentMessageEvent\Content
  *
  * @phpstan-type ManagedAgentsAgentMessageEventShape = array{
  *   id: string,
- *   content: list<ManagedAgentsTextBlock|ManagedAgentsTextBlockShape>,
+ *   content: list<ContentShape>,
  *   processedAt: \DateTimeInterface,
  *   type: Type|value-of<Type>,
  * }
@@ -35,9 +37,9 @@ final class ManagedAgentsAgentMessageEvent implements BaseModel
     /**
      * Array of text blocks comprising the agent response.
      *
-     * @var list<ManagedAgentsTextBlock> $content
+     * @var list<ContentVariants> $content
      */
-    #[Required(list: ManagedAgentsTextBlock::class)]
+    #[Required(list: Content::class)]
     public array $content;
 
     /**
@@ -80,7 +82,7 @@ final class ManagedAgentsAgentMessageEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<ManagedAgentsTextBlock|ManagedAgentsTextBlockShape> $content
+     * @param list<ContentShape> $content
      * @param Type|value-of<Type> $type
      */
     public static function with(
@@ -113,7 +115,7 @@ final class ManagedAgentsAgentMessageEvent implements BaseModel
     /**
      * Array of text blocks comprising the agent response.
      *
-     * @param list<ManagedAgentsTextBlock|ManagedAgentsTextBlockShape> $content
+     * @param list<ContentShape> $content
      */
     public function withContent(array $content): self
     {

@@ -10,6 +10,7 @@ use Anthropic\Beta\Sessions\BetaManagedAgentsDeltaContent;
 use Anthropic\Beta\Sessions\BetaManagedAgentsDeltaEvent;
 use Anthropic\Beta\Sessions\BetaManagedAgentsStartEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentMessageEvent;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsRedactedBlock;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsTextBlock;
 use Anthropic\Core\Exceptions\AnthropicException;
 use Anthropic\Lib\Sessions\EventAccumulator;
@@ -217,8 +218,19 @@ final class EventAccumulatorTest extends TestCase
         $next = EventAccumulator::accumulate($msg, self::delta('evt_1', 'ignored', 0));
 
         self::assertNotNull($next);
+        self::assertInstanceOf(ManagedAgentsTextBlock::class, $next->content[0]);
         self::assertSame('kept', $next->content[0]->text);
         self::assertSame('tool_use', $next->content[0]['type']);
+    }
+
+    #[Test]
+    public function redactedBlockOnExistingIndexIsNoOp(): void
+    {
+        $msg = self::seed('evt_1')->withContent([ManagedAgentsRedactedBlock::with(type: 'redacted')]);
+
+        $next = EventAccumulator::accumulate($msg, self::delta('evt_1', 'ignored', 0));
+
+        self::assertSame($msg, $next);
     }
 
     private static function seed(string $eventID): ManagedAgentsAgentMessageEvent
@@ -270,10 +282,11 @@ final class EventAccumulatorTest extends TestCase
      */
     private static function assertTexts(array $texts, ManagedAgentsAgentMessageEvent $msg): void
     {
-        $actual = array_map(
-            static fn (ManagedAgentsTextBlock $block): string => $block->text,
-            $msg->content,
-        );
+        $actual = [];
+        foreach ($msg->content as $block) {
+            self::assertInstanceOf(ManagedAgentsTextBlock::class, $block);
+            $actual[] = $block->text;
+        }
         self::assertSame($texts, $actual);
     }
 }

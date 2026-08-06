@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events\ManagedAgentsSessionThreadStatusIdleEvent;
 
+use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionBudgetReached;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionEndTurn;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionRequiresAction;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionRetriesExhausted;
@@ -17,9 +18,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type ManagedAgentsSessionEndTurnShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionEndTurn
  * @phpstan-import-type ManagedAgentsSessionRequiresActionShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionRequiresAction
  * @phpstan-import-type ManagedAgentsSessionRetriesExhaustedShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionRetriesExhausted
+ * @phpstan-import-type ManagedAgentsSessionBudgetReachedShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionBudgetReached
  *
- * @phpstan-type StopReasonVariants = ManagedAgentsSessionEndTurn|ManagedAgentsSessionRequiresAction|ManagedAgentsSessionRetriesExhausted
- * @phpstan-type StopReasonShape = StopReasonVariants|ManagedAgentsSessionEndTurnShape|ManagedAgentsSessionRequiresActionShape|ManagedAgentsSessionRetriesExhaustedShape
+ * @phpstan-type StopReasonVariants = ManagedAgentsSessionEndTurn|ManagedAgentsSessionRequiresAction|ManagedAgentsSessionRetriesExhausted|ManagedAgentsSessionBudgetReached
+ * @phpstan-type StopReasonShape = StopReasonVariants|ManagedAgentsSessionEndTurnShape|ManagedAgentsSessionRequiresActionShape|ManagedAgentsSessionRetriesExhaustedShape|ManagedAgentsSessionBudgetReachedShape
  */
 final class StopReason implements ConverterSource
 {
@@ -39,6 +41,7 @@ final class StopReason implements ConverterSource
             'end_turn' => ManagedAgentsSessionEndTurn::class,
             'requires_action' => ManagedAgentsSessionRequiresAction::class,
             'retries_exhausted' => ManagedAgentsSessionRetriesExhausted::class,
+            'budget_reached' => ManagedAgentsSessionBudgetReached::class,
         ];
     }
 }

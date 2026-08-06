@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Threads;
 
+use Anthropic\Beta\Agents\BetaManagedAgentsAdvisor;
 use Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent;
+use Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThread\Agent;
 use Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThread\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -13,13 +15,14 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * An execution thread within a `session`. Each session has one primary thread plus zero or more child threads spawned by the coordinator.
  *
- * @phpstan-import-type BetaManagedAgentsSessionThreadAgentShape from \Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent
+ * @phpstan-import-type AgentVariants from \Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThread\Agent
+ * @phpstan-import-type AgentShape from \Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThread\Agent
  * @phpstan-import-type ManagedAgentsSessionThreadStatsShape from \Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThreadStats
  * @phpstan-import-type ManagedAgentsSessionThreadUsageShape from \Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThreadUsage
  *
  * @phpstan-type ManagedAgentsSessionThreadShape = array{
  *   id: string,
- *   agent: BetaManagedAgentsSessionThreadAgent|BetaManagedAgentsSessionThreadAgentShape,
+ *   agent: AgentShape,
  *   archivedAt: \DateTimeInterface|null,
  *   createdAt: \DateTimeInterface,
  *   parentThreadID: string|null,
@@ -43,10 +46,12 @@ final class ManagedAgentsSessionThread implements BaseModel
     public string $id;
 
     /**
-     * Resolved `agent` definition for a single `session_thread`. Snapshot of the agent at thread creation time. The multiagent roster is not repeated here; read it from `Session.agent`.
+     * A session-resolved multiagent roster entry.
+     *
+     * @var AgentVariants $agent
      */
-    #[Required]
-    public BetaManagedAgentsSessionThreadAgent $agent;
+    #[Required(union: Agent::class)]
+    public BetaManagedAgentsSessionThreadAgent|BetaManagedAgentsAdvisor $agent;
 
     /**
      * A timestamp in RFC 3339 format.
@@ -149,7 +154,7 @@ final class ManagedAgentsSessionThread implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaManagedAgentsSessionThreadAgent|BetaManagedAgentsSessionThreadAgentShape $agent
+     * @param AgentShape $agent
      * @param ManagedAgentsSessionThreadStats|ManagedAgentsSessionThreadStatsShape|null $stats
      * @param ManagedAgentsSessionThreadStatus|value-of<ManagedAgentsSessionThreadStatus> $status
      * @param Type|value-of<Type> $type
@@ -157,7 +162,7 @@ final class ManagedAgentsSessionThread implements BaseModel
      */
     public static function with(
         string $id,
-        BetaManagedAgentsSessionThreadAgent|array $agent,
+        BetaManagedAgentsSessionThreadAgent|array|BetaManagedAgentsAdvisor $agent,
         ?\DateTimeInterface $archivedAt,
         \DateTimeInterface $createdAt,
         ?string $parentThreadID,
@@ -197,12 +202,12 @@ final class ManagedAgentsSessionThread implements BaseModel
     }
 
     /**
-     * Resolved `agent` definition for a single `session_thread`. Snapshot of the agent at thread creation time. The multiagent roster is not repeated here; read it from `Session.agent`.
+     * A session-resolved multiagent roster entry.
      *
-     * @param BetaManagedAgentsSessionThreadAgent|BetaManagedAgentsSessionThreadAgentShape $agent
+     * @param AgentShape $agent
      */
     public function withAgent(
-        BetaManagedAgentsSessionThreadAgent|array $agent
+        BetaManagedAgentsSessionThreadAgent|array|BetaManagedAgentsAdvisor $agent
     ): self {
         $self = clone $this;
         $self['agent'] = $agent;

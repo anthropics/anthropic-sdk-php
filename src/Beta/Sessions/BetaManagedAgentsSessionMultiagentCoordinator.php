@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions;
 
-use Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent;
+use Anthropic\Beta\Sessions\BetaManagedAgentsSessionMultiagentCoordinator\Agent;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSessionMultiagentCoordinator\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -13,11 +13,11 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Resolved coordinator topology with full agent definitions for each roster member.
  *
- * @phpstan-import-type BetaManagedAgentsSessionThreadAgentShape from \Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent
+ * @phpstan-import-type AgentVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionMultiagentCoordinator\Agent
+ * @phpstan-import-type AgentShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionMultiagentCoordinator\Agent
  *
  * @phpstan-type BetaManagedAgentsSessionMultiagentCoordinatorShape = array{
- *   agents: list<BetaManagedAgentsSessionThreadAgent|BetaManagedAgentsSessionThreadAgentShape>,
- *   type: Type|value-of<Type>,
+ *   agents: list<AgentShape>, type: Type|value-of<Type>
  * }
  */
 final class BetaManagedAgentsSessionMultiagentCoordinator implements BaseModel
@@ -28,9 +28,9 @@ final class BetaManagedAgentsSessionMultiagentCoordinator implements BaseModel
     /**
      * Full `agent` definitions the coordinator may spawn as session threads.
      *
-     * @var list<BetaManagedAgentsSessionThreadAgent> $agents
+     * @var list<AgentVariants> $agents
      */
-    #[Required(list: BetaManagedAgentsSessionThreadAgent::class)]
+    #[Required(list: Agent::class)]
     public array $agents;
 
     /** @var value-of<Type> $type */
@@ -63,7 +63,7 @@ final class BetaManagedAgentsSessionMultiagentCoordinator implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaManagedAgentsSessionThreadAgent|BetaManagedAgentsSessionThreadAgentShape> $agents
+     * @param list<AgentShape> $agents
      * @param Type|value-of<Type> $type
      */
     public static function with(array $agents, Type|string $type): self
@@ -79,7 +79,7 @@ final class BetaManagedAgentsSessionMultiagentCoordinator implements BaseModel
     /**
      * Full `agent` definitions the coordinator may spawn as session threads.
      *
-     * @param list<BetaManagedAgentsSessionThreadAgent|BetaManagedAgentsSessionThreadAgentShape> $agents
+     * @param list<AgentShape> $agents
      */
     public function withAgents(array $agents): self
     {

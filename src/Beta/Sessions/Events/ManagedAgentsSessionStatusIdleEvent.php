@@ -46,7 +46,7 @@ final class ManagedAgentsSessionStatusIdleEvent implements BaseModel
      * @var StopReasonVariants $stopReason
      */
     #[Required('stop_reason', union: StopReason::class)]
-    public ManagedAgentsSessionEndTurn|ManagedAgentsSessionRequiresAction|ManagedAgentsSessionRetriesExhausted $stopReason;
+    public ManagedAgentsSessionEndTurn|ManagedAgentsSessionRequiresAction|ManagedAgentsSessionRetriesExhausted|ManagedAgentsSessionBudgetReached $stopReason;
 
     /** @var value-of<Type> $type */
     #[Required(enum: Type::class)]
@@ -88,7 +88,7 @@ final class ManagedAgentsSessionStatusIdleEvent implements BaseModel
     public static function with(
         string $id,
         \DateTimeInterface $processedAt,
-        ManagedAgentsSessionEndTurn|array|ManagedAgentsSessionRequiresAction|ManagedAgentsSessionRetriesExhausted $stopReason,
+        ManagedAgentsSessionEndTurn|array|ManagedAgentsSessionRequiresAction|ManagedAgentsSessionRetriesExhausted|ManagedAgentsSessionBudgetReached $stopReason,
         Type|string $type,
     ): self {
         $self = new self;
@@ -129,7 +129,7 @@ final class ManagedAgentsSessionStatusIdleEvent implements BaseModel
      * @param StopReasonShape $stopReason
      */
     public function withStopReason(
-        ManagedAgentsSessionEndTurn|array|ManagedAgentsSessionRequiresAction|ManagedAgentsSessionRetriesExhausted $stopReason,
+        ManagedAgentsSessionEndTurn|array|ManagedAgentsSessionRequiresAction|ManagedAgentsSessionRetriesExhausted|ManagedAgentsSessionBudgetReached $stopReason,
     ): self {
         $self = clone $this;
         $self['stopReason'] = $stopReason;

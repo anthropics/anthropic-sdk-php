@@ -14,9 +14,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  *
  * @phpstan-import-type BetaManagedAgentsAgentParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsAgentParams
  * @phpstan-import-type BetaManagedAgentsMultiagentSelfParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsMultiagentSelfParams
+ * @phpstan-import-type BetaManagedAgentsAdvisorParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsAdvisorParams
  *
- * @phpstan-type BetaManagedAgentsMultiagentRosterEntryParamsVariants = string|BetaManagedAgentsAgentParams|BetaManagedAgentsMultiagentSelfParams
- * @phpstan-type BetaManagedAgentsMultiagentRosterEntryParamsShape = BetaManagedAgentsMultiagentRosterEntryParamsVariants|BetaManagedAgentsAgentParamsShape|BetaManagedAgentsMultiagentSelfParamsShape
+ * @phpstan-type BetaManagedAgentsMultiagentRosterEntryParamsVariants = string|BetaManagedAgentsAgentParams|BetaManagedAgentsMultiagentSelfParams|BetaManagedAgentsAdvisorParams
+ * @phpstan-type BetaManagedAgentsMultiagentRosterEntryParamsShape = BetaManagedAgentsMultiagentRosterEntryParamsVariants|BetaManagedAgentsAgentParamsShape|BetaManagedAgentsMultiagentSelfParamsShape|BetaManagedAgentsAdvisorParamsShape
  */
 final class BetaManagedAgentsMultiagentRosterEntryParams implements ConverterSource
 {
@@ -31,6 +32,7 @@ final class BetaManagedAgentsMultiagentRosterEntryParams implements ConverterSou
             'string',
             BetaManagedAgentsAgentParams::class,
             BetaManagedAgentsMultiagentSelfParams::class,
+            BetaManagedAgentsAdvisorParams::class,
         ];
     }
 }
