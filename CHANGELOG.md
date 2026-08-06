@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.41.0 (2026-08-06)
+
+Full Changelog: [v0.40.0...v0.41.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.40.0...v0.41.0)
+
+### Features
+
+* **api:** add `mid-conversation-tool-changes-2026-07-01` beta ([6cdad3e](https://github.com/anthropics/anthropic-sdk-php/commit/6cdad3ee73de292dc6b5770fa7a53146da48cc79))
+* **api:** add support for session budgets, advisor tool, pinned inference location and skills auto-loading from GitHub ([37531b2](https://github.com/anthropics/anthropic-sdk-php/commit/37531b2d4f3d777cd24041f8bcb5d57393097695))
+
+
+### Bug Fixes
+
+* **client:** improve http-discovery error message ([3be4d22](https://github.com/anthropics/anthropic-sdk-php/commit/3be4d22c0ab056f5e430ca2522b1e8c7e3d326b6))
+
+
+### Chores
+
+* **api:** remove retired Claude Opus 4.1 models ([625f364](https://github.com/anthropics/anthropic-sdk-php/commit/625f364a5fae71724fb3525c47ef9695ccaac3f0))
+* **docs:** small updates to descriptions ([a2c07ea](https://github.com/anthropics/anthropic-sdk-php/commit/a2c07ea7e44d72f1ecbed408e5b21bd064fd6281))
+* **docs:** updates to a few documentation strings ([e497b81](https://github.com/anthropics/anthropic-sdk-php/commit/e497b81baa693d39596db41c9ab2832a480619ea))
+
 ## 0.40.0 (2026-07-24)
 
 Full Changelog: [v0.39.0...v0.40.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.39.0...v0.40.0)
