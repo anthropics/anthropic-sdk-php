@@ -20,6 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaManagedAgentsModelConfigShape = array{
  *   id: string|BetaManagedAgentsModel|value-of<BetaManagedAgentsModel>,
  *   effort?: EffortShape|null,
+ *   inferenceGeo?: string|null,
  *   speed?: null|Speed|value-of<Speed>,
  * }
  */
@@ -45,6 +46,12 @@ final class BetaManagedAgentsModelConfig implements BaseModel
      */
     #[Optional(union: Effort::class)]
     public BetaManagedAgentsEffortLow|BetaManagedAgentsEffortMedium|BetaManagedAgentsEffortHigh|BetaManagedAgentsEffortXhigh|BetaManagedAgentsEffortMax|null $effort;
+
+    /**
+     * Geographic region for model inference. When unset, requests fall through to the workspace's default_inference_geo.
+     */
+    #[Optional('inference_geo')]
+    public ?string $inferenceGeo;
 
     /**
      * Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Not all models support `fast`; invalid combinations are rejected at create time.
@@ -85,6 +92,7 @@ final class BetaManagedAgentsModelConfig implements BaseModel
     public static function with(
         BetaManagedAgentsModel|string $id,
         BetaManagedAgentsEffortLow|array|BetaManagedAgentsEffortMedium|BetaManagedAgentsEffortHigh|BetaManagedAgentsEffortXhigh|BetaManagedAgentsEffortMax|null $effort = null,
+        ?string $inferenceGeo = null,
         Speed|string|null $speed = null,
     ): self {
         $self = new self;
@@ -92,6 +100,7 @@ final class BetaManagedAgentsModelConfig implements BaseModel
         $self['id'] = $id;
 
         null !== $effort && $self['effort'] = $effort;
+        null !== $inferenceGeo && $self['inferenceGeo'] = $inferenceGeo;
         null !== $speed && $self['speed'] = $speed;
 
         return $self;
@@ -122,6 +131,17 @@ final class BetaManagedAgentsModelConfig implements BaseModel
     ): self {
         $self = clone $this;
         $self['effort'] = $effort;
+
+        return $self;
+    }
+
+    /**
+     * Geographic region for model inference. When unset, requests fall through to the workspace's default_inference_geo.
+     */
+    public function withInferenceGeo(string $inferenceGeo): self
+    {
+        $self = clone $this;
+        $self['inferenceGeo'] = $inferenceGeo;
 
         return $self;
     }

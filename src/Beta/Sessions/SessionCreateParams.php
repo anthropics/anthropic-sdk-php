@@ -22,12 +22,14 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type InitialEventVariants from \Anthropic\Beta\Sessions\SessionCreateParams\InitialEvent
  * @phpstan-import-type ResourceVariants from \Anthropic\Beta\Sessions\SessionCreateParams\Resource
  * @phpstan-import-type AgentShape from \Anthropic\Beta\Sessions\SessionCreateParams\Agent
+ * @phpstan-import-type BetaManagedAgentsBudgetLimitShape from \Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit
  * @phpstan-import-type InitialEventShape from \Anthropic\Beta\Sessions\SessionCreateParams\InitialEvent
  * @phpstan-import-type ResourceShape from \Anthropic\Beta\Sessions\SessionCreateParams\Resource
  *
  * @phpstan-type SessionCreateParamsShape = array{
  *   agent: AgentShape,
  *   environmentID: string,
+ *   budget?: null|BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape,
  *   initialEvents?: list<InitialEventShape>|null,
  *   metadata?: array<string,string>|null,
  *   resources?: list<ResourceShape>|null,
@@ -55,6 +57,12 @@ final class SessionCreateParams implements BaseModel
      */
     #[Required('environment_id')]
     public string $environmentID;
+
+    /**
+     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     */
+    #[Optional]
+    public ?BetaManagedAgentsBudgetLimit $budget;
 
     /**
      * Initial events to send to the `session` at creation, processed in order. Supports `user.message` and `user.define_outcome` events. Maximum 50 events.
@@ -127,6 +135,7 @@ final class SessionCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param AgentShape $agent
+     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
      * @param list<InitialEventShape>|null $initialEvents
      * @param array<string,string>|null $metadata
      * @param list<ResourceShape>|null $resources
@@ -136,6 +145,7 @@ final class SessionCreateParams implements BaseModel
     public static function with(
         string|BetaManagedAgentsAgentParams|array|BetaManagedAgentsAgentWithOverridesParams $agent,
         string $environmentID,
+        BetaManagedAgentsBudgetLimit|array|null $budget = null,
         ?array $initialEvents = null,
         ?array $metadata = null,
         ?array $resources = null,
@@ -148,6 +158,7 @@ final class SessionCreateParams implements BaseModel
         $self['agent'] = $agent;
         $self['environmentID'] = $environmentID;
 
+        null !== $budget && $self['budget'] = $budget;
         null !== $initialEvents && $self['initialEvents'] = $initialEvents;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $resources && $self['resources'] = $resources;
@@ -179,6 +190,19 @@ final class SessionCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['environmentID'] = $environmentID;
+
+        return $self;
+    }
+
+    /**
+     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     *
+     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape $budget
+     */
+    public function withBudget(BetaManagedAgentsBudgetLimit|array $budget): self
+    {
+        $self = clone $this;
+        $self['budget'] = $budget;
 
         return $self;
     }

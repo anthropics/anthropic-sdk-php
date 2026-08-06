@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta;
 
+use Anthropic\Beta\BetaCurrency;
 use Anthropic\Beta\Sessions\BetaManagedAgentsDeletedSession;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSession;
 use Anthropic\BidirectionalPageCursor;
@@ -48,6 +49,10 @@ final class SessionsTest extends TestCase
         $result = $this->client->beta->sessions->create(
             agent: 'agent_011CZkYpogX7uDKUyvBTophP',
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
+            budget: [
+                'maxListCost' => ['amount' => '2500', 'currency' => BetaCurrency::USD],
+                'type' => 'limit',
+            ],
             initialEvents: [
                 [
                     'content' => [

@@ -21,6 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaManagedAgentsModelConfigParamsShape = array{
  *   id: string|BetaManagedAgentsModel|value-of<BetaManagedAgentsModel>,
  *   effort?: EffortShape|null,
+ *   inferenceGeo?: string|null,
  *   speed?: null|Speed|value-of<Speed>,
  * }
  */
@@ -46,6 +47,12 @@ final class BetaManagedAgentsModelConfigParams implements BaseModel
      */
     #[Optional(union: Effort::class, nullable: true)]
     public BetaManagedAgentsEffortLow|BetaManagedAgentsEffortMedium|BetaManagedAgentsEffortHigh|BetaManagedAgentsEffortXhigh|BetaManagedAgentsEffortMax|string|null $effort;
+
+    /**
+     * Geographic region for model inference. When unset, requests fall through to the workspace's default_inference_geo. On update, `model` is whole-object replacement — omitting inference_geo clears it.
+     */
+    #[Optional('inference_geo', nullable: true)]
+    public ?string $inferenceGeo;
 
     /**
      * Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Not all models support `fast`; invalid combinations are rejected at create time.
@@ -86,6 +93,7 @@ final class BetaManagedAgentsModelConfigParams implements BaseModel
     public static function with(
         BetaManagedAgentsModel|string $id,
         BetaManagedAgentsEffortLevel|BetaManagedAgentsEffortLow|array|BetaManagedAgentsEffortMedium|BetaManagedAgentsEffortHigh|BetaManagedAgentsEffortXhigh|BetaManagedAgentsEffortMax|string|null $effort = null,
+        ?string $inferenceGeo = null,
         Speed|string|null $speed = null,
     ): self {
         $self = new self;
@@ -93,6 +101,7 @@ final class BetaManagedAgentsModelConfigParams implements BaseModel
         $self['id'] = $id;
 
         null !== $effort && $self['effort'] = $effort;
+        null !== $inferenceGeo && $self['inferenceGeo'] = $inferenceGeo;
         null !== $speed && $self['speed'] = $speed;
 
         return $self;
@@ -123,6 +132,17 @@ final class BetaManagedAgentsModelConfigParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['effort'] = $effort;
+
+        return $self;
+    }
+
+    /**
+     * Geographic region for model inference. When unset, requests fall through to the workspace's default_inference_geo. On update, `model` is whole-object replacement — omitting inference_geo clears it.
+     */
+    public function withInferenceGeo(?string $inferenceGeo): self
+    {
+        $self = clone $this;
+        $self['inferenceGeo'] = $inferenceGeo;
 
         return $self;
     }

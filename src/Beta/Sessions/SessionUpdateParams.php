@@ -17,9 +17,11 @@ use Anthropic\Core\Conversion\MapOf;
  * @see Anthropic\Services\Beta\SessionsService::update()
  *
  * @phpstan-import-type BetaManagedAgentsSessionAgentUpdateShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgentUpdate
+ * @phpstan-import-type BetaManagedAgentsBudgetLimitShape from \Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit
  *
  * @phpstan-type SessionUpdateParamsShape = array{
  *   agent?: null|BetaManagedAgentsSessionAgentUpdate|BetaManagedAgentsSessionAgentUpdateShape,
+ *   budget?: null|BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape,
  *   metadata?: array<string,string|null>|null,
  *   title?: string|null,
  *   vaultIDs?: list<string>|null,
@@ -37,6 +39,12 @@ final class SessionUpdateParams implements BaseModel
      */
     #[Optional]
     public ?BetaManagedAgentsSessionAgentUpdate $agent;
+
+    /**
+     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     */
+    #[Optional(nullable: true)]
+    public ?BetaManagedAgentsBudgetLimit $budget;
 
     /**
      * Metadata patch. Set a key to a string to upsert it, or to null to delete it. Omit the field to preserve.
@@ -79,12 +87,14 @@ final class SessionUpdateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaManagedAgentsSessionAgentUpdate|BetaManagedAgentsSessionAgentUpdateShape|null $agent
+     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
      * @param array<string,string|null>|null $metadata
      * @param list<string>|null $vaultIDs
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
         BetaManagedAgentsSessionAgentUpdate|array|null $agent = null,
+        BetaManagedAgentsBudgetLimit|array|null $budget = null,
         ?array $metadata = null,
         ?string $title = null,
         ?array $vaultIDs = null,
@@ -93,6 +103,7 @@ final class SessionUpdateParams implements BaseModel
         $self = new self;
 
         null !== $agent && $self['agent'] = $agent;
+        null !== $budget && $self['budget'] = $budget;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $title && $self['title'] = $title;
         null !== $vaultIDs && $self['vaultIDs'] = $vaultIDs;
@@ -111,6 +122,20 @@ final class SessionUpdateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['agent'] = $agent;
+
+        return $self;
+    }
+
+    /**
+     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     *
+     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
+     */
+    public function withBudget(
+        BetaManagedAgentsBudgetLimit|array|null $budget
+    ): self {
+        $self = clone $this;
+        $self['budget'] = $budget;
 
         return $self;
     }

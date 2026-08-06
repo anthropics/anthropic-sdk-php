@@ -6,6 +6,7 @@ namespace Anthropic\Beta\Sessions\Events\ManagedAgentsUserMessageEvent;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsDocumentBlock;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsImageBlock;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsRedactedBlock;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsTextBlock;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
@@ -17,9 +18,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type ManagedAgentsTextBlockShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsTextBlock
  * @phpstan-import-type ManagedAgentsImageBlockShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsImageBlock
  * @phpstan-import-type ManagedAgentsDocumentBlockShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsDocumentBlock
+ * @phpstan-import-type ManagedAgentsRedactedBlockShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRedactedBlock
  *
- * @phpstan-type ContentVariants = ManagedAgentsTextBlock|ManagedAgentsImageBlock|ManagedAgentsDocumentBlock
- * @phpstan-type ContentShape = ContentVariants|ManagedAgentsTextBlockShape|ManagedAgentsImageBlockShape|ManagedAgentsDocumentBlockShape
+ * @phpstan-type ContentVariants = ManagedAgentsTextBlock|ManagedAgentsImageBlock|ManagedAgentsDocumentBlock|ManagedAgentsRedactedBlock
+ * @phpstan-type ContentShape = ContentVariants|ManagedAgentsTextBlockShape|ManagedAgentsImageBlockShape|ManagedAgentsDocumentBlockShape|ManagedAgentsRedactedBlockShape
  */
 final class Content implements ConverterSource
 {
@@ -39,6 +41,7 @@ final class Content implements ConverterSource
             'text' => ManagedAgentsTextBlock::class,
             'image' => ManagedAgentsImageBlock::class,
             'document' => ManagedAgentsDocumentBlock::class,
+            'redacted' => ManagedAgentsRedactedBlock::class,
         ];
     }
 }

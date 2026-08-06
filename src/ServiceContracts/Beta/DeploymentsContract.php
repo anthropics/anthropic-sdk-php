@@ -10,6 +10,7 @@ use Anthropic\Beta\Deployments\BetaManagedAgentsDeployment;
 use Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentStatus;
 use Anthropic\Beta\Deployments\BetaManagedAgentsScheduleParams;
 use Anthropic\Beta\Sessions\BetaManagedAgentsAgentParams;
+use Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -20,6 +21,7 @@ use Anthropic\RequestOptions;
  * @phpstan-import-type AgentShape from \Anthropic\Beta\Deployments\DeploymentUpdateParams\Agent as AgentShape1
  * @phpstan-import-type ResourceShape from \Anthropic\Beta\Deployments\DeploymentUpdateParams\Resource as ResourceShape1
  * @phpstan-import-type BetaManagedAgentsDeploymentInitialEventParamsShape from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentInitialEventParams
+ * @phpstan-import-type BetaManagedAgentsBudgetLimitShape from \Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit
  * @phpstan-import-type BetaManagedAgentsScheduleParamsShape from \Anthropic\Beta\Deployments\BetaManagedAgentsScheduleParams
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
@@ -32,6 +34,7 @@ interface DeploymentsContract
      * @param string $environmentID body param: ID of the `environment` defining the container configuration for sessions created from this deployment
      * @param list<BetaManagedAgentsDeploymentInitialEventParamsShape> $initialEvents Body param: Events to send to each session immediately after creation. At least 1, maximum 50.
      * @param string $name body param: Human-readable name for the deployment
+     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget Body param: A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
      * @param string|null $description body param: Description of what the deployment does
      * @param array<string,string> $metadata Body param: Arbitrary key-value metadata. Maximum 16 pairs, keys up to 64 chars, values up to 512 chars.
      * @param list<ResourceShape> $resources Body param: Resources (e.g. repositories, files) to mount into each session's container. Maximum 500.
@@ -47,6 +50,7 @@ interface DeploymentsContract
         string $environmentID,
         array $initialEvents,
         string $name,
+        BetaManagedAgentsBudgetLimit|array|null $budget = null,
         ?string $description = null,
         ?array $metadata = null,
         ?array $resources = null,
@@ -76,6 +80,7 @@ interface DeploymentsContract
      *
      * @param string $deploymentID Path param: Path parameter deployment_id
      * @param AgentShape1 $agent Body param: Agent to deploy. Accepts the `agent` ID string, which re-pins to the latest version, or an `agent` object with both id and version specified. Omit to preserve. Cannot be cleared.
+     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget Body param: A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
      * @param string|null $description Body param: Description. Omit to preserve; send empty string or null to clear.
      * @param string $environmentID Body param: ID of the `environment` where sessions run. Omit to preserve. Cannot be cleared.
      * @param list<BetaManagedAgentsDeploymentInitialEventParamsShape> $initialEvents Body param: Initial events. Full replacement. Omit to preserve. Cannot be cleared. At least 1, maximum 50.
@@ -92,6 +97,7 @@ interface DeploymentsContract
     public function update(
         string $deploymentID,
         string|BetaManagedAgentsAgentParams|array|null $agent = null,
+        BetaManagedAgentsBudgetLimit|array|null $budget = null,
         ?string $description = null,
         ?string $environmentID = null,
         ?array $initialEvents = null,
