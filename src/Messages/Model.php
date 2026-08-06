@@ -50,18 +50,6 @@ enum Model: string
 
     case CLAUDE_SONNET_4_5_20250929 = 'claude-sonnet-4-5-20250929';
 
-    /**
-     * @deprecated Will reach end-of-life on August 5, 2026. Please migrate to a newer model.
-     * Visit https://docs.anthropic.com/en/docs/resources/model-deprecations for more information.
-     */
-    case CLAUDE_OPUS_4_1 = 'claude-opus-4-1';
-
-    /**
-     * @deprecated Will reach end-of-life on August 5, 2026. Please migrate to a newer model.
-     * Visit https://docs.anthropic.com/en/docs/resources/model-deprecations for more information.
-     */
-    case CLAUDE_OPUS_4_1_20250805 = 'claude-opus-4-1-20250805';
-
     // AWS Bedrock model identifiers
 
     case BEDROCK_CLAUDE_SONNET_4_5_20250929 = 'anthropic.claude-sonnet-4-5-20250929-v1:0';
