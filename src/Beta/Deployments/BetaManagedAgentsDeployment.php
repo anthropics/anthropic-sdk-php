@@ -6,6 +6,8 @@ namespace Anthropic\Beta\Deployments;
 
 use Anthropic\Beta\Agents\BetaManagedAgentsAgentReference;
 use Anthropic\Beta\Deployments\BetaManagedAgentsDeployment\Type;
+use Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -21,6 +23,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type BetaManagedAgentsDeploymentPausedReasonShape from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentPausedReason
  * @phpstan-import-type BetaManagedAgentsSessionResourceConfigShape from \Anthropic\Beta\Deployments\BetaManagedAgentsSessionResourceConfig
  * @phpstan-import-type BetaManagedAgentsScheduleShape from \Anthropic\Beta\Deployments\BetaManagedAgentsSchedule
+ * @phpstan-import-type BetaManagedAgentsBudgetLimitShape from \Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit
  *
  * @phpstan-type BetaManagedAgentsDeploymentShape = array{
  *   id: string,
@@ -39,6 +42,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   type: Type|value-of<Type>,
  *   updatedAt: \DateTimeInterface,
  *   vaultIDs: list<string>,
+ *   budget?: null|BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape,
  * }
  */
 final class BetaManagedAgentsDeployment implements BaseModel
@@ -159,6 +163,12 @@ final class BetaManagedAgentsDeployment implements BaseModel
     public array $vaultIDs;
 
     /**
+     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     */
+    #[Optional(nullable: true)]
+    public ?BetaManagedAgentsBudgetLimit $budget;
+
+    /**
      * `new BetaManagedAgentsDeployment()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -224,6 +234,7 @@ final class BetaManagedAgentsDeployment implements BaseModel
      * @param BetaManagedAgentsDeploymentStatus|value-of<BetaManagedAgentsDeploymentStatus> $status
      * @param Type|value-of<Type> $type
      * @param list<string> $vaultIDs
+     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
      */
     public static function with(
         string $id,
@@ -242,6 +253,7 @@ final class BetaManagedAgentsDeployment implements BaseModel
         Type|string $type,
         \DateTimeInterface $updatedAt,
         array $vaultIDs,
+        BetaManagedAgentsBudgetLimit|array|null $budget = null,
     ): self {
         $self = new self;
 
@@ -261,6 +273,8 @@ final class BetaManagedAgentsDeployment implements BaseModel
         $self['type'] = $type;
         $self['updatedAt'] = $updatedAt;
         $self['vaultIDs'] = $vaultIDs;
+
+        null !== $budget && $self['budget'] = $budget;
 
         return $self;
     }
@@ -457,6 +471,20 @@ final class BetaManagedAgentsDeployment implements BaseModel
     {
         $self = clone $this;
         $self['vaultIDs'] = $vaultIDs;
+
+        return $self;
+    }
+
+    /**
+     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     *
+     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
+     */
+    public function withBudget(
+        BetaManagedAgentsBudgetLimit|array|null $budget
+    ): self {
+        $self = clone $this;
+        $self['budget'] = $budget;
 
         return $self;
     }

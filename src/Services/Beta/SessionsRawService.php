@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit;
 use Anthropic\Beta\Sessions\BetaManagedAgentsDeletedSession;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSession;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgentUpdate;
@@ -29,6 +30,7 @@ use Anthropic\ServiceContracts\Beta\SessionsRawContract;
  * @phpstan-import-type InitialEventShape from \Anthropic\Beta\Sessions\SessionCreateParams\InitialEvent
  * @phpstan-import-type ResourceShape from \Anthropic\Beta\Sessions\SessionCreateParams\Resource
  * @phpstan-import-type BetaManagedAgentsSessionAgentUpdateShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgentUpdate
+ * @phpstan-import-type BetaManagedAgentsBudgetLimitShape from \Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
 final class SessionsRawService implements SessionsRawContract
@@ -47,6 +49,7 @@ final class SessionsRawService implements SessionsRawContract
      * @param array{
      *   agent: AgentShape,
      *   environmentID: string,
+     *   budget?: BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape,
      *   initialEvents?: list<InitialEventShape>,
      *   metadata?: array<string,string>,
      *   resources?: list<ResourceShape>,
@@ -139,6 +142,7 @@ final class SessionsRawService implements SessionsRawContract
      * @param string $sessionID Path param: Path parameter session_id
      * @param array{
      *   agent?: BetaManagedAgentsSessionAgentUpdate|BetaManagedAgentsSessionAgentUpdateShape,
+     *   budget?: BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null,
      *   metadata?: array<string,string|null>|null,
      *   title?: string|null,
      *   vaultIDs?: list<string>,

@@ -14,12 +14,14 @@ use Anthropic\Core\Contracts\BaseModel;
  * Emitted when an UpdateSession request changed at least one field. Carries only the fields that changed; absent fields were not part of the update. The new configuration applies from the next turn.
  *
  * @phpstan-import-type BetaManagedAgentsSessionAgentShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent
+ * @phpstan-import-type BetaManagedAgentsBudgetLimitShape from \Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit
  *
  * @phpstan-type BetaManagedAgentsSessionUpdatedEventShape = array{
  *   id: string,
  *   processedAt: \DateTimeInterface,
  *   type: Type|value-of<Type>,
  *   agent?: null|BetaManagedAgentsSessionAgent|BetaManagedAgentsSessionAgentShape,
+ *   budget?: null|BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape,
  *   metadata?: array<string,string>|null,
  *   title?: string|null,
  * }
@@ -50,6 +52,12 @@ final class BetaManagedAgentsSessionUpdatedEvent implements BaseModel
      */
     #[Optional(nullable: true)]
     public ?BetaManagedAgentsSessionAgent $agent;
+
+    /**
+     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     */
+    #[Optional(nullable: true)]
+    public ?BetaManagedAgentsBudgetLimit $budget;
 
     /**
      * The session's full metadata bag after the update. Present when the update set non-empty metadata; absent when metadata was unchanged or cleared to empty.
@@ -94,6 +102,7 @@ final class BetaManagedAgentsSessionUpdatedEvent implements BaseModel
      *
      * @param Type|value-of<Type> $type
      * @param BetaManagedAgentsSessionAgent|BetaManagedAgentsSessionAgentShape|null $agent
+     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
      * @param array<string,string>|null $metadata
      */
     public static function with(
@@ -101,6 +110,7 @@ final class BetaManagedAgentsSessionUpdatedEvent implements BaseModel
         \DateTimeInterface $processedAt,
         Type|string $type,
         BetaManagedAgentsSessionAgent|array|null $agent = null,
+        BetaManagedAgentsBudgetLimit|array|null $budget = null,
         ?array $metadata = null,
         ?string $title = null,
     ): self {
@@ -111,6 +121,7 @@ final class BetaManagedAgentsSessionUpdatedEvent implements BaseModel
         $self['type'] = $type;
 
         null !== $agent && $self['agent'] = $agent;
+        null !== $budget && $self['budget'] = $budget;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $title && $self['title'] = $title;
 
@@ -160,6 +171,20 @@ final class BetaManagedAgentsSessionUpdatedEvent implements BaseModel
     ): self {
         $self = clone $this;
         $self['agent'] = $agent;
+
+        return $self;
+    }
+
+    /**
+     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     *
+     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
+     */
+    public function withBudget(
+        BetaManagedAgentsBudgetLimit|array|null $budget
+    ): self {
+        $self = clone $this;
+        $self['budget'] = $budget;
 
         return $self;
     }

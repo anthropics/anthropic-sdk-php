@@ -18,6 +18,7 @@ use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionEndTurn;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionErrorEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusIdleEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSpanModelRequestEndEvent;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsTextBlock;
 use Anthropic\Client;
 use Anthropic\Lib\Sessions\EventAccumulator;
 
@@ -64,7 +65,10 @@ $stream = $client->beta->sessions->events->streamStream(
 
 function render_text(ManagedAgentsAgentMessageEvent $message): string
 {
-    return implode('', array_map(fn ($block) => $block->text, $message->content));
+    return implode('', array_map(
+        fn ($block) => $block instanceof ManagedAgentsTextBlock ? $block->text : '',
+        $message->content,
+    ));
 }
 
 // One snapshot per event id: previews grow delta by delta, then the buffered

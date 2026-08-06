@@ -8,6 +8,7 @@ use Anthropic\Beta\Sessions\BetaManagedAgentsAgentMessagePreview;
 use Anthropic\Beta\Sessions\BetaManagedAgentsDeltaEvent;
 use Anthropic\Beta\Sessions\BetaManagedAgentsStartEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentMessageEvent;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsTextBlock;
 use Anthropic\Core\Exceptions\AnthropicException;
 
 /**
@@ -114,11 +115,20 @@ final class EventAccumulator
 
             if ($idx === \count($content)) {
                 $content[] = clone $fragment;
-            } elseif ('text' === $fragment['type'] && 'text' === $content[$idx]['type']) {
-                $updated = $content[$idx]->withText($content[$idx]->text.$fragment->text);
-                array_splice($content, $idx, 1, [$updated]);
             } else {
-                return $accumulated;
+                // Only text blocks accumulate: a redacted (or future, unknown)
+                // block at this index is left alone.
+                $existing = $content[$idx];
+                if (
+                    !$existing instanceof ManagedAgentsTextBlock
+                    || 'text' !== $existing['type']
+                    || 'text' !== $fragment['type']
+                ) {
+                    return $accumulated;
+                }
+
+                $updated = $existing->withText($existing->text.$fragment->text);
+                array_splice($content, $idx, 1, [$updated]);
             }
 
             return $accumulated->withContent($content);

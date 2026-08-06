@@ -17,6 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-import-type ManagedAgentsSessionResourceVariants from \Anthropic\Beta\Sessions\Resources\ManagedAgentsSessionResource
  * @phpstan-import-type BetaManagedAgentsSessionAgentShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent
+ * @phpstan-import-type BetaManagedAgentsBudgetLimitShape from \Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit
  * @phpstan-import-type BetaManagedAgentsOutcomeEvaluationResourceShape from \Anthropic\Beta\Sessions\BetaManagedAgentsOutcomeEvaluationResource
  * @phpstan-import-type ManagedAgentsSessionResourceShape from \Anthropic\Beta\Sessions\Resources\ManagedAgentsSessionResource
  * @phpstan-import-type BetaManagedAgentsSessionStatsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionStats
@@ -26,6 +27,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   id: string,
  *   agent: BetaManagedAgentsSessionAgent|BetaManagedAgentsSessionAgentShape,
  *   archivedAt: \DateTimeInterface|null,
+ *   budget: null|BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape,
  *   createdAt: \DateTimeInterface,
  *   environmentID: string,
  *   metadata: array<string,string>,
@@ -60,6 +62,12 @@ final class BetaManagedAgentsSession implements BaseModel
      */
     #[Required('archived_at')]
     public ?\DateTimeInterface $archivedAt;
+
+    /**
+     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     */
+    #[Required]
+    public ?BetaManagedAgentsBudgetLimit $budget;
 
     /**
      * A timestamp in RFC 3339 format.
@@ -145,6 +153,7 @@ final class BetaManagedAgentsSession implements BaseModel
      *   id: ...,
      *   agent: ...,
      *   archivedAt: ...,
+     *   budget: ...,
      *   createdAt: ...,
      *   environmentID: ...,
      *   metadata: ...,
@@ -167,6 +176,7 @@ final class BetaManagedAgentsSession implements BaseModel
      *   ->withID(...)
      *   ->withAgent(...)
      *   ->withArchivedAt(...)
+     *   ->withBudget(...)
      *   ->withCreatedAt(...)
      *   ->withEnvironmentID(...)
      *   ->withMetadata(...)
@@ -192,6 +202,7 @@ final class BetaManagedAgentsSession implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaManagedAgentsSessionAgent|BetaManagedAgentsSessionAgentShape $agent
+     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
      * @param array<string,string> $metadata
      * @param list<BetaManagedAgentsOutcomeEvaluationResource|BetaManagedAgentsOutcomeEvaluationResourceShape> $outcomeEvaluations
      * @param list<ManagedAgentsSessionResourceShape> $resources
@@ -205,6 +216,7 @@ final class BetaManagedAgentsSession implements BaseModel
         string $id,
         BetaManagedAgentsSessionAgent|array $agent,
         ?\DateTimeInterface $archivedAt,
+        BetaManagedAgentsBudgetLimit|array|null $budget,
         \DateTimeInterface $createdAt,
         string $environmentID,
         array $metadata,
@@ -224,6 +236,7 @@ final class BetaManagedAgentsSession implements BaseModel
         $self['id'] = $id;
         $self['agent'] = $agent;
         $self['archivedAt'] = $archivedAt;
+        $self['budget'] = $budget;
         $self['createdAt'] = $createdAt;
         $self['environmentID'] = $environmentID;
         $self['metadata'] = $metadata;
@@ -270,6 +283,20 @@ final class BetaManagedAgentsSession implements BaseModel
     {
         $self = clone $this;
         $self['archivedAt'] = $archivedAt;
+
+        return $self;
+    }
+
+    /**
+     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     *
+     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
+     */
+    public function withBudget(
+        BetaManagedAgentsBudgetLimit|array|null $budget
+    ): self {
+        $self = clone $this;
+        $self['budget'] = $budget;
 
         return $self;
     }

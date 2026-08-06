@@ -17,6 +17,7 @@ use Anthropic\Beta\Deployments\DeploymentRetrieveParams;
 use Anthropic\Beta\Deployments\DeploymentRunParams;
 use Anthropic\Beta\Deployments\DeploymentUnpauseParams;
 use Anthropic\Beta\Deployments\DeploymentUpdateParams;
+use Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
@@ -31,6 +32,7 @@ use Anthropic\ServiceContracts\Beta\DeploymentsRawContract;
  * @phpstan-import-type AgentShape from \Anthropic\Beta\Deployments\DeploymentUpdateParams\Agent as AgentShape1
  * @phpstan-import-type ResourceShape from \Anthropic\Beta\Deployments\DeploymentUpdateParams\Resource as ResourceShape1
  * @phpstan-import-type BetaManagedAgentsDeploymentInitialEventParamsShape from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentInitialEventParams
+ * @phpstan-import-type BetaManagedAgentsBudgetLimitShape from \Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit
  * @phpstan-import-type BetaManagedAgentsScheduleParamsShape from \Anthropic\Beta\Deployments\BetaManagedAgentsScheduleParams
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
@@ -52,6 +54,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
      *   environmentID: string,
      *   initialEvents: list<BetaManagedAgentsDeploymentInitialEventParamsShape>,
      *   name: string,
+     *   budget?: BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null,
      *   description?: string|null,
      *   metadata?: array<string,string>,
      *   resources?: list<ResourceShape>,
@@ -144,6 +147,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
      * @param string $deploymentID Path param: Path parameter deployment_id
      * @param array{
      *   agent?: AgentShape1,
+     *   budget?: BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null,
      *   description?: string|null,
      *   environmentID?: string,
      *   initialEvents?: list<BetaManagedAgentsDeploymentInitialEventParamsShape>,
