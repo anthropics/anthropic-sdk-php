@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Dreams;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Dreams\DreamCreateParams\OutputBehavior;
+use Anthropic\Beta\Dreams\DreamCreateParams\OutputBehavior\BetaOutputBehaviorCreateNew;
+use Anthropic\Beta\Dreams\DreamCreateParams\OutputBehavior\BetaOutputBehaviorUpdateExisting;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -18,13 +21,16 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-import-type BetaDreamInputVariants from \Anthropic\Beta\Dreams\BetaDreamInput
  * @phpstan-import-type ModelVariants from \Anthropic\Beta\Dreams\DreamCreateParams\Model
+ * @phpstan-import-type OutputBehaviorVariants from \Anthropic\Beta\Dreams\DreamCreateParams\OutputBehavior
  * @phpstan-import-type BetaDreamInputShape from \Anthropic\Beta\Dreams\BetaDreamInput
  * @phpstan-import-type ModelShape from \Anthropic\Beta\Dreams\DreamCreateParams\Model
+ * @phpstan-import-type OutputBehaviorShape from \Anthropic\Beta\Dreams\DreamCreateParams\OutputBehavior
  *
  * @phpstan-type DreamCreateParamsShape = array{
  *   inputs: list<BetaDreamInputShape>,
  *   model: ModelShape,
  *   instructions?: string|null,
+ *   outputBehavior?: OutputBehaviorShape|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
@@ -48,6 +54,14 @@ final class DreamCreateParams implements BaseModel
 
     #[Optional(nullable: true)]
     public ?string $instructions;
+
+    /**
+     * The default destination: the job creates a new output memory store as a clone of the memory_store input and writes the consolidated memories into it. The input store is never mutated.
+     *
+     * @var OutputBehaviorVariants|null $outputBehavior
+     */
+    #[Optional('output_behavior', union: OutputBehavior::class)]
+    public BetaOutputBehaviorCreateNew|BetaOutputBehaviorUpdateExisting|null $outputBehavior;
 
     /**
      * Optional header to specify the beta version(s) you want to use.
@@ -83,12 +97,14 @@ final class DreamCreateParams implements BaseModel
      *
      * @param list<BetaDreamInputShape> $inputs
      * @param ModelShape $model
+     * @param OutputBehaviorShape|null $outputBehavior
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
         array $inputs,
         string|BetaDreamModelConfigParam|array $model,
         ?string $instructions = null,
+        BetaOutputBehaviorCreateNew|array|BetaOutputBehaviorUpdateExisting|null $outputBehavior = null,
         ?array $betas = null,
     ): self {
         $self = new self;
@@ -97,6 +113,7 @@ final class DreamCreateParams implements BaseModel
         $self['model'] = $model;
 
         null !== $instructions && $self['instructions'] = $instructions;
+        null !== $outputBehavior && $self['outputBehavior'] = $outputBehavior;
         null !== $betas && $self['betas'] = $betas;
 
         return $self;
@@ -131,6 +148,20 @@ final class DreamCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['instructions'] = $instructions;
+
+        return $self;
+    }
+
+    /**
+     * The default destination: the job creates a new output memory store as a clone of the memory_store input and writes the consolidated memories into it. The input store is never mutated.
+     *
+     * @param OutputBehaviorShape $outputBehavior
+     */
+    public function withOutputBehavior(
+        BetaOutputBehaviorCreateNew|array|BetaOutputBehaviorUpdateExisting $outputBehavior,
+    ): self {
+        $self = clone $this;
+        $self['outputBehavior'] = $outputBehavior;
 
         return $self;
     }
