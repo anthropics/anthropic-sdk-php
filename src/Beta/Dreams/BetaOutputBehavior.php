@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Dreams\BetaDream;
+namespace Anthropic\Beta\Dreams;
 
-use Anthropic\Beta\Dreams\BetaDream\OutputBehavior\BetaOutputBehaviorCreateNew;
-use Anthropic\Beta\Dreams\BetaDream\OutputBehavior\BetaOutputBehaviorUpdateExisting;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -13,13 +11,13 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 /**
  * The default destination: the job creates a new output memory store as a clone of the memory_store input and writes the consolidated memories into it. The input store is never mutated.
  *
- * @phpstan-import-type BetaOutputBehaviorCreateNewShape from \Anthropic\Beta\Dreams\BetaDream\OutputBehavior\BetaOutputBehaviorCreateNew
- * @phpstan-import-type BetaOutputBehaviorUpdateExistingShape from \Anthropic\Beta\Dreams\BetaDream\OutputBehavior\BetaOutputBehaviorUpdateExisting
+ * @phpstan-import-type BetaOutputBehaviorCreateNewShape from \Anthropic\Beta\Dreams\BetaOutputBehaviorCreateNew
+ * @phpstan-import-type BetaOutputBehaviorUpdateExistingShape from \Anthropic\Beta\Dreams\BetaOutputBehaviorUpdateExisting
  *
- * @phpstan-type OutputBehaviorVariants = BetaOutputBehaviorCreateNew|BetaOutputBehaviorUpdateExisting
- * @phpstan-type OutputBehaviorShape = OutputBehaviorVariants|BetaOutputBehaviorCreateNewShape|BetaOutputBehaviorUpdateExistingShape
+ * @phpstan-type BetaOutputBehaviorVariants = BetaOutputBehaviorCreateNew|BetaOutputBehaviorUpdateExisting
+ * @phpstan-type BetaOutputBehaviorShape = BetaOutputBehaviorVariants|BetaOutputBehaviorCreateNewShape|BetaOutputBehaviorUpdateExistingShape
  */
-final class OutputBehavior implements ConverterSource
+final class BetaOutputBehavior implements ConverterSource
 {
     use SdkUnion;
 
