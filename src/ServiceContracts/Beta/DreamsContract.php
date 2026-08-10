@@ -8,8 +8,8 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Dreams\BetaDream;
 use Anthropic\Beta\Dreams\BetaDreamModelConfigParam;
 use Anthropic\Beta\Dreams\BetaDreamStatus;
-use Anthropic\Beta\Dreams\DreamCreateParams\OutputBehavior\BetaOutputBehaviorCreateNew;
-use Anthropic\Beta\Dreams\DreamCreateParams\OutputBehavior\BetaOutputBehaviorUpdateExisting;
+use Anthropic\Beta\Dreams\BetaOutputBehaviorCreateNew;
+use Anthropic\Beta\Dreams\BetaOutputBehaviorUpdateExisting;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -17,7 +17,7 @@ use Anthropic\RequestOptions;
 /**
  * @phpstan-import-type BetaDreamInputShape from \Anthropic\Beta\Dreams\BetaDreamInput
  * @phpstan-import-type ModelShape from \Anthropic\Beta\Dreams\DreamCreateParams\Model
- * @phpstan-import-type OutputBehaviorShape from \Anthropic\Beta\Dreams\DreamCreateParams\OutputBehavior
+ * @phpstan-import-type BetaOutputBehaviorShape from \Anthropic\Beta\Dreams\BetaOutputBehavior
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
 interface DreamsContract
@@ -28,7 +28,7 @@ interface DreamsContract
      * @param list<BetaDreamInputShape> $inputs Body param
      * @param ModelShape $model body param: Model identifier and configuration applied to every pipeline stage
      * @param string|null $instructions Body param
-     * @param OutputBehaviorShape $outputBehavior Body param: The default destination: the job creates a new output memory store as a clone of the memory_store input and writes the consolidated memories into it. The input store is never mutated.
+     * @param BetaOutputBehaviorShape $outputBehavior Body param: The default destination: the job creates a new output memory store as a clone of the memory_store input and writes the consolidated memories into it. The input store is never mutated.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *

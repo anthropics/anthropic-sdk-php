@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Dreams;
 
-use Anthropic\Beta\Dreams\BetaDream\OutputBehavior;
-use Anthropic\Beta\Dreams\BetaDream\OutputBehavior\BetaOutputBehaviorCreateNew;
-use Anthropic\Beta\Dreams\BetaDream\OutputBehavior\BetaOutputBehaviorUpdateExisting;
 use Anthropic\Beta\Dreams\BetaDream\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -16,11 +13,11 @@ use Anthropic\Core\Contracts\BaseModel;
  * An asynchronous memory-consolidation job that reads a memory store plus a set of session transcripts and writes consolidated memories into an output memory store — a new store by default, or an existing store chosen via output_behavior. The Dreams API is in research preview: the request and response shapes are volatile and may change without the deprecation period that applies to generally-available endpoints.
  *
  * @phpstan-import-type BetaDreamInputVariants from \Anthropic\Beta\Dreams\BetaDreamInput
- * @phpstan-import-type OutputBehaviorVariants from \Anthropic\Beta\Dreams\BetaDream\OutputBehavior
+ * @phpstan-import-type BetaOutputBehaviorVariants from \Anthropic\Beta\Dreams\BetaOutputBehavior
  * @phpstan-import-type BetaDreamErrorShape from \Anthropic\Beta\Dreams\BetaDreamError
  * @phpstan-import-type BetaDreamInputShape from \Anthropic\Beta\Dreams\BetaDreamInput
  * @phpstan-import-type BetaDreamModelConfigShape from \Anthropic\Beta\Dreams\BetaDreamModelConfig
- * @phpstan-import-type OutputBehaviorShape from \Anthropic\Beta\Dreams\BetaDream\OutputBehavior
+ * @phpstan-import-type BetaOutputBehaviorShape from \Anthropic\Beta\Dreams\BetaOutputBehavior
  * @phpstan-import-type BetaDreamOutputShape from \Anthropic\Beta\Dreams\BetaDreamOutput
  * @phpstan-import-type BetaDreamUsageShape from \Anthropic\Beta\Dreams\BetaDreamUsage
  *
@@ -33,7 +30,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   inputs: list<BetaDreamInputShape>,
  *   instructions: string|null,
  *   model: BetaDreamModelConfig|BetaDreamModelConfigShape,
- *   outputBehavior: OutputBehaviorShape,
+ *   outputBehavior: BetaOutputBehaviorShape,
  *   outputs: list<BetaDreamOutput|BetaDreamOutputShape>,
  *   sessionID: string|null,
  *   status: BetaDreamStatus|value-of<BetaDreamStatus>,
@@ -89,9 +86,9 @@ final class BetaDream implements BaseModel
     /**
      * The default destination: the job creates a new output memory store as a clone of the memory_store input and writes the consolidated memories into it. The input store is never mutated.
      *
-     * @var OutputBehaviorVariants $outputBehavior
+     * @var BetaOutputBehaviorVariants $outputBehavior
      */
-    #[Required('output_behavior', union: OutputBehavior::class)]
+    #[Required('output_behavior', union: BetaOutputBehavior::class)]
     public BetaOutputBehaviorCreateNew|BetaOutputBehaviorUpdateExisting $outputBehavior;
 
     /** @var list<BetaDreamOutput> $outputs */
@@ -175,7 +172,7 @@ final class BetaDream implements BaseModel
      * @param BetaDreamError|BetaDreamErrorShape|null $error
      * @param list<BetaDreamInputShape> $inputs
      * @param BetaDreamModelConfig|BetaDreamModelConfigShape $model
-     * @param OutputBehaviorShape $outputBehavior
+     * @param BetaOutputBehaviorShape $outputBehavior
      * @param list<BetaDreamOutput|BetaDreamOutputShape> $outputs
      * @param BetaDreamStatus|value-of<BetaDreamStatus> $status
      * @param Type|value-of<Type> $type
@@ -306,7 +303,7 @@ final class BetaDream implements BaseModel
     /**
      * The default destination: the job creates a new output memory store as a clone of the memory_store input and writes the consolidated memories into it. The input store is never mutated.
      *
-     * @param OutputBehaviorShape $outputBehavior
+     * @param BetaOutputBehaviorShape $outputBehavior
      */
     public function withOutputBehavior(
         BetaOutputBehaviorCreateNew|array|BetaOutputBehaviorUpdateExisting $outputBehavior,
