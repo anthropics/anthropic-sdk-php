@@ -23,6 +23,7 @@ use Anthropic\ServiceContracts\Beta\DreamsRawContract;
 /**
  * @phpstan-import-type BetaDreamInputShape from \Anthropic\Beta\Dreams\BetaDreamInput
  * @phpstan-import-type ModelShape from \Anthropic\Beta\Dreams\DreamCreateParams\Model
+ * @phpstan-import-type OutputBehaviorShape from \Anthropic\Beta\Dreams\DreamCreateParams\OutputBehavior
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
 final class DreamsRawService implements DreamsRawContract
@@ -42,6 +43,7 @@ final class DreamsRawService implements DreamsRawContract
      *   inputs: list<BetaDreamInputShape>,
      *   model: ModelShape,
      *   instructions?: string|null,
+     *   outputBehavior?: OutputBehaviorShape,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|DreamCreateParams $params
      * @param RequestOpts|null $requestOptions

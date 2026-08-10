@@ -9,7 +9,7 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * An input memory store the dream reads from. The dream never mutates this store.
+ * An input memory store the dream reads from. The dream never mutates this store unless it is also the destination: with output_behavior {type: "update_existing"} the job consolidates this store in place.
  *
  * @phpstan-import-type BetaDreamMemoryStoreInputShape from \Anthropic\Beta\Dreams\BetaDreamMemoryStoreInput
  * @phpstan-import-type BetaDreamSessionsInputShape from \Anthropic\Beta\Dreams\BetaDreamSessionsInput

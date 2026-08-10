@@ -47,6 +47,7 @@ final class DreamsTest extends TestCase
             inputs: [['memoryStoreID' => 'x', 'type' => 'memory_store']],
             model: 'string',
             instructions: 'x',
+            outputBehavior: ['type' => 'create_new'],
             betas: ['message-batches-2024-09-24'],
         );
 
