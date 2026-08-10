@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * An input memory store the dream reads from. The dream never mutates this store.
+ * An input memory store the dream reads from. The dream never mutates this store unless it is also the destination: with output_behavior {type: "update_existing"} the job consolidates this store in place.
  *
  * @phpstan-type BetaDreamMemoryStoreInputShape = array{
  *   memoryStoreID: string, type: Type|value-of<Type>
