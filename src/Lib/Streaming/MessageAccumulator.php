@@ -28,10 +28,11 @@ use Anthropic\Messages\Message;
  *   the block's `input` when the block completes; until then the snapshot
  *   keeps the start event's `{}` placeholder.
  * - `citations_delta` appends to the block's `citations` list.
- * - `message_delta` overwrites `stop_reason`/`stop_sequence`, replaces
- *   `stop_details` when present, always replaces `usage.output_tokens` (the
- *   API streams cumulative totals), and replaces other usage fields only
- *   when present — fields reported at `message_start` are preserved.
+ * - `message_delta` overwrites `stop_reason`/`stop_sequence`/`stop_details`,
+ *   always replaces `usage.output_tokens` (the API streams cumulative
+ *   totals), and replaces `container`, `context_management` and the other
+ *   usage fields only when the event carries them — those keys are omitted
+ *   when they do not apply, so what `message_start` reported is preserved.
  *
  * Event-order violations throw: an event before `message_start`, a second
  * `message_start`, a `content_block_start` that skips an index, or a delta
@@ -154,12 +155,20 @@ final class MessageAccumulator
         $snapshot = $this->snapshot ?? [];
         $delta = self::wireShape($event['delta'] ?? null) ?? [];
 
-        // stop_reason and stop_sequence overwrite unconditionally;
-        // stop_details only replaces when the delta carries one
+        // the stop fields always ride along and a null is the message's
+        // final value for them, so they overwrite unconditionally
         $snapshot['stop_reason'] = $delta['stop_reason'] ?? null;
         $snapshot['stop_sequence'] = $delta['stop_sequence'] ?? null;
-        if (!is_null($delta['stop_details'] ?? null)) {
-            $snapshot['stop_details'] = $delta['stop_details'];
+        $snapshot['stop_details'] = $delta['stop_details'] ?? null;
+
+        // container, and the beta surface's event-level context_management,
+        // are omitted unless they apply and never reported at
+        // message_start, so they replace only when the event carries them
+        if (!is_null($delta['container'] ?? null)) {
+            $snapshot['container'] = $delta['container'];
+        }
+        if (!is_null($event['context_management'] ?? null)) {
+            $snapshot['context_management'] = $event['context_management'];
         }
 
         $usage = self::wireShape($event['usage'] ?? null) ?? [];
