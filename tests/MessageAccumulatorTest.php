@@ -2,6 +2,13 @@
 
 namespace Tests;
 
+use Anthropic\Beta\Messages\BetaClearThinking20251015EditResponse;
+use Anthropic\Beta\Messages\BetaContainer;
+use Anthropic\Beta\Messages\BetaContextManagementResponse;
+use Anthropic\Beta\Messages\BetaMessageDeltaUsage;
+use Anthropic\Beta\Messages\BetaOutputTokensDetails;
+use Anthropic\Beta\Messages\BetaRawMessageDeltaEvent;
+use Anthropic\Beta\Messages\BetaRawMessageDeltaEvent\Delta;
 use Anthropic\Client;
 use Anthropic\Lib\Streaming\MessageAccumulator;
 use Anthropic\Messages\RawContentBlockDeltaEvent;
@@ -120,6 +127,147 @@ class MessageAccumulatorTest extends TestCase
         ;
 
         $this->assertSame([], (array) self::blockField($accumulator->message()->jsonSerialize(), index: 0, field: 'input'));
+    }
+
+    public function testMessageDeltaAppliesContainerAndEveryUsageField(): void
+    {
+        $accumulator = MessageAccumulator::forMessages()
+            ->accumulate(['type' => 'message_start', 'message' => self::startMessage()])
+            ->accumulate(['type' => 'message_delta', 'delta' => [
+                'stop_reason' => 'end_turn',
+                'stop_sequence' => null,
+                'stop_details' => null,
+                'container' => ['id' => 'container_abc', 'expires_at' => '2026-01-01T00:00:00Z'],
+            ], 'usage' => [
+                'input_tokens' => 100,
+                'output_tokens' => 25,
+                'cache_creation_input_tokens' => 5,
+                'cache_read_input_tokens' => 80,
+                'server_tool_use' => ['web_search_requests' => 2, 'web_fetch_requests' => 0],
+                'output_tokens_details' => ['thinking_tokens' => 7],
+            ]])
+            ->accumulate(['type' => 'message_stop'])
+        ;
+
+        $this->assertSame('end_turn', self::wire($accumulator, at: 'stop_reason'));
+        $this->assertSame('container_abc', self::wire($accumulator, at: 'container.id'));
+        $this->assertSame(100, self::wire($accumulator, at: 'usage.input_tokens'));
+        $this->assertSame(25, self::wire($accumulator, at: 'usage.output_tokens'));
+        $this->assertSame(5, self::wire($accumulator, at: 'usage.cache_creation_input_tokens'));
+        $this->assertSame(80, self::wire($accumulator, at: 'usage.cache_read_input_tokens'));
+        $this->assertSame(2, self::wire($accumulator, at: 'usage.server_tool_use.web_search_requests'));
+        $this->assertSame(7, self::wire($accumulator, at: 'usage.output_tokens_details.thinking_tokens'));
+    }
+
+    public function testMessageDeltaKeepsStartUsageForOmittedFields(): void
+    {
+        // the API omits the optional usage keys when they do not apply, so
+        // what message_start reported must survive
+        $start = [...self::startMessage(), 'usage' => [
+            'input_tokens' => 10,
+            'output_tokens' => 1,
+            'cache_creation_input_tokens' => 4,
+            'cache_read_input_tokens' => 2,
+            'cache_creation' => ['ephemeral_5m_input_tokens' => 4, 'ephemeral_1h_input_tokens' => 0],
+            'service_tier' => 'standard',
+        ]];
+
+        $accumulator = MessageAccumulator::forMessages()
+            ->accumulate(['type' => 'message_start', 'message' => $start])
+            ->accumulate(['type' => 'message_delta', 'delta' => [
+                'stop_reason' => 'end_turn', 'stop_sequence' => null, 'stop_details' => null,
+            ], 'usage' => ['output_tokens' => 42]])
+            ->accumulate(['type' => 'message_stop'])
+        ;
+
+        $this->assertSame(42, self::wire($accumulator, at: 'usage.output_tokens'));
+        $this->assertSame(10, self::wire($accumulator, at: 'usage.input_tokens'));
+        $this->assertSame(4, self::wire($accumulator, at: 'usage.cache_creation_input_tokens'));
+        $this->assertSame(2, self::wire($accumulator, at: 'usage.cache_read_input_tokens'));
+        $this->assertSame('standard', self::wire($accumulator, at: 'usage.service_tier'));
+        $this->assertSame(4, self::wire($accumulator, at: 'usage.cache_creation.ephemeral_5m_input_tokens'));
+    }
+
+    public function testBetaMessageDeltaAppliesEventLevelContextManagement(): void
+    {
+        // context_management is a sibling of delta/usage on the event, and
+        // is never reported at message_start
+        $accumulator = MessageAccumulator::forBetaMessages()
+            ->accumulate(['type' => 'message_start', 'message' => self::startMessage()])
+            ->accumulate(['type' => 'message_delta', 'delta' => [
+                'stop_reason' => 'end_turn',
+                'stop_sequence' => null,
+                'stop_details' => null,
+                'container' => ['id' => 'container_beta', 'expires_at' => '2026-01-01T00:00:00Z'],
+            ], 'context_management' => ['applied_edits' => [
+                ['type' => 'clear_tool_uses_20250919', 'cleared_input_tokens' => 100, 'cleared_tool_uses' => 2],
+            ]], 'usage' => ['output_tokens' => 9]])
+            ->accumulate(['type' => 'message_stop'])
+        ;
+
+        $this->assertSame('container_beta', self::wire($accumulator, at: 'container.id'));
+        $this->assertSame(
+            'clear_tool_uses_20250919',
+            self::wire($accumulator, at: 'context_management.applied_edits.0.type'),
+        );
+        $this->assertSame(2, self::wire($accumulator, at: 'context_management.applied_edits.0.cleared_tool_uses'));
+        $this->assertSame(100, self::wire($accumulator, at: 'context_management.applied_edits.0.cleared_input_tokens'));
+    }
+
+    public function testBetaMessageDeltaReadsTypedEventModels(): void
+    {
+        $accumulator = MessageAccumulator::forBetaMessages()
+            ->accumulate(['type' => 'message_start', 'message' => self::startMessage()])
+            ->accumulate(BetaRawMessageDeltaEvent::with(
+                contextManagement: BetaContextManagementResponse::with(appliedEdits: [
+                    BetaClearThinking20251015EditResponse::with(clearedInputTokens: 12, clearedThinkingTurns: 1),
+                ]),
+                delta: Delta::with(
+                    container: BetaContainer::with(
+                        id: 'container_typed',
+                        expiresAt: new \DateTimeImmutable('2026-01-01T00:00:00Z'),
+                        skills: null,
+                    ),
+                    stopDetails: null,
+                    stopReason: 'end_turn',
+                    stopSequence: null,
+                ),
+                usage: BetaMessageDeltaUsage::with(
+                    cacheCreationInputTokens: null,
+                    cacheReadInputTokens: null,
+                    fallbackCredit: null,
+                    inputTokens: null,
+                    iterations: null,
+                    outputTokens: 3,
+                    outputTokensDetails: BetaOutputTokensDetails::with(thinkingTokens: 1),
+                    serverToolUse: null,
+                ),
+            ))
+        ;
+
+        $this->assertSame('container_typed', self::wire($accumulator, at: 'container.id'));
+        $this->assertSame(
+            12,
+            self::wire($accumulator, at: 'context_management.applied_edits.0.cleared_input_tokens'),
+        );
+        $this->assertSame(1, self::wire($accumulator, at: 'usage.output_tokens_details.thinking_tokens'));
+    }
+
+    public function testMessageDeltaStopDetailsOverwriteUnconditionally(): void
+    {
+        // stop_details is always keyed on the delta and a null is the
+        // message's final value, like its stop_reason/stop_sequence siblings
+        $accumulator = MessageAccumulator::forMessages()
+            ->accumulate(['type' => 'message_start', 'message' => [
+                ...self::startMessage(),
+                'stop_details' => ['type' => 'refusal', 'category' => 'cyber', 'explanation' => 'refused'],
+            ]])
+            ->accumulate(['type' => 'message_delta', 'delta' => [
+                'stop_reason' => 'end_turn', 'stop_sequence' => null, 'stop_details' => null,
+            ], 'usage' => ['output_tokens' => 2]])
+        ;
+
+        $this->assertNull(self::wire($accumulator, at: 'stop_details'));
     }
 
     public function testAcceptsTypedEventModels(): void
@@ -291,6 +439,29 @@ class MessageAccumulatorTest extends TestCase
         }
 
         self::assertSame($expected, $actual, "{$path}: value mismatch");
+    }
+
+    /**
+     * Reads a dotted path (`usage.output_tokens_details.thinking_tokens`)
+     * out of the accumulated message, serialized to plain wire shape.
+     */
+    private static function wire(MessageAccumulator $accumulator, string $at): mixed
+    {
+        $value = json_decode(
+            json_encode($accumulator->message(), flags: JSON_THROW_ON_ERROR),
+            associative: true,
+            flags: JSON_THROW_ON_ERROR,
+        );
+
+        foreach (explode('.', $at) as $segment) {
+            if (!is_array($value)) {
+                return null;
+            }
+            $key = ctype_digit($segment) ? (int) $segment : $segment;
+            $value = $value[$key] ?? null;
+        }
+
+        return $value;
     }
 
     /** Reads `content[$index][$field]` out of a serialized message. */
