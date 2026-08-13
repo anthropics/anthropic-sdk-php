@@ -41,7 +41,7 @@ final class UserProfilesService implements UserProfilesContract
      *
      * @param string|null $externalID Body param: Platform's own identifier for this user. Not enforced unique. Maximum 255 characters.
      * @param array<string,string> $metadata Body param: Free-form key-value data to attach to this user profile. Maximum 16 keys, with keys up to 64 characters and values up to 512 characters. Values must be non-empty strings.
-     * @param string|null $name Body param: Display name of the entity this profile represents. Required when relationship is `resold` (the resold-to company's name); optional otherwise. Maximum 255 characters.
+     * @param string|null $name Body param: Optional for all profiles. Real-world name of the entity this profile represents (company or individual); for `resold` profiles, the resold-to company's name where known. Maximum 255 characters.
      * @param Relationship|value-of<Relationship> $relationship Body param: How the entity behind a user profile relates to the platform that owns the API key. `external`: an individual end-user of the platform. `resold`: a company the platform resells Claude access to. `internal`: the platform's own usage.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
