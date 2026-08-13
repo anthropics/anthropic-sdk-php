@@ -120,7 +120,7 @@ final class BatchesService implements BatchesContract
     public function list(
         ?string $afterID = null,
         ?string $beforeID = null,
-        int $limit = 20,
+        ?int $limit = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page {

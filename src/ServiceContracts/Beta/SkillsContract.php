@@ -79,7 +79,7 @@ interface SkillsContract
      * @throws APIException
      */
     public function list(
-        int $limit = 20,
+        ?int $limit = null,
         ?string $page = null,
         ?string $source = null,
         ?array $betas = null,
