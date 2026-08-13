@@ -167,8 +167,8 @@ final class EnvironmentsService implements EnvironmentsContract
      * @throws APIException
      */
     public function list(
-        bool $includeArchived = false,
-        int $limit = 20,
+        ?bool $includeArchived = null,
+        ?int $limit = null,
         ?string $page = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,

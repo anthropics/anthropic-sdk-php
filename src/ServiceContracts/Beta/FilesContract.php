@@ -36,7 +36,7 @@ interface FilesContract
     public function list(
         ?string $afterID = null,
         ?string $beforeID = null,
-        int $limit = 20,
+        ?int $limit = null,
         ?string $scopeID = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
