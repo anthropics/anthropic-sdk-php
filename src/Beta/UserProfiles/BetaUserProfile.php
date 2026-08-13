@@ -88,7 +88,7 @@ final class BetaUserProfile implements BaseModel
     public ?string $externalID;
 
     /**
-     * Display name of the entity this profile represents. For `resold` this is the resold-to company's name.
+     * Real-world name of the entity this profile represents (company or individual). For `resold` this is the resold-to company's name.
      */
     #[Optional(nullable: true)]
     public ?string $name;
@@ -261,7 +261,7 @@ final class BetaUserProfile implements BaseModel
     }
 
     /**
-     * Display name of the entity this profile represents. For `resold` this is the resold-to company's name.
+     * Real-world name of the entity this profile represents (company or individual). For `resold` this is the resold-to company's name.
      */
     public function withName(?string $name): self
     {
