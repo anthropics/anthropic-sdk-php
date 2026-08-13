@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.42.0 (2026-08-13)
+
+Full Changelog: [v0.41.0...v0.42.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.41.0...v0.42.0)
+
+### Features
+
+* **api:** add output_behavior to dream creation (create a new memory store or update the input store in place) ([3def5a2](https://github.com/anthropics/anthropic-sdk-php/commit/3def5a2bd9d41c2972833a4309c06d569947c502))
+
+
+### Bug Fixes
+
+* **client:** add models ([2a6eebf](https://github.com/anthropics/anthropic-sdk-php/commit/2a6eebfc0ea136a263c18744576d26efff9e83b3))
+* **streaming:** apply all message_delta fields when accumulating streamed messages ([#140](https://github.com/anthropics/anthropic-sdk-php/issues/140)) ([4fff7e7](https://github.com/anthropics/anthropic-sdk-php/commit/4fff7e786eb71209aa5f245776c785fd1c59d958))
+
+
+### Documentation
+
+* **api:** clarify that user profile name is optional for resold profiles ([87420c9](https://github.com/anthropics/anthropic-sdk-php/commit/87420c9ffe8e1fd263bb93c4526e59e378708f21))
+
 ## 0.41.0 (2026-08-06)
 
 Full Changelog: [v0.40.0...v0.41.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.40.0...v0.41.0)
