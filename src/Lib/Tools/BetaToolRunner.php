@@ -6,6 +6,7 @@ namespace Anthropic\Lib\Tools;
 
 use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Beta\Messages\BetaMessageParam;
+use Anthropic\Beta\Messages\BetaStopReason;
 use Anthropic\Beta\Messages\BetaToolUseBlock;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseModel;
@@ -254,6 +255,15 @@ final class BetaToolRunner implements \IteratorAggregate
             // @phpstan-ignore booleanNot.alwaysTrue
             if (!$this->mutated) {
                 $this->messages[] = ['role' => 'assistant', 'content' => $message->content];
+
+                // Refusal-terminated turns are terminal: the refusal may have cut a tool_use off
+                // with partial input, so executing this turn's tools would fire side effects the
+                // model never confirmed — and once middleware strips the refusal turn, their
+                // tool_results could never be replayed coherently. Surface the refusal as the
+                // final message instead.
+                if (BetaStopReason::REFUSAL->value === $message->stopReason) {
+                    break;
+                }
             }
 
             $toolResults = $this->buildToolResults($this->messages[array_key_last($this->messages)]);

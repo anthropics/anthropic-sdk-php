@@ -89,6 +89,41 @@ final class BetaToolRunnerTest extends TestCase
     }
 
     // -------------------------------------------------------------------------
+    // Refusal-terminated turn is final even when it carries a tool_use block
+    // -------------------------------------------------------------------------
+
+    #[Test]
+    public function testRefusalTurnWithToolUseIsTerminal(): void
+    {
+        $this->transporter->addResponse(
+            $this->toolUseResponse('get_weather', ['location' => 'Paris'], stopReason: 'refusal')
+        );
+        // Must never be requested: the refusal turn ends the loop.
+        $this->transporter->addResponse($this->textResponse('Sunny in Paris.'));
+
+        $called = false;
+        $tool = $this->makeWeatherTool(function () use (&$called): void {
+            $called = true;
+        });
+
+        $messages = [];
+        foreach ($this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [['role' => 'user', 'content' => 'Weather in Paris?']],
+            model: 'claude-opus-4-6',
+            tools: [$tool],
+        ) as $message) {
+            $messages[] = $message;
+        }
+
+        $this->assertFalse($called, 'Tool in a refusal-terminated turn must not be executed');
+        $this->assertCount(1, $messages);
+        $this->assertSame('refusal', $messages[0]->stopReason);
+        $this->assertInstanceOf(BetaToolUseBlock::class, $messages[0]->content[0]);
+        $this->assertCount(1, $this->transporter->getRequests());
+    }
+
+    // -------------------------------------------------------------------------
     // History: assistant message + tool results appended before next call
     // -------------------------------------------------------------------------
 
@@ -885,6 +920,7 @@ final class BetaToolRunnerTest extends TestCase
         array $input,
         string $id = 'msg_1',
         string $toolId = 'tool_1',
+        string $stopReason = 'tool_use',
     ): ResponseInterface {
         return $this->makeResponse([
             'id' => $id,
@@ -894,7 +930,7 @@ final class BetaToolRunnerTest extends TestCase
                 ['type' => 'tool_use', 'id' => $toolId, 'name' => $toolName, 'input' => $input],
             ],
             'model' => 'claude-opus-4-6',
-            'stop_reason' => 'tool_use',
+            'stop_reason' => $stopReason,
             'stop_sequence' => null,
             'context_management' => null,
             'container' => null,
