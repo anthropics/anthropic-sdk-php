@@ -34,7 +34,7 @@ final class MessagesTest extends TestCase
         $result = $this->client->beta->messages->create(
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-opus-4-6',
+            model: 'claude-opus-5',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -47,7 +47,7 @@ final class MessagesTest extends TestCase
         $result = $this->client->beta->messages->create(
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-opus-4-6',
+            model: 'claude-opus-5',
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             container: [
                 'id' => 'id',
@@ -145,7 +145,7 @@ final class MessagesTest extends TestCase
     {
         $result = $this->client->beta->messages->countTokens(
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-opus-4-6',
+            model: 'claude-opus-5',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -157,7 +157,7 @@ final class MessagesTest extends TestCase
     {
         $result = $this->client->beta->messages->countTokens(
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-opus-4-6',
+            model: 'claude-opus-5',
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             contextManagement: [
                 'edits' => [

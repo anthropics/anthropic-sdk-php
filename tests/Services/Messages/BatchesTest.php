@@ -40,7 +40,7 @@ final class BatchesTest extends TestCase
                     'params' => [
                         'maxTokens' => 1024,
                         'messages' => [['content' => 'Hello, world', 'role' => 'user']],
-                        'model' => 'claude-opus-4-6',
+                        'model' => 'claude-opus-5',
                     ],
                 ],
             ],
@@ -60,7 +60,7 @@ final class BatchesTest extends TestCase
                     'params' => [
                         'maxTokens' => 1024,
                         'messages' => [['content' => 'Hello, world', 'role' => 'user']],
-                        'model' => 'claude-opus-4-6',
+                        'model' => 'claude-opus-5',
                         'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                         'container' => 'container',
                         'inferenceGeo' => 'inference_geo',

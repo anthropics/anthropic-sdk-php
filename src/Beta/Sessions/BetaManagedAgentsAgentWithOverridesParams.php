@@ -62,7 +62,7 @@ final class BetaManagedAgentsAgentWithOverridesParams implements BaseModel
     public ?array $mcpServers;
 
     /**
-     * Replacement model. Accepts the model string, e.g. `claude-opus-4-6`, or a `model_config` object. Omit to use the agent's model.
+     * Replacement model. Accepts the model string, e.g. `claude-opus-5`, or a `model_config` object. Omit to use the agent's model.
      *
      * @var ModelVariants|null $model
      */
@@ -188,7 +188,7 @@ final class BetaManagedAgentsAgentWithOverridesParams implements BaseModel
     }
 
     /**
-     * Replacement model. Accepts the model string, e.g. `claude-opus-4-6`, or a `model_config` object. Omit to use the agent's model.
+     * Replacement model. Accepts the model string, e.g. `claude-opus-5`, or a `model_config` object. Omit to use the agent's model.
      *
      * @param ModelShape $model
      */

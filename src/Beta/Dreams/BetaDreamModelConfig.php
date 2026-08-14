@@ -23,7 +23,7 @@ final class BetaDreamModelConfig implements BaseModel
     use SdkModel;
 
     /**
-     * Model identifier, e.g. "claude-opus-4-7". 1-256 characters.
+     * Model identifier, e.g. "claude-opus-5". 1-256 characters.
      */
     #[Required]
     public string $id;
@@ -74,7 +74,7 @@ final class BetaDreamModelConfig implements BaseModel
     }
 
     /**
-     * Model identifier, e.g. "claude-opus-4-7". 1-256 characters.
+     * Model identifier, e.g. "claude-opus-5". 1-256 characters.
      */
     public function withID(string $id): self
     {

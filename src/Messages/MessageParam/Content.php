@@ -14,7 +14,6 @@ use Anthropic\Messages\ContainerUploadBlockParam;
 use Anthropic\Messages\ContentBlockParam;
 use Anthropic\Messages\DocumentBlockParam;
 use Anthropic\Messages\ImageBlockParam;
-use Anthropic\Messages\MidConversationSystemBlockParam;
 use Anthropic\Messages\RedactedThinkingBlockParam;
 use Anthropic\Messages\SearchResultBlockParam;
 use Anthropic\Messages\ServerToolUseBlockParam;
@@ -30,7 +29,7 @@ use Anthropic\Messages\WebSearchToolResultBlockParam;
 /**
  * @phpstan-import-type ContentBlockParamShape from \Anthropic\Messages\ContentBlockParam
  *
- * @phpstan-type ContentVariants = string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam|WebFetchToolResultBlockParam|CodeExecutionToolResultBlockParam|BashCodeExecutionToolResultBlockParam|TextEditorCodeExecutionToolResultBlockParam|ToolSearchToolResultBlockParam|ContainerUploadBlockParam|MidConversationSystemBlockParam>
+ * @phpstan-type ContentVariants = string|list<TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam|WebFetchToolResultBlockParam|CodeExecutionToolResultBlockParam|BashCodeExecutionToolResultBlockParam|TextEditorCodeExecutionToolResultBlockParam|ToolSearchToolResultBlockParam|ContainerUploadBlockParam>
  * @phpstan-type ContentShape = ContentVariants|list<ContentBlockParamShape>
  */
 final class Content implements ConverterSource
