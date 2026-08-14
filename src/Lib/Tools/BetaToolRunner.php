@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Lib\Tools;
 
+use Anthropic\Beta\Messages\BetaContainerParams;
 use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Beta\Messages\BetaMessageParam;
 use Anthropic\Beta\Messages\BetaStopReason;
@@ -255,6 +256,20 @@ final class BetaToolRunner implements \IteratorAggregate
             // @phpstan-ignore booleanNot.alwaysTrue
             if (!$this->mutated) {
                 $this->messages[] = ['role' => 'assistant', 'content' => $message->content];
+
+                // Container-bound server tools reject a follow-up request that omits the container the
+                // previous turn ran in, so carry its id forward unless the caller pinned one themselves.
+                $containerID = ($message->container ?? null)?->id;
+                if (null !== $containerID) {
+                    $container = $this->extraParams['container'] ?? null;
+                    if (null === $container) {
+                        $this->extraParams['container'] = $containerID;
+                    } elseif ($container instanceof BetaContainerParams && null === $container->id) {
+                        $this->extraParams['container'] = $container->withID($containerID);
+                    } elseif (is_array($container) && !isset($container['id'])) {
+                        $this->extraParams['container'] = ['id' => $containerID] + $container;
+                    }
+                }
 
                 // Refusal-terminated turns are terminal: the refusal may have cut a tool_use off
                 // with partial input, so executing this turn's tools would fire side effects the
