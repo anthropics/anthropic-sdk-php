@@ -45,7 +45,7 @@ final class EnvironmentUpdateParams implements BaseModel
     public BetaCloudConfigParams|BetaSelfHostedConfigParams|null $config;
 
     /**
-     * Updated description of the environment.
+     * Updated description of the environment. Omit to preserve; null clears to null; an empty string is stored as an empty string.
      */
     #[Optional(nullable: true)]
     public ?string $description;
@@ -130,7 +130,7 @@ final class EnvironmentUpdateParams implements BaseModel
     }
 
     /**
-     * Updated description of the environment.
+     * Updated description of the environment. Omit to preserve; null clears to null; an empty string is stored as an empty string.
      */
     public function withDescription(?string $description): self
     {

@@ -76,6 +76,7 @@ final class MemoryVersionsService implements MemoryVersionsContract
      * @param string $memoryID Query param: Query parameter for memory_id
      * @param ManagedAgentsMemoryVersionOperation|value-of<ManagedAgentsMemoryVersionOperation> $operation Query param: Query parameter for operation
      * @param string $page Query param: Query parameter for page
+     * @param string $serviceAccountID Query param: Query parameter for service_account_id
      * @param string $sessionID Query param: Query parameter for session_id
      * @param ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView> $view Query param: Query parameter for view
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
@@ -94,6 +95,7 @@ final class MemoryVersionsService implements MemoryVersionsContract
         ?string $memoryID = null,
         ManagedAgentsMemoryVersionOperation|string|null $operation = null,
         ?string $page = null,
+        ?string $serviceAccountID = null,
         ?string $sessionID = null,
         ManagedAgentsMemoryView|string|null $view = null,
         ?array $betas = null,
@@ -108,6 +110,7 @@ final class MemoryVersionsService implements MemoryVersionsContract
                 'memoryID' => $memoryID,
                 'operation' => $operation,
                 'page' => $page,
+                'serviceAccountID' => $serviceAccountID,
                 'sessionID' => $sessionID,
                 'view' => $view,
                 'betas' => $betas,

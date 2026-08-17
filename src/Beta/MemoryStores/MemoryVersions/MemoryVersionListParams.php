@@ -24,6 +24,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   memoryID?: string|null,
  *   operation?: null|ManagedAgentsMemoryVersionOperation|value-of<ManagedAgentsMemoryVersionOperation>,
  *   page?: string|null,
+ *   serviceAccountID?: string|null,
  *   sessionID?: string|null,
  *   view?: null|ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView>,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
@@ -80,6 +81,12 @@ final class MemoryVersionListParams implements BaseModel
     public ?string $page;
 
     /**
+     * Query parameter for service_account_id.
+     */
+    #[Optional]
+    public ?string $serviceAccountID;
+
+    /**
      * Query parameter for session_id.
      */
     #[Optional]
@@ -123,6 +130,7 @@ final class MemoryVersionListParams implements BaseModel
         ?string $memoryID = null,
         ManagedAgentsMemoryVersionOperation|string|null $operation = null,
         ?string $page = null,
+        ?string $serviceAccountID = null,
         ?string $sessionID = null,
         ManagedAgentsMemoryView|string|null $view = null,
         ?array $betas = null,
@@ -136,6 +144,7 @@ final class MemoryVersionListParams implements BaseModel
         null !== $memoryID && $self['memoryID'] = $memoryID;
         null !== $operation && $self['operation'] = $operation;
         null !== $page && $self['page'] = $page;
+        null !== $serviceAccountID && $self['serviceAccountID'] = $serviceAccountID;
         null !== $sessionID && $self['sessionID'] = $sessionID;
         null !== $view && $self['view'] = $view;
         null !== $betas && $self['betas'] = $betas;
@@ -219,6 +228,17 @@ final class MemoryVersionListParams implements BaseModel
     {
         $self = clone $this;
         $self['page'] = $page;
+
+        return $self;
+    }
+
+    /**
+     * Query parameter for service_account_id.
+     */
+    public function withServiceAccountID(string $serviceAccountID): self
+    {
+        $self = clone $this;
+        $self['serviceAccountID'] = $serviceAccountID;
 
         return $self;
     }
