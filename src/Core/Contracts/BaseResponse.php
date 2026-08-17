@@ -14,6 +14,10 @@ interface BaseResponse extends ResponseInterface
 {
     public function getRequest(): RequestInterface;
 
+    public function getRequestID(): ?string;
+
+    public function getWorkspaceID(): ?string;
+
     /**
      * @return R
      */
