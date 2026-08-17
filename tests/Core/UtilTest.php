@@ -67,17 +67,17 @@ class UtilTest extends TestCase
             [
                 '',
                 ['dog' => ['dog']],
-                'http://localhost?dog[0]=dog',
+                'http://localhost?dog[]=dog',
             ],
             [
                 '',
                 ['dog' => [true, false]],
-                'http://localhost?dog[0]=true&dog[1]=false',
+                'http://localhost?dog[]=true&dog[]=false',
             ],
             [
                 '',
                 ['dog' => ['dog' => ['dog']]],
-                'http://localhost?dog[dog][0]=dog',
+                'http://localhost?dog[dog][]=dog',
             ],
         ];
 
@@ -86,6 +86,69 @@ class UtilTest extends TestCase
             $actual = Util::joinUri($base, path: $path, query: $query);
             $this->assertEquals($expected, $actual);
         }
+    }
+
+    #[Test]
+    public function testJoinUriEncodesListQueryParamsWithEmptyBrackets(): void
+    {
+        $factory = Psr17FactoryDiscovery::findUriFactory();
+        $base = $factory->createUri('http://localhost');
+
+        $uri = Util::joinUri($base, path: '', query: ['types' => ['a', 'b']]);
+
+        $this->assertSame('types%5B%5D=a&types%5B%5D=b', $uri->getQuery());
+    }
+
+    #[Test]
+    public function testJoinUriQueryEncoding(): void
+    {
+        $factory = Psr17FactoryDiscovery::findUriFactory();
+        $base = $factory->createUri('http://localhost');
+        $cases = [
+            // scalars keep their existing encoding
+            [['limit' => 10, 'enabled' => true], 'limit=10&enabled=true'],
+            [['q' => 'a+b c'], 'q=a%2Bb%20c'],
+            [['k' => null, 'other' => 'x'], 'other=x'],
+            // DateTimeInterface values use the SDK's date serialization
+            [['created_at' => new \DateTimeImmutable('2026-01-02T03:04:05+00:00')], 'created_at=2026-01-02T03%3A04%3A05%2B00%3A00'],
+            // associative arrays keep their keys
+            [['created_at' => ['gt' => '1', 'lte' => '2']], 'created_at%5Bgt%5D=1&created_at%5Blte%5D=2'],
+            [['created_at[gt]' => '2026-01-01'], 'created_at%5Bgt%5D=2026-01-01'],
+            // generic map-like objects keep their associative expansion
+            [['k' => (object) ['x' => 'y']], 'k%5Bx%5D=y'],
+            // lists nested under associative keys use empty brackets
+            [['f' => ['types' => ['a', 'b']]], 'f%5Btypes%5D%5B%5D=a&f%5Btypes%5D%5B%5D=b'],
+            // non-list numeric keys are not treated as lists
+            [['k' => [5 => 'a']], 'k%5B5%5D=a'],
+            [['k' => [1 => 'a', 0 => 'b']], 'k%5B1%5D=a&k%5B0%5D=b'],
+            // empty lists are omitted, as before
+            [['k' => [], 'other' => 'x'], 'other=x'],
+        ];
+
+        foreach ($cases as [$query, $expected]) {
+            $actual = Util::joinUri($base, path: '', query: $query);
+            $this->assertSame($expected, $actual->getQuery());
+        }
+    }
+
+    #[Test]
+    public function testJoinUriMergesBaseAndPathQueries(): void
+    {
+        $factory = Psr17FactoryDiscovery::findUriFactory();
+
+        $withBaseQuery = Util::joinUri(
+            $factory->createUri('http://localhost?existing=1'),
+            path: '',
+            query: ['k' => 'v'],
+        );
+        $this->assertSame('existing=1&k=v', $withBaseQuery->getQuery());
+
+        $withPathQuery = Util::joinUri(
+            $factory->createUri('http://localhost'),
+            path: 'dog?beta=true',
+            query: ['types' => ['a']],
+        );
+        $this->assertSame('beta=true&types%5B%5D=a', $withPathQuery->getQuery());
     }
 
     #[Test]

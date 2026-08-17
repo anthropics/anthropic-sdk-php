@@ -217,6 +217,50 @@ final class Util
     }
 
     /**
+     * Encodes query params with RFC3986 escaping, emitting list values as
+     * repeated `key[]=value` pairs — the format the API expects — instead of
+     * the indexed `key[0]=value` form produced by `http_build_query`.
+     *
+     * @param array<string|int,mixed> $query
+     */
+    public static function encodeQuery(array $query): string
+    {
+        $parts = [];
+        foreach ($query as $key => $value) {
+            self::encodeQueryPart($parts, key: rawurlencode(self::strVal($key)), value: $value);
+        }
+
+        return implode('&', $parts);
+    }
+
+    /**
+     * @param list<string> $parts encoded `key=value` pairs, appended in order
+     * @param string $key RFC3986-encoded key, including any parent brackets
+     */
+    private static function encodeQueryPart(array &$parts, string $key, mixed $value): void
+    {
+        if ($value instanceof \DateTimeInterface) {
+            $value = self::strVal($value);
+        } elseif (is_object($value)) {
+            $value = get_object_vars($value);
+        }
+
+        if (is_array($value)) {
+            if (array_is_list($value)) {
+                foreach ($value as $item) {
+                    self::encodeQueryPart($parts, key: "{$key}%5B%5D", value: $item);
+                }
+            } else {
+                foreach ($value as $subKey => $item) {
+                    self::encodeQueryPart($parts, key: "{$key}%5B".rawurlencode(self::strVal($subKey)).'%5D', value: $item);
+                }
+            }
+        } elseif (!is_null($value)) {
+            $parts[] = "{$key}=".rawurlencode(self::strVal($value));
+        }
+    }
+
+    /**
      * @param array<string,mixed> $query
      */
     public static function joinUri(
@@ -252,7 +296,7 @@ final class Util
             static fn ($v) => is_bool($v) || is_numeric($v) ? self::strVal($v) : $v,
             value: $mergedQuery
         );
-        $qs = http_build_query($normalizedQuery, encoding_type: PHP_QUERY_RFC3986);
+        $qs = self::encodeQuery($normalizedQuery);
 
         return $base->withQuery($qs);
     }

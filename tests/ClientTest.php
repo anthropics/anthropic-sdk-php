@@ -225,6 +225,45 @@ class ClientTest extends TestCase
         $this->assertSame('claude-sonnet-4-5', $sent['model'] ?? null);
     }
 
+    public function testListQueryParamsUseEmptyBrackets(): void
+    {
+        $client = new Client(
+            apiKey: 'my-anthropic-api-key',
+            requestOptions: ['transporter' => $this->transporter],
+        );
+
+        $client->beta->sessions->events->list(
+            'sesn_011CZkZAtmR3yMPDzynEDxu7',
+            types: ['session.usage', 'agent.message'],
+        );
+
+        $query = $this->getLastRequest()->getUri()->getQuery();
+
+        // lists are sent as repeated `key[]=` pairs, not `key[0]=`, and the
+        // path-level `beta=true` query param is preserved
+        $this->assertSame(
+            'beta=true&types%5B%5D=session.usage&types%5B%5D=agent.message',
+            $query,
+        );
+    }
+
+    public function testExtraQueryParamsListsUseEmptyBrackets(): void
+    {
+        $client = new Client(
+            apiKey: 'my-anthropic-api-key',
+            requestOptions: ['transporter' => $this->transporter],
+        );
+
+        $client->models->list(
+            limit: 10,
+            requestOptions: ['extraQueryParams' => ['types' => ['a', 'b']]],
+        );
+
+        $query = $this->getLastRequest()->getUri()->getQuery();
+
+        $this->assertSame('limit=10&types%5B%5D=a&types%5B%5D=b', $query);
+    }
+
     public function testExtraBodyParamsOverrideTypedParams(): void
     {
         $transporter = new \Http\Mock\Client;

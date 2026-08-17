@@ -79,4 +79,14 @@ final class RequestTransformerTest extends TestCase
         self::assertSame(['k' => 'v'], json_decode((string) $built->getBody(), true));
         self::assertFalse($built->hasHeader('Content-Length'));
     }
+
+    public function testListQueryParamsKeepEmptyBracketsThroughRebuild(): void
+    {
+        $factory = new HttpFactory();
+        $req = new Request('GET', 'https://h/v1/x?beta=true&types%5B%5D=a&types%5B%5D=b', [], $factory->createStream(''));
+
+        $out = (new RequestTransformer($req, $factory))->dropQueryParam('beta')->build();
+
+        self::assertSame('types%5B%5D=a&types%5B%5D=b', $out->getUri()->getQuery());
+    }
 }

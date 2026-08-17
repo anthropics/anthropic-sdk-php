@@ -143,7 +143,7 @@ final class RequestTransformer
 
     public function build(): RequestInterface
     {
-        $uri = $this->request->getUri()->withPath($this->path)->withQuery(http_build_query($this->query));
+        $uri = $this->request->getUri()->withPath($this->path)->withQuery(Util::encodeQuery($this->query));
         $req = $this->request->withUri($uri, preserveHost: true);
 
         foreach ($this->setHeaders as $name => $v) {
