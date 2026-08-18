@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta\Sessions\Threads;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
@@ -61,7 +62,7 @@ final class EventsTest extends TestCase
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
             limit: 0,
             page: 'page',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

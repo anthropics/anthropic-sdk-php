@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta\Environments;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Environments\Work\SelfHostedWork;
 use Anthropic\Beta\Environments\Work\SelfHostedWorkHeartbeatResponse;
 use Anthropic\Beta\Environments\Work\SelfHostedWorkQueueStats;
@@ -49,7 +50,7 @@ final class WorkTest extends TestCase
         $result = $this->client->beta->environments->work->retrieve(
             'work_id',
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -76,7 +77,7 @@ final class WorkTest extends TestCase
             'work_id',
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
             metadata: ['foo' => 'string'],
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -121,7 +122,7 @@ final class WorkTest extends TestCase
         $result = $this->client->beta->environments->work->ack(
             'work_id',
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -148,7 +149,7 @@ final class WorkTest extends TestCase
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
             desiredTTLSeconds: 0,
             expectedLastHeartbeat: 'expected_last_heartbeat',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -200,7 +201,7 @@ final class WorkTest extends TestCase
             'work_id',
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
             force: true,
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\BetaCurrency;
 use Anthropic\Beta\Sessions\BetaManagedAgentsDeletedSession;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSession;
@@ -71,7 +72,7 @@ final class SessionsTest extends TestCase
             ],
             title: 'Order #1234 inquiry',
             vaultIDs: ['string'],
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

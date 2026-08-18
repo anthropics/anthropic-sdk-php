@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\UserProfiles;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\UserProfiles\UserProfileCreateParams\AccessType;
 use Anthropic\Beta\UserProfiles\UserProfileCreateParams\Relationship;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
@@ -17,6 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\UserProfilesService::create()
  *
  * @phpstan-type UserProfileCreateParamsShape = array{
+ *   accessType?: null|AccessType|value-of<AccessType>,
  *   externalID?: string|null,
  *   metadata?: array<string,string>|null,
  *   name?: string|null,
@@ -29,6 +31,14 @@ final class UserProfileCreateParams implements BaseModel
     /** @use SdkModel<UserProfileCreateParamsShape> */
     use SdkModel;
     use SdkParams;
+
+    /**
+     * How the platform uses the API on behalf of the entity this profile represents. `application`: the platform sells a product that uses the API behind the scenes, and the profile represents an individual end-user of that product. `passthrough`: the platform resells raw inference, and the profile identifies the resold-to company.
+     *
+     * @var value-of<AccessType>|null $accessType
+     */
+    #[Optional('access_type', enum: AccessType::class)]
+    public ?string $accessType;
 
     /**
      * Platform's own identifier for this user. Not enforced unique. Maximum 255 characters.
@@ -45,7 +55,7 @@ final class UserProfileCreateParams implements BaseModel
     public ?array $metadata;
 
     /**
-     * Optional for all profiles. Real-world name of the entity this profile represents (company or individual); for `resold` profiles, the resold-to company's name where known. Maximum 255 characters.
+     * Optional for all profiles. Real-world name of the entity this profile represents (company or individual); for a resold-to company (`relationship` `resold` / `access_type` `passthrough`), that company's name where known. Maximum 255 characters.
      */
     #[Optional(nullable: true)]
     public ?string $name;
@@ -76,11 +86,13 @@ final class UserProfileCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param AccessType|value-of<AccessType>|null $accessType
      * @param array<string,string>|null $metadata
      * @param Relationship|value-of<Relationship>|null $relationship
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
+        AccessType|string|null $accessType = null,
         ?string $externalID = null,
         ?array $metadata = null,
         ?string $name = null,
@@ -89,11 +101,25 @@ final class UserProfileCreateParams implements BaseModel
     ): self {
         $self = new self;
 
+        null !== $accessType && $self['accessType'] = $accessType;
         null !== $externalID && $self['externalID'] = $externalID;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $name && $self['name'] = $name;
         null !== $relationship && $self['relationship'] = $relationship;
         null !== $betas && $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    /**
+     * How the platform uses the API on behalf of the entity this profile represents. `application`: the platform sells a product that uses the API behind the scenes, and the profile represents an individual end-user of that product. `passthrough`: the platform resells raw inference, and the profile identifies the resold-to company.
+     *
+     * @param AccessType|value-of<AccessType> $accessType
+     */
+    public function withAccessType(AccessType|string $accessType): self
+    {
+        $self = clone $this;
+        $self['accessType'] = $accessType;
 
         return $self;
     }
@@ -123,7 +149,7 @@ final class UserProfileCreateParams implements BaseModel
     }
 
     /**
-     * Optional for all profiles. Real-world name of the entity this profile represents (company or individual); for `resold` profiles, the resold-to company's name where known. Maximum 255 characters.
+     * Optional for all profiles. Real-world name of the entity this profile represents (company or individual); for a resold-to company (`relationship` `resold` / `access_type` `passthrough`), that company's name where known. Maximum 255 characters.
      */
     public function withName(?string $name): self
     {

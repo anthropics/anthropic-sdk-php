@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta\Tunnels;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Tunnels\Certificates\TunnelCertificate;
 use Anthropic\Client;
 use Anthropic\Core\Util;
@@ -47,7 +48,7 @@ final class CertificatesTest extends TestCase
         $result = $this->client->beta->tunnels->certificates->create(
             'tunnel_id',
             caCertificatePem: 'ca_certificate_pem',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -80,7 +81,7 @@ final class CertificatesTest extends TestCase
         $result = $this->client->beta->tunnels->certificates->retrieve(
             'certificate_id',
             tunnelID: 'tunnel_id',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -123,7 +124,7 @@ final class CertificatesTest extends TestCase
         $result = $this->client->beta->tunnels->certificates->archive(
             'certificate_id',
             tunnelID: 'tunnel_id',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

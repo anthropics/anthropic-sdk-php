@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta\Sessions;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSendSessionEvents;
 use Anthropic\Client;
 use Anthropic\Core\Util;
@@ -81,7 +82,7 @@ final class EventsTest extends TestCase
                     'type' => 'user.message',
                 ],
             ],
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

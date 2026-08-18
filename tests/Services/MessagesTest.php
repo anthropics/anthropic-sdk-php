@@ -6,6 +6,7 @@ use Anthropic\Client;
 use Anthropic\Core\Util;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageTokensCount;
+use Anthropic\Messages\Model;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -34,7 +35,7 @@ final class MessagesTest extends TestCase
         $result = $this->client->messages->create(
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-opus-5',
+            model: Model::CLAUDE_OPUS_5,
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -47,7 +48,7 @@ final class MessagesTest extends TestCase
         $result = $this->client->messages->create(
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-opus-5',
+            model: Model::CLAUDE_OPUS_5,
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             container: 'container',
             inferenceGeo: 'inference_geo',
@@ -110,7 +111,7 @@ final class MessagesTest extends TestCase
     {
         $result = $this->client->messages->countTokens(
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-opus-5',
+            model: Model::CLAUDE_OPUS_5,
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -122,7 +123,7 @@ final class MessagesTest extends TestCase
     {
         $result = $this->client->messages->countTokens(
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-opus-5',
+            model: Model::CLAUDE_OPUS_5,
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             outputConfig: [
                 'effort' => 'low',

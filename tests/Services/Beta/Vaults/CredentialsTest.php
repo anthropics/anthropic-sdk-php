@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta\Vaults;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredential;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredentialValidation;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsDeletedCredential;
@@ -59,7 +60,7 @@ final class CredentialsTest extends TestCase
             ],
             displayName: 'Example credential',
             metadata: ['environment' => 'production'],
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -84,7 +85,7 @@ final class CredentialsTest extends TestCase
         $result = $this->client->beta->vaults->credentials->retrieve(
             'vcrd_011CZkZEMt8gZan2iYOQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -123,7 +124,7 @@ final class CredentialsTest extends TestCase
             ],
             displayName: 'Example credential',
             metadata: ['environment' => 'production'],
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -168,7 +169,7 @@ final class CredentialsTest extends TestCase
         $result = $this->client->beta->vaults->credentials->delete(
             'vcrd_011CZkZEMt8gZan2iYOQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -193,7 +194,7 @@ final class CredentialsTest extends TestCase
         $result = $this->client->beta->vaults->credentials->archive(
             'vcrd_011CZkZEMt8gZan2iYOQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -226,7 +227,7 @@ final class CredentialsTest extends TestCase
         $result = $this->client->beta->vaults->credentials->mcpOAuthValidate(
             'vcrd_011CZkZEMt8gZan2iYOQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

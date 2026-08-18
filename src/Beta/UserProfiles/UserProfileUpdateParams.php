@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\UserProfiles;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\UserProfiles\UserProfileUpdateParams\AccessType;
 use Anthropic\Beta\UserProfiles\UserProfileUpdateParams\Relationship;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
@@ -17,6 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\UserProfilesService::update()
  *
  * @phpstan-type UserProfileUpdateParamsShape = array{
+ *   accessType?: null|AccessType|value-of<AccessType>,
  *   externalID?: string|null,
  *   metadata?: array<string,string>|null,
  *   name?: string|null,
@@ -29,6 +31,14 @@ final class UserProfileUpdateParams implements BaseModel
     /** @use SdkModel<UserProfileUpdateParamsShape> */
     use SdkModel;
     use SdkParams;
+
+    /**
+     * How the platform uses the API on behalf of the entity this profile represents. `application`: the platform sells a product that uses the API behind the scenes, and the profile represents an individual end-user of that product. `passthrough`: the platform resells raw inference, and the profile identifies the resold-to company.
+     *
+     * @var value-of<AccessType>|null $accessType
+     */
+    #[Optional('access_type', enum: AccessType::class, nullable: true)]
+    public ?string $accessType;
 
     /**
      * If present, replaces the stored external_id. Omit to leave unchanged. Maximum 255 characters.
@@ -76,11 +86,13 @@ final class UserProfileUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param AccessType|value-of<AccessType>|null $accessType
      * @param array<string,string>|null $metadata
      * @param Relationship|value-of<Relationship>|null $relationship
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
+        AccessType|string|null $accessType = null,
         ?string $externalID = null,
         ?array $metadata = null,
         ?string $name = null,
@@ -89,11 +101,25 @@ final class UserProfileUpdateParams implements BaseModel
     ): self {
         $self = new self;
 
+        null !== $accessType && $self['accessType'] = $accessType;
         null !== $externalID && $self['externalID'] = $externalID;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $name && $self['name'] = $name;
         null !== $relationship && $self['relationship'] = $relationship;
         null !== $betas && $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    /**
+     * How the platform uses the API on behalf of the entity this profile represents. `application`: the platform sells a product that uses the API behind the scenes, and the profile represents an individual end-user of that product. `passthrough`: the platform resells raw inference, and the profile identifies the resold-to company.
+     *
+     * @param AccessType|value-of<AccessType>|null $accessType
+     */
+    public function withAccessType(AccessType|string|null $accessType): self
+    {
+        $self = clone $this;
+        $self['accessType'] = $accessType;
 
         return $self;
     }

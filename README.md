@@ -59,6 +59,7 @@ We provide support for streaming responses using Server-Sent Events (SSE).
 <?php
 
 use Anthropic\Client;
+use Anthropic\Messages\Model;
 
 $client = new Client(
   apiKey: getenv('ANTHROPIC_API_KEY') ?: 'my-anthropic-api-key'
@@ -67,7 +68,7 @@ $client = new Client(
 $stream = $client->messages->createStream(
   maxTokens: 1024,
   messages: [['role' => 'user', 'content' => 'Hello, Claude']],
-  model: 'claude-sonnet-5',
+  model: Model::CLAUDE_SONNET_5,
 );
 
 foreach ($stream as $message) {
@@ -170,12 +171,13 @@ When the library is unable to connect to the API, or if the API returns a non-su
 use Anthropic\Core\Exceptions\APIConnectionException;
 use Anthropic\Core\Exceptions\RateLimitException;
 use Anthropic\Core\Exceptions\APIStatusException;
+use Anthropic\Messages\Model;
 
 try {
   $message = $client->messages->create(
     maxTokens: 1024,
     messages: [['role' => 'user', 'content' => 'Hello, Claude']],
-    model: 'claude-sonnet-5',
+    model: Model::CLAUDE_SONNET_5,
   );
 } catch (APIConnectionException $e) {
   echo "The server could not be reached", PHP_EOL;
@@ -216,6 +218,7 @@ You can use the `maxRetries` option to configure or disable this:
 <?php
 
 use Anthropic\Client;
+use Anthropic\Messages\Model;
 
 // Configure the default for all requests:
 $client = new Client(requestOptions: ['maxRetries' => 0]);
@@ -224,7 +227,7 @@ $client = new Client(requestOptions: ['maxRetries' => 0]);
 $result = $client->messages->create(
   maxTokens: 1024,
   messages: [['role' => 'user', 'content' => 'Hello, Claude']],
-  model: 'claude-sonnet-5',
+  model: Model::CLAUDE_SONNET_5,
   requestOptions: ['maxRetries' => 5],
 );
 ```
@@ -272,10 +275,12 @@ Note: the `extra*` parameters of the same name overrides the documented paramete
 ```php
 <?php
 
+use Anthropic\Messages\Model;
+
 $message = $client->messages->create(
   maxTokens: 1024,
   messages: [['role' => 'user', 'content' => 'Hello, Claude']],
-  model: 'claude-sonnet-5',
+  model: Model::CLAUDE_SONNET_5,
   requestOptions: [
     'extraQueryParams' => ['my_query_parameter' => 'value'],
     'extraBodyParams' => ['my_body_parameter' => 'value'],
