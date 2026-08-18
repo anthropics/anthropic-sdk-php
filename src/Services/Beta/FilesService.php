@@ -153,7 +153,6 @@ final class FilesService implements FilesContract
      * Upload File
      *
      * @param string|FileParam $file Body param: The file to upload
-     * @param int $expiresInSeconds Body param: Seconds from upload until the file expires and its bytes become permanently unavailable. Must be between 3600 (one hour) and 7776000 (ninety days).
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
@@ -161,17 +160,10 @@ final class FilesService implements FilesContract
      */
     public function upload(
         string|FileParam $file,
-        ?int $expiresInSeconds = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): FileMetadata {
-        $params = Util::removeNulls(
-            [
-                'file' => $file,
-                'expiresInSeconds' => $expiresInSeconds,
-                'betas' => $betas,
-            ],
-        );
+        $params = Util::removeNulls(['file' => $file, 'betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->upload(params: $params, requestOptions: $requestOptions);

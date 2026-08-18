@@ -9,6 +9,7 @@ use Anthropic\Beta\UserProfiles\BetaUserProfile;
 use Anthropic\Beta\UserProfiles\BetaUserProfileEnrollmentURL;
 use Anthropic\Beta\UserProfiles\UserProfileCreateEnrollmentURLParams;
 use Anthropic\Beta\UserProfiles\UserProfileCreateParams;
+use Anthropic\Beta\UserProfiles\UserProfileCreateParams\AccessType;
 use Anthropic\Beta\UserProfiles\UserProfileCreateParams\Relationship;
 use Anthropic\Beta\UserProfiles\UserProfileListParams;
 use Anthropic\Beta\UserProfiles\UserProfileListParams\Order;
@@ -39,6 +40,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
      * Create User Profile
      *
      * @param array{
+     *   accessType?: AccessType|value-of<AccessType>,
      *   externalID?: string|null,
      *   metadata?: array<string,string>,
      *   name?: string|null,
@@ -74,7 +76,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
                 array_flip(array_keys($header_params))
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-03-24']],
+                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
                 $options,
             ),
             convert: BetaUserProfile::class,
@@ -115,7 +117,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
                 ['betas' => 'anthropic-beta']
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-03-24']],
+                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
                 $options,
             ),
             convert: BetaUserProfile::class,
@@ -129,6 +131,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
      *
      * @param string $userProfileID Path param: Path parameter user_profile_id
      * @param array{
+     *   accessType?: UserProfileUpdateParams\AccessType|value-of<UserProfileUpdateParams\AccessType>|null,
      *   externalID?: string|null,
      *   metadata?: array<string,string>,
      *   name?: string|null,
@@ -165,7 +168,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
                 array_flip(array_keys($header_params))
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-03-24']],
+                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
                 $options,
             ),
             convert: BetaUserProfile::class,
@@ -212,7 +215,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
                 ['betas' => 'anthropic-beta']
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-03-24']],
+                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
                 $options,
             ),
             convert: BetaUserProfile::class,
@@ -254,7 +257,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
                 ['betas' => 'anthropic-beta']
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-03-24']],
+                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
                 $options,
             ),
             convert: BetaUserProfileEnrollmentURL::class,
