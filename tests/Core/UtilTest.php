@@ -67,17 +67,17 @@ class UtilTest extends TestCase
             [
                 '',
                 ['dog' => ['dog']],
-                'http://localhost?dog[0]=dog',
+                'http://localhost?dog[]=dog',
             ],
             [
                 '',
                 ['dog' => [true, false]],
-                'http://localhost?dog[0]=true&dog[1]=false',
+                'http://localhost?dog[]=true&dog[]=false',
             ],
             [
                 '',
                 ['dog' => ['dog' => ['dog']]],
-                'http://localhost?dog[dog][0]=dog',
+                'http://localhost?dog[dog][]=dog',
             ],
         ];
 

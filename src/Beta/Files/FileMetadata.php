@@ -20,7 +20,6 @@ use Anthropic\Core\Contracts\BaseModel;
  *   sizeBytes: int,
  *   type: 'file',
  *   downloadable?: bool|null,
- *   expiresAt?: \DateTimeInterface|null,
  *   scope?: null|BetaFileScope|BetaFileScopeShape,
  * }
  */
@@ -78,12 +77,6 @@ final class FileMetadata implements BaseModel
     public ?bool $downloadable;
 
     /**
-     * RFC 3339 datetime string representing when the file will expire and become unavailable for download. Null if the file does not expire. For files uploaded with `expires_in_seconds`, this is the upload time plus that value.
-     */
-    #[Optional('expires_at', nullable: true)]
-    public ?\DateTimeInterface $expiresAt;
-
-    /**
      * The scope of this file, indicating the context in which it was created (e.g., a session).
      */
     #[Optional(nullable: true)]
@@ -129,7 +122,6 @@ final class FileMetadata implements BaseModel
         string $mimeType,
         int $sizeBytes,
         ?bool $downloadable = null,
-        ?\DateTimeInterface $expiresAt = null,
         BetaFileScope|array|null $scope = null,
     ): self {
         $self = new self;
@@ -141,7 +133,6 @@ final class FileMetadata implements BaseModel
         $self['sizeBytes'] = $sizeBytes;
 
         null !== $downloadable && $self['downloadable'] = $downloadable;
-        null !== $expiresAt && $self['expiresAt'] = $expiresAt;
         null !== $scope && $self['scope'] = $scope;
 
         return $self;
@@ -226,17 +217,6 @@ final class FileMetadata implements BaseModel
     {
         $self = clone $this;
         $self['downloadable'] = $downloadable;
-
-        return $self;
-    }
-
-    /**
-     * RFC 3339 datetime string representing when the file will expire and become unavailable for download. Null if the file does not expire. For files uploaded with `expires_in_seconds`, this is the upload time plus that value.
-     */
-    public function withExpiresAt(?\DateTimeInterface $expiresAt): self
-    {
-        $self = clone $this;
-        $self['expiresAt'] = $expiresAt;
 
         return $self;
     }

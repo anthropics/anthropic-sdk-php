@@ -245,16 +245,10 @@ final class Util
         parse_str($base->getQuery(), $q1);
         parse_str($parsed['query'] ?? '', $q2);
 
+        /** @var array<string,mixed> */
         $mergedQuery = array_merge_recursive($q1, $q2, $query);
 
-        /** @var array<string,mixed> */
-        $normalizedQuery = self::mapRecursive(
-            static fn ($v) => is_bool($v) || is_numeric($v) ? self::strVal($v) : $v,
-            value: $mergedQuery
-        );
-        $qs = http_build_query($normalizedQuery, encoding_type: PHP_QUERY_RFC3986);
-
-        return $base->withQuery($qs);
+        return $base->withQuery(self::encodeQuery($mergedQuery));
     }
 
     public static function isStreamingRequest(RequestInterface $request): bool
@@ -483,6 +477,40 @@ final class Util
     public static function prettyEncodeJson(mixed $obj): string
     {
         return json_encode($obj, flags: JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
+    }
+
+    /**
+     * @param array<string,mixed> $query
+     */
+    private static function encodeQuery(array $query): string
+    {
+        $pairs = [];
+        foreach ($query as $key => $val) {
+            self::writeQueryElement($pairs, key: $key, val: $val);
+        }
+
+        return implode('&', array_map(static fn ($pair) => rawurlencode($pair[0]).'='.rawurlencode($pair[1]), array: $pairs));
+    }
+
+    /**
+     * @param list<array{string, string}> $pairs
+     */
+    private static function writeQueryElement(
+        array &$pairs,
+        string $key,
+        mixed $val
+    ): void {
+        if (is_array($val) && !array_is_list($val)) {
+            foreach ($val as $name => $item) {
+                self::writeQueryElement($pairs, key: "{$key}[{$name}]", val: $item);
+            }
+        } elseif (is_array($val)) {
+            foreach ($val as $item) {
+                self::writeQueryElement($pairs, key: "{$key}[]", val: $item);
+            }
+        } elseif (!is_null($val)) {
+            $pairs[] = [$key, self::strVal($val)];
+        }
     }
 
     /**

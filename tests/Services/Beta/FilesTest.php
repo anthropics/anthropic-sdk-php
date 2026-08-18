@@ -88,7 +88,6 @@ final class FilesTest extends TestCase
     {
         $result = $this->client->beta->files->upload(
             file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
-            expiresInSeconds: 3600,
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 

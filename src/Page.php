@@ -115,7 +115,7 @@ final class Page implements BaseModel, BasePage
         $nextRequest = $this->requestInfo;
         $nextRequest['query'] = [
             ...$nextRequest['query'],
-            ...empty($prev) ? ['after_id' => $next] : ['before_id' => $prev],
+            ...(empty($prev) ? ['after_id' => $next] : ['before_id' => $prev]),
         ];
 
         // @phpstan-ignore-next-line return.type

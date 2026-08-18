@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaImageBlockParam\Source;
+use Anthropic\Beta\Messages\BetaImageBlockParam\Transformations;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -14,11 +15,13 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type SourceVariants from \Anthropic\Beta\Messages\BetaImageBlockParam\Source
  * @phpstan-import-type SourceShape from \Anthropic\Beta\Messages\BetaImageBlockParam\Source
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type TransformationsShape from \Anthropic\Beta\Messages\BetaImageBlockParam\Transformations
  *
  * @phpstan-type BetaImageBlockParamShape = array{
  *   source: SourceShape,
  *   type: 'image',
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
+ *   transformations?: null|Transformations|TransformationsShape,
  * }
  */
 final class BetaImageBlockParam implements BaseModel
@@ -39,6 +42,12 @@ final class BetaImageBlockParam implements BaseModel
      */
     #[Optional('cache_control', nullable: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
+
+    /**
+     * Configures the transformations the server applies to this image before the model observes it. Each key names a condition the server transforms images for; its value selects the transformation applied. Omitted keys keep their default behavior, and an empty object is equivalent to omitting the field.
+     */
+    #[Optional(nullable: true)]
+    public ?Transformations $transformations;
 
     /**
      * `new BetaImageBlockParam()` is missing required properties by the API.
@@ -66,16 +75,19 @@ final class BetaImageBlockParam implements BaseModel
      *
      * @param SourceShape $source
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param Transformations|TransformationsShape|null $transformations
      */
     public static function with(
         BetaBase64ImageSource|array|BetaURLImageSource|BetaFileImageSource $source,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
+        Transformations|array|null $transformations = null,
     ): self {
         $self = new self;
 
         $self['source'] = $source;
 
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $transformations && $self['transformations'] = $transformations;
 
         return $self;
     }
@@ -113,6 +125,20 @@ final class BetaImageBlockParam implements BaseModel
     ): self {
         $self = clone $this;
         $self['cacheControl'] = $cacheControl;
+
+        return $self;
+    }
+
+    /**
+     * Configures the transformations the server applies to this image before the model observes it. Each key names a condition the server transforms images for; its value selects the transformation applied. Omitted keys keep their default behavior, and an empty object is equivalent to omitting the field.
+     *
+     * @param Transformations|TransformationsShape|null $transformations
+     */
+    public function withTransformations(
+        Transformations|array|null $transformations
+    ): self {
+        $self = clone $this;
+        $self['transformations'] = $transformations;
 
         return $self;
     }

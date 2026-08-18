@@ -218,7 +218,6 @@ final class FilesRawService implements FilesRawContract
      *
      * @param array{
      *   file: string|FileParam,
-     *   expiresInSeconds?: int,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|FileUploadParams $params
      * @param RequestOpts|null $requestOptions
