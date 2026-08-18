@@ -106,10 +106,8 @@ final class TokenPage implements BaseModel, BasePage
             return null;
         }
 
-        $nextRequest = array_merge_recursive(
-            $this->requestInfo,
-            ['query' => ['page_token' => $next]]
-        );
+        $nextRequest = $this->requestInfo;
+        $nextRequest['query'] = [...$nextRequest['query'], 'page_token' => $next];
 
         // @phpstan-ignore-next-line return.type
         return [$nextRequest, $this->options];
