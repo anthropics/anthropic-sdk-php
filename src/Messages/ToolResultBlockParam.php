@@ -21,6 +21,7 @@ use Anthropic\Messages\ToolResultBlockParam\Content;
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   content?: ContentShape|null,
  *   isError?: bool|null,
+ *   toolsetName?: string|null,
  * }
  */
 final class ToolResultBlockParam implements BaseModel
@@ -47,6 +48,12 @@ final class ToolResultBlockParam implements BaseModel
 
     #[Optional('is_error')]
     public ?bool $isError;
+
+    /**
+     * For a toolset member tool_result, the toolset family of the paired tool_use.
+     */
+    #[Optional('toolset_name', nullable: true)]
+    public ?string $toolsetName;
 
     /**
      * `new ToolResultBlockParam()` is missing required properties by the API.
@@ -80,6 +87,7 @@ final class ToolResultBlockParam implements BaseModel
         CacheControlEphemeral|array|null $cacheControl = null,
         string|array|null $content = null,
         ?bool $isError = null,
+        ?string $toolsetName = null,
     ): self {
         $self = new self;
 
@@ -88,6 +96,7 @@ final class ToolResultBlockParam implements BaseModel
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $content && $self['content'] = $content;
         null !== $isError && $self['isError'] = $isError;
+        null !== $toolsetName && $self['toolsetName'] = $toolsetName;
 
         return $self;
     }
@@ -140,6 +149,17 @@ final class ToolResultBlockParam implements BaseModel
     {
         $self = clone $this;
         $self['isError'] = $isError;
+
+        return $self;
+    }
+
+    /**
+     * For a toolset member tool_result, the toolset family of the paired tool_use.
+     */
+    public function withToolsetName(?string $toolsetName): self
+    {
+        $self = clone $this;
+        $self['toolsetName'] = $toolsetName;
 
         return $self;
     }

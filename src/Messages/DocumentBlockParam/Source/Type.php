@@ -13,4 +13,6 @@ enum Type: string
     case CONTENT = 'content';
 
     case URL = 'url';
+
+    case FILE = 'file';
 }

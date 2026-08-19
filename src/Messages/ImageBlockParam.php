@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\ImageBlockParam\Source;
+use Anthropic\Messages\ImageBlockParam\Source\FileImageSource;
 use Anthropic\Messages\ImageBlockParam\Transformations;
 
 /**
@@ -35,7 +36,7 @@ final class ImageBlockParam implements BaseModel
 
     /** @var SourceVariants $source */
     #[Required(union: Source::class)]
-    public Base64ImageSource|URLImageSource $source;
+    public Base64ImageSource|URLImageSource|FileImageSource $source;
 
     /**
      * Create a cache control breakpoint at this content block.
@@ -78,7 +79,7 @@ final class ImageBlockParam implements BaseModel
      * @param Transformations|TransformationsShape|null $transformations
      */
     public static function with(
-        Base64ImageSource|array|URLImageSource $source,
+        Base64ImageSource|array|URLImageSource|FileImageSource $source,
         CacheControlEphemeral|array|null $cacheControl = null,
         Transformations|array|null $transformations = null,
     ): self {
@@ -96,7 +97,7 @@ final class ImageBlockParam implements BaseModel
      * @param SourceShape $source
      */
     public function withSource(
-        Base64ImageSource|array|URLImageSource $source
+        Base64ImageSource|array|URLImageSource|FileImageSource $source
     ): self {
         $self = clone $this;
         $self['source'] = $source;

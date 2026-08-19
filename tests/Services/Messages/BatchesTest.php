@@ -63,7 +63,16 @@ final class BatchesTest extends TestCase
                         'messages' => [['content' => 'Hello, world', 'role' => 'user']],
                         'model' => Model::CLAUDE_OPUS_5,
                         'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
-                        'container' => 'container',
+                        'container' => [
+                            'id' => 'id',
+                            'skills' => [
+                                [
+                                    'skillID' => 'pdf',
+                                    'type' => 'anthropic',
+                                    'version' => 'latest',
+                                ],
+                            ],
+                        ],
                         'inferenceGeo' => 'inference_geo',
                         'metadata' => ['userID' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
                         'outputConfig' => [

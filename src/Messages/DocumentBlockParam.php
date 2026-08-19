@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\DocumentBlockParam\Source;
+use Anthropic\Messages\DocumentBlockParam\Source\FileDocumentSource;
 
 /**
  * @phpstan-import-type SourceVariants from \Anthropic\Messages\DocumentBlockParam\Source
@@ -36,7 +37,7 @@ final class DocumentBlockParam implements BaseModel
 
     /** @var SourceVariants $source */
     #[Required(union: Source::class)]
-    public Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource $source;
+    public Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource|FileDocumentSource $source;
 
     /**
      * Create a cache control breakpoint at this content block.
@@ -82,7 +83,7 @@ final class DocumentBlockParam implements BaseModel
      * @param CitationsConfigParam|CitationsConfigParamShape|null $citations
      */
     public static function with(
-        Base64PDFSource|array|PlainTextSource|ContentBlockSource|URLPDFSource $source,
+        Base64PDFSource|array|PlainTextSource|ContentBlockSource|URLPDFSource|FileDocumentSource $source,
         CacheControlEphemeral|array|null $cacheControl = null,
         CitationsConfigParam|array|null $citations = null,
         ?string $context = null,
@@ -104,7 +105,7 @@ final class DocumentBlockParam implements BaseModel
      * @param SourceShape $source
      */
     public function withSource(
-        Base64PDFSource|array|PlainTextSource|ContentBlockSource|URLPDFSource $source,
+        Base64PDFSource|array|PlainTextSource|ContentBlockSource|URLPDFSource|FileDocumentSource $source,
     ): self {
         $self = clone $this;
         $self['source'] = $source;

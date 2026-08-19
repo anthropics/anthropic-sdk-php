@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\MessageCreateParams\Container\ContainerParams;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Messages\MessageCreateParams\System;
 
@@ -21,12 +22,14 @@ use Anthropic\Messages\MessageCreateParams\System;
  *
  * @see Anthropic\Services\MessagesService::create()
  *
+ * @phpstan-import-type ContainerVariants from \Anthropic\Messages\MessageCreateParams\Container
  * @phpstan-import-type SystemVariants from \Anthropic\Messages\MessageCreateParams\System
  * @phpstan-import-type ThinkingConfigParamVariants from \Anthropic\Messages\ThinkingConfigParam
  * @phpstan-import-type ToolChoiceVariants from \Anthropic\Messages\ToolChoice
  * @phpstan-import-type ToolUnionVariants from \Anthropic\Messages\ToolUnion
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ * @phpstan-import-type ContainerShape from \Anthropic\Messages\MessageCreateParams\Container
  * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
  * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
  * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCreateParams\System
@@ -39,7 +42,7 @@ use Anthropic\Messages\MessageCreateParams\System;
  *   messages: list<MessageParam|MessageParamShape>,
  *   model: string|Model|value-of<Model>,
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
- *   container?: string|null,
+ *   container?: ContainerShape|null,
  *   inferenceGeo?: string|null,
  *   metadata?: null|Metadata|MetadataShape,
  *   outputConfig?: null|OutputConfig|OutputConfigShape,
@@ -146,9 +149,11 @@ final class MessageCreateParams implements BaseModel
 
     /**
      * Container identifier for reuse across requests.
+     *
+     * @var ContainerVariants|null $container
      */
     #[Optional(nullable: true)]
-    public ?string $container;
+    public string|ContainerParams|null $container;
 
     /**
      * Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
@@ -357,6 +362,7 @@ final class MessageCreateParams implements BaseModel
      * @param list<MessageParam|MessageParamShape> $messages
      * @param string|Model|value-of<Model> $model
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
+     * @param ContainerShape|null $container
      * @param Metadata|MetadataShape|null $metadata
      * @param OutputConfig|OutputConfigShape|null $outputConfig
      * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
@@ -371,7 +377,7 @@ final class MessageCreateParams implements BaseModel
         array $messages,
         Model|string $model,
         CacheControlEphemeral|array|null $cacheControl = null,
-        ?string $container = null,
+        string|ContainerParams|array|null $container = null,
         ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
@@ -519,9 +525,12 @@ final class MessageCreateParams implements BaseModel
 
     /**
      * Container identifier for reuse across requests.
+     *
+     * @param ContainerShape|null $container
      */
-    public function withContainer(?string $container): self
-    {
+    public function withContainer(
+        string|ContainerParams|array|null $container
+    ): self {
         $self = clone $this;
         $self['container'] = $container;
 

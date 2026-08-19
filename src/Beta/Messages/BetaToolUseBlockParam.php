@@ -22,6 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   type: 'tool_use',
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   caller?: CallerShape|null,
+ *   toolsetName?: string|null,
  * }
  */
 final class BetaToolUseBlockParam implements BaseModel
@@ -58,6 +59,12 @@ final class BetaToolUseBlockParam implements BaseModel
     public BetaDirectCaller|BetaServerToolCaller|BetaServerToolCaller20260120|null $caller;
 
     /**
+     * For a toolset member tool_use, the toolset family this member belongs to.
+     */
+    #[Optional('toolset_name', nullable: true)]
+    public ?string $toolsetName;
+
+    /**
      * `new BetaToolUseBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -91,6 +98,7 @@ final class BetaToolUseBlockParam implements BaseModel
         string $name,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
         BetaDirectCaller|array|BetaServerToolCaller|BetaServerToolCaller20260120|null $caller = null,
+        ?string $toolsetName = null,
     ): self {
         $self = new self;
 
@@ -100,6 +108,7 @@ final class BetaToolUseBlockParam implements BaseModel
 
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $caller && $self['caller'] = $caller;
+        null !== $toolsetName && $self['toolsetName'] = $toolsetName;
 
         return $self;
     }
@@ -166,6 +175,17 @@ final class BetaToolUseBlockParam implements BaseModel
     ): self {
         $self = clone $this;
         $self['caller'] = $caller;
+
+        return $self;
+    }
+
+    /**
+     * For a toolset member tool_use, the toolset family this member belongs to.
+     */
+    public function withToolsetName(?string $toolsetName): self
+    {
+        $self = clone $this;
+        $self['toolsetName'] = $toolsetName;
 
         return $self;
     }

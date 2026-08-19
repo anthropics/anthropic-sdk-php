@@ -9,4 +9,6 @@ enum Type: string
     case BASE64 = 'base64';
 
     case URL = 'url';
+
+    case FILE = 'file';
 }
