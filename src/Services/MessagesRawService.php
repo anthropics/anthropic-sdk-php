@@ -35,7 +35,7 @@ use Anthropic\SSEStream;
  * @phpstan-import-type MessageCountTokensToolShape from \Anthropic\Messages\MessageCountTokensTool
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
- * @phpstan-import-type ContainerShape from \Anthropic\Messages\MessageCreateParams\Container
+ * @phpstan-import-type MessageCreateParamsContainerShape from \Anthropic\Messages\MessageCreateParamsContainer
  * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
  * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
  * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCreateParams\System as SystemShape1
@@ -66,7 +66,7 @@ final class MessagesRawService implements MessagesRawContract
      *   messages: list<MessageParam|MessageParamShape>,
      *   model: string|Model|value-of<Model>,
      *   cacheControl?: CacheControlEphemeral|CacheControlEphemeralShape|null,
-     *   container?: ContainerShape|null,
+     *   container?: MessageCreateParamsContainerShape|null,
      *   inferenceGeo?: string|null,
      *   metadata?: Metadata|MetadataShape,
      *   outputConfig?: OutputConfig|OutputConfigShape,
@@ -122,7 +122,7 @@ final class MessagesRawService implements MessagesRawContract
      *   messages: list<MessageParam|MessageParamShape>,
      *   model: string|Model|value-of<Model>,
      *   cacheControl?: CacheControlEphemeral|CacheControlEphemeralShape|null,
-     *   container?: ContainerShape|null,
+     *   container?: MessageCreateParamsContainerShape|null,
      *   inferenceGeo?: string|null,
      *   metadata?: Metadata|MetadataShape,
      *   outputConfig?: OutputConfig|OutputConfigShape,

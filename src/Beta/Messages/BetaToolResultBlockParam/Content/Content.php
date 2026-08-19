@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\BetaToolResultBlockParam\Content;
 
+use Anthropic\Beta\Messages\BetaBrowserStateBlockParam;
 use Anthropic\Beta\Messages\BetaImageBlockParam;
 use Anthropic\Beta\Messages\BetaRequestDocumentBlock;
 use Anthropic\Beta\Messages\BetaSearchResultBlockParam;
 use Anthropic\Beta\Messages\BetaTextBlockParam;
 use Anthropic\Beta\Messages\BetaToolReferenceBlockParam;
-use Anthropic\Beta\Messages\BetaToolResultBlockParam\Content\Content\BetaRequestBrowserStateBlock;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -22,10 +22,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type BetaSearchResultBlockParamShape from \Anthropic\Beta\Messages\BetaSearchResultBlockParam
  * @phpstan-import-type BetaRequestDocumentBlockShape from \Anthropic\Beta\Messages\BetaRequestDocumentBlock
  * @phpstan-import-type BetaToolReferenceBlockParamShape from \Anthropic\Beta\Messages\BetaToolReferenceBlockParam
- * @phpstan-import-type BetaRequestBrowserStateBlockShape from \Anthropic\Beta\Messages\BetaToolResultBlockParam\Content\Content\BetaRequestBrowserStateBlock
+ * @phpstan-import-type BetaBrowserStateBlockParamShape from \Anthropic\Beta\Messages\BetaBrowserStateBlockParam
  *
- * @phpstan-type ContentVariants = BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock|BetaToolReferenceBlockParam|BetaRequestBrowserStateBlock
- * @phpstan-type ContentShape = ContentVariants|BetaTextBlockParamShape|BetaImageBlockParamShape|BetaSearchResultBlockParamShape|BetaRequestDocumentBlockShape|BetaToolReferenceBlockParamShape|BetaRequestBrowserStateBlockShape
+ * @phpstan-type ContentVariants = BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock|BetaToolReferenceBlockParam|BetaBrowserStateBlockParam
+ * @phpstan-type ContentShape = ContentVariants|BetaTextBlockParamShape|BetaImageBlockParamShape|BetaSearchResultBlockParamShape|BetaRequestDocumentBlockShape|BetaToolReferenceBlockParamShape|BetaBrowserStateBlockParamShape
  */
 final class Content implements ConverterSource
 {
@@ -47,7 +47,7 @@ final class Content implements ConverterSource
             'search_result' => BetaSearchResultBlockParam::class,
             'document' => BetaRequestDocumentBlock::class,
             'tool_reference' => BetaToolReferenceBlockParam::class,
-            'browser_state' => BetaRequestBrowserStateBlock::class,
+            'browser_state' => BetaBrowserStateBlockParam::class,
         ];
     }
 }

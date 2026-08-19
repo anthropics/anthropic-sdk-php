@@ -9,7 +9,7 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Messages\Base64PDFSource;
 use Anthropic\Messages\ContentBlockSource;
-use Anthropic\Messages\DocumentBlockParam\Source\FileDocumentSource;
+use Anthropic\Messages\FileDocumentSource;
 use Anthropic\Messages\PlainTextSource;
 use Anthropic\Messages\URLPDFSource;
 
@@ -18,7 +18,7 @@ use Anthropic\Messages\URLPDFSource;
  * @phpstan-import-type PlainTextSourceShape from \Anthropic\Messages\PlainTextSource
  * @phpstan-import-type ContentBlockSourceShape from \Anthropic\Messages\ContentBlockSource
  * @phpstan-import-type URLPDFSourceShape from \Anthropic\Messages\URLPDFSource
- * @phpstan-import-type FileDocumentSourceShape from \Anthropic\Messages\DocumentBlockParam\Source\FileDocumentSource
+ * @phpstan-import-type FileDocumentSourceShape from \Anthropic\Messages\FileDocumentSource
  *
  * @phpstan-type SourceVariants = Base64PDFSource|PlainTextSource|ContentBlockSource|URLPDFSource|FileDocumentSource
  * @phpstan-type SourceShape = SourceVariants|Base64PDFSourceShape|PlainTextSourceShape|ContentBlockSourceShape|URLPDFSourceShape|FileDocumentSourceShape

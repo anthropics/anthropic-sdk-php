@@ -76,7 +76,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
                 array_flip(array_keys($header_params))
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-03-24']],
+                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
                 $options,
             ),
             convert: BetaUserProfile::class,
@@ -117,7 +117,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
                 ['betas' => 'anthropic-beta']
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-03-24']],
+                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
                 $options,
             ),
             convert: BetaUserProfile::class,
@@ -168,7 +168,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
                 array_flip(array_keys($header_params))
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-03-24']],
+                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
                 $options,
             ),
             convert: BetaUserProfile::class,
@@ -215,7 +215,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
                 ['betas' => 'anthropic-beta']
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-03-24']],
+                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
                 $options,
             ),
             convert: BetaUserProfile::class,
@@ -257,7 +257,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
                 ['betas' => 'anthropic-beta']
             ),
             options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-03-24']],
+                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
                 $options,
             ),
             convert: BetaUserProfileEnrollmentURL::class,

@@ -9,20 +9,18 @@ use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\ImageBlockParam\Source;
-use Anthropic\Messages\ImageBlockParam\Source\FileImageSource;
-use Anthropic\Messages\ImageBlockParam\Transformations;
 
 /**
  * @phpstan-import-type SourceVariants from \Anthropic\Messages\ImageBlockParam\Source
  * @phpstan-import-type SourceShape from \Anthropic\Messages\ImageBlockParam\Source
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
- * @phpstan-import-type TransformationsShape from \Anthropic\Messages\ImageBlockParam\Transformations
+ * @phpstan-import-type ImageTransformationsParamShape from \Anthropic\Messages\ImageTransformationsParam
  *
  * @phpstan-type ImageBlockParamShape = array{
  *   source: SourceShape,
  *   type: 'image',
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
- *   transformations?: null|Transformations|TransformationsShape,
+ *   transformations?: null|ImageTransformationsParam|ImageTransformationsParamShape,
  * }
  */
 final class ImageBlockParam implements BaseModel
@@ -48,7 +46,7 @@ final class ImageBlockParam implements BaseModel
      * Configures the transformations the server applies to this image before the model observes it. Each key names a condition the server transforms images for; its value selects the transformation applied. Omitted keys keep their default behavior, and an empty object is equivalent to omitting the field.
      */
     #[Optional(nullable: true)]
-    public ?Transformations $transformations;
+    public ?ImageTransformationsParam $transformations;
 
     /**
      * `new ImageBlockParam()` is missing required properties by the API.
@@ -76,12 +74,12 @@ final class ImageBlockParam implements BaseModel
      *
      * @param SourceShape $source
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
-     * @param Transformations|TransformationsShape|null $transformations
+     * @param ImageTransformationsParam|ImageTransformationsParamShape|null $transformations
      */
     public static function with(
         Base64ImageSource|array|URLImageSource|FileImageSource $source,
         CacheControlEphemeral|array|null $cacheControl = null,
-        Transformations|array|null $transformations = null,
+        ImageTransformationsParam|array|null $transformations = null,
     ): self {
         $self = new self;
 
@@ -133,10 +131,10 @@ final class ImageBlockParam implements BaseModel
     /**
      * Configures the transformations the server applies to this image before the model observes it. Each key names a condition the server transforms images for; its value selects the transformation applied. Omitted keys keep their default behavior, and an empty object is equivalent to omitting the field.
      *
-     * @param Transformations|TransformationsShape|null $transformations
+     * @param ImageTransformationsParam|ImageTransformationsParamShape|null $transformations
      */
     public function withTransformations(
-        Transformations|array|null $transformations
+        ImageTransformationsParam|array|null $transformations
     ): self {
         $self = clone $this;
         $self['transformations'] = $transformations;

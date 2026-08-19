@@ -7,12 +7,12 @@ namespace Anthropic\Messages\ToolResultBlockParam\Content;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
+use Anthropic\Messages\BrowserStateBlockParam;
 use Anthropic\Messages\DocumentBlockParam;
 use Anthropic\Messages\ImageBlockParam;
 use Anthropic\Messages\SearchResultBlockParam;
 use Anthropic\Messages\TextBlockParam;
 use Anthropic\Messages\ToolReferenceBlockParam;
-use Anthropic\Messages\ToolResultBlockParam\Content\Content\RequestBrowserStateBlock;
 
 /**
  * Tool reference block that can be included in tool_result content.
@@ -22,10 +22,10 @@ use Anthropic\Messages\ToolResultBlockParam\Content\Content\RequestBrowserStateB
  * @phpstan-import-type SearchResultBlockParamShape from \Anthropic\Messages\SearchResultBlockParam
  * @phpstan-import-type DocumentBlockParamShape from \Anthropic\Messages\DocumentBlockParam
  * @phpstan-import-type ToolReferenceBlockParamShape from \Anthropic\Messages\ToolReferenceBlockParam
- * @phpstan-import-type RequestBrowserStateBlockShape from \Anthropic\Messages\ToolResultBlockParam\Content\Content\RequestBrowserStateBlock
+ * @phpstan-import-type BrowserStateBlockParamShape from \Anthropic\Messages\BrowserStateBlockParam
  *
- * @phpstan-type ContentVariants = TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam|ToolReferenceBlockParam|RequestBrowserStateBlock
- * @phpstan-type ContentShape = ContentVariants|TextBlockParamShape|ImageBlockParamShape|SearchResultBlockParamShape|DocumentBlockParamShape|ToolReferenceBlockParamShape|RequestBrowserStateBlockShape
+ * @phpstan-type ContentVariants = TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam|ToolReferenceBlockParam|BrowserStateBlockParam
+ * @phpstan-type ContentShape = ContentVariants|TextBlockParamShape|ImageBlockParamShape|SearchResultBlockParamShape|DocumentBlockParamShape|ToolReferenceBlockParamShape|BrowserStateBlockParamShape
  */
 final class Content implements ConverterSource
 {
@@ -47,7 +47,7 @@ final class Content implements ConverterSource
             'search_result' => SearchResultBlockParam::class,
             'document' => DocumentBlockParam::class,
             'tool_reference' => ToolReferenceBlockParam::class,
-            'browser_state' => RequestBrowserStateBlock::class,
+            'browser_state' => BrowserStateBlockParam::class,
         ];
     }
 }

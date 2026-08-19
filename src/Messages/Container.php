@@ -7,15 +7,16 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\Container\Skill;
 
 /**
  * Information about the container used in the request (for the code execution tool).
  *
- * @phpstan-import-type SkillShape from \Anthropic\Messages\Container\Skill
+ * @phpstan-import-type ContainerSkillShape from \Anthropic\Messages\ContainerSkill
  *
  * @phpstan-type ContainerShape = array{
- *   id: string, expiresAt: \DateTimeInterface, skills: list<Skill|SkillShape>|null
+ *   id: string,
+ *   expiresAt: \DateTimeInterface,
+ *   skills: list<ContainerSkill|ContainerSkillShape>|null,
  * }
  */
 final class Container implements BaseModel
@@ -38,9 +39,9 @@ final class Container implements BaseModel
     /**
      * Skills loaded in the container.
      *
-     * @var list<Skill>|null $skills
+     * @var list<ContainerSkill>|null $skills
      */
-    #[Required(list: Skill::class)]
+    #[Required(list: ContainerSkill::class)]
     public ?array $skills;
 
     /**
@@ -67,7 +68,7 @@ final class Container implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Skill|SkillShape>|null $skills
+     * @param list<ContainerSkill|ContainerSkillShape>|null $skills
      */
     public static function with(
         string $id,
@@ -108,7 +109,7 @@ final class Container implements BaseModel
     /**
      * Skills loaded in the container.
      *
-     * @param list<Skill|SkillShape>|null $skills
+     * @param list<ContainerSkill|ContainerSkillShape>|null $skills
      */
     public function withSkills(?array $skills): self
     {

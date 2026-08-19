@@ -8,13 +8,13 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Messages\Base64ImageSource;
-use Anthropic\Messages\ImageBlockParam\Source\FileImageSource;
+use Anthropic\Messages\FileImageSource;
 use Anthropic\Messages\URLImageSource;
 
 /**
  * @phpstan-import-type Base64ImageSourceShape from \Anthropic\Messages\Base64ImageSource
  * @phpstan-import-type URLImageSourceShape from \Anthropic\Messages\URLImageSource
- * @phpstan-import-type FileImageSourceShape from \Anthropic\Messages\ImageBlockParam\Source\FileImageSource
+ * @phpstan-import-type FileImageSourceShape from \Anthropic\Messages\FileImageSource
  *
  * @phpstan-type SourceVariants = Base64ImageSource|URLImageSource|FileImageSource
  * @phpstan-type SourceShape = SourceVariants|Base64ImageSourceShape|URLImageSourceShape|FileImageSourceShape

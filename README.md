@@ -244,17 +244,17 @@ use Anthropic\Core\FileParam;
 // Pass a string with filename and content type:
 $contents = file_get_contents('/path/to/file');
 // Pass a string with filename and content type:
-$fileMetadata = $client->beta->files->upload(
+$fileMetadata = $client->files->upload(
   file: FileParam::fromString($contents, filename: '/path/to/file', contentType: '…'),
 );
 
 // Pass in only a string (where applicable)
-$fileMetadata = $client->beta->files->upload(file: '…');
+$fileMetadata = $client->files->upload(file: '…');
 
 // Pass an open resource:
 $fd = fopen('/path/to/file', 'r');
 try {
-  $fileMetadata = $client->beta->files->upload(
+  $fileMetadata = $client->files->upload(
     file: FileParam::fromResource($fd, filename: '/path/to/file', contentType: '…'),
   );
 } finally {

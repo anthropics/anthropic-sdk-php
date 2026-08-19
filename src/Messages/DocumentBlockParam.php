@@ -9,7 +9,6 @@ use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\DocumentBlockParam\Source;
-use Anthropic\Messages\DocumentBlockParam\Source\FileDocumentSource;
 
 /**
  * @phpstan-import-type SourceVariants from \Anthropic\Messages\DocumentBlockParam\Source

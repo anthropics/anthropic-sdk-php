@@ -7,8 +7,6 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
-use Anthropic\Messages\ToolUnion\BrowserToolset20260801;
-use Anthropic\Messages\ToolUnion\ComputerToolset20260801;
 
 /**
  * Code execution tool with REPL state persistence (daemon mode + gVisor checkpoint).
@@ -19,9 +17,9 @@ use Anthropic\Messages\ToolUnion\ComputerToolset20260801;
  * @phpstan-import-type CodeExecutionTool20250825Shape from \Anthropic\Messages\CodeExecutionTool20250825
  * @phpstan-import-type CodeExecutionTool20260120Shape from \Anthropic\Messages\CodeExecutionTool20260120
  * @phpstan-import-type CodeExecutionTool20260521Shape from \Anthropic\Messages\CodeExecutionTool20260521
- * @phpstan-import-type BrowserToolset20260801Shape from \Anthropic\Messages\ToolUnion\BrowserToolset20260801
+ * @phpstan-import-type BrowserToolset20260801Shape from \Anthropic\Messages\BrowserToolset20260801
  * @phpstan-import-type MemoryTool20250818Shape from \Anthropic\Messages\MemoryTool20250818
- * @phpstan-import-type ComputerToolset20260801Shape from \Anthropic\Messages\ToolUnion\ComputerToolset20260801
+ * @phpstan-import-type ComputerToolset20260801Shape from \Anthropic\Messages\ComputerToolset20260801
  * @phpstan-import-type ToolTextEditor20250124Shape from \Anthropic\Messages\ToolTextEditor20250124
  * @phpstan-import-type ToolTextEditor20250429Shape from \Anthropic\Messages\ToolTextEditor20250429
  * @phpstan-import-type ToolTextEditor20250728Shape from \Anthropic\Messages\ToolTextEditor20250728

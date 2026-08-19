@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaToolUnion\BetaBrowserToolset20260801;
-use Anthropic\Beta\Messages\BetaToolUnion\BetaComputerToolset20260801;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -20,13 +18,13 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type BetaCodeExecutionTool20250825Shape from \Anthropic\Beta\Messages\BetaCodeExecutionTool20250825
  * @phpstan-import-type BetaCodeExecutionTool20260120Shape from \Anthropic\Beta\Messages\BetaCodeExecutionTool20260120
  * @phpstan-import-type BetaCodeExecutionTool20260521Shape from \Anthropic\Beta\Messages\BetaCodeExecutionTool20260521
- * @phpstan-import-type BetaBrowserToolset20260801Shape from \Anthropic\Beta\Messages\BetaToolUnion\BetaBrowserToolset20260801
+ * @phpstan-import-type BetaBrowserToolset20260801Shape from \Anthropic\Beta\Messages\BetaBrowserToolset20260801
  * @phpstan-import-type BetaToolComputerUse20241022Shape from \Anthropic\Beta\Messages\BetaToolComputerUse20241022
  * @phpstan-import-type BetaMemoryTool20250818Shape from \Anthropic\Beta\Messages\BetaMemoryTool20250818
  * @phpstan-import-type BetaToolComputerUse20250124Shape from \Anthropic\Beta\Messages\BetaToolComputerUse20250124
  * @phpstan-import-type BetaToolTextEditor20241022Shape from \Anthropic\Beta\Messages\BetaToolTextEditor20241022
  * @phpstan-import-type BetaToolComputerUse20251124Shape from \Anthropic\Beta\Messages\BetaToolComputerUse20251124
- * @phpstan-import-type BetaComputerToolset20260801Shape from \Anthropic\Beta\Messages\BetaToolUnion\BetaComputerToolset20260801
+ * @phpstan-import-type BetaComputerToolset20260801Shape from \Anthropic\Beta\Messages\BetaComputerToolset20260801
  * @phpstan-import-type BetaToolTextEditor20250124Shape from \Anthropic\Beta\Messages\BetaToolTextEditor20250124
  * @phpstan-import-type BetaToolTextEditor20250429Shape from \Anthropic\Beta\Messages\BetaToolTextEditor20250429
  * @phpstan-import-type BetaToolTextEditor20250728Shape from \Anthropic\Beta\Messages\BetaToolTextEditor20250728
