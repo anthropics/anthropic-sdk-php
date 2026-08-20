@@ -5,17 +5,11 @@
 /**
  * Comprehensive Managed Agents example demonstrating:
  *  - Vault and credential management
- *  - Skill creation with uploaded files (requires SDK multipart fix — see NOTE below)
+ *  - Skill creation with uploaded files
  *  - Agent creation with custom tools and agent toolset
  *  - Agent versioning (create v1, update to v2, list versions)
  *  - Session creation with vault credentials
  *  - Streaming events and handling custom tool calls
- *
- * NOTE: Two SDK capabilities require fixes before they work end-to-end:
- *  1. files->upload(): missing filename= in Content-Disposition (server returns 400).
- *     Fix: Util::writeMultipartChunk() must add filename= for resource values.
- *  2. skills->create(files: [...]): array gets JSON-encoded as a single multipart part.
- *     Fix: encodeMultipartStreaming() must expand list arrays into separate parts.
  */
 
 require_once dirname(__DIR__, 2).'/vendor/autoload.php';
@@ -24,6 +18,7 @@ use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentCustomToolUseEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionEndTurn;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusIdleEvent;
 use Anthropic\Client;
+use Anthropic\Core\FileParam;
 
 $client = new Client(
     apiKey: getenv('ANTHROPIC_API_KEY') ?: 'my-anthropic-api-key'
@@ -47,20 +42,14 @@ $credential = $client->beta->vaults->credentials->create(
 );
 echo "Created credential: {$credential->id}\n";
 
-// ── Skill (requires multipart fix — see NOTE above) ───────────────────────────
+// ── Skill ─────────────────────────────────────────────────────────────────────
 
-/*
- * Once the SDK multipart encoding is fixed, skills can be created like this.
- * Each string in `files` is the raw file content; the SDK must send each as
- * a separate multipart part with Content-Disposition: filename="<path>".
- *
- * $skillMd = "# Weather Skill\n\nRetrieves current weather for a given city.\n";
- * $skill = $client->beta->skills->create(
- *     displayTitle: 'Weather Skill',
- *     files: [$skillMd]
- * );
- * echo "Created skill: {$skill->id}\n";
- */
+$skillMd = "# Weather Skill\n\nRetrieves current weather for a given city.\n";
+$skill = $client->skills->create(
+    displayName: 'Weather Skill',
+    files: [FileParam::fromString($skillMd, 'weather/SKILL.md', 'text/markdown')],
+);
+echo "Created skill: {$skill->id}\n";
 
 // ── Agent v1 with custom tool and agent toolset ───────────────────────────────
 
