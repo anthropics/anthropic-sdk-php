@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Lib\Streaming;
 
 use Anthropic\Beta\Messages\BetaClearThinking20251015EditResponse;
 use Anthropic\Beta\Messages\BetaContainer;
@@ -338,7 +338,7 @@ class MessageAccumulatorTest extends TestCase
 
     private static function fixturesDir(): string
     {
-        return dirname(__DIR__).'/fixtures';
+        return dirname(__DIR__, 3).'/fixtures';
     }
 
     private static function client(ResponseInterface $response): Client

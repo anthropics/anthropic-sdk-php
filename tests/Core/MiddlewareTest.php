@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Core;
 
 use Anthropic\Client;
 use Anthropic\Core\BaseClient;

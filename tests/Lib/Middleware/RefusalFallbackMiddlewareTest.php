@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Lib\Middleware;
 
 use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Beta\Messages\BetaOutputConfig;
@@ -34,7 +34,7 @@ use Psr\Http\Message\ResponseInterface;
 #[CoversNothing]
 class RefusalFallbackMiddlewareTest extends TestCase
 {
-    private const PRIMARY = 'fable-v5-prod';
+    private const PRIMARY = 'claude-fable-5';
     private const FALLBACK = 'claude-opus-4-8';
     private const CREDIT_BETA = 'fallback-credit-2026-07-01';
     private const SERVER_SIDE_BETA = 'server-side-fallback-2026-06-01';
@@ -542,8 +542,8 @@ class RefusalFallbackMiddlewareTest extends TestCase
 
     public function testErrorsBeforeAnyRequestWhenTheBodyCarriesServerSideFallbacks(): void
     {
-        // Gaveled (suite 200002): the server-side chain and the middleware
-        // cannot both own a request — error client-side, send nothing.
+        // The server-side chain and the middleware cannot both own a
+        // request — error client-side, send nothing.
         try {
             $this->create($this->client(), fallbacks: [['model' => 'claude-haiku-4-5']]);
             $this->fail('Expected AnthropicException to be thrown');
@@ -741,8 +741,8 @@ class RefusalFallbackMiddlewareTest extends TestCase
     {
         // The caller requests under an alias and the refusal answers under
         // a canonical id; the seam carries the caller's spelling — the
-        // request alias, exactly as sent (suite 203002).
-        $this->transporter->addResponse(self::refusal(model: 'fable-v5-canonical-20990101', token: 'tok_1'));
+        // request alias, exactly as sent.
+        $this->transporter->addResponse(self::refusal(model: 'claude-fable-5-20990101', token: 'tok_1'));
         $this->transporter->addResponse(self::message(self::FALLBACK));
 
         $message = $this->create($this->client());
