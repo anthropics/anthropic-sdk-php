@@ -34,7 +34,7 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\MessagesContract;
 
 /**
- * @phpstan-import-type ContainerShape from \Anthropic\Messages\MessageCreateParams\Container
+ * @phpstan-import-type MessageCreateParamsContainerShape from \Anthropic\Messages\MessageCreateParamsContainer
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
  * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
  * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
@@ -65,7 +65,7 @@ final class MantleMessagesService implements MessagesContract
      *
      * @param list<MessageParam|MessageParamShape> $messages
      * @param Model::CLAUDE_OPUS_4_5|Model::CLAUDE_OPUS_4_6|Model::CLAUDE_SONNET_4_5|Model::CLAUDE_HAIKU_4_5 $model
-     * @param ContainerShape|null $container
+     * @param MessageCreateParamsContainerShape|null $container
      * @param Metadata|MetadataShape $metadata
      * @param OutputConfig|OutputConfigShape $outputConfig
      * @param list<string> $stopSequences
@@ -130,7 +130,7 @@ final class MantleMessagesService implements MessagesContract
      *
      * @param list<MessageParam|MessageParamShape> $messages
      * @param Model::CLAUDE_OPUS_4_5|Model::CLAUDE_OPUS_4_6|Model::CLAUDE_SONNET_4_5|Model::CLAUDE_HAIKU_4_5 $model
-     * @param ContainerShape|null $container
+     * @param MessageCreateParamsContainerShape|null $container
      * @param Metadata|MetadataShape $metadata
      * @param OutputConfig|OutputConfigShape $outputConfig
      * @param list<string> $stopSequences
