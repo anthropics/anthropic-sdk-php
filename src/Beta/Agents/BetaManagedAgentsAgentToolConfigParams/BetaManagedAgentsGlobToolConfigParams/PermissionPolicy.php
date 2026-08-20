@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfig;
+namespace Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfigParams\BetaManagedAgentsGlobToolConfigParams;
 
 use Anthropic\Beta\Agents\BetaManagedAgentsAlwaysAllowPolicy;
 use Anthropic\Beta\Agents\BetaManagedAgentsAlwaysAskPolicy;

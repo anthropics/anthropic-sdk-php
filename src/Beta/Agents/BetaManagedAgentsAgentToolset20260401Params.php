@@ -13,12 +13,13 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Configuration for built-in agent tools. Use this to enable or disable groups of tools available to the agent.
  *
+ * @phpstan-import-type BetaManagedAgentsAgentToolConfigParamsVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfigParams
  * @phpstan-import-type BetaManagedAgentsAgentToolConfigParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfigParams
  * @phpstan-import-type BetaManagedAgentsAgentToolsetDefaultConfigParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolsetDefaultConfigParams
  *
  * @phpstan-type BetaManagedAgentsAgentToolset20260401ParamsShape = array{
  *   type: Type|value-of<Type>,
- *   configs?: list<BetaManagedAgentsAgentToolConfigParams|BetaManagedAgentsAgentToolConfigParamsShape>|null,
+ *   configs?: list<BetaManagedAgentsAgentToolConfigParamsShape>|null,
  *   defaultConfig?: null|BetaManagedAgentsAgentToolsetDefaultConfigParams|BetaManagedAgentsAgentToolsetDefaultConfigParamsShape,
  * }
  */
@@ -34,7 +35,7 @@ final class BetaManagedAgentsAgentToolset20260401Params implements BaseModel
     /**
      * Per-tool configuration overrides.
      *
-     * @var list<BetaManagedAgentsAgentToolConfigParams>|null $configs
+     * @var list<BetaManagedAgentsAgentToolConfigParamsVariants>|null $configs
      */
     #[Optional(list: BetaManagedAgentsAgentToolConfigParams::class)]
     public ?array $configs;
@@ -70,7 +71,7 @@ final class BetaManagedAgentsAgentToolset20260401Params implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Type|value-of<Type> $type
-     * @param list<BetaManagedAgentsAgentToolConfigParams|BetaManagedAgentsAgentToolConfigParamsShape>|null $configs
+     * @param list<BetaManagedAgentsAgentToolConfigParamsShape>|null $configs
      * @param BetaManagedAgentsAgentToolsetDefaultConfigParams|BetaManagedAgentsAgentToolsetDefaultConfigParamsShape|null $defaultConfig
      */
     public static function with(
@@ -102,7 +103,7 @@ final class BetaManagedAgentsAgentToolset20260401Params implements BaseModel
     /**
      * Per-tool configuration overrides.
      *
-     * @param list<BetaManagedAgentsAgentToolConfigParams|BetaManagedAgentsAgentToolConfigParamsShape> $configs
+     * @param list<BetaManagedAgentsAgentToolConfigParamsShape> $configs
      */
     public function withConfigs(array $configs): self
     {

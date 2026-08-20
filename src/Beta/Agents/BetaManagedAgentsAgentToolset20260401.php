@@ -10,11 +10,12 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type BetaManagedAgentsAgentToolConfigVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfig
  * @phpstan-import-type BetaManagedAgentsAgentToolConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfig
  * @phpstan-import-type BetaManagedAgentsAgentToolsetDefaultConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolsetDefaultConfig
  *
  * @phpstan-type BetaManagedAgentsAgentToolset20260401Shape = array{
- *   configs: list<BetaManagedAgentsAgentToolConfig|BetaManagedAgentsAgentToolConfigShape>,
+ *   configs: list<BetaManagedAgentsAgentToolConfigShape>,
  *   defaultConfig: BetaManagedAgentsAgentToolsetDefaultConfig|BetaManagedAgentsAgentToolsetDefaultConfigShape,
  *   type: Type|value-of<Type>,
  * }
@@ -24,7 +25,7 @@ final class BetaManagedAgentsAgentToolset20260401 implements BaseModel
     /** @use SdkModel<BetaManagedAgentsAgentToolset20260401Shape> */
     use SdkModel;
 
-    /** @var list<BetaManagedAgentsAgentToolConfig> $configs */
+    /** @var list<BetaManagedAgentsAgentToolConfigVariants> $configs */
     #[Required(list: BetaManagedAgentsAgentToolConfig::class)]
     public array $configs;
 
@@ -67,7 +68,7 @@ final class BetaManagedAgentsAgentToolset20260401 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaManagedAgentsAgentToolConfig|BetaManagedAgentsAgentToolConfigShape> $configs
+     * @param list<BetaManagedAgentsAgentToolConfigShape> $configs
      * @param BetaManagedAgentsAgentToolsetDefaultConfig|BetaManagedAgentsAgentToolsetDefaultConfigShape $defaultConfig
      * @param Type|value-of<Type> $type
      */
@@ -86,7 +87,7 @@ final class BetaManagedAgentsAgentToolset20260401 implements BaseModel
     }
 
     /**
-     * @param list<BetaManagedAgentsAgentToolConfig|BetaManagedAgentsAgentToolConfigShape> $configs
+     * @param list<BetaManagedAgentsAgentToolConfigShape> $configs
      */
     public function withConfigs(array $configs): self
     {

@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfigParams;
 
-/**
- * Built-in agent tool identifier.
- */
-enum Name: string
+enum Type: string
 {
     case BASH = 'bash';
 

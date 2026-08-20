@@ -72,6 +72,7 @@ final class AgentsTest extends TestCase
                             'name' => 'bash',
                             'enabled' => true,
                             'permissionPolicy' => ['type' => 'always_allow'],
+                            'type' => 'bash',
                         ],
                     ],
                     'defaultConfig' => [
