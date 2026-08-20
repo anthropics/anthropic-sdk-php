@@ -35,11 +35,11 @@ echo "Created agent: {$agent->id}\n";
 
 // Upload a file to the Files API
 $fileContents = file_get_contents(__DIR__.'/data.csv');
-$file = $client->beta->files->upload(file: FileParam::fromString($fileContents, 'data.csv', 'text/csv'));
+$file = $client->files->upload(file: FileParam::fromString($fileContents, 'data.csv', 'text/csv'));
 echo "Uploaded file: {$file->id}\n";
 
 // List files to confirm upload
-$filesList = $client->beta->files->list();
+$filesList = $client->files->list();
 echo 'Listed files: ['.implode(', ', array_map(fn ($f) => $f->id, $filesList->getItems()))."]\n";
 
 // Create a session with the file mounted as a resource
@@ -78,5 +78,5 @@ foreach ($stream as $event) {
 }
 
 // Clean up the uploaded file
-$client->beta->files->delete($file->id);
+$client->files->delete($file->id);
 echo "Deleted file: {$file->id}\n";
