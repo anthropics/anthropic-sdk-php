@@ -57,6 +57,23 @@ class ClientTest extends TestCase
         $this->assertSame('Bearer static-token', $sent->getHeaderLine('Authorization'));
     }
 
+    public function testExtraQueryParamsKeepGeneratedEncoding(): void
+    {
+        $transporter = new \Http\Mock\Client();
+        $transporter->setDefaultResponse(new \GuzzleHttp\Psr7\Response(200, ['Content-Type' => 'application/json'], '{}'));
+
+        $query = ['ids' => ['a', 'b c']];
+        $client = Client::withAccessToken('static-token', location: 'us-east5', projectId: 'p', requestOptions: ['transporter' => $transporter]);
+        $client->messages->create(maxTokens: 1, messages: [], model: 'm@v', requestOptions: ['extraQueryParams' => $query]);
+
+        $sent = $transporter->getLastRequest();
+        $this->assertInstanceOf(\Psr\Http\Message\RequestInterface::class, $sent);
+        $expected = \Anthropic\Core\Util::joinUri(new \GuzzleHttp\Psr7\Uri(), path: '', query: $query)->getQuery();
+
+        $this->assertSame('/v1/projects/p/locations/us-east5/publishers/anthropic/models/m@v:rawPredict', $sent->getUri()->getPath());
+        $this->assertSame($expected, $sent->getUri()->getQuery());
+    }
+
     private function createClientWithLocation(string $location): Client
     {
         $reflection = new \ReflectionClass(Client::class);

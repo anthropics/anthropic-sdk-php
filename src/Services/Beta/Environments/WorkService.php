@@ -118,7 +118,7 @@ final class WorkService implements WorkContract
      */
     public function list(
         string $environmentID,
-        int $limit = 20,
+        ?int $limit = null,
         ?string $page = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
@@ -282,7 +282,7 @@ final class WorkService implements WorkContract
     public function stop(
         string $workID,
         string $environmentID,
-        bool $force = false,
+        ?bool $force = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): SelfHostedWork {

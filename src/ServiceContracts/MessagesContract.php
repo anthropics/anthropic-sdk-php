@@ -7,6 +7,7 @@ namespace Anthropic\ServiceContracts;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Messages\CacheControlEphemeral;
+use Anthropic\Messages\ContainerParams;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Messages\MessageParam;
@@ -34,6 +35,7 @@ use Anthropic\RequestOptions;
  * @phpstan-import-type MessageCountTokensToolShape from \Anthropic\Messages\MessageCountTokensTool
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ * @phpstan-import-type MessageCreateParamsContainerShape from \Anthropic\Messages\MessageCreateParamsContainer
  * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
  * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
  * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCreateParams\System as SystemShape1
@@ -106,7 +108,7 @@ interface MessagesContract
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
-     * @param string|null $container body param: Container identifier for reuse across requests
+     * @param MessageCreateParamsContainerShape|null $container body param: Container identifier for reuse across requests
      * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param Metadata|MetadataShape $metadata body param: An object describing metadata about the request
      * @param OutputConfig|OutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
@@ -213,7 +215,7 @@ interface MessagesContract
         array $messages,
         Model|string $model,
         CacheControlEphemeral|array|null $cacheControl = null,
-        ?string $container = null,
+        string|ContainerParams|array|null $container = null,
         ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
@@ -292,7 +294,7 @@ interface MessagesContract
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
-     * @param string|null $container body param: Container identifier for reuse across requests
+     * @param MessageCreateParamsContainerShape|null $container body param: Container identifier for reuse across requests
      * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param Metadata|MetadataShape $metadata body param: An object describing metadata about the request
      * @param OutputConfig|OutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
@@ -401,7 +403,7 @@ interface MessagesContract
         array $messages,
         Model|string $model,
         CacheControlEphemeral|array|null $cacheControl = null,
-        ?string $container = null,
+        string|ContainerParams|array|null $container = null,
         ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,

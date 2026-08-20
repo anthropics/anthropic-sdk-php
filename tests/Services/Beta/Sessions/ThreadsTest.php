@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta\Sessions;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThread;
 use Anthropic\Client;
 use Anthropic\Core\Util;
@@ -47,7 +48,7 @@ final class ThreadsTest extends TestCase
         $result = $this->client->beta->sessions->threads->retrieve(
             'sthr_011CZkZVWa6oIjw0rgXZpnBt',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -92,7 +93,7 @@ final class ThreadsTest extends TestCase
         $result = $this->client->beta->sessions->threads->archive(
             'sthr_011CZkZVWa6oIjw0rgXZpnBt',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

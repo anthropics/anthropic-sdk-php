@@ -42,7 +42,7 @@
     "friendsofphp/php-cs-fixer": "^3",
     "google/auth": "^1.49",
     "guzzlehttp/guzzle": "^7",
-    "mcp/sdk": "^0.5",
+    "mcp/sdk": "^0.7.1",
     "nyholm/psr7": "^1",
     "pestphp/pest": "^3",
     "php-http/mock-client": "^1",

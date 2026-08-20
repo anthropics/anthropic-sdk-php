@@ -17,8 +17,7 @@ final class RequestTransformer
 
     private string $path;
 
-    /** @var array<int|string,mixed> */
-    private array $query;
+    private string $query;
 
     /** @var array<string,string> */
     private array $setHeaders = [];
@@ -30,8 +29,7 @@ final class RequestTransformer
     {
         $uri = $request->getUri();
         $this->path = $uri->getPath();
-        parse_str($uri->getQuery(), $query);
-        $this->query = $query;
+        $this->query = $uri->getQuery();
     }
 
     public function takeBodyParam(string $key): mixed
@@ -117,7 +115,10 @@ final class RequestTransformer
 
     public function dropQueryParam(string $key): static
     {
-        unset($this->query[$key]);
+        $this->query = implode('&', array_filter(
+            explode('&', $this->query),
+            static fn (string $pair) => urldecode(explode('=', $pair, 2)[0]) !== $key,
+        ));
 
         return $this;
     }
@@ -143,7 +144,7 @@ final class RequestTransformer
 
     public function build(): RequestInterface
     {
-        $uri = $this->request->getUri()->withPath($this->path)->withQuery(http_build_query($this->query));
+        $uri = $this->request->getUri()->withPath($this->path)->withQuery($this->query);
         $req = $this->request->withUri($uri, preserveHost: true);
 
         foreach ($this->setHeaders as $name => $v) {

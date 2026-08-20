@@ -120,6 +120,29 @@ final class ClientTest extends TestCase
         $this->assertNotSame('', $request->getHeaderLine('x-amz-date'));
     }
 
+    public function testExtraQueryParamsKeepGeneratedEncoding(): void
+    {
+        $client = Client::withApiKey(
+            apiKey: 'test-bedrock-api-key',
+            region: 'us-east-1',
+            requestOptions: ['transporter' => $this->transporter],
+        );
+
+        $query = ['ids' => ['a', 'b c']];
+        $client->messages->create(
+            maxTokens: 1024,
+            messages: [['content' => 'Hello', 'role' => 'user']],
+            model: 'anthropic.claude-3-5-sonnet-20241022-v2:0',
+            requestOptions: ['extraQueryParams' => $query],
+        );
+
+        $request = $this->getLastRequest();
+        $expected = Util::joinUri(Psr17FactoryDiscovery::findUriFactory()->createUri(), path: '', query: $query)->getQuery();
+
+        $this->assertSame('/model/anthropic.claude-3-5-sonnet-20241022-v2:0/invoke', $request->getUri()->getPath());
+        $this->assertSame($expected, $request->getUri()->getQuery());
+    }
+
     private function getLastRequest(): RequestInterface
     {
         $request = $this->transporter->getLastRequest();

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Beta\Files\DeletedFile;
-use Anthropic\Beta\Files\FileMetadata;
+use Anthropic\Beta\Files\BetaDeletedFile;
+use Anthropic\Beta\Files\BetaFileMetadata;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\FileParam;
@@ -47,14 +47,14 @@ final class FilesService implements FilesContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
-     * @return Page<FileMetadata>
+     * @return Page<BetaFileMetadata>
      *
      * @throws APIException
      */
     public function list(
         ?string $afterID = null,
         ?string $beforeID = null,
-        int $limit = 20,
+        ?int $limit = null,
         ?string $scopeID = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
@@ -90,7 +90,7 @@ final class FilesService implements FilesContract
         string $fileID,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
-    ): DeletedFile {
+    ): BetaDeletedFile {
         $params = Util::removeNulls(['betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type
@@ -138,7 +138,7 @@ final class FilesService implements FilesContract
         string $fileID,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
-    ): FileMetadata {
+    ): BetaFileMetadata {
         $params = Util::removeNulls(['betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type
@@ -162,7 +162,7 @@ final class FilesService implements FilesContract
         string|FileParam $file,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
-    ): FileMetadata {
+    ): BetaFileMetadata {
         $params = Util::removeNulls(['file' => $file, 'betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type

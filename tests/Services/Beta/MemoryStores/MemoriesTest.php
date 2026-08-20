@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta\MemoryStores;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\MemoryStores\Memories\ManagedAgentsDeletedMemory;
 use Anthropic\Beta\MemoryStores\Memories\ManagedAgentsMemory;
 use Anthropic\Beta\MemoryStores\Memories\ManagedAgentsMemoryView;
@@ -52,7 +53,7 @@ final class MemoriesTest extends TestCase
             content: 'content',
             path: 'xx',
             view: ManagedAgentsMemoryView::BASIC,
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -78,7 +79,7 @@ final class MemoriesTest extends TestCase
             'memory_id',
             memoryStoreID: 'memory_store_id',
             view: ManagedAgentsMemoryView::BASIC,
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -109,7 +110,7 @@ final class MemoriesTest extends TestCase
             precondition: [
                 'type' => 'content_sha256', 'contentSha256' => 'content_sha256',
             ],
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -155,7 +156,7 @@ final class MemoriesTest extends TestCase
             'memory_id',
             memoryStoreID: 'memory_store_id',
             expectedContentSha256: 'expected_content_sha256',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

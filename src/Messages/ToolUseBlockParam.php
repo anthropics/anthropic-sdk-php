@@ -22,6 +22,7 @@ use Anthropic\Messages\ToolUseBlockParam\Caller;
  *   type: 'tool_use',
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   caller?: CallerShape|null,
+ *   toolsetName?: string|null,
  * }
  */
 final class ToolUseBlockParam implements BaseModel
@@ -58,6 +59,12 @@ final class ToolUseBlockParam implements BaseModel
     public DirectCaller|ServerToolCaller|ServerToolCaller20260120|null $caller;
 
     /**
+     * For a toolset member tool_use, the toolset family this member belongs to.
+     */
+    #[Optional('toolset_name', nullable: true)]
+    public ?string $toolsetName;
+
+    /**
      * `new ToolUseBlockParam()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -91,6 +98,7 @@ final class ToolUseBlockParam implements BaseModel
         string $name,
         CacheControlEphemeral|array|null $cacheControl = null,
         DirectCaller|array|ServerToolCaller|ServerToolCaller20260120|null $caller = null,
+        ?string $toolsetName = null,
     ): self {
         $self = new self;
 
@@ -100,6 +108,7 @@ final class ToolUseBlockParam implements BaseModel
 
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $caller && $self['caller'] = $caller;
+        null !== $toolsetName && $self['toolsetName'] = $toolsetName;
 
         return $self;
     }
@@ -166,6 +175,17 @@ final class ToolUseBlockParam implements BaseModel
     ): self {
         $self = clone $this;
         $self['caller'] = $caller;
+
+        return $self;
+    }
+
+    /**
+     * For a toolset member tool_use, the toolset family this member belongs to.
+     */
+    public function withToolsetName(?string $toolsetName): self
+    {
+        $self = clone $this;
+        $self['toolsetName'] = $toolsetName;
 
         return $self;
     }

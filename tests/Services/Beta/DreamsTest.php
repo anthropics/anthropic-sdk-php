@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Dreams\BetaDream;
 use Anthropic\Client;
 use Anthropic\Core\Util;
@@ -48,7 +49,7 @@ final class DreamsTest extends TestCase
             model: 'string',
             instructions: 'x',
             outputBehavior: ['type' => 'create_new'],
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

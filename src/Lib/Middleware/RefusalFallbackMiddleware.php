@@ -24,8 +24,7 @@ use Psr\Http\Message\StreamInterface;
 
 /**
  * Middleware that retries refused `/v1/messages` requests down a fallback
- * model chain, conforming to the cross-SDK fable-fallbacks conformance
- * suite.
+ * model chain.
  *
  * ```php
  * $client = new Client(requestOptions: [
@@ -167,7 +166,7 @@ final class RefusalFallbackMiddleware implements Middleware
         }
 
         if (isset($body['fallbacks'])) {
-            // Gaveled: the server-side chain and the client-side middleware
+            // The server-side chain and the client-side middleware
             // cannot both own a request — error before anything reaches the
             // wire rather than guess which chain the caller meant.
             throw new AnthropicException(
@@ -822,7 +821,7 @@ final class RefusalFallbackMiddleware implements Middleware
                     $lastEntry = $entry;
                 }
 
-                // The blanket redemption ladder (gaveled 2026-06-07): a 400 on the
+                // The blanket redemption ladder: a 400 on the
                 // hop performing the refusal retry walks replacement redemption
                 // forms on the SAME entry - drop the claim turn (token kept), then
                 // drop the token. Walked at most once per refusal; a 400 on a LATER

@@ -39,6 +39,16 @@ final class RequestTransformerTest extends TestCase
         self::assertSame('', $out->getUri()->getQuery());
     }
 
+    public function testDropQueryParamPreservesEncodedArrayParams(): void
+    {
+        $factory = new HttpFactory();
+        $req = new Request('GET', 'https://h/v1/x?ids%5B%5D=a&beta=true&ids%5B%5D=b%20c');
+
+        $out = (new RequestTransformer($req, $factory))->dropQueryParam('beta')->build();
+
+        self::assertSame('ids%5B%5D=a&ids%5B%5D=b%20c', $out->getUri()->getQuery());
+    }
+
     public function testGetBodyParamDoesNotTriggerReencode(): void
     {
         $factory = new HttpFactory();

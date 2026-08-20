@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.43.0 (2026-08-20)
+
+Full Changelog: [v0.42.0...v0.43.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.42.0...v0.43.0)
+
+### Features
+
+* **api:** add input_transformations to beta message responses; default to the user-profiles-2026-08-18 beta ([dc61a98](https://github.com/anthropics/anthropic-sdk-php/commit/dc61a981be1f53a3d90d5114f991d9642ce3931e))
+* **api:** add support for message threads (beta) ([9b3febc](https://github.com/anthropics/anthropic-sdk-php/commit/9b3febc79c808811d64b95148cd21a5a1ebe4b63))
+* **api:** add tool configuration for Managed Agents toolsets ([a163631](https://github.com/anthropics/anthropic-sdk-php/commit/a163631b2ec0bbf2e01d028b005e5f2b5de8cf16))
+* **api:** additions to files and memory stores ([c84d91b](https://github.com/anthropics/anthropic-sdk-php/commit/c84d91b9856de3afdec3d14fc4496c6544ff2e98))
+* **api:** Files and Skills APIs are now GA; add computer use and browser use toolsets ([eccbd6c](https://github.com/anthropics/anthropic-sdk-php/commit/eccbd6ce690bad29be7b66acad7cea01ff2f9be3))
+
+
+### Bug Fixes
+
+* **api:** remove unsupported mid_conv_system content block ([d0940d2](https://github.com/anthropics/anthropic-sdk-php/commit/d0940d24b94c87c9bd76b3b98ac623fc176880c9))
+* **bedrock,foundry:** follow MessageCreateParamsContainer rename in restricted services ([#170](https://github.com/anthropics/anthropic-sdk-php/issues/170)) ([#188](https://github.com/anthropics/anthropic-sdk-php/issues/188)) ([e2d278b](https://github.com/anthropics/anthropic-sdk-php/commit/e2d278bd4378fd9a5ca153fcbe7dd3b55e3d270b))
+* **bedrock,vertex:** preserve encoded query params ([#178](https://github.com/anthropics/anthropic-sdk-php/issues/178)) ([#187](https://github.com/anthropics/anthropic-sdk-php/issues/187)) ([8623ab9](https://github.com/anthropics/anthropic-sdk-php/commit/8623ab9bec94acd5fdbf705e4b85637884a1e018))
+* **client:** do not send schema defaults for omitted optional params ([070d76b](https://github.com/anthropics/anthropic-sdk-php/commit/070d76bb507e6da7606141691aeafa1a48c0fdfd))
+* **tool-runner:** forward the server-assigned container on follow-up requests ([#160](https://github.com/anthropics/anthropic-sdk-php/issues/160)) ([0a9497c](https://github.com/anthropics/anthropic-sdk-php/commit/0a9497c97accfd759dd108e419ac08b5861dc2b9))
+* **tool-runner:** stop on refusal instead of executing tools ([#144](https://github.com/anthropics/anthropic-sdk-php/issues/144)) ([70040a2](https://github.com/anthropics/anthropic-sdk-php/commit/70040a2a2bad16102fb9e369ba4efdd1bb532018))
+
+
+### Chores
+
+* **api:** expose Managed Agents per-tool config types at top level ([2a50464](https://github.com/anthropics/anthropic-sdk-php/commit/2a504648c76eec308d5d1e39f1ac8b11e5085c29))
+* **api:** share the computer use and browser use toolset config models ([dc61a98](https://github.com/anthropics/anthropic-sdk-php/commit/dc61a981be1f53a3d90d5114f991d9642ce3931e))
+* **deps:** bump mcp/sdk dev dependency ([f436e41](https://github.com/anthropics/anthropic-sdk-php/commit/f436e41041e1eedf50d48f837b145de577aa1925))
+* use model enum constants in generated examples and tests ([e72da8b](https://github.com/anthropics/anthropic-sdk-php/commit/e72da8b975a791024182339c18fb7a5e66ff4446))
+
+
+### Documentation
+
+* **api:** describe what a resolved skill reference's version carries ([3bb98d9](https://github.com/anthropics/anthropic-sdk-php/commit/3bb98d9f06526730a54ce335861630d924b62cab))
+* **examples:** use GA files resource in agents file example ([#169](https://github.com/anthropics/anthropic-sdk-php/issues/169)) ([#186](https://github.com/anthropics/anthropic-sdk-php/issues/186)) ([0d111a2](https://github.com/anthropics/anthropic-sdk-php/commit/0d111a2a24ce82b9b131cae970993abed82df5f8))
+
 ## 0.42.0 (2026-08-13)
 
 Full Changelog: [v0.41.0...v0.42.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.41.0...v0.42.0)

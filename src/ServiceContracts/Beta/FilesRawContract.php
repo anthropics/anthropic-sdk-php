@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts\Beta;
 
-use Anthropic\Beta\Files\DeletedFile;
+use Anthropic\Beta\Files\BetaDeletedFile;
+use Anthropic\Beta\Files\BetaFileMetadata;
 use Anthropic\Beta\Files\FileDeleteParams;
 use Anthropic\Beta\Files\FileDownloadParams;
 use Anthropic\Beta\Files\FileListParams;
-use Anthropic\Beta\Files\FileMetadata;
 use Anthropic\Beta\Files\FileRetrieveMetadataParams;
 use Anthropic\Beta\Files\FileUploadParams;
 use Anthropic\Core\Contracts\BaseResponse;
@@ -27,7 +27,7 @@ interface FilesRawContract
      * @param array<string,mixed>|FileListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<Page<FileMetadata>>
+     * @return BaseResponse<Page<BetaFileMetadata>>
      *
      * @throws APIException
      */
@@ -43,7 +43,7 @@ interface FilesRawContract
      * @param array<string,mixed>|FileDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<DeletedFile>
+     * @return BaseResponse<BetaDeletedFile>
      *
      * @throws APIException
      */
@@ -77,7 +77,7 @@ interface FilesRawContract
      * @param array<string,mixed>|FileRetrieveMetadataParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<FileMetadata>
+     * @return BaseResponse<BetaFileMetadata>
      *
      * @throws APIException
      */
@@ -93,7 +93,7 @@ interface FilesRawContract
      * @param array<string,mixed>|FileUploadParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<FileMetadata>
+     * @return BaseResponse<BetaFileMetadata>
      *
      * @throws APIException
      */

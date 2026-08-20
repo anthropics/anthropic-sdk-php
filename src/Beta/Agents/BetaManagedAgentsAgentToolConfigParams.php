@@ -4,133 +4,48 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Agents;
 
-use Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfigParams\Name;
-use Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfigParams\PermissionPolicy;
-use Anthropic\Core\Attributes\Optional;
-use Anthropic\Core\Attributes\Required;
-use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Concerns\SdkUnion;
+use Anthropic\Core\Conversion\Contracts\Converter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * Configuration override for a specific tool within a toolset.
  *
- * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfigParams\PermissionPolicy
- * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfigParams\PermissionPolicy
+ * @phpstan-import-type BetaManagedAgentsBashToolConfigParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsBashToolConfigParams
+ * @phpstan-import-type BetaManagedAgentsEditToolConfigParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsEditToolConfigParams
+ * @phpstan-import-type BetaManagedAgentsReadToolConfigParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsReadToolConfigParams
+ * @phpstan-import-type BetaManagedAgentsWriteToolConfigParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsWriteToolConfigParams
+ * @phpstan-import-type BetaManagedAgentsGlobToolConfigParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsGlobToolConfigParams
+ * @phpstan-import-type BetaManagedAgentsGrepToolConfigParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsGrepToolConfigParams
+ * @phpstan-import-type BetaManagedAgentsWebFetchToolConfigParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsWebFetchToolConfigParams
+ * @phpstan-import-type BetaManagedAgentsWebSearchToolConfigParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsWebSearchToolConfigParams
  *
- * @phpstan-type BetaManagedAgentsAgentToolConfigParamsShape = array{
- *   name: Name|value-of<Name>,
- *   enabled?: bool|null,
- *   permissionPolicy?: PermissionPolicyShape|null,
- * }
+ * @phpstan-type BetaManagedAgentsAgentToolConfigParamsVariants = BetaManagedAgentsBashToolConfigParams|BetaManagedAgentsEditToolConfigParams|BetaManagedAgentsReadToolConfigParams|BetaManagedAgentsWriteToolConfigParams|BetaManagedAgentsGlobToolConfigParams|BetaManagedAgentsGrepToolConfigParams|BetaManagedAgentsWebFetchToolConfigParams|BetaManagedAgentsWebSearchToolConfigParams
+ * @phpstan-type BetaManagedAgentsAgentToolConfigParamsShape = BetaManagedAgentsAgentToolConfigParamsVariants|BetaManagedAgentsBashToolConfigParamsShape|BetaManagedAgentsEditToolConfigParamsShape|BetaManagedAgentsReadToolConfigParamsShape|BetaManagedAgentsWriteToolConfigParamsShape|BetaManagedAgentsGlobToolConfigParamsShape|BetaManagedAgentsGrepToolConfigParamsShape|BetaManagedAgentsWebFetchToolConfigParamsShape|BetaManagedAgentsWebSearchToolConfigParamsShape
  */
-final class BetaManagedAgentsAgentToolConfigParams implements BaseModel
+final class BetaManagedAgentsAgentToolConfigParams implements ConverterSource
 {
-    /** @use SdkModel<BetaManagedAgentsAgentToolConfigParamsShape> */
-    use SdkModel;
+    use SdkUnion;
 
-    /**
-     * Built-in agent tool identifier.
-     *
-     * @var value-of<Name> $name
-     */
-    #[Required(enum: Name::class)]
-    public string $name;
-
-    /**
-     * Whether this tool is enabled and available to Claude. Overrides the default_config setting.
-     */
-    #[Optional(nullable: true)]
-    public ?bool $enabled;
-
-    /**
-     * Permission policy for tool execution.
-     *
-     * @var PermissionPolicyVariants|null $permissionPolicy
-     */
-    #[Optional(
-        'permission_policy',
-        union: PermissionPolicy::class,
-        nullable: true
-    )]
-    public BetaManagedAgentsAlwaysAllowPolicy|BetaManagedAgentsAlwaysAskPolicy|null $permissionPolicy;
-
-    /**
-     * `new BetaManagedAgentsAgentToolConfigParams()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * BetaManagedAgentsAgentToolConfigParams::with(name: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new BetaManagedAgentsAgentToolConfigParams)->withName(...)
-     * ```
-     */
-    public function __construct()
+    public static function discriminator(): string
     {
-        $this->initialize();
+        return 'type';
     }
 
     /**
-     * Construct an instance from the required parameters.
-     *
-     * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Name|value-of<Name> $name
-     * @param PermissionPolicyShape|null $permissionPolicy
+     * @return list<string|Converter|ConverterSource>|array<string,string|Converter|ConverterSource>
      */
-    public static function with(
-        Name|string $name,
-        ?bool $enabled = null,
-        BetaManagedAgentsAlwaysAllowPolicy|array|BetaManagedAgentsAlwaysAskPolicy|null $permissionPolicy = null,
-    ): self {
-        $self = new self;
-
-        $self['name'] = $name;
-
-        null !== $enabled && $self['enabled'] = $enabled;
-        null !== $permissionPolicy && $self['permissionPolicy'] = $permissionPolicy;
-
-        return $self;
-    }
-
-    /**
-     * Built-in agent tool identifier.
-     *
-     * @param Name|value-of<Name> $name
-     */
-    public function withName(Name|string $name): self
+    public static function variants(): array
     {
-        $self = clone $this;
-        $self['name'] = $name;
-
-        return $self;
-    }
-
-    /**
-     * Whether this tool is enabled and available to Claude. Overrides the default_config setting.
-     */
-    public function withEnabled(?bool $enabled): self
-    {
-        $self = clone $this;
-        $self['enabled'] = $enabled;
-
-        return $self;
-    }
-
-    /**
-     * Permission policy for tool execution.
-     *
-     * @param PermissionPolicyShape|null $permissionPolicy
-     */
-    public function withPermissionPolicy(
-        BetaManagedAgentsAlwaysAllowPolicy|array|BetaManagedAgentsAlwaysAskPolicy|null $permissionPolicy,
-    ): self {
-        $self = clone $this;
-        $self['permissionPolicy'] = $permissionPolicy;
-
-        return $self;
+        return [
+            'bash' => BetaManagedAgentsBashToolConfigParams::class,
+            'edit' => BetaManagedAgentsEditToolConfigParams::class,
+            'read' => BetaManagedAgentsReadToolConfigParams::class,
+            'write' => BetaManagedAgentsWriteToolConfigParams::class,
+            'glob' => BetaManagedAgentsGlobToolConfigParams::class,
+            'grep' => BetaManagedAgentsGrepToolConfigParams::class,
+            'web_fetch' => BetaManagedAgentsWebFetchToolConfigParams::class,
+            'web_search' => BetaManagedAgentsWebSearchToolConfigParams::class,
+        ];
     }
 }

@@ -2,10 +2,12 @@
 
 namespace Tests\Services\Beta\Messages;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Client;
 use Anthropic\Core\Util;
+use Anthropic\Messages\Model;
 use Anthropic\Page;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -40,7 +42,7 @@ final class BatchesTest extends TestCase
                     'params' => [
                         'maxTokens' => 1024,
                         'messages' => [['content' => 'Hello, world', 'role' => 'user']],
-                        'model' => 'claude-opus-4-6',
+                        'model' => Model::CLAUDE_OPUS_5,
                     ],
                 ],
             ],
@@ -60,7 +62,7 @@ final class BatchesTest extends TestCase
                     'params' => [
                         'maxTokens' => 1024,
                         'messages' => [['content' => 'Hello, world', 'role' => 'user']],
-                        'model' => 'claude-opus-4-6',
+                        'model' => Model::CLAUDE_OPUS_5,
                         'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                         'container' => [
                             'id' => 'id',
@@ -161,7 +163,7 @@ final class BatchesTest extends TestCase
                     ],
                 ],
             ],
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             userProfileID: 'anthropic-user-profile-id',
         );
 

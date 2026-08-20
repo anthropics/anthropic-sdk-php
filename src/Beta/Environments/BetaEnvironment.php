@@ -22,7 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   archivedAt: string|null,
  *   config: ConfigShape,
  *   createdAt: string,
- *   description: string,
+ *   description: string|null,
  *   metadata: array<string,string>,
  *   name: string,
  *   type: 'environment',
@@ -70,10 +70,10 @@ final class BetaEnvironment implements BaseModel
     public string $createdAt;
 
     /**
-     * User-provided description for the environment.
+     * User-provided description for the environment; null when unset.
      */
     #[Required]
-    public string $description;
+    public ?string $description;
 
     /**
      * User-provided metadata key-value pairs.
@@ -153,7 +153,7 @@ final class BetaEnvironment implements BaseModel
         ?string $archivedAt,
         BetaCloudConfig|array|BetaSelfHostedConfig $config,
         string $createdAt,
-        string $description,
+        ?string $description,
         array $metadata,
         string $name,
         string $updatedAt,
@@ -223,9 +223,9 @@ final class BetaEnvironment implements BaseModel
     }
 
     /**
-     * User-provided description for the environment.
+     * User-provided description for the environment; null when unset.
      */
-    public function withDescription(string $description): self
+    public function withDescription(?string $description): self
     {
         $self = clone $this;
         $self['description'] = $description;

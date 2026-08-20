@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Skills\SkillDeleteResponse;
 use Anthropic\Beta\Skills\SkillGetResponse;
 use Anthropic\Beta\Skills\SkillListResponse;
@@ -53,7 +54,7 @@ final class SkillsTest extends TestCase
                 FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
             ],
             displayTitle: 'display_title',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

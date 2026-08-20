@@ -161,10 +161,66 @@ class ClientTest extends TestCase
         $this->assertNull($e->type);
     }
 
+    public function testStatusErrorRequestIDAndWorkspaceID(): void
+    {
+        $e = $this->makeErrorRequest(
+            ['message' => 'Bad request'],
+            headers: ['request-id' => 'req_123', 'anthropic-workspace-id' => 'wrkspc_123'],
+        );
+
+        $this->assertSame('req_123', $e->getRequestID());
+        $this->assertSame('wrkspc_123', $e->getWorkspaceID());
+    }
+
+    public function testStatusErrorRequestIDAndWorkspaceIDAbsent(): void
+    {
+        $e = $this->makeErrorRequest(['message' => 'Bad request']);
+
+        $this->assertNull($e->getRequestID());
+        $this->assertNull($e->getWorkspaceID());
+    }
+
+    public function testRawResponseRequestIDAndWorkspaceID(): void
+    {
+        $mockRsp = Psr17FactoryDiscovery::findResponseFactory()
+            ->createResponse()
+            ->withStatus(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->withHeader('request-id', 'req_123')
+            ->withHeader('anthropic-workspace-id', 'wrkspc_123')
+            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream('{}'))
+        ;
+        $this->transporter->setDefaultResponse($mockRsp);
+
+        $client = new Client(
+            apiKey: 'my-anthropic-api-key',
+            requestOptions: ['transporter' => $this->transporter],
+        );
+
+        $response = $client->messages->raw->create(['maxTokens' => 1024, 'messages' => [], 'model' => 'claude-opus-4-6']);
+
+        $this->assertSame('req_123', $response->getRequestID());
+        $this->assertSame('wrkspc_123', $response->getWorkspaceID());
+    }
+
+    public function testRawResponseRequestIDAndWorkspaceIDAbsent(): void
+    {
+        $client = new Client(
+            apiKey: 'my-anthropic-api-key',
+            requestOptions: ['transporter' => $this->transporter],
+        );
+
+        $response = $client->messages->raw->create(['maxTokens' => 1024, 'messages' => [], 'model' => 'claude-opus-4-6']);
+
+        $this->assertNull($response->getRequestID());
+        $this->assertNull($response->getWorkspaceID());
+    }
+
     /**
      * @param array<mixed> $body
+     * @param array<string, string> $headers
      */
-    private function makeErrorRequest(array $body, int $status = 400): APIStatusException
+    private function makeErrorRequest(array $body, int $status = 400, array $headers = []): APIStatusException
     {
         $mockRsp = Psr17FactoryDiscovery::findResponseFactory()
             ->createResponse()
@@ -172,6 +228,9 @@ class ClientTest extends TestCase
             ->withHeader('Content-Type', 'application/json')
             ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(json_encode($body, flags: Util::JSON_ENCODE_FLAGS) ?: ''))
         ;
+        foreach ($headers as $name => $value) {
+            $mockRsp = $mockRsp->withHeader($name, $value);
+        }
 
         $this->transporter->setDefaultResponse($mockRsp);
 

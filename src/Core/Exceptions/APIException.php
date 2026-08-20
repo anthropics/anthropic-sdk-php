@@ -20,4 +20,14 @@ class APIException extends AnthropicException
     ) {
         parent::__construct(message: $message, previous: $previous);
     }
+
+    public function getRequestID(): ?string
+    {
+        return $this->response?->getHeaderLine('request-id') ?: null;
+    }
+
+    public function getWorkspaceID(): ?string
+    {
+        return $this->response?->getHeaderLine('anthropic-workspace-id') ?: null;
+    }
 }

@@ -97,7 +97,7 @@ final class ManagedAgentsMemoryVersion implements BaseModel
      * @var ManagedAgentsActorVariants|null $createdBy
      */
     #[Optional('created_by', union: ManagedAgentsActor::class)]
-    public ManagedAgentsSessionActor|ManagedAgentsAPIActor|ManagedAgentsUserActor|null $createdBy;
+    public ManagedAgentsSessionActor|ManagedAgentsAPIActor|ManagedAgentsUserActor|ManagedAgentsServiceAccountActor|null $createdBy;
 
     /**
      * The memory's path at the time of this write. `null` if and only if `redacted_at` is set.
@@ -117,7 +117,7 @@ final class ManagedAgentsMemoryVersion implements BaseModel
      * @var ManagedAgentsActorVariants|null $redactedBy
      */
     #[Optional('redacted_by', union: ManagedAgentsActor::class)]
-    public ManagedAgentsSessionActor|ManagedAgentsAPIActor|ManagedAgentsUserActor|null $redactedBy;
+    public ManagedAgentsSessionActor|ManagedAgentsAPIActor|ManagedAgentsUserActor|ManagedAgentsServiceAccountActor|null $redactedBy;
 
     /**
      * `new ManagedAgentsMemoryVersion()` is missing required properties by the API.
@@ -171,10 +171,10 @@ final class ManagedAgentsMemoryVersion implements BaseModel
         ?string $content = null,
         ?string $contentSha256 = null,
         ?int $contentSizeBytes = null,
-        ManagedAgentsSessionActor|array|ManagedAgentsAPIActor|ManagedAgentsUserActor|null $createdBy = null,
+        ManagedAgentsSessionActor|array|ManagedAgentsAPIActor|ManagedAgentsUserActor|ManagedAgentsServiceAccountActor|null $createdBy = null,
         ?string $path = null,
         ?\DateTimeInterface $redactedAt = null,
-        ManagedAgentsSessionActor|array|ManagedAgentsAPIActor|ManagedAgentsUserActor|null $redactedBy = null,
+        ManagedAgentsSessionActor|array|ManagedAgentsAPIActor|ManagedAgentsUserActor|ManagedAgentsServiceAccountActor|null $redactedBy = null,
     ): self {
         $self = new self;
 
@@ -304,7 +304,7 @@ final class ManagedAgentsMemoryVersion implements BaseModel
      * @param ManagedAgentsActorShape $createdBy
      */
     public function withCreatedBy(
-        ManagedAgentsSessionActor|array|ManagedAgentsAPIActor|ManagedAgentsUserActor $createdBy,
+        ManagedAgentsSessionActor|array|ManagedAgentsAPIActor|ManagedAgentsUserActor|ManagedAgentsServiceAccountActor $createdBy,
     ): self {
         $self = clone $this;
         $self['createdBy'] = $createdBy;
@@ -340,7 +340,7 @@ final class ManagedAgentsMemoryVersion implements BaseModel
      * @param ManagedAgentsActorShape $redactedBy
      */
     public function withRedactedBy(
-        ManagedAgentsSessionActor|array|ManagedAgentsAPIActor|ManagedAgentsUserActor $redactedBy,
+        ManagedAgentsSessionActor|array|ManagedAgentsAPIActor|ManagedAgentsUserActor|ManagedAgentsServiceAccountActor $redactedBy,
     ): self {
         $self = clone $this;
         $self['redactedBy'] = $redactedBy;

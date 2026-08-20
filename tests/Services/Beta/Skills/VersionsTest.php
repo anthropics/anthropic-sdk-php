@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta\Skills;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Skills\Versions\VersionDeleteResponse;
 use Anthropic\Beta\Skills\Versions\VersionGetResponse;
 use Anthropic\Beta\Skills\Versions\VersionListResponse;
@@ -54,7 +55,7 @@ final class VersionsTest extends TestCase
             files: [
                 FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
             ],
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -79,7 +80,7 @@ final class VersionsTest extends TestCase
         $result = $this->client->beta->skills->versions->retrieve(
             'version',
             skillID: 'skill_id',
-            betas: ['message-batches-2024-09-24']
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -118,7 +119,7 @@ final class VersionsTest extends TestCase
         $result = $this->client->beta->skills->versions->delete(
             'version',
             skillID: 'skill_id',
-            betas: ['message-batches-2024-09-24']
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -143,7 +144,7 @@ final class VersionsTest extends TestCase
         $result = $this->client->beta->skills->versions->download(
             'version',
             skillID: 'skill_id',
-            betas: ['message-batches-2024-09-24']
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

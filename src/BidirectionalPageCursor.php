@@ -106,10 +106,8 @@ final class BidirectionalPageCursor implements BaseModel, BasePage
             return null;
         }
 
-        $nextRequest = array_merge_recursive(
-            $this->requestInfo,
-            ['query' => ['page' => $next]]
-        );
+        $nextRequest = $this->requestInfo;
+        $nextRequest['query'] = [...$nextRequest['query'], 'page' => $next];
 
         // @phpstan-ignore-next-line return.type
         return [$nextRequest, $this->options];

@@ -11,8 +11,10 @@ use Anthropic\Lib\Credentials\CredentialResult;
 use Anthropic\Lib\Credentials\DefaultCredentials;
 use Anthropic\Lib\Credentials\TokenCache;
 use Anthropic\Services\BetaService;
+use Anthropic\Services\FilesService;
 use Anthropic\Services\MessagesService;
 use Anthropic\Services\ModelsService;
+use Anthropic\Services\SkillsService;
 use Http\Discovery\Exception\NotFoundException;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
@@ -40,6 +42,16 @@ class Client extends BaseClient
      * @api
      */
     public ModelsService $models;
+
+    /**
+     * @api
+     */
+    public FilesService $files;
+
+    /**
+     * @api
+     */
+    public SkillsService $skills;
 
     /**
      * @api
@@ -97,7 +109,7 @@ class Client extends BaseClient
             'Accept' => 'application/json',
             'User-Agent' => sprintf('anthropic/PHP %s', VERSION),
             'X-Stainless-Lang' => 'php',
-            'X-Stainless-Package-Version' => '0.17.1',
+            'X-Stainless-Package-Version' => VERSION,
             'X-Stainless-Arch' => Util::machtype(),
             'X-Stainless-OS' => Util::ostype(),
             'X-Stainless-Runtime' => php_sapi_name(),
@@ -134,6 +146,8 @@ class Client extends BaseClient
 
         $this->messages = new MessagesService($this);
         $this->models = new ModelsService($this);
+        $this->files = new FilesService($this);
+        $this->skills = new SkillsService($this);
         $this->beta = new BetaService($this);
     }
 

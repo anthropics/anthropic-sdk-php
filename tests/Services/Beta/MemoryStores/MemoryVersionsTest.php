@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta\MemoryStores;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\MemoryStores\Memories\ManagedAgentsMemoryView;
 use Anthropic\Beta\MemoryStores\MemoryVersions\ManagedAgentsMemoryVersion;
 use Anthropic\Client;
@@ -49,7 +50,7 @@ final class MemoryVersionsTest extends TestCase
             'memory_version_id',
             memoryStoreID: 'memory_store_id',
             view: ManagedAgentsMemoryView::BASIC,
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -94,7 +95,7 @@ final class MemoryVersionsTest extends TestCase
         $result = $this->client->beta->memoryStores->memoryVersions->redact(
             'memory_version_id',
             memoryStoreID: 'memory_store_id',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

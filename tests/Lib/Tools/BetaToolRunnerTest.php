@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Lib\Tools;
 
+use Anthropic\Beta\Messages\BetaContainerParams;
 use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Beta\Messages\BetaRequestToolAdditionBlock;
 use Anthropic\Beta\Messages\BetaRequestToolRemovalBlock;
@@ -26,6 +27,8 @@ use Psr\Http\Message\ResponseInterface;
  */
 final class BetaToolRunnerTest extends TestCase
 {
+    private const CONTAINER = ['id' => 'container_123', 'expires_at' => '2025-01-01T00:00:00Z', 'skills' => []];
+
     private MockClient $transporter;
 
     private Client $client;
@@ -85,6 +88,41 @@ final class BetaToolRunnerTest extends TestCase
         }
 
         $this->assertCount(1, $messages);
+        $this->assertCount(1, $this->transporter->getRequests());
+    }
+
+    // -------------------------------------------------------------------------
+    // Refusal-terminated turn is final even when it carries a tool_use block
+    // -------------------------------------------------------------------------
+
+    #[Test]
+    public function testRefusalTurnWithToolUseIsTerminal(): void
+    {
+        $this->transporter->addResponse(
+            $this->toolUseResponse('get_weather', ['location' => 'Paris'], stopReason: 'refusal')
+        );
+        // Must never be requested: the refusal turn ends the loop.
+        $this->transporter->addResponse($this->textResponse('Sunny in Paris.'));
+
+        $called = false;
+        $tool = $this->makeWeatherTool(function () use (&$called): void {
+            $called = true;
+        });
+
+        $messages = [];
+        foreach ($this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [['role' => 'user', 'content' => 'Weather in Paris?']],
+            model: 'claude-opus-4-6',
+            tools: [$tool],
+        ) as $message) {
+            $messages[] = $message;
+        }
+
+        $this->assertFalse($called, 'Tool in a refusal-terminated turn must not be executed');
+        $this->assertCount(1, $messages);
+        $this->assertSame('refusal', $messages[0]->stopReason);
+        $this->assertInstanceOf(BetaToolUseBlock::class, $messages[0]->content[0]);
         $this->assertCount(1, $this->transporter->getRequests());
     }
 
@@ -864,6 +902,99 @@ final class BetaToolRunnerTest extends TestCase
     }
 
     // -------------------------------------------------------------------------
+    // Server-assigned container is forwarded to the follow-up request
+    // -------------------------------------------------------------------------
+
+    #[Test]
+    public function testServerContainerForwardedToFollowUpRequest(): void
+    {
+        $this->transporter->addResponse(
+            $this->toolUseResponse('get_weather', ['location' => 'SF'], container: self::CONTAINER)
+        );
+        $this->transporter->addResponse($this->textResponse('Sunny.'));
+
+        $this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [['role' => 'user', 'content' => 'Weather?']],
+            model: 'claude-opus-4-6',
+            tools: [$this->makeWeatherTool()],
+        )->runUntilDone();
+
+        $this->assertArrayNotHasKey('container', $this->requestBody(0));
+        $this->assertSame('container_123', $this->requestBody(1)['container']);
+    }
+
+    #[Test]
+    public function testResponseWithoutContainerKeySendsNoContainer(): void
+    {
+        $this->transporter->addResponse($this->makeResponse([
+            'id' => 'msg_1',
+            'type' => 'message',
+            'role' => 'assistant',
+            'content' => [
+                ['type' => 'tool_use', 'id' => 'tool_1', 'name' => 'get_weather', 'input' => ['location' => 'SF']],
+            ],
+            'model' => 'claude-opus-4-6',
+            'stop_reason' => 'tool_use',
+            'stop_sequence' => null,
+            'usage' => ['input_tokens' => 10, 'output_tokens' => 20],
+        ]));
+        $this->transporter->addResponse($this->textResponse('Sunny.'));
+
+        $this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [['role' => 'user', 'content' => 'Weather?']],
+            model: 'claude-opus-4-6',
+            tools: [$this->makeWeatherTool()],
+        )->runUntilDone();
+
+        $this->assertArrayNotHasKey('container', $this->requestBody(1));
+    }
+
+    #[Test]
+    public function testPinnedContainerIsNotOverridden(): void
+    {
+        $this->transporter->addResponse(
+            $this->toolUseResponse('get_weather', ['location' => 'SF'], container: self::CONTAINER)
+        );
+        $this->transporter->addResponse($this->textResponse('Sunny.'));
+
+        $this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [['role' => 'user', 'content' => 'Weather?']],
+            model: 'claude-opus-4-6',
+            tools: [$this->makeWeatherTool()],
+            extraParams: ['container' => 'container_mine'],
+        )->runUntilDone();
+
+        $this->assertSame('container_mine', $this->requestBody(1)['container']);
+    }
+
+    #[Test]
+    public function testPinnedContainerParamsWithoutIdAdoptServerId(): void
+    {
+        $this->transporter->addResponse(
+            $this->toolUseResponse('get_weather', ['location' => 'SF'], container: self::CONTAINER)
+        );
+        $this->transporter->addResponse($this->textResponse('Sunny.'));
+
+        $this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [['role' => 'user', 'content' => 'Weather?']],
+            model: 'claude-opus-4-6',
+            tools: [$this->makeWeatherTool()],
+            extraParams: ['container' => BetaContainerParams::with(
+                skills: [['skillID' => 'pdf', 'type' => 'anthropic', 'version' => 'latest']],
+            )],
+        )->runUntilDone();
+
+        $this->assertSame(
+            ['id' => 'container_123', 'skills' => [['skill_id' => 'pdf', 'type' => 'anthropic', 'version' => 'latest']]],
+            $this->requestBody(1)['container'],
+        );
+    }
+
+    // -------------------------------------------------------------------------
     // Response fixtures
     // -------------------------------------------------------------------------
 
@@ -879,12 +1010,17 @@ final class BetaToolRunnerTest extends TestCase
         ;
     }
 
-    /** @param array<string, mixed> $input */
+    /**
+     * @param array<string, mixed> $input
+     * @param array<string, mixed>|null $container
+     */
     private function toolUseResponse(
         string $toolName,
         array $input,
         string $id = 'msg_1',
         string $toolId = 'tool_1',
+        string $stopReason = 'tool_use',
+        ?array $container = null,
     ): ResponseInterface {
         return $this->makeResponse([
             'id' => $id,
@@ -894,10 +1030,10 @@ final class BetaToolRunnerTest extends TestCase
                 ['type' => 'tool_use', 'id' => $toolId, 'name' => $toolName, 'input' => $input],
             ],
             'model' => 'claude-opus-4-6',
-            'stop_reason' => 'tool_use',
+            'stop_reason' => $stopReason,
             'stop_sequence' => null,
             'context_management' => null,
-            'container' => null,
+            'container' => $container,
             'usage' => ['input_tokens' => 10, 'output_tokens' => 20],
         ]);
     }

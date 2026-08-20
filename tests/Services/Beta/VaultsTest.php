@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Vaults\BetaManagedAgentsDeletedVault;
 use Anthropic\Beta\Vaults\BetaManagedAgentsVault;
 use Anthropic\Client;
@@ -45,7 +46,7 @@ final class VaultsTest extends TestCase
         $result = $this->client->beta->vaults->create(
             displayName: 'Example vault',
             metadata: ['environment' => 'production'],
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

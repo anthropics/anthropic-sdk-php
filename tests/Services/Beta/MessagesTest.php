@@ -2,10 +2,12 @@
 
 namespace Tests\Services\Beta;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Beta\Messages\BetaMessageTokensCount;
 use Anthropic\Client;
 use Anthropic\Core\Util;
+use Anthropic\Messages\Model;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -34,7 +36,7 @@ final class MessagesTest extends TestCase
         $result = $this->client->beta->messages->create(
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-opus-4-6',
+            model: Model::CLAUDE_OPUS_5,
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -47,7 +49,7 @@ final class MessagesTest extends TestCase
         $result = $this->client->beta->messages->create(
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-opus-4-6',
+            model: Model::CLAUDE_OPUS_5,
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             container: [
                 'id' => 'id',
@@ -132,7 +134,7 @@ final class MessagesTest extends TestCase
             ],
             topK: 5,
             topP: 0.7,
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             userProfileID: 'anthropic-user-profile-id',
         );
 
@@ -145,7 +147,7 @@ final class MessagesTest extends TestCase
     {
         $result = $this->client->beta->messages->countTokens(
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-opus-4-6',
+            model: Model::CLAUDE_OPUS_5,
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -157,7 +159,7 @@ final class MessagesTest extends TestCase
     {
         $result = $this->client->beta->messages->countTokens(
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-opus-4-6',
+            model: Model::CLAUDE_OPUS_5,
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             contextManagement: [
                 'edits' => [
@@ -226,7 +228,7 @@ final class MessagesTest extends TestCase
                     'type' => 'custom',
                 ],
             ],
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             userProfileID: 'anthropic-user-profile-id',
         );
 

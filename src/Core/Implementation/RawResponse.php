@@ -55,6 +55,16 @@ class RawResponse implements BaseResponse
         return $this->request;
     }
 
+    public function getRequestID(): ?string
+    {
+        return $this->response->getHeaderLine('request-id') ?: null;
+    }
+
+    public function getWorkspaceID(): ?string
+    {
+        return $this->response->getHeaderLine('anthropic-workspace-id') ?: null;
+    }
+
     public function parse(): mixed
     {
         if (!$this->coerced) {

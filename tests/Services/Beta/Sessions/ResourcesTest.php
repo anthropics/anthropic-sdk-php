@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta\Sessions;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsDeleteSessionResource;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsFileResource;
 use Anthropic\Client;
@@ -56,7 +57,7 @@ final class ResourcesTest extends TestCase
         $result = $this->client->beta->sessions->resources->retrieve(
             'sesrsc_011CZkZBJq5dWxk9fVLNcPht',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -91,7 +92,7 @@ final class ResourcesTest extends TestCase
             'sesrsc_011CZkZBJq5dWxk9fVLNcPht',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
             authorizationToken: 'ghp_exampletoken',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -144,7 +145,7 @@ final class ResourcesTest extends TestCase
         $result = $this->client->beta->sessions->resources->delete(
             'sesrsc_011CZkZBJq5dWxk9fVLNcPht',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -180,7 +181,7 @@ final class ResourcesTest extends TestCase
             fileID: 'file_011CNha8iCJcU1wXNR6q4V8w',
             type: 'file',
             mountPath: '/uploads/receipt.pdf',
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

@@ -6,6 +6,7 @@ use Anthropic\Client;
 use Anthropic\Core\Util;
 use Anthropic\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Messages\Batches\MessageBatch;
+use Anthropic\Messages\Model;
 use Anthropic\Page;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -40,7 +41,7 @@ final class BatchesTest extends TestCase
                     'params' => [
                         'maxTokens' => 1024,
                         'messages' => [['content' => 'Hello, world', 'role' => 'user']],
-                        'model' => 'claude-opus-4-6',
+                        'model' => Model::CLAUDE_OPUS_5,
                     ],
                 ],
             ],
@@ -60,9 +61,18 @@ final class BatchesTest extends TestCase
                     'params' => [
                         'maxTokens' => 1024,
                         'messages' => [['content' => 'Hello, world', 'role' => 'user']],
-                        'model' => 'claude-opus-4-6',
+                        'model' => Model::CLAUDE_OPUS_5,
                         'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
-                        'container' => 'container',
+                        'container' => [
+                            'id' => 'id',
+                            'skills' => [
+                                [
+                                    'skillID' => 'pdf',
+                                    'type' => 'anthropic',
+                                    'version' => 'latest',
+                                ],
+                            ],
+                        ],
                         'inferenceGeo' => 'inference_geo',
                         'metadata' => ['userID' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
                         'outputConfig' => [

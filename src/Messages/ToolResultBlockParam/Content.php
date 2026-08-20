@@ -8,6 +8,7 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
+use Anthropic\Messages\BrowserStateBlockParam;
 use Anthropic\Messages\DocumentBlockParam;
 use Anthropic\Messages\ImageBlockParam;
 use Anthropic\Messages\SearchResultBlockParam;
@@ -17,7 +18,7 @@ use Anthropic\Messages\ToolReferenceBlockParam;
 /**
  * @phpstan-import-type ContentShape from \Anthropic\Messages\ToolResultBlockParam\Content\Content as ContentShape1
  *
- * @phpstan-type ContentVariants = string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam|ToolReferenceBlockParam>
+ * @phpstan-type ContentVariants = string|list<TextBlockParam|ImageBlockParam|SearchResultBlockParam|DocumentBlockParam|ToolReferenceBlockParam|BrowserStateBlockParam>
  * @phpstan-type ContentShape = ContentVariants|list<ContentShape1>
  */
 final class Content implements ConverterSource

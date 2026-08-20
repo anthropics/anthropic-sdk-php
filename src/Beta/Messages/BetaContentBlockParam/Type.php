@@ -1,0 +1,54 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\Beta\Messages\BetaContentBlockParam;
+
+enum Type: string
+{
+    case TEXT = 'text';
+
+    case IMAGE = 'image';
+
+    case DOCUMENT = 'document';
+
+    case SEARCH_RESULT = 'search_result';
+
+    case THINKING = 'thinking';
+
+    case REDACTED_THINKING = 'redacted_thinking';
+
+    case TOOL_USE = 'tool_use';
+
+    case TOOL_RESULT = 'tool_result';
+
+    case SERVER_TOOL_USE = 'server_tool_use';
+
+    case WEB_SEARCH_TOOL_RESULT = 'web_search_tool_result';
+
+    case WEB_FETCH_TOOL_RESULT = 'web_fetch_tool_result';
+
+    case ADVISOR_TOOL_RESULT = 'advisor_tool_result';
+
+    case CODE_EXECUTION_TOOL_RESULT = 'code_execution_tool_result';
+
+    case BASH_CODE_EXECUTION_TOOL_RESULT = 'bash_code_execution_tool_result';
+
+    case TEXT_EDITOR_CODE_EXECUTION_TOOL_RESULT = 'text_editor_code_execution_tool_result';
+
+    case TOOL_SEARCH_TOOL_RESULT = 'tool_search_tool_result';
+
+    case MCP_TOOL_USE = 'mcp_tool_use';
+
+    case MCP_TOOL_RESULT = 'mcp_tool_result';
+
+    case CONTAINER_UPLOAD = 'container_upload';
+
+    case COMPACTION = 'compaction';
+
+    case TOOL_ADDITION = 'tool_addition';
+
+    case TOOL_REMOVAL = 'tool_removal';
+
+    case FALLBACK = 'fallback';
+}

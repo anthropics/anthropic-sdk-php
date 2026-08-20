@@ -6,6 +6,7 @@ use Anthropic\Client;
 use Anthropic\Core\Util;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageTokensCount;
+use Anthropic\Messages\Model;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -34,7 +35,7 @@ final class MessagesTest extends TestCase
         $result = $this->client->messages->create(
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-opus-4-6',
+            model: Model::CLAUDE_OPUS_5,
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -47,9 +48,14 @@ final class MessagesTest extends TestCase
         $result = $this->client->messages->create(
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-opus-4-6',
+            model: Model::CLAUDE_OPUS_5,
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
-            container: 'container',
+            container: [
+                'id' => 'id',
+                'skills' => [
+                    ['skillID' => 'pdf', 'type' => 'anthropic', 'version' => 'latest'],
+                ],
+            ],
             inferenceGeo: 'inference_geo',
             metadata: ['userID' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
             outputConfig: [
@@ -110,7 +116,7 @@ final class MessagesTest extends TestCase
     {
         $result = $this->client->messages->countTokens(
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-opus-4-6',
+            model: Model::CLAUDE_OPUS_5,
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -122,7 +128,7 @@ final class MessagesTest extends TestCase
     {
         $result = $this->client->messages->countTokens(
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: 'claude-opus-4-6',
+            model: Model::CLAUDE_OPUS_5,
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             outputConfig: [
                 'effort' => 'low',

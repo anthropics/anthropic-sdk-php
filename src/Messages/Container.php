@@ -11,7 +11,13 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Information about the container used in the request (for the code execution tool).
  *
- * @phpstan-type ContainerShape = array{id: string, expiresAt: \DateTimeInterface}
+ * @phpstan-import-type ContainerSkillShape from \Anthropic\Messages\ContainerSkill
+ *
+ * @phpstan-type ContainerShape = array{
+ *   id: string,
+ *   expiresAt: \DateTimeInterface,
+ *   skills: list<ContainerSkill|ContainerSkillShape>|null,
+ * }
  */
 final class Container implements BaseModel
 {
@@ -31,17 +37,25 @@ final class Container implements BaseModel
     public \DateTimeInterface $expiresAt;
 
     /**
+     * Skills loaded in the container.
+     *
+     * @var list<ContainerSkill>|null $skills
+     */
+    #[Required(list: ContainerSkill::class)]
+    public ?array $skills;
+
+    /**
      * `new Container()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Container::with(id: ..., expiresAt: ...)
+     * Container::with(id: ..., expiresAt: ..., skills: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Container)->withID(...)->withExpiresAt(...)
+     * (new Container)->withID(...)->withExpiresAt(...)->withSkills(...)
      * ```
      */
     public function __construct()
@@ -53,13 +67,19 @@ final class Container implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param list<ContainerSkill|ContainerSkillShape>|null $skills
      */
-    public static function with(string $id, \DateTimeInterface $expiresAt): self
-    {
+    public static function with(
+        string $id,
+        \DateTimeInterface $expiresAt,
+        ?array $skills
+    ): self {
         $self = new self;
 
         $self['id'] = $id;
         $self['expiresAt'] = $expiresAt;
+        $self['skills'] = $skills;
 
         return $self;
     }
@@ -82,6 +102,19 @@ final class Container implements BaseModel
     {
         $self = clone $this;
         $self['expiresAt'] = $expiresAt;
+
+        return $self;
+    }
+
+    /**
+     * Skills loaded in the container.
+     *
+     * @param list<ContainerSkill|ContainerSkillShape>|null $skills
+     */
+    public function withSkills(?array $skills): self
+    {
+        $self = clone $this;
+        $self['skills'] = $skills;
 
         return $self;
     }

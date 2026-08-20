@@ -20,6 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   name: string,
  *   type: 'tool_use',
  *   caller?: CallerShape|null,
+ *   toolsetName?: string|null,
  * }
  */
 final class BetaToolUseBlock implements BaseModel
@@ -48,6 +49,12 @@ final class BetaToolUseBlock implements BaseModel
      */
     #[Optional(union: Caller::class)]
     public BetaDirectCaller|BetaServerToolCaller|BetaServerToolCaller20260120|null $caller;
+
+    /**
+     * For a toolset member tool_use, the toolset family.
+     */
+    #[Optional('toolset_name', nullable: true)]
+    public ?string $toolsetName;
 
     /**
      * `new BetaToolUseBlock()` is missing required properties by the API.
@@ -81,6 +88,7 @@ final class BetaToolUseBlock implements BaseModel
         array $input,
         string $name,
         BetaDirectCaller|array|BetaServerToolCaller|BetaServerToolCaller20260120|null $caller = null,
+        ?string $toolsetName = null,
     ): self {
         $self = new self;
 
@@ -89,6 +97,7 @@ final class BetaToolUseBlock implements BaseModel
         $self['name'] = $name;
 
         null !== $caller && $self['caller'] = $caller;
+        null !== $toolsetName && $self['toolsetName'] = $toolsetName;
 
         return $self;
     }
@@ -141,6 +150,17 @@ final class BetaToolUseBlock implements BaseModel
     ): self {
         $self = clone $this;
         $self['caller'] = $caller;
+
+        return $self;
+    }
+
+    /**
+     * For a toolset member tool_use, the toolset family.
+     */
+    public function withToolsetName(?string $toolsetName): self
+    {
+        $self = clone $this;
+        $self['toolsetName'] = $toolsetName;
 
         return $self;
     }

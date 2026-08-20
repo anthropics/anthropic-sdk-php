@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\BetaCurrency;
 use Anthropic\Beta\DeploymentRuns\BetaManagedAgentsDeploymentRun;
 use Anthropic\Beta\Deployments\BetaManagedAgentsDeployment;
@@ -86,7 +87,7 @@ final class DeploymentsTest extends TestCase
                 'type' => 'cron',
             ],
             vaultIDs: ['string'],
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

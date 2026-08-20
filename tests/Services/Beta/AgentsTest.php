@@ -3,6 +3,8 @@
 namespace Tests\Services\Beta;
 
 use Anthropic\Beta\Agents\BetaManagedAgentsAgent;
+use Anthropic\Beta\Agents\BetaManagedAgentsModel;
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
@@ -33,7 +35,7 @@ final class AgentsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->beta->agents->create(
-            model: 'claude-sonnet-4-6',
+            model: BetaManagedAgentsModel::CLAUDE_OPUS_5,
             name: 'My First Agent'
         );
 
@@ -45,7 +47,7 @@ final class AgentsTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->beta->agents->create(
-            model: 'claude-sonnet-4-6',
+            model: BetaManagedAgentsModel::CLAUDE_OPUS_5,
             name: 'My First Agent',
             description: 'A general-purpose starter agent.',
             mcpServers: [
@@ -70,6 +72,7 @@ final class AgentsTest extends TestCase
                             'name' => 'bash',
                             'enabled' => true,
                             'permissionPolicy' => ['type' => 'always_allow'],
+                            'type' => 'bash',
                         ],
                     ],
                     'defaultConfig' => [
@@ -77,7 +80,7 @@ final class AgentsTest extends TestCase
                     ],
                 ],
             ],
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

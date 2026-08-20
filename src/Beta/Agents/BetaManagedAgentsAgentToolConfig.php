@@ -4,126 +4,48 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Agents;
 
-use Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfig\Name;
-use Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfig\PermissionPolicy;
-use Anthropic\Core\Attributes\Required;
-use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Concerns\SdkUnion;
+use Anthropic\Core\Conversion\Contracts\Converter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * Configuration for a specific agent tool.
  *
- * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfig\PermissionPolicy
- * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfig\PermissionPolicy
+ * @phpstan-import-type BetaManagedAgentsBashToolConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsBashToolConfig
+ * @phpstan-import-type BetaManagedAgentsEditToolConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsEditToolConfig
+ * @phpstan-import-type BetaManagedAgentsReadToolConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsReadToolConfig
+ * @phpstan-import-type BetaManagedAgentsWriteToolConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsWriteToolConfig
+ * @phpstan-import-type BetaManagedAgentsGlobToolConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsGlobToolConfig
+ * @phpstan-import-type BetaManagedAgentsGrepToolConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsGrepToolConfig
+ * @phpstan-import-type BetaManagedAgentsWebFetchToolConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsWebFetchToolConfig
+ * @phpstan-import-type BetaManagedAgentsWebSearchToolConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsWebSearchToolConfig
  *
- * @phpstan-type BetaManagedAgentsAgentToolConfigShape = array{
- *   enabled: bool,
- *   name: Name|value-of<Name>,
- *   permissionPolicy: PermissionPolicyShape,
- * }
+ * @phpstan-type BetaManagedAgentsAgentToolConfigVariants = BetaManagedAgentsBashToolConfig|BetaManagedAgentsEditToolConfig|BetaManagedAgentsReadToolConfig|BetaManagedAgentsWriteToolConfig|BetaManagedAgentsGlobToolConfig|BetaManagedAgentsGrepToolConfig|BetaManagedAgentsWebFetchToolConfig|BetaManagedAgentsWebSearchToolConfig
+ * @phpstan-type BetaManagedAgentsAgentToolConfigShape = BetaManagedAgentsAgentToolConfigVariants|BetaManagedAgentsBashToolConfigShape|BetaManagedAgentsEditToolConfigShape|BetaManagedAgentsReadToolConfigShape|BetaManagedAgentsWriteToolConfigShape|BetaManagedAgentsGlobToolConfigShape|BetaManagedAgentsGrepToolConfigShape|BetaManagedAgentsWebFetchToolConfigShape|BetaManagedAgentsWebSearchToolConfigShape
  */
-final class BetaManagedAgentsAgentToolConfig implements BaseModel
+final class BetaManagedAgentsAgentToolConfig implements ConverterSource
 {
-    /** @use SdkModel<BetaManagedAgentsAgentToolConfigShape> */
-    use SdkModel;
+    use SdkUnion;
 
-    #[Required]
-    public bool $enabled;
-
-    /**
-     * Built-in agent tool identifier.
-     *
-     * @var value-of<Name> $name
-     */
-    #[Required(enum: Name::class)]
-    public string $name;
-
-    /**
-     * Permission policy for tool execution.
-     *
-     * @var PermissionPolicyVariants $permissionPolicy
-     */
-    #[Required('permission_policy', union: PermissionPolicy::class)]
-    public BetaManagedAgentsAlwaysAllowPolicy|BetaManagedAgentsAlwaysAskPolicy $permissionPolicy;
-
-    /**
-     * `new BetaManagedAgentsAgentToolConfig()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * BetaManagedAgentsAgentToolConfig::with(
-     *   enabled: ..., name: ..., permissionPolicy: ...
-     * )
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new BetaManagedAgentsAgentToolConfig)
-     *   ->withEnabled(...)
-     *   ->withName(...)
-     *   ->withPermissionPolicy(...)
-     * ```
-     */
-    public function __construct()
+    public static function discriminator(): string
     {
-        $this->initialize();
+        return 'type';
     }
 
     /**
-     * Construct an instance from the required parameters.
-     *
-     * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Name|value-of<Name> $name
-     * @param PermissionPolicyShape $permissionPolicy
+     * @return list<string|Converter|ConverterSource>|array<string,string|Converter|ConverterSource>
      */
-    public static function with(
-        bool $enabled,
-        Name|string $name,
-        BetaManagedAgentsAlwaysAllowPolicy|array|BetaManagedAgentsAlwaysAskPolicy $permissionPolicy,
-    ): self {
-        $self = new self;
-
-        $self['enabled'] = $enabled;
-        $self['name'] = $name;
-        $self['permissionPolicy'] = $permissionPolicy;
-
-        return $self;
-    }
-
-    public function withEnabled(bool $enabled): self
+    public static function variants(): array
     {
-        $self = clone $this;
-        $self['enabled'] = $enabled;
-
-        return $self;
-    }
-
-    /**
-     * Built-in agent tool identifier.
-     *
-     * @param Name|value-of<Name> $name
-     */
-    public function withName(Name|string $name): self
-    {
-        $self = clone $this;
-        $self['name'] = $name;
-
-        return $self;
-    }
-
-    /**
-     * Permission policy for tool execution.
-     *
-     * @param PermissionPolicyShape $permissionPolicy
-     */
-    public function withPermissionPolicy(
-        BetaManagedAgentsAlwaysAllowPolicy|array|BetaManagedAgentsAlwaysAskPolicy $permissionPolicy,
-    ): self {
-        $self = clone $this;
-        $self['permissionPolicy'] = $permissionPolicy;
-
-        return $self;
+        return [
+            'bash' => BetaManagedAgentsBashToolConfig::class,
+            'edit' => BetaManagedAgentsEditToolConfig::class,
+            'read' => BetaManagedAgentsReadToolConfig::class,
+            'write' => BetaManagedAgentsWriteToolConfig::class,
+            'glob' => BetaManagedAgentsGlobToolConfig::class,
+            'grep' => BetaManagedAgentsGrepToolConfig::class,
+            'web_fetch' => BetaManagedAgentsWebFetchToolConfig::class,
+            'web_search' => BetaManagedAgentsWebSearchToolConfig::class,
+        ];
     }
 }

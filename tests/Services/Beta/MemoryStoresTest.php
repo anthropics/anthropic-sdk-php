@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\MemoryStores\BetaManagedAgentsDeletedMemoryStore;
 use Anthropic\Beta\MemoryStores\BetaManagedAgentsMemoryStore;
 use Anthropic\Client;
@@ -46,7 +47,7 @@ final class MemoryStoresTest extends TestCase
             name: 'x',
             description: 'description',
             metadata: ['foo' => 'string'],
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

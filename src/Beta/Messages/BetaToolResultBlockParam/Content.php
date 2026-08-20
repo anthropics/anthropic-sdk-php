@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\BetaToolResultBlockParam;
 
+use Anthropic\Beta\Messages\BetaBrowserStateBlockParam;
 use Anthropic\Beta\Messages\BetaImageBlockParam;
 use Anthropic\Beta\Messages\BetaRequestDocumentBlock;
 use Anthropic\Beta\Messages\BetaSearchResultBlockParam;
@@ -17,7 +18,7 @@ use Anthropic\Core\Conversion\ListOf;
 /**
  * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaToolResultBlockParam\Content\Content as ContentShape1
  *
- * @phpstan-type ContentVariants = string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock|BetaToolReferenceBlockParam>
+ * @phpstan-type ContentVariants = string|list<BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock|BetaToolReferenceBlockParam|BetaBrowserStateBlockParam>
  * @phpstan-type ContentShape = ContentVariants|list<ContentShape1>
  */
 final class Content implements ConverterSource

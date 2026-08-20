@@ -36,7 +36,7 @@ final class BetaSkill implements BaseModel
     public string $type;
 
     /**
-     * Skill version or 'latest' for most recent version.
+     * The resolved version: a skill version ID for custom skills.
      */
     #[Required]
     public string $version;
@@ -106,7 +106,7 @@ final class BetaSkill implements BaseModel
     }
 
     /**
-     * Skill version or 'latest' for most recent version.
+     * The resolved version: a skill version ID for custom skills.
      */
     public function withVersion(string $version): self
     {

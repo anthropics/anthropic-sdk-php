@@ -63,7 +63,7 @@ interface EnvironmentsContract
      *
      * @param string $environmentID Path param
      * @param ConfigShape1|null $config Body param: Updated environment configuration
-     * @param string|null $description Body param: Updated description of the environment
+     * @param string|null $description Body param: Updated description of the environment. Omit to preserve; null clears to null; an empty string is stored as an empty string.
      * @param array<string,string|null> $metadata Body param: User-provided metadata key-value pairs. Set a value to null or empty string to delete the key.
      * @param string|null $name Body param: Updated name for the environment
      * @param \Anthropic\Beta\Environments\EnvironmentUpdateParams\Scope|value-of<\Anthropic\Beta\Environments\EnvironmentUpdateParams\Scope>|null $scope Body param: The visibility scope for this environment. 'organization' makes the environment visible to all accounts. 'account' restricts visibility to the owning account only.
@@ -97,8 +97,8 @@ interface EnvironmentsContract
      * @throws APIException
      */
     public function list(
-        bool $includeArchived = false,
-        int $limit = 20,
+        ?bool $includeArchived = null,
+        ?int $limit = null,
         ?string $page = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,

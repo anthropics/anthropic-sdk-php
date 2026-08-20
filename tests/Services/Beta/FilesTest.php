@@ -2,8 +2,9 @@
 
 namespace Tests\Services\Beta;
 
-use Anthropic\Beta\Files\DeletedFile;
-use Anthropic\Beta\Files\FileMetadata;
+use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Files\BetaDeletedFile;
+use Anthropic\Beta\Files\BetaFileMetadata;
 use Anthropic\Client;
 use Anthropic\Core\FileParam;
 use Anthropic\Core\Util;
@@ -40,7 +41,7 @@ final class FilesTest extends TestCase
 
         if ($item = $page->getItems()[0] ?? null) {
             // @phpstan-ignore-next-line method.alreadyNarrowedType
-            $this->assertInstanceOf(FileMetadata::class, $item);
+            $this->assertInstanceOf(BetaFileMetadata::class, $item);
         }
     }
 
@@ -50,7 +51,7 @@ final class FilesTest extends TestCase
         $result = $this->client->beta->files->delete('file_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(DeletedFile::class, $result);
+        $this->assertInstanceOf(BetaDeletedFile::class, $result);
     }
 
     #[Test]
@@ -68,7 +69,7 @@ final class FilesTest extends TestCase
         $result = $this->client->beta->files->retrieveMetadata('file_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(FileMetadata::class, $result);
+        $this->assertInstanceOf(BetaFileMetadata::class, $result);
     }
 
     #[Test]
@@ -79,7 +80,7 @@ final class FilesTest extends TestCase
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(FileMetadata::class, $result);
+        $this->assertInstanceOf(BetaFileMetadata::class, $result);
     }
 
     #[Test]
@@ -87,10 +88,10 @@ final class FilesTest extends TestCase
     {
         $result = $this->client->beta->files->upload(
             file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
-            betas: ['message-batches-2024-09-24'],
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(FileMetadata::class, $result);
+        $this->assertInstanceOf(BetaFileMetadata::class, $result);
     }
 }
