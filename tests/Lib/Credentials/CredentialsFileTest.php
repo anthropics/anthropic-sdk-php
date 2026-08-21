@@ -114,6 +114,31 @@ class CredentialsFileTest extends TestCase
         );
     }
 
+    public function testProfileBaseUrlExposedOnResult(): void
+    {
+        $this->writeProfile('test-profile', [
+            'base_url' => 'https://api.staging.example.com',
+            'authentication' => ['type' => 'user_oauth'],
+        ]);
+        $this->writeCredentials('test-profile', ['access_token' => 'tok']);
+
+        $result = (new CredentialsFile(configDir: $this->configDir, profile: 'test-profile'))->resolve();
+
+        $this->assertNotNull($result);
+        $this->assertSame('https://api.staging.example.com', $result->baseUrl);
+    }
+
+    public function testResultBaseUrlNullWhenProfileHasNone(): void
+    {
+        $this->writeProfile('test-profile', ['authentication' => ['type' => 'user_oauth']]);
+        $this->writeCredentials('test-profile', ['access_token' => 'tok']);
+
+        $result = (new CredentialsFile(configDir: $this->configDir, profile: 'test-profile'))->resolve();
+
+        $this->assertNotNull($result);
+        $this->assertNull($result->baseUrl);
+    }
+
     /**
      * @param array<string,mixed> $config
      */
