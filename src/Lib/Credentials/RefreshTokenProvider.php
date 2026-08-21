@@ -21,9 +21,14 @@ final class RefreshTokenProvider implements AccessTokenProvider, Closeable
     private const MAX_ERROR_LENGTH = 256;
     private const OAUTH_ERROR_FIELDS = ['error', 'error_description', 'error_uri'];
 
+    /** Same window in which TokenCache asks for a replacement, so a stored token with less left would come straight back. */
+    private const ADVISORY_REFRESH_SECONDS = 120;
+
     private ClientInterface $httpClient;
     private RequestFactoryInterface $requestFactory;
     private StreamFactoryInterface $streamFactory;
+
+    private ?string $lastIssued = null;
 
     public function __construct(
         private readonly string $clientId,
@@ -46,6 +51,32 @@ final class RefreshTokenProvider implements AccessTokenProvider, Closeable
     }
 
     public function fetchToken(): AccessToken
+    {
+        $stored = $this->readCredentialsFile();
+        if (is_string($stored['refresh_token'] ?? null) && '' !== $stored['refresh_token']) {
+            $this->refreshToken = $stored['refresh_token'];
+        }
+
+        // A 401 makes TokenCache call back while the stored token still looks fresh; never re-serve the token that was just rejected.
+        $token = self::storedAccessToken($stored);
+        if (null === $token || $token->token === $this->lastIssued || $token->isExpired(self::ADVISORY_REFRESH_SECONDS)) {
+            $token = $this->refresh($stored);
+        }
+
+        $this->lastIssued = $token->token;
+
+        return $token;
+    }
+
+    public function close(): void
+    {
+        // No-op — PSR-18 clients don't have a standard close mechanism.
+    }
+
+    /**
+     * @param array<string,mixed> $stored
+     */
+    private function refresh(array $stored): AccessToken
     {
         $body = [
             'grant_type' => 'refresh_token',
@@ -98,19 +129,55 @@ final class RefreshTokenProvider implements AccessTokenProvider, Closeable
         }
 
         // Write updated tokens back to the credentials file atomically.
-        $this->persistCredentials($accessToken, $expiresAt);
+        $this->persistCredentials($stored, $accessToken, $expiresAt);
 
         return new AccessToken($accessToken, $expiresAt);
     }
 
-    public function close(): void
+    /**
+     * @return array<string,mixed>
+     */
+    private function readCredentialsFile(): array
     {
-        // No-op — PSR-18 clients don't have a standard close mechanism.
+        $content = @file_get_contents($this->credentialsFilePath);
+        if (false === $content) {
+            return [];
+        }
+
+        try {
+            /** @var array<string,mixed>|scalar|null $data */
+            $data = json_decode($content, associative: true, flags: JSON_THROW_ON_ERROR);
+        } catch (\JsonException) {
+            return [];
+        }
+
+        return is_array($data) ? $data : [];
     }
 
-    private function persistCredentials(string $accessToken, ?int $expiresAt): void
+    /**
+     * @param array<string,mixed> $stored
+     */
+    private static function storedAccessToken(array $stored): ?AccessToken
     {
+        $accessToken = $stored['access_token'] ?? null;
+        if (!is_string($accessToken) || '' === $accessToken) {
+            return null;
+        }
+
+        $expiresAt = $stored['expires_at'] ?? null;
+
+        return new AccessToken($accessToken, is_numeric($expiresAt) && (int) $expiresAt > 0 ? (int) $expiresAt : null);
+    }
+
+    /**
+     * @param array<string,mixed> $stored
+     */
+    private function persistCredentials(array $stored, string $accessToken, ?int $expiresAt): void
+    {
+        unset($stored['expires_at']);
         $credentials = [
+            ...$stored,
+            'version' => '1.0',
             'type' => 'oauth_token',
             'access_token' => $accessToken,
             'refresh_token' => $this->refreshToken,
