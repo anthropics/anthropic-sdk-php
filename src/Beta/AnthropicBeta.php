@@ -73,4 +73,14 @@ enum AnthropicBeta: string
     case AGENT_MEMORY_2026_07_22 = 'agent-memory-2026-07-22';
 
     case MID_CONVERSATION_TOOL_CHANGES_2026_07_01 = 'mid-conversation-tool-changes-2026-07-01';
+
+    case COMPACT_2026_01_12 = 'compact-2026-01-12';
+
+    case COMPUTER_USE_2025_11_24 = 'computer-use-2025-11-24';
+
+    case MCP_TUNNELS_2026_06_22 = 'mcp-tunnels-2026-06-22';
+
+    case STRUCTURED_OUTPUTS_2025_11_13 = 'structured-outputs-2025-11-13';
+
+    case TASK_BUDGETS_2026_03_13 = 'task-budgets-2026-03-13';
 }
