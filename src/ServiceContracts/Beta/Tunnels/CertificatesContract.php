@@ -19,7 +19,7 @@ interface CertificatesContract
      * @api
      *
      * @param string $tunnelID Path param: Path parameter tunnel_id
-     * @param string $caCertificatePem Body param: PEM-encoded X.509 CA certificate. Must contain exactly one certificate and no private-key material. Maximum 8KB.
+     * @param string $caCertificatePEM Body param: PEM-encoded X.509 CA certificate. Must contain exactly one certificate and no private-key material. Maximum 8KB.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
@@ -27,7 +27,7 @@ interface CertificatesContract
      */
     public function create(
         string $tunnelID,
-        string $caCertificatePem,
+        string $caCertificatePEM,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): TunnelCertificate;

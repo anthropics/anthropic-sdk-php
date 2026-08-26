@@ -85,4 +85,6 @@ enum AnthropicBeta: string
     case TASK_BUDGETS_2026_03_13 = 'task-budgets-2026-03-13';
 
     case THINKING_DISPLAY_UPDATES_2026_08_18 = 'thinking-display-updates-2026-08-18';
+
+    case CE_USER_MANAGEMENT_2026_07_13 = 'ce-user-management-2026-07-13';
 }
