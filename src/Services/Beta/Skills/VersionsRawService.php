@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta\Skills;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Skills\Versions\DeletedSkillVersion;
+use Anthropic\Beta\Skills\Versions\SkillVersion;
 use Anthropic\Beta\Skills\Versions\VersionCreateParams;
 use Anthropic\Beta\Skills\Versions\VersionDeleteParams;
-use Anthropic\Beta\Skills\Versions\VersionDeleteResponse;
 use Anthropic\Beta\Skills\Versions\VersionDownloadParams;
-use Anthropic\Beta\Skills\Versions\VersionGetResponse;
 use Anthropic\Beta\Skills\Versions\VersionListParams;
-use Anthropic\Beta\Skills\Versions\VersionListResponse;
-use Anthropic\Beta\Skills\Versions\VersionNewResponse;
 use Anthropic\Beta\Skills\Versions\VersionRetrieveParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
@@ -48,7 +46,7 @@ final class VersionsRawService implements VersionsRawContract
      * }|VersionCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<VersionNewResponse>
+     * @return BaseResponse<SkillVersion>
      *
      * @throws APIException
      */
@@ -81,11 +79,8 @@ final class VersionsRawService implements VersionsRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'skills-2025-10-02']],
-                $options
-            ),
-            convert: VersionNewResponse::class,
+            options: $options,
+            convert: SkillVersion::class,
         );
     }
 
@@ -94,15 +89,15 @@ final class VersionsRawService implements VersionsRawContract
      *
      * Get Skill Version
      *
-     * @param string $version Path param: Version identifier for the skill.
+     * @param string $version Path param: Identifies the skill version: a version ID, or the literal `latest` for the skill's most recent version.
      *
-     * Each version is identified by a Unix epoch timestamp (e.g., "1759178010641129").
+     * Requests carrying the `skills-2025-10-02` beta header address versions by their Unix epoch timestamp instead (e.g., "1759178010641129").
      * @param array{
      *   skillID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
      * }|VersionRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<VersionGetResponse>
+     * @return BaseResponse<SkillVersion>
      *
      * @throws APIException
      */
@@ -126,11 +121,8 @@ final class VersionsRawService implements VersionsRawContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'skills-2025-10-02']],
-                $options
-            ),
-            convert: VersionGetResponse::class,
+            options: $options,
+            convert: SkillVersion::class,
         );
     }
 
@@ -149,7 +141,7 @@ final class VersionsRawService implements VersionsRawContract
      * }|VersionListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<PageCursor<VersionListResponse>>
+     * @return BaseResponse<PageCursor<SkillVersion>>
      *
      * @throws APIException
      */
@@ -176,11 +168,8 @@ final class VersionsRawService implements VersionsRawContract
                 $header_params,
                 ['betas' => 'anthropic-beta']
             ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'skills-2025-10-02']],
-                $options
-            ),
-            convert: VersionListResponse::class,
+            options: $options,
+            convert: SkillVersion::class,
             page: PageCursor::class,
         );
     }
@@ -190,15 +179,15 @@ final class VersionsRawService implements VersionsRawContract
      *
      * Delete Skill Version
      *
-     * @param string $version Path param: Version identifier for the skill.
+     * @param string $version Path param: Identifies the skill version by its version ID.
      *
-     * Each version is identified by a Unix epoch timestamp (e.g., "1759178010641129").
+     * Requests carrying the `skills-2025-10-02` beta header address versions by their Unix epoch timestamp instead (e.g., "1759178010641129").
      * @param array{
      *   skillID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
      * }|VersionDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<VersionDeleteResponse>
+     * @return BaseResponse<DeletedSkillVersion>
      *
      * @throws APIException
      */
@@ -222,11 +211,8 @@ final class VersionsRawService implements VersionsRawContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'skills-2025-10-02']],
-                $options
-            ),
-            convert: VersionDeleteResponse::class,
+            options: $options,
+            convert: DeletedSkillVersion::class,
         );
     }
 
@@ -235,9 +221,9 @@ final class VersionsRawService implements VersionsRawContract
      *
      * Download a skill version's content as a zip archive.
      *
-     * @param string $version Path param: Version identifier for the skill.
+     * @param string $version Path param: Identifies the skill version by its version ID.
      *
-     * Each version is identified by a Unix epoch timestamp (e.g., "1759178010641129").
+     * Requests carrying the `skills-2025-10-02` beta header address versions by their Unix epoch timestamp instead (e.g., "1759178010641129").
      * @param array{
      *   skillID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
      * }|VersionDownloadParams $params
@@ -269,10 +255,7 @@ final class VersionsRawService implements VersionsRawContract
                 ['Accept' => 'application/binary', ...$parsed],
                 ['betas' => 'anthropic-beta'],
             ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'skills-2025-10-02']],
-                $options
-            ),
+            options: $options,
             convert: 'string',
         );
     }

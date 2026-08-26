@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaSkill\Type;
+use Anthropic\Beta\Messages\BetaContainerSkill\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -12,13 +12,13 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * A skill that was loaded in a container (response model).
  *
- * @phpstan-type BetaSkillShape = array{
+ * @phpstan-type BetaContainerSkillShape = array{
  *   skillID: string, type: Type|value-of<Type>, version: string
  * }
  */
-final class BetaSkill implements BaseModel
+final class BetaContainerSkill implements BaseModel
 {
-    /** @use SdkModel<BetaSkillShape> */
+    /** @use SdkModel<BetaContainerSkillShape> */
     use SdkModel;
 
     /**
@@ -42,17 +42,17 @@ final class BetaSkill implements BaseModel
     public string $version;
 
     /**
-     * `new BetaSkill()` is missing required properties by the API.
+     * `new BetaContainerSkill()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaSkill::with(skillID: ..., type: ..., version: ...)
+     * BetaContainerSkill::with(skillID: ..., type: ..., version: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaSkill)->withSkillID(...)->withType(...)->withVersion(...)
+     * (new BetaContainerSkill)->withSkillID(...)->withType(...)->withVersion(...)
      * ```
      */
     public function __construct()

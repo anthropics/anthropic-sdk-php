@@ -19,7 +19,7 @@ use Anthropic\Core\FileParam;
  *
  * @phpstan-type SkillCreateParamsShape = array{
  *   files: list<string|FileParam>,
- *   displayTitle?: string|null,
+ *   displayName?: string|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
@@ -40,12 +40,12 @@ final class SkillCreateParams implements BaseModel
     public array $files;
 
     /**
-     * Display title for the skill.
-     *
-     * This is a human-readable label that is not included in the prompt sent to the model.
+     * Human-readable, single-line label for the Skill. Maximum 255 characters.
+     * Always set: derived from the SKILL.md frontmatter `name` when omitted at
+     * creation. Not unique.
      */
-    #[Optional('display_title', nullable: true)]
-    public ?string $displayTitle;
+    #[Optional('display_name', nullable: true)]
+    public ?string $displayName;
 
     /**
      * Optional header to specify the beta version(s) you want to use.
@@ -84,14 +84,14 @@ final class SkillCreateParams implements BaseModel
      */
     public static function with(
         array $files,
-        ?string $displayTitle = null,
+        ?string $displayName = null,
         ?array $betas = null
     ): self {
         $self = new self;
 
         $self['files'] = $files;
 
-        null !== $displayTitle && $self['displayTitle'] = $displayTitle;
+        null !== $displayName && $self['displayName'] = $displayName;
         null !== $betas && $self['betas'] = $betas;
 
         return $self;
@@ -113,14 +113,14 @@ final class SkillCreateParams implements BaseModel
     }
 
     /**
-     * Display title for the skill.
-     *
-     * This is a human-readable label that is not included in the prompt sent to the model.
+     * Human-readable, single-line label for the Skill. Maximum 255 characters.
+     * Always set: derived from the SKILL.md frontmatter `name` when omitted at
+     * creation. Not unique.
      */
-    public function withDisplayTitle(?string $displayTitle): self
+    public function withDisplayName(?string $displayName): self
     {
         $self = clone $this;
-        $self['displayTitle'] = $displayTitle;
+        $self['displayName'] = $displayName;
 
         return $self;
     }

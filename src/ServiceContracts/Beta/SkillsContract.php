@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\ServiceContracts\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Beta\Skills\SkillDeleteResponse;
-use Anthropic\Beta\Skills\SkillGetResponse;
-use Anthropic\Beta\Skills\SkillListResponse;
-use Anthropic\Beta\Skills\SkillNewResponse;
+use Anthropic\Beta\Skills\BetaDeletedSkill;
+use Anthropic\Beta\Skills\BetaSkill;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\FileParam;
 use Anthropic\PageCursor;
@@ -25,9 +23,9 @@ interface SkillsContract
      * @param list<string|FileParam> $files Body param: Files to upload for the skill.
      *
      * All files must be in the same top-level directory and must include a SKILL.md file at the root of that directory.
-     * @param string|null $displayTitle Body param: Display title for the skill.
-     *
-     * This is a human-readable label that is not included in the prompt sent to the model.
+     * @param string|null $displayName Body param: Human-readable, single-line label for the Skill. Maximum 255 characters.
+     * Always set: derived from the SKILL.md frontmatter `name` when omitted at
+     * creation. Not unique.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
@@ -35,10 +33,10 @@ interface SkillsContract
      */
     public function create(
         array $files,
-        ?string $displayTitle = null,
+        ?string $displayName = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
-    ): SkillNewResponse;
+    ): BetaSkill;
 
     /**
      * @api
@@ -55,14 +53,14 @@ interface SkillsContract
         string $skillID,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
-    ): SkillGetResponse;
+    ): BetaSkill;
 
     /**
      * @api
      *
      * @param int $limit Query param: Number of results to return per page.
      *
-     * Maximum value is 100. Defaults to 20.
+     * Ranges from `1` to `1000`. Defaults to `20`.
      * @param string|null $page Query param: Pagination token for fetching a specific page of results.
      *
      * Pass the value from a previous response's `next_page` field to get the next page of results.
@@ -74,7 +72,7 @@ interface SkillsContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
-     * @return PageCursor<SkillListResponse>
+     * @return PageCursor<BetaSkill>
      *
      * @throws APIException
      */
@@ -101,5 +99,5 @@ interface SkillsContract
         string $skillID,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
-    ): SkillDeleteResponse;
+    ): BetaDeletedSkill;
 }

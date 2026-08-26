@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Skills\BetaDeletedSkill;
+use Anthropic\Beta\Skills\BetaSkill;
 use Anthropic\Beta\Skills\SkillCreateParams;
 use Anthropic\Beta\Skills\SkillDeleteParams;
-use Anthropic\Beta\Skills\SkillDeleteResponse;
-use Anthropic\Beta\Skills\SkillGetResponse;
 use Anthropic\Beta\Skills\SkillListParams;
-use Anthropic\Beta\Skills\SkillListResponse;
-use Anthropic\Beta\Skills\SkillNewResponse;
 use Anthropic\Beta\Skills\SkillRetrieveParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
@@ -40,12 +38,12 @@ final class SkillsRawService implements SkillsRawContract
      *
      * @param array{
      *   files: list<string|FileParam>,
-     *   displayTitle?: string|null,
+     *   displayName?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|SkillCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<SkillNewResponse>
+     * @return BaseResponse<BetaSkill>
      *
      * @throws APIException
      */
@@ -77,11 +75,8 @@ final class SkillsRawService implements SkillsRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'skills-2025-10-02']],
-                $options
-            ),
-            convert: SkillNewResponse::class,
+            options: $options,
+            convert: BetaSkill::class,
         );
     }
 
@@ -98,7 +93,7 @@ final class SkillsRawService implements SkillsRawContract
      * }|SkillRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<SkillGetResponse>
+     * @return BaseResponse<BetaSkill>
      *
      * @throws APIException
      */
@@ -120,11 +115,8 @@ final class SkillsRawService implements SkillsRawContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'skills-2025-10-02']],
-                $options
-            ),
-            convert: SkillGetResponse::class,
+            options: $options,
+            convert: BetaSkill::class,
         );
     }
 
@@ -141,7 +133,7 @@ final class SkillsRawService implements SkillsRawContract
      * }|SkillListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<PageCursor<SkillListResponse>>
+     * @return BaseResponse<PageCursor<BetaSkill>>
      *
      * @throws APIException
      */
@@ -167,11 +159,8 @@ final class SkillsRawService implements SkillsRawContract
                 $header_params,
                 ['betas' => 'anthropic-beta']
             ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'skills-2025-10-02']],
-                $options
-            ),
-            convert: SkillListResponse::class,
+            options: $options,
+            convert: BetaSkill::class,
             page: PageCursor::class,
         );
     }
@@ -189,7 +178,7 @@ final class SkillsRawService implements SkillsRawContract
      * }|SkillDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<SkillDeleteResponse>
+     * @return BaseResponse<BetaDeletedSkill>
      *
      * @throws APIException
      */
@@ -211,11 +200,8 @@ final class SkillsRawService implements SkillsRawContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'skills-2025-10-02']],
-                $options
-            ),
-            convert: SkillDeleteResponse::class,
+            options: $options,
+            convert: BetaDeletedSkill::class,
         );
     }
 }

@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts\Beta;
 
+use Anthropic\Beta\Skills\BetaDeletedSkill;
+use Anthropic\Beta\Skills\BetaSkill;
 use Anthropic\Beta\Skills\SkillCreateParams;
 use Anthropic\Beta\Skills\SkillDeleteParams;
-use Anthropic\Beta\Skills\SkillDeleteResponse;
-use Anthropic\Beta\Skills\SkillGetResponse;
 use Anthropic\Beta\Skills\SkillListParams;
-use Anthropic\Beta\Skills\SkillListResponse;
-use Anthropic\Beta\Skills\SkillNewResponse;
 use Anthropic\Beta\Skills\SkillRetrieveParams;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
@@ -28,7 +26,7 @@ interface SkillsRawContract
      * @param array<string,mixed>|SkillCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<SkillNewResponse>
+     * @return BaseResponse<BetaSkill>
      *
      * @throws APIException
      */
@@ -46,7 +44,7 @@ interface SkillsRawContract
      * @param array<string,mixed>|SkillRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<SkillGetResponse>
+     * @return BaseResponse<BetaSkill>
      *
      * @throws APIException
      */
@@ -62,7 +60,7 @@ interface SkillsRawContract
      * @param array<string,mixed>|SkillListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<PageCursor<SkillListResponse>>
+     * @return BaseResponse<PageCursor<BetaSkill>>
      *
      * @throws APIException
      */
@@ -80,7 +78,7 @@ interface SkillsRawContract
      * @param array<string,mixed>|SkillDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<SkillDeleteResponse>
+     * @return BaseResponse<BetaDeletedSkill>
      *
      * @throws APIException
      */

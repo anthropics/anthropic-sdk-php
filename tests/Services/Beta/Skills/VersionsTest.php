@@ -3,10 +3,8 @@
 namespace Tests\Services\Beta\Skills;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Beta\Skills\Versions\VersionDeleteResponse;
-use Anthropic\Beta\Skills\Versions\VersionGetResponse;
-use Anthropic\Beta\Skills\Versions\VersionListResponse;
-use Anthropic\Beta\Skills\Versions\VersionNewResponse;
+use Anthropic\Beta\Skills\Versions\DeletedSkillVersion;
+use Anthropic\Beta\Skills\Versions\SkillVersion;
 use Anthropic\Client;
 use Anthropic\Core\FileParam;
 use Anthropic\Core\Util;
@@ -44,7 +42,7 @@ final class VersionsTest extends TestCase
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(VersionNewResponse::class, $result);
+        $this->assertInstanceOf(SkillVersion::class, $result);
     }
 
     #[Test]
@@ -59,7 +57,7 @@ final class VersionsTest extends TestCase
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(VersionNewResponse::class, $result);
+        $this->assertInstanceOf(SkillVersion::class, $result);
     }
 
     #[Test]
@@ -71,7 +69,7 @@ final class VersionsTest extends TestCase
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(VersionGetResponse::class, $result);
+        $this->assertInstanceOf(SkillVersion::class, $result);
     }
 
     #[Test]
@@ -84,7 +82,7 @@ final class VersionsTest extends TestCase
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(VersionGetResponse::class, $result);
+        $this->assertInstanceOf(SkillVersion::class, $result);
     }
 
     #[Test]
@@ -97,7 +95,7 @@ final class VersionsTest extends TestCase
 
         if ($item = $page->getItems()[0] ?? null) {
             // @phpstan-ignore-next-line method.alreadyNarrowedType
-            $this->assertInstanceOf(VersionListResponse::class, $item);
+            $this->assertInstanceOf(SkillVersion::class, $item);
         }
     }
 
@@ -110,7 +108,7 @@ final class VersionsTest extends TestCase
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(VersionDeleteResponse::class, $result);
+        $this->assertInstanceOf(DeletedSkillVersion::class, $result);
     }
 
     #[Test]
@@ -123,7 +121,7 @@ final class VersionsTest extends TestCase
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(VersionDeleteResponse::class, $result);
+        $this->assertInstanceOf(DeletedSkillVersion::class, $result);
     }
 
     #[Test]

@@ -28,9 +28,9 @@ final class VersionListParams implements BaseModel
     use SdkParams;
 
     /**
-     * Number of items to return per page.
+     * Number of results to return per page.
      *
-     * Defaults to `20`. Ranges from `1` to `1000`.
+     * Ranges from `1` to `1000`. Defaults to `20`.
      */
     #[Optional(nullable: true)]
     public ?int $limit;
@@ -76,9 +76,9 @@ final class VersionListParams implements BaseModel
     }
 
     /**
-     * Number of items to return per page.
+     * Number of results to return per page.
      *
-     * Defaults to `20`. Ranges from `1` to `1000`.
+     * Ranges from `1` to `1000`. Defaults to `20`.
      */
     public function withLimit(?int $limit): self
     {

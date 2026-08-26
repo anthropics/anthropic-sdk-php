@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\FileParam;
 use Anthropic\Core\Util;
-use Anthropic\Page;
+use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\FilesRawContract;
 
@@ -38,15 +38,15 @@ final class FilesRawService implements FilesRawContract
      * List Files
      *
      * @param array{
-     *   afterID?: string,
-     *   beforeID?: string,
+     *   ids?: list<string>|null,
      *   limit?: int,
+     *   page?: string|null,
      *   scopeID?: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|FileListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<Page<BetaFileMetadata>>
+     * @return BaseResponse<PageCursor<BetaFileMetadata>>
      *
      * @throws APIException
      */
@@ -58,7 +58,7 @@ final class FilesRawService implements FilesRawContract
             $params,
             $requestOptions,
         );
-        $query_params = array_flip(['afterID', 'beforeID', 'limit', 'scopeID']);
+        $query_params = array_flip(['ids', 'limit', 'page', 'scopeID']);
 
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);
@@ -69,22 +69,15 @@ final class FilesRawService implements FilesRawContract
             path: 'v1/files?beta=true',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
-                [
-                    'afterID' => 'after_id',
-                    'beforeID' => 'before_id',
-                    'scopeID' => 'scope_id',
-                ],
+                ['scopeID' => 'scope_id']
             ),
             headers: Util::array_transform_keys(
                 $header_params,
                 ['betas' => 'anthropic-beta']
             ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
-                $options,
-            ),
+            options: $options,
             convert: BetaFileMetadata::class,
-            page: Page::class,
+            page: PageCursor::class,
         );
     }
 
@@ -121,10 +114,7 @@ final class FilesRawService implements FilesRawContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
-                $options,
-            ),
+            options: $options,
             convert: BetaDeletedFile::class,
         );
     }
@@ -162,10 +152,7 @@ final class FilesRawService implements FilesRawContract
                 ['Accept' => 'application/binary', ...$parsed],
                 ['betas' => 'anthropic-beta'],
             ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
-                $options,
-            ),
+            options: $options,
             convert: 'string',
         );
     }
@@ -203,10 +190,7 @@ final class FilesRawService implements FilesRawContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
-                $options,
-            ),
+            options: $options,
             convert: BetaFileMetadata::class,
         );
     }
@@ -218,6 +202,7 @@ final class FilesRawService implements FilesRawContract
      *
      * @param array{
      *   file: string|FileParam,
+     *   expiresInSeconds?: int,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|FileUploadParams $params
      * @param RequestOpts|null $requestOptions
@@ -254,10 +239,7 @@ final class FilesRawService implements FilesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: RequestOptions::parse(
-                ['extraHeaders' => ['anthropic-beta' => 'files-api-2025-04-14']],
-                $options,
-            ),
+            options: $options,
             convert: BetaFileMetadata::class,
         );
     }

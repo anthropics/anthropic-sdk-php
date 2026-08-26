@@ -8,7 +8,7 @@ use Anthropic\Beta\Files\BetaFileMetadata;
 use Anthropic\Client;
 use Anthropic\Core\FileParam;
 use Anthropic\Core\Util;
-use Anthropic\Page;
+use Anthropic\PageCursor;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -37,7 +37,7 @@ final class FilesTest extends TestCase
         $page = $this->client->beta->files->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(Page::class, $page);
+        $this->assertInstanceOf(PageCursor::class, $page);
 
         if ($item = $page->getItems()[0] ?? null) {
             // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -88,6 +88,7 @@ final class FilesTest extends TestCase
     {
         $result = $this->client->beta->files->upload(
             file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
+            expiresInSeconds: 3600,
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
