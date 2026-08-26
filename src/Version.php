@@ -5,5 +5,5 @@ declare(strict_types=1);
 namespace Anthropic;
 
 // x-release-please-start-version
-const VERSION = '0.43.0';
+const VERSION = '0.44.0';
 // x-release-please-end
