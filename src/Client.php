@@ -79,9 +79,19 @@ class Client extends BaseClient
             'ANTHROPIC_WEBHOOK_SIGNING_KEY'
         ));
 
-        $baseUrl ??= Util::getenv(
-            'ANTHROPIC_BASE_URL'
-        ) ?: 'https://api.anthropic.com';
+        // If explicit credentials were provided, use them.
+        // Otherwise, if no apiKey/authToken are configured and this is
+        // the base Client class (not a subclass), auto-detect credentials.
+        if (!is_null($credentials)) {
+            $this->setCredentials($credentials);
+        } elseif ('' === $this->apiKey && '' === $this->authToken && self::class === static::class) {
+            $resolved = DefaultCredentials::resolve();
+            if (!is_null($resolved)) {
+                $this->setCredentials($resolved);
+            }
+        }
+
+        $baseUrl ??= Util::getenv('ANTHROPIC_BASE_URL') ?: ($this->credentialResult->baseUrl ?? 'https://api.anthropic.com');
 
         try {
             $options = RequestOptions::parse(
@@ -131,18 +141,6 @@ class Client extends BaseClient
             baseUrl: $baseUrl,
             options: $options
         );
-
-        // If explicit credentials were provided, use them.
-        // Otherwise, if no apiKey/authToken are configured and this is
-        // the base Client class (not a subclass), auto-detect credentials.
-        if (!is_null($credentials)) {
-            $this->setCredentials($credentials);
-        } elseif ('' === $this->apiKey && '' === $this->authToken && self::class === static::class) {
-            $resolved = DefaultCredentials::resolve();
-            if (!is_null($resolved)) {
-                $this->setCredentials($resolved);
-            }
-        }
 
         $this->messages = new MessagesService($this);
         $this->models = new ModelsService($this);

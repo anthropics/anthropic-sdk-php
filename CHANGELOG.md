@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.44.0 (2026-08-26)
+
+Full Changelog: [v0.43.0...v0.44.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.43.0...v0.44.0)
+
+### Features
+
+* **api:** add missing public beta values to the AnthropicBeta enum ([fbfd3fa](https://github.com/anthropics/anthropic-sdk-php/commit/fbfd3fa9531fd29e7e17104c30c1f278e2115a1b))
+* **api:** add SessionThreadAgentEntry type for a session thread's agent ([4c3b632](https://github.com/anthropics/anthropic-sdk-php/commit/4c3b63275d5bf1f52b1a4a4ef3bcd345f62a48af))
+* **api:** add the Admin API organization resources under client.beta.organization ([c43ac6b](https://github.com/anthropics/anthropic-sdk-php/commit/c43ac6becf614709fbd2cbba3c22b97fb774b047))
+* **api:** add thinking-display-updates beta ([20124c2](https://github.com/anthropics/anthropic-sdk-php/commit/20124c222ce191d3bdf37aaaffeb501bb9ceff29))
+
+
+### Bug Fixes
+
+* **client:** honor profile base_url from the config store ([#175](https://github.com/anthropics/anthropic-sdk-php/issues/175)) ([936b35b](https://github.com/anthropics/anthropic-sdk-php/commit/936b35bfc6a111ef2cf8773b6d0b4e1e7a674eb5))
+* **client:** read omitted response properties as null instead of throwing ([b713422](https://github.com/anthropics/anthropic-sdk-php/commit/b713422c2dae35477760a303e48aeb66899e2619))
+* **client:** reuse stored user_oauth access token and re-read credentials before refreshing ([#176](https://github.com/anthropics/anthropic-sdk-php/issues/176)) ([96b2cb9](https://github.com/anthropics/anthropic-sdk-php/commit/96b2cb907cb77549a2a8c69a7e631267a8bf66e5))
+
+
+### Chores
+
+* **ci:** cancel the CI run of an older push when a newer one arrives ([dc85d4c](https://github.com/anthropics/anthropic-sdk-php/commit/dc85d4c8f0695a5588887344b0d76b6bab670ad8))
+* **docs:** clarify how long memory versions are retained ([a8d1b04](https://github.com/anthropics/anthropic-sdk-php/commit/a8d1b04798613c475631bad74caf21d83f9e63cc))
+* **docs:** clarify that skill-version delete and download don't accept 'latest' ([51dbe2f](https://github.com/anthropics/anthropic-sdk-php/commit/51dbe2f8f16b9ef69c8c4407bf7506b79f1fdc16))
+* **docs:** note allow_package_managers requirement for packages ([affd04d](https://github.com/anthropics/anthropic-sdk-php/commit/affd04db38b3d01850e5c38bce937fa0be9a0b41))
+* **internal:** move embedded mock-server spec to a sidecar file ([51dbe2f](https://github.com/anthropics/anthropic-sdk-php/commit/51dbe2f8f16b9ef69c8c4407bf7506b79f1fdc16))
+
 ## 0.43.0 (2026-08-20)
 
 Full Changelog: [v0.42.0...v0.43.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.42.0...v0.43.0)

@@ -15,6 +15,7 @@ use Anthropic\Services\Beta\FilesService;
 use Anthropic\Services\Beta\MemoryStoresService;
 use Anthropic\Services\Beta\MessagesService;
 use Anthropic\Services\Beta\ModelsService;
+use Anthropic\Services\Beta\OrganizationService;
 use Anthropic\Services\Beta\SessionsService;
 use Anthropic\Services\Beta\SkillsService;
 use Anthropic\Services\Beta\TunnelsService;
@@ -105,6 +106,11 @@ final class BetaService implements BetaContract
     public TunnelsService $tunnels;
 
     /**
+     * @api
+     */
+    public OrganizationService $organization;
+
+    /**
      * @internal
      */
     public function __construct(private Client $client)
@@ -125,5 +131,6 @@ final class BetaService implements BetaContract
         $this->userProfiles = new UserProfilesService($client);
         $this->dreams = new DreamsService($client);
         $this->tunnels = new TunnelsService($client);
+        $this->organization = new OrganizationService($client);
     }
 }

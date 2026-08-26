@@ -38,7 +38,7 @@ final class CertificatesRawService implements CertificatesRawContract
      *
      * @param string $tunnelID Path param: Path parameter tunnel_id
      * @param array{
-     *   caCertificatePem: string,
+     *   caCertificatePEM: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|CertificateCreateParams $params
      * @param RequestOpts|null $requestOptions

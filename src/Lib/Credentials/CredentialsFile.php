@@ -48,7 +48,8 @@ final class CredentialsFile
         }
 
         /** @var array<string,mixed> $auth */
-        $baseUrl = is_string($config['base_url'] ?? null) ? $config['base_url'] : 'https://api.anthropic.com';
+        $profileBaseUrl = is_string($config['base_url'] ?? null) && '' !== $config['base_url'] ? $config['base_url'] : null;
+        $baseUrl = $profileBaseUrl ?? 'https://api.anthropic.com';
         $extraHeaders = [];
 
         $type = $auth['type'] ?? null;
@@ -83,6 +84,7 @@ final class CredentialsFile
         return new CredentialResult(
             provider: new TokenCache($provider),
             extraHeaders: $extraHeaders,
+            baseUrl: $profileBaseUrl,
         );
     }
 

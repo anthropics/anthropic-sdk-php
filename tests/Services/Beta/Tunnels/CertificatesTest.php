@@ -35,7 +35,7 @@ final class CertificatesTest extends TestCase
     {
         $result = $this->client->beta->tunnels->certificates->create(
             'tunnel_id',
-            caCertificatePem: 'ca_certificate_pem'
+            caCertificatePEM: 'ca_certificate_pem'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -47,7 +47,7 @@ final class CertificatesTest extends TestCase
     {
         $result = $this->client->beta->tunnels->certificates->create(
             'tunnel_id',
-            caCertificatePem: 'ca_certificate_pem',
+            caCertificatePEM: 'ca_certificate_pem',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 

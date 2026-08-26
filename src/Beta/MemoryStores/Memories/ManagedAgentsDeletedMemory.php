@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Tombstone returned by [Delete a memory](/en/api/beta/memory_stores/memories/delete). The memory's version history persists and remains listable via [List memory versions](/en/api/beta/memory_stores/memory_versions/list) until the store itself is deleted.
+ * Tombstone returned by [Delete a memory](/en/api/beta/memory_stores/memories/delete). Deleting a memory does not erase its version history: its versions remain listable via [List memory versions](/en/api/beta/memory_stores/memory_versions/list) while they are retained (each version is kept for at least the version retention period after it was written, unless the store itself is deleted).
  *
  * @phpstan-type ManagedAgentsDeletedMemoryShape = array{
  *   id: string, type: Type|value-of<Type>

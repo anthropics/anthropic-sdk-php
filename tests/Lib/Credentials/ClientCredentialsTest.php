@@ -27,6 +27,8 @@ class ClientCredentialsTest extends TestCase
     /** @var array<string,string|false> */
     private array $savedEnv = [];
 
+    private ?string $configDir = null;
+
     protected function setUp(): void
     {
         $this->transporter = new MockClient;
@@ -41,7 +43,7 @@ class ClientCredentialsTest extends TestCase
         $this->transporter->setDefaultResponse($mockRsp);
 
         // Save and clear relevant env vars.
-        foreach (['ANTHROPIC_API_KEY', 'ANTHROPIC_AUTH_TOKEN'] as $var) {
+        foreach (['ANTHROPIC_API_KEY', 'ANTHROPIC_AUTH_TOKEN', 'ANTHROPIC_BASE_URL', 'ANTHROPIC_CONFIG_DIR', 'ANTHROPIC_PROFILE'] as $var) {
             $this->savedEnv[$var] = getenv($var);
             putenv($var);
         }
@@ -55,6 +57,15 @@ class ClientCredentialsTest extends TestCase
             } else {
                 putenv("{$var}={$value}");
             }
+        }
+
+        if (null !== $this->configDir) {
+            foreach (glob($this->configDir.'/*/*') ?: [] as $file) {
+                @unlink($file);
+            }
+            @rmdir($this->configDir.'/configs');
+            @rmdir($this->configDir.'/credentials');
+            @rmdir($this->configDir);
         }
     }
 
@@ -195,7 +206,62 @@ class ClientCredentialsTest extends TestCase
         $this->assertSame('', $request->getHeaderLine('Authorization'));
     }
 
-    private function makeCredentials(string $token): CredentialResult
+    public function testProfileBaseUrlUsedWhenNoExplicitBaseUrl(): void
+    {
+        $this->configDir = sys_get_temp_dir().'/anthropic_client_cred_test_'.uniqid();
+        mkdir($this->configDir.'/configs', 0700, true);
+        mkdir($this->configDir.'/credentials', 0700, true);
+        file_put_contents($this->configDir.'/configs/staging.json', json_encode([
+            'base_url' => 'https://profile.example.com',
+            'authentication' => ['type' => 'user_oauth'],
+        ]));
+        file_put_contents($this->configDir.'/credentials/staging.json', json_encode(['access_token' => 'tok_profile']));
+        chmod($this->configDir.'/credentials/staging.json', 0600);
+        putenv("ANTHROPIC_CONFIG_DIR={$this->configDir}");
+        putenv('ANTHROPIC_PROFILE=staging');
+
+        $client = new Client(requestOptions: ['transporter' => $this->transporter]);
+
+        $this->assertSame('profile.example.com', $this->requestHost($client));
+        $this->assertSame('Bearer tok_profile', $this->getLastRequest()->getHeaderLine('Authorization'));
+    }
+
+    public function testEnvBaseUrlTakesPrecedenceOverProfileBaseUrl(): void
+    {
+        putenv('ANTHROPIC_BASE_URL=https://env.example.com');
+
+        $client = new Client(
+            requestOptions: ['transporter' => $this->transporter],
+            credentials: $this->makeCredentials('tok', baseUrl: 'https://profile.example.com'),
+        );
+
+        $this->assertSame('env.example.com', $this->requestHost($client));
+    }
+
+    public function testExplicitBaseUrlTakesPrecedenceOverEnvAndProfileBaseUrl(): void
+    {
+        putenv('ANTHROPIC_BASE_URL=https://env.example.com');
+
+        $client = new Client(
+            baseUrl: 'https://explicit.example.com',
+            requestOptions: ['transporter' => $this->transporter],
+            credentials: $this->makeCredentials('tok', baseUrl: 'https://profile.example.com'),
+        );
+
+        $this->assertSame('explicit.example.com', $this->requestHost($client));
+    }
+
+    public function testDefaultBaseUrlWhenProfileHasNone(): void
+    {
+        $client = new Client(
+            requestOptions: ['transporter' => $this->transporter],
+            credentials: $this->makeCredentials('tok'),
+        );
+
+        $this->assertSame('api.anthropic.com', $this->requestHost($client));
+    }
+
+    private function makeCredentials(string $token, ?string $baseUrl = null): CredentialResult
     {
         $inner = new class($token) implements AccessTokenProvider {
             public function __construct(private readonly string $token) {}
@@ -206,7 +272,14 @@ class ClientCredentialsTest extends TestCase
             }
         };
 
-        return new CredentialResult(provider: new TokenCache($inner));
+        return new CredentialResult(provider: new TokenCache($inner), baseUrl: $baseUrl);
+    }
+
+    private function requestHost(Client $client): string
+    {
+        $client->messages->create(1024, [], 'claude-haiku-4-5');
+
+        return $this->getLastRequest()->getUri()->getHost();
     }
 
     private function getLastRequest(): RequestInterface

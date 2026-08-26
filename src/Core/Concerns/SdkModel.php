@@ -108,7 +108,7 @@ trait SdkModel
             );
         }
 
-        // An optional property which was unset to be omitted from serialized is being accessed.
+        // A property which was unset because its value was omitted is being accessed.
         // Return null to match user's expectations.
         // @phpstan-ignore-next-line return.type
         return null;

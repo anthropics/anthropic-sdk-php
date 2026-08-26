@@ -42,7 +42,7 @@ final class BetaLimitedNetworkParams implements BaseModel
     public ?bool $allowMCPServers;
 
     /**
-     * Permits outbound access to public package registries (PyPI, npm, etc.) beyond those listed in the `allowed_hosts` array. Defaults to `false`.
+     * Permits outbound access to public package registries (PyPI, npm, etc.) beyond those listed in the `allowed_hosts` array. Defaults to `false` on creation. Must be `true` when `packages` are specified.
      */
     #[Optional('allow_package_managers', nullable: true)]
     public ?bool $allowPackageManagers;
@@ -106,7 +106,7 @@ final class BetaLimitedNetworkParams implements BaseModel
     }
 
     /**
-     * Permits outbound access to public package registries (PyPI, npm, etc.) beyond those listed in the `allowed_hosts` array. Defaults to `false`.
+     * Permits outbound access to public package registries (PyPI, npm, etc.) beyond those listed in the `allowed_hosts` array. Defaults to `false` on creation. Must be `true` when `packages` are specified.
      */
     public function withAllowPackageManagers(?bool $allowPackageManagers): self
     {

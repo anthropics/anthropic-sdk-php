@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\Tunnels\CertificatesService::create()
  *
  * @phpstan-type CertificateCreateParamsShape = array{
- *   caCertificatePem: string,
+ *   caCertificatePEM: string,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
@@ -33,7 +33,7 @@ final class CertificateCreateParams implements BaseModel
      * PEM-encoded X.509 CA certificate. Must contain exactly one certificate and no private-key material. Maximum 8KB.
      */
     #[Required('ca_certificate_pem')]
-    public string $caCertificatePem;
+    public string $caCertificatePEM;
 
     /**
      * Optional header to specify the beta version(s) you want to use.
@@ -48,13 +48,13 @@ final class CertificateCreateParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * CertificateCreateParams::with(caCertificatePem: ...)
+     * CertificateCreateParams::with(caCertificatePEM: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CertificateCreateParams)->withCaCertificatePem(...)
+     * (new CertificateCreateParams)->withCACertificatePEM(...)
      * ```
      */
     public function __construct()
@@ -70,12 +70,12 @@ final class CertificateCreateParams implements BaseModel
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
-        string $caCertificatePem,
+        string $caCertificatePEM,
         ?array $betas = null
     ): self {
         $self = new self;
 
-        $self['caCertificatePem'] = $caCertificatePem;
+        $self['caCertificatePEM'] = $caCertificatePEM;
 
         null !== $betas && $self['betas'] = $betas;
 
@@ -85,10 +85,10 @@ final class CertificateCreateParams implements BaseModel
     /**
      * PEM-encoded X.509 CA certificate. Must contain exactly one certificate and no private-key material. Maximum 8KB.
      */
-    public function withCaCertificatePem(string $caCertificatePem): self
+    public function withCACertificatePEM(string $caCertificatePEM): self
     {
         $self = clone $this;
-        $self['caCertificatePem'] = $caCertificatePem;
+        $self['caCertificatePEM'] = $caCertificatePEM;
 
         return $self;
     }

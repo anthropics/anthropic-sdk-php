@@ -39,7 +39,7 @@ final class CertificatesService implements CertificatesContract
      * Registers a public CA certificate on a tunnel. Anthropic verifies the gateway's server certificate against this CA when it terminates the inner TLS session. A tunnel holds at most two non-archived certificates.
      *
      * @param string $tunnelID Path param: Path parameter tunnel_id
-     * @param string $caCertificatePem Body param: PEM-encoded X.509 CA certificate. Must contain exactly one certificate and no private-key material. Maximum 8KB.
+     * @param string $caCertificatePEM Body param: PEM-encoded X.509 CA certificate. Must contain exactly one certificate and no private-key material. Maximum 8KB.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
@@ -47,12 +47,12 @@ final class CertificatesService implements CertificatesContract
      */
     public function create(
         string $tunnelID,
-        string $caCertificatePem,
+        string $caCertificatePEM,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): TunnelCertificate {
         $params = Util::removeNulls(
-            ['caCertificatePem' => $caCertificatePem, 'betas' => $betas]
+            ['caCertificatePEM' => $caCertificatePEM, 'betas' => $betas]
         );
 
         // @phpstan-ignore-next-line argument.type

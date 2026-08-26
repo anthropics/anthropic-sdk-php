@@ -12,4 +12,6 @@ enum Display: string
     case SUMMARIZED = 'summarized';
 
     case OMITTED = 'omitted';
+
+    case UPDATES = 'updates';
 }

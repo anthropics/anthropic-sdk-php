@@ -6,6 +6,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -44,6 +45,25 @@ class Dog implements BaseModel
         $this->owner = $owner;
 
         null !== $friends && $this['friends'] = $friends;
+    }
+}
+
+class Cat implements BaseModel
+{
+    /** @use SdkModel<array<string, mixed>> */
+    use SdkModel;
+
+    #[Required]
+    public string $type = 'cat';
+
+    #[Required]
+    public string $name;
+
+    public function __construct(string $name)
+    {
+        $this->initialize();
+
+        $this->name = $name;
     }
 }
 
@@ -140,5 +160,54 @@ class ModelTest extends TestCase
             '{"name":"Bob","age_years":12,"friends":null,"owner":null}',
             json_encode($model)
         );
+    }
+
+    #[Test]
+    public function testCoerceWithOmittedProperties(): void
+    {
+        /** @var Dog $model */
+        $model = Conversion::coerce(Dog::class, value: ['name' => 'Bob', 'age_years' => 12]);
+
+        $this->assertNull($model->owner);
+        $this->assertNull($model->friends);
+        $this->assertFalse($model->offsetExists('owner'));
+        $this->assertFalse($model->offsetExists('friends'));
+        $this->assertEquals('{"name":"Bob","age_years":12}', json_encode($model));
+    }
+
+    #[Test]
+    public function testCoerceWithExplicitNull(): void
+    {
+        /** @var Dog $model */
+        $model = Conversion::coerce(Dog::class, value: ['name' => 'Bob', 'age_years' => 12, 'owner' => null]);
+
+        $this->assertNull($model->owner);
+        $this->assertTrue($model->offsetExists('owner'));
+        $this->assertEquals('{"name":"Bob","age_years":12,"owner":null}', json_encode($model));
+    }
+
+    #[Test]
+    public function testCoerceWithOmittedConstantKeepsDefault(): void
+    {
+        /** @var Cat $model */
+        $model = Conversion::coerce(Cat::class, value: ['name' => 'Tom']);
+
+        $this->assertEquals('cat', $model->type);
+        $this->assertTrue($model->offsetExists('type'));
+        $this->assertEquals('{"type":"cat","name":"Tom"}', json_encode($model));
+        $this->assertEquals('cat', Cat::fromArray(['name' => 'Tom'])->type);
+    }
+
+    #[Test]
+    public function testCoerceWithOmittedNonNullablePropertyThrowsOnAccess(): void
+    {
+        /** @var Dog $model */
+        $model = Conversion::coerce(Dog::class, value: ['age_years' => 12]);
+
+        $this->assertEquals(12, $model->ageYears);
+        $this->expectException(\Error::class);
+        $this->expectExceptionMessage('must not be accessed before initialization');
+        // @phpstan-ignore-next-line expr.resultUnused
+        $model->name;
     }
 }

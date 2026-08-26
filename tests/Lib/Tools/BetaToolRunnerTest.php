@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace Tests\Lib\Tools;
 
+use Anthropic\Beta\Messages\BetaCompactionBlock;
 use Anthropic\Beta\Messages\BetaContainerParams;
 use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Beta\Messages\BetaRequestToolAdditionBlock;
 use Anthropic\Beta\Messages\BetaRequestToolRemovalBlock;
+use Anthropic\Beta\Messages\BetaStopReason;
 use Anthropic\Beta\Messages\BetaTextBlock;
 use Anthropic\Beta\Messages\BetaToolChangeToolReference;
 use Anthropic\Beta\Messages\BetaToolUseBlock;
 use Anthropic\Client;
 use Anthropic\Core\Util;
 use Anthropic\Lib\Tools\BetaRunnableTool;
+use Anthropic\Lib\Tools\BetaToolRunner;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
 use PHPUnit\Framework\Attributes\Test;
@@ -28,6 +31,20 @@ use Psr\Http\Message\ResponseInterface;
 final class BetaToolRunnerTest extends TestCase
 {
     private const CONTAINER = ['id' => 'container_123', 'expires_at' => '2025-01-01T00:00:00Z', 'skills' => []];
+
+    private const PAUSED_CONTENT = [
+        ['type' => 'text', 'text' => 'Let me look that up.'],
+        [
+            'type' => 'server_tool_use',
+            'id' => 'srvtoolu_1',
+            'name' => 'web_search',
+            'input' => ['query' => 'weather in SF'],
+        ],
+    ];
+
+    private const COMPACTION_CONTENT = [
+        ['type' => 'compaction', 'content' => 'Summary of the conversation so far.'],
+    ];
 
     private MockClient $transporter;
 
@@ -92,7 +109,7 @@ final class BetaToolRunnerTest extends TestCase
     }
 
     // -------------------------------------------------------------------------
-    // Refusal-terminated turn is final even when it carries a tool_use block
+    // Terminal turns (refusal, max_tokens) are final even when they carry a tool_use block
     // -------------------------------------------------------------------------
 
     #[Test]
@@ -123,6 +140,33 @@ final class BetaToolRunnerTest extends TestCase
         $this->assertCount(1, $messages);
         $this->assertSame('refusal', $messages[0]->stopReason);
         $this->assertInstanceOf(BetaToolUseBlock::class, $messages[0]->content[0]);
+        $this->assertCount(1, $this->transporter->getRequests());
+    }
+
+    #[Test]
+    public function testMaxTokensTurnWithToolUseIsTerminal(): void
+    {
+        $this->transporter->addResponse(
+            $this->toolUseResponse('get_weather', ['location' => 'Paris'], stopReason: 'max_tokens')
+        );
+        // Must never be requested: the truncated turn ends the loop.
+        $this->transporter->addResponse($this->textResponse('Sunny in Paris.'));
+
+        $called = false;
+        $tool = $this->makeWeatherTool(function () use (&$called): void {
+            $called = true;
+        });
+
+        $final = $this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [['role' => 'user', 'content' => 'Weather in Paris?']],
+            model: 'claude-opus-4-6',
+            tools: [$tool],
+        )->runUntilDone();
+
+        $this->assertFalse($called, 'Tool in a max_tokens-truncated turn must not be executed');
+        $this->assertSame('max_tokens', $final->stopReason);
+        $this->assertInstanceOf(BetaToolUseBlock::class, $final->content[0]);
         $this->assertCount(1, $this->transporter->getRequests());
     }
 
@@ -853,6 +897,120 @@ final class BetaToolRunnerTest extends TestCase
     }
 
     // -------------------------------------------------------------------------
+    // pause_turn / compaction: the unfinished turn is sent back so the server resumes it
+    // -------------------------------------------------------------------------
+
+    #[Test]
+    public function testPauseTurnIsSentBackAndResumed(): void
+    {
+        $this->transporter->addResponse($this->pauseTurnResponse());
+        $this->transporter->addResponse($this->textResponse('Sunny in SF.'));
+
+        $final = $this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [['role' => 'user', 'content' => 'Weather in SF?']],
+            model: 'claude-opus-4-6',
+            tools: [$this->makeWeatherTool(), ['name' => 'web_search', 'type' => 'web_search_20250305']],
+        )->runUntilDone();
+
+        $this->assertSame('end_turn', $final->stopReason);
+        $this->assertCount(2, $this->transporter->getRequests());
+
+        $this->assertEquals(
+            [
+                ['role' => 'user', 'content' => 'Weather in SF?'],
+                ['role' => 'assistant', 'content' => self::PAUSED_CONTENT],
+            ],
+            $this->requestBody(1)['messages'],
+        );
+    }
+
+    #[Test]
+    public function testPauseTurnStopsAtMaxIterations(): void
+    {
+        for ($i = 1; $i <= 5; ++$i) {
+            $this->transporter->addResponse($this->pauseTurnResponse("msg_{$i}"));
+        }
+
+        $final = $this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [['role' => 'user', 'content' => 'Weather in SF?']],
+            model: 'claude-opus-4-6',
+            tools: [['name' => 'web_search', 'type' => 'web_search_20250305']],
+            maxIterations: 3,
+        )->runUntilDone();
+
+        $this->assertSame('pause_turn', $final->stopReason);
+        $this->assertCount(3, $this->transporter->getRequests());
+    }
+
+    #[Test]
+    public function testCompactionTurnIsSentBackAndResumed(): void
+    {
+        $this->transporter->addResponse($this->compactionResponse());
+        $this->transporter->addResponse($this->textResponse('Sunny in SF.'));
+
+        $called = false;
+        $tool = $this->makeWeatherTool(function () use (&$called): void {
+            $called = true;
+        });
+
+        $messages = [];
+        foreach ($this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [['role' => 'user', 'content' => 'Weather in SF?']],
+            model: 'claude-opus-4-6',
+            tools: [$tool],
+        ) as $message) {
+            $messages[] = $message;
+        }
+
+        $this->assertCount(2, $messages);
+        $this->assertInstanceOf(BetaCompactionBlock::class, $messages[0]->content[0]);
+        $this->assertSame('end_turn', $messages[1]->stopReason);
+        $this->assertFalse($called);
+        $this->assertCount(2, $this->transporter->getRequests());
+
+        // The compaction turn goes back unchanged as the last message, with no tool_result turn after it.
+        $this->assertEquals(
+            [
+                ['role' => 'user', 'content' => 'Weather in SF?'],
+                ['role' => 'assistant', 'content' => self::COMPACTION_CONTENT],
+            ],
+            $this->requestBody(1)['messages'],
+        );
+    }
+
+    #[Test]
+    public function testDetermineNextStepFromStopReasonCoversEveryStopReason(): void
+    {
+        $determineNextStep = new \ReflectionMethod(BetaToolRunner::class, 'determineNextStepFromStopReason');
+        $expected = [
+            'tool_use' => 'run_tools',
+            'pause_turn' => 'resume',
+            'compaction' => 'resume',
+            'end_turn' => 'stop',
+            'stop_sequence' => 'stop',
+            'max_tokens' => 'stop',
+            'model_context_window_exceeded' => 'stop',
+            'refusal' => 'stop',
+        ];
+
+        foreach (BetaStopReason::cases() as $case) {
+            $this->assertArrayHasKey($case->value, $expected, "stop_reason {$case->value} has no expected bucket");
+            $this->assertSame(
+                $expected[$case->value],
+                $determineNextStep->invoke(null, $case->value),
+                "stop_reason {$case->value}",
+            );
+        }
+
+        // A stop reason this SDK does not know yet must stop the loop, never throw.
+        $this->assertSame('stop', $determineNextStep->invoke(null, 'some_future_reason'));
+        $this->assertSame('stop', $determineNextStep->invoke(null, null));
+    }
+
+    // -------------------------------------------------------------------------
     // Double-consumption throws
     // -------------------------------------------------------------------------
 
@@ -1047,6 +1205,38 @@ final class BetaToolRunnerTest extends TestCase
             'content' => [['type' => 'text', 'text' => $text]],
             'model' => 'claude-opus-4-6',
             'stop_reason' => 'end_turn',
+            'stop_sequence' => null,
+            'context_management' => null,
+            'container' => null,
+            'usage' => ['input_tokens' => 10, 'output_tokens' => 20],
+        ]);
+    }
+
+    private function pauseTurnResponse(string $id = 'msg_paused'): ResponseInterface
+    {
+        return $this->makeResponse([
+            'id' => $id,
+            'type' => 'message',
+            'role' => 'assistant',
+            'content' => self::PAUSED_CONTENT,
+            'model' => 'claude-opus-4-6',
+            'stop_reason' => 'pause_turn',
+            'stop_sequence' => null,
+            'context_management' => null,
+            'container' => null,
+            'usage' => ['input_tokens' => 10, 'output_tokens' => 20],
+        ]);
+    }
+
+    private function compactionResponse(string $id = 'msg_compacted'): ResponseInterface
+    {
+        return $this->makeResponse([
+            'id' => $id,
+            'type' => 'message',
+            'role' => 'assistant',
+            'content' => self::COMPACTION_CONTENT,
+            'model' => 'claude-opus-4-6',
+            'stop_reason' => 'compaction',
             'stop_sequence' => null,
             'context_management' => null,
             'container' => null,

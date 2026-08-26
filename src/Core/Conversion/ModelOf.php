@@ -129,6 +129,14 @@ final class ModelOf implements Converter
     public function from(array $data): BaseModel
     {
         $instance = $this->class->newInstanceWithoutConstructor();
+        // Omitted nullable properties without a default are unset so they read as null and stay omitted
+        // on re-serialization; non-nullable ones stay uninitialized so access raises PHP's usual error.
+        foreach ($this->properties as $name => $info) {
+            $prop = $info->property;
+            if (!array_key_exists($name, array: $data) && !$prop->hasDefaultValue() && ($prop->getType()?->allowsNull() ?? true)) {
+                unset($instance->{$name});
+            }
+        }
         // @phpstan-ignore-next-line
         $instance->__unserialize($data);
 

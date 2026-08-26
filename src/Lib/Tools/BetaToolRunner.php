@@ -27,6 +27,15 @@ use Anthropic\Messages\Model;
  */
 final class BetaToolRunner implements \IteratorAggregate
 {
+    /** Execute the turn's client tool calls, answer with their results, and continue; with none, stop. */
+    private const STEP_RUN_TOOLS = 'run_tools';
+
+    /** The turn is unfinished: send it back unchanged, executing nothing, so the server continues it. */
+    private const STEP_RESUME = 'resume';
+
+    /** The turn is final: the loop ends on it and its tool_use blocks are not executed. */
+    private const STEP_STOP = 'stop';
+
     private bool $consumed = false;
 
     /**
@@ -251,6 +260,8 @@ final class BetaToolRunner implements \IteratorAggregate
 
             yield $message;
 
+            $nextStep = self::determineNextStepFromStopReason($message->stopReason);
+
             // If the caller mutated params during this yield, skip auto-appending
             // the assistant message — they are managing history manually this turn.
             // @phpstan-ignore booleanNot.alwaysTrue
@@ -271,13 +282,12 @@ final class BetaToolRunner implements \IteratorAggregate
                     }
                 }
 
-                // Refusal-terminated turns are terminal: the refusal may have cut a tool_use off
-                // with partial input, so executing this turn's tools would fire side effects the
-                // model never confirmed — and once middleware strips the refusal turn, their
-                // tool_results could never be replayed coherently. Surface the refusal as the
-                // final message instead.
-                if (BetaStopReason::REFUSAL->value === $message->stopReason) {
+                if (self::STEP_STOP === $nextStep) {
                     break;
+                }
+
+                if (self::STEP_RESUME === $nextStep) {
+                    continue;
                 }
             }
 
@@ -289,6 +299,32 @@ final class BetaToolRunner implements \IteratorAggregate
                 break;
             }
         }
+    }
+
+    /**
+     * Decides how the loop treats a finished request from its stop reason.
+     *
+     * @return self::STEP_* one of three outcomes; unknown values from a newer API stop the loop
+     */
+    private static function determineNextStepFromStopReason(?string $stopReason): string
+    {
+        $reason = null === $stopReason ? null : BetaStopReason::tryFrom($stopReason);
+        if (null === $reason) {
+            return self::STEP_STOP;
+        }
+
+        // No default arm: PHPStan rejects a non-exhaustive match, so every new case must be classified here.
+        return match ($reason) {
+            BetaStopReason::TOOL_USE => self::STEP_RUN_TOOLS,
+            // pause_after_compaction hands the turn back before the model answers; sending it back unchanged continues it.
+            BetaStopReason::COMPACTION,
+            BetaStopReason::PAUSE_TURN => self::STEP_RESUME,
+            BetaStopReason::END_TURN,
+            BetaStopReason::STOP_SEQUENCE,
+            BetaStopReason::MAX_TOKENS,
+            BetaStopReason::MODEL_CONTEXT_WINDOW_EXCEEDED,
+            BetaStopReason::REFUSAL => self::STEP_STOP,
+        };
     }
 
     /**
