@@ -6,7 +6,6 @@ namespace Anthropic\Beta\UserProfiles;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\UserProfiles\UserProfileUpdateParams\AccessType;
-use Anthropic\Beta\UserProfiles\UserProfileUpdateParams\Relationship;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
@@ -23,7 +22,6 @@ use Anthropic\Core\Contracts\BaseModel;
  *   externalUserOnboardedAt?: \DateTimeInterface|null,
  *   metadata?: array<string,string>|null,
  *   name?: string|null,
- *   relationship?: null|Relationship|value-of<Relationship>,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
@@ -68,14 +66,6 @@ final class UserProfileUpdateParams implements BaseModel
     public ?string $name;
 
     /**
-     * How the entity behind a user profile relates to the platform that owns the API key. `external`: an individual end-user of the platform. `resold`: a company the platform resells Claude access to. `internal`: the platform's own usage.
-     *
-     * @var value-of<Relationship>|null $relationship
-     */
-    #[Optional(enum: Relationship::class, nullable: true)]
-    public ?string $relationship;
-
-    /**
      * Optional header to specify the beta version(s) you want to use.
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
@@ -95,7 +85,6 @@ final class UserProfileUpdateParams implements BaseModel
      *
      * @param AccessType|value-of<AccessType>|null $accessType
      * @param array<string,string>|null $metadata
-     * @param Relationship|value-of<Relationship>|null $relationship
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
@@ -104,7 +93,6 @@ final class UserProfileUpdateParams implements BaseModel
         ?\DateTimeInterface $externalUserOnboardedAt = null,
         ?array $metadata = null,
         ?string $name = null,
-        Relationship|string|null $relationship = null,
         ?array $betas = null,
     ): self {
         $self = new self;
@@ -114,7 +102,6 @@ final class UserProfileUpdateParams implements BaseModel
         null !== $externalUserOnboardedAt && $self['externalUserOnboardedAt'] = $externalUserOnboardedAt;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $name && $self['name'] = $name;
-        null !== $relationship && $self['relationship'] = $relationship;
         null !== $betas && $self['betas'] = $betas;
 
         return $self;
@@ -176,20 +163,6 @@ final class UserProfileUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['name'] = $name;
-
-        return $self;
-    }
-
-    /**
-     * How the entity behind a user profile relates to the platform that owns the API key. `external`: an individual end-user of the platform. `resold`: a company the platform resells Claude access to. `internal`: the platform's own usage.
-     *
-     * @param Relationship|value-of<Relationship>|null $relationship
-     */
-    public function withRelationship(
-        Relationship|string|null $relationship
-    ): self {
-        $self = clone $this;
-        $self['relationship'] = $relationship;
 
         return $self;
     }
