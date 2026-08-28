@@ -20,6 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type UserProfileCreateParamsShape = array{
  *   accessType?: null|AccessType|value-of<AccessType>,
  *   externalID?: string|null,
+ *   externalUserOnboardedAt?: \DateTimeInterface|null,
  *   metadata?: array<string,string>|null,
  *   name?: string|null,
  *   relationship?: null|Relationship|value-of<Relationship>,
@@ -45,6 +46,12 @@ final class UserProfileCreateParams implements BaseModel
      */
     #[Optional('external_id', nullable: true)]
     public ?string $externalID;
+
+    /**
+     * A timestamp in RFC 3339 format.
+     */
+    #[Optional('external_user_onboarded_at')]
+    public ?\DateTimeInterface $externalUserOnboardedAt;
 
     /**
      * Free-form key-value data to attach to this user profile. Maximum 16 keys, with keys up to 64 characters and values up to 512 characters. Values must be non-empty strings.
@@ -94,6 +101,7 @@ final class UserProfileCreateParams implements BaseModel
     public static function with(
         AccessType|string|null $accessType = null,
         ?string $externalID = null,
+        ?\DateTimeInterface $externalUserOnboardedAt = null,
         ?array $metadata = null,
         ?string $name = null,
         Relationship|string|null $relationship = null,
@@ -103,6 +111,7 @@ final class UserProfileCreateParams implements BaseModel
 
         null !== $accessType && $self['accessType'] = $accessType;
         null !== $externalID && $self['externalID'] = $externalID;
+        null !== $externalUserOnboardedAt && $self['externalUserOnboardedAt'] = $externalUserOnboardedAt;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $name && $self['name'] = $name;
         null !== $relationship && $self['relationship'] = $relationship;
@@ -131,6 +140,18 @@ final class UserProfileCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['externalID'] = $externalID;
+
+        return $self;
+    }
+
+    /**
+     * A timestamp in RFC 3339 format.
+     */
+    public function withExternalUserOnboardedAt(
+        \DateTimeInterface $externalUserOnboardedAt
+    ): self {
+        $self = clone $this;
+        $self['externalUserOnboardedAt'] = $externalUserOnboardedAt;
 
         return $self;
     }

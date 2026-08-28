@@ -312,4 +312,64 @@ class ClientTest extends TestCase
         $this->assertSame('claude-opus-4-8', $sent['model'] ?? null);
     }
 
+    public function testCustomRequestPathResolvesAgainstBaseUrl(): void
+    {
+        $transporter = new MockClient;
+        $mockRsp = Psr17FactoryDiscovery::findResponseFactory()
+            ->createResponse()
+            ->withStatus(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(json_encode([], flags: Util::JSON_ENCODE_FLAGS) ?: ''))
+        ;
+
+        $transporter->setDefaultResponse($mockRsp);
+
+        $client = new \Anthropic\Client(
+            baseUrl: 'http://localhost/prefix',
+            apiKey: 'my-anthropic-api-key',
+            requestOptions: ['transporter' => $transporter],
+        );
+
+        $cases = [
+            'model/vendor.model-v1:0/invoke' => ['http', 'localhost', '/prefix/model/vendor.model-v1:0/invoke'],
+            '/model/vendor.model-v1:0/invoke' => ['http', 'localhost', '/prefix/model/vendor.model-v1:0/invoke'],
+            'https://example.com/absolute/path?dog=woof' => ['https', 'example.com', '/absolute/path'],
+        ];
+
+        foreach ($cases as $path => [$scheme, $host, $expectedPath]) {
+            $client->request('post', $path, body: ['hello' => 'world']);
+            $this->assertInstanceOf(RequestInterface::class, $requested = $transporter->getLastRequest());
+            $this->assertSame($scheme, $requested->getUri()->getScheme());
+            $this->assertSame($host, $requested->getUri()->getHost());
+            $this->assertSame($expectedPath, $requested->getUri()->getPath());
+        }
+    }
+
+    public function testProtocolRelativeRedirectSwitchesHost(): void
+    {
+        $transporter = new MockClient;
+        $mockRsp = Psr17FactoryDiscovery::findResponseFactory()
+            ->createResponse()
+            ->withStatus(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(json_encode([], flags: Util::JSON_ENCODE_FLAGS) ?: ''))
+        ;
+
+        $transporter->setDefaultResponse($mockRsp);
+
+        $client = new \Anthropic\Client(
+            baseUrl: 'http://localhost/prefix',
+            apiKey: 'my-anthropic-api-key',
+            requestOptions: ['transporter' => $transporter],
+        );
+
+        $transporter->addResponse(Psr17FactoryDiscovery::findResponseFactory()->createResponse(302)->withHeader('Location', '//cdn.example.com/file?sig=abc'));
+
+        $client->request('get', 'v1/thing');
+        $this->assertInstanceOf(RequestInterface::class, $requested = $transporter->getLastRequest());
+        $this->assertSame('http', $requested->getUri()->getScheme());
+        $this->assertSame('cdn.example.com', $requested->getUri()->getHost());
+        $this->assertSame('/file', $requested->getUri()->getPath());
+        $this->assertStringContainsString('sig=abc', $requested->getUri()->getQuery());
+    }
 }

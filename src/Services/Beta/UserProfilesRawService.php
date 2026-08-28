@@ -42,6 +42,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
      * @param array{
      *   accessType?: AccessType|value-of<AccessType>,
      *   externalID?: string|null,
+     *   externalUserOnboardedAt?: \DateTimeInterface,
      *   metadata?: array<string,string>,
      *   name?: string|null,
      *   relationship?: Relationship|value-of<Relationship>,
@@ -133,6 +134,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
      * @param array{
      *   accessType?: UserProfileUpdateParams\AccessType|value-of<UserProfileUpdateParams\AccessType>|null,
      *   externalID?: string|null,
+     *   externalUserOnboardedAt?: \DateTimeInterface,
      *   metadata?: array<string,string>,
      *   name?: string|null,
      *   relationship?: UserProfileUpdateParams\Relationship|value-of<UserProfileUpdateParams\Relationship>|null,

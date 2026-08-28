@@ -89,6 +89,26 @@ class UtilTest extends TestCase
     }
 
     #[Test]
+    public function testJoinUriResolvesPathsAgainstBase(): void
+    {
+        $factory = Psr17FactoryDiscovery::findUriFactory();
+        $base = $factory->createUri('http://localhost/prefix');
+        $cases = [
+            ['model/vendor.model-v1:0/invoke', 'http://localhost/prefix/model/vendor.model-v1:0/invoke'],
+            ['dog?cat=meow#tail', 'http://localhost/prefix/dog?cat=meow'],
+            ['/dog', 'http://localhost/dog'],
+            ['https://example.com/absolute/path?dog=woof', 'https://example.com/absolute/path?dog=woof'],
+            ['//example.com/absolute/path', 'http://example.com/absolute/path'],
+        ];
+
+        foreach ($cases as [$path, $output]) {
+            $expected = $factory->createUri($output);
+            $actual = Util::joinUri($base, path: $path);
+            $this->assertEquals($expected, $actual);
+        }
+    }
+
+    #[Test]
     public function testMergeBodyStdClassBaseWithArrayExtra(): void
     {
         $body = (object) ['model' => 'claude-sonnet-4-5', 'max_tokens' => 1];

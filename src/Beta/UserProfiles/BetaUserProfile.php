@@ -24,6 +24,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   updatedAt: \DateTimeInterface,
  *   accessType?: null|AccessType|value-of<AccessType>,
  *   externalID?: string|null,
+ *   externalUserOnboardedAt?: \DateTimeInterface|null,
  *   name?: string|null,
  *   relationship?: null|Relationship|value-of<Relationship>,
  * }
@@ -88,6 +89,12 @@ final class BetaUserProfile implements BaseModel
      */
     #[Optional('external_id', nullable: true)]
     public ?string $externalID;
+
+    /**
+     * A timestamp in RFC 3339 format.
+     */
+    #[Optional('external_user_onboarded_at', nullable: true)]
+    public ?\DateTimeInterface $externalUserOnboardedAt;
 
     /**
      * Real-world name of the entity this profile represents (company or individual). For a resold-to company (`access_type` `passthrough`, or `relationship` `resold` under the `user-profiles-2026-03-24` header) this is that company's name.
@@ -155,6 +162,7 @@ final class BetaUserProfile implements BaseModel
         \DateTimeInterface $updatedAt,
         AccessType|string|null $accessType = null,
         ?string $externalID = null,
+        ?\DateTimeInterface $externalUserOnboardedAt = null,
         ?string $name = null,
         Relationship|string|null $relationship = null,
     ): self {
@@ -169,6 +177,7 @@ final class BetaUserProfile implements BaseModel
 
         null !== $accessType && $self['accessType'] = $accessType;
         null !== $externalID && $self['externalID'] = $externalID;
+        null !== $externalUserOnboardedAt && $self['externalUserOnboardedAt'] = $externalUserOnboardedAt;
         null !== $name && $self['name'] = $name;
         null !== $relationship && $self['relationship'] = $relationship;
 
@@ -267,6 +276,18 @@ final class BetaUserProfile implements BaseModel
     {
         $self = clone $this;
         $self['externalID'] = $externalID;
+
+        return $self;
+    }
+
+    /**
+     * A timestamp in RFC 3339 format.
+     */
+    public function withExternalUserOnboardedAt(
+        ?\DateTimeInterface $externalUserOnboardedAt
+    ): self {
+        $self = clone $this;
+        $self['externalUserOnboardedAt'] = $externalUserOnboardedAt;
 
         return $self;
     }
