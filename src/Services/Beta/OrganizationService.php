@@ -10,6 +10,7 @@ use Anthropic\Core\Exceptions\APIException;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\OrganizationContract;
 use Anthropic\Services\Beta\Organization\APIKeysService;
+use Anthropic\Services\Beta\Organization\ComplianceSettingsService;
 use Anthropic\Services\Beta\Organization\ExternalKeysService;
 use Anthropic\Services\Beta\Organization\FederationService;
 use Anthropic\Services\Beta\Organization\InvitesService;
@@ -69,6 +70,11 @@ final class OrganizationService implements OrganizationContract
     public RateLimitsService $rateLimits;
 
     /**
+     * @api
+     */
+    public ComplianceSettingsService $complianceSettings;
+
+    /**
      * @internal
      */
     public function __construct(private Client $client)
@@ -82,6 +88,7 @@ final class OrganizationService implements OrganizationContract
         $this->users = new UsersService($client);
         $this->workspaces = new WorkspacesService($client);
         $this->rateLimits = new RateLimitsService($client);
+        $this->complianceSettings = new ComplianceSettingsService($client);
     }
 
     /**
