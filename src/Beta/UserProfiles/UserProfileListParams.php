@@ -6,6 +6,7 @@ namespace Anthropic\Beta\UserProfiles;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\UserProfiles\UserProfileListParams\Order;
+use Anthropic\Beta\UserProfiles\UserProfileListParams\OrderBy;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
@@ -19,6 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type UserProfileListParamsShape = array{
  *   limit?: int|null,
  *   order?: null|Order|value-of<Order>,
+ *   orderBy?: null|OrderBy|value-of<OrderBy>,
  *   page?: string|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
@@ -42,6 +44,14 @@ final class UserProfileListParams implements BaseModel
      */
     #[Optional(enum: Order::class)]
     public ?string $order;
+
+    /**
+     * Query parameter for order_by.
+     *
+     * @var value-of<OrderBy>|null $orderBy
+     */
+    #[Optional(enum: OrderBy::class)]
+    public ?string $orderBy;
 
     /**
      * Query parameter for page.
@@ -68,11 +78,13 @@ final class UserProfileListParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Order|value-of<Order>|null $order
+     * @param OrderBy|value-of<OrderBy>|null $orderBy
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
         ?int $limit = null,
         Order|string|null $order = null,
+        OrderBy|string|null $orderBy = null,
         ?string $page = null,
         ?array $betas = null,
     ): self {
@@ -80,6 +92,7 @@ final class UserProfileListParams implements BaseModel
 
         null !== $limit && $self['limit'] = $limit;
         null !== $order && $self['order'] = $order;
+        null !== $orderBy && $self['orderBy'] = $orderBy;
         null !== $page && $self['page'] = $page;
         null !== $betas && $self['betas'] = $betas;
 
@@ -106,6 +119,19 @@ final class UserProfileListParams implements BaseModel
     {
         $self = clone $this;
         $self['order'] = $order;
+
+        return $self;
+    }
+
+    /**
+     * Query parameter for order_by.
+     *
+     * @param OrderBy|value-of<OrderBy> $orderBy
+     */
+    public function withOrderBy(OrderBy|string $orderBy): self
+    {
+        $self = clone $this;
+        $self['orderBy'] = $orderBy;
 
         return $self;
     }

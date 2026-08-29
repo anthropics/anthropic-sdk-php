@@ -9,6 +9,7 @@ use Anthropic\Beta\UserProfiles\BetaUserProfile;
 use Anthropic\Beta\UserProfiles\BetaUserProfileEnrollmentURL;
 use Anthropic\Beta\UserProfiles\UserProfileCreateParams\AccessType;
 use Anthropic\Beta\UserProfiles\UserProfileListParams\Order;
+use Anthropic\Beta\UserProfiles\UserProfileListParams\OrderBy;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
@@ -149,6 +150,7 @@ final class UserProfilesService implements UserProfilesContract
      *
      * @param int $limit Query param: Query parameter for limit
      * @param Order|value-of<Order> $order Query param: Query parameter for order
+     * @param OrderBy|value-of<OrderBy> $orderBy Query param: Query parameter for order_by
      * @param string $page Query param: Query parameter for page
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
@@ -160,12 +162,19 @@ final class UserProfilesService implements UserProfilesContract
     public function list(
         ?int $limit = null,
         Order|string|null $order = null,
+        OrderBy|string|null $orderBy = null,
         ?string $page = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): PageCursor {
         $params = Util::removeNulls(
-            ['limit' => $limit, 'order' => $order, 'page' => $page, 'betas' => $betas]
+            [
+                'limit' => $limit,
+                'order' => $order,
+                'orderBy' => $orderBy,
+                'page' => $page,
+                'betas' => $betas,
+            ],
         );
 
         // @phpstan-ignore-next-line argument.type
