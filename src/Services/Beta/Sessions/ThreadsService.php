@@ -71,7 +71,7 @@ final class ThreadsService implements ThreadsContract
      *
      * @param string $sessionID Path param: Path parameter session_id
      * @param int $limit Query param: Maximum results per page. Defaults to 1000.
-     * @param string $page Query param: Opaque pagination cursor from a previous response's next_page. Forward-only.
+     * @param string $page Query param: Opaque pagination cursor from a previous response's `next_page`. Forward-only.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *

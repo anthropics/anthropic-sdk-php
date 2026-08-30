@@ -59,13 +59,13 @@ final class DeploymentRunListParams implements BaseModel
     public ?\DateTimeInterface $createdAtLte;
 
     /**
-     * Filter to a specific deployment. Omit to list across all deployments in the workspace. Filtering by a non-existent deployment_id returns 200 with empty data.
+     * Filter to a specific deployment. Omit to list across all deployments in the workspace. Filtering by a non-existent `deployment_id` returns 200 with empty data.
      */
     #[Optional]
     public ?string $deploymentID;
 
     /**
-     * Filter: true for runs with non-null error, false for runs with non-null session_id. Omit for all.
+     * Filter: true for runs with non-null `error`, false for runs with non-null `session_id`. Omit for all.
      */
     #[Optional]
     public ?bool $hasError;
@@ -77,7 +77,7 @@ final class DeploymentRunListParams implements BaseModel
     public ?int $limit;
 
     /**
-     * Opaque pagination cursor. Pass next_page from the previous response. Invalid or expired cursors return 400.
+     * Opaque pagination cursor. Pass `next_page` from the previous response. Invalid or expired cursors return 400.
      */
     #[Optional]
     public ?string $page;
@@ -184,7 +184,7 @@ final class DeploymentRunListParams implements BaseModel
     }
 
     /**
-     * Filter to a specific deployment. Omit to list across all deployments in the workspace. Filtering by a non-existent deployment_id returns 200 with empty data.
+     * Filter to a specific deployment. Omit to list across all deployments in the workspace. Filtering by a non-existent `deployment_id` returns 200 with empty data.
      */
     public function withDeploymentID(string $deploymentID): self
     {
@@ -195,7 +195,7 @@ final class DeploymentRunListParams implements BaseModel
     }
 
     /**
-     * Filter: true for runs with non-null error, false for runs with non-null session_id. Omit for all.
+     * Filter: true for runs with non-null `error`, false for runs with non-null `session_id`. Omit for all.
      */
     public function withHasError(bool $hasError): self
     {
@@ -217,7 +217,7 @@ final class DeploymentRunListParams implements BaseModel
     }
 
     /**
-     * Opaque pagination cursor. Pass next_page from the previous response. Invalid or expired cursors return 400.
+     * Opaque pagination cursor. Pass `next_page` from the previous response. Invalid or expired cursors return 400.
      */
     public function withPage(string $page): self
     {

@@ -34,7 +34,7 @@ final class ThreadListParams implements BaseModel
     public ?int $limit;
 
     /**
-     * Opaque pagination cursor from a previous response's next_page. Forward-only.
+     * Opaque pagination cursor from a previous response's `next_page`. Forward-only.
      */
     #[Optional]
     public ?string $page;
@@ -85,7 +85,7 @@ final class ThreadListParams implements BaseModel
     }
 
     /**
-     * Opaque pagination cursor from a previous response's next_page. Forward-only.
+     * Opaque pagination cursor from a previous response's `next_page`. Forward-only.
      */
     public function withPage(string $page): self
     {

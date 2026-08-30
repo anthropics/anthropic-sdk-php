@@ -100,7 +100,7 @@ interface SessionsContract
      * @api
      *
      * @param string $agentID query param: Filter sessions created with this agent ID
-     * @param int $agentVersion Query param: Filter by agent version. Only applies when agent_id is also set.
+     * @param int $agentVersion Query param: Filter by agent version. Only applies when `agent_id` is also set.
      * @param \DateTimeInterface $createdAtGt query param: Return sessions created after this time (exclusive)
      * @param \DateTimeInterface $createdAtGte query param: Return sessions created at or after this time (inclusive)
      * @param \DateTimeInterface $createdAtLt query param: Return sessions created before this time (exclusive)
@@ -108,8 +108,8 @@ interface SessionsContract
      * @param string $deploymentID query param: Filter sessions created by this deployment ID
      * @param bool $includeArchived Query param: When true, includes archived sessions. Default: false (exclude archived).
      * @param int $limit query param: Maximum number of results to return
-     * @param string $memoryStoreID query param: Filter sessions whose resources contain a memory_store with this memory store ID
-     * @param Order|value-of<Order> $order Query param: Sort direction for results, ordered by created_at. Defaults to desc (newest first).
+     * @param string $memoryStoreID query param: Filter sessions whose resources contain a `memory_store` with this memory store ID
+     * @param Order|value-of<Order> $order Query param: Sort direction for results, ordered by `created_at`. Defaults to `desc` (newest first).
      * @param string $page query param: Opaque pagination cursor from a previous response
      * @param list<Status|value-of<Status>> $statuses Query param: Filter by session status. Repeat the parameter to match any of multiple statuses.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use

@@ -60,7 +60,7 @@ interface ResourcesContract
      *
      * @param string $sessionID Path param: Path parameter session_id
      * @param int $limit Query param: Maximum number of resources to return per page (max 1000). If omitted, returns all resources.
-     * @param string $page query param: Opaque cursor from a previous response's next_page field
+     * @param string $page query param: Opaque cursor from a previous response's `next_page` field
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *

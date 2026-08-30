@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Evaluation state for a single outcome defined via a define_outcome event.
+ * Evaluation state for a single outcome defined via a `define_outcome` event.
  *
  * @phpstan-type BetaManagedAgentsOutcomeEvaluationResourceShape = array{
  *   completedAt: \DateTimeInterface|null,
@@ -40,7 +40,7 @@ final class BetaManagedAgentsOutcomeEvaluationResource implements BaseModel
     public string $description;
 
     /**
-     * Grader's verdict text from the most recent evaluation. For satisfied, explains why criteria are met; for needs_revision (intermediate), what's missing; for failed, why unrecoverable.
+     * Grader's verdict text from the most recent evaluation. For `satisfied`, explains why criteria are met; for `needs_revision` (intermediate), what's missing; for `failed`, why unrecoverable.
      */
     #[Required]
     public ?string $explanation;
@@ -153,7 +153,7 @@ final class BetaManagedAgentsOutcomeEvaluationResource implements BaseModel
     }
 
     /**
-     * Grader's verdict text from the most recent evaluation. For satisfied, explains why criteria are met; for needs_revision (intermediate), what's missing; for failed, why unrecoverable.
+     * Grader's verdict text from the most recent evaluation. For `satisfied`, explains why criteria are met; for `needs_revision` (intermediate), what's missing; for `failed`, why unrecoverable.
      */
     public function withExplanation(?string $explanation): self
     {
