@@ -36,7 +36,7 @@ final class BetaHeaderMergeTest extends TestCase
             ->withHeader('Content-Type', 'application/json')
             ->withBody(
                 Psr17FactoryDiscovery::findStreamFactory()
-                    ->createStream('{"data":[],"has_more":false,"first_id":null,"last_id":null}')
+                    ->createStream('{"data":[],"next_page":null}')
             )
         ;
         $this->transporter->setDefaultResponse($mockRsp);
@@ -50,10 +50,10 @@ final class BetaHeaderMergeTest extends TestCase
     #[Test]
     public function testEndpointDefaultBetaSentWhenNoBetasGiven(): void
     {
-        $this->client->beta->files->list(scopeID: 'sess_123');
+        $this->client->beta->vaults->list();
 
         $this->assertSame(
-            ['files-api-2025-04-14'],
+            ['managed-agents-2026-04-01'],
             $this->getLastRequest()->getHeader('anthropic-beta'),
         );
     }
@@ -61,13 +61,12 @@ final class BetaHeaderMergeTest extends TestCase
     #[Test]
     public function testBetasParamMergedWithEndpointDefault(): void
     {
-        $this->client->beta->files->list(
-            scopeID: 'sess_123',
-            betas: ['managed-agents-2026-04-01'],
+        $this->client->beta->vaults->list(
+            betas: ['mcp-client-2025-04-04'],
         );
 
         $this->assertSame(
-            ['managed-agents-2026-04-01', 'files-api-2025-04-14'],
+            ['mcp-client-2025-04-04', 'managed-agents-2026-04-01'],
             $this->getLastRequest()->getHeader('anthropic-beta'),
         );
     }
@@ -75,13 +74,12 @@ final class BetaHeaderMergeTest extends TestCase
     #[Test]
     public function testBetasParamDeduplicatedAgainstEndpointDefault(): void
     {
-        $this->client->beta->files->list(
-            scopeID: 'sess_123',
-            betas: ['files-api-2025-04-14', 'managed-agents-2026-04-01'],
+        $this->client->beta->vaults->list(
+            betas: ['managed-agents-2026-04-01', 'mcp-client-2025-04-04'],
         );
 
         $this->assertSame(
-            ['files-api-2025-04-14', 'managed-agents-2026-04-01'],
+            ['managed-agents-2026-04-01', 'mcp-client-2025-04-04'],
             $this->getLastRequest()->getHeader('anthropic-beta'),
         );
     }
@@ -89,8 +87,7 @@ final class BetaHeaderMergeTest extends TestCase
     #[Test]
     public function testExtraHeadersOverrideReplacesEndpointDefault(): void
     {
-        $this->client->beta->files->list(
-            scopeID: 'sess_123',
+        $this->client->beta->vaults->list(
             requestOptions: ['extraHeaders' => ['anthropic-beta' => 'custom-beta']],
         );
 
