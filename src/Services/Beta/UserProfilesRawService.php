@@ -10,9 +10,9 @@ use Anthropic\Beta\UserProfiles\BetaUserProfileEnrollmentURL;
 use Anthropic\Beta\UserProfiles\UserProfileCreateEnrollmentURLParams;
 use Anthropic\Beta\UserProfiles\UserProfileCreateParams;
 use Anthropic\Beta\UserProfiles\UserProfileCreateParams\AccessType;
-use Anthropic\Beta\UserProfiles\UserProfileCreateParams\Relationship;
 use Anthropic\Beta\UserProfiles\UserProfileListParams;
 use Anthropic\Beta\UserProfiles\UserProfileListParams\Order;
+use Anthropic\Beta\UserProfiles\UserProfileListParams\OrderBy;
 use Anthropic\Beta\UserProfiles\UserProfileRetrieveParams;
 use Anthropic\Beta\UserProfiles\UserProfileUpdateParams;
 use Anthropic\Client;
@@ -42,9 +42,9 @@ final class UserProfilesRawService implements UserProfilesRawContract
      * @param array{
      *   accessType?: AccessType|value-of<AccessType>,
      *   externalID?: string|null,
+     *   externalUserOnboardedAt?: \DateTimeInterface,
      *   metadata?: array<string,string>,
      *   name?: string|null,
-     *   relationship?: Relationship|value-of<Relationship>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|UserProfileCreateParams $params
      * @param RequestOpts|null $requestOptions
@@ -133,9 +133,9 @@ final class UserProfilesRawService implements UserProfilesRawContract
      * @param array{
      *   accessType?: UserProfileUpdateParams\AccessType|value-of<UserProfileUpdateParams\AccessType>|null,
      *   externalID?: string|null,
+     *   externalUserOnboardedAt?: \DateTimeInterface,
      *   metadata?: array<string,string>,
      *   name?: string|null,
-     *   relationship?: UserProfileUpdateParams\Relationship|value-of<UserProfileUpdateParams\Relationship>|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|UserProfileUpdateParams $params
      * @param RequestOpts|null $requestOptions
@@ -183,6 +183,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
      * @param array{
      *   limit?: int,
      *   order?: Order|value-of<Order>,
+     *   orderBy?: OrderBy|value-of<OrderBy>,
      *   page?: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|UserProfileListParams $params
@@ -200,7 +201,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
             $params,
             $requestOptions,
         );
-        $query_params = array_flip(['limit', 'order', 'page']);
+        $query_params = array_flip(['limit', 'order', 'orderBy', 'page']);
 
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);
@@ -209,7 +210,10 @@ final class UserProfilesRawService implements UserProfilesRawContract
         return $this->client->request(
             method: 'get',
             path: 'v1/user_profiles?beta=true',
-            query: array_intersect_key($parsed, $query_params),
+            query: Util::array_transform_keys(
+                array_intersect_key($parsed, $query_params),
+                ['orderBy' => 'order_by']
+            ),
             headers: Util::array_transform_keys(
                 $header_params,
                 ['betas' => 'anthropic-beta']

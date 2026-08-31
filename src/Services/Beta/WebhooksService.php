@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Services\Beta;
 
-use Anthropic\Beta\Webhooks\UnwrapWebhookEvent;
+use Anthropic\Beta\Webhooks\BetaWebhookEvent;
 use Anthropic\Client;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Exceptions\WebhookException;
@@ -31,37 +31,57 @@ final class WebhooksService implements WebhooksContract
     /**
      * @api
      *
-     * Unwraps a webhook event from its JSON representation.
+     * Parses a webhook payload into an event without verifying its signature. Prefer `unwrap()` unless
+     * you have already verified the signature yourself.
      *
-     * @param array<string,string|list<string>>|null $headers
+     * @throws WebhookException
+     */
+    public function parseUnverified(string $body): BetaWebhookEvent
+    {
+        try {
+            $decoded = Util::decodeJson($body);
+
+            // @phpstan-ignore return.type
+            return Conversion::coerce(BetaWebhookEvent::class, value: $decoded);
+        } catch (\Throwable $e) {
+            throw new WebhookException('Error parsing webhook body', previous: $e);
+        }
+    }
+
+    /**
+     * @api
+     *
+     * Verifies the webhook signature from the `webhook-id`, `webhook-timestamp` and `webhook-signature`
+     * headers using your webhook signing key, then parses the payload into an event. Fails if the
+     * signature is missing or invalid.
+     *
+     * @param array<string,string|list<string>> $headers
      *
      * @throws WebhookException
      */
     public function unwrap(
         string $body,
-        ?array $headers = null,
+        array $headers,
         ?string $secret = null
-    ): UnwrapWebhookEvent {
-        if (!is_null($headers)) {
-            $secret = $secret ?? ($this->client->webhookKey ?: null);
-            if (is_null($secret)) {
-                throw new WebhookException('Webhook key must not be null in order to unwrap');
-            }
+    ): BetaWebhookEvent {
+        $secret = $secret ?? ($this->client->webhookKey ?: null);
+        if (null === $secret || '' === $secret) {
+            throw new WebhookException('Webhook key must not be null or empty in order to unwrap');
+        }
 
-            try {
-                $flatHeaders = array_map(fn (string|array $v): string => is_array($v) ? $v[0] : $v, $headers);
-                $webhook = new Webhook($secret);
-                $webhook->verify($body, $flatHeaders);
-            } catch (WebhookVerificationException $e) {
-                throw new WebhookException('Could not verify webhook event signature', previous: $e);
-            }
+        try {
+            $flatHeaders = array_map(fn (string|array $v): string => is_array($v) ? $v[0] : $v, $headers);
+            $webhook = new Webhook($secret);
+            $webhook->verify($body, $flatHeaders);
+        } catch (WebhookVerificationException $e) {
+            throw new WebhookException('Could not verify webhook event signature', previous: $e);
         }
 
         try {
             $decoded = Util::decodeJson($body);
 
             // @phpstan-ignore return.type
-            return Conversion::coerce(UnwrapWebhookEvent::class, value: $decoded);
+            return Conversion::coerce(BetaWebhookEvent::class, value: $decoded);
         } catch (\Throwable $e) {
             throw new WebhookException('Error parsing webhook body', previous: $e);
         }

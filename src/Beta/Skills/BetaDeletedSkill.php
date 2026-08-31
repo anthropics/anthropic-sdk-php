@@ -9,12 +9,22 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type SkillDeleteResponseShape = array{id: string, type: string}
+ * @phpstan-type BetaDeletedSkillShape = array{id: string, type: 'skill_deleted'}
  */
-final class SkillDeleteResponse implements BaseModel
+final class BetaDeletedSkill implements BaseModel
 {
-    /** @use SdkModel<SkillDeleteResponseShape> */
+    /** @use SdkModel<BetaDeletedSkillShape> */
     use SdkModel;
+
+    /**
+     * Deleted object type.
+     *
+     * For Skills, this is always `"skill_deleted"`.
+     *
+     * @var 'skill_deleted' $type
+     */
+    #[Required]
+    public string $type = 'skill_deleted';
 
     /**
      * Unique identifier for the skill.
@@ -25,25 +35,17 @@ final class SkillDeleteResponse implements BaseModel
     public string $id;
 
     /**
-     * Deleted object type.
-     *
-     * For Skills, this is always `"skill_deleted"`.
-     */
-    #[Required]
-    public string $type;
-
-    /**
-     * `new SkillDeleteResponse()` is missing required properties by the API.
+     * `new BetaDeletedSkill()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * SkillDeleteResponse::with(id: ..., type: ...)
+     * BetaDeletedSkill::with(id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SkillDeleteResponse)->withID(...)->withType(...)
+     * (new BetaDeletedSkill)->withID(...)
      * ```
      */
     public function __construct()
@@ -56,14 +58,11 @@ final class SkillDeleteResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(
-        string $id,
-        string $type = 'skill_deleted'
-    ): self {
+    public static function with(string $id): self
+    {
         $self = new self;
 
         $self['id'] = $id;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -85,6 +84,8 @@ final class SkillDeleteResponse implements BaseModel
      * Deleted object type.
      *
      * For Skills, this is always `"skill_deleted"`.
+     *
+     * @param 'skill_deleted' $type
      */
     public function withType(string $type): self
     {

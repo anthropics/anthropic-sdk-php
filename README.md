@@ -13,7 +13,7 @@ Full documentation is available at **[platform.claude.com/docs/en/api/sdks/php](
 <!-- x-release-please-start-version -->
 
 ```sh
-composer require "anthropic-ai/sdk:^0.44.0"
+composer require "anthropic-ai/sdk:^0.45.0"
 ```
 
 <!-- x-release-please-end -->
@@ -368,6 +368,26 @@ This package considers improvements to the (non-runtime) PHPDoc type definitions
 ## Requirements
 
 PHP 8.1.0+
+
+## Autoloading note
+
+This SDK includes class aliases for backwards compatibility, but these are not available when using authoritative classmaps in Composer.
+
+If you use `composer --classmap-authoritative` and you rely on any of the following class names:
+
+- `UnwrapWebhookEvent`
+
+Then update your code to use the true class name.
+
+## Autoloading note
+
+This SDK includes class aliases for backwards compatibility, but these are not available when using authoritative classmaps in Composer.
+
+If you use `composer --classmap-authoritative` and you rely on any of the following class names:
+
+- `UnwrapWebhookEvent`
+
+Then update your code to use the true class name.
 
 ## Contributing
 

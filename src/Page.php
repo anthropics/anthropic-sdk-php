@@ -108,15 +108,18 @@ final class Page implements BaseModel, BasePage
             return null;
         }
 
-        if (!($prev = $this->firstID ?? null) && !($next = $this->lastID ?? null)) {
-            return null;
-        }
-
         $nextRequest = $this->requestInfo;
-        $nextRequest['query'] = [
-            ...$nextRequest['query'],
-            ...(empty($prev) ? ['after_id' => $next] : ['before_id' => $prev]),
-        ];
+        if (!is_null($nextRequest['query']['before_id'] ?? null)) {
+            if (!($prev = $this->firstID ?? null)) {
+                return null;
+            }
+            $nextRequest['query'] = [...$nextRequest['query'], 'before_id' => $prev];
+        } else {
+            if (!($next = $this->lastID ?? null)) {
+                return null;
+            }
+            $nextRequest['query'] = [...$nextRequest['query'], 'after_id' => $next];
+        }
 
         // @phpstan-ignore-next-line return.type
         return [$nextRequest, $this->options];

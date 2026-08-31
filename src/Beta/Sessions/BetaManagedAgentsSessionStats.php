@@ -21,7 +21,7 @@ final class BetaManagedAgentsSessionStats implements BaseModel
     use SdkModel;
 
     /**
-     * Cumulative time in seconds the session spent in running status. Excludes idle time.
+     * Cumulative time in seconds the session spent in `running` status. Excludes idle time.
      */
     #[Optional('active_seconds')]
     public ?float $activeSeconds;
@@ -55,7 +55,7 @@ final class BetaManagedAgentsSessionStats implements BaseModel
     }
 
     /**
-     * Cumulative time in seconds the session spent in running status. Excludes idle time.
+     * Cumulative time in seconds the session spent in `running` status. Excludes idle time.
      */
     public function withActiveSeconds(float $activeSeconds): self
     {

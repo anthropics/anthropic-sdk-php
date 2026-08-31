@@ -83,7 +83,7 @@ final class BetaManagedAgentsSession implements BaseModel
     public array $metadata;
 
     /**
-     * Per-outcome evaluation state. One entry per define_outcome event sent to the session.
+     * Per-outcome evaluation state. One entry per `define_outcome` event sent to the session.
      *
      * @var list<BetaManagedAgentsOutcomeEvaluationResource> $outcomeEvaluations
      */
@@ -332,7 +332,7 @@ final class BetaManagedAgentsSession implements BaseModel
     }
 
     /**
-     * Per-outcome evaluation state. One entry per define_outcome event sent to the session.
+     * Per-outcome evaluation state. One entry per `define_outcome` event sent to the session.
      *
      * @param list<BetaManagedAgentsOutcomeEvaluationResource|BetaManagedAgentsOutcomeEvaluationResourceShape> $outcomeEvaluations
      */

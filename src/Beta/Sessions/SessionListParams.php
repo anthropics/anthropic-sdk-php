@@ -47,7 +47,7 @@ final class SessionListParams implements BaseModel
     public ?string $agentID;
 
     /**
-     * Filter by agent version. Only applies when agent_id is also set.
+     * Filter by agent version. Only applies when `agent_id` is also set.
      */
     #[Optional]
     public ?int $agentVersion;
@@ -95,13 +95,13 @@ final class SessionListParams implements BaseModel
     public ?int $limit;
 
     /**
-     * Filter sessions whose resources contain a memory_store with this memory store ID.
+     * Filter sessions whose resources contain a `memory_store` with this memory store ID.
      */
     #[Optional]
     public ?string $memoryStoreID;
 
     /**
-     * Sort direction for results, ordered by created_at. Defaults to desc (newest first).
+     * Sort direction for results, ordered by `created_at`. Defaults to `desc` (newest first).
      *
      * @var value-of<Order>|null $order
      */
@@ -192,7 +192,7 @@ final class SessionListParams implements BaseModel
     }
 
     /**
-     * Filter by agent version. Only applies when agent_id is also set.
+     * Filter by agent version. Only applies when `agent_id` is also set.
      */
     public function withAgentVersion(int $agentVersion): self
     {
@@ -280,7 +280,7 @@ final class SessionListParams implements BaseModel
     }
 
     /**
-     * Filter sessions whose resources contain a memory_store with this memory store ID.
+     * Filter sessions whose resources contain a `memory_store` with this memory store ID.
      */
     public function withMemoryStoreID(string $memoryStoreID): self
     {
@@ -291,7 +291,7 @@ final class SessionListParams implements BaseModel
     }
 
     /**
-     * Sort direction for results, ordered by created_at. Defaults to desc (newest first).
+     * Sort direction for results, ordered by `created_at`. Defaults to `desc` (newest first).
      *
      * @param Order|value-of<Order> $order
      */

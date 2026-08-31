@@ -19,6 +19,7 @@ use Anthropic\Core\FileParam;
  *
  * @phpstan-type FileUploadParamsShape = array{
  *   file: string|FileParam,
+ *   expiresInSeconds?: int|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
@@ -33,6 +34,12 @@ final class FileUploadParams implements BaseModel
      */
     #[Required]
     public string $file;
+
+    /**
+     * Seconds from upload until the file expires and its bytes become permanently unavailable. Must be between 3600 (one hour) and 7776000 (ninety days).
+     */
+    #[Optional('expires_in_seconds')]
+    public ?int $expiresInSeconds;
 
     /**
      * Optional header to specify the beta version(s) you want to use.
@@ -70,12 +77,14 @@ final class FileUploadParams implements BaseModel
      */
     public static function with(
         string|FileParam $file,
+        ?int $expiresInSeconds = null,
         ?array $betas = null
     ): self {
         $self = new self;
 
         $self['file'] = $file;
 
+        null !== $expiresInSeconds && $self['expiresInSeconds'] = $expiresInSeconds;
         null !== $betas && $self['betas'] = $betas;
 
         return $self;
@@ -88,6 +97,17 @@ final class FileUploadParams implements BaseModel
     {
         $self = clone $this;
         $self['file'] = $file;
+
+        return $self;
+    }
+
+    /**
+     * Seconds from upload until the file expires and its bytes become permanently unavailable. Must be between 3600 (one hour) and 7776000 (ninety days).
+     */
+    public function withExpiresInSeconds(int $expiresInSeconds): self
+    {
+        $self = clone $this;
+        $self['expiresInSeconds'] = $expiresInSeconds;
 
         return $self;
     }

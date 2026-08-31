@@ -13,7 +13,7 @@ use Anthropic\Beta\Files\FileRetrieveMetadataParams;
 use Anthropic\Beta\Files\FileUploadParams;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
-use Anthropic\Page;
+use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
 /**
@@ -27,7 +27,7 @@ interface FilesRawContract
      * @param array<string,mixed>|FileListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<Page<BetaFileMetadata>>
+     * @return BaseResponse<PageCursor<BetaFileMetadata>>
      *
      * @throws APIException
      */

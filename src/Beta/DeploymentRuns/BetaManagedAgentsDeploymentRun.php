@@ -69,7 +69,7 @@ final class BetaManagedAgentsDeploymentRun implements BaseModel
     public BetaManagedAgentsEnvironmentArchivedRunError|BetaManagedAgentsAgentArchivedRunError|BetaManagedAgentsEnvironmentNotFoundRunError|BetaManagedAgentsVaultNotFoundRunError|BetaManagedAgentsVaultArchivedRunError|BetaManagedAgentsFileNotFoundRunError|BetaManagedAgentsMemoryStoreArchivedRunError|BetaManagedAgentsSkillNotFoundRunError|BetaManagedAgentsSessionResourceNotFoundRunError|BetaManagedAgentsWorkspaceArchivedRunError|BetaManagedAgentsOrganizationDisabledRunError|BetaManagedAgentsSessionRateLimitedRunError|BetaManagedAgentsSessionCreationRejectedRunError|BetaManagedAgentsUnknownRunError|BetaManagedAgentsSelfHostedResourcesUnsupportedRunError|BetaManagedAgentsMCPEgressBlockedRunError|null $error;
 
     /**
-     * Populated on success. Null on creation failure. Exactly one of session_id or error is non-null.
+     * Populated on success. Null on creation failure. Exactly one of `session_id` or `error` is non-null.
      */
     #[Required('session_id')]
     public ?string $sessionID;
@@ -218,7 +218,7 @@ final class BetaManagedAgentsDeploymentRun implements BaseModel
     }
 
     /**
-     * Populated on success. Null on creation failure. Exactly one of session_id or error is non-null.
+     * Populated on success. Null on creation failure. Exactly one of `session_id` or `error` is non-null.
      */
     public function withSessionID(?string $sessionID): self
     {

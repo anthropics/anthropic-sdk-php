@@ -65,10 +65,10 @@ final class DeploymentRunsService implements DeploymentRunsContract
      * @param \DateTimeInterface $createdAtGte query param: Return runs created at or after this time (inclusive)
      * @param \DateTimeInterface $createdAtLt query param: Return runs created strictly before this time (exclusive)
      * @param \DateTimeInterface $createdAtLte query param: Return runs created at or before this time (inclusive)
-     * @param string $deploymentID Query param: Filter to a specific deployment. Omit to list across all deployments in the workspace. Filtering by a non-existent deployment_id returns 200 with empty data.
-     * @param bool $hasError Query param: Filter: true for runs with non-null error, false for runs with non-null session_id. Omit for all.
+     * @param string $deploymentID Query param: Filter to a specific deployment. Omit to list across all deployments in the workspace. Filtering by a non-existent `deployment_id` returns 200 with empty data.
+     * @param bool $hasError Query param: Filter: true for runs with non-null `error`, false for runs with non-null `session_id`. Omit for all.
      * @param int $limit Query param: Maximum results per page. Default 20, maximum 1000.
-     * @param string $page Query param: Opaque pagination cursor. Pass next_page from the previous response. Invalid or expired cursors return 400.
+     * @param string $page Query param: Opaque pagination cursor. Pass `next_page` from the previous response. Invalid or expired cursors return 400.
      * @param BetaManagedAgentsTriggerType|value-of<BetaManagedAgentsTriggerType> $triggerType Query param: Filter runs by what triggered them. Omit to return all runs.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions

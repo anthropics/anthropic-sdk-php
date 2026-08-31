@@ -29,21 +29,74 @@ final class WebhooksTest extends TestCase
     }
 
     #[Test]
-    public function testUnwrap(): void
+    public function testParseUnverified(): void
     {
         $payload = '{"id":"whe_0f1e2d3c4b5a69788796a5b4c3d2e1f0","created_at":"2026-03-15T10:00:00Z","data":{"id":"sesn_011CZkZAtmR3yMPDzynEDxu7","organization_id":"org_011CZkZZAe0sMna4vkBdtrfx","type":"session.status_idled","workspace_id":"wrkspc_011CZkZaBF1tNoB5wlCeusgy"},"type":"event"}';
-        $this->client->beta->webhooks->unwrap($payload);
+        $this->client->beta->webhooks->parseUnverified($payload);
         // unwrap successful if not error thrown, increment assertion count to avoid risky test warning
         $this->addToAssertionCount(1);
+    }
+
+    #[Test]
+    public function testParseUnverifiedBadJSON(): void
+    {
+        $this->expectException(WebhookException::class);
+
+        $badPayload = 'not a json string';
+        $this->client->beta->webhooks->parseUnverified($badPayload);
+    }
+
+    #[Test]
+    public function testUnwrapWithoutHeaders(): void
+    {
+        $this->expectException(\ArgumentCountError::class);
+
+        $payload = '{"id":"whe_0f1e2d3c4b5a69788796a5b4c3d2e1f0","created_at":"2026-03-15T10:00:00Z","data":{"id":"sesn_011CZkZAtmR3yMPDzynEDxu7","organization_id":"org_011CZkZZAe0sMna4vkBdtrfx","type":"session.status_idled","workspace_id":"wrkspc_011CZkZaBF1tNoB5wlCeusgy"},"type":"event"}';
+        // @phpstan-ignore arguments.count
+        $this->client->beta->webhooks->unwrap($payload);
     }
 
     #[Test]
     public function testUnwrapBadJSON(): void
     {
         $this->expectException(WebhookException::class);
+        $this->expectExceptionMessage('Error parsing webhook body');
 
         $badPayload = 'not a json string';
-        $this->client->beta->webhooks->unwrap($badPayload);
+        $secret = 'whsec_c2VjcmV0Cg==';
+        $webhook = new Webhook($secret);
+        $messageId = '1';
+        $timestamp = time();
+        $signature = $webhook->sign($messageId, $timestamp, $badPayload);
+
+        /** @var array<string, list<string>> $headers */
+        $headers = [
+            'webhook-signature' => [$signature],
+            'webhook-id' => [$messageId],
+            'webhook-timestamp' => [(string) $timestamp],
+        ];
+        $this->client->beta->webhooks->unwrap($badPayload, $headers, $secret);
+    }
+
+    #[Test]
+    public function testUnwrapEmptySecret(): void
+    {
+        $this->expectException(WebhookException::class);
+        $this->expectExceptionMessage('Webhook key must not be null or empty in order to unwrap');
+
+        $payload = '{"id":"whe_0f1e2d3c4b5a69788796a5b4c3d2e1f0","created_at":"2026-03-15T10:00:00Z","data":{"id":"sesn_011CZkZAtmR3yMPDzynEDxu7","organization_id":"org_011CZkZZAe0sMna4vkBdtrfx","type":"session.status_idled","workspace_id":"wrkspc_011CZkZaBF1tNoB5wlCeusgy"},"type":"event"}';
+        $webhook = new Webhook('whsec_c2VjcmV0Cg==');
+        $messageId = '1';
+        $timestamp = time();
+        $signature = $webhook->sign($messageId, $timestamp, $payload);
+
+        /** @var array<string, list<string>> $headers */
+        $headers = [
+            'webhook-signature' => [$signature],
+            'webhook-id' => [$messageId],
+            'webhook-timestamp' => [(string) $timestamp],
+        ];
+        $this->client->beta->webhooks->unwrap($payload, $headers, '');
     }
 
     #[Test]

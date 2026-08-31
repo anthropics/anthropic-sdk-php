@@ -65,7 +65,7 @@ final class EventListParams implements BaseModel
     public ?int $limit;
 
     /**
-     * Sort direction for results, ordered by the event's `processed_at`. Defaults to asc (chronological).
+     * Sort direction for results, ordered by the event's `processed_at`. Defaults to `asc` (chronological).
      *
      * @var value-of<Order>|null $order
      */
@@ -73,7 +73,7 @@ final class EventListParams implements BaseModel
     public ?string $order;
 
     /**
-     * Opaque pagination cursor from a previous response's next_page.
+     * Opaque pagination cursor from a previous response's `next_page`.
      */
     #[Optional]
     public ?string $page;
@@ -190,7 +190,7 @@ final class EventListParams implements BaseModel
     }
 
     /**
-     * Sort direction for results, ordered by the event's `processed_at`. Defaults to asc (chronological).
+     * Sort direction for results, ordered by the event's `processed_at`. Defaults to `asc` (chronological).
      *
      * @param Order|value-of<Order> $order
      */
@@ -203,7 +203,7 @@ final class EventListParams implements BaseModel
     }
 
     /**
-     * Opaque pagination cursor from a previous response's next_page.
+     * Opaque pagination cursor from a previous response's `next_page`.
      */
     public function withPage(string $page): self
     {

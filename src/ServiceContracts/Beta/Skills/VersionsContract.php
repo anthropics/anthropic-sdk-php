@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\ServiceContracts\Beta\Skills;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Beta\Skills\Versions\VersionDeleteResponse;
-use Anthropic\Beta\Skills\Versions\VersionGetResponse;
-use Anthropic\Beta\Skills\Versions\VersionListResponse;
-use Anthropic\Beta\Skills\Versions\VersionNewResponse;
+use Anthropic\Beta\Skills\Versions\DeletedSkillVersion;
+use Anthropic\Beta\Skills\Versions\SkillVersion;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\FileParam;
 use Anthropic\PageCursor;
@@ -38,14 +36,14 @@ interface VersionsContract
         array $files,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
-    ): VersionNewResponse;
+    ): SkillVersion;
 
     /**
      * @api
      *
-     * @param string $version Path param: Version identifier for the skill.
+     * @param string $version Path param: Identifies the skill version: a version ID, or the literal `latest` for the skill's most recent version.
      *
-     * Each version is identified by a Unix epoch timestamp (e.g., "1759178010641129").
+     * Requests carrying the `skills-2025-10-02` beta header address versions by their Unix epoch timestamp instead (e.g., "1759178010641129").
      * @param string $skillID Path param: Unique identifier for the skill.
      *
      * The format and length of IDs may change over time.
@@ -59,7 +57,7 @@ interface VersionsContract
         string $skillID,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
-    ): VersionGetResponse;
+    ): SkillVersion;
 
     /**
      * @api
@@ -67,14 +65,14 @@ interface VersionsContract
      * @param string $skillID Path param: Unique identifier for the skill.
      *
      * The format and length of IDs may change over time.
-     * @param int|null $limit Query param: Number of items to return per page.
+     * @param int|null $limit Query param: Number of results to return per page.
      *
-     * Defaults to `20`. Ranges from `1` to `1000`.
+     * Ranges from `1` to `1000`. Defaults to `20`.
      * @param string|null $page query param: Optionally set to the `next_page` token from the previous response
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
-     * @return PageCursor<VersionListResponse>
+     * @return PageCursor<SkillVersion>
      *
      * @throws APIException
      */
@@ -89,9 +87,9 @@ interface VersionsContract
     /**
      * @api
      *
-     * @param string $version Path param: Version identifier for the skill.
+     * @param string $version Path param: Identifies the skill version by its version ID.
      *
-     * Each version is identified by a Unix epoch timestamp (e.g., "1759178010641129").
+     * Requests carrying the `skills-2025-10-02` beta header address versions by their Unix epoch timestamp instead (e.g., "1759178010641129").
      * @param string $skillID Path param: Unique identifier for the skill.
      *
      * The format and length of IDs may change over time.
@@ -105,14 +103,14 @@ interface VersionsContract
         string $skillID,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
-    ): VersionDeleteResponse;
+    ): DeletedSkillVersion;
 
     /**
      * @api
      *
-     * @param string $version Path param: Version identifier for the skill.
+     * @param string $version Path param: Identifies the skill version by its version ID.
      *
-     * Each version is identified by a Unix epoch timestamp (e.g., "1759178010641129").
+     * Requests carrying the `skills-2025-10-02` beta header address versions by their Unix epoch timestamp instead (e.g., "1759178010641129").
      * @param string $skillID Path param: Unique identifier for the skill.
      *
      * The format and length of IDs may change over time.

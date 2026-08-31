@@ -8,8 +8,8 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\UserProfiles\BetaUserProfile;
 use Anthropic\Beta\UserProfiles\BetaUserProfileEnrollmentURL;
 use Anthropic\Beta\UserProfiles\UserProfileCreateParams\AccessType;
-use Anthropic\Beta\UserProfiles\UserProfileCreateParams\Relationship;
 use Anthropic\Beta\UserProfiles\UserProfileListParams\Order;
+use Anthropic\Beta\UserProfiles\UserProfileListParams\OrderBy;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -24,9 +24,9 @@ interface UserProfilesContract
      *
      * @param AccessType|value-of<AccessType> $accessType Body param: How the platform uses the API on behalf of the entity this profile represents. `application`: the platform sells a product that uses the API behind the scenes, and the profile represents an individual end-user of that product. `passthrough`: the platform resells raw inference, and the profile identifies the resold-to company.
      * @param string|null $externalID Body param: Platform's own identifier for this user. Not enforced unique. Maximum 255 characters.
+     * @param \DateTimeInterface $externalUserOnboardedAt Body param: A timestamp in RFC 3339 format
      * @param array<string,string> $metadata Body param: Free-form key-value data to attach to this user profile. Maximum 16 keys, with keys up to 64 characters and values up to 512 characters. Values must be non-empty strings.
-     * @param string|null $name Body param: Optional for all profiles. Real-world name of the entity this profile represents (company or individual); for a resold-to company (`relationship` `resold` / `access_type` `passthrough`), that company's name where known. Maximum 255 characters.
-     * @param Relationship|value-of<Relationship> $relationship Body param: How the entity behind a user profile relates to the platform that owns the API key. `external`: an individual end-user of the platform. `resold`: a company the platform resells Claude access to. `internal`: the platform's own usage.
+     * @param string|null $name Body param: Optional for all profiles. Real-world name of the entity this profile represents (company or individual); for a company the platform resells Claude access to (`access_type` `passthrough`), that company's name where known. Maximum 255 characters.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
@@ -35,9 +35,9 @@ interface UserProfilesContract
     public function create(
         AccessType|string|null $accessType = null,
         ?string $externalID = null,
+        ?\DateTimeInterface $externalUserOnboardedAt = null,
         ?array $metadata = null,
         ?string $name = null,
-        Relationship|string|null $relationship = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaUserProfile;
@@ -63,9 +63,9 @@ interface UserProfilesContract
      * @param string $userProfileID Path param: Path parameter user_profile_id
      * @param \Anthropic\Beta\UserProfiles\UserProfileUpdateParams\AccessType|value-of<\Anthropic\Beta\UserProfiles\UserProfileUpdateParams\AccessType>|null $accessType Body param: How the platform uses the API on behalf of the entity this profile represents. `application`: the platform sells a product that uses the API behind the scenes, and the profile represents an individual end-user of that product. `passthrough`: the platform resells raw inference, and the profile identifies the resold-to company.
      * @param string|null $externalID Body param: If present, replaces the stored external_id. Omit to leave unchanged. Maximum 255 characters.
+     * @param \DateTimeInterface $externalUserOnboardedAt Body param: A timestamp in RFC 3339 format
      * @param array<string,string> $metadata Body param: Key-value pairs to merge into the stored metadata. Keys provided overwrite existing values. To remove a key, set its value to an empty string. Keys not provided are left unchanged. Maximum 16 keys, with keys up to 64 characters and values up to 512 characters.
      * @param string|null $name Body param: If present, replaces the stored name. Omit to leave unchanged. Maximum 255 characters.
-     * @param \Anthropic\Beta\UserProfiles\UserProfileUpdateParams\Relationship|value-of<\Anthropic\Beta\UserProfiles\UserProfileUpdateParams\Relationship>|null $relationship Body param: How the entity behind a user profile relates to the platform that owns the API key. `external`: an individual end-user of the platform. `resold`: a company the platform resells Claude access to. `internal`: the platform's own usage.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *
@@ -75,9 +75,9 @@ interface UserProfilesContract
         string $userProfileID,
         \Anthropic\Beta\UserProfiles\UserProfileUpdateParams\AccessType|string|null $accessType = null,
         ?string $externalID = null,
+        ?\DateTimeInterface $externalUserOnboardedAt = null,
         ?array $metadata = null,
         ?string $name = null,
-        \Anthropic\Beta\UserProfiles\UserProfileUpdateParams\Relationship|string|null $relationship = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaUserProfile;
@@ -87,6 +87,7 @@ interface UserProfilesContract
      *
      * @param int $limit Query param: Query parameter for limit
      * @param Order|value-of<Order> $order Query param: Query parameter for order
+     * @param OrderBy|value-of<OrderBy> $orderBy Query param: Query parameter for order_by
      * @param string $page Query param: Query parameter for page
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
@@ -98,6 +99,7 @@ interface UserProfilesContract
     public function list(
         ?int $limit = null,
         Order|string|null $order = null,
+        OrderBy|string|null $orderBy = null,
         ?string $page = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,

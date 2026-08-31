@@ -3,10 +3,8 @@
 namespace Tests\Services\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Beta\Skills\SkillDeleteResponse;
-use Anthropic\Beta\Skills\SkillGetResponse;
-use Anthropic\Beta\Skills\SkillListResponse;
-use Anthropic\Beta\Skills\SkillNewResponse;
+use Anthropic\Beta\Skills\BetaDeletedSkill;
+use Anthropic\Beta\Skills\BetaSkill;
 use Anthropic\Client;
 use Anthropic\Core\FileParam;
 use Anthropic\Core\Util;
@@ -43,7 +41,7 @@ final class SkillsTest extends TestCase
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(SkillNewResponse::class, $result);
+        $this->assertInstanceOf(BetaSkill::class, $result);
     }
 
     #[Test]
@@ -53,12 +51,12 @@ final class SkillsTest extends TestCase
             files: [
                 FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
             ],
-            displayTitle: 'display_title',
+            displayName: 'display_name',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(SkillNewResponse::class, $result);
+        $this->assertInstanceOf(BetaSkill::class, $result);
     }
 
     #[Test]
@@ -67,7 +65,7 @@ final class SkillsTest extends TestCase
         $result = $this->client->beta->skills->retrieve('skill_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(SkillGetResponse::class, $result);
+        $this->assertInstanceOf(BetaSkill::class, $result);
     }
 
     #[Test]
@@ -80,7 +78,7 @@ final class SkillsTest extends TestCase
 
         if ($item = $page->getItems()[0] ?? null) {
             // @phpstan-ignore-next-line method.alreadyNarrowedType
-            $this->assertInstanceOf(SkillListResponse::class, $item);
+            $this->assertInstanceOf(BetaSkill::class, $item);
         }
     }
 
@@ -90,6 +88,6 @@ final class SkillsTest extends TestCase
         $result = $this->client->beta->skills->delete('skill_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(SkillDeleteResponse::class, $result);
+        $this->assertInstanceOf(BetaDeletedSkill::class, $result);
     }
 }

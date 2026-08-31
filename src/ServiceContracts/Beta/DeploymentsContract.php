@@ -119,7 +119,7 @@ interface DeploymentsContract
      * @param bool $includeArchived Query param: When true, includes archived deployments. Default: false (exclude archived).
      * @param int $limit Query param: Maximum results per page. Default 20, maximum 100.
      * @param string $page query param: Opaque pagination cursor
-     * @param BetaManagedAgentsDeploymentStatus|value-of<BetaManagedAgentsDeploymentStatus> $status Query param: Filter by status: active or paused. Omit for both. To include archived deployments, use include_archived instead; the two cannot be combined.
+     * @param BetaManagedAgentsDeploymentStatus|value-of<BetaManagedAgentsDeploymentStatus> $status Query param: Filter by status: `active` or `paused`. Omit for both. To include archived deployments, use `include_archived` instead; the two cannot be combined.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param RequestOpts|null $requestOptions
      *

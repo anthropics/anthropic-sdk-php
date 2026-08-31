@@ -31,7 +31,7 @@ final class SkillListParams implements BaseModel
     /**
      * Number of results to return per page.
      *
-     * Maximum value is 100. Defaults to 20.
+     * Ranges from `1` to `1000`. Defaults to `20`.
      */
     #[Optional]
     public ?int $limit;
@@ -93,7 +93,7 @@ final class SkillListParams implements BaseModel
     /**
      * Number of results to return per page.
      *
-     * Maximum value is 100. Defaults to 20.
+     * Ranges from `1` to `1000`. Defaults to `20`.
      */
     public function withLimit(int $limit): self
     {

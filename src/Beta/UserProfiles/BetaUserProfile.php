@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Anthropic\Beta\UserProfiles;
 
 use Anthropic\Beta\UserProfiles\BetaUserProfile\AccessType;
-use Anthropic\Beta\UserProfiles\BetaUserProfile\Relationship;
 use Anthropic\Beta\UserProfiles\BetaUserProfile\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
@@ -24,8 +23,8 @@ use Anthropic\Core\Contracts\BaseModel;
  *   updatedAt: \DateTimeInterface,
  *   accessType?: null|AccessType|value-of<AccessType>,
  *   externalID?: string|null,
+ *   externalUserOnboardedAt?: \DateTimeInterface|null,
  *   name?: string|null,
- *   relationship?: null|Relationship|value-of<Relationship>,
  * }
  */
 final class BetaUserProfile implements BaseModel
@@ -90,18 +89,16 @@ final class BetaUserProfile implements BaseModel
     public ?string $externalID;
 
     /**
-     * Real-world name of the entity this profile represents (company or individual). For a resold-to company (`access_type` `passthrough`, or `relationship` `resold` under the `user-profiles-2026-03-24` header) this is that company's name.
+     * A timestamp in RFC 3339 format.
+     */
+    #[Optional('external_user_onboarded_at', nullable: true)]
+    public ?\DateTimeInterface $externalUserOnboardedAt;
+
+    /**
+     * Real-world name of the entity this profile represents (company or individual). For a company the platform resells Claude access to (`access_type` `passthrough`) this is that company's name.
      */
     #[Optional(nullable: true)]
     public ?string $name;
-
-    /**
-     * How the entity behind a user profile relates to the platform that owns the API key. `external`: an individual end-user of the platform. `resold`: a company the platform resells Claude access to. `internal`: the platform's own usage.
-     *
-     * @var value-of<Relationship>|null $relationship
-     */
-    #[Optional(enum: Relationship::class)]
-    public ?string $relationship;
 
     /**
      * `new BetaUserProfile()` is missing required properties by the API.
@@ -144,7 +141,6 @@ final class BetaUserProfile implements BaseModel
      * @param array<string,BetaUserProfileTrustGrant|BetaUserProfileTrustGrantShape> $trustGrants
      * @param Type|value-of<Type> $type
      * @param AccessType|value-of<AccessType>|null $accessType
-     * @param Relationship|value-of<Relationship>|null $relationship
      */
     public static function with(
         string $id,
@@ -155,8 +151,8 @@ final class BetaUserProfile implements BaseModel
         \DateTimeInterface $updatedAt,
         AccessType|string|null $accessType = null,
         ?string $externalID = null,
+        ?\DateTimeInterface $externalUserOnboardedAt = null,
         ?string $name = null,
-        Relationship|string|null $relationship = null,
     ): self {
         $self = new self;
 
@@ -169,8 +165,8 @@ final class BetaUserProfile implements BaseModel
 
         null !== $accessType && $self['accessType'] = $accessType;
         null !== $externalID && $self['externalID'] = $externalID;
+        null !== $externalUserOnboardedAt && $self['externalUserOnboardedAt'] = $externalUserOnboardedAt;
         null !== $name && $self['name'] = $name;
-        null !== $relationship && $self['relationship'] = $relationship;
 
         return $self;
     }
@@ -272,25 +268,24 @@ final class BetaUserProfile implements BaseModel
     }
 
     /**
-     * Real-world name of the entity this profile represents (company or individual). For a resold-to company (`access_type` `passthrough`, or `relationship` `resold` under the `user-profiles-2026-03-24` header) this is that company's name.
+     * A timestamp in RFC 3339 format.
      */
-    public function withName(?string $name): self
-    {
+    public function withExternalUserOnboardedAt(
+        ?\DateTimeInterface $externalUserOnboardedAt
+    ): self {
         $self = clone $this;
-        $self['name'] = $name;
+        $self['externalUserOnboardedAt'] = $externalUserOnboardedAt;
 
         return $self;
     }
 
     /**
-     * How the entity behind a user profile relates to the platform that owns the API key. `external`: an individual end-user of the platform. `resold`: a company the platform resells Claude access to. `internal`: the platform's own usage.
-     *
-     * @param Relationship|value-of<Relationship> $relationship
+     * Real-world name of the entity this profile represents (company or individual). For a company the platform resells Claude access to (`access_type` `passthrough`) this is that company's name.
      */
-    public function withRelationship(Relationship|string $relationship): self
+    public function withName(?string $name): self
     {
         $self = clone $this;
-        $self['relationship'] = $relationship;
+        $self['name'] = $name;
 
         return $self;
     }

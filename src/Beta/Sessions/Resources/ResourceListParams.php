@@ -34,7 +34,7 @@ final class ResourceListParams implements BaseModel
     public ?int $limit;
 
     /**
-     * Opaque cursor from a previous response's next_page field.
+     * Opaque cursor from a previous response's `next_page` field.
      */
     #[Optional]
     public ?string $page;
@@ -85,7 +85,7 @@ final class ResourceListParams implements BaseModel
     }
 
     /**
-     * Opaque cursor from a previous response's next_page field.
+     * Opaque cursor from a previous response's `next_page` field.
      */
     public function withPage(string $page): self
     {

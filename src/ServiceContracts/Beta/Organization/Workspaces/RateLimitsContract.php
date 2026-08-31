@@ -22,7 +22,7 @@ interface RateLimitsContract
      * @param GroupType|value-of<GroupType>|null $groupType filter by group type
      * @param int|null $limit Maximum number of items to return per page. Ranges from `1` to `1000`.
      *
-     * Accepted for request-shape compatibility and currently ignored: every entry is returned in a single page.
+     * When omitted, every remaining entry is returned in a single page and `next_page` is `null`.
      * @param string|null $page opaque cursor from a previous response's `next_page`
      * @param RequestOpts|null $requestOptions
      *

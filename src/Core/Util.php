@@ -224,26 +224,33 @@ final class Util
         string $path,
         array $query = []
     ): UriInterface {
-        $parsed = parse_url($path);
-        if ($scheme = $parsed['scheme'] ?? null) {
-            $base = $base->withScheme($scheme);
+        // parse_url misreads relative paths whose segments contain ':' as a scheme or host:port, so only absolute and network-path (`//host`) URLs go through it.
+        if (preg_match('#^([A-Za-z][A-Za-z0-9+.-]*:)?//#', $path)) {
+            $parsed = parse_url($path) ?: [];
+            if ($scheme = $parsed['scheme'] ?? null) {
+                $base = $base->withScheme($scheme);
+            }
+            if ($host = $parsed['host'] ?? null) {
+                $base = $base->withHost($host);
+            }
+            if ($port = $parsed['port'] ?? null) {
+                $base = $base->withPort($port);
+            }
+            if (($user = $parsed['user'] ?? null) || ($pass = $parsed['pass'] ?? null)) {
+                $base = $base->withUserInfo($user ?? '', $pass ?? null);
+            }
+            [$path, $pathQuery] = [$parsed['path'] ?? '', $parsed['query'] ?? ''];
+        } else {
+            [$path, $pathQuery] = explode('?', explode('#', $path, 2)[0], 2) + [1 => ''];
         }
-        if ($host = $parsed['host'] ?? null) {
-            $base = $base->withHost($host);
-        }
-        if ($port = $parsed['port'] ?? null) {
-            $base = $base->withPort($port);
-        }
-        if (($user = $parsed['user'] ?? null) || ($pass = $parsed['pass'] ?? null)) {
-            $base = $base->withUserInfo($user ?? '', $pass ?? null);
-        }
-        if ($path = $parsed['path'] ?? null) {
-            $base = str_starts_with($path, '/') ? $base->withPath($path) : $base->withPath($base->getPath().'/'.$path);
+
+        if ('' !== $path) {
+            $base = str_starts_with($path, '/') ? $base->withPath($path) : $base->withPath(rtrim($base->getPath(), '/').'/'.$path);
         }
 
         [$q1, $q2] = [[], []];
         parse_str($base->getQuery(), $q1);
-        parse_str($parsed['query'] ?? '', $q2);
+        parse_str($pathQuery, $q2);
 
         /** @var array<string,mixed> */
         $mergedQuery = array_merge_recursive($q1, $q2, $query);

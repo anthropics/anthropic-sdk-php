@@ -9,41 +9,44 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type VersionDeleteResponseShape = array{id: string, type: string}
+ * @phpstan-type DeletedSkillVersionShape = array{
+ *   id: string, type: 'skill_version_deleted'
+ * }
  */
-final class VersionDeleteResponse implements BaseModel
+final class DeletedSkillVersion implements BaseModel
 {
-    /** @use SdkModel<VersionDeleteResponseShape> */
+    /** @use SdkModel<DeletedSkillVersionShape> */
     use SdkModel;
-
-    /**
-     * Version identifier for the skill.
-     *
-     * Each version is identified by a Unix epoch timestamp (e.g., "1759178010641129").
-     */
-    #[Required]
-    public string $id;
 
     /**
      * Deleted object type.
      *
      * For Skill Versions, this is always `"skill_version_deleted"`.
+     *
+     * @var 'skill_version_deleted' $type
      */
     #[Required]
-    public string $type;
+    public string $type = 'skill_version_deleted';
 
     /**
-     * `new VersionDeleteResponse()` is missing required properties by the API.
+     * Unique identifier for this Skill Version. The id addresses the version in
+     * paths and pins it in references.
+     */
+    #[Required]
+    public string $id;
+
+    /**
+     * `new DeletedSkillVersion()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * VersionDeleteResponse::with(id: ..., type: ...)
+     * DeletedSkillVersion::with(id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new VersionDeleteResponse)->withID(...)->withType(...)
+     * (new DeletedSkillVersion)->withID(...)
      * ```
      */
     public function __construct()
@@ -56,22 +59,18 @@ final class VersionDeleteResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(
-        string $id,
-        string $type = 'skill_version_deleted'
-    ): self {
+    public static function with(string $id): self
+    {
         $self = new self;
 
         $self['id'] = $id;
-        $self['type'] = $type;
 
         return $self;
     }
 
     /**
-     * Version identifier for the skill.
-     *
-     * Each version is identified by a Unix epoch timestamp (e.g., "1759178010641129").
+     * Unique identifier for this Skill Version. The id addresses the version in
+     * paths and pins it in references.
      */
     public function withID(string $id): self
     {
@@ -85,6 +84,8 @@ final class VersionDeleteResponse implements BaseModel
      * Deleted object type.
      *
      * For Skill Versions, this is always `"skill_version_deleted"`.
+     *
+     * @param 'skill_version_deleted' $type
      */
     public function withType(string $type): self
     {
