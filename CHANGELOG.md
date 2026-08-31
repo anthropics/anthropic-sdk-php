@@ -9,6 +9,15 @@ Full Changelog: [v0.44.0...v0.45.0](https://github.com/anthropics/anthropic-sdk-
 * **api:** add beta webhooks parse_unverified; unwrap now verifies signatures ([eb701fa](https://github.com/anthropics/anthropic-sdk-php/commit/eb701fa971b8174a96fe142447c582588ec1e42d))
 * **api:** add support for organization compliance settings in the Admin API ([42c09e2](https://github.com/anthropics/anthropic-sdk-php/commit/42c09e25c50f5283d2daf999f04a73e89aee19af))
 * **api:** beta files/skills namespaces use GA shapes; drop dated beta header pins ([e221c18](https://github.com/anthropics/anthropic-sdk-php/commit/e221c18b92aaeda6c9b3ad4955e88f316a833b8b))
+
+  The beta Files and Skills namespaces no longer send the `files-api-2025-04-14` / `skills-2025-10-02` headers and return the same shapes as `client.files` / `client.skills` (with `Beta`-prefixed type names). Requests that still send those headers on raw HTTP keep receiving the beta shapes.
+
+  Changes in the beta namespaces:
+  - `client.beta.skills.delete()` now deletes a Skill together with all of its versions (previously refused while any version existed).
+  - Beta Messages type `BetaSkill` (container skill reference, `{type, skill_id, version}`) is renamed `BetaContainerSkill`; `BetaSkill` now names the Skills resource.
+  - `client.beta.files.list()` returns `{data, next_page}` and paginates with `page` / `ids` (was `{data, has_more, first_id, last_id}` with `before_id` / `after_id`); Skills types use `display_name`, `latest_version_id`, and `skver_…` version ids.
+
+  Migration guides: [Migrate from `files-api-2025-04-14`](https://platform.claude.com/docs/en/build-with-claude/files#migrate-from-files-api-2025-04-14) · [Migrate from `skills-2025-10-02`](https://platform.claude.com/docs/en/build-with-claude/skills-guide#migrate-from-skills-2025-10-02)
 * **user_profiles:** sort the user profile list by name with order_by=name ([48bf551](https://github.com/anthropics/anthropic-sdk-php/commit/48bf5516647f34b36b56179bd3c05176ce57f481))
 
 
