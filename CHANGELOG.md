@@ -9,6 +9,15 @@ Full Changelog: [v0.44.0...v0.45.0](https://github.com/anthropics/anthropic-sdk-
 * **api:** add beta webhooks parse_unverified; unwrap now verifies signatures ([eb701fa](https://github.com/anthropics/anthropic-sdk-php/commit/eb701fa971b8174a96fe142447c582588ec1e42d))
 * **api:** add support for organization compliance settings in the Admin API ([42c09e2](https://github.com/anthropics/anthropic-sdk-php/commit/42c09e25c50f5283d2daf999f04a73e89aee19af))
 * **api:** beta files/skills namespaces use GA shapes; drop dated beta header pins ([e221c18](https://github.com/anthropics/anthropic-sdk-php/commit/e221c18b92aaeda6c9b3ad4955e88f316a833b8b))
+
+  The beta Files and Skills services (`$client->beta->files`, `$client->beta->skills`) no longer send the `files-api-2025-04-14` / `skills-2025-10-02` headers and return the same shapes as `$client->files` / `$client->skills` (as `Anthropic\Beta\…` classes). Requests that still send those headers on raw HTTP keep receiving the beta shapes.
+
+  Changes in the beta services:
+  - `$client->beta->skills->delete($skillID)` now deletes a Skill together with all of its versions (previously refused while any version existed). It returns `Anthropic\Beta\Skills\BetaDeletedSkill` (was `SkillDeleteResponse`).
+  - Beta Messages class `Anthropic\Beta\Messages\BetaSkill` (container skill reference with `skillID`, `type`, `version`) is renamed `BetaContainerSkill`. `Anthropic\Beta\Skills\BetaSkill` now names the Skill object returned by `create()` / `retrieve()` / `list()` (replacing `SkillNewResponse` / `SkillGetResponse` / `SkillListResponse`), and skill versions are `Anthropic\Beta\Skills\Versions\SkillVersion` / `DeletedSkillVersion` (replacing `Version*Response`).
+  - `$client->beta->files->list()` returns an `Anthropic\PageCursor` (with `data` / `nextPage`) and paginates with `page` / `ids` (was an `Anthropic\Page` with `data`, `hasMore`, `firstID`, `lastID` and `beforeID` / `afterID`); `pagingEachItem()` is unchanged. `BetaSkill` uses `displayName` (was `displayTitle`, also the `create()` parameter) and `latestVersionID` (was `latestVersion`), and `SkillVersion` is addressed by its `skver_…` `id` (the Unix-timestamp `version` property is gone).
+
+  Migration guides: [Migrate from `files-api-2025-04-14`](https://platform.claude.com/docs/en/build-with-claude/files#migrate-from-files-api-2025-04-14) · [Migrate from `skills-2025-10-02`](https://platform.claude.com/docs/en/build-with-claude/skills-guide#migrate-from-skills-2025-10-02)
 * **user_profiles:** sort the user profile list by name with order_by=name ([48bf551](https://github.com/anthropics/anthropic-sdk-php/commit/48bf5516647f34b36b56179bd3c05176ce57f481))
 
 
