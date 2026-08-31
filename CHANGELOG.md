@@ -1,5 +1,37 @@
 # Changelog
 
+## 0.45.0 (2026-08-31)
+
+Full Changelog: [v0.44.0...v0.45.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.44.0...v0.45.0)
+
+### Features
+
+* **api:** add beta webhooks parse_unverified; unwrap now verifies signatures ([eb701fa](https://github.com/anthropics/anthropic-sdk-php/commit/eb701fa971b8174a96fe142447c582588ec1e42d))
+* **api:** add support for organization compliance settings in the Admin API ([42c09e2](https://github.com/anthropics/anthropic-sdk-php/commit/42c09e25c50f5283d2daf999f04a73e89aee19af))
+* **api:** beta files/skills namespaces use GA shapes; drop dated beta header pins ([e221c18](https://github.com/anthropics/anthropic-sdk-php/commit/e221c18b92aaeda6c9b3ad4955e88f316a833b8b))
+* **user_profiles:** sort the user profile list by name with order_by=name ([48bf551](https://github.com/anthropics/anthropic-sdk-php/commit/48bf5516647f34b36b56179bd3c05176ce57f481))
+
+
+### Bug Fixes
+
+* **api:** mark the beta header required on Admin API Tunnel operations ([cba198a](https://github.com/anthropics/anthropic-sdk-php/commit/cba198a3bd129181b0c52be411ab7f9037780bd0))
+* **pagination:** follow the requested paging direction past page 1 ([101257d](https://github.com/anthropics/anthropic-sdk-php/commit/101257d947d7194a897a3b57477b9f71e0a5e611))
+* **pagination:** page backward with before_id and stop on has_more false or an empty page ([101257d](https://github.com/anthropics/anthropic-sdk-php/commit/101257d947d7194a897a3b57477b9f71e0a5e611))
+* **pagination:** request the next page only with items, has_more, and the cursor for the request's direction ([101257d](https://github.com/anthropics/anthropic-sdk-php/commit/101257d947d7194a897a3b57477b9f71e0a5e611))
+
+
+### Chores
+
+* **api:** remove unreleased thinking prefix_mismatched_behavior param ([a714a2b](https://github.com/anthropics/anthropic-sdk-php/commit/a714a2bddcc6c1cb48212a63f83981e59e834384))
+* **api:** remove user profile relationship in favor of access_type ([a714a2b](https://github.com/anthropics/anthropic-sdk-php/commit/a714a2bddcc6c1cb48212a63f83981e59e834384))
+* **internal:** add UnionDiscriminator marker for response unions ([61b81cc](https://github.com/anthropics/anthropic-sdk-php/commit/61b81cc9f6875561f452edb7effef76965a1ebcb))
+* **internal:** remove discriminator support from PropertyInfo ([42c09e2](https://github.com/anthropics/anthropic-sdk-php/commit/42c09e25c50f5283d2daf999f04a73e89aee19af))
+
+
+### Documentation
+
+* **api:** backtick identifiers in managed-agents API descriptions ([93e8aec](https://github.com/anthropics/anthropic-sdk-php/commit/93e8aec5f1f1e4ffb24b2842bccaa0c468485453))
+
 ## 0.44.0 (2026-08-26)
 
 Full Changelog: [v0.43.0...v0.44.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.43.0...v0.44.0)
