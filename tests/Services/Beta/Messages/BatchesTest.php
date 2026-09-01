@@ -5,6 +5,7 @@ namespace Tests\Services\Beta\Messages;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatch;
+use Anthropic\Beta\Messages\BetaThinkingPrefixMismatchBehavior;
 use Anthropic\Client;
 use Anthropic\Core\Util;
 use Anthropic\Messages\Model;
@@ -61,7 +62,14 @@ final class BatchesTest extends TestCase
                     'customID' => 'my-custom-id-1',
                     'params' => [
                         'maxTokens' => 1024,
-                        'messages' => [['content' => 'Hello, world', 'role' => 'user']],
+                        'messages' => [
+                            [
+                                'content' => 'Hello, world',
+                                'role' => 'user',
+                                'clearAt' => 'next_user_message',
+                                'outputConfig' => ['effort' => 'low'],
+                            ],
+                        ],
                         'model' => Model::CLAUDE_OPUS_5,
                         'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                         'container' => [
@@ -136,7 +144,13 @@ final class BatchesTest extends TestCase
                             ],
                         ],
                         'temperature' => 1,
-                        'thinking' => ['type' => 'adaptive', 'display' => 'summarized'],
+                        'thinking' => [
+                            'type' => 'adaptive',
+                            'blockBinding' => [
+                                'prefixMismatchBehavior' => BetaThinkingPrefixMismatchBehavior::ERROR,
+                            ],
+                            'display' => 'summarized',
+                        ],
                         'toolChoice' => [
                             'type' => 'auto', 'disableParallelToolUse' => true,
                         ],

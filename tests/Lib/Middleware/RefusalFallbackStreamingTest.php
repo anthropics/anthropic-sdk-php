@@ -45,6 +45,9 @@ class RefusalFallbackStreamingTest extends TestCase
     ];
 
     private const TOOL_USE_ID = 'srvtoolu_01';
+    private const INPUT_TRANSFORMATIONS = [
+        ['type' => 'thinking_dropped', 'path' => 'messages.1.content.0', 'reason' => 'model_binding_mismatch'],
+    ];
 
     private ScriptedTransport $transporter;
 
@@ -89,7 +92,10 @@ class RefusalFallbackStreamingTest extends TestCase
         // B's message_start is suppressed.
         $this->assertCount(1, self::ofType($events, 'message_start'));
         $this->assertCount(1, self::ofType($events, 'message_stop'));
-        $this->assertCount(1, self::ofType($events, 'message_delta'));
+        $deltas = self::ofType($events, 'message_delta');
+        $this->assertCount(1, $deltas);
+        // B's message_start carries no `input_transformations`, so nothing is forwarded.
+        $this->assertArrayNotHasKey('input_transformations', $deltas[0]);
     }
 
     public function testUsageIterationsIsTheTwoEntryServerShape(): void
@@ -106,6 +112,70 @@ class RefusalFallbackStreamingTest extends TestCase
             ['message', 'claude-fable-5'],
             ['fallback_message', self::FALLBACK_MODEL],
         ], self::iterations($messageDelta));
+    }
+
+    public function testForwardsTheSplicedHopInputTransformationsOnTheTerminalDelta(): void
+    {
+        $this->serve(
+            self::sseResponse(self::streamA()),
+            self::sseResponse(self::servingStream(startExtra: ['input_transformations' => self::INPUT_TRANSFORMATIONS])),
+        );
+        $client = $this->makeClient(new RefusalFallbackMiddleware(self::FALLBACKS));
+
+        $events = self::collect($this->createStream($client));
+
+        // B's message_start is not re-emitted, so the list it reported is copied
+        // onto the emitted message_delta, matching what a server-side fallback sends.
+        $this->assertCount(1, self::ofType($events, 'message_start'));
+        $delta = self::first($events, 'message_delta');
+        $this->assertSame('end_turn', self::at($delta, 'delta', 'stop_reason'));
+        $this->assertCount(1, self::items(self::at($delta, 'input_transformations')));
+        $this->assertSame('thinking_dropped', self::at($delta, 'input_transformations', 0, 'type'));
+        $this->assertSame('messages.1.content.0', self::at($delta, 'input_transformations', 0, 'path'));
+        $this->assertSame('model_binding_mismatch', self::at($delta, 'input_transformations', 0, 'reason'));
+    }
+
+    public function testKeepsInputTransformationsAlreadyOnTheSplicedTerminalDelta(): void
+    {
+        $this->serve(
+            self::sseResponse(self::streamA()),
+            self::sseResponse(self::servingStream(
+                startExtra: ['input_transformations' => self::INPUT_TRANSFORMATIONS],
+                deltaExtra: ['input_transformations' => []],
+            )),
+        );
+        $client = $this->makeClient(new RefusalFallbackMiddleware(self::FALLBACKS));
+
+        $events = self::collect($this->createStream($client));
+
+        $delta = self::first($events, 'message_delta');
+        $this->assertSame([], self::at($delta, 'input_transformations'));
+    }
+
+    public function testAHeldRefusalCarriesTheRefusedHopInputTransformationsWhenTheChainDegrades(): void
+    {
+        // B (spliced, message_start not re-emitted) reports the list, contributes
+        // a block, then refuses with a fresh token; C's request raises, so B's
+        // held refusal closes the stream.
+        $this->serve(
+            self::sseResponse(self::streamA()),
+            self::sseResponse(self::hopRefusal(startExtra: ['input_transformations' => self::INPUT_TRANSFORMATIONS])),
+            self::connectionError('connection reset'),
+        );
+        $client = $this->makeClient(new RefusalFallbackMiddleware(self::TWO_FALLBACKS));
+
+        $events = self::collect($this->createStream($client));
+
+        $this->assertCount(3, $this->transporter->requests);
+        $this->assertCount(1, self::ofType($events, 'message_start'));
+        $this->assertCount(1, self::ofType($events, 'message_delta'));
+        $delta = self::first($events, 'message_delta');
+        $this->assertSame('refusal', self::at($delta, 'delta', 'stop_reason'));
+        $this->assertSame('tok_b', self::at($delta, 'delta', 'stop_details', 'fallback_credit_token'));
+        $this->assertCount(1, self::items(self::at($delta, 'input_transformations')));
+        $this->assertSame('thinking_dropped', self::at($delta, 'input_transformations', 0, 'type'));
+        $this->assertSame('messages.1.content.0', self::at($delta, 'input_transformations', 0, 'path'));
+        $this->assertSame('message_stop', $events[count($events) - 1]['type'] ?? null);
     }
 
     public function testBuildsRequestBAsAShapeBContinuation(): void
@@ -553,6 +623,28 @@ class RefusalFallbackStreamingTest extends TestCase
         ], self::iterations($delta));
     }
 
+    public function testAPreStreamFallbackEmitsTheServingHopStartAndForwardsNothing(): void
+    {
+        $this->serve(
+            self::sseResponse(self::preStreamRefusal()),
+            self::sseResponse(self::servingStream(startExtra: ['input_transformations' => self::INPUT_TRANSFORMATIONS])),
+        );
+        $client = $this->makeClient(new RefusalFallbackMiddleware(self::FALLBACKS));
+
+        $events = self::collect($this->createStream($client));
+
+        // The serving fallback's message_start is emitted, so its list reaches the
+        // client there and is not copied onto the message_delta.
+        $starts = self::ofType($events, 'message_start');
+        $this->assertCount(1, $starts);
+        $this->assertCount(1, self::items(self::at($starts[0], 'message', 'input_transformations')));
+        $this->assertSame('thinking_dropped', self::at($starts[0], 'message', 'input_transformations', 0, 'type'));
+        $this->assertSame('messages.1.content.0', self::at($starts[0], 'message', 'input_transformations', 0, 'path'));
+        $delta = self::first($events, 'message_delta');
+        $this->assertSame('end_turn', self::at($delta, 'delta', 'stop_reason'));
+        $this->assertArrayNotHasKey('input_transformations', $delta);
+    }
+
     public function testATokenLessPreStreamRefusalStillRetries(): void
     {
         $tokenLess = implode('', [self::messageStart(), self::refusalDelta(null), self::ev(['type' => 'message_stop'])]);
@@ -911,7 +1003,8 @@ class RefusalFallbackStreamingTest extends TestCase
         return "event: {$type}\ndata: ".self::json($data)."\n\n";
     }
 
-    private static function messageStart(): string
+    /** @param array<string,mixed> $extra fields merged onto `message_start.message` */
+    private static function messageStart(array $extra = []): string
     {
         return self::ev([
             'type' => 'message_start',
@@ -924,6 +1017,7 @@ class RefusalFallbackStreamingTest extends TestCase
                 'stop_reason' => null,
                 'stop_sequence' => null,
                 'usage' => ['input_tokens' => 12, 'output_tokens' => 1],
+                ...$extra,
             ],
         ]);
     }
@@ -957,11 +1051,15 @@ class RefusalFallbackStreamingTest extends TestCase
         return ['token' => $token, 'mode' => 'best_effort'];
     }
 
-    /** A fallback hop that contributes one text block, then refuses with a fresh token. */
-    private static function hopRefusal(?string $token = 'tok_b', bool $hasPrefillClaim = true): string
+    /**
+     * A fallback hop that contributes one text block, then refuses with a fresh token.
+     *
+     * @param array<string,mixed> $startExtra fields merged onto the hop's `message_start.message`
+     */
+    private static function hopRefusal(?string $token = 'tok_b', bool $hasPrefillClaim = true, array $startExtra = []): string
     {
         return implode('', [
-            self::messageStart(),
+            self::messageStart($startExtra),
             self::ev(['type' => 'content_block_start', 'index' => 0, 'content_block' => ['type' => 'text', 'text' => '']]),
             self::ev([
                 'type' => 'content_block_delta',
@@ -974,8 +1072,16 @@ class RefusalFallbackStreamingTest extends TestCase
         ]);
     }
 
-    private static function servingStream(string $model = self::FALLBACK_MODEL, string $messageId = 'msg_b'): string
-    {
+    /**
+     * @param array<string,mixed> $startExtra fields merged onto the hop's `message_start.message`
+     * @param array<string,mixed> $deltaExtra fields merged onto the hop's terminal `message_delta`
+     */
+    private static function servingStream(
+        string $model = self::FALLBACK_MODEL,
+        string $messageId = 'msg_b',
+        array $startExtra = [],
+        array $deltaExtra = [],
+    ): string {
         return implode('', [
             self::ev([
                 'type' => 'message_start',
@@ -988,6 +1094,7 @@ class RefusalFallbackStreamingTest extends TestCase
                     'stop_reason' => null,
                     'stop_sequence' => null,
                     'usage' => ['input_tokens' => 12, 'output_tokens' => 1],
+                    ...$startExtra,
                 ],
             ]),
             self::ev(['type' => 'content_block_start', 'index' => 0, 'content_block' => ['type' => 'text', 'text' => '']]),
@@ -997,6 +1104,7 @@ class RefusalFallbackStreamingTest extends TestCase
                 'type' => 'message_delta',
                 'delta' => ['stop_reason' => 'end_turn', 'stop_sequence' => null],
                 'usage' => ['output_tokens' => 9],
+                ...$deltaExtra,
             ]),
             self::ev(['type' => 'message_stop']),
         ]);

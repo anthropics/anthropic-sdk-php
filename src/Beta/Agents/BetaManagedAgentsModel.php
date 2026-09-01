@@ -11,6 +11,8 @@ namespace Anthropic\Beta\Agents;
  */
 enum BetaManagedAgentsModel: string
 {
+    case CLAUDE_FABLE_5_1 = 'claude-fable-5-1';
+
     case CLAUDE_SONNET_5 = 'claude-sonnet-5';
 
     case CLAUDE_FABLE_5 = 'claude-fable-5';

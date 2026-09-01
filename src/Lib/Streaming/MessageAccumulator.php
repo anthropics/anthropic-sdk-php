@@ -14,7 +14,7 @@ use Anthropic\Messages\Message;
  * `Message.Accumulate`, TypeScript's `MessageStream` snapshots).
  *
  * ```php
- * $accumulator = new MessageAccumulator;
+ * $accumulator = MessageAccumulator::forMessages(); // or forBetaMessages()
  * foreach ($client->messages->createStream(...) as $event) {
  *     $accumulator->accumulate($event);
  * }
@@ -30,9 +30,10 @@ use Anthropic\Messages\Message;
  * - `citations_delta` appends to the block's `citations` list.
  * - `message_delta` overwrites `stop_reason`/`stop_sequence`/`stop_details`,
  *   always replaces `usage.output_tokens` (the API streams cumulative
- *   totals), and replaces `container`, `context_management` and the other
- *   usage fields only when the event carries them — those keys are omitted
- *   when they do not apply, so what `message_start` reported is preserved.
+ *   totals), and replaces `container`, `context_management`,
+ *   `input_transformations` and the other usage fields only when the event
+ *   carries them — those keys are omitted when they do not apply, so what
+ *   `message_start` reported is preserved.
  *
  * Event-order violations throw: an event before `message_start`, a second
  * `message_start`, a `content_block_start` that skips an index, or a delta
@@ -169,6 +170,11 @@ final class MessageAccumulator
         }
         if (!is_null($event['context_management'] ?? null)) {
             $snapshot['context_management'] = $event['context_management'];
+        }
+        // the beta surface re-sends input_transformations on the event only
+        // after a mid-stream model fallback; otherwise message_start's stands
+        if (!is_null($event['input_transformations'] ?? null)) {
+            $snapshot['input_transformations'] = $event['input_transformations'];
         }
 
         $usage = self::wireShape($event['usage'] ?? null) ?? [];

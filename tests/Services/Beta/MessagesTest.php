@@ -5,6 +5,7 @@ namespace Tests\Services\Beta;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Beta\Messages\BetaMessageTokensCount;
+use Anthropic\Beta\Messages\BetaThinkingPrefixMismatchBehavior;
 use Anthropic\Client;
 use Anthropic\Core\Util;
 use Anthropic\Messages\Model;
@@ -48,7 +49,14 @@ final class MessagesTest extends TestCase
     {
         $result = $this->client->beta->messages->create(
             maxTokens: 1024,
-            messages: [['content' => 'Hello, world', 'role' => 'user']],
+            messages: [
+                [
+                    'content' => 'Hello, world',
+                    'role' => 'user',
+                    'clearAt' => 'next_user_message',
+                    'outputConfig' => ['effort' => 'low'],
+                ],
+            ],
             model: Model::CLAUDE_OPUS_5,
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             container: [
@@ -112,7 +120,13 @@ final class MessagesTest extends TestCase
                 ],
             ],
             temperature: 1,
-            thinking: ['type' => 'adaptive', 'display' => 'summarized'],
+            thinking: [
+                'type' => 'adaptive',
+                'blockBinding' => [
+                    'prefixMismatchBehavior' => BetaThinkingPrefixMismatchBehavior::ERROR,
+                ],
+                'display' => 'summarized',
+            ],
             toolChoice: ['type' => 'auto', 'disableParallelToolUse' => true],
             tools: [
                 [
@@ -158,7 +172,14 @@ final class MessagesTest extends TestCase
     public function testCountTokensWithOptionalParams(): void
     {
         $result = $this->client->beta->messages->countTokens(
-            messages: [['content' => 'Hello, world', 'role' => 'user']],
+            messages: [
+                [
+                    'content' => 'Hello, world',
+                    'role' => 'user',
+                    'clearAt' => 'next_user_message',
+                    'outputConfig' => ['effort' => 'low'],
+                ],
+            ],
             model: Model::CLAUDE_OPUS_5,
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             contextManagement: [
@@ -208,7 +229,13 @@ final class MessagesTest extends TestCase
                     ],
                 ],
             ],
-            thinking: ['type' => 'adaptive', 'display' => 'summarized'],
+            thinking: [
+                'type' => 'adaptive',
+                'blockBinding' => [
+                    'prefixMismatchBehavior' => BetaThinkingPrefixMismatchBehavior::ERROR,
+                ],
+                'display' => 'summarized',
+            ],
             toolChoice: ['type' => 'auto', 'disableParallelToolUse' => true],
             tools: [
                 [

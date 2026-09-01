@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaRawMessageDeltaEvent\Delta;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -13,12 +14,14 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type BetaContextManagementResponseShape from \Anthropic\Beta\Messages\BetaContextManagementResponse
  * @phpstan-import-type DeltaShape from \Anthropic\Beta\Messages\BetaRawMessageDeltaEvent\Delta
  * @phpstan-import-type BetaMessageDeltaUsageShape from \Anthropic\Beta\Messages\BetaMessageDeltaUsage
+ * @phpstan-import-type BetaThinkingDroppedInputTransformationShape from \Anthropic\Beta\Messages\BetaThinkingDroppedInputTransformation
  *
  * @phpstan-type BetaRawMessageDeltaEventShape = array{
  *   contextManagement: null|BetaContextManagementResponse|BetaContextManagementResponseShape,
  *   delta: Delta|DeltaShape,
  *   type: 'message_delta',
  *   usage: BetaMessageDeltaUsage|BetaMessageDeltaUsageShape,
+ *   inputTransformations?: list<BetaThinkingDroppedInputTransformation|BetaThinkingDroppedInputTransformationShape>|null,
  * }
  */
 final class BetaRawMessageDeltaEvent implements BaseModel
@@ -54,6 +57,32 @@ final class BetaRawMessageDeltaEvent implements BaseModel
     public BetaMessageDeltaUsage $usage;
 
     /**
+     * Changes the API made to the request's input before showing it to the model:
+     * one entry per change, in request order. Today the only entry type is
+     * `thinking_dropped` — a `thinking`, `redacted_thinking` or `connector_text`
+     * block from the request's `messages` that was removed from the prompt instead
+     * of being shown to the model because it failed a binding check. More entry
+     * types may be added over time; ignore types you do not recognize.
+     *
+     * Requires `anthropic-beta: thinking-binding-controls-2026-08-01`. Present on
+     * every such response from a model that supports extended thinking, as `[]`
+     * when nothing was changed; without the beta, blocks are removed all the same
+     * but nothing is reported. Removed blocks contribute nothing to
+     * `usage.input_tokens`. When streaming, the array is final in `message_start`;
+     * the final `message_delta` event carries it only when a server-side model
+     * fallback happened mid-stream, in which case it holds the serving model's
+     * entries and replaces the one in `message_start`.
+     *
+     * @var list<BetaThinkingDroppedInputTransformation>|null $inputTransformations
+     */
+    #[Optional(
+        'input_transformations',
+        list: BetaThinkingDroppedInputTransformation::class,
+        nullable: true,
+    )]
+    public ?array $inputTransformations;
+
+    /**
      * `new BetaRawMessageDeltaEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -83,17 +112,21 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      * @param BetaContextManagementResponse|BetaContextManagementResponseShape|null $contextManagement
      * @param Delta|DeltaShape $delta
      * @param BetaMessageDeltaUsage|BetaMessageDeltaUsageShape $usage
+     * @param list<BetaThinkingDroppedInputTransformation|BetaThinkingDroppedInputTransformationShape>|null $inputTransformations
      */
     public static function with(
         BetaContextManagementResponse|array|null $contextManagement,
         Delta|array $delta,
         BetaMessageDeltaUsage|array $usage,
+        ?array $inputTransformations = null,
     ): self {
         $self = new self;
 
         $self['contextManagement'] = $contextManagement;
         $self['delta'] = $delta;
         $self['usage'] = $usage;
+
+        null !== $inputTransformations && $self['inputTransformations'] = $inputTransformations;
 
         return $self;
     }
@@ -151,6 +184,33 @@ final class BetaRawMessageDeltaEvent implements BaseModel
     {
         $self = clone $this;
         $self['usage'] = $usage;
+
+        return $self;
+    }
+
+    /**
+     * Changes the API made to the request's input before showing it to the model:
+     * one entry per change, in request order. Today the only entry type is
+     * `thinking_dropped` — a `thinking`, `redacted_thinking` or `connector_text`
+     * block from the request's `messages` that was removed from the prompt instead
+     * of being shown to the model because it failed a binding check. More entry
+     * types may be added over time; ignore types you do not recognize.
+     *
+     * Requires `anthropic-beta: thinking-binding-controls-2026-08-01`. Present on
+     * every such response from a model that supports extended thinking, as `[]`
+     * when nothing was changed; without the beta, blocks are removed all the same
+     * but nothing is reported. Removed blocks contribute nothing to
+     * `usage.input_tokens`. When streaming, the array is final in `message_start`;
+     * the final `message_delta` event carries it only when a server-side model
+     * fallback happened mid-stream, in which case it holds the serving model's
+     * entries and replaces the one in `message_start`.
+     *
+     * @param list<BetaThinkingDroppedInputTransformation|BetaThinkingDroppedInputTransformationShape>|null $inputTransformations
+     */
+    public function withInputTransformations(?array $inputTransformations): self
+    {
+        $self = clone $this;
+        $self['inputTransformations'] = $inputTransformations;
 
         return $self;
     }
