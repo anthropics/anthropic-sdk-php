@@ -56,8 +56,13 @@ final class Workspace implements BaseModel
      * customer-managed encryption key (CMEK) on AWS, reference this value in your
      * KMS key-policy condition so the key is scoped to this compartment. On GCP and
      * Azure, Anthropic enforces the compartment binding automatically; you do not
-     * need to reference this value in your key configuration. See the CMEK integration guide for the
-     * required key configuration, including the value used during key validation.
+     * need to reference this value in your key configuration. See the CMEK
+     * integration guide for the required key configuration; unless your organization
+     * is on Claude Platform on AWS, it includes a separate value used during key
+     * validation. On Claude Platform on AWS there is no separate validation value:
+     * the key is validated against this Workspace's own value when it is attached, so
+     * if your key policy uses the compartment condition, add this value to it before
+     * attaching the key.
      */
     #[Required('compartment_id')]
     public string $compartmentID;
@@ -84,10 +89,14 @@ final class Workspace implements BaseModel
      * ID of the customer-managed encryption key (CMEK) configuration to use for this
      * Workspace. Setting this field requires CMEK to be enabled for your
      * organization. When set, data stored for this Workspace is encrypted with the
-     * referenced key. Create key configurations with the External Keys API. This
-     * field is write-once: once a key is attached to a Workspace it cannot be
-     * detached or replaced. To rotate key material, rotate the underlying key on
-     * your cloud KMS; the `external_key_id` stays the same.
+     * referenced key. Create key configurations with the External Keys API. On
+     * Claude Platform on AWS the value is the AWS KMS key ARN, and the key must be a
+     * single-Region key in the same AWS account and Region as the Workspace. On that
+     * platform the key is validated against this Workspace when it is attached, so a
+     * key-policy problem is reported as an error on this request. This field is write-once:
+     * once a key is attached to a Workspace it cannot be detached or replaced. To
+     * rotate key material, rotate the underlying key on your cloud KMS; the
+     * `external_key_id` stays the same.
      */
     #[Required('external_key_id')]
     public ?string $externalKeyID;
@@ -205,8 +214,13 @@ final class Workspace implements BaseModel
      * customer-managed encryption key (CMEK) on AWS, reference this value in your
      * KMS key-policy condition so the key is scoped to this compartment. On GCP and
      * Azure, Anthropic enforces the compartment binding automatically; you do not
-     * need to reference this value in your key configuration. See the CMEK integration guide for the
-     * required key configuration, including the value used during key validation.
+     * need to reference this value in your key configuration. See the CMEK
+     * integration guide for the required key configuration; unless your organization
+     * is on Claude Platform on AWS, it includes a separate value used during key
+     * validation. On Claude Platform on AWS there is no separate validation value:
+     * the key is validated against this Workspace's own value when it is attached, so
+     * if your key policy uses the compartment condition, add this value to it before
+     * attaching the key.
      */
     public function withCompartmentID(string $compartmentID): self
     {
@@ -255,10 +269,14 @@ final class Workspace implements BaseModel
      * ID of the customer-managed encryption key (CMEK) configuration to use for this
      * Workspace. Setting this field requires CMEK to be enabled for your
      * organization. When set, data stored for this Workspace is encrypted with the
-     * referenced key. Create key configurations with the External Keys API. This
-     * field is write-once: once a key is attached to a Workspace it cannot be
-     * detached or replaced. To rotate key material, rotate the underlying key on
-     * your cloud KMS; the `external_key_id` stays the same.
+     * referenced key. Create key configurations with the External Keys API. On
+     * Claude Platform on AWS the value is the AWS KMS key ARN, and the key must be a
+     * single-Region key in the same AWS account and Region as the Workspace. On that
+     * platform the key is validated against this Workspace when it is attached, so a
+     * key-policy problem is reported as an error on this request. This field is write-once:
+     * once a key is attached to a Workspace it cannot be detached or replaced. To
+     * rotate key material, rotate the underlying key on your cloud KMS; the
+     * `external_key_id` stays the same.
      */
     public function withExternalKeyID(?string $externalKeyID): self
     {

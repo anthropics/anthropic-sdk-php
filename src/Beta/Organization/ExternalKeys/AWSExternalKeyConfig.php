@@ -24,7 +24,7 @@ final class AWSExternalKeyConfig implements BaseModel
     public string $type = 'aws';
 
     /**
-     * Full ARN of the AWS KMS key.
+     * Full ARN of the AWS KMS key. On Claude Platform on AWS the key must be a single-Region key in your organization's own AWS account; cross-account keys, multi-Region keys, and alias ARNs are rejected.
      */
     #[Required('kms_arn')]
     public string $kmsARN;
@@ -38,7 +38,7 @@ final class AWSExternalKeyConfig implements BaseModel
     /**
      * @deprecated
      *
-     * IAM role ARN. Deprecated — Anthropic reaches the KMS key via a managed intermediate role; this field is ignored.
+     * IAM role ARN. Deprecated — Anthropic reaches the KMS key through its own intermediate role (or, on Claude Platform on AWS, with credentials AWS issues for the Workspace); this field is ignored.
      */
     #[Optional('role_arn', nullable: true)]
     public ?string $roleARN;
@@ -83,7 +83,7 @@ final class AWSExternalKeyConfig implements BaseModel
     }
 
     /**
-     * Full ARN of the AWS KMS key.
+     * Full ARN of the AWS KMS key. On Claude Platform on AWS the key must be a single-Region key in your organization's own AWS account; cross-account keys, multi-Region keys, and alias ARNs are rejected.
      */
     public function withKMSARN(string $kmsARN): self
     {
@@ -116,7 +116,7 @@ final class AWSExternalKeyConfig implements BaseModel
     }
 
     /**
-     * IAM role ARN. Deprecated — Anthropic reaches the KMS key via a managed intermediate role; this field is ignored.
+     * IAM role ARN. Deprecated — Anthropic reaches the KMS key through its own intermediate role (or, on Claude Platform on AWS, with credentials AWS issues for the Workspace); this field is ignored.
      */
     public function withRoleARN(?string $roleARN): self
     {
