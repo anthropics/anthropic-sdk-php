@@ -552,7 +552,7 @@ final class RefusalFallbackMiddleware implements Middleware
             /** @var list<array{from: string, to: string}> seams queued until the wire opens */
             private array $pendingSeams = [];
 
-            /** @var array{start: array<string,mixed>|null, delta: array<string,mixed>, stop: array<string,mixed>}|null */
+            /** @var array{start: array<string,mixed>|null, startSuppressed: bool, delta: array<string,mixed>, stop: array<string,mixed>}|null */
             private ?array $held = null;
 
             private bool $wireOpen = false;
@@ -577,6 +577,15 @@ final class RefusalFallbackMiddleware implements Middleware
 
             /** @var array<string,mixed>|null the current hop's held message_start event data */
             private ?array $startRaw = null;
+
+            /**
+             * Whether the current hop's `message_start` event was suppressed (a
+             * spliced fallback hop's is, since the stream is already open). Retained
+             * so its `input_transformations` field can be forwarded onto the hop's
+             * terminal `message_delta` event, or onto the replayed refusal
+             * `message_delta` event if the chain degrades.
+             */
+            private bool $startSuppressed = false;
 
             /** @var array<int,true> blocks the current hop has open */
             private array $open = [];
@@ -685,6 +694,7 @@ final class RefusalFallbackMiddleware implements Middleware
 
                     case 'message_start':
                         $this->startRaw = $data;
+                        $this->startSuppressed = $this->wireOpen;
                         if (!$this->isRetryHop) {
                             $message = $data['message'] ?? null;
                             $id = is_array($message) ? ($message['id'] ?? null) : null;
@@ -775,7 +785,7 @@ final class RefusalFallbackMiddleware implements Middleware
                         $this->lastClaimCount = count($claim);
                     }
                     $this->token = $token;
-                    $this->held = ['start' => $this->startRaw, 'delta' => $data, 'stop' => $this->readAheadStop()];
+                    $this->held = ['start' => $this->startRaw, 'startSuppressed' => $this->startSuppressed, 'delta' => $data, 'stop' => $this->readAheadStop()];
                     // blocks the refusal cut open close NOW, so both the engaged
                     // splice and a later degrade land on complete framing
                     $this->closeOpenBlocks();
@@ -917,6 +927,7 @@ final class RefusalFallbackMiddleware implements Middleware
                 $this->blocks = [];
                 $this->blockOrder = [];
                 $this->startRaw = null;
+                $this->startSuppressed = false;
                 $this->decoder->close();
                 $this->decoder = new SseDecoder($response->getBody());
             }
@@ -984,6 +995,10 @@ final class RefusalFallbackMiddleware implements Middleware
                     $data['usage'] = $usage;
                 }
 
+                // the held start, not startRaw: a later hop may have engaged and
+                // died after its own message_start
+                $data = $this->forwardSuppressedInputTransformations($data, $held['start'], $held['startSuppressed']);
+
                 $this->emit('message_delta', $data);
                 $this->emit('message_stop', $held['stop']);
                 $this->done = true;
@@ -991,8 +1006,9 @@ final class RefusalFallbackMiddleware implements Middleware
 
             /**
              * Replaces the serving hop's `usage.iterations` with the whole-chain
-             * ledger; on a surfaced retry-hop refusal also stamps a missing
-             * `recommended_model` null.
+             * ledger and copies `input_transformations` from a message_start that
+             * was not re-emitted; on a surfaced retry-hop refusal also stamps a
+             * missing `recommended_model` null.
              *
              * @param array<string,mixed> $data
              *
@@ -1004,6 +1020,8 @@ final class RefusalFallbackMiddleware implements Middleware
                 $usage['iterations'] = [...$this->ledger, ...$this->hopIterations($data, final: true)];
                 $data['usage'] = $usage;
 
+                $data = $this->forwardSuppressedInputTransformations($data, $this->startRaw, $this->startSuppressed);
+
                 if ($stampNullIfAbsent) {
                     $delta = is_array($data['delta'] ?? null) ? $data['delta'] : [];
                     $details = is_array($delta['stop_details'] ?? null) ? $delta['stop_details'] : [];
@@ -1012,6 +1030,26 @@ final class RefusalFallbackMiddleware implements Middleware
                         $delta['stop_details'] = $details;
                         $data['delta'] = $delta;
                     }
+                }
+
+                return $data;
+            }
+
+            /**
+             * Copies `input_transformations` from a fallback's message_start that
+             * was not re-emitted onto the emitted message_delta, as a server-side
+             * fallback does. A list already on the delta is kept.
+             *
+             * @param array<string,mixed> $data
+             * @param array<string,mixed>|null $start
+             *
+             * @return array<string,mixed>
+             */
+            private function forwardSuppressedInputTransformations(array $data, ?array $start, bool $suppressed): array
+            {
+                $startMessage = $start['message'] ?? null;
+                if ($suppressed && is_array($startMessage) && array_key_exists('input_transformations', $startMessage) && !array_key_exists('input_transformations', $data)) {
+                    $data['input_transformations'] = $startMessage['input_transformations'];
                 }
 
                 return $data;

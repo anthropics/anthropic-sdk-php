@@ -13,6 +13,8 @@ use Anthropic\Client;
 use Anthropic\Lib\Streaming\MessageAccumulator;
 use Anthropic\Messages\RawContentBlockDeltaEvent;
 use Anthropic\Messages\RawContentBlockStartEvent;
+use Anthropic\Messages\RawMessageDeltaEvent;
+use Anthropic\Messages\RawMessageDeltaEvent\Delta as MessageDelta;
 use Anthropic\Messages\RawMessageStartEvent;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
@@ -212,6 +214,96 @@ class MessageAccumulatorTest extends TestCase
         );
         $this->assertSame(2, self::wire($accumulator, at: 'context_management.applied_edits.0.cleared_tool_uses'));
         $this->assertSame(100, self::wire($accumulator, at: 'context_management.applied_edits.0.cleared_input_tokens'));
+    }
+
+    public function testBetaMessageDeltaReplacesInputTransformations(): void
+    {
+        // input_transformations is handled like context_management: a list on
+        // message_delta (a mid-stream fallback) replaces message_start's
+        $start = [...self::startMessage(), 'input_transformations' => [
+            ['type' => 'thinking_dropped', 'path' => 'messages.1.content.0', 'reason' => 'prefix_binding_mismatch'],
+        ]];
+        $accumulator = MessageAccumulator::forBetaMessages()
+            ->accumulate(['type' => 'message_start', 'message' => $start])
+            ->accumulate(['type' => 'message_delta', 'delta' => [
+                'stop_reason' => 'end_turn',
+                'stop_sequence' => null,
+                'stop_details' => null,
+            ], 'input_transformations' => [
+                ['type' => 'thinking_dropped', 'path' => 'messages.3.content.0', 'reason' => 'model_binding_mismatch'],
+            ], 'usage' => ['output_tokens' => 9]])
+            ->accumulate(['type' => 'message_stop'])
+        ;
+
+        $this->assertSame('messages.3.content.0', self::wire($accumulator, at: 'input_transformations.0.path'));
+        $this->assertSame('model_binding_mismatch', self::wire($accumulator, at: 'input_transformations.0.reason'));
+        $this->assertNull(self::wire($accumulator, at: 'input_transformations.1'));
+    }
+
+    public function testBetaMessageDeltaKeepsStartInputTransformationsWhenOmitted(): void
+    {
+        $start = [...self::startMessage(), 'input_transformations' => [
+            ['type' => 'thinking_dropped', 'path' => 'messages.1.content.0', 'reason' => 'prefix_binding_mismatch'],
+        ]];
+        $accumulator = MessageAccumulator::forBetaMessages()
+            ->accumulate(['type' => 'message_start', 'message' => $start])
+            ->accumulate(['type' => 'message_delta', 'delta' => [
+                'stop_reason' => 'end_turn',
+                'stop_sequence' => null,
+                'stop_details' => null,
+            ], 'usage' => ['output_tokens' => 9]])
+            ->accumulate(['type' => 'message_stop'])
+        ;
+
+        $this->assertSame('messages.1.content.0', self::wire($accumulator, at: 'input_transformations.0.path'));
+        $this->assertSame('prefix_binding_mismatch', self::wire($accumulator, at: 'input_transformations.0.reason'));
+    }
+
+    public function testBetaMessageDeltaEmptyInputTransformationsReplaceStartList(): void
+    {
+        // an empty list on message_delta still replaces the non-empty one
+        // from message_start
+        $start = [...self::startMessage(), 'input_transformations' => [
+            ['type' => 'thinking_dropped', 'path' => 'messages.1.content.0', 'reason' => 'prefix_binding_mismatch'],
+        ]];
+        $accumulator = MessageAccumulator::forBetaMessages()
+            ->accumulate(['type' => 'message_start', 'message' => $start])
+            ->accumulate(['type' => 'message_delta', 'delta' => [
+                'stop_reason' => 'end_turn',
+                'stop_sequence' => null,
+                'stop_details' => null,
+            ], 'input_transformations' => [], 'usage' => ['output_tokens' => 9]])
+            ->accumulate(['type' => 'message_stop'])
+        ;
+
+        $this->assertSame([], self::wire($accumulator, at: 'input_transformations'));
+    }
+
+    public function testBetaMessageDeltaFieldsAreAllHandledByApplyMessageDelta(): void
+    {
+        // tripwire: handle a new field in MessageAccumulator::applyMessageDelta, then list it here
+        $this->assertSame(
+            ['contextManagement', 'delta', 'inputTransformations', 'type', 'usage'],
+            self::publicProperties(BetaRawMessageDeltaEvent::class),
+        );
+        $this->assertSame(
+            ['container', 'stopDetails', 'stopReason', 'stopSequence'],
+            self::publicProperties(Delta::class),
+        );
+        // usage keys are merged generically in applyMessageDelta, so a new usage field needs no listing
+    }
+
+    public function testMessageDeltaFieldsAreAllHandledByApplyMessageDelta(): void
+    {
+        // tripwire: applyMessageDelta is shared with forMessages(); same rule as the beta twin above
+        $this->assertSame(
+            ['delta', 'type', 'usage'],
+            self::publicProperties(RawMessageDeltaEvent::class),
+        );
+        $this->assertSame(
+            ['container', 'stopDetails', 'stopReason', 'stopSequence'],
+            self::publicProperties(MessageDelta::class),
+        );
     }
 
     public function testBetaMessageDeltaReadsTypedEventModels(): void
@@ -462,6 +554,22 @@ class MessageAccumulatorTest extends TestCase
         }
 
         return $value;
+    }
+
+    /**
+     * @param class-string $class
+     *
+     * @return list<string> the class's public property names, sorted
+     */
+    private static function publicProperties(string $class): array
+    {
+        $names = array_map(
+            static fn (\ReflectionProperty $property): string => $property->getName(),
+            (new \ReflectionClass($class))->getProperties(\ReflectionProperty::IS_PUBLIC),
+        );
+        sort($names);
+
+        return $names;
     }
 
     /** Reads `content[$index][$field]` out of a serialized message. */

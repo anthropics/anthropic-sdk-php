@@ -8,7 +8,6 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\ComputerToolset20260801\AllowedCaller;
 
 /**
  * The computer toolset: a single ``tools[]`` entry (carrying no
@@ -25,7 +24,6 @@ use Anthropic\Messages\ComputerToolset20260801\AllowedCaller;
  *
  * @phpstan-type ComputerToolset20260801Shape = array{
  *   type: 'computer_toolset_20260801',
- *   allowedCallers?: list<AllowedCaller|value-of<AllowedCaller>>|null,
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   configs?: null|ComputerToolsetConfigs|ComputerToolsetConfigsShape,
  * }
@@ -38,10 +36,6 @@ final class ComputerToolset20260801 implements BaseModel
     /** @var 'computer_toolset_20260801' $type */
     #[Required]
     public string $type = 'computer_toolset_20260801';
-
-    /** @var list<value-of<AllowedCaller>>|null $allowedCallers */
-    #[Optional('allowed_callers', list: AllowedCaller::class)]
-    public ?array $allowedCallers;
 
     /**
      * Create a cache control breakpoint at this content block.
@@ -70,18 +64,15 @@ final class ComputerToolset20260801 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AllowedCaller|value-of<AllowedCaller>>|null $allowedCallers
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      * @param ComputerToolsetConfigs|ComputerToolsetConfigsShape|null $configs
      */
     public static function with(
-        ?array $allowedCallers = null,
         CacheControlEphemeral|array|null $cacheControl = null,
         ComputerToolsetConfigs|array|null $configs = null,
     ): self {
         $self = new self;
 
-        null !== $allowedCallers && $self['allowedCallers'] = $allowedCallers;
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $configs && $self['configs'] = $configs;
 
@@ -95,17 +86,6 @@ final class ComputerToolset20260801 implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
-
-        return $self;
-    }
-
-    /**
-     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
-     */
-    public function withAllowedCallers(array $allowedCallers): self
-    {
-        $self = clone $this;
-        $self['allowedCallers'] = $allowedCallers;
 
         return $self;
     }

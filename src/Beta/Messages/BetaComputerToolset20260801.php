@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaComputerToolset20260801\AllowedCaller;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -25,7 +24,6 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type BetaComputerToolset20260801Shape = array{
  *   type: 'computer_toolset_20260801',
- *   allowedCallers?: list<AllowedCaller|value-of<AllowedCaller>>|null,
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   configs?: null|BetaComputerToolsetConfigs|BetaComputerToolsetConfigsShape,
  * }
@@ -38,10 +36,6 @@ final class BetaComputerToolset20260801 implements BaseModel
     /** @var 'computer_toolset_20260801' $type */
     #[Required]
     public string $type = 'computer_toolset_20260801';
-
-    /** @var list<value-of<AllowedCaller>>|null $allowedCallers */
-    #[Optional('allowed_callers', list: AllowedCaller::class)]
-    public ?array $allowedCallers;
 
     /**
      * Create a cache control breakpoint at this content block.
@@ -70,18 +64,15 @@ final class BetaComputerToolset20260801 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AllowedCaller|value-of<AllowedCaller>>|null $allowedCallers
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      * @param BetaComputerToolsetConfigs|BetaComputerToolsetConfigsShape|null $configs
      */
     public static function with(
-        ?array $allowedCallers = null,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
         BetaComputerToolsetConfigs|array|null $configs = null,
     ): self {
         $self = new self;
 
-        null !== $allowedCallers && $self['allowedCallers'] = $allowedCallers;
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $configs && $self['configs'] = $configs;
 
@@ -95,17 +86,6 @@ final class BetaComputerToolset20260801 implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
-
-        return $self;
-    }
-
-    /**
-     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
-     */
-    public function withAllowedCallers(array $allowedCallers): self
-    {
-        $self = clone $this;
-        $self['allowedCallers'] = $allowedCallers;
 
         return $self;
     }

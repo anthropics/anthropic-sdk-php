@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.46.0 (2026-09-01)
+
+Full Changelog: [v0.45.0...v0.46.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.45.0...v0.46.0)
+
+### Features
+
+* **api:** add support for claude-fable-5-1 and claude-mythos-5-1 ([cad1be2](https://github.com/anthropics/anthropic-sdk-php/commit/cad1be26910fa8276e08b9d402312283cd2671e9))
+
+
+### Bug Fixes
+
+* **api:** remove unsupported allowed_callers from the toolset entries ([608b335](https://github.com/anthropics/anthropic-sdk-php/commit/608b335c9ed43745e5a32034444602804db4bcf9))
+
+
+### Chores
+
+* **docs:** clarify disallowed characters in memory paths ([0530f91](https://github.com/anthropics/anthropic-sdk-php/commit/0530f915b53a1f0f577fc39e4a1824f28a2e0958))
+
+
+### Documentation
+
+* **api:** describe external_key_id and compartment_id behavior on Claude Platform on AWS ([f013779](https://github.com/anthropics/anthropic-sdk-php/commit/f013779f0d5b8a03f93d69ea94f8be00021a15d6))
+* **changelog:** detail the beta files/skills GA-shape change ([232ecef](https://github.com/anthropics/anthropic-sdk-php/commit/232ecef3ed179f7c123ea571ed1bf1073e1c850e))
+* **changelog:** use this SDK's names in the beta files/skills entry ([b9bcd90](https://github.com/anthropics/anthropic-sdk-php/commit/b9bcd905171dcc37e6232ada2a678b28d04c863e))
+
 ## 0.45.0 (2026-08-31)
 
 Full Changelog: [v0.44.0...v0.45.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.44.0...v0.45.0)

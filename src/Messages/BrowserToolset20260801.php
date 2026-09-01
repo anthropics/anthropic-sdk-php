@@ -8,7 +8,6 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\BrowserToolset20260801\AllowedCaller;
 
 /**
  * The browser toolset: a single ``tools[]`` entry (carrying no
@@ -21,7 +20,6 @@ use Anthropic\Messages\BrowserToolset20260801\AllowedCaller;
  *
  * @phpstan-type BrowserToolset20260801Shape = array{
  *   type: 'browser_toolset_20260801',
- *   allowedCallers?: list<AllowedCaller|value-of<AllowedCaller>>|null,
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   configs?: null|BrowserToolsetConfigs|BrowserToolsetConfigsShape,
  * }
@@ -34,10 +32,6 @@ final class BrowserToolset20260801 implements BaseModel
     /** @var 'browser_toolset_20260801' $type */
     #[Required]
     public string $type = 'browser_toolset_20260801';
-
-    /** @var list<value-of<AllowedCaller>>|null $allowedCallers */
-    #[Optional('allowed_callers', list: AllowedCaller::class)]
-    public ?array $allowedCallers;
 
     /**
      * Create a cache control breakpoint at this content block.
@@ -66,18 +60,15 @@ final class BrowserToolset20260801 implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AllowedCaller|value-of<AllowedCaller>>|null $allowedCallers
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      * @param BrowserToolsetConfigs|BrowserToolsetConfigsShape|null $configs
      */
     public static function with(
-        ?array $allowedCallers = null,
         CacheControlEphemeral|array|null $cacheControl = null,
         BrowserToolsetConfigs|array|null $configs = null,
     ): self {
         $self = new self;
 
-        null !== $allowedCallers && $self['allowedCallers'] = $allowedCallers;
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $configs && $self['configs'] = $configs;
 
@@ -91,17 +82,6 @@ final class BrowserToolset20260801 implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
-
-        return $self;
-    }
-
-    /**
-     * @param list<AllowedCaller|value-of<AllowedCaller>> $allowedCallers
-     */
-    public function withAllowedCallers(array $allowedCallers): self
-    {
-        $self = clone $this;
-        $self['allowedCallers'] = $allowedCallers;
 
         return $self;
     }
