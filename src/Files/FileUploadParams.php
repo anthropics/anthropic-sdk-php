@@ -27,7 +27,7 @@ final class FileUploadParams implements BaseModel
     use SdkParams;
 
     /**
-     * The file to upload.
+     * The file to upload. Only the final path component of the part's `filename` is kept; an absent or empty `filename` is replaced with `unnamed` plus the extension for the file's stored `mime_type`, when known.
      */
     #[Required]
     public string $file;
@@ -76,7 +76,7 @@ final class FileUploadParams implements BaseModel
     }
 
     /**
-     * The file to upload.
+     * The file to upload. Only the final path component of the part's `filename` is kept; an absent or empty `filename` is replaced with `unnamed` plus the extension for the file's stored `mime_type`, when known.
      */
     public function withFile(string|FileParam $file): self
     {
