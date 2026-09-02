@@ -22,7 +22,7 @@ final class ManagedAgentsSessionActor implements BaseModel
     use SdkModel;
 
     /**
-     * ID of the session that performed the write (a `sesn_...` value). Look up the session via [Retrieve a session](/en/api/sessions-retrieve) for further provenance.
+     * ID of the session that performed the write (a `sesn_...` value). Look up the session via [Retrieve a session](/en/api/beta/sessions/retrieve) for further provenance.
      */
     #[Required('session_id')]
     public string $sessionID;
@@ -68,7 +68,7 @@ final class ManagedAgentsSessionActor implements BaseModel
     }
 
     /**
-     * ID of the session that performed the write (a `sesn_...` value). Look up the session via [Retrieve a session](/en/api/sessions-retrieve) for further provenance.
+     * ID of the session that performed the write (a `sesn_...` value). Look up the session via [Retrieve a session](/en/api/beta/sessions/retrieve) for further provenance.
      */
     public function withSessionID(string $sessionID): self
     {
