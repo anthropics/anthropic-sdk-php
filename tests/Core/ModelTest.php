@@ -48,6 +48,44 @@ class Dog implements BaseModel
     }
 }
 
+class Collar implements BaseModel
+{
+    /** @use SdkModel<array<string, mixed>> */
+    use SdkModel;
+
+    #[Optional]
+    public ?string $color;
+
+    #[Optional('serial_number')]
+    public ?string $serialNumber;
+
+    public function __construct()
+    {
+        $this->initialize();
+    }
+}
+
+class Kennel implements BaseModel
+{
+    /** @use SdkModel<array<string, mixed>> */
+    use SdkModel;
+
+    #[Required]
+    public string $name;
+
+    #[Optional]
+    public ?Collar $collar;
+
+    public function __construct(string $name, ?Collar $collar = null)
+    {
+        $this->initialize();
+
+        $this->name = $name;
+
+        null !== $collar && $this['collar'] = $collar;
+    }
+}
+
 class Cat implements BaseModel
 {
     /** @use SdkModel<array<string, mixed>> */
@@ -160,6 +198,13 @@ class ModelTest extends TestCase
             '{"name":"Bob","age_years":12,"friends":null,"owner":null}',
             json_encode($model)
         );
+    }
+
+    #[Test]
+    public function testSerializeEmptyModel(): void
+    {
+        $this->assertEquals('{}', json_encode(new Collar));
+        $this->assertEquals('{"name":"north","collar":{}}', json_encode(new Kennel(name: 'north', collar: new Collar)));
     }
 
     #[Test]

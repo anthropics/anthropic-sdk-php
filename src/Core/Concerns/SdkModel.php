@@ -239,10 +239,11 @@ trait SdkModel
     /**
      * @internal
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\stdClass
      */
-    public function jsonSerialize(): array
+    public function jsonSerialize(): array|\stdClass
     {
+        // stdClass when no properties are set, so json_encode renders {} rather than [].
         // @phpstan-ignore-next-line argument.type
         return Conversion::dump(self::converter(), value: $this->__serialize());
     }
