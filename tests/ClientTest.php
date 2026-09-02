@@ -7,6 +7,7 @@ use Anthropic\Core\Exceptions\APIStatusException;
 use Anthropic\Core\Exceptions\BadRequestException;
 use Anthropic\Core\Util;
 use Anthropic\ErrorType;
+use Anthropic\Messages\Model;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
 use PHPUnit\Framework\TestCase;
@@ -371,5 +372,69 @@ class ClientTest extends TestCase
         $this->assertSame('cdn.example.com', $requested->getUri()->getHost());
         $this->assertSame('/file', $requested->getUri()->getPath());
         $this->assertStringContainsString('sig=abc', $requested->getUri()->getQuery());
+    }
+
+    public function testNonJsonErrorBody(): void
+    {
+        $transporter = new MockClient;
+        $mockRsp = Psr17FactoryDiscovery::findResponseFactory()
+            ->createResponse()
+            ->withStatus(413)
+            ->withHeader('Content-Type', 'text/plain')
+            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream('length limit exceeded'))
+        ;
+
+        $transporter->setDefaultResponse($mockRsp);
+
+        $client = new \Anthropic\Client(
+            baseUrl: 'http://localhost',
+            apiKey: 'my-anthropic-api-key',
+            requestOptions: ['transporter' => $transporter],
+        );
+
+        try {
+            $client->messages->create(
+                maxTokens: 1024,
+                messages: [['content' => 'Hello, world', 'role' => 'user']],
+                model: Model::CLAUDE_OPUS_5,
+            );
+            $this->fail('Expected an API status exception');
+        } catch (APIStatusException $e) {
+            $this->assertSame(413, $e->status);
+            $this->assertSame('length limit exceeded', $e->body);
+            $this->assertStringContainsString('"body": "length limit exceeded"', $e->getMessage());
+        }
+    }
+
+    public function testEmptyErrorBody(): void
+    {
+        $transporter = new MockClient;
+        $mockRsp = Psr17FactoryDiscovery::findResponseFactory()
+            ->createResponse()
+            ->withStatus(413)
+            ->withHeader('Content-Type', 'text/plain')
+            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(''))
+        ;
+
+        $transporter->setDefaultResponse($mockRsp);
+
+        $client = new \Anthropic\Client(
+            baseUrl: 'http://localhost',
+            apiKey: 'my-anthropic-api-key',
+            requestOptions: ['transporter' => $transporter],
+        );
+
+        try {
+            $client->messages->create(
+                maxTokens: 1024,
+                messages: [['content' => 'Hello, world', 'role' => 'user']],
+                model: Model::CLAUDE_OPUS_5,
+            );
+            $this->fail('Expected an API status exception');
+        } catch (APIStatusException $e) {
+            $this->assertSame(413, $e->status);
+            $this->assertNull($e->body);
+            $this->assertStringContainsString('"body": null', $e->getMessage());
+        }
     }
 }

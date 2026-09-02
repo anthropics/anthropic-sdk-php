@@ -26,15 +26,17 @@ class APIStatusException extends APIException
         $this->response = $response;
         $this->status = $response->getStatusCode();
 
+        $body = (string) $response->getBody();
+
         try {
-            $body = Util::decodeJson($response->getBody());
+            $this->body = Util::decodeJson($body);
         } catch (\JsonException) {
-            $body = null;
+            $this->body = '' == $body ? null : $body;
         }
 
-        $summary = Util::prettyEncodeJson(['status' => $this->status, 'body' => $body]);
+        $summary = Util::prettyEncodeJson(['status' => $this->status, 'body' => $this->body]);
 
-        $errorType = Util::dig(Util::dig($body, 'error'), 'type');
+        $errorType = Util::dig(Util::dig($this->body, 'error'), 'type');
         $this->type = $type ?? (is_string($errorType) ? ErrorType::tryFrom($errorType) : null);
 
         if ('' != $message) {
