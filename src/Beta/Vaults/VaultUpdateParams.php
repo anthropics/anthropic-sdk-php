@@ -20,6 +20,7 @@ use Anthropic\Core\Conversion\MapOf;
  *   displayName?: string|null,
  *   metadata?: array<string,string|null>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class VaultUpdateParams implements BaseModel
@@ -50,6 +51,9 @@ final class VaultUpdateParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -66,13 +70,15 @@ final class VaultUpdateParams implements BaseModel
     public static function with(
         ?string $displayName = null,
         ?array $metadata = null,
-        ?array $betas = null
+        ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
         null !== $displayName && $self['displayName'] = $displayName;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -110,6 +116,14 @@ final class VaultUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

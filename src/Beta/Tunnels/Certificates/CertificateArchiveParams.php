@@ -21,6 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type CertificateArchiveParamsShape = array{
  *   tunnelID: string,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class CertificateArchiveParams implements BaseModel
@@ -39,6 +40,9 @@ final class CertificateArchiveParams implements BaseModel
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
+
+    #[Optional]
+    public ?string $workspaceID;
 
     /**
      * `new CertificateArchiveParams()` is missing required properties by the API.
@@ -66,13 +70,17 @@ final class CertificateArchiveParams implements BaseModel
      *
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
-    public static function with(string $tunnelID, ?array $betas = null): self
-    {
+    public static function with(
+        string $tunnelID,
+        ?array $betas = null,
+        ?string $workspaceID = null
+    ): self {
         $self = new self;
 
         $self['tunnelID'] = $tunnelID;
 
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -94,6 +102,14 @@ final class CertificateArchiveParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

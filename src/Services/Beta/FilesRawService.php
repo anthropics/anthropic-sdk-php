@@ -43,6 +43,7 @@ final class FilesRawService implements FilesRawContract
      *   page?: string|null,
      *   scopeID?: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|FileListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -73,7 +74,9 @@ final class FilesRawService implements FilesRawContract
             ),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: $options,
             convert: BetaFileMetadata::class,
@@ -88,7 +91,8 @@ final class FilesRawService implements FilesRawContract
      *
      * @param string $fileID ID of the File
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|FileDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -112,7 +116,9 @@ final class FilesRawService implements FilesRawContract
             path: ['v1/files/%1$s?beta=true', $fileID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: $options,
             convert: BetaDeletedFile::class,
@@ -126,7 +132,8 @@ final class FilesRawService implements FilesRawContract
      *
      * @param string $fileID ID of the File
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|FileDownloadParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -150,7 +157,9 @@ final class FilesRawService implements FilesRawContract
             path: ['v1/files/%1$s/content?beta=true', $fileID],
             headers: Util::array_transform_keys(
                 ['Accept' => 'application/binary', ...$parsed],
-                ['betas' => 'anthropic-beta'],
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: $options,
             convert: 'string',
@@ -164,7 +173,8 @@ final class FilesRawService implements FilesRawContract
      *
      * @param string $fileID ID of the File
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|FileRetrieveMetadataParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -188,7 +198,9 @@ final class FilesRawService implements FilesRawContract
             path: ['v1/files/%1$s?beta=true', $fileID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: $options,
             convert: BetaFileMetadata::class,
@@ -204,6 +216,7 @@ final class FilesRawService implements FilesRawContract
      *   file: string|FileParam,
      *   expiresInSeconds?: int,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|FileUploadParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -219,7 +232,9 @@ final class FilesRawService implements FilesRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

@@ -19,6 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type EventStreamParamsShape = array{
  *   eventDeltas?: list<BetaManagedAgentsDeltaType|value-of<BetaManagedAgentsDeltaType>>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class EventStreamParams implements BaseModel
@@ -43,6 +44,9 @@ final class EventStreamParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -58,12 +62,14 @@ final class EventStreamParams implements BaseModel
      */
     public static function with(
         ?array $eventDeltas = null,
-        ?array $betas = null
+        ?array $betas = null,
+        ?string $workspaceID = null
     ): self {
         $self = new self;
 
         null !== $eventDeltas && $self['eventDeltas'] = $eventDeltas;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -90,6 +96,14 @@ final class EventStreamParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

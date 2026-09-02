@@ -51,6 +51,7 @@ final class WorkTest extends TestCase
             'work_id',
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -78,6 +79,7 @@ final class WorkTest extends TestCase
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
             metadata: ['foo' => 'string'],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -202,6 +204,7 @@ final class WorkTest extends TestCase
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
             force: true,
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

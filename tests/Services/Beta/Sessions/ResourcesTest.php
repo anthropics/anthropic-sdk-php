@@ -58,6 +58,7 @@ final class ResourcesTest extends TestCase
             'sesrsc_011CZkZBJq5dWxk9fVLNcPht',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -93,6 +94,7 @@ final class ResourcesTest extends TestCase
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
             authorizationToken: 'ghp_exampletoken',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -146,6 +148,7 @@ final class ResourcesTest extends TestCase
             'sesrsc_011CZkZBJq5dWxk9fVLNcPht',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -182,6 +185,7 @@ final class ResourcesTest extends TestCase
             type: 'file',
             mountPath: '/uploads/receipt.pdf',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

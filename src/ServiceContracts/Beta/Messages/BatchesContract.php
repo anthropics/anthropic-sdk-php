@@ -26,6 +26,9 @@ interface BatchesContract
      * @param list<Request|RequestShape> $requests Body param: List of requests for prompt completion. Each is an individual request to create a Message.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $userProfileID Header param: The user profile ID to attribute the requests in this batch to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header. Applies to every request in the batch; an individual request whose `user_profile_id` body field conflicts with this header is errored.
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -34,6 +37,7 @@ interface BatchesContract
         array $requests,
         ?array $betas = null,
         ?string $userProfileID = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): MessageBatch;
 
@@ -42,6 +46,9 @@ interface BatchesContract
      *
      * @param string $messageBatchID ID of the Message Batch
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -49,6 +56,7 @@ interface BatchesContract
     public function retrieve(
         string $messageBatchID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): MessageBatch;
 
@@ -61,6 +69,9 @@ interface BatchesContract
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @return Page<MessageBatch>
@@ -72,6 +83,7 @@ interface BatchesContract
         ?string $beforeID = null,
         ?int $limit = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page;
 
@@ -80,6 +92,9 @@ interface BatchesContract
      *
      * @param string $messageBatchID ID of the Message Batch
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -87,6 +102,7 @@ interface BatchesContract
     public function delete(
         string $messageBatchID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): DeletedMessageBatch;
 
@@ -95,6 +111,9 @@ interface BatchesContract
      *
      * @param string $messageBatchID ID of the Message Batch
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -102,6 +121,7 @@ interface BatchesContract
     public function cancel(
         string $messageBatchID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): MessageBatch;
 
@@ -110,6 +130,9 @@ interface BatchesContract
      *
      * @param string $messageBatchID ID of the Message Batch
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseStream<MessageBatchIndividualResponse>
@@ -119,6 +142,7 @@ interface BatchesContract
     public function resultsStream(
         string $messageBatchID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BaseStream;
 }

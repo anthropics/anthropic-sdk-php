@@ -19,6 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type CredentialRetrieveParamsShape = array{
  *   vaultID: string,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class CredentialRetrieveParams implements BaseModel
@@ -37,6 +38,9 @@ final class CredentialRetrieveParams implements BaseModel
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
+
+    #[Optional]
+    public ?string $workspaceID;
 
     /**
      * `new CredentialRetrieveParams()` is missing required properties by the API.
@@ -64,13 +68,17 @@ final class CredentialRetrieveParams implements BaseModel
      *
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
-    public static function with(string $vaultID, ?array $betas = null): self
-    {
+    public static function with(
+        string $vaultID,
+        ?array $betas = null,
+        ?string $workspaceID = null
+    ): self {
         $self = new self;
 
         $self['vaultID'] = $vaultID;
 
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -92,6 +100,14 @@ final class CredentialRetrieveParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

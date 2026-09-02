@@ -22,6 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   type: Type|value-of<Type>,
  *   mountPath?: string|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class ResourceAddParams implements BaseModel
@@ -53,6 +54,9 @@ final class ResourceAddParams implements BaseModel
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
+
+    #[Optional]
+    public ?string $workspaceID;
 
     /**
      * `new ResourceAddParams()` is missing required properties by the API.
@@ -86,6 +90,7 @@ final class ResourceAddParams implements BaseModel
         Type|string $type,
         ?string $mountPath = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -94,6 +99,7 @@ final class ResourceAddParams implements BaseModel
 
         null !== $mountPath && $self['mountPath'] = $mountPath;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -140,6 +146,14 @@ final class ResourceAddParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

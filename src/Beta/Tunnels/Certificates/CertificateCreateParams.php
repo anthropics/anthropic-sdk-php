@@ -21,6 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type CertificateCreateParamsShape = array{
  *   caCertificatePEM: string,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class CertificateCreateParams implements BaseModel
@@ -42,6 +43,9 @@ final class CertificateCreateParams implements BaseModel
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
+
+    #[Optional]
+    public ?string $workspaceID;
 
     /**
      * `new CertificateCreateParams()` is missing required properties by the API.
@@ -71,13 +75,15 @@ final class CertificateCreateParams implements BaseModel
      */
     public static function with(
         string $caCertificatePEM,
-        ?array $betas = null
+        ?array $betas = null,
+        ?string $workspaceID = null
     ): self {
         $self = new self;
 
         $self['caCertificatePEM'] = $caCertificatePEM;
 
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -102,6 +108,14 @@ final class CertificateCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

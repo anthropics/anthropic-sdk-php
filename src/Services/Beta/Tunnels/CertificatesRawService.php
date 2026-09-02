@@ -40,6 +40,7 @@ final class CertificatesRawService implements CertificatesRawContract
      * @param array{
      *   caCertificatePEM: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|CertificateCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -56,7 +57,9 @@ final class CertificatesRawService implements CertificatesRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -87,7 +90,9 @@ final class CertificatesRawService implements CertificatesRawContract
      *
      * @param string $certificateID Path param: Path parameter certificate_id
      * @param array{
-     *   tunnelID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   tunnelID: string,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|CertificateRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -115,7 +120,9 @@ final class CertificatesRawService implements CertificatesRawContract
             ],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
@@ -138,6 +145,7 @@ final class CertificatesRawService implements CertificatesRawContract
      *   limit?: int,
      *   page?: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|CertificateListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -169,7 +177,9 @@ final class CertificatesRawService implements CertificatesRawContract
             ),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
@@ -189,7 +199,9 @@ final class CertificatesRawService implements CertificatesRawContract
      *
      * @param string $certificateID Path param: Path parameter certificate_id
      * @param array{
-     *   tunnelID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   tunnelID: string,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|CertificateArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -219,7 +231,9 @@ final class CertificatesRawService implements CertificatesRawContract
             ],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],

@@ -54,6 +54,7 @@ final class MemoriesTest extends TestCase
             path: 'xx',
             view: ManagedAgentsMemoryView::BASIC,
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -80,6 +81,7 @@ final class MemoriesTest extends TestCase
             memoryStoreID: 'memory_store_id',
             view: ManagedAgentsMemoryView::BASIC,
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -111,6 +113,7 @@ final class MemoriesTest extends TestCase
                 'type' => 'content_sha256', 'contentSha256' => 'content_sha256',
             ],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -157,6 +160,7 @@ final class MemoriesTest extends TestCase
             memoryStoreID: 'memory_store_id',
             expectedContentSha256: 'expected_content_sha256',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

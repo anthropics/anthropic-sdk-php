@@ -47,6 +47,7 @@ final class VaultsTest extends TestCase
             displayName: 'Example vault',
             metadata: ['environment' => 'production'],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

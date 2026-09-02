@@ -48,6 +48,9 @@ final class DreamsService implements DreamsContract
      * @param string|null $instructions Body param
      * @param BetaOutputBehaviorShape $outputBehavior Body param: The default destination: the job creates a new output memory store as a clone of the memory_store input and writes the consolidated memories into it. The input store is never mutated.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -58,6 +61,7 @@ final class DreamsService implements DreamsContract
         ?string $instructions = null,
         BetaOutputBehaviorCreateNew|array|BetaOutputBehaviorUpdateExisting|null $outputBehavior = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaDream {
         $params = Util::removeNulls(
@@ -67,6 +71,7 @@ final class DreamsService implements DreamsContract
                 'instructions' => $instructions,
                 'outputBehavior' => $outputBehavior,
                 'betas' => $betas,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -83,6 +88,9 @@ final class DreamsService implements DreamsContract
      *
      * @param string $dreamID Path parameter dream_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -90,9 +98,12 @@ final class DreamsService implements DreamsContract
     public function retrieve(
         string $dreamID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaDream {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($dreamID, params: $params, requestOptions: $requestOptions);
@@ -112,6 +123,9 @@ final class DreamsService implements DreamsContract
      * @param string $page Query param: Query parameter for page
      * @param list<BetaDreamStatus|value-of<BetaDreamStatus>> $statuses Query param: Filter by lifecycle status. Repeat the parameter to match any of multiple statuses. Empty applies no status filter.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<BetaDream>
@@ -126,6 +140,7 @@ final class DreamsService implements DreamsContract
         ?string $page = null,
         ?array $statuses = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): PageCursor {
         $params = Util::removeNulls(
@@ -137,6 +152,7 @@ final class DreamsService implements DreamsContract
                 'page' => $page,
                 'statuses' => $statuses,
                 'betas' => $betas,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -153,6 +169,9 @@ final class DreamsService implements DreamsContract
      *
      * @param string $dreamID Path parameter dream_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -160,9 +179,12 @@ final class DreamsService implements DreamsContract
     public function archive(
         string $dreamID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaDream {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->archive($dreamID, params: $params, requestOptions: $requestOptions);
@@ -177,6 +199,9 @@ final class DreamsService implements DreamsContract
      *
      * @param string $dreamID Path parameter dream_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -184,9 +209,12 @@ final class DreamsService implements DreamsContract
     public function cancel(
         string $dreamID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaDream {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->cancel($dreamID, params: $params, requestOptions: $requestOptions);

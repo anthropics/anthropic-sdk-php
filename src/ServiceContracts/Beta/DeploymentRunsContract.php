@@ -21,6 +21,9 @@ interface DeploymentRunsContract
      *
      * @param string $deploymentRunID Path parameter deployment_run_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -28,6 +31,7 @@ interface DeploymentRunsContract
     public function retrieve(
         string $deploymentRunID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsDeploymentRun;
 
@@ -44,6 +48,9 @@ interface DeploymentRunsContract
      * @param string $page Query param: Opaque pagination cursor. Pass `next_page` from the previous response. Invalid or expired cursors return 400.
      * @param BetaManagedAgentsTriggerType|value-of<BetaManagedAgentsTriggerType> $triggerType Query param: Filter runs by what triggered them. Omit to return all runs.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<BetaManagedAgentsDeploymentRun>
@@ -61,6 +68,7 @@ interface DeploymentRunsContract
         ?string $page = null,
         BetaManagedAgentsTriggerType|string|null $triggerType = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): PageCursor;
 }

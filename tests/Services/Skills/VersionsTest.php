@@ -52,6 +52,7 @@ final class VersionsTest extends TestCase
             files: [
                 FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
             ],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -75,7 +76,8 @@ final class VersionsTest extends TestCase
     {
         $result = $this->client->skills->versions->retrieve(
             'version',
-            skillID: 'skill_id'
+            skillID: 'skill_id',
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -113,7 +115,8 @@ final class VersionsTest extends TestCase
     {
         $result = $this->client->skills->versions->delete(
             'version',
-            skillID: 'skill_id'
+            skillID: 'skill_id',
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

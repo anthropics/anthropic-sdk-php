@@ -20,6 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   limit?: int|null,
  *   page?: string|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class EnvironmentListParams implements BaseModel
@@ -54,6 +55,9 @@ final class EnvironmentListParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -71,6 +75,7 @@ final class EnvironmentListParams implements BaseModel
         ?int $limit = null,
         ?string $page = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -78,6 +83,7 @@ final class EnvironmentListParams implements BaseModel
         null !== $limit && $self['limit'] = $limit;
         null !== $page && $self['page'] = $page;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -124,6 +130,14 @@ final class EnvironmentListParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

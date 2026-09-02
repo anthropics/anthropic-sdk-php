@@ -35,7 +35,9 @@ final class ThreadsRawService implements ThreadsRawContract
      *
      * @param string $threadID Path param: Path parameter thread_id
      * @param array{
-     *   sessionID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   sessionID: string,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|ThreadRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -61,7 +63,9 @@ final class ThreadsRawService implements ThreadsRawContract
             path: ['v1/sessions/%1$s/threads/%2$s?beta=true', $sessionID, $threadID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -81,6 +85,7 @@ final class ThreadsRawService implements ThreadsRawContract
      *   limit?: int,
      *   page?: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|ThreadListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -109,7 +114,9 @@ final class ThreadsRawService implements ThreadsRawContract
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -127,7 +134,9 @@ final class ThreadsRawService implements ThreadsRawContract
      *
      * @param string $threadID Path param: Path parameter thread_id
      * @param array{
-     *   sessionID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   sessionID: string,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|ThreadArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -155,7 +164,9 @@ final class ThreadsRawService implements ThreadsRawContract
             ],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],

@@ -51,6 +51,7 @@ final class SkillsTest extends TestCase
                 FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
             ],
             displayName: 'display_name',
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

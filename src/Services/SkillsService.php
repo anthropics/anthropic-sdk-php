@@ -44,12 +44,15 @@ final class SkillsService implements SkillsContract
      *
      * Create Skill
      *
-     * @param list<string|FileParam> $files Files to upload for the skill.
+     * @param list<string|FileParam> $files Body param: Files to upload for the skill.
      *
      * All files must be in the same top-level directory and must include a SKILL.md file at the root of that directory.
-     * @param string|null $displayName Human-readable, single-line label for the Skill. Maximum 255 characters.
+     * @param string|null $displayName Body param: Human-readable, single-line label for the Skill. Maximum 255 characters.
      * Always set: derived from the SKILL.md frontmatter `name` when omitted at
      * creation. Not unique.
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -57,10 +60,15 @@ final class SkillsService implements SkillsContract
     public function create(
         array $files,
         ?string $displayName = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): Skill {
         $params = Util::removeNulls(
-            ['files' => $files, 'displayName' => $displayName]
+            [
+                'files' => $files,
+                'displayName' => $displayName,
+                'workspaceID' => $workspaceID,
+            ],
         );
 
         // @phpstan-ignore-next-line argument.type
@@ -77,16 +85,22 @@ final class SkillsService implements SkillsContract
      * @param string $skillID Unique identifier for the skill.
      *
      * The format and length of IDs may change over time.
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $skillID,
-        RequestOptions|array|null $requestOptions = null
+        ?string $workspaceID = null,
+        RequestOptions|array|null $requestOptions = null,
     ): Skill {
+        $params = Util::removeNulls(['workspaceID' => $workspaceID]);
+
         // @phpstan-ignore-next-line argument.type
-        $response = $this->raw->retrieve($skillID, requestOptions: $requestOptions);
+        $response = $this->raw->retrieve($skillID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -96,17 +110,20 @@ final class SkillsService implements SkillsContract
      *
      * List Skills
      *
-     * @param int $limit Number of results to return per page.
+     * @param int $limit Query param: Number of results to return per page.
      *
      * Ranges from `1` to `1000`. Defaults to `20`.
-     * @param string|null $page Pagination token for fetching a specific page of results.
+     * @param string|null $page Query param: Pagination token for fetching a specific page of results.
      *
      * Pass the value from a previous response's `next_page` field to get the next page of results.
-     * @param string|null $source Filter skills by source.
+     * @param string|null $source Query param: Filter skills by source.
      *
      * If provided, only skills from the specified source will be returned:
      * * `"custom"`: only return user-created skills
      * * `"anthropic"`: only return Anthropic-created skills
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<Skill>
@@ -117,10 +134,16 @@ final class SkillsService implements SkillsContract
         ?int $limit = null,
         ?string $page = null,
         ?string $source = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): PageCursor {
         $params = Util::removeNulls(
-            ['limit' => $limit, 'page' => $page, 'source' => $source]
+            [
+                'limit' => $limit,
+                'page' => $page,
+                'source' => $source,
+                'workspaceID' => $workspaceID,
+            ],
         );
 
         // @phpstan-ignore-next-line argument.type
@@ -137,16 +160,22 @@ final class SkillsService implements SkillsContract
      * @param string $skillID Unique identifier for the skill.
      *
      * The format and length of IDs may change over time.
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function delete(
         string $skillID,
-        RequestOptions|array|null $requestOptions = null
+        ?string $workspaceID = null,
+        RequestOptions|array|null $requestOptions = null,
     ): DeletedSkill {
+        $params = Util::removeNulls(['workspaceID' => $workspaceID]);
+
         // @phpstan-ignore-next-line argument.type
-        $response = $this->raw->delete($skillID, requestOptions: $requestOptions);
+        $response = $this->raw->delete($skillID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

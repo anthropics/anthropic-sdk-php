@@ -46,6 +46,9 @@ final class ThreadsService implements ThreadsContract
      * @param string $threadID Path param: Path parameter thread_id
      * @param string $sessionID Path param: Path parameter session_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -54,9 +57,16 @@ final class ThreadsService implements ThreadsContract
         string $threadID,
         string $sessionID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): ManagedAgentsSessionThread {
-        $params = Util::removeNulls(['sessionID' => $sessionID, 'betas' => $betas]);
+        $params = Util::removeNulls(
+            [
+                'sessionID' => $sessionID,
+                'betas' => $betas,
+                'workspaceID' => $workspaceID,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($threadID, params: $params, requestOptions: $requestOptions);
@@ -73,6 +83,9 @@ final class ThreadsService implements ThreadsContract
      * @param int $limit Query param: Maximum results per page. Defaults to 1000.
      * @param string $page Query param: Opaque pagination cursor from a previous response's `next_page`. Forward-only.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<ManagedAgentsSessionThread>
@@ -84,10 +97,16 @@ final class ThreadsService implements ThreadsContract
         ?int $limit = null,
         ?string $page = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): PageCursor {
         $params = Util::removeNulls(
-            ['limit' => $limit, 'page' => $page, 'betas' => $betas]
+            [
+                'limit' => $limit,
+                'page' => $page,
+                'betas' => $betas,
+                'workspaceID' => $workspaceID,
+            ],
         );
 
         // @phpstan-ignore-next-line argument.type
@@ -104,6 +123,9 @@ final class ThreadsService implements ThreadsContract
      * @param string $threadID Path param: Path parameter thread_id
      * @param string $sessionID Path param: Path parameter session_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -112,9 +134,16 @@ final class ThreadsService implements ThreadsContract
         string $threadID,
         string $sessionID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): ManagedAgentsSessionThread {
-        $params = Util::removeNulls(['sessionID' => $sessionID, 'betas' => $betas]);
+        $params = Util::removeNulls(
+            [
+                'sessionID' => $sessionID,
+                'betas' => $betas,
+                'workspaceID' => $workspaceID,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->archive($threadID, params: $params, requestOptions: $requestOptions);

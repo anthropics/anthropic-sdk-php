@@ -39,6 +39,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   system?: string|null,
  *   tools?: list<ToolShape>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class AgentCreateParams implements BaseModel
@@ -119,6 +120,9 @@ final class AgentCreateParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     /**
      * `new AgentCreateParams()` is missing required properties by the API.
      *
@@ -162,6 +166,7 @@ final class AgentCreateParams implements BaseModel
         ?string $system = null,
         ?array $tools = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -176,6 +181,7 @@ final class AgentCreateParams implements BaseModel
         null !== $system && $self['system'] = $system;
         null !== $tools && $self['tools'] = $tools;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -302,6 +308,14 @@ final class AgentCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

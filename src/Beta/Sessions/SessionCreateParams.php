@@ -36,6 +36,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   title?: string|null,
  *   vaultIDs?: list<string>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class SessionCreateParams implements BaseModel
@@ -110,6 +111,9 @@ final class SessionCreateParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     /**
      * `new SessionCreateParams()` is missing required properties by the API.
      *
@@ -152,6 +156,7 @@ final class SessionCreateParams implements BaseModel
         ?string $title = null,
         ?array $vaultIDs = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -165,6 +170,7 @@ final class SessionCreateParams implements BaseModel
         null !== $title && $self['title'] = $title;
         null !== $vaultIDs && $self['vaultIDs'] = $vaultIDs;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -279,6 +285,14 @@ final class SessionCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

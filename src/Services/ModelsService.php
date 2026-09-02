@@ -40,6 +40,9 @@ final class ModelsService implements ModelsContract
      *
      * @param string $modelID model identifier or alias
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -47,9 +50,12 @@ final class ModelsService implements ModelsContract
     public function retrieve(
         string $modelID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): ModelInfo {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($modelID, params: $params, requestOptions: $requestOptions);
@@ -70,6 +76,9 @@ final class ModelsService implements ModelsContract
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @return Page<ModelInfo>
@@ -81,6 +90,7 @@ final class ModelsService implements ModelsContract
         ?string $beforeID = null,
         ?int $limit = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page {
         $params = Util::removeNulls(
@@ -89,6 +99,7 @@ final class ModelsService implements ModelsContract
                 'beforeID' => $beforeID,
                 'limit' => $limit,
                 'betas' => $betas,
+                'workspaceID' => $workspaceID,
             ],
         );
 

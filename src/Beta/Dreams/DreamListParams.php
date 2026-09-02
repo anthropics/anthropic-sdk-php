@@ -23,6 +23,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   page?: string|null,
  *   statuses?: list<BetaDreamStatus|value-of<BetaDreamStatus>>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class DreamListParams implements BaseModel
@@ -77,6 +78,9 @@ final class DreamListParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -98,6 +102,7 @@ final class DreamListParams implements BaseModel
         ?string $page = null,
         ?array $statuses = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -108,6 +113,7 @@ final class DreamListParams implements BaseModel
         null !== $page && $self['page'] = $page;
         null !== $statuses && $self['statuses'] = $statuses;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -189,6 +195,14 @@ final class DreamListParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

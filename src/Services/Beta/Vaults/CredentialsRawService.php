@@ -47,6 +47,7 @@ final class CredentialsRawService implements CredentialsRawContract
      *   displayName?: string|null,
      *   metadata?: array<string,string>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|CredentialCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -63,7 +64,9 @@ final class CredentialsRawService implements CredentialsRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -92,7 +95,9 @@ final class CredentialsRawService implements CredentialsRawContract
      *
      * @param string $credentialID Path param: Path parameter credential_id
      * @param array{
-     *   vaultID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   vaultID: string,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|CredentialRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -120,7 +125,9 @@ final class CredentialsRawService implements CredentialsRawContract
             ],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -142,6 +149,7 @@ final class CredentialsRawService implements CredentialsRawContract
      *   displayName?: string|null,
      *   metadata?: array<string,string|null>|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|CredentialUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -160,7 +168,9 @@ final class CredentialsRawService implements CredentialsRawContract
         );
         $vaultID = $parsed['vaultID'];
         unset($parsed['vaultID']);
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -195,6 +205,7 @@ final class CredentialsRawService implements CredentialsRawContract
      *   limit?: int,
      *   page?: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|CredentialListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -226,7 +237,9 @@ final class CredentialsRawService implements CredentialsRawContract
             ),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -244,7 +257,9 @@ final class CredentialsRawService implements CredentialsRawContract
      *
      * @param string $credentialID Path param: Path parameter credential_id
      * @param array{
-     *   vaultID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   vaultID: string,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|CredentialDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -272,7 +287,9 @@ final class CredentialsRawService implements CredentialsRawContract
             ],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -289,7 +306,9 @@ final class CredentialsRawService implements CredentialsRawContract
      *
      * @param string $credentialID Path param: Path parameter credential_id
      * @param array{
-     *   vaultID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   vaultID: string,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|CredentialArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -319,7 +338,9 @@ final class CredentialsRawService implements CredentialsRawContract
             ],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -336,7 +357,9 @@ final class CredentialsRawService implements CredentialsRawContract
      *
      * @param string $credentialID Path param: Path parameter credential_id
      * @param array{
-     *   vaultID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   vaultID: string,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|CredentialMCPOAuthValidateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -366,7 +389,9 @@ final class CredentialsRawService implements CredentialsRawContract
             ],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],

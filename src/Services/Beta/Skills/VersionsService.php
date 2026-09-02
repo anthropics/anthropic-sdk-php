@@ -45,6 +45,9 @@ final class VersionsService implements VersionsContract
      *
      * All files must be in the same top-level directory and must include a SKILL.md file at the root of that directory.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -53,9 +56,12 @@ final class VersionsService implements VersionsContract
         string $skillID,
         array $files,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): SkillVersion {
-        $params = Util::removeNulls(['files' => $files, 'betas' => $betas]);
+        $params = Util::removeNulls(
+            ['files' => $files, 'betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create($skillID, params: $params, requestOptions: $requestOptions);
@@ -75,6 +81,9 @@ final class VersionsService implements VersionsContract
      *
      * The format and length of IDs may change over time.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -83,9 +92,12 @@ final class VersionsService implements VersionsContract
         string $version,
         string $skillID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): SkillVersion {
-        $params = Util::removeNulls(['skillID' => $skillID, 'betas' => $betas]);
+        $params = Util::removeNulls(
+            ['skillID' => $skillID, 'betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($version, params: $params, requestOptions: $requestOptions);
@@ -106,6 +118,9 @@ final class VersionsService implements VersionsContract
      * Ranges from `1` to `1000`. Defaults to `20`.
      * @param string|null $page query param: Optionally set to the `next_page` token from the previous response
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<SkillVersion>
@@ -117,10 +132,16 @@ final class VersionsService implements VersionsContract
         ?int $limit = null,
         ?string $page = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): PageCursor {
         $params = Util::removeNulls(
-            ['limit' => $limit, 'page' => $page, 'betas' => $betas]
+            [
+                'limit' => $limit,
+                'page' => $page,
+                'betas' => $betas,
+                'workspaceID' => $workspaceID,
+            ],
         );
 
         // @phpstan-ignore-next-line argument.type
@@ -141,6 +162,9 @@ final class VersionsService implements VersionsContract
      *
      * The format and length of IDs may change over time.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -149,9 +173,12 @@ final class VersionsService implements VersionsContract
         string $version,
         string $skillID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): DeletedSkillVersion {
-        $params = Util::removeNulls(['skillID' => $skillID, 'betas' => $betas]);
+        $params = Util::removeNulls(
+            ['skillID' => $skillID, 'betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($version, params: $params, requestOptions: $requestOptions);
@@ -171,6 +198,9 @@ final class VersionsService implements VersionsContract
      *
      * The format and length of IDs may change over time.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -179,9 +209,12 @@ final class VersionsService implements VersionsContract
         string $version,
         string $skillID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): string {
-        $params = Util::removeNulls(['skillID' => $skillID, 'betas' => $betas]);
+        $params = Util::removeNulls(
+            ['skillID' => $skillID, 'betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->download($version, params: $params, requestOptions: $requestOptions);

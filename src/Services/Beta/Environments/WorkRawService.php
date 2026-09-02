@@ -46,6 +46,7 @@ final class WorkRawService implements WorkRawContract
      * @param array{
      *   environmentID: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|WorkRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -73,7 +74,9 @@ final class WorkRawService implements WorkRawContract
             ],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -95,6 +98,7 @@ final class WorkRawService implements WorkRawContract
      *   environmentID: string,
      *   metadata: array<string,string|null>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|WorkUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -113,7 +117,9 @@ final class WorkRawService implements WorkRawContract
         );
         $environmentID = $parsed['environmentID'];
         unset($parsed['environmentID']);
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -365,7 +371,8 @@ final class WorkRawService implements WorkRawContract
      * Get statistics about the work queue for an environment.
      *
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|WorkStatsParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -389,7 +396,9 @@ final class WorkRawService implements WorkRawContract
             path: ['v1/environments/%1$s/work/stats?beta=true', $environmentID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -411,6 +420,7 @@ final class WorkRawService implements WorkRawContract
      *   environmentID: string,
      *   force?: bool,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|WorkStopParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -429,7 +439,9 @@ final class WorkRawService implements WorkRawContract
         );
         $environmentID = $parsed['environmentID'];
         unset($parsed['environmentID']);
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

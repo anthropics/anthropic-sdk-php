@@ -81,6 +81,7 @@ final class AgentsTest extends TestCase
                 ],
             ],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

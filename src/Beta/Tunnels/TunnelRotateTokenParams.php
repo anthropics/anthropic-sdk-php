@@ -20,6 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type TunnelRotateTokenParamsShape = array{
  *   reason?: string|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class TunnelRotateTokenParams implements BaseModel
@@ -42,6 +43,9 @@ final class TunnelRotateTokenParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -56,12 +60,14 @@ final class TunnelRotateTokenParams implements BaseModel
      */
     public static function with(
         ?string $reason = null,
-        ?array $betas = null
+        ?array $betas = null,
+        ?string $workspaceID = null
     ): self {
         $self = new self;
 
         null !== $reason && $self['reason'] = $reason;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -86,6 +92,14 @@ final class TunnelRotateTokenParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

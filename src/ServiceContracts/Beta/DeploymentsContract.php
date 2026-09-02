@@ -41,6 +41,9 @@ interface DeploymentsContract
      * @param BetaManagedAgentsScheduleParams|BetaManagedAgentsScheduleParamsShape|null $schedule Body param: 5-field POSIX cron schedule. Literal wall-clock matching in the configured timezone.
      * @param list<string> $vaultIDs Body param: Vault IDs for stored credentials the agent can use during sessions created from this deployment. Maximum 50.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -57,6 +60,7 @@ interface DeploymentsContract
         BetaManagedAgentsScheduleParams|array|null $schedule = null,
         ?array $vaultIDs = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsDeployment;
 
@@ -65,6 +69,9 @@ interface DeploymentsContract
      *
      * @param string $deploymentID Path parameter deployment_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -72,6 +79,7 @@ interface DeploymentsContract
     public function retrieve(
         string $deploymentID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsDeployment;
 
@@ -90,6 +98,9 @@ interface DeploymentsContract
      * @param BetaManagedAgentsScheduleParams|BetaManagedAgentsScheduleParamsShape|null $schedule Body param: 5-field POSIX cron schedule. Literal wall-clock matching in the configured timezone.
      * @param list<string>|null $vaultIDs Body param: Vault IDs. Full replacement. Omit to preserve; send empty array or null to clear. Maximum 50.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -107,6 +118,7 @@ interface DeploymentsContract
         BetaManagedAgentsScheduleParams|array|null $schedule = null,
         ?array $vaultIDs = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsDeployment;
 
@@ -121,6 +133,9 @@ interface DeploymentsContract
      * @param string $page query param: Opaque pagination cursor
      * @param BetaManagedAgentsDeploymentStatus|value-of<BetaManagedAgentsDeploymentStatus> $status Query param: Filter by status: `active` or `paused`. Omit for both. To include archived deployments, use `include_archived` instead; the two cannot be combined.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<BetaManagedAgentsDeployment>
@@ -136,6 +151,7 @@ interface DeploymentsContract
         ?string $page = null,
         BetaManagedAgentsDeploymentStatus|string|null $status = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): PageCursor;
 
@@ -144,6 +160,9 @@ interface DeploymentsContract
      *
      * @param string $deploymentID Path parameter deployment_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -151,6 +170,7 @@ interface DeploymentsContract
     public function archive(
         string $deploymentID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsDeployment;
 
@@ -159,6 +179,9 @@ interface DeploymentsContract
      *
      * @param string $deploymentID Path parameter deployment_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -166,6 +189,7 @@ interface DeploymentsContract
     public function pause(
         string $deploymentID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsDeployment;
 
@@ -174,6 +198,9 @@ interface DeploymentsContract
      *
      * @param string $deploymentID Path parameter deployment_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -181,6 +208,7 @@ interface DeploymentsContract
     public function run(
         string $deploymentID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsDeploymentRun;
 
@@ -189,6 +217,9 @@ interface DeploymentsContract
      *
      * @param string $deploymentID Path parameter deployment_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -196,6 +227,7 @@ interface DeploymentsContract
     public function unpause(
         string $deploymentID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsDeployment;
 }

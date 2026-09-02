@@ -48,6 +48,9 @@ final class TunnelsService implements TunnelsContract
      *
      * @param string|null $displayName body param: Optional human-readable name for the tunnel (1-255 characters)
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -55,10 +58,15 @@ final class TunnelsService implements TunnelsContract
     public function create(
         ?string $displayName = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaTunnel {
         $params = Util::removeNulls(
-            ['displayName' => $displayName, 'betas' => $betas]
+            [
+                'displayName' => $displayName,
+                'betas' => $betas,
+                'workspaceID' => $workspaceID,
+            ],
         );
 
         // @phpstan-ignore-next-line argument.type
@@ -76,6 +84,9 @@ final class TunnelsService implements TunnelsContract
      *
      * @param string $tunnelID Path parameter tunnel_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -83,9 +94,12 @@ final class TunnelsService implements TunnelsContract
     public function retrieve(
         string $tunnelID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaTunnel {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($tunnelID, params: $params, requestOptions: $requestOptions);
@@ -104,6 +118,9 @@ final class TunnelsService implements TunnelsContract
      * @param int $limit Query param: Maximum number of tunnels to return per page. Defaults to 20, maximum 1000.
      * @param string $page query param: Opaque pagination cursor from a previous `list_tunnels` response
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<BetaTunnel>
@@ -115,6 +132,7 @@ final class TunnelsService implements TunnelsContract
         ?int $limit = null,
         ?string $page = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): PageCursor {
         $params = Util::removeNulls(
@@ -123,6 +141,7 @@ final class TunnelsService implements TunnelsContract
                 'limit' => $limit,
                 'page' => $page,
                 'betas' => $betas,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -141,6 +160,9 @@ final class TunnelsService implements TunnelsContract
      *
      * @param string $tunnelID Path parameter tunnel_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -148,9 +170,12 @@ final class TunnelsService implements TunnelsContract
     public function archive(
         string $tunnelID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaTunnel {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->archive($tunnelID, params: $params, requestOptions: $requestOptions);
@@ -167,6 +192,9 @@ final class TunnelsService implements TunnelsContract
      *
      * @param string $tunnelID Path parameter tunnel_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -174,9 +202,12 @@ final class TunnelsService implements TunnelsContract
     public function revealToken(
         string $tunnelID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaTunnelToken {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->revealToken($tunnelID, params: $params, requestOptions: $requestOptions);
@@ -194,6 +225,9 @@ final class TunnelsService implements TunnelsContract
      * @param string $tunnelID Path param: Path parameter tunnel_id
      * @param string|null $reason body param: Optional free-text reason for the rotation, recorded for audit
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -202,9 +236,12 @@ final class TunnelsService implements TunnelsContract
         string $tunnelID,
         ?string $reason = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaTunnelToken {
-        $params = Util::removeNulls(['reason' => $reason, 'betas' => $betas]);
+        $params = Util::removeNulls(
+            ['reason' => $reason, 'betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->rotateToken($tunnelID, params: $params, requestOptions: $requestOptions);

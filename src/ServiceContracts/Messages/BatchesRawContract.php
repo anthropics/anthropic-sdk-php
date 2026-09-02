@@ -7,8 +7,12 @@ namespace Anthropic\ServiceContracts\Messages;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Messages\Batches\BatchCancelParams;
 use Anthropic\Messages\Batches\BatchCreateParams;
+use Anthropic\Messages\Batches\BatchDeleteParams;
 use Anthropic\Messages\Batches\BatchListParams;
+use Anthropic\Messages\Batches\BatchResultsParams;
+use Anthropic\Messages\Batches\BatchRetrieveParams;
 use Anthropic\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Messages\Batches\MessageBatch;
 use Anthropic\Messages\Batches\MessageBatchIndividualResponse;
@@ -39,6 +43,7 @@ interface BatchesRawContract
      * @api
      *
      * @param string $messageBatchID ID of the Message Batch
+     * @param array<string,mixed>|BatchRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<MessageBatch>
@@ -47,7 +52,8 @@ interface BatchesRawContract
      */
     public function retrieve(
         string $messageBatchID,
-        RequestOptions|array|null $requestOptions = null
+        array|BatchRetrieveParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
@@ -69,6 +75,7 @@ interface BatchesRawContract
      * @api
      *
      * @param string $messageBatchID ID of the Message Batch
+     * @param array<string,mixed>|BatchDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DeletedMessageBatch>
@@ -77,13 +84,15 @@ interface BatchesRawContract
      */
     public function delete(
         string $messageBatchID,
-        RequestOptions|array|null $requestOptions = null
+        array|BatchDeleteParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $messageBatchID ID of the Message Batch
+     * @param array<string,mixed>|BatchCancelParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<MessageBatch>
@@ -92,13 +101,15 @@ interface BatchesRawContract
      */
     public function cancel(
         string $messageBatchID,
-        RequestOptions|array|null $requestOptions = null
+        array|BatchCancelParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $messageBatchID ID of the Message Batch
+     * @param array<string,mixed>|BatchResultsParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<BaseStream<MessageBatchIndividualResponse>>
@@ -107,6 +118,7 @@ interface BatchesRawContract
      */
     public function resultsStream(
         string $messageBatchID,
-        RequestOptions|array|null $requestOptions = null
+        array|BatchResultsParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

@@ -47,6 +47,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
      *   metadata?: array<string,string>,
      *   scope?: Scope|value-of<Scope>|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|EnvironmentCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -62,7 +63,9 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -90,7 +93,8 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
      * Retrieve a specific environment by ID.
      *
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|EnvironmentRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -114,7 +118,9 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
             path: ['v1/environments/%1$s?beta=true', $environmentID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -137,6 +143,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
      *   name?: string|null,
      *   scope?: EnvironmentUpdateParams\Scope|value-of<EnvironmentUpdateParams\Scope>|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|EnvironmentUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -153,7 +160,9 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -185,6 +194,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
      *   limit?: int,
      *   page?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|EnvironmentListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -215,7 +225,9 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
             ),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -232,7 +244,8 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
      * Delete an environment by ID. Returns a confirmation of the deletion.
      *
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|EnvironmentDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -256,7 +269,9 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
             path: ['v1/environments/%1$s?beta=true', $environmentID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -272,7 +287,8 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
      * Archive an environment by ID. Archived environments cannot be used to create new sessions.
      *
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|EnvironmentArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -296,7 +312,9 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
             path: ['v1/environments/%1$s/archive?beta=true', $environmentID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],

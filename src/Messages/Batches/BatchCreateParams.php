@@ -23,7 +23,9 @@ use Anthropic\Messages\Batches\BatchCreateParams\Request;
  * @phpstan-import-type RequestShape from \Anthropic\Messages\Batches\BatchCreateParams\Request
  *
  * @phpstan-type BatchCreateParamsShape = array{
- *   requests: list<Request|RequestShape>, userProfileID?: string|null
+ *   requests: list<Request|RequestShape>,
+ *   userProfileID?: string|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class BatchCreateParams implements BaseModel
@@ -45,6 +47,9 @@ final class BatchCreateParams implements BaseModel
      */
     #[Optional]
     public ?string $userProfileID;
+
+    #[Optional]
+    public ?string $workspaceID;
 
     /**
      * `new BatchCreateParams()` is missing required properties by the API.
@@ -74,13 +79,15 @@ final class BatchCreateParams implements BaseModel
      */
     public static function with(
         array $requests,
-        ?string $userProfileID = null
+        ?string $userProfileID = null,
+        ?string $workspaceID = null
     ): self {
         $self = new self;
 
         $self['requests'] = $requests;
 
         null !== $userProfileID && $self['userProfileID'] = $userProfileID;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -105,6 +112,14 @@ final class BatchCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['userProfileID'] = $userProfileID;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

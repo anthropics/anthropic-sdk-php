@@ -42,6 +42,7 @@ final class TunnelsRawService implements TunnelsRawContract
      * @param array{
      *   displayName?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|TunnelCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -57,7 +58,9 @@ final class TunnelsRawService implements TunnelsRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -88,7 +91,8 @@ final class TunnelsRawService implements TunnelsRawContract
      *
      * @param string $tunnelID Path parameter tunnel_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|TunnelRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -112,7 +116,9 @@ final class TunnelsRawService implements TunnelsRawContract
             path: ['v1/tunnels/%1$s?beta=true', $tunnelID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
@@ -134,6 +140,7 @@ final class TunnelsRawService implements TunnelsRawContract
      *   limit?: int,
      *   page?: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|TunnelListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -164,7 +171,9 @@ final class TunnelsRawService implements TunnelsRawContract
             ),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
@@ -184,7 +193,8 @@ final class TunnelsRawService implements TunnelsRawContract
      *
      * @param string $tunnelID Path parameter tunnel_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|TunnelArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -208,7 +218,9 @@ final class TunnelsRawService implements TunnelsRawContract
             path: ['v1/tunnels/%1$s/archive?beta=true', $tunnelID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
@@ -227,7 +239,8 @@ final class TunnelsRawService implements TunnelsRawContract
      *
      * @param string $tunnelID Path parameter tunnel_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|TunnelRevealTokenParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -251,7 +264,9 @@ final class TunnelsRawService implements TunnelsRawContract
             path: ['v1/tunnels/%1$s/reveal_token?beta=true', $tunnelID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
@@ -272,6 +287,7 @@ final class TunnelsRawService implements TunnelsRawContract
      * @param array{
      *   reason?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|TunnelRotateTokenParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -288,7 +304,9 @@ final class TunnelsRawService implements TunnelsRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

@@ -20,6 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   memoryStoreID: string,
  *   expectedContentSha256?: string|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class MemoryDeleteParams implements BaseModel
@@ -44,6 +45,9 @@ final class MemoryDeleteParams implements BaseModel
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
+
+    #[Optional]
+    public ?string $workspaceID;
 
     /**
      * `new MemoryDeleteParams()` is missing required properties by the API.
@@ -75,6 +79,7 @@ final class MemoryDeleteParams implements BaseModel
         string $memoryStoreID,
         ?string $expectedContentSha256 = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -82,6 +87,7 @@ final class MemoryDeleteParams implements BaseModel
 
         null !== $expectedContentSha256 && $self['expectedContentSha256'] = $expectedContentSha256;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -115,6 +121,14 @@ final class MemoryDeleteParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

@@ -146,6 +146,31 @@ class ClientCredentialsTest extends TestCase
         $this->assertSame('wrkspc_01test', $request->getHeaderLine('anthropic-workspace-id'));
     }
 
+    public function testPerRequestWorkspaceIDOverridesCredentialHeader(): void
+    {
+        $inner = new class() implements AccessTokenProvider {
+            public function fetchToken(): AccessToken
+            {
+                return new AccessToken('tok');
+            }
+        };
+
+        $credentials = new CredentialResult(
+            provider: new TokenCache($inner),
+            extraHeaders: ['anthropic-workspace-id' => 'wrkspc_01test'],
+        );
+
+        $client = new Client(
+            requestOptions: ['transporter' => $this->transporter],
+            credentials: $credentials,
+        );
+
+        $client->messages->create(1024, [], 'claude-haiku-4-5', workspaceID: 'wrkspc_02override');
+        $request = $this->getLastRequest();
+
+        $this->assertSame(['wrkspc_02override'], $request->getHeader('anthropic-workspace-id'));
+    }
+
     public function test401TriggersTokenRefresh(): void
     {
         $callCount = 0;

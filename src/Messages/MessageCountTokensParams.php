@@ -42,6 +42,7 @@ use Anthropic\Messages\MessageCountTokensParams\System;
  *   toolChoice?: ToolChoiceShape|null,
  *   tools?: list<MessageCountTokensToolShape>|null,
  *   userProfileID?: string|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class MessageCountTokensParams implements BaseModel
@@ -231,6 +232,9 @@ final class MessageCountTokensParams implements BaseModel
     #[Optional]
     public ?string $userProfileID;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     /**
      * `new MessageCountTokensParams()` is missing required properties by the API.
      *
@@ -274,6 +278,7 @@ final class MessageCountTokensParams implements BaseModel
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?string $userProfileID = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -287,6 +292,7 @@ final class MessageCountTokensParams implements BaseModel
         null !== $toolChoice && $self['toolChoice'] = $toolChoice;
         null !== $tools && $self['tools'] = $tools;
         null !== $userProfileID && $self['userProfileID'] = $userProfileID;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -520,6 +526,14 @@ final class MessageCountTokensParams implements BaseModel
     {
         $self = clone $this;
         $self['userProfileID'] = $userProfileID;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

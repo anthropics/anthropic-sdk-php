@@ -88,6 +88,7 @@ final class FilesTest extends TestCase
         $result = $this->client->files->upload(
             file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
             expiresInSeconds: 3600,
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

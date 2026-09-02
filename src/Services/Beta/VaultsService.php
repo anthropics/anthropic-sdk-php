@@ -47,6 +47,9 @@ final class VaultsService implements VaultsContract
      * @param string $displayName Body param: Human-readable name for the vault. 1-255 characters.
      * @param array<string,string> $metadata Body param: Arbitrary key-value metadata to attach to the vault. Maximum 16 pairs, keys up to 64 chars, values up to 512 chars.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -55,6 +58,7 @@ final class VaultsService implements VaultsContract
         string $displayName,
         ?array $metadata = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsVault {
         $params = Util::removeNulls(
@@ -62,6 +66,7 @@ final class VaultsService implements VaultsContract
                 'displayName' => $displayName,
                 'metadata' => $metadata,
                 'betas' => $betas,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -78,6 +83,9 @@ final class VaultsService implements VaultsContract
      *
      * @param string $vaultID Path parameter vault_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -85,9 +93,12 @@ final class VaultsService implements VaultsContract
     public function retrieve(
         string $vaultID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsVault {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($vaultID, params: $params, requestOptions: $requestOptions);
@@ -104,6 +115,9 @@ final class VaultsService implements VaultsContract
      * @param string|null $displayName Body param: Updated human-readable name for the vault. 1-255 characters.
      * @param array<string,string|null>|null $metadata Body param: Metadata patch. Set a key to a string to upsert it, or to null to delete it. Omitted keys are preserved.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -113,6 +127,7 @@ final class VaultsService implements VaultsContract
         ?string $displayName = null,
         ?array $metadata = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsVault {
         $params = Util::removeNulls(
@@ -120,6 +135,7 @@ final class VaultsService implements VaultsContract
                 'displayName' => $displayName,
                 'metadata' => $metadata,
                 'betas' => $betas,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -138,6 +154,9 @@ final class VaultsService implements VaultsContract
      * @param int $limit Query param: Maximum number of vaults to return per page. Defaults to 20, maximum 100.
      * @param string $page query param: Opaque pagination token from a previous `list_vaults` response
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<BetaManagedAgentsVault>
@@ -149,6 +168,7 @@ final class VaultsService implements VaultsContract
         ?int $limit = null,
         ?string $page = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): PageCursor {
         $params = Util::removeNulls(
@@ -157,6 +177,7 @@ final class VaultsService implements VaultsContract
                 'limit' => $limit,
                 'page' => $page,
                 'betas' => $betas,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -173,6 +194,9 @@ final class VaultsService implements VaultsContract
      *
      * @param string $vaultID Path parameter vault_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -180,9 +204,12 @@ final class VaultsService implements VaultsContract
     public function delete(
         string $vaultID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsDeletedVault {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($vaultID, params: $params, requestOptions: $requestOptions);
@@ -197,6 +224,9 @@ final class VaultsService implements VaultsContract
      *
      * @param string $vaultID Path parameter vault_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -204,9 +234,12 @@ final class VaultsService implements VaultsContract
     public function archive(
         string $vaultID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsVault {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->archive($vaultID, params: $params, requestOptions: $requestOptions);

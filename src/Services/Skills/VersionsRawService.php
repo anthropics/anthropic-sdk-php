@@ -8,6 +8,7 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\FileParam;
+use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Skills\VersionsRawContract;
@@ -34,10 +35,12 @@ final class VersionsRawService implements VersionsRawContract
      *
      * Create Skill Version
      *
-     * @param string $skillID Unique identifier for the skill.
+     * @param string $skillID Path param: Unique identifier for the skill.
      *
      * The format and length of IDs may change over time.
-     * @param array{files: list<string|FileParam>}|VersionCreateParams $params
+     * @param array{
+     *   files: list<string|FileParam>, workspaceID?: string
+     * }|VersionCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<SkillVersion>
@@ -53,13 +56,26 @@ final class VersionsRawService implements VersionsRawContract
             $params,
             $requestOptions,
         );
+        $header_params = ['workspaceID' => 'anthropic-workspace-id'];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: ['v1/skills/%1$s/versions', $skillID],
-            headers: ['Content-Type' => 'multipart/form-data'],
-            body: (object) $parsed,
+            headers: Util::array_transform_keys(
+                [
+                    'Content-Type' => 'multipart/form-data',
+                    ...array_intersect_key(
+                        $parsed,
+                        array_flip(array_keys($header_params))
+                    ),
+                ],
+                $header_params,
+            ),
+            body: (object) array_diff_key(
+                $parsed,
+                array_flip(array_keys($header_params))
+            ),
             options: $options,
             convert: SkillVersion::class,
         );
@@ -70,10 +86,12 @@ final class VersionsRawService implements VersionsRawContract
      *
      * Get Skill Version
      *
-     * @param string $version Identifies the skill version: a version ID, or the literal `latest` for the skill's most recent version.
+     * @param string $version Path param: Identifies the skill version: a version ID, or the literal `latest` for the skill's most recent version.
      *
      * Requests carrying the `skills-2025-10-02` beta header address versions by their Unix epoch timestamp instead (e.g., "1759178010641129").
-     * @param array{skillID: string}|VersionRetrieveParams $params
+     * @param array{
+     *   skillID: string, workspaceID?: string
+     * }|VersionRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<SkillVersion>
@@ -96,6 +114,10 @@ final class VersionsRawService implements VersionsRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/skills/%1$s/versions/%2$s', $skillID, $version],
+            headers: Util::array_transform_keys(
+                $parsed,
+                ['workspaceID' => 'anthropic-workspace-id']
+            ),
             options: $options,
             convert: SkillVersion::class,
         );
@@ -106,10 +128,12 @@ final class VersionsRawService implements VersionsRawContract
      *
      * List Skill Versions
      *
-     * @param string $skillID Unique identifier for the skill.
+     * @param string $skillID Path param: Unique identifier for the skill.
      *
      * The format and length of IDs may change over time.
-     * @param array{limit?: int|null, page?: string|null}|VersionListParams $params
+     * @param array{
+     *   limit?: int|null, page?: string|null, workspaceID?: string
+     * }|VersionListParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<PageCursor<SkillVersion>>
@@ -125,12 +149,20 @@ final class VersionsRawService implements VersionsRawContract
             $params,
             $requestOptions,
         );
+        $query_params = array_flip(['limit', 'page']);
+
+        /** @var array<string,string> */
+        $header_params = array_diff_key($parsed, $query_params);
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['v1/skills/%1$s/versions', $skillID],
-            query: $parsed,
+            query: array_intersect_key($parsed, $query_params),
+            headers: Util::array_transform_keys(
+                $header_params,
+                ['workspaceID' => 'anthropic-workspace-id']
+            ),
             options: $options,
             convert: SkillVersion::class,
             page: PageCursor::class,
@@ -142,10 +174,10 @@ final class VersionsRawService implements VersionsRawContract
      *
      * Delete Skill Version
      *
-     * @param string $version Identifies the skill version by its version ID.
+     * @param string $version Path param: Identifies the skill version by its version ID.
      *
      * Requests carrying the `skills-2025-10-02` beta header address versions by their Unix epoch timestamp instead (e.g., "1759178010641129").
-     * @param array{skillID: string}|VersionDeleteParams $params
+     * @param array{skillID: string, workspaceID?: string}|VersionDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DeletedSkillVersion>
@@ -168,6 +200,10 @@ final class VersionsRawService implements VersionsRawContract
         return $this->client->request(
             method: 'delete',
             path: ['v1/skills/%1$s/versions/%2$s', $skillID, $version],
+            headers: Util::array_transform_keys(
+                $parsed,
+                ['workspaceID' => 'anthropic-workspace-id']
+            ),
             options: $options,
             convert: DeletedSkillVersion::class,
         );

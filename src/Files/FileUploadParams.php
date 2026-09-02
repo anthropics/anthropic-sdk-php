@@ -17,7 +17,7 @@ use Anthropic\Core\FileParam;
  * @see Anthropic\Services\FilesService::upload()
  *
  * @phpstan-type FileUploadParamsShape = array{
- *   file: string|FileParam, expiresInSeconds?: int|null
+ *   file: string|FileParam, expiresInSeconds?: int|null, workspaceID?: string|null
  * }
  */
 final class FileUploadParams implements BaseModel
@@ -37,6 +37,9 @@ final class FileUploadParams implements BaseModel
      */
     #[Optional('expires_in_seconds')]
     public ?int $expiresInSeconds;
+
+    #[Optional]
+    public ?string $workspaceID;
 
     /**
      * `new FileUploadParams()` is missing required properties by the API.
@@ -64,13 +67,15 @@ final class FileUploadParams implements BaseModel
      */
     public static function with(
         string|FileParam $file,
-        ?int $expiresInSeconds = null
+        ?int $expiresInSeconds = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
         $self['file'] = $file;
 
         null !== $expiresInSeconds && $self['expiresInSeconds'] = $expiresInSeconds;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -93,6 +98,14 @@ final class FileUploadParams implements BaseModel
     {
         $self = clone $this;
         $self['expiresInSeconds'] = $expiresInSeconds;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

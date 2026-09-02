@@ -40,6 +40,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   schedule?: null|BetaManagedAgentsScheduleParams|BetaManagedAgentsScheduleParamsShape,
  *   vaultIDs?: list<string>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class DeploymentCreateParams implements BaseModel
@@ -129,6 +130,9 @@ final class DeploymentCreateParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     /**
      * `new DeploymentCreateParams()` is missing required properties by the API.
      *
@@ -180,6 +184,7 @@ final class DeploymentCreateParams implements BaseModel
         BetaManagedAgentsScheduleParams|array|null $schedule = null,
         ?array $vaultIDs = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -195,6 +200,7 @@ final class DeploymentCreateParams implements BaseModel
         null !== $schedule && $self['schedule'] = $schedule;
         null !== $vaultIDs && $self['vaultIDs'] = $vaultIDs;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -335,6 +341,14 @@ final class DeploymentCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

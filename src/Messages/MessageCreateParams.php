@@ -55,6 +55,7 @@ use Anthropic\Messages\MessageCreateParams\System;
  *   topK?: int|null,
  *   topP?: float|null,
  *   userProfileID?: string|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class MessageCreateParams implements BaseModel
@@ -334,6 +335,9 @@ final class MessageCreateParams implements BaseModel
     #[Optional]
     public ?string $userProfileID;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     /**
      * `new MessageCreateParams()` is missing required properties by the API.
      *
@@ -390,6 +394,7 @@ final class MessageCreateParams implements BaseModel
         ?int $topK = null,
         ?float $topP = null,
         ?string $userProfileID = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -412,6 +417,7 @@ final class MessageCreateParams implements BaseModel
         null !== $topK && $self['topK'] = $topK;
         null !== $topP && $self['topP'] = $topP;
         null !== $userProfileID && $self['userProfileID'] = $userProfileID;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -777,6 +783,14 @@ final class MessageCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['userProfileID'] = $userProfileID;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

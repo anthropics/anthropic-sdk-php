@@ -25,6 +25,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   displayName?: string|null,
  *   metadata?: array<string,string>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class CredentialCreateParams implements BaseModel
@@ -63,6 +64,9 @@ final class CredentialCreateParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     /**
      * `new CredentialCreateParams()` is missing required properties by the API.
      *
@@ -96,6 +100,7 @@ final class CredentialCreateParams implements BaseModel
         ?string $displayName = null,
         ?array $metadata = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -104,6 +109,7 @@ final class CredentialCreateParams implements BaseModel
         null !== $displayName && $self['displayName'] = $displayName;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -155,6 +161,14 @@ final class CredentialCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

@@ -56,6 +56,7 @@ final class SessionsRawService implements SessionsRawContract
      *   title?: string|null,
      *   vaultIDs?: list<string>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|SessionCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -71,7 +72,9 @@ final class SessionsRawService implements SessionsRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -100,7 +103,8 @@ final class SessionsRawService implements SessionsRawContract
      *
      * @param string $sessionID Path parameter session_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|SessionRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -124,7 +128,9 @@ final class SessionsRawService implements SessionsRawContract
             path: ['v1/sessions/%1$s?beta=true', $sessionID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -147,6 +153,7 @@ final class SessionsRawService implements SessionsRawContract
      *   title?: string|null,
      *   vaultIDs?: list<string>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|SessionUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -163,7 +170,9 @@ final class SessionsRawService implements SessionsRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -205,6 +214,7 @@ final class SessionsRawService implements SessionsRawContract
      *   page?: string,
      *   statuses?: list<Status|value-of<Status>>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|SessionListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -261,7 +271,9 @@ final class SessionsRawService implements SessionsRawContract
             ),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -279,7 +291,8 @@ final class SessionsRawService implements SessionsRawContract
      *
      * @param string $sessionID Path parameter session_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|SessionDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -303,7 +316,9 @@ final class SessionsRawService implements SessionsRawContract
             path: ['v1/sessions/%1$s?beta=true', $sessionID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -320,7 +335,8 @@ final class SessionsRawService implements SessionsRawContract
      *
      * @param string $sessionID Path parameter session_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|SessionArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -344,7 +360,9 @@ final class SessionsRawService implements SessionsRawContract
             path: ['v1/sessions/%1$s/archive?beta=true', $sessionID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],

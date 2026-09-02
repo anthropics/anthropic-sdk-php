@@ -32,6 +32,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   page?: string|null,
  *   statuses?: list<Status|value-of<Status>>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class SessionListParams implements BaseModel
@@ -130,6 +131,9 @@ final class SessionListParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -159,6 +163,7 @@ final class SessionListParams implements BaseModel
         ?string $page = null,
         ?array $statuses = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -176,6 +181,7 @@ final class SessionListParams implements BaseModel
         null !== $page && $self['page'] = $page;
         null !== $statuses && $self['statuses'] = $statuses;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -336,6 +342,14 @@ final class SessionListParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

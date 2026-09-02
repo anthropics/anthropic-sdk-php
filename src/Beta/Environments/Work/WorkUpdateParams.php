@@ -23,6 +23,7 @@ use Anthropic\Core\Conversion\MapOf;
  *   environmentID: string,
  *   metadata: array<string,string|null>,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class WorkUpdateParams implements BaseModel
@@ -49,6 +50,9 @@ final class WorkUpdateParams implements BaseModel
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
+
+    #[Optional]
+    public ?string $workspaceID;
 
     /**
      * `new WorkUpdateParams()` is missing required properties by the API.
@@ -80,7 +84,8 @@ final class WorkUpdateParams implements BaseModel
     public static function with(
         string $environmentID,
         array $metadata,
-        ?array $betas = null
+        ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -88,6 +93,7 @@ final class WorkUpdateParams implements BaseModel
         $self['metadata'] = $metadata;
 
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -122,6 +128,14 @@ final class WorkUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

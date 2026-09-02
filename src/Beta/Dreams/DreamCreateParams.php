@@ -29,6 +29,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   instructions?: string|null,
  *   outputBehavior?: BetaOutputBehaviorShape|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class DreamCreateParams implements BaseModel
@@ -68,6 +69,9 @@ final class DreamCreateParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     /**
      * `new DreamCreateParams()` is missing required properties by the API.
      *
@@ -103,6 +107,7 @@ final class DreamCreateParams implements BaseModel
         ?string $instructions = null,
         BetaOutputBehaviorCreateNew|array|BetaOutputBehaviorUpdateExisting|null $outputBehavior = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -112,6 +117,7 @@ final class DreamCreateParams implements BaseModel
         null !== $instructions && $self['instructions'] = $instructions;
         null !== $outputBehavior && $self['outputBehavior'] = $outputBehavior;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -172,6 +178,14 @@ final class DreamCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

@@ -8,13 +8,16 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\FileParam;
+use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\SkillsRawContract;
 use Anthropic\Skills\DeletedSkill;
 use Anthropic\Skills\Skill;
 use Anthropic\Skills\SkillCreateParams;
+use Anthropic\Skills\SkillDeleteParams;
 use Anthropic\Skills\SkillListParams;
+use Anthropic\Skills\SkillRetrieveParams;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -33,7 +36,7 @@ final class SkillsRawService implements SkillsRawContract
      * Create Skill
      *
      * @param array{
-     *   files: list<string|FileParam>, displayName?: string|null
+     *   files: list<string|FileParam>, displayName?: string|null, workspaceID?: string
      * }|SkillCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -49,13 +52,26 @@ final class SkillsRawService implements SkillsRawContract
             $params,
             $requestOptions,
         );
+        $header_params = ['workspaceID' => 'anthropic-workspace-id'];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'v1/skills',
-            headers: ['Content-Type' => 'multipart/form-data'],
-            body: (object) $parsed,
+            headers: Util::array_transform_keys(
+                [
+                    'Content-Type' => 'multipart/form-data',
+                    ...array_intersect_key(
+                        $parsed,
+                        array_flip(array_keys($header_params))
+                    ),
+                ],
+                $header_params,
+            ),
+            body: (object) array_diff_key(
+                $parsed,
+                array_flip(array_keys($header_params))
+            ),
             options: $options,
             convert: Skill::class,
         );
@@ -69,6 +85,7 @@ final class SkillsRawService implements SkillsRawContract
      * @param string $skillID Unique identifier for the skill.
      *
      * The format and length of IDs may change over time.
+     * @param array{workspaceID?: string}|SkillRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Skill>
@@ -77,13 +94,23 @@ final class SkillsRawService implements SkillsRawContract
      */
     public function retrieve(
         string $skillID,
-        RequestOptions|array|null $requestOptions = null
+        array|SkillRetrieveParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
+        [$parsed, $options] = SkillRetrieveParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['v1/skills/%1$s', $skillID],
-            options: $requestOptions,
+            headers: Util::array_transform_keys(
+                $parsed,
+                ['workspaceID' => 'anthropic-workspace-id']
+            ),
+            options: $options,
             convert: Skill::class,
         );
     }
@@ -94,7 +121,7 @@ final class SkillsRawService implements SkillsRawContract
      * List Skills
      *
      * @param array{
-     *   limit?: int, page?: string|null, source?: string|null
+     *   limit?: int, page?: string|null, source?: string|null, workspaceID?: string
      * }|SkillListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -110,12 +137,20 @@ final class SkillsRawService implements SkillsRawContract
             $params,
             $requestOptions,
         );
+        $query_params = array_flip(['limit', 'page', 'source']);
+
+        /** @var array<string,string> */
+        $header_params = array_diff_key($parsed, $query_params);
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'v1/skills',
-            query: $parsed,
+            query: array_intersect_key($parsed, $query_params),
+            headers: Util::array_transform_keys(
+                $header_params,
+                ['workspaceID' => 'anthropic-workspace-id']
+            ),
             options: $options,
             convert: Skill::class,
             page: PageCursor::class,
@@ -130,6 +165,7 @@ final class SkillsRawService implements SkillsRawContract
      * @param string $skillID Unique identifier for the skill.
      *
      * The format and length of IDs may change over time.
+     * @param array{workspaceID?: string}|SkillDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DeletedSkill>
@@ -138,13 +174,23 @@ final class SkillsRawService implements SkillsRawContract
      */
     public function delete(
         string $skillID,
-        RequestOptions|array|null $requestOptions = null
+        array|SkillDeleteParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
+        [$parsed, $options] = SkillDeleteParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
             path: ['v1/skills/%1$s', $skillID],
-            options: $requestOptions,
+            headers: Util::array_transform_keys(
+                $parsed,
+                ['workspaceID' => 'anthropic-workspace-id']
+            ),
+            options: $options,
             convert: DeletedSkill::class,
         );
     }

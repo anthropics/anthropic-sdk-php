@@ -45,6 +45,7 @@ final class DreamsRawService implements DreamsRawContract
      *   instructions?: string|null,
      *   outputBehavior?: BetaOutputBehaviorShape,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|DreamCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -60,7 +61,9 @@ final class DreamsRawService implements DreamsRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -89,7 +92,8 @@ final class DreamsRawService implements DreamsRawContract
      *
      * @param string $dreamID Path parameter dream_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|DreamRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -113,7 +117,9 @@ final class DreamsRawService implements DreamsRawContract
             path: ['v1/dreams/%1$s?beta=true', $dreamID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'dreaming-2026-04-21']],
@@ -136,6 +142,7 @@ final class DreamsRawService implements DreamsRawContract
      *   page?: string,
      *   statuses?: list<BetaDreamStatus|value-of<BetaDreamStatus>>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|DreamListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -179,7 +186,9 @@ final class DreamsRawService implements DreamsRawContract
             ),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'dreaming-2026-04-21']],
@@ -197,7 +206,8 @@ final class DreamsRawService implements DreamsRawContract
      *
      * @param string $dreamID Path parameter dream_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|DreamArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -221,7 +231,9 @@ final class DreamsRawService implements DreamsRawContract
             path: ['v1/dreams/%1$s/archive?beta=true', $dreamID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'dreaming-2026-04-21']],
@@ -238,7 +250,8 @@ final class DreamsRawService implements DreamsRawContract
      *
      * @param string $dreamID Path parameter dream_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|DreamCancelParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -262,7 +275,9 @@ final class DreamsRawService implements DreamsRawContract
             path: ['v1/dreams/%1$s/cancel?beta=true', $dreamID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'dreaming-2026-04-21']],

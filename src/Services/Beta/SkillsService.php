@@ -52,6 +52,9 @@ final class SkillsService implements SkillsContract
      * Always set: derived from the SKILL.md frontmatter `name` when omitted at
      * creation. Not unique.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -60,10 +63,16 @@ final class SkillsService implements SkillsContract
         array $files,
         ?string $displayName = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaSkill {
         $params = Util::removeNulls(
-            ['files' => $files, 'displayName' => $displayName, 'betas' => $betas]
+            [
+                'files' => $files,
+                'displayName' => $displayName,
+                'betas' => $betas,
+                'workspaceID' => $workspaceID,
+            ],
         );
 
         // @phpstan-ignore-next-line argument.type
@@ -81,6 +90,9 @@ final class SkillsService implements SkillsContract
      *
      * The format and length of IDs may change over time.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -88,9 +100,12 @@ final class SkillsService implements SkillsContract
     public function retrieve(
         string $skillID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaSkill {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($skillID, params: $params, requestOptions: $requestOptions);
@@ -115,6 +130,9 @@ final class SkillsService implements SkillsContract
      * * `"custom"`: only return user-created skills
      * * `"anthropic"`: only return Anthropic-created skills
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<BetaSkill>
@@ -126,6 +144,7 @@ final class SkillsService implements SkillsContract
         ?string $page = null,
         ?string $source = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): PageCursor {
         $params = Util::removeNulls(
@@ -134,6 +153,7 @@ final class SkillsService implements SkillsContract
                 'page' => $page,
                 'source' => $source,
                 'betas' => $betas,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -152,6 +172,9 @@ final class SkillsService implements SkillsContract
      *
      * The format and length of IDs may change over time.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -159,9 +182,12 @@ final class SkillsService implements SkillsContract
     public function delete(
         string $skillID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaDeletedSkill {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($skillID, params: $params, requestOptions: $requestOptions);

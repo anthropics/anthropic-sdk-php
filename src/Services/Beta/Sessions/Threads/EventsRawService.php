@@ -79,6 +79,7 @@ final class EventsRawService implements EventsRawContract
      *   limit?: int,
      *   page?: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|EventListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -111,7 +112,9 @@ final class EventsRawService implements EventsRawContract
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -130,6 +133,7 @@ final class EventsRawService implements EventsRawContract
      *   sessionID: string,
      *   eventDeltas?: list<BetaManagedAgentsDeltaType|value-of<BetaManagedAgentsDeltaType>>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|EventStreamParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -165,7 +169,9 @@ final class EventsRawService implements EventsRawContract
             ),
             headers: Util::array_transform_keys(
                 ['Accept' => 'text/event-stream', ...$header_params],
-                ['betas' => 'anthropic-beta'],
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],

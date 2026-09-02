@@ -36,7 +36,8 @@ final class ModelsRawService implements ModelsRawContract
      *
      * @param string $modelID model identifier or alias
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|ModelRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -60,7 +61,9 @@ final class ModelsRawService implements ModelsRawContract
             path: ['v1/models/%1$s?beta=true', $modelID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: $options,
             convert: BetaModelInfo::class,
@@ -79,6 +82,7 @@ final class ModelsRawService implements ModelsRawContract
      *   beforeID?: string,
      *   limit?: int,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|ModelListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -109,7 +113,9 @@ final class ModelsRawService implements ModelsRawContract
             ),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: $options,
             convert: BetaModelInfo::class,

@@ -20,6 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type TunnelCreateParamsShape = array{
  *   displayName?: string|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class TunnelCreateParams implements BaseModel
@@ -42,6 +43,9 @@ final class TunnelCreateParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -56,12 +60,14 @@ final class TunnelCreateParams implements BaseModel
      */
     public static function with(
         ?string $displayName = null,
-        ?array $betas = null
+        ?array $betas = null,
+        ?string $workspaceID = null
     ): self {
         $self = new self;
 
         null !== $displayName && $self['displayName'] = $displayName;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -86,6 +92,14 @@ final class TunnelCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

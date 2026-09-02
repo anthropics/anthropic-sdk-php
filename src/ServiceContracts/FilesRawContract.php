@@ -7,8 +7,11 @@ namespace Anthropic\ServiceContracts;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Files\DeletedFile;
+use Anthropic\Files\FileDeleteParams;
+use Anthropic\Files\FileDownloadParams;
 use Anthropic\Files\FileListParams;
 use Anthropic\Files\FileMetadata;
+use Anthropic\Files\FileRetrieveMetadataParams;
 use Anthropic\Files\FileUploadParams;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -37,6 +40,7 @@ interface FilesRawContract
      * @api
      *
      * @param string $fileID ID of the File
+     * @param array<string,mixed>|FileDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DeletedFile>
@@ -45,13 +49,15 @@ interface FilesRawContract
      */
     public function delete(
         string $fileID,
-        RequestOptions|array|null $requestOptions = null
+        array|FileDeleteParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $fileID ID of the File
+     * @param array<string,mixed>|FileDownloadParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<string>
@@ -60,13 +66,15 @@ interface FilesRawContract
      */
     public function download(
         string $fileID,
-        RequestOptions|array|null $requestOptions = null
+        array|FileDownloadParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $fileID ID of the File
+     * @param array<string,mixed>|FileRetrieveMetadataParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<FileMetadata>
@@ -75,7 +83,8 @@ interface FilesRawContract
      */
     public function retrieveMetadata(
         string $fileID,
-        RequestOptions|array|null $requestOptions = null
+        array|FileRetrieveMetadataParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**

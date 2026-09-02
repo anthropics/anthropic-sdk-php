@@ -22,6 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   pathPrefix?: string|null,
  *   view?: null|ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView>,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class MemoryListParams implements BaseModel
@@ -70,6 +71,9 @@ final class MemoryListParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -90,6 +94,7 @@ final class MemoryListParams implements BaseModel
         ?string $pathPrefix = null,
         ManagedAgentsMemoryView|string|null $view = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -99,6 +104,7 @@ final class MemoryListParams implements BaseModel
         null !== $pathPrefix && $self['pathPrefix'] = $pathPrefix;
         null !== $view && $self['view'] = $view;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -169,6 +175,14 @@ final class MemoryListParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
