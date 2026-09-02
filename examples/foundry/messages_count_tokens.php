@@ -15,7 +15,7 @@ $response = $client->messages->countTokens(
             'content' => 'Hello, Claude!',
         ],
     ],
-    model: 'claude-haiku-4-5',
+    model: 'claude-sonnet-5',
 );
 
 var_dump($response->inputTokens);
