@@ -319,7 +319,6 @@ final class Util
         mixed $body
     ): RequestInterface {
         if ($body instanceof StreamInterface) {
-            // @var RequestInterface
             return $req->withBody($body);
         }
 
@@ -329,7 +328,6 @@ final class Util
                 $encoded = json_encode($body, flags: self::JSON_ENCODE_FLAGS);
                 $stream = $factory->createStream($encoded);
 
-                // @var RequestInterface
                 return $req->withBody($stream);
             }
         }
@@ -339,21 +337,18 @@ final class Util
             $encoded = implode('', iterator_to_array($gen, preserve_keys: false));
             $stream = $factory->createStream($encoded);
 
-            // @var RequestInterface
             return $req->withHeader('Content-Type', "{$contentType}; boundary={$boundary}")->withBody($stream);
         }
 
         if (is_resource($body)) {
             $stream = $factory->createStreamFromResource($body);
 
-            // @var RequestInterface
             return $req->withBody($stream);
         }
 
         if (is_string($body)) {
             $stream = $factory->createStream($body);
 
-            // @var RequestInterface
             return $req->withBody($stream);
         }
 
