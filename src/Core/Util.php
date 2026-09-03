@@ -190,8 +190,10 @@ final class Util
             return $extra;
         }
 
-        if (is_array($base) && !array_is_list($base)) {
-            return [...$base, ...$extra];
+        // An empty array is map-shaped too: a body with no fields set still takes the extras.
+        // array_replace, not spread: spread renumbers integer keys, and PHP stores numeric-string keys as integers.
+        if (is_array($base) && ([] === $base || !array_is_list($base))) {
+            return array_replace($base, $extra);
         }
 
         return $body;

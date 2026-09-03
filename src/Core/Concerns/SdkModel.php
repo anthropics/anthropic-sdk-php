@@ -121,8 +121,9 @@ trait SdkModel
      */
     public function toProperties(): array
     {
+        // array_replace, not spread: extra data keeps the payload's numeric-string keys, which PHP stores as integers and spread renumbers.
         // @phpstan-ignore-next-line return.type
-        return [...Util::get_object_vars($this), ...$this->_data];
+        return array_replace(Util::get_object_vars($this), $this->_data);
     }
 
     /**
