@@ -8,6 +8,9 @@ use Anthropic\Core\Exceptions\BadRequestException;
 use Anthropic\Core\Util;
 use Anthropic\ErrorType;
 use Anthropic\Messages\Model;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
 use PHPUnit\Framework\TestCase;
@@ -435,6 +438,32 @@ class ClientTest extends TestCase
             $this->assertSame(413, $e->status);
             $this->assertNull($e->body);
             $this->assertStringContainsString('"body": null', $e->getMessage());
+        }
+    }
+
+    public function testStreamedErrorStatusRaisesStatusException(): void
+    {
+        $mock = new MockHandler([
+            new Response(400, ['Content-Type' => 'application/json'], '{"error":{"message":"invalid"}}'),
+        ]);
+        $transporter = new \GuzzleHttp\Client(['handler' => HandlerStack::create($mock)]);
+
+        $client = new \Anthropic\Client(
+            baseUrl: 'http://localhost',
+            apiKey: 'my-anthropic-api-key',
+            requestOptions: ['transporter' => $transporter],
+        );
+
+        try {
+            foreach ($client->messages->createStream(
+                maxTokens: 1024,
+                messages: [['content' => 'Hello, world', 'role' => 'user']],
+                model: Model::CLAUDE_OPUS_5,
+            ) as $_);
+
+            $this->fail('expected an APIStatusException');
+        } catch (APIStatusException $e) {
+            $this->assertSame(400, $e->status);
         }
     }
 }
