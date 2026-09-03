@@ -3,6 +3,7 @@
 namespace Tests\Core;
 
 use Anthropic\Core\BaseClient;
+use Anthropic\Core\Exceptions\APIStatusException;
 use Anthropic\RequestOptions;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
@@ -47,18 +48,41 @@ class BaseClientTest extends TestCase
         $this->assertSame(['b' => 2], json_decode((string) $empty->getBody(), associative: true));
     }
 
+    #[Test]
+    public function testRequestOptionsOnlyOverrideWhatTheySet(): void
+    {
+        [$client, $transporter] = $this->buildClient(['maxRetries' => 3, 'maxRetryDelay' => 0.0], status: 500);
+
+        try {
+            $client->request('GET', '/', options: RequestOptions::with(extraHeaders: ['X-Custom' => '1']));
+            $this->fail('expected an APIStatusException');
+        } catch (APIStatusException) {
+        }
+        // client-level maxRetries survives request options that leave it unset
+        $this->assertCount(4, $transporter->getRequests());
+
+        [$client, $transporter] = $this->buildClient(['maxRetries' => 3, 'maxRetryDelay' => 0.0], status: 500);
+
+        try {
+            $client->request('GET', '/', options: ['maxRetries' => 0]);
+            $this->fail('expected an APIStatusException');
+        } catch (APIStatusException) {
+        }
+        $this->assertCount(1, $transporter->getRequests());
+    }
+
     /**
      * @param RequestOpts $options client-level request options
      *
      * @return array{BaseClient, MockClient}
      */
-    private function buildClient(RequestOptions|array|null $options = null): array
+    private function buildClient(RequestOptions|array|null $options = null, int $status = 200): array
     {
         $transporter = new MockClient;
         $responseFactory = Psr17FactoryDiscovery::findResponseFactory();
         $streamFactory = Psr17FactoryDiscovery::findStreamFactory();
         $transporter->setDefaultResponse(
-            $responseFactory->createResponse(200)
+            $responseFactory->createResponse($status)
                 ->withHeader('Content-Type', 'application/json')
                 ->withBody($streamFactory->createStream('{}')),
         );
