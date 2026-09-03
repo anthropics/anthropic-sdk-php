@@ -10,6 +10,7 @@ use Http\Mock\Client as MockClient;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @internal
@@ -71,10 +72,37 @@ class BaseClientTest extends TestCase
         $this->assertCount(1, $transporter->getRequests());
     }
 
+    #[Test]
+    public function testTransformRequestRunsOnEveryAttemptWithTheFinalRequest(): void
+    {
+        [, $transporter, $requestOptions] = $this->buildClient(['maxRetries' => 2, 'maxRetryDelay' => 0.0], status: 500);
+
+        $client = new class(headers: ['Content-Type' => 'application/json'], baseUrl: 'http://localhost', options: $requestOptions) extends BaseClient {
+            /** @var list<string> */
+            public array $seenBodies = [];
+
+            protected function transformRequest(RequestInterface $request): RequestInterface
+            {
+                $this->seenBodies[] = (string) $request->getBody();
+
+                return $request->withHeader('X-Attempt', (string) count($this->seenBodies));
+            }
+        };
+
+        try {
+            $client->request('POST', '/', body: ['a' => 1]);
+            $this->fail('expected an APIStatusException');
+        } catch (APIStatusException) {
+        }
+
+        $this->assertSame(['{"a":1}', '{"a":1}', '{"a":1}'], $client->seenBodies);
+        $this->assertSame(['1', '2', '3'], array_map(static fn ($r) => $r->getHeaderLine('X-Attempt'), $transporter->getRequests()));
+    }
+
     /**
      * @param RequestOpts $options client-level request options
      *
-     * @return array{BaseClient, MockClient}
+     * @return array{BaseClient, MockClient, RequestOptions}
      */
     private function buildClient(RequestOptions|array|null $options = null, int $status = 200): array
     {
@@ -99,6 +127,6 @@ class BaseClientTest extends TestCase
 
         $client = new class(headers: [], baseUrl: 'http://localhost', options: $requestOptions) extends BaseClient {};
 
-        return [$client, $transporter];
+        return [$client, $transporter, $requestOptions];
     }
 }
