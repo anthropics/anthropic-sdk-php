@@ -73,6 +73,7 @@ final class BetaMcpTest extends TestCase
         /** @var BetaTool $def */
         $def = $runnable->definition;
         $serialized = $def->jsonSerialize();
+        $this->assertIsArray($serialized);
 
         $this->assertSame(['type' => 'ephemeral'], $serialized['cache_control']);
         $this->assertTrue($serialized['defer_loading']);
