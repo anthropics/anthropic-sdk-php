@@ -1,5 +1,51 @@
 # Changelog
 
+## 0.47.0 (2026-09-04)
+
+Full Changelog: [v0.46.0...v0.47.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.46.0...v0.47.0)
+
+### Features
+
+* **api:** add Claude Tag category and user breakdowns to usage reports ([a6f4b54](https://github.com/anthropics/anthropic-sdk-php/commit/a6f4b545ff43f83b4f7d68391ccdf57e70dcbbe8))
+* **api:** add named types for organization compliance settings state ([faa3716](https://github.com/anthropics/anthropic-sdk-php/commit/faa3716f4802248557adebf321a2daa634c8ad91))
+* **api:** add workspace_id request option for multi-workspace credentials ([9fca8fc](https://github.com/anthropics/anthropic-sdk-php/commit/9fca8fceb02ffeefb662b84ce2eef7787ef42171))
+* **api:** raise Managed Agents vault refresh token limit to 8192 chars ([2824211](https://github.com/anthropics/anthropic-sdk-php/commit/28242111d254f9245e402bb8ed0df53c9dddc72d))
+* **client:** keep vault credential secrets out of Terraform state with write-only arguments ([956e0fc](https://github.com/anthropics/anthropic-sdk-php/commit/956e0fc6eac7a7563df0a1012013c8ad3941335d))
+
+
+### Bug Fixes
+
+* **api:** remove response text block maxLength constraint ([4a4289a](https://github.com/anthropics/anthropic-sdk-php/commit/4a4289aec9e95bdc916096f1245cd4740d147795))
+* **client:** keep empty JSON objects when Bedrock and Vertex rewrite the request body ([#210](https://github.com/anthropics/anthropic-sdk-php/issues/210)) ([6231378](https://github.com/anthropics/anthropic-sdk-php/commit/6231378c5012d32b02b984fd33b40ffe9e746d15))
+* **client:** raise a clear error when an httpx object is passed instead of an httpx2 one ([03266f2](https://github.com/anthropics/anthropic-sdk-php/commit/03266f2dd0ac92969beb182391f7352111c29224))
+* **client:** say which package to install when no HTTP client is found ([37aa520](https://github.com/anthropics/anthropic-sdk-php/commit/37aa52041f6dbeafe02d9348ee41c575eff5cbdd))
+* **errors:** keep non-JSON error bodies in APIStatusException ([5b72b0d](https://github.com/anthropics/anthropic-sdk-php/commit/5b72b0da8e50d509455212b17690f6e47fbf9caa))
+* **models:** json_encode an empty model as {} instead of a TypeError ([4400c3d](https://github.com/anthropics/anthropic-sdk-php/commit/4400c3d667faf2cb0bc13d7ce3630a6c818d0f6b))
+
+
+### Chores
+
+* **api:** accept anthropic-version on Claude Enterprise admin endpoints ([893c6d6](https://github.com/anthropics/anthropic-sdk-php/commit/893c6d6d2ac05da713a035e0001f55fc45977f2e))
+* **api:** declare specific error statuses instead of a generic 4XX response ([79018ea](https://github.com/anthropics/anthropic-sdk-php/commit/79018ea9cba68867b50c82b0e528db9570af8a1e))
+* **api:** update authentication parameters on spend limit create and delete ([77a39fd](https://github.com/anthropics/anthropic-sdk-php/commit/77a39fd3d6a5367c0e205e0a57c84c062fdb9b95))
+* **ci:** cache Go build output in the build job ([97f6eff](https://github.com/anthropics/anthropic-sdk-php/commit/97f6effa2ca1f9747d6e8ba0b930801488698e05))
+* **docs:** fix broken session link in memory version descriptions ([3796f8a](https://github.com/anthropics/anthropic-sdk-php/commit/3796f8a7ff8e6c8d6f01ce2c83ee6bc827a741de))
+* **docs:** note that value object arguments must be set by name ([0dd790c](https://github.com/anthropics/anthropic-sdk-php/commit/0dd790ce85b2610a1449dee902352aa27ef4d35a))
+* **examples:** refresh platform model IDs ([#198](https://github.com/anthropics/anthropic-sdk-php/issues/198)) ([902bb9e](https://github.com/anthropics/anthropic-sdk-php/commit/902bb9e90964f0dbe0186e4555d0683949cc6ce4))
+* **internal:** fix spec repo README link and drop its mock script ([956e0fc](https://github.com/anthropics/anthropic-sdk-php/commit/956e0fc6eac7a7563df0a1012013c8ad3941335d))
+* **internal:** read formatter versions from one place ([9fca8fc](https://github.com/anthropics/anthropic-sdk-php/commit/9fca8fceb02ffeefb662b84ce2eef7787ef42171))
+* **internal:** remove redundant type comments in request body handling ([2de0a83](https://github.com/anthropics/anthropic-sdk-php/commit/2de0a83e93bc1715c957234c0aa79dc34b978f53))
+* **internal:** update CODEOWNERS ([e10f3a0](https://github.com/anthropics/anthropic-sdk-php/commit/e10f3a0414041bf1c07cde86c156445aec43f679))
+* **internal:** update CODEOWNERS ([956e0fc](https://github.com/anthropics/anthropic-sdk-php/commit/956e0fc6eac7a7563df0a1012013c8ad3941335d))
+* **refactor:** split the client tests ([61b721d](https://github.com/anthropics/anthropic-sdk-php/commit/61b721d51a9c097430e015a37e4bdb14b3a54e79))
+* **tests:** narrow the serialized tool definition before indexing it ([#214](https://github.com/anthropics/anthropic-sdk-php/issues/214)) ([f12bad7](https://github.com/anthropics/anthropic-sdk-php/commit/f12bad773a8ad931381fff75764e0c6b176d462e))
+* **tests:** reword the skip reason on the path-level query param tests ([c1f04a7](https://github.com/anthropics/anthropic-sdk-php/commit/c1f04a7f9f9754298c14b7419c8f2ffb3acbbdf9))
+
+
+### Documentation
+
+* **api:** add HTTP reference for the remaining Admin API endpoints ([03266f2](https://github.com/anthropics/anthropic-sdk-php/commit/03266f2dd0ac92969beb182391f7352111c29224))
+
 ## 0.46.0 (2026-09-01)
 
 Full Changelog: [v0.45.0...v0.46.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.45.0...v0.46.0)
