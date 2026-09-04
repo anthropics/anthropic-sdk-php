@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\ComplianceSettings;
 
-use Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettings\State;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-import-type StateVariants from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettings\State
- * @phpstan-import-type StateShape from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettings\State
+ * @phpstan-import-type ComplianceSettingsStateVariants from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsState
+ * @phpstan-import-type ComplianceSettingsStateShape from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsState
  *
  * @phpstan-type ComplianceSettingsShape = array{
- *   state: StateShape, type: 'compliance_settings'
+ *   state: ComplianceSettingsStateShape, type: 'compliance_settings'
  * }
  */
 final class ComplianceSettings implements BaseModel
@@ -29,9 +28,9 @@ final class ComplianceSettings implements BaseModel
     /**
      * Whether the Compliance API is enabled for this organization.
      *
-     * @var StateVariants $state
+     * @var ComplianceSettingsStateVariants $state
      */
-    #[Required(union: State::class)]
+    #[Required(union: ComplianceSettingsState::class)]
     public ComplianceSettingsStateEnabled|ComplianceSettingsStateDisabled $state;
 
     /**
@@ -58,7 +57,7 @@ final class ComplianceSettings implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param StateShape $state
+     * @param ComplianceSettingsStateShape $state
      */
     public static function with(
         ComplianceSettingsStateEnabled|array|ComplianceSettingsStateDisabled $state
@@ -73,7 +72,7 @@ final class ComplianceSettings implements BaseModel
     /**
      * Whether the Compliance API is enabled for this organization.
      *
-     * @param StateShape $state
+     * @param ComplianceSettingsStateShape $state
      */
     public function withState(
         ComplianceSettingsStateEnabled|array|ComplianceSettingsStateDisabled $state

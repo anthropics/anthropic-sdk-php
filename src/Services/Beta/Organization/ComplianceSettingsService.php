@@ -14,7 +14,7 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\ComplianceSettingsContract;
 
 /**
- * @phpstan-import-type StateShape from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingUpdateParams\State
+ * @phpstan-import-type ComplianceSettingsStateParamShape from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsStateParam
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
 final class ComplianceSettingsService implements ComplianceSettingsContract
@@ -73,7 +73,7 @@ final class ComplianceSettingsService implements ComplianceSettingsContract
      * after a `disabled` request. Automated provisioning never disables
      * compliance settings.
      *
-     * @param StateShape $state Desired state. Accepts the string shorthand "enabled" or "disabled" in place of the object form; the response always returns the canonical object form.
+     * @param ComplianceSettingsStateParamShape $state Desired state. Accepts the string shorthand "enabled" or "disabled" in place of the object form; the response always returns the canonical object form.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

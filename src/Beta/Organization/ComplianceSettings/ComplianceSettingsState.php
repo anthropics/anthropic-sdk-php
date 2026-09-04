@@ -2,24 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettings;
+namespace Anthropic\Beta\Organization\ComplianceSettings;
 
-use Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsStateDisabled;
-use Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsStateEnabled;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Whether the Compliance API is enabled for this organization.
- *
  * @phpstan-import-type ComplianceSettingsStateEnabledShape from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsStateEnabled
  * @phpstan-import-type ComplianceSettingsStateDisabledShape from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsStateDisabled
  *
- * @phpstan-type StateVariants = ComplianceSettingsStateEnabled|ComplianceSettingsStateDisabled
- * @phpstan-type StateShape = StateVariants|ComplianceSettingsStateEnabledShape|ComplianceSettingsStateDisabledShape
+ * @phpstan-type ComplianceSettingsStateVariants = ComplianceSettingsStateEnabled|ComplianceSettingsStateDisabled
+ * @phpstan-type ComplianceSettingsStateShape = ComplianceSettingsStateVariants|ComplianceSettingsStateEnabledShape|ComplianceSettingsStateDisabledShape
  */
-final class State implements ConverterSource
+final class ComplianceSettingsState implements ConverterSource
 {
     use SdkUnion;
 
