@@ -11,7 +11,9 @@ use Anthropic\RequestOptions;
 use Anthropic\Skills\DeletedSkill;
 use Anthropic\Skills\Skill;
 use Anthropic\Skills\SkillCreateParams;
+use Anthropic\Skills\SkillDeleteParams;
 use Anthropic\Skills\SkillListParams;
+use Anthropic\Skills\SkillRetrieveParams;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -39,6 +41,7 @@ interface SkillsRawContract
      * @param string $skillID Unique identifier for the skill.
      *
      * The format and length of IDs may change over time.
+     * @param array<string,mixed>|SkillRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Skill>
@@ -47,7 +50,8 @@ interface SkillsRawContract
      */
     public function retrieve(
         string $skillID,
-        RequestOptions|array|null $requestOptions = null
+        array|SkillRetrieveParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
@@ -71,6 +75,7 @@ interface SkillsRawContract
      * @param string $skillID Unique identifier for the skill.
      *
      * The format and length of IDs may change over time.
+     * @param array<string,mixed>|SkillDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DeletedSkill>
@@ -79,6 +84,7 @@ interface SkillsRawContract
      */
     public function delete(
         string $skillID,
-        RequestOptions|array|null $requestOptions = null
+        array|SkillDeleteParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

@@ -21,6 +21,7 @@ use Anthropic\Core\FileParam;
  *   files: list<string|FileParam>,
  *   displayName?: string|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class SkillCreateParams implements BaseModel
@@ -55,6 +56,9 @@ final class SkillCreateParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     /**
      * `new SkillCreateParams()` is missing required properties by the API.
      *
@@ -85,7 +89,8 @@ final class SkillCreateParams implements BaseModel
     public static function with(
         array $files,
         ?string $displayName = null,
-        ?array $betas = null
+        ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -93,6 +98,7 @@ final class SkillCreateParams implements BaseModel
 
         null !== $displayName && $self['displayName'] = $displayName;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -134,6 +140,14 @@ final class SkillCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

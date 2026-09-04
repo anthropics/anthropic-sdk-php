@@ -61,6 +61,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
      *   schedule?: BetaManagedAgentsScheduleParams|BetaManagedAgentsScheduleParamsShape|null,
      *   vaultIDs?: list<string>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|DeploymentCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -76,7 +77,9 @@ final class DeploymentsRawService implements DeploymentsRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -105,7 +108,8 @@ final class DeploymentsRawService implements DeploymentsRawContract
      *
      * @param string $deploymentID Path parameter deployment_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|DeploymentRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -129,7 +133,9 @@ final class DeploymentsRawService implements DeploymentsRawContract
             path: ['v1/deployments/%1$s?beta=true', $deploymentID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -157,6 +163,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
      *   schedule?: BetaManagedAgentsScheduleParams|BetaManagedAgentsScheduleParamsShape|null,
      *   vaultIDs?: list<string>|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|DeploymentUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -173,7 +180,9 @@ final class DeploymentsRawService implements DeploymentsRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -209,6 +218,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
      *   page?: string,
      *   status?: BetaManagedAgentsDeploymentStatus|value-of<BetaManagedAgentsDeploymentStatus>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|DeploymentListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -254,7 +264,9 @@ final class DeploymentsRawService implements DeploymentsRawContract
             ),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -272,7 +284,8 @@ final class DeploymentsRawService implements DeploymentsRawContract
      *
      * @param string $deploymentID Path parameter deployment_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|DeploymentArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -296,7 +309,9 @@ final class DeploymentsRawService implements DeploymentsRawContract
             path: ['v1/deployments/%1$s/archive?beta=true', $deploymentID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -313,7 +328,8 @@ final class DeploymentsRawService implements DeploymentsRawContract
      *
      * @param string $deploymentID Path parameter deployment_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|DeploymentPauseParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -337,7 +353,9 @@ final class DeploymentsRawService implements DeploymentsRawContract
             path: ['v1/deployments/%1$s/pause?beta=true', $deploymentID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -354,7 +372,8 @@ final class DeploymentsRawService implements DeploymentsRawContract
      *
      * @param string $deploymentID Path parameter deployment_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|DeploymentRunParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -378,7 +397,9 @@ final class DeploymentsRawService implements DeploymentsRawContract
             path: ['v1/deployments/%1$s/run?beta=true', $deploymentID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -395,7 +416,8 @@ final class DeploymentsRawService implements DeploymentsRawContract
      *
      * @param string $deploymentID Path parameter deployment_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|DeploymentUnpauseParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -419,7 +441,9 @@ final class DeploymentsRawService implements DeploymentsRawContract
             path: ['v1/deployments/%1$s/unpause?beta=true', $deploymentID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],

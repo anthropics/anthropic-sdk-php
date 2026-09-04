@@ -12,7 +12,7 @@ use Anthropic\Vertex;
 $client = Vertex\Client::fromEnvironment(location: 'us-east5', projectId: 'my-project-id');
 
 $stream = $client->messages->createStream(
-    model: 'claude-3-5-haiku@20241022',
+    model: 'claude-sonnet-5',
     maxTokens: 1024,
     messages: [
         [

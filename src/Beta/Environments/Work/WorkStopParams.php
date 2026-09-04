@@ -22,6 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   environmentID: string,
  *   force?: bool|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class WorkStopParams implements BaseModel
@@ -46,6 +47,9 @@ final class WorkStopParams implements BaseModel
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
+
+    #[Optional]
+    public ?string $workspaceID;
 
     /**
      * `new WorkStopParams()` is missing required properties by the API.
@@ -76,7 +80,8 @@ final class WorkStopParams implements BaseModel
     public static function with(
         string $environmentID,
         ?bool $force = null,
-        ?array $betas = null
+        ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -84,6 +89,7 @@ final class WorkStopParams implements BaseModel
 
         null !== $force && $self['force'] = $force;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -116,6 +122,14 @@ final class WorkStopParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

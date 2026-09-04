@@ -26,6 +26,7 @@ use Anthropic\Core\Conversion\MapOf;
  *   title?: string|null,
  *   vaultIDs?: list<string>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class SessionUpdateParams implements BaseModel
@@ -76,6 +77,9 @@ final class SessionUpdateParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -99,6 +103,7 @@ final class SessionUpdateParams implements BaseModel
         ?string $title = null,
         ?array $vaultIDs = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -108,6 +113,7 @@ final class SessionUpdateParams implements BaseModel
         null !== $title && $self['title'] = $title;
         null !== $vaultIDs && $self['vaultIDs'] = $vaultIDs;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -186,6 +192,14 @@ final class SessionUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

@@ -22,6 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type EventSendParamsShape = array{
  *   events: list<ManagedAgentsEventParamsShape>,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class EventSendParams implements BaseModel
@@ -45,6 +46,9 @@ final class EventSendParams implements BaseModel
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
+
+    #[Optional]
+    public ?string $workspaceID;
 
     /**
      * `new EventSendParams()` is missing required properties by the API.
@@ -73,13 +77,17 @@ final class EventSendParams implements BaseModel
      * @param list<ManagedAgentsEventParamsShape> $events
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
-    public static function with(array $events, ?array $betas = null): self
-    {
+    public static function with(
+        array $events,
+        ?array $betas = null,
+        ?string $workspaceID = null
+    ): self {
         $self = new self;
 
         $self['events'] = $events;
 
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -106,6 +114,14 @@ final class EventSendParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

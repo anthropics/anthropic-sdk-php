@@ -21,6 +21,7 @@ use Anthropic\Core\FileParam;
  *   file: string|FileParam,
  *   expiresInSeconds?: int|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class FileUploadParams implements BaseModel
@@ -30,7 +31,7 @@ final class FileUploadParams implements BaseModel
     use SdkParams;
 
     /**
-     * The file to upload.
+     * The file to upload. Only the final path component of the part's `filename` is kept; an absent or empty `filename` is replaced with `unnamed` plus the extension for the file's stored `mime_type`, when known.
      */
     #[Required]
     public string $file;
@@ -48,6 +49,9 @@ final class FileUploadParams implements BaseModel
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
+
+    #[Optional]
+    public ?string $workspaceID;
 
     /**
      * `new FileUploadParams()` is missing required properties by the API.
@@ -78,7 +82,8 @@ final class FileUploadParams implements BaseModel
     public static function with(
         string|FileParam $file,
         ?int $expiresInSeconds = null,
-        ?array $betas = null
+        ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -86,12 +91,13 @@ final class FileUploadParams implements BaseModel
 
         null !== $expiresInSeconds && $self['expiresInSeconds'] = $expiresInSeconds;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
 
     /**
-     * The file to upload.
+     * The file to upload. Only the final path component of the part's `filename` is kept; an absent or empty `filename` is replaced with `unnamed` plus the extension for the file's stored `mime_type`, when known.
      */
     public function withFile(string|FileParam $file): self
     {
@@ -121,6 +127,14 @@ final class FileUploadParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

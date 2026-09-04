@@ -284,6 +284,9 @@ final class MessagesService implements MessagesContract
      * Recommended for advanced use cases only.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $userProfileID Header param: The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header.
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -315,6 +318,7 @@ final class MessagesService implements MessagesContract
         ?float $topP = null,
         ?array $betas = null,
         ?string $userProfileID = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaMessage {
         self::warnIfDeprecatedThinkingConfig($model, $thinking);
@@ -348,6 +352,7 @@ final class MessagesService implements MessagesContract
                 'topP' => $topP,
                 'betas' => $betas,
                 'userProfileID' => $userProfileID,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -576,6 +581,9 @@ final class MessagesService implements MessagesContract
      * Recommended for advanced use cases only.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $userProfileID Header param: The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header.
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseStream<BetaRawMessageStartEvent|BetaRawMessageDeltaEvent|BetaRawMessageStopEvent|BetaRawContentBlockStartEvent|BetaRawContentBlockDeltaEvent|BetaRawContentBlockStopEvent,>
@@ -609,6 +617,7 @@ final class MessagesService implements MessagesContract
         ?float $topP = null,
         ?array $betas = null,
         ?string $userProfileID = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BaseStream {
         self::warnIfDeprecatedThinkingConfig($model, $thinking);
@@ -642,6 +651,7 @@ final class MessagesService implements MessagesContract
                 'topP' => $topP,
                 'betas' => $betas,
                 'userProfileID' => $userProfileID,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -796,6 +806,9 @@ final class MessagesService implements MessagesContract
      * See our [guide](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview) for more details.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $userProfileID Header param: The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header.
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -815,6 +828,7 @@ final class MessagesService implements MessagesContract
         ?array $tools = null,
         ?array $betas = null,
         ?string $userProfileID = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaMessageTokensCount {
         self::warnIfDeprecatedThinkingConfig($model, $thinking);
@@ -836,6 +850,7 @@ final class MessagesService implements MessagesContract
                 'tools' => $tools,
                 'betas' => $betas,
                 'userProfileID' => $userProfileID,
+                'workspaceID' => $workspaceID,
             ],
         );
 

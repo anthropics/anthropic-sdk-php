@@ -19,6 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type MemoryVersionRedactParamsShape = array{
  *   memoryStoreID: string,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class MemoryVersionRedactParams implements BaseModel
@@ -37,6 +38,9 @@ final class MemoryVersionRedactParams implements BaseModel
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
+
+    #[Optional]
+    public ?string $workspaceID;
 
     /**
      * `new MemoryVersionRedactParams()` is missing required properties by the API.
@@ -66,13 +70,15 @@ final class MemoryVersionRedactParams implements BaseModel
      */
     public static function with(
         string $memoryStoreID,
-        ?array $betas = null
+        ?array $betas = null,
+        ?string $workspaceID = null
     ): self {
         $self = new self;
 
         $self['memoryStoreID'] = $memoryStoreID;
 
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -94,6 +100,14 @@ final class MemoryVersionRedactParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

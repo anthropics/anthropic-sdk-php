@@ -50,6 +50,7 @@ final class BatchesRawService implements BatchesRawContract
      *   requests: list<Request|RequestShape>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   userProfileID?: string,
+     *   workspaceID?: string,
      * }|BatchCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -68,6 +69,7 @@ final class BatchesRawService implements BatchesRawContract
         $header_params = [
             'betas' => 'anthropic-beta',
             'userProfileID' => 'anthropic-user-profile-id',
+            'workspaceID' => 'anthropic-workspace-id',
         ];
 
         // @phpstan-ignore-next-line return.type
@@ -99,7 +101,8 @@ final class BatchesRawService implements BatchesRawContract
      *
      * @param string $messageBatchID ID of the Message Batch
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|BatchRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -123,7 +126,9 @@ final class BatchesRawService implements BatchesRawContract
             path: ['v1/messages/batches/%1$s?beta=true', $messageBatchID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
@@ -145,6 +150,7 @@ final class BatchesRawService implements BatchesRawContract
      *   beforeID?: string,
      *   limit?: int,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|BatchListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -175,7 +181,9 @@ final class BatchesRawService implements BatchesRawContract
             ),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
@@ -197,7 +205,8 @@ final class BatchesRawService implements BatchesRawContract
      *
      * @param string $messageBatchID ID of the Message Batch
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|BatchDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -221,7 +230,9 @@ final class BatchesRawService implements BatchesRawContract
             path: ['v1/messages/batches/%1$s?beta=true', $messageBatchID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
@@ -242,7 +253,8 @@ final class BatchesRawService implements BatchesRawContract
      *
      * @param string $messageBatchID ID of the Message Batch
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|BatchCancelParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -266,7 +278,9 @@ final class BatchesRawService implements BatchesRawContract
             path: ['v1/messages/batches/%1$s/cancel?beta=true', $messageBatchID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
@@ -281,7 +295,8 @@ final class BatchesRawService implements BatchesRawContract
      *
      * @param string $messageBatchID ID of the Message Batch
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|BatchResultsParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -305,7 +320,9 @@ final class BatchesRawService implements BatchesRawContract
             path: ['v1/messages/batches/%1$s/results?beta=true', $messageBatchID],
             headers: Util::array_transform_keys(
                 ['Accept' => 'application/x-jsonl', ...$parsed],
-                ['betas' => 'anthropic-beta'],
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],

@@ -15,7 +15,10 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\SkillsService::list()
  *
  * @phpstan-type SkillListParamsShape = array{
- *   limit?: int|null, page?: string|null, source?: string|null
+ *   limit?: int|null,
+ *   page?: string|null,
+ *   source?: string|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class SkillListParams implements BaseModel
@@ -50,6 +53,9 @@ final class SkillListParams implements BaseModel
     #[Optional(nullable: true)]
     public ?string $source;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -63,13 +69,15 @@ final class SkillListParams implements BaseModel
     public static function with(
         ?int $limit = null,
         ?string $page = null,
-        ?string $source = null
+        ?string $source = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
         null !== $limit && $self['limit'] = $limit;
         null !== $page && $self['page'] = $page;
         null !== $source && $self['source'] = $source;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -111,6 +119,14 @@ final class SkillListParams implements BaseModel
     {
         $self = clone $this;
         $self['source'] = $source;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

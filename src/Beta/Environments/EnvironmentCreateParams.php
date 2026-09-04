@@ -28,6 +28,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   metadata?: array<string,string>|null,
  *   scope?: null|Scope|value-of<Scope>,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class EnvironmentCreateParams implements BaseModel
@@ -80,6 +81,9 @@ final class EnvironmentCreateParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     /**
      * `new EnvironmentCreateParams()` is missing required properties by the API.
      *
@@ -116,6 +120,7 @@ final class EnvironmentCreateParams implements BaseModel
         ?array $metadata = null,
         Scope|string|null $scope = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -126,6 +131,7 @@ final class EnvironmentCreateParams implements BaseModel
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $scope && $self['scope'] = $scope;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -201,6 +207,14 @@ final class EnvironmentCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

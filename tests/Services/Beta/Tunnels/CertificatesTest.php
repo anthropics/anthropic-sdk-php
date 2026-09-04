@@ -49,6 +49,7 @@ final class CertificatesTest extends TestCase
             'tunnel_id',
             caCertificatePEM: 'ca_certificate_pem',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -59,7 +60,7 @@ final class CertificatesTest extends TestCase
     public function testRetrieve(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('buildURL drops path-level query params (SDK-4349)');
+            $this->markTestSkipped('buildURL drops path-level query params');
         }
 
         $result = $this->client->beta->tunnels->certificates->retrieve(
@@ -75,13 +76,14 @@ final class CertificatesTest extends TestCase
     public function testRetrieveWithOptionalParams(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('buildURL drops path-level query params (SDK-4349)');
+            $this->markTestSkipped('buildURL drops path-level query params');
         }
 
         $result = $this->client->beta->tunnels->certificates->retrieve(
             'certificate_id',
             tunnelID: 'tunnel_id',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -92,7 +94,7 @@ final class CertificatesTest extends TestCase
     public function testList(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('buildURL drops path-level query params (SDK-4349)');
+            $this->markTestSkipped('buildURL drops path-level query params');
         }
 
         $page = $this->client->beta->tunnels->certificates->list('tunnel_id');
@@ -125,6 +127,7 @@ final class CertificatesTest extends TestCase
             'certificate_id',
             tunnelID: 'tunnel_id',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

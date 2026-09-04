@@ -179,6 +179,7 @@ final class BatchesTest extends TestCase
             ],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             userProfileID: 'anthropic-user-profile-id',
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

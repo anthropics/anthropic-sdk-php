@@ -80,6 +80,7 @@ final class MessagesRawService implements MessagesRawContract
      *   topK?: int,
      *   topP?: float,
      *   userProfileID?: string,
+     *   workspaceID?: string,
      * }|MessageCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -95,7 +96,10 @@ final class MessagesRawService implements MessagesRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['userProfileID' => 'anthropic-user-profile-id'];
+        $header_params = [
+            'userProfileID' => 'anthropic-user-profile-id',
+            'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -136,6 +140,7 @@ final class MessagesRawService implements MessagesRawContract
      *   topK?: int,
      *   topP?: float,
      *   userProfileID?: string,
+     *   workspaceID?: string,
      * }|MessageCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -152,7 +157,10 @@ final class MessagesRawService implements MessagesRawContract
             $requestOptions,
         );
         $parsed['stream'] = true;
-        $header_params = ['userProfileID' => 'anthropic-user-profile-id'];
+        $header_params = [
+            'userProfileID' => 'anthropic-user-profile-id',
+            'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -197,6 +205,7 @@ final class MessagesRawService implements MessagesRawContract
      *   toolChoice?: ToolChoiceShape,
      *   tools?: list<MessageCountTokensToolShape>,
      *   userProfileID?: string,
+     *   workspaceID?: string,
      * }|MessageCountTokensParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -212,7 +221,10 @@ final class MessagesRawService implements MessagesRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['userProfileID' => 'anthropic-user-profile-id'];
+        $header_params = [
+            'userProfileID' => 'anthropic-user-profile-id',
+            'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

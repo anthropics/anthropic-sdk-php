@@ -78,6 +78,9 @@ final class SessionsService implements SessionsContract
      * @param string|null $title body param: Human-readable session title
      * @param list<string> $vaultIDs body param: Vault IDs for stored credentials the agent can use during the session
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -92,6 +95,7 @@ final class SessionsService implements SessionsContract
         ?string $title = null,
         ?array $vaultIDs = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsSession {
         $params = Util::removeNulls(
@@ -105,6 +109,7 @@ final class SessionsService implements SessionsContract
                 'title' => $title,
                 'vaultIDs' => $vaultIDs,
                 'betas' => $betas,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -121,6 +126,9 @@ final class SessionsService implements SessionsContract
      *
      * @param string $sessionID Path parameter session_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -128,9 +136,12 @@ final class SessionsService implements SessionsContract
     public function retrieve(
         string $sessionID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsSession {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($sessionID, params: $params, requestOptions: $requestOptions);
@@ -150,6 +161,9 @@ final class SessionsService implements SessionsContract
      * @param string|null $title body param: Human-readable session title
      * @param list<string> $vaultIDs Body param: Vault IDs (`vlt_*`) to attach to the session. Not yet supported; requests setting this field are rejected. Reserved for future use.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -162,6 +176,7 @@ final class SessionsService implements SessionsContract
         ?string $title = null,
         ?array $vaultIDs = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsSession {
         $params = Util::removeNulls(
@@ -172,6 +187,7 @@ final class SessionsService implements SessionsContract
                 'title' => $title,
                 'vaultIDs' => $vaultIDs,
                 'betas' => $betas,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -200,6 +216,9 @@ final class SessionsService implements SessionsContract
      * @param string $page query param: Opaque pagination cursor from a previous response
      * @param list<Status|value-of<Status>> $statuses Query param: Filter by session status. Repeat the parameter to match any of multiple statuses.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @return BidirectionalPageCursor<BetaManagedAgentsSession>
@@ -221,6 +240,7 @@ final class SessionsService implements SessionsContract
         ?string $page = null,
         ?array $statuses = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BidirectionalPageCursor {
         $params = Util::removeNulls(
@@ -239,6 +259,7 @@ final class SessionsService implements SessionsContract
                 'page' => $page,
                 'statuses' => $statuses,
                 'betas' => $betas,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -255,6 +276,9 @@ final class SessionsService implements SessionsContract
      *
      * @param string $sessionID Path parameter session_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -262,9 +286,12 @@ final class SessionsService implements SessionsContract
     public function delete(
         string $sessionID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsDeletedSession {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($sessionID, params: $params, requestOptions: $requestOptions);
@@ -279,6 +306,9 @@ final class SessionsService implements SessionsContract
      *
      * @param string $sessionID Path parameter session_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -286,9 +316,12 @@ final class SessionsService implements SessionsContract
     public function archive(
         string $sessionID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaManagedAgentsSession {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->archive($sessionID, params: $params, requestOptions: $requestOptions);

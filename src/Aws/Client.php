@@ -91,12 +91,12 @@ class Client extends \Anthropic\Client
     }
 
     /**
-     * Applies workspace-id header (not overridable by user headers) and
-     * signs the request with SigV4 if configured.
+     * Applies the client workspace-id header unless the request already carries
+     * one (a per-request value wins), then signs the request with SigV4 if configured.
      */
     protected function transformRequest(RequestInterface $request): RequestInterface
     {
-        if (null !== $this->resolvedWorkspaceId) {
+        if (null !== $this->resolvedWorkspaceId && !$request->hasHeader('anthropic-workspace-id')) {
             $request = $request->withHeader('anthropic-workspace-id', $this->resolvedWorkspaceId);
         }
 

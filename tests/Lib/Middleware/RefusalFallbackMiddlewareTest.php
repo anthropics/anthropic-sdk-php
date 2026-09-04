@@ -861,6 +861,79 @@ class RefusalFallbackMiddlewareTest extends TestCase
         $this->assertSame('partial', $block['text'] ?? null);
     }
 
+    public function testEmptyObjectsStayObjectsOnEveryAttempt(): void
+    {
+        $emptyObjects = '"metadata":{},'
+            .'"messages":[{"role":"user","content":"hi"},'
+            .'{"role":"assistant","content":[{"type":"tool_use","id":"t","name":"n","input":{}}]},'
+            .'{"role":"user","content":[{"type":"tool_result","tool_use_id":"t","content":"ok"}]}],'
+            .'"output_config":{"format":{"type":"json_schema","schema":{"type":"object","properties":{}}}';
+        $body = '{"model":"'.self::PRIMARY.'","max_tokens":16,'.$emptyObjects.'}}';
+
+        $responses = [self::refusal(model: self::PRIMARY, token: 'tok_1'), self::message(model: self::FALLBACK)];
+        $sent = self::send(
+            new RefusalFallbackMiddleware([['model' => self::FALLBACK, 'output_config' => ['effort' => 'high']]]),
+            body: $body,
+            responses: $responses,
+        );
+
+        $this->assertSame([
+            $body,
+            '{"model":"'.self::FALLBACK.'","max_tokens":16,'.$emptyObjects.',"effort":"high"},'
+                .'"fallback_credit_token":{"token":"tok_1","mode":"best_effort"}}',
+        ], $sent);
+    }
+
+    public function testStreamingEchoKeepsEmptyToolInputsAsObjects(): void
+    {
+        $leg1 = implode('', [
+            "event: message_start\n",
+            'data: {"type":"message_start","message":{"id":"msg_r","type":"message","role":"assistant","model":"'.self::PRIMARY.'","content":[],"usage":{"input_tokens":1,"output_tokens":0}}}'."\n\n",
+            "event: content_block_start\n",
+            'data: {"type":"content_block_start","index":0,"content_block":{"type":"tool_use","id":"t1","name":"n","input":{}}}'."\n\n",
+            "event: content_block_stop\n",
+            'data: {"type":"content_block_stop","index":0}'."\n\n",
+            "event: content_block_start\n",
+            'data: {"type":"content_block_start","index":1,"content_block":{"type":"tool_use","id":"t2","name":"n","input":{}}}'."\n\n",
+            "event: content_block_delta\n",
+            'data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"{\"a\":{}}"}}'."\n\n",
+            "event: content_block_stop\n",
+            'data: {"type":"content_block_stop","index":1}'."\n\n",
+            "event: message_delta\n",
+            'data: {"type":"message_delta","delta":{"stop_reason":"refusal","stop_details":{"type":"refusal","fallback_credit_token":"tok_s","fallback_has_prefill_claim":true}},"usage":{"output_tokens":1}}'."\n\n",
+            "event: message_stop\n",
+            'data: {"type":"message_stop"}'."\n\n",
+        ]);
+        $leg2 = implode('', [
+            "event: message_start\n",
+            'data: {"type":"message_start","message":{"id":"msg_f","type":"message","role":"assistant","model":"'.self::FALLBACK.'","content":[],"usage":{"input_tokens":1,"output_tokens":0}}}'."\n\n",
+            "event: message_delta\n",
+            'data: {"type":"message_delta","delta":{"stop_reason":"end_turn"},"usage":{"output_tokens":1}}'."\n\n",
+            "event: message_stop\n",
+            'data: {"type":"message_stop"}'."\n\n",
+        ]);
+        $responses = array_map(
+            static fn (string $sse) => Psr17FactoryDiscovery::findResponseFactory()
+                ->createResponse(200)
+                ->withHeader('Content-Type', 'text/event-stream')
+                ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream($sse)),
+            [$leg1, $leg2],
+        );
+
+        $messages = '"messages":[{"role":"user","content":"hi"}';
+        $body = '{"model":"'.self::PRIMARY.'","max_tokens":16,"metadata":{},'.$messages.'],"stream":true}';
+
+        $sent = self::send(new RefusalFallbackMiddleware([['model' => self::FALLBACK]]), body: $body, responses: $responses);
+
+        $this->assertSame([
+            $body,
+            '{"model":"'.self::FALLBACK.'","max_tokens":16,"metadata":{},'.$messages.','
+                .'{"role":"assistant","content":[{"type":"tool_use","id":"t1","name":"n","input":{}},'
+                .'{"type":"tool_use","id":"t2","name":"n","input":{"a":{}}}]}],"stream":true,'
+                .'"fallback_credit_token":{"token":"tok_s","mode":"best_effort"}}',
+        ], $sent);
+    }
+
     public function testSkipsRequestsItDoesNotApplyTo(): void
     {
         $this->transporter->addResponse(self::json(['data' => [], 'has_more' => false, 'first_id' => null, 'last_id' => null]));
@@ -916,6 +989,34 @@ class RefusalFallbackMiddlewareTest extends TestCase
             apiKey: 'my-anthropic-api-key',
             requestOptions: ['transporter' => $this->transporter, 'middleware' => [$middleware]],
         );
+    }
+
+    /**
+     * Runs one raw JSON body through the middleware, draining the served
+     * body so a streaming walk finishes, and returns each attempt's wire bytes.
+     *
+     * @param list<ResponseInterface> $responses
+     *
+     * @return list<string>
+     */
+    private static function send(RefusalFallbackMiddleware $middleware, string $body, array $responses): array
+    {
+        $factory = Psr17FactoryDiscovery::findStreamFactory();
+        $request = Psr17FactoryDiscovery::findRequestFactory()
+            ->createRequest('POST', 'https://api.anthropic.com/v1/messages?beta=true')
+            ->withHeader('Content-Type', 'application/json')
+            ->withBody($factory->createStream($body))
+        ;
+
+        $sent = [];
+        $response = $middleware->handle($request, static function (RequestInterface $r) use (&$sent, &$responses): ResponseInterface {
+            $sent[] = (string) $r->getBody();
+
+            return array_shift($responses) ?? throw new \RuntimeException('no response queued');
+        });
+        (string) $response->getBody();
+
+        return $sent;
     }
 
     /** @return array<string,mixed> */

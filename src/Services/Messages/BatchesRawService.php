@@ -10,9 +10,13 @@ use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
 use Anthropic\JsonLStream;
+use Anthropic\Messages\Batches\BatchCancelParams;
 use Anthropic\Messages\Batches\BatchCreateParams;
 use Anthropic\Messages\Batches\BatchCreateParams\Request;
+use Anthropic\Messages\Batches\BatchDeleteParams;
 use Anthropic\Messages\Batches\BatchListParams;
+use Anthropic\Messages\Batches\BatchResultsParams;
+use Anthropic\Messages\Batches\BatchRetrieveParams;
 use Anthropic\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Messages\Batches\MessageBatch;
 use Anthropic\Messages\Batches\MessageBatchIndividualResponse;
@@ -42,7 +46,9 @@ final class BatchesRawService implements BatchesRawContract
      * Learn more about the Message Batches API in our [user guide](https://platform.claude.com/docs/en/build-with-claude/batch-processing)
      *
      * @param array{
-     *   requests: list<Request|RequestShape>, userProfileID?: string
+     *   requests: list<Request|RequestShape>,
+     *   userProfileID?: string,
+     *   workspaceID?: string,
      * }|BatchCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -58,7 +64,10 @@ final class BatchesRawService implements BatchesRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['userProfileID' => 'anthropic-user-profile-id'];
+        $header_params = [
+            'userProfileID' => 'anthropic-user-profile-id',
+            'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -85,6 +94,7 @@ final class BatchesRawService implements BatchesRawContract
      * Learn more about the Message Batches API in our [user guide](https://platform.claude.com/docs/en/build-with-claude/batch-processing)
      *
      * @param string $messageBatchID ID of the Message Batch
+     * @param array{workspaceID?: string}|BatchRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<MessageBatch>
@@ -93,13 +103,23 @@ final class BatchesRawService implements BatchesRawContract
      */
     public function retrieve(
         string $messageBatchID,
-        RequestOptions|array|null $requestOptions = null
+        array|BatchRetrieveParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
+        [$parsed, $options] = BatchRetrieveParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['v1/messages/batches/%1$s', $messageBatchID],
-            options: $requestOptions,
+            headers: Util::array_transform_keys(
+                $parsed,
+                ['workspaceID' => 'anthropic-workspace-id']
+            ),
+            options: $options,
             convert: MessageBatch::class,
         );
     }
@@ -112,7 +132,7 @@ final class BatchesRawService implements BatchesRawContract
      * Learn more about the Message Batches API in our [user guide](https://platform.claude.com/docs/en/build-with-claude/batch-processing)
      *
      * @param array{
-     *   afterID?: string, beforeID?: string, limit?: int
+     *   afterID?: string, beforeID?: string, limit?: int, workspaceID?: string
      * }|BatchListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -128,14 +148,22 @@ final class BatchesRawService implements BatchesRawContract
             $params,
             $requestOptions,
         );
+        $query_params = array_flip(['afterID', 'beforeID', 'limit']);
+
+        /** @var array<string,string> */
+        $header_params = array_diff_key($parsed, $query_params);
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'v1/messages/batches',
             query: Util::array_transform_keys(
-                $parsed,
-                ['afterID' => 'after_id', 'beforeID' => 'before_id']
+                array_intersect_key($parsed, $query_params),
+                ['afterID' => 'after_id', 'beforeID' => 'before_id'],
+            ),
+            headers: Util::array_transform_keys(
+                $header_params,
+                ['workspaceID' => 'anthropic-workspace-id']
             ),
             options: $options,
             convert: MessageBatch::class,
@@ -153,6 +181,7 @@ final class BatchesRawService implements BatchesRawContract
      * Learn more about the Message Batches API in our [user guide](https://platform.claude.com/docs/en/build-with-claude/batch-processing)
      *
      * @param string $messageBatchID ID of the Message Batch
+     * @param array{workspaceID?: string}|BatchDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DeletedMessageBatch>
@@ -161,13 +190,23 @@ final class BatchesRawService implements BatchesRawContract
      */
     public function delete(
         string $messageBatchID,
-        RequestOptions|array|null $requestOptions = null
+        array|BatchDeleteParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
+        [$parsed, $options] = BatchDeleteParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
             path: ['v1/messages/batches/%1$s', $messageBatchID],
-            options: $requestOptions,
+            headers: Util::array_transform_keys(
+                $parsed,
+                ['workspaceID' => 'anthropic-workspace-id']
+            ),
+            options: $options,
             convert: DeletedMessageBatch::class,
         );
     }
@@ -182,6 +221,7 @@ final class BatchesRawService implements BatchesRawContract
      * Learn more about the Message Batches API in our [user guide](https://platform.claude.com/docs/en/build-with-claude/batch-processing)
      *
      * @param string $messageBatchID ID of the Message Batch
+     * @param array{workspaceID?: string}|BatchCancelParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<MessageBatch>
@@ -190,13 +230,23 @@ final class BatchesRawService implements BatchesRawContract
      */
     public function cancel(
         string $messageBatchID,
-        RequestOptions|array|null $requestOptions = null
+        array|BatchCancelParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
+        [$parsed, $options] = BatchCancelParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: ['v1/messages/batches/%1$s/cancel', $messageBatchID],
-            options: $requestOptions,
+            headers: Util::array_transform_keys(
+                $parsed,
+                ['workspaceID' => 'anthropic-workspace-id']
+            ),
+            options: $options,
             convert: MessageBatch::class,
         );
     }
@@ -205,6 +255,7 @@ final class BatchesRawService implements BatchesRawContract
      * @api
      *
      * @param string $messageBatchID ID of the Message Batch
+     * @param array{workspaceID?: string}|BatchResultsParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<BaseStream<MessageBatchIndividualResponse>>
@@ -213,14 +264,23 @@ final class BatchesRawService implements BatchesRawContract
      */
     public function resultsStream(
         string $messageBatchID,
-        RequestOptions|array|null $requestOptions = null
+        array|BatchResultsParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
+        [$parsed, $options] = BatchResultsParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['v1/messages/batches/%1$s/results', $messageBatchID],
-            headers: ['Accept' => 'application/x-jsonl'],
-            options: $requestOptions,
+            headers: Util::array_transform_keys(
+                ['Accept' => 'application/x-jsonl', ...$parsed],
+                ['workspaceID' => 'anthropic-workspace-id'],
+            ),
+            options: $options,
             convert: MessageBatchIndividualResponse::class,
             stream: JsonLStream::class,
         );

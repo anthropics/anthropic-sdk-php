@@ -111,11 +111,11 @@ class UtilTest extends TestCase
     #[Test]
     public function testMergeBodyStdClassBaseWithArrayExtra(): void
     {
-        $body = (object) ['model' => 'claude-sonnet-4-5', 'max_tokens' => 1];
+        $body = (object) ['model' => 'model-x', 'max_tokens' => 1];
         $actual = Util::mergeBody($body, extraBody: ['max_tokens' => 2, 'extra' => 'yes']);
 
         $this->assertSame(
-            ['model' => 'claude-sonnet-4-5', 'max_tokens' => 2, 'extra' => 'yes'],
+            ['model' => 'model-x', 'max_tokens' => 2, 'extra' => 'yes'],
             $actual,
         );
     }
@@ -126,6 +126,15 @@ class UtilTest extends TestCase
         $actual = Util::mergeBody(['a' => 1], extraBody: (object) ['b' => 2]);
 
         $this->assertSame(['a' => 1, 'b' => 2], $actual);
+    }
+
+    #[Test]
+    public function testMergeBodyKeepsNumericStringKeys(): void
+    {
+        $actual = Util::mergeBody(['2024' => 'a', 'x' => 1], extraBody: ['2025' => 'b', 'x' => 2]);
+
+        $this->assertSame(['2024' => 'a', 'x' => 2, '2025' => 'b'], $actual);
+        $this->assertSame('{"2024":"a","x":2,"2025":"b"}', json_encode($actual));
     }
 
     #[Test]

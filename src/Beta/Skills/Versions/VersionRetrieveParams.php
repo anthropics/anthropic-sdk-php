@@ -19,6 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type VersionRetrieveParamsShape = array{
  *   skillID: string,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class VersionRetrieveParams implements BaseModel
@@ -42,6 +43,9 @@ final class VersionRetrieveParams implements BaseModel
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
+
+    #[Optional]
+    public ?string $workspaceID;
 
     /**
      * `new VersionRetrieveParams()` is missing required properties by the API.
@@ -69,13 +73,17 @@ final class VersionRetrieveParams implements BaseModel
      *
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
-    public static function with(string $skillID, ?array $betas = null): self
-    {
+    public static function with(
+        string $skillID,
+        ?array $betas = null,
+        ?string $workspaceID = null
+    ): self {
         $self = new self;
 
         $self['skillID'] = $skillID;
 
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -102,6 +110,14 @@ final class VersionRetrieveParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

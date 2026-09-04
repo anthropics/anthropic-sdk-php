@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\ComplianceSettings;
 
-use Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingUpdateParams\State;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
@@ -28,10 +27,12 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Beta\Organization\ComplianceSettingsService::update()
  *
- * @phpstan-import-type StateVariants from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingUpdateParams\State
- * @phpstan-import-type StateShape from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingUpdateParams\State
+ * @phpstan-import-type ComplianceSettingsStateParamVariants from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsStateParam
+ * @phpstan-import-type ComplianceSettingsStateParamShape from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsStateParam
  *
- * @phpstan-type ComplianceSettingUpdateParamsShape = array{state: StateShape}
+ * @phpstan-type ComplianceSettingUpdateParamsShape = array{
+ *   state: ComplianceSettingsStateParamShape
+ * }
  */
 final class ComplianceSettingUpdateParams implements BaseModel
 {
@@ -42,9 +43,9 @@ final class ComplianceSettingUpdateParams implements BaseModel
     /**
      * Desired state. Accepts the string shorthand "enabled" or "disabled" in place of the object form; the response always returns the canonical object form.
      *
-     * @var StateVariants $state
+     * @var ComplianceSettingsStateParamVariants $state
      */
-    #[Required(union: State::class)]
+    #[Required(union: ComplianceSettingsStateParam::class)]
     public ComplianceSettingsStateEnabledParam|ComplianceSettingsStateDisabledParam $state;
 
     /**
@@ -71,7 +72,7 @@ final class ComplianceSettingUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param StateShape $state
+     * @param ComplianceSettingsStateParamShape $state
      */
     public static function with(
         ComplianceSettingsStateEnabledParam|array|ComplianceSettingsStateDisabledParam $state,
@@ -86,7 +87,7 @@ final class ComplianceSettingUpdateParams implements BaseModel
     /**
      * Desired state. Accepts the string shorthand "enabled" or "disabled" in place of the object form; the response always returns the canonical object form.
      *
-     * @param StateShape $state
+     * @param ComplianceSettingsStateParamShape $state
      */
     public function withState(
         ComplianceSettingsStateEnabledParam|array|ComplianceSettingsStateDisabledParam $state,

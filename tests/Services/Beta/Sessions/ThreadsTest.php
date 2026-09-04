@@ -49,6 +49,7 @@ final class ThreadsTest extends TestCase
             'sthr_011CZkZVWa6oIjw0rgXZpnBt',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -59,7 +60,7 @@ final class ThreadsTest extends TestCase
     public function testList(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('buildURL drops path-level query params (SDK-4349)');
+            $this->markTestSkipped('buildURL drops path-level query params');
         }
 
         $page = $this->client->beta->sessions->threads->list(
@@ -94,6 +95,7 @@ final class ThreadsTest extends TestCase
             'sthr_011CZkZVWa6oIjw0rgXZpnBt',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

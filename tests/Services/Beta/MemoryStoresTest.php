@@ -48,6 +48,7 @@ final class MemoryStoresTest extends TestCase
             description: 'description',
             metadata: ['foo' => 'string'],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -76,7 +77,7 @@ final class MemoryStoresTest extends TestCase
     public function testList(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('buildURL drops path-level query params (SDK-4349)');
+            $this->markTestSkipped('buildURL drops path-level query params');
         }
 
         $page = $this->client->beta->memoryStores->list();

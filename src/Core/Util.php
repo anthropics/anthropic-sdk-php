@@ -27,6 +27,13 @@ final class Util
 
     public const STREAMING_CONTENT_TYPE = ['/^text\/event-stream/', self::JSONL_CONTENT_TYPE];
 
+    /**
+     * Matches `scheme://...` and `//...`, the only URI references that carry an authority (RFC 3986 section 3).
+     *
+     * parse_url() is trusted only on strings this matches, because it reads `host:8080/path` and `a/b:80/c` as a host and port.
+     */
+    private const URI_WITH_AUTHORITY = '#^([A-Za-z][A-Za-z0-9+.-]*:)?//#';
+
     public static function getenv(string $key): ?string
     {
         if (array_key_exists($key, array: $_ENV)) {
@@ -190,8 +197,10 @@ final class Util
             return $extra;
         }
 
-        if (is_array($base) && !array_is_list($base)) {
-            return [...$base, ...$extra];
+        // An empty array is map-shaped too: a body with no fields set still takes the extras.
+        // array_replace, not spread: spread renumbers integer keys, and PHP stores numeric-string keys as integers.
+        if (is_array($base) && ([] === $base || !array_is_list($base))) {
+            return array_replace($base, $extra);
         }
 
         return $body;
@@ -224,8 +233,7 @@ final class Util
         string $path,
         array $query = []
     ): UriInterface {
-        // parse_url misreads relative paths whose segments contain ':' as a scheme or host:port, so only absolute and network-path (`//host`) URLs go through it.
-        if (preg_match('#^([A-Za-z][A-Za-z0-9+.-]*:)?//#', $path)) {
+        if (preg_match(self::URI_WITH_AUTHORITY, $path)) {
             $parsed = parse_url($path) ?: [];
             if ($scheme = $parsed['scheme'] ?? null) {
                 $base = $base->withScheme($scheme);
@@ -256,6 +264,56 @@ final class Util
         $mergedQuery = array_merge_recursive($q1, $q2, $query);
 
         return $base->withQuery(self::encodeQuery($mergedQuery));
+    }
+
+    /**
+     * Resolves a URI reference (e.g. a Location header) against a base URI per RFC 3986 section 5.2: an absolute reference replaces every component, a relative one inherits only what it does not redefine. A reference with a scheme but no `//` authority (`mailto:x`, and equally `host:8080/path`) is rejected, since it names no host to send a request to.
+     */
+    public static function resolveUri(
+        UriInterface $base,
+        string $reference
+    ): UriInterface {
+        if (preg_match(self::URI_WITH_AUTHORITY, $reference)) {
+            $ref = parse_url($reference);
+            if (false === $ref) {
+                throw new \InvalidArgumentException('Unable to parse URI reference');
+            }
+
+            // Only the scheme may be inherited: userinfo, host, port, path and query all come from the reference.
+            return $base
+                ->withScheme($ref['scheme'] ?? $base->getScheme())
+                ->withUserInfo($ref['user'] ?? '', $ref['pass'] ?? null)
+                ->withHost($ref['host'] ?? '')
+                ->withPort($ref['port'] ?? null)
+                ->withPath(self::removeDotSegments($ref['path'] ?? ''))
+                ->withQuery($ref['query'] ?? '')
+                ->withFragment($ref['fragment'] ?? '')
+            ;
+        }
+
+        // RFC 3986 appendix B: a ':' before any '/', '?' or '#' ends a scheme, so this is not a relative path.
+        if (preg_match('~^[^:/?#]+:~', $reference)) {
+            throw new \InvalidArgumentException('URI reference has a scheme without a network authority');
+        }
+
+        [$rest, $fragment] = explode('#', $reference, 2) + [1 => ''];
+        [$path, $query] = explode('?', $rest, 2) + [1 => ''];
+        if ('' === $path) {
+            // A query- or fragment-only reference keeps the base path; only an empty one also keeps the base query.
+            $target = $base->withQuery('' === $rest ? $base->getQuery() : $query);
+        } else {
+            if (!str_starts_with($path, '/')) {
+                $basePath = $base->getPath();
+                $slash = strrpos($basePath, '/');
+                $path = '' !== $base->getAuthority() && '' === $basePath
+                    ? '/'.$path
+                    : (false === $slash ? $path : substr($basePath, 0, $slash + 1).$path);
+            }
+            // A reference with its own path never inherits the base query.
+            $target = $base->withPath(self::removeDotSegments($path))->withQuery($query);
+        }
+
+        return $target->withFragment($fragment);
     }
 
     public static function isStreamingRequest(RequestInterface $request): bool
@@ -317,7 +375,6 @@ final class Util
         mixed $body
     ): RequestInterface {
         if ($body instanceof StreamInterface) {
-            // @var RequestInterface
             return $req->withBody($body);
         }
 
@@ -327,7 +384,6 @@ final class Util
                 $encoded = json_encode($body, flags: self::JSON_ENCODE_FLAGS);
                 $stream = $factory->createStream($encoded);
 
-                // @var RequestInterface
                 return $req->withBody($stream);
             }
         }
@@ -336,22 +392,21 @@ final class Util
             [$boundary, $gen] = self::encodeMultipartStreaming($body);
             $encoded = implode('', iterator_to_array($gen, preserve_keys: false));
             $stream = $factory->createStream($encoded);
+            // A retried request already carries the previous attempt's boundary; replace it rather than appending a second one.
+            $contentType = preg_replace('/;\s*boundary=[^;]*/i', '', $contentType) ?? $contentType;
 
-            // @var RequestInterface
             return $req->withHeader('Content-Type', "{$contentType}; boundary={$boundary}")->withBody($stream);
         }
 
         if (is_resource($body)) {
             $stream = $factory->createStreamFromResource($body);
 
-            // @var RequestInterface
             return $req->withBody($stream);
         }
 
         if (is_string($body)) {
             $stream = $factory->createStream($body);
 
-            // @var RequestInterface
             return $req->withBody($stream);
         }
 
@@ -520,6 +575,32 @@ final class Util
         }
     }
 
+    private static function removeDotSegments(string $path): string
+    {
+        if ('' === $path) {
+            return '';
+        }
+
+        $out = [];
+        $segments = explode('/', $path);
+        foreach ($segments as $segment) {
+            if ('..' === $segment) {
+                array_pop($out);
+            } elseif ('.' !== $segment) {
+                $out[] = $segment;
+            }
+        }
+
+        $result = implode('/', $out);
+        $last = end($segments);
+        if (str_starts_with($path, '/') && !str_starts_with($result, '/')) {
+            return '/'.$result;
+        }
+
+        // "a/b/." and "a/b/.." name directories, so keep the trailing slash.
+        return '' !== $result && ('.' === $last || '..' === $last) ? $result.'/' : $result;
+    }
+
     /**
      * @param list<callable> $closing
      *
@@ -540,10 +621,21 @@ final class Util
             if (is_string($data)) {
                 yield $data;
             } else { // resource
+                $seekable = stream_get_meta_data($data)['seekable'];
+                if (!$seekable && feof($data)) {
+                    // A retry re-encodes the body; a pipe/socket that the first attempt drained would silently upload an empty part.
+                    throw new \InvalidArgumentException('Cannot retry a request whose file body is a non-seekable stream that was already consumed; pass a seekable stream or string contents.');
+                }
+                $start = ftell($data);
                 while (!feof($data)) {
-                    if ($read = fread($data, length: self::BUF_SIZE)) {
+                    $read = fread($data, length: self::BUF_SIZE);
+                    if (false !== $read && '' !== $read) {
                         yield $read;
                     }
+                }
+                // Put the cursor back so a retried request re-encodes the same bytes rather than an empty part.
+                if ($seekable && is_int($start)) {
+                    fseek($data, offset: $start);
                 }
             }
         } elseif (is_string($val) || is_numeric($val) || is_bool($val)) {

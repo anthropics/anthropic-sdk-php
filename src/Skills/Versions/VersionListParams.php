@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Skills\VersionsService::list()
  *
  * @phpstan-type VersionListParamsShape = array{
- *   limit?: int|null, page?: string|null
+ *   limit?: int|null, page?: string|null, workspaceID?: string|null
  * }
  */
 final class VersionListParams implements BaseModel
@@ -38,6 +38,9 @@ final class VersionListParams implements BaseModel
     #[Optional(nullable: true)]
     public ?string $page;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -48,12 +51,16 @@ final class VersionListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(?int $limit = null, ?string $page = null): self
-    {
+    public static function with(
+        ?int $limit = null,
+        ?string $page = null,
+        ?string $workspaceID = null
+    ): self {
         $self = new self;
 
         null !== $limit && $self['limit'] = $limit;
         null !== $page && $self['page'] = $page;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -78,6 +85,14 @@ final class VersionListParams implements BaseModel
     {
         $self = clone $this;
         $self['page'] = $page;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

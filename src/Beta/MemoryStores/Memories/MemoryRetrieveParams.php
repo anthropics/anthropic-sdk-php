@@ -20,6 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   memoryStoreID: string,
  *   view?: null|ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView>,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class MemoryRetrieveParams implements BaseModel
@@ -46,6 +47,9 @@ final class MemoryRetrieveParams implements BaseModel
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
+
+    #[Optional]
+    public ?string $workspaceID;
 
     /**
      * `new MemoryRetrieveParams()` is missing required properties by the API.
@@ -78,6 +82,7 @@ final class MemoryRetrieveParams implements BaseModel
         string $memoryStoreID,
         ManagedAgentsMemoryView|string|null $view = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -85,6 +90,7 @@ final class MemoryRetrieveParams implements BaseModel
 
         null !== $view && $self['view'] = $view;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -119,6 +125,14 @@ final class MemoryRetrieveParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

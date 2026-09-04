@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingUpdateParams\State;
+namespace Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsStateParam;
 
 enum Type: string
 {

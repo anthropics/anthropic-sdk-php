@@ -21,6 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   description?: string|null,
  *   metadata?: array<string,string>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class MemoryStoreCreateParams implements BaseModel
@@ -57,6 +58,9 @@ final class MemoryStoreCreateParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     /**
      * `new MemoryStoreCreateParams()` is missing required properties by the API.
      *
@@ -89,6 +93,7 @@ final class MemoryStoreCreateParams implements BaseModel
         ?string $description = null,
         ?array $metadata = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -97,6 +102,7 @@ final class MemoryStoreCreateParams implements BaseModel
         null !== $description && $self['description'] = $description;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -145,6 +151,14 @@ final class MemoryStoreCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

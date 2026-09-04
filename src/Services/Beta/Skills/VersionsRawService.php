@@ -43,6 +43,7 @@ final class VersionsRawService implements VersionsRawContract
      * @param array{
      *   files: list<string|FileParam>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|VersionCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -59,7 +60,9 @@ final class VersionsRawService implements VersionsRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -93,7 +96,9 @@ final class VersionsRawService implements VersionsRawContract
      *
      * Requests carrying the `skills-2025-10-02` beta header address versions by their Unix epoch timestamp instead (e.g., "1759178010641129").
      * @param array{
-     *   skillID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   skillID: string,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|VersionRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -119,7 +124,9 @@ final class VersionsRawService implements VersionsRawContract
             path: ['v1/skills/%1$s/versions/%2$s?beta=true', $skillID, $version],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: $options,
             convert: SkillVersion::class,
@@ -138,6 +145,7 @@ final class VersionsRawService implements VersionsRawContract
      *   limit?: int|null,
      *   page?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|VersionListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -166,7 +174,9 @@ final class VersionsRawService implements VersionsRawContract
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: $options,
             convert: SkillVersion::class,
@@ -183,7 +193,9 @@ final class VersionsRawService implements VersionsRawContract
      *
      * Requests carrying the `skills-2025-10-02` beta header address versions by their Unix epoch timestamp instead (e.g., "1759178010641129").
      * @param array{
-     *   skillID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   skillID: string,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|VersionDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -209,7 +221,9 @@ final class VersionsRawService implements VersionsRawContract
             path: ['v1/skills/%1$s/versions/%2$s?beta=true', $skillID, $version],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: $options,
             convert: DeletedSkillVersion::class,
@@ -225,7 +239,9 @@ final class VersionsRawService implements VersionsRawContract
      *
      * Requests carrying the `skills-2025-10-02` beta header address versions by their Unix epoch timestamp instead (e.g., "1759178010641129").
      * @param array{
-     *   skillID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   skillID: string,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|VersionDownloadParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -253,7 +269,9 @@ final class VersionsRawService implements VersionsRawContract
             ],
             headers: Util::array_transform_keys(
                 ['Accept' => 'application/binary', ...$parsed],
-                ['betas' => 'anthropic-beta'],
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: $options,
             convert: 'string',

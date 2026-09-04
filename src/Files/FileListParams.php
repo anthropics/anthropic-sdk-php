@@ -15,7 +15,10 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\FilesService::list()
  *
  * @phpstan-type FileListParamsShape = array{
- *   ids?: list<string>|null, limit?: int|null, page?: string|null
+ *   ids?: list<string>|null,
+ *   limit?: int|null,
+ *   page?: string|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class FileListParams implements BaseModel
@@ -46,6 +49,9 @@ final class FileListParams implements BaseModel
     #[Optional(nullable: true)]
     public ?string $page;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -61,13 +67,15 @@ final class FileListParams implements BaseModel
     public static function with(
         ?array $ids = null,
         ?int $limit = null,
-        ?string $page = null
+        ?string $page = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
         null !== $ids && $self['ids'] = $ids;
         null !== $limit && $self['limit'] = $limit;
         null !== $page && $self['page'] = $page;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -105,6 +113,14 @@ final class FileListParams implements BaseModel
     {
         $self = clone $this;
         $self['page'] = $page;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

@@ -17,7 +17,10 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Messages\BatchesService::list()
  *
  * @phpstan-type BatchListParamsShape = array{
- *   afterID?: string|null, beforeID?: string|null, limit?: int|null
+ *   afterID?: string|null,
+ *   beforeID?: string|null,
+ *   limit?: int|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class BatchListParams implements BaseModel
@@ -46,6 +49,9 @@ final class BatchListParams implements BaseModel
     #[Optional]
     public ?int $limit;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -59,13 +65,15 @@ final class BatchListParams implements BaseModel
     public static function with(
         ?string $afterID = null,
         ?string $beforeID = null,
-        ?int $limit = null
+        ?int $limit = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
         null !== $afterID && $self['afterID'] = $afterID;
         null !== $beforeID && $self['beforeID'] = $beforeID;
         null !== $limit && $self['limit'] = $limit;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -101,6 +109,14 @@ final class BatchListParams implements BaseModel
     {
         $self = clone $this;
         $self['limit'] = $limit;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

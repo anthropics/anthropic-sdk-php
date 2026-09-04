@@ -32,6 +32,11 @@ use Psr\Http\Message\UriInterface;
  */
 abstract class BaseClient
 {
+    /** Credential-bearing headers, never sent once a redirect chain has left the original origin. */
+    private const REDIRECT_SENSITIVE_HEADERS = [
+        'Authorization', 'Cookie', 'Proxy-Authorization', 'X-Api-Key',
+    ];
+
     private UriInterface $baseUrl;
 
     /**
@@ -90,7 +95,7 @@ abstract class BaseClient
         $request = Util::withSetHeaders($request, headers: $headers);
 
         // @phpstan-ignore-next-line argument.type
-        $rsp = $this->sendRequest($opts, req: $request, data: $data, redirectCount: 0, retryCount: 0);
+        $rsp = $this->sendRequest($opts, req: $request, data: $data, redirectCount: 0, retryCount: 0, crossOrigin: false);
 
         // @phpstan-ignore-next-line argument.type
         return new RawResponse(client: $this, request: $request, response: $rsp, options: $opts, requestInfo: $req, unwrap: $unwrap, stream: $stream, page: $page, convert: $convert ?? 'null');
@@ -202,19 +207,41 @@ abstract class BaseClient
 
     /**
      * @internal
+     *
+     * @return array{RequestInterface, bool}
      */
     protected function followRedirect(
         ResponseInterface $rsp,
         RequestInterface $req
-    ): RequestInterface {
+    ): array {
         $location = $rsp->getHeaderLine('Location');
         if (!$location) {
             throw new APIConnectionException($req, message: 'Redirection without Location header');
         }
 
-        $uri = Util::joinUri($req->getUri(), path: $location);
+        // RFC 3986 resolution, not a merge: an absolute Location must not inherit $from's query or userinfo.
+        $from = $req->getUri();
 
-        return $req->withUri($uri);
+        try {
+            $uri = Util::resolveUri($from, reference: $location);
+        } catch (\InvalidArgumentException $e) {
+            throw new APIConnectionException($req, previous: $e, message: 'Redirection with unparseable Location header');
+        }
+        // Same allowlist as Guzzle's redirect middleware: a 3xx must not steer the client to file://, gopher://, etc.
+        if (!in_array($uri->getScheme(), ['http', 'https'], strict: true)) {
+            throw new APIConnectionException($req, message: 'Redirection to unsupported scheme');
+        }
+        $redirect = $req->withUri($uri);
+        $crossOrigin = $uri->getScheme() !== $from->getScheme() || $uri->getHost() !== $from->getHost() || $uri->getPort() !== $from->getPort();
+
+        // Like browsers and Guzzle: a 303, or a 301/302 answering a non-GET/HEAD request, is refetched with a bodyless GET.
+        $code = $rsp->getStatusCode();
+        $method = strtoupper($req->getMethod());
+        if ((301 == $code || 302 == $code || 303 == $code) && 'GET' !== $method && 'HEAD' !== $method) {
+            $redirect = $redirect->withMethod('GET')->withoutHeader('Content-Type')->withoutHeader('Content-Length');
+        }
+
+        return [$redirect, $crossOrigin];
     }
 
     /**
@@ -236,12 +263,24 @@ abstract class BaseClient
             return true;
         }
 
-        $code = $rsp?->getStatusCode();
-        if (408 == $code || 409 == $code || 429 == $code || $code >= 500) {
+        // No response means the transport failed (connection refused/reset, DNS, TLS, timeout).
+        if (is_null($rsp)) {
             return true;
         }
 
-        return false;
+        // Note this is not a standard header. If the server explicitly says whether to retry, obey.
+        $shouldRetryHeader = $rsp->getHeaderLine('x-should-retry');
+        if ('true' === $shouldRetryHeader) {
+            return true;
+        }
+        if ('false' === $shouldRetryHeader) {
+            return false;
+        }
+
+        $code = $rsp->getStatusCode();
+
+        // Retry on request timeouts, lock timeouts, rate limits and internal errors.
+        return 408 == $code || 409 == $code || 429 == $code || $code >= 500;
     }
 
     /**
@@ -252,25 +291,44 @@ abstract class BaseClient
         int $retryCount,
         ?ResponseInterface $rsp
     ): float {
-        if (!empty($header = $rsp?->getHeaderLine('retry-after'))) {
+        $retryAfter = null;
+
+        // Note the `retry-after-ms` header may not be standard, but is a good idea and we'd like proactive support for it.
+        $header = $rsp?->getHeaderLine('retry-after-ms');
+        if (is_numeric($header)) {
+            $retryAfter = floatval($header) / 1000;
+        } elseif (($header = $rsp?->getHeaderLine('retry-after') ?? '') !== '') {
+            // About the Retry-After header: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Retry-After
             if (is_numeric($header)) {
-                return floatval($header);
-            }
-
-            try {
-                $date = new \DateTimeImmutable($header);
-                $span = time() - $date->getTimestamp();
-
-                return max(0.0, $span);
-            } catch (\DateMalformedStringException) {
+                $retryAfter = floatval($header);
+            } elseif (($date = strtotime($header)) !== false) {
+                $retryAfter = (float) ($date - time());
             }
         }
 
-        $scale = $retryCount ** 2;
-        $jitter = 1 - (0.25 * mt_rand() / mt_getrandmax());
-        $naive = ($opts->initialRetryDelay ?? RequestOptions::DEFAULT_INITIAL_RETRY_DELAY) * $scale * $jitter;
+        // If the API asks us to wait a certain amount of time, do what it says; otherwise calculate a default backoff.
+        if (!is_null($retryAfter) && $retryAfter > 0) {
+            return $retryAfter;
+        }
 
-        return max(0.0, min($naive, $opts->maxRetryDelay ?? RequestOptions::DEFAULT_MAX_RETRY_DELAY));
+        // Exponential backoff capped at maxRetryDelay, with up to 25% downward jitter.
+        $delay = min(($opts->initialRetryDelay ?? RequestOptions::DEFAULT_INITIAL_RETRY_DELAY) * 2 ** $retryCount, $opts->maxRetryDelay ?? RequestOptions::DEFAULT_MAX_RETRY_DELAY);
+        $jitter = 1 - 0.25 * mt_rand() / mt_getrandmax();
+
+        return $delay * $jitter;
+    }
+
+    /**
+     * @internal
+     */
+    protected function sleep(float $seconds): void
+    {
+        if ($seconds <= 0) {
+            return;
+        }
+
+        $whole = (int) floor($seconds);
+        time_nanosleep($whole, nanoseconds: (int) (($seconds - $whole) * 1e9));
     }
 
     /**
@@ -284,6 +342,7 @@ abstract class BaseClient
         mixed $data,
         int $retryCount,
         int $redirectCount,
+        bool $crossOrigin,
     ): ResponseInterface {
         $defaultTransporter = $opts->transporter;
         $streamingTransporter = $opts->streamingTransporter ?? $defaultTransporter;
@@ -292,11 +351,16 @@ abstract class BaseClient
         /** @var RequestInterface */
         $req = $req->withHeader('X-Stainless-Retry-Count', strval($retryCount));
         $req = Util::withSetBody($opts->streamFactory, req: $req, body: $data);
+        // A retry or redirect reuses the stream the previous attempt read from, and PSR-18 clients are not required to rewind it.
+        $body = $req->getBody();
+        if ($body->isSeekable()) {
+            $body->rewind();
+        }
 
         // The innermost step: per-backend signing and the actual HTTP
         // send. Middleware wraps around this, so request modifications it
         // makes are signed by transformRequest() here, per attempt.
-        $sendRequest = function (RequestInterface $req) use ($defaultTransporter, $streamingTransporter): ResponseInterface {
+        $sendRequest = function (RequestInterface $req) use ($defaultTransporter, $streamingTransporter, $crossOrigin): ResponseInterface {
             // Rewind the request body when a prior send consumed it — a
             // custom-retry middleware calling callNext more than once, or
             // stream reuse across SDK retries/redirects — so the full body
@@ -307,6 +371,12 @@ abstract class BaseClient
             }
 
             $req = $this->transformRequest($req);
+            // transformRequest() may sign each attempt, but credentials must never follow a redirect chain off the original origin.
+            if ($crossOrigin) {
+                foreach (self::REDIRECT_SENSITIVE_HEADERS as $header) {
+                    $req = $req->withoutHeader($header);
+                }
+            }
 
             $transporter = Util::isStreamingRequest($req) ? $streamingTransporter : $defaultTransporter;
 
@@ -342,17 +412,27 @@ abstract class BaseClient
                 throw new APIConnectionException($req, message: 'Maximum redirects exceeded');
             }
 
-            $req = $this->followRedirect($rsp, req: $req);
+            [$redirect, $leftOrigin] = $this->followRedirect($rsp, req: $req);
+            if ($redirect->getMethod() !== $req->getMethod()) {
+                // Rewritten to GET: this hop carries no body.
+                $redirect = $redirect->withBody($opts->streamFactory->createStream());
+                $data = null;
+            } elseif (!$body->isSeekable()) {
+                throw new APIConnectionException($req, message: 'Redirection requires resending a body that cannot be rewound');
+            }
 
-            return $this->sendRequest($opts, req: $req, data: $data, retryCount: $retryCount, redirectCount: ++$redirectCount);
+            return $this->sendRequest($opts, req: $redirect, data: $data, retryCount: $retryCount, redirectCount: ++$redirectCount, crossOrigin: $crossOrigin || $leftOrigin);
         }
 
-        if ($this->shouldRetry($opts, retryCount: $retryCount, rsp: $rsp, wantsRetryFromException: null !== $middlewareRetry)) {
+        // A body that cannot seek cannot be replayed, so a retry could send it empty or truncated.
+        if (($code >= 400 || is_null($rsp)) && $body->isSeekable() && $this->shouldRetry($opts, retryCount: $retryCount, rsp: $rsp, wantsRetryFromException: null !== $middlewareRetry)) {
             $seconds = $this->retryDelay($opts, retryCount: $retryCount, rsp: $rsp);
-            $floor = floor($seconds);
-            time_nanosleep((int) $floor, nanoseconds: (int) ($seconds - $floor) * 10 ** 9);
 
-            return $this->sendRequest($opts, req: $req, data: $data, retryCount: ++$retryCount, redirectCount: $redirectCount);
+            // Release the connection before sleeping so it can be reused for the retry.
+            $rsp?->getBody()->close();
+            $this->sleep($seconds);
+
+            return $this->sendRequest($opts, req: $req, data: $data, retryCount: ++$retryCount, redirectCount: $redirectCount, crossOrigin: $crossOrigin);
         }
 
         // Not retrying: a middleware RetryableException surfaces as-is, a

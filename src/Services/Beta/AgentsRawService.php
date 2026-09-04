@@ -55,6 +55,7 @@ final class AgentsRawService implements AgentsRawContract
      *   system?: string|null,
      *   tools?: list<ToolShape>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|AgentCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -70,7 +71,9 @@ final class AgentsRawService implements AgentsRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -99,7 +102,9 @@ final class AgentsRawService implements AgentsRawContract
      *
      * @param string $agentID Path param: Path parameter agent_id
      * @param array{
-     *   version?: int, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   version?: int,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|AgentRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -128,7 +133,9 @@ final class AgentsRawService implements AgentsRawContract
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -156,6 +163,7 @@ final class AgentsRawService implements AgentsRawContract
      *   tools?: list<ToolShape1>|null,
      *   version?: int,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|AgentUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -172,7 +180,9 @@ final class AgentsRawService implements AgentsRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -206,6 +216,7 @@ final class AgentsRawService implements AgentsRawContract
      *   limit?: int,
      *   page?: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|AgentListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -242,7 +253,9 @@ final class AgentsRawService implements AgentsRawContract
             ),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -260,7 +273,8 @@ final class AgentsRawService implements AgentsRawContract
      *
      * @param string $agentID Path parameter agent_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|AgentArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -284,7 +298,9 @@ final class AgentsRawService implements AgentsRawContract
             path: ['v1/agents/%1$s/archive?beta=true', $agentID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],

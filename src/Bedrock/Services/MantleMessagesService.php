@@ -96,6 +96,7 @@ final class MantleMessagesService implements MessagesContract
         ?int $topK = null,
         ?float $topP = null,
         ?string $userProfileID = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): Message {
         $params = Util::removeNulls(
@@ -163,6 +164,7 @@ final class MantleMessagesService implements MessagesContract
         ?int $topK = null,
         ?float $topP = null,
         ?string $userProfileID = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BaseStream {
         $params = Util::removeNulls(
@@ -216,6 +218,7 @@ final class MantleMessagesService implements MessagesContract
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?string $userProfileID = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): MessageTokensCount {
         $params = Util::removeNulls(

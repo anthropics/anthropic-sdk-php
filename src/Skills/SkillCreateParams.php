@@ -17,7 +17,9 @@ use Anthropic\Core\FileParam;
  * @see Anthropic\Services\SkillsService::create()
  *
  * @phpstan-type SkillCreateParamsShape = array{
- *   files: list<string|FileParam>, displayName?: string|null
+ *   files: list<string|FileParam>,
+ *   displayName?: string|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class SkillCreateParams implements BaseModel
@@ -43,6 +45,9 @@ final class SkillCreateParams implements BaseModel
      */
     #[Optional('display_name', nullable: true)]
     public ?string $displayName;
+
+    #[Optional]
+    public ?string $workspaceID;
 
     /**
      * `new SkillCreateParams()` is missing required properties by the API.
@@ -70,13 +75,17 @@ final class SkillCreateParams implements BaseModel
      *
      * @param list<string|FileParam> $files
      */
-    public static function with(array $files, ?string $displayName = null): self
-    {
+    public static function with(
+        array $files,
+        ?string $displayName = null,
+        ?string $workspaceID = null
+    ): self {
         $self = new self;
 
         $self['files'] = $files;
 
         null !== $displayName && $self['displayName'] = $displayName;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -105,6 +114,14 @@ final class SkillCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['displayName'] = $displayName;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

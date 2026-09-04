@@ -47,6 +47,7 @@ final class MemoriesRawService implements MemoriesRawContract
      *   path: string,
      *   view?: ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|MemoryCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -64,7 +65,9 @@ final class MemoriesRawService implements MemoriesRawContract
             $requestOptions,
         );
         $query_params = array_flip(['view']);
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -97,6 +100,7 @@ final class MemoriesRawService implements MemoriesRawContract
      *   memoryStoreID: string,
      *   view?: ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|MemoryRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -131,7 +135,9 @@ final class MemoriesRawService implements MemoriesRawContract
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
@@ -154,6 +160,7 @@ final class MemoriesRawService implements MemoriesRawContract
      *   path?: string|null,
      *   precondition?: ManagedAgentsPrecondition|ManagedAgentsPreconditionShape,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|MemoryUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -173,7 +180,9 @@ final class MemoriesRawService implements MemoriesRawContract
         $memoryStoreID = $parsed['memoryStoreID'];
         unset($parsed['memoryStoreID']);
         $query_params = array_flip(['view']);
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -216,6 +225,7 @@ final class MemoriesRawService implements MemoriesRawContract
      *   pathPrefix?: string,
      *   view?: ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|MemoryListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -249,7 +259,9 @@ final class MemoriesRawService implements MemoriesRawContract
             ),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
@@ -270,6 +282,7 @@ final class MemoriesRawService implements MemoriesRawContract
      *   memoryStoreID: string,
      *   expectedContentSha256?: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|MemoryDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -307,7 +320,9 @@ final class MemoriesRawService implements MemoriesRawContract
             ),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],

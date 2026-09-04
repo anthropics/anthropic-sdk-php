@@ -40,6 +40,7 @@ final class SkillsRawService implements SkillsRawContract
      *   files: list<string|FileParam>,
      *   displayName?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|SkillCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -55,7 +56,9 @@ final class SkillsRawService implements SkillsRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -89,7 +92,8 @@ final class SkillsRawService implements SkillsRawContract
      *
      * The format and length of IDs may change over time.
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|SkillRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -113,7 +117,9 @@ final class SkillsRawService implements SkillsRawContract
             path: ['v1/skills/%1$s?beta=true', $skillID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: $options,
             convert: BetaSkill::class,
@@ -130,6 +136,7 @@ final class SkillsRawService implements SkillsRawContract
      *   page?: string|null,
      *   source?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|SkillListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -157,7 +164,9 @@ final class SkillsRawService implements SkillsRawContract
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: $options,
             convert: BetaSkill::class,
@@ -174,7 +183,8 @@ final class SkillsRawService implements SkillsRawContract
      *
      * The format and length of IDs may change over time.
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|SkillDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -198,7 +208,9 @@ final class SkillsRawService implements SkillsRawContract
             path: ['v1/skills/%1$s?beta=true', $skillID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: $options,
             convert: BetaDeletedSkill::class,

@@ -105,6 +105,7 @@ final class MessagesTest extends TestCase
             topK: 5,
             topP: 0.7,
             userProfileID: 'anthropic-user-profile-id',
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -172,6 +173,7 @@ final class MessagesTest extends TestCase
                 ],
             ],
             userProfileID: 'anthropic-user-profile-id',
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

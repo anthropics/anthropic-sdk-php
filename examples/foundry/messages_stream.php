@@ -21,7 +21,7 @@ $stream = $client->messages->createStream(
             'content' => 'Hello, Claude!',
         ],
     ],
-    model: 'claude-haiku-4-5',
+    model: 'claude-sonnet-5',
 );
 
 foreach ($stream as $event) {

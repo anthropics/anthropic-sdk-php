@@ -352,24 +352,41 @@ class ClientTest extends TestCase
         $this->assertSame('env-workspace', $request->getHeaderLine('anthropic-workspace-id'));
     }
 
-    // ── Workspace-id header not overridable ─────────────────────────
+    // ── Per-request workspace-id overrides the client value ─────────
 
-    public function testWorkspaceIdNotOverridableByExtraHeaders(): void
+    public function testPerRequestExtraHeadersOverrideWorkspaceId(): void
     {
-        $client = new Client(
-            apiKey: 'key',
-            awsRegion: 'us-east-1',
-            workspaceId: 'default',
-            requestOptions: [
-                'transporter' => $this->transporter,
-                'extraHeaders' => ['anthropic-workspace-id' => 'override-attempt'],
-            ],
+        $client = $this->makeClient();
+
+        $client->messages->create(
+            1024,
+            [],
+            'claude-haiku-4-5',
+            requestOptions: ['extraHeaders' => ['anthropic-workspace-id' => 'per-request']],
         );
+        $request = $this->getLastRequest();
+
+        $this->assertSame(['per-request'], $request->getHeader('anthropic-workspace-id'));
+    }
+
+    public function testPerRequestWorkspaceIdParamOverridesClientWorkspaceId(): void
+    {
+        $client = $this->makeClient();
+
+        $client->messages->create(1024, [], 'claude-haiku-4-5', workspaceID: 'per-request');
+        $request = $this->getLastRequest();
+
+        $this->assertSame(['per-request'], $request->getHeader('anthropic-workspace-id'));
+    }
+
+    public function testClientWorkspaceIdSentWhenNoPerRequestValue(): void
+    {
+        $client = $this->makeClient();
 
         $client->messages->create(1024, [], 'claude-haiku-4-5');
         $request = $this->getLastRequest();
 
-        $this->assertSame('default', $request->getHeaderLine('anthropic-workspace-id'));
+        $this->assertSame(['default'], $request->getHeader('anthropic-workspace-id'));
     }
 
     // ── API key env var doesn't leak into SigV4 ─────────────────────

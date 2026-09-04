@@ -28,6 +28,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   sessionID?: string|null,
  *   view?: null|ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView>,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class MemoryVersionListParams implements BaseModel
@@ -108,6 +109,9 @@ final class MemoryVersionListParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -134,6 +138,7 @@ final class MemoryVersionListParams implements BaseModel
         ?string $sessionID = null,
         ManagedAgentsMemoryView|string|null $view = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -148,6 +153,7 @@ final class MemoryVersionListParams implements BaseModel
         null !== $sessionID && $self['sessionID'] = $sessionID;
         null !== $view && $self['view'] = $view;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -276,6 +282,14 @@ final class MemoryVersionListParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

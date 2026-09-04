@@ -16,7 +16,8 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\VaultsService::delete()
  *
  * @phpstan-type VaultDeleteParamsShape = array{
- *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null
+ *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class VaultDeleteParams implements BaseModel
@@ -33,6 +34,9 @@ final class VaultDeleteParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -45,11 +49,14 @@ final class VaultDeleteParams implements BaseModel
      *
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
-    public static function with(?array $betas = null): self
-    {
+    public static function with(
+        ?array $betas = null,
+        ?string $workspaceID = null
+    ): self {
         $self = new self;
 
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -63,6 +70,14 @@ final class VaultDeleteParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

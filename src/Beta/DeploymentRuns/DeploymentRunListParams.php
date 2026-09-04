@@ -26,6 +26,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   page?: string|null,
  *   triggerType?: null|BetaManagedAgentsTriggerType|value-of<BetaManagedAgentsTriggerType>,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class DeploymentRunListParams implements BaseModel
@@ -98,6 +99,9 @@ final class DeploymentRunListParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -122,6 +126,7 @@ final class DeploymentRunListParams implements BaseModel
         ?string $page = null,
         BetaManagedAgentsTriggerType|string|null $triggerType = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -135,6 +140,7 @@ final class DeploymentRunListParams implements BaseModel
         null !== $page && $self['page'] = $page;
         null !== $triggerType && $self['triggerType'] = $triggerType;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -250,6 +256,14 @@ final class DeploymentRunListParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

@@ -13,7 +13,7 @@ Full documentation is available at **[platform.claude.com/docs/en/api/sdks/php](
 <!-- x-release-please-start-version -->
 
 ```sh
-composer require "anthropic-ai/sdk:^0.46.0"
+composer require "anthropic-ai/sdk:^0.47.0"
 ```
 
 <!-- x-release-please-end -->
@@ -43,6 +43,9 @@ $message = $client->messages->create(
 
 var_dump($message->content);
 ```
+
+> [!NOTE]
+> This library uses named parameters to specify optional arguments. For forward compatibility, arguments must be set by name.
 
 ### Value Objects
 

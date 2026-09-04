@@ -34,7 +34,7 @@ class HttpDiscoveryTest extends TestCase
         ClassDiscovery::setStrategies([]);
 
         try {
-            new Client(apiKey: 'sk-ant-test');
+            new Client(apiKey: 'my-anthropic-api-key');
             $this->fail('Expected '.NotFoundException::class);
         } catch (NotFoundException $e) {
             $this->assertStringContainsString('composer require guzzlehttp/guzzle', $e->getMessage());

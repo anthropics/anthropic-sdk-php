@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Skills\Versions;
 
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
@@ -15,7 +16,9 @@ use Anthropic\Core\FileParam;
  *
  * @see Anthropic\Services\Skills\VersionsService::create()
  *
- * @phpstan-type VersionCreateParamsShape = array{files: list<string|FileParam>}
+ * @phpstan-type VersionCreateParamsShape = array{
+ *   files: list<string|FileParam>, workspaceID?: string|null
+ * }
  */
 final class VersionCreateParams implements BaseModel
 {
@@ -32,6 +35,9 @@ final class VersionCreateParams implements BaseModel
      */
     #[Required(list: FileParam::class)]
     public array $files;
+
+    #[Optional]
+    public ?string $workspaceID;
 
     /**
      * `new VersionCreateParams()` is missing required properties by the API.
@@ -59,11 +65,13 @@ final class VersionCreateParams implements BaseModel
      *
      * @param list<string|FileParam> $files
      */
-    public static function with(array $files): self
+    public static function with(array $files, ?string $workspaceID = null): self
     {
         $self = new self;
 
         $self['files'] = $files;
+
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -79,6 +87,14 @@ final class VersionCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['files'] = $files;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

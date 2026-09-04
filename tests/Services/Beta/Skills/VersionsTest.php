@@ -54,6 +54,7 @@ final class VersionsTest extends TestCase
                 FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
             ],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -79,6 +80,7 @@ final class VersionsTest extends TestCase
             'version',
             skillID: 'skill_id',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -118,6 +120,7 @@ final class VersionsTest extends TestCase
             'version',
             skillID: 'skill_id',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -143,6 +146,7 @@ final class VersionsTest extends TestCase
             'version',
             skillID: 'skill_id',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

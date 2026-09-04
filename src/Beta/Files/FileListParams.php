@@ -21,6 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   page?: string|null,
  *   scopeID?: string|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class FileListParams implements BaseModel
@@ -65,6 +66,9 @@ final class FileListParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -84,6 +88,7 @@ final class FileListParams implements BaseModel
         ?string $page = null,
         ?string $scopeID = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -92,6 +97,7 @@ final class FileListParams implements BaseModel
         null !== $page && $self['page'] = $page;
         null !== $scopeID && $self['scopeID'] = $scopeID;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -153,6 +159,14 @@ final class FileListParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

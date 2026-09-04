@@ -42,6 +42,9 @@ final class MemoryVersionsService implements MemoryVersionsContract
      * @param string $memoryStoreID Path param: Path parameter memory_store_id
      * @param ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView> $view Query param: Query parameter for view
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -51,10 +54,16 @@ final class MemoryVersionsService implements MemoryVersionsContract
         string $memoryStoreID,
         ManagedAgentsMemoryView|string|null $view = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): ManagedAgentsMemoryVersion {
         $params = Util::removeNulls(
-            ['memoryStoreID' => $memoryStoreID, 'view' => $view, 'betas' => $betas]
+            [
+                'memoryStoreID' => $memoryStoreID,
+                'view' => $view,
+                'betas' => $betas,
+                'workspaceID' => $workspaceID,
+            ],
         );
 
         // @phpstan-ignore-next-line argument.type
@@ -80,6 +89,9 @@ final class MemoryVersionsService implements MemoryVersionsContract
      * @param string $sessionID Query param: Query parameter for session_id
      * @param ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView> $view Query param: Query parameter for view
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<ManagedAgentsMemoryVersion>
@@ -99,6 +111,7 @@ final class MemoryVersionsService implements MemoryVersionsContract
         ?string $sessionID = null,
         ManagedAgentsMemoryView|string|null $view = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): PageCursor {
         $params = Util::removeNulls(
@@ -114,6 +127,7 @@ final class MemoryVersionsService implements MemoryVersionsContract
                 'sessionID' => $sessionID,
                 'view' => $view,
                 'betas' => $betas,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -131,6 +145,9 @@ final class MemoryVersionsService implements MemoryVersionsContract
      * @param string $memoryVersionID Path param: Path parameter memory_version_id
      * @param string $memoryStoreID Path param: Path parameter memory_store_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -139,10 +156,15 @@ final class MemoryVersionsService implements MemoryVersionsContract
         string $memoryVersionID,
         string $memoryStoreID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): ManagedAgentsMemoryVersion {
         $params = Util::removeNulls(
-            ['memoryStoreID' => $memoryStoreID, 'betas' => $betas]
+            [
+                'memoryStoreID' => $memoryStoreID,
+                'betas' => $betas,
+                'workspaceID' => $workspaceID,
+            ],
         );
 
         // @phpstan-ignore-next-line argument.type

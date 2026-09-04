@@ -13,7 +13,7 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\ComplianceSettingsRawContract;
 
 /**
- * @phpstan-import-type StateShape from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingUpdateParams\State
+ * @phpstan-import-type ComplianceSettingsStateParamShape from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsStateParam
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
 final class ComplianceSettingsRawService implements ComplianceSettingsRawContract
@@ -70,7 +70,9 @@ final class ComplianceSettingsRawService implements ComplianceSettingsRawContrac
      * after a `disabled` request. Automated provisioning never disables
      * compliance settings.
      *
-     * @param array{state: StateShape}|ComplianceSettingUpdateParams $params
+     * @param array{
+     *   state: ComplianceSettingsStateParamShape
+     * }|ComplianceSettingUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ComplianceSettings>

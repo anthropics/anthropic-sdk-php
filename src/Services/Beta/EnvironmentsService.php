@@ -55,6 +55,9 @@ final class EnvironmentsService implements EnvironmentsContract
      * @param array<string,string> $metadata Body param: User-provided metadata key-value pairs
      * @param Scope|value-of<Scope>|null $scope Body param: The visibility scope for this environment. 'organization' makes the environment visible to all accounts. 'account' restricts visibility to the owning account only. Only applicable for self-hosted environments. If not specified, defaults based on organization type.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -66,6 +69,7 @@ final class EnvironmentsService implements EnvironmentsContract
         ?array $metadata = null,
         Scope|string|null $scope = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaEnvironment {
         $params = Util::removeNulls(
@@ -76,6 +80,7 @@ final class EnvironmentsService implements EnvironmentsContract
                 'metadata' => $metadata,
                 'scope' => $scope,
                 'betas' => $betas,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -91,6 +96,9 @@ final class EnvironmentsService implements EnvironmentsContract
      * Retrieve a specific environment by ID.
      *
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -98,9 +106,12 @@ final class EnvironmentsService implements EnvironmentsContract
     public function retrieve(
         string $environmentID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaEnvironment {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($environmentID, params: $params, requestOptions: $requestOptions);
@@ -120,6 +131,9 @@ final class EnvironmentsService implements EnvironmentsContract
      * @param string|null $name Body param: Updated name for the environment
      * @param \Anthropic\Beta\Environments\EnvironmentUpdateParams\Scope|value-of<\Anthropic\Beta\Environments\EnvironmentUpdateParams\Scope>|null $scope Body param: The visibility scope for this environment. 'organization' makes the environment visible to all accounts. 'account' restricts visibility to the owning account only.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -132,6 +146,7 @@ final class EnvironmentsService implements EnvironmentsContract
         ?string $name = null,
         \Anthropic\Beta\Environments\EnvironmentUpdateParams\Scope|string|null $scope = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaEnvironment {
         $params = Util::removeNulls(
@@ -142,6 +157,7 @@ final class EnvironmentsService implements EnvironmentsContract
                 'name' => $name,
                 'scope' => $scope,
                 'betas' => $betas,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -160,6 +176,9 @@ final class EnvironmentsService implements EnvironmentsContract
      * @param int $limit Query param: Maximum number of environments to return
      * @param string|null $page Query param: Opaque cursor from previous response for pagination. Pass the `next_page` value from the previous response.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<BetaEnvironment>
@@ -171,6 +190,7 @@ final class EnvironmentsService implements EnvironmentsContract
         ?int $limit = null,
         ?string $page = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): PageCursor {
         $params = Util::removeNulls(
@@ -179,6 +199,7 @@ final class EnvironmentsService implements EnvironmentsContract
                 'limit' => $limit,
                 'page' => $page,
                 'betas' => $betas,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -194,6 +215,9 @@ final class EnvironmentsService implements EnvironmentsContract
      * Delete an environment by ID. Returns a confirmation of the deletion.
      *
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -201,9 +225,12 @@ final class EnvironmentsService implements EnvironmentsContract
     public function delete(
         string $environmentID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaEnvironmentDeleteResponse {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($environmentID, params: $params, requestOptions: $requestOptions);
@@ -217,6 +244,9 @@ final class EnvironmentsService implements EnvironmentsContract
      * Archive an environment by ID. Archived environments cannot be used to create new sessions.
      *
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -224,9 +254,12 @@ final class EnvironmentsService implements EnvironmentsContract
     public function archive(
         string $environmentID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): BetaEnvironment {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->archive($environmentID, params: $params, requestOptions: $requestOptions);

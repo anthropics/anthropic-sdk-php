@@ -40,6 +40,7 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
      *   memoryStoreID: string,
      *   view?: ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|MemoryVersionRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -74,7 +75,9 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
@@ -102,6 +105,7 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
      *   sessionID?: string,
      *   view?: ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|MemoryVersionListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -153,7 +157,9 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
             ),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
@@ -173,6 +179,7 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
      * @param array{
      *   memoryStoreID: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|MemoryVersionRedactParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -202,7 +209,9 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
             ],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],

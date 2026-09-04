@@ -41,6 +41,7 @@ final class VaultsRawService implements VaultsRawContract
      *   displayName: string,
      *   metadata?: array<string,string>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|VaultCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -56,7 +57,9 @@ final class VaultsRawService implements VaultsRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -85,7 +88,8 @@ final class VaultsRawService implements VaultsRawContract
      *
      * @param string $vaultID Path parameter vault_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|VaultRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -109,7 +113,9 @@ final class VaultsRawService implements VaultsRawContract
             path: ['v1/vaults/%1$s?beta=true', $vaultID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -129,6 +135,7 @@ final class VaultsRawService implements VaultsRawContract
      *   displayName?: string|null,
      *   metadata?: array<string,string|null>|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|VaultUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -145,7 +152,9 @@ final class VaultsRawService implements VaultsRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -177,6 +186,7 @@ final class VaultsRawService implements VaultsRawContract
      *   limit?: int,
      *   page?: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|VaultListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -207,7 +217,9 @@ final class VaultsRawService implements VaultsRawContract
             ),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -225,7 +237,8 @@ final class VaultsRawService implements VaultsRawContract
      *
      * @param string $vaultID Path parameter vault_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|VaultDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -249,7 +262,9 @@ final class VaultsRawService implements VaultsRawContract
             path: ['v1/vaults/%1$s?beta=true', $vaultID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -266,7 +281,8 @@ final class VaultsRawService implements VaultsRawContract
      *
      * @param string $vaultID Path parameter vault_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|VaultArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -290,7 +306,9 @@ final class VaultsRawService implements VaultsRawContract
             path: ['v1/vaults/%1$s/archive?beta=true', $vaultID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],

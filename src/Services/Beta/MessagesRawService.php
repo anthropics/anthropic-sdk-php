@@ -100,6 +100,7 @@ final class MessagesRawService implements MessagesRawContract
      *   topP?: float,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   userProfileID?: string,
+     *   workspaceID?: string,
      * }|MessageCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -118,6 +119,7 @@ final class MessagesRawService implements MessagesRawContract
         $header_params = [
             'betas' => 'anthropic-beta',
             'userProfileID' => 'anthropic-user-profile-id',
+            'workspaceID' => 'anthropic-workspace-id',
         ];
 
         // @phpstan-ignore-next-line return.type
@@ -167,6 +169,7 @@ final class MessagesRawService implements MessagesRawContract
      *   topP?: float,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   userProfileID?: string,
+     *   workspaceID?: string,
      * }|MessageCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -186,6 +189,7 @@ final class MessagesRawService implements MessagesRawContract
         $header_params = [
             'betas' => 'anthropic-beta',
             'userProfileID' => 'anthropic-user-profile-id',
+            'workspaceID' => 'anthropic-workspace-id',
         ];
 
         // @phpstan-ignore-next-line return.type
@@ -236,6 +240,7 @@ final class MessagesRawService implements MessagesRawContract
      *   tools?: list<ToolShape>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   userProfileID?: string,
+     *   workspaceID?: string,
      * }|MessageCountTokensParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -254,6 +259,7 @@ final class MessagesRawService implements MessagesRawContract
         $header_params = [
             'betas' => 'anthropic-beta',
             'userProfileID' => 'anthropic-user-profile-id',
+            'workspaceID' => 'anthropic-workspace-id',
         ];
 
         // @phpstan-ignore-next-line return.type

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Anthropic;
 
 use Anthropic\Core\Attributes\Optional;
-use Anthropic\Core\Attributes\Required as Property;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Lib\Middleware\BetaFallbackState;

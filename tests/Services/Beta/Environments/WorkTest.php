@@ -51,6 +51,7 @@ final class WorkTest extends TestCase
             'work_id',
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -78,6 +79,7 @@ final class WorkTest extends TestCase
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
             metadata: ['foo' => 'string'],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -88,7 +90,7 @@ final class WorkTest extends TestCase
     public function testList(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('buildURL drops path-level query params (SDK-4349)');
+            $this->markTestSkipped('buildURL drops path-level query params');
         }
 
         $page = $this->client->beta->environments->work->list(
@@ -171,7 +173,7 @@ final class WorkTest extends TestCase
     public function testStats(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('buildURL drops path-level query params (SDK-4349)');
+            $this->markTestSkipped('buildURL drops path-level query params');
         }
 
         $result = $this->client->beta->environments->work->stats(
@@ -202,6 +204,7 @@ final class WorkTest extends TestCase
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
             force: true,
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

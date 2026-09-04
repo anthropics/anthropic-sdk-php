@@ -26,6 +26,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   page?: string|null,
  *   types?: list<string>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class EventListParams implements BaseModel
@@ -94,6 +95,9 @@ final class EventListParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -118,6 +122,7 @@ final class EventListParams implements BaseModel
         ?string $page = null,
         ?array $types = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -130,6 +135,7 @@ final class EventListParams implements BaseModel
         null !== $page && $self['page'] = $page;
         null !== $types && $self['types'] = $types;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -235,6 +241,14 @@ final class EventListParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

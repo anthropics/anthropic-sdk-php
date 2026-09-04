@@ -44,7 +44,9 @@ final class ResourcesRawService implements ResourcesRawContract
      *
      * @param string $resourceID Path param: Path parameter resource_id
      * @param array{
-     *   sessionID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   sessionID: string,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|ResourceRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -72,7 +74,9 @@ final class ResourcesRawService implements ResourcesRawContract
             ],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -92,6 +96,7 @@ final class ResourcesRawService implements ResourcesRawContract
      *   sessionID: string,
      *   authorizationToken: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|ResourceUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -110,7 +115,9 @@ final class ResourcesRawService implements ResourcesRawContract
         );
         $sessionID = $parsed['sessionID'];
         unset($parsed['sessionID']);
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -144,6 +151,7 @@ final class ResourcesRawService implements ResourcesRawContract
      *   limit?: int,
      *   page?: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|ResourceListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -172,7 +180,9 @@ final class ResourcesRawService implements ResourcesRawContract
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -190,7 +200,9 @@ final class ResourcesRawService implements ResourcesRawContract
      *
      * @param string $resourceID Path param: Path parameter resource_id
      * @param array{
-     *   sessionID: string, betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   sessionID: string,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|ResourceDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -218,7 +230,9 @@ final class ResourcesRawService implements ResourcesRawContract
             ],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
@@ -239,6 +253,7 @@ final class ResourcesRawService implements ResourcesRawContract
      *   type: Type|value-of<Type>,
      *   mountPath?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|ResourceAddParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -255,7 +270,9 @@ final class ResourcesRawService implements ResourcesRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

@@ -20,6 +20,7 @@ use Anthropic\Core\FileParam;
  * @phpstan-type VersionCreateParamsShape = array{
  *   files: list<string|FileParam>,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class VersionCreateParams implements BaseModel
@@ -45,6 +46,9 @@ final class VersionCreateParams implements BaseModel
      */
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
+
+    #[Optional]
+    public ?string $workspaceID;
 
     /**
      * `new VersionCreateParams()` is missing required properties by the API.
@@ -73,13 +77,17 @@ final class VersionCreateParams implements BaseModel
      * @param list<string|FileParam> $files
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
-    public static function with(array $files, ?array $betas = null): self
-    {
+    public static function with(
+        array $files,
+        ?array $betas = null,
+        ?string $workspaceID = null
+    ): self {
         $self = new self;
 
         $self['files'] = $files;
 
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -108,6 +116,14 @@ final class VersionCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

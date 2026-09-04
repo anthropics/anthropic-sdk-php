@@ -43,6 +43,9 @@ final class WorkService implements WorkContract
      * @param string $workID Path param
      * @param string $environmentID Path param
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -51,10 +54,15 @@ final class WorkService implements WorkContract
         string $workID,
         string $environmentID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): SelfHostedWork {
         $params = Util::removeNulls(
-            ['environmentID' => $environmentID, 'betas' => $betas]
+            [
+                'environmentID' => $environmentID,
+                'betas' => $betas,
+                'workspaceID' => $workspaceID,
+            ],
         );
 
         // @phpstan-ignore-next-line argument.type
@@ -74,6 +82,9 @@ final class WorkService implements WorkContract
      * @param string $environmentID Path param
      * @param array<string,string|null> $metadata Body param: Metadata patch. Set a key to a string to upsert it, or to null to delete it. Omit the field to preserve existing metadata.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -83,6 +94,7 @@ final class WorkService implements WorkContract
         string $environmentID,
         array $metadata,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): SelfHostedWork {
         $params = Util::removeNulls(
@@ -90,6 +102,7 @@ final class WorkService implements WorkContract
                 'environmentID' => $environmentID,
                 'metadata' => $metadata,
                 'betas' => $betas,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -247,6 +260,9 @@ final class WorkService implements WorkContract
      * Get statistics about the work queue for an environment.
      *
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -254,9 +270,12 @@ final class WorkService implements WorkContract
     public function stats(
         string $environmentID,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): SelfHostedWorkQueueStats {
-        $params = Util::removeNulls(['betas' => $betas]);
+        $params = Util::removeNulls(
+            ['betas' => $betas, 'workspaceID' => $workspaceID]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->stats($environmentID, params: $params, requestOptions: $requestOptions);
@@ -275,6 +294,9 @@ final class WorkService implements WorkContract
      * @param string $environmentID Path param
      * @param bool $force Body param: If true, immediately stop work without graceful shutdown
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -284,10 +306,16 @@ final class WorkService implements WorkContract
         string $environmentID,
         ?bool $force = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): SelfHostedWork {
         $params = Util::removeNulls(
-            ['environmentID' => $environmentID, 'force' => $force, 'betas' => $betas]
+            [
+                'environmentID' => $environmentID,
+                'force' => $force,
+                'betas' => $betas,
+                'workspaceID' => $workspaceID,
+            ],
         );
 
         // @phpstan-ignore-next-line argument.type
