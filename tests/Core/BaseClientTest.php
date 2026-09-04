@@ -109,11 +109,15 @@ class BaseClientTest extends TestCase
         $transporter = new MockClient;
         $responseFactory = Psr17FactoryDiscovery::findResponseFactory();
         $streamFactory = Psr17FactoryDiscovery::findStreamFactory();
-        $transporter->setDefaultResponse(
-            $responseFactory->createResponse($status)
-                ->withHeader('Content-Type', 'application/json')
-                ->withBody($streamFactory->createStream('{}')),
-        );
+        // One fresh response per attempt: the retry loop closes a failed
+        // response's body, so a shared default response would come back detached.
+        for ($i = 0; $i < 8; ++$i) {
+            $transporter->addResponse(
+                $responseFactory->createResponse($status)
+                    ->withHeader('Content-Type', 'application/json')
+                    ->withBody($streamFactory->createStream('{}')),
+            );
+        }
 
         $requestOptions = RequestOptions::parse(
             RequestOptions::with(

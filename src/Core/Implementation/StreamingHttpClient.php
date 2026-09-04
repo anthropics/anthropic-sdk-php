@@ -21,10 +21,13 @@ final class StreamingHttpClient implements ClientInterface
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
         if (is_a($this->inner, '\GuzzleHttp\Client')) {
-            // http_errors must stay off: PSR-18 sendRequest (which Guzzle's
-            // own implementation honors) returns the response for every HTTP
-            // status, and callers — the retry loop, middleware — rely on it.
-            return $this->inner->send($request, ['stream' => true, 'http_errors' => false]);
+            // Same options as Guzzle's PSR-18 sendRequest(): error statuses and redirects must
+            // come back as responses so the base client can decide whether to retry or follow.
+            return $this->inner->send($request, [
+                'stream' => true,
+                'http_errors' => false,
+                'allow_redirects' => false,
+            ]);
         }
 
         return $this->inner->sendRequest($request);
