@@ -90,7 +90,7 @@ final class WorkTest extends TestCase
     public function testList(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('buildURL drops path-level query params (SDK-4349)');
+            $this->markTestSkipped('buildURL drops path-level query params');
         }
 
         $page = $this->client->beta->environments->work->list(
@@ -173,7 +173,7 @@ final class WorkTest extends TestCase
     public function testStats(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('buildURL drops path-level query params (SDK-4349)');
+            $this->markTestSkipped('buildURL drops path-level query params');
         }
 
         $result = $this->client->beta->environments->work->stats(
