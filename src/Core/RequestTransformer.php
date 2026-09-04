@@ -93,14 +93,15 @@ final class RequestTransformer
     {
         if (null === $this->body) {
             $stream = $this->request->getBody();
-            $decoded = json_decode((string) $stream, true);
+            // Nested objects stay stdClass so an empty `{}` re-encodes as `{}`, not `[]`.
+            $decoded = json_decode((string) $stream, false);
             if ($stream->isSeekable()) {
                 $stream->rewind();
             }
-            if (!is_array($decoded)) {
+            if (!$decoded instanceof \stdClass) {
                 throw new \InvalidArgumentException('Expected request body to be a JSON object.');
             }
-            $this->body = $decoded;
+            $this->body = (array) $decoded;
         }
 
         return $this->body;

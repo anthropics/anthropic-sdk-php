@@ -257,8 +257,7 @@ final class RefusalFallbackMiddleware implements Middleware
                 continue;
             }
             if (is_array($value) && isset(self::NESTED_OVERRIDE_KEYS[$key])) {
-                $current = $body[$key] ?? null;
-                $value = self::patch(is_array($current) ? $current : [], patch: $value);
+                $value = self::patch(self::bodyArray($body[$key] ?? null) ?? [], patch: $value);
                 if ([] === $value) {
                     // patched down to no subfields: drop the field rather than
                     // send an empty object
@@ -1164,9 +1163,13 @@ final class RefusalFallbackMiddleware implements Middleware
                     }
                 }
 
+                // The echoed block is re-encoded: an empty `input` decoded from the stream is `[]`, which must go back out as `{}`.
+                if ([] === ($block['input'] ?? null)) {
+                    $block['input'] = new \stdClass;
+                }
                 $partial = self::str($raw['partial_json'] ?? null);
                 if ('' !== $partial) {
-                    $decoded = json_decode($partial, associative: true);
+                    $decoded = json_decode($partial);
                     if (!is_null($decoded)) {
                         $block['input'] = $decoded;
                     }
@@ -1685,7 +1688,7 @@ final class RefusalFallbackMiddleware implements Middleware
     }
 
     /**
-     * Decodes the outgoing request body to its wire-shape array, restoring
+     * Decodes the outgoing request body to its wire shape, restoring
      * the stream so the rest of the pipeline can read it again. A
      * non-seekable body is left untouched — the SDK always builds seekable
      * bodies, so this is a stand-down guard.
@@ -1703,7 +1706,8 @@ final class RefusalFallbackMiddleware implements Middleware
             return null;
         }
 
-        return json_decode($raw, associative: true);
+        // Nested objects stay stdClass so an empty `{}` re-encodes as `{}`, not `[]`.
+        return json_decode($raw);
     }
 
     /**
