@@ -13,6 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-import-type BetaUserProfileTrustGrantShape from \Anthropic\Beta\UserProfiles\BetaUserProfileTrustGrant
+ * @phpstan-import-type BetaUserProfileExternalUserDetailsShape from \Anthropic\Beta\UserProfiles\BetaUserProfileExternalUserDetails
  *
  * @phpstan-type BetaUserProfileShape = array{
  *   id: string,
@@ -23,6 +24,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   updatedAt: \DateTimeInterface,
  *   accessType?: null|AccessType|value-of<AccessType>,
  *   externalID?: string|null,
+ *   externalUserDetails?: null|BetaUserProfileExternalUserDetails|BetaUserProfileExternalUserDetailsShape,
  *   externalUserOnboardedAt?: \DateTimeInterface|null,
  *   name?: string|null,
  * }
@@ -83,10 +85,16 @@ final class BetaUserProfile implements BaseModel
     public ?string $accessType;
 
     /**
-     * Platform's own identifier for this user. Not enforced unique.
+     * Platform's own identifier for this user. Not enforced unique. Present under the `user-profiles-2026-03-24` and `user-profiles-2026-08-18` beta headers; under `user-profiles-2026-09-04` the value is `external_user_details.reference_id`.
      */
     #[Optional('external_id', nullable: true)]
     public ?string $externalID;
+
+    /**
+     * Details about the entity this profile represents, as the platform states them. Anthropic does not verify them. Every field is present, `null` until the platform supplies a value.
+     */
+    #[Optional('external_user_details')]
+    public ?BetaUserProfileExternalUserDetails $externalUserDetails;
 
     /**
      * A timestamp in RFC 3339 format.
@@ -141,6 +149,7 @@ final class BetaUserProfile implements BaseModel
      * @param array<string,BetaUserProfileTrustGrant|BetaUserProfileTrustGrantShape> $trustGrants
      * @param Type|value-of<Type> $type
      * @param AccessType|value-of<AccessType>|null $accessType
+     * @param BetaUserProfileExternalUserDetails|BetaUserProfileExternalUserDetailsShape|null $externalUserDetails
      */
     public static function with(
         string $id,
@@ -151,6 +160,7 @@ final class BetaUserProfile implements BaseModel
         \DateTimeInterface $updatedAt,
         AccessType|string|null $accessType = null,
         ?string $externalID = null,
+        BetaUserProfileExternalUserDetails|array|null $externalUserDetails = null,
         ?\DateTimeInterface $externalUserOnboardedAt = null,
         ?string $name = null,
     ): self {
@@ -165,6 +175,7 @@ final class BetaUserProfile implements BaseModel
 
         null !== $accessType && $self['accessType'] = $accessType;
         null !== $externalID && $self['externalID'] = $externalID;
+        null !== $externalUserDetails && $self['externalUserDetails'] = $externalUserDetails;
         null !== $externalUserOnboardedAt && $self['externalUserOnboardedAt'] = $externalUserOnboardedAt;
         null !== $name && $self['name'] = $name;
 
@@ -257,12 +268,26 @@ final class BetaUserProfile implements BaseModel
     }
 
     /**
-     * Platform's own identifier for this user. Not enforced unique.
+     * Platform's own identifier for this user. Not enforced unique. Present under the `user-profiles-2026-03-24` and `user-profiles-2026-08-18` beta headers; under `user-profiles-2026-09-04` the value is `external_user_details.reference_id`.
      */
     public function withExternalID(?string $externalID): self
     {
         $self = clone $this;
         $self['externalID'] = $externalID;
+
+        return $self;
+    }
+
+    /**
+     * Details about the entity this profile represents, as the platform states them. Anthropic does not verify them. Every field is present, `null` until the platform supplies a value.
+     *
+     * @param BetaUserProfileExternalUserDetails|BetaUserProfileExternalUserDetailsShape $externalUserDetails
+     */
+    public function withExternalUserDetails(
+        BetaUserProfileExternalUserDetails|array $externalUserDetails
+    ): self {
+        $self = clone $this;
+        $self['externalUserDetails'] = $externalUserDetails;
 
         return $self;
     }

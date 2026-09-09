@@ -7,6 +7,7 @@ namespace Anthropic\ServiceContracts\Beta;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\UserProfiles\BetaUserProfile;
 use Anthropic\Beta\UserProfiles\BetaUserProfileEnrollmentURL;
+use Anthropic\Beta\UserProfiles\BetaUserProfileExternalUserDetailsParams;
 use Anthropic\Beta\UserProfiles\UserProfileCreateParams\AccessType;
 use Anthropic\Beta\UserProfiles\UserProfileListParams\Order;
 use Anthropic\Beta\UserProfiles\UserProfileListParams\OrderBy;
@@ -15,6 +16,7 @@ use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
 /**
+ * @phpstan-import-type BetaUserProfileExternalUserDetailsParamsShape from \Anthropic\Beta\UserProfiles\BetaUserProfileExternalUserDetailsParams
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
 interface UserProfilesContract
@@ -23,7 +25,8 @@ interface UserProfilesContract
      * @api
      *
      * @param AccessType|value-of<AccessType> $accessType Body param: How the platform uses the API on behalf of the entity this profile represents. `application`: the platform sells a product that uses the API behind the scenes, and the profile represents an individual end-user of that product. `passthrough`: the platform resells raw inference, and the profile identifies the resold-to company.
-     * @param string|null $externalID Body param: Platform's own identifier for this user. Not enforced unique. Maximum 255 characters.
+     * @param string|null $externalID Body param: Platform's own identifier for this user. Not enforced unique. Maximum 255 characters. Accepted under the `user-profiles-2026-03-24` and `user-profiles-2026-08-18` beta headers; under `user-profiles-2026-09-04` send `external_user_details.reference_id` instead.
+     * @param BetaUserProfileExternalUserDetailsParams|BetaUserProfileExternalUserDetailsParamsShape $externalUserDetails Body param: Details about the entity this profile represents, as the platform states them. Every field is optional. Accepted under the `user-profiles-2026-09-04` beta header only.
      * @param \DateTimeInterface $externalUserOnboardedAt Body param: A timestamp in RFC 3339 format
      * @param array<string,string> $metadata Body param: Free-form key-value data to attach to this user profile. Maximum 16 keys, with keys up to 64 characters and values up to 512 characters. Values must be non-empty strings.
      * @param string|null $name Body param: Optional for all profiles. Real-world name of the entity this profile represents (company or individual); for a company the platform resells Claude access to (`access_type` `passthrough`), that company's name where known. Maximum 255 characters.
@@ -35,6 +38,7 @@ interface UserProfilesContract
     public function create(
         AccessType|string|null $accessType = null,
         ?string $externalID = null,
+        BetaUserProfileExternalUserDetailsParams|array|null $externalUserDetails = null,
         ?\DateTimeInterface $externalUserOnboardedAt = null,
         ?array $metadata = null,
         ?string $name = null,
@@ -62,7 +66,8 @@ interface UserProfilesContract
      *
      * @param string $userProfileID Path param: Path parameter user_profile_id
      * @param \Anthropic\Beta\UserProfiles\UserProfileUpdateParams\AccessType|value-of<\Anthropic\Beta\UserProfiles\UserProfileUpdateParams\AccessType>|null $accessType Body param: How the platform uses the API on behalf of the entity this profile represents. `application`: the platform sells a product that uses the API behind the scenes, and the profile represents an individual end-user of that product. `passthrough`: the platform resells raw inference, and the profile identifies the resold-to company.
-     * @param string|null $externalID Body param: If present, replaces the stored external_id. Omit to leave unchanged. Maximum 255 characters.
+     * @param string|null $externalID Body param: If present, replaces the stored external_id. Omit to leave unchanged. Maximum 255 characters. Accepted under the `user-profiles-2026-03-24` and `user-profiles-2026-08-18` beta headers; under `user-profiles-2026-09-04` send `external_user_details.reference_id` instead.
+     * @param BetaUserProfileExternalUserDetailsParams|BetaUserProfileExternalUserDetailsParamsShape $externalUserDetails Body param: Details about the entity this profile represents, as the platform states them. Each field sent replaces the stored value; omit a field to leave it unchanged. Once set, a value cannot be cleared and `null` is rejected. Accepted under the `user-profiles-2026-09-04` beta header only.
      * @param \DateTimeInterface $externalUserOnboardedAt Body param: A timestamp in RFC 3339 format
      * @param array<string,string> $metadata Body param: Key-value pairs to merge into the stored metadata. Keys provided overwrite existing values. To remove a key, set its value to an empty string. Keys not provided are left unchanged. Maximum 16 keys, with keys up to 64 characters and values up to 512 characters.
      * @param string|null $name Body param: If present, replaces the stored name. Omit to leave unchanged. Maximum 255 characters.
@@ -75,6 +80,7 @@ interface UserProfilesContract
         string $userProfileID,
         \Anthropic\Beta\UserProfiles\UserProfileUpdateParams\AccessType|string|null $accessType = null,
         ?string $externalID = null,
+        BetaUserProfileExternalUserDetailsParams|array|null $externalUserDetails = null,
         ?\DateTimeInterface $externalUserOnboardedAt = null,
         ?array $metadata = null,
         ?string $name = null,

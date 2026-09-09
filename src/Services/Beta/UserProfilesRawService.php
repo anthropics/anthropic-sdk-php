@@ -7,6 +7,7 @@ namespace Anthropic\Services\Beta;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\UserProfiles\BetaUserProfile;
 use Anthropic\Beta\UserProfiles\BetaUserProfileEnrollmentURL;
+use Anthropic\Beta\UserProfiles\BetaUserProfileExternalUserDetailsParams;
 use Anthropic\Beta\UserProfiles\UserProfileCreateEnrollmentURLParams;
 use Anthropic\Beta\UserProfiles\UserProfileCreateParams;
 use Anthropic\Beta\UserProfiles\UserProfileCreateParams\AccessType;
@@ -24,6 +25,7 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\UserProfilesRawContract;
 
 /**
+ * @phpstan-import-type BetaUserProfileExternalUserDetailsParamsShape from \Anthropic\Beta\UserProfiles\BetaUserProfileExternalUserDetailsParams
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
 final class UserProfilesRawService implements UserProfilesRawContract
@@ -42,6 +44,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
      * @param array{
      *   accessType?: AccessType|value-of<AccessType>,
      *   externalID?: string|null,
+     *   externalUserDetails?: BetaUserProfileExternalUserDetailsParams|BetaUserProfileExternalUserDetailsParamsShape,
      *   externalUserOnboardedAt?: \DateTimeInterface,
      *   metadata?: array<string,string>,
      *   name?: string|null,
@@ -133,6 +136,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
      * @param array{
      *   accessType?: UserProfileUpdateParams\AccessType|value-of<UserProfileUpdateParams\AccessType>|null,
      *   externalID?: string|null,
+     *   externalUserDetails?: BetaUserProfileExternalUserDetailsParams|BetaUserProfileExternalUserDetailsParamsShape,
      *   externalUserOnboardedAt?: \DateTimeInterface,
      *   metadata?: array<string,string>,
      *   name?: string|null,
