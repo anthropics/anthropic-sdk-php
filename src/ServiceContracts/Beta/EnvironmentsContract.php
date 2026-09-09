@@ -28,7 +28,7 @@ interface EnvironmentsContract
      * @param ConfigShape|null $config Body param: Environment configuration
      * @param string|null $description Body param: Optional description of the environment
      * @param array<string,string> $metadata Body param: User-provided metadata key-value pairs
-     * @param Scope|value-of<Scope>|null $scope Body param: The visibility scope for this environment. 'organization' makes the environment visible to all accounts. 'account' restricts visibility to the owning account only. Only applicable for self-hosted environments. If not specified, defaults based on organization type.
+     * @param Scope|value-of<Scope>|null $scope Body param: The visibility scope for this environment. 'organization' makes the environment visible to all accounts. 'account' restricts visibility to the owning account only. API organizations support only 'organization'; 'account' is rejected. If not specified, defaults based on organization type.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *

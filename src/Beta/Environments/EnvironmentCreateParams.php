@@ -66,7 +66,7 @@ final class EnvironmentCreateParams implements BaseModel
     public ?array $metadata;
 
     /**
-     * The visibility scope for this environment. 'organization' makes the environment visible to all accounts. 'account' restricts visibility to the owning account only. Only applicable for self-hosted environments. If not specified, defaults based on organization type.
+     * The visibility scope for this environment. 'organization' makes the environment visible to all accounts. 'account' restricts visibility to the owning account only. API organizations support only 'organization'; 'account' is rejected. If not specified, defaults based on organization type.
      *
      * @var value-of<Scope>|null $scope
      */
@@ -186,7 +186,7 @@ final class EnvironmentCreateParams implements BaseModel
     }
 
     /**
-     * The visibility scope for this environment. 'organization' makes the environment visible to all accounts. 'account' restricts visibility to the owning account only. Only applicable for self-hosted environments. If not specified, defaults based on organization type.
+     * The visibility scope for this environment. 'organization' makes the environment visible to all accounts. 'account' restricts visibility to the owning account only. API organizations support only 'organization'; 'account' is rejected. If not specified, defaults based on organization type.
      *
      * @param Scope|value-of<Scope>|null $scope
      */
