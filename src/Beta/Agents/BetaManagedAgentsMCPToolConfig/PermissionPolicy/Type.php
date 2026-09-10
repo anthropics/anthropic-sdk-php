@@ -9,4 +9,6 @@ enum Type: string
     case ALWAYS_ALLOW = 'always_allow';
 
     case ALWAYS_ASK = 'always_ask';
+
+    case AUTO = 'auto';
 }

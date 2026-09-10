@@ -49,7 +49,7 @@ final class BetaManagedAgentsWebSearchToolConfig implements BaseModel
      * @var PermissionPolicyVariants $permissionPolicy
      */
     #[Required('permission_policy', union: PermissionPolicy::class)]
-    public BetaManagedAgentsAlwaysAllowPolicy|BetaManagedAgentsAlwaysAskPolicy $permissionPolicy;
+    public BetaManagedAgentsAlwaysAllowPolicy|BetaManagedAgentsAlwaysAskPolicy|BetaManagedAgentsAutoPolicy $permissionPolicy;
 
     /** @var list<string>|null $allowedDomains */
     #[Optional('allowed_domains', list: 'string')]
@@ -98,7 +98,7 @@ final class BetaManagedAgentsWebSearchToolConfig implements BaseModel
      */
     public static function with(
         bool $enabled,
-        BetaManagedAgentsAlwaysAllowPolicy|array|BetaManagedAgentsAlwaysAskPolicy $permissionPolicy,
+        BetaManagedAgentsAlwaysAllowPolicy|array|BetaManagedAgentsAlwaysAskPolicy|BetaManagedAgentsAutoPolicy $permissionPolicy,
         ?array $allowedDomains = null,
         ?array $blockedDomains = null,
         BetaManagedAgentsUserLocation|array|null $userLocation = null,
@@ -140,7 +140,7 @@ final class BetaManagedAgentsWebSearchToolConfig implements BaseModel
      * @param PermissionPolicyShape $permissionPolicy
      */
     public function withPermissionPolicy(
-        BetaManagedAgentsAlwaysAllowPolicy|array|BetaManagedAgentsAlwaysAskPolicy $permissionPolicy,
+        BetaManagedAgentsAlwaysAllowPolicy|array|BetaManagedAgentsAlwaysAskPolicy|BetaManagedAgentsAutoPolicy $permissionPolicy,
     ): self {
         $self = clone $this;
         $self['permissionPolicy'] = $permissionPolicy;

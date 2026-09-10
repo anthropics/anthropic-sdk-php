@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Agents\BetaManagedAgentsAgentToolsetDefaultConfigParams\PermissionPolicy;
+namespace Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolEvaluation;
 
 enum Type: string
 {

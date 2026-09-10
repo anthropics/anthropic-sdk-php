@@ -78,7 +78,7 @@ final class BetaManagedAgentsWebFetchToolConfigParams implements BaseModel
         union: PermissionPolicy::class,
         nullable: true
     )]
-    public BetaManagedAgentsAlwaysAllowPolicy|BetaManagedAgentsAlwaysAskPolicy|null $permissionPolicy;
+    public BetaManagedAgentsAlwaysAllowPolicy|BetaManagedAgentsAlwaysAskPolicy|BetaManagedAgentsAutoPolicy|null $permissionPolicy;
 
     /** @var value-of<Type>|null $type */
     #[Optional(enum: Type::class)]
@@ -104,7 +104,7 @@ final class BetaManagedAgentsWebFetchToolConfigParams implements BaseModel
         ?array $blockedDomains = null,
         ?bool $enabled = null,
         ?int $maxContentTokens = null,
-        BetaManagedAgentsAlwaysAllowPolicy|array|BetaManagedAgentsAlwaysAskPolicy|null $permissionPolicy = null,
+        BetaManagedAgentsAlwaysAllowPolicy|array|BetaManagedAgentsAlwaysAskPolicy|BetaManagedAgentsAutoPolicy|null $permissionPolicy = null,
         Type|string|null $type = null,
     ): self {
         $self = new self;
@@ -186,7 +186,7 @@ final class BetaManagedAgentsWebFetchToolConfigParams implements BaseModel
      * @param PermissionPolicyShape|null $permissionPolicy
      */
     public function withPermissionPolicy(
-        BetaManagedAgentsAlwaysAllowPolicy|array|BetaManagedAgentsAlwaysAskPolicy|null $permissionPolicy,
+        BetaManagedAgentsAlwaysAllowPolicy|array|BetaManagedAgentsAlwaysAskPolicy|BetaManagedAgentsAutoPolicy|null $permissionPolicy,
     ): self {
         $self = clone $this;
         $self['permissionPolicy'] = $permissionPolicy;

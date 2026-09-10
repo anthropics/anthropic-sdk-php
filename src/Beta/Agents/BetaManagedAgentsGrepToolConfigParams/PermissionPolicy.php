@@ -6,6 +6,7 @@ namespace Anthropic\Beta\Agents\BetaManagedAgentsGrepToolConfigParams;
 
 use Anthropic\Beta\Agents\BetaManagedAgentsAlwaysAllowPolicy;
 use Anthropic\Beta\Agents\BetaManagedAgentsAlwaysAskPolicy;
+use Anthropic\Beta\Agents\BetaManagedAgentsAutoPolicy;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -15,9 +16,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  *
  * @phpstan-import-type BetaManagedAgentsAlwaysAllowPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsAlwaysAllowPolicy
  * @phpstan-import-type BetaManagedAgentsAlwaysAskPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsAlwaysAskPolicy
+ * @phpstan-import-type BetaManagedAgentsAutoPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsAutoPolicy
  *
- * @phpstan-type PermissionPolicyVariants = BetaManagedAgentsAlwaysAllowPolicy|BetaManagedAgentsAlwaysAskPolicy
- * @phpstan-type PermissionPolicyShape = PermissionPolicyVariants|BetaManagedAgentsAlwaysAllowPolicyShape|BetaManagedAgentsAlwaysAskPolicyShape
+ * @phpstan-type PermissionPolicyVariants = BetaManagedAgentsAlwaysAllowPolicy|BetaManagedAgentsAlwaysAskPolicy|BetaManagedAgentsAutoPolicy
+ * @phpstan-type PermissionPolicyShape = PermissionPolicyVariants|BetaManagedAgentsAlwaysAllowPolicyShape|BetaManagedAgentsAlwaysAskPolicyShape|BetaManagedAgentsAutoPolicyShape
  */
 final class PermissionPolicy implements ConverterSource
 {
@@ -36,6 +38,7 @@ final class PermissionPolicy implements ConverterSource
         return [
             'always_allow' => BetaManagedAgentsAlwaysAllowPolicy::class,
             'always_ask' => BetaManagedAgentsAlwaysAskPolicy::class,
+            'auto' => BetaManagedAgentsAutoPolicy::class,
         ];
     }
 }

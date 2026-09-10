@@ -14,6 +14,9 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Event emitted when the agent invokes a built-in agent tool.
  *
+ * @phpstan-import-type ManagedAgentsAgentToolEvaluationVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolEvaluation
+ * @phpstan-import-type ManagedAgentsAgentToolEvaluationShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolEvaluation
+ *
  * @phpstan-type ManagedAgentsAgentToolUseEventShape = array{
  *   id: string,
  *   input: array<string,mixed>,
@@ -21,6 +24,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   processedAt: \DateTimeInterface,
  *   type: Type|value-of<Type>,
  *   evaluatedPermission?: null|EvaluatedPermission|value-of<EvaluatedPermission>,
+ *   evaluation?: ManagedAgentsAgentToolEvaluationShape|null,
  *   sessionThreadID?: string|null,
  * }
  */
@@ -68,6 +72,14 @@ final class ManagedAgentsAgentToolUseEvent implements BaseModel
     public ?string $evaluatedPermission;
 
     /**
+     * Names the resolved permission_policy that produced evaluated_permission, and under auto carries the judgement. Open union: clients must tolerate unknown variants.
+     *
+     * @var ManagedAgentsAgentToolEvaluationVariants|null $evaluation
+     */
+    #[Optional(union: ManagedAgentsAgentToolEvaluation::class)]
+    public ManagedAgentsAgentToolEvaluationAlwaysAllow|ManagedAgentsAgentToolEvaluationAlwaysAsk|ManagedAgentsAgentToolEvaluationAuto|null $evaluation;
+
+    /**
      * When set, this event was cross-posted from a subagent's thread to surface its permission request on the primary thread's stream. Empty on the thread's own events. Echo this on a `user.tool_confirmation` event to route the approval back.
      */
     #[Optional('session_thread_id', nullable: true)]
@@ -107,6 +119,7 @@ final class ManagedAgentsAgentToolUseEvent implements BaseModel
      * @param array<string,mixed> $input
      * @param Type|value-of<Type> $type
      * @param EvaluatedPermission|value-of<EvaluatedPermission>|null $evaluatedPermission
+     * @param ManagedAgentsAgentToolEvaluationShape|null $evaluation
      */
     public static function with(
         string $id,
@@ -115,6 +128,7 @@ final class ManagedAgentsAgentToolUseEvent implements BaseModel
         \DateTimeInterface $processedAt,
         Type|string $type,
         EvaluatedPermission|string|null $evaluatedPermission = null,
+        ManagedAgentsAgentToolEvaluationAlwaysAllow|array|ManagedAgentsAgentToolEvaluationAlwaysAsk|ManagedAgentsAgentToolEvaluationAuto|null $evaluation = null,
         ?string $sessionThreadID = null,
     ): self {
         $self = new self;
@@ -126,6 +140,7 @@ final class ManagedAgentsAgentToolUseEvent implements BaseModel
         $self['type'] = $type;
 
         null !== $evaluatedPermission && $self['evaluatedPermission'] = $evaluatedPermission;
+        null !== $evaluation && $self['evaluation'] = $evaluation;
         null !== $sessionThreadID && $self['sessionThreadID'] = $sessionThreadID;
 
         return $self;
@@ -198,6 +213,20 @@ final class ManagedAgentsAgentToolUseEvent implements BaseModel
     ): self {
         $self = clone $this;
         $self['evaluatedPermission'] = $evaluatedPermission;
+
+        return $self;
+    }
+
+    /**
+     * Names the resolved permission_policy that produced evaluated_permission, and under auto carries the judgement. Open union: clients must tolerate unknown variants.
+     *
+     * @param ManagedAgentsAgentToolEvaluationShape $evaluation
+     */
+    public function withEvaluation(
+        ManagedAgentsAgentToolEvaluationAlwaysAllow|array|ManagedAgentsAgentToolEvaluationAlwaysAsk|ManagedAgentsAgentToolEvaluationAuto $evaluation,
+    ): self {
+        $self = clone $this;
+        $self['evaluation'] = $evaluation;
 
         return $self;
     }
