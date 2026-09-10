@@ -16,9 +16,12 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Beta\UserProfilesService::create()
  *
+ * @phpstan-import-type BetaUserProfileExternalUserDetailsParamsShape from \Anthropic\Beta\UserProfiles\BetaUserProfileExternalUserDetailsParams
+ *
  * @phpstan-type UserProfileCreateParamsShape = array{
  *   accessType?: null|AccessType|value-of<AccessType>,
  *   externalID?: string|null,
+ *   externalUserDetails?: null|BetaUserProfileExternalUserDetailsParams|BetaUserProfileExternalUserDetailsParamsShape,
  *   externalUserOnboardedAt?: \DateTimeInterface|null,
  *   metadata?: array<string,string>|null,
  *   name?: string|null,
@@ -40,10 +43,16 @@ final class UserProfileCreateParams implements BaseModel
     public ?string $accessType;
 
     /**
-     * Platform's own identifier for this user. Not enforced unique. Maximum 255 characters.
+     * Platform's own identifier for this user. Not enforced unique. Maximum 255 characters. Accepted under the `user-profiles-2026-03-24` and `user-profiles-2026-08-18` beta headers; under `user-profiles-2026-09-04` send `external_user_details.reference_id` instead.
      */
     #[Optional('external_id', nullable: true)]
     public ?string $externalID;
+
+    /**
+     * Details about the entity this profile represents, as the platform states them. Every field is optional. Accepted under the `user-profiles-2026-09-04` beta header only.
+     */
+    #[Optional('external_user_details')]
+    public ?BetaUserProfileExternalUserDetailsParams $externalUserDetails;
 
     /**
      * A timestamp in RFC 3339 format.
@@ -84,12 +93,14 @@ final class UserProfileCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param AccessType|value-of<AccessType>|null $accessType
+     * @param BetaUserProfileExternalUserDetailsParams|BetaUserProfileExternalUserDetailsParamsShape|null $externalUserDetails
      * @param array<string,string>|null $metadata
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
         AccessType|string|null $accessType = null,
         ?string $externalID = null,
+        BetaUserProfileExternalUserDetailsParams|array|null $externalUserDetails = null,
         ?\DateTimeInterface $externalUserOnboardedAt = null,
         ?array $metadata = null,
         ?string $name = null,
@@ -99,6 +110,7 @@ final class UserProfileCreateParams implements BaseModel
 
         null !== $accessType && $self['accessType'] = $accessType;
         null !== $externalID && $self['externalID'] = $externalID;
+        null !== $externalUserDetails && $self['externalUserDetails'] = $externalUserDetails;
         null !== $externalUserOnboardedAt && $self['externalUserOnboardedAt'] = $externalUserOnboardedAt;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $name && $self['name'] = $name;
@@ -121,12 +133,26 @@ final class UserProfileCreateParams implements BaseModel
     }
 
     /**
-     * Platform's own identifier for this user. Not enforced unique. Maximum 255 characters.
+     * Platform's own identifier for this user. Not enforced unique. Maximum 255 characters. Accepted under the `user-profiles-2026-03-24` and `user-profiles-2026-08-18` beta headers; under `user-profiles-2026-09-04` send `external_user_details.reference_id` instead.
      */
     public function withExternalID(?string $externalID): self
     {
         $self = clone $this;
         $self['externalID'] = $externalID;
+
+        return $self;
+    }
+
+    /**
+     * Details about the entity this profile represents, as the platform states them. Every field is optional. Accepted under the `user-profiles-2026-09-04` beta header only.
+     *
+     * @param BetaUserProfileExternalUserDetailsParams|BetaUserProfileExternalUserDetailsParamsShape $externalUserDetails
+     */
+    public function withExternalUserDetails(
+        BetaUserProfileExternalUserDetailsParams|array $externalUserDetails
+    ): self {
+        $self = clone $this;
+        $self['externalUserDetails'] = $externalUserDetails;
 
         return $self;
     }

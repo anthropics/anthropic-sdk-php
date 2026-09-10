@@ -23,4 +23,6 @@ enum WebFetchToolResultErrorCode: string
     case MAX_USES_EXCEEDED = 'max_uses_exceeded';
 
     case UNAVAILABLE = 'unavailable';
+
+    case CONTENT_TOO_LARGE = 'content_too_large';
 }

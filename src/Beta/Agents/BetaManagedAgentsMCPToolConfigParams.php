@@ -49,7 +49,7 @@ final class BetaManagedAgentsMCPToolConfigParams implements BaseModel
         union: PermissionPolicy::class,
         nullable: true
     )]
-    public BetaManagedAgentsAlwaysAllowPolicy|BetaManagedAgentsAlwaysAskPolicy|null $permissionPolicy;
+    public BetaManagedAgentsAlwaysAllowPolicy|BetaManagedAgentsAlwaysAskPolicy|BetaManagedAgentsAutoPolicy|null $permissionPolicy;
 
     /**
      * `new BetaManagedAgentsMCPToolConfigParams()` is missing required properties by the API.
@@ -80,7 +80,7 @@ final class BetaManagedAgentsMCPToolConfigParams implements BaseModel
     public static function with(
         string $name,
         ?bool $enabled = null,
-        BetaManagedAgentsAlwaysAllowPolicy|array|BetaManagedAgentsAlwaysAskPolicy|null $permissionPolicy = null,
+        BetaManagedAgentsAlwaysAllowPolicy|array|BetaManagedAgentsAlwaysAskPolicy|BetaManagedAgentsAutoPolicy|null $permissionPolicy = null,
     ): self {
         $self = new self;
 
@@ -120,7 +120,7 @@ final class BetaManagedAgentsMCPToolConfigParams implements BaseModel
      * @param PermissionPolicyShape|null $permissionPolicy
      */
     public function withPermissionPolicy(
-        BetaManagedAgentsAlwaysAllowPolicy|array|BetaManagedAgentsAlwaysAskPolicy|null $permissionPolicy,
+        BetaManagedAgentsAlwaysAllowPolicy|array|BetaManagedAgentsAlwaysAskPolicy|BetaManagedAgentsAutoPolicy|null $permissionPolicy,
     ): self {
         $self = clone $this;
         $self['permissionPolicy'] = $permissionPolicy;
