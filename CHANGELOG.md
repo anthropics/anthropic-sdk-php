@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.48.0 (2026-09-10)
+
+Full Changelog: [v0.47.0...v0.48.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.47.0...v0.48.0)
+
+### Features
+
+* **api:** add auto mode tool permissions for Managed Agents ([f9f9434](https://github.com/anthropics/anthropic-sdk-php/commit/f9f9434726a54f548eec2da86b9bcaea6bd44b2d))
+* **api:** add content_too_large web_fetch tool error code ([bcb781b](https://github.com/anthropics/anthropic-sdk-php/commit/bcb781baa3b8dd10495d4b3a91f320e3d79876b4))
+* **api:** add the user-profiles-2026-09-04 beta value and external_user_details to user profiles ([33d3ed1](https://github.com/anthropics/anthropic-sdk-php/commit/33d3ed108b6e889ae4ca299813bce2865a47a3c4))
+* **api:** support mounting public GitHub repositories without an authorization_token in Managed Agents sessions ([b65b29e](https://github.com/anthropics/anthropic-sdk-php/commit/b65b29ef37bb4e8918ad8c1d69320e9567c7cc99))
+
+
+### Chores
+
+* **docs:** correct the environment scope field description ([3549c57](https://github.com/anthropics/anthropic-sdk-php/commit/3549c57fbb8715d160e938d673060e1a94892522))
+* **internal:** restore package version ([#216](https://github.com/anthropics/anthropic-sdk-php/issues/216)) ([127ca6a](https://github.com/anthropics/anthropic-sdk-php/commit/127ca6a053d6816d780bf9763ccd0c26af9b194d))
+* **internal:** restore package version ([#217](https://github.com/anthropics/anthropic-sdk-php/issues/217)) ([0a28b14](https://github.com/anthropics/anthropic-sdk-php/commit/0a28b14b5c33e6dc9084cca5a2ca402ec59bd604))
+* **internal:** stop stamping the package version into generated files ([c5a95ae](https://github.com/anthropics/anthropic-sdk-php/commit/c5a95aec8f0bce96fe2839f15dc2cb11f4ebabbe))
+
 ## 0.47.0 (2026-09-04)
 
 Full Changelog: [v0.46.0...v0.47.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.46.0...v0.47.0)
