@@ -410,6 +410,76 @@ class RetryTest extends TestCase
     }
 
     #[Test]
+    public function testRetriedFilePartIsRereadFromWhereTheFirstAttemptStarted(): void
+    {
+        [$client, $transporter] = $this->buildClient();
+        $transporter->addResponse($this->response(503));
+        $transporter->addResponse($this->response(200));
+
+        $file = fopen('php://temp', 'r+');
+        assert(false !== $file);
+        fwrite($file, 'hello,world');
+        fseek($file, 6);
+
+        $client->request(
+            'POST',
+            '/files',
+            headers: ['Content-Type' => 'multipart/form-data'],
+            body: ['file' => FileParam::fromResource($file, filename: 'data.csv', contentType: 'text/csv')],
+        );
+
+        $requests = $transporter->getRequests();
+        $this->assertCount(2, $requests);
+        foreach ($requests as $i => $req) {
+            $this->assertStringContainsString("filename=\"data.csv\"\r\nContent-Type: text/csv\r\n\r\nworld\r\n", (string) $req->getBody(), "attempt {$i}");
+        }
+        $this->assertSame(6, ftell($file));
+    }
+
+    #[Test]
+    public function testFilePartFromNonSeekableStreamIsSentOnce(): void
+    {
+        // A socket cannot be read twice, so the first attempt's outcome is final even though the status is retryable
+        // and the request allows retries.
+        $pipe = fn () => self::socketContaining('hello,world');
+
+        [$client, $transporter] = $this->buildClient();
+        $transporter->addResponse($this->response(503));
+        $transporter->addResponse($this->response(200));
+        $resource = $pipe();
+        // Generated service methods pass the fields as an object, hand-written calls usually as an array; both are covered.
+        $body = (object) ['purpose' => 'test', 'file' => FileParam::fromResource($resource, filename: 'data.csv', contentType: 'text/csv')];
+
+        try {
+            $client->request('POST', '/files', headers: ['Content-Type' => 'multipart/form-data'], body: $body, options: ['maxRetries' => 5]);
+            $this->fail('a file part read from a non-seekable stream must not be retried');
+        } catch (APIStatusException $e) {
+            $this->assertSame(503, $e->status);
+        } finally {
+            fclose($resource);
+        }
+        $this->assertCount(1, $transporter->sent);
+        $this->assertStringContainsString("filename=\"data.csv\"\r\nContent-Type: text/csv\r\n\r\nhello,world\r\n", $transporter->sent[0]);
+        $this->assertSame([], $client->sleeps);
+
+        [$client, $transporter] = $this->buildClient();
+        $transporter->addException(new NetworkException('connection reset by peer', Psr17FactoryDiscovery::findRequestFactory()->createRequest('POST', '/')));
+        $transporter->addResponse($this->response(200));
+        $resource = $pipe();
+        $body = ['purpose' => 'test', 'file' => FileParam::fromResource($resource, filename: 'data.csv', contentType: 'text/csv')];
+
+        try {
+            $client->request('POST', '/files', headers: ['Content-Type' => 'multipart/form-data'], body: $body);
+            $this->fail('a file part read from a non-seekable stream must not be retried');
+        } catch (APIConnectionException) {
+        } finally {
+            fclose($resource);
+        }
+        $this->assertCount(1, $transporter->sent);
+        $this->assertSame([], $client->sleeps);
+    }
+
+    #[Test]
     public function testRetrySendsStreamBodyFromTheStart(): void
     {
         $resource = fopen('php://temp', 'r+');
@@ -458,6 +528,22 @@ class RetryTest extends TestCase
         }
         $this->assertSame(['payload'], $transporter->sent);
         $this->assertSame([], $client->sleeps);
+    }
+
+    /**
+     * A read-only stream that cannot seek, already holding the given bytes.
+     *
+     * @return resource
+     */
+    private static function socketContaining(string $contents): mixed
+    {
+        $pair = stream_socket_pair(STREAM_PF_UNIX, STREAM_SOCK_STREAM, STREAM_IPPROTO_IP);
+        assert(false !== $pair);
+        [$reader, $writer] = $pair;
+        fwrite($writer, $contents);
+        fclose($writer);
+
+        return $reader;
     }
 
     /**

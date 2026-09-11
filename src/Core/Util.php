@@ -414,6 +414,31 @@ final class Util
     }
 
     /**
+     * @internal
+     *
+     * Whether any file part in the body reads from a stream that cannot seek back, so the body can be encoded and sent only once
+     */
+    public static function hasNonSeekableFilePart(mixed $body): bool
+    {
+        if ($body instanceof FileParam) {
+            return !is_string($body->data) && !stream_get_meta_data($body->data)['seekable'];
+        }
+        // The multipart encoder casts an object body to an array of its entries, so look inside objects the same way.
+        if (is_object($body)) {
+            $body = (array) $body;
+        }
+        if (is_array($body)) {
+            foreach ($body as $val) {
+                if (self::hasNonSeekableFilePart($val)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @param \Iterator<string> $stream
      *
      * @return \Iterator<string>
@@ -623,8 +648,8 @@ final class Util
             } else { // resource
                 $seekable = stream_get_meta_data($data)['seekable'];
                 if (!$seekable && feof($data)) {
-                    // A retry re-encodes the body; a pipe/socket that the first attempt drained would silently upload an empty part.
-                    throw new \InvalidArgumentException('Cannot retry a request whose file body is a non-seekable stream that was already consumed; pass a seekable stream or string contents.');
+                    // A pipe or socket that an earlier request drained would silently upload an empty part.
+                    throw new \InvalidArgumentException('The file body is a non-seekable stream that was already consumed; pass a fresh stream, a seekable stream, or the contents as a string.');
                 }
                 $start = ftell($data);
                 while (!feof($data)) {

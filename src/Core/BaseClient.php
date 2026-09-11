@@ -94,8 +94,12 @@ abstract class BaseClient
         $request = $opts->requestFactory->createRequest($method, uri: $uri);
         $request = Util::withSetHeaders($request, headers: $headers);
 
+        // A file part that reads from a pipe or socket can be encoded only once, so such a request gets a single
+        // attempt: whatever that attempt throws is surfaced instead of retried, even when retries were asked for.
+        $sendOpts = Util::hasNonSeekableFilePart($data) ? $opts->withMaxRetries(0) : $opts;
+
         // @phpstan-ignore-next-line argument.type
-        $rsp = $this->sendRequest($opts, req: $request, data: $data, redirectCount: 0, retryCount: 0, crossOrigin: false);
+        $rsp = $this->sendRequest($sendOpts, req: $request, data: $data, redirectCount: 0, retryCount: 0, crossOrigin: false);
 
         // @phpstan-ignore-next-line argument.type
         return new RawResponse(client: $this, request: $request, response: $rsp, options: $opts, requestInfo: $req, unwrap: $unwrap, stream: $stream, page: $page, convert: $convert ?? 'null');
