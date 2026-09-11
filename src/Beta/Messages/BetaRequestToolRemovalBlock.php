@@ -36,14 +36,7 @@ final class BetaRequestToolRemovalBlock implements BaseModel
     #[Required]
     public string $type = 'tool_removal';
 
-    /**
-     * Reference to a single tool the caller declared directly in
-     * ``tools[]``. Does not accept the composed ``{server}_{name}`` form the
-     * server assigns to MCP-resolved tools — use ``mcp_tool_reference`` or
-     * ``mcp_toolset_reference`` for those.
-     *
-     * @var ToolVariants $tool
-     */
+    /** @var ToolVariants $tool */
     #[Required(union: Tool::class)]
     public BetaToolChangeToolReference|BetaToolChangeMCPToolReference|BetaToolChangeMCPToolsetReference $tool;
 
@@ -94,11 +87,6 @@ final class BetaRequestToolRemovalBlock implements BaseModel
     }
 
     /**
-     * Reference to a single tool the caller declared directly in
-     * ``tools[]``. Does not accept the composed ``{server}_{name}`` form the
-     * server assigns to MCP-resolved tools — use ``mcp_tool_reference`` or
-     * ``mcp_toolset_reference`` for those.
-     *
      * @param ToolShape $tool
      */
     public function withTool(

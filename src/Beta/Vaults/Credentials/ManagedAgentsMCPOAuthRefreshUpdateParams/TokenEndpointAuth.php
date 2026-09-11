@@ -11,8 +11,6 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Updated HTTP Basic authentication parameters for the token endpoint.
- *
  * @phpstan-import-type ManagedAgentsTokenEndpointAuthBasicUpdateParamShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsTokenEndpointAuthBasicUpdateParam
  * @phpstan-import-type ManagedAgentsTokenEndpointAuthPostUpdateParamShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsTokenEndpointAuthPostUpdateParam
  *

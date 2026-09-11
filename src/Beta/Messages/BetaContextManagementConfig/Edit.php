@@ -12,8 +12,6 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Automatically compact older context when reaching the configured trigger threshold.
- *
  * @phpstan-import-type BetaClearToolUses20250919EditShape from \Anthropic\Beta\Messages\BetaClearToolUses20250919Edit
  * @phpstan-import-type BetaClearThinking20251015EditShape from \Anthropic\Beta\Messages\BetaClearThinking20251015Edit
  * @phpstan-import-type BetaCompact20260112EditShape from \Anthropic\Beta\Messages\BetaCompact20260112Edit

@@ -9,8 +9,6 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Regular text content.
- *
  * @phpstan-import-type TextBlockParamShape from \Anthropic\Messages\TextBlockParam
  * @phpstan-import-type ImageBlockParamShape from \Anthropic\Messages\ImageBlockParam
  * @phpstan-import-type DocumentBlockParamShape from \Anthropic\Messages\DocumentBlockParam

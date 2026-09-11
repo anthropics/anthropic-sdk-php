@@ -34,11 +34,7 @@ final class ManagedAgentsSessionErrorEvent implements BaseModel
     #[Required]
     public string $id;
 
-    /**
-     * An unknown or unexpected error occurred during session execution. A fallback variant; clients that don't recognize a new error code can match on `retry_status` and `message` alone.
-     *
-     * @var ErrorVariants $error
-     */
+    /** @var ErrorVariants $error */
     #[Required(union: Error::class)]
     public ManagedAgentsUnknownError|ManagedAgentsModelOverloadedError|ManagedAgentsModelRateLimitedError|ManagedAgentsModelRequestFailedError|ManagedAgentsMCPConnectionFailedError|ManagedAgentsMCPAuthenticationFailedError|ManagedAgentsBillingError|ManagedAgentsCredentialHostUnreachableError $error;
 
@@ -113,8 +109,6 @@ final class ManagedAgentsSessionErrorEvent implements BaseModel
     }
 
     /**
-     * An unknown or unexpected error occurred during session execution. A fallback variant; clients that don't recognize a new error code can match on `retry_status` and `message` alone.
-     *
      * @param ErrorShape $error
      */
     public function withError(

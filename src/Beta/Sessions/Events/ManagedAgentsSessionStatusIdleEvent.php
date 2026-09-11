@@ -40,11 +40,7 @@ final class ManagedAgentsSessionStatusIdleEvent implements BaseModel
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
 
-    /**
-     * The agent completed its turn naturally and is ready for the next user message.
-     *
-     * @var StopReasonVariants $stopReason
-     */
+    /** @var StopReasonVariants $stopReason */
     #[Required('stop_reason', union: StopReason::class)]
     public ManagedAgentsSessionEndTurn|ManagedAgentsSessionRequiresAction|ManagedAgentsSessionRetriesExhausted|ManagedAgentsSessionBudgetReached $stopReason;
 
@@ -124,8 +120,6 @@ final class ManagedAgentsSessionStatusIdleEvent implements BaseModel
     }
 
     /**
-     * The agent completed its turn naturally and is ready for the next user message.
-     *
      * @param StopReasonShape $stopReason
      */
     public function withStopReason(

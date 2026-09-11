@@ -9,8 +9,6 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Code execution result with encrypted stdout for PFC + web_search results.
- *
  * @phpstan-import-type BetaCodeExecutionToolResultErrorShape from \Anthropic\Beta\Messages\BetaCodeExecutionToolResultError
  * @phpstan-import-type BetaCodeExecutionResultBlockShape from \Anthropic\Beta\Messages\BetaCodeExecutionResultBlock
  * @phpstan-import-type BetaEncryptedCodeExecutionResultBlockShape from \Anthropic\Beta\Messages\BetaEncryptedCodeExecutionResultBlock

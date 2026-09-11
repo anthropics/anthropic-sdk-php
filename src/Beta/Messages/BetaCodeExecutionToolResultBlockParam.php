@@ -30,11 +30,7 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
     #[Required]
     public string $type = 'code_execution_tool_result';
 
-    /**
-     * Code execution result with encrypted stdout for PFC + web_search results.
-     *
-     * @var BetaCodeExecutionToolResultBlockParamContentVariants $content
-     */
+    /** @var BetaCodeExecutionToolResultBlockParamContentVariants $content */
     #[Required]
     public BetaCodeExecutionToolResultErrorParam|BetaCodeExecutionResultBlockParam|BetaEncryptedCodeExecutionResultBlockParam $content;
 
@@ -92,8 +88,6 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
     }
 
     /**
-     * Code execution result with encrypted stdout for PFC + web_search results.
-     *
      * @param BetaCodeExecutionToolResultBlockParamContentShape $content
      */
     public function withContent(

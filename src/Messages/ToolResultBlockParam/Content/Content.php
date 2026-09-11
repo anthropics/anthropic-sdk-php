@@ -15,8 +15,6 @@ use Anthropic\Messages\TextBlockParam;
 use Anthropic\Messages\ToolReferenceBlockParam;
 
 /**
- * Tool reference block that can be included in tool_result content.
- *
  * @phpstan-import-type TextBlockParamShape from \Anthropic\Messages\TextBlockParam
  * @phpstan-import-type ImageBlockParamShape from \Anthropic\Messages\ImageBlockParam
  * @phpstan-import-type SearchResultBlockParamShape from \Anthropic\Messages\SearchResultBlockParam

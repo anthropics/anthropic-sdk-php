@@ -54,11 +54,7 @@ final class ManagedAgentsSessionThreadStatusIdleEvent implements BaseModel
     #[Required('session_thread_id')]
     public string $sessionThreadID;
 
-    /**
-     * The agent completed its turn naturally and is ready for the next user message.
-     *
-     * @var StopReasonVariants $stopReason
-     */
+    /** @var StopReasonVariants $stopReason */
     #[Required('stop_reason', union: StopReason::class)]
     public ManagedAgentsSessionEndTurn|ManagedAgentsSessionRequiresAction|ManagedAgentsSessionRetriesExhausted|ManagedAgentsSessionBudgetReached $stopReason;
 
@@ -171,8 +167,6 @@ final class ManagedAgentsSessionThreadStatusIdleEvent implements BaseModel
     }
 
     /**
-     * The agent completed its turn naturally and is ready for the next user message.
-     *
      * @param StopReasonShape $stopReason
      */
     public function withStopReason(

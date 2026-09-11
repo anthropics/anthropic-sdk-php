@@ -42,22 +42,14 @@ final class DreamCreateParams implements BaseModel
     #[Required(list: BetaDreamInput::class)]
     public array $inputs;
 
-    /**
-     * Model identifier and configuration applied to every pipeline stage.
-     *
-     * @var ModelVariants $model
-     */
+    /** @var ModelVariants $model */
     #[Required]
     public string|BetaDreamModelConfigParam $model;
 
     #[Optional(nullable: true)]
     public ?string $instructions;
 
-    /**
-     * The default destination: the job creates a new output memory store as a clone of the memory_store input and writes the consolidated memories into it. The input store is never mutated.
-     *
-     * @var BetaOutputBehaviorVariants|null $outputBehavior
-     */
+    /** @var BetaOutputBehaviorVariants|null $outputBehavior */
     #[Optional('output_behavior', union: BetaOutputBehavior::class)]
     public BetaOutputBehaviorCreateNew|BetaOutputBehaviorUpdateExisting|null $outputBehavior;
 
@@ -134,8 +126,6 @@ final class DreamCreateParams implements BaseModel
     }
 
     /**
-     * Model identifier and configuration applied to every pipeline stage.
-     *
      * @param ModelShape $model
      */
     public function withModel(
@@ -156,8 +146,6 @@ final class DreamCreateParams implements BaseModel
     }
 
     /**
-     * The default destination: the job creates a new output memory store as a clone of the memory_store input and writes the consolidated memories into it. The input store is never mutated.
-     *
      * @param BetaOutputBehaviorShape $outputBehavior
      */
     public function withOutputBehavior(

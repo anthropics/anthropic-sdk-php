@@ -48,11 +48,7 @@ final class ManagedAgentsMCPOAuthRefreshParams implements BaseModel
     #[Required('token_endpoint')]
     public string $tokenEndpoint;
 
-    /**
-     * Token endpoint requires no client authentication.
-     *
-     * @var TokenEndpointAuthVariants $tokenEndpointAuth
-     */
+    /** @var TokenEndpointAuthVariants $tokenEndpointAuth */
     #[Required('token_endpoint_auth', union: TokenEndpointAuth::class)]
     public ManagedAgentsTokenEndpointAuthNoneParam|ManagedAgentsTokenEndpointAuthBasicParam|ManagedAgentsTokenEndpointAuthPostParam $tokenEndpointAuth;
 
@@ -155,8 +151,6 @@ final class ManagedAgentsMCPOAuthRefreshParams implements BaseModel
     }
 
     /**
-     * Token endpoint requires no client authentication.
-     *
      * @param TokenEndpointAuthShape $tokenEndpointAuth
      */
     public function withTokenEndpointAuth(

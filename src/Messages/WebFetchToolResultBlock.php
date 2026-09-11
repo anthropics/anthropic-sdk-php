@@ -31,11 +31,7 @@ final class WebFetchToolResultBlock implements BaseModel
     #[Required]
     public string $type = 'web_fetch_tool_result';
 
-    /**
-     * Tool invocation directly from the model.
-     *
-     * @var CallerVariants $caller
-     */
+    /** @var CallerVariants $caller */
     #[Required(union: Caller::class)]
     public DirectCaller|ServerToolCaller|ServerToolCaller20260120 $caller;
 
@@ -93,8 +89,6 @@ final class WebFetchToolResultBlock implements BaseModel
     }
 
     /**
-     * Tool invocation directly from the model.
-     *
      * @param CallerShape $caller
      */
     public function withCaller(

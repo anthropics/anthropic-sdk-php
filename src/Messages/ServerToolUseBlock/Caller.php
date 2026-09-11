@@ -12,8 +12,6 @@ use Anthropic\Messages\ServerToolCaller;
 use Anthropic\Messages\ServerToolCaller20260120;
 
 /**
- * Tool invocation directly from the model.
- *
  * @phpstan-import-type DirectCallerShape from \Anthropic\Messages\DirectCaller
  * @phpstan-import-type ServerToolCallerShape from \Anthropic\Messages\ServerToolCaller
  * @phpstan-import-type ServerToolCaller20260120Shape from \Anthropic\Messages\ServerToolCaller20260120

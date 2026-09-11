@@ -9,8 +9,6 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Response model for a file uploaded to the container.
- *
  * @phpstan-import-type TextBlockShape from \Anthropic\Messages\TextBlock
  * @phpstan-import-type ThinkingBlockShape from \Anthropic\Messages\ThinkingBlock
  * @phpstan-import-type RedactedThinkingBlockShape from \Anthropic\Messages\RedactedThinkingBlock
