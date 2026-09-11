@@ -23,6 +23,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   orderBy?: null|OrderBy|value-of<OrderBy>,
  *   page?: string|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class UserProfileListParams implements BaseModel
@@ -67,6 +68,9 @@ final class UserProfileListParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -87,6 +91,7 @@ final class UserProfileListParams implements BaseModel
         OrderBy|string|null $orderBy = null,
         ?string $page = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -95,6 +100,7 @@ final class UserProfileListParams implements BaseModel
         null !== $orderBy && $self['orderBy'] = $orderBy;
         null !== $page && $self['page'] = $page;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -156,6 +162,14 @@ final class UserProfileListParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
