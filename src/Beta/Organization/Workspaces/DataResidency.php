@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Organization\Workspaces;
 
 use Anthropic\Beta\Organization\Workspaces\DataResidency\AllowedInferenceGeos;
+use Anthropic\Beta\Organization\Workspaces\DataResidency\DefaultInferenceGeo;
+use Anthropic\Beta\Organization\Workspaces\DataResidency\WorkspaceGeo;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -15,8 +17,8 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type DataResidencyShape = array{
  *   allowedInferenceGeos: AllowedInferenceGeosShape,
- *   defaultInferenceGeo: string,
- *   workspaceGeo: string,
+ *   defaultInferenceGeo: DefaultInferenceGeo|value-of<DefaultInferenceGeo>,
+ *   workspaceGeo: WorkspaceGeo|value-of<WorkspaceGeo>,
  * }
  */
 final class DataResidency implements BaseModel
@@ -34,14 +36,18 @@ final class DataResidency implements BaseModel
 
     /**
      * Default inference geo applied when requests omit the parameter.
+     *
+     * @var value-of<DefaultInferenceGeo> $defaultInferenceGeo
      */
-    #[Required('default_inference_geo')]
+    #[Required('default_inference_geo', enum: DefaultInferenceGeo::class)]
     public string $defaultInferenceGeo;
 
     /**
      * Geographic region for workspace data storage. Immutable after creation.
+     *
+     * @var value-of<WorkspaceGeo> $workspaceGeo
      */
-    #[Required('workspace_geo')]
+    #[Required('workspace_geo', enum: WorkspaceGeo::class)]
     public string $workspaceGeo;
 
     /**
@@ -74,11 +80,13 @@ final class DataResidency implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param AllowedInferenceGeosShape $allowedInferenceGeos
+     * @param DefaultInferenceGeo|value-of<DefaultInferenceGeo> $defaultInferenceGeo
+     * @param WorkspaceGeo|value-of<WorkspaceGeo> $workspaceGeo
      */
     public static function with(
         string|array $allowedInferenceGeos,
-        string $defaultInferenceGeo,
-        string $workspaceGeo,
+        DefaultInferenceGeo|string $defaultInferenceGeo,
+        WorkspaceGeo|string $workspaceGeo,
     ): self {
         $self = new self;
 
@@ -105,9 +113,12 @@ final class DataResidency implements BaseModel
 
     /**
      * Default inference geo applied when requests omit the parameter.
+     *
+     * @param DefaultInferenceGeo|value-of<DefaultInferenceGeo> $defaultInferenceGeo
      */
-    public function withDefaultInferenceGeo(string $defaultInferenceGeo): self
-    {
+    public function withDefaultInferenceGeo(
+        DefaultInferenceGeo|string $defaultInferenceGeo
+    ): self {
         $self = clone $this;
         $self['defaultInferenceGeo'] = $defaultInferenceGeo;
 
@@ -116,8 +127,10 @@ final class DataResidency implements BaseModel
 
     /**
      * Geographic region for workspace data storage. Immutable after creation.
+     *
+     * @param WorkspaceGeo|value-of<WorkspaceGeo> $workspaceGeo
      */
-    public function withWorkspaceGeo(string $workspaceGeo): self
+    public function withWorkspaceGeo(WorkspaceGeo|string $workspaceGeo): self
     {
         $self = clone $this;
         $self['workspaceGeo'] = $workspaceGeo;
