@@ -19,7 +19,7 @@ use Anthropic\Messages\Model;
  *   cacheCreationInputTokens: int,
  *   cacheReadInputTokens: int,
  *   inputTokens: int,
- *   model: string|Model|value-of<Model>,
+ *   model: string|null|Model|value-of<Model>,
  *   outputTokens: int,
  *   type: 'message',
  * }
@@ -66,10 +66,10 @@ final class BetaMessageIterationUsage implements BaseModel
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @var string|value-of<Model> $model
+     * @var string|value-of<Model>|null $model
      */
     #[Required(enum: Model::class)]
-    public string $model;
+    public ?string $model;
 
     /**
      * The number of output tokens which were used.
@@ -115,12 +115,12 @@ final class BetaMessageIterationUsage implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaCacheCreation|BetaCacheCreationShape|null $cacheCreation
-     * @param string|Model|value-of<Model> $model
+     * @param string|Model|value-of<Model>|null $model
      */
     public static function with(
         BetaCacheCreation|array|null $cacheCreation,
         int $inputTokens,
-        Model|string $model,
+        Model|string|null $model,
         int $outputTokens,
         int $cacheCreationInputTokens = 0,
         int $cacheReadInputTokens = 0,
@@ -190,9 +190,9 @@ final class BetaMessageIterationUsage implements BaseModel
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      *
-     * @param string|Model|value-of<Model> $model
+     * @param string|Model|value-of<Model>|null $model
      */
-    public function withModel(Model|string $model): self
+    public function withModel(Model|string|null $model): self
     {
         $self = clone $this;
         $self['model'] = $model;
