@@ -69,7 +69,7 @@ final class BetaManagedAgentsUserToolResultEvent implements BaseModel
     public ?\DateTimeInterface $processedAt;
 
     /**
-     * Routes this result to a subagent thread. Copy from the `agent.tool_use` event's `session_thread_id`.
+     * Set by the server to the subagent thread this result was routed to. Omitted when it was routed to the primary thread.
      */
     #[Optional('session_thread_id', nullable: true)]
     public ?string $sessionThreadID;
@@ -196,7 +196,7 @@ final class BetaManagedAgentsUserToolResultEvent implements BaseModel
     }
 
     /**
-     * Routes this result to a subagent thread. Copy from the `agent.tool_use` event's `session_thread_id`.
+     * Set by the server to the subagent thread this result was routed to. Omitted when it was routed to the primary thread.
      */
     public function withSessionThreadID(?string $sessionThreadID): self
     {
