@@ -26,6 +26,6 @@ final class Agent implements ConverterSource
      */
     public static function variants(): array
     {
-        return ['string', BetaManagedAgentsAgentParams::class];
+        return [BetaManagedAgentsAgentParams::class, 'string'];
     }
 }

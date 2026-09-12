@@ -53,7 +53,7 @@ final class BetaManagedAgentsSchedule implements BaseModel
      *
      * @var list<\DateTimeInterface>|null $upcomingRunsAt
      */
-    #[Optional('upcoming_runs_at', list: '\DateTimeInterface')]
+    #[Optional('upcoming_runs_at', list: \DateTimeInterface::class)]
     public ?array $upcomingRunsAt;
 
     /**

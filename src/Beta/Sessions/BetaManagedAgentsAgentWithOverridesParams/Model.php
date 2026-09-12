@@ -28,7 +28,7 @@ final class Model implements ConverterSource
     public static function variants(): array
     {
         return [
-            BetaManagedAgentsModel::class, BetaManagedAgentsModelConfigParams::class,
+            BetaManagedAgentsModelConfigParams::class, BetaManagedAgentsModel::class,
         ];
     }
 }

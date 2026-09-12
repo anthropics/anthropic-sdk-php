@@ -24,6 +24,6 @@ final class Model implements ConverterSource
      */
     public static function variants(): array
     {
-        return ['string', BetaDreamModelConfigParam::class];
+        return [BetaDreamModelConfigParam::class, 'string'];
     }
 }
