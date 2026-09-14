@@ -5,25 +5,24 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaRawMessageDeltaEvent\Delta;
-use Anthropic\Beta\Messages\BetaRawMessageDeltaEvent\InputTransformation;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-import-type InputTransformationVariants from \Anthropic\Beta\Messages\BetaRawMessageDeltaEvent\InputTransformation
+ * @phpstan-import-type BetaInputTransformationVariants from \Anthropic\Beta\Messages\BetaInputTransformation
  * @phpstan-import-type BetaContextManagementResponseShape from \Anthropic\Beta\Messages\BetaContextManagementResponse
  * @phpstan-import-type DeltaShape from \Anthropic\Beta\Messages\BetaRawMessageDeltaEvent\Delta
  * @phpstan-import-type BetaMessageDeltaUsageShape from \Anthropic\Beta\Messages\BetaMessageDeltaUsage
- * @phpstan-import-type InputTransformationShape from \Anthropic\Beta\Messages\BetaRawMessageDeltaEvent\InputTransformation
+ * @phpstan-import-type BetaInputTransformationShape from \Anthropic\Beta\Messages\BetaInputTransformation
  *
  * @phpstan-type BetaRawMessageDeltaEventShape = array{
  *   contextManagement: null|BetaContextManagementResponse|BetaContextManagementResponseShape,
  *   delta: Delta|DeltaShape,
  *   type: 'message_delta',
  *   usage: BetaMessageDeltaUsage|BetaMessageDeltaUsageShape,
- *   inputTransformations?: list<InputTransformationShape>|null,
+ *   inputTransformations?: list<BetaInputTransformationShape>|null,
  * }
  */
 final class BetaRawMessageDeltaEvent implements BaseModel
@@ -81,12 +80,12 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      * in which case it holds the serving model's entries and replaces the one in
      * `message_start`.
      *
-     * @var list<InputTransformationVariants>|null $inputTransformations
+     * @var list<BetaInputTransformationVariants>|null $inputTransformations
      */
     #[Optional(
         'input_transformations',
-        list: InputTransformation::class,
-        nullable: true
+        list: BetaInputTransformation::class,
+        nullable: true,
     )]
     public ?array $inputTransformations;
 
@@ -120,7 +119,7 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      * @param BetaContextManagementResponse|BetaContextManagementResponseShape|null $contextManagement
      * @param Delta|DeltaShape $delta
      * @param BetaMessageDeltaUsage|BetaMessageDeltaUsageShape $usage
-     * @param list<InputTransformationShape>|null $inputTransformations
+     * @param list<BetaInputTransformationShape>|null $inputTransformations
      */
     public static function with(
         BetaContextManagementResponse|array|null $contextManagement,
@@ -219,7 +218,7 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      * in which case it holds the serving model's entries and replaces the one in
      * `message_start`.
      *
-     * @param list<InputTransformationShape>|null $inputTransformations
+     * @param list<BetaInputTransformationShape>|null $inputTransformations
      */
     public function withInputTransformations(?array $inputTransformations): self
     {
