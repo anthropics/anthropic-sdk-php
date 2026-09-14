@@ -1,0 +1,51 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\Messages;
+
+use Anthropic\Core\Attributes\Required;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Contracts\BaseModel;
+
+/**
+ * The ``url_sources`` variant under which a source contributes in
+ * full: every result of the tool filter's source, or all user input.
+ *
+ * @phpstan-type WebFetchURLSourceAllShape = array{type: 'all'}
+ */
+final class WebFetchURLSourceAll implements BaseModel
+{
+    /** @use SdkModel<WebFetchURLSourceAllShape> */
+    use SdkModel;
+
+    /** @var 'all' $type */
+    #[Required]
+    public string $type = 'all';
+
+    public function __construct()
+    {
+        $this->initialize();
+    }
+
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function with(): self
+    {
+        return new self;
+    }
+
+    /**
+     * @param 'all' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+}

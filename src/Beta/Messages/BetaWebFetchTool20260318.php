@@ -14,6 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type BetaCitationsConfigParamShape from \Anthropic\Beta\Messages\BetaCitationsConfigParam
+ * @phpstan-import-type BetaWebFetchURLSourcesShape from \Anthropic\Beta\Messages\BetaWebFetchURLSources
  *
  * @phpstan-type BetaWebFetchTool20260318Shape = array{
  *   name: 'web_fetch',
@@ -28,6 +29,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   maxUses?: int|null,
  *   responseInclusion?: null|ResponseInclusion|value-of<ResponseInclusion>,
  *   strict?: bool|null,
+ *   urlSources?: null|BetaWebFetchURLSources|BetaWebFetchURLSourcesShape,
  *   useCache?: bool|null,
  * }
  */
@@ -115,6 +117,17 @@ final class BetaWebFetchTool20260318 implements BaseModel
     public ?bool $strict;
 
     /**
+     * Which sources contribute to the set of URLs web fetch may fetch.
+     *
+     * Each key is a tagged variant: ``user_input`` is ``all`` or ``none``; the
+     * two tool filters are ``all``, ``none``, ``only`` (only the named tools'
+     * results) or ``except`` (every result but the named tools'). A named tool
+     * must be declared in this request's ``tools[]``.
+     */
+    #[Optional('url_sources', nullable: true)]
+    public ?BetaWebFetchURLSources $urlSources;
+
+    /**
      * Whether to use cached content. Set to false to bypass the cache and fetch fresh content. Only set to false when the user explicitly requests fresh content or when fetching rapidly-changing sources.
      */
     #[Optional('use_cache')]
@@ -136,6 +149,7 @@ final class BetaWebFetchTool20260318 implements BaseModel
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      * @param BetaCitationsConfigParam|BetaCitationsConfigParamShape|null $citations
      * @param ResponseInclusion|value-of<ResponseInclusion>|null $responseInclusion
+     * @param BetaWebFetchURLSources|BetaWebFetchURLSourcesShape|null $urlSources
      */
     public static function with(
         ?array $allowedCallers = null,
@@ -148,6 +162,7 @@ final class BetaWebFetchTool20260318 implements BaseModel
         ?int $maxUses = null,
         ResponseInclusion|string|null $responseInclusion = null,
         ?bool $strict = null,
+        BetaWebFetchURLSources|array|null $urlSources = null,
         ?bool $useCache = null,
     ): self {
         $self = new self;
@@ -162,6 +177,7 @@ final class BetaWebFetchTool20260318 implements BaseModel
         null !== $maxUses && $self['maxUses'] = $maxUses;
         null !== $responseInclusion && $self['responseInclusion'] = $responseInclusion;
         null !== $strict && $self['strict'] = $strict;
+        null !== $urlSources && $self['urlSources'] = $urlSources;
         null !== $useCache && $self['useCache'] = $useCache;
 
         return $self;
@@ -312,6 +328,25 @@ final class BetaWebFetchTool20260318 implements BaseModel
     {
         $self = clone $this;
         $self['strict'] = $strict;
+
+        return $self;
+    }
+
+    /**
+     * Which sources contribute to the set of URLs web fetch may fetch.
+     *
+     * Each key is a tagged variant: ``user_input`` is ``all`` or ``none``; the
+     * two tool filters are ``all``, ``none``, ``only`` (only the named tools'
+     * results) or ``except`` (every result but the named tools'). A named tool
+     * must be declared in this request's ``tools[]``.
+     *
+     * @param BetaWebFetchURLSources|BetaWebFetchURLSourcesShape|null $urlSources
+     */
+    public function withURLSources(
+        BetaWebFetchURLSources|array|null $urlSources
+    ): self {
+        $self = clone $this;
+        $self['urlSources'] = $urlSources;
 
         return $self;
     }

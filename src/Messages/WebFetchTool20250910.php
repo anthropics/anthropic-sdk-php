@@ -13,6 +13,7 @@ use Anthropic\Messages\WebFetchTool20250910\AllowedCaller;
 /**
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type CitationsConfigParamShape from \Anthropic\Messages\CitationsConfigParam
+ * @phpstan-import-type WebFetchURLSourcesShape from \Anthropic\Messages\WebFetchURLSources
  *
  * @phpstan-type WebFetchTool20250910Shape = array{
  *   name: 'web_fetch',
@@ -26,6 +27,7 @@ use Anthropic\Messages\WebFetchTool20250910\AllowedCaller;
  *   maxContentTokens?: int|null,
  *   maxUses?: int|null,
  *   strict?: bool|null,
+ *   urlSources?: null|WebFetchURLSources|WebFetchURLSourcesShape,
  * }
  */
 final class WebFetchTool20250910 implements BaseModel
@@ -103,6 +105,17 @@ final class WebFetchTool20250910 implements BaseModel
     #[Optional]
     public ?bool $strict;
 
+    /**
+     * Which sources contribute to the set of URLs web fetch may fetch.
+     *
+     * Each key is a tagged variant: ``user_input`` is ``all`` or ``none``; the
+     * two tool filters are ``all``, ``none``, ``only`` (only the named tools'
+     * results) or ``except`` (every result but the named tools'). A named tool
+     * must be declared in this request's ``tools[]``.
+     */
+    #[Optional('url_sources', nullable: true)]
+    public ?WebFetchURLSources $urlSources;
+
     public function __construct()
     {
         $this->initialize();
@@ -118,6 +131,7 @@ final class WebFetchTool20250910 implements BaseModel
      * @param list<string>|null $blockedDomains
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      * @param CitationsConfigParam|CitationsConfigParamShape|null $citations
+     * @param WebFetchURLSources|WebFetchURLSourcesShape|null $urlSources
      */
     public static function with(
         ?array $allowedCallers = null,
@@ -129,6 +143,7 @@ final class WebFetchTool20250910 implements BaseModel
         ?int $maxContentTokens = null,
         ?int $maxUses = null,
         ?bool $strict = null,
+        WebFetchURLSources|array|null $urlSources = null,
     ): self {
         $self = new self;
 
@@ -141,6 +156,7 @@ final class WebFetchTool20250910 implements BaseModel
         null !== $maxContentTokens && $self['maxContentTokens'] = $maxContentTokens;
         null !== $maxUses && $self['maxUses'] = $maxUses;
         null !== $strict && $self['strict'] = $strict;
+        null !== $urlSources && $self['urlSources'] = $urlSources;
 
         return $self;
     }
@@ -276,6 +292,25 @@ final class WebFetchTool20250910 implements BaseModel
     {
         $self = clone $this;
         $self['strict'] = $strict;
+
+        return $self;
+    }
+
+    /**
+     * Which sources contribute to the set of URLs web fetch may fetch.
+     *
+     * Each key is a tagged variant: ``user_input`` is ``all`` or ``none``; the
+     * two tool filters are ``all``, ``none``, ``only`` (only the named tools'
+     * results) or ``except`` (every result but the named tools'). A named tool
+     * must be declared in this request's ``tools[]``.
+     *
+     * @param WebFetchURLSources|WebFetchURLSourcesShape|null $urlSources
+     */
+    public function withURLSources(
+        WebFetchURLSources|array|null $urlSources
+    ): self {
+        $self = clone $this;
+        $self['urlSources'] = $urlSources;
 
         return $self;
     }
