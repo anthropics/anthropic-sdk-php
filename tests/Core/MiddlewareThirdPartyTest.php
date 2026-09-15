@@ -6,7 +6,7 @@ use Anthropic\Aws\Client as AwsClient;
 use Anthropic\Bedrock\BedrockMiddleware;
 use Anthropic\Bedrock\Client as BedrockClient;
 use Anthropic\Core\Exceptions\AnthropicException;
-use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Exceptions\APIStatusException;
 use Anthropic\Messages\RawMessageDeltaEvent;
 use Anthropic\Messages\RawMessageStartEvent;
 use Anthropic\Messages\RawMessageStopEvent;
@@ -20,6 +20,7 @@ use GuzzleHttp\Psr7\NoSeekStream;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
 use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
@@ -239,13 +240,42 @@ final class MiddlewareThirdPartyTest extends TestCase
         $this->assertInstanceOf(RawMessageStopEvent::class, $events[1]);
     }
 
-    #[Test]
-    public function testBedrockEventstreamExceptionFrameSurfacesAsApiException(): void
+    /**
+     * @return iterable<string,array{array<string,string>,string,string,string}>
+     */
+    public static function bedrockEventstreamErrorFrames(): iterable
     {
-        // An eventstream `exception` frame mid-stream surfaces as an
-        // APIException during iteration, after the events that preceded it.
+        yield 'exception frame' => [
+            [':message-type' => 'exception', ':exception-type' => 'throttlingException', ':content-type' => 'application/json'],
+            '{"message":"Too many requests, please wait before trying again."}',
+            'throttlingException',
+            'Too many requests, please wait before trying again.',
+        ];
+
+        yield 'error frame' => [
+            [':message-type' => 'error', ':error-code' => 'InternalFailure', ':error-message' => 'boom'],
+            '',
+            'InternalFailure',
+            'boom',
+        ];
+    }
+
+    /**
+     * @param array<string,string> $headers
+     */
+    #[Test]
+    #[DataProvider('bedrockEventstreamErrorFrames')]
+    public function testBedrockEventstreamExceptionFrameSurfacesAsApiException(
+        array $headers,
+        string $payload,
+        string $errorType,
+        string $errorMessage,
+    ): void {
+        // An eventstream `exception` or `error` frame mid-stream surfaces as
+        // the API error a 1p stream `error` event raises, after the events
+        // that preceded it.
         $body = $this->eventstreamChunk($this->messageStartJson())
-            .$this->eventstreamException('internalServerException', '{"message":"boom"}');
+            .$this->eventstreamFrame($headers, $payload);
         $transporter = $this->transporter($this->eventstreamResponse($body));
 
         $client = BedrockClient::withApiKey(
@@ -266,9 +296,10 @@ final class MiddlewareThirdPartyTest extends TestCase
             foreach ($stream as $event) {
                 $events[] = $event;
             }
-            $this->fail('expected APIException');
-        } catch (APIException) {
-            // expected
+            $this->fail('expected APIStatusException');
+        } catch (APIStatusException $e) {
+            $this->assertStringContainsString("\"type\": \"{$errorType}\"", $e->getMessage());
+            $this->assertStringContainsString("\"message\": \"{$errorMessage}\"", $e->getMessage());
         }
 
         $this->assertCount(1, $events);
@@ -910,17 +941,6 @@ final class MiddlewareThirdPartyTest extends TestCase
 
         return $this->eventstreamFrame(
             [':message-type' => 'event', ':event-type' => 'chunk', ':content-type' => 'application/json'],
-            $payload,
-        );
-    }
-
-    /**
-     * Encode one AWS eventstream `exception` frame.
-     */
-    private function eventstreamException(string $exceptionType, string $payload): string
-    {
-        return $this->eventstreamFrame(
-            [':message-type' => 'exception', ':exception-type' => $exceptionType, ':content-type' => 'application/json'],
             $payload,
         );
     }
