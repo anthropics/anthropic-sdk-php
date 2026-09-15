@@ -33,7 +33,7 @@ final class BetaSummarizeCompaction implements BaseModel
     public string $type = 'summarize';
 
     /**
-     * Replaces the server's summarization prompt for this request. When set, earlier thinking blocks are left out of the content being summarized on models that require it.
+     * Replaces the server's default summarization prompt for this request. An empty or whitespace-only value counts as absent.
      */
     #[Optional(nullable: true)]
     public ?string $instructions;
@@ -69,7 +69,7 @@ final class BetaSummarizeCompaction implements BaseModel
     }
 
     /**
-     * Replaces the server's summarization prompt for this request. When set, earlier thinking blocks are left out of the content being summarized on models that require it.
+     * Replaces the server's default summarization prompt for this request. An empty or whitespace-only value counts as absent.
      */
     public function withInstructions(?string $instructions): self
     {
