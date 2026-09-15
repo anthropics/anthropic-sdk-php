@@ -59,6 +59,7 @@ final class MessagesTest extends TestCase
             ],
             model: Model::CLAUDE_OPUS_5,
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
+            compaction: ['type' => 'summarize', 'instructions' => 'instructions'],
             container: [
                 'id' => 'id',
                 'skills' => [
@@ -183,6 +184,7 @@ final class MessagesTest extends TestCase
             ],
             model: Model::CLAUDE_OPUS_5,
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
+            compaction: ['type' => 'summarize', 'instructions' => 'instructions'],
             contextManagement: [
                 'edits' => [
                     [

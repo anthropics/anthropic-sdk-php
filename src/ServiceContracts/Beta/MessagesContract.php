@@ -6,6 +6,7 @@ namespace Anthropic\ServiceContracts\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral;
+use Anthropic\Beta\Messages\BetaCompactionConfig;
 use Anthropic\Beta\Messages\BetaContainerParams;
 use Anthropic\Beta\Messages\BetaContextManagementConfig;
 use Anthropic\Beta\Messages\BetaDiagnosticsParam;
@@ -44,6 +45,7 @@ use Anthropic\RequestOptions;
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Messages\MessageCountTokensParams\Tool
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type BetaCompactionConfigShape from \Anthropic\Beta\Messages\BetaCompactionConfig
  * @phpstan-import-type ContainerShape from \Anthropic\Beta\Messages\MessageCreateParams\Container
  * @phpstan-import-type BetaContextManagementConfigShape from \Anthropic\Beta\Messages\BetaContextManagementConfig
  * @phpstan-import-type BetaDiagnosticsParamShape from \Anthropic\Beta\Messages\BetaDiagnosticsParam
@@ -123,6 +125,14 @@ interface MessagesContract
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
+     * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction Body param: Compact the whole conversation and return a signed `compaction` block,
+     * alone, that a later request sends back first in `messages`, in place of
+     * the messages it summarizes. There is no trigger and no pause flag: sending
+     * the parameter compacts, and nothing is sampled after the block.
+     *
+     * The summarization prompt is the server's own unless `instructions` are
+     * given, which then replace it for this request; a value that is empty or
+     * only whitespace counts as absent.
      * @param ContainerShape|null $container body param: Container identifier for reuse across requests
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement Body param: Context management configuration.
      *
@@ -265,6 +275,7 @@ interface MessagesContract
         array $messages,
         Model|string $model,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
+        BetaCompactionConfig|array|null $compaction = null,
         string|BetaContainerParams|array|null $container = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
         BetaDiagnosticsParam|array|null $diagnostics = null,
@@ -353,6 +364,14 @@ interface MessagesContract
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
+     * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction Body param: Compact the whole conversation and return a signed `compaction` block,
+     * alone, that a later request sends back first in `messages`, in place of
+     * the messages it summarizes. There is no trigger and no pause flag: sending
+     * the parameter compacts, and nothing is sampled after the block.
+     *
+     * The summarization prompt is the server's own unless `instructions` are
+     * given, which then replace it for this request; a value that is empty or
+     * only whitespace counts as absent.
      * @param ContainerShape|null $container body param: Container identifier for reuse across requests
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement Body param: Context management configuration.
      *
@@ -497,6 +516,7 @@ interface MessagesContract
         array $messages,
         Model|string $model,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
+        BetaCompactionConfig|array|null $compaction = null,
         string|BetaContainerParams|array|null $container = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
         BetaDiagnosticsParam|array|null $diagnostics = null,
@@ -578,6 +598,14 @@ interface MessagesContract
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
+     * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction Body param: Compact the whole conversation and return a signed `compaction` block,
+     * alone, that a later request sends back first in `messages`, in place of
+     * the messages it summarizes. There is no trigger and no pause flag: sending
+     * the parameter compacts, and nothing is sampled after the block.
+     *
+     * The summarization prompt is the server's own unless `instructions` are
+     * given, which then replace it for this request; a value that is empty or
+     * only whitespace counts as absent.
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement Body param: Context management configuration.
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
@@ -670,6 +698,7 @@ interface MessagesContract
         array $messages,
         Model|string $model,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
+        BetaCompactionConfig|array|null $compaction = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
         ?array $mcpServers = null,
         BetaOutputConfig|array|null $outputConfig = null,

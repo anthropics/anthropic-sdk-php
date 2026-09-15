@@ -95,4 +95,6 @@ enum AnthropicBeta: string
     case THINKING_BINDING_CONTROLS_2026_08_01 = 'thinking-binding-controls-2026-08-01';
 
     case MID_CONVERSATION_SYSTEM_CLEAR_AT_2026_08_21 = 'mid-conversation-system-clear-at-2026-08-21';
+
+    case COMPACT_2026_09_04 = 'compact-2026-09-04';
 }

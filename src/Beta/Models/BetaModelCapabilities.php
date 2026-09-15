@@ -12,6 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * Model capability information.
  *
  * @phpstan-import-type BetaCapabilitySupportShape from \Anthropic\Beta\Models\BetaCapabilitySupport
+ * @phpstan-import-type BetaCompactionCapabilityShape from \Anthropic\Beta\Models\BetaCompactionCapability
  * @phpstan-import-type BetaContextManagementCapabilityShape from \Anthropic\Beta\Models\BetaContextManagementCapability
  * @phpstan-import-type BetaEffortCapabilityShape from \Anthropic\Beta\Models\BetaEffortCapability
  * @phpstan-import-type BetaThinkingCapabilityShape from \Anthropic\Beta\Models\BetaThinkingCapability
@@ -20,6 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   batch: BetaCapabilitySupport|BetaCapabilitySupportShape,
  *   citations: BetaCapabilitySupport|BetaCapabilitySupportShape,
  *   codeExecution: BetaCapabilitySupport|BetaCapabilitySupportShape,
+ *   compaction: null|BetaCompactionCapability|BetaCompactionCapabilityShape,
  *   contextManagement: BetaContextManagementCapability|BetaContextManagementCapabilityShape,
  *   effort: BetaEffortCapability|BetaEffortCapabilityShape,
  *   imageInput: BetaCapabilitySupport|BetaCapabilitySupportShape,
@@ -50,6 +52,14 @@ final class BetaModelCapabilities implements BaseModel
      */
     #[Required('code_execution')]
     public BetaCapabilitySupport $codeExecution;
+
+    /**
+     * Compaction capability details: whether the model accepts the top-level
+     * `compaction` request parameter, with one entry per supported
+     * `compaction.type` value.
+     */
+    #[Required]
+    public ?BetaCompactionCapability $compaction;
 
     /**
      * Context management support and available strategies.
@@ -96,6 +106,7 @@ final class BetaModelCapabilities implements BaseModel
      *   batch: ...,
      *   citations: ...,
      *   codeExecution: ...,
+     *   compaction: ...,
      *   contextManagement: ...,
      *   effort: ...,
      *   imageInput: ...,
@@ -112,6 +123,7 @@ final class BetaModelCapabilities implements BaseModel
      *   ->withBatch(...)
      *   ->withCitations(...)
      *   ->withCodeExecution(...)
+     *   ->withCompaction(...)
      *   ->withContextManagement(...)
      *   ->withEffort(...)
      *   ->withImageInput(...)
@@ -133,6 +145,7 @@ final class BetaModelCapabilities implements BaseModel
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $batch
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $citations
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $codeExecution
+     * @param BetaCompactionCapability|BetaCompactionCapabilityShape|null $compaction
      * @param BetaContextManagementCapability|BetaContextManagementCapabilityShape $contextManagement
      * @param BetaEffortCapability|BetaEffortCapabilityShape $effort
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $imageInput
@@ -144,6 +157,7 @@ final class BetaModelCapabilities implements BaseModel
         BetaCapabilitySupport|array $batch,
         BetaCapabilitySupport|array $citations,
         BetaCapabilitySupport|array $codeExecution,
+        BetaCompactionCapability|array|null $compaction,
         BetaContextManagementCapability|array $contextManagement,
         BetaEffortCapability|array $effort,
         BetaCapabilitySupport|array $imageInput,
@@ -156,6 +170,7 @@ final class BetaModelCapabilities implements BaseModel
         $self['batch'] = $batch;
         $self['citations'] = $citations;
         $self['codeExecution'] = $codeExecution;
+        $self['compaction'] = $compaction;
         $self['contextManagement'] = $contextManagement;
         $self['effort'] = $effort;
         $self['imageInput'] = $imageInput;
@@ -202,6 +217,22 @@ final class BetaModelCapabilities implements BaseModel
     ): self {
         $self = clone $this;
         $self['codeExecution'] = $codeExecution;
+
+        return $self;
+    }
+
+    /**
+     * Compaction capability details: whether the model accepts the top-level
+     * `compaction` request parameter, with one entry per supported
+     * `compaction.type` value.
+     *
+     * @param BetaCompactionCapability|BetaCompactionCapabilityShape|null $compaction
+     */
+    public function withCompaction(
+        BetaCompactionCapability|array|null $compaction
+    ): self {
+        $self = clone $this;
+        $self['compaction'] = $compaction;
 
         return $self;
     }
