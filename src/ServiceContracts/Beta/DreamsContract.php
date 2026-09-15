@@ -26,9 +26,9 @@ interface DreamsContract
      * @api
      *
      * @param list<BetaDreamInputShape> $inputs Body param
-     * @param ModelShape $model body param: Model identifier and configuration applied to every pipeline stage
+     * @param ModelShape $model Body param
      * @param string|null $instructions Body param
-     * @param BetaOutputBehaviorShape $outputBehavior Body param: The default destination: the job creates a new output memory store as a clone of the memory_store input and writes the consolidated memories into it. The input store is never mutated.
+     * @param BetaOutputBehaviorShape $outputBehavior Body param
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *

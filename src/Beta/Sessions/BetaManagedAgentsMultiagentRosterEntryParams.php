@@ -29,10 +29,10 @@ final class BetaManagedAgentsMultiagentRosterEntryParams implements ConverterSou
     public static function variants(): array
     {
         return [
-            'string',
             BetaManagedAgentsAgentParams::class,
             BetaManagedAgentsMultiagentSelfParams::class,
             BetaManagedAgentsAdvisorParams::class,
+            'string',
         ];
     }
 }

@@ -26,6 +26,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   metadata?: array<string,string>|null,
  *   name?: string|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
+ *   workspaceID?: string|null,
  * }
  */
 final class UserProfileUpdateParams implements BaseModel
@@ -82,6 +83,9 @@ final class UserProfileUpdateParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    #[Optional]
+    public ?string $workspaceID;
+
     public function __construct()
     {
         $this->initialize();
@@ -105,6 +109,7 @@ final class UserProfileUpdateParams implements BaseModel
         ?array $metadata = null,
         ?string $name = null,
         ?array $betas = null,
+        ?string $workspaceID = null,
     ): self {
         $self = new self;
 
@@ -115,6 +120,7 @@ final class UserProfileUpdateParams implements BaseModel
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $name && $self['name'] = $name;
         null !== $betas && $self['betas'] = $betas;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -202,6 +208,14 @@ final class UserProfileUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['betas'] = $betas;
+
+        return $self;
+    }
+
+    public function withWorkspaceID(string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

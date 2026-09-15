@@ -6,6 +6,7 @@ namespace Anthropic\Services\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral;
+use Anthropic\Beta\Messages\BetaCompactionConfig;
 use Anthropic\Beta\Messages\BetaContextManagementConfig;
 use Anthropic\Beta\Messages\BetaDiagnosticsParam;
 use Anthropic\Beta\Messages\BetaJSONOutputFormat;
@@ -41,6 +42,7 @@ use Anthropic\SSEStream;
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Messages\MessageCountTokensParams\Tool
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type BetaCompactionConfigShape from \Anthropic\Beta\Messages\BetaCompactionConfig
  * @phpstan-import-type ContainerShape from \Anthropic\Beta\Messages\MessageCreateParams\Container
  * @phpstan-import-type BetaContextManagementConfigShape from \Anthropic\Beta\Messages\BetaContextManagementConfig
  * @phpstan-import-type BetaDiagnosticsParamShape from \Anthropic\Beta\Messages\BetaDiagnosticsParam
@@ -78,6 +80,7 @@ final class MessagesRawService implements MessagesRawContract
      *   messages: list<BetaMessageParam|BetaMessageParamShape>,
      *   model: string|Model|value-of<Model>,
      *   cacheControl?: BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null,
+     *   compaction?: BetaCompactionConfig|BetaCompactionConfigShape|null,
      *   container?: ContainerShape|null,
      *   contextManagement?: BetaContextManagementConfig|BetaContextManagementConfigShape|null,
      *   diagnostics?: BetaDiagnosticsParam|BetaDiagnosticsParamShape|null,
@@ -147,6 +150,7 @@ final class MessagesRawService implements MessagesRawContract
      *   messages: list<BetaMessageParam|BetaMessageParamShape>,
      *   model: string|Model|value-of<Model>,
      *   cacheControl?: BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null,
+     *   compaction?: BetaCompactionConfig|BetaCompactionConfigShape|null,
      *   container?: ContainerShape|null,
      *   contextManagement?: BetaContextManagementConfig|BetaContextManagementConfigShape|null,
      *   diagnostics?: BetaDiagnosticsParam|BetaDiagnosticsParamShape|null,
@@ -229,6 +233,7 @@ final class MessagesRawService implements MessagesRawContract
      *   messages: list<BetaMessageParam|BetaMessageParamShape>,
      *   model: string|Model|value-of<Model>,
      *   cacheControl?: BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null,
+     *   compaction?: BetaCompactionConfig|BetaCompactionConfigShape|null,
      *   contextManagement?: BetaContextManagementConfig|BetaContextManagementConfigShape|null,
      *   mcpServers?: list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape>,
      *   outputConfig?: BetaOutputConfig|BetaOutputConfigShape,

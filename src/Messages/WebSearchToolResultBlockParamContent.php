@@ -26,8 +26,8 @@ final class WebSearchToolResultBlockParamContent implements ConverterSource
     public static function variants(): array
     {
         return [
-            new ListOf(WebSearchResultBlockParam::class),
             WebSearchToolRequestError::class,
+            new ListOf(WebSearchResultBlockParam::class),
         ];
     }
 }

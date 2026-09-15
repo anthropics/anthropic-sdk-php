@@ -9,8 +9,6 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Token usage for a sampling iteration.
- *
  * @phpstan-import-type BetaMessageIterationUsageShape from \Anthropic\Beta\Messages\BetaMessageIterationUsage
  * @phpstan-import-type BetaCompactionIterationUsageShape from \Anthropic\Beta\Messages\BetaCompactionIterationUsage
  * @phpstan-import-type BetaAdvisorMessageIterationUsageShape from \Anthropic\Beta\Messages\BetaAdvisorMessageIterationUsage

@@ -9,8 +9,6 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Code execution tool with REPL state persistence (daemon mode + gVisor checkpoint).
- *
  * @phpstan-import-type BetaToolShape from \Anthropic\Beta\Messages\BetaTool
  * @phpstan-import-type BetaToolBash20241022Shape from \Anthropic\Beta\Messages\BetaToolBash20241022
  * @phpstan-import-type BetaToolBash20250124Shape from \Anthropic\Beta\Messages\BetaToolBash20250124

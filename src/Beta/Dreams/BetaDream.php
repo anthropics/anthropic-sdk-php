@@ -83,11 +83,7 @@ final class BetaDream implements BaseModel
     #[Required]
     public BetaDreamModelConfig $model;
 
-    /**
-     * The default destination: the job creates a new output memory store as a clone of the memory_store input and writes the consolidated memories into it. The input store is never mutated.
-     *
-     * @var BetaOutputBehaviorVariants $outputBehavior
-     */
+    /** @var BetaOutputBehaviorVariants $outputBehavior */
     #[Required('output_behavior', union: BetaOutputBehavior::class)]
     public BetaOutputBehaviorCreateNew|BetaOutputBehaviorUpdateExisting $outputBehavior;
 
@@ -301,8 +297,6 @@ final class BetaDream implements BaseModel
     }
 
     /**
-     * The default destination: the job creates a new output memory store as a clone of the memory_store input and writes the consolidated memories into it. The input store is never mutated.
-     *
      * @param BetaOutputBehaviorShape $outputBehavior
      */
     public function withOutputBehavior(

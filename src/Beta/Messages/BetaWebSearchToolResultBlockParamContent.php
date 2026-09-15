@@ -26,8 +26,8 @@ final class BetaWebSearchToolResultBlockParamContent implements ConverterSource
     public static function variants(): array
     {
         return [
-            new ListOf(BetaWebSearchResultBlockParam::class),
             BetaWebSearchToolRequestError::class,
+            new ListOf(BetaWebSearchResultBlockParam::class),
         ];
     }
 }

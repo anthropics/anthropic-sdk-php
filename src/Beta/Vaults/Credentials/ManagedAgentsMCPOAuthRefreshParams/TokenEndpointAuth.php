@@ -12,8 +12,6 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Token endpoint requires no client authentication.
- *
  * @phpstan-import-type ManagedAgentsTokenEndpointAuthNoneParamShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsTokenEndpointAuthNoneParam
  * @phpstan-import-type ManagedAgentsTokenEndpointAuthBasicParamShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsTokenEndpointAuthBasicParam
  * @phpstan-import-type ManagedAgentsTokenEndpointAuthPostParamShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsTokenEndpointAuthPostParam

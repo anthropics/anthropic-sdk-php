@@ -31,6 +31,11 @@ final class FileParam
     /**
      * Create a FileParam from an open resource (e.g. from fopen()).
      *
+     * The resource is read from its current position on each attempt and its position is restored afterwards, so
+     * a failed upload can be retried. A stream that cannot seek (a pipe or a socket) is sent once: if that attempt
+     * fails with an error the client would normally retry, the error is thrown instead. Read such a stream into a
+     * string and use {@see FileParam::fromString()} to keep retries.
+     *
      * @param resource $resource an open file resource
      * @param string|null $filename Override the filename. Defaults to the resource URI basename.
      * @param string $contentType override the content type

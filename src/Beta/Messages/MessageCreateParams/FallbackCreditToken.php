@@ -45,6 +45,6 @@ final class FallbackCreditToken implements ConverterSource
      */
     public static function variants(): array
     {
-        return ['string', BetaFallbackCreditTokenParam::class];
+        return [BetaFallbackCreditTokenParam::class, 'string'];
     }
 }

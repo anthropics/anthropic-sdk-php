@@ -27,11 +27,7 @@ final class CodeExecutionToolResultBlock implements BaseModel
     #[Required]
     public string $type = 'code_execution_tool_result';
 
-    /**
-     * Code execution result with encrypted stdout for PFC + web_search results.
-     *
-     * @var CodeExecutionToolResultBlockContentVariants $content
-     */
+    /** @var CodeExecutionToolResultBlockContentVariants $content */
     #[Required]
     public CodeExecutionToolResultError|CodeExecutionResultBlock|EncryptedCodeExecutionResultBlock $content;
 
@@ -77,8 +73,6 @@ final class CodeExecutionToolResultBlock implements BaseModel
     }
 
     /**
-     * Code execution result with encrypted stdout for PFC + web_search results.
-     *
      * @param CodeExecutionToolResultBlockContentShape $content
      */
     public function withContent(

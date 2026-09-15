@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -16,7 +17,10 @@ use Anthropic\Core\Contracts\BaseModel;
  * compaction blocks with null content; the server treats them as no-ops.
  *
  * @phpstan-type BetaCompactionBlockShape = array{
- *   content: string|null, encryptedContent: string|null, type: 'compaction'
+ *   content: string|null,
+ *   encryptedContent: string|null,
+ *   type: 'compaction',
+ *   signature?: string|null,
  * }
  */
 final class BetaCompactionBlock implements BaseModel
@@ -39,6 +43,12 @@ final class BetaCompactionBlock implements BaseModel
      */
     #[Required('encrypted_content')]
     public ?string $encryptedContent;
+
+    /**
+     * Signature over the summary, to be sent back with the block verbatim.
+     */
+    #[Optional(nullable: true)]
+    public ?string $signature;
 
     /**
      * `new BetaCompactionBlock()` is missing required properties by the API.
@@ -66,12 +76,15 @@ final class BetaCompactionBlock implements BaseModel
      */
     public static function with(
         ?string $content,
-        ?string $encryptedContent
+        ?string $encryptedContent,
+        ?string $signature = null
     ): self {
         $self = new self;
 
         $self['content'] = $content;
         $self['encryptedContent'] = $encryptedContent;
+
+        null !== $signature && $self['signature'] = $signature;
 
         return $self;
     }
@@ -105,6 +118,17 @@ final class BetaCompactionBlock implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * Signature over the summary, to be sent back with the block verbatim.
+     */
+    public function withSignature(?string $signature): self
+    {
+        $self = clone $this;
+        $self['signature'] = $signature;
 
         return $self;
     }

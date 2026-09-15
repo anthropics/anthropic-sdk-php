@@ -26,11 +26,7 @@ final class RawContentBlockStartEvent implements BaseModel
     #[Required]
     public string $type = 'content_block_start';
 
-    /**
-     * Response model for a file uploaded to the container.
-     *
-     * @var ContentBlockVariants $contentBlock
-     */
+    /** @var ContentBlockVariants $contentBlock */
     #[Required(
         'content_block',
         union: ContentBlock::class,
@@ -79,8 +75,6 @@ final class RawContentBlockStartEvent implements BaseModel
     }
 
     /**
-     * Response model for a file uploaded to the container.
-     *
      * @param ContentBlockShape $contentBlock
      */
     public function withContentBlock(

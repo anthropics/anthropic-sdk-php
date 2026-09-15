@@ -49,6 +49,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
      *   metadata?: array<string,string>,
      *   name?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|UserProfileCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -64,7 +65,9 @@ final class UserProfilesRawService implements UserProfilesRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -93,7 +96,8 @@ final class UserProfilesRawService implements UserProfilesRawContract
      *
      * @param string $userProfileID Path parameter user_profile_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|UserProfileRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -117,7 +121,9 @@ final class UserProfilesRawService implements UserProfilesRawContract
             path: ['v1/user_profiles/%1$s?beta=true', $userProfileID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
@@ -141,6 +147,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
      *   metadata?: array<string,string>,
      *   name?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|UserProfileUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -157,7 +164,9 @@ final class UserProfilesRawService implements UserProfilesRawContract
             $params,
             $requestOptions,
         );
-        $header_params = ['betas' => 'anthropic-beta'];
+        $header_params = [
+            'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+        ];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -190,6 +199,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
      *   orderBy?: OrderBy|value-of<OrderBy>,
      *   page?: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|UserProfileListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -220,7 +230,9 @@ final class UserProfilesRawService implements UserProfilesRawContract
             ),
             headers: Util::array_transform_keys(
                 $header_params,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
@@ -238,7 +250,8 @@ final class UserProfilesRawService implements UserProfilesRawContract
      *
      * @param string $userProfileID Path parameter user_profile_id
      * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
      * }|UserProfileCreateEnrollmentURLParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -262,7 +275,9 @@ final class UserProfilesRawService implements UserProfilesRawContract
             path: ['v1/user_profiles/%1$s/enrollment_url?beta=true', $userProfileID],
             headers: Util::array_transform_keys(
                 $parsed,
-                ['betas' => 'anthropic-beta']
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
             ),
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],

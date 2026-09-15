@@ -1,5 +1,39 @@
 # Changelog
 
+## 0.49.0 (2026-09-15)
+
+Full Changelog: [v0.48.0...v0.49.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.48.0...v0.49.0)
+
+### Features
+
+* **api:** add compaction parameter and signed compaction blocks (beta) ([a6569e1](https://github.com/anthropics/anthropic-sdk-php/commit/a6569e1ab21bd566a16ae3a340a3d97f0ad87a6b))
+* **api:** add enum types for workspace data-residency geo fields ([ae759fa](https://github.com/anthropics/anthropic-sdk-php/commit/ae759faaf273d0bd3f316ac99205fb8d9736f272))
+* **api:** add thinking_mismatch_allowed entries to input_transformations (beta) ([7f51166](https://github.com/anthropics/anthropic-sdk-php/commit/7f51166684cef5766330f5523a42c235cba7b3a6))
+* **api:** add url_sources to the web fetch tool ([a1c309f](https://github.com/anthropics/anthropic-sdk-php/commit/a1c309f6952bf8ec5659d118acc12e63b918a6ec))
+* **api:** add workspace_id parameter to user profiles methods ([e0a3141](https://github.com/anthropics/anthropic-sdk-php/commit/e0a31413876db4e546b69558c48be6fe80f1c8ba))
+
+
+### Bug Fixes
+
+* **api:** mark usage iteration model as nullable ([f61a249](https://github.com/anthropics/anthropic-sdk-php/commit/f61a24977cda6ba00973c2662bae292e8db20239))
+* **api:** use one input transformation type for message and delta event ([a4b1807](https://github.com/anthropics/anthropic-sdk-php/commit/a4b1807c23f2af7f80e76fed5ef6d6df1bb2c08f))
+* **client:** decode timestamps as dates in unions with a string variant ([e4ab631](https://github.com/anthropics/anthropic-sdk-php/commit/e4ab631f45b47516499d67460a5a6d90ab38e686))
+* **client:** send uploads from non-seekable streams once instead of failing on retry ([b412f0b](https://github.com/anthropics/anthropic-sdk-php/commit/b412f0bf4c9bd3ef5e6f318b08a745de5e5cd968))
+
+
+### Chores
+
+* **docs:** clarify that session_thread_id on tool use events is informational ([29f1895](https://github.com/anthropics/anthropic-sdk-php/commit/29f18952f7539bcf7eb6af032a3d6c7190d25561))
+* **docs:** correct the compaction beta's parameter descriptions ([2672f33](https://github.com/anthropics/anthropic-sdk-php/commit/2672f33eaab2a1b24647237c73c82c0cec0bbfb7))
+* **tests:** stop the mock server without failing a passing test run ([8be1b0b](https://github.com/anthropics/anthropic-sdk-php/commit/8be1b0b8e32ecd3de93fedabdb2d2870e031167e))
+
+
+### Documentation
+
+* **api:** clarify usage.iterations entry typing under server-side fallback ([14fa132](https://github.com/anthropics/anthropic-sdk-php/commit/14fa1329e3266cfcbae1333dc0d4886d662d9722))
+* **api:** fix typo in temperature deprecation message ([466e602](https://github.com/anthropics/anthropic-sdk-php/commit/466e602251a5f9f3d298cf9ae451668726790fb0))
+* stop documenting unions with their first variant's description ([4c18bd8](https://github.com/anthropics/anthropic-sdk-php/commit/4c18bd8fb4a9507693380d6f46d8d4951beb8a46))
+
 ## 0.48.0 (2026-09-10)
 
 Full Changelog: [v0.47.0...v0.48.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.47.0...v0.48.0)

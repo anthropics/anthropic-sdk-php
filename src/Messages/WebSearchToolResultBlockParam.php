@@ -47,11 +47,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
     #[Optional('cache_control', nullable: true)]
     public ?CacheControlEphemeral $cacheControl;
 
-    /**
-     * Tool invocation directly from the model.
-     *
-     * @var CallerVariants|null $caller
-     */
+    /** @var CallerVariants|null $caller */
     #[Optional(union: Caller::class)]
     public DirectCaller|ServerToolCaller|ServerToolCaller20260120|null $caller;
 
@@ -145,8 +141,6 @@ final class WebSearchToolResultBlockParam implements BaseModel
     }
 
     /**
-     * Tool invocation directly from the model.
-     *
      * @param CallerShape $caller
      */
     public function withCaller(

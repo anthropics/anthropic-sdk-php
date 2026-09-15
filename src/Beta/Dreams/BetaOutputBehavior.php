@@ -9,8 +9,6 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * The default destination: the job creates a new output memory store as a clone of the memory_store input and writes the consolidated memories into it. The input store is never mutated.
- *
  * @phpstan-import-type BetaOutputBehaviorCreateNewShape from \Anthropic\Beta\Dreams\BetaOutputBehaviorCreateNew
  * @phpstan-import-type BetaOutputBehaviorUpdateExistingShape from \Anthropic\Beta\Dreams\BetaOutputBehaviorUpdateExisting
  *

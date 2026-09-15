@@ -10,8 +10,6 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Model identifier and configuration applied to every pipeline stage.
- *
  * @phpstan-import-type BetaDreamModelConfigParamShape from \Anthropic\Beta\Dreams\BetaDreamModelConfigParam
  *
  * @phpstan-type ModelVariants = string|BetaDreamModelConfigParam
@@ -26,6 +24,6 @@ final class Model implements ConverterSource
      */
     public static function variants(): array
     {
-        return ['string', BetaDreamModelConfigParam::class];
+        return [BetaDreamModelConfigParam::class, 'string'];
     }
 }

@@ -13,8 +13,6 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * The agent completed its turn naturally and is ready for the next user message.
- *
  * @phpstan-import-type ManagedAgentsSessionEndTurnShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionEndTurn
  * @phpstan-import-type ManagedAgentsSessionRequiresActionShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionRequiresAction
  * @phpstan-import-type ManagedAgentsSessionRetriesExhaustedShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionRetriesExhausted

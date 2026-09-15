@@ -38,11 +38,7 @@ final class ManagedAgentsMCPOAuthRefreshUpdateParams implements BaseModel
     #[Optional(nullable: true)]
     public ?string $scope;
 
-    /**
-     * Updated HTTP Basic authentication parameters for the token endpoint.
-     *
-     * @var TokenEndpointAuthVariants|null $tokenEndpointAuth
-     */
+    /** @var TokenEndpointAuthVariants|null $tokenEndpointAuth */
     #[Optional('token_endpoint_auth', union: TokenEndpointAuth::class)]
     public ManagedAgentsTokenEndpointAuthBasicUpdateParam|ManagedAgentsTokenEndpointAuthPostUpdateParam|null $tokenEndpointAuth;
 
@@ -95,8 +91,6 @@ final class ManagedAgentsMCPOAuthRefreshUpdateParams implements BaseModel
     }
 
     /**
-     * Updated HTTP Basic authentication parameters for the token endpoint.
-     *
      * @param TokenEndpointAuthShape $tokenEndpointAuth
      */
     public function withTokenEndpointAuth(

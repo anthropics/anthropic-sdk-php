@@ -25,6 +25,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   content?: string|null,
  *   encryptedContent?: string|null,
+ *   signature?: string|null,
  * }
  */
 final class BetaCompactionBlockParam implements BaseModel
@@ -54,6 +55,12 @@ final class BetaCompactionBlockParam implements BaseModel
     #[Optional('encrypted_content', nullable: true)]
     public ?string $encryptedContent;
 
+    /**
+     * The block's signature as returned, to be sent back verbatim.
+     */
+    #[Optional(nullable: true)]
+    public ?string $signature;
+
     public function __construct()
     {
         $this->initialize();
@@ -70,12 +77,14 @@ final class BetaCompactionBlockParam implements BaseModel
         BetaCacheControlEphemeral|array|null $cacheControl = null,
         ?string $content = null,
         ?string $encryptedContent = null,
+        ?string $signature = null,
     ): self {
         $self = new self;
 
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $content && $self['content'] = $content;
         null !== $encryptedContent && $self['encryptedContent'] = $encryptedContent;
+        null !== $signature && $self['signature'] = $signature;
 
         return $self;
     }
@@ -123,6 +132,17 @@ final class BetaCompactionBlockParam implements BaseModel
     {
         $self = clone $this;
         $self['encryptedContent'] = $encryptedContent;
+
+        return $self;
+    }
+
+    /**
+     * The block's signature as returned, to be sent back verbatim.
+     */
+    public function withSignature(?string $signature): self
+    {
+        $self = clone $this;
+        $self['signature'] = $signature;
 
         return $self;
     }

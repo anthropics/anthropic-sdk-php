@@ -31,11 +31,7 @@ final class WebSearchToolResultBlock implements BaseModel
     #[Required]
     public string $type = 'web_search_tool_result';
 
-    /**
-     * Tool invocation directly from the model.
-     *
-     * @var CallerVariants $caller
-     */
+    /** @var CallerVariants $caller */
     #[Required(union: Caller::class)]
     public DirectCaller|ServerToolCaller|ServerToolCaller20260120 $caller;
 
@@ -93,8 +89,6 @@ final class WebSearchToolResultBlock implements BaseModel
     }
 
     /**
-     * Tool invocation directly from the model.
-     *
      * @param CallerShape $caller
      */
     public function withCaller(

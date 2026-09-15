@@ -13,13 +13,14 @@ use Anthropic\Messages\Model;
 
 /**
  * @phpstan-import-type BetaContentBlockVariants from \Anthropic\Beta\Messages\BetaContentBlock
+ * @phpstan-import-type BetaInputTransformationVariants from \Anthropic\Beta\Messages\BetaInputTransformation
  * @phpstan-import-type BetaContainerShape from \Anthropic\Beta\Messages\BetaContainer
  * @phpstan-import-type BetaContentBlockShape from \Anthropic\Beta\Messages\BetaContentBlock
  * @phpstan-import-type BetaContextManagementResponseShape from \Anthropic\Beta\Messages\BetaContextManagementResponse
  * @phpstan-import-type BetaDiagnosticsShape from \Anthropic\Beta\Messages\BetaDiagnostics
  * @phpstan-import-type BetaRefusalStopDetailsShape from \Anthropic\Beta\Messages\BetaRefusalStopDetails
  * @phpstan-import-type BetaUsageShape from \Anthropic\Beta\Messages\BetaUsage
- * @phpstan-import-type BetaThinkingDroppedInputTransformationShape from \Anthropic\Beta\Messages\BetaThinkingDroppedInputTransformation
+ * @phpstan-import-type BetaInputTransformationShape from \Anthropic\Beta\Messages\BetaInputTransformation
  *
  * @phpstan-type BetaMessageShape = array{
  *   id: string,
@@ -34,7 +35,7 @@ use Anthropic\Messages\Model;
  *   stopSequence: string|null,
  *   type: 'message',
  *   usage: BetaUsage|BetaUsageShape,
- *   inputTransformations?: list<BetaThinkingDroppedInputTransformation|BetaThinkingDroppedInputTransformationShape>|null,
+ *   inputTransformations?: list<BetaInputTransformationShape>|null,
  * }
  */
 final class BetaMessage implements BaseModel
@@ -181,27 +182,33 @@ final class BetaMessage implements BaseModel
     public BetaUsage $usage;
 
     /**
-     * Changes the API made to the request's input before showing it to the model:
-     * one entry per change, in request order. Today the only entry type is
-     * `thinking_dropped` — a `thinking`, `redacted_thinking` or `connector_text`
-     * block from the request's `messages` that was removed from the prompt instead
-     * of being shown to the model because it failed a binding check. More entry
-     * types may be added over time; ignore types you do not recognize.
+     * Changes the API made to the request's input before showing it to the model,
+     * and blocks that failed a binding check but were left unchanged: one entry per
+     * block, in request order. Two entry types today. `thinking_dropped` — a
+     * `thinking`, `redacted_thinking` or `connector_text` block from the request's
+     * `messages` that was removed from the prompt instead of being shown to the
+     * model because it failed a binding check. `thinking_mismatch_allowed` — a
+     * `thinking` or `redacted_thinking` block that failed the conversation check
+     * (the conversation before it differs from the one it was created in, or it
+     * carries no record of one on a model that requires it) and was shown to the
+     * model all the same, because that check is not enforced for this request.
+     * More entry types may be added over time; ignore types you do not recognize.
      *
      * Requires `anthropic-beta: thinking-binding-controls-2026-08-01`. Present on
      * every such response from a model that supports extended thinking, as `[]`
-     * when nothing was changed; without the beta, blocks are removed all the same
-     * but nothing is reported. Removed blocks contribute nothing to
-     * `usage.input_tokens`. When streaming, the array is final in `message_start`;
-     * the final `message_delta` event carries it only when a server-side model
-     * fallback happened mid-stream, in which case it holds the serving model's
-     * entries and replaces the one in `message_start`.
+     * when there is no entry to report; without the beta, blocks are removed or
+     * left in place all the same but nothing is reported. Removed blocks contribute
+     * nothing to `usage.input_tokens`; blocks left in place count as sent. When
+     * streaming, the array is final in `message_start`; the final `message_delta`
+     * event carries it only when a server-side model fallback happened mid-stream,
+     * in which case it holds the serving model's entries and replaces the one in
+     * `message_start`.
      *
-     * @var list<BetaThinkingDroppedInputTransformation>|null $inputTransformations
+     * @var list<BetaInputTransformationVariants>|null $inputTransformations
      */
     #[Optional(
         'input_transformations',
-        list: BetaThinkingDroppedInputTransformation::class,
+        list: BetaInputTransformation::class,
         nullable: true,
     )]
     public ?array $inputTransformations;
@@ -279,7 +286,7 @@ final class BetaMessage implements BaseModel
      * @param BetaRefusalStopDetails|BetaRefusalStopDetailsShape|null $stopDetails
      * @param BetaStopReason|value-of<BetaStopReason>|null $stopReason
      * @param BetaUsage|BetaUsageShape $usage
-     * @param list<BetaThinkingDroppedInputTransformation|BetaThinkingDroppedInputTransformationShape>|null $inputTransformations
+     * @param list<BetaInputTransformationShape>|null $inputTransformations
      */
     public static function with(
         string $id,
@@ -524,23 +531,29 @@ final class BetaMessage implements BaseModel
     }
 
     /**
-     * Changes the API made to the request's input before showing it to the model:
-     * one entry per change, in request order. Today the only entry type is
-     * `thinking_dropped` — a `thinking`, `redacted_thinking` or `connector_text`
-     * block from the request's `messages` that was removed from the prompt instead
-     * of being shown to the model because it failed a binding check. More entry
-     * types may be added over time; ignore types you do not recognize.
+     * Changes the API made to the request's input before showing it to the model,
+     * and blocks that failed a binding check but were left unchanged: one entry per
+     * block, in request order. Two entry types today. `thinking_dropped` — a
+     * `thinking`, `redacted_thinking` or `connector_text` block from the request's
+     * `messages` that was removed from the prompt instead of being shown to the
+     * model because it failed a binding check. `thinking_mismatch_allowed` — a
+     * `thinking` or `redacted_thinking` block that failed the conversation check
+     * (the conversation before it differs from the one it was created in, or it
+     * carries no record of one on a model that requires it) and was shown to the
+     * model all the same, because that check is not enforced for this request.
+     * More entry types may be added over time; ignore types you do not recognize.
      *
      * Requires `anthropic-beta: thinking-binding-controls-2026-08-01`. Present on
      * every such response from a model that supports extended thinking, as `[]`
-     * when nothing was changed; without the beta, blocks are removed all the same
-     * but nothing is reported. Removed blocks contribute nothing to
-     * `usage.input_tokens`. When streaming, the array is final in `message_start`;
-     * the final `message_delta` event carries it only when a server-side model
-     * fallback happened mid-stream, in which case it holds the serving model's
-     * entries and replaces the one in `message_start`.
+     * when there is no entry to report; without the beta, blocks are removed or
+     * left in place all the same but nothing is reported. Removed blocks contribute
+     * nothing to `usage.input_tokens`; blocks left in place count as sent. When
+     * streaming, the array is final in `message_start`; the final `message_delta`
+     * event carries it only when a server-side model fallback happened mid-stream,
+     * in which case it holds the serving model's entries and replaces the one in
+     * `message_start`.
      *
-     * @param list<BetaThinkingDroppedInputTransformation|BetaThinkingDroppedInputTransformationShape>|null $inputTransformations
+     * @param list<BetaInputTransformationShape>|null $inputTransformations
      */
     public function withInputTransformations(?array $inputTransformations): self
     {

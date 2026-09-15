@@ -8,6 +8,7 @@ use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\ServiceTier
 use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\Speed;
 use Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\System;
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral;
+use Anthropic\Beta\Messages\BetaCompactionConfig;
 use Anthropic\Beta\Messages\BetaContainerParams;
 use Anthropic\Beta\Messages\BetaContextManagementConfig;
 use Anthropic\Beta\Messages\BetaDiagnosticsParam;
@@ -48,6 +49,7 @@ use Anthropic\Messages\Model;
  * @phpstan-import-type BetaToolUnionVariants from \Anthropic\Beta\Messages\BetaToolUnion
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type BetaCompactionConfigShape from \Anthropic\Beta\Messages\BetaCompactionConfig
  * @phpstan-import-type ContainerShape from \Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\Container
  * @phpstan-import-type BetaContextManagementConfigShape from \Anthropic\Beta\Messages\BetaContextManagementConfig
  * @phpstan-import-type BetaDiagnosticsParamShape from \Anthropic\Beta\Messages\BetaDiagnosticsParam
@@ -67,6 +69,7 @@ use Anthropic\Messages\Model;
  *   messages: list<BetaMessageParam|BetaMessageParamShape>,
  *   model: string|Model|value-of<Model>,
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
+ *   compaction?: null|BetaCompactionConfig|BetaCompactionConfigShape,
  *   container?: ContainerShape|null,
  *   contextManagement?: null|BetaContextManagementConfig|BetaContextManagementConfigShape,
  *   diagnostics?: null|BetaDiagnosticsParam|BetaDiagnosticsParamShape,
@@ -177,6 +180,19 @@ final class Params implements BaseModel
      */
     #[Optional('cache_control', nullable: true)]
     public ?BetaCacheControlEphemeral $cacheControl;
+
+    /**
+     * Compact the whole conversation and return a signed `compaction` block,
+     * alone, that a later request sends back first in `messages`, in place of
+     * the messages it summarizes. There is no trigger and no pause flag: sending
+     * the parameter compacts, and nothing is sampled after the block.
+     *
+     * The summarization prompt is the server's own unless `instructions` are
+     * given, which then replace it for this request; a value that is empty or
+     * only whitespace counts as absent.
+     */
+    #[Optional(nullable: true)]
+    public ?BetaCompactionConfig $compaction;
 
     /**
      * Container identifier for reuse across requests.
@@ -321,7 +337,7 @@ final class Params implements BaseModel
     public string|array|null $system;
 
     /**
-     * @deprecated Deprecated. Models released after Claude Opus 4.6 do not support setting temperature. A value of 1.0 of will be accepted for backwards compatibility, all other values will be rejected with a 400 error.
+     * @deprecated Deprecated. Models released after Claude Opus 4.6 do not support setting temperature. A value of 1.0 will be accepted for backwards compatibility, all other values will be rejected with a 400 error.
      *
      * Amount of randomness injected into the response.
      *
@@ -471,6 +487,7 @@ final class Params implements BaseModel
      * @param list<BetaMessageParam|BetaMessageParamShape> $messages
      * @param string|Model|value-of<Model> $model
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction
      * @param ContainerShape|null $container
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement
      * @param BetaDiagnosticsParam|BetaDiagnosticsParamShape|null $diagnostics
@@ -493,6 +510,7 @@ final class Params implements BaseModel
         array $messages,
         Model|string $model,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
+        BetaCompactionConfig|array|null $compaction = null,
         string|BetaContainerParams|array|null $container = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
         BetaDiagnosticsParam|array|null $diagnostics = null,
@@ -522,6 +540,7 @@ final class Params implements BaseModel
         $self['model'] = $model;
 
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
+        null !== $compaction && $self['compaction'] = $compaction;
         null !== $container && $self['container'] = $container;
         null !== $contextManagement && $self['contextManagement'] = $contextManagement;
         null !== $diagnostics && $self['diagnostics'] = $diagnostics;
@@ -649,6 +668,27 @@ final class Params implements BaseModel
     ): self {
         $self = clone $this;
         $self['cacheControl'] = $cacheControl;
+
+        return $self;
+    }
+
+    /**
+     * Compact the whole conversation and return a signed `compaction` block,
+     * alone, that a later request sends back first in `messages`, in place of
+     * the messages it summarizes. There is no trigger and no pause flag: sending
+     * the parameter compacts, and nothing is sampled after the block.
+     *
+     * The summarization prompt is the server's own unless `instructions` are
+     * given, which then replace it for this request; a value that is empty or
+     * only whitespace counts as absent.
+     *
+     * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction
+     */
+    public function withCompaction(
+        BetaCompactionConfig|array|null $compaction
+    ): self {
+        $self = clone $this;
+        $self['compaction'] = $compaction;
 
         return $self;
     }
