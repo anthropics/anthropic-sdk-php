@@ -66,7 +66,7 @@ final class BetaHeaderMergeTest extends TestCase
         );
 
         $this->assertSame(
-            ['mcp-client-2025-04-04', 'managed-agents-2026-04-01'],
+            ['mcp-client-2025-04-04,managed-agents-2026-04-01'],
             $this->getLastRequest()->getHeader('anthropic-beta'),
         );
     }
@@ -79,7 +79,7 @@ final class BetaHeaderMergeTest extends TestCase
         );
 
         $this->assertSame(
-            ['managed-agents-2026-04-01', 'mcp-client-2025-04-04'],
+            ['managed-agents-2026-04-01,mcp-client-2025-04-04'],
             $this->getLastRequest()->getHeader('anthropic-beta'),
         );
     }
