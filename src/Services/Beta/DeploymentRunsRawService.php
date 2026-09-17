@@ -33,7 +33,7 @@ final class DeploymentRunsRawService implements DeploymentRunsRawContract
      *
      * Get Deployment Run
      *
-     * @param string $deploymentRunID Path parameter deployment_run_id
+     * @param string $deploymentRunID unique identifier of the deployment run
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,

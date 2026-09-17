@@ -91,7 +91,7 @@ final class MemoryStoresService implements MemoryStoresContract
      *
      * Retrieve a memory store
      *
-     * @param string $memoryStoreID Path parameter memory_store_id
+     * @param string $memoryStoreID ID of the memory store to retrieve (a `memstore_...` identifier). Required. Enumerate IDs via `GET /v1/memory_stores`.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -121,7 +121,7 @@ final class MemoryStoresService implements MemoryStoresContract
      *
      * Update a memory store
      *
-     * @param string $memoryStoreID Path param: Path parameter memory_store_id
+     * @param string $memoryStoreID Path param: ID of the memory store to update (a `memstore_...` identifier). Required. Enumerate IDs via `GET /v1/memory_stores`. Updating an archived store returns 400.
      * @param string|null $description Body param: New description for the store, up to 1024 characters. Pass an empty string to clear it.
      * @param array<string,string|null>|null $metadata Body param: Metadata patch. Set a key to a string to upsert it, or to null to delete it. Omit the field to preserve. The stored bag is limited to 16 keys (up to 64 chars each) with values up to 512 chars.
      * @param string|null $name Body param: New human-readable name for the store. 1–255 characters; no control characters. Renaming changes the slug used for the store's `mount_path` in sessions created after the update.
@@ -211,7 +211,7 @@ final class MemoryStoresService implements MemoryStoresContract
      *
      * Delete a memory store
      *
-     * @param string $memoryStoreID Path parameter memory_store_id
+     * @param string $memoryStoreID ID of the memory store to permanently delete (a `memstore_...` identifier). Required. Deletion cascades to all memories and memory versions in the store and cannot be undone.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -241,7 +241,7 @@ final class MemoryStoresService implements MemoryStoresContract
      *
      * Archive a memory store
      *
-     * @param string $memoryStoreID Path parameter memory_store_id
+     * @param string $memoryStoreID ID of the memory store to archive (a `memstore_...` identifier). Required. Archiving is one-way and idempotent; archived stores cannot be unarchived. Enumerate IDs via `GET /v1/memory_stores`.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *

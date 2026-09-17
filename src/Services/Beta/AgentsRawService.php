@@ -100,7 +100,7 @@ final class AgentsRawService implements AgentsRawContract
      *
      * Get Agent
      *
-     * @param string $agentID Path param: Path parameter agent_id
+     * @param string $agentID path param: Unique identifier of the agent to retrieve
      * @param array{
      *   version?: int,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -150,7 +150,7 @@ final class AgentsRawService implements AgentsRawContract
      *
      * Update Agent
      *
-     * @param string $agentID Path param: Path parameter agent_id
+     * @param string $agentID path param: Unique identifier of the agent to update
      * @param array{
      *   description?: string|null,
      *   mcpServers?: list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null,
@@ -271,7 +271,7 @@ final class AgentsRawService implements AgentsRawContract
      *
      * Archive Agent
      *
-     * @param string $agentID Path parameter agent_id
+     * @param string $agentID unique identifier of the agent to archive
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,

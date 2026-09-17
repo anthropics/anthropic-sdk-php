@@ -40,7 +40,7 @@ interface TunnelsRawContract
     /**
      * @api
      *
-     * @param string $tunnelID Path parameter tunnel_id
+     * @param string $tunnelID ID of the tunnel (`tnl_...`).
      * @param array<string,mixed>|TunnelRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -72,7 +72,7 @@ interface TunnelsRawContract
     /**
      * @api
      *
-     * @param string $tunnelID Path parameter tunnel_id
+     * @param string $tunnelID ID of the tunnel (`tnl_...`).
      * @param array<string,mixed>|TunnelArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -89,7 +89,7 @@ interface TunnelsRawContract
     /**
      * @api
      *
-     * @param string $tunnelID Path parameter tunnel_id
+     * @param string $tunnelID ID of the tunnel (`tnl_...`).
      * @param array<string,mixed>|TunnelRevealTokenParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -106,7 +106,7 @@ interface TunnelsRawContract
     /**
      * @api
      *
-     * @param string $tunnelID Path param: Path parameter tunnel_id
+     * @param string $tunnelID Path param: ID of the tunnel (`tnl_...`).
      * @param array<string,mixed>|TunnelRotateTokenParams $params
      * @param RequestOpts|null $requestOptions
      *

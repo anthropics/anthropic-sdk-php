@@ -9,7 +9,13 @@ namespace Anthropic\Beta\DeploymentRuns;
  */
 enum BetaManagedAgentsTriggerType: string
 {
+    /**
+     * The run was fired by the deployment's cron schedule.
+     */
     case SCHEDULE = 'schedule';
 
+    /**
+     * The run was started manually by creating a session directly against the deployment.
+     */
     case MANUAL = 'manual';
 }

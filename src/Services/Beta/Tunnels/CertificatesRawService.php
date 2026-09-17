@@ -36,7 +36,7 @@ final class CertificatesRawService implements CertificatesRawContract
      *
      * Registers a public CA certificate on a tunnel. Anthropic verifies the gateway's server certificate against this CA when it terminates the inner TLS session. A tunnel holds at most two non-archived certificates.
      *
-     * @param string $tunnelID Path param: Path parameter tunnel_id
+     * @param string $tunnelID Path param: ID of the tunnel (`tnl_...`).
      * @param array{
      *   caCertificatePEM: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -88,7 +88,7 @@ final class CertificatesRawService implements CertificatesRawContract
      *
      * Fetches a tunnel certificate by ID.
      *
-     * @param string $certificateID Path param: Path parameter certificate_id
+     * @param string $certificateID Path param: ID of the certificate (`tcrt_...`).
      * @param array{
      *   tunnelID: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -139,7 +139,7 @@ final class CertificatesRawService implements CertificatesRawContract
      *
      * Lists the certificates registered on a tunnel. Archived certificates are excluded unless include_archived is set.
      *
-     * @param string $tunnelID Path param: Path parameter tunnel_id
+     * @param string $tunnelID Path param: ID of the tunnel (`tnl_...`).
      * @param array{
      *   includeArchived?: bool,
      *   limit?: int,
@@ -197,7 +197,7 @@ final class CertificatesRawService implements CertificatesRawContract
      *
      * Archives a tunnel certificate, removing it from the set Anthropic trusts for the tunnel. The certificate record is retained. Archiving the last non-archived certificate is permitted; the tunnel rejects MCP traffic until a new certificate is added.
      *
-     * @param string $certificateID Path param: Path parameter certificate_id
+     * @param string $certificateID Path param: ID of the certificate to archive (`tcrt_...`).
      * @param array{
      *   tunnelID: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,

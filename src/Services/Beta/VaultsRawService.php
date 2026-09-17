@@ -86,7 +86,7 @@ final class VaultsRawService implements VaultsRawContract
      *
      * Get Vault
      *
-     * @param string $vaultID Path parameter vault_id
+     * @param string $vaultID unique identifier of the vault to retrieve
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -130,7 +130,7 @@ final class VaultsRawService implements VaultsRawContract
      *
      * Update Vault
      *
-     * @param string $vaultID Path param: Path parameter vault_id
+     * @param string $vaultID path param: Unique identifier of the vault to update
      * @param array{
      *   displayName?: string|null,
      *   metadata?: array<string,string|null>|null,
@@ -235,7 +235,7 @@ final class VaultsRawService implements VaultsRawContract
      *
      * Delete Vault
      *
-     * @param string $vaultID Path parameter vault_id
+     * @param string $vaultID unique identifier of the vault to delete
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -279,7 +279,7 @@ final class VaultsRawService implements VaultsRawContract
      *
      * Archive Vault
      *
-     * @param string $vaultID Path parameter vault_id
+     * @param string $vaultID unique identifier of the vault to archive
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,

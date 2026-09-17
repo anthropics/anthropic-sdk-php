@@ -40,7 +40,7 @@ interface VaultsRawContract
     /**
      * @api
      *
-     * @param string $vaultID Path parameter vault_id
+     * @param string $vaultID unique identifier of the vault to retrieve
      * @param array<string,mixed>|VaultRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -57,7 +57,7 @@ interface VaultsRawContract
     /**
      * @api
      *
-     * @param string $vaultID Path param: Path parameter vault_id
+     * @param string $vaultID path param: Unique identifier of the vault to update
      * @param array<string,mixed>|VaultUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -89,7 +89,7 @@ interface VaultsRawContract
     /**
      * @api
      *
-     * @param string $vaultID Path parameter vault_id
+     * @param string $vaultID unique identifier of the vault to delete
      * @param array<string,mixed>|VaultDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -106,7 +106,7 @@ interface VaultsRawContract
     /**
      * @api
      *
-     * @param string $vaultID Path parameter vault_id
+     * @param string $vaultID unique identifier of the vault to archive
      * @param array<string,mixed>|VaultArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *

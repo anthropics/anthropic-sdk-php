@@ -87,7 +87,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
      *
      * Retrieve a memory store
      *
-     * @param string $memoryStoreID Path parameter memory_store_id
+     * @param string $memoryStoreID ID of the memory store to retrieve (a `memstore_...` identifier). Required. Enumerate IDs via `GET /v1/memory_stores`.
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -131,7 +131,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
      *
      * Update a memory store
      *
-     * @param string $memoryStoreID Path param: Path parameter memory_store_id
+     * @param string $memoryStoreID Path param: ID of the memory store to update (a `memstore_...` identifier). Required. Enumerate IDs via `GET /v1/memory_stores`. Updating an archived store returns 400.
      * @param array{
      *   description?: string|null,
      *   metadata?: array<string,string|null>|null,
@@ -245,7 +245,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
      *
      * Delete a memory store
      *
-     * @param string $memoryStoreID Path parameter memory_store_id
+     * @param string $memoryStoreID ID of the memory store to permanently delete (a `memstore_...` identifier). Required. Deletion cascades to all memories and memory versions in the store and cannot be undone.
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -289,7 +289,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
      *
      * Archive a memory store
      *
-     * @param string $memoryStoreID Path parameter memory_store_id
+     * @param string $memoryStoreID ID of the memory store to archive (a `memstore_...` identifier). Required. Archiving is one-way and idempotent; archived stores cannot be unarchived. Enumerate IDs via `GET /v1/memory_stores`.
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,

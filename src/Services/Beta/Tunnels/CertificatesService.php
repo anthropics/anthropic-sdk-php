@@ -38,7 +38,7 @@ final class CertificatesService implements CertificatesContract
      *
      * Registers a public CA certificate on a tunnel. Anthropic verifies the gateway's server certificate against this CA when it terminates the inner TLS session. A tunnel holds at most two non-archived certificates.
      *
-     * @param string $tunnelID Path param: Path parameter tunnel_id
+     * @param string $tunnelID Path param: ID of the tunnel (`tnl_...`).
      * @param string $caCertificatePEM Body param: PEM-encoded X.509 CA certificate. Must contain exactly one certificate and no private-key material. Maximum 8KB.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
@@ -76,8 +76,8 @@ final class CertificatesService implements CertificatesContract
      *
      * Fetches a tunnel certificate by ID.
      *
-     * @param string $certificateID Path param: Path parameter certificate_id
-     * @param string $tunnelID Path param: Path parameter tunnel_id
+     * @param string $certificateID Path param: ID of the certificate (`tcrt_...`).
+     * @param string $tunnelID Path param: ID of the tunnel (`tnl_...`).
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -114,7 +114,7 @@ final class CertificatesService implements CertificatesContract
      *
      * Lists the certificates registered on a tunnel. Archived certificates are excluded unless include_archived is set.
      *
-     * @param string $tunnelID Path param: Path parameter tunnel_id
+     * @param string $tunnelID Path param: ID of the tunnel (`tnl_...`).
      * @param bool $includeArchived Query param: Whether to include archived certificates in the results. Defaults to false.
      * @param int $limit Query param: Maximum number of certificates to return per page. Defaults to 20, maximum 1000.
      * @param string $page query param: Opaque pagination cursor from a previous `list_tunnel_certificates` response
@@ -160,8 +160,8 @@ final class CertificatesService implements CertificatesContract
      *
      * Archives a tunnel certificate, removing it from the set Anthropic trusts for the tunnel. The certificate record is retained. Archiving the last non-archived certificate is permitted; the tunnel rejects MCP traffic until a new certificate is added.
      *
-     * @param string $certificateID Path param: Path parameter certificate_id
-     * @param string $tunnelID Path param: Path parameter tunnel_id
+     * @param string $certificateID Path param: ID of the certificate to archive (`tcrt_...`).
+     * @param string $tunnelID Path param: ID of the tunnel (`tnl_...`).
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *

@@ -81,7 +81,7 @@ final class VaultsService implements VaultsContract
      *
      * Get Vault
      *
-     * @param string $vaultID Path parameter vault_id
+     * @param string $vaultID unique identifier of the vault to retrieve
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -111,7 +111,7 @@ final class VaultsService implements VaultsContract
      *
      * Update Vault
      *
-     * @param string $vaultID Path param: Path parameter vault_id
+     * @param string $vaultID path param: Unique identifier of the vault to update
      * @param string|null $displayName Body param: Updated human-readable name for the vault. 1-255 characters.
      * @param array<string,string|null>|null $metadata Body param: Metadata patch. Set a key to a string to upsert it, or to null to delete it. Omitted keys are preserved.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
@@ -192,7 +192,7 @@ final class VaultsService implements VaultsContract
      *
      * Delete Vault
      *
-     * @param string $vaultID Path parameter vault_id
+     * @param string $vaultID unique identifier of the vault to delete
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -222,7 +222,7 @@ final class VaultsService implements VaultsContract
      *
      * Archive Vault
      *
-     * @param string $vaultID Path parameter vault_id
+     * @param string $vaultID unique identifier of the vault to archive
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *

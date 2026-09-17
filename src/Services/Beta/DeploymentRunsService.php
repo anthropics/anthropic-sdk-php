@@ -37,7 +37,7 @@ final class DeploymentRunsService implements DeploymentRunsContract
      *
      * Get Deployment Run
      *
-     * @param string $deploymentRunID Path parameter deployment_run_id
+     * @param string $deploymentRunID unique identifier of the deployment run
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *

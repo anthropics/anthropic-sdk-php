@@ -36,7 +36,7 @@ final class VersionsService implements VersionsContract
      *
      * List Agent Versions
      *
-     * @param string $agentID Path param: Path parameter agent_id
+     * @param string $agentID path param: Agent ID to list versions for
      * @param int $limit Query param: Maximum results per page. Default 20, maximum 100.
      * @param string $page query param: Opaque pagination cursor
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use

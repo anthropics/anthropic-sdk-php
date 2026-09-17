@@ -41,7 +41,7 @@ final class CredentialsRawService implements CredentialsRawContract
      *
      * Create Credential
      *
-     * @param string $vaultID Path param: Path parameter vault_id
+     * @param string $vaultID path param: Identifier of the vault to create the credential in
      * @param array{
      *   auth: AuthShape,
      *   displayName?: string|null,
@@ -93,7 +93,7 @@ final class CredentialsRawService implements CredentialsRawContract
      *
      * Get Credential
      *
-     * @param string $credentialID Path param: Path parameter credential_id
+     * @param string $credentialID path param: Unique identifier of the credential to retrieve
      * @param array{
      *   vaultID: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -142,7 +142,7 @@ final class CredentialsRawService implements CredentialsRawContract
      *
      * Update Credential
      *
-     * @param string $credentialID Path param: Path parameter credential_id
+     * @param string $credentialID path param: Unique identifier of the credential to update
      * @param array{
      *   vaultID: string,
      *   auth?: AuthShape1,
@@ -199,7 +199,7 @@ final class CredentialsRawService implements CredentialsRawContract
      *
      * List Credentials
      *
-     * @param string $vaultID Path param: Path parameter vault_id
+     * @param string $vaultID path param: Identifier of the vault to list credentials for
      * @param array{
      *   includeArchived?: bool,
      *   limit?: int,
@@ -255,7 +255,7 @@ final class CredentialsRawService implements CredentialsRawContract
      *
      * Delete Credential
      *
-     * @param string $credentialID Path param: Path parameter credential_id
+     * @param string $credentialID path param: Unique identifier of the credential to delete
      * @param array{
      *   vaultID: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -304,7 +304,7 @@ final class CredentialsRawService implements CredentialsRawContract
      *
      * Archive Credential
      *
-     * @param string $credentialID Path param: Path parameter credential_id
+     * @param string $credentialID path param: Unique identifier of the credential to archive
      * @param array{
      *   vaultID: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -355,7 +355,7 @@ final class CredentialsRawService implements CredentialsRawContract
      *
      * Validate Credential
      *
-     * @param string $credentialID Path param: Path parameter credential_id
+     * @param string $credentialID path param: Unique identifier of the credential to validate
      * @param array{
      *   vaultID: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,

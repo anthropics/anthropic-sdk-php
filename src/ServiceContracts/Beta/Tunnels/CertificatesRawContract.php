@@ -22,7 +22,7 @@ interface CertificatesRawContract
     /**
      * @api
      *
-     * @param string $tunnelID Path param: Path parameter tunnel_id
+     * @param string $tunnelID Path param: ID of the tunnel (`tnl_...`).
      * @param array<string,mixed>|CertificateCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -39,7 +39,7 @@ interface CertificatesRawContract
     /**
      * @api
      *
-     * @param string $certificateID Path param: Path parameter certificate_id
+     * @param string $certificateID Path param: ID of the certificate (`tcrt_...`).
      * @param array<string,mixed>|CertificateRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -56,7 +56,7 @@ interface CertificatesRawContract
     /**
      * @api
      *
-     * @param string $tunnelID Path param: Path parameter tunnel_id
+     * @param string $tunnelID Path param: ID of the tunnel (`tnl_...`).
      * @param array<string,mixed>|CertificateListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -73,7 +73,7 @@ interface CertificatesRawContract
     /**
      * @api
      *
-     * @param string $certificateID Path param: Path parameter certificate_id
+     * @param string $certificateID Path param: ID of the certificate to archive (`tcrt_...`).
      * @param array<string,mixed>|CertificateArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *

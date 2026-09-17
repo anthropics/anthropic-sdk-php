@@ -38,7 +38,7 @@ interface AgentsRawContract
     /**
      * @api
      *
-     * @param string $agentID Path param: Path parameter agent_id
+     * @param string $agentID path param: Unique identifier of the agent to retrieve
      * @param array<string,mixed>|AgentRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -55,7 +55,7 @@ interface AgentsRawContract
     /**
      * @api
      *
-     * @param string $agentID Path param: Path parameter agent_id
+     * @param string $agentID path param: Unique identifier of the agent to update
      * @param array<string,mixed>|AgentUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -87,7 +87,7 @@ interface AgentsRawContract
     /**
      * @api
      *
-     * @param string $agentID Path parameter agent_id
+     * @param string $agentID unique identifier of the agent to archive
      * @param array<string,mixed>|AgentArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *

@@ -82,7 +82,7 @@ final class TunnelsService implements TunnelsContract
      *
      * Fetches a tunnel by ID.
      *
-     * @param string $tunnelID Path parameter tunnel_id
+     * @param string $tunnelID ID of the tunnel (`tnl_...`).
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -158,7 +158,7 @@ final class TunnelsService implements TunnelsContract
      *
      * Archives a tunnel. Archival is irreversible: every non-archived certificate on the tunnel is archived in the same operation, the hostname is retired and never re-allocated, and the tunnel token is invalidated. Retrying against an already-archived tunnel returns the existing record unchanged.
      *
-     * @param string $tunnelID Path parameter tunnel_id
+     * @param string $tunnelID ID of the tunnel (`tnl_...`).
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -190,7 +190,7 @@ final class TunnelsService implements TunnelsContract
      *
      * Reveals a tunnel's connector token. The value is fetched live on each call; Anthropic does not store it. Repeated calls return the same value until the token is rotated. Exposed as POST so the token does not appear in intermediary access logs.
      *
-     * @param string $tunnelID Path parameter tunnel_id
+     * @param string $tunnelID ID of the tunnel (`tnl_...`).
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -222,7 +222,7 @@ final class TunnelsService implements TunnelsContract
      *
      * Rotates a tunnel's connector token. Rotation invalidates the current token for new connections and returns a fresh value; established connections are not severed. A connector restarted after rotation must use the new value.
      *
-     * @param string $tunnelID Path param: Path parameter tunnel_id
+     * @param string $tunnelID Path param: ID of the tunnel (`tnl_...`).
      * @param string|null $reason body param: Optional free-text reason for the rotation, recorded for audit
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
