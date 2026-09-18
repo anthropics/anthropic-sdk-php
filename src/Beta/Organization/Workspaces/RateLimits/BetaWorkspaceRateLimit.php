@@ -4,15 +4,25 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\Workspaces\RateLimits;
 
+use Anthropic\Beta\Organization\RateLimits\OrganizationRateLimitBatchGroup;
+use Anthropic\Beta\Organization\RateLimits\OrganizationRateLimitFilesGroup;
+use Anthropic\Beta\Organization\RateLimits\OrganizationRateLimitModelGroup;
+use Anthropic\Beta\Organization\RateLimits\OrganizationRateLimitSkillsGroup;
+use Anthropic\Beta\Organization\RateLimits\OrganizationRateLimitTokenCountGroup;
+use Anthropic\Beta\Organization\RateLimits\OrganizationRateLimitWebSearchGroup;
+use Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimit\Group;
 use Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimit\GroupType;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type GroupVariants from \Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimit\Group
+ * @phpstan-import-type GroupShape from \Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimit\Group
  * @phpstan-import-type BetaWorkspaceRateLimitValueShape from \Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimitValue
  *
  * @phpstan-type BetaWorkspaceRateLimitShape = array{
+ *   group: GroupShape,
  *   groupType: GroupType|value-of<GroupType>,
  *   limits: list<BetaWorkspaceRateLimitValue|BetaWorkspaceRateLimitValueShape>,
  *   models: list<string>|null,
@@ -35,7 +45,17 @@ final class BetaWorkspaceRateLimit implements BaseModel
     public string $type = 'workspace_rate_limit';
 
     /**
-     * The kind of rate-limit group this entry represents. `model_group` entries apply to a family of models (listed in `models`); other values apply to an API-surface category and have `models` set to `null`.
+     * The rate-limit group this entry's limits apply to. Its `type` equals `group_type`.
+     *
+     * @var GroupVariants $group
+     */
+    #[Required(union: Group::class)]
+    public OrganizationRateLimitModelGroup|OrganizationRateLimitBatchGroup|OrganizationRateLimitTokenCountGroup|OrganizationRateLimitFilesGroup|OrganizationRateLimitSkillsGroup|OrganizationRateLimitWebSearchGroup $group;
+
+    /**
+     * @deprecated Use `group.type` instead. `group_type` is still returned and always equals `group.type`.
+     *
+     * Deprecated: use `group.type` instead. The kind of rate-limit group this entry represents. `model_group` entries apply to a family of models (listed in `models`); other values apply to an API-surface category and have `models` set to `null`. Always equal to `group.type`.
      *
      * @var value-of<GroupType> $groupType
      */
@@ -59,7 +79,7 @@ final class BetaWorkspaceRateLimit implements BaseModel
     public ?array $models;
 
     /**
-     * The `id` of the RateLimit group this override applies to.
+     * The `id` of the organization's RateLimit entry this override applies to.
      */
     #[Required('rate_limit_id')]
     public string $rateLimitID;
@@ -76,7 +96,12 @@ final class BetaWorkspaceRateLimit implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaWorkspaceRateLimit::with(
-     *   groupType: ..., limits: ..., models: ..., rateLimitID: ..., workspaceID: ...
+     *   group: ...,
+     *   groupType: ...,
+     *   limits: ...,
+     *   models: ...,
+     *   rateLimitID: ...,
+     *   workspaceID: ...,
      * )
      * ```
      *
@@ -84,6 +109,7 @@ final class BetaWorkspaceRateLimit implements BaseModel
      *
      * ```
      * (new BetaWorkspaceRateLimit)
+     *   ->withGroup(...)
      *   ->withGroupType(...)
      *   ->withLimits(...)
      *   ->withModels(...)
@@ -101,11 +127,13 @@ final class BetaWorkspaceRateLimit implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param GroupShape $group
      * @param GroupType|value-of<GroupType> $groupType
      * @param list<BetaWorkspaceRateLimitValue|BetaWorkspaceRateLimitValueShape> $limits
      * @param list<string>|null $models
      */
     public static function with(
+        OrganizationRateLimitModelGroup|array|OrganizationRateLimitBatchGroup|OrganizationRateLimitTokenCountGroup|OrganizationRateLimitFilesGroup|OrganizationRateLimitSkillsGroup|OrganizationRateLimitWebSearchGroup $group,
         GroupType|string $groupType,
         array $limits,
         ?array $models,
@@ -114,6 +142,7 @@ final class BetaWorkspaceRateLimit implements BaseModel
     ): self {
         $self = new self;
 
+        $self['group'] = $group;
         $self['groupType'] = $groupType;
         $self['limits'] = $limits;
         $self['models'] = $models;
@@ -124,7 +153,21 @@ final class BetaWorkspaceRateLimit implements BaseModel
     }
 
     /**
-     * The kind of rate-limit group this entry represents. `model_group` entries apply to a family of models (listed in `models`); other values apply to an API-surface category and have `models` set to `null`.
+     * The rate-limit group this entry's limits apply to. Its `type` equals `group_type`.
+     *
+     * @param GroupShape $group
+     */
+    public function withGroup(
+        OrganizationRateLimitModelGroup|array|OrganizationRateLimitBatchGroup|OrganizationRateLimitTokenCountGroup|OrganizationRateLimitFilesGroup|OrganizationRateLimitSkillsGroup|OrganizationRateLimitWebSearchGroup $group,
+    ): self {
+        $self = clone $this;
+        $self['group'] = $group;
+
+        return $self;
+    }
+
+    /**
+     * Deprecated: use `group.type` instead. The kind of rate-limit group this entry represents. `model_group` entries apply to a family of models (listed in `models`); other values apply to an API-surface category and have `models` set to `null`. Always equal to `group.type`.
      *
      * @param GroupType|value-of<GroupType> $groupType
      */
@@ -163,7 +206,7 @@ final class BetaWorkspaceRateLimit implements BaseModel
     }
 
     /**
-     * The `id` of the RateLimit group this override applies to.
+     * The `id` of the organization's RateLimit entry this override applies to.
      */
     public function withRateLimitID(string $rateLimitID): self
     {
