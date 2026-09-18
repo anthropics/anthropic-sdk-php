@@ -46,7 +46,7 @@ final class ManagedAgentsSessionThread implements BaseModel
     public string $id;
 
     /**
-     * The resolved agent a session thread runs: a saved-agent snapshot, the platform advisor entry, or an inline-defined (ephemeral) agent snapshot.
+     * The resolved agent a `session_thread` runs.
      *
      * @var AgentVariants $agent
      */
@@ -202,7 +202,7 @@ final class ManagedAgentsSessionThread implements BaseModel
     }
 
     /**
-     * The resolved agent a session thread runs: a saved-agent snapshot, the platform advisor entry, or an inline-defined (ephemeral) agent snapshot.
+     * The resolved agent a `session_thread` runs.
      *
      * @param AgentShape $agent
      */
