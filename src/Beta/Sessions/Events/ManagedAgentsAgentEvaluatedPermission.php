@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Sessions\Events\ManagedAgentsAgentMCPToolUseEvent;
+namespace Anthropic\Beta\Sessions\Events;
 
 /**
  * AgentEvaluatedPermission enum.
  */
-enum EvaluatedPermission: string
+enum ManagedAgentsAgentEvaluatedPermission: string
 {
     case ALLOW = 'allow';
 
