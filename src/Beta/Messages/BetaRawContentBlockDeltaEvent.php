@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type BetaRawContentBlockDeltaVariants from \Anthropic\Beta\Messages\BetaRawContentBlockDelta
@@ -22,7 +23,7 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
     use SdkModel;
 
     /** @var 'content_block_delta' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('content_block_delta'))]
     public string $type = 'content_block_delta';
 
     /** @var BetaRawContentBlockDeltaVariants $delta */

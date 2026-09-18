@@ -8,6 +8,7 @@ use Anthropic\Beta\Messages\BetaRawContentBlockStartEvent\ContentBlock;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type ContentBlockVariants from \Anthropic\Beta\Messages\BetaRawContentBlockStartEvent\ContentBlock
@@ -23,7 +24,7 @@ final class BetaRawContentBlockStartEvent implements BaseModel
     use SdkModel;
 
     /** @var 'content_block_start' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('content_block_start'))]
     public string $type = 'content_block_start';
 
     /** @var ContentBlockVariants $contentBlock */

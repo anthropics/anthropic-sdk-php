@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type CodeExecutionToolResultBlockContentVariants from \Anthropic\Messages\CodeExecutionToolResultBlockContent
@@ -24,7 +25,7 @@ final class CodeExecutionToolResultBlock implements BaseModel
     use SdkModel;
 
     /** @var 'code_execution_tool_result' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('code_execution_tool_result'))]
     public string $type = 'code_execution_tool_result';
 
     /** @var CodeExecutionToolResultBlockContentVariants $content */

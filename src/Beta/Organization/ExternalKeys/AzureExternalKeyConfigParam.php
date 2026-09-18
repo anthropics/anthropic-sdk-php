@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Azure Key Vault provider configuration.
@@ -26,7 +27,7 @@ final class AzureExternalKeyConfigParam implements BaseModel
     use SdkModel;
 
     /** @var 'azure' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('azure'))]
     public string $type = 'azure';
 
     /**

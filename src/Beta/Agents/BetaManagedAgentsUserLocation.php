@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Approximate user location for search result localization.
@@ -30,7 +31,7 @@ final class BetaManagedAgentsUserLocation implements BaseModel
      *
      * @var 'approximate' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('approximate'))]
     public string $type = 'approximate';
 
     /**

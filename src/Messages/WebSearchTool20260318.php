@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\WebSearchTool20260318\AllowedCaller;
 use Anthropic\Messages\WebSearchTool20260318\ResponseInclusion;
 
@@ -41,11 +42,11 @@ final class WebSearchTool20260318 implements BaseModel
      *
      * @var 'web_search' $name
      */
-    #[Required]
+    #[Required(type: new ConstantOf('web_search'))]
     public string $name = 'web_search';
 
     /** @var 'web_search_20260318' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('web_search_20260318'))]
     public string $type = 'web_search_20260318';
 
     /** @var list<value-of<AllowedCaller>>|null $allowedCallers */

@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\Model;
 
 /**
@@ -34,7 +35,7 @@ final class BetaAdvisorMessageIterationUsage implements BaseModel
      *
      * @var 'advisor_message' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('advisor_message'))]
     public string $type = 'advisor_message';
 
     /**

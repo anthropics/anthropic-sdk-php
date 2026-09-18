@@ -10,6 +10,7 @@ use Anthropic\Beta\Organization\APIKeys\APIKey\Status;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type PrincipalVariants from \Anthropic\Beta\Organization\APIKeys\APIKey\Principal
@@ -44,7 +45,7 @@ final class APIKey implements BaseModel
      *
      * @var 'api_key' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('api_key'))]
     public string $type = 'api_key';
 
     /**

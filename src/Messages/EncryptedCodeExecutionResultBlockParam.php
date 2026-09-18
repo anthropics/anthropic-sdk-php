@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Code execution result with encrypted stdout for PFC + web_search results.
@@ -27,7 +28,7 @@ final class EncryptedCodeExecutionResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'encrypted_code_execution_result' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('encrypted_code_execution_result'))]
     public string $type = 'encrypted_code_execution_result';
 
     /** @var list<CodeExecutionOutputBlockParam> $content */

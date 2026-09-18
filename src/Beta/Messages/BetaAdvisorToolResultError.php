@@ -8,6 +8,7 @@ use Anthropic\Beta\Messages\BetaAdvisorToolResultError\ErrorCode;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaAdvisorToolResultErrorShape = array{
@@ -20,7 +21,7 @@ final class BetaAdvisorToolResultError implements BaseModel
     use SdkModel;
 
     /** @var 'advisor_tool_result_error' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('advisor_tool_result_error'))]
     public string $type = 'advisor_tool_result_error';
 
     /** @var value-of<ErrorCode> $errorCode */

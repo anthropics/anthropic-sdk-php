@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A compaction block containing summary of previous context.
@@ -34,7 +35,7 @@ final class BetaCompactionBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'compaction' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('compaction'))]
     public string $type = 'compaction';
 
     /**

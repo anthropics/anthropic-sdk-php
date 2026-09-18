@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type CitationPageLocationParamShape = array{
@@ -24,7 +25,7 @@ final class CitationPageLocationParam implements BaseModel
     use SdkModel;
 
     /** @var 'page_location' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('page_location'))]
     public string $type = 'page_location';
 
     #[Required('cited_text')]

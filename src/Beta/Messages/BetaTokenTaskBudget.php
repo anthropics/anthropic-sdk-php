@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * User-configurable total token budget across contexts.
@@ -26,7 +27,7 @@ final class BetaTokenTaskBudget implements BaseModel
      *
      * @var 'tokens' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('tokens'))]
     public string $type = 'tokens';
 
     /**

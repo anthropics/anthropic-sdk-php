@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type BetaWebSearchToolResultBlockContentVariants from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlockContent
@@ -29,7 +30,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
     use SdkModel;
 
     /** @var 'web_search_tool_result' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('web_search_tool_result'))]
     public string $type = 'web_search_tool_result';
 
     /** @var BetaWebSearchToolResultBlockContentVariants $content */

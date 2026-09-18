@@ -8,6 +8,7 @@ use Anthropic\Beta\Agents\BetaManagedAgentsGlobToolConfig\PermissionPolicy;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Configuration for the glob tool.
@@ -28,11 +29,11 @@ final class BetaManagedAgentsGlobToolConfig implements BaseModel
     use SdkModel;
 
     /** @var 'glob' $name */
-    #[Required]
+    #[Required(type: new ConstantOf('glob'))]
     public string $name = 'glob';
 
     /** @var 'glob' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('glob'))]
     public string $type = 'glob';
 
     #[Required]

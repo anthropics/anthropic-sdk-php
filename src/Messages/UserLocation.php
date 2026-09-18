@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type UserLocationShape = array{
@@ -24,7 +25,7 @@ final class UserLocation implements BaseModel
     use SdkModel;
 
     /** @var 'approximate' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('approximate'))]
     public string $type = 'approximate';
 
     /**

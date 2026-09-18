@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\Federation\Rules;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Authorization rule binding an external OIDC identity to Anthropic.
@@ -52,7 +53,7 @@ final class BetaFederationRule implements BaseModel
     use SdkModel;
 
     /** @var 'federation_rule' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('federation_rule'))]
     public string $type = 'federation_rule';
 
     /**

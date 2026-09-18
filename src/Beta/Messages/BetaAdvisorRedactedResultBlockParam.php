@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaAdvisorRedactedResultBlockParamShape = array{
@@ -22,7 +23,7 @@ final class BetaAdvisorRedactedResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'advisor_redacted_result' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('advisor_redacted_result'))]
     public string $type = 'advisor_redacted_result';
 
     /**

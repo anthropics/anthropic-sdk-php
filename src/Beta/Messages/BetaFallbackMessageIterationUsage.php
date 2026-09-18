@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\Model;
 
 /**
@@ -41,7 +42,7 @@ final class BetaFallbackMessageIterationUsage implements BaseModel
      *
      * @var 'fallback_message' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('fallback_message'))]
     public string $type = 'fallback_message';
 
     /**

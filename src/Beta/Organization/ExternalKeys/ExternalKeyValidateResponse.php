@@ -8,6 +8,7 @@ use Anthropic\Beta\Organization\ExternalKeys\ExternalKeyValidateResponse\Status;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Result of a validation roundtrip against the customer's KMS.
@@ -27,7 +28,7 @@ final class ExternalKeyValidateResponse implements BaseModel
     use SdkModel;
 
     /** @var 'external_key_validation' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('external_key_validation'))]
     public string $type = 'external_key_validation';
 
     /**

@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Limited network request params.
@@ -32,7 +33,7 @@ final class BetaLimitedNetworkParams implements BaseModel
      *
      * @var 'limited' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('limited'))]
     public string $type = 'limited';
 
     /**

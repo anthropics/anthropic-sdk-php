@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\DocumentBlock\Source;
 
 /**
@@ -27,7 +28,7 @@ final class DocumentBlock implements BaseModel
     use SdkModel;
 
     /** @var 'document' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('document'))]
     public string $type = 'document';
 
     /**

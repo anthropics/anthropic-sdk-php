@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A tab this call's execution opened that remains open at its end —
@@ -27,7 +28,7 @@ final class BetaBrowserStateChangeTabOpened implements BaseModel
     use SdkModel;
 
     /** @var 'tab_opened' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('tab_opened'))]
     public string $type = 'tab_opened';
 
     /**

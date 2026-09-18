@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\RateLimits;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type OrganizationRateLimitModelGroupShape = array{
@@ -23,7 +24,7 @@ final class OrganizationRateLimitModelGroup implements BaseModel
      *
      * @var 'model_group' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('model_group'))]
     public string $type = 'model_group';
 
     /**

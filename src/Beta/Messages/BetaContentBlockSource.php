@@ -8,6 +8,7 @@ use Anthropic\Beta\Messages\BetaContentBlockSource\Content;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type ContentVariants from \Anthropic\Beta\Messages\BetaContentBlockSource\Content
@@ -23,7 +24,7 @@ final class BetaContentBlockSource implements BaseModel
     use SdkModel;
 
     /** @var 'content' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('content'))]
     public string $type = 'content';
 
     /** @var ContentVariants $content */

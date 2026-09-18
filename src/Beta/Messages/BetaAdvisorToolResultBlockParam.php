@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type ContentVariants from \Anthropic\Beta\Messages\BetaAdvisorToolResultBlockParam\Content
@@ -27,7 +28,7 @@ final class BetaAdvisorToolResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'advisor_tool_result' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('advisor_tool_result'))]
     public string $type = 'advisor_tool_result';
 
     /** @var ContentVariants $content */

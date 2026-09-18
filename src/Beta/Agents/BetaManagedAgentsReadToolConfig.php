@@ -8,6 +8,7 @@ use Anthropic\Beta\Agents\BetaManagedAgentsReadToolConfig\PermissionPolicy;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Configuration for the read tool.
@@ -28,11 +29,11 @@ final class BetaManagedAgentsReadToolConfig implements BaseModel
     use SdkModel;
 
     /** @var 'read' $name */
-    #[Required]
+    #[Required(type: new ConstantOf('read'))]
     public string $name = 'read';
 
     /** @var 'read' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('read'))]
     public string $type = 'read';
 
     #[Required]

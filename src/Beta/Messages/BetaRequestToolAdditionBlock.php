@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Mid-conversation directive to surface a declared tool.
@@ -33,7 +34,7 @@ final class BetaRequestToolAdditionBlock implements BaseModel
     use SdkModel;
 
     /** @var 'tool_addition' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('tool_addition'))]
     public string $type = 'tool_addition';
 
     /** @var ToolVariants $tool */

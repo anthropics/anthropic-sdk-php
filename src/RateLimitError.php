@@ -7,6 +7,7 @@ namespace Anthropic;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type RateLimitErrorShape = array{
@@ -19,7 +20,7 @@ final class RateLimitError implements BaseModel
     use SdkModel;
 
     /** @var 'rate_limit_error' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('rate_limit_error'))]
     public string $type = 'rate_limit_error';
 
     #[Required]

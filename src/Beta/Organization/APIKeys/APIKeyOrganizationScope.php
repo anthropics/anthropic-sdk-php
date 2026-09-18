@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\APIKeys;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type APIKeyOrganizationScopeShape = array{type: 'organization'}
@@ -21,7 +22,7 @@ final class APIKeyOrganizationScope implements BaseModel
      *
      * @var 'organization' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('organization'))]
     public string $type = 'organization';
 
     public function __construct()

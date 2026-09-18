@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\ServerToolUseBlockParam\Caller;
 use Anthropic\Messages\ServerToolUseBlockParam\Name;
 
@@ -31,7 +32,7 @@ final class ServerToolUseBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'server_tool_use' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('server_tool_use'))]
     public string $type = 'server_tool_use';
 
     #[Required]

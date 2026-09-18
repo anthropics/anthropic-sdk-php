@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * JWKS via the issuer's OIDC discovery document.
@@ -22,7 +23,7 @@ final class BetaJWKSDiscovery implements BaseModel
     use SdkModel;
 
     /** @var 'discovery' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('discovery'))]
     public string $type = 'discovery';
 
     /**

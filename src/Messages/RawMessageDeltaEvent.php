@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\RawMessageDeltaEvent\Delta;
 
 /**
@@ -25,7 +26,7 @@ final class RawMessageDeltaEvent implements BaseModel
     use SdkModel;
 
     /** @var 'message_delta' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('message_delta'))]
     public string $type = 'message_delta';
 
     #[Required]

@@ -8,6 +8,7 @@ use Anthropic\Beta\Environments\Work\SelfHostedWork\State;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Work resource representing a unit of work in a self-hosted environment.
@@ -44,7 +45,7 @@ final class SelfHostedWork implements BaseModel
      *
      * @var 'work' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('work'))]
     public string $type = 'work';
 
     /**

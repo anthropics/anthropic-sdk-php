@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages\Batches;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type MessageBatchCanceledResultShape = array{type: 'canceled'}
@@ -17,7 +18,7 @@ final class MessageBatchCanceledResult implements BaseModel
     use SdkModel;
 
     /** @var 'canceled' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('canceled'))]
     public string $type = 'canceled';
 
     public function __construct()

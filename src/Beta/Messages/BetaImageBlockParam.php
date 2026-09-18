@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type SourceVariants from \Anthropic\Beta\Messages\BetaImageBlockParam\Source
@@ -29,7 +30,7 @@ final class BetaImageBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'image' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('image'))]
     public string $type = 'image';
 
     /** @var SourceVariants $source */

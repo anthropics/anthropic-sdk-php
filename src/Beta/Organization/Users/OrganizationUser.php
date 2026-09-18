@@ -8,6 +8,7 @@ use Anthropic\Beta\Organization\BetaOrganizationRole;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type OrganizationUserShape = array{
@@ -31,7 +32,7 @@ final class OrganizationUser implements BaseModel
      *
      * @var 'user' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('user'))]
     public string $type = 'user';
 
     /**

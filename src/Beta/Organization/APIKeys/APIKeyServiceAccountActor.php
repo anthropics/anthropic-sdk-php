@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\APIKeys;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type APIKeyServiceAccountActorShape = array{
@@ -23,7 +24,7 @@ final class APIKeyServiceAccountActor implements BaseModel
      *
      * @var 'service_account_actor' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('service_account_actor'))]
     public string $type = 'service_account_actor';
 
     /**

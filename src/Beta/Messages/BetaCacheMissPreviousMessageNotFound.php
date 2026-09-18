@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaCacheMissPreviousMessageNotFoundShape = array{
@@ -19,7 +20,7 @@ final class BetaCacheMissPreviousMessageNotFound implements BaseModel
     use SdkModel;
 
     /** @var 'previous_message_not_found' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('previous_message_not_found'))]
     public string $type = 'previous_message_not_found';
 
     public function __construct()

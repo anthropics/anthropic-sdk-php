@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaMemoryTool20250818RenameCommandShape = array{
@@ -23,7 +24,7 @@ final class BetaMemoryTool20250818RenameCommand implements BaseModel
      *
      * @var 'rename' $command
      */
-    #[Required]
+    #[Required(type: new ConstantOf('rename'))]
     public string $command = 'rename';
 
     /**

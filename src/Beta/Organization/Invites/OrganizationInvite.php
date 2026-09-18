@@ -9,6 +9,7 @@ use Anthropic\Beta\Organization\Invites\OrganizationInvite\Status;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type OrganizationInviteShape = array{
@@ -35,7 +36,7 @@ final class OrganizationInvite implements BaseModel
      *
      * @var 'invite' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('invite'))]
     public string $type = 'invite';
 
     /**

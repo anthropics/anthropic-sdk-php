@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Core\Conversion\MapOf;
 use Anthropic\Messages\ToolTextEditor20250429\AllowedCaller;
 
@@ -36,11 +37,11 @@ final class ToolTextEditor20250429 implements BaseModel
      *
      * @var 'str_replace_based_edit_tool' $name
      */
-    #[Required]
+    #[Required(type: new ConstantOf('str_replace_based_edit_tool'))]
     public string $name = 'str_replace_based_edit_tool';
 
     /** @var 'text_editor_20250429' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('text_editor_20250429'))]
     public string $type = 'text_editor_20250429';
 
     /** @var list<value-of<AllowedCaller>>|null $allowedCallers */

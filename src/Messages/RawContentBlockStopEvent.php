@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type RawContentBlockStopEventShape = array{
@@ -19,7 +20,7 @@ final class RawContentBlockStopEvent implements BaseModel
     use SdkModel;
 
     /** @var 'content_block_stop' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('content_block_stop'))]
     public string $type = 'content_block_stop';
 
     #[Required]

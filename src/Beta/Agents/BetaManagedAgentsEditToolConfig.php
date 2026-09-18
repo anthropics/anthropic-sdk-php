@@ -8,6 +8,7 @@ use Anthropic\Beta\Agents\BetaManagedAgentsEditToolConfig\PermissionPolicy;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Configuration for the edit tool.
@@ -28,11 +29,11 @@ final class BetaManagedAgentsEditToolConfig implements BaseModel
     use SdkModel;
 
     /** @var 'edit' $name */
-    #[Required]
+    #[Required(type: new ConstantOf('edit'))]
     public string $name = 'edit';
 
     /** @var 'edit' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('edit'))]
     public string $type = 'edit';
 
     #[Required]

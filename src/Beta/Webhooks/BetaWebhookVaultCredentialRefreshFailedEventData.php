@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Webhooks;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaWebhookVaultCredentialRefreshFailedEventDataShape = array{
@@ -23,7 +24,7 @@ final class BetaWebhookVaultCredentialRefreshFailedEventData implements BaseMode
     use SdkModel;
 
     /** @var 'vault_credential.refresh_failed' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('vault_credential.refresh_failed'))]
     public string $type = 'vault_credential.refresh_failed';
 
     /**

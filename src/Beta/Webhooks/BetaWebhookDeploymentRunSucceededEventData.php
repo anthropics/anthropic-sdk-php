@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Webhooks;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaWebhookDeploymentRunSucceededEventDataShape = array{
@@ -22,7 +23,7 @@ final class BetaWebhookDeploymentRunSucceededEventData implements BaseModel
     use SdkModel;
 
     /** @var 'deployment_run.succeeded' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('deployment_run.succeeded'))]
     public string $type = 'deployment_run.succeeded';
 
     /**

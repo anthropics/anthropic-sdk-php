@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Environments;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Limited network access.
@@ -28,7 +29,7 @@ final class BetaLimitedNetwork implements BaseModel
      *
      * @var 'limited' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('limited'))]
     public string $type = 'limited';
 
     /**

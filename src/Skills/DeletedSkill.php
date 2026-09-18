@@ -7,6 +7,7 @@ namespace Anthropic\Skills;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type DeletedSkillShape = array{id: string, type: 'skill_deleted'}
@@ -23,7 +24,7 @@ final class DeletedSkill implements BaseModel
      *
      * @var 'skill_deleted' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('skill_deleted'))]
     public string $type = 'skill_deleted';
 
     /**

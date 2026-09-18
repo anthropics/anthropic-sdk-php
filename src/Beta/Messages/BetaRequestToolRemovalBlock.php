@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Mid-conversation directive to withdraw a tool.
@@ -33,7 +34,7 @@ final class BetaRequestToolRemovalBlock implements BaseModel
     use SdkModel;
 
     /** @var 'tool_removal' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('tool_removal'))]
     public string $type = 'tool_removal';
 
     /** @var ToolVariants $tool */

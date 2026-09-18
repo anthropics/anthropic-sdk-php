@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The tool filter variant under which every result but the named
@@ -25,7 +26,7 @@ final class BetaWebFetchURLSourceExcept implements BaseModel
     use SdkModel;
 
     /** @var 'except' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('except'))]
     public string $type = 'except';
 
     /** @var list<BetaWebFetchURLSourceToolReference> $tools */

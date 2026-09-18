@@ -7,6 +7,7 @@ namespace Anthropic\Beta\MemoryStores\MemoryVersions;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Attribution for a write made by a workload authenticated as a service account, for example via Workload Identity Federation.
@@ -21,7 +22,7 @@ final class ManagedAgentsServiceAccountActor implements BaseModel
     use SdkModel;
 
     /** @var 'service_account_actor' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('service_account_actor'))]
     public string $type = 'service_account_actor';
 
     /**

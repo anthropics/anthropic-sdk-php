@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type AWSExternalKeyConfigShape = array{
@@ -20,7 +21,7 @@ final class AWSExternalKeyConfig implements BaseModel
     use SdkModel;
 
     /** @var 'aws' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('aws'))]
     public string $type = 'aws';
 
     /**

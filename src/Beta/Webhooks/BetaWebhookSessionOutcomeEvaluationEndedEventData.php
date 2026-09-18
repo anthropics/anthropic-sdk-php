@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Webhooks;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaWebhookSessionOutcomeEvaluationEndedEventDataShape = array{
@@ -22,7 +23,7 @@ final class BetaWebhookSessionOutcomeEvaluationEndedEventData implements BaseMod
     use SdkModel;
 
     /** @var 'session.outcome_evaluation_ended' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('session.outcome_evaluation_ended'))]
     public string $type = 'session.outcome_evaluation_ended';
 
     /**

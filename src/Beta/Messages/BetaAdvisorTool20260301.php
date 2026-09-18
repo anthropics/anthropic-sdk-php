@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\Model;
 
 /**
@@ -39,11 +40,11 @@ final class BetaAdvisorTool20260301 implements BaseModel
      *
      * @var 'advisor' $name
      */
-    #[Required]
+    #[Required(type: new ConstantOf('advisor'))]
     public string $name = 'advisor';
 
     /** @var 'advisor_20260301' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('advisor_20260301'))]
     public string $type = 'advisor_20260301';
 
     /**

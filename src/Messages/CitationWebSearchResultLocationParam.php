@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type CitationWebSearchResultLocationParamShape = array{
@@ -23,7 +24,7 @@ final class CitationWebSearchResultLocationParam implements BaseModel
     use SdkModel;
 
     /** @var 'web_search_result_location' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('web_search_result_location'))]
     public string $type = 'web_search_result_location';
 
     #[Required('cited_text')]

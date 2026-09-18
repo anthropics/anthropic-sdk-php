@@ -8,6 +8,7 @@ use Anthropic\Beta\Messages\BetaThinkingDroppedInputTransformation\Reason;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaThinkingDroppedInputTransformationShape = array{
@@ -24,7 +25,7 @@ final class BetaThinkingDroppedInputTransformation implements BaseModel
      *
      * @var 'thinking_dropped' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('thinking_dropped'))]
     public string $type = 'thinking_dropped';
 
     /**

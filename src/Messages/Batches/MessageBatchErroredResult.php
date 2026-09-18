@@ -7,6 +7,7 @@ namespace Anthropic\Messages\Batches;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\ErrorResponse;
 
 /**
@@ -22,7 +23,7 @@ final class MessageBatchErroredResult implements BaseModel
     use SdkModel;
 
     /** @var 'errored' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('errored'))]
     public string $type = 'errored';
 
     #[Required]

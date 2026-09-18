@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Bind to a fixed service account by ID.
@@ -24,7 +25,7 @@ final class BetaServiceAccountTarget implements BaseModel
     use SdkModel;
 
     /** @var 'service_account' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('service_account'))]
     public string $type = 'service_account';
 
     /**

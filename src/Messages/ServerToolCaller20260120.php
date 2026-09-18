@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type ServerToolCaller20260120Shape = array{
@@ -19,7 +20,7 @@ final class ServerToolCaller20260120 implements BaseModel
     use SdkModel;
 
     /** @var 'code_execution_20260120' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('code_execution_20260120'))]
     public string $type = 'code_execution_20260120';
 
     #[Required('tool_id')]

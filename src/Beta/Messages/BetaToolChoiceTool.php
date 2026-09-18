@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The model will use the specified tool with `tool_choice.name`.
@@ -22,7 +23,7 @@ final class BetaToolChoiceTool implements BaseModel
     use SdkModel;
 
     /** @var 'tool' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('tool'))]
     public string $type = 'tool';
 
     /**

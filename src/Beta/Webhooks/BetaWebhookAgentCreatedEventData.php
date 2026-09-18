@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Webhooks;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaWebhookAgentCreatedEventDataShape = array{
@@ -19,7 +20,7 @@ final class BetaWebhookAgentCreatedEventData implements BaseModel
     use SdkModel;
 
     /** @var 'agent.created' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('agent.created'))]
     public string $type = 'agent.created';
 
     /**

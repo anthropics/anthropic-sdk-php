@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaThinkingDeltaShape = array{
@@ -19,7 +20,7 @@ final class BetaThinkingDelta implements BaseModel
     use SdkModel;
 
     /** @var 'thinking_delta' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('thinking_delta'))]
     public string $type = 'thinking_delta';
 
     /**

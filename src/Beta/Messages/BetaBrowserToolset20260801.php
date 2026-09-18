@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The browser toolset: a single ``tools[]`` entry (carrying no
@@ -30,7 +31,7 @@ final class BetaBrowserToolset20260801 implements BaseModel
     use SdkModel;
 
     /** @var 'browser_toolset_20260801' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('browser_toolset_20260801'))]
     public string $type = 'browser_toolset_20260801';
 
     /**

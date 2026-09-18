@@ -7,6 +7,7 @@ namespace Anthropic;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BillingErrorShape = array{message: string, type: 'billing_error'}
@@ -17,7 +18,7 @@ final class BillingError implements BaseModel
     use SdkModel;
 
     /** @var 'billing_error' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('billing_error'))]
     public string $type = 'billing_error';
 
     #[Required]

@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A file download that started during this call.
@@ -21,7 +22,7 @@ final class BetaBrowserStateChangeDownloadStarted implements BaseModel
     use SdkModel;
 
     /** @var 'download_started' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('download_started'))]
     public string $type = 'download_started';
 
     /**

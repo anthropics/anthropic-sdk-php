@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type ContentVariants from \Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultBlock\Content
@@ -24,7 +25,7 @@ final class BetaBashCodeExecutionToolResultBlock implements BaseModel
     use SdkModel;
 
     /** @var 'bash_code_execution_tool_result' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('bash_code_execution_tool_result'))]
     public string $type = 'bash_code_execution_tool_result';
 
     /** @var ContentVariants $content */

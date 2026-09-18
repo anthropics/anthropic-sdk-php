@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Tool invocation directly from the model.
@@ -19,7 +20,7 @@ final class BetaDirectCaller implements BaseModel
     use SdkModel;
 
     /** @var 'direct' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('direct'))]
     public string $type = 'direct';
 
     public function __construct()

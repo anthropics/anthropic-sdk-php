@@ -8,6 +8,7 @@ use Anthropic\Beta\Messages\BetaDocumentBlock\Source;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type SourceVariants from \Anthropic\Beta\Messages\BetaDocumentBlock\Source
@@ -27,7 +28,7 @@ final class BetaDocumentBlock implements BaseModel
     use SdkModel;
 
     /** @var 'document' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('document'))]
     public string $type = 'document';
 
     /**

@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaCitationSearchResultLocationShape = array{
@@ -25,7 +26,7 @@ final class BetaCitationSearchResultLocation implements BaseModel
     use SdkModel;
 
     /** @var 'search_result_location' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('search_result_location'))]
     public string $type = 'search_result_location';
 
     /**

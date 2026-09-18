@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\RawContentBlockStartEvent\ContentBlock;
 
 /**
@@ -23,7 +24,7 @@ final class RawContentBlockStartEvent implements BaseModel
     use SdkModel;
 
     /** @var 'content_block_start' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('content_block_start'))]
     public string $type = 'content_block_start';
 
     /** @var ContentBlockVariants $contentBlock */

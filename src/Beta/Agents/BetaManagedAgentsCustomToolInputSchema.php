@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * JSON Schema for custom tool input parameters.
@@ -24,7 +25,7 @@ final class BetaManagedAgentsCustomToolInputSchema implements BaseModel
     use SdkModel;
 
     /** @var 'object' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('object'))]
     public string $type = 'object';
 
     /** @var array<string,mixed>|null $properties */

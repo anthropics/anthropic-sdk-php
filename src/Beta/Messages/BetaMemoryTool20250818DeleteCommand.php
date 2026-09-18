@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaMemoryTool20250818DeleteCommandShape = array{
@@ -23,7 +24,7 @@ final class BetaMemoryTool20250818DeleteCommand implements BaseModel
      *
      * @var 'delete' $command
      */
-    #[Required]
+    #[Required(type: new ConstantOf('delete'))]
     public string $command = 'delete';
 
     /**

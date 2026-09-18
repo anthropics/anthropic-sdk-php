@@ -10,6 +10,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type ClearToolInputsVariants from \Anthropic\Beta\Messages\BetaClearToolUses20250919Edit\ClearToolInputs
@@ -34,7 +35,7 @@ final class BetaClearToolUses20250919Edit implements BaseModel
     use SdkModel;
 
     /** @var 'clear_tool_uses_20250919' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('clear_tool_uses_20250919'))]
     public string $type = 'clear_tool_uses_20250919';
 
     /**

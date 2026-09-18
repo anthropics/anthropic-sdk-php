@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The tool filter variant under which only the named tools' results
@@ -25,7 +26,7 @@ final class BetaWebFetchURLSourceOnly implements BaseModel
     use SdkModel;
 
     /** @var 'only' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('only'))]
     public string $type = 'only';
 
     /** @var list<BetaWebFetchURLSourceToolReference> $tools */

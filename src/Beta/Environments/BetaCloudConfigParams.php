@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Request params for `cloud` environment configuration.
@@ -36,7 +37,7 @@ final class BetaCloudConfigParams implements BaseModel
      *
      * @var 'cloud' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('cloud'))]
     public string $type = 'cloud';
 
     /**

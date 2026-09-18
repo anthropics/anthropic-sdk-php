@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Reference to every tool in the named MCP server's toolset.
@@ -21,7 +22,7 @@ final class BetaToolChangeMCPToolsetReference implements BaseModel
     use SdkModel;
 
     /** @var 'mcp_toolset_reference' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('mcp_toolset_reference'))]
     public string $type = 'mcp_toolset_reference';
 
     #[Required('server_name')]

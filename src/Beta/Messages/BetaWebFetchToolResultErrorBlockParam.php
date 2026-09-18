@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaWebFetchToolResultErrorBlockParamShape = array{
@@ -20,7 +21,7 @@ final class BetaWebFetchToolResultErrorBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'web_fetch_tool_result_error' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('web_fetch_tool_result_error'))]
     public string $type = 'web_fetch_tool_result_error';
 
     /** @var value-of<BetaWebFetchToolResultErrorCode> $errorCode */

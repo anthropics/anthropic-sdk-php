@@ -10,6 +10,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Configuration override for the bash tool.
@@ -34,7 +35,7 @@ final class BetaManagedAgentsBashToolConfigParams implements BaseModel
      *
      * @var 'bash' $name
      */
-    #[Required]
+    #[Required(type: new ConstantOf('bash'))]
     public string $name = 'bash';
 
     /**

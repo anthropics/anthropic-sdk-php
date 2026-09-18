@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
@@ -27,7 +28,7 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'mcp_tool_use' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('mcp_tool_use'))]
     public string $type = 'mcp_tool_use';
 
     #[Required]

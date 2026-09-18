@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type BetaThinkingBlockBindingShape from \Anthropic\Beta\Messages\BetaThinkingBlockBinding
@@ -25,7 +26,7 @@ final class BetaThinkingConfigAdaptive implements BaseModel
     use SdkModel;
 
     /** @var 'adaptive' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('adaptive'))]
     public string $type = 'adaptive';
 
     /**

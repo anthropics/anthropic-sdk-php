@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Sessions\Events;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The resolved permission_policy was always_allow; accompanies evaluated_permission "allow".
@@ -21,7 +22,7 @@ final class ManagedAgentsAgentToolEvaluationAlwaysAllow implements BaseModel
     use SdkModel;
 
     /** @var 'always_allow' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('always_allow'))]
     public string $type = 'always_allow';
 
     public function __construct()

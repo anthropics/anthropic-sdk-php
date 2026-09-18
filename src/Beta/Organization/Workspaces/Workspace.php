@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\Workspaces;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type DataResidencyShape from \Anthropic\Beta\Organization\Workspaces\DataResidency
@@ -36,7 +37,7 @@ final class Workspace implements BaseModel
      *
      * @var 'workspace' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('workspace'))]
     public string $type = 'workspace';
 
     /**

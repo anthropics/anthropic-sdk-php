@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Configuration for a group of tools from an MCP server.
@@ -33,7 +34,7 @@ final class BetaMCPToolset implements BaseModel
     use SdkModel;
 
     /** @var 'mcp_toolset' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('mcp_toolset'))]
     public string $type = 'mcp_toolset';
 
     /**

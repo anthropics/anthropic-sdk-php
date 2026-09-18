@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The model will automatically decide whether to use tools.
@@ -22,7 +23,7 @@ final class BetaToolChoiceAuto implements BaseModel
     use SdkModel;
 
     /** @var 'auto' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('auto'))]
     public string $type = 'auto';
 
     /**

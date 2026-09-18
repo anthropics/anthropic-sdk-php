@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The model will not be allowed to use tools.
@@ -19,7 +20,7 @@ final class ToolChoiceNone implements BaseModel
     use SdkModel;
 
     /** @var 'none' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('none'))]
     public string $type = 'none';
 
     public function __construct()

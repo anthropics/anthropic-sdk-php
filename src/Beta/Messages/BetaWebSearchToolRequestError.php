@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaWebSearchToolRequestErrorShape = array{
@@ -20,7 +21,7 @@ final class BetaWebSearchToolRequestError implements BaseModel
     use SdkModel;
 
     /** @var 'web_search_tool_result_error' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('web_search_tool_result_error'))]
     public string $type = 'web_search_tool_result_error';
 
     /** @var value-of<BetaWebSearchToolResultErrorCode> $errorCode */

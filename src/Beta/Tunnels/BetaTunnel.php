@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Tunnels;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * An MCP tunnel.
@@ -26,7 +27,7 @@ final class BetaTunnel implements BaseModel
     use SdkModel;
 
     /** @var 'tunnel' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('tunnel'))]
     public string $type = 'tunnel';
 
     /**

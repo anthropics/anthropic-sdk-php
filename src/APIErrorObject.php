@@ -7,6 +7,7 @@ namespace Anthropic;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type APIErrorObjectShape = array{message: string, type: 'api_error'}
@@ -17,7 +18,7 @@ final class APIErrorObject implements BaseModel
     use SdkModel;
 
     /** @var 'api_error' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('api_error'))]
     public string $type = 'api_error';
 
     #[Required]

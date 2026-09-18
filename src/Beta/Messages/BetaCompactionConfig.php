@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Compact the whole conversation and return a signed `compaction` block,
@@ -29,7 +30,7 @@ final class BetaCompactionConfig implements BaseModel
     use SdkModel;
 
     /** @var 'summarize' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('summarize'))]
     public string $type = 'summarize';
 
     /**

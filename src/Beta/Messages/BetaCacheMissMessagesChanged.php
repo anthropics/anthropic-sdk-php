@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaCacheMissMessagesChangedShape = array{
@@ -19,7 +20,7 @@ final class BetaCacheMissMessagesChanged implements BaseModel
     use SdkModel;
 
     /** @var 'messages_changed' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('messages_changed'))]
     public string $type = 'messages_changed';
 
     /**

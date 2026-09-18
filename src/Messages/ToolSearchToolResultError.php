@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type ToolSearchToolResultErrorShape = array{
@@ -21,7 +22,7 @@ final class ToolSearchToolResultError implements BaseModel
     use SdkModel;
 
     /** @var 'tool_search_tool_result_error' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('tool_search_tool_result_error'))]
     public string $type = 'tool_search_tool_result_error';
 
     /** @var value-of<ToolSearchToolResultErrorCode> $errorCode */

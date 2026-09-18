@@ -8,6 +8,7 @@ use Anthropic\Beta\Organization\Federation\Issuers\BetaFederationIssuer\JWKS;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Registered external OIDC identity provider.
@@ -43,7 +44,7 @@ final class BetaFederationIssuer implements BaseModel
     use SdkModel;
 
     /** @var 'federation_issuer' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('federation_issuer'))]
     public string $type = 'federation_issuer';
 
     /**

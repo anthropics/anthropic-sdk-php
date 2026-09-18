@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Configuration for the web_fetch tool.
@@ -32,11 +33,11 @@ final class BetaManagedAgentsWebFetchToolConfig implements BaseModel
     use SdkModel;
 
     /** @var 'web_fetch' $name */
-    #[Required]
+    #[Required(type: new ConstantOf('web_fetch'))]
     public string $name = 'web_fetch';
 
     /** @var 'web_fetch' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('web_fetch'))]
     public string $type = 'web_fetch';
 
     #[Required]

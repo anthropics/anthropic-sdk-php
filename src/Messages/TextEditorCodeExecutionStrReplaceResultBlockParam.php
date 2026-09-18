@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type TextEditorCodeExecutionStrReplaceResultBlockParamShape = array{
@@ -25,7 +26,9 @@ final class TextEditorCodeExecutionStrReplaceResultBlockParam implements BaseMod
     use SdkModel;
 
     /** @var 'text_editor_code_execution_str_replace_result' $type */
-    #[Required]
+    #[Required(
+        type: new ConstantOf('text_editor_code_execution_str_replace_result')
+    )]
     public string $type = 'text_editor_code_execution_str_replace_result';
 
     /** @var list<string>|null $lines */

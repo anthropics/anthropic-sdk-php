@@ -10,6 +10,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
@@ -35,7 +36,7 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
      *
      * @var 'tool_search_tool_bm25' $name
      */
-    #[Required]
+    #[Required(type: new ConstantOf('tool_search_tool_bm25'))]
     public string $name = 'tool_search_tool_bm25';
 
     /** @var value-of<Type> $type */

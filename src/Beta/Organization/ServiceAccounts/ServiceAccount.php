@@ -8,6 +8,7 @@ use Anthropic\Beta\Organization\ServiceAccounts\ServiceAccount\OrganizationRole;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Named non-human identity within the caller's organization.
@@ -35,7 +36,7 @@ final class ServiceAccount implements BaseModel
     use SdkModel;
 
     /** @var 'service_account' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('service_account'))]
     public string $type = 'service_account';
 
     /**

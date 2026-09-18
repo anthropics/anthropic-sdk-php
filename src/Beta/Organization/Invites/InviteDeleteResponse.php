@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\Invites;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type InviteDeleteResponseShape = array{
@@ -25,7 +26,7 @@ final class InviteDeleteResponse implements BaseModel
      *
      * @var 'invite_deleted' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('invite_deleted'))]
     public string $type = 'invite_deleted';
 
     /**

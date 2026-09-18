@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type BetaFileScopeShape from \Anthropic\Beta\Files\BetaFileScope
@@ -36,7 +37,7 @@ final class BetaFileMetadata implements BaseModel
      *
      * @var 'file' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('file'))]
     public string $type = 'file';
 
     /**

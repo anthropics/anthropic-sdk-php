@@ -8,6 +8,7 @@ use Anthropic\Beta\Environments\Work\SelfHostedWorkHeartbeatResponse\State;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Response after recording a heartbeat for a work item.
@@ -30,7 +31,7 @@ final class SelfHostedWorkHeartbeatResponse implements BaseModel
      *
      * @var 'work_heartbeat' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('work_heartbeat'))]
     public string $type = 'work_heartbeat';
 
     /**

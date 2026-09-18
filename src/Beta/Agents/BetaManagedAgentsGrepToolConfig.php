@@ -8,6 +8,7 @@ use Anthropic\Beta\Agents\BetaManagedAgentsGrepToolConfig\PermissionPolicy;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Configuration for the grep tool.
@@ -28,11 +29,11 @@ final class BetaManagedAgentsGrepToolConfig implements BaseModel
     use SdkModel;
 
     /** @var 'grep' $name */
-    #[Required]
+    #[Required(type: new ConstantOf('grep'))]
     public string $name = 'grep';
 
     /** @var 'grep' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('grep'))]
     public string $type = 'grep';
 
     #[Required]

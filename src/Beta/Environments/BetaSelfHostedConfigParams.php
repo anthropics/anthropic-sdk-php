@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Environments;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Request params for `self_hosted` environment configuration.
@@ -23,7 +24,7 @@ final class BetaSelfHostedConfigParams implements BaseModel
      *
      * @var 'self_hosted' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('self_hosted'))]
     public string $type = 'self_hosted';
 
     public function __construct()

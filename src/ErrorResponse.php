@@ -7,6 +7,7 @@ namespace Anthropic;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type ErrorObjectVariants from \Anthropic\ErrorObject
@@ -22,7 +23,7 @@ final class ErrorResponse implements BaseModel
     use SdkModel;
 
     /** @var 'error' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('error'))]
     public string $type = 'error';
 
     /** @var ErrorObjectVariants $error */

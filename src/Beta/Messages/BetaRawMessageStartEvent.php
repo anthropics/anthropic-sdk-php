@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type BetaMessageShape from \Anthropic\Beta\Messages\BetaMessage
@@ -21,7 +22,7 @@ final class BetaRawMessageStartEvent implements BaseModel
     use SdkModel;
 
     /** @var 'message_start' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('message_start'))]
     public string $type = 'message_start';
 
     #[Required]

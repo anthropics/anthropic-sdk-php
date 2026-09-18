@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type ToolReferenceBlockShape = array{
@@ -19,7 +20,7 @@ final class ToolReferenceBlock implements BaseModel
     use SdkModel;
 
     /** @var 'tool_reference' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('tool_reference'))]
     public string $type = 'tool_reference';
 
     #[Required('tool_name')]

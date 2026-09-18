@@ -8,6 +8,7 @@ use Anthropic\Beta\Organization\Workspaces\WorkspaceRole;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type ServiceAccountWorkspaceMemberShape = array{
@@ -25,7 +26,7 @@ final class ServiceAccountWorkspaceMember implements BaseModel
     use SdkModel;
 
     /** @var 'service_account_workspace_member' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('service_account_workspace_member'))]
     public string $type = 'service_account_workspace_member';
 
     /**

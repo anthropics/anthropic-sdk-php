@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Token usage for a compaction iteration.
@@ -32,7 +33,7 @@ final class BetaCompactionIterationUsage implements BaseModel
      *
      * @var 'compaction' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('compaction'))]
     public string $type = 'compaction';
 
     /**

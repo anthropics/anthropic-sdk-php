@@ -7,6 +7,7 @@ namespace Anthropic\Skills;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type SkillSourceShape from \Anthropic\Skills\SkillSource
@@ -33,7 +34,7 @@ final class Skill implements BaseModel
      *
      * @var 'skill' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('skill'))]
     public string $type = 'skill';
 
     /**

@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Environments;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Unrestricted network access.
@@ -23,7 +24,7 @@ final class BetaUnrestrictedNetwork implements BaseModel
      *
      * @var 'unrestricted' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('unrestricted'))]
     public string $type = 'unrestricted';
 
     public function __construct()

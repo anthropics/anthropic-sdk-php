@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type BetaDocumentBlockShape from \Anthropic\Beta\Messages\BetaDocumentBlock
@@ -24,7 +25,7 @@ final class BetaWebFetchBlock implements BaseModel
     use SdkModel;
 
     /** @var 'web_fetch_result' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('web_fetch_result'))]
     public string $type = 'web_fetch_result';
 
     #[Required]

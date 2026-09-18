@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\RateLimits;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type OrganizationRateLimitFilesGroupShape = array{
@@ -23,7 +24,7 @@ final class OrganizationRateLimitFilesGroup implements BaseModel
      *
      * @var 'files' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('files'))]
     public string $type = 'files';
 
     /**

@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\Users;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type UserRemoveResponseShape = array{id: string, type: 'user_deleted'}
@@ -23,7 +24,7 @@ final class UserRemoveResponse implements BaseModel
      *
      * @var 'user_deleted' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('user_deleted'))]
     public string $type = 'user_deleted';
 
     /**
