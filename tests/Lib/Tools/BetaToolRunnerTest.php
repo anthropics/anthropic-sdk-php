@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Lib\Tools;
 
+use Anthropic\Beta\Messages\BetaCompact20260112Edit;
 use Anthropic\Beta\Messages\BetaCompactionBlock;
+use Anthropic\Beta\Messages\BetaCompactionConfig;
 use Anthropic\Beta\Messages\BetaContainerParams;
+use Anthropic\Beta\Messages\BetaContextManagementConfig;
 use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Beta\Messages\BetaRequestToolAdditionBlock;
 use Anthropic\Beta\Messages\BetaRequestToolRemovalBlock;
@@ -14,11 +17,13 @@ use Anthropic\Beta\Messages\BetaTextBlock;
 use Anthropic\Beta\Messages\BetaToolChangeToolReference;
 use Anthropic\Beta\Messages\BetaToolUseBlock;
 use Anthropic\Client;
+use Anthropic\Core\Exceptions\BadRequestException;
 use Anthropic\Core\Util;
 use Anthropic\Lib\Tools\BetaRunnableTool;
 use Anthropic\Lib\Tools\BetaToolRunner;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -1011,6 +1016,447 @@ final class BetaToolRunnerTest extends TestCase
     }
 
     // -------------------------------------------------------------------------
+    // compactBeforeNextTurn(): one compaction request, sent once the current turn is complete
+    // -------------------------------------------------------------------------
+
+    #[Test]
+    public function testCompactBeforeNextTurnIsSentAfterTheToolsRun(): void
+    {
+        $compacted = [
+            ['type' => 'compaction', 'content' => 'Summary so far.', 'signature' => 'sig_01'],
+            // A block type this SDK version does not model.
+            ['type' => 'some_future_listing', 'server_name' => 'docs', 'tools' => [['name' => 'search', 'opts' => ['a' => 1]]]],
+        ];
+
+        $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF']));
+        $this->transporter->addResponse($this->compactedResponse($compacted));
+        $this->transporter->addResponse($this->textResponse('Sunny in SF.'));
+
+        $runner = $this->compactRunner(
+            // The compaction request is not a model turn, so both real turns still fit.
+            maxIterations: 2,
+            extraParams: [
+                'betas' => ['compact-2026-09-04'],
+                'contextManagement' => ['edits' => [['type' => 'clear_tool_uses_20250919']]],
+            ],
+        );
+
+        $yielded = [];
+        foreach ($runner as $message) {
+            $yielded[] = $message;
+            if ('tool_use' === $message->stopReason) {
+                $runner->compactBeforeNextTurn(['type' => 'summarize', 'instructions' => 'Keep the city.']);
+            }
+        }
+
+        $this->assertSame(['tool_use', 'compaction', 'end_turn'], array_column($yielded, 'stopReason'));
+        $summary = $yielded[1]->content[0];
+        $this->assertInstanceOf(BetaCompactionBlock::class, $summary);
+        $this->assertSame('Summary so far.', $summary->content);
+
+        [$first, $compaction, $after] = $this->requestBodies();
+        $this->assertSame(['type' => 'summarize', 'instructions' => 'Keep the city.'], $compaction['compaction']);
+        $this->assertArrayNotHasKey('context_management', $compaction);
+        $this->assertEquals(
+            [
+                ['role' => 'user', 'content' => 'What is the weather in SF?'],
+                ['role' => 'assistant', 'content' => [
+                    ['type' => 'tool_use', 'id' => 'tool_1', 'name' => 'get_weather', 'input' => ['location' => 'SF']],
+                ]],
+                ['role' => 'user', 'content' => [
+                    ['type' => 'tool_result', 'tool_use_id' => 'tool_1', 'content' => '{"location":"SF","temperature":72}'],
+                ]],
+            ],
+            $compaction['messages'],
+        );
+
+        // The history is now the compaction response as it came.
+        $this->assertEquals([['role' => 'assistant', 'content' => $compacted]], $after['messages']);
+        $this->assertArrayNotHasKey('compaction', $after);
+        $this->assertSame($first['context_management'], $after['context_management']);
+
+        // The beta is the caller's to pass; the runner sends what it was given and nothing more.
+        foreach ($this->transporter->getRequests() as $request) {
+            $this->assertSame('compact-2026-09-04', $request->getHeaderLine('anthropic-beta'));
+        }
+    }
+
+    #[Test]
+    public function testCompactBeforeNextTurnBeforeTheFirstIterationIsTheFirstRequest(): void
+    {
+        $this->transporter->addResponse($this->compactedResponse());
+        $this->transporter->addResponse($this->textResponse('Sunny in SF.'));
+
+        $runner = $this->compactRunner();
+        $runner->compactBeforeNextTurn();
+
+        $stopReasons = [];
+        foreach ($runner as $message) {
+            $stopReasons[] = $message->stopReason;
+        }
+
+        $this->assertSame(['compaction', 'end_turn'], $stopReasons);
+
+        [$compaction, $after] = $this->requestBodies();
+        $this->assertSame(['type' => 'summarize'], $compaction['compaction']);
+        $this->assertEquals([['role' => 'user', 'content' => 'What is the weather in SF?']], $compaction['messages']);
+        $this->assertEquals(self::compactionBlockAlone(), $after['messages']);
+    }
+
+    #[Test]
+    public function testCompactBeforeNextTurnAgainReplacesThePendingCompaction(): void
+    {
+        $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF']));
+        $this->transporter->addResponse($this->compactedResponse());
+        $this->transporter->addResponse($this->textResponse('Sunny in SF.'));
+
+        $runner = $this->compactRunner();
+        foreach ($runner as $message) {
+            if ('tool_use' === $message->stopReason) {
+                $runner->compactBeforeNextTurn(['type' => 'summarize', 'instructions' => 'Keep the city.']);
+                $runner->compactBeforeNextTurn(['type' => 'summarize', 'instructions' => 'Keep the units.']);
+            }
+        }
+
+        $this->assertSame(
+            [null, ['type' => 'summarize', 'instructions' => 'Keep the units.'], null],
+            array_map(fn (array $body) => $body['compaction'] ?? null, $this->requestBodies()),
+        );
+    }
+
+    #[Test]
+    public function testCompactBeforeNextTurnWaitsOutAPausedTurn(): void
+    {
+        $this->transporter->addResponse($this->pauseTurnResponse());
+        $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF']));
+        $this->transporter->addResponse($this->compactedResponse());
+        $this->transporter->addResponse($this->textResponse('Sunny in SF.'));
+
+        $runner = $this->compactRunner();
+        foreach ($runner as $message) {
+            if ('pause_turn' === $message->stopReason) {
+                $runner->compactBeforeNextTurn();
+            }
+        }
+
+        [, $resumed, $compaction, $after] = $this->requestBodies();
+        $this->assertArrayNotHasKey('compaction', $resumed);
+        $this->assertEquals(['role' => 'assistant', 'content' => self::PAUSED_CONTENT], $this->lastMessage($resumed));
+        $this->assertSame(['type' => 'summarize'], $compaction['compaction']);
+        $this->assertSame('tool_result', $this->lastToolResult($compaction)['type']);
+        $this->assertEquals(self::compactionBlockAlone(), $after['messages']);
+    }
+
+    #[Test]
+    public function testCompactBeforeNextTurnOnTheFinalTurnIsSentBeforeStopping(): void
+    {
+        $this->transporter->addResponse($this->textResponse('Sunny in SF.'));
+        $this->transporter->addResponse($this->compactedResponse());
+
+        // The final answer is also the last iteration allowed; the compaction still goes out.
+        $runner = $this->compactRunner(maxIterations: 1);
+
+        $stopReasons = [];
+        foreach ($runner as $message) {
+            $stopReasons[] = $message->stopReason;
+            if ('end_turn' === $message->stopReason) {
+                $runner->compactBeforeNextTurn();
+            }
+        }
+
+        $this->assertSame(['end_turn', 'compaction'], $stopReasons);
+
+        [, $compaction] = $this->requestBodies();
+        $this->assertSame(['type' => 'summarize'], $compaction['compaction']);
+        $this->assertEquals(
+            [
+                ['role' => 'user', 'content' => 'What is the weather in SF?'],
+                ['role' => 'assistant', 'content' => [['type' => 'text', 'text' => 'Sunny in SF.']]],
+            ],
+            $compaction['messages'],
+        );
+        $this->assertEquals(self::compactionBlockAlone(), $this->currentMessages($runner));
+    }
+
+    #[Test]
+    public function testPendingCompactionIsSkippedOnAFinalTurnWithUnrunToolCalls(): void
+    {
+        $this->transporter->addResponse(
+            $this->toolUseResponse('get_weather', ['location' => 'SF'], stopReason: 'max_tokens')
+        );
+
+        $runner = $this->compactRunner();
+
+        $stopReasons = [];
+        $warnings = $this->captureWarnings(function () use ($runner, &$stopReasons): void {
+            foreach ($runner as $message) {
+                $stopReasons[] = $message->stopReason;
+                $runner->compactBeforeNextTurn();
+            }
+        });
+
+        $this->assertSame(['max_tokens'], $stopReasons);
+        $this->assertCount(1, $this->transporter->getRequests());
+        $this->assertCount(1, $warnings);
+        $this->assertStringContainsString('pending compaction was skipped', $warnings[0]);
+        $this->assertStringContainsString('max_tokens', $warnings[0]);
+    }
+
+    #[Test]
+    public function testPendingCompactionIsSkippedWhenMaxIterationsEndsTheRun(): void
+    {
+        $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF']));
+
+        $runner = $this->compactRunner(maxIterations: 1);
+        foreach ($runner as $_) {
+            $runner->compactBeforeNextTurn();
+        }
+
+        $this->assertCount(1, $this->transporter->getRequests());
+    }
+
+    #[Test]
+    public function testCompactBeforeNextTurnOnTheCompactionResponseIsIgnored(): void
+    {
+        $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF']));
+        $this->transporter->addResponse($this->compactedResponse());
+        $this->transporter->addResponse($this->textResponse('Sunny in SF.'));
+
+        $runner = $this->compactRunner();
+
+        $stopReasons = [];
+        foreach ($runner as $message) {
+            $stopReasons[] = $message->stopReason;
+            if ('end_turn' !== $message->stopReason) {
+                $runner->compactBeforeNextTurn();
+            }
+        }
+
+        $this->assertSame(['tool_use', 'compaction', 'end_turn'], $stopReasons);
+        $this->assertSame(
+            [null, ['type' => 'summarize'], null],
+            array_map(fn (array $body) => $body['compaction'] ?? null, $this->requestBodies()),
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // compactBeforeNextTurn(): the history becomes the compaction response, as it came
+    // -------------------------------------------------------------------------
+
+    /**
+     * @param list<array<string, mixed>> $content
+     */
+    #[Test]
+    #[DataProvider('responsesWithoutASummary')]
+    public function testCompactionWithoutASummaryKeepsTheHistoryAndWarns(array $content, string $stopReason): void
+    {
+        $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF']));
+        $this->transporter->addResponse($this->compactedResponse($content, $stopReason));
+        $this->transporter->addResponse($this->textResponse('Sunny in SF.'));
+
+        $runner = $this->compactRunner();
+
+        $warnings = $this->captureWarnings(function () use ($runner): void {
+            $yielded = 0;
+            foreach ($runner as $_) {
+                // The second call is made on the compaction response, so it is ignored: no retry is sent.
+                if (++$yielded <= 2) {
+                    $runner->compactBeforeNextTurn();
+                }
+            }
+        });
+
+        [, $compaction, $after] = $this->requestBodies();
+        $this->assertEquals($compaction['messages'], $after['messages']);
+        $this->assertArrayNotHasKey('compaction', $after);
+        $this->assertSame(['Compaction produced no summary; keeping the conversation as it is.'], $warnings);
+    }
+
+    /**
+     * @return iterable<string, array{list<array<string, mixed>>, string}>
+     */
+    public static function responsesWithoutASummary(): iterable
+    {
+        yield 'block without content' => [[['type' => 'compaction', 'content' => null]], 'compaction'];
+
+        yield 'no content' => [[], 'max_tokens'];
+    }
+
+    #[Test]
+    public function testMessagesCannotBeReplacedWhileCompacting(): void
+    {
+        $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF']));
+        $this->transporter->addResponse($this->compactedResponse());
+        $this->transporter->addResponse($this->textResponse('Sunny in SF.'));
+
+        $runner = $this->compactRunner();
+
+        $refused = [];
+        foreach ($runner as $message) {
+            if ('tool_use' === $message->stopReason) {
+                $runner->compactBeforeNextTurn();
+            } elseif ('compaction' === $message->stopReason) {
+                $changes = [
+                    fn () => $runner->pushMessages(['role' => 'user', 'content' => 'And in NYC?']),
+                    fn () => $runner->setMessagesParams(['messages' => []]),
+                    fn () => $runner->setMessagesParams(fn (array $params): array => ['messages' => []] + $params),
+                ];
+                foreach ($changes as $change) {
+                    try {
+                        $change();
+                    } catch (\LogicException $e) {
+                        $refused[] = $e->getMessage();
+                    }
+                }
+
+                // Other params can still change, and the change is kept after the history is replaced.
+                $runner->setMessagesParams(fn (array $params): array => ['maxTokens' => 2048] + $params);
+            }
+        }
+
+        $this->assertCount(3, $refused);
+        foreach ($refused as $error) {
+            $this->assertStringContainsString('while the conversation is being compacted', $error);
+        }
+
+        $after = $this->requestBody(2);
+        $this->assertEquals(self::compactionBlockAlone(), $after['messages']);
+        $this->assertSame(2048, $after['max_tokens']);
+    }
+
+    #[Test]
+    public function testMessagesCanBeChangedAgainWhenTheCompactionDoesNotComplete(): void
+    {
+        // The compaction request fails.
+        $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF']));
+        $this->transporter->addResponse($this->makeResponse(
+            ['type' => 'error', 'error' => ['type' => 'invalid_request_error', 'message' => 'No.']],
+            status: 400,
+        ));
+
+        $failed = $this->compactRunner();
+
+        try {
+            foreach ($failed as $_) {
+                $failed->compactBeforeNextTurn();
+            }
+            $this->fail('The failed compaction request should have thrown');
+        } catch (BadRequestException) {
+        }
+
+        // The caller leaves the loop while handling the compaction response.
+        $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF']));
+        $this->transporter->addResponse($this->compactedResponse());
+
+        $abandoned = $this->compactRunner();
+        foreach ($abandoned as $message) {
+            if ('compaction' === $message->stopReason) {
+                break;
+            }
+            $abandoned->compactBeforeNextTurn();
+        }
+
+        foreach ([$failed, $abandoned] as $runner) {
+            $runner->pushMessages(['role' => 'user', 'content' => 'And in NYC?']);
+            $this->assertCount(4, (array) $this->currentMessages($runner));
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // compactBeforeNextTurn(): what the runner refuses
+    // -------------------------------------------------------------------------
+
+    #[Test]
+    public function testCompactionParamIsRefusedOnAToolRunner(): void
+    {
+        $refusal = '`compaction` cannot be set on a tool runner: every request in the loop would compact again. '
+            .'Call compactBeforeNextTurn() when the conversation should be compacted instead.';
+
+        $errors = [];
+        $attempts = [
+            fn () => $this->compactRunner(extraParams: ['compaction' => ['type' => 'summarize']]),
+            fn () => $this->compactRunner()->setMessagesParams(['compaction' => BetaCompactionConfig::with()]),
+            fn () => $this->compactRunner()->setMessagesParams(
+                fn (array $params): array => ['compaction' => ['type' => 'summarize']] + $params,
+            ),
+        ];
+        foreach ($attempts as $attempt) {
+            try {
+                $attempt();
+            } catch (\InvalidArgumentException $e) {
+                $errors[] = $e->getMessage();
+            }
+        }
+
+        $this->assertSame([$refusal, $refusal, $refusal], $errors);
+    }
+
+    /**
+     * @param BetaContextManagementConfig|array<string, mixed> $contextManagement
+     */
+    #[Test]
+    #[DataProvider('compactionEdits')]
+    public function testCompactBeforeNextTurnIsRefusedBesideACompactionEdit(
+        BetaContextManagementConfig|array $contextManagement,
+    ): void {
+        $attempts = [
+            fn () => $this->compactRunner(extraParams: ['contextManagement' => $contextManagement])->compactBeforeNextTurn(),
+            // The edit arrives after the call was accepted, so the setter refuses it.
+            function () use ($contextManagement): void {
+                $runner = $this->compactRunner();
+                $runner->compactBeforeNextTurn();
+                $runner->setMessagesParams(['contextManagement' => $contextManagement]);
+            },
+        ];
+
+        $errors = [];
+        foreach ($attempts as $attempt) {
+            try {
+                $attempt();
+            } catch (\LogicException $e) {
+                $errors[] = $e->getMessage();
+            }
+        }
+
+        $this->assertCount(2, $errors);
+        foreach ($errors as $error) {
+            $this->assertStringContainsString('has a compaction edit', $error);
+        }
+    }
+
+    /**
+     * @return iterable<string, array{BetaContextManagementConfig|array<string, mixed>}>
+     */
+    public static function compactionEdits(): iterable
+    {
+        yield 'array' => [['edits' => [['type' => 'clear_tool_uses_20250919'], ['type' => 'compact_20260112']]]];
+
+        yield 'model' => [BetaContextManagementConfig::with(edits: [BetaCompact20260112Edit::with()])];
+
+        yield 'model edit in an array' => [['edits' => [BetaCompact20260112Edit::with()]]];
+    }
+
+    #[Test]
+    public function testACompactionEditMadeInPlaceIsRefusedWhenTheRequestWouldBeSent(): void
+    {
+        $contextManagement = BetaContextManagementConfig::with(edits: [['type' => 'clear_tool_uses_20250919']]);
+        $runner = $this->compactRunner(extraParams: ['contextManagement' => $contextManagement]);
+        $runner->compactBeforeNextTurn();
+
+        // The runner holds the same object, so no setter sees this change.
+        $contextManagement['edits'] = [BetaCompact20260112Edit::with()];
+
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('has a compaction edit');
+
+        try {
+            $runner->runUntilDone();
+        } finally {
+            $this->assertCount(0, $this->transporter->getRequests());
+        }
+    }
+
+    // -------------------------------------------------------------------------
     // Double-consumption throws
     // -------------------------------------------------------------------------
 
@@ -1157,12 +1603,12 @@ final class BetaToolRunnerTest extends TestCase
     // -------------------------------------------------------------------------
 
     /** @param array<string, mixed> $body */
-    private function makeResponse(array $body): ResponseInterface
+    private function makeResponse(array $body, int $status = 200): ResponseInterface
     {
         $json = json_encode($body, flags: Util::JSON_ENCODE_FLAGS) ?: '{}';
 
         return Psr17FactoryDiscovery::findResponseFactory()
-            ->createResponse(200)
+            ->createResponse($status)
             ->withHeader('Content-Type', 'application/json')
             ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream($json))
         ;
@@ -1244,6 +1690,94 @@ final class BetaToolRunnerTest extends TestCase
         ]);
     }
 
+    /**
+     * The response to a request that carried the `compaction` param.
+     *
+     * @param list<array<string, mixed>>|null $content
+     */
+    private function compactedResponse(?array $content = null, string $stopReason = 'compaction'): ResponseInterface
+    {
+        return $this->makeResponse([
+            'id' => 'msg_compacted',
+            'type' => 'message',
+            'role' => 'assistant',
+            'content' => $content ?? self::compactionBlockAlone()[0]['content'],
+            'model' => 'claude-opus-4-6',
+            'stop_reason' => $stopReason,
+            'stop_sequence' => null,
+            'context_management' => null,
+            'container' => null,
+            'usage' => ['input_tokens' => 10, 'output_tokens' => 20],
+        ]);
+    }
+
+    /**
+     * @return list<array{role: string, content: list<array<string, mixed>>}>
+     */
+    private static function compactionBlockAlone(): array
+    {
+        return [[
+            'role' => 'assistant',
+            'content' => [['type' => 'compaction', 'content' => 'Summary so far.', 'signature' => 'sig_01']],
+        ]];
+    }
+
+    // -------------------------------------------------------------------------
+    // Runner fixtures
+    // -------------------------------------------------------------------------
+
+    /**
+     * @param array<string, mixed> $extraParams
+     */
+    private function compactRunner(?int $maxIterations = null, array $extraParams = []): BetaToolRunner
+    {
+        return $this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [['role' => 'user', 'content' => 'What is the weather in SF?']],
+            model: 'claude-opus-4-6',
+            tools: [$this->makeWeatherTool()],
+            maxIterations: $maxIterations,
+            extraParams: $extraParams,
+        );
+    }
+
+    /**
+     * The runner's message history in its API shape.
+     */
+    private function currentMessages(BetaToolRunner $runner): mixed
+    {
+        return json_decode(
+            json_encode($runner->getParams()['messages'], flags: Util::JSON_ENCODE_FLAGS),
+            associative: true,
+        );
+    }
+
+    /**
+     * Runs the callback and returns the E_USER_WARNING messages it raised.
+     *
+     * @return list<string>
+     */
+    private function captureWarnings(\Closure $run): array
+    {
+        $warnings = [];
+        set_error_handler(
+            function (int $_, string $message) use (&$warnings): bool {
+                $warnings[] = $message;
+
+                return true;
+            },
+            E_USER_WARNING,
+        );
+
+        try {
+            $run();
+        } finally {
+            restore_error_handler();
+        }
+
+        return $warnings;
+    }
+
     // -------------------------------------------------------------------------
     // Tool fixtures
     // -------------------------------------------------------------------------
@@ -1292,6 +1826,32 @@ final class BetaToolRunnerTest extends TestCase
         $content = $lastMsg['content'];
 
         return $content[0];
+    }
+
+    /**
+     * @param array<string, mixed> $body
+     *
+     * @return array<string, mixed>
+     */
+    private function lastMessage(array $body): array
+    {
+        /** @var non-empty-list<array<string, mixed>> $messages */
+        $messages = $body['messages'];
+
+        return $messages[array_key_last($messages)];
+    }
+
+    /**
+     * Returns the decoded body of every request sent.
+     *
+     * @return list<array<string, mixed>>
+     */
+    private function requestBodies(): array
+    {
+        return array_map(
+            fn (int $index) => $this->requestBody($index),
+            array_keys($this->transporter->getRequests()),
+        );
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Lib\Tools;
 
+use Anthropic\Beta\Messages\BetaCompactionConfig;
 use Anthropic\Beta\Messages\BetaContainerParams;
 use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Beta\Messages\BetaMessageParam;
@@ -22,6 +23,7 @@ use Anthropic\Messages\Model;
  * tools or max_iterations is reached.
  *
  * @phpstan-import-type BetaToolUnionShape from \Anthropic\Beta\Messages\BetaToolUnion
+ * @phpstan-import-type BetaCompactionConfigShape from \Anthropic\Beta\Messages\BetaCompactionConfig
  *
  * @implements \IteratorAggregate<int, BetaMessage>
  */
@@ -35,6 +37,9 @@ final class BetaToolRunner implements \IteratorAggregate
 
     /** The turn is final: the loop ends on it and its tool_use blocks are not executed. */
     private const STEP_STOP = 'stop';
+
+    private const MESSAGES_LOCKED = "Message params can't be changed while the conversation is being compacted, "
+        .'because the compaction response replaces them. Make the change on the next iteration.';
 
     private bool $consumed = false;
 
@@ -59,6 +64,12 @@ final class BetaToolRunner implements \IteratorAggregate
 
     private string $model;
 
+    /** @var BetaCompactionConfig|BetaCompactionConfigShape|null */
+    private BetaCompactionConfig|array|null $pendingCompaction = null;
+
+    /** True while the caller is handling a yielded compaction response. */
+    private bool $compacting = false;
+
     /**
      * @param list<BetaRunnableTool|BetaToolUnionShape> $tools Mix of runnable tools and plain tool definitions
      * @param list<array<string, mixed>> $messages Initial messages
@@ -73,6 +84,7 @@ final class BetaToolRunner implements \IteratorAggregate
         private ?int $maxIterations = null,
         private array $extraParams = [],
     ) {
+        self::rejectCompactionParam($extraParams);
         $this->model = $model instanceof Model ? $model->value : $model;
         $this->messages = $messages;
         $this->tools = $tools;
@@ -129,6 +141,14 @@ final class BetaToolRunner implements \IteratorAggregate
             ? $paramsOrMutator
             : $paramsOrMutator($this->getParams());
 
+        self::rejectCompactionParam($new);
+        if ($this->compacting && is_array($new['messages'] ?? null) && $new['messages'] !== $this->messages) {
+            throw new \LogicException(self::MESSAGES_LOCKED);
+        }
+        if (null !== $this->pendingCompaction || $this->compacting) {
+            self::assertNoCompactionEdit($new['contextManagement'] ?? null);
+        }
+
         if (is_int($new['maxTokens'] ?? null)) {
             $this->maxTokens = $new['maxTokens'];
         }
@@ -180,6 +200,10 @@ final class BetaToolRunner implements \IteratorAggregate
      */
     public function pushMessages(array|BaseModel ...$messages): void
     {
+        if ($this->compacting) {
+            throw new \LogicException(self::MESSAGES_LOCKED);
+        }
+
         /** @var list<array<string, mixed>> $normalized */
         $normalized = array_map(
             fn ($msg) => $msg instanceof BaseModel ? $msg->jsonSerialize() : $msg,
@@ -187,6 +211,30 @@ final class BetaToolRunner implements \IteratorAggregate
         );
         array_push($this->messages, ...$normalized);
         $this->mutated = true;
+    }
+
+    /**
+     * Compact the conversation before the model's next turn. Requires the `compact-2026-09-04` beta.
+     *
+     * This only schedules the compaction. Once the current turn has finished,
+     * including any tool calls, the runner requests a summary and replaces the
+     * message history with the response. On the last turn it compacts and then
+     * stops, unless that turn was cut off with tool calls that were never run.
+     *
+     * The compaction response is yielded with a `compaction` stop reason and does
+     * not count towards `maxIterations`. Calling this while handling it does
+     * nothing, so a token threshold does not compact twice.
+     *
+     * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction The same config create() takes as `compaction`. Defaults to `['type' => 'summarize']`.
+     */
+    public function compactBeforeNextTurn(BetaCompactionConfig|array|null $compaction = null): void
+    {
+        if ($this->compacting) {
+            return;
+        }
+
+        self::assertNoCompactionEdit($this->extraParams['contextManagement'] ?? null);
+        $this->pendingCompaction = $compaction ?? ['type' => 'summarize'];
     }
 
     /**
@@ -227,40 +275,40 @@ final class BetaToolRunner implements \IteratorAggregate
         $this->consumed = true;
 
         $iterationCount = 0;
+        $turnPaused = false;
+        $finalMessage = null;
 
         while (true) {
             if (null !== $this->maxIterations && $iterationCount >= $this->maxIterations) {
                 break;
             }
 
+            // The API cannot compact a conversation that ends mid-turn, so a paused turn is resumed first.
+            if (null !== $this->pendingCompaction && !$turnPaused) {
+                $compacted = $this->requestCompaction($this->pendingCompaction);
+                $this->compacting = true;
+
+                try {
+                    yield $compacted;
+                } finally {
+                    $this->compacting = false;
+                }
+
+                $this->registerCompactionResponse($compacted);
+
+                continue;
+            }
+
             $this->mutated = false;
             ++$iterationCount;
 
-            $params = array_filter(
-                array_merge(
-                    [
-                        'maxTokens' => $this->maxTokens,
-                        'messages' => $this->messages,
-                        'model' => $this->model,
-                        'tools' => $this->toolDefinitions ?: null,
-                    ],
-                    $this->extraParams,
-                ),
-                fn ($v) => null !== $v,
-            );
-
-            $params['requestOptions'] = [
-                'extraHeaders' => [
-                    StainlessHelperHeader::HEADER => StainlessHelperHeader::BETA_TOOL_RUNNER,
-                ],
-            ];
-
             // @phpstan-ignore argument.type
-            $message = $this->client->beta->messages->create(...$params);
+            $message = $this->client->beta->messages->create(...$this->requestParams());
 
             yield $message;
 
             $nextStep = self::determineNextStepFromStopReason($message->stopReason);
+            $turnPaused = self::STEP_RESUME === $nextStep;
 
             // If the caller mutated params during this yield, skip auto-appending
             // the assistant message — they are managing history manually this turn.
@@ -283,6 +331,8 @@ final class BetaToolRunner implements \IteratorAggregate
                 }
 
                 if (self::STEP_STOP === $nextStep) {
+                    $finalMessage = $message;
+
                     break;
                 }
 
@@ -296,9 +346,161 @@ final class BetaToolRunner implements \IteratorAggregate
             if (null !== $toolResults) {
                 $this->messages[] = ['role' => 'user', 'content' => $toolResults];
             } elseif (!$this->mutated) {
+                $finalMessage = $message;
+
                 break;
             }
         }
+
+        $compaction = null === $finalMessage ? null : $this->pendingCompactionAfter($finalMessage);
+        if (null !== $compaction) {
+            $compacted = $this->requestCompaction($compaction);
+            $this->compacting = true;
+
+            try {
+                yield $compacted;
+            } finally {
+                $this->compacting = false;
+            }
+
+            $this->registerCompactionResponse($compacted);
+        }
+    }
+
+    /**
+     * @return array<string, mixed> Named arguments for messages->create()
+     */
+    private function requestParams(): array
+    {
+        $params = array_filter(
+            array_merge(
+                [
+                    'maxTokens' => $this->maxTokens,
+                    'messages' => $this->messages,
+                    'model' => $this->model,
+                    'tools' => $this->toolDefinitions ?: null,
+                ],
+                $this->extraParams,
+            ),
+            fn ($v) => null !== $v,
+        );
+
+        $params['requestOptions'] = [
+            'extraHeaders' => [
+                StainlessHelperHeader::HEADER => StainlessHelperHeader::BETA_TOOL_RUNNER,
+            ],
+        ];
+
+        return $params;
+    }
+
+    /**
+     * @param array<array-key, mixed> $params
+     */
+    private static function rejectCompactionParam(array $params): void
+    {
+        if (null !== ($params['compaction'] ?? null)) {
+            throw new \InvalidArgumentException(
+                '`compaction` cannot be set on a tool runner: every request in the loop would compact again. '
+                .'Call compactBeforeNextTurn() when the conversation should be compacted instead.'
+            );
+        }
+    }
+
+    private static function assertNoCompactionEdit(mixed $contextManagement): void
+    {
+        // The compaction request is sent without `contextManagement`, so the API cannot reject this
+        // combination there: it would run and bill the compaction, then reject the next request, where
+        // the compaction response and the compaction edit meet.
+        $contextManagement = self::toArray($contextManagement);
+        if (!is_array($contextManagement)) {
+            return;
+        }
+
+        $edits = $contextManagement['edits'] ?? null;
+        if (!is_array($edits)) {
+            return;
+        }
+
+        foreach ($edits as $edit) {
+            $edit = self::toArray($edit);
+            if (is_array($edit) && is_string($edit['type'] ?? null) && str_starts_with($edit['type'], 'compact_')) {
+                throw new \LogicException(
+                    'compactBeforeNextTurn() cannot be used while `contextManagement` has a compaction edit, '
+                    .'because the API does not accept a compaction block together with one. Remove the edit first.'
+                );
+            }
+        }
+    }
+
+    /**
+     * @param BetaCompactionConfig|BetaCompactionConfigShape $compaction
+     */
+    private function requestCompaction(BetaCompactionConfig|array $compaction): BetaMessage
+    {
+        // Checked again here because `contextManagement` can be a model the caller still holds and edits in place.
+        self::assertNoCompactionEdit($this->extraParams['contextManagement'] ?? null);
+        $this->pendingCompaction = null;
+
+        $params = $this->requestParams();
+        // The API refuses `compaction` alongside `context_management`; later requests keep it.
+        unset($params['contextManagement']);
+        $params['compaction'] = $compaction;
+
+        // @phpstan-ignore argument.type
+        return $this->client->beta->messages->create(...$params);
+    }
+
+    private function registerCompactionResponse(BetaMessage $message): void
+    {
+        foreach ($message->content as $block) {
+            // By type, not class: a block type this SDK version does not model is parsed into another block's class.
+            if ('compaction' !== ($block['type'] ?? null)) {
+                continue;
+            }
+
+            $summary = $block['content'] ?? null;
+            if (null === $summary || '' === $summary) {
+                continue;
+            }
+
+            // The response has to be sent back as it came, first, replacing the messages it summarizes.
+            $this->messages = [['role' => 'assistant', 'content' => $message->content]];
+
+            return;
+        }
+
+        trigger_error('Compaction produced no summary; keeping the conversation as it is.', E_USER_WARNING);
+    }
+
+    /**
+     * @return BetaCompactionConfig|BetaCompactionConfigShape|null The compaction to send now that the run has ended on this message
+     */
+    private function pendingCompactionAfter(BetaMessage $finalMessage): BetaCompactionConfig|array|null
+    {
+        if (null === $this->pendingCompaction) {
+            return null;
+        }
+
+        foreach ($finalMessage->content as $block) {
+            if ('tool_use' !== ($block['type'] ?? null)) {
+                continue;
+            }
+
+            // A turn that was cut short can end with tool calls that are never run, and the API
+            // cannot compact a conversation whose last turn has an unanswered tool call.
+            $this->pendingCompaction = null;
+            trigger_error(
+                "The pending compaction was skipped because the last turn (stop reason: {$finalMessage->stopReason}) "
+                .'ended with tool calls that were not run. '
+                .'Call compactBeforeNextTurn() again if you continue the conversation.',
+                E_USER_WARNING,
+            );
+
+            return null;
+        }
+
+        return $this->pendingCompaction;
     }
 
     /**
