@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.50.0 (2026-09-18)
+
+Full Changelog: [v0.49.0...v0.50.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.49.0...v0.50.0)
+
+### Features
+
+* **api:** add group with display_name to rate limits, deprecate group_type ([936b187](https://github.com/anthropics/anthropic-sdk-php/commit/936b18742ec84d1e64c3dbc180fb4ee8b48b4f67))
+
+
+### Bug Fixes
+
+* **bedrock:** report AWS EventStream exception and error frames by name ([#226](https://github.com/anthropics/anthropic-sdk-php/issues/226)) ([e8c5aaa](https://github.com/anthropics/anthropic-sdk-php/commit/e8c5aaa3c4235d91cc48c9cc632329cbfdadf7b1))
+* **client:** join multiple anthropic-beta values with a comma and no space ([#227](https://github.com/anthropics/anthropic-sdk-php/issues/227)) ([096c510](https://github.com/anthropics/anthropic-sdk-php/commit/096c5109123d0303873f4634162abdaf60df2fba))
+
+
+### Chores
+
+* **docs:** add descriptions for enum values and path parameters ([3faa184](https://github.com/anthropics/anthropic-sdk-php/commit/3faa18455541e9973297eb9a72b162e6c0ab64f4))
+* **docs:** clarify the compaction tool_changes and tool change descriptions ([1482980](https://github.com/anthropics/anthropic-sdk-php/commit/14829806dd9f31508fb787c59f503091b91bc348))
+
 ## 0.49.0 (2026-09-15)
 
 Full Changelog: [v0.48.0...v0.49.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.48.0...v0.49.0)
