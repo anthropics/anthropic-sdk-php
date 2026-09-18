@@ -11,7 +11,11 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Archive a Dream.
+ * Hide a `completed`, `failed`, or `canceled` dream from the default list of dreams.
+ *
+ * Archiving a `pending` or `running` dream returns a 400 error, so cancel it first. Archiving an archived dream returns it unchanged. An archived dream can still be fetched by ID. Archiving can't be undone.
+ *
+ * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#archive-a-dream) to learn more about archiving dreams.
  *
  * @see Anthropic\Services\Beta\DreamsService::archive()
  *

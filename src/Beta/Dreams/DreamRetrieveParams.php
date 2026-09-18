@@ -11,7 +11,11 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Get a Dream.
+ * Get a dream by ID to check its status, output memory store, and token usage.
+ *
+ * Archived dreams are returned too.
+ *
+ * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#track-progress) for how to poll a dream and what each status means.
  *
  * @see Anthropic\Services\Beta\DreamsService::retrieve()
  *

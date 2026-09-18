@@ -43,6 +43,9 @@ final class BetaDream implements BaseModel
     /** @use SdkModel<BetaDreamShape> */
     use SdkModel;
 
+    /**
+     * The unique ID of the dream (`drm_...`).
+     */
     #[Required]
     public string $id;
 
@@ -70,10 +73,17 @@ final class BetaDream implements BaseModel
     #[Required]
     public ?BetaDreamError $error;
 
-    /** @var list<BetaDreamInputVariants> $inputs */
+    /**
+     * The sources that the dream reads, from the request that created it.
+     *
+     * @var list<BetaDreamInputVariants> $inputs
+     */
     #[Required(list: BetaDreamInput::class)]
     public array $inputs;
 
+    /**
+     * The guidance given when the dream was created, or `null` if none was given.
+     */
     #[Required]
     public ?string $instructions;
 
@@ -83,14 +93,33 @@ final class BetaDream implements BaseModel
     #[Required]
     public BetaDreamModelConfig $model;
 
-    /** @var BetaOutputBehaviorVariants $outputBehavior */
+    /**
+     * Which memory store a dream writes its result to. Defaults to `create_new` when left out of a create request.
+     *
+     * @var BetaOutputBehaviorVariants $outputBehavior
+     */
     #[Required('output_behavior', union: BetaOutputBehavior::class)]
     public BetaOutputBehaviorCreateNew|BetaOutputBehaviorUpdateExisting $outputBehavior;
 
-    /** @var list<BetaDreamOutput> $outputs */
+    /**
+     * The memory store that holds the dream's result, as a one-item array, or an empty array until the dream records that memory store.
+     *
+     * The array is empty while the dream is `pending` and for a short time after it starts `running`. It can stay empty if the dream fails or is canceled before then. The memory store holds the complete result only once `status` is `completed`.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#use-the-output) for how to review and use the result.
+     *
+     * @var list<BetaDreamOutput> $outputs
+     */
     #[Required(list: BetaDreamOutput::class)]
     public array $outputs;
 
+    /**
+     * The ID of the session that runs the dream (`sesn_...`), or `null` if that session hasn't started.
+     *
+     * Stream that session's events to follow what the dream reads and writes.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#watch-the-pipeline-run) for how to watch a running dream.
+     */
     #[Required('session_id')]
     public ?string $sessionID;
 
@@ -210,6 +239,9 @@ final class BetaDream implements BaseModel
         return $self;
     }
 
+    /**
+     * The unique ID of the dream (`drm_...`).
+     */
     public function withID(string $id): self
     {
         $self = clone $this;
@@ -265,6 +297,8 @@ final class BetaDream implements BaseModel
     }
 
     /**
+     * The sources that the dream reads, from the request that created it.
+     *
      * @param list<BetaDreamInputShape> $inputs
      */
     public function withInputs(array $inputs): self
@@ -275,6 +309,9 @@ final class BetaDream implements BaseModel
         return $self;
     }
 
+    /**
+     * The guidance given when the dream was created, or `null` if none was given.
+     */
     public function withInstructions(?string $instructions): self
     {
         $self = clone $this;
@@ -297,6 +334,8 @@ final class BetaDream implements BaseModel
     }
 
     /**
+     * Which memory store a dream writes its result to. Defaults to `create_new` when left out of a create request.
+     *
      * @param BetaOutputBehaviorShape $outputBehavior
      */
     public function withOutputBehavior(
@@ -309,6 +348,12 @@ final class BetaDream implements BaseModel
     }
 
     /**
+     * The memory store that holds the dream's result, as a one-item array, or an empty array until the dream records that memory store.
+     *
+     * The array is empty while the dream is `pending` and for a short time after it starts `running`. It can stay empty if the dream fails or is canceled before then. The memory store holds the complete result only once `status` is `completed`.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#use-the-output) for how to review and use the result.
+     *
      * @param list<BetaDreamOutput|BetaDreamOutputShape> $outputs
      */
     public function withOutputs(array $outputs): self
@@ -319,6 +364,13 @@ final class BetaDream implements BaseModel
         return $self;
     }
 
+    /**
+     * The ID of the session that runs the dream (`sesn_...`), or `null` if that session hasn't started.
+     *
+     * Stream that session's events to follow what the dream reads and writes.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#watch-the-pipeline-run) for how to watch a running dream.
+     */
     public function withSessionID(?string $sessionID): self
     {
         $self = clone $this;

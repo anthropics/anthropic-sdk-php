@@ -21,6 +21,9 @@ final class BetaOutputBehaviorUpdateExisting implements BaseModel
     /** @use SdkModel<BetaOutputBehaviorUpdateExistingShape> */
     use SdkModel;
 
+    /**
+     * The ID of the memory store for the dream to write its result to (`memstore_...`). It must be the memory store in the `memory_store` entry of `inputs`.
+     */
     #[Required('memory_store_id')]
     public string $memoryStoreID;
 
@@ -64,6 +67,9 @@ final class BetaOutputBehaviorUpdateExisting implements BaseModel
         return $self;
     }
 
+    /**
+     * The ID of the memory store for the dream to write its result to (`memstore_...`). It must be the memory store in the `memory_store` entry of `inputs`.
+     */
     public function withMemoryStoreID(string $memoryStoreID): self
     {
         $self = clone $this;

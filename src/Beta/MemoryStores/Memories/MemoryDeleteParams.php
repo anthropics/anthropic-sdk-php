@@ -29,9 +29,17 @@ final class MemoryDeleteParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
+    /**
+     * The ID of the memory store that holds the memory (`memstore_...`).
+     */
     #[Required]
     public string $memoryStoreID;
 
+    /**
+     * Delete the memory only if its current `content_sha256` equals this value, given as 64 lowercase hexadecimal characters. Omit it to delete unconditionally.
+     *
+     * If the hashes differ, the request fails with HTTP status 409 and nothing is deleted.
+     */
     #[Optional]
     public ?string $expectedContentSha256;
 
@@ -94,6 +102,9 @@ final class MemoryDeleteParams implements BaseModel
         return $self;
     }
 
+    /**
+     * The ID of the memory store that holds the memory (`memstore_...`).
+     */
     public function withMemoryStoreID(string $memoryStoreID): self
     {
         $self = clone $this;
@@ -102,6 +113,11 @@ final class MemoryDeleteParams implements BaseModel
         return $self;
     }
 
+    /**
+     * Delete the memory only if its current `content_sha256` equals this value, given as 64 lowercase hexadecimal characters. Omit it to delete unconditionally.
+     *
+     * If the hashes differ, the request fails with HTTP status 409 and nothing is deleted.
+     */
     public function withExpectedContentSha256(
         string $expectedContentSha256
     ): self {

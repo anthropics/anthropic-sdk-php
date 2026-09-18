@@ -32,11 +32,14 @@ final class UserProfileListParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
+    /**
+     * The maximum number of user profiles to return, from 1 to 100. Defaults to 20.
+     */
     #[Optional]
     public ?int $limit;
 
     /**
-     * ListOrder enum.
+     * The sort direction, applied to the field that `order_by` selects. Defaults to `desc`.
      *
      * @var value-of<Order>|null $order
      */
@@ -44,13 +47,18 @@ final class UserProfileListParams implements BaseModel
     public ?string $order;
 
     /**
-     * Sort field for listing user profiles: `created_at` (default) or `name` (case-insensitive; profiles without a name sort last).
+     * The field to sort user profiles by, in the direction that `order` sets. Defaults to `created_at`.
      *
      * @var value-of<OrderBy>|null $orderBy
      */
     #[Optional(enum: OrderBy::class)]
     public ?string $orderBy;
 
+    /**
+     * The cursor for the page to return, taken from `next_page` in a previous response.
+     *
+     * Leave it out to get the first page.
+     */
     #[Optional]
     public ?string $page;
 
@@ -104,6 +112,9 @@ final class UserProfileListParams implements BaseModel
         return $self;
     }
 
+    /**
+     * The maximum number of user profiles to return, from 1 to 100. Defaults to 20.
+     */
     public function withLimit(int $limit): self
     {
         $self = clone $this;
@@ -113,7 +124,7 @@ final class UserProfileListParams implements BaseModel
     }
 
     /**
-     * ListOrder enum.
+     * The sort direction, applied to the field that `order_by` selects. Defaults to `desc`.
      *
      * @param Order|value-of<Order> $order
      */
@@ -126,7 +137,7 @@ final class UserProfileListParams implements BaseModel
     }
 
     /**
-     * Sort field for listing user profiles: `created_at` (default) or `name` (case-insensitive; profiles without a name sort last).
+     * The field to sort user profiles by, in the direction that `order` sets. Defaults to `created_at`.
      *
      * @param OrderBy|value-of<OrderBy> $orderBy
      */
@@ -138,6 +149,11 @@ final class UserProfileListParams implements BaseModel
         return $self;
     }
 
+    /**
+     * The cursor for the page to return, taken from `next_page` in a previous response.
+     *
+     * Leave it out to get the first page.
+     */
     public function withPage(string $page): self
     {
         $self = clone $this;

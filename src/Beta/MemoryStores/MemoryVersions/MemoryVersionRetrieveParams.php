@@ -30,6 +30,9 @@ final class MemoryVersionRetrieveParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
+    /**
+     * The ID of the memory store that holds the version (`memstore_...`).
+     */
     #[Required]
     public string $memoryStoreID;
 
@@ -101,6 +104,9 @@ final class MemoryVersionRetrieveParams implements BaseModel
         return $self;
     }
 
+    /**
+     * The ID of the memory store that holds the version (`memstore_...`).
+     */
     public function withMemoryStoreID(string $memoryStoreID): self
     {
         $self = clone $this;

@@ -9,6 +9,8 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
+ * A source that a dream reads, such as a memory store or a set of sessions.
+ *
  * @phpstan-import-type BetaDreamMemoryStoreInputShape from \Anthropic\Beta\Dreams\BetaDreamMemoryStoreInput
  * @phpstan-import-type BetaDreamSessionsInputShape from \Anthropic\Beta\Dreams\BetaDreamSessionsInput
  *

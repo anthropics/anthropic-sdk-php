@@ -29,6 +29,9 @@ final class MemoryRetrieveParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
+    /**
+     * The ID of the memory store that holds the memory (`memstore_...`).
+     */
     #[Required]
     public string $memoryStoreID;
 
@@ -100,6 +103,9 @@ final class MemoryRetrieveParams implements BaseModel
         return $self;
     }
 
+    /**
+     * The ID of the memory store that holds the memory (`memstore_...`).
+     */
     public function withMemoryStoreID(string $memoryStoreID): self
     {
         $self = clone $this;

@@ -10,6 +10,8 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * The status of one trust grant on a user profile, listed in the profile's `trust_grants` map under the grant's name.
+ *
  * @phpstan-type BetaUserProfileTrustGrantShape = array{
  *   status: Status|value-of<Status>
  * }

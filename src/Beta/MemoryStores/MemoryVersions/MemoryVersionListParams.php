@@ -37,6 +37,9 @@ final class MemoryVersionListParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
+    /**
+     * Return only versions written with the API key that has this ID.
+     */
     #[Optional]
     public ?string $apiKeyID;
 
@@ -52,26 +55,43 @@ final class MemoryVersionListParams implements BaseModel
     #[Optional]
     public ?\DateTimeInterface $createdAtLte;
 
+    /**
+     * The maximum number of versions to return per page. Defaults to 20.
+     */
     #[Optional]
     public ?int $limit;
 
+    /**
+     * Return only versions of the memory with this ID (`mem_...`).
+     *
+     * The filter still works after the memory is deleted. The results then include the version whose `operation` is `deleted`.
+     */
     #[Optional]
     public ?string $memoryID;
 
     /**
-     * The kind of mutation a `memory_version` records. Every non-no-op mutation to a memory appends exactly one version row with one of these values.
+     * Return only versions that record this kind of change.
      *
      * @var value-of<ManagedAgentsMemoryVersionOperation>|null $operation
      */
     #[Optional(enum: ManagedAgentsMemoryVersionOperation::class)]
     public ?string $operation;
 
+    /**
+     * The `next_page` value from a previous response, to get the next page. Omit it to get the first page.
+     */
     #[Optional]
     public ?string $page;
 
+    /**
+     * Return only versions written by the service account with this ID (`svac_...`).
+     */
     #[Optional]
     public ?string $serviceAccountID;
 
+    /**
+     * Return only versions written by the session with this ID.
+     */
     #[Optional]
     public ?string $sessionID;
 
@@ -145,6 +165,9 @@ final class MemoryVersionListParams implements BaseModel
         return $self;
     }
 
+    /**
+     * Return only versions written with the API key that has this ID.
+     */
     public function withAPIKeyID(string $apiKeyID): self
     {
         $self = clone $this;
@@ -175,6 +198,9 @@ final class MemoryVersionListParams implements BaseModel
         return $self;
     }
 
+    /**
+     * The maximum number of versions to return per page. Defaults to 20.
+     */
     public function withLimit(int $limit): self
     {
         $self = clone $this;
@@ -183,6 +209,11 @@ final class MemoryVersionListParams implements BaseModel
         return $self;
     }
 
+    /**
+     * Return only versions of the memory with this ID (`mem_...`).
+     *
+     * The filter still works after the memory is deleted. The results then include the version whose `operation` is `deleted`.
+     */
     public function withMemoryID(string $memoryID): self
     {
         $self = clone $this;
@@ -192,7 +223,7 @@ final class MemoryVersionListParams implements BaseModel
     }
 
     /**
-     * The kind of mutation a `memory_version` records. Every non-no-op mutation to a memory appends exactly one version row with one of these values.
+     * Return only versions that record this kind of change.
      *
      * @param ManagedAgentsMemoryVersionOperation|value-of<ManagedAgentsMemoryVersionOperation> $operation
      */
@@ -205,6 +236,9 @@ final class MemoryVersionListParams implements BaseModel
         return $self;
     }
 
+    /**
+     * The `next_page` value from a previous response, to get the next page. Omit it to get the first page.
+     */
     public function withPage(string $page): self
     {
         $self = clone $this;
@@ -213,6 +247,9 @@ final class MemoryVersionListParams implements BaseModel
         return $self;
     }
 
+    /**
+     * Return only versions written by the service account with this ID (`svac_...`).
+     */
     public function withServiceAccountID(string $serviceAccountID): self
     {
         $self = clone $this;
@@ -221,6 +258,9 @@ final class MemoryVersionListParams implements BaseModel
         return $self;
     }
 
+    /**
+     * Return only versions written by the session with this ID.
+     */
     public function withSessionID(string $sessionID): self
     {
         $self = clone $this;

@@ -39,6 +39,7 @@ interface UserProfilesRawContract
     /**
      * @api
      *
+     * @param string $userProfileID The ID of the user profile to get (`uprof_...`).
      * @param array<string,mixed>|UserProfileRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -55,7 +56,7 @@ interface UserProfilesRawContract
     /**
      * @api
      *
-     * @param string $userProfileID Path param
+     * @param string $userProfileID Path param: The ID of the user profile to update (`uprof_...`).
      * @param array<string,mixed>|UserProfileUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -87,6 +88,7 @@ interface UserProfilesRawContract
     /**
      * @api
      *
+     * @param string $userProfileID The ID of the user profile to create an enrollment URL for (`uprof_...`).
      * @param array<string,mixed>|UserProfileCreateEnrollmentURLParams $params
      * @param RequestOpts|null $requestOptions
      *

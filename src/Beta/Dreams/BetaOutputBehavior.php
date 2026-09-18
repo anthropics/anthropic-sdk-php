@@ -9,6 +9,8 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
+ * Which memory store a dream writes its result to. Defaults to `create_new` when left out of a create request.
+ *
  * @phpstan-import-type BetaOutputBehaviorCreateNewShape from \Anthropic\Beta\Dreams\BetaOutputBehaviorCreateNew
  * @phpstan-import-type BetaOutputBehaviorUpdateExistingShape from \Anthropic\Beta\Dreams\BetaOutputBehaviorUpdateExisting
  *

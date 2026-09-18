@@ -25,7 +25,7 @@ interface MemoriesRawContract
     /**
      * @api
      *
-     * @param string $memoryStoreID Path param
+     * @param string $memoryStoreID Path param: The ID of the memory store to create the memory in (`memstore_...`).
      * @param array<string,mixed>|MemoryCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -42,7 +42,7 @@ interface MemoriesRawContract
     /**
      * @api
      *
-     * @param string $memoryID Path param
+     * @param string $memoryID Path param: The ID of the memory to retrieve (`mem_...`).
      * @param array<string,mixed>|MemoryRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -59,7 +59,7 @@ interface MemoriesRawContract
     /**
      * @api
      *
-     * @param string $memoryID Path param
+     * @param string $memoryID Path param: The ID of the memory to update (`mem_...`).
      * @param array<string,mixed>|MemoryUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -76,7 +76,7 @@ interface MemoriesRawContract
     /**
      * @api
      *
-     * @param string $memoryStoreID Path param
+     * @param string $memoryStoreID Path param: The ID of the memory store to list memories from (`memstore_...`).
      * @param array<string,mixed>|MemoryListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -93,7 +93,7 @@ interface MemoriesRawContract
     /**
      * @api
      *
-     * @param string $memoryID Path param
+     * @param string $memoryID Path param: The ID of the memory to delete (`mem_...`).
      * @param array<string,mixed>|MemoryDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *

@@ -10,6 +10,12 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
+ * The model that runs a dream, given as a model ID or as an object with `id` and `speed`.
+ *
+ * In the object form, `speed` can only be `standard`.
+ *
+ * The [limits table in the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#limits) lists the supported models.
+ *
  * @phpstan-import-type BetaDreamModelConfigParamShape from \Anthropic\Beta\Dreams\BetaDreamModelConfigParam
  *
  * @phpstan-type ModelVariants = string|BetaDreamModelConfigParam

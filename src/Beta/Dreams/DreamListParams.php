@@ -11,7 +11,11 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List Dreams.
+ * List the dreams in the workspace, newest first.
+ *
+ * Archived dreams are left out unless `include_archived` is `true`.
+ *
+ * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#list-dreams) for how to page through dreams.
  *
  * @see Anthropic\Services\Beta\DreamsService::list()
  *
@@ -44,12 +48,23 @@ final class DreamListParams implements BaseModel
     #[Optional]
     public ?\DateTimeInterface $createdAtLt;
 
+    /**
+     * Whether to include archived dreams. Defaults to `false`.
+     */
     #[Optional]
     public ?bool $includeArchived;
 
+    /**
+     * The maximum number of dreams to return, from 1 to 100. Defaults to 20.
+     */
     #[Optional]
     public ?int $limit;
 
+    /**
+     * The cursor for the page to return, taken from `next_page` in a previous response.
+     *
+     * Leave it out to get the first page.
+     */
     #[Optional]
     public ?string $page;
 
@@ -136,6 +151,9 @@ final class DreamListParams implements BaseModel
         return $self;
     }
 
+    /**
+     * Whether to include archived dreams. Defaults to `false`.
+     */
     public function withIncludeArchived(bool $includeArchived): self
     {
         $self = clone $this;
@@ -144,6 +162,9 @@ final class DreamListParams implements BaseModel
         return $self;
     }
 
+    /**
+     * The maximum number of dreams to return, from 1 to 100. Defaults to 20.
+     */
     public function withLimit(int $limit): self
     {
         $self = clone $this;
@@ -152,6 +173,11 @@ final class DreamListParams implements BaseModel
         return $self;
     }
 
+    /**
+     * The cursor for the page to return, taken from `next_page` in a previous response.
+     *
+     * Leave it out to get the first page.
+     */
     public function withPage(string $page): self
     {
         $self = clone $this;

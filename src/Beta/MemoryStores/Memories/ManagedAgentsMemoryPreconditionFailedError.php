@@ -11,6 +11,12 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * The error returned with HTTP status 409 when a request's precondition doesn't hold for the memory's current state, such as `precondition` on an update or `expected_content_sha256` on a delete.
+ *
+ * The error doesn't include the memory's current state. Retrieve the memory to see its current content and `content_sha256` before you retry.
+ *
+ * See the [memory guide](https://platform.claude.com/docs/en/managed-agents/memory#safe-content-edits-optimistic-concurrency) to learn more about safe content edits with content hash preconditions.
+ *
  * @phpstan-type ManagedAgentsMemoryPreconditionFailedErrorShape = array{
  *   type: Type|value-of<Type>, message?: string|null
  * }
@@ -24,6 +30,9 @@ final class ManagedAgentsMemoryPreconditionFailedError implements BaseModel
     #[Required(enum: Type::class)]
     public string $type;
 
+    /**
+     * A human-readable explanation of why the precondition failed.
+     */
     #[Optional]
     public ?string $message;
 
@@ -75,6 +84,9 @@ final class ManagedAgentsMemoryPreconditionFailedError implements BaseModel
         return $self;
     }
 
+    /**
+     * A human-readable explanation of why the precondition failed.
+     */
     public function withMessage(string $message): self
     {
         $self = clone $this;

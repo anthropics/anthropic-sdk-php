@@ -21,6 +21,11 @@ final class BetaDreamMemoryStoreInput implements BaseModel
     /** @use SdkModel<BetaDreamMemoryStoreInputShape> */
     use SdkModel;
 
+    /**
+     * The ID of the memory store for the dream to read (`memstore_...`).
+     *
+     * The memory store must be in the same workspace as the dream and must not be archived.
+     */
     #[Required('memory_store_id')]
     public string $memoryStoreID;
 
@@ -64,6 +69,11 @@ final class BetaDreamMemoryStoreInput implements BaseModel
         return $self;
     }
 
+    /**
+     * The ID of the memory store for the dream to read (`memstore_...`).
+     *
+     * The memory store must be in the same workspace as the dream and must not be archived.
+     */
     public function withMemoryStoreID(string $memoryStoreID): self
     {
         $self = clone $this;
