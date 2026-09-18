@@ -36,6 +36,9 @@ final class CredentialUpdateParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
+    /**
+     * Identifier of the vault containing the credential.
+     */
     #[Required]
     public string $vaultID;
 
@@ -69,6 +72,11 @@ final class CredentialUpdateParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    /**
+     * Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
+     */
     #[Optional]
     public ?string $workspaceID;
 
@@ -121,6 +129,9 @@ final class CredentialUpdateParams implements BaseModel
         return $self;
     }
 
+    /**
+     * Identifier of the vault containing the credential.
+     */
     public function withVaultID(string $vaultID): self
     {
         $self = clone $this;
@@ -180,6 +191,11 @@ final class CredentialUpdateParams implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
+     */
     public function withWorkspaceID(string $workspaceID): self
     {
         $self = clone $this;
