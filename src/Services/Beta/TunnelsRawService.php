@@ -89,7 +89,7 @@ final class TunnelsRawService implements TunnelsRawContract
      *
      * Fetches a tunnel by ID.
      *
-     * @param string $tunnelID Path parameter tunnel_id
+     * @param string $tunnelID ID of the tunnel (`tnl_...`).
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -191,7 +191,7 @@ final class TunnelsRawService implements TunnelsRawContract
      *
      * Archives a tunnel. Archival is irreversible: every non-archived certificate on the tunnel is archived in the same operation, the hostname is retired and never re-allocated, and the tunnel token is invalidated. Retrying against an already-archived tunnel returns the existing record unchanged.
      *
-     * @param string $tunnelID Path parameter tunnel_id
+     * @param string $tunnelID ID of the tunnel (`tnl_...`).
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -237,7 +237,7 @@ final class TunnelsRawService implements TunnelsRawContract
      *
      * Reveals a tunnel's connector token. The value is fetched live on each call; Anthropic does not store it. Repeated calls return the same value until the token is rotated. Exposed as POST so the token does not appear in intermediary access logs.
      *
-     * @param string $tunnelID Path parameter tunnel_id
+     * @param string $tunnelID ID of the tunnel (`tnl_...`).
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -283,7 +283,7 @@ final class TunnelsRawService implements TunnelsRawContract
      *
      * Rotates a tunnel's connector token. Rotation invalidates the current token for new connections and returns a fresh value; established connections are not severed. A connector restarted after rotation must use the new value.
      *
-     * @param string $tunnelID Path param: Path parameter tunnel_id
+     * @param string $tunnelID Path param: ID of the tunnel (`tnl_...`).
      * @param array{
      *   reason?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,

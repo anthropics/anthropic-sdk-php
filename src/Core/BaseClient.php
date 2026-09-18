@@ -521,6 +521,6 @@ abstract class BaseClient
             ...$normalize($extraHeaders[$key]),
         ]));
 
-        return [] === $merged ? [] : [$key => $merged];
+        return [] === $merged ? [] : [$key => [implode(',', $merged)]];
     }
 }

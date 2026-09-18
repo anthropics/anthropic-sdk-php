@@ -106,7 +106,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
      *
      * Get Deployment
      *
-     * @param string $deploymentID Path parameter deployment_id
+     * @param string $deploymentID unique identifier of the deployment
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -150,7 +150,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
      *
      * Update Deployment
      *
-     * @param string $deploymentID Path param: Path parameter deployment_id
+     * @param string $deploymentID path param: Unique identifier of the deployment to update
      * @param array{
      *   agent?: AgentShape1,
      *   budget?: BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null,
@@ -282,7 +282,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
      *
      * Archive Deployment
      *
-     * @param string $deploymentID Path parameter deployment_id
+     * @param string $deploymentID unique identifier of the deployment to archive
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -326,7 +326,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
      *
      * Pause Deployment
      *
-     * @param string $deploymentID Path parameter deployment_id
+     * @param string $deploymentID unique identifier of the deployment to pause
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -370,7 +370,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
      *
      * Run Deployment Now
      *
-     * @param string $deploymentID Path parameter deployment_id
+     * @param string $deploymentID unique identifier of the deployment to run
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -414,7 +414,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
      *
      * Unpause Deployment
      *
-     * @param string $deploymentID Path parameter deployment_id
+     * @param string $deploymentID unique identifier of the deployment to unpause
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,

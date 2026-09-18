@@ -67,7 +67,7 @@ interface DeploymentsContract
     /**
      * @api
      *
-     * @param string $deploymentID Path parameter deployment_id
+     * @param string $deploymentID unique identifier of the deployment
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -86,7 +86,7 @@ interface DeploymentsContract
     /**
      * @api
      *
-     * @param string $deploymentID Path param: Path parameter deployment_id
+     * @param string $deploymentID path param: Unique identifier of the deployment to update
      * @param AgentShape1 $agent Body param: Agent to deploy. Accepts the `agent` ID string, which re-pins to the latest version, or an `agent` object with both id and version specified. Omit to preserve. Cannot be cleared.
      * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget Body param: A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
      * @param string|null $description Body param: Description. Omit to preserve; send empty string or null to clear.
@@ -158,7 +158,7 @@ interface DeploymentsContract
     /**
      * @api
      *
-     * @param string $deploymentID Path parameter deployment_id
+     * @param string $deploymentID unique identifier of the deployment to archive
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -177,7 +177,7 @@ interface DeploymentsContract
     /**
      * @api
      *
-     * @param string $deploymentID Path parameter deployment_id
+     * @param string $deploymentID unique identifier of the deployment to pause
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -196,7 +196,7 @@ interface DeploymentsContract
     /**
      * @api
      *
-     * @param string $deploymentID Path parameter deployment_id
+     * @param string $deploymentID unique identifier of the deployment to run
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -215,7 +215,7 @@ interface DeploymentsContract
     /**
      * @api
      *
-     * @param string $deploymentID Path parameter deployment_id
+     * @param string $deploymentID unique identifier of the deployment to unpause
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *

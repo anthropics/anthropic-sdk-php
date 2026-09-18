@@ -28,7 +28,7 @@ interface CredentialsContract
     /**
      * @api
      *
-     * @param string $vaultID Path param: Path parameter vault_id
+     * @param string $vaultID path param: Identifier of the vault to create the credential in
      * @param AuthShape $auth body param: Authentication details for creating a credential
      * @param string|null $displayName Body param: Human-readable name for the credential. Up to 255 characters.
      * @param array<string,string> $metadata Body param: Arbitrary key-value metadata to attach to the credential. Maximum 16 pairs, keys up to 64 chars, values up to 512 chars.
@@ -53,8 +53,8 @@ interface CredentialsContract
     /**
      * @api
      *
-     * @param string $credentialID Path param: Path parameter credential_id
-     * @param string $vaultID Path param: Path parameter vault_id
+     * @param string $credentialID path param: Unique identifier of the credential to retrieve
+     * @param string $vaultID path param: Identifier of the vault containing the credential
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -74,8 +74,8 @@ interface CredentialsContract
     /**
      * @api
      *
-     * @param string $credentialID Path param: Path parameter credential_id
-     * @param string $vaultID Path param: Path parameter vault_id
+     * @param string $credentialID path param: Unique identifier of the credential to update
+     * @param string $vaultID path param: Identifier of the vault containing the credential
      * @param AuthShape1 $auth body param: Updated authentication details for a credential
      * @param string|null $displayName Body param: Updated human-readable name for the credential. 1-255 characters.
      * @param array<string,string|null>|null $metadata Body param: Metadata patch. Set a key to a string to upsert it, or to null to delete it. Omitted keys are preserved.
@@ -101,7 +101,7 @@ interface CredentialsContract
     /**
      * @api
      *
-     * @param string $vaultID Path param: Path parameter vault_id
+     * @param string $vaultID path param: Identifier of the vault to list credentials for
      * @param bool $includeArchived query param: Whether to include archived credentials in the results
      * @param int $limit Query param: Maximum number of credentials to return per page. Defaults to 20, maximum 100.
      * @param string $page query param: Opaque pagination token from a previous `list_credentials` response
@@ -128,8 +128,8 @@ interface CredentialsContract
     /**
      * @api
      *
-     * @param string $credentialID Path param: Path parameter credential_id
-     * @param string $vaultID Path param: Path parameter vault_id
+     * @param string $credentialID path param: Unique identifier of the credential to delete
+     * @param string $vaultID path param: Identifier of the vault containing the credential
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -149,8 +149,8 @@ interface CredentialsContract
     /**
      * @api
      *
-     * @param string $credentialID Path param: Path parameter credential_id
-     * @param string $vaultID Path param: Path parameter vault_id
+     * @param string $credentialID path param: Unique identifier of the credential to archive
+     * @param string $vaultID path param: Identifier of the vault containing the credential
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -170,8 +170,8 @@ interface CredentialsContract
     /**
      * @api
      *
-     * @param string $credentialID Path param: Path parameter credential_id
-     * @param string $vaultID Path param: Path parameter vault_id
+     * @param string $credentialID path param: Unique identifier of the credential to validate
+     * @param string $vaultID path param: Identifier of the vault containing the credential
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *

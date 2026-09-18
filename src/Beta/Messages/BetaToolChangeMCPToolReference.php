@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Reference to a single MCP tool by its server and remote name — the
+ * Reference to a single MCP tool by its server and remote name; the
  * same ``server_name``/``name`` pair ``mcp_tool_use`` carries.
  *
  * @phpstan-type BetaToolChangeMCPToolReferenceShape = array{

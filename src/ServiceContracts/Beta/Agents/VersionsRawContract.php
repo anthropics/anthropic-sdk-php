@@ -19,7 +19,7 @@ interface VersionsRawContract
     /**
      * @api
      *
-     * @param string $agentID Path param: Path parameter agent_id
+     * @param string $agentID path param: Agent ID to list versions for
      * @param array<string,mixed>|VersionListParams $params
      * @param RequestOpts|null $requestOptions
      *

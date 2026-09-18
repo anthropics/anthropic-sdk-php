@@ -112,7 +112,7 @@ final class AgentsService implements AgentsContract
      *
      * Get Agent
      *
-     * @param string $agentID Path param: Path parameter agent_id
+     * @param string $agentID path param: Unique identifier of the agent to retrieve
      * @param int $version Query param: Agent version. Omit for the most recent version. Must be at least 1 if specified.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
@@ -144,7 +144,7 @@ final class AgentsService implements AgentsContract
      *
      * Update Agent
      *
-     * @param string $agentID Path param: Path parameter agent_id
+     * @param string $agentID path param: Unique identifier of the agent to update
      * @param string|null $description Body param: Description. Omit to preserve; send empty string or null to clear.
      * @param list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null $mcpServers Body param: MCP servers. Full replacement. Omit to preserve; send empty array or `null` to clear. Names must be unique. Maximum 20. Every server must be referenced by an `mcp_toolset` in the agent's resulting `tools`; unreferenced servers are rejected. See the [MCP connector guide](https://platform.claude.com/docs/en/managed-agents/mcp-connector).
      * @param array<string,string|null>|null $metadata Body param: Metadata patch. Set a key to a string to upsert it, or to null to delete it. Omit the field to preserve. The stored bag is limited to 16 keys (up to 64 chars each) with values up to 512 chars.
@@ -255,7 +255,7 @@ final class AgentsService implements AgentsContract
      *
      * Archive Agent
      *
-     * @param string $agentID Path parameter agent_id
+     * @param string $agentID unique identifier of the agent to archive
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *

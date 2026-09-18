@@ -20,7 +20,7 @@ interface DeploymentRunsRawContract
     /**
      * @api
      *
-     * @param string $deploymentRunID Path parameter deployment_run_id
+     * @param string $deploymentRunID unique identifier of the deployment run
      * @param array<string,mixed>|DeploymentRunRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *

@@ -38,7 +38,7 @@ interface TunnelsContract
     /**
      * @api
      *
-     * @param string $tunnelID Path parameter tunnel_id
+     * @param string $tunnelID ID of the tunnel (`tnl_...`).
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -82,7 +82,7 @@ interface TunnelsContract
     /**
      * @api
      *
-     * @param string $tunnelID Path parameter tunnel_id
+     * @param string $tunnelID ID of the tunnel (`tnl_...`).
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -101,7 +101,7 @@ interface TunnelsContract
     /**
      * @api
      *
-     * @param string $tunnelID Path parameter tunnel_id
+     * @param string $tunnelID ID of the tunnel (`tnl_...`).
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -120,7 +120,7 @@ interface TunnelsContract
     /**
      * @api
      *
-     * @param string $tunnelID Path param: Path parameter tunnel_id
+     * @param string $tunnelID Path param: ID of the tunnel (`tnl_...`).
      * @param string|null $reason body param: Optional free-text reason for the rotation, recorded for audit
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).

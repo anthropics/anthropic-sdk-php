@@ -42,7 +42,7 @@ interface DeploymentsRawContract
     /**
      * @api
      *
-     * @param string $deploymentID Path parameter deployment_id
+     * @param string $deploymentID unique identifier of the deployment
      * @param array<string,mixed>|DeploymentRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -59,7 +59,7 @@ interface DeploymentsRawContract
     /**
      * @api
      *
-     * @param string $deploymentID Path param: Path parameter deployment_id
+     * @param string $deploymentID path param: Unique identifier of the deployment to update
      * @param array<string,mixed>|DeploymentUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -91,7 +91,7 @@ interface DeploymentsRawContract
     /**
      * @api
      *
-     * @param string $deploymentID Path parameter deployment_id
+     * @param string $deploymentID unique identifier of the deployment to archive
      * @param array<string,mixed>|DeploymentArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -108,7 +108,7 @@ interface DeploymentsRawContract
     /**
      * @api
      *
-     * @param string $deploymentID Path parameter deployment_id
+     * @param string $deploymentID unique identifier of the deployment to pause
      * @param array<string,mixed>|DeploymentPauseParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -125,7 +125,7 @@ interface DeploymentsRawContract
     /**
      * @api
      *
-     * @param string $deploymentID Path parameter deployment_id
+     * @param string $deploymentID unique identifier of the deployment to run
      * @param array<string,mixed>|DeploymentRunParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -142,7 +142,7 @@ interface DeploymentsRawContract
     /**
      * @api
      *
-     * @param string $deploymentID Path parameter deployment_id
+     * @param string $deploymentID unique identifier of the deployment to unpause
      * @param array<string,mixed>|DeploymentUnpauseParams $params
      * @param RequestOpts|null $requestOptions
      *

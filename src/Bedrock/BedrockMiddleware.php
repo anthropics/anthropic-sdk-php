@@ -13,6 +13,7 @@ use Aws\Api\Parser\EventParsingIterator;
 use Aws\Api\Parser\RestJsonParser;
 use Aws\Api\Service;
 use Aws\Api\StructureShape;
+use Aws\Exception\EventStreamDataException;
 use GuzzleHttp\Psr7\NoSeekStream;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -171,8 +172,9 @@ final class BedrockMiddleware implements Middleware
                 yield "event: {$type}\ndata: {$bytes}\n\n";
             }
         } catch (\Throwable $exception) {
+            $type = ($exception instanceof EventStreamDataException ? $exception->getAwsErrorCode() : null) ?? 'api_error';
             $error = json_encode(
-                ['type' => 'error', 'error' => ['type' => 'api_error', 'message' => $exception->getMessage()]],
+                ['type' => 'error', 'error' => ['type' => $type, 'message' => $exception->getMessage()]],
                 flags: Util::JSON_ENCODE_FLAGS,
             );
 
