@@ -32,14 +32,11 @@ final class UserProfileListParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    /**
-     * Query parameter for limit.
-     */
     #[Optional]
     public ?int $limit;
 
     /**
-     * Query parameter for order.
+     * ListOrder enum.
      *
      * @var value-of<Order>|null $order
      */
@@ -47,16 +44,13 @@ final class UserProfileListParams implements BaseModel
     public ?string $order;
 
     /**
-     * Query parameter for order_by.
+     * Sort field for listing user profiles: `created_at` (default) or `name` (case-insensitive; profiles without a name sort last).
      *
      * @var value-of<OrderBy>|null $orderBy
      */
     #[Optional(enum: OrderBy::class)]
     public ?string $orderBy;
 
-    /**
-     * Query parameter for page.
-     */
     #[Optional]
     public ?string $page;
 
@@ -105,9 +99,6 @@ final class UserProfileListParams implements BaseModel
         return $self;
     }
 
-    /**
-     * Query parameter for limit.
-     */
     public function withLimit(int $limit): self
     {
         $self = clone $this;
@@ -117,7 +108,7 @@ final class UserProfileListParams implements BaseModel
     }
 
     /**
-     * Query parameter for order.
+     * ListOrder enum.
      *
      * @param Order|value-of<Order> $order
      */
@@ -130,7 +121,7 @@ final class UserProfileListParams implements BaseModel
     }
 
     /**
-     * Query parameter for order_by.
+     * Sort field for listing user profiles: `created_at` (default) or `name` (case-insensitive; profiles without a name sort last).
      *
      * @param OrderBy|value-of<OrderBy> $orderBy
      */
@@ -142,9 +133,6 @@ final class UserProfileListParams implements BaseModel
         return $self;
     }
 
-    /**
-     * Query parameter for page.
-     */
     public function withPage(string $page): self
     {
         $self = clone $this;

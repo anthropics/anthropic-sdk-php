@@ -43,8 +43,8 @@ final class ThreadsService implements ThreadsContract
      *
      * Get Session Thread
      *
-     * @param string $threadID Path param: Path parameter thread_id
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $threadID Path param
+     * @param string $sessionID Path param
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -79,7 +79,7 @@ final class ThreadsService implements ThreadsContract
      *
      * List Session Threads
      *
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $sessionID Path param
      * @param int $limit Query param: Maximum results per page. Defaults to 1000.
      * @param string $page Query param: Opaque pagination cursor from a previous response's `next_page`. Forward-only.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
@@ -120,8 +120,8 @@ final class ThreadsService implements ThreadsContract
      *
      * Archive Session Thread
      *
-     * @param string $threadID Path param: Path parameter thread_id
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $threadID Path param
+     * @param string $sessionID Path param
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *

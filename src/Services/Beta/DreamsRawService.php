@@ -90,7 +90,6 @@ final class DreamsRawService implements DreamsRawContract
      *
      * Get a Dream
      *
-     * @param string $dreamID Path parameter dream_id
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -204,7 +203,6 @@ final class DreamsRawService implements DreamsRawContract
      *
      * Archive a Dream
      *
-     * @param string $dreamID Path parameter dream_id
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -248,7 +246,6 @@ final class DreamsRawService implements DreamsRawContract
      *
      * Cancel a Dream
      *
-     * @param string $dreamID Path parameter dream_id
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,

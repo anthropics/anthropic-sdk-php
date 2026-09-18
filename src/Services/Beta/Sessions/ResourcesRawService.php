@@ -42,7 +42,7 @@ final class ResourcesRawService implements ResourcesRawContract
      *
      * Get Session Resource
      *
-     * @param string $resourceID Path param: Path parameter resource_id
+     * @param string $resourceID Path param
      * @param array{
      *   sessionID: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -91,7 +91,7 @@ final class ResourcesRawService implements ResourcesRawContract
      *
      * Update Session Resource
      *
-     * @param string $resourceID Path param: Path parameter resource_id
+     * @param string $resourceID Path param
      * @param array{
      *   sessionID: string,
      *   authorizationToken: string,
@@ -146,7 +146,7 @@ final class ResourcesRawService implements ResourcesRawContract
      *
      * List Session Resources
      *
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $sessionID Path param
      * @param array{
      *   limit?: int,
      *   page?: string,
@@ -198,7 +198,7 @@ final class ResourcesRawService implements ResourcesRawContract
      *
      * Delete Session Resource
      *
-     * @param string $resourceID Path param: Path parameter resource_id
+     * @param string $resourceID Path param
      * @param array{
      *   sessionID: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -247,7 +247,7 @@ final class ResourcesRawService implements ResourcesRawContract
      *
      * Add Session Resource
      *
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $sessionID Path param
      * @param array{
      *   fileID: string,
      *   type: Type|value-of<Type>,

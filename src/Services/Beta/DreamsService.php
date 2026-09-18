@@ -86,7 +86,6 @@ final class DreamsService implements DreamsContract
      *
      * Get a Dream
      *
-     * @param string $dreamID Path parameter dream_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -118,9 +117,9 @@ final class DreamsService implements DreamsContract
      *
      * @param \DateTimeInterface $createdAtGt Query param: Return dreams with `created_at` strictly after this timestamp (exclusive lower bound, RFC 3339). Unset applies no lower bound.
      * @param \DateTimeInterface $createdAtLt Query param: Return dreams with `created_at` strictly before this timestamp (exclusive upper bound, RFC 3339). Unset applies no upper bound.
-     * @param bool $includeArchived Query param: Query parameter for include_archived
-     * @param int $limit Query param: Query parameter for limit
-     * @param string $page Query param: Query parameter for page
+     * @param bool $includeArchived Query param
+     * @param int $limit Query param
+     * @param string $page Query param
      * @param list<BetaDreamStatus|value-of<BetaDreamStatus>> $statuses Query param: Filter by lifecycle status. Repeat the parameter to match any of multiple statuses. Empty applies no status filter.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
@@ -167,7 +166,6 @@ final class DreamsService implements DreamsContract
      *
      * Archive a Dream
      *
-     * @param string $dreamID Path parameter dream_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -197,7 +195,6 @@ final class DreamsService implements DreamsContract
      *
      * Cancel a Dream
      *
-     * @param string $dreamID Path parameter dream_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *

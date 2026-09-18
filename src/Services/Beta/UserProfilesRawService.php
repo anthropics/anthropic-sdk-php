@@ -94,7 +94,6 @@ final class UserProfilesRawService implements UserProfilesRawContract
      *
      * Get User Profile
      *
-     * @param string $userProfileID Path parameter user_profile_id
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -138,7 +137,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
      *
      * Update User Profile
      *
-     * @param string $userProfileID Path param: Path parameter user_profile_id
+     * @param string $userProfileID Path param
      * @param array{
      *   accessType?: UserProfileUpdateParams\AccessType|value-of<UserProfileUpdateParams\AccessType>|null,
      *   externalID?: string|null,
@@ -248,7 +247,6 @@ final class UserProfilesRawService implements UserProfilesRawContract
      *
      * Create Enrollment URL
      *
-     * @param string $userProfileID Path parameter user_profile_id
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,

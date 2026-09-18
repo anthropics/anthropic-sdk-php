@@ -41,7 +41,7 @@ final class MemoriesRawService implements MemoriesRawContract
      *
      * Create a memory
      *
-     * @param string $memoryStoreID Path param: Path parameter memory_store_id
+     * @param string $memoryStoreID Path param
      * @param array{
      *   content: string|null,
      *   path: string,
@@ -95,7 +95,7 @@ final class MemoriesRawService implements MemoriesRawContract
      *
      * Retrieve a memory
      *
-     * @param string $memoryID Path param: Path parameter memory_id
+     * @param string $memoryID Path param
      * @param array{
      *   memoryStoreID: string,
      *   view?: ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView>,
@@ -152,7 +152,7 @@ final class MemoriesRawService implements MemoriesRawContract
      *
      * Update a memory
      *
-     * @param string $memoryID Path param: Path parameter memory_id
+     * @param string $memoryID Path param
      * @param array{
      *   memoryStoreID: string,
      *   view?: ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView>,
@@ -217,7 +217,7 @@ final class MemoriesRawService implements MemoriesRawContract
      *
      * List memories
      *
-     * @param string $memoryStoreID Path param: Path parameter memory_store_id
+     * @param string $memoryStoreID Path param
      * @param array{
      *   depth?: int,
      *   limit?: int,
@@ -277,7 +277,7 @@ final class MemoriesRawService implements MemoriesRawContract
      *
      * Delete a memory
      *
-     * @param string $memoryID Path param: Path parameter memory_id
+     * @param string $memoryID Path param
      * @param array{
      *   memoryStoreID: string,
      *   expectedContentSha256?: string,

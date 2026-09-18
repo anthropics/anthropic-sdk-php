@@ -44,21 +44,12 @@ final class DreamListParams implements BaseModel
     #[Optional]
     public ?\DateTimeInterface $createdAtLt;
 
-    /**
-     * Query parameter for include_archived.
-     */
     #[Optional]
     public ?bool $includeArchived;
 
-    /**
-     * Query parameter for limit.
-     */
     #[Optional]
     public ?int $limit;
 
-    /**
-     * Query parameter for page.
-     */
     #[Optional]
     public ?string $page;
 
@@ -140,9 +131,6 @@ final class DreamListParams implements BaseModel
         return $self;
     }
 
-    /**
-     * Query parameter for include_archived.
-     */
     public function withIncludeArchived(bool $includeArchived): self
     {
         $self = clone $this;
@@ -151,9 +139,6 @@ final class DreamListParams implements BaseModel
         return $self;
     }
 
-    /**
-     * Query parameter for limit.
-     */
     public function withLimit(int $limit): self
     {
         $self = clone $this;
@@ -162,9 +147,6 @@ final class DreamListParams implements BaseModel
         return $self;
     }
 
-    /**
-     * Query parameter for page.
-     */
     public function withPage(string $page): self
     {
         $self = clone $this;

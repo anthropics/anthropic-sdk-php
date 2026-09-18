@@ -37,9 +37,6 @@ final class MemoryVersionListParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    /**
-     * Query parameter for api_key_id.
-     */
     #[Optional]
     public ?string $apiKeyID;
 
@@ -55,46 +52,31 @@ final class MemoryVersionListParams implements BaseModel
     #[Optional]
     public ?\DateTimeInterface $createdAtLte;
 
-    /**
-     * Query parameter for limit.
-     */
     #[Optional]
     public ?int $limit;
 
-    /**
-     * Query parameter for memory_id.
-     */
     #[Optional]
     public ?string $memoryID;
 
     /**
-     * Query parameter for operation.
+     * The kind of mutation a `memory_version` records. Every non-no-op mutation to a memory appends exactly one version row with one of these values.
      *
      * @var value-of<ManagedAgentsMemoryVersionOperation>|null $operation
      */
     #[Optional(enum: ManagedAgentsMemoryVersionOperation::class)]
     public ?string $operation;
 
-    /**
-     * Query parameter for page.
-     */
     #[Optional]
     public ?string $page;
 
-    /**
-     * Query parameter for service_account_id.
-     */
     #[Optional]
     public ?string $serviceAccountID;
 
-    /**
-     * Query parameter for session_id.
-     */
     #[Optional]
     public ?string $sessionID;
 
     /**
-     * Query parameter for view.
+     * Selects which projection of a `memory` or `memory_version` the server returns. `basic` returns the object with `content` set to `null`; `full` populates `content`. When omitted, the default is endpoint-specific: retrieve operations default to `full`; list, create, and update operations default to `basic`. Listing with `view=full` caps `limit` at 20.
      *
      * @var value-of<ManagedAgentsMemoryView>|null $view
      */
@@ -158,9 +140,6 @@ final class MemoryVersionListParams implements BaseModel
         return $self;
     }
 
-    /**
-     * Query parameter for api_key_id.
-     */
     public function withAPIKeyID(string $apiKeyID): self
     {
         $self = clone $this;
@@ -191,9 +170,6 @@ final class MemoryVersionListParams implements BaseModel
         return $self;
     }
 
-    /**
-     * Query parameter for limit.
-     */
     public function withLimit(int $limit): self
     {
         $self = clone $this;
@@ -202,9 +178,6 @@ final class MemoryVersionListParams implements BaseModel
         return $self;
     }
 
-    /**
-     * Query parameter for memory_id.
-     */
     public function withMemoryID(string $memoryID): self
     {
         $self = clone $this;
@@ -214,7 +187,7 @@ final class MemoryVersionListParams implements BaseModel
     }
 
     /**
-     * Query parameter for operation.
+     * The kind of mutation a `memory_version` records. Every non-no-op mutation to a memory appends exactly one version row with one of these values.
      *
      * @param ManagedAgentsMemoryVersionOperation|value-of<ManagedAgentsMemoryVersionOperation> $operation
      */
@@ -227,9 +200,6 @@ final class MemoryVersionListParams implements BaseModel
         return $self;
     }
 
-    /**
-     * Query parameter for page.
-     */
     public function withPage(string $page): self
     {
         $self = clone $this;
@@ -238,9 +208,6 @@ final class MemoryVersionListParams implements BaseModel
         return $self;
     }
 
-    /**
-     * Query parameter for service_account_id.
-     */
     public function withServiceAccountID(string $serviceAccountID): self
     {
         $self = clone $this;
@@ -249,9 +216,6 @@ final class MemoryVersionListParams implements BaseModel
         return $self;
     }
 
-    /**
-     * Query parameter for session_id.
-     */
     public function withSessionID(string $sessionID): self
     {
         $self = clone $this;
@@ -261,7 +225,7 @@ final class MemoryVersionListParams implements BaseModel
     }
 
     /**
-     * Query parameter for view.
+     * Selects which projection of a `memory` or `memory_version` the server returns. `basic` returns the object with `content` set to `null`; `full` populates `content`. When omitted, the default is endpoint-specific: retrieve operations default to `full`; list, create, and update operations default to `basic`. Listing with `view=full` caps `limit` at 20.
      *
      * @param ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView> $view
      */

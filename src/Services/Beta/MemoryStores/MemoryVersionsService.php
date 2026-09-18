@@ -38,9 +38,9 @@ final class MemoryVersionsService implements MemoryVersionsContract
      *
      * Retrieve a memory version
      *
-     * @param string $memoryVersionID Path param: Path parameter memory_version_id
-     * @param string $memoryStoreID Path param: Path parameter memory_store_id
-     * @param ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView> $view Query param: Query parameter for view
+     * @param string $memoryVersionID Path param
+     * @param string $memoryStoreID Path param
+     * @param ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView> $view Query param: Selects which projection of a `memory` or `memory_version` the server returns. `basic` returns the object with `content` set to `null`; `full` populates `content`. When omitted, the default is endpoint-specific: retrieve operations default to `full`; list, create, and update operations default to `basic`. Listing with `view=full` caps `limit` at 20.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -77,17 +77,17 @@ final class MemoryVersionsService implements MemoryVersionsContract
      *
      * List memory versions
      *
-     * @param string $memoryStoreID Path param: Path parameter memory_store_id
-     * @param string $apiKeyID Query param: Query parameter for api_key_id
+     * @param string $memoryStoreID Path param
+     * @param string $apiKeyID Query param
      * @param \DateTimeInterface $createdAtGte query param: Return versions created at or after this time (inclusive)
      * @param \DateTimeInterface $createdAtLte query param: Return versions created at or before this time (inclusive)
-     * @param int $limit Query param: Query parameter for limit
-     * @param string $memoryID Query param: Query parameter for memory_id
-     * @param ManagedAgentsMemoryVersionOperation|value-of<ManagedAgentsMemoryVersionOperation> $operation Query param: Query parameter for operation
-     * @param string $page Query param: Query parameter for page
-     * @param string $serviceAccountID Query param: Query parameter for service_account_id
-     * @param string $sessionID Query param: Query parameter for session_id
-     * @param ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView> $view Query param: Query parameter for view
+     * @param int $limit Query param
+     * @param string $memoryID Query param
+     * @param ManagedAgentsMemoryVersionOperation|value-of<ManagedAgentsMemoryVersionOperation> $operation Query param: The kind of mutation a `memory_version` records. Every non-no-op mutation to a memory appends exactly one version row with one of these values.
+     * @param string $page Query param
+     * @param string $serviceAccountID Query param
+     * @param string $sessionID Query param
+     * @param ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView> $view Query param: Selects which projection of a `memory` or `memory_version` the server returns. `basic` returns the object with `content` set to `null`; `full` populates `content`. When omitted, the default is endpoint-specific: retrieve operations default to `full`; list, create, and update operations default to `basic`. Listing with `view=full` caps `limit` at 20.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -142,8 +142,8 @@ final class MemoryVersionsService implements MemoryVersionsContract
      *
      * Redact a memory version
      *
-     * @param string $memoryVersionID Path param: Path parameter memory_version_id
-     * @param string $memoryStoreID Path param: Path parameter memory_store_id
+     * @param string $memoryVersionID Path param
+     * @param string $memoryStoreID Path param
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *

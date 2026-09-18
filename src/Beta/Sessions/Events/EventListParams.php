@@ -59,9 +59,6 @@ final class EventListParams implements BaseModel
     #[Optional]
     public ?\DateTimeInterface $createdAtLte;
 
-    /**
-     * Query parameter for limit.
-     */
     #[Optional]
     public ?int $limit;
 
@@ -184,9 +181,6 @@ final class EventListParams implements BaseModel
         return $self;
     }
 
-    /**
-     * Query parameter for limit.
-     */
     public function withLimit(int $limit): self
     {
         $self = clone $this;

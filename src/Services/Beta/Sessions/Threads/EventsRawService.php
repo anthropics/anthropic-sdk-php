@@ -73,7 +73,7 @@ final class EventsRawService implements EventsRawContract
      *
      * List Session Thread Events
      *
-     * @param string $threadID Path param: Path parameter thread_id
+     * @param string $threadID Path param
      * @param array{
      *   sessionID: string,
      *   limit?: int,
@@ -128,7 +128,7 @@ final class EventsRawService implements EventsRawContract
     /**
      * @api
      *
-     * @param string $threadID Path param: Path parameter thread_id
+     * @param string $threadID Path param
      * @param array{
      *   sessionID: string,
      *   eventDeltas?: list<BetaManagedAgentsDeltaType|value-of<BetaManagedAgentsDeltaType>>,

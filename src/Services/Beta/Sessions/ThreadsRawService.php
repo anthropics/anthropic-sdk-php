@@ -33,7 +33,7 @@ final class ThreadsRawService implements ThreadsRawContract
      *
      * Get Session Thread
      *
-     * @param string $threadID Path param: Path parameter thread_id
+     * @param string $threadID Path param
      * @param array{
      *   sessionID: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -80,7 +80,7 @@ final class ThreadsRawService implements ThreadsRawContract
      *
      * List Session Threads
      *
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $sessionID Path param
      * @param array{
      *   limit?: int,
      *   page?: string,
@@ -132,7 +132,7 @@ final class ThreadsRawService implements ThreadsRawContract
      *
      * Archive Session Thread
      *
-     * @param string $threadID Path param: Path parameter thread_id
+     * @param string $threadID Path param
      * @param array{
      *   sessionID: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\UserProfiles\UserProfileListParams;
 
 /**
- * Query parameter for order.
+ * ListOrder enum.
  */
 enum Order: string
 {

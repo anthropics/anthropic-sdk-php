@@ -35,7 +35,7 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
      *
      * Retrieve a memory version
      *
-     * @param string $memoryVersionID Path param: Path parameter memory_version_id
+     * @param string $memoryVersionID Path param
      * @param array{
      *   memoryStoreID: string,
      *   view?: ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView>,
@@ -92,7 +92,7 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
      *
      * List memory versions
      *
-     * @param string $memoryStoreID Path param: Path parameter memory_store_id
+     * @param string $memoryStoreID Path param
      * @param array{
      *   apiKeyID?: string,
      *   createdAtGte?: \DateTimeInterface,
@@ -175,7 +175,7 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
      *
      * Redact a memory version
      *
-     * @param string $memoryVersionID Path param: Path parameter memory_version_id
+     * @param string $memoryVersionID Path param
      * @param array{
      *   memoryStoreID: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,

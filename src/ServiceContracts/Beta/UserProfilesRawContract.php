@@ -39,7 +39,6 @@ interface UserProfilesRawContract
     /**
      * @api
      *
-     * @param string $userProfileID Path parameter user_profile_id
      * @param array<string,mixed>|UserProfileRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -56,7 +55,7 @@ interface UserProfilesRawContract
     /**
      * @api
      *
-     * @param string $userProfileID Path param: Path parameter user_profile_id
+     * @param string $userProfileID Path param
      * @param array<string,mixed>|UserProfileUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -88,7 +87,6 @@ interface UserProfilesRawContract
     /**
      * @api
      *
-     * @param string $userProfileID Path parameter user_profile_id
      * @param array<string,mixed>|UserProfileCreateEnrollmentURLParams $params
      * @param RequestOpts|null $requestOptions
      *

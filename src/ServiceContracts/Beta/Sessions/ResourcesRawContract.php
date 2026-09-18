@@ -26,7 +26,7 @@ interface ResourcesRawContract
     /**
      * @api
      *
-     * @param string $resourceID Path param: Path parameter resource_id
+     * @param string $resourceID Path param
      * @param array<string,mixed>|ResourceRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -43,7 +43,7 @@ interface ResourcesRawContract
     /**
      * @api
      *
-     * @param string $resourceID Path param: Path parameter resource_id
+     * @param string $resourceID Path param
      * @param array<string,mixed>|ResourceUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -60,7 +60,7 @@ interface ResourcesRawContract
     /**
      * @api
      *
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $sessionID Path param
      * @param array<string,mixed>|ResourceListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -77,7 +77,7 @@ interface ResourcesRawContract
     /**
      * @api
      *
-     * @param string $resourceID Path param: Path parameter resource_id
+     * @param string $resourceID Path param
      * @param array<string,mixed>|ResourceDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -94,7 +94,7 @@ interface ResourcesRawContract
     /**
      * @api
      *
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $sessionID Path param
      * @param array<string,mixed>|ResourceAddParams $params
      * @param RequestOpts|null $requestOptions
      *

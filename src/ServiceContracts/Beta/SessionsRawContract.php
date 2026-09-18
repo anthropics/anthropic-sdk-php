@@ -40,7 +40,6 @@ interface SessionsRawContract
     /**
      * @api
      *
-     * @param string $sessionID Path parameter session_id
      * @param array<string,mixed>|SessionRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -57,7 +56,7 @@ interface SessionsRawContract
     /**
      * @api
      *
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $sessionID Path param
      * @param array<string,mixed>|SessionUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -89,7 +88,6 @@ interface SessionsRawContract
     /**
      * @api
      *
-     * @param string $sessionID Path parameter session_id
      * @param array<string,mixed>|SessionDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -106,7 +104,6 @@ interface SessionsRawContract
     /**
      * @api
      *
-     * @param string $sessionID Path parameter session_id
      * @param array<string,mixed>|SessionArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *

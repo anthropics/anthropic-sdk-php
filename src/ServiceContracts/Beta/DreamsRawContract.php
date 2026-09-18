@@ -38,7 +38,6 @@ interface DreamsRawContract
     /**
      * @api
      *
-     * @param string $dreamID Path parameter dream_id
      * @param array<string,mixed>|DreamRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -70,7 +69,6 @@ interface DreamsRawContract
     /**
      * @api
      *
-     * @param string $dreamID Path parameter dream_id
      * @param array<string,mixed>|DreamArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -87,7 +85,6 @@ interface DreamsRawContract
     /**
      * @api
      *
-     * @param string $dreamID Path parameter dream_id
      * @param array<string,mixed>|DreamCancelParams $params
      * @param RequestOpts|null $requestOptions
      *

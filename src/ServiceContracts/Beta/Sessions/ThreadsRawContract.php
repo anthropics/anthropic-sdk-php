@@ -21,7 +21,7 @@ interface ThreadsRawContract
     /**
      * @api
      *
-     * @param string $threadID Path param: Path parameter thread_id
+     * @param string $threadID Path param
      * @param array<string,mixed>|ThreadRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -38,7 +38,7 @@ interface ThreadsRawContract
     /**
      * @api
      *
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $sessionID Path param
      * @param array<string,mixed>|ThreadListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -55,7 +55,7 @@ interface ThreadsRawContract
     /**
      * @api
      *
-     * @param string $threadID Path param: Path parameter thread_id
+     * @param string $threadID Path param
      * @param array<string,mixed>|ThreadArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *

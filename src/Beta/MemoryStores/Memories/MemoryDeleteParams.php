@@ -32,9 +32,6 @@ final class MemoryDeleteParams implements BaseModel
     #[Required]
     public string $memoryStoreID;
 
-    /**
-     * Query parameter for expected_content_sha256.
-     */
     #[Optional]
     public ?string $expectedContentSha256;
 
@@ -100,9 +97,6 @@ final class MemoryDeleteParams implements BaseModel
         return $self;
     }
 
-    /**
-     * Query parameter for expected_content_sha256.
-     */
     public function withExpectedContentSha256(
         string $expectedContentSha256
     ): self {

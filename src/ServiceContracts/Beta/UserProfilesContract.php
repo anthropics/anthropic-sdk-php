@@ -53,7 +53,6 @@ interface UserProfilesContract
     /**
      * @api
      *
-     * @param string $userProfileID Path parameter user_profile_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -72,7 +71,7 @@ interface UserProfilesContract
     /**
      * @api
      *
-     * @param string $userProfileID Path param: Path parameter user_profile_id
+     * @param string $userProfileID Path param
      * @param \Anthropic\Beta\UserProfiles\UserProfileUpdateParams\AccessType|value-of<\Anthropic\Beta\UserProfiles\UserProfileUpdateParams\AccessType>|null $accessType Body param: How the platform uses the API on behalf of the entity this profile represents. `application`: the platform sells a product that uses the API behind the scenes, and the profile represents an individual end-user of that product. `passthrough`: the platform resells raw inference, and the profile identifies the resold-to company.
      * @param string|null $externalID Body param: If present, replaces the stored external_id. Omit to leave unchanged. Maximum 255 characters. Accepted under the `user-profiles-2026-03-24` and `user-profiles-2026-08-18` beta headers; under `user-profiles-2026-09-04` send `external_user_details.reference_id` instead.
      * @param BetaUserProfileExternalUserDetailsParams|BetaUserProfileExternalUserDetailsParamsShape $externalUserDetails Body param: Details about the entity this profile represents, as the platform states them. Each field sent replaces the stored value; omit a field to leave it unchanged. Once set, a value cannot be cleared and `null` is rejected. Accepted under the `user-profiles-2026-09-04` beta header only.
@@ -103,10 +102,10 @@ interface UserProfilesContract
     /**
      * @api
      *
-     * @param int $limit Query param: Query parameter for limit
-     * @param Order|value-of<Order> $order Query param: Query parameter for order
-     * @param OrderBy|value-of<OrderBy> $orderBy Query param: Query parameter for order_by
-     * @param string $page Query param: Query parameter for page
+     * @param int $limit Query param
+     * @param Order|value-of<Order> $order Query param: ListOrder enum
+     * @param OrderBy|value-of<OrderBy> $orderBy query param: Sort field for listing user profiles: `created_at` (default) or `name` (case-insensitive; profiles without a name sort last)
+     * @param string $page Query param
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -130,7 +129,6 @@ interface UserProfilesContract
     /**
      * @api
      *
-     * @param string $userProfileID Path parameter user_profile_id
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
