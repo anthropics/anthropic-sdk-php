@@ -119,8 +119,8 @@ final class BetaMessage implements BaseModel
     public ?BetaContextManagementResponse $contextManagement;
 
     /**
-     * Response envelope for request-level diagnostics. Present (possibly
-     * null) whenever the caller supplied `diagnostics` on the request.
+     * Request-level diagnostics: why the prompt cache could not fully reuse
+     * the prefix of the request named by `diagnostics.previous_message_id`.
      */
     #[Required]
     public ?BetaDiagnostics $diagnostics;
@@ -400,8 +400,8 @@ final class BetaMessage implements BaseModel
     }
 
     /**
-     * Response envelope for request-level diagnostics. Present (possibly
-     * null) whenever the caller supplied `diagnostics` on the request.
+     * Request-level diagnostics: why the prompt cache could not fully reuse
+     * the prefix of the request named by `diagnostics.previous_message_id`.
      *
      * @param BetaDiagnostics|BetaDiagnosticsShape|null $diagnostics
      */
