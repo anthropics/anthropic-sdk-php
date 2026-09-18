@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Model identifier and configuration applied to every pipeline stage.
+ * The object form of `model` in a request to create a dream.
  *
  * @phpstan-type BetaDreamModelConfigParamShape = array{
  *   id: string, speed?: null|Speed|value-of<Speed>
@@ -23,7 +23,11 @@ final class BetaDreamModelConfigParam implements BaseModel
     use SdkModel;
 
     /**
-     * Model identifier, e.g. "claude-opus-5". 1-256 characters.
+     * The ID of the model to run the dream with.
+     *
+     * The ID can be 1 to 256 characters long.
+     *
+     * The [limits table in the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#limits) lists the supported models.
      */
     #[Required]
     public string $id;
@@ -76,7 +80,11 @@ final class BetaDreamModelConfigParam implements BaseModel
     }
 
     /**
-     * Model identifier, e.g. "claude-opus-5". 1-256 characters.
+     * The ID of the model to run the dream with.
+     *
+     * The ID can be 1 to 256 characters long.
+     *
+     * The [limits table in the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#limits) lists the supported models.
      */
     public function withID(string $id): self
     {

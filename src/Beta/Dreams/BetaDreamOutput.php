@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * An output memory store the dream writes consolidated memories into.
+ * The memory store that holds a dream's result, as an entry in `outputs`.
  *
  * @phpstan-type BetaDreamOutputShape = array{
  *   memoryStoreID: string, type: Type|value-of<Type>

@@ -134,14 +134,16 @@ final class DreamsService implements DreamsContract
      *
      * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#list-dreams) for how to page through dreams.
      *
-     * @param \DateTimeInterface $createdAtGt Query param: Return dreams with `created_at` strictly after this timestamp (exclusive lower bound, RFC 3339). Unset applies no lower bound.
-     * @param \DateTimeInterface $createdAtLt Query param: Return dreams with `created_at` strictly before this timestamp (exclusive upper bound, RFC 3339). Unset applies no upper bound.
+     * @param \DateTimeInterface $createdAtGt query param: Return only dreams created after this time (exclusive), in RFC 3339
+     * @param \DateTimeInterface $createdAtLt query param: Return only dreams created before this time (exclusive), in RFC 3339
      * @param bool $includeArchived Query param: Whether to include archived dreams. Defaults to `false`.
      * @param int $limit Query param: The maximum number of dreams to return, from 1 to 100. Defaults to 20.
      * @param string $page Query param: The cursor for the page to return, taken from `next_page` in a previous response.
      *
      * Leave it out to get the first page.
-     * @param list<BetaDreamStatus|value-of<BetaDreamStatus>> $statuses Query param: Filter by lifecycle status. Repeat the parameter to match any of multiple statuses. Empty applies no status filter.
+     * @param list<BetaDreamStatus|value-of<BetaDreamStatus>> $statuses Query param: Return only dreams that have one of these statuses.
+     *
+     * Repeat the parameter to give more than one status. Leave it out to return dreams of every status.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *

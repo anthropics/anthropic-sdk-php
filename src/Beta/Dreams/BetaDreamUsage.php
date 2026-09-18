@@ -9,7 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Cumulative token usage for the dream across every pipeline stage.
+ * The tokens that a dream has used so far.
+ *
+ * The counts are zero while the dream is `pending` and update while it is `running`. They can keep changing after a cancel.
+ *
+ * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#billing) for how dreams are billed. See the [prompt caching guide](https://platform.claude.com/docs/en/build-with-claude/prompt-caching#tracking-cache-performance) for how the input token counts add up.
  *
  * @phpstan-type BetaDreamUsageShape = array{
  *   cacheCreationInputTokens: int,
@@ -24,25 +28,25 @@ final class BetaDreamUsage implements BaseModel
     use SdkModel;
 
     /**
-     * Total tokens used to create prompt-cache entries (sum of all TTL tiers).
+     * The dream's input tokens that were written to the prompt cache, for both the 5-minute and 1-hour cache durations.
      */
     #[Required('cache_creation_input_tokens')]
     public int $cacheCreationInputTokens;
 
     /**
-     * Total tokens read from prompt cache.
+     * The dream's input tokens that were read from the prompt cache.
      */
     #[Required('cache_read_input_tokens')]
     public int $cacheReadInputTokens;
 
     /**
-     * Total uncached input tokens consumed across every pipeline stage.
+     * The dream's input tokens that weren't read from or written to the prompt cache.
      */
     #[Required('input_tokens')]
     public int $inputTokens;
 
     /**
-     * Total output tokens generated across every pipeline stage.
+     * The tokens that the model generated for the dream.
      */
     #[Required('output_tokens')]
     public int $outputTokens;
@@ -97,7 +101,7 @@ final class BetaDreamUsage implements BaseModel
     }
 
     /**
-     * Total tokens used to create prompt-cache entries (sum of all TTL tiers).
+     * The dream's input tokens that were written to the prompt cache, for both the 5-minute and 1-hour cache durations.
      */
     public function withCacheCreationInputTokens(
         int $cacheCreationInputTokens
@@ -109,7 +113,7 @@ final class BetaDreamUsage implements BaseModel
     }
 
     /**
-     * Total tokens read from prompt cache.
+     * The dream's input tokens that were read from the prompt cache.
      */
     public function withCacheReadInputTokens(int $cacheReadInputTokens): self
     {
@@ -120,7 +124,7 @@ final class BetaDreamUsage implements BaseModel
     }
 
     /**
-     * Total uncached input tokens consumed across every pipeline stage.
+     * The dream's input tokens that weren't read from or written to the prompt cache.
      */
     public function withInputTokens(int $inputTokens): self
     {
@@ -131,7 +135,7 @@ final class BetaDreamUsage implements BaseModel
     }
 
     /**
-     * Total output tokens generated across every pipeline stage.
+     * The tokens that the model generated for the dream.
      */
     public function withOutputTokens(int $outputTokens): self
     {

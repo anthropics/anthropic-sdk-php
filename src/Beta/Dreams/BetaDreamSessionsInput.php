@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Input session transcripts the dream reads.
+ * The sessions that a dream reads, given as an entry in `inputs`.
  *
  * @phpstan-type BetaDreamSessionsInputShape = array{
  *   sessionIDs: list<string>, type: Type|value-of<Type>

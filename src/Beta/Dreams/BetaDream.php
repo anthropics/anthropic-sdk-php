@@ -10,7 +10,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * An asynchronous memory-consolidation job that reads a memory store plus a set of session transcripts and writes consolidated memories into an output memory store — a new store by default, or an existing store chosen via output_behavior. The Dreams API is in research preview: the request and response shapes are volatile and may change without the deprecation period that applies to generally-available endpoints.
+ * An asynchronous job that reads a memory store and past sessions, then writes a reorganized version of that memory store.
+ *
+ * By default the dream writes its result to a new memory store and doesn't change the input memory store. With `output_behavior` set to `update_existing`, it writes its result into the input memory store instead. The Dreams API is in research preview, so this resource can still change.
+ *
+ * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#how-it-works) for what a dream reads and produces.
  *
  * @phpstan-import-type BetaDreamInputVariants from \Anthropic\Beta\Dreams\BetaDreamInput
  * @phpstan-import-type BetaOutputBehaviorVariants from \Anthropic\Beta\Dreams\BetaOutputBehavior
@@ -88,7 +92,9 @@ final class BetaDream implements BaseModel
     public ?string $instructions;
 
     /**
-     * Model identifier and configuration applied to every pipeline stage. Same wire shape as the Agents API ModelConfig.
+     * The model that runs a dream, from the request that created it.
+     *
+     * The dream uses this model for all of its work. The response always gives the model as an object, even if the request gave only a model ID.
      */
     #[Required]
     public BetaDreamModelConfig $model;
@@ -124,7 +130,11 @@ final class BetaDream implements BaseModel
     public ?string $sessionID;
 
     /**
-     * Lifecycle status of a Dream.
+     * Where a dream is in its lifecycle.
+     *
+     * `completed`, `failed`, and `canceled` are final: once a dream has one of these statuses, its status doesn't change again.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#lifecycle) for what each status means.
      *
      * @var value-of<BetaDreamStatus> $status
      */
@@ -136,7 +146,11 @@ final class BetaDream implements BaseModel
     public string $type;
 
     /**
-     * Cumulative token usage for the dream across every pipeline stage.
+     * The tokens that a dream has used so far.
+     *
+     * The counts are zero while the dream is `pending` and update while it is `running`. They can keep changing after a cancel.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#billing) for how dreams are billed. See the [prompt caching guide](https://platform.claude.com/docs/en/build-with-claude/prompt-caching#tracking-cache-performance) for how the input token counts add up.
      */
     #[Required]
     public BetaDreamUsage $usage;
@@ -321,7 +335,9 @@ final class BetaDream implements BaseModel
     }
 
     /**
-     * Model identifier and configuration applied to every pipeline stage. Same wire shape as the Agents API ModelConfig.
+     * The model that runs a dream, from the request that created it.
+     *
+     * The dream uses this model for all of its work. The response always gives the model as an object, even if the request gave only a model ID.
      *
      * @param BetaDreamModelConfig|BetaDreamModelConfigShape $model
      */
@@ -380,7 +396,11 @@ final class BetaDream implements BaseModel
     }
 
     /**
-     * Lifecycle status of a Dream.
+     * Where a dream is in its lifecycle.
+     *
+     * `completed`, `failed`, and `canceled` are final: once a dream has one of these statuses, its status doesn't change again.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#lifecycle) for what each status means.
      *
      * @param BetaDreamStatus|value-of<BetaDreamStatus> $status
      */
@@ -404,7 +424,11 @@ final class BetaDream implements BaseModel
     }
 
     /**
-     * Cumulative token usage for the dream across every pipeline stage.
+     * The tokens that a dream has used so far.
+     *
+     * The counts are zero while the dream is `pending` and update while it is `running`. They can keep changing after a cancel.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#billing) for how dreams are billed. See the [prompt caching guide](https://platform.claude.com/docs/en/build-with-claude/prompt-caching#tracking-cache-performance) for how the input token counts add up.
      *
      * @param BetaDreamUsage|BetaDreamUsageShape $usage
      */

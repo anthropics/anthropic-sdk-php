@@ -37,13 +37,13 @@ final class DreamListParams implements BaseModel
     use SdkParams;
 
     /**
-     * Return dreams with `created_at` strictly after this timestamp (exclusive lower bound, RFC 3339). Unset applies no lower bound.
+     * Return only dreams created after this time (exclusive), in RFC 3339.
      */
     #[Optional]
     public ?\DateTimeInterface $createdAtGt;
 
     /**
-     * Return dreams with `created_at` strictly before this timestamp (exclusive upper bound, RFC 3339). Unset applies no upper bound.
+     * Return only dreams created before this time (exclusive), in RFC 3339.
      */
     #[Optional]
     public ?\DateTimeInterface $createdAtLt;
@@ -69,7 +69,9 @@ final class DreamListParams implements BaseModel
     public ?string $page;
 
     /**
-     * Filter by lifecycle status. Repeat the parameter to match any of multiple statuses. Empty applies no status filter.
+     * Return only dreams that have one of these statuses.
+     *
+     * Repeat the parameter to give more than one status. Leave it out to return dreams of every status.
      *
      * @var list<value-of<BetaDreamStatus>>|null $statuses
      */
@@ -130,7 +132,7 @@ final class DreamListParams implements BaseModel
     }
 
     /**
-     * Return dreams with `created_at` strictly after this timestamp (exclusive lower bound, RFC 3339). Unset applies no lower bound.
+     * Return only dreams created after this time (exclusive), in RFC 3339.
      */
     public function withCreatedAtGt(\DateTimeInterface $createdAtGt): self
     {
@@ -141,7 +143,7 @@ final class DreamListParams implements BaseModel
     }
 
     /**
-     * Return dreams with `created_at` strictly before this timestamp (exclusive upper bound, RFC 3339). Unset applies no upper bound.
+     * Return only dreams created before this time (exclusive), in RFC 3339.
      */
     public function withCreatedAtLt(\DateTimeInterface $createdAtLt): self
     {
@@ -187,7 +189,9 @@ final class DreamListParams implements BaseModel
     }
 
     /**
-     * Filter by lifecycle status. Repeat the parameter to match any of multiple statuses. Empty applies no status filter.
+     * Return only dreams that have one of these statuses.
+     *
+     * Repeat the parameter to give more than one status. Leave it out to return dreams of every status.
      *
      * @param list<BetaDreamStatus|value-of<BetaDreamStatus>> $statuses
      */

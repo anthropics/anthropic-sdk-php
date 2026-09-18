@@ -11,7 +11,9 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Model identifier and configuration applied to every pipeline stage. Same wire shape as the Agents API ModelConfig.
+ * The model that runs a dream, from the request that created it.
+ *
+ * The dream uses this model for all of its work. The response always gives the model as an object, even if the request gave only a model ID.
  *
  * @phpstan-type BetaDreamModelConfigShape = array{
  *   id: string, speed?: null|Speed|value-of<Speed>
@@ -23,7 +25,7 @@ final class BetaDreamModelConfig implements BaseModel
     use SdkModel;
 
     /**
-     * Model identifier, e.g. "claude-opus-5". 1-256 characters.
+     * The ID of the model that runs the dream, as given in the request that created it.
      */
     #[Required]
     public string $id;
@@ -74,7 +76,7 @@ final class BetaDreamModelConfig implements BaseModel
     }
 
     /**
-     * Model identifier, e.g. "claude-opus-5". 1-256 characters.
+     * The ID of the model that runs the dream, as given in the request that created it.
      */
     public function withID(string $id): self
     {
