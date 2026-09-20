@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaCompactionBlockParam\ToolChange;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -19,7 +20,9 @@ use Anthropic\Core\Conversion\ConstantOf;
  * When content is None, the block represents a failed compaction. The server
  * treats these as no-ops. Empty string content is not allowed.
  *
+ * @phpstan-import-type ToolChangeVariants from \Anthropic\Beta\Messages\BetaCompactionBlockParam\ToolChange
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type ToolChangeShape from \Anthropic\Beta\Messages\BetaCompactionBlockParam\ToolChange
  *
  * @phpstan-type BetaCompactionBlockParamShape = array{
  *   type: 'compaction',
@@ -27,6 +30,7 @@ use Anthropic\Core\Conversion\ConstantOf;
  *   content?: string|null,
  *   encryptedContent?: string|null,
  *   signature?: string|null,
+ *   toolChanges?: list<ToolChangeShape>|null,
  * }
  */
 final class BetaCompactionBlockParam implements BaseModel
@@ -62,6 +66,14 @@ final class BetaCompactionBlockParam implements BaseModel
     #[Optional(nullable: true)]
     public ?string $signature;
 
+    /**
+     * The tool changes of the compacted range, as the server returned them on this block: the `tool_addition` and `tool_removal` entries that take the request's `tools` to the tool set in effect at the end of the range. Send them back unchanged with the block.
+     *
+     * @var list<ToolChangeVariants>|null $toolChanges
+     */
+    #[Optional('tool_changes', list: ToolChange::class, nullable: true)]
+    public ?array $toolChanges;
+
     public function __construct()
     {
         $this->initialize();
@@ -73,12 +85,14 @@ final class BetaCompactionBlockParam implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param list<ToolChangeShape>|null $toolChanges
      */
     public static function with(
         BetaCacheControlEphemeral|array|null $cacheControl = null,
         ?string $content = null,
         ?string $encryptedContent = null,
         ?string $signature = null,
+        ?array $toolChanges = null,
     ): self {
         $self = new self;
 
@@ -86,6 +100,7 @@ final class BetaCompactionBlockParam implements BaseModel
         null !== $content && $self['content'] = $content;
         null !== $encryptedContent && $self['encryptedContent'] = $encryptedContent;
         null !== $signature && $self['signature'] = $signature;
+        null !== $toolChanges && $self['toolChanges'] = $toolChanges;
 
         return $self;
     }
@@ -144,6 +159,19 @@ final class BetaCompactionBlockParam implements BaseModel
     {
         $self = clone $this;
         $self['signature'] = $signature;
+
+        return $self;
+    }
+
+    /**
+     * The tool changes of the compacted range, as the server returned them on this block: the `tool_addition` and `tool_removal` entries that take the request's `tools` to the tool set in effect at the end of the range. Send them back unchanged with the block.
+     *
+     * @param list<ToolChangeShape>|null $toolChanges
+     */
+    public function withToolChanges(?array $toolChanges): self
+    {
+        $self = clone $this;
+        $self['toolChanges'] = $toolChanges;
 
         return $self;
     }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Messages\BetaRequestToolAdditionBlock\Tool;
+namespace Anthropic\Beta\Messages\BetaResponseToolRemovalBlock\Tool;
 
 enum Type: string
 {
@@ -11,6 +11,4 @@ enum Type: string
     case MCP_TOOL_REFERENCE = 'mcp_tool_reference';
 
     case MCP_TOOLSET_REFERENCE = 'mcp_toolset_reference';
-
-    case TOOL_DEFINITION = 'tool_definition';
 }

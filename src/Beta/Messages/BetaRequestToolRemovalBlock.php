@@ -14,9 +14,9 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * Mid-conversation directive to withdraw a tool.
  *
- * ``tool`` references a tool (or MCP toolset) by name from the request's
- * ``tools``; it is no longer offered to the model from this point in the
- * conversation onward.
+ * ``tool`` references a tool (or MCP toolset) by name: one declared in the
+ * request's ``tools`` or defined earlier in ``messages``. It is no longer
+ * offered to the model from this point in the conversation onward.
  *
  * @phpstan-import-type ToolVariants from \Anthropic\Beta\Messages\BetaRequestToolRemovalBlock\Tool
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Messages\BetaRequestToolRemovalBlock\Tool

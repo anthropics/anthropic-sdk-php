@@ -51,7 +51,7 @@ use Mcp\Schema\Tool;
  * $runner = $anthropic->beta->messages->toolRunner(
  *     maxTokens: 1024,
  *     messages: [['role' => 'user', 'content' => 'What is the weather in SF?']],
- *     model: 'claude-opus-4-7',
+ *     model: 'claude-opus-5-5',
  *     tools: BetaMcp::tools($mcp->listTools()->tools, $mcp),
  * );
  * $final = $runner->runUntilDone();

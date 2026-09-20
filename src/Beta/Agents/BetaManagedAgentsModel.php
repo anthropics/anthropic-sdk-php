@@ -12,6 +12,11 @@ namespace Anthropic\Beta\Agents;
 enum BetaManagedAgentsModel: string
 {
     /**
+     * Powerful intelligence for coding, knowledge work, and long-running agents.
+     */
+    case CLAUDE_OPUS_5_5 = 'claude-opus-5-5';
+
+    /**
      * Frontier intelligence for ambitious tasks across coding, scientific discovery, and enterprise workflows.
      */
     case CLAUDE_FABLE_5_1 = 'claude-fable-5-1';

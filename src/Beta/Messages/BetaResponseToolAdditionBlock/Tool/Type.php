@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Messages\BetaRequestToolAdditionBlock\Tool;
+namespace Anthropic\Beta\Messages\BetaResponseToolAdditionBlock\Tool;
 
 enum Type: string
 {

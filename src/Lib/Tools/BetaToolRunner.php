@@ -64,11 +64,17 @@ final class BetaToolRunner implements \IteratorAggregate
 
     private string $model;
 
+    /** @var list<array{add: BetaRunnableTool|BaseModel|array<string, mixed>}|array{remove: string}> A runnable tool or a plain definition to add, or the name of a tool to remove */
+    private array $pendingToolChanges = [];
+
     /** @var BetaCompactionConfig|BetaCompactionConfigShape|null */
     private BetaCompactionConfig|array|null $pendingCompaction = null;
 
     /** True while the caller is handling a yielded compaction response. */
     private bool $compacting = false;
+
+    /** @var array<string, BetaRunnableTool> Runnable tools the history had removed when the compaction request was sent */
+    private array $removedByHistory = [];
 
     /**
      * @param list<BetaRunnableTool|BetaToolUnionShape> $tools Mix of runnable tools and plain tool definitions
@@ -128,6 +134,9 @@ final class BetaToolRunner implements \IteratorAggregate
      * Accepts either a full replacement array or a mutator callable that receives
      * the current params and returns new params. Recognized keys match the named
      * parameters of MessagesService::create() (camelCase), plus `maxIterations`.
+     * Passing a different `tools` list also resets which tools the runner will
+     * run to that list, dropping changes made with addTools() / removeTools(),
+     * sent or not.
      *
      * Calling this during iteration signals that the caller is managing message
      * history manually; the runner will skip auto-appending the current assistant
@@ -170,12 +179,15 @@ final class BetaToolRunner implements \IteratorAggregate
             $this->messages = $messages;
         }
 
-        if (is_array($new['tools'] ?? null)) {
+        // A mutator hands back `tools` untouched; rebuilding the dispatch map then would undo addTools() / removeTools().
+        if (is_array($new['tools'] ?? null) && $new['tools'] !== $this->tools) {
             /** @var list<BetaRunnableTool|BetaToolUnionShape> $tools */
             $tools = $new['tools'];
             $this->tools = $tools;
             $this->runnableToolsByName = [];
             $this->toolDefinitions = [];
+            $this->pendingToolChanges = [];
+            $this->removedByHistory = [];
             $this->processTools($tools);
         }
 
@@ -211,6 +223,44 @@ final class BetaToolRunner implements \IteratorAggregate
         );
         array_push($this->messages, ...$normalized);
         $this->mutated = true;
+    }
+
+    /**
+     * Give the model more tools without changing `tools`, which would miss the prompt cache.
+     *
+     * A runnable tool can be called from the request that carries its definition. A plain definition
+     * (a server tool, say) is sent as given and never run, and drops a runnable tool of the same name.
+     * Pass the `inline-tools-2026-09-15` beta in `betas`; the runner does not add it.
+     *
+     * In the rare case where a compaction response comes back without `tool_changes` even though the
+     * summarized messages added or removed tools, the model goes back to the tools in `tools` and the
+     * runner does not detect it. Call addTools() / removeTools() again after that compaction if you
+     * need the change restored.
+     *
+     * @param BetaRunnableTool|BetaToolUnionShape ...$tools
+     */
+    public function addTools(BetaRunnableTool|BaseModel|array ...$tools): void
+    {
+        foreach ($tools as $tool) {
+            $this->pendingToolChanges[] = ['add' => $tool];
+        }
+    }
+
+    /**
+     * Take tools away from the model without changing `tools`, which would miss the prompt cache.
+     *
+     * The tools stop being run at once, even for a call in the message being handled; addTools() brings
+     * one back. Pass the `inline-tools-2026-09-15` beta in `betas`; the runner does not add it.
+     *
+     * @param BetaRunnableTool|string ...$tools The tools to remove, or their names
+     */
+    public function removeTools(BetaRunnableTool|string ...$tools): void
+    {
+        foreach ($tools as $tool) {
+            $name = $tool instanceof BetaRunnableTool ? $tool->name() : $tool;
+            unset($this->runnableToolsByName[$name]);
+            $this->pendingToolChanges[] = ['remove' => $name];
+        }
     }
 
     /**
@@ -282,6 +332,9 @@ final class BetaToolRunner implements \IteratorAggregate
             if (null !== $this->maxIterations && $iterationCount >= $this->maxIterations) {
                 break;
             }
+
+            // Before the compaction check, so that a compaction due now summarizes the tool changes too.
+            $this->sendPendingToolChanges($turnPaused);
 
             // The API cannot compact a conversation that ends mid-turn, so a paused turn is resumed first.
             if (null !== $this->pendingCompaction && !$turnPaused) {
@@ -441,6 +494,7 @@ final class BetaToolRunner implements \IteratorAggregate
         // Checked again here because `contextManagement` can be a model the caller still holds and edits in place.
         self::assertNoCompactionEdit($this->extraParams['contextManagement'] ?? null);
         $this->pendingCompaction = null;
+        $this->removedByHistory = array_diff_key($this->runnableToolsByName, $this->availableToolNames());
 
         $params = $this->requestParams();
         // The API refuses `compaction` alongside `context_management`; later requests keep it.
@@ -463,6 +517,10 @@ final class BetaToolRunner implements \IteratorAggregate
             if (null === $summary || '' === $summary) {
                 continue;
             }
+
+            // The history's tool_removal blocks go with it, so what they took away leaves the dispatch map first.
+            // Worked out before the yield, so a `tools` list the caller sets while handling the response stays whole.
+            $this->runnableToolsByName = array_diff_key($this->runnableToolsByName, $this->removedByHistory);
 
             // The response has to be sent back as it came, first, replacing the messages it summarizes.
             $this->messages = [['role' => 'assistant', 'content' => $message->content]];
@@ -501,6 +559,41 @@ final class BetaToolRunner implements \IteratorAggregate
         }
 
         return $this->pendingCompaction;
+    }
+
+    private function sendPendingToolChanges(bool $turnPaused): void
+    {
+        // A paused turn goes back unchanged to be continued, so the changes wait for the request after it.
+        if ([] === $this->pendingToolChanges || $turnPaused) {
+            return;
+        }
+
+        $blocks = [];
+        foreach ($this->pendingToolChanges as $change) {
+            if (isset($change['remove'])) {
+                unset($this->runnableToolsByName[$change['remove']]);
+                $blocks[] = ['type' => 'tool_removal', 'tool' => ['type' => 'tool_reference', 'name' => $change['remove']]];
+
+                continue;
+            }
+
+            $tool = $change['add'];
+            $definition = $tool instanceof BetaRunnableTool ? $tool->definition : $tool;
+            if ($tool instanceof BetaRunnableTool) {
+                $this->runnableToolsByName[$tool->name()] = $tool;
+            } elseif (is_string($definition['name'] ?? null)) {
+                unset($this->runnableToolsByName[$definition['name']]);
+            }
+
+            $blocks[] = [
+                'type' => 'tool_addition',
+                'tool' => ['type' => 'tool_definition', 'definition' => self::toArray($definition)],
+            ];
+        }
+
+        // Not pushMessages(): that marks the history as caller-edited, so the runner would not append this turn.
+        $this->messages[] = ['role' => 'system', 'content' => $blocks];
+        $this->pendingToolChanges = [];
     }
 
     /**
@@ -568,8 +661,10 @@ final class BetaToolRunner implements \IteratorAggregate
     /**
      * Names of the tools the model may currently call, as a set.
      *
-     * Folds tool_removal / tool_addition blocks from role "system" messages
-     * over the runner's runnable tool names. Removal is only a hint to the
+     * Folds tool_removal / tool_addition blocks over the runner's runnable
+     * tool names. They arrive in role "system" messages, and in the
+     * tool_changes of a compaction block, which stands in for the system
+     * messages of the turns it summarized. Removal is only a hint to the
      * model, which can still emit a tool_use for a removed tool — such a call
      * must behave exactly like a call to a tool that was never defined.
      *
@@ -581,7 +676,7 @@ final class BetaToolRunner implements \IteratorAggregate
 
         foreach ($this->messages as $message) {
             $message = self::toArray($message);
-            if (!is_array($message) || 'system' !== ($message['role'] ?? null)) {
+            if (!is_array($message)) {
                 continue;
             }
 
@@ -590,8 +685,17 @@ final class BetaToolRunner implements \IteratorAggregate
                 continue;
             }
 
+            $role = $message['role'] ?? null;
             foreach ($content as $block) {
-                $this->applyToolChange(self::toArray($block), $available);
+                $block = self::toArray($block);
+                if ('system' === $role) {
+                    $this->applyToolChange($block, $available);
+                } elseif ('assistant' === $role && is_array($block) && 'compaction' === ($block['type'] ?? null)) {
+                    // A hand-written array block may spell the key the way the SDK's array shapes do.
+                    foreach ((array) ($block['tool_changes'] ?? $block['toolChanges'] ?? []) as $change) {
+                        self::applyToolReferenceChange(self::toArray($change), $available);
+                    }
+                }
             }
         }
 
@@ -646,14 +750,14 @@ final class BetaToolRunner implements \IteratorAggregate
 
         switch ($block['type'] ?? null) {
             case 'tool_removal':
-                if (null !== ($name = self::referencedToolName($block['tool'] ?? null))) {
+                if (null !== ($name = self::changedToolName($block['tool'] ?? null))) {
                     unset($available[$name]);
                 }
 
                 break;
 
             case 'tool_addition':
-                if (null !== ($name = self::referencedToolName($block['tool'] ?? null))) {
+                if (null !== ($name = self::changedToolName($block['tool'] ?? null))) {
                     $available[$name] = true;
                 }
 
@@ -665,10 +769,11 @@ final class BetaToolRunner implements \IteratorAggregate
     }
 
     /**
-     * Only tool_reference names a locally runnable tool; MCP references are
-     * executed server-side and unknown/newer types are ignored.
+     * tool_reference names a locally runnable tool directly and tool_definition
+     * carries one by value; MCP references are executed server-side and
+     * unknown/newer types are ignored.
      */
-    private static function referencedToolName(mixed $tool): ?string
+    private static function changedToolName(mixed $tool): ?string
     {
         $tool = self::toArray($tool);
         if (!is_array($tool)) {
@@ -678,6 +783,12 @@ final class BetaToolRunner implements \IteratorAggregate
         switch ($tool['type'] ?? null) {
             case 'tool_reference':
                 return is_string($tool['name'] ?? null) ? $tool['name'] : null;
+
+            case 'tool_definition':
+                // Not every tools[] entry has a name (e.g. mcp_toolset); those are never locally runnable.
+                $definition = self::toArray($tool['definition'] ?? null);
+
+                return is_array($definition) && is_string($definition['name'] ?? null) ? $definition['name'] : null;
 
             default:
                 return null;

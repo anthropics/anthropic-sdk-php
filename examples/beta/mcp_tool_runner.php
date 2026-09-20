@@ -55,7 +55,7 @@ printf("[user]: %s\n\n", $question);
 $runner = $anthropic->beta->messages->toolRunner(
     maxTokens: 4096,
     messages: [['role' => 'user', 'content' => $question]],
-    model: 'claude-opus-4-7',
+    model: 'claude-opus-5-5',
     tools: BetaMcp::tools($tools, $mcp),
     maxIterations: 10,
 );

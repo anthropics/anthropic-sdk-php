@@ -42,7 +42,7 @@ $weatherTool = new BetaRunnableTool(
 $runner = $client->beta->messages->toolRunner(
     maxTokens: 1024,
     messages: [['role' => 'user', 'content' => 'What is the weather in San Francisco?']],
-    model: 'claude-opus-4-6',
+    model: 'claude-opus-5-5',
     tools: [$weatherTool],
 );
 

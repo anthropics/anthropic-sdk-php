@@ -39,4 +39,6 @@ enum Type: string
     case COMPACTION = 'compaction';
 
     case FALLBACK = 'fallback';
+
+    case MCP_TOOL_LISTING = 'mcp_tool_listing';
 }

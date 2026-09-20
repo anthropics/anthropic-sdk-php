@@ -10,19 +10,18 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * Reference to a single tool, by the name the model uses to call it: a
- * tool declared in ``tools`` or defined by an earlier ``tool_addition``
- * block. Does not accept the composed ``{server}_{name}`` form the server
- * assigns to MCP-resolved tools; use ``mcp_tool_reference`` or
- * ``mcp_toolset_reference`` for those.
+ * Reference to a single tool, by the name the model uses to call it, as
+ * a ``compaction`` block's ``tool_changes`` entry reports it: a tool
+ * declared in ``tools`` or defined by an earlier ``tool_addition`` block.
+ * Send it back unchanged with the block.
  *
- * @phpstan-type BetaToolChangeToolReferenceShape = array{
+ * @phpstan-type BetaResponseToolChangeToolReferenceShape = array{
  *   name: string, type: 'tool_reference'
  * }
  */
-final class BetaToolChangeToolReference implements BaseModel
+final class BetaResponseToolChangeToolReference implements BaseModel
 {
-    /** @use SdkModel<BetaToolChangeToolReferenceShape> */
+    /** @use SdkModel<BetaResponseToolChangeToolReferenceShape> */
     use SdkModel;
 
     /** @var 'tool_reference' $type */
@@ -33,17 +32,17 @@ final class BetaToolChangeToolReference implements BaseModel
     public string $name;
 
     /**
-     * `new BetaToolChangeToolReference()` is missing required properties by the API.
+     * `new BetaResponseToolChangeToolReference()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaToolChangeToolReference::with(name: ...)
+     * BetaResponseToolChangeToolReference::with(name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaToolChangeToolReference)->withName(...)
+     * (new BetaResponseToolChangeToolReference)->withName(...)
      * ```
      */
     public function __construct()

@@ -16,7 +16,9 @@ use Anthropic\Beta\Messages\BetaStopReason;
 use Anthropic\Beta\Messages\BetaTextBlock;
 use Anthropic\Beta\Messages\BetaToolChangeToolReference;
 use Anthropic\Beta\Messages\BetaToolUseBlock;
+use Anthropic\Beta\Messages\BetaWebSearchTool20250305;
 use Anthropic\Client;
+use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Exceptions\BadRequestException;
 use Anthropic\Core\Util;
 use Anthropic\Lib\Tools\BetaRunnableTool;
@@ -30,6 +32,8 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * @internal
+ *
+ * @phpstan-import-type BetaToolUnionShape from \Anthropic\Beta\Messages\BetaToolUnion
  *
  * @coversNothing
  */
@@ -50,6 +54,10 @@ final class BetaToolRunnerTest extends TestCase
     private const COMPACTION_CONTENT = [
         ['type' => 'compaction', 'content' => 'Summary of the conversation so far.'],
     ];
+
+    private const INITIAL_MESSAGE = ['role' => 'user', 'content' => 'What time is it, and what is the weather in SF?'];
+
+    private const WEB_SEARCH = ['type' => 'web_search_20250305', 'name' => 'web_search'];
 
     private MockClient $transporter;
 
@@ -376,6 +384,48 @@ final class BetaToolRunnerTest extends TestCase
     }
 
     #[Test]
+    public function testToolRemovalInCompactionToolChangesIsHonored(): void
+    {
+        $compaction = [
+            'type' => 'compaction',
+            'content' => 'Earlier turns, summarized.',
+            'encrypted_content' => null,
+            'tool_changes' => [
+                ['type' => 'tool_removal', 'tool' => ['type' => 'tool_reference', 'name' => 'get_weather']],
+            ],
+        ];
+
+        // The compacted turns are gone from the history, so the removal survives only inside the block.
+        $blocks = [
+            'wire array' => $compaction,
+            'shape array' => ['type' => 'compaction', 'content' => $compaction['content'], 'toolChanges' => $compaction['tool_changes']],
+            'echoed from a response' => BetaCompactionBlock::fromArray($compaction),
+        ];
+
+        foreach ($blocks as $label => $block) {
+            $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF']));
+            $this->transporter->addResponse($this->textResponse('Cannot help.'));
+
+            $called = false;
+            $tool = $this->makeWeatherTool(function () use (&$called): void {
+                $called = true;
+            });
+
+            foreach ($this->client->beta->messages->toolRunner(
+                maxTokens: 1024,
+                messages: [
+                    ['role' => 'assistant', 'content' => [$block]],
+                    ['role' => 'user', 'content' => 'Weather?'],
+                ],
+                model: 'claude-opus-4-6',
+                tools: [$tool],
+            ) as $_);
+
+            $this->assertFalse($called, "Tool removed by a compaction block ({$label}) must not be executed");
+        }
+    }
+
+    #[Test]
     public function testToolAddedBackAfterRemovalExecutesNormally(): void
     {
         $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF']));
@@ -604,6 +654,331 @@ final class BetaToolRunnerTest extends TestCase
         /** @var string $content */
         $content = $result['content'];
         $this->assertStringContainsString('"temperature":72', $content);
+    }
+
+    // -------------------------------------------------------------------------
+    // addTools / removeTools: queued changes go out as one system message, `tools` never changes
+    // -------------------------------------------------------------------------
+
+    #[Test]
+    public function testAddToolsSendsTheDefinitionAfterTheToolResultsAndRunsTheTool(): void
+    {
+        $this->transporter->addResponse($this->callsTool('get_time', 'toolu_time'));
+        $this->transporter->addResponse($this->callsTool('get_weather', 'toolu_weather'));
+        $this->transporter->addResponse($this->textResponse('Noon and sunny.'));
+
+        $calls = [];
+        $getTime = $this->recordingTool('get_time', $calls);
+        $getWeather = $this->recordingTool('get_weather', $calls);
+
+        $this->runWithToolChanges(
+            tools: [$getTime],
+            script: ['msg_toolu_time' => fn (BetaToolRunner $runner) => $runner->addTools($getWeather)],
+        );
+
+        $this->assertSame(['get_time', 'get_weather'], $calls);
+        $this->assertSame([[$getTime->definition], [$getTime->definition], [$getTime->definition]], $this->sentTools());
+        $this->assertSame(
+            [
+                self::ranResult('toolu_time', 'get_time'),
+                self::toolChangesMessage(self::addition($getWeather->definition)),
+            ],
+            array_slice($this->sentMessages(1), -2),
+        );
+    }
+
+    #[Test]
+    public function testRemoveToolsRefusesACallAlreadyInTheTurn(): void
+    {
+        $this->transporter->addResponse($this->callsTool('get_weather', 'toolu_weather'));
+        $this->transporter->addResponse($this->textResponse('Cannot help.'));
+
+        $calls = [];
+        $getWeather = $this->recordingTool('get_weather', $calls);
+
+        $this->runWithToolChanges(
+            tools: [$getWeather],
+            script: ['msg_toolu_weather' => fn (BetaToolRunner $runner) => $runner->removeTools($getWeather)],
+        );
+
+        $this->assertSame([], $calls);
+        $this->assertSame(
+            [self::notFoundResult('toolu_weather', 'get_weather'), self::toolChangesMessage(self::removal('get_weather'))],
+            array_slice($this->sentMessages(1), -2),
+        );
+    }
+
+    #[Test]
+    public function testRemovedToolStaysRemovedWhenItsRemovalBlockLeavesTheHistory(): void
+    {
+        $this->transporter->addResponse($this->callsTool('get_time', 'toolu_time'));
+        $this->transporter->addResponse($this->callsTool('get_time', 'toolu_time_again'));
+        $this->transporter->addResponse($this->callsTool('get_weather', 'toolu_weather'));
+        $this->transporter->addResponse($this->textResponse('Cannot help.'));
+
+        $calls = [];
+        $getTime = $this->recordingTool('get_time', $calls);
+        $getWeather = $this->recordingTool('get_weather', $calls);
+
+        $this->runWithToolChanges(
+            tools: [$getWeather, $getTime],
+            script: [
+                'msg_toolu_time' => fn (BetaToolRunner $runner) => $runner->removeTools($getWeather),
+                // Hands `tools` back untouched along with the trimmed history.
+                'msg_toolu_time_again' => fn (BetaToolRunner $runner) => $runner->setMessagesParams(
+                    /**
+                     * @param array<string, mixed> $params
+                     *
+                     * @return array<string, mixed>
+                     */
+                    fn (array $params): array => array_merge($params, ['messages' => [self::INITIAL_MESSAGE]]),
+                ),
+            ],
+        );
+
+        $this->assertSame(['get_time'], $calls);
+        $this->assertSame([self::INITIAL_MESSAGE], $this->sentMessages(2));
+        $this->assertSame(self::notFoundResult('toolu_weather', 'get_weather'), $this->lastSentMessage(3));
+    }
+
+    #[Test]
+    public function testARemovedToolComesBackWithAddTools(): void
+    {
+        $this->transporter->addResponse($this->callsTool('get_time', 'toolu_time'));
+        $this->transporter->addResponse($this->callsTool('get_weather', 'toolu_weather'));
+        $this->transporter->addResponse($this->callsTool('get_weather', 'toolu_weather_again'));
+        $this->transporter->addResponse($this->textResponse('Sunny.'));
+
+        $calls = [];
+        $getTime = $this->recordingTool('get_time', $calls);
+        $getWeather = $this->recordingTool('get_weather', $calls);
+
+        $this->runWithToolChanges(
+            tools: [$getTime, $getWeather],
+            script: [
+                'msg_toolu_time' => fn (BetaToolRunner $runner) => $runner->removeTools('get_weather'),
+                'msg_toolu_weather' => fn (BetaToolRunner $runner) => $runner->addTools($getWeather),
+            ],
+        );
+
+        $this->assertSame(['get_time', 'get_weather'], $calls);
+        $this->assertSame(
+            [
+                self::notFoundResult('toolu_weather', 'get_weather'),
+                self::toolChangesMessage(self::addition($getWeather->definition)),
+            ],
+            array_slice($this->sentMessages(2), -2),
+        );
+        $this->assertSame(self::ranResult('toolu_weather_again', 'get_weather'), $this->lastSentMessage(3));
+    }
+
+    #[Test]
+    public function testAddingThenRemovingAToolIsNotCollapsed(): void
+    {
+        $this->transporter->addResponse($this->callsTool('get_time', 'toolu_time'));
+        $this->transporter->addResponse($this->callsTool('get_weather', 'toolu_weather'));
+        $this->transporter->addResponse($this->textResponse('Noon.'));
+
+        $calls = [];
+        $getTime = $this->recordingTool('get_time', $calls);
+        $getWeather = $this->recordingTool('get_weather', $calls);
+
+        $this->runWithToolChanges(
+            tools: [$getTime],
+            script: ['msg_toolu_time' => function (BetaToolRunner $runner) use ($getWeather): void {
+                $runner->addTools($getWeather);
+                $runner->removeTools($getWeather);
+            }],
+        );
+
+        $this->assertSame(['get_time'], $calls);
+        $this->assertSame(
+            self::toolChangesMessage(self::addition($getWeather->definition), self::removal('get_weather')),
+            $this->lastSentMessage(1),
+        );
+        $this->assertSame(self::notFoundResult('toolu_weather', 'get_weather'), $this->lastSentMessage(2));
+    }
+
+    #[Test]
+    public function testAddToolsWithAPlainDefinitionSendsItAndNeverRunsIt(): void
+    {
+        $this->transporter->addResponse($this->callsTool('get_time', 'toolu_time'));
+        $this->transporter->addResponse($this->callsTool('get_weather', 'toolu_weather'));
+        $this->transporter->addResponse($this->textResponse('Noon.'));
+
+        $calls = [];
+        $getTime = $this->recordingTool('get_time', $calls);
+        $getWeather = $this->recordingTool('get_weather', $calls);
+
+        $this->runWithToolChanges(
+            tools: [$getTime, $getWeather],
+            script: ['msg_toolu_time' => fn (BetaToolRunner $runner) => $runner->addTools(
+                ['name' => 'get_weather', 'inputSchema' => ['type' => 'object']],
+                BetaWebSearchTool20250305::with(maxUses: 3),
+            )],
+        );
+
+        // The plain definition takes over the name get_weather, which the runner no longer runs.
+        $this->assertSame(['get_time'], $calls);
+        $this->assertSame(
+            self::toolChangesMessage(
+                self::addition(['name' => 'get_weather', 'input_schema' => ['type' => 'object']]),
+                self::addition(['name' => 'web_search', 'type' => 'web_search_20250305', 'max_uses' => 3]),
+            ),
+            $this->lastSentMessage(1),
+        );
+        $this->assertSame(self::notFoundResult('toolu_weather', 'get_weather'), $this->lastSentMessage(2));
+    }
+
+    #[Test]
+    public function testToolChangesMadeDuringAPausedTurnAreSentOneRequestLater(): void
+    {
+        $this->transporter->addResponse($this->pauseTurnResponse());
+        $this->transporter->addResponse($this->callsTool('get_weather', 'toolu_weather'));
+        $this->transporter->addResponse($this->callsTool('get_time', 'toolu_time'));
+        $this->transporter->addResponse($this->textResponse('Noon.'));
+
+        $calls = [];
+        $getTime = $this->recordingTool('get_time', $calls);
+        $getWeather = $this->recordingTool('get_weather', $calls);
+
+        $this->runWithToolChanges(
+            tools: [$getWeather, self::WEB_SEARCH],
+            script: ['msg_paused' => function (BetaToolRunner $runner) use ($getTime, $getWeather): void {
+                $runner->removeTools($getWeather);
+                $runner->addTools($getTime);
+            }],
+        );
+
+        $this->assertSame(['get_time'], $calls);
+        $this->assertEquals(
+            [self::INITIAL_MESSAGE, ['role' => 'assistant', 'content' => self::PAUSED_CONTENT]],
+            $this->sentMessages(1),
+        );
+        $this->assertSame(
+            [
+                self::notFoundResult('toolu_weather', 'get_weather'),
+                self::toolChangesMessage(self::removal('get_weather'), self::addition($getTime->definition)),
+            ],
+            array_slice($this->sentMessages(2), -2),
+        );
+    }
+
+    #[Test]
+    public function testToolChangesMadeDuringAServerCompactionTurnAreSentOneRequestLater(): void
+    {
+        $this->transporter->addResponse($this->compactionResponse());
+        $this->transporter->addResponse($this->callsTool('get_weather', 'toolu_weather'));
+        $this->transporter->addResponse($this->callsTool('get_time', 'toolu_time'));
+        $this->transporter->addResponse($this->textResponse('Noon.'));
+
+        $calls = [];
+        $getTime = $this->recordingTool('get_time', $calls);
+        $getWeather = $this->recordingTool('get_weather', $calls);
+
+        $this->runWithToolChanges(
+            tools: [$getWeather],
+            script: ['msg_compacted' => function (BetaToolRunner $runner) use ($getTime, $getWeather): void {
+                $runner->removeTools($getWeather);
+                $runner->addTools($getTime);
+            }],
+        );
+
+        $this->assertSame(['get_time'], $calls);
+        $this->assertEquals(
+            [self::INITIAL_MESSAGE, ['role' => 'assistant', 'content' => self::COMPACTION_CONTENT]],
+            $this->sentMessages(1),
+        );
+        $this->assertSame(
+            [
+                self::notFoundResult('toolu_weather', 'get_weather'),
+                self::toolChangesMessage(self::removal('get_weather'), self::addition($getTime->definition)),
+            ],
+            array_slice($this->sentMessages(2), -2),
+        );
+    }
+
+    #[Test]
+    public function testToolChangesFollowACompactionBlockWithoutWaiting(): void
+    {
+        $this->transporter->addResponse($this->callsTool('get_weather', 'toolu_weather'));
+        $this->transporter->addResponse($this->textResponse('Sunny.'));
+
+        $calls = [];
+        $getWeather = $this->recordingTool('get_weather', $calls);
+        $compacted = ['role' => 'assistant', 'content' => self::COMPACTION_CONTENT];
+
+        $this->runWithToolChanges(
+            tools: [],
+            script: [],
+            beforeFirstRequest: fn (BetaToolRunner $runner) => $runner->addTools($getWeather),
+            messages: [$compacted],
+        );
+
+        $this->assertSame(['get_weather'], $calls);
+        $this->assertSame(
+            [$compacted, self::toolChangesMessage(self::addition($getWeather->definition))],
+            $this->sentMessages(0),
+        );
+    }
+
+    #[Test]
+    public function testToolChangesPendingWhenTheRunEndsAreNotSent(): void
+    {
+        $calls = [];
+        $getTime = $this->recordingTool('get_time', $calls);
+        $removeGetTime = fn (BetaToolRunner $runner) => $runner->removeTools($getTime);
+
+        $this->transporter->addResponse($this->textResponse('Done.', 'msg_end'));
+        $this->runWithToolChanges(tools: [$getTime], script: ['msg_end' => $removeGetTime]);
+        $this->assertCount(1, $this->transporter->getRequests());
+
+        $this->transporter->addResponse($this->callsTool('get_time', 'toolu_time'));
+        $this->runWithToolChanges(tools: [$getTime], script: ['msg_toolu_time' => $removeGetTime], maxIterations: 1);
+        $this->assertCount(2, $this->transporter->getRequests());
+    }
+
+    #[Test]
+    public function testPassingADifferentToolsListDropsToolChanges(): void
+    {
+        $this->transporter->addResponse($this->textResponse('Done.'));
+
+        $calls = [];
+        $getTime = $this->recordingTool('get_time', $calls);
+        $getWeather = $this->recordingTool('get_weather', $calls);
+        $getNews = $this->recordingTool('get_news', $calls);
+
+        $this->runWithToolChanges(
+            tools: [$getTime],
+            script: [],
+            beforeFirstRequest: function (BetaToolRunner $runner) use ($getWeather, $getNews): void {
+                $runner->addTools($getWeather);
+                $runner->setMessagesParams(['tools' => [$getNews]]);
+            },
+        );
+
+        $this->assertSame([[$getNews->definition]], $this->sentTools());
+        $this->assertSame([self::INITIAL_MESSAGE], $this->sentMessages(0));
+    }
+
+    #[Test]
+    public function testToolChangesDoNotAddABetaHeader(): void
+    {
+        $this->transporter->addResponse($this->callsTool('get_time', 'toolu_time'));
+        $this->transporter->addResponse($this->textResponse('Noon.'));
+
+        $calls = [];
+        $getTime = $this->recordingTool('get_time', $calls);
+
+        $this->runWithToolChanges(
+            tools: [$getTime],
+            script: ['msg_toolu_time' => fn (BetaToolRunner $runner) => $runner->addTools(self::WEB_SEARCH)],
+        );
+
+        $this->assertSame(self::toolChangesMessage(self::addition(self::WEB_SEARCH)), $this->lastSentMessage(1));
+        foreach ($this->transporter->getRequests() as $request) {
+            $this->assertFalse($request->hasHeader('anthropic-beta'));
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -1141,7 +1516,7 @@ final class BetaToolRunnerTest extends TestCase
 
         [, $resumed, $compaction, $after] = $this->requestBodies();
         $this->assertArrayNotHasKey('compaction', $resumed);
-        $this->assertEquals(['role' => 'assistant', 'content' => self::PAUSED_CONTENT], $this->lastMessage($resumed));
+        $this->assertEquals(['role' => 'assistant', 'content' => self::PAUSED_CONTENT], $this->lastMessageOf($resumed));
         $this->assertSame(['type' => 'summarize'], $compaction['compaction']);
         $this->assertSame('tool_result', $this->lastToolResult($compaction)['type']);
         $this->assertEquals(self::compactionBlockAlone(), $after['messages']);
@@ -1457,6 +1832,127 @@ final class BetaToolRunnerTest extends TestCase
     }
 
     // -------------------------------------------------------------------------
+    // addTools / removeTools with compactBeforeNextTurn(): the changes go out first and outlive the history
+    // -------------------------------------------------------------------------
+
+    #[Test]
+    public function testToolChangesMadeWithACompactionAreInItsRequestAndOutliveTheHistory(): void
+    {
+        $this->transporter->addResponse($this->callsTool('get_time', 'toolu_time'));
+        $this->transporter->addResponse($this->compactedResponse());
+        $this->transporter->addResponse($this->callsTool('get_news', 'toolu_news'));
+        $this->transporter->addResponse($this->callsTool('get_weather', 'toolu_weather'));
+        $this->transporter->addResponse($this->textResponse('Noon, and here is the news.'));
+
+        $calls = [];
+        $getTime = $this->recordingTool('get_time', $calls);
+        $getWeather = $this->recordingTool('get_weather', $calls);
+        $getNews = $this->recordingTool('get_news', $calls);
+
+        $this->runWithToolChanges(
+            tools: [$getTime, $getWeather],
+            script: ['msg_toolu_time' => function (BetaToolRunner $runner) use ($getWeather, $getNews): void {
+                $runner->addTools($getNews);
+                $runner->removeTools($getWeather);
+                $runner->compactBeforeNextTurn();
+            }],
+        );
+
+        $this->assertSame(['type' => 'summarize'], $this->requestBody(1)['compaction']);
+        $this->assertSame(
+            [
+                self::ranResult('toolu_time', 'get_time'),
+                self::toolChangesMessage(self::addition($getNews->definition), self::removal('get_weather')),
+            ],
+            array_slice($this->sentMessages(1), -2),
+        );
+        $this->assertEquals(self::compactionBlockAlone(), $this->sentMessages(2));
+
+        $this->assertSame(['get_time', 'get_news'], $calls);
+        $this->assertSame(self::ranResult('toolu_news', 'get_news'), $this->lastSentMessage(3));
+        $this->assertSame(self::notFoundResult('toolu_weather', 'get_weather'), $this->lastSentMessage(4));
+        $this->assertSame(array_fill(0, 5, [$getTime->definition, $getWeather->definition]), $this->sentTools());
+    }
+
+    #[Test]
+    public function testAToolRemovedByABlockInTheHistoryStaysRemovedAfterACompaction(): void
+    {
+        $this->transporter->addResponse($this->compactedResponse());
+        $this->transporter->addResponse($this->callsTool('get_weather', 'toolu_weather'));
+        $this->transporter->addResponse($this->textResponse('Cannot help.'));
+
+        $calls = [];
+        $getWeather = $this->recordingTool('get_weather', $calls);
+
+        $this->runWithToolChanges(
+            tools: [$getWeather],
+            script: [],
+            beforeFirstRequest: fn (BetaToolRunner $runner) => $runner->compactBeforeNextTurn(),
+            messages: [self::INITIAL_MESSAGE, self::toolChangesMessage(self::removal('get_weather'))],
+        );
+
+        $this->assertSame([], $calls);
+        $this->assertEquals(self::compactionBlockAlone(), $this->sentMessages(1));
+        $this->assertSame(self::notFoundResult('toolu_weather', 'get_weather'), $this->lastSentMessage(2));
+    }
+
+    #[Test]
+    public function testAToolsListSetWhileHandlingTheCompactionResponseIsKeptWhole(): void
+    {
+        $this->transporter->addResponse($this->callsTool('get_time', 'toolu_time'));
+        $this->transporter->addResponse($this->compactedResponse());
+        $this->transporter->addResponse($this->callsTool('get_weather', 'toolu_weather'));
+        $this->transporter->addResponse($this->textResponse('Sunny.'));
+
+        $calls = [];
+        $getTime = $this->recordingTool('get_time', $calls);
+        $getWeather = $this->recordingTool('get_weather', $calls);
+
+        $this->runWithToolChanges(
+            tools: [$getTime, $getWeather],
+            script: [
+                'msg_toolu_time' => function (BetaToolRunner $runner) use ($getWeather): void {
+                    $runner->removeTools($getWeather);
+                    $runner->compactBeforeNextTurn();
+                },
+                'msg_compacted' => fn (BetaToolRunner $runner) => $runner->setMessagesParams(['tools' => [$getWeather]]),
+            ],
+        );
+
+        $this->assertSame(self::toolChangesMessage(self::removal('get_weather')), $this->lastSentMessage(1));
+        $this->assertEquals(self::compactionBlockAlone(), $this->sentMessages(2));
+        $this->assertSame([$getWeather->definition], $this->sentTools()[2]);
+        $this->assertSame(['get_time', 'get_weather'], $calls);
+        $this->assertSame(self::ranResult('toolu_weather', 'get_weather'), $this->lastSentMessage(3));
+    }
+
+    #[Test]
+    public function testACompactionOnTheFinalTurnDoesNotSendPendingToolChanges(): void
+    {
+        $this->transporter->addResponse($this->textResponse('Done.', 'msg_end'));
+        $this->transporter->addResponse($this->compactedResponse());
+
+        $calls = [];
+        $getTime = $this->recordingTool('get_time', $calls);
+        $getWeather = $this->recordingTool('get_weather', $calls);
+
+        $this->runWithToolChanges(
+            tools: [$getTime],
+            script: ['msg_end' => function (BetaToolRunner $runner) use ($getWeather): void {
+                $runner->addTools($getWeather);
+                $runner->compactBeforeNextTurn();
+            }],
+        );
+
+        $this->assertCount(2, $this->transporter->getRequests());
+        $this->assertSame(['type' => 'summarize'], $this->requestBody(1)['compaction']);
+        $this->assertEquals(
+            [self::INITIAL_MESSAGE, ['role' => 'assistant', 'content' => [['type' => 'text', 'text' => 'Done.']]]],
+            $this->sentMessages(1),
+        );
+    }
+
+    // -------------------------------------------------------------------------
     // Double-consumption throws
     // -------------------------------------------------------------------------
 
@@ -1690,6 +2186,11 @@ final class BetaToolRunnerTest extends TestCase
         ]);
     }
 
+    private function callsTool(string $toolName, string $toolId): ResponseInterface
+    {
+        return $this->toolUseResponse($toolName, ['location' => 'SF'], id: "msg_{$toolId}", toolId: $toolId);
+    }
+
     /**
      * The response to a request that carried the `compaction` param.
      *
@@ -1782,6 +2283,29 @@ final class BetaToolRunnerTest extends TestCase
     // Tool fixtures
     // -------------------------------------------------------------------------
 
+    /**
+     * A tool that appends `$label` (its name by default) to `$calls` when it runs.
+     *
+     * @param list<string> $calls
+     */
+    private function recordingTool(string $name, array &$calls, ?string $label = null): BetaRunnableTool
+    {
+        $label ??= $name;
+
+        return new BetaRunnableTool(
+            definition: [
+                'name' => $name,
+                'description' => "Stand-in for {$name}",
+                'input_schema' => ['type' => 'object', 'properties' => ['location' => ['type' => 'string']]],
+            ],
+            run: function () use (&$calls, $label): string {
+                $calls[] = $label;
+
+                return "ran {$label}";
+            },
+        );
+    }
+
     private function makeWeatherTool(?\Closure $run = null): BetaRunnableTool
     {
         return new BetaRunnableTool(
@@ -1804,6 +2328,115 @@ final class BetaToolRunnerTest extends TestCase
 
                     return json_encode(['location' => $input['location'] ?? '', 'temperature' => 72]) ?: '';
                 },
+        );
+    }
+
+    // -------------------------------------------------------------------------
+    // addTools / removeTools helpers
+    // -------------------------------------------------------------------------
+
+    /**
+     * Runs a tool runner to the end, calling `$script[$message->id]` while each message is being handled.
+     *
+     * @param list<BetaRunnableTool|BetaToolUnionShape> $tools
+     * @param array<string, \Closure(BetaToolRunner): void> $script
+     * @param (\Closure(BetaToolRunner): void)|null $beforeFirstRequest
+     * @param list<array<string, mixed>> $messages
+     */
+    private function runWithToolChanges(
+        array $tools,
+        array $script,
+        ?\Closure $beforeFirstRequest = null,
+        ?int $maxIterations = null,
+        array $messages = [self::INITIAL_MESSAGE],
+    ): void {
+        $runner = $this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: $messages,
+            model: 'claude-opus-4-6',
+            tools: $tools,
+            maxIterations: $maxIterations,
+        );
+
+        if (null !== $beforeFirstRequest) {
+            $beforeFirstRequest($runner);
+        }
+
+        foreach ($runner as $message) {
+            if (isset($script[$message->id])) {
+                $script[$message->id]($runner);
+            }
+        }
+    }
+
+    /**
+     * @param array<string, mixed> ...$blocks
+     *
+     * @return array<string, mixed>
+     */
+    private static function toolChangesMessage(array ...$blocks): array
+    {
+        return ['role' => 'system', 'content' => $blocks];
+    }
+
+    /**
+     * @param BaseModel|array<string, mixed> $definition
+     *
+     * @return array<string, mixed>
+     */
+    private static function addition(BaseModel|array $definition): array
+    {
+        return ['type' => 'tool_addition', 'tool' => ['type' => 'tool_definition', 'definition' => $definition]];
+    }
+
+    /** @return array<string, mixed> */
+    private static function removal(string $name): array
+    {
+        return ['type' => 'tool_removal', 'tool' => ['type' => 'tool_reference', 'name' => $name]];
+    }
+
+    /** @return array<string, mixed> */
+    private static function ranResult(string $toolUseId, string $label): array
+    {
+        return ['role' => 'user', 'content' => [
+            ['type' => 'tool_result', 'tool_use_id' => $toolUseId, 'content' => "ran {$label}"],
+        ]];
+    }
+
+    /** @return array<string, mixed> */
+    private static function notFoundResult(string $toolUseId, string $toolName): array
+    {
+        return ['role' => 'user', 'content' => [
+            ['type' => 'tool_result', 'tool_use_id' => $toolUseId, 'content' => "Error: Tool '{$toolName}' not found", 'is_error' => true],
+        ]];
+    }
+
+    /** @return list<array<string, mixed>> */
+    private function sentMessages(int $index): array
+    {
+        /** @var list<array<string, mixed>> $messages */
+        $messages = $this->requestBody($index)['messages'];
+
+        return $messages;
+    }
+
+    /** @return array<string, mixed> */
+    private function lastSentMessage(int $index): array
+    {
+        $messages = $this->sentMessages($index);
+
+        /** @var array<string, mixed> $last */
+        $last = end($messages);
+
+        return $last;
+    }
+
+    /** @return list<mixed> The `tools` of every request sent */
+    private function sentTools(): array
+    {
+        return array_map(
+            fn (int $index) => $this->requestBody($index)['tools'] ?? null,
+            array_keys($this->transporter->getRequests()),
         );
     }
 
@@ -1833,7 +2466,7 @@ final class BetaToolRunnerTest extends TestCase
      *
      * @return array<string, mixed>
      */
-    private function lastMessage(array $body): array
+    private function lastMessageOf(array $body): array
     {
         /** @var non-empty-list<array<string, mixed>> $messages */
         $messages = $body['messages'];
