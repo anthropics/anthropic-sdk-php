@@ -9,12 +9,16 @@ use Anthropic\Beta\Messages\BetaCompactionBlock;
 use Anthropic\Beta\Messages\BetaCompactionConfig;
 use Anthropic\Beta\Messages\BetaContainerParams;
 use Anthropic\Beta\Messages\BetaContextManagementConfig;
+use Anthropic\Beta\Messages\BetaFallbackParam;
+use Anthropic\Beta\Messages\BetaJSONOutputFormat;
 use Anthropic\Beta\Messages\BetaMessage;
+use Anthropic\Beta\Messages\BetaOutputConfig;
 use Anthropic\Beta\Messages\BetaRequestToolAdditionBlock;
 use Anthropic\Beta\Messages\BetaRequestToolRemovalBlock;
 use Anthropic\Beta\Messages\BetaStopReason;
 use Anthropic\Beta\Messages\BetaTextBlock;
 use Anthropic\Beta\Messages\BetaToolChangeToolReference;
+use Anthropic\Beta\Messages\BetaToolChoiceTool;
 use Anthropic\Beta\Messages\BetaToolUseBlock;
 use Anthropic\Beta\Messages\BetaWebSearchTool20250305;
 use Anthropic\Client;
@@ -1612,6 +1616,116 @@ final class BetaToolRunnerTest extends TestCase
             [null, ['type' => 'summarize'], null],
             array_map(fn (array $body) => $body['compaction'] ?? null, $this->requestBodies()),
         );
+    }
+
+    /**
+     * @param array<string, mixed> $extraParams
+     * @param array<string, mixed> $onOrdinaryRequests
+     * @param array<string, mixed> $onTheCompactionRequest
+     */
+    #[Test]
+    #[DataProvider('replyOnlyParams')]
+    public function testCompactionRequestLeavesOffReplyOnlyParams(
+        array $extraParams,
+        array $onOrdinaryRequests,
+        array $onTheCompactionRequest,
+    ): void {
+        $this->transporter->addResponse($this->compactedResponse());
+        $this->transporter->addResponse($this->textResponse('Sunny in SF.'));
+
+        $runner = $this->compactRunner(
+            extraParams: ['betas' => ['compact-2026-09-04'], 'system' => 'Be brief.'] + $extraParams,
+        );
+        $runner->compactBeforeNextTurn();
+        $runner->runUntilDone();
+
+        $replyOnly = array_flip(['stop_sequences', 'tool_choice', 'output_config', 'output_format', 'fallbacks']);
+        [$compaction, $after] = $this->requestBodies();
+        $this->assertEquals($onTheCompactionRequest, array_intersect_key($compaction, $replyOnly));
+        $this->assertEquals($onOrdinaryRequests, array_intersect_key($after, $replyOnly));
+
+        $this->assertSame(['type' => 'summarize'], $compaction['compaction']);
+        $this->assertNotEmpty($compaction['tools']);
+        $this->assertSame($after['tools'], $compaction['tools']);
+        $this->assertSame('Be brief.', $compaction['system']);
+        $this->assertSame(1024, $compaction['max_tokens']);
+        $this->assertSame(
+            'compact-2026-09-04',
+            $this->transporter->getRequests()[0]->getHeaderLine('anthropic-beta'),
+        );
+    }
+
+    /**
+     * @return iterable<string, array{array<string, mixed>, array<string, mixed>, array<string, mixed>}>
+     */
+    public static function replyOnlyParams(): iterable
+    {
+        $format = ['type' => 'json_schema', 'schema' => ['type' => 'object']];
+
+        yield 'arrays' => [
+            [
+                'stopSequences' => ['END'],
+                'toolChoice' => ['type' => 'any'],
+                'outputConfig' => ['effort' => 'low', 'format' => $format],
+            ],
+            [
+                'stop_sequences' => ['END'],
+                'tool_choice' => ['type' => 'any'],
+                'output_config' => ['effort' => 'low', 'format' => $format],
+            ],
+            ['output_config' => ['effort' => 'low']],
+        ];
+
+        yield 'models' => [
+            [
+                'stopSequences' => ['END'],
+                'toolChoice' => BetaToolChoiceTool::with(name: 'get_weather'),
+                'outputConfig' => BetaOutputConfig::with(
+                    effort: 'low',
+                    format: BetaJSONOutputFormat::with(schema: ['type' => 'object']),
+                ),
+            ],
+            [
+                'stop_sequences' => ['END'],
+                'tool_choice' => ['type' => 'tool', 'name' => 'get_weather'],
+                'output_config' => ['effort' => 'low', 'format' => $format],
+            ],
+            ['output_config' => ['effort' => 'low']],
+        ];
+
+        yield 'tool_choice auto stays on; the legacy output format does not' => [
+            ['toolChoice' => ['type' => 'auto'], 'outputFormat' => $format],
+            ['tool_choice' => ['type' => 'auto'], 'output_format' => $format],
+            ['tool_choice' => ['type' => 'auto']],
+        ];
+
+        yield 'a fallback keeps everything but its format' => [
+            [
+                'fallbacks' => [
+                    ['model' => 'claude-sonnet-4-5', 'outputConfig' => ['effort' => 'low', 'format' => $format]],
+                    BetaFallbackParam::with(
+                        model: 'claude-haiku-4-5',
+                        maxTokens: 512,
+                        outputConfig: BetaOutputConfig::with(
+                            effort: 'low',
+                            format: BetaJSONOutputFormat::with(schema: ['type' => 'object']),
+                        ),
+                    ),
+                ],
+            ],
+            [
+                'fallbacks' => [
+                    ['model' => 'claude-sonnet-4-5', 'output_config' => ['effort' => 'low', 'format' => $format]],
+                    ['model' => 'claude-haiku-4-5', 'max_tokens' => 512, 'output_config' => ['effort' => 'low', 'format' => $format]],
+                ],
+            ],
+            [
+                'fallbacks' => [
+                    ['model' => 'claude-sonnet-4-5', 'output_config' => ['effort' => 'low']],
+                    ['model' => 'claude-haiku-4-5', 'max_tokens' => 512, 'output_config' => ['effort' => 'low']],
+                ],
+            ],
+        ];
     }
 
     // -------------------------------------------------------------------------

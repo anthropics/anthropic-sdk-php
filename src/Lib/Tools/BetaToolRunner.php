@@ -496,13 +496,62 @@ final class BetaToolRunner implements \IteratorAggregate
         $this->pendingCompaction = null;
         $this->removedByHistory = array_diff_key($this->runnableToolsByName, $this->availableToolNames());
 
-        $params = $this->requestParams();
-        // The API refuses `compaction` alongside `context_management`; later requests keep it.
-        unset($params['contextManagement']);
+        $params = self::withoutCompactionIncompatibleParams($this->requestParams());
         $params['compaction'] = $compaction;
 
         // @phpstan-ignore argument.type
         return $this->client->beta->messages->create(...$params);
+    }
+
+    /**
+     * A compaction request returns only the compaction block, never a reply, so the API rejects the params that
+     * only shape a reply. The runner's later requests keep them.
+     *
+     * @param array<string, mixed> $params Named arguments for messages->create()
+     *
+     * @return array<string, mixed> A copy of `$params` without them
+     */
+    private static function withoutCompactionIncompatibleParams(array $params): array
+    {
+        unset($params['contextManagement'], $params['stopSequences'], $params['outputFormat']);
+
+        $toolChoice = self::toArray($params['toolChoice'] ?? null);
+        if (is_array($toolChoice) && in_array($toolChoice['type'] ?? null, ['any', 'tool'], true)) {
+            unset($params['toolChoice']);
+        }
+
+        if (isset($params['outputConfig'])) {
+            $params['outputConfig'] = self::without($params['outputConfig'], 'format');
+        }
+
+        if (is_array($params['fallbacks'] ?? null)) {
+            $params['fallbacks'] = array_map(
+                static fn (mixed $fallback): mixed => self::without($fallback, 'outputConfig', 'format'),
+                $params['fallbacks'],
+            );
+        }
+
+        return $params;
+    }
+
+    /**
+     * @return mixed `$value` without the key the path ends on; a model on the way is copied, never changed
+     */
+    private static function without(mixed $value, string $key, string ...$path): mixed
+    {
+        if ($value instanceof BaseModel) {
+            $value = clone $value;
+        } elseif (!is_array($value)) {
+            return $value;
+        }
+
+        if ([] === $path) {
+            unset($value[$key]);
+        } elseif (isset($value[$key])) {
+            $value[$key] = self::without($value[$key], ...$path);
+        }
+
+        return $value;
     }
 
     private function registerCompactionResponse(BetaMessage $message): void
