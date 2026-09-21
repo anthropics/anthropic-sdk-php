@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
+use Anthropic\Beta\Messages\BetaInputTransformation\Type;
+use Anthropic\Beta\Messages\BetaThinkingDroppedInputTransformation\Reason;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -38,5 +40,33 @@ final class BetaInputTransformation implements ConverterSource
             'thinking_dropped' => BetaThinkingDroppedInputTransformation::class,
             'thinking_mismatch_allowed' => BetaThinkingMismatchAllowedInputTransformation::class,
         ];
+    }
+
+    /**
+     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
+     *
+     * @param ($type is Type::THINKING_DROPPED|'thinking_dropped' ? Reason|value-of<Reason> : BetaThinkingMismatchAllowedInputTransformation\Reason|value-of<BetaThinkingMismatchAllowedInputTransformation\Reason>) $reason
+     *
+     * @return ($type is Type::THINKING_DROPPED|'thinking_dropped' ? BetaThinkingDroppedInputTransformation : ($type is Type::THINKING_MISMATCH_ALLOWED|'thinking_mismatch_allowed' ? BetaThinkingMismatchAllowedInputTransformation : BetaThinkingDroppedInputTransformation|BetaThinkingMismatchAllowedInputTransformation))
+     *
+     * @throws \UnhandledMatchError
+     */
+    public static function with(
+        Type|string $type,
+        string $path,
+        Reason|BetaThinkingMismatchAllowedInputTransformation\Reason|string $reason,
+    ): BetaThinkingDroppedInputTransformation|BetaThinkingMismatchAllowedInputTransformation {
+        return match ($type) {
+            Type::THINKING_DROPPED, 'thinking_dropped' => BetaThinkingDroppedInputTransformation::with(
+                path: $path,
+                reason: $reason
+            ),
+            Type::THINKING_MISMATCH_ALLOWED, 'thinking_mismatch_allowed' => BetaThinkingMismatchAllowedInputTransformation::with(
+                path: $path,
+                // @phpstan-ignore argument.type
+                reason: $reason,
+            ),
+            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
+        };
     }
 }

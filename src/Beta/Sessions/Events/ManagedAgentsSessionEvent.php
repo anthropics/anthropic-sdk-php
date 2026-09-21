@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
+use Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit;
+use Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSessionUpdatedEvent;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSessionUsageEvent;
+use Anthropic\Beta\Sessions\BetaManagedAgentsSystemContentBlock;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSystemMessageEvent;
 use Anthropic\Beta\Sessions\BetaManagedAgentsUserToolResultEvent;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionEvent\Type;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsUserToolConfirmationEvent\Result;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -50,6 +55,24 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type BetaManagedAgentsSessionUpdatedEventShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionUpdatedEvent
  * @phpstan-import-type BetaManagedAgentsSystemMessageEventShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSystemMessageEvent
  * @phpstan-import-type BetaManagedAgentsSessionUsageEventShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionUsageEvent
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserMessageEvent\Content
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserCustomToolResultEvent\Content as ContentShape1
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentMessageEvent\Content as ContentShape2
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentMCPToolResultEvent\Content as ContentShape3
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolResultEvent\Content as ContentShape4
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentThreadMessageReceivedEvent\Content as ContentShape5
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentThreadMessageSentEvent\Content as ContentShape6
+ * @phpstan-import-type ContentShape from \Anthropic\Beta\Sessions\BetaManagedAgentsUserToolResultEvent\Content as ContentShape7
+ * @phpstan-import-type BetaManagedAgentsSystemContentBlockShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSystemContentBlock
+ * @phpstan-import-type ManagedAgentsAgentToolEvaluationShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolEvaluation
+ * @phpstan-import-type ErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionErrorEvent\Error
+ * @phpstan-import-type StopReasonShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusIdleEvent\StopReason
+ * @phpstan-import-type StopReasonShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionThreadStatusIdleEvent\StopReason as StopReasonShape1
+ * @phpstan-import-type ManagedAgentsSessionUsageSnapshotShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionUsageSnapshot
+ * @phpstan-import-type RubricShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserDefineOutcomeEvent\Rubric
+ * @phpstan-import-type BetaManagedAgentsSessionAgentShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent
+ * @phpstan-import-type BetaManagedAgentsBudgetLimitShape from \Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit
+ * @phpstan-import-type ManagedAgentsSpanModelUsageShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSpanModelUsage
  *
  * @phpstan-type ManagedAgentsSessionEventVariants = ManagedAgentsUserMessageEvent|ManagedAgentsUserInterruptEvent|ManagedAgentsUserToolConfirmationEvent|ManagedAgentsUserCustomToolResultEvent|ManagedAgentsAgentCustomToolUseEvent|ManagedAgentsAgentMessageEvent|ManagedAgentsAgentThinkingEvent|ManagedAgentsAgentMCPToolUseEvent|ManagedAgentsAgentMCPToolResultEvent|ManagedAgentsAgentToolUseEvent|ManagedAgentsAgentToolResultEvent|ManagedAgentsAgentThreadMessageReceivedEvent|ManagedAgentsAgentThreadMessageSentEvent|ManagedAgentsAgentThreadContextCompactedEvent|ManagedAgentsSessionErrorEvent|ManagedAgentsSessionStatusRescheduledEvent|ManagedAgentsSessionStatusRunningEvent|ManagedAgentsSessionStatusIdleEvent|ManagedAgentsSessionStatusTerminatedEvent|ManagedAgentsSessionThreadCreatedEvent|ManagedAgentsSpanOutcomeEvaluationStartEvent|ManagedAgentsSpanOutcomeEvaluationEndEvent|ManagedAgentsSpanModelRequestStartEvent|ManagedAgentsSpanModelRequestEndEvent|ManagedAgentsSpanOutcomeEvaluationOngoingEvent|ManagedAgentsUserDefineOutcomeEvent|ManagedAgentsSessionDeletedEvent|ManagedAgentsSessionThreadStatusRunningEvent|ManagedAgentsSessionThreadStatusIdleEvent|ManagedAgentsSessionThreadStatusTerminatedEvent|BetaManagedAgentsUserToolResultEvent|ManagedAgentsSessionThreadStatusRescheduledEvent|BetaManagedAgentsSessionUpdatedEvent|BetaManagedAgentsSystemMessageEvent|BetaManagedAgentsSessionUsageEvent
  * @phpstan-type ManagedAgentsSessionEventShape = ManagedAgentsSessionEventVariants|ManagedAgentsUserMessageEventShape|ManagedAgentsUserInterruptEventShape|ManagedAgentsUserToolConfirmationEventShape|ManagedAgentsUserCustomToolResultEventShape|ManagedAgentsAgentCustomToolUseEventShape|ManagedAgentsAgentMessageEventShape|ManagedAgentsAgentThinkingEventShape|ManagedAgentsAgentMCPToolUseEventShape|ManagedAgentsAgentMCPToolResultEventShape|ManagedAgentsAgentToolUseEventShape|ManagedAgentsAgentToolResultEventShape|ManagedAgentsAgentThreadMessageReceivedEventShape|ManagedAgentsAgentThreadMessageSentEventShape|ManagedAgentsAgentThreadContextCompactedEventShape|ManagedAgentsSessionErrorEventShape|ManagedAgentsSessionStatusRescheduledEventShape|ManagedAgentsSessionStatusRunningEventShape|ManagedAgentsSessionStatusIdleEventShape|ManagedAgentsSessionStatusTerminatedEventShape|ManagedAgentsSessionThreadCreatedEventShape|ManagedAgentsSpanOutcomeEvaluationStartEventShape|ManagedAgentsSpanOutcomeEvaluationEndEventShape|ManagedAgentsSpanModelRequestStartEventShape|ManagedAgentsSpanModelRequestEndEventShape|ManagedAgentsSpanOutcomeEvaluationOngoingEventShape|ManagedAgentsUserDefineOutcomeEventShape|ManagedAgentsSessionDeletedEventShape|ManagedAgentsSessionThreadStatusRunningEventShape|ManagedAgentsSessionThreadStatusIdleEventShape|ManagedAgentsSessionThreadStatusTerminatedEventShape|BetaManagedAgentsUserToolResultEventShape|ManagedAgentsSessionThreadStatusRescheduledEventShape|BetaManagedAgentsSessionUpdatedEventShape|BetaManagedAgentsSystemMessageEventShape|BetaManagedAgentsSessionUsageEventShape
@@ -105,5 +128,334 @@ final class ManagedAgentsSessionEvent implements ConverterSource
             'system.message' => BetaManagedAgentsSystemMessageEvent::class,
             'session.usage' => BetaManagedAgentsSessionUsageEvent::class,
         ];
+    }
+
+    /**
+     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
+     *
+     * @param ($type is Type::USER_MESSAGE|'user.message' ? list<ContentShape>|null : ($type is Type::USER_CUSTOM_TOOL_RESULT|'user.custom_tool_result' ? list<ContentShape1>|null : ($type is Type::AGENT_MESSAGE|'agent.message' ? list<ContentShape2>|null : ($type is Type::AGENT_MCP_TOOL_RESULT|'agent.mcp_tool_result' ? list<ContentShape3>|null : ($type is Type::AGENT_TOOL_RESULT|'agent.tool_result' ? list<ContentShape4>|null : ($type is Type::AGENT_THREAD_MESSAGE_RECEIVED|'agent.thread_message_received' ? list<ContentShape5>|null : ($type is Type::AGENT_THREAD_MESSAGE_SENT|'agent.thread_message_sent' ? list<ContentShape6>|null : ($type is Type::USER_TOOL_RESULT|'user.tool_result' ? list<ContentShape7>|null : list<BetaManagedAgentsSystemContentBlock|BetaManagedAgentsSystemContentBlockShape>|null)))))))) $content
+     * @param ($type is Type::USER_TOOL_CONFIRMATION|'user.tool_confirmation' ? Result|value-of<Result>|null : string|null) $result
+     * @param array<string,mixed>|null $input
+     * @param ManagedAgentsAgentEvaluatedPermission|value-of<ManagedAgentsAgentEvaluatedPermission>|null $evaluatedPermission
+     * @param ManagedAgentsAgentToolEvaluationShape|null $evaluation
+     * @param ErrorShape|null $error
+     * @param ($type is Type::SESSION_STATUS_IDLE|'session.status_idle' ? StopReasonShape|null : StopReasonShape1|null) $stopReason
+     * @param ($type is Type::SPAN_OUTCOME_EVALUATION_END|'span.outcome_evaluation_end' ? ManagedAgentsSpanModelUsage|ManagedAgentsSpanModelUsageShape|null : ManagedAgentsSessionUsageSnapshot|ManagedAgentsSessionUsageSnapshotShape|null) $usage
+     * @param ManagedAgentsSpanModelUsage|ManagedAgentsSpanModelUsageShape|null $modelUsage
+     * @param RubricShape|null $rubric
+     * @param BetaManagedAgentsSessionAgent|BetaManagedAgentsSessionAgentShape|null $agent
+     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
+     * @param array<string,string>|null $metadata
+     *
+     * @return ($type is Type::USER_MESSAGE|'user.message' ? ManagedAgentsUserMessageEvent : ($type is Type::USER_INTERRUPT|'user.interrupt' ? ManagedAgentsUserInterruptEvent : ($type is Type::USER_TOOL_CONFIRMATION|'user.tool_confirmation' ? ManagedAgentsUserToolConfirmationEvent : ($type is Type::USER_CUSTOM_TOOL_RESULT|'user.custom_tool_result' ? ManagedAgentsUserCustomToolResultEvent : ($type is Type::AGENT_CUSTOM_TOOL_USE|'agent.custom_tool_use' ? ManagedAgentsAgentCustomToolUseEvent : ($type is Type::AGENT_MESSAGE|'agent.message' ? ManagedAgentsAgentMessageEvent : ($type is Type::AGENT_THINKING|'agent.thinking' ? ManagedAgentsAgentThinkingEvent : ($type is Type::AGENT_MCP_TOOL_USE|'agent.mcp_tool_use' ? ManagedAgentsAgentMCPToolUseEvent : ($type is Type::AGENT_MCP_TOOL_RESULT|'agent.mcp_tool_result' ? ManagedAgentsAgentMCPToolResultEvent : ($type is Type::AGENT_TOOL_USE|'agent.tool_use' ? ManagedAgentsAgentToolUseEvent : ($type is Type::AGENT_TOOL_RESULT|'agent.tool_result' ? ManagedAgentsAgentToolResultEvent : ($type is Type::AGENT_THREAD_MESSAGE_RECEIVED|'agent.thread_message_received' ? ManagedAgentsAgentThreadMessageReceivedEvent : ($type is Type::AGENT_THREAD_MESSAGE_SENT|'agent.thread_message_sent' ? ManagedAgentsAgentThreadMessageSentEvent : ($type is Type::AGENT_THREAD_CONTEXT_COMPACTED|'agent.thread_context_compacted' ? ManagedAgentsAgentThreadContextCompactedEvent : ($type is Type::SESSION_ERROR|'session.error' ? ManagedAgentsSessionErrorEvent : ($type is Type::SESSION_STATUS_RESCHEDULED|'session.status_rescheduled' ? ManagedAgentsSessionStatusRescheduledEvent : ($type is Type::SESSION_STATUS_RUNNING|'session.status_running' ? ManagedAgentsSessionStatusRunningEvent : ($type is Type::SESSION_STATUS_IDLE|'session.status_idle' ? ManagedAgentsSessionStatusIdleEvent : ($type is Type::SESSION_STATUS_TERMINATED|'session.status_terminated' ? ManagedAgentsSessionStatusTerminatedEvent : ($type is Type::SESSION_THREAD_CREATED|'session.thread_created' ? ManagedAgentsSessionThreadCreatedEvent : ($type is Type::SPAN_OUTCOME_EVALUATION_START|'span.outcome_evaluation_start' ? ManagedAgentsSpanOutcomeEvaluationStartEvent : ($type is Type::SPAN_OUTCOME_EVALUATION_END|'span.outcome_evaluation_end' ? ManagedAgentsSpanOutcomeEvaluationEndEvent : ($type is Type::SPAN_MODEL_REQUEST_START|'span.model_request_start' ? ManagedAgentsSpanModelRequestStartEvent : ($type is Type::SPAN_MODEL_REQUEST_END|'span.model_request_end' ? ManagedAgentsSpanModelRequestEndEvent : ($type is Type::SPAN_OUTCOME_EVALUATION_ONGOING|'span.outcome_evaluation_ongoing' ? ManagedAgentsSpanOutcomeEvaluationOngoingEvent : ($type is Type::USER_DEFINE_OUTCOME|'user.define_outcome' ? ManagedAgentsUserDefineOutcomeEvent : ($type is Type::SESSION_DELETED|'session.deleted' ? ManagedAgentsSessionDeletedEvent : ($type is Type::SESSION_THREAD_STATUS_RUNNING|'session.thread_status_running' ? ManagedAgentsSessionThreadStatusRunningEvent : ($type is Type::SESSION_THREAD_STATUS_IDLE|'session.thread_status_idle' ? ManagedAgentsSessionThreadStatusIdleEvent : ($type is Type::SESSION_THREAD_STATUS_TERMINATED|'session.thread_status_terminated' ? ManagedAgentsSessionThreadStatusTerminatedEvent : ($type is Type::USER_TOOL_RESULT|'user.tool_result' ? BetaManagedAgentsUserToolResultEvent : ($type is Type::SESSION_THREAD_STATUS_RESCHEDULED|'session.thread_status_rescheduled' ? ManagedAgentsSessionThreadStatusRescheduledEvent : ($type is Type::SESSION_UPDATED|'session.updated' ? BetaManagedAgentsSessionUpdatedEvent : ($type is Type::SYSTEM_MESSAGE|'system.message' ? BetaManagedAgentsSystemMessageEvent : ($type is Type::SESSION_USAGE|'session.usage' ? BetaManagedAgentsSessionUsageEvent : ManagedAgentsUserMessageEvent|ManagedAgentsUserInterruptEvent|ManagedAgentsUserToolConfirmationEvent|ManagedAgentsUserCustomToolResultEvent|ManagedAgentsAgentCustomToolUseEvent|ManagedAgentsAgentMessageEvent|ManagedAgentsAgentThinkingEvent|ManagedAgentsAgentMCPToolUseEvent|ManagedAgentsAgentMCPToolResultEvent|ManagedAgentsAgentToolUseEvent|ManagedAgentsAgentToolResultEvent|ManagedAgentsAgentThreadMessageReceivedEvent|ManagedAgentsAgentThreadMessageSentEvent|ManagedAgentsAgentThreadContextCompactedEvent|ManagedAgentsSessionErrorEvent|ManagedAgentsSessionStatusRescheduledEvent|ManagedAgentsSessionStatusRunningEvent|ManagedAgentsSessionStatusIdleEvent|ManagedAgentsSessionStatusTerminatedEvent|ManagedAgentsSessionThreadCreatedEvent|ManagedAgentsSpanOutcomeEvaluationStartEvent|ManagedAgentsSpanOutcomeEvaluationEndEvent|ManagedAgentsSpanModelRequestStartEvent|ManagedAgentsSpanModelRequestEndEvent|ManagedAgentsSpanOutcomeEvaluationOngoingEvent|ManagedAgentsUserDefineOutcomeEvent|ManagedAgentsSessionDeletedEvent|ManagedAgentsSessionThreadStatusRunningEvent|ManagedAgentsSessionThreadStatusIdleEvent|ManagedAgentsSessionThreadStatusTerminatedEvent|BetaManagedAgentsUserToolResultEvent|ManagedAgentsSessionThreadStatusRescheduledEvent|BetaManagedAgentsSessionUpdatedEvent|BetaManagedAgentsSystemMessageEvent|BetaManagedAgentsSessionUsageEvent)))))))))))))))))))))))))))))))))))
+     *
+     * @throws \UnhandledMatchError
+     */
+    public static function with(
+        Type|string $type,
+        string $id,
+        ?array $content = null,
+        ?\DateTimeInterface $processedAt = null,
+        ?string $sessionThreadID = null,
+        string|Result|null $result = null,
+        ?string $toolUseID = null,
+        ?string $denyMessage = null,
+        ?string $customToolUseID = null,
+        ?bool $isError = null,
+        ?array $input = null,
+        ?string $name = null,
+        ?string $mcpServerName = null,
+        ManagedAgentsAgentEvaluatedPermission|string|null $evaluatedPermission = null,
+        ManagedAgentsAgentToolEvaluationAlwaysAllow|array|ManagedAgentsAgentToolEvaluationAlwaysAsk|ManagedAgentsAgentToolEvaluationAuto|null $evaluation = null,
+        ?string $mcpToolUseID = null,
+        ?string $fromSessionThreadID = null,
+        ?string $fromAgentName = null,
+        ?string $toSessionThreadID = null,
+        ?string $toAgentName = null,
+        ManagedAgentsUnknownError|array|ManagedAgentsModelOverloadedError|ManagedAgentsModelRateLimitedError|ManagedAgentsModelRequestFailedError|ManagedAgentsMCPConnectionFailedError|ManagedAgentsMCPAuthenticationFailedError|ManagedAgentsBillingError|ManagedAgentsCredentialHostUnreachableError|null $error = null,
+        ManagedAgentsSessionEndTurn|array|ManagedAgentsSessionRequiresAction|ManagedAgentsSessionRetriesExhausted|ManagedAgentsSessionBudgetReached|null $stopReason = null,
+        ?string $agentName = null,
+        ?int $iteration = null,
+        ?string $outcomeID = null,
+        ?string $explanation = null,
+        ?string $outcomeEvaluationStartID = null,
+        ManagedAgentsSpanModelUsage|array|ManagedAgentsSessionUsageSnapshot|null $usage = null,
+        ?string $modelRequestStartID = null,
+        ManagedAgentsSpanModelUsage|array|null $modelUsage = null,
+        ?string $description = null,
+        ?int $maxIterations = null,
+        ManagedAgentsFileRubric|array|ManagedAgentsTextRubric|null $rubric = null,
+        BetaManagedAgentsSessionAgent|array|null $agent = null,
+        BetaManagedAgentsBudgetLimit|array|null $budget = null,
+        ?array $metadata = null,
+        ?string $title = null,
+    ): ManagedAgentsUserMessageEvent|ManagedAgentsUserInterruptEvent|ManagedAgentsUserToolConfirmationEvent|ManagedAgentsUserCustomToolResultEvent|ManagedAgentsAgentCustomToolUseEvent|ManagedAgentsAgentMessageEvent|ManagedAgentsAgentThinkingEvent|ManagedAgentsAgentMCPToolUseEvent|ManagedAgentsAgentMCPToolResultEvent|ManagedAgentsAgentToolUseEvent|ManagedAgentsAgentToolResultEvent|ManagedAgentsAgentThreadMessageReceivedEvent|ManagedAgentsAgentThreadMessageSentEvent|ManagedAgentsAgentThreadContextCompactedEvent|ManagedAgentsSessionErrorEvent|ManagedAgentsSessionStatusRescheduledEvent|ManagedAgentsSessionStatusRunningEvent|ManagedAgentsSessionStatusIdleEvent|ManagedAgentsSessionStatusTerminatedEvent|ManagedAgentsSessionThreadCreatedEvent|ManagedAgentsSpanOutcomeEvaluationStartEvent|ManagedAgentsSpanOutcomeEvaluationEndEvent|ManagedAgentsSpanModelRequestStartEvent|ManagedAgentsSpanModelRequestEndEvent|ManagedAgentsSpanOutcomeEvaluationOngoingEvent|ManagedAgentsUserDefineOutcomeEvent|ManagedAgentsSessionDeletedEvent|ManagedAgentsSessionThreadStatusRunningEvent|ManagedAgentsSessionThreadStatusIdleEvent|ManagedAgentsSessionThreadStatusTerminatedEvent|BetaManagedAgentsUserToolResultEvent|ManagedAgentsSessionThreadStatusRescheduledEvent|BetaManagedAgentsSessionUpdatedEvent|BetaManagedAgentsSystemMessageEvent|BetaManagedAgentsSessionUsageEvent {
+        return match ($type) {
+            Type::USER_MESSAGE, 'user.message' => ManagedAgentsUserMessageEvent::with(
+                type: 'user.message',
+                id: $id,
+                content: $content ?? throw new \ArgumentCountError('$content is required'),
+                processedAt: $processedAt,
+            ),
+            Type::USER_INTERRUPT, 'user.interrupt' => ManagedAgentsUserInterruptEvent::with(
+                type: 'user.interrupt',
+                id: $id,
+                processedAt: $processedAt,
+                sessionThreadID: $sessionThreadID,
+            ),
+            Type::USER_TOOL_CONFIRMATION, 'user.tool_confirmation' => ManagedAgentsUserToolConfirmationEvent::with(
+                type: 'user.tool_confirmation',
+                id: $id,
+                result: $result ?? throw new \ArgumentCountError('$result is required'),
+                toolUseID: $toolUseID ?? throw new \ArgumentCountError('$toolUseID is required'),
+                denyMessage: $denyMessage,
+                processedAt: $processedAt,
+                sessionThreadID: $sessionThreadID,
+            ),
+            Type::USER_CUSTOM_TOOL_RESULT, 'user.custom_tool_result' => ManagedAgentsUserCustomToolResultEvent::with(
+                type: 'user.custom_tool_result',
+                id: $id,
+                customToolUseID: $customToolUseID ?? throw new \ArgumentCountError('$customToolUseID is required'),
+                // @phpstan-ignore argument.type
+                content: $content,
+                isError: $isError,
+                processedAt: $processedAt,
+                sessionThreadID: $sessionThreadID,
+            ),
+            Type::AGENT_CUSTOM_TOOL_USE, 'agent.custom_tool_use' => ManagedAgentsAgentCustomToolUseEvent::with(
+                type: 'agent.custom_tool_use',
+                id: $id,
+                input: $input ?? throw new \ArgumentCountError('$input is required'),
+                name: $name ?? throw new \ArgumentCountError('$name is required'),
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+                sessionThreadID: $sessionThreadID,
+            ),
+            Type::AGENT_MESSAGE, 'agent.message' => ManagedAgentsAgentMessageEvent::with(
+                type: 'agent.message',
+                id: $id,
+                // @phpstan-ignore argument.type
+                content: $content ?? throw new \ArgumentCountError('$content is required'),
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+            ),
+            Type::AGENT_THINKING, 'agent.thinking' => ManagedAgentsAgentThinkingEvent::with(
+                type: 'agent.thinking',
+                id: $id,
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+            ),
+            Type::AGENT_MCP_TOOL_USE, 'agent.mcp_tool_use' => ManagedAgentsAgentMCPToolUseEvent::with(
+                type: 'agent.mcp_tool_use',
+                id: $id,
+                input: $input ?? throw new \ArgumentCountError('$input is required'),
+                mcpServerName: $mcpServerName ?? throw new \ArgumentCountError('$mcpServerName is required'),
+                name: $name ?? throw new \ArgumentCountError('$name is required'),
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+                evaluatedPermission: $evaluatedPermission,
+                evaluation: $evaluation,
+                sessionThreadID: $sessionThreadID,
+            ),
+            Type::AGENT_MCP_TOOL_RESULT, 'agent.mcp_tool_result' => ManagedAgentsAgentMCPToolResultEvent::with(
+                type: 'agent.mcp_tool_result',
+                id: $id,
+                mcpToolUseID: $mcpToolUseID ?? throw new \ArgumentCountError('$mcpToolUseID is required'),
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+                // @phpstan-ignore argument.type
+                content: $content,
+                isError: $isError,
+            ),
+            Type::AGENT_TOOL_USE, 'agent.tool_use' => ManagedAgentsAgentToolUseEvent::with(
+                type: 'agent.tool_use',
+                id: $id,
+                input: $input ?? throw new \ArgumentCountError('$input is required'),
+                name: $name ?? throw new \ArgumentCountError('$name is required'),
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+                evaluatedPermission: $evaluatedPermission,
+                evaluation: $evaluation,
+                sessionThreadID: $sessionThreadID,
+            ),
+            Type::AGENT_TOOL_RESULT, 'agent.tool_result' => ManagedAgentsAgentToolResultEvent::with(
+                type: 'agent.tool_result',
+                id: $id,
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+                toolUseID: $toolUseID ?? throw new \ArgumentCountError('$toolUseID is required'),
+                // @phpstan-ignore argument.type
+                content: $content,
+                isError: $isError,
+            ),
+            Type::AGENT_THREAD_MESSAGE_RECEIVED, 'agent.thread_message_received' => ManagedAgentsAgentThreadMessageReceivedEvent::with(
+                type: 'agent.thread_message_received',
+                id: $id,
+                // @phpstan-ignore argument.type
+                content: $content ?? throw new \ArgumentCountError('$content is required'),
+                fromSessionThreadID: $fromSessionThreadID ?? throw new \ArgumentCountError('$fromSessionThreadID is required'),
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+                fromAgentName: $fromAgentName,
+            ),
+            Type::AGENT_THREAD_MESSAGE_SENT, 'agent.thread_message_sent' => ManagedAgentsAgentThreadMessageSentEvent::with(
+                type: 'agent.thread_message_sent',
+                id: $id,
+                // @phpstan-ignore argument.type
+                content: $content ?? throw new \ArgumentCountError('$content is required'),
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+                toSessionThreadID: $toSessionThreadID ?? throw new \ArgumentCountError('$toSessionThreadID is required'),
+                toAgentName: $toAgentName,
+            ),
+            Type::AGENT_THREAD_CONTEXT_COMPACTED, 'agent.thread_context_compacted' => ManagedAgentsAgentThreadContextCompactedEvent::with(
+                type: 'agent.thread_context_compacted',
+                id: $id,
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+            ),
+            Type::SESSION_ERROR, 'session.error' => ManagedAgentsSessionErrorEvent::with(
+                type: 'session.error',
+                id: $id,
+                error: $error ?? throw new \ArgumentCountError('$error is required'),
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+            ),
+            Type::SESSION_STATUS_RESCHEDULED, 'session.status_rescheduled' => ManagedAgentsSessionStatusRescheduledEvent::with(
+                type: 'session.status_rescheduled',
+                id: $id,
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+            ),
+            Type::SESSION_STATUS_RUNNING, 'session.status_running' => ManagedAgentsSessionStatusRunningEvent::with(
+                type: 'session.status_running',
+                id: $id,
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+            ),
+            Type::SESSION_STATUS_IDLE, 'session.status_idle' => ManagedAgentsSessionStatusIdleEvent::with(
+                type: 'session.status_idle',
+                id: $id,
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+                stopReason: $stopReason ?? throw new \ArgumentCountError('$stopReason is required'),
+            ),
+            Type::SESSION_STATUS_TERMINATED, 'session.status_terminated' => ManagedAgentsSessionStatusTerminatedEvent::with(
+                type: 'session.status_terminated',
+                id: $id,
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+            ),
+            Type::SESSION_THREAD_CREATED, 'session.thread_created' => ManagedAgentsSessionThreadCreatedEvent::with(
+                type: 'session.thread_created',
+                id: $id,
+                agentName: $agentName ?? throw new \ArgumentCountError('$agentName is required'),
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+                sessionThreadID: $sessionThreadID ?? throw new \ArgumentCountError('$sessionThreadID is required'),
+            ),
+            Type::SPAN_OUTCOME_EVALUATION_START, 'span.outcome_evaluation_start' => ManagedAgentsSpanOutcomeEvaluationStartEvent::with(
+                type: 'span.outcome_evaluation_start',
+                id: $id,
+                iteration: $iteration ?? throw new \ArgumentCountError('$iteration is required'),
+                outcomeID: $outcomeID ?? throw new \ArgumentCountError('$outcomeID is required'),
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+            ),
+            Type::SPAN_OUTCOME_EVALUATION_END, 'span.outcome_evaluation_end' => ManagedAgentsSpanOutcomeEvaluationEndEvent::with(
+                type: 'span.outcome_evaluation_end',
+                id: $id,
+                explanation: $explanation ?? throw new \ArgumentCountError('$explanation is required'),
+                iteration: $iteration ?? throw new \ArgumentCountError('$iteration is required'),
+                outcomeEvaluationStartID: $outcomeEvaluationStartID ?? throw new \ArgumentCountError('$outcomeEvaluationStartID is required'),
+                outcomeID: $outcomeID ?? throw new \ArgumentCountError('$outcomeID is required'),
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+                // @phpstan-ignore argument.type
+                result: $result ?? throw new \ArgumentCountError('$result is required'),
+                usage: $usage ?? throw new \ArgumentCountError('$usage is required'),
+            ),
+            Type::SPAN_MODEL_REQUEST_START, 'span.model_request_start' => ManagedAgentsSpanModelRequestStartEvent::with(
+                type: 'span.model_request_start',
+                id: $id,
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+            ),
+            Type::SPAN_MODEL_REQUEST_END, 'span.model_request_end' => ManagedAgentsSpanModelRequestEndEvent::with(
+                type: 'span.model_request_end',
+                id: $id,
+                isError: $isError,
+                modelRequestStartID: $modelRequestStartID ?? throw new \ArgumentCountError('$modelRequestStartID is required'),
+                modelUsage: $modelUsage ?? throw new \ArgumentCountError('$modelUsage is required'),
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+            ),
+            Type::SPAN_OUTCOME_EVALUATION_ONGOING, 'span.outcome_evaluation_ongoing' => ManagedAgentsSpanOutcomeEvaluationOngoingEvent::with(
+                type: 'span.outcome_evaluation_ongoing',
+                id: $id,
+                iteration: $iteration ?? throw new \ArgumentCountError('$iteration is required'),
+                outcomeID: $outcomeID ?? throw new \ArgumentCountError('$outcomeID is required'),
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+            ),
+            Type::USER_DEFINE_OUTCOME, 'user.define_outcome' => ManagedAgentsUserDefineOutcomeEvent::with(
+                type: 'user.define_outcome',
+                id: $id,
+                description: $description ?? throw new \ArgumentCountError('$description is required'),
+                maxIterations: $maxIterations,
+                outcomeID: $outcomeID ?? throw new \ArgumentCountError('$outcomeID is required'),
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+                rubric: $rubric ?? throw new \ArgumentCountError('$rubric is required'),
+            ),
+            Type::SESSION_DELETED, 'session.deleted' => ManagedAgentsSessionDeletedEvent::with(
+                type: 'session.deleted',
+                id: $id,
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+            ),
+            Type::SESSION_THREAD_STATUS_RUNNING, 'session.thread_status_running' => ManagedAgentsSessionThreadStatusRunningEvent::with(
+                type: 'session.thread_status_running',
+                id: $id,
+                agentName: $agentName ?? throw new \ArgumentCountError('$agentName is required'),
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+                sessionThreadID: $sessionThreadID ?? throw new \ArgumentCountError('$sessionThreadID is required'),
+            ),
+            Type::SESSION_THREAD_STATUS_IDLE, 'session.thread_status_idle' => ManagedAgentsSessionThreadStatusIdleEvent::with(
+                type: 'session.thread_status_idle',
+                id: $id,
+                agentName: $agentName ?? throw new \ArgumentCountError('$agentName is required'),
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+                sessionThreadID: $sessionThreadID ?? throw new \ArgumentCountError('$sessionThreadID is required'),
+                // @phpstan-ignore argument.type
+                stopReason: $stopReason ?? throw new \ArgumentCountError('$stopReason is required'),
+            ),
+            Type::SESSION_THREAD_STATUS_TERMINATED, 'session.thread_status_terminated' => ManagedAgentsSessionThreadStatusTerminatedEvent::with(
+                type: 'session.thread_status_terminated',
+                id: $id,
+                agentName: $agentName ?? throw new \ArgumentCountError('$agentName is required'),
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+                sessionThreadID: $sessionThreadID ?? throw new \ArgumentCountError('$sessionThreadID is required'),
+            ),
+            Type::USER_TOOL_RESULT, 'user.tool_result' => BetaManagedAgentsUserToolResultEvent::with(
+                type: 'user.tool_result',
+                id: $id,
+                toolUseID: $toolUseID ?? throw new \ArgumentCountError('$toolUseID is required'),
+                // @phpstan-ignore argument.type
+                content: $content,
+                isError: $isError,
+                processedAt: $processedAt,
+                sessionThreadID: $sessionThreadID,
+            ),
+            Type::SESSION_THREAD_STATUS_RESCHEDULED, 'session.thread_status_rescheduled' => ManagedAgentsSessionThreadStatusRescheduledEvent::with(
+                type: 'session.thread_status_rescheduled',
+                id: $id,
+                agentName: $agentName ?? throw new \ArgumentCountError('$agentName is required'),
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+                sessionThreadID: $sessionThreadID ?? throw new \ArgumentCountError('$sessionThreadID is required'),
+            ),
+            Type::SESSION_UPDATED, 'session.updated' => BetaManagedAgentsSessionUpdatedEvent::with(
+                type: 'session.updated',
+                id: $id,
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+                agent: $agent,
+                budget: $budget,
+                metadata: $metadata,
+                title: $title,
+            ),
+            Type::SYSTEM_MESSAGE, 'system.message' => BetaManagedAgentsSystemMessageEvent::with(
+                type: 'system.message',
+                id: $id,
+                // @phpstan-ignore argument.type
+                content: $content ?? throw new \ArgumentCountError('$content is required'),
+                processedAt: $processedAt,
+            ),
+            Type::SESSION_USAGE, 'session.usage' => BetaManagedAgentsSessionUsageEvent::with(
+                type: 'session.usage',
+                id: $id,
+                processedAt: $processedAt ?? throw new \ArgumentCountError('$processedAt is required'),
+                // @phpstan-ignore argument.type
+                usage: $usage ?? throw new \ArgumentCountError('$usage is required'),
+                budget: $budget,
+            ),
+            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
+        };
     }
 }

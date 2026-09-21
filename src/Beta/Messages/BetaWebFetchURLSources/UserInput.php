@@ -6,6 +6,7 @@ namespace Anthropic\Beta\Messages\BetaWebFetchURLSources;
 
 use Anthropic\Beta\Messages\BetaWebFetchURLSourceAll;
 use Anthropic\Beta\Messages\BetaWebFetchURLSourceNone;
+use Anthropic\Beta\Messages\BetaWebFetchURLSources\UserInput\Type;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -37,5 +38,22 @@ final class UserInput implements ConverterSource
             'all' => BetaWebFetchURLSourceAll::class,
             'none' => BetaWebFetchURLSourceNone::class,
         ];
+    }
+
+    /**
+     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
+     *
+     * @return ($type is Type::ALL|'all' ? BetaWebFetchURLSourceAll : ($type is Type::NONE|'none' ? BetaWebFetchURLSourceNone : BetaWebFetchURLSourceAll|BetaWebFetchURLSourceNone))
+     *
+     * @throws \UnhandledMatchError
+     */
+    public static function with(
+        Type|string $type
+    ): BetaWebFetchURLSourceAll|BetaWebFetchURLSourceNone {
+        return match ($type) {
+            Type::ALL, 'all' => BetaWebFetchURLSourceAll::with(),
+            Type::NONE, 'none' => BetaWebFetchURLSourceNone::with(),
+            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
+        };
     }
 }

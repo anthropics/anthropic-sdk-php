@@ -10,6 +10,7 @@ use Anthropic\Beta\Messages\BetaCacheMissPreviousMessageNotFound;
 use Anthropic\Beta\Messages\BetaCacheMissSystemChanged;
 use Anthropic\Beta\Messages\BetaCacheMissToolsChanged;
 use Anthropic\Beta\Messages\BetaCacheMissUnavailable;
+use Anthropic\Beta\Messages\BetaDiagnostics\CacheMissReason\Type;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -49,5 +50,36 @@ final class CacheMissReason implements ConverterSource
             'previous_message_not_found' => BetaCacheMissPreviousMessageNotFound::class,
             'unavailable' => BetaCacheMissUnavailable::class,
         ];
+    }
+
+    /**
+     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
+     *
+     * @return ($type is Type::MODEL_CHANGED|'model_changed' ? BetaCacheMissModelChanged : ($type is Type::SYSTEM_CHANGED|'system_changed' ? BetaCacheMissSystemChanged : ($type is Type::TOOLS_CHANGED|'tools_changed' ? BetaCacheMissToolsChanged : ($type is Type::MESSAGES_CHANGED|'messages_changed' ? BetaCacheMissMessagesChanged : ($type is Type::PREVIOUS_MESSAGE_NOT_FOUND|'previous_message_not_found' ? BetaCacheMissPreviousMessageNotFound : ($type is Type::UNAVAILABLE|'unavailable' ? BetaCacheMissUnavailable : BetaCacheMissModelChanged|BetaCacheMissSystemChanged|BetaCacheMissToolsChanged|BetaCacheMissMessagesChanged|BetaCacheMissPreviousMessageNotFound|BetaCacheMissUnavailable))))))
+     *
+     * @throws \UnhandledMatchError
+     */
+    public static function with(
+        Type|string $type,
+        ?int $cacheMissedInputTokens = null
+    ): BetaCacheMissModelChanged|BetaCacheMissSystemChanged|BetaCacheMissToolsChanged|BetaCacheMissMessagesChanged|BetaCacheMissPreviousMessageNotFound|BetaCacheMissUnavailable {
+        return match ($type) {
+            Type::MODEL_CHANGED, 'model_changed' => BetaCacheMissModelChanged::with(
+                cacheMissedInputTokens: $cacheMissedInputTokens ?? throw new \ArgumentCountError('$cacheMissedInputTokens is required'),
+            ),
+            Type::SYSTEM_CHANGED, 'system_changed' => BetaCacheMissSystemChanged::with(
+                cacheMissedInputTokens: $cacheMissedInputTokens ?? throw new \ArgumentCountError('$cacheMissedInputTokens is required'),
+            ),
+            Type::TOOLS_CHANGED, 'tools_changed' => BetaCacheMissToolsChanged::with(
+                cacheMissedInputTokens: $cacheMissedInputTokens ?? throw new \ArgumentCountError('$cacheMissedInputTokens is required'),
+            ),
+            Type::MESSAGES_CHANGED, 'messages_changed' => BetaCacheMissMessagesChanged::with(
+                cacheMissedInputTokens: $cacheMissedInputTokens ?? throw new \ArgumentCountError('$cacheMissedInputTokens is required'),
+            ),
+            Type::PREVIOUS_MESSAGE_NOT_FOUND, 'previous_message_not_found' => BetaCacheMissPreviousMessageNotFound::with(
+            ),
+            Type::UNAVAILABLE, 'unavailable' => BetaCacheMissUnavailable::with(),
+            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
+        };
     }
 }

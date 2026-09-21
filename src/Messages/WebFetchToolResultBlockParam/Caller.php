@@ -10,6 +10,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Messages\DirectCaller;
 use Anthropic\Messages\ServerToolCaller;
 use Anthropic\Messages\ServerToolCaller20260120;
+use Anthropic\Messages\WebFetchToolResultBlockParam\Caller\Type;
 
 /**
  * @phpstan-import-type DirectCallerShape from \Anthropic\Messages\DirectCaller
@@ -38,5 +39,28 @@ final class Caller implements ConverterSource
             'code_execution_20250825' => ServerToolCaller::class,
             'code_execution_20260120' => ServerToolCaller20260120::class,
         ];
+    }
+
+    /**
+     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
+     *
+     * @return ($type is Type::DIRECT|'direct' ? DirectCaller : ($type is Type::CODE_EXECUTION_20250825|'code_execution_20250825' ? ServerToolCaller : ($type is Type::CODE_EXECUTION_20260120|'code_execution_20260120' ? ServerToolCaller20260120 : DirectCaller|ServerToolCaller|ServerToolCaller20260120)))
+     *
+     * @throws \UnhandledMatchError
+     */
+    public static function with(
+        Type|string $type,
+        ?string $toolID = null
+    ): DirectCaller|ServerToolCaller|ServerToolCaller20260120 {
+        return match ($type) {
+            Type::DIRECT, 'direct' => DirectCaller::with(),
+            Type::CODE_EXECUTION_20250825, 'code_execution_20250825' => ServerToolCaller::with(
+                toolID: $toolID ?? throw new \ArgumentCountError('$toolID is required'),
+            ),
+            Type::CODE_EXECUTION_20260120, 'code_execution_20260120' => ServerToolCaller20260120::with(
+                toolID: $toolID ?? throw new \ArgumentCountError('$toolID is required'),
+            ),
+            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
+        };
     }
 }

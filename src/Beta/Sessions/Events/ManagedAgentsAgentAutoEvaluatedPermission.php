@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
+use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentAutoEvaluatedPermission\Type;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -37,5 +38,29 @@ final class ManagedAgentsAgentAutoEvaluatedPermission implements ConverterSource
             'ask' => ManagedAgentsAgentAutoEvaluatedPermissionAsk::class,
             'deny' => ManagedAgentsAgentAutoEvaluatedPermissionDeny::class,
         ];
+    }
+
+    /**
+     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
+     *
+     * @return ($type is Type::ALLOW|'allow' ? ManagedAgentsAgentAutoEvaluatedPermissionAllow : ($type is Type::ASK|'ask' ? ManagedAgentsAgentAutoEvaluatedPermissionAsk : ($type is Type::DENY|'deny' ? ManagedAgentsAgentAutoEvaluatedPermissionDeny : ManagedAgentsAgentAutoEvaluatedPermissionAllow|ManagedAgentsAgentAutoEvaluatedPermissionAsk|ManagedAgentsAgentAutoEvaluatedPermissionDeny)))
+     *
+     * @throws \UnhandledMatchError
+     */
+    public static function with(
+        Type|string $type,
+        ?string $reasonCode = null
+    ): ManagedAgentsAgentAutoEvaluatedPermissionAllow|ManagedAgentsAgentAutoEvaluatedPermissionAsk|ManagedAgentsAgentAutoEvaluatedPermissionDeny {
+        return match ($type) {
+            Type::ALLOW, 'allow' => ManagedAgentsAgentAutoEvaluatedPermissionAllow::with(
+            ),
+            Type::ASK, 'ask' => ManagedAgentsAgentAutoEvaluatedPermissionAsk::with(
+                reasonCode: $reasonCode ?? throw new \ArgumentCountError('$reasonCode is required'),
+            ),
+            Type::DENY, 'deny' => ManagedAgentsAgentAutoEvaluatedPermissionDeny::with(
+                reasonCode: $reasonCode ?? throw new \ArgumentCountError('$reasonCode is required'),
+            ),
+            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
+        };
     }
 }

@@ -6,6 +6,7 @@ namespace Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent;
 
 use Anthropic\Beta\Agents\BetaManagedAgentsAnthropicSkill;
 use Anthropic\Beta\Agents\BetaManagedAgentsCustomSkill;
+use Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Skill\Type;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -37,5 +38,32 @@ final class Skill implements ConverterSource
             'anthropic' => BetaManagedAgentsAnthropicSkill::class,
             'custom' => BetaManagedAgentsCustomSkill::class,
         ];
+    }
+
+    /**
+     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
+     *
+     * @return ($type is Type::ANTHROPIC|'anthropic' ? BetaManagedAgentsAnthropicSkill : ($type is Type::CUSTOM|'custom' ? BetaManagedAgentsCustomSkill : BetaManagedAgentsAnthropicSkill|BetaManagedAgentsCustomSkill))
+     *
+     * @throws \UnhandledMatchError
+     */
+    public static function with(
+        Type|string $type,
+        string $skillID,
+        string $version,
+    ): BetaManagedAgentsAnthropicSkill|BetaManagedAgentsCustomSkill {
+        return match ($type) {
+            Type::ANTHROPIC, 'anthropic' => BetaManagedAgentsAnthropicSkill::with(
+                type: 'anthropic',
+                skillID: $skillID,
+                version: $version
+            ),
+            Type::CUSTOM, 'custom' => BetaManagedAgentsCustomSkill::with(
+                type: 'custom',
+                skillID: $skillID,
+                version: $version
+            ),
+            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
+        };
     }
 }

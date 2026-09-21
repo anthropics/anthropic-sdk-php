@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\BetaRequestToolRemovalBlock;
 
+use Anthropic\Beta\Messages\BetaRequestToolRemovalBlock\Tool\Type;
 use Anthropic\Beta\Messages\BetaToolChangeMCPToolReference;
 use Anthropic\Beta\Messages\BetaToolChangeMCPToolsetReference;
 use Anthropic\Beta\Messages\BetaToolChangeToolReference;
@@ -38,5 +39,32 @@ final class Tool implements ConverterSource
             'mcp_tool_reference' => BetaToolChangeMCPToolReference::class,
             'mcp_toolset_reference' => BetaToolChangeMCPToolsetReference::class,
         ];
+    }
+
+    /**
+     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
+     *
+     * @return ($type is Type::TOOL_REFERENCE|'tool_reference' ? BetaToolChangeToolReference : ($type is Type::MCP_TOOL_REFERENCE|'mcp_tool_reference' ? BetaToolChangeMCPToolReference : ($type is Type::MCP_TOOLSET_REFERENCE|'mcp_toolset_reference' ? BetaToolChangeMCPToolsetReference : BetaToolChangeToolReference|BetaToolChangeMCPToolReference|BetaToolChangeMCPToolsetReference)))
+     *
+     * @throws \UnhandledMatchError
+     */
+    public static function with(
+        Type|string $type,
+        ?string $name = null,
+        ?string $serverName = null
+    ): BetaToolChangeToolReference|BetaToolChangeMCPToolReference|BetaToolChangeMCPToolsetReference {
+        return match ($type) {
+            Type::TOOL_REFERENCE, 'tool_reference' => BetaToolChangeToolReference::with(
+                name: $name ?? throw new \ArgumentCountError('$name is required')
+            ),
+            Type::MCP_TOOL_REFERENCE, 'mcp_tool_reference' => BetaToolChangeMCPToolReference::with(
+                name: $name ?? throw new \ArgumentCountError('$name is required'),
+                serverName: $serverName ?? throw new \ArgumentCountError('$serverName is required'),
+            ),
+            Type::MCP_TOOLSET_REFERENCE, 'mcp_toolset_reference' => BetaToolChangeMCPToolsetReference::with(
+                serverName: $serverName ?? throw new \ArgumentCountError('$serverName is required'),
+            ),
+            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
+        };
     }
 }
