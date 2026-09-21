@@ -692,6 +692,31 @@ final class BetaToolRunnerTest extends TestCase
     }
 
     #[Test]
+    public function testAddToolsReplacesASameNamedToolForACallAlreadyInTheTurn(): void
+    {
+        $this->transporter->addResponse($this->callsTool('get_weather', 'toolu_weather'));
+        $this->transporter->addResponse($this->textResponse('Raining.'));
+
+        $calls = [];
+        $getWeather = $this->recordingTool('get_weather', $calls);
+        $newGetWeather = $this->recordingTool('get_weather', $calls, 'new get_weather');
+
+        $this->runWithToolChanges(
+            tools: [$getWeather],
+            script: ['msg_toolu_weather' => fn (BetaToolRunner $runner) => $runner->addTools($newGetWeather)],
+        );
+
+        $this->assertSame(['new get_weather'], $calls);
+        $this->assertSame(
+            [
+                self::ranResult('toolu_weather', 'new get_weather'),
+                self::toolChangesMessage(self::addition($newGetWeather->definition)),
+            ],
+            array_slice($this->sentMessages(1), -2),
+        );
+    }
+
+    #[Test]
     public function testRemoveToolsRefusesACallAlreadyInTheTurn(): void
     {
         $this->transporter->addResponse($this->callsTool('get_weather', 'toolu_weather'));
@@ -765,10 +790,10 @@ final class BetaToolRunnerTest extends TestCase
             ],
         );
 
-        $this->assertSame(['get_time', 'get_weather'], $calls);
+        $this->assertSame(['get_time', 'get_weather', 'get_weather'], $calls);
         $this->assertSame(
             [
-                self::notFoundResult('toolu_weather', 'get_weather'),
+                self::ranResult('toolu_weather', 'get_weather'),
                 self::toolChangesMessage(self::addition($getWeather->definition)),
             ],
             array_slice($this->sentMessages(2), -2),
@@ -2008,6 +2033,27 @@ final class BetaToolRunnerTest extends TestCase
         $this->assertSame([], $calls);
         $this->assertEquals(self::compactionBlockAlone(), $this->sentMessages(1));
         $this->assertSame(self::notFoundResult('toolu_weather', 'get_weather'), $this->lastSentMessage(2));
+    }
+
+    #[Test]
+    public function testAToolTheHistoryRemovedComesBackWhenAddedWhileHandlingTheCompactionResponse(): void
+    {
+        $this->transporter->addResponse($this->compactedResponse());
+        $this->transporter->addResponse($this->callsTool('get_weather', 'toolu_weather'));
+        $this->transporter->addResponse($this->textResponse('Sunny.'));
+
+        $calls = [];
+        $getWeather = $this->recordingTool('get_weather', $calls);
+
+        $this->runWithToolChanges(
+            tools: [$getWeather],
+            script: ['msg_compacted' => fn (BetaToolRunner $runner) => $runner->addTools($getWeather)],
+            beforeFirstRequest: fn (BetaToolRunner $runner) => $runner->compactBeforeNextTurn(),
+            messages: [self::INITIAL_MESSAGE, self::toolChangesMessage(self::removal('get_weather'))],
+        );
+
+        $this->assertSame(['get_weather'], $calls);
+        $this->assertSame(self::ranResult('toolu_weather', 'get_weather'), $this->lastSentMessage(2));
     }
 
     #[Test]

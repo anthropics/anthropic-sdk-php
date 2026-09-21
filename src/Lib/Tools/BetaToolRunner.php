@@ -64,7 +64,7 @@ final class BetaToolRunner implements \IteratorAggregate
 
     private string $model;
 
-    /** @var list<array{add: BetaRunnableTool|BaseModel|array<string, mixed>}|array{remove: string}> A runnable tool or a plain definition to add, or the name of a tool to remove */
+    /** @var list<array<string, mixed>> The tool_addition / tool_removal blocks of the next system message, in call order */
     private array $pendingToolChanges = [];
 
     /** @var BetaCompactionConfig|BetaCompactionConfigShape|null */
@@ -228,8 +228,9 @@ final class BetaToolRunner implements \IteratorAggregate
     /**
      * Give the model more tools without changing `tools`, which would miss the prompt cache.
      *
-     * A runnable tool can be called from the request that carries its definition. A plain definition
-     * (a server tool, say) is sent as given and never run, and drops a runnable tool of the same name.
+     * A runnable tool is run under its name at once, even for a call in the message being handled; its
+     * definition goes out with the next request. A plain definition (a server tool, say) is sent as given
+     * and never run, and drops a runnable tool of the same name.
      * Pass the `inline-tools-2026-09-15` beta in `betas`; the runner does not add it.
      *
      * In the rare case where a compaction response comes back without `tool_changes` even though the
@@ -242,7 +243,20 @@ final class BetaToolRunner implements \IteratorAggregate
     public function addTools(BetaRunnableTool|BaseModel|array ...$tools): void
     {
         foreach ($tools as $tool) {
-            $this->pendingToolChanges[] = ['add' => $tool];
+            if ($tool instanceof BetaRunnableTool) {
+                $this->runnableToolsByName[$tool->name()] = $tool;
+                // Added while a compaction response is handled, it is no longer a tool the summarized history took away.
+                unset($this->removedByHistory[$tool->name()]);
+            } elseif (is_string($tool['name'] ?? null)) {
+                unset($this->runnableToolsByName[$tool['name']]);
+            }
+            $this->pendingToolChanges[] = [
+                'type' => 'tool_addition',
+                'tool' => [
+                    'type' => 'tool_definition',
+                    'definition' => self::toArray($tool instanceof BetaRunnableTool ? $tool->definition : $tool),
+                ],
+            ];
         }
     }
 
@@ -259,7 +273,7 @@ final class BetaToolRunner implements \IteratorAggregate
         foreach ($tools as $tool) {
             $name = $tool instanceof BetaRunnableTool ? $tool->name() : $tool;
             unset($this->runnableToolsByName[$name]);
-            $this->pendingToolChanges[] = ['remove' => $name];
+            $this->pendingToolChanges[] = ['type' => 'tool_removal', 'tool' => ['type' => 'tool_reference', 'name' => $name]];
         }
     }
 
@@ -617,31 +631,8 @@ final class BetaToolRunner implements \IteratorAggregate
             return;
         }
 
-        $blocks = [];
-        foreach ($this->pendingToolChanges as $change) {
-            if (isset($change['remove'])) {
-                unset($this->runnableToolsByName[$change['remove']]);
-                $blocks[] = ['type' => 'tool_removal', 'tool' => ['type' => 'tool_reference', 'name' => $change['remove']]];
-
-                continue;
-            }
-
-            $tool = $change['add'];
-            $definition = $tool instanceof BetaRunnableTool ? $tool->definition : $tool;
-            if ($tool instanceof BetaRunnableTool) {
-                $this->runnableToolsByName[$tool->name()] = $tool;
-            } elseif (is_string($definition['name'] ?? null)) {
-                unset($this->runnableToolsByName[$definition['name']]);
-            }
-
-            $blocks[] = [
-                'type' => 'tool_addition',
-                'tool' => ['type' => 'tool_definition', 'definition' => self::toArray($definition)],
-            ];
-        }
-
         // Not pushMessages(): that marks the history as caller-edited, so the runner would not append this turn.
-        $this->messages[] = ['role' => 'system', 'content' => $blocks];
+        $this->messages[] = ['role' => 'system', 'content' => $this->pendingToolChanges];
         $this->pendingToolChanges = [];
     }
 
@@ -716,6 +707,8 @@ final class BetaToolRunner implements \IteratorAggregate
      * messages of the turns it summarized. Removal is only a hint to the
      * model, which can still emit a tool_use for a removed tool — such a call
      * must behave exactly like a call to a tool that was never defined.
+     * Changes queued by addTools() / removeTools() fold in last, as the
+     * system message they will be sent in.
      *
      * @return array<string, true>
      */
@@ -723,7 +716,7 @@ final class BetaToolRunner implements \IteratorAggregate
     {
         $available = array_fill_keys(array_keys($this->runnableToolsByName), true);
 
-        foreach ($this->messages as $message) {
+        foreach ([...$this->messages, ['role' => 'system', 'content' => $this->pendingToolChanges]] as $message) {
             $message = self::toArray($message);
             if (!is_array($message)) {
                 continue;
