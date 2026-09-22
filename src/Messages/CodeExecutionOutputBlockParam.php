@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type CodeExecutionOutputBlockParamShape = array{
@@ -19,7 +20,7 @@ final class CodeExecutionOutputBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'code_execution_output' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('code_execution_output'))]
     public string $type = 'code_execution_output';
 
     #[Required('file_id')]

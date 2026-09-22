@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A `fallback` block echoed back from a prior response.
@@ -39,7 +40,7 @@ final class BetaFallbackBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'fallback' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('fallback'))]
     public string $type = 'fallback';
 
     /**

@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A file download that failed — or was cancelled — during this call.
@@ -22,7 +23,7 @@ final class BetaBrowserStateChangeDownloadFailed implements BaseModel
     use SdkModel;
 
     /** @var 'download_failed' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('download_failed'))]
     public string $type = 'download_failed';
 
     /**

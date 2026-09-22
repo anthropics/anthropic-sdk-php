@@ -30,11 +30,14 @@ final class MemoryVersionRetrieveParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
+    /**
+     * The ID of the memory store that holds the version (`memstore_...`).
+     */
     #[Required]
     public string $memoryStoreID;
 
     /**
-     * Query parameter for view.
+     * Selects which projection of a `memory` or `memory_version` the server returns. `basic` returns the object with `content` set to `null`; `full` populates `content`. When omitted, the default is endpoint-specific: retrieve operations default to `full`; list, create, and update operations default to `basic`. Listing with `view=full` caps `limit` at 20.
      *
      * @var value-of<ManagedAgentsMemoryView>|null $view
      */
@@ -49,6 +52,11 @@ final class MemoryVersionRetrieveParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    /**
+     * Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
+     */
     #[Optional]
     public ?string $workspaceID;
 
@@ -96,6 +104,9 @@ final class MemoryVersionRetrieveParams implements BaseModel
         return $self;
     }
 
+    /**
+     * The ID of the memory store that holds the version (`memstore_...`).
+     */
     public function withMemoryStoreID(string $memoryStoreID): self
     {
         $self = clone $this;
@@ -105,7 +116,7 @@ final class MemoryVersionRetrieveParams implements BaseModel
     }
 
     /**
-     * Query parameter for view.
+     * Selects which projection of a `memory` or `memory_version` the server returns. `basic` returns the object with `content` set to `null`; `full` populates `content`. When omitted, the default is endpoint-specific: retrieve operations default to `full`; list, create, and update operations default to `basic`. Listing with `view=full` caps `limit` at 20.
      *
      * @param ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView> $view
      */
@@ -130,6 +141,11 @@ final class MemoryVersionRetrieveParams implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
+     */
     public function withWorkspaceID(string $workspaceID): self
     {
         $self = clone $this;

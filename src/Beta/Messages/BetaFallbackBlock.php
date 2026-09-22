@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Marks the point in `content` where one model's output gives way to the next.
@@ -37,7 +38,7 @@ final class BetaFallbackBlock implements BaseModel
     use SdkModel;
 
     /** @var 'fallback' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('fallback'))]
     public string $type = 'fallback';
 
     /**

@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * No reprice was applied; ``reason`` says why.
@@ -25,7 +26,7 @@ final class BetaFallbackCreditNotApplied implements BaseModel
     use SdkModel;
 
     /** @var 'not_applied' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('not_applied'))]
     public string $type = 'not_applied';
 
     /**

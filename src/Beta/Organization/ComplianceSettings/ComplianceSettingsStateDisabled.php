@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\ComplianceSettings;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type ComplianceSettingsStateDisabledShape = array{type: 'disabled'}
@@ -17,7 +18,7 @@ final class ComplianceSettingsStateDisabled implements BaseModel
     use SdkModel;
 
     /** @var 'disabled' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('disabled'))]
     public string $type = 'disabled';
 
     public function __construct()

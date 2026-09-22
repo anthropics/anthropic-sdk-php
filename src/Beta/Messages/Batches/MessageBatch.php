@@ -8,6 +8,7 @@ use Anthropic\Beta\Messages\Batches\MessageBatch\ProcessingStatus;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type MessageBatchRequestCountsShape from \Anthropic\Beta\Messages\Batches\MessageBatchRequestCounts
@@ -37,7 +38,7 @@ final class MessageBatch implements BaseModel
      *
      * @var 'message_batch' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('message_batch'))]
     public string $type = 'message_batch';
 
     /**

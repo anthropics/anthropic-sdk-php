@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaCitationContentBlockLocationShape = array{
@@ -25,7 +26,7 @@ final class BetaCitationContentBlockLocation implements BaseModel
     use SdkModel;
 
     /** @var 'content_block_location' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('content_block_location'))]
     public string $type = 'content_block_location';
 
     /**

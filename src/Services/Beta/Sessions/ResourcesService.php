@@ -40,8 +40,8 @@ final class ResourcesService implements ResourcesContract
      *
      * Get Session Resource
      *
-     * @param string $resourceID Path param: Path parameter resource_id
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $resourceID Path param
+     * @param string $sessionID Path param
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -76,8 +76,8 @@ final class ResourcesService implements ResourcesContract
      *
      * Update Session Resource
      *
-     * @param string $resourceID Path param: Path parameter resource_id
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $resourceID Path param
+     * @param string $sessionID Path param
      * @param string $authorizationToken Body param: New authorization token for the resource. Currently only `github_repository` resources support token rotation.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
@@ -115,7 +115,7 @@ final class ResourcesService implements ResourcesContract
      *
      * List Session Resources
      *
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $sessionID Path param
      * @param int $limit Query param: Maximum number of resources to return per page (max 1000). If omitted, returns all resources.
      * @param string $page query param: Opaque cursor from a previous response's `next_page` field
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
@@ -156,8 +156,8 @@ final class ResourcesService implements ResourcesContract
      *
      * Delete Session Resource
      *
-     * @param string $resourceID Path param: Path parameter resource_id
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $resourceID Path param
+     * @param string $sessionID Path param
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -192,7 +192,7 @@ final class ResourcesService implements ResourcesContract
      *
      * Add Session Resource
      *
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $sessionID Path param
      * @param string $fileID body param: ID of a previously uploaded file
      * @param Type|value-of<Type> $type Body param
      * @param string|null $mountPath Body param: Mount path in the container. Defaults to `/mnt/session/uploads/<file_id>`.

@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Webhooks;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaWebhookVaultCredentialCreatedEventDataShape = array{
@@ -23,7 +24,7 @@ final class BetaWebhookVaultCredentialCreatedEventData implements BaseModel
     use SdkModel;
 
     /** @var 'vault_credential.created' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('vault_credential.created'))]
     public string $type = 'vault_credential.created';
 
     /**

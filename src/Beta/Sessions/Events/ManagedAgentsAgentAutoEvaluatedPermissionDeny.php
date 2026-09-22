@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Sessions\Events;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The server judged the invocation high-risk; it does not execute and a synthetic error tool result is appended.
@@ -21,7 +22,7 @@ final class ManagedAgentsAgentAutoEvaluatedPermissionDeny implements BaseModel
     use SdkModel;
 
     /** @var 'deny' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('deny'))]
     public string $type = 'deny';
 
     /**

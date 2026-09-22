@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaWebSearchResultBlockParamShape = array{
@@ -24,7 +25,7 @@ final class BetaWebSearchResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'web_search_result' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('web_search_result'))]
     public string $type = 'web_search_result';
 
     #[Required('encrypted_content')]

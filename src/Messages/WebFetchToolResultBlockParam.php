@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\WebFetchToolResultBlockParam\Caller;
 
 /**
@@ -31,7 +32,7 @@ final class WebFetchToolResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'web_fetch_tool_result' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('web_fetch_tool_result'))]
     public string $type = 'web_fetch_tool_result';
 
     /** @var ContentVariants $content */

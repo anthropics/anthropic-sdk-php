@@ -8,6 +8,7 @@ use Anthropic\Beta\Messages\BetaTextEditorCodeExecutionViewResultBlock\FileType;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaTextEditorCodeExecutionViewResultBlockShape = array{
@@ -25,7 +26,7 @@ final class BetaTextEditorCodeExecutionViewResultBlock implements BaseModel
     use SdkModel;
 
     /** @var 'text_editor_code_execution_view_result' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('text_editor_code_execution_view_result'))]
     public string $type = 'text_editor_code_execution_view_result';
 
     #[Required]

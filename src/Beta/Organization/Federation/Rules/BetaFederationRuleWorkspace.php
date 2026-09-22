@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\Federation\Rules;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaFederationRuleWorkspaceShape = array{
@@ -24,7 +25,7 @@ final class BetaFederationRuleWorkspace implements BaseModel
     use SdkModel;
 
     /** @var 'federation_rule_workspace' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('federation_rule_workspace'))]
     public string $type = 'federation_rule_workspace';
 
     /**

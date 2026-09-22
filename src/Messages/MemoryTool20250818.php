@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Core\Conversion\MapOf;
 use Anthropic\Messages\MemoryTool20250818\AllowedCaller;
 
@@ -36,11 +37,11 @@ final class MemoryTool20250818 implements BaseModel
      *
      * @var 'memory' $name
      */
-    #[Required]
+    #[Required(type: new ConstantOf('memory'))]
     public string $name = 'memory';
 
     /** @var 'memory_20250818' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('memory_20250818'))]
     public string $type = 'memory_20250818';
 
     /** @var list<value-of<AllowedCaller>>|null $allowedCallers */

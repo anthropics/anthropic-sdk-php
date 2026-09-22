@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type TextBlockParamShape from \Anthropic\Messages\TextBlockParam
@@ -29,7 +30,7 @@ final class SearchResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'search_result' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('search_result'))]
     public string $type = 'search_result';
 
     /** @var list<TextBlockParam> $content */

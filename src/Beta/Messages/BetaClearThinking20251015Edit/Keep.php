@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages\BetaClearThinking20251015Edit;
 use Anthropic\Beta\Messages\BetaAllThinkingTurns;
 use Anthropic\Beta\Messages\BetaThinkingTurns;
 use Anthropic\Core\Concerns\SdkUnion;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
@@ -28,6 +29,10 @@ final class Keep implements ConverterSource
      */
     public static function variants(): array
     {
-        return [BetaThinkingTurns::class, BetaAllThinkingTurns::class, 'string'];
+        return [
+            BetaThinkingTurns::class,
+            BetaAllThinkingTurns::class,
+            new ConstantOf('all'),
+        ];
     }
 }

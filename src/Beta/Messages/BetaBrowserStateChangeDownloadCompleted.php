@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A file download that finished during this call, reported with the
@@ -29,7 +30,7 @@ final class BetaBrowserStateChangeDownloadCompleted implements BaseModel
     use SdkModel;
 
     /** @var 'download_completed' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('download_completed'))]
     public string $type = 'download_completed';
 
     /**

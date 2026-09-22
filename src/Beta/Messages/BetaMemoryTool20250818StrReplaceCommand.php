@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaMemoryTool20250818StrReplaceCommandShape = array{
@@ -23,7 +24,7 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
      *
      * @var 'str_replace' $command
      */
-    #[Required]
+    #[Required(type: new ConstantOf('str_replace'))]
     public string $command = 'str_replace';
 
     /**

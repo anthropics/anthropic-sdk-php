@@ -8,6 +8,7 @@ use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type BetaMessageShape from \Anthropic\Beta\Messages\BetaMessage
@@ -22,7 +23,7 @@ final class MessageBatchSucceededResult implements BaseModel
     use SdkModel;
 
     /** @var 'succeeded' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('succeeded'))]
     public string $type = 'succeeded';
 
     #[Required]

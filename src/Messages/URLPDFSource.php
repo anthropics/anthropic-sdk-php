@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type URLPDFSourceShape = array{type: 'url', url: string}
@@ -17,7 +18,7 @@ final class URLPDFSource implements BaseModel
     use SdkModel;
 
     /** @var 'url' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('url'))]
     public string $type = 'url';
 
     #[Required]

@@ -97,4 +97,8 @@ enum AnthropicBeta: string
     case MID_CONVERSATION_SYSTEM_CLEAR_AT_2026_08_21 = 'mid-conversation-system-clear-at-2026-08-21';
 
     case COMPACT_2026_09_04 = 'compact-2026-09-04';
+
+    case INLINE_TOOLS_2026_09_15 = 'inline-tools-2026-09-15';
+
+    case MCP_CLIENT_2026_09_15 = 'mcp-client-2026-09-15';
 }

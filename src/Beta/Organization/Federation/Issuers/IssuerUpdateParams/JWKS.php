@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\Federation\Issuers\IssuerUpdateParams;
 use Anthropic\Beta\Organization\Federation\Issuers\BetaJWKSDiscovery;
 use Anthropic\Beta\Organization\Federation\Issuers\BetaJWKSExplicitURL;
 use Anthropic\Beta\Organization\Federation\Issuers\BetaJWKSInline;
+use Anthropic\Beta\Organization\Federation\Issuers\IssuerUpdateParams\JWKS\Type;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -40,5 +41,37 @@ final class JWKS implements ConverterSource
             'explicit_url' => BetaJWKSExplicitURL::class,
             'inline' => BetaJWKSInline::class,
         ];
+    }
+
+    /**
+     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
+     *
+     * @param list<array<string,mixed>>|null $keys
+     *
+     * @return ($type is Type::DISCOVERY|'discovery' ? BetaJWKSDiscovery : ($type is Type::EXPLICIT_URL|'explicit_url' ? BetaJWKSExplicitURL : ($type is Type::INLINE|'inline' ? BetaJWKSInline : BetaJWKSDiscovery|BetaJWKSExplicitURL|BetaJWKSInline)))
+     *
+     * @throws \UnhandledMatchError
+     */
+    public static function with(
+        Type|string $type,
+        ?string $caCertPEM = null,
+        ?string $discoveryBase = null,
+        ?string $url = null,
+        ?array $keys = null,
+    ): BetaJWKSDiscovery|BetaJWKSExplicitURL|BetaJWKSInline {
+        return match ($type) {
+            Type::DISCOVERY, 'discovery' => BetaJWKSDiscovery::with(
+                caCertPEM: $caCertPEM,
+                discoveryBase: $discoveryBase
+            ),
+            Type::EXPLICIT_URL, 'explicit_url' => BetaJWKSExplicitURL::with(
+                url: $url ?? throw new \ArgumentCountError('$url is required'),
+                caCertPEM: $caCertPEM,
+            ),
+            Type::INLINE, 'inline' => BetaJWKSInline::with(
+                keys: $keys ?? throw new \ArgumentCountError('$keys is required')
+            ),
+            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
+        };
     }
 }

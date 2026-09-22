@@ -7,6 +7,7 @@ namespace Anthropic\Messages\Batches;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\Batches\MessageBatch\ProcessingStatus;
 
 /**
@@ -37,7 +38,7 @@ final class MessageBatch implements BaseModel
      *
      * @var 'message_batch' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('message_batch'))]
     public string $type = 'message_batch';
 
     /**

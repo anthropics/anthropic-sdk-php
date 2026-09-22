@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaInputTokensTriggerShape = array{
@@ -19,7 +20,7 @@ final class BetaInputTokensTrigger implements BaseModel
     use SdkModel;
 
     /** @var 'input_tokens' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('input_tokens'))]
     public string $type = 'input_tokens';
 
     #[Required]

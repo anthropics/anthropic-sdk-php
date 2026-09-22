@@ -33,13 +33,13 @@ final class UserProfileListParams implements BaseModel
     use SdkParams;
 
     /**
-     * Query parameter for limit.
+     * The maximum number of user profiles to return, from 1 to 100. Defaults to 20.
      */
     #[Optional]
     public ?int $limit;
 
     /**
-     * Query parameter for order.
+     * The sort direction, applied to the field that `order_by` selects. Defaults to `desc`.
      *
      * @var value-of<Order>|null $order
      */
@@ -47,7 +47,7 @@ final class UserProfileListParams implements BaseModel
     public ?string $order;
 
     /**
-     * Query parameter for order_by.
+     * The field to sort user profiles by, in the direction that `order` sets. Defaults to `created_at`.
      *
      * @var value-of<OrderBy>|null $orderBy
      */
@@ -55,7 +55,9 @@ final class UserProfileListParams implements BaseModel
     public ?string $orderBy;
 
     /**
-     * Query parameter for page.
+     * The cursor for the page to return, taken from `next_page` in a previous response.
+     *
+     * Leave it out to get the first page.
      */
     #[Optional]
     public ?string $page;
@@ -68,6 +70,11 @@ final class UserProfileListParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    /**
+     * Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
+     */
     #[Optional]
     public ?string $workspaceID;
 
@@ -106,7 +113,7 @@ final class UserProfileListParams implements BaseModel
     }
 
     /**
-     * Query parameter for limit.
+     * The maximum number of user profiles to return, from 1 to 100. Defaults to 20.
      */
     public function withLimit(int $limit): self
     {
@@ -117,7 +124,7 @@ final class UserProfileListParams implements BaseModel
     }
 
     /**
-     * Query parameter for order.
+     * The sort direction, applied to the field that `order_by` selects. Defaults to `desc`.
      *
      * @param Order|value-of<Order> $order
      */
@@ -130,7 +137,7 @@ final class UserProfileListParams implements BaseModel
     }
 
     /**
-     * Query parameter for order_by.
+     * The field to sort user profiles by, in the direction that `order` sets. Defaults to `created_at`.
      *
      * @param OrderBy|value-of<OrderBy> $orderBy
      */
@@ -143,7 +150,9 @@ final class UserProfileListParams implements BaseModel
     }
 
     /**
-     * Query parameter for page.
+     * The cursor for the page to return, taken from `next_page` in a previous response.
+     *
+     * Leave it out to get the first page.
      */
     public function withPage(string $page): self
     {
@@ -166,6 +175,11 @@ final class UserProfileListParams implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
+     */
     public function withWorkspaceID(string $workspaceID): self
     {
         $self = clone $this;

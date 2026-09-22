@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type BetaToolReferenceBlockShape from \Anthropic\Beta\Messages\BetaToolReferenceBlock
@@ -22,7 +23,7 @@ final class BetaToolSearchToolSearchResultBlock implements BaseModel
     use SdkModel;
 
     /** @var 'tool_search_tool_search_result' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('tool_search_tool_search_result'))]
     public string $type = 'tool_search_tool_search_result';
 
     /** @var list<BetaToolReferenceBlock> $toolReferences */

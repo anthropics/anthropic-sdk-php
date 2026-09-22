@@ -50,5 +50,7 @@ enum Type: string
 
     case TOOL_REMOVAL = 'tool_removal';
 
+    case MCP_TOOL_LISTING = 'mcp_tool_listing';
+
     case FALLBACK = 'fallback';
 }

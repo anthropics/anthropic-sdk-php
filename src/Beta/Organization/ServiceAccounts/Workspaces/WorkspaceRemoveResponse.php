@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\ServiceAccounts\Workspaces;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type WorkspaceRemoveResponseShape = array{
@@ -21,7 +22,7 @@ final class WorkspaceRemoveResponse implements BaseModel
     use SdkModel;
 
     /** @var 'service_account_workspace_member_deleted' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('service_account_workspace_member_deleted'))]
     public string $type = 'service_account_workspace_member_deleted';
 
     /**

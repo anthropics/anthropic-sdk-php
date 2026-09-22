@@ -11,4 +11,6 @@ enum Type: string
     case MCP_TOOL_REFERENCE = 'mcp_tool_reference';
 
     case MCP_TOOLSET_REFERENCE = 'mcp_toolset_reference';
+
+    case TOOL_DEFINITION = 'tool_definition';
 }

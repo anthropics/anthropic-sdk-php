@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\RateLimits;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type OrganizationRateLimitWebSearchGroupShape = array{
@@ -23,7 +24,7 @@ final class OrganizationRateLimitWebSearchGroup implements BaseModel
      *
      * @var 'web_search' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('web_search'))]
     public string $type = 'web_search';
 
     /**

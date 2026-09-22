@@ -7,6 +7,7 @@ namespace Anthropic;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type PermissionErrorShape = array{
@@ -19,7 +20,7 @@ final class PermissionError implements BaseModel
     use SdkModel;
 
     /** @var 'permission_error' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('permission_error'))]
     public string $type = 'permission_error';
 
     #[Required]

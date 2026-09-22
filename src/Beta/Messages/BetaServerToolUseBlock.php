@@ -10,6 +10,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type CallerVariants from \Anthropic\Beta\Messages\BetaServerToolUseBlock\Caller
@@ -29,7 +30,7 @@ final class BetaServerToolUseBlock implements BaseModel
     use SdkModel;
 
     /** @var 'server_tool_use' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('server_tool_use'))]
     public string $type = 'server_tool_use';
 
     #[Required]

@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\WebFetchTool20260309\AllowedCaller;
 
 /**
@@ -45,11 +46,11 @@ final class WebFetchTool20260309 implements BaseModel
      *
      * @var 'web_fetch' $name
      */
-    #[Required]
+    #[Required(type: new ConstantOf('web_fetch'))]
     public string $name = 'web_fetch';
 
     /** @var 'web_fetch_20260309' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('web_fetch_20260309'))]
     public string $type = 'web_fetch_20260309';
 
     /** @var list<value-of<AllowedCaller>>|null $allowedCallers */

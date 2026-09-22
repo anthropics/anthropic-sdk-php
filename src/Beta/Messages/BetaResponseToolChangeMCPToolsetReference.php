@@ -1,0 +1,84 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\Beta\Messages;
+
+use Anthropic\Core\Attributes\Required;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
+
+/**
+ * Reference to every tool in the named MCP server's toolset, as a
+ * ``compaction`` block's ``tool_changes`` entry reports it. Send it back
+ * unchanged with the block.
+ *
+ * @phpstan-type BetaResponseToolChangeMCPToolsetReferenceShape = array{
+ *   serverName: string, type: 'mcp_toolset_reference'
+ * }
+ */
+final class BetaResponseToolChangeMCPToolsetReference implements BaseModel
+{
+    /** @use SdkModel<BetaResponseToolChangeMCPToolsetReferenceShape> */
+    use SdkModel;
+
+    /** @var 'mcp_toolset_reference' $type */
+    #[Required(type: new ConstantOf('mcp_toolset_reference'))]
+    public string $type = 'mcp_toolset_reference';
+
+    #[Required('server_name')]
+    public string $serverName;
+
+    /**
+     * `new BetaResponseToolChangeMCPToolsetReference()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaResponseToolChangeMCPToolsetReference::with(serverName: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaResponseToolChangeMCPToolsetReference)->withServerName(...)
+     * ```
+     */
+    public function __construct()
+    {
+        $this->initialize();
+    }
+
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function with(string $serverName): self
+    {
+        $self = new self;
+
+        $self['serverName'] = $serverName;
+
+        return $self;
+    }
+
+    public function withServerName(string $serverName): self
+    {
+        $self = clone $this;
+        $self['serverName'] = $serverName;
+
+        return $self;
+    }
+
+    /**
+     * @param 'mcp_toolset_reference' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+}

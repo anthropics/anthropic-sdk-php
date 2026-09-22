@@ -18,9 +18,17 @@ final class BetaDreamError implements BaseModel
     /** @use SdkModel<BetaDreamErrorShape> */
     use SdkModel;
 
+    /**
+     * A human-readable explanation of why the dream failed.
+     */
     #[Required]
     public string $message;
 
+    /**
+     * A code for why the dream failed, such as `timeout` or `internal_error`.
+     *
+     * The [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#errors) lists common error codes and when they occur.
+     */
     #[Required]
     public string $type;
 
@@ -58,6 +66,9 @@ final class BetaDreamError implements BaseModel
         return $self;
     }
 
+    /**
+     * A human-readable explanation of why the dream failed.
+     */
     public function withMessage(string $message): self
     {
         $self = clone $this;
@@ -66,6 +77,11 @@ final class BetaDreamError implements BaseModel
         return $self;
     }
 
+    /**
+     * A code for why the dream failed, such as `timeout` or `internal_error`.
+     *
+     * The [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#errors) lists common error codes and when they occur.
+     */
     public function withType(string $type): self
     {
         $self = clone $this;

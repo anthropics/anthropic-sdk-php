@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type BetaTextCitationParamVariants from \Anthropic\Beta\Messages\BetaTextCitationParam
@@ -27,7 +28,7 @@ final class BetaTextBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'text' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('text'))]
     public string $type = 'text';
 
     #[Required]

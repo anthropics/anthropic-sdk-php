@@ -11,7 +11,11 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Archive a Dream.
+ * Hide a `completed`, `failed`, or `canceled` dream from the default list of dreams.
+ *
+ * Archiving a `pending` or `running` dream returns a 400 error, so cancel it first. Archiving an archived dream returns it unchanged. An archived dream can still be fetched by ID. Archiving can't be undone.
+ *
+ * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#archive-a-dream) to learn more about archiving dreams.
  *
  * @see Anthropic\Services\Beta\DreamsService::archive()
  *
@@ -34,6 +38,11 @@ final class DreamArchiveParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    /**
+     * Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
+     */
     #[Optional]
     public ?string $workspaceID;
 
@@ -74,6 +83,11 @@ final class DreamArchiveParams implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
+     */
     public function withWorkspaceID(string $workspaceID): self
     {
         $self = clone $this;

@@ -11,6 +11,10 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
+ * The error returned with HTTP status 409 when a create or rename targets a path that another memory uses, or a path that overlaps another memory's path.
+ *
+ * Two paths overlap when one is an ancestor of the other, such as `/notes` and `/notes/todo.md`. To free the path, rename or delete the memory that `conflicting_memory_id` references, then retry. To change that memory instead of creating a new one, update it.
+ *
  * @phpstan-type ManagedAgentsMemoryPathConflictErrorShape = array{
  *   type: Type|value-of<Type>,
  *   conflictingMemoryID?: string|null,
@@ -27,12 +31,23 @@ final class ManagedAgentsMemoryPathConflictError implements BaseModel
     #[Required(enum: Type::class)]
     public string $type;
 
+    /**
+     * The ID of the memory that blocked the write (`mem_...`), or an empty string if that memory can't be identified.
+     *
+     * Retry the request when it is empty.
+     */
     #[Optional('conflicting_memory_id')]
     public ?string $conflictingMemoryID;
 
+    /**
+     * The path that blocked the write: the requested path, or the path of a memory that is an ancestor or descendant of it.
+     */
     #[Optional('conflicting_path')]
     public ?string $conflictingPath;
 
+    /**
+     * A human-readable explanation of the conflict. To handle the error in code, use `conflicting_path` and `conflicting_memory_id` instead.
+     */
     #[Optional]
     public ?string $message;
 
@@ -90,6 +105,11 @@ final class ManagedAgentsMemoryPathConflictError implements BaseModel
         return $self;
     }
 
+    /**
+     * The ID of the memory that blocked the write (`mem_...`), or an empty string if that memory can't be identified.
+     *
+     * Retry the request when it is empty.
+     */
     public function withConflictingMemoryID(string $conflictingMemoryID): self
     {
         $self = clone $this;
@@ -98,6 +118,9 @@ final class ManagedAgentsMemoryPathConflictError implements BaseModel
         return $self;
     }
 
+    /**
+     * The path that blocked the write: the requested path, or the path of a memory that is an ancestor or descendant of it.
+     */
     public function withConflictingPath(string $conflictingPath): self
     {
         $self = clone $this;
@@ -106,6 +129,9 @@ final class ManagedAgentsMemoryPathConflictError implements BaseModel
         return $self;
     }
 
+    /**
+     * A human-readable explanation of the conflict. To handle the error in code, use `conflicting_path` and `conflicting_memory_id` instead.
+     */
     public function withMessage(string $message): self
     {
         $self = clone $this;

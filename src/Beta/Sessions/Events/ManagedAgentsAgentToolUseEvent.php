@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolUseEvent\EvaluatedPermission;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolUseEvent\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
@@ -23,7 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   name: string,
  *   processedAt: \DateTimeInterface,
  *   type: Type|value-of<Type>,
- *   evaluatedPermission?: null|EvaluatedPermission|value-of<EvaluatedPermission>,
+ *   evaluatedPermission?: null|ManagedAgentsAgentEvaluatedPermission|value-of<ManagedAgentsAgentEvaluatedPermission>,
  *   evaluation?: ManagedAgentsAgentToolEvaluationShape|null,
  *   sessionThreadID?: string|null,
  * }
@@ -66,9 +65,12 @@ final class ManagedAgentsAgentToolUseEvent implements BaseModel
     /**
      * AgentEvaluatedPermission enum.
      *
-     * @var value-of<EvaluatedPermission>|null $evaluatedPermission
+     * @var value-of<ManagedAgentsAgentEvaluatedPermission>|null $evaluatedPermission
      */
-    #[Optional('evaluated_permission', enum: EvaluatedPermission::class)]
+    #[Optional(
+        'evaluated_permission',
+        enum: ManagedAgentsAgentEvaluatedPermission::class
+    )]
     public ?string $evaluatedPermission;
 
     /**
@@ -118,7 +120,7 @@ final class ManagedAgentsAgentToolUseEvent implements BaseModel
      *
      * @param array<string,mixed> $input
      * @param Type|value-of<Type> $type
-     * @param EvaluatedPermission|value-of<EvaluatedPermission>|null $evaluatedPermission
+     * @param ManagedAgentsAgentEvaluatedPermission|value-of<ManagedAgentsAgentEvaluatedPermission>|null $evaluatedPermission
      * @param ManagedAgentsAgentToolEvaluationShape|null $evaluation
      */
     public static function with(
@@ -127,7 +129,7 @@ final class ManagedAgentsAgentToolUseEvent implements BaseModel
         string $name,
         \DateTimeInterface $processedAt,
         Type|string $type,
-        EvaluatedPermission|string|null $evaluatedPermission = null,
+        ManagedAgentsAgentEvaluatedPermission|string|null $evaluatedPermission = null,
         ManagedAgentsAgentToolEvaluationAlwaysAllow|array|ManagedAgentsAgentToolEvaluationAlwaysAsk|ManagedAgentsAgentToolEvaluationAuto|null $evaluation = null,
         ?string $sessionThreadID = null,
     ): self {
@@ -206,10 +208,10 @@ final class ManagedAgentsAgentToolUseEvent implements BaseModel
     /**
      * AgentEvaluatedPermission enum.
      *
-     * @param EvaluatedPermission|value-of<EvaluatedPermission> $evaluatedPermission
+     * @param ManagedAgentsAgentEvaluatedPermission|value-of<ManagedAgentsAgentEvaluatedPermission> $evaluatedPermission
      */
     public function withEvaluatedPermission(
-        EvaluatedPermission|string $evaluatedPermission
+        ManagedAgentsAgentEvaluatedPermission|string $evaluatedPermission
     ): self {
         $self = clone $this;
         $self['evaluatedPermission'] = $evaluatedPermission;

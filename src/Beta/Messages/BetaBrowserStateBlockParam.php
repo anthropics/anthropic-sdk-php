@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The caller's browser state after a browser toolset member call —
@@ -36,7 +37,7 @@ final class BetaBrowserStateBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'browser_state' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('browser_state'))]
     public string $type = 'browser_state';
 
     /**

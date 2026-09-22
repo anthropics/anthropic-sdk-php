@@ -8,6 +8,7 @@ use Anthropic\Beta\Messages\BetaRefusalStopDetails\Category;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Structured information about a refusal.
@@ -27,7 +28,7 @@ final class BetaRefusalStopDetails implements BaseModel
     use SdkModel;
 
     /** @var 'refusal' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('refusal'))]
     public string $type = 'refusal';
 
     /**

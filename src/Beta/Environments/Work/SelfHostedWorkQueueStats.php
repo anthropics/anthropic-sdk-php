@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Environments\Work;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Statistics about the work queue for an environment.
@@ -31,7 +32,7 @@ final class SelfHostedWorkQueueStats implements BaseModel
      *
      * @var 'work_queue_stats' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('work_queue_stats'))]
     public string $type = 'work_queue_stats';
 
     /**

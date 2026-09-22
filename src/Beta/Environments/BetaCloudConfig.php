@@ -8,6 +8,7 @@ use Anthropic\Beta\Environments\BetaCloudConfig\Networking;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * `cloud` environment configuration.
@@ -32,7 +33,7 @@ final class BetaCloudConfig implements BaseModel
      *
      * @var 'cloud' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('cloud'))]
     public string $type = 'cloud';
 
     /**

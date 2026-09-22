@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\RateLimits;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type OrganizationRateLimitTokenCountGroupShape = array{
@@ -23,7 +24,7 @@ final class OrganizationRateLimitTokenCountGroup implements BaseModel
      *
      * @var 'token_count' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('token_count'))]
     public string $type = 'token_count';
 
     /**

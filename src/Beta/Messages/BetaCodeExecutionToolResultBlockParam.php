@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type BetaCodeExecutionToolResultBlockParamContentVariants from \Anthropic\Beta\Messages\BetaCodeExecutionToolResultBlockParamContent
@@ -27,7 +28,7 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'code_execution_tool_result' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('code_execution_tool_result'))]
     public string $type = 'code_execution_tool_result';
 
     /** @var BetaCodeExecutionToolResultBlockParamContentVariants $content */

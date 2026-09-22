@@ -38,7 +38,7 @@ final class MemoryVersionListParams implements BaseModel
     use SdkParams;
 
     /**
-     * Query parameter for api_key_id.
+     * Return only versions written with the API key that has this ID.
      */
     #[Optional]
     public ?string $apiKeyID;
@@ -56,19 +56,21 @@ final class MemoryVersionListParams implements BaseModel
     public ?\DateTimeInterface $createdAtLte;
 
     /**
-     * Query parameter for limit.
+     * The maximum number of versions to return per page. Defaults to 20.
      */
     #[Optional]
     public ?int $limit;
 
     /**
-     * Query parameter for memory_id.
+     * Return only versions of the memory with this ID (`mem_...`).
+     *
+     * The filter still works after the memory is deleted. The results then include the version whose `operation` is `deleted`.
      */
     #[Optional]
     public ?string $memoryID;
 
     /**
-     * Query parameter for operation.
+     * Return only versions that record this kind of change.
      *
      * @var value-of<ManagedAgentsMemoryVersionOperation>|null $operation
      */
@@ -76,25 +78,25 @@ final class MemoryVersionListParams implements BaseModel
     public ?string $operation;
 
     /**
-     * Query parameter for page.
+     * The `next_page` value from a previous response, to get the next page. Omit it to get the first page.
      */
     #[Optional]
     public ?string $page;
 
     /**
-     * Query parameter for service_account_id.
+     * Return only versions written by the service account with this ID (`svac_...`).
      */
     #[Optional]
     public ?string $serviceAccountID;
 
     /**
-     * Query parameter for session_id.
+     * Return only versions written by the session with this ID.
      */
     #[Optional]
     public ?string $sessionID;
 
     /**
-     * Query parameter for view.
+     * Selects which projection of a `memory` or `memory_version` the server returns. `basic` returns the object with `content` set to `null`; `full` populates `content`. When omitted, the default is endpoint-specific: retrieve operations default to `full`; list, create, and update operations default to `basic`. Listing with `view=full` caps `limit` at 20.
      *
      * @var value-of<ManagedAgentsMemoryView>|null $view
      */
@@ -109,6 +111,11 @@ final class MemoryVersionListParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    /**
+     * Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
+     */
     #[Optional]
     public ?string $workspaceID;
 
@@ -159,7 +166,7 @@ final class MemoryVersionListParams implements BaseModel
     }
 
     /**
-     * Query parameter for api_key_id.
+     * Return only versions written with the API key that has this ID.
      */
     public function withAPIKeyID(string $apiKeyID): self
     {
@@ -192,7 +199,7 @@ final class MemoryVersionListParams implements BaseModel
     }
 
     /**
-     * Query parameter for limit.
+     * The maximum number of versions to return per page. Defaults to 20.
      */
     public function withLimit(int $limit): self
     {
@@ -203,7 +210,9 @@ final class MemoryVersionListParams implements BaseModel
     }
 
     /**
-     * Query parameter for memory_id.
+     * Return only versions of the memory with this ID (`mem_...`).
+     *
+     * The filter still works after the memory is deleted. The results then include the version whose `operation` is `deleted`.
      */
     public function withMemoryID(string $memoryID): self
     {
@@ -214,7 +223,7 @@ final class MemoryVersionListParams implements BaseModel
     }
 
     /**
-     * Query parameter for operation.
+     * Return only versions that record this kind of change.
      *
      * @param ManagedAgentsMemoryVersionOperation|value-of<ManagedAgentsMemoryVersionOperation> $operation
      */
@@ -228,7 +237,7 @@ final class MemoryVersionListParams implements BaseModel
     }
 
     /**
-     * Query parameter for page.
+     * The `next_page` value from a previous response, to get the next page. Omit it to get the first page.
      */
     public function withPage(string $page): self
     {
@@ -239,7 +248,7 @@ final class MemoryVersionListParams implements BaseModel
     }
 
     /**
-     * Query parameter for service_account_id.
+     * Return only versions written by the service account with this ID (`svac_...`).
      */
     public function withServiceAccountID(string $serviceAccountID): self
     {
@@ -250,7 +259,7 @@ final class MemoryVersionListParams implements BaseModel
     }
 
     /**
-     * Query parameter for session_id.
+     * Return only versions written by the session with this ID.
      */
     public function withSessionID(string $sessionID): self
     {
@@ -261,7 +270,7 @@ final class MemoryVersionListParams implements BaseModel
     }
 
     /**
-     * Query parameter for view.
+     * Selects which projection of a `memory` or `memory_version` the server returns. `basic` returns the object with `content` set to `null`; `full` populates `content`. When omitted, the default is endpoint-specific: retrieve operations default to `full`; list, create, and update operations default to `basic`. Listing with `view=full` caps `limit` at 20.
      *
      * @param ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView> $view
      */
@@ -286,6 +295,11 @@ final class MemoryVersionListParams implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
+     */
     public function withWorkspaceID(string $workspaceID): self
     {
         $self = clone $this;

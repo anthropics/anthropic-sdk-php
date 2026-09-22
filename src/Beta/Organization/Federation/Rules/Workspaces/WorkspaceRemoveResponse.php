@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\Federation\Rules\Workspaces;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type WorkspaceRemoveResponseShape = array{
@@ -21,7 +22,7 @@ final class WorkspaceRemoveResponse implements BaseModel
     use SdkModel;
 
     /** @var 'federation_rule_workspace_deleted' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('federation_rule_workspace_deleted'))]
     public string $type = 'federation_rule_workspace_deleted';
 
     /**

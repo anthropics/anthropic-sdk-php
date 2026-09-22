@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The ``url_sources`` variant under which a source contributes in
@@ -20,7 +21,7 @@ final class WebFetchURLSourceAll implements BaseModel
     use SdkModel;
 
     /** @var 'all' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('all'))]
     public string $type = 'all';
 
     public function __construct()

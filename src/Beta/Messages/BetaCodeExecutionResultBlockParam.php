@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type BetaCodeExecutionOutputBlockParamShape from \Anthropic\Beta\Messages\BetaCodeExecutionOutputBlockParam
@@ -25,7 +26,7 @@ final class BetaCodeExecutionResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'code_execution_result' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('code_execution_result'))]
     public string $type = 'code_execution_result';
 
     /** @var list<BetaCodeExecutionOutputBlockParam> $content */

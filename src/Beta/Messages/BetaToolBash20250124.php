@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Core\Conversion\MapOf;
 
 /**
@@ -36,11 +37,11 @@ final class BetaToolBash20250124 implements BaseModel
      *
      * @var 'bash' $name
      */
-    #[Required]
+    #[Required(type: new ConstantOf('bash'))]
     public string $name = 'bash';
 
     /** @var 'bash_20250124' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('bash_20250124'))]
     public string $type = 'bash_20250124';
 
     /** @var list<value-of<AllowedCaller>>|null $allowedCallers */

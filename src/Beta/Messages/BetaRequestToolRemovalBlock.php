@@ -9,13 +9,14 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Mid-conversation directive to withdraw a tool.
  *
- * ``tool`` references a tool (or MCP toolset) by name from the request's
- * ``tools``; it is no longer offered to the model from this point in the
- * conversation onward.
+ * ``tool`` references a tool (or MCP toolset) by name: one declared in the
+ * request's ``tools`` or defined earlier in ``messages``. It is no longer
+ * offered to the model from this point in the conversation onward.
  *
  * @phpstan-import-type ToolVariants from \Anthropic\Beta\Messages\BetaRequestToolRemovalBlock\Tool
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Messages\BetaRequestToolRemovalBlock\Tool
@@ -33,7 +34,7 @@ final class BetaRequestToolRemovalBlock implements BaseModel
     use SdkModel;
 
     /** @var 'tool_removal' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('tool_removal'))]
     public string $type = 'tool_removal';
 
     /** @var ToolVariants $tool */

@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaMemoryTool20250818InsertCommandShape = array{
@@ -23,7 +24,7 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
      *
      * @var 'insert' $command
      */
-    #[Required]
+    #[Required(type: new ConstantOf('insert'))]
     public string $command = 'insert';
 
     /**

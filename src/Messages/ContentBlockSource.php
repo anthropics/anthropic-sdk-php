@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\ContentBlockSource\Content;
 
 /**
@@ -23,7 +24,7 @@ final class ContentBlockSource implements BaseModel
     use SdkModel;
 
     /** @var 'content' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('content'))]
     public string $type = 'content';
 
     /** @var ContentVariants $content */

@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type FileMetadataShape = array{
@@ -33,7 +34,7 @@ final class FileMetadata implements BaseModel
      *
      * @var 'file' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('file'))]
     public string $type = 'file';
 
     /**

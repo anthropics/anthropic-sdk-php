@@ -8,6 +8,7 @@ use Anthropic\Beta\Agents\BetaManagedAgentsWriteToolConfig\PermissionPolicy;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Configuration for the write tool.
@@ -28,11 +29,11 @@ final class BetaManagedAgentsWriteToolConfig implements BaseModel
     use SdkModel;
 
     /** @var 'write' $name */
-    #[Required]
+    #[Required(type: new ConstantOf('write'))]
     public string $name = 'write';
 
     /** @var 'write' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('write'))]
     public string $type = 'write';
 
     #[Required]

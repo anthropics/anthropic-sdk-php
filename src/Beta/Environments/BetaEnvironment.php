@@ -10,6 +10,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Unified Environment resource for both cloud and self-hosted environments.
@@ -40,7 +41,7 @@ final class BetaEnvironment implements BaseModel
      *
      * @var 'environment' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('environment'))]
     public string $type = 'environment';
 
     /**

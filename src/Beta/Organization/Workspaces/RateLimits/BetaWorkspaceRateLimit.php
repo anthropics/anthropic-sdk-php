@@ -15,6 +15,7 @@ use Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimit\Gro
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type GroupVariants from \Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimit\Group
@@ -41,7 +42,7 @@ final class BetaWorkspaceRateLimit implements BaseModel
      *
      * @var 'workspace_rate_limit' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('workspace_rate_limit'))]
     public string $type = 'workspace_rate_limit';
 
     /**

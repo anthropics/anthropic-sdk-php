@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type ContentVariants from \Anthropic\Messages\ToolSearchToolResultBlockParam\Content
@@ -27,7 +28,7 @@ final class ToolSearchToolResultBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'tool_search_tool_result' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('tool_search_tool_result'))]
     public string $type = 'tool_search_tool_result';
 
     /** @var ContentVariants $content */

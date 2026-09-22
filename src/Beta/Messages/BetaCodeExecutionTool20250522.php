@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
@@ -34,11 +35,11 @@ final class BetaCodeExecutionTool20250522 implements BaseModel
      *
      * @var 'code_execution' $name
      */
-    #[Required]
+    #[Required(type: new ConstantOf('code_execution'))]
     public string $name = 'code_execution';
 
     /** @var 'code_execution_20250522' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('code_execution_20250522'))]
     public string $type = 'code_execution_20250522';
 
     /** @var list<value-of<AllowedCaller>>|null $allowedCallers */

@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Configuration for the web_search tool.
@@ -33,11 +34,11 @@ final class BetaManagedAgentsWebSearchToolConfig implements BaseModel
     use SdkModel;
 
     /** @var 'web_search' $name */
-    #[Required]
+    #[Required(type: new ConstantOf('web_search'))]
     public string $name = 'web_search';
 
     /** @var 'web_search' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('web_search'))]
     public string $type = 'web_search';
 
     #[Required]

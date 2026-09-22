@@ -9,13 +9,18 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * Mid-conversation directive to surface a declared tool.
+ * Mid-conversation directive to make a tool available.
  *
- * ``tool`` references a tool (or MCP toolset) by name from the request's
- * ``tools``; it is offered to the model from this point in the
- * conversation onward.
+ * ``tool`` is a reference to a tool (or MCP toolset) declared in the
+ * request's ``tools``. Under the ``inline-tools-2026-09-15`` beta it may
+ * instead be a reference to a tool defined earlier in ``messages``, or a
+ * ``tool_definition`` object that carries an inline tool definition in
+ * ``definition`` (the same object a ``tools`` entry holds). An ``mcp_toolset``
+ * definition also requires the ``mcp-client-2026-09-15`` beta. The tool is
+ * offered to the model from this point in the conversation onward.
  *
  * @phpstan-import-type ToolVariants from \Anthropic\Beta\Messages\BetaRequestToolAdditionBlock\Tool
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Messages\BetaRequestToolAdditionBlock\Tool
@@ -33,12 +38,12 @@ final class BetaRequestToolAdditionBlock implements BaseModel
     use SdkModel;
 
     /** @var 'tool_addition' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('tool_addition'))]
     public string $type = 'tool_addition';
 
     /** @var ToolVariants $tool */
     #[Required(union: Tool::class)]
-    public BetaToolChangeToolReference|BetaToolChangeMCPToolReference|BetaToolChangeMCPToolsetReference $tool;
+    public BetaToolChangeToolReference|BetaToolChangeMCPToolReference|BetaToolChangeMCPToolsetReference|BetaToolChangeToolDefinitionParam $tool;
 
     /**
      * Create a cache control breakpoint at this content block.
@@ -74,7 +79,7 @@ final class BetaRequestToolAdditionBlock implements BaseModel
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      */
     public static function with(
-        BetaToolChangeToolReference|array|BetaToolChangeMCPToolReference|BetaToolChangeMCPToolsetReference $tool,
+        BetaToolChangeToolReference|array|BetaToolChangeMCPToolReference|BetaToolChangeMCPToolsetReference|BetaToolChangeToolDefinitionParam $tool,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
     ): self {
         $self = new self;
@@ -90,7 +95,7 @@ final class BetaRequestToolAdditionBlock implements BaseModel
      * @param ToolShape $tool
      */
     public function withTool(
-        BetaToolChangeToolReference|array|BetaToolChangeMCPToolReference|BetaToolChangeMCPToolsetReference $tool,
+        BetaToolChangeToolReference|array|BetaToolChangeMCPToolReference|BetaToolChangeMCPToolsetReference|BetaToolChangeToolDefinitionParam $tool,
     ): self {
         $self = clone $this;
         $self['tool'] = $tool;

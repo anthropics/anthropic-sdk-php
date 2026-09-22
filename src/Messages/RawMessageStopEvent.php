@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type RawMessageStopEventShape = array{type: 'message_stop'}
@@ -17,7 +18,7 @@ final class RawMessageStopEvent implements BaseModel
     use SdkModel;
 
     /** @var 'message_stop' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('message_stop'))]
     public string $type = 'message_stop';
 
     public function __construct()

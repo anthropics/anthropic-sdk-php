@@ -7,6 +7,7 @@ namespace Anthropic\Beta;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaGatewayTimeoutErrorShape = array{
@@ -19,7 +20,7 @@ final class BetaGatewayTimeoutError implements BaseModel
     use SdkModel;
 
     /** @var 'timeout_error' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('timeout_error'))]
     public string $type = 'timeout_error';
 
     #[Required]

@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\APIKeys;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type APIKeyWorkspaceScopeShape = array{
@@ -23,7 +24,7 @@ final class APIKeyWorkspaceScope implements BaseModel
      *
      * @var 'workspace' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('workspace'))]
     public string $type = 'workspace';
 
     /**

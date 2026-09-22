@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaCacheMissUnavailableShape = array{type: 'unavailable'}
@@ -17,7 +18,7 @@ final class BetaCacheMissUnavailable implements BaseModel
     use SdkModel;
 
     /** @var 'unavailable' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('unavailable'))]
     public string $type = 'unavailable';
 
     public function __construct()

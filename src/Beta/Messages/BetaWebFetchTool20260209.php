@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
@@ -42,11 +43,11 @@ final class BetaWebFetchTool20260209 implements BaseModel
      *
      * @var 'web_fetch' $name
      */
-    #[Required]
+    #[Required(type: new ConstantOf('web_fetch'))]
     public string $name = 'web_fetch';
 
     /** @var 'web_fetch_20260209' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('web_fetch_20260209'))]
     public string $type = 'web_fetch_20260209';
 
     /** @var list<value-of<AllowedCaller>>|null $allowedCallers */

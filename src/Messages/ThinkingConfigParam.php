@@ -7,6 +7,8 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
+use Anthropic\Messages\ThinkingConfigEnabled\Display;
+use Anthropic\Messages\ThinkingConfigParam\Type;
 
 /**
  * Configuration for enabling Claude's extended thinking.
@@ -41,5 +43,33 @@ final class ThinkingConfigParam implements ConverterSource
             'disabled' => ThinkingConfigDisabled::class,
             'adaptive' => ThinkingConfigAdaptive::class,
         ];
+    }
+
+    /**
+     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
+     *
+     * @param ($type is Type::ENABLED|'enabled' ? Display|value-of<Display>|null : ThinkingConfigAdaptive\Display|value-of<ThinkingConfigAdaptive\Display>|null) $display
+     *
+     * @return ($type is Type::ENABLED|'enabled' ? ThinkingConfigEnabled : ($type is Type::DISABLED|'disabled' ? ThinkingConfigDisabled : ($type is Type::ADAPTIVE|'adaptive' ? ThinkingConfigAdaptive : ThinkingConfigEnabled|ThinkingConfigDisabled|ThinkingConfigAdaptive)))
+     *
+     * @throws \UnhandledMatchError
+     */
+    public static function with(
+        Type|string $type,
+        ?int $budgetTokens = null,
+        Display|ThinkingConfigAdaptive\Display|string|null $display = null,
+    ): ThinkingConfigEnabled|ThinkingConfigDisabled|ThinkingConfigAdaptive {
+        return match ($type) {
+            Type::ENABLED, 'enabled' => ThinkingConfigEnabled::with(
+                budgetTokens: $budgetTokens ?? throw new \ArgumentCountError('$budgetTokens is required'),
+                display: $display,
+            ),
+            Type::DISABLED, 'disabled' => ThinkingConfigDisabled::with(),
+            Type::ADAPTIVE, 'adaptive' => ThinkingConfigAdaptive::with(
+                // @phpstan-ignore argument.type
+                display: $display,
+            ),
+            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
+        };
     }
 }

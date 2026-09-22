@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Input session transcripts the dream reads.
+ * The sessions that a dream reads, given as an entry in `inputs`.
  *
  * @phpstan-type BetaDreamSessionsInputShape = array{
  *   sessionIDs: list<string>, type: Type|value-of<Type>
@@ -21,7 +21,15 @@ final class BetaDreamSessionsInput implements BaseModel
     /** @use SdkModel<BetaDreamSessionsInputShape> */
     use SdkModel;
 
-    /** @var list<string> $sessionIDs */
+    /**
+     * The IDs of the sessions whose transcripts the dream reads (`sesn_...`).
+     *
+     * Give 1 to 100 IDs, with no duplicates. Each session must be in the same workspace as the dream. Responses list the IDs in sorted order.
+     *
+     * The [limits table in the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#limits) lists all the limits on a dream.
+     *
+     * @var list<string> $sessionIDs
+     */
     #[Required('session_ids', list: 'string')]
     public array $sessionIDs;
 
@@ -67,6 +75,12 @@ final class BetaDreamSessionsInput implements BaseModel
     }
 
     /**
+     * The IDs of the sessions whose transcripts the dream reads (`sesn_...`).
+     *
+     * Give 1 to 100 IDs, with no duplicates. Each session must be in the same workspace as the dream. Responses list the IDs in sorted order.
+     *
+     * The [limits table in the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#limits) lists all the limits on a dream.
+     *
      * @param list<string> $sessionIDs
      */
     public function withSessionIDs(array $sessionIDs): self

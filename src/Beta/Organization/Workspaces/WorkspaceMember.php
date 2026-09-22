@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\Workspaces;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type WorkspaceMemberShape = array{
@@ -28,7 +29,7 @@ final class WorkspaceMember implements BaseModel
      *
      * @var 'workspace_member' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('workspace_member'))]
     public string $type = 'workspace_member';
 
     /**

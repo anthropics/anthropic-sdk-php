@@ -8,6 +8,7 @@ use Anthropic\Beta\Agents\BetaManagedAgentsBashToolConfig\PermissionPolicy;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Configuration for the bash tool.
@@ -28,11 +29,11 @@ final class BetaManagedAgentsBashToolConfig implements BaseModel
     use SdkModel;
 
     /** @var 'bash' $name */
-    #[Required]
+    #[Required(type: new ConstantOf('bash'))]
     public string $name = 'bash';
 
     /** @var 'bash' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('bash'))]
     public string $type = 'bash';
 
     #[Required]

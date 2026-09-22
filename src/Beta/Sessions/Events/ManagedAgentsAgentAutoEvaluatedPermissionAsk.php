@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Sessions\Events;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The server reached no judgement; the invocation is held for client approval.
@@ -21,7 +22,7 @@ final class ManagedAgentsAgentAutoEvaluatedPermissionAsk implements BaseModel
     use SdkModel;
 
     /** @var 'ask' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('ask'))]
     public string $type = 'ask';
 
     /**

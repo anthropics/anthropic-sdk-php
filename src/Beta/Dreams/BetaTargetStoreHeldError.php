@@ -8,9 +8,12 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * The `output_behavior.memory_store_id` target is still held by a prior `{type: "update_existing"}` dream — one that is `pending` or `running`, or was canceled with its final writes still landing. Rarely the named dream has just finished (`completed`/`failed`) and its execution is still closing; an immediate retry then almost always succeeds. The message names the holding dream when the server can identify it (rarely omitted); poll it to a terminal state or cancel it, then retry. Carried with `x-should-retry: false`.
+ * Returned with status 409 when a request to create a dream sets `output_behavior` to `update_existing` and another dream that writes into the same memory store hasn't fully stopped.
+ *
+ * The other dream is `pending` or `running`, or it has just stopped and is still finishing its last writes. `message` gives the ID of the other dream when the server can identify it. If that dream has already reached `completed`, `failed`, or `canceled`, retry after a short wait. Otherwise, wait for the other dream to end or cancel it, then retry. The response sets the `x-should-retry` header to `false`.
  *
  * @phpstan-type BetaTargetStoreHeldErrorShape = array{
  *   type: 'conflict_error', message?: string|null
@@ -22,11 +25,11 @@ final class BetaTargetStoreHeldError implements BaseModel
     use SdkModel;
 
     /** @var 'conflict_error' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('conflict_error'))]
     public string $type = 'conflict_error';
 
     /**
-     * Human-readable description of the conflict, naming the dream that holds the target store when the server can identify it.
+     * A human-readable explanation of why the memory store can't be used yet, with the ID of the dream that is using it when the server can identify it.
      */
     #[Optional]
     public ?string $message;
@@ -62,7 +65,7 @@ final class BetaTargetStoreHeldError implements BaseModel
     }
 
     /**
-     * Human-readable description of the conflict, naming the dream that holds the target store when the server can identify it.
+     * A human-readable explanation of why the memory store can't be used yet, with the ID of the dream that is using it when the server can identify it.
      */
     public function withMessage(string $message): self
     {

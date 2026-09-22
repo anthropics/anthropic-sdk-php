@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\ExternalKeys;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type GCPExternalKeyConfigShape = array{keyName: string, type: 'gcp'}
@@ -17,7 +18,7 @@ final class GCPExternalKeyConfig implements BaseModel
     use SdkModel;
 
     /** @var 'gcp' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('gcp'))]
     public string $type = 'gcp';
 
     /**

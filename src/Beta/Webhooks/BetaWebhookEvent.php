@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Webhooks;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type BetaWebhookEventDataVariants from \Anthropic\Beta\Webhooks\BetaWebhookEventData
@@ -29,7 +30,7 @@ final class BetaWebhookEvent implements BaseModel
      *
      * @var 'event' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('event'))]
     public string $type = 'event';
 
     /**

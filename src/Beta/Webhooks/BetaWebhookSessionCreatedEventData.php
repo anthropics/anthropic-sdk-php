@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Webhooks;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaWebhookSessionCreatedEventDataShape = array{
@@ -22,7 +23,7 @@ final class BetaWebhookSessionCreatedEventData implements BaseModel
     use SdkModel;
 
     /** @var 'session.created' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('session.created'))]
     public string $type = 'session.created';
 
     /**

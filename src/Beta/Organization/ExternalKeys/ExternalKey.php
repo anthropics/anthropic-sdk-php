@@ -9,6 +9,7 @@ use Anthropic\Beta\Organization\ExternalKeys\ExternalKey\ProviderConfig;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * CMEK external key config belonging to the caller's organization.
@@ -39,7 +40,7 @@ final class ExternalKey implements BaseModel
     use SdkModel;
 
     /** @var 'external_key' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('external_key'))]
     public string $type = 'external_key';
 
     /**

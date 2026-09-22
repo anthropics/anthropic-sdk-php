@@ -9,6 +9,7 @@ use Anthropic\Beta\Organization\RateLimits\OrganizationRateLimit\GroupType;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type GroupVariants from \Anthropic\Beta\Organization\RateLimits\OrganizationRateLimit\Group
@@ -34,7 +35,7 @@ final class OrganizationRateLimit implements BaseModel
      *
      * @var 'rate_limit' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('rate_limit'))]
     public string $type = 'rate_limit';
 
     /**

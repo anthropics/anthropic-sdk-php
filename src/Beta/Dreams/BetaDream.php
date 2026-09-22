@@ -10,7 +10,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * An asynchronous memory-consolidation job that reads a memory store plus a set of session transcripts and writes consolidated memories into an output memory store — a new store by default, or an existing store chosen via output_behavior. The Dreams API is in research preview: the request and response shapes are volatile and may change without the deprecation period that applies to generally-available endpoints.
+ * An asynchronous job that reads a memory store and past sessions, then writes a reorganized version of that memory store.
+ *
+ * By default the dream writes its result to a new memory store and doesn't change the input memory store. With `output_behavior` set to `update_existing`, it writes its result into the input memory store instead. The Dreams API is in research preview, so this resource can still change.
+ *
+ * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#how-it-works) for what a dream reads and produces.
  *
  * @phpstan-import-type BetaDreamInputVariants from \Anthropic\Beta\Dreams\BetaDreamInput
  * @phpstan-import-type BetaOutputBehaviorVariants from \Anthropic\Beta\Dreams\BetaOutputBehavior
@@ -43,6 +47,9 @@ final class BetaDream implements BaseModel
     /** @use SdkModel<BetaDreamShape> */
     use SdkModel;
 
+    /**
+     * The unique ID of the dream (`drm_...`).
+     */
     #[Required]
     public string $id;
 
@@ -70,32 +77,64 @@ final class BetaDream implements BaseModel
     #[Required]
     public ?BetaDreamError $error;
 
-    /** @var list<BetaDreamInputVariants> $inputs */
+    /**
+     * The sources that the dream reads, from the request that created it.
+     *
+     * @var list<BetaDreamInputVariants> $inputs
+     */
     #[Required(list: BetaDreamInput::class)]
     public array $inputs;
 
+    /**
+     * The guidance given when the dream was created, or `null` if none was given.
+     */
     #[Required]
     public ?string $instructions;
 
     /**
-     * Model identifier and configuration applied to every pipeline stage. Same wire shape as the Agents API ModelConfig.
+     * The model that runs a dream, from the request that created it.
+     *
+     * The dream uses this model for all of its work. The response always gives the model as an object, even if the request gave only a model ID.
      */
     #[Required]
     public BetaDreamModelConfig $model;
 
-    /** @var BetaOutputBehaviorVariants $outputBehavior */
+    /**
+     * Which memory store a dream writes its result to. Defaults to `create_new` when left out of a create request.
+     *
+     * @var BetaOutputBehaviorVariants $outputBehavior
+     */
     #[Required('output_behavior', union: BetaOutputBehavior::class)]
     public BetaOutputBehaviorCreateNew|BetaOutputBehaviorUpdateExisting $outputBehavior;
 
-    /** @var list<BetaDreamOutput> $outputs */
+    /**
+     * The memory store that holds the dream's result, as a one-item array, or an empty array until the dream records that memory store.
+     *
+     * The array is empty while the dream is `pending` and for a short time after it starts `running`. It can stay empty if the dream fails or is canceled before then. The memory store holds the complete result only once `status` is `completed`.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#use-the-output) for how to review and use the result.
+     *
+     * @var list<BetaDreamOutput> $outputs
+     */
     #[Required(list: BetaDreamOutput::class)]
     public array $outputs;
 
+    /**
+     * The ID of the session that runs the dream (`sesn_...`), or `null` if that session hasn't started.
+     *
+     * Stream that session's events to follow what the dream reads and writes.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#watch-the-pipeline-run) for how to watch a running dream.
+     */
     #[Required('session_id')]
     public ?string $sessionID;
 
     /**
-     * Lifecycle status of a Dream.
+     * Where a dream is in its lifecycle.
+     *
+     * `completed`, `failed`, and `canceled` are final: once a dream has one of these statuses, its status doesn't change again.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#lifecycle) for what each status means.
      *
      * @var value-of<BetaDreamStatus> $status
      */
@@ -107,7 +146,11 @@ final class BetaDream implements BaseModel
     public string $type;
 
     /**
-     * Cumulative token usage for the dream across every pipeline stage.
+     * The tokens that a dream has used so far.
+     *
+     * The counts are zero while the dream is `pending` and update while it is `running`. They can keep changing after a cancel.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#billing) for how dreams are billed. See the [prompt caching guide](https://platform.claude.com/docs/en/build-with-claude/prompt-caching#tracking-cache-performance) for how the input token counts add up.
      */
     #[Required]
     public BetaDreamUsage $usage;
@@ -210,6 +253,9 @@ final class BetaDream implements BaseModel
         return $self;
     }
 
+    /**
+     * The unique ID of the dream (`drm_...`).
+     */
     public function withID(string $id): self
     {
         $self = clone $this;
@@ -265,6 +311,8 @@ final class BetaDream implements BaseModel
     }
 
     /**
+     * The sources that the dream reads, from the request that created it.
+     *
      * @param list<BetaDreamInputShape> $inputs
      */
     public function withInputs(array $inputs): self
@@ -275,6 +323,9 @@ final class BetaDream implements BaseModel
         return $self;
     }
 
+    /**
+     * The guidance given when the dream was created, or `null` if none was given.
+     */
     public function withInstructions(?string $instructions): self
     {
         $self = clone $this;
@@ -284,7 +335,9 @@ final class BetaDream implements BaseModel
     }
 
     /**
-     * Model identifier and configuration applied to every pipeline stage. Same wire shape as the Agents API ModelConfig.
+     * The model that runs a dream, from the request that created it.
+     *
+     * The dream uses this model for all of its work. The response always gives the model as an object, even if the request gave only a model ID.
      *
      * @param BetaDreamModelConfig|BetaDreamModelConfigShape $model
      */
@@ -297,6 +350,8 @@ final class BetaDream implements BaseModel
     }
 
     /**
+     * Which memory store a dream writes its result to. Defaults to `create_new` when left out of a create request.
+     *
      * @param BetaOutputBehaviorShape $outputBehavior
      */
     public function withOutputBehavior(
@@ -309,6 +364,12 @@ final class BetaDream implements BaseModel
     }
 
     /**
+     * The memory store that holds the dream's result, as a one-item array, or an empty array until the dream records that memory store.
+     *
+     * The array is empty while the dream is `pending` and for a short time after it starts `running`. It can stay empty if the dream fails or is canceled before then. The memory store holds the complete result only once `status` is `completed`.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#use-the-output) for how to review and use the result.
+     *
      * @param list<BetaDreamOutput|BetaDreamOutputShape> $outputs
      */
     public function withOutputs(array $outputs): self
@@ -319,6 +380,13 @@ final class BetaDream implements BaseModel
         return $self;
     }
 
+    /**
+     * The ID of the session that runs the dream (`sesn_...`), or `null` if that session hasn't started.
+     *
+     * Stream that session's events to follow what the dream reads and writes.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#watch-the-pipeline-run) for how to watch a running dream.
+     */
     public function withSessionID(?string $sessionID): self
     {
         $self = clone $this;
@@ -328,7 +396,11 @@ final class BetaDream implements BaseModel
     }
 
     /**
-     * Lifecycle status of a Dream.
+     * Where a dream is in its lifecycle.
+     *
+     * `completed`, `failed`, and `canceled` are final: once a dream has one of these statuses, its status doesn't change again.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#lifecycle) for what each status means.
      *
      * @param BetaDreamStatus|value-of<BetaDreamStatus> $status
      */
@@ -352,7 +424,11 @@ final class BetaDream implements BaseModel
     }
 
     /**
-     * Cumulative token usage for the dream across every pipeline stage.
+     * The tokens that a dream has used so far.
+     *
+     * The counts are zero while the dream is `pending` and update while it is `running`. They can keep changing after a cancel.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#billing) for how dreams are billed. See the [prompt caching guide](https://platform.claude.com/docs/en/build-with-claude/prompt-caching#tracking-cache-performance) for how the input token counts add up.
      *
      * @param BetaDreamUsage|BetaDreamUsageShape $usage
      */

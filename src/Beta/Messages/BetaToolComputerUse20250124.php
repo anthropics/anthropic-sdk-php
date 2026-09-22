@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Core\Conversion\MapOf;
 
 /**
@@ -39,11 +40,11 @@ final class BetaToolComputerUse20250124 implements BaseModel
      *
      * @var 'computer' $name
      */
-    #[Required]
+    #[Required(type: new ConstantOf('computer'))]
     public string $name = 'computer';
 
     /** @var 'computer_20250124' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('computer_20250124'))]
     public string $type = 'computer_20250124';
 
     /**

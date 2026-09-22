@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Core\Concerns\SdkUnion;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
@@ -26,6 +27,6 @@ final class BetaFallbacksParam implements ConverterSource
      */
     public static function variants(): array
     {
-        return [new ListOf(BetaFallbackParam::class), 'string'];
+        return [new ListOf(BetaFallbackParam::class), new ConstantOf('default')];
     }
 }

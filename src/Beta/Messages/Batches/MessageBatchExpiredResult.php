@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages\Batches;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type MessageBatchExpiredResultShape = array{type: 'expired'}
@@ -17,7 +18,7 @@ final class MessageBatchExpiredResult implements BaseModel
     use SdkModel;
 
     /** @var 'expired' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('expired'))]
     public string $type = 'expired';
 
     public function __construct()

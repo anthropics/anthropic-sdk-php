@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\CitationsDelta\Citation;
 
 /**
@@ -23,7 +24,7 @@ final class CitationsDelta implements BaseModel
     use SdkModel;
 
     /** @var 'citations_delta' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('citations_delta'))]
     public string $type = 'citations_delta';
 
     /** @var CitationVariants $citation */

@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Sessions\Events;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The resolved permission_policy was auto: the server judged this invocation individually.
@@ -25,7 +26,7 @@ final class ManagedAgentsAgentToolEvaluationAuto implements BaseModel
     use SdkModel;
 
     /** @var 'auto' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('auto'))]
     public string $type = 'auto';
 
     /**

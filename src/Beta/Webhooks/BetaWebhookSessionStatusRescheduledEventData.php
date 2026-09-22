@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Webhooks;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaWebhookSessionStatusRescheduledEventDataShape = array{
@@ -22,7 +23,7 @@ final class BetaWebhookSessionStatusRescheduledEventData implements BaseModel
     use SdkModel;
 
     /** @var 'session.status_rescheduled' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('session.status_rescheduled'))]
     public string $type = 'session.status_rescheduled';
 
     /**

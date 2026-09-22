@@ -7,6 +7,7 @@ namespace Anthropic\Models;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type ModelCapabilitiesShape from \Anthropic\Models\ModelCapabilities
@@ -33,7 +34,7 @@ final class ModelInfo implements BaseModel
      *
      * @var 'model' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('model'))]
     public string $type = 'model';
 
     /**

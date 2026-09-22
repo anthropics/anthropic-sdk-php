@@ -59,7 +59,7 @@ interface EventsRawContract
     /**
      * @api
      *
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $sessionID Path param
      * @param array<string,mixed>|EventListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -76,7 +76,7 @@ interface EventsRawContract
     /**
      * @api
      *
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $sessionID Path param
      * @param array<string,mixed>|EventSendParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -93,7 +93,7 @@ interface EventsRawContract
     /**
      * @api
      *
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $sessionID Path param
      * @param array<string,mixed>|EventStreamParams $params
      * @param RequestOpts|null $requestOptions
      *

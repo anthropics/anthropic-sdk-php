@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaAdvisorResultBlockShape = array{
@@ -19,7 +20,7 @@ final class BetaAdvisorResultBlock implements BaseModel
     use SdkModel;
 
     /** @var 'advisor_result' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('advisor_result'))]
     public string $type = 'advisor_result';
 
     /**

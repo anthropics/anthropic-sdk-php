@@ -7,6 +7,7 @@ namespace Anthropic;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type InvalidRequestErrorShape = array{
@@ -19,7 +20,7 @@ final class InvalidRequestError implements BaseModel
     use SdkModel;
 
     /** @var 'invalid_request_error' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('invalid_request_error'))]
     public string $type = 'invalid_request_error';
 
     #[Required]

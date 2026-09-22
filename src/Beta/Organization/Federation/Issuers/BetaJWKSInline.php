@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\Federation\Issuers;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Core\Conversion\MapOf;
 
 /**
@@ -22,7 +23,7 @@ final class BetaJWKSInline implements BaseModel
     use SdkModel;
 
     /** @var 'inline' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('inline'))]
     public string $type = 'inline';
 
     /**

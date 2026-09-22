@@ -6,6 +6,7 @@ namespace Anthropic\Beta\Organization\Workspaces\DataResidencyCreateConfig;
 
 use Anthropic\Beta\Organization\Workspaces\AllowedInferenceGeo;
 use Anthropic\Core\Concerns\SdkUnion;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
@@ -25,6 +26,8 @@ final class AllowedInferenceGeos implements ConverterSource
      */
     public static function variants(): array
     {
-        return [new ListOf(AllowedInferenceGeo::class), 'string'];
+        return [
+            new ListOf(AllowedInferenceGeo::class), new ConstantOf('unrestricted'),
+        ];
     }
 }

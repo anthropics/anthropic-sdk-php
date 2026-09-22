@@ -7,6 +7,7 @@ namespace Anthropic\Beta;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaOverloadedErrorShape = array{
@@ -19,7 +20,7 @@ final class BetaOverloadedError implements BaseModel
     use SdkModel;
 
     /** @var 'overloaded_error' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('overloaded_error'))]
     public string $type = 'overloaded_error';
 
     #[Required]

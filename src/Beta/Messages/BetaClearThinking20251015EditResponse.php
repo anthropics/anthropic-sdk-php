@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaClearThinking20251015EditResponseShape = array{
@@ -25,7 +26,7 @@ final class BetaClearThinking20251015EditResponse implements BaseModel
      *
      * @var 'clear_thinking_20251015' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('clear_thinking_20251015'))]
     public string $type = 'clear_thinking_20251015';
 
     /**

@@ -7,6 +7,7 @@ namespace Anthropic\Messages\Batches;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type DeletedMessageBatchShape = array{
@@ -25,7 +26,7 @@ final class DeletedMessageBatch implements BaseModel
      *
      * @var 'message_batch_deleted' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('message_batch_deleted'))]
     public string $type = 'message_batch_deleted';
 
     /**

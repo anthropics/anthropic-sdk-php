@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The model will use any available tools.
@@ -22,7 +23,7 @@ final class BetaToolChoiceAny implements BaseModel
     use SdkModel;
 
     /** @var 'any' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('any'))]
     public string $type = 'any';
 
     /**

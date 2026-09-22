@@ -8,6 +8,7 @@ use Anthropic\Beta\Messages\BetaRawContentBlockStartEvent\ContentBlock;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type ContentBlockVariants from \Anthropic\Beta\Messages\BetaRawContentBlockStartEvent\ContentBlock
@@ -23,12 +24,12 @@ final class BetaRawContentBlockStartEvent implements BaseModel
     use SdkModel;
 
     /** @var 'content_block_start' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('content_block_start'))]
     public string $type = 'content_block_start';
 
     /** @var ContentBlockVariants $contentBlock */
     #[Required('content_block', union: ContentBlock::class)]
-    public BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaAdvisorToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock|BetaCompactionBlock|BetaFallbackBlock $contentBlock;
+    public BetaTextBlock|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaAdvisorToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock|BetaCompactionBlock|BetaFallbackBlock|BetaMCPToolListingBlock $contentBlock;
 
     #[Required]
     public int $index;
@@ -60,7 +61,7 @@ final class BetaRawContentBlockStartEvent implements BaseModel
      * @param ContentBlockShape $contentBlock
      */
     public static function with(
-        BetaTextBlock|array|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaAdvisorToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock|BetaCompactionBlock|BetaFallbackBlock $contentBlock,
+        BetaTextBlock|array|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaAdvisorToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock|BetaCompactionBlock|BetaFallbackBlock|BetaMCPToolListingBlock $contentBlock,
         int $index,
     ): self {
         $self = new self;
@@ -75,7 +76,7 @@ final class BetaRawContentBlockStartEvent implements BaseModel
      * @param ContentBlockShape $contentBlock
      */
     public function withContentBlock(
-        BetaTextBlock|array|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaAdvisorToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock|BetaCompactionBlock|BetaFallbackBlock $contentBlock,
+        BetaTextBlock|array|BetaThinkingBlock|BetaRedactedThinkingBlock|BetaToolUseBlock|BetaServerToolUseBlock|BetaWebSearchToolResultBlock|BetaWebFetchToolResultBlock|BetaAdvisorToolResultBlock|BetaCodeExecutionToolResultBlock|BetaBashCodeExecutionToolResultBlock|BetaTextEditorCodeExecutionToolResultBlock|BetaToolSearchToolResultBlock|BetaMCPToolUseBlock|BetaMCPToolResultBlock|BetaContainerUploadBlock|BetaCompactionBlock|BetaFallbackBlock|BetaMCPToolListingBlock $contentBlock,
     ): self {
         $self = clone $this;
         $self['contentBlock'] = $contentBlock;

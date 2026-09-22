@@ -8,6 +8,7 @@ use Anthropic\Beta\Messages\BetaThinkingMismatchAllowedInputTransformation\Reaso
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaThinkingMismatchAllowedInputTransformationShape = array{
@@ -26,7 +27,7 @@ final class BetaThinkingMismatchAllowedInputTransformation implements BaseModel
      *
      * @var 'thinking_mismatch_allowed' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('thinking_mismatch_allowed'))]
     public string $type = 'thinking_mismatch_allowed';
 
     /**

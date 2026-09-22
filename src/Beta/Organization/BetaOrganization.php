@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaOrganizationShape = array{
@@ -25,7 +26,7 @@ final class BetaOrganization implements BaseModel
      *
      * @var 'organization' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('organization'))]
     public string $type = 'organization';
 
     /**

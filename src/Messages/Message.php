@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Lib\Contracts\StructuredOutputModel;
 
 /**
@@ -41,7 +42,7 @@ final class Message implements BaseModel
      *
      * @var 'assistant' $role
      */
-    #[Required]
+    #[Required(type: new ConstantOf('assistant'))]
     public string $role = 'assistant';
 
     /**
@@ -51,7 +52,7 @@ final class Message implements BaseModel
      *
      * @var 'message' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('message'))]
     public string $type = 'message';
 
     /**

@@ -7,6 +7,7 @@ namespace Anthropic\Messages\Batches;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\Message;
 
 /**
@@ -22,7 +23,7 @@ final class MessageBatchSucceededResult implements BaseModel
     use SdkModel;
 
     /** @var 'succeeded' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('succeeded'))]
     public string $type = 'succeeded';
 
     #[Required]

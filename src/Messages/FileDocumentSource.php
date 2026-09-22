@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type FileDocumentSourceShape = array{fileID: string, type: 'file'}
@@ -17,7 +18,7 @@ final class FileDocumentSource implements BaseModel
     use SdkModel;
 
     /** @var 'file' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('file'))]
     public string $type = 'file';
 
     #[Required('file_id')]

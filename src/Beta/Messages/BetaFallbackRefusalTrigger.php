@@ -8,6 +8,7 @@ use Anthropic\Beta\Messages\BetaFallbackRefusalTrigger\Category;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The `from` model declined for policy reasons.
@@ -22,7 +23,7 @@ final class BetaFallbackRefusalTrigger implements BaseModel
     use SdkModel;
 
     /** @var 'refusal' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('refusal'))]
     public string $type = 'refusal';
 
     /**

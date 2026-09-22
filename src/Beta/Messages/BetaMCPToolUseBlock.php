@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaMCPToolUseBlockShape = array{
@@ -23,7 +24,7 @@ final class BetaMCPToolUseBlock implements BaseModel
     use SdkModel;
 
     /** @var 'mcp_tool_use' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('mcp_tool_use'))]
     public string $type = 'mcp_tool_use';
 
     #[Required]

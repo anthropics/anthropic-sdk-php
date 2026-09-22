@@ -7,11 +7,13 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * Reference to a single tool the caller declared directly in
- * ``tools[]``. Does not accept the composed ``{server}_{name}`` form the
- * server assigns to MCP-resolved tools — use ``mcp_tool_reference`` or
+ * Reference to a single tool, by the name the model uses to call it: a
+ * tool declared in ``tools`` or defined by an earlier ``tool_addition``
+ * block. Does not accept the composed ``{server}_{name}`` form the server
+ * assigns to MCP-resolved tools; use ``mcp_tool_reference`` or
  * ``mcp_toolset_reference`` for those.
  *
  * @phpstan-type BetaToolChangeToolReferenceShape = array{
@@ -24,7 +26,7 @@ final class BetaToolChangeToolReference implements BaseModel
     use SdkModel;
 
     /** @var 'tool_reference' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('tool_reference'))]
     public string $type = 'tool_reference';
 
     #[Required]

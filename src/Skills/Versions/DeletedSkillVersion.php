@@ -7,6 +7,7 @@ namespace Anthropic\Skills\Versions;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type DeletedSkillVersionShape = array{
@@ -25,7 +26,7 @@ final class DeletedSkillVersion implements BaseModel
      *
      * @var 'skill_version_deleted' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('skill_version_deleted'))]
     public string $type = 'skill_version_deleted';
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Vaults\Credentials;
 
+use Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredentialNetworkingParams\Type;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -33,5 +34,30 @@ final class ManagedAgentsCredentialNetworkingParams implements ConverterSource
             'unrestricted' => ManagedAgentsUnrestrictedCredentialNetworkingParams::class,
             'limited' => ManagedAgentsLimitedCredentialNetworkingParams::class,
         ];
+    }
+
+    /**
+     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
+     *
+     * @param list<string>|null $allowedHosts
+     *
+     * @return ($type is Type::UNRESTRICTED|'unrestricted' ? ManagedAgentsUnrestrictedCredentialNetworkingParams : ($type is Type::LIMITED|'limited' ? ManagedAgentsLimitedCredentialNetworkingParams : ManagedAgentsUnrestrictedCredentialNetworkingParams|ManagedAgentsLimitedCredentialNetworkingParams))
+     *
+     * @throws \UnhandledMatchError
+     */
+    public static function with(
+        Type|string $type,
+        ?array $allowedHosts = null
+    ): ManagedAgentsUnrestrictedCredentialNetworkingParams|ManagedAgentsLimitedCredentialNetworkingParams {
+        return match ($type) {
+            Type::UNRESTRICTED, 'unrestricted' => ManagedAgentsUnrestrictedCredentialNetworkingParams::with(
+                type: 'unrestricted'
+            ),
+            Type::LIMITED, 'limited' => ManagedAgentsLimitedCredentialNetworkingParams::with(
+                type: 'limited',
+                allowedHosts: $allowedHosts ?? throw new \ArgumentCountError('$allowedHosts is required'),
+            ),
+            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
+        };
     }
 }

@@ -37,7 +37,11 @@ final class DreamsRawService implements DreamsRawContract
     /**
      * @api
      *
-     * Create a Dream
+     * Start an asynchronous job that uses past sessions to produce a reorganized version of a memory store and get back the dream to poll for the result.
+     *
+     * By default the dream writes its result to a new memory store and doesn't change the input memory store. The response has `status` set to `pending` and an empty `outputs` array. Poll the dream until `status` is `completed`, `failed`, or `canceled`.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#create-a-dream) to learn more about creating dreams.
      *
      * @param array{
      *   inputs: list<BetaDreamInputShape>,
@@ -88,9 +92,13 @@ final class DreamsRawService implements DreamsRawContract
     /**
      * @api
      *
-     * Get a Dream
+     * Get a dream by ID to check its status, output memory store, and token usage.
      *
-     * @param string $dreamID Path parameter dream_id
+     * Archived dreams are returned too.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#track-progress) for how to poll a dream and what each status means.
+     *
+     * @param string $dreamID The ID of the dream to get (`drm_...`).
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -132,7 +140,11 @@ final class DreamsRawService implements DreamsRawContract
     /**
      * @api
      *
-     * List Dreams
+     * List the dreams in the workspace, newest first.
+     *
+     * Archived dreams are left out unless `include_archived` is `true`.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#list-dreams) for how to page through dreams.
      *
      * @param array{
      *   createdAtGt?: \DateTimeInterface,
@@ -202,9 +214,13 @@ final class DreamsRawService implements DreamsRawContract
     /**
      * @api
      *
-     * Archive a Dream
+     * Hide a `completed`, `failed`, or `canceled` dream from the default list of dreams.
      *
-     * @param string $dreamID Path parameter dream_id
+     * Archiving a `pending` or `running` dream returns a 400 error, so cancel it first. Archiving an archived dream returns it unchanged. An archived dream can still be fetched by ID. Archiving can't be undone.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#archive-a-dream) to learn more about archiving dreams.
+     *
+     * @param string $dreamID The ID of the dream to archive (`drm_...`).
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -246,9 +262,13 @@ final class DreamsRawService implements DreamsRawContract
     /**
      * @api
      *
-     * Cancel a Dream
+     * Stop a `pending` or `running` dream.
      *
-     * @param string $dreamID Path parameter dream_id
+     * The response shows `status` as `canceled`, unless the dream reached `completed` or `failed` first. `usage` can keep changing after the response. Canceling a `canceled` dream returns it unchanged. Canceling a `completed` or `failed` dream returns a 400 error.
+     *
+     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#cancel-a-dream) to learn more about canceling dreams.
+     *
+     * @param string $dreamID The ID of the dream to cancel (`drm_...`).
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,

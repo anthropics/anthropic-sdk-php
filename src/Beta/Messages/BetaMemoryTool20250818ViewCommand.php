@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaMemoryTool20250818ViewCommandShape = array{
@@ -24,7 +25,7 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
      *
      * @var 'view' $command
      */
-    #[Required]
+    #[Required(type: new ConstantOf('view'))]
     public string $command = 'view';
 
     /**

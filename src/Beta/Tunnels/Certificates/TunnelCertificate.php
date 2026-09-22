@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Tunnels\Certificates;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A CA certificate attached to a tunnel.
@@ -27,7 +28,7 @@ final class TunnelCertificate implements BaseModel
     use SdkModel;
 
     /** @var 'tunnel_certificate' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('tunnel_certificate'))]
     public string $type = 'tunnel_certificate';
 
     /**

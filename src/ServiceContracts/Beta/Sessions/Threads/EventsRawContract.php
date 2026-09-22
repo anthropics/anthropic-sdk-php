@@ -57,7 +57,7 @@ interface EventsRawContract
     /**
      * @api
      *
-     * @param string $threadID Path param: Path parameter thread_id
+     * @param string $threadID Path param
      * @param array<string,mixed>|EventListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -74,7 +74,7 @@ interface EventsRawContract
     /**
      * @api
      *
-     * @param string $threadID Path param: Path parameter thread_id
+     * @param string $threadID Path param
      * @param array<string,mixed>|EventStreamParams $params
      * @param RequestOpts|null $requestOptions
      *

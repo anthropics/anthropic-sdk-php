@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Sessions\Events;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The resolved permission_policy was always_ask; accompanies evaluated_permission "ask".
@@ -21,7 +22,7 @@ final class ManagedAgentsAgentToolEvaluationAlwaysAsk implements BaseModel
     use SdkModel;
 
     /** @var 'always_ask' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('always_ask'))]
     public string $type = 'always_ask';
 
     public function __construct()

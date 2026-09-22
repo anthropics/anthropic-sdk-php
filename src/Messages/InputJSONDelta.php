@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type InputJSONDeltaShape = array{
@@ -19,7 +20,7 @@ final class InputJSONDelta implements BaseModel
     use SdkModel;
 
     /** @var 'input_json_delta' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('input_json_delta'))]
     public string $type = 'input_json_delta';
 
     #[Required('partial_json')]

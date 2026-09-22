@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Webhooks;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaWebhookEnvironmentDeletedEventDataShape = array{
@@ -22,7 +23,7 @@ final class BetaWebhookEnvironmentDeletedEventData implements BaseModel
     use SdkModel;
 
     /** @var 'environment.deleted' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('environment.deleted'))]
     public string $type = 'environment.deleted';
 
     /**

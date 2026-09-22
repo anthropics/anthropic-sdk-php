@@ -7,6 +7,7 @@ namespace Anthropic\Skills\Versions;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type SkillVersionShape = array{
@@ -30,7 +31,7 @@ final class SkillVersion implements BaseModel
      *
      * @var 'skill_version' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('skill_version'))]
     public string $type = 'skill_version';
 
     /**

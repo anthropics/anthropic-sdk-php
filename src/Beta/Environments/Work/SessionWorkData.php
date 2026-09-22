@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Environments\Work;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Work data for session work items.
@@ -26,7 +27,7 @@ final class SessionWorkData implements BaseModel
      *
      * @var 'session' $type
      */
-    #[Required]
+    #[Required(type: new ConstantOf('session'))]
     public string $type = 'session';
 
     /**

@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type MessageShape from \Anthropic\Messages\Message
@@ -21,7 +22,7 @@ final class RawMessageStartEvent implements BaseModel
     use SdkModel;
 
     /** @var 'message_start' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('message_start'))]
     public string $type = 'message_start';
 
     #[Required]

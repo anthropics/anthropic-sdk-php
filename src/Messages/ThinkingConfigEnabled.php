@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\ThinkingConfigEnabled\Display;
 
 /**
@@ -21,7 +22,7 @@ final class ThinkingConfigEnabled implements BaseModel
     use SdkModel;
 
     /** @var 'enabled' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('enabled'))]
     public string $type = 'enabled';
 
     /**

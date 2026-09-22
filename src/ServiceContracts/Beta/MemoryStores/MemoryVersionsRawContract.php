@@ -21,7 +21,7 @@ interface MemoryVersionsRawContract
     /**
      * @api
      *
-     * @param string $memoryVersionID Path param: Path parameter memory_version_id
+     * @param string $memoryVersionID Path param: The ID of the memory version to retrieve (`memver_...`).
      * @param array<string,mixed>|MemoryVersionRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -38,7 +38,7 @@ interface MemoryVersionsRawContract
     /**
      * @api
      *
-     * @param string $memoryStoreID Path param: Path parameter memory_store_id
+     * @param string $memoryStoreID Path param: The ID of the memory store whose version history to list (`memstore_...`).
      * @param array<string,mixed>|MemoryVersionListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -55,7 +55,7 @@ interface MemoryVersionsRawContract
     /**
      * @api
      *
-     * @param string $memoryVersionID Path param: Path parameter memory_version_id
+     * @param string $memoryVersionID Path param: The ID of the memory version to redact (`memver_...`).
      * @param array<string,mixed>|MemoryVersionRedactParams $params
      * @param RequestOpts|null $requestOptions
      *

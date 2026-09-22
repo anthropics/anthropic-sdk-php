@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\ToolUseBlock\Caller;
 
 /**
@@ -29,7 +30,7 @@ final class ToolUseBlock implements BaseModel
     use SdkModel;
 
     /** @var 'tool_use' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('tool_use'))]
     public string $type = 'tool_use';
 
     #[Required]

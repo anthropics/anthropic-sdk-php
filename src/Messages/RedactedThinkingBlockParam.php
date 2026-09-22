@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type RedactedThinkingBlockParamShape = array{
@@ -19,7 +20,7 @@ final class RedactedThinkingBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'redacted_thinking' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('redacted_thinking'))]
     public string $type = 'redacted_thinking';
 
     /**

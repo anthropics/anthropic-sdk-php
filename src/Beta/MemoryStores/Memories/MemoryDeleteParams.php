@@ -29,11 +29,16 @@ final class MemoryDeleteParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
+    /**
+     * The ID of the memory store that holds the memory (`memstore_...`).
+     */
     #[Required]
     public string $memoryStoreID;
 
     /**
-     * Query parameter for expected_content_sha256.
+     * Delete the memory only if its current `content_sha256` equals this value, given as 64 lowercase hexadecimal characters. Omit it to delete unconditionally.
+     *
+     * If the hashes differ, the request fails with HTTP status 409 and nothing is deleted.
      */
     #[Optional]
     public ?string $expectedContentSha256;
@@ -46,6 +51,11 @@ final class MemoryDeleteParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    /**
+     * Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
+     */
     #[Optional]
     public ?string $workspaceID;
 
@@ -92,6 +102,9 @@ final class MemoryDeleteParams implements BaseModel
         return $self;
     }
 
+    /**
+     * The ID of the memory store that holds the memory (`memstore_...`).
+     */
     public function withMemoryStoreID(string $memoryStoreID): self
     {
         $self = clone $this;
@@ -101,7 +114,9 @@ final class MemoryDeleteParams implements BaseModel
     }
 
     /**
-     * Query parameter for expected_content_sha256.
+     * Delete the memory only if its current `content_sha256` equals this value, given as 64 lowercase hexadecimal characters. Omit it to delete unconditionally.
+     *
+     * If the hashes differ, the request fails with HTTP status 409 and nothing is deleted.
      */
     public function withExpectedContentSha256(
         string $expectedContentSha256
@@ -125,6 +140,11 @@ final class MemoryDeleteParams implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
+     */
     public function withWorkspaceID(string $workspaceID): self
     {
         $self = clone $this;

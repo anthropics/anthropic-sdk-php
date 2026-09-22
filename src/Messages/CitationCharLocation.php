@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type CitationCharLocationShape = array{
@@ -25,7 +26,7 @@ final class CitationCharLocation implements BaseModel
     use SdkModel;
 
     /** @var 'char_location' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('char_location'))]
     public string $type = 'char_location';
 
     #[Required('cited_text')]

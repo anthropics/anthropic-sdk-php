@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\ComplianceSettings;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type ComplianceSettingsStateVariants from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsState
@@ -22,7 +23,7 @@ final class ComplianceSettings implements BaseModel
     use SdkModel;
 
     /** @var 'compliance_settings' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('compliance_settings'))]
     public string $type = 'compliance_settings';
 
     /**

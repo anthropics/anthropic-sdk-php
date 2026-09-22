@@ -8,6 +8,7 @@ use Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultError\ErrorCode;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaBashCodeExecutionToolResultErrorShape = array{
@@ -21,7 +22,7 @@ final class BetaBashCodeExecutionToolResultError implements BaseModel
     use SdkModel;
 
     /** @var 'bash_code_execution_tool_result_error' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('bash_code_execution_tool_result_error'))]
     public string $type = 'bash_code_execution_tool_result_error';
 
     /** @var value-of<ErrorCode> $errorCode */

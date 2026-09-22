@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type PlainTextSourceShape = array{
@@ -19,11 +20,11 @@ final class PlainTextSource implements BaseModel
     use SdkModel;
 
     /** @var 'text/plain' $mediaType */
-    #[Required('media_type')]
+    #[Required('media_type', type: new ConstantOf('text/plain'))]
     public string $mediaType = 'text/plain';
 
     /** @var 'text' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('text'))]
     public string $type = 'text';
 
     #[Required]

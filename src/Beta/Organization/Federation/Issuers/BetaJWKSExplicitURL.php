@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * JWKS fetched from a fixed endpoint.
@@ -22,7 +23,7 @@ final class BetaJWKSExplicitURL implements BaseModel
     use SdkModel;
 
     /** @var 'explicit_url' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('explicit_url'))]
     public string $type = 'explicit_url';
 
     /**

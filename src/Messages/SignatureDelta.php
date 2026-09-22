@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type SignatureDeltaShape = array{
@@ -19,7 +20,7 @@ final class SignatureDelta implements BaseModel
     use SdkModel;
 
     /** @var 'signature_delta' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('signature_delta'))]
     public string $type = 'signature_delta';
 
     /**

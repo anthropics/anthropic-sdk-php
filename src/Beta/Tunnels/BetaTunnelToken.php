@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Tunnels;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A tunnel's connector token.
@@ -21,7 +22,7 @@ final class BetaTunnelToken implements BaseModel
     use SdkModel;
 
     /** @var 'tunnel_token' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('tunnel_token'))]
     public string $type = 'tunnel_token';
 
     /**

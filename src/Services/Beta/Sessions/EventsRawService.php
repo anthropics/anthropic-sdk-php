@@ -77,7 +77,7 @@ final class EventsRawService implements EventsRawContract
      *
      * List Events
      *
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $sessionID Path param
      * @param array{
      *   createdAtGt?: \DateTimeInterface,
      *   createdAtGte?: \DateTimeInterface,
@@ -154,7 +154,7 @@ final class EventsRawService implements EventsRawContract
      *
      * Send Events
      *
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $sessionID Path param
      * @param array{
      *   events: list<ManagedAgentsEventParamsShape>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -202,7 +202,7 @@ final class EventsRawService implements EventsRawContract
     /**
      * @api
      *
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $sessionID Path param
      * @param array{
      *   eventDeltas?: list<BetaManagedAgentsDeltaType|value-of<BetaManagedAgentsDeltaType>>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,

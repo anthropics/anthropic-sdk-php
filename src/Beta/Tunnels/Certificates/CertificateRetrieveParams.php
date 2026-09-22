@@ -30,6 +30,9 @@ final class CertificateRetrieveParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
+    /**
+     * ID of the tunnel (`tnl_...`).
+     */
     #[Required]
     public string $tunnelID;
 
@@ -41,6 +44,11 @@ final class CertificateRetrieveParams implements BaseModel
     #[Optional(list: AnthropicBeta::class)]
     public ?array $betas;
 
+    /**
+     * Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
+     */
     #[Optional]
     public ?string $workspaceID;
 
@@ -85,6 +93,9 @@ final class CertificateRetrieveParams implements BaseModel
         return $self;
     }
 
+    /**
+     * ID of the tunnel (`tnl_...`).
+     */
     public function withTunnelID(string $tunnelID): self
     {
         $self = clone $this;
@@ -106,6 +117,11 @@ final class CertificateRetrieveParams implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
+     *
+     * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
+     */
     public function withWorkspaceID(string $workspaceID): self
     {
         $self = clone $this;

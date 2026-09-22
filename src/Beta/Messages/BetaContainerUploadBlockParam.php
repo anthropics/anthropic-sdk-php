@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A content block that represents a file to be uploaded to the container
@@ -27,7 +28,7 @@ final class BetaContainerUploadBlockParam implements BaseModel
     use SdkModel;
 
     /** @var 'container_upload' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('container_upload'))]
     public string $type = 'container_upload';
 
     #[Required('file_id')]

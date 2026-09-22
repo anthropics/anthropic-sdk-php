@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type BetaInputTransformationVariants from \Anthropic\Beta\Messages\BetaInputTransformation
@@ -31,7 +32,7 @@ final class BetaRawMessageDeltaEvent implements BaseModel
     use SdkModel;
 
     /** @var 'message_delta' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('message_delta'))]
     public string $type = 'message_delta';
 
     /**

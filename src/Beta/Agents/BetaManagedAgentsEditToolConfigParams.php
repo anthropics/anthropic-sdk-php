@@ -10,6 +10,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Configuration override for the edit tool.
@@ -34,7 +35,7 @@ final class BetaManagedAgentsEditToolConfigParams implements BaseModel
      *
      * @var 'edit' $name
      */
-    #[Required]
+    #[Required(type: new ConstantOf('edit'))]
     public string $name = 'edit';
 
     /**

@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\ExternalKeys;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type ExternalKeyUnattachedAttachmentShape = array{type: 'unattached'}
@@ -17,7 +18,7 @@ final class ExternalKeyUnattachedAttachment implements BaseModel
     use SdkModel;
 
     /** @var 'unattached' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('unattached'))]
     public string $type = 'unattached';
 
     public function __construct()

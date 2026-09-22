@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Sessions\Events;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The server judged the invocation safe to execute without client approval.
@@ -21,7 +22,7 @@ final class ManagedAgentsAgentAutoEvaluatedPermissionAllow implements BaseModel
     use SdkModel;
 
     /** @var 'allow' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('allow'))]
     public string $type = 'allow';
 
     public function __construct()

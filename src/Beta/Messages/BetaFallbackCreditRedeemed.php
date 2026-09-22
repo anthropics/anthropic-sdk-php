@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The reprice was applied: the retry is billed as if the conversation
@@ -20,7 +21,7 @@ final class BetaFallbackCreditRedeemed implements BaseModel
     use SdkModel;
 
     /** @var 'redeemed' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('redeemed'))]
     public string $type = 'redeemed';
 
     public function __construct()

@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Webhooks;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaWebhookDeploymentPausedEventDataShape = array{
@@ -22,7 +23,7 @@ final class BetaWebhookDeploymentPausedEventData implements BaseModel
     use SdkModel;
 
     /** @var 'deployment.paused' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('deployment.paused'))]
     public string $type = 'deployment.paused';
 
     /**

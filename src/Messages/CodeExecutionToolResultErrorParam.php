@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type CodeExecutionToolResultErrorParamShape = array{
@@ -20,7 +21,7 @@ final class CodeExecutionToolResultErrorParam implements BaseModel
     use SdkModel;
 
     /** @var 'code_execution_tool_result_error' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('code_execution_tool_result_error'))]
     public string $type = 'code_execution_tool_result_error';
 
     /** @var value-of<CodeExecutionToolResultErrorCode> $errorCode */

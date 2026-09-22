@@ -101,7 +101,6 @@ final class SessionsRawService implements SessionsRawContract
      *
      * Get Session
      *
-     * @param string $sessionID Path parameter session_id
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -145,7 +144,7 @@ final class SessionsRawService implements SessionsRawContract
      *
      * Update Session
      *
-     * @param string $sessionID Path param: Path parameter session_id
+     * @param string $sessionID Path param
      * @param array{
      *   agent?: BetaManagedAgentsSessionAgentUpdate|BetaManagedAgentsSessionAgentUpdateShape,
      *   budget?: BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null,
@@ -289,7 +288,6 @@ final class SessionsRawService implements SessionsRawContract
      *
      * Delete Session
      *
-     * @param string $sessionID Path parameter session_id
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -333,7 +331,6 @@ final class SessionsRawService implements SessionsRawContract
      *
      * Archive Session
      *
-     * @param string $sessionID Path parameter session_id
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,

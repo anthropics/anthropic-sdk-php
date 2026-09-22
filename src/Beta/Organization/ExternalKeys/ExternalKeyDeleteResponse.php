@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Organization\ExternalKeys;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type ExternalKeyDeleteResponseShape = array{
@@ -19,7 +20,7 @@ final class ExternalKeyDeleteResponse implements BaseModel
     use SdkModel;
 
     /** @var 'external_key_deleted' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('external_key_deleted'))]
     public string $type = 'external_key_deleted';
 
     /**

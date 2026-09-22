@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Automatically compact older context when reaching the configured trigger threshold.
@@ -27,7 +28,7 @@ final class BetaCompact20260112Edit implements BaseModel
     use SdkModel;
 
     /** @var 'compact_20260112' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('compact_20260112'))]
     public string $type = 'compact_20260112';
 
     /**

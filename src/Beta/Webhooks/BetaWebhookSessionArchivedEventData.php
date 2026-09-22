@@ -7,6 +7,7 @@ namespace Anthropic\Beta\Webhooks;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaWebhookSessionArchivedEventDataShape = array{
@@ -22,7 +23,7 @@ final class BetaWebhookSessionArchivedEventData implements BaseModel
     use SdkModel;
 
     /** @var 'session.archived' $type */
-    #[Required]
+    #[Required(type: new ConstantOf('session.archived'))]
     public string $type = 'session.archived';
 
     /**
