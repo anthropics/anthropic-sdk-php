@@ -8,7 +8,6 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Messages\Base64PDFSource;
-use Anthropic\Messages\DocumentBlock\Source\Type;
 use Anthropic\Messages\PlainTextSource;
 
 /**
@@ -35,23 +34,5 @@ final class Source implements ConverterSource
         return [
             'base64' => Base64PDFSource::class, 'text' => PlainTextSource::class,
         ];
-    }
-
-    /**
-     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
-     *
-     * @return ($type is Type::BASE64|'base64' ? Base64PDFSource : ($type is Type::TEXT|'text' ? PlainTextSource : Base64PDFSource|PlainTextSource))
-     *
-     * @throws \UnhandledMatchError
-     */
-    public static function with(
-        Type|string $type,
-        string $data
-    ): Base64PDFSource|PlainTextSource {
-        return match ($type) {
-            Type::BASE64, 'base64' => Base64PDFSource::with(data: $data),
-            Type::TEXT, 'text' => PlainTextSource::with(data: $data),
-            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
-        };
     }
 }

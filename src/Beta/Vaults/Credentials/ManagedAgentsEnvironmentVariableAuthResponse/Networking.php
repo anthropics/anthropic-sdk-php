@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Vaults\Credentials\ManagedAgentsEnvironmentVariableAuthResponse;
 
-use Anthropic\Beta\Vaults\Credentials\ManagedAgentsEnvironmentVariableAuthResponse\Networking\Type;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsLimitedCredentialNetworkingResponse;
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsUnrestrictedCredentialNetworkingResponse;
 use Anthropic\Core\Concerns\SdkUnion;
@@ -38,30 +37,5 @@ final class Networking implements ConverterSource
             'unrestricted' => ManagedAgentsUnrestrictedCredentialNetworkingResponse::class,
             'limited' => ManagedAgentsLimitedCredentialNetworkingResponse::class,
         ];
-    }
-
-    /**
-     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
-     *
-     * @param list<string>|null $allowedHosts
-     *
-     * @return ($type is Type::UNRESTRICTED|'unrestricted' ? ManagedAgentsUnrestrictedCredentialNetworkingResponse : ($type is Type::LIMITED|'limited' ? ManagedAgentsLimitedCredentialNetworkingResponse : ManagedAgentsUnrestrictedCredentialNetworkingResponse|ManagedAgentsLimitedCredentialNetworkingResponse))
-     *
-     * @throws \UnhandledMatchError
-     */
-    public static function with(
-        Type|string $type,
-        ?array $allowedHosts = null,
-    ): ManagedAgentsUnrestrictedCredentialNetworkingResponse|ManagedAgentsLimitedCredentialNetworkingResponse {
-        return match ($type) {
-            Type::UNRESTRICTED, 'unrestricted' => ManagedAgentsUnrestrictedCredentialNetworkingResponse::with(
-                type: 'unrestricted'
-            ),
-            Type::LIMITED, 'limited' => ManagedAgentsLimitedCredentialNetworkingResponse::with(
-                type: 'limited',
-                allowedHosts: $allowedHosts ?? throw new \ArgumentCountError('$allowedHosts is required'),
-            ),
-            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
-        };
     }
 }

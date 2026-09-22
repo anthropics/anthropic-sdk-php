@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events\ManagedAgentsMCPConnectionFailedError;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsMCPConnectionFailedError\RetryStatus\Type;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsRetryStatusExhausted;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsRetryStatusRetrying;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsRetryStatusTerminal;
@@ -41,29 +40,5 @@ final class RetryStatus implements ConverterSource
             'exhausted' => ManagedAgentsRetryStatusExhausted::class,
             'terminal' => ManagedAgentsRetryStatusTerminal::class,
         ];
-    }
-
-    /**
-     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
-     *
-     * @return ($type is Type::RETRYING|'retrying' ? ManagedAgentsRetryStatusRetrying : ($type is Type::EXHAUSTED|'exhausted' ? ManagedAgentsRetryStatusExhausted : ($type is Type::TERMINAL|'terminal' ? ManagedAgentsRetryStatusTerminal : ManagedAgentsRetryStatusRetrying|ManagedAgentsRetryStatusExhausted|ManagedAgentsRetryStatusTerminal)))
-     *
-     * @throws \UnhandledMatchError
-     */
-    public static function with(
-        Type|string $type,
-    ): ManagedAgentsRetryStatusRetrying|ManagedAgentsRetryStatusExhausted|ManagedAgentsRetryStatusTerminal {
-        return match ($type) {
-            Type::RETRYING, 'retrying' => ManagedAgentsRetryStatusRetrying::with(
-                type: 'retrying'
-            ),
-            Type::EXHAUSTED, 'exhausted' => ManagedAgentsRetryStatusExhausted::with(
-                type: 'exhausted'
-            ),
-            Type::TERMINAL, 'terminal' => ManagedAgentsRetryStatusTerminal::with(
-                type: 'terminal'
-            ),
-            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
-        };
     }
 }

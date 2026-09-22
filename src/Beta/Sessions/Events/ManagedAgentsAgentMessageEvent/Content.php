@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events\ManagedAgentsAgentMessageEvent;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentMessageEvent\Content\Type;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsRedactedBlock;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsTextBlock;
 use Anthropic\Core\Concerns\SdkUnion;
@@ -38,28 +37,5 @@ final class Content implements ConverterSource
             'text' => ManagedAgentsTextBlock::class,
             'redacted' => ManagedAgentsRedactedBlock::class,
         ];
-    }
-
-    /**
-     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
-     *
-     * @return ($type is Type::TEXT|'text' ? ManagedAgentsTextBlock : ($type is Type::REDACTED|'redacted' ? ManagedAgentsRedactedBlock : ManagedAgentsTextBlock|ManagedAgentsRedactedBlock))
-     *
-     * @throws \UnhandledMatchError
-     */
-    public static function with(
-        Type|string $type,
-        ?string $text = null,
-    ): ManagedAgentsTextBlock|ManagedAgentsRedactedBlock {
-        return match ($type) {
-            Type::TEXT, 'text' => ManagedAgentsTextBlock::with(
-                type: 'text',
-                text: $text ?? throw new \ArgumentCountError('$text is required'),
-            ),
-            Type::REDACTED, 'redacted' => ManagedAgentsRedactedBlock::with(
-                type: 'redacted'
-            ),
-            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
-        };
     }
 }

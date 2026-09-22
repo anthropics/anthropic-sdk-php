@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\ExternalKeys\ExternalKey;
 
-use Anthropic\Beta\Organization\ExternalKeys\ExternalKey\Attachment\Type;
 use Anthropic\Beta\Organization\ExternalKeys\ExternalKeyAttachedAttachment;
 use Anthropic\Beta\Organization\ExternalKeys\ExternalKeyUnattachedAttachment;
 use Anthropic\Core\Concerns\SdkUnion;
@@ -38,23 +37,5 @@ final class Attachment implements ConverterSource
             'attached' => ExternalKeyAttachedAttachment::class,
             'unattached' => ExternalKeyUnattachedAttachment::class,
         ];
-    }
-
-    /**
-     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
-     *
-     * @return ($type is Type::ATTACHED|'attached' ? ExternalKeyAttachedAttachment : ($type is Type::UNATTACHED|'unattached' ? ExternalKeyUnattachedAttachment : ExternalKeyAttachedAttachment|ExternalKeyUnattachedAttachment))
-     *
-     * @throws \UnhandledMatchError
-     */
-    public static function with(
-        Type|string $type
-    ): ExternalKeyAttachedAttachment|ExternalKeyUnattachedAttachment {
-        return match ($type) {
-            Type::ATTACHED, 'attached' => ExternalKeyAttachedAttachment::with(),
-            Type::UNATTACHED, 'unattached' => ExternalKeyUnattachedAttachment::with(
-            ),
-            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
-        };
     }
 }

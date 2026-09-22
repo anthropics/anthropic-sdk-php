@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\APIKeys\APIKey;
 
-use Anthropic\Beta\Organization\APIKeys\APIKey\Scope\Type;
 use Anthropic\Beta\Organization\APIKeys\APIKeyOrganizationScope;
 use Anthropic\Beta\Organization\APIKeys\APIKeyWorkspaceScope;
 use Anthropic\Core\Concerns\SdkUnion;
@@ -38,25 +37,5 @@ final class Scope implements ConverterSource
             'organization' => APIKeyOrganizationScope::class,
             'workspace' => APIKeyWorkspaceScope::class,
         ];
-    }
-
-    /**
-     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
-     *
-     * @return ($type is Type::ORGANIZATION|'organization' ? APIKeyOrganizationScope : ($type is Type::WORKSPACE|'workspace' ? APIKeyWorkspaceScope : APIKeyOrganizationScope|APIKeyWorkspaceScope))
-     *
-     * @throws \UnhandledMatchError
-     */
-    public static function with(
-        Type|string $type,
-        ?string $workspaceID = null
-    ): APIKeyOrganizationScope|APIKeyWorkspaceScope {
-        return match ($type) {
-            Type::ORGANIZATION, 'organization' => APIKeyOrganizationScope::with(),
-            Type::WORKSPACE, 'workspace' => APIKeyWorkspaceScope::with(
-                workspaceID: $workspaceID ?? throw new \ArgumentCountError('$workspaceID is required'),
-            ),
-            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
-        };
     }
 }

@@ -8,7 +8,6 @@ use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionBudgetReached;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionEndTurn;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionRequiresAction;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionRetriesExhausted;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionThreadStatusIdleEvent\StopReason\Type;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -42,36 +41,5 @@ final class StopReason implements ConverterSource
             'retries_exhausted' => ManagedAgentsSessionRetriesExhausted::class,
             'budget_reached' => ManagedAgentsSessionBudgetReached::class,
         ];
-    }
-
-    /**
-     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
-     *
-     * @param list<string>|null $eventIDs
-     *
-     * @return ($type is Type::END_TURN|'end_turn' ? ManagedAgentsSessionEndTurn : ($type is Type::REQUIRES_ACTION|'requires_action' ? ManagedAgentsSessionRequiresAction : ($type is Type::RETRIES_EXHAUSTED|'retries_exhausted' ? ManagedAgentsSessionRetriesExhausted : ($type is Type::BUDGET_REACHED|'budget_reached' ? ManagedAgentsSessionBudgetReached : ManagedAgentsSessionEndTurn|ManagedAgentsSessionRequiresAction|ManagedAgentsSessionRetriesExhausted|ManagedAgentsSessionBudgetReached))))
-     *
-     * @throws \UnhandledMatchError
-     */
-    public static function with(
-        Type|string $type,
-        ?array $eventIDs = null,
-    ): ManagedAgentsSessionEndTurn|ManagedAgentsSessionRequiresAction|ManagedAgentsSessionRetriesExhausted|ManagedAgentsSessionBudgetReached {
-        return match ($type) {
-            Type::END_TURN, 'end_turn' => ManagedAgentsSessionEndTurn::with(
-                type: 'end_turn'
-            ),
-            Type::REQUIRES_ACTION, 'requires_action' => ManagedAgentsSessionRequiresAction::with(
-                type: 'requires_action',
-                eventIDs: $eventIDs ?? throw new \ArgumentCountError('$eventIDs is required'),
-            ),
-            Type::RETRIES_EXHAUSTED, 'retries_exhausted' => ManagedAgentsSessionRetriesExhausted::with(
-                type: 'retries_exhausted'
-            ),
-            Type::BUDGET_REACHED, 'budget_reached' => ManagedAgentsSessionBudgetReached::with(
-                type: 'budget_reached'
-            ),
-            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
-        };
     }
 }

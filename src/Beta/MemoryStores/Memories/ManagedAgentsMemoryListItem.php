@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\MemoryStores\Memories;
 
-use Anthropic\Beta\MemoryStores\Memories\ManagedAgentsMemoryListItem\Type;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -36,45 +35,5 @@ final class ManagedAgentsMemoryListItem implements ConverterSource
             'memory' => ManagedAgentsMemory::class,
             'memory_prefix' => ManagedAgentsMemoryPrefix::class,
         ];
-    }
-
-    /**
-     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
-     *
-     * @return ($type is Type::MEMORY|'memory' ? ManagedAgentsMemory : ($type is Type::MEMORY_PREFIX|'memory_prefix' ? ManagedAgentsMemoryPrefix : ManagedAgentsMemory|ManagedAgentsMemoryPrefix))
-     *
-     * @throws \UnhandledMatchError
-     */
-    public static function with(
-        Type|string $type,
-        string $path,
-        ?string $id = null,
-        ?string $contentSha256 = null,
-        ?int $contentSizeBytes = null,
-        ?\DateTimeInterface $createdAt = null,
-        ?string $memoryStoreID = null,
-        ?string $memoryVersionID = null,
-        ?\DateTimeInterface $updatedAt = null,
-        ?string $content = null,
-    ): ManagedAgentsMemory|ManagedAgentsMemoryPrefix {
-        return match ($type) {
-            Type::MEMORY, 'memory' => ManagedAgentsMemory::with(
-                type: 'memory',
-                id: $id ?? throw new \ArgumentCountError('$id is required'),
-                contentSha256: $contentSha256 ?? throw new \ArgumentCountError('$contentSha256 is required'),
-                contentSizeBytes: $contentSizeBytes ?? throw new \ArgumentCountError('$contentSizeBytes is required'),
-                createdAt: $createdAt ?? throw new \ArgumentCountError('$createdAt is required'),
-                memoryStoreID: $memoryStoreID ?? throw new \ArgumentCountError('$memoryStoreID is required'),
-                memoryVersionID: $memoryVersionID ?? throw new \ArgumentCountError('$memoryVersionID is required'),
-                path: $path,
-                updatedAt: $updatedAt ?? throw new \ArgumentCountError('$updatedAt is required'),
-                content: $content,
-            ),
-            Type::MEMORY_PREFIX, 'memory_prefix' => ManagedAgentsMemoryPrefix::with(
-                type: 'memory_prefix',
-                path: $path
-            ),
-            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
-        };
     }
 }

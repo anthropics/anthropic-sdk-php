@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaMemoryTool20250818Command\Command;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -42,56 +41,5 @@ final class BetaMemoryTool20250818Command implements ConverterSource
             'delete' => BetaMemoryTool20250818DeleteCommand::class,
             'rename' => BetaMemoryTool20250818RenameCommand::class,
         ];
-    }
-
-    /**
-     * Constructs the variant whose `command` matches the given value, forwarding the remaining arguments to its own `with()`.
-     *
-     * @param list<int>|null $viewRange
-     *
-     * @return ($command is Command::VIEW|'view' ? BetaMemoryTool20250818ViewCommand : ($command is Command::CREATE|'create' ? BetaMemoryTool20250818CreateCommand : ($command is Command::STR_REPLACE|'str_replace' ? BetaMemoryTool20250818StrReplaceCommand : ($command is Command::INSERT|'insert' ? BetaMemoryTool20250818InsertCommand : ($command is Command::DELETE|'delete' ? BetaMemoryTool20250818DeleteCommand : ($command is Command::RENAME|'rename' ? BetaMemoryTool20250818RenameCommand : BetaMemoryTool20250818ViewCommand|BetaMemoryTool20250818CreateCommand|BetaMemoryTool20250818StrReplaceCommand|BetaMemoryTool20250818InsertCommand|BetaMemoryTool20250818DeleteCommand|BetaMemoryTool20250818RenameCommand))))))
-     *
-     * @throws \UnhandledMatchError
-     */
-    public static function with(
-        Command|string $command,
-        ?string $path = null,
-        ?array $viewRange = null,
-        ?string $fileText = null,
-        ?string $newStr = null,
-        ?string $oldStr = null,
-        ?int $insertLine = null,
-        ?string $insertText = null,
-        ?string $newPath = null,
-        ?string $oldPath = null,
-    ): BetaMemoryTool20250818ViewCommand|BetaMemoryTool20250818CreateCommand|BetaMemoryTool20250818StrReplaceCommand|BetaMemoryTool20250818InsertCommand|BetaMemoryTool20250818DeleteCommand|BetaMemoryTool20250818RenameCommand {
-        return match ($command) {
-            Command::VIEW, 'view' => BetaMemoryTool20250818ViewCommand::with(
-                path: $path ?? throw new \ArgumentCountError('$path is required'),
-                viewRange: $viewRange,
-            ),
-            Command::CREATE, 'create' => BetaMemoryTool20250818CreateCommand::with(
-                fileText: $fileText ?? throw new \ArgumentCountError('$fileText is required'),
-                path: $path ?? throw new \ArgumentCountError('$path is required'),
-            ),
-            Command::STR_REPLACE, 'str_replace' => BetaMemoryTool20250818StrReplaceCommand::with(
-                newStr: $newStr ?? throw new \ArgumentCountError('$newStr is required'),
-                oldStr: $oldStr ?? throw new \ArgumentCountError('$oldStr is required'),
-                path: $path ?? throw new \ArgumentCountError('$path is required'),
-            ),
-            Command::INSERT, 'insert' => BetaMemoryTool20250818InsertCommand::with(
-                insertLine: $insertLine ?? throw new \ArgumentCountError('$insertLine is required'),
-                insertText: $insertText ?? throw new \ArgumentCountError('$insertText is required'),
-                path: $path ?? throw new \ArgumentCountError('$path is required'),
-            ),
-            Command::DELETE, 'delete' => BetaMemoryTool20250818DeleteCommand::with(
-                path: $path ?? throw new \ArgumentCountError('$path is required')
-            ),
-            Command::RENAME, 'rename' => BetaMemoryTool20250818RenameCommand::with(
-                newPath: $newPath ?? throw new \ArgumentCountError('$newPath is required'),
-                oldPath: $oldPath ?? throw new \ArgumentCountError('$oldPath is required'),
-            ),
-            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($command, true)))
-        };
     }
 }

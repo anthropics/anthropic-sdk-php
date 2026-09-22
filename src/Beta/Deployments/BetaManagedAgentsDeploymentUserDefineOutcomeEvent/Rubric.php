@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentUserDefineOutcomeEvent;
 
-use Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentUserDefineOutcomeEvent\Rubric\Type;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsFileRubric;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsTextRubric;
 use Anthropic\Core\Concerns\SdkUnion;
@@ -38,30 +37,5 @@ final class Rubric implements ConverterSource
             'file' => ManagedAgentsFileRubric::class,
             'text' => ManagedAgentsTextRubric::class,
         ];
-    }
-
-    /**
-     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
-     *
-     * @return ($type is Type::FILE|'file' ? ManagedAgentsFileRubric : ($type is Type::TEXT|'text' ? ManagedAgentsTextRubric : ManagedAgentsFileRubric|ManagedAgentsTextRubric))
-     *
-     * @throws \UnhandledMatchError
-     */
-    public static function with(
-        Type|string $type,
-        ?string $fileID = null,
-        ?string $content = null,
-    ): ManagedAgentsFileRubric|ManagedAgentsTextRubric {
-        return match ($type) {
-            Type::FILE, 'file' => ManagedAgentsFileRubric::with(
-                type: 'file',
-                fileID: $fileID ?? throw new \ArgumentCountError('$fileID is required'),
-            ),
-            Type::TEXT, 'text' => ManagedAgentsTextRubric::with(
-                type: 'text',
-                content: $content ?? throw new \ArgumentCountError('$content is required'),
-            ),
-            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
-        };
     }
 }

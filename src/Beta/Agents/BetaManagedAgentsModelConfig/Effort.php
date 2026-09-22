@@ -9,7 +9,6 @@ use Anthropic\Beta\Agents\BetaManagedAgentsEffortLow;
 use Anthropic\Beta\Agents\BetaManagedAgentsEffortMax;
 use Anthropic\Beta\Agents\BetaManagedAgentsEffortMedium;
 use Anthropic\Beta\Agents\BetaManagedAgentsEffortXhigh;
-use Anthropic\Beta\Agents\BetaManagedAgentsModelConfig\Effort\Type;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -47,29 +46,5 @@ final class Effort implements ConverterSource
             'xhigh' => BetaManagedAgentsEffortXhigh::class,
             'max' => BetaManagedAgentsEffortMax::class,
         ];
-    }
-
-    /**
-     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
-     *
-     * @return ($type is Type::LOW|'low' ? BetaManagedAgentsEffortLow : ($type is Type::MEDIUM|'medium' ? BetaManagedAgentsEffortMedium : ($type is Type::HIGH|'high' ? BetaManagedAgentsEffortHigh : ($type is Type::XHIGH|'xhigh' ? BetaManagedAgentsEffortXhigh : ($type is Type::MAX|'max' ? BetaManagedAgentsEffortMax : BetaManagedAgentsEffortLow|BetaManagedAgentsEffortMedium|BetaManagedAgentsEffortHigh|BetaManagedAgentsEffortXhigh|BetaManagedAgentsEffortMax)))))
-     *
-     * @throws \UnhandledMatchError
-     */
-    public static function with(
-        Type|string $type
-    ): BetaManagedAgentsEffortLow|BetaManagedAgentsEffortMedium|BetaManagedAgentsEffortHigh|BetaManagedAgentsEffortXhigh|BetaManagedAgentsEffortMax {
-        return match ($type) {
-            Type::LOW, 'low' => BetaManagedAgentsEffortLow::with(type: 'low'),
-            Type::MEDIUM, 'medium' => BetaManagedAgentsEffortMedium::with(
-                type: 'medium'
-            ),
-            Type::HIGH, 'high' => BetaManagedAgentsEffortHigh::with(type: 'high'),
-            Type::XHIGH, 'xhigh' => BetaManagedAgentsEffortXhigh::with(
-                type: 'xhigh'
-            ),
-            Type::MAX, 'max' => BetaManagedAgentsEffortMax::with(type: 'max'),
-            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
-        };
     }
 }
