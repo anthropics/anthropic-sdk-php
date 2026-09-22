@@ -1,5 +1,40 @@
 # Changelog
 
+## 0.51.0 (2026-09-22)
+
+Full Changelog: [v0.50.0...v0.51.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.50.0...v0.51.0)
+
+### Features
+
+* **api:** add support for claude-opus-5-5, inline tool definitions and MCP tool-list pinning (beta) ([0d6ea88](https://github.com/anthropics/anthropic-sdk-php/commit/0d6ea88faa7e266c486945ca0be14d0a5a0f695f))
+* **php:** add static with() constructors to discriminated unions ([ca8fa1f](https://github.com/anthropics/anthropic-sdk-php/commit/ca8fa1fdff9e6052c3a8d543791f3c3b166a1e2b))
+* **tools:** add compactBeforeNextTurn() to the tool runner ([#228](https://github.com/anthropics/anthropic-sdk-php/issues/228)) ([1501659](https://github.com/anthropics/anthropic-sdk-php/commit/1501659eab57e96259f4c90b12397cda4eee8b43))
+
+
+### Bug Fixes
+
+* **api:** share one evaluated_permission enum across Managed Agents events ([dc060c1](https://github.com/anthropics/anthropic-sdk-php/commit/dc060c175f217ab875da292d78021c396a1f26c7))
+* **client:** read tool definitions into the class their type names ([761c22d](https://github.com/anthropics/anthropic-sdk-php/commit/761c22deb220e5a70c69b55bef6d31a0b593f6b4))
+* **php:** limit static with() constructors to unions used in request params ([d826535](https://github.com/anthropics/anthropic-sdk-php/commit/d8265355fe869698ddf06f5533032bd3b1f77a0d))
+* **tools:** addTools() takes effect straight away ([#235](https://github.com/anthropics/anthropic-sdk-php/issues/235)) ([e277760](https://github.com/anthropics/anthropic-sdk-php/commit/e27776030c12c0c7bd302d5ea70248e8cb5b4157))
+* **tools:** leave reply-only params off the tool runner's compaction request ([#234](https://github.com/anthropics/anthropic-sdk-php/issues/234)) ([a65dec2](https://github.com/anthropics/anthropic-sdk-php/commit/a65dec2d956e39e1bbcf8332d7878286ffde3fce))
+
+
+### Chores
+
+* **docs:** add descriptions to the Dreams API reference ([a3fa7d2](https://github.com/anthropics/anthropic-sdk-php/commit/a3fa7d241ab72daab196787fe766b5fc3121ae22))
+* **docs:** add descriptions to the User Profiles API reference ([a3fa7d2](https://github.com/anthropics/anthropic-sdk-php/commit/a3fa7d241ab72daab196787fe766b5fc3121ae22))
+* **docs:** add memory store descriptions to the Managed Agents API reference ([a3fa7d2](https://github.com/anthropics/anthropic-sdk-php/commit/a3fa7d241ab72daab196787fe766b5fc3121ae22))
+* **docs:** improve descriptions in the Dreams API reference ([ee3a9c9](https://github.com/anthropics/anthropic-sdk-php/commit/ee3a9c9a8e3951ca4ee741500287d40cff7defbb))
+* **docs:** remove placeholder parameter descriptions ([8d16eb8](https://github.com/anthropics/anthropic-sdk-php/commit/8d16eb8d1f4f4bbe1700610cb69ae1107f3f3fbb))
+* **docs:** simplify the session thread agent type description ([35d8451](https://github.com/anthropics/anthropic-sdk-php/commit/35d8451d283fbe9526f4fa589fe1ba333295ae16))
+* **docs:** update diagnostics field descriptions on beta messages ([35c8916](https://github.com/anthropics/anthropic-sdk-php/commit/35c89160c7abba287c20388eeac946eee5f6bf77))
+
+
+### Documentation
+
+* add path and header parameter descriptions ([801a12b](https://github.com/anthropics/anthropic-sdk-php/commit/801a12bbf0786c35a5418bb265f2307ba745cf73))
+
 ## 0.50.0 (2026-09-18)
 
 Full Changelog: [v0.49.0...v0.50.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.49.0...v0.50.0)
