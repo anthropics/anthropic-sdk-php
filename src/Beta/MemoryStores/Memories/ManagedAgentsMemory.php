@@ -50,7 +50,7 @@ final class ManagedAgentsMemory implements BaseModel
     public int $contentSizeBytes;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When this memory was created, in RFC 3339 format.
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
@@ -78,7 +78,7 @@ final class ManagedAgentsMemory implements BaseModel
     public string $type;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When this memory was last modified, in RFC 3339 format. Use this as a cheap freshness signal; for who made the change, look up the head version's `created_by` via [List memory versions](/en/api/beta/memory_stores/memory_versions/list).
      */
     #[Required('updated_at')]
     public \DateTimeInterface $updatedAt;
@@ -197,7 +197,7 @@ final class ManagedAgentsMemory implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When this memory was created, in RFC 3339 format.
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
@@ -252,7 +252,7 @@ final class ManagedAgentsMemory implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When this memory was last modified, in RFC 3339 format. Use this as a cheap freshness signal; for who made the change, look up the head version's `created_by` via [List memory versions](/en/api/beta/memory_stores/memory_versions/list).
      */
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {

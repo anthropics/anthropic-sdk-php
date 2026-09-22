@@ -43,7 +43,7 @@ final class CredentialUpdateParams implements BaseModel
     public string $vaultID;
 
     /**
-     * Updated authentication details for a credential.
+     * Updated authentication configuration. The `type` is immutable; the variant sent must match the stored credential's type.
      *
      * @var AuthVariants|null $auth
      */
@@ -141,7 +141,7 @@ final class CredentialUpdateParams implements BaseModel
     }
 
     /**
-     * Updated authentication details for a credential.
+     * Updated authentication configuration. The `type` is immutable; the variant sent must match the stored credential's type.
      *
      * @param AuthShape $auth
      */

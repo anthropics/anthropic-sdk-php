@@ -60,7 +60,7 @@ final class SessionCreateParams implements BaseModel
     public string $environmentID;
 
     /**
-     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     * Enforced spend ceiling for the session. Omit to create an uncapped session. Every model the session can run — the agent's model and each callable agent's model — must have a public list price, or the request is rejected with reason `model_not_budgetable`.
      */
     #[Optional]
     public ?BetaManagedAgentsBudgetLimit $budget;
@@ -206,7 +206,7 @@ final class SessionCreateParams implements BaseModel
     }
 
     /**
-     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     * Enforced spend ceiling for the session. Omit to create an uncapped session. Every model the session can run — the agent's model and each callable agent's model — must have a public list price, or the request is rejected with reason `model_not_budgetable`.
      *
      * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape $budget
      */

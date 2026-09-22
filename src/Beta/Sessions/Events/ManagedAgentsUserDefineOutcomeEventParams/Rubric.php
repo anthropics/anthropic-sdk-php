@@ -12,7 +12,7 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Rubric for grading the quality of an outcome.
+ * How to grade the outcome. Text or file reference.
  *
  * @phpstan-import-type ManagedAgentsFileRubricParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsFileRubricParams
  * @phpstan-import-type ManagedAgentsTextRubricParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsTextRubricParams

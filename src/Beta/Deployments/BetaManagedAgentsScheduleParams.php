@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * 5-field POSIX cron schedule. Literal wall-clock matching in the configured timezone.
+ * A recurring schedule. Discriminated union — only cron is supported currently.
  *
  * @phpstan-type BetaManagedAgentsScheduleParamsShape = array{
  *   expression: string, timezone: string, type: Type|value-of<Type>

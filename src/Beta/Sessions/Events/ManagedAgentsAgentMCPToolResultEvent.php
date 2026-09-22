@@ -44,7 +44,7 @@ final class ManagedAgentsAgentMCPToolResultEvent implements BaseModel
     public string $mcpToolUseID;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when this event was processed.
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
@@ -144,7 +144,7 @@ final class ManagedAgentsAgentMCPToolResultEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when this event was processed.
      */
     public function withProcessedAt(\DateTimeInterface $processedAt): self
     {

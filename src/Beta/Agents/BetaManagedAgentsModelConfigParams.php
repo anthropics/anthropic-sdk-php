@@ -55,7 +55,7 @@ final class BetaManagedAgentsModelConfigParams implements BaseModel
     public ?string $inferenceGeo;
 
     /**
-     * Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Not all models support `fast`; invalid combinations are rejected at create time.
+     * Inference speed mode. Defaults to `standard`.
      *
      * @var value-of<Speed>|null $speed
      */
@@ -148,7 +148,7 @@ final class BetaManagedAgentsModelConfigParams implements BaseModel
     }
 
     /**
-     * Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Not all models support `fast`; invalid combinations are rejected at create time.
+     * Inference speed mode. Defaults to `standard`.
      *
      * @param Speed|value-of<Speed>|null $speed
      */

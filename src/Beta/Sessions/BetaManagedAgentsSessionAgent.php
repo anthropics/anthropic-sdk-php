@@ -63,7 +63,7 @@ final class BetaManagedAgentsSessionAgent implements BaseModel
     public BetaManagedAgentsModelConfig $model;
 
     /**
-     * Resolved coordinator topology with full agent definitions for each roster member.
+     * Resolved multiagent orchestration configuration. Null when the agent is single-threaded.
      */
     #[Required]
     public ?BetaManagedAgentsSessionMultiagentCoordinator $multiagent;
@@ -214,7 +214,7 @@ final class BetaManagedAgentsSessionAgent implements BaseModel
     }
 
     /**
-     * Resolved coordinator topology with full agent definitions for each roster member.
+     * Resolved multiagent orchestration configuration. Null when the agent is single-threaded.
      *
      * @param BetaManagedAgentsSessionMultiagentCoordinator|BetaManagedAgentsSessionMultiagentCoordinatorShape|null $multiagent
      */

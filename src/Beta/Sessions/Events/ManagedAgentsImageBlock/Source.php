@@ -13,7 +13,7 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Union type for image source variants.
+ * The source of the image data.
  *
  * @phpstan-import-type ManagedAgentsBase64ImageSourceShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsBase64ImageSource
  * @phpstan-import-type ManagedAgentsURLImageSourceShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsURLImageSource

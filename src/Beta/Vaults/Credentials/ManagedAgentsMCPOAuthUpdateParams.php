@@ -44,7 +44,7 @@ final class ManagedAgentsMCPOAuthUpdateParams implements BaseModel
     public ?\DateTimeInterface $expiresAt;
 
     /**
-     * Parameters for updating OAuth refresh token configuration.
+     * Updated refresh token configuration.
      */
     #[Optional(nullable: true)]
     public ?ManagedAgentsMCPOAuthRefreshUpdateParams $refresh;
@@ -127,7 +127,7 @@ final class ManagedAgentsMCPOAuthUpdateParams implements BaseModel
     }
 
     /**
-     * Parameters for updating OAuth refresh token configuration.
+     * Updated refresh token configuration.
      *
      * @param ManagedAgentsMCPOAuthRefreshUpdateParams|ManagedAgentsMCPOAuthRefreshUpdateParamsShape|null $refresh
      */

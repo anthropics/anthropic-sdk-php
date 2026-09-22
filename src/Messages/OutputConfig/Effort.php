@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Anthropic\Messages\OutputConfig;
 
 /**
- * All possible effort levels.
+ * How much effort the model should put into its response. Higher effort levels may result in more thorough analysis but take longer.
+ *
+ * Valid values are `low`, `medium`, `high`, `xhigh`, or `max`.
  */
 enum Effort: string
 {

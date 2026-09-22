@@ -48,7 +48,7 @@ final class ManagedAgentsAgentCustomToolUseEvent implements BaseModel
     public string $name;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when this tool use was processed.
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
@@ -154,7 +154,7 @@ final class ManagedAgentsAgentCustomToolUseEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when this tool use was processed.
      */
     public function withProcessedAt(\DateTimeInterface $processedAt): self
     {

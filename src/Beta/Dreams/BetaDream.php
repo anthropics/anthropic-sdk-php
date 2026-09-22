@@ -54,25 +54,27 @@ final class BetaDream implements BaseModel
     public string $id;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the dream was archived, in RFC 3339, or `null` if it hasn't been archived.
      */
     #[Required('archived_at')]
     public ?\DateTimeInterface $archivedAt;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the dream was created, in RFC 3339.
+     *
+     * Lists of dreams are sorted by this time, newest first.
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the dream reached `completed`, `failed`, or `canceled`, in RFC 3339, or `null` if it is still `pending` or `running`.
      */
     #[Required('ended_at')]
     public ?\DateTimeInterface $endedAt;
 
     /**
-     * Failure detail for a Dream whose `status` is `failed`.
+     * Why the dream failed, or `null` if `status` isn't `failed`.
      */
     #[Required]
     public ?BetaDreamError $error;
@@ -100,7 +102,7 @@ final class BetaDream implements BaseModel
     public BetaDreamModelConfig $model;
 
     /**
-     * Which memory store a dream writes its result to. Defaults to `create_new` when left out of a create request.
+     * Where the dream writes its result, as set in the request that created the dream. If that request left out `output_behavior`, the dream used the `create_new` behavior.
      *
      * @var BetaOutputBehaviorVariants $outputBehavior
      */
@@ -146,11 +148,7 @@ final class BetaDream implements BaseModel
     public string $type;
 
     /**
-     * The tokens that a dream has used so far.
-     *
-     * The counts are zero while the dream is `pending` and update while it is `running`. They can keep changing after a cancel.
-     *
-     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#billing) for how dreams are billed. See the [prompt caching guide](https://platform.claude.com/docs/en/build-with-claude/prompt-caching#tracking-cache-performance) for how the input token counts add up.
+     * The dream's token counts, which stop changing once its `status` is `completed` or `failed`. After a cancel, they can keep changing.
      */
     #[Required]
     public BetaDreamUsage $usage;
@@ -265,7 +263,7 @@ final class BetaDream implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the dream was archived, in RFC 3339, or `null` if it hasn't been archived.
      */
     public function withArchivedAt(?\DateTimeInterface $archivedAt): self
     {
@@ -276,7 +274,9 @@ final class BetaDream implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the dream was created, in RFC 3339.
+     *
+     * Lists of dreams are sorted by this time, newest first.
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
@@ -287,7 +287,7 @@ final class BetaDream implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the dream reached `completed`, `failed`, or `canceled`, in RFC 3339, or `null` if it is still `pending` or `running`.
      */
     public function withEndedAt(?\DateTimeInterface $endedAt): self
     {
@@ -298,7 +298,7 @@ final class BetaDream implements BaseModel
     }
 
     /**
-     * Failure detail for a Dream whose `status` is `failed`.
+     * Why the dream failed, or `null` if `status` isn't `failed`.
      *
      * @param BetaDreamError|BetaDreamErrorShape|null $error
      */
@@ -350,7 +350,7 @@ final class BetaDream implements BaseModel
     }
 
     /**
-     * Which memory store a dream writes its result to. Defaults to `create_new` when left out of a create request.
+     * Where the dream writes its result, as set in the request that created the dream. If that request left out `output_behavior`, the dream used the `create_new` behavior.
      *
      * @param BetaOutputBehaviorShape $outputBehavior
      */
@@ -424,11 +424,7 @@ final class BetaDream implements BaseModel
     }
 
     /**
-     * The tokens that a dream has used so far.
-     *
-     * The counts are zero while the dream is `pending` and update while it is `running`. They can keep changing after a cancel.
-     *
-     * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#billing) for how dreams are billed. See the [prompt caching guide](https://platform.claude.com/docs/en/build-with-claude/prompt-caching#tracking-cache-performance) for how the input token counts add up.
+     * The dream's token counts, which stop changing once its `status` is `completed` or `failed`. After a cancel, they can keep changing.
      *
      * @param BetaDreamUsage|BetaDreamUsageShape $usage
      */

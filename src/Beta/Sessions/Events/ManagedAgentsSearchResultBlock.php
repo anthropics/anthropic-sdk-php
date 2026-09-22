@@ -29,7 +29,7 @@ final class ManagedAgentsSearchResultBlock implements BaseModel
     use SdkModel;
 
     /**
-     * Citation settings for a search result.
+     * Citation settings for this search result.
      */
     #[Required]
     public ManagedAgentsSearchResultCitations $citations;
@@ -112,7 +112,7 @@ final class ManagedAgentsSearchResultBlock implements BaseModel
     }
 
     /**
-     * Citation settings for a search result.
+     * Citation settings for this search result.
      *
      * @param ManagedAgentsSearchResultCitations|ManagedAgentsSearchResultCitationsShape $citations
      */

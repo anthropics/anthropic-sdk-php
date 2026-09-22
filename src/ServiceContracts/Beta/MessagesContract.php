@@ -125,20 +125,14 @@ interface MessagesContract
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
-     * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction Body param: Compact the whole conversation and return a signed `compaction` block,
-     * alone, that a later request sends back first in `messages`, in place of
-     * the messages it summarizes. There is no trigger and no pause flag: sending
-     * the parameter compacts, and nothing is sampled after the block.
+     * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction Body param: Compaction configuration.
      *
-     * The summarization prompt is the server's own unless `instructions` are
-     * given, which then replace it for this request; a value that is empty or
-     * only whitespace counts as absent.
+     * When set on `POST /v1/messages`, the request is a compaction request: the conversation in `messages` is summarized and the response holds only the resulting `compaction` block (`stop_reason` `"compaction"`), which later requests send first in `messages` in place of the messages it summarizes. `POST /v1/messages/count_tokens` accepts this parameter and ignores it: the count it returns is for the conversation in `messages` as sent. Cannot be combined with `context_management`.
      * @param ContainerShape|null $container body param: Container identifier for reuse across requests
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement Body param: Context management configuration.
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
-     * @param BetaDiagnosticsParam|BetaDiagnosticsParamShape|null $diagnostics Body param: Request-level diagnostics. Currently carries the previous response
-     * id for prompt-cache divergence reporting.
+     * @param BetaDiagnosticsParam|BetaDiagnosticsParamShape|null $diagnostics Body param: Request-level diagnostics. Supply `previous_message_id` to have the response include `diagnostics.cache_miss_reason` explaining any prompt-cache divergence from that prior request.
      * @param FallbackCreditTokenShape|null $fallbackCreditToken Body param: The `fallback_credit_token` from a prior refusal's `stop_details`.
      *
      * When a preceding request was refused and returned a `fallback_credit_token`,
@@ -170,7 +164,7 @@ interface MessagesContract
      * @param ServiceTier|value-of<ServiceTier> $serviceTier Body param: Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://platform.claude.com/docs/en/api/service-tiers) for details.
-     * @param Speed|value-of<Speed>|null $speed Body param: Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Not all models support `fast`; invalid combinations are rejected at create time.
+     * @param Speed|value-of<Speed>|null $speed Body param: The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
      * @param list<string> $stopSequences Body param: Custom text sequences that will cause the model to stop generating.
      *
      * Our models will normally stop when they have naturally completed their turn, which will result in a response `stop_reason` of `"end_turn"`.
@@ -364,20 +358,14 @@ interface MessagesContract
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
-     * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction Body param: Compact the whole conversation and return a signed `compaction` block,
-     * alone, that a later request sends back first in `messages`, in place of
-     * the messages it summarizes. There is no trigger and no pause flag: sending
-     * the parameter compacts, and nothing is sampled after the block.
+     * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction Body param: Compaction configuration.
      *
-     * The summarization prompt is the server's own unless `instructions` are
-     * given, which then replace it for this request; a value that is empty or
-     * only whitespace counts as absent.
+     * When set on `POST /v1/messages`, the request is a compaction request: the conversation in `messages` is summarized and the response holds only the resulting `compaction` block (`stop_reason` `"compaction"`), which later requests send first in `messages` in place of the messages it summarizes. `POST /v1/messages/count_tokens` accepts this parameter and ignores it: the count it returns is for the conversation in `messages` as sent. Cannot be combined with `context_management`.
      * @param ContainerShape|null $container body param: Container identifier for reuse across requests
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement Body param: Context management configuration.
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
-     * @param BetaDiagnosticsParam|BetaDiagnosticsParamShape|null $diagnostics Body param: Request-level diagnostics. Currently carries the previous response
-     * id for prompt-cache divergence reporting.
+     * @param BetaDiagnosticsParam|BetaDiagnosticsParamShape|null $diagnostics Body param: Request-level diagnostics. Supply `previous_message_id` to have the response include `diagnostics.cache_miss_reason` explaining any prompt-cache divergence from that prior request.
      * @param FallbackCreditTokenShape|null $fallbackCreditToken Body param: The `fallback_credit_token` from a prior refusal's `stop_details`.
      *
      * When a preceding request was refused and returned a `fallback_credit_token`,
@@ -409,7 +397,7 @@ interface MessagesContract
      * @param ServiceTier|value-of<ServiceTier> $serviceTier Body param: Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://platform.claude.com/docs/en/api/service-tiers) for details.
-     * @param Speed|value-of<Speed>|null $speed Body param: Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Not all models support `fast`; invalid combinations are rejected at create time.
+     * @param Speed|value-of<Speed>|null $speed Body param: The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
      * @param list<string> $stopSequences Body param: Custom text sequences that will cause the model to stop generating.
      *
      * Our models will normally stop when they have naturally completed their turn, which will result in a response `stop_reason` of `"end_turn"`.
@@ -598,14 +586,9 @@ interface MessagesContract
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
-     * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction Body param: Compact the whole conversation and return a signed `compaction` block,
-     * alone, that a later request sends back first in `messages`, in place of
-     * the messages it summarizes. There is no trigger and no pause flag: sending
-     * the parameter compacts, and nothing is sampled after the block.
+     * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction Body param: Compaction configuration.
      *
-     * The summarization prompt is the server's own unless `instructions` are
-     * given, which then replace it for this request; a value that is empty or
-     * only whitespace counts as absent.
+     * When set on `POST /v1/messages`, the request is a compaction request: the conversation in `messages` is summarized and the response holds only the resulting `compaction` block (`stop_reason` `"compaction"`), which later requests send first in `messages` in place of the messages it summarizes. `POST /v1/messages/count_tokens` accepts this parameter and ignores it: the count it returns is for the conversation in `messages` as sent. Cannot be combined with `context_management`.
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement Body param: Context management configuration.
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
@@ -614,7 +597,7 @@ interface MessagesContract
      * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat Body param: Deprecated: Use `output_config.format` instead. See [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
      *
      * A schema to specify Claude's output format in responses. This parameter will be removed in a future release.
-     * @param \Anthropic\Beta\Messages\MessageCountTokensParams\Speed|value-of<\Anthropic\Beta\Messages\MessageCountTokensParams\Speed>|null $speed Body param: Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Not all models support `fast`; invalid combinations are rejected at create time.
+     * @param \Anthropic\Beta\Messages\MessageCountTokensParams\Speed|value-of<\Anthropic\Beta\Messages\MessageCountTokensParams\Speed>|null $speed Body param: The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
      * @param SystemShape $system Body param: System prompt.
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#give-claude-a-role).

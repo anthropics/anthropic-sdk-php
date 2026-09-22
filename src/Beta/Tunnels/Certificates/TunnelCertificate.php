@@ -38,19 +38,19 @@ final class TunnelCertificate implements BaseModel
     public string $id;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * RFC 3339 datetime string indicating when the certificate was archived. Null if it is still in the trusted set.
      */
     #[Required('archived_at')]
     public ?\DateTimeInterface $archivedAt;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * RFC 3339 datetime string indicating when the certificate was registered.
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * RFC 3339 datetime string indicating when the certificate expires, or `null` if it does not expire.
      */
     #[Required('expires_at')]
     public ?\DateTimeInterface $expiresAt;
@@ -136,7 +136,7 @@ final class TunnelCertificate implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * RFC 3339 datetime string indicating when the certificate was archived. Null if it is still in the trusted set.
      */
     public function withArchivedAt(?\DateTimeInterface $archivedAt): self
     {
@@ -147,7 +147,7 @@ final class TunnelCertificate implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * RFC 3339 datetime string indicating when the certificate was registered.
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
@@ -158,7 +158,7 @@ final class TunnelCertificate implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * RFC 3339 datetime string indicating when the certificate expires, or `null` if it does not expire.
      */
     public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {

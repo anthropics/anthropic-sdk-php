@@ -40,7 +40,7 @@ final class BetaManagedAgentsModelConfig implements BaseModel
     public string $id;
 
     /**
-     * How hard Claude works on each turn. Sets `output_config.effort` on every Messages call the session makes.
+     * How hard Claude works on each inference call. One of `low`, `medium`, `high`, `xhigh`, `max`. Always present; resolved to the per-model default at save time when not supplied.
      *
      * @var EffortVariants|null $effort
      */
@@ -54,7 +54,7 @@ final class BetaManagedAgentsModelConfig implements BaseModel
     public ?string $inferenceGeo;
 
     /**
-     * Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Not all models support `fast`; invalid combinations are rejected at create time.
+     * Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Defaults to `standard`. Not all models support `fast`; invalid combinations are rejected at create time.
      *
      * @var value-of<Speed>|null $speed
      */
@@ -122,7 +122,7 @@ final class BetaManagedAgentsModelConfig implements BaseModel
     }
 
     /**
-     * How hard Claude works on each turn. Sets `output_config.effort` on every Messages call the session makes.
+     * How hard Claude works on each inference call. One of `low`, `medium`, `high`, `xhigh`, `max`. Always present; resolved to the per-model default at save time when not supplied.
      *
      * @param EffortShape $effort
      */
@@ -147,7 +147,7 @@ final class BetaManagedAgentsModelConfig implements BaseModel
     }
 
     /**
-     * Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Not all models support `fast`; invalid combinations are rejected at create time.
+     * Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Defaults to `standard`. Not all models support `fast`; invalid combinations are rejected at create time.
      *
      * @param Speed|value-of<Speed> $speed
      */

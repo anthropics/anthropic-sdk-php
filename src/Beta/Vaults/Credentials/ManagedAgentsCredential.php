@@ -41,13 +41,13 @@ final class ManagedAgentsCredential implements BaseModel
     public string $id;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the credential was archived. Null if not archived.
      */
     #[Required('archived_at')]
     public ?\DateTimeInterface $archivedAt;
 
     /**
-     * Authentication details for a credential.
+     * Authentication configuration for this credential.
      *
      * @var AuthVariants $auth
      */
@@ -174,7 +174,7 @@ final class ManagedAgentsCredential implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the credential was archived. Null if not archived.
      */
     public function withArchivedAt(?\DateTimeInterface $archivedAt): self
     {
@@ -185,7 +185,7 @@ final class ManagedAgentsCredential implements BaseModel
     }
 
     /**
-     * Authentication details for a credential.
+     * Authentication configuration for this credential.
      *
      * @param AuthShape $auth
      */

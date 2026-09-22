@@ -29,7 +29,7 @@ final class BetaUserProfileExternalUserDetails implements BaseModel
     use SdkModel;
 
     /**
-     * The status of the entity's account on the platform, as the platform states it: `active`; `suspended`, when the platform has restricted the account and may restore it; or `blocked`, when the platform has barred it. It records the platform's decision only; the statuses in `trust_grants` are Anthropic's and do not follow it.
+     * The status of the entity's account on the platform: `active`, `suspended` or `blocked`. `null` until the platform supplies one.
      *
      * @var value-of<AccountStatus>|null $accountStatus
      */
@@ -49,7 +49,7 @@ final class BetaUserProfileExternalUserDetails implements BaseModel
     public ?string $emailHash;
 
     /**
-     * What kind of entity the profile represents, as the platform states it: `individual`, `business`, `non_profit` or `government`.
+     * What kind of entity the profile represents: `individual`, `business`, `non_profit` or `government`. `null` until the platform supplies one.
      *
      * @var value-of<EntityType>|null $entityType
      */
@@ -63,7 +63,7 @@ final class BetaUserProfileExternalUserDetails implements BaseModel
     public ?string $nameHash;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the entity opened its account with the platform, as stated by the platform, in RFC 3339 format (UTC). `null` until the platform supplies one.
      */
     #[Required('onboarded_at')]
     public ?\DateTimeInterface $onboardedAt;
@@ -139,7 +139,7 @@ final class BetaUserProfileExternalUserDetails implements BaseModel
     }
 
     /**
-     * The status of the entity's account on the platform, as the platform states it: `active`; `suspended`, when the platform has restricted the account and may restore it; or `blocked`, when the platform has barred it. It records the platform's decision only; the statuses in `trust_grants` are Anthropic's and do not follow it.
+     * The status of the entity's account on the platform: `active`, `suspended` or `blocked`. `null` until the platform supplies one.
      *
      * @param AccountStatus|value-of<AccountStatus>|null $accountStatus
      */
@@ -175,7 +175,7 @@ final class BetaUserProfileExternalUserDetails implements BaseModel
     }
 
     /**
-     * What kind of entity the profile represents, as the platform states it: `individual`, `business`, `non_profit` or `government`.
+     * What kind of entity the profile represents: `individual`, `business`, `non_profit` or `government`. `null` until the platform supplies one.
      *
      * @param EntityType|value-of<EntityType>|null $entityType
      */
@@ -199,7 +199,7 @@ final class BetaUserProfileExternalUserDetails implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the entity opened its account with the platform, as stated by the platform, in RFC 3339 format (UTC). `null` until the platform supplies one.
      */
     public function withOnboardedAt(?\DateTimeInterface $onboardedAt): self
     {

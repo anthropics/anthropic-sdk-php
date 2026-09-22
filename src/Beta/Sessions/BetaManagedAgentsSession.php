@@ -58,13 +58,13 @@ final class BetaManagedAgentsSession implements BaseModel
     public BetaManagedAgentsSessionAgent $agent;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the session was archived. Null if not archived.
      */
     #[Required('archived_at')]
     public ?\DateTimeInterface $archivedAt;
 
     /**
-     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     * The session's enforced spend ceiling, or null when no budget is set.
      */
     #[Required]
     public ?BetaManagedAgentsBudgetLimit $budget;
@@ -98,7 +98,7 @@ final class BetaManagedAgentsSession implements BaseModel
     public array $resources;
 
     /**
-     * Timing statistics for a session.
+     * Timing statistics for the session.
      */
     #[Required]
     public BetaManagedAgentsSessionStats $stats;
@@ -125,7 +125,7 @@ final class BetaManagedAgentsSession implements BaseModel
     public \DateTimeInterface $updatedAt;
 
     /**
-     * Cumulative token usage for a session across all turns.
+     * Cumulative token usage for the session.
      */
     #[Required]
     public BetaManagedAgentsSessionUsage $usage;
@@ -277,7 +277,7 @@ final class BetaManagedAgentsSession implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the session was archived. Null if not archived.
      */
     public function withArchivedAt(?\DateTimeInterface $archivedAt): self
     {
@@ -288,7 +288,7 @@ final class BetaManagedAgentsSession implements BaseModel
     }
 
     /**
-     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     * The session's enforced spend ceiling, or null when no budget is set.
      *
      * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
      */
@@ -356,7 +356,7 @@ final class BetaManagedAgentsSession implements BaseModel
     }
 
     /**
-     * Timing statistics for a session.
+     * Timing statistics for the session.
      *
      * @param BetaManagedAgentsSessionStats|BetaManagedAgentsSessionStatsShape $stats
      */
@@ -412,7 +412,7 @@ final class BetaManagedAgentsSession implements BaseModel
     }
 
     /**
-     * Cumulative token usage for a session across all turns.
+     * Cumulative token usage for the session.
      *
      * @param BetaManagedAgentsSessionUsage|BetaManagedAgentsSessionUsageShape $usage
      */

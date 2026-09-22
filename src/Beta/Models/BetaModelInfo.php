@@ -53,7 +53,7 @@ final class BetaModelInfo implements BaseModel
     public ?array $allowedFallbackModels;
 
     /**
-     * Model capability information.
+     * Object mapping capability names to their support details. Keys are always present for all known capabilities.
      */
     #[Required]
     public ?BetaModelCapabilities $capabilities;
@@ -172,7 +172,7 @@ final class BetaModelInfo implements BaseModel
     }
 
     /**
-     * Model capability information.
+     * Object mapping capability names to their support details. Keys are always present for all known capabilities.
      *
      * @param BetaModelCapabilities|BetaModelCapabilitiesShape|null $capabilities
      */

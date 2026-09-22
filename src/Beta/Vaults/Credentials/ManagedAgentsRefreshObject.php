@@ -25,13 +25,13 @@ final class ManagedAgentsRefreshObject implements BaseModel
     use SdkModel;
 
     /**
-     * An HTTP response captured during a credential validation probe.
+     * The captured HTTP error response from the token endpoint. Populated only when `status` is `failed`.
      */
     #[Required('http_response')]
     public ?ManagedAgentsRefreshHTTPResponse $httpResponse;
 
     /**
-     * Outcome of a refresh-token exchange attempted during credential validation.
+     * Outcome of the refresh attempt.
      *
      * @var value-of<Status> $status
      */
@@ -78,7 +78,7 @@ final class ManagedAgentsRefreshObject implements BaseModel
     }
 
     /**
-     * An HTTP response captured during a credential validation probe.
+     * The captured HTTP error response from the token endpoint. Populated only when `status` is `failed`.
      *
      * @param ManagedAgentsRefreshHTTPResponse|ManagedAgentsRefreshHTTPResponseShape|null $httpResponse
      */
@@ -92,7 +92,7 @@ final class ManagedAgentsRefreshObject implements BaseModel
     }
 
     /**
-     * Outcome of a refresh-token exchange attempted during credential validation.
+     * Outcome of the refresh attempt.
      *
      * @param Status|value-of<Status> $status
      */

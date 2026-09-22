@@ -64,7 +64,9 @@ final class Message implements BaseModel
     public string $id;
 
     /**
-     * Information about the container used in the request (for the code execution tool).
+     * Information about the container used in this request.
+     *
+     * This will be non-null if a container tool (e.g. code execution) was used.
      */
     #[Required]
     public ?Container $container;
@@ -112,7 +114,9 @@ final class Message implements BaseModel
     public string $model;
 
     /**
-     * Structured information about a refusal.
+     * Structured information about why model output stopped.
+     *
+     * This is `null` when the `stop_reason` has no additional detail to report.
      */
     #[Required('stop_details')]
     public ?RefusalStopDetails $stopDetails;
@@ -264,7 +268,9 @@ final class Message implements BaseModel
     }
 
     /**
-     * Information about the container used in the request (for the code execution tool).
+     * Information about the container used in this request.
+     *
+     * This will be non-null if a container tool (e.g. code execution) was used.
      *
      * @param Container|ContainerShape|null $container
      */
@@ -344,7 +350,9 @@ final class Message implements BaseModel
     }
 
     /**
-     * Structured information about a refusal.
+     * Structured information about why model output stopped.
+     *
+     * This is `null` when the `stop_reason` has no additional detail to report.
      *
      * @param RefusalStopDetails|RefusalStopDetailsShape|null $stopDetails
      */

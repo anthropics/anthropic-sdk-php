@@ -30,7 +30,7 @@ final class ManagedAgentsAgentToolEvaluationAuto implements BaseModel
     public string $type = 'auto';
 
     /**
-     * The server's per-invocation judgement under the auto permission policy. Its type always equals the event's top-level evaluated_permission. Open union: clients must tolerate unknown variants.
+     * The server's judgement for this invocation.
      *
      * @var ManagedAgentsAgentAutoEvaluatedPermissionVariants $evaluatedPermission
      */
@@ -77,7 +77,7 @@ final class ManagedAgentsAgentToolEvaluationAuto implements BaseModel
     }
 
     /**
-     * The server's per-invocation judgement under the auto permission policy. Its type always equals the event's top-level evaluated_permission. Open union: clients must tolerate unknown variants.
+     * The server's judgement for this invocation.
      *
      * @param ManagedAgentsAgentAutoEvaluatedPermissionShape $evaluatedPermission
      */

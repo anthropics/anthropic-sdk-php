@@ -44,7 +44,7 @@ final class ModelInfo implements BaseModel
     public string $id;
 
     /**
-     * Model capability information.
+     * Object mapping capability names to their support details. Keys are always present for all known capabilities.
      */
     #[Required]
     public ?ModelCapabilities $capabilities;
@@ -144,7 +144,7 @@ final class ModelInfo implements BaseModel
     }
 
     /**
-     * Model capability information.
+     * Object mapping capability names to their support details. Keys are always present for all known capabilities.
      *
      * @param ModelCapabilities|ModelCapabilitiesShape|null $capabilities
      */

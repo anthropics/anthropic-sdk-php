@@ -46,7 +46,7 @@ final class ManagedAgentsSessionThread implements BaseModel
     public string $id;
 
     /**
-     * The resolved agent a `session_thread` runs.
+     * Resolved agent definition for this thread. Snapshot of the agent at thread creation time.
      *
      * @var AgentVariants $agent
      */
@@ -54,13 +54,13 @@ final class ManagedAgentsSessionThread implements BaseModel
     public BetaManagedAgentsSessionThreadAgent|BetaManagedAgentsAdvisor $agent;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the thread was archived. Null if not archived.
      */
     #[Required('archived_at')]
     public ?\DateTimeInterface $archivedAt;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the thread was created.
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
@@ -78,13 +78,13 @@ final class ManagedAgentsSessionThread implements BaseModel
     public string $sessionID;
 
     /**
-     * Timing statistics for a session thread.
+     * Timing statistics for this thread. Null until the thread's first status transition.
      */
     #[Required]
     public ?ManagedAgentsSessionThreadStats $stats;
 
     /**
-     * SessionThreadStatus enum.
+     * Current execution status of the thread.
      *
      * @var value-of<ManagedAgentsSessionThreadStatus> $status
      */
@@ -96,13 +96,13 @@ final class ManagedAgentsSessionThread implements BaseModel
     public string $type;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the thread was last updated.
      */
     #[Required('updated_at')]
     public \DateTimeInterface $updatedAt;
 
     /**
-     * Cumulative token usage for a session thread across all turns.
+     * Cumulative token usage for this thread. Null until the thread's first idle transition.
      */
     #[Required]
     public ?ManagedAgentsSessionThreadUsage $usage;
@@ -202,7 +202,7 @@ final class ManagedAgentsSessionThread implements BaseModel
     }
 
     /**
-     * The resolved agent a `session_thread` runs.
+     * Resolved agent definition for this thread. Snapshot of the agent at thread creation time.
      *
      * @param AgentShape $agent
      */
@@ -216,7 +216,7 @@ final class ManagedAgentsSessionThread implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the thread was archived. Null if not archived.
      */
     public function withArchivedAt(?\DateTimeInterface $archivedAt): self
     {
@@ -227,7 +227,7 @@ final class ManagedAgentsSessionThread implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the thread was created.
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
@@ -260,7 +260,7 @@ final class ManagedAgentsSessionThread implements BaseModel
     }
 
     /**
-     * Timing statistics for a session thread.
+     * Timing statistics for this thread. Null until the thread's first status transition.
      *
      * @param ManagedAgentsSessionThreadStats|ManagedAgentsSessionThreadStatsShape|null $stats
      */
@@ -274,7 +274,7 @@ final class ManagedAgentsSessionThread implements BaseModel
     }
 
     /**
-     * SessionThreadStatus enum.
+     * Current execution status of the thread.
      *
      * @param ManagedAgentsSessionThreadStatus|value-of<ManagedAgentsSessionThreadStatus> $status
      */
@@ -299,7 +299,7 @@ final class ManagedAgentsSessionThread implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the thread was last updated.
      */
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
@@ -310,7 +310,7 @@ final class ManagedAgentsSessionThread implements BaseModel
     }
 
     /**
-     * Cumulative token usage for a session thread across all turns.
+     * Cumulative token usage for this thread. Null until the thread's first idle transition.
      *
      * @param ManagedAgentsSessionThreadUsage|ManagedAgentsSessionThreadUsageShape|null $usage
      */

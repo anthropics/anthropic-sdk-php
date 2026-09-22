@@ -28,7 +28,7 @@ final class ManagedAgentsAgentThreadContextCompactedEvent implements BaseModel
     public string $id;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when compaction was processed.
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
@@ -94,7 +94,7 @@ final class ManagedAgentsAgentThreadContextCompactedEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when compaction was processed.
      */
     public function withProcessedAt(\DateTimeInterface $processedAt): self
     {

@@ -38,7 +38,7 @@ final class BetaManagedAgentsSessionUpdatedEvent implements BaseModel
     public string $id;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the update was applied.
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
@@ -48,13 +48,13 @@ final class BetaManagedAgentsSessionUpdatedEvent implements BaseModel
     public string $type;
 
     /**
-     * Resolved `agent` definition for a `session`. Snapshot of the `agent` at `session` creation time.
+     * The session's effective agent configuration after the update. Present only when the update changed `agent` (tools or mcp_servers); when present it is the full materialised snapshot, not a diff.
      */
     #[Optional(nullable: true)]
     public ?BetaManagedAgentsSessionAgent $agent;
 
     /**
-     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     * The session's budget after the update: the new budget when set or replaced, or null when the update removed it. Present only when the update changed the budget.
      */
     #[Optional(nullable: true)]
     public ?BetaManagedAgentsBudgetLimit $budget;
@@ -140,7 +140,7 @@ final class BetaManagedAgentsSessionUpdatedEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the update was applied.
      */
     public function withProcessedAt(\DateTimeInterface $processedAt): self
     {
@@ -162,7 +162,7 @@ final class BetaManagedAgentsSessionUpdatedEvent implements BaseModel
     }
 
     /**
-     * Resolved `agent` definition for a `session`. Snapshot of the `agent` at `session` creation time.
+     * The session's effective agent configuration after the update. Present only when the update changed `agent` (tools or mcp_servers); when present it is the full materialised snapshot, not a diff.
      *
      * @param BetaManagedAgentsSessionAgent|BetaManagedAgentsSessionAgentShape|null $agent
      */
@@ -176,7 +176,7 @@ final class BetaManagedAgentsSessionUpdatedEvent implements BaseModel
     }
 
     /**
-     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     * The session's budget after the update: the new budget when set or replaced, or null when the update removed it. Present only when the update changed the budget.
      *
      * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
      */

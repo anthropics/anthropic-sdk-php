@@ -26,19 +26,19 @@ final class ContextManagementCapability implements BaseModel
     use SdkModel;
 
     /**
-     * Indicates whether a capability is supported.
+     * Whether the clear_thinking_20251015 strategy is supported.
      */
     #[Required('clear_thinking_20251015')]
     public ?CapabilitySupport $clearThinking20251015;
 
     /**
-     * Indicates whether a capability is supported.
+     * Whether the clear_tool_uses_20250919 strategy is supported.
      */
     #[Required('clear_tool_uses_20250919')]
     public ?CapabilitySupport $clearToolUses20250919;
 
     /**
-     * Indicates whether a capability is supported.
+     * Whether the compact_20260112 strategy is supported.
      */
     #[Required('compact_20260112')]
     public ?CapabilitySupport $compact20260112;
@@ -103,7 +103,7 @@ final class ContextManagementCapability implements BaseModel
     }
 
     /**
-     * Indicates whether a capability is supported.
+     * Whether the clear_thinking_20251015 strategy is supported.
      *
      * @param CapabilitySupport|CapabilitySupportShape|null $clearThinking20251015
      */
@@ -117,7 +117,7 @@ final class ContextManagementCapability implements BaseModel
     }
 
     /**
-     * Indicates whether a capability is supported.
+     * Whether the clear_tool_uses_20250919 strategy is supported.
      *
      * @param CapabilitySupport|CapabilitySupportShape|null $clearToolUses20250919
      */
@@ -131,7 +131,7 @@ final class ContextManagementCapability implements BaseModel
     }
 
     /**
-     * Indicates whether a capability is supported.
+     * Whether the compact_20260112 strategy is supported.
      *
      * @param CapabilitySupport|CapabilitySupportShape|null $compact20260112
      */

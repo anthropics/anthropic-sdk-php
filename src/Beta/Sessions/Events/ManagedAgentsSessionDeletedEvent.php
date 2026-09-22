@@ -28,7 +28,7 @@ final class ManagedAgentsSessionDeletedEvent implements BaseModel
     public string $id;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the session was deleted.
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
@@ -92,7 +92,7 @@ final class ManagedAgentsSessionDeletedEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the session was deleted.
      */
     public function withProcessedAt(\DateTimeInterface $processedAt): self
     {

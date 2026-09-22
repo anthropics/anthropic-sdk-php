@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Vaults\Credentials\ManagedAgentsRefreshObject;
 
 /**
- * Outcome of a refresh-token exchange attempted during credential validation.
+ * Outcome of the refresh attempt.
  */
 enum Status: string
 {

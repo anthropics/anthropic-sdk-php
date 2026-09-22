@@ -26,7 +26,7 @@ final class BetaManagedAgentsDeltaContent implements BaseModel
     use SdkModel;
 
     /**
-     * Regular text content.
+     * A partial element of the content array at index, typed like the element itself — the same shape the buffered agent.message carries in content.
      */
     #[Required]
     public ManagedAgentsTextBlock $content;
@@ -84,7 +84,7 @@ final class BetaManagedAgentsDeltaContent implements BaseModel
     }
 
     /**
-     * Regular text content.
+     * A partial element of the content array at index, typed like the element itself — the same shape the buffered agent.message carries in content.
      *
      * @param ManagedAgentsTextBlock|ManagedAgentsTextBlockShape $content
      */

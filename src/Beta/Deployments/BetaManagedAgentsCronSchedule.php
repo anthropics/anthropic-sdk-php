@@ -43,7 +43,7 @@ final class BetaManagedAgentsCronSchedule implements BaseModel
     public string $type;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Time the most recent scheduled run actually started. Null until one completes; preserved after the deployment is archived. Manual runs do not update this.
      */
     #[Optional('last_run_at', nullable: true)]
     public ?\DateTimeInterface $lastRunAt;
@@ -139,7 +139,7 @@ final class BetaManagedAgentsCronSchedule implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Time the most recent scheduled run actually started. Null until one completes; preserved after the deployment is archived. Manual runs do not update this.
      */
     public function withLastRunAt(?\DateTimeInterface $lastRunAt): self
     {

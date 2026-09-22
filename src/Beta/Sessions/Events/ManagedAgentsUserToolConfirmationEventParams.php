@@ -27,7 +27,7 @@ final class ManagedAgentsUserToolConfirmationEventParams implements BaseModel
     use SdkModel;
 
     /**
-     * UserToolConfirmationResult enum.
+     * The confirmation result: 'allow' or 'deny'.
      *
      * @var value-of<Result> $result
      */
@@ -100,7 +100,7 @@ final class ManagedAgentsUserToolConfirmationEventParams implements BaseModel
     }
 
     /**
-     * UserToolConfirmationResult enum.
+     * The confirmation result: 'allow' or 'deny'.
      *
      * @param Result|value-of<Result> $result
      */

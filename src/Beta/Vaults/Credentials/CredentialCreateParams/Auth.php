@@ -17,7 +17,7 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Authentication details for creating a credential.
+ * Authentication configuration for the credential.
  *
  * @phpstan-import-type ManagedAgentsMCPOAuthCreateParamsShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsMCPOAuthCreateParams
  * @phpstan-import-type ManagedAgentsStaticBearerCreateParamsShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsStaticBearerCreateParams

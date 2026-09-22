@@ -58,7 +58,7 @@ final class DeploymentUpdateParams implements BaseModel
     public string|BetaManagedAgentsAgentParams|null $agent;
 
     /**
-     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     * Spend ceiling for future sessions. Full replacement. Omit to preserve; send null to clear (sessions created afterwards are uncapped). The deployment agent's model must have a public list price, or the request is rejected; a multiagent roster is re-validated in full when each fire copies the cap, which fails closed the same way.
      */
     #[Optional(nullable: true)]
     public ?BetaManagedAgentsBudgetLimit $budget;
@@ -109,7 +109,7 @@ final class DeploymentUpdateParams implements BaseModel
     public ?array $resources;
 
     /**
-     * 5-field POSIX cron schedule. Literal wall-clock matching in the configured timezone.
+     * Cron schedule. Full replacement. Omit to preserve; send null to clear (revert to manual-only).
      */
     #[Optional(nullable: true)]
     public ?BetaManagedAgentsScheduleParams $schedule;
@@ -204,7 +204,7 @@ final class DeploymentUpdateParams implements BaseModel
     }
 
     /**
-     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     * Spend ceiling for future sessions. Full replacement. Omit to preserve; send null to clear (sessions created afterwards are uncapped). The deployment agent's model must have a public list price, or the request is rejected; a multiagent roster is re-validated in full when each fire copies the cap, which fails closed the same way.
      *
      * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
      */
@@ -290,7 +290,7 @@ final class DeploymentUpdateParams implements BaseModel
     }
 
     /**
-     * 5-field POSIX cron schedule. Literal wall-clock matching in the configured timezone.
+     * Cron schedule. Full replacement. Omit to preserve; send null to clear (revert to manual-only).
      *
      * @param BetaManagedAgentsScheduleParams|BetaManagedAgentsScheduleParamsShape|null $schedule
      */

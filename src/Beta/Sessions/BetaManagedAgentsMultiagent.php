@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Resolved coordinator topology with a concrete agent roster.
+ * Resolved multiagent orchestration configuration as returned in API responses.
  *
  * @phpstan-import-type AgentVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagent\Agent
  * @phpstan-import-type AgentShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagent\Agent

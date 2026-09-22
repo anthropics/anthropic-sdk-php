@@ -35,7 +35,7 @@ final class ManagedAgentsSessionStatusIdleEvent implements BaseModel
     public string $id;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp of status change.
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
@@ -109,7 +109,7 @@ final class ManagedAgentsSessionStatusIdleEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp of status change.
      */
     public function withProcessedAt(\DateTimeInterface $processedAt): self
     {

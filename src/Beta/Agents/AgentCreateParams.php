@@ -85,7 +85,7 @@ final class AgentCreateParams implements BaseModel
     public ?array $metadata;
 
     /**
-     * A coordinator topology: the session's primary thread orchestrates work by spawning session threads, each running an agent drawn from the `agents` roster.
+     * Multiagent orchestration configuration. Currently supports the `coordinator` topology with a roster of 1-20 agents.
      */
     #[Optional(nullable: true)]
     public ?BetaManagedAgentsMultiagentParams $multiagent;
@@ -254,7 +254,7 @@ final class AgentCreateParams implements BaseModel
     }
 
     /**
-     * A coordinator topology: the session's primary thread orchestrates work by spawning session threads, each running an agent drawn from the `agents` roster.
+     * Multiagent orchestration configuration. Currently supports the `coordinator` topology with a roster of 1-20 agents.
      *
      * @param BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null $multiagent
      */

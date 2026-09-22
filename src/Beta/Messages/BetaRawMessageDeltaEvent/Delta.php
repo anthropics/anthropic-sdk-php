@@ -28,13 +28,17 @@ final class Delta implements BaseModel
     use SdkModel;
 
     /**
-     * Information about the container used in the request (for the code execution tool).
+     * Information about the container used in this request.
+     *
+     * This will be non-null if a container tool (e.g. code execution) was used.
      */
     #[Required]
     public ?BetaContainer $container;
 
     /**
-     * Structured information about a refusal.
+     * Structured information about why model output stopped.
+     *
+     * This is `null` when the `stop_reason` has no additional detail to report.
      */
     #[Required('stop_details')]
     public ?BetaRefusalStopDetails $stopDetails;
@@ -97,7 +101,9 @@ final class Delta implements BaseModel
     }
 
     /**
-     * Information about the container used in the request (for the code execution tool).
+     * Information about the container used in this request.
+     *
+     * This will be non-null if a container tool (e.g. code execution) was used.
      *
      * @param BetaContainer|BetaContainerShape|null $container
      */
@@ -110,7 +116,9 @@ final class Delta implements BaseModel
     }
 
     /**
-     * Structured information about a refusal.
+     * Structured information about why model output stopped.
+     *
+     * This is `null` when the `stop_reason` has no additional detail to report.
      *
      * @param BetaRefusalStopDetails|BetaRefusalStopDetailsShape|null $stopDetails
      */

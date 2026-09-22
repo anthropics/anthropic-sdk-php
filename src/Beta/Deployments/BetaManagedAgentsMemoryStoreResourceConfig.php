@@ -37,7 +37,7 @@ final class BetaManagedAgentsMemoryStoreResourceConfig implements BaseModel
     public string $type;
 
     /**
-     * Access mode for an attached memory store.
+     * Access mode for the mounted store. Defaults to `read_write`. `read_only` mounts the store as a read-only filesystem.
      *
      * @var value-of<Access>|null $access
      */
@@ -119,7 +119,7 @@ final class BetaManagedAgentsMemoryStoreResourceConfig implements BaseModel
     }
 
     /**
-     * Access mode for an attached memory store.
+     * Access mode for the mounted store. Defaults to `read_write`. `read_only` mounts the store as a read-only filesystem.
      *
      * @param Access|value-of<Access>|null $access
      */

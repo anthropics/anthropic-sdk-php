@@ -41,7 +41,7 @@ final class BetaManagedAgentsAgentToolset20260401Params implements BaseModel
     public ?array $configs;
 
     /**
-     * Default configuration for all tools in a toolset.
+     * Default configuration applied to all tools in this set.
      */
     #[Optional('default_config', nullable: true)]
     public ?BetaManagedAgentsAgentToolsetDefaultConfigParams $defaultConfig;
@@ -114,7 +114,7 @@ final class BetaManagedAgentsAgentToolset20260401Params implements BaseModel
     }
 
     /**
-     * Default configuration for all tools in a toolset.
+     * Default configuration applied to all tools in this set.
      *
      * @param BetaManagedAgentsAgentToolsetDefaultConfigParams|BetaManagedAgentsAgentToolsetDefaultConfigParamsShape|null $defaultConfig
      */

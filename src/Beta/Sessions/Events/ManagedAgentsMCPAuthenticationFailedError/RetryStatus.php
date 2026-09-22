@@ -12,7 +12,7 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * What the client should do next in response to this error.
+ * What the client should do next.
  *
  * @phpstan-import-type ManagedAgentsRetryStatusRetryingShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRetryStatusRetrying
  * @phpstan-import-type ManagedAgentsRetryStatusExhaustedShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRetryStatusExhausted

@@ -70,7 +70,7 @@ final class BetaManagedAgentsWebFetchToolConfigParams implements BaseModel
     public ?int $maxContentTokens;
 
     /**
-     * Permission policy for tool execution.
+     * Permission policy for this tool. Controls whether tool calls are auto-approved or require confirmation.
      *
      * @var PermissionPolicyVariants|null $permissionPolicy
      */
@@ -182,7 +182,7 @@ final class BetaManagedAgentsWebFetchToolConfigParams implements BaseModel
     }
 
     /**
-     * Permission policy for tool execution.
+     * Permission policy for this tool. Controls whether tool calls are auto-approved or require confirmation.
      *
      * @param PermissionPolicyShape|null $permissionPolicy
      */

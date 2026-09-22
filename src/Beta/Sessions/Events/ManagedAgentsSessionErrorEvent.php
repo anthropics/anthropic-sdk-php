@@ -39,7 +39,7 @@ final class ManagedAgentsSessionErrorEvent implements BaseModel
     public ManagedAgentsUnknownError|ManagedAgentsModelOverloadedError|ManagedAgentsModelRateLimitedError|ManagedAgentsModelRequestFailedError|ManagedAgentsMCPConnectionFailedError|ManagedAgentsMCPAuthenticationFailedError|ManagedAgentsBillingError|ManagedAgentsCredentialHostUnreachableError $error;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the error occurred.
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
@@ -121,7 +121,7 @@ final class ManagedAgentsSessionErrorEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the error occurred.
      */
     public function withProcessedAt(\DateTimeInterface $processedAt): self
     {

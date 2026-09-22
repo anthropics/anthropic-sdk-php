@@ -28,7 +28,7 @@ final class BetaManagedAgentsOutcomeEvaluationResource implements BaseModel
     use SdkModel;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the outcome reached a terminal result. Null while `pending`/`running`/`evaluating`.
      */
     #[Required('completed_at')]
     public ?\DateTimeInterface $completedAt;
@@ -131,7 +131,7 @@ final class BetaManagedAgentsOutcomeEvaluationResource implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the outcome reached a terminal result. Null while `pending`/`running`/`evaluating`.
      */
     public function withCompletedAt(?\DateTimeInterface $completedAt): self
     {

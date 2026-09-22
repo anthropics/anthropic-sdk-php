@@ -44,7 +44,7 @@ final class ManagedAgentsSpanOutcomeEvaluationOngoingEvent implements BaseModel
     public string $outcomeID;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when this heartbeat was emitted.
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
@@ -138,7 +138,7 @@ final class ManagedAgentsSpanOutcomeEvaluationOngoingEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when this heartbeat was emitted.
      */
     public function withProcessedAt(\DateTimeInterface $processedAt): self
     {

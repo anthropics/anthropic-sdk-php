@@ -56,13 +56,13 @@ final class ManagedAgentsUserDefineOutcomeEvent implements BaseModel
     public string $outcomeID;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the outcome was accepted.
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
 
     /**
-     * Rubric for grading the quality of an outcome.
+     * How to grade the outcome. File rubrics are currently resolved to their text content; clients should handle both variants.
      *
      * @var RubricVariants $rubric
      */
@@ -182,7 +182,7 @@ final class ManagedAgentsUserDefineOutcomeEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the outcome was accepted.
      */
     public function withProcessedAt(\DateTimeInterface $processedAt): self
     {
@@ -193,7 +193,7 @@ final class ManagedAgentsUserDefineOutcomeEvent implements BaseModel
     }
 
     /**
-     * Rubric for grading the quality of an outcome.
+     * How to grade the outcome. File rubrics are currently resolved to their text content; clients should handle both variants.
      *
      * @param RubricShape $rubric
      */

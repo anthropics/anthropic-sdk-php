@@ -52,7 +52,7 @@ final class ManagedAgentsAgentThreadMessageReceivedEvent implements BaseModel
     public string $fromSessionThreadID;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the message was received.
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
@@ -158,7 +158,7 @@ final class ManagedAgentsAgentThreadMessageReceivedEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the message was received.
      */
     public function withProcessedAt(\DateTimeInterface $processedAt): self
     {

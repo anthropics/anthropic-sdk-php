@@ -43,13 +43,13 @@ final class BetaManagedAgentsDeploymentRun implements BaseModel
     public string $id;
 
     /**
-     * A resolved agent reference with a concrete version.
+     * Snapshot of the agent at fire time. Always fully resolved — deployments pin agent + version.
      */
     #[Required]
     public BetaManagedAgentsAgentReference $agent;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Time this run record was persisted.
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
@@ -61,7 +61,7 @@ final class BetaManagedAgentsDeploymentRun implements BaseModel
     public string $deploymentID;
 
     /**
-     * Why the run failed to create a session. The type identifies the failure; message is human-readable detail.
+     * Populated on creation failure. Null on success. Exactly one of `session_id` or `error` is non-null.
      *
      * @var ErrorVariants|null $error
      */
@@ -75,7 +75,7 @@ final class BetaManagedAgentsDeploymentRun implements BaseModel
     public ?string $sessionID;
 
     /**
-     * Describes what triggered a deployment run, with trigger-specific metadata.
+     * What triggered this run and trigger-specific metadata.
      *
      * @var BetaManagedAgentsTriggerContextVariants $triggerContext
      */
@@ -168,7 +168,7 @@ final class BetaManagedAgentsDeploymentRun implements BaseModel
     }
 
     /**
-     * A resolved agent reference with a concrete version.
+     * Snapshot of the agent at fire time. Always fully resolved — deployments pin agent + version.
      *
      * @param BetaManagedAgentsAgentReference|BetaManagedAgentsAgentReferenceShape $agent
      */
@@ -182,7 +182,7 @@ final class BetaManagedAgentsDeploymentRun implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Time this run record was persisted.
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
@@ -204,7 +204,7 @@ final class BetaManagedAgentsDeploymentRun implements BaseModel
     }
 
     /**
-     * Why the run failed to create a session. The type identifies the failure; message is human-readable detail.
+     * Populated on creation failure. Null on success. Exactly one of `session_id` or `error` is non-null.
      *
      * @param ErrorShape|null $error
      */
@@ -229,7 +229,7 @@ final class BetaManagedAgentsDeploymentRun implements BaseModel
     }
 
     /**
-     * Describes what triggered a deployment run, with trigger-specific metadata.
+     * What triggered this run and trigger-specific metadata.
      *
      * @param BetaManagedAgentsTriggerContextShape $triggerContext
      */

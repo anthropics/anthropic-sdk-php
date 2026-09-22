@@ -44,19 +44,19 @@ final class ManagedAgentsCredentialValidation implements BaseModel
     public bool $hasRefreshToken;
 
     /**
-     * The failing step of an MCP validation probe.
+     * Details of the failing MCP probe step. Null when the probe succeeded.
      */
     #[Required('mcp_probe')]
     public ?ManagedAgentsMCPProbe $mcpProbe;
 
     /**
-     * Outcome of a refresh-token exchange attempted during credential validation.
+     * Details of the refresh-token exchange attempted on a 401. Null when no refresh was attempted.
      */
     #[Required]
     public ?ManagedAgentsRefreshObject $refresh;
 
     /**
-     * Overall verdict of a credential validation probe.
+     * Overall verdict of the validation probe.
      *
      * @var value-of<ManagedAgentsCredentialValidationStatus> $status
      */
@@ -68,7 +68,7 @@ final class ManagedAgentsCredentialValidation implements BaseModel
     public string $type;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the validation probe was performed.
      */
     #[Required('validated_at')]
     public \DateTimeInterface $validatedAt;
@@ -172,7 +172,7 @@ final class ManagedAgentsCredentialValidation implements BaseModel
     }
 
     /**
-     * The failing step of an MCP validation probe.
+     * Details of the failing MCP probe step. Null when the probe succeeded.
      *
      * @param ManagedAgentsMCPProbe|ManagedAgentsMCPProbeShape|null $mcpProbe
      */
@@ -186,7 +186,7 @@ final class ManagedAgentsCredentialValidation implements BaseModel
     }
 
     /**
-     * Outcome of a refresh-token exchange attempted during credential validation.
+     * Details of the refresh-token exchange attempted on a 401. Null when no refresh was attempted.
      *
      * @param ManagedAgentsRefreshObject|ManagedAgentsRefreshObjectShape|null $refresh
      */
@@ -200,7 +200,7 @@ final class ManagedAgentsCredentialValidation implements BaseModel
     }
 
     /**
-     * Overall verdict of a credential validation probe.
+     * Overall verdict of the validation probe.
      *
      * @param ManagedAgentsCredentialValidationStatus|value-of<ManagedAgentsCredentialValidationStatus> $status
      */
@@ -225,7 +225,7 @@ final class ManagedAgentsCredentialValidation implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the validation probe was performed.
      */
     public function withValidatedAt(\DateTimeInterface $validatedAt): self
     {

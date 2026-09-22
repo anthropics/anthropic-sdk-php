@@ -28,7 +28,7 @@ final class ManagedAgentsSpanModelRequestStartEvent implements BaseModel
     public string $id;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the model request started.
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
@@ -94,7 +94,7 @@ final class ManagedAgentsSpanModelRequestStartEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the model request started.
      */
     public function withProcessedAt(\DateTimeInterface $processedAt): self
     {

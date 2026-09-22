@@ -15,7 +15,7 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Union type for document source variants.
+ * The source of the document data.
  *
  * @phpstan-import-type ManagedAgentsBase64DocumentSourceShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsBase64DocumentSource
  * @phpstan-import-type ManagedAgentsPlainTextDocumentSourceShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsPlainTextDocumentSource

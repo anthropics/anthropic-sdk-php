@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages\BetaFallbackRefusalTrigger;
 
 /**
- * The policy category that triggered a refusal.
+ * The policy category that triggered the `from` model's refusal at this hop. `null` when the refusal doesn't map to a named category. Same vocabulary as `stop_details.category`.
  */
 enum Category: string
 {

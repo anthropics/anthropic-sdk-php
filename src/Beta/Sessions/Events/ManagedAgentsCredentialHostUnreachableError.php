@@ -42,7 +42,7 @@ final class ManagedAgentsCredentialHostUnreachableError implements BaseModel
     public string $message;
 
     /**
-     * What the client should do next in response to this error.
+     * What the client should do next.
      *
      * @var RetryStatusVariants $retryStatus
      */
@@ -134,7 +134,7 @@ final class ManagedAgentsCredentialHostUnreachableError implements BaseModel
     }
 
     /**
-     * What the client should do next in response to this error.
+     * What the client should do next.
      *
      * @param RetryStatusShape $retryStatus
      */
