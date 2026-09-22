@@ -357,9 +357,19 @@ final class Util
             return;
         }
 
+        // PHP's HTTP wrapper (http:// and https://) holds a read of N bytes from a chunked response until all N arrive,
+        // so take one byte and then only what is already buffered.
+        $http = 'http' === $stream->getMetadata('wrapper_type');
+
         try {
             while (!$stream->eof()) {
-                yield $stream->read(self::BUF_SIZE);
+                $chunk = $stream->read($http ? 1 : self::BUF_SIZE);
+                $buffered = $http ? $stream->getMetadata('unread_bytes') : 0;
+                if (is_int($buffered) && $buffered > 0) {
+                    $chunk .= $stream->read($buffered);
+                }
+
+                yield $chunk;
             }
         } finally {
             $stream->close();
