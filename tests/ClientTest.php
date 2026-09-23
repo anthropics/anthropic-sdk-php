@@ -74,6 +74,7 @@ class ClientTest extends TestCase
             'model/vendor.model-v1:0/invoke' => ['http', 'localhost', '/prefix/model/vendor.model-v1:0/invoke'],
             '/model/vendor.model-v1:0/invoke' => ['http', 'localhost', '/prefix/model/vendor.model-v1:0/invoke'],
             'https://example.com/absolute/path?dog=woof' => ['https', 'example.com', '/absolute/path'],
+            '/https://example.com/absolute/path' => ['http', 'localhost', '/prefix/https://example.com/absolute/path'],
         ];
 
         foreach ($cases as $path => [$scheme, $host, $expectedPath]) {

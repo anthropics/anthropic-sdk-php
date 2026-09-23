@@ -233,7 +233,8 @@ final class Util
         string $path,
         array $query = []
     ): UriInterface {
-        if (preg_match(self::URI_WITH_AUTHORITY, $path)) {
+        // Only a full URL such as `https://host/x` switches to another host. Every other path, `/x` and `//host/x` included, is appended to the base URL's path.
+        if (!str_starts_with($path, '/') && preg_match(self::URI_WITH_AUTHORITY, $path)) {
             $parsed = parse_url($path) ?: [];
             if ($scheme = $parsed['scheme'] ?? null) {
                 $base = $base->withScheme($scheme);
@@ -249,7 +250,7 @@ final class Util
             }
             [$path, $pathQuery] = [$parsed['path'] ?? '', $parsed['query'] ?? ''];
         } else {
-            [$path, $pathQuery] = explode('?', explode('#', $path, 2)[0], 2) + [1 => ''];
+            [$path, $pathQuery] = explode('?', explode('#', ltrim($path, '/'), 2)[0], 2) + [1 => ''];
         }
 
         if ('' !== $path) {
