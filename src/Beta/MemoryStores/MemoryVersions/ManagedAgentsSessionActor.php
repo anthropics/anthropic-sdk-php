@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Attribution for a write made by an agent during a session, through the mounted filesystem at `/mnt/memory/`.
+ * An agent acting during a session, for example through the session's mounted filesystem. It names the session itself, not the user or API key that started the session.
  *
  * @phpstan-type ManagedAgentsSessionActorShape = array{
  *   sessionID: string, type: Type|value-of<Type>
@@ -22,7 +22,7 @@ final class ManagedAgentsSessionActor implements BaseModel
     use SdkModel;
 
     /**
-     * ID of the session that performed the write (a `sesn_...` value). Look up the session via [Retrieve a session](/en/api/beta/sessions/retrieve) for further provenance.
+     * ID of the session (a `sesn_...` value). Look up the session via [Retrieve a session](/en/api/beta/sessions/retrieve) for further provenance.
      */
     #[Required('session_id')]
     public string $sessionID;
@@ -68,7 +68,7 @@ final class ManagedAgentsSessionActor implements BaseModel
     }
 
     /**
-     * ID of the session that performed the write (a `sesn_...` value). Look up the session via [Retrieve a session](/en/api/beta/sessions/retrieve) for further provenance.
+     * ID of the session (a `sesn_...` value). Look up the session via [Retrieve a session](/en/api/beta/sessions/retrieve) for further provenance.
      */
     public function withSessionID(string $sessionID): self
     {

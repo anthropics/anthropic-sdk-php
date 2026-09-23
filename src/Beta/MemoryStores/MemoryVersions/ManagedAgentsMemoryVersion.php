@@ -92,7 +92,7 @@ final class ManagedAgentsMemoryVersion implements BaseModel
     public ?int $contentSizeBytes;
 
     /**
-     * Who performed this write: one of `session_actor`, `api_actor`, `user_actor`, or `service_account_actor`; `null` when no writer is recorded. Captured at write time and preserved through redaction.
+     * Who performed this write: one of `session_actor`, `api_actor`, `user_actor`, or `service_account_actor`; `null` when no writer is recorded. Captured at write time and preserved through redaction. A `session_actor` is an agent writing through the store's mounted filesystem at `/mnt/memory/`. The API key that created that session is not recorded on agent writes, so attribution names who made the write, not who is ultimately responsible; look up session provenance via the [Sessions API](/en/api/beta/sessions/retrieve).
      *
      * @var ManagedAgentsActorVariants|null $createdBy
      */
@@ -299,7 +299,7 @@ final class ManagedAgentsMemoryVersion implements BaseModel
     }
 
     /**
-     * Who performed this write: one of `session_actor`, `api_actor`, `user_actor`, or `service_account_actor`; `null` when no writer is recorded. Captured at write time and preserved through redaction.
+     * Who performed this write: one of `session_actor`, `api_actor`, `user_actor`, or `service_account_actor`; `null` when no writer is recorded. Captured at write time and preserved through redaction. A `session_actor` is an agent writing through the store's mounted filesystem at `/mnt/memory/`. The API key that created that session is not recorded on agent writes, so attribution names who made the write, not who is ultimately responsible; look up session provenance via the [Sessions API](/en/api/beta/sessions/retrieve).
      *
      * @param ManagedAgentsActorShape $createdBy
      */

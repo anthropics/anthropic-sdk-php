@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Attribution for a write made directly via the public API (outside of any session).
+ * A direct caller of the public API, identified by the API key that authenticated the request.
  *
  * @phpstan-type ManagedAgentsAPIActorShape = array{
  *   apiKeyID: string, type: Type|value-of<Type>
@@ -22,7 +22,7 @@ final class ManagedAgentsAPIActor implements BaseModel
     use SdkModel;
 
     /**
-     * ID of the API key that performed the write. This identifies the key, not the secret.
+     * ID of the API key (an `apikey_...` value). This identifies the key, not the secret.
      */
     #[Required('api_key_id')]
     public string $apiKeyID;
@@ -68,7 +68,7 @@ final class ManagedAgentsAPIActor implements BaseModel
     }
 
     /**
-     * ID of the API key that performed the write. This identifies the key, not the secret.
+     * ID of the API key (an `apikey_...` value). This identifies the key, not the secret.
      */
     public function withAPIKeyID(string $apiKeyID): self
     {
