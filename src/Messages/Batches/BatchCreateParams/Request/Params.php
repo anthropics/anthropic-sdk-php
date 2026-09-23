@@ -12,6 +12,7 @@ use Anthropic\Messages\Batches\BatchCreateParams\Request\Params\ServiceTier;
 use Anthropic\Messages\Batches\BatchCreateParams\Request\Params\System;
 use Anthropic\Messages\CacheControlEphemeral;
 use Anthropic\Messages\ContainerParams;
+use Anthropic\Messages\DiagnosticsParam;
 use Anthropic\Messages\MessageParam;
 use Anthropic\Messages\Metadata;
 use Anthropic\Messages\Model;
@@ -40,6 +41,7 @@ use Anthropic\Messages\ToolUnion;
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type MessageCreateParamsContainerShape from \Anthropic\Messages\MessageCreateParamsContainer
+ * @phpstan-import-type DiagnosticsParamShape from \Anthropic\Messages\DiagnosticsParam
  * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
  * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
  * @phpstan-import-type SystemShape from \Anthropic\Messages\Batches\BatchCreateParams\Request\Params\System
@@ -53,6 +55,7 @@ use Anthropic\Messages\ToolUnion;
  *   model: string|Model|value-of<Model>,
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   container?: MessageCreateParamsContainerShape|null,
+ *   diagnostics?: null|DiagnosticsParam|DiagnosticsParamShape,
  *   inferenceGeo?: string|null,
  *   metadata?: null|Metadata|MetadataShape,
  *   outputConfig?: null|OutputConfig|OutputConfigShape,
@@ -163,6 +166,12 @@ final class Params implements BaseModel
      */
     #[Optional(nullable: true)]
     public string|ContainerParams|null $container;
+
+    /**
+     * Request-level diagnostics. Supply `previous_message_id` to have the response include `diagnostics.cache_miss_reason` explaining any prompt-cache divergence from that prior request.
+     */
+    #[Optional(nullable: true)]
+    public ?DiagnosticsParam $diagnostics;
 
     /**
      * Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
@@ -374,6 +383,7 @@ final class Params implements BaseModel
      * @param string|Model|value-of<Model> $model
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      * @param MessageCreateParamsContainerShape|null $container
+     * @param DiagnosticsParam|DiagnosticsParamShape|null $diagnostics
      * @param Metadata|MetadataShape|null $metadata
      * @param OutputConfig|OutputConfigShape|null $outputConfig
      * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
@@ -389,6 +399,7 @@ final class Params implements BaseModel
         Model|string $model,
         CacheControlEphemeral|array|null $cacheControl = null,
         string|ContainerParams|array|null $container = null,
+        DiagnosticsParam|array|null $diagnostics = null,
         ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
@@ -411,6 +422,7 @@ final class Params implements BaseModel
 
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $container && $self['container'] = $container;
+        null !== $diagnostics && $self['diagnostics'] = $diagnostics;
         null !== $inferenceGeo && $self['inferenceGeo'] = $inferenceGeo;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $outputConfig && $self['outputConfig'] = $outputConfig;
@@ -544,6 +556,20 @@ final class Params implements BaseModel
     ): self {
         $self = clone $this;
         $self['container'] = $container;
+
+        return $self;
+    }
+
+    /**
+     * Request-level diagnostics. Supply `previous_message_id` to have the response include `diagnostics.cache_miss_reason` explaining any prompt-cache divergence from that prior request.
+     *
+     * @param DiagnosticsParam|DiagnosticsParamShape|null $diagnostics
+     */
+    public function withDiagnostics(
+        DiagnosticsParam|array|null $diagnostics
+    ): self {
+        $self = clone $this;
+        $self['diagnostics'] = $diagnostics;
 
         return $self;
     }

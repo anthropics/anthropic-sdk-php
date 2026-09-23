@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Messages\BetaDiagnostics\CacheMissReason;
+namespace Anthropic\Beta\Messages\BetaCacheMissReason;
 
 enum Type: string
 {
