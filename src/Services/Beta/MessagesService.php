@@ -922,7 +922,7 @@ final class MessagesService implements MessagesContract
      */
     private static function warnIfDeprecatedThinkingConfig(
         Model|string $model,
-        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking,
+        object|array|null $thinking,
     ): void {
         // Check if model is in the list of models that should warn on thinking.type=enabled
         $modelString = $model instanceof Model ? $model->value : $model;

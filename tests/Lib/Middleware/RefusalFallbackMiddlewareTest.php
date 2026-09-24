@@ -7,6 +7,7 @@ use Anthropic\Beta\Messages\BetaOutputConfig;
 use Anthropic\Beta\Messages\BetaThinkingConfigAdaptive;
 use Anthropic\Beta\Messages\BetaThinkingConfigDisabled;
 use Anthropic\Beta\Messages\BetaThinkingConfigEnabled;
+use Anthropic\Beta\Messages\BetaThinkingConfigParam\BetaThinkingConfigBetweenTools;
 use Anthropic\Client;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Exceptions\AnthropicException;
@@ -966,7 +967,7 @@ class RefusalFallbackMiddlewareTest extends TestCase
         ?string $fallbackCreditToken = null,
         ?array $fallbacks = null,
         ?array $requestOptions = null,
-        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking = null,
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking = null,
         BetaOutputConfig|array|null $outputConfig = null,
     ): BetaMessage {
         return $client->beta->messages->create(
