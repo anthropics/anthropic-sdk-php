@@ -893,12 +893,9 @@ class StructuredOutputTest extends TestCase
     #[Test]
     public function testRecursiveModelIsNotSupported(): void
     {
-        // Recursive schemas cannot be represented in JSON Schema.
-        // Self-referential models cause infinite recursion during schema generation.
-        // This is a known limitation - users should avoid self-referential model structures.
-        // TODO: Add cycle detection to fail fast with a descriptive error.
-        $this->markTestIncomplete(
-            'Recursive models are not supported: self-referential models cause infinite recursion in schema generation (known limitation).'
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('/circular reference/i');
+
+        StructuredOutput::toJsonSchema(RecursiveTreeNode::class);
     }
 }
