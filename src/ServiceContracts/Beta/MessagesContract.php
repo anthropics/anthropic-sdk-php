@@ -27,6 +27,7 @@ use Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition;
 use Anthropic\Beta\Messages\BetaThinkingConfigAdaptive;
 use Anthropic\Beta\Messages\BetaThinkingConfigDisabled;
 use Anthropic\Beta\Messages\BetaThinkingConfigEnabled;
+use Anthropic\Beta\Messages\BetaThinkingConfigParam\BetaThinkingConfigBetweenTools;
 use Anthropic\Beta\Messages\BetaToolChoiceAny;
 use Anthropic\Beta\Messages\BetaToolChoiceAuto;
 use Anthropic\Beta\Messages\BetaToolChoiceNone;
@@ -285,7 +286,7 @@ interface MessagesContract
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
-        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking = null,
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking = null,
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?int $topK = null,
@@ -520,7 +521,7 @@ interface MessagesContract
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
-        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking = null,
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking = null,
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?int $topK = null,
@@ -688,7 +689,7 @@ interface MessagesContract
         BetaJSONOutputFormat|array|null $outputFormat = null,
         \Anthropic\Beta\Messages\MessageCountTokensParams\Speed|string|null $speed = null,
         string|array|null $system = null,
-        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking = null,
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking = null,
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?array $betas = null,

@@ -8,6 +8,7 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Messages\ThinkingConfigEnabled\Display;
+use Anthropic\Messages\ThinkingConfigParam\ThinkingConfigBetweenTools;
 use Anthropic\Messages\ThinkingConfigParam\Type;
 
 /**
@@ -19,10 +20,11 @@ use Anthropic\Messages\ThinkingConfigParam\Type;
  *
  * @phpstan-import-type ThinkingConfigEnabledShape from \Anthropic\Messages\ThinkingConfigEnabled
  * @phpstan-import-type ThinkingConfigDisabledShape from \Anthropic\Messages\ThinkingConfigDisabled
+ * @phpstan-import-type ThinkingConfigBetweenToolsShape from \Anthropic\Messages\ThinkingConfigParam\ThinkingConfigBetweenTools
  * @phpstan-import-type ThinkingConfigAdaptiveShape from \Anthropic\Messages\ThinkingConfigAdaptive
  *
- * @phpstan-type ThinkingConfigParamVariants = ThinkingConfigEnabled|ThinkingConfigDisabled|ThinkingConfigAdaptive
- * @phpstan-type ThinkingConfigParamShape = ThinkingConfigParamVariants|ThinkingConfigEnabledShape|ThinkingConfigDisabledShape|ThinkingConfigAdaptiveShape
+ * @phpstan-type ThinkingConfigParamVariants = ThinkingConfigEnabled|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive
+ * @phpstan-type ThinkingConfigParamShape = ThinkingConfigParamVariants|ThinkingConfigEnabledShape|ThinkingConfigDisabledShape|ThinkingConfigBetweenToolsShape|ThinkingConfigAdaptiveShape
  */
 final class ThinkingConfigParam implements ConverterSource
 {
@@ -41,6 +43,7 @@ final class ThinkingConfigParam implements ConverterSource
         return [
             'enabled' => ThinkingConfigEnabled::class,
             'disabled' => ThinkingConfigDisabled::class,
+            'between_tools' => ThinkingConfigBetweenTools::class,
             'adaptive' => ThinkingConfigAdaptive::class,
         ];
     }
@@ -50,7 +53,7 @@ final class ThinkingConfigParam implements ConverterSource
      *
      * @param ($type is Type::ENABLED|'enabled' ? Display|value-of<Display>|null : ThinkingConfigAdaptive\Display|value-of<ThinkingConfigAdaptive\Display>|null) $display
      *
-     * @return ($type is Type::ENABLED|'enabled' ? ThinkingConfigEnabled : ($type is Type::DISABLED|'disabled' ? ThinkingConfigDisabled : ($type is Type::ADAPTIVE|'adaptive' ? ThinkingConfigAdaptive : ThinkingConfigEnabled|ThinkingConfigDisabled|ThinkingConfigAdaptive)))
+     * @return ($type is Type::ENABLED|'enabled' ? ThinkingConfigEnabled : ($type is Type::DISABLED|'disabled' ? ThinkingConfigDisabled : ($type is Type::BETWEEN_TOOLS|'between_tools' ? ThinkingConfigBetweenTools : ($type is Type::ADAPTIVE|'adaptive' ? ThinkingConfigAdaptive : ThinkingConfigEnabled|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive))))
      *
      * @throws \UnhandledMatchError
      */
@@ -58,13 +61,15 @@ final class ThinkingConfigParam implements ConverterSource
         Type|string $type,
         ?int $budgetTokens = null,
         Display|ThinkingConfigAdaptive\Display|string|null $display = null,
-    ): ThinkingConfigEnabled|ThinkingConfigDisabled|ThinkingConfigAdaptive {
+    ): ThinkingConfigEnabled|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive {
         return match ($type) {
             Type::ENABLED, 'enabled' => ThinkingConfigEnabled::with(
                 budgetTokens: $budgetTokens ?? throw new \ArgumentCountError('$budgetTokens is required'),
                 display: $display,
             ),
             Type::DISABLED, 'disabled' => ThinkingConfigDisabled::with(),
+            Type::BETWEEN_TOOLS, 'between_tools' => ThinkingConfigBetweenTools::with(
+            ),
             Type::ADAPTIVE, 'adaptive' => ThinkingConfigAdaptive::with(
                 // @phpstan-ignore argument.type
                 display: $display,
