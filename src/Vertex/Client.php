@@ -70,12 +70,13 @@ final class Client extends \Anthropic\Client
     }
 
     /**
-     * @param non-empty-string $location
+     * @param non-empty-string|null $region Google Cloud region, e.g. `us-east5` or `global`; required
      * @param non-empty-string|null $projectId
      * @param non-empty-string|null $baseUrl
      * @param RequestOpts|null $requestOptions
+     * @param non-empty-string|null $location deprecated alias for `$region`; use `$region` instead
      */
-    public static function fromEnvironment(string $location, ?string $projectId = null, ?string $baseUrl = null, RequestOptions|array|null $requestOptions = null): self
+    public static function fromEnvironment(?string $region = null, ?string $projectId = null, ?string $baseUrl = null, RequestOptions|array|null $requestOptions = null, ?string $location = null): self
     {
         self::ensureGoogleAuthLibraryIsInstalled();
 
@@ -83,7 +84,7 @@ final class Client extends \Anthropic\Client
             credentialsProvider: static fn (): FetchAuthTokenInterface => ApplicationDefaultCredentials::getCredentials(
                 scope: ['https://www.googleapis.com/auth/cloud-platform'],
             ),
-            location: $location,
+            location: self::resolveRegion($region, $location),
             projectId: $projectId,
             baseUrl: $baseUrl,
             requestOptions: $requestOptions,
@@ -91,16 +92,17 @@ final class Client extends \Anthropic\Client
     }
 
     /**
-     * @param non-empty-string $location
+     * @param non-empty-string|null $region Google Cloud region, e.g. `us-east5` or `global`; required
      * @param non-empty-string|null $projectId
      * @param non-empty-string|null $baseUrl
      * @param RequestOpts|null $requestOptions
+     * @param non-empty-string|null $location deprecated alias for `$region`; use `$region` instead
      */
-    public static function withCredentials(FetchAuthTokenInterface $credentials, string $location, ?string $projectId = null, ?string $baseUrl = null, RequestOptions|array|null $requestOptions = null): self
+    public static function withCredentials(FetchAuthTokenInterface $credentials, ?string $region = null, ?string $projectId = null, ?string $baseUrl = null, RequestOptions|array|null $requestOptions = null, ?string $location = null): self
     {
         return new self(
             credentialsProvider: static fn (): FetchAuthTokenInterface => $credentials,
-            location: $location,
+            location: self::resolveRegion($region, $location),
             projectId: $projectId,
             baseUrl: $baseUrl,
             requestOptions: $requestOptions,
@@ -109,15 +111,17 @@ final class Client extends \Anthropic\Client
 
     /**
      * @param non-empty-string $accessToken
-     * @param non-empty-string $location
+     * @param non-empty-string|null $region Google Cloud region, e.g. `us-east5` or `global`; required
      * @param non-empty-string|null $projectId
      * @param non-empty-string|null $baseUrl
      * @param RequestOpts|null $requestOptions
+     * @param non-empty-string|null $location deprecated alias for `$region`; use `$region` instead
      */
-    public static function withAccessToken(string $accessToken, string $location, ?string $projectId = null, ?string $baseUrl = null, RequestOptions|array|null $requestOptions = null): self
+    public static function withAccessToken(string $accessToken, ?string $region = null, ?string $projectId = null, ?string $baseUrl = null, RequestOptions|array|null $requestOptions = null, ?string $location = null): self
     {
         return self::withCredentials(
             new StaticAccessToken($accessToken),
+            region: $region,
             location: $location,
             projectId: $projectId,
             baseUrl: $baseUrl,
@@ -148,6 +152,23 @@ final class Client extends \Anthropic\Client
                 ? $request
                 : $request->withHeader('Authorization', 'Bearer '.$this->authToken()['access_token']),
         )];
+    }
+
+    /**
+     * @param non-empty-string|null $region
+     * @param non-empty-string|null $location
+     *
+     * @return non-empty-string
+     */
+    private static function resolveRegion(?string $region, ?string $location): string
+    {
+        if (null !== $region && null !== $location && $region !== $location) {
+            throw new \InvalidArgumentException(
+                'The `region` and `location` arguments conflict; pass only `region` (`location` is a deprecated alias for it).'
+            );
+        }
+
+        return $region ?? $location ?? throw new \InvalidArgumentException('The `region` argument is required.');
     }
 
     private function resolveCredentials(): FetchAuthTokenInterface
