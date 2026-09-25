@@ -213,9 +213,8 @@ final class RefusalFallbackMiddleware implements Middleware
         $state = $options->fallbackState ?? $this->state;
         $index = $this->startIndex($state);
 
-        // merging an empty entry is the identity, so index -1 (original
-        // params) needs no special case
-        $attemptBody = self::mergeEntry($body, entry: $this->fallbacks[$index] ?? []);
+        $entry = $this->fallbacks[$index] ?? null;
+        $attemptBody = is_null($entry) ? $body : self::mergeEntry($body, entry: $entry);
         // The first attempt goes out as the caller spelled it — a caller-set
         // `fallback_credit_token` included — but retries never inherit it:
         // each retry carries the fresh token its own refusal minted, or none.
@@ -235,7 +234,9 @@ final class RefusalFallbackMiddleware implements Middleware
      * Array-valued {@see NESTED_OVERRIDE_KEYS} overrides apply the same
      * set/null/absent rules to their subfields, one level deep, over the
      * original's value; a nested field patched down to no subfields is
-     * dropped, never sent empty.
+     * dropped, never sent empty. A `between_tools` thinking config is sent as
+     * `disabled` unless the entry sets `thinking`: the fallback model may not
+     * accept `between_tools`.
      *
      * @param array<string,mixed> $body
      * @param array<string,mixed> $entry
@@ -246,6 +247,9 @@ final class RefusalFallbackMiddleware implements Middleware
      */
     public static function mergeEntry(array $body, array $entry): array
     {
+        if (!array_key_exists('thinking', $entry) && 'between_tools' === (self::bodyArray($body['thinking'] ?? null)['type'] ?? null)) {
+            $body['thinking'] = ['type' => 'disabled'];
+        }
         foreach (self::ENTRY_OVERRIDE_ALLOWLIST as $key => $_) {
             if (!array_key_exists($key, $entry)) {
                 continue; // absent: the original top-level value stands
