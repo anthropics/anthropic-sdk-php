@@ -314,9 +314,9 @@ final class Params implements BaseModel
     public ?array $stopSequences;
 
     /**
-     * Whether to incrementally stream the response using server-sent events.
+     * Whether to incrementally stream the response using server-sent events. When `true`, SDKs return a raw event stream.
      *
-     * See [streaming](https://platform.claude.com/docs/en/build-with-claude/streaming) for details.
+     * In the TypeScript, Python and Ruby SDKs, the recommended way to stream is `messages.stream()`. It sets `stream` for you and accumulates the events into the final message. See [Streaming with SDKs](https://platform.claude.com/docs/en/build-with-claude/streaming#streaming-with-sdks) for an example in each language.
      */
     #[Optional]
     public ?bool $stream;
@@ -885,9 +885,9 @@ final class Params implements BaseModel
     }
 
     /**
-     * Whether to incrementally stream the response using server-sent events.
+     * Whether to incrementally stream the response using server-sent events. When `true`, SDKs return a raw event stream.
      *
-     * See [streaming](https://platform.claude.com/docs/en/build-with-claude/streaming) for details.
+     * In the TypeScript, Python and Ruby SDKs, the recommended way to stream is `messages.stream()`. It sets `stream` for you and accumulates the events into the final message. See [Streaming with SDKs](https://platform.claude.com/docs/en/build-with-claude/streaming#streaming-with-sdks) for an example in each language.
      */
     public function withStream(bool $stream): self
     {
