@@ -26,6 +26,7 @@ use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolUseEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSendSessionEvents;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionDeletedEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionErrorEvent;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionEventType;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusIdleEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusRescheduledEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusRunningEvent;
@@ -85,7 +86,7 @@ final class EventsService implements EventsContract
      * @param int $limit Query param
      * @param Order|value-of<Order> $order Query param: Sort direction for results, ordered by the event's `processed_at`. Defaults to `asc` (chronological).
      * @param string $page query param: Opaque pagination cursor from a previous response's `next_page`
-     * @param list<string> $types Query param: Filter by event type. Values match the `type` field on returned events (for example, `user.message` or `agent.tool_use`). Omit to return all event types.
+     * @param list<ManagedAgentsSessionEventType|value-of<ManagedAgentsSessionEventType>> $types Query param: Filter by event type. Values match the `type` field on returned events (for example, `user.message` or `agent.tool_use`). Omit to return all event types.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *

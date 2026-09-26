@@ -30,6 +30,7 @@ use Anthropic\Beta\Sessions\Events\ManagedAgentsSendSessionEvents;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionDeletedEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionErrorEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionEvent;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionEventType;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusIdleEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusRescheduledEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusRunningEvent;
@@ -86,7 +87,7 @@ final class EventsRawService implements EventsRawContract
      *   limit?: int,
      *   order?: Order|value-of<Order>,
      *   page?: string,
-     *   types?: list<string>,
+     *   types?: list<ManagedAgentsSessionEventType|value-of<ManagedAgentsSessionEventType>>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
      * }|EventListParams $params
