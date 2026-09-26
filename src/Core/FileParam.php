@@ -37,7 +37,7 @@ final class FileParam
      * string and use {@see FileParam::fromString()} to keep retries.
      *
      * @param resource $resource an open file resource
-     * @param string|null $filename Override the filename. Defaults to the resource URI basename.
+     * @param string|null $filename Override the filename. Defaults to the resource URI basename, or to an empty name for a resource without one.
      * @param string $contentType override the content type
      */
     public static function fromResource(mixed $resource, ?string $filename = null, string $contentType = self::DEFAULT_CONTENT_TYPE): self
@@ -48,7 +48,7 @@ final class FileParam
 
         if (is_null($filename)) {
             $meta = stream_get_meta_data($resource);
-            $filename = basename($meta['uri'] ?? 'upload');
+            $filename = basename($meta['uri'] ?? '');
         }
 
         return new self($resource, filename: $filename, contentType: $contentType);
