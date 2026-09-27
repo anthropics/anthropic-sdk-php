@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\BetaFallbackParam;
 
-use Anthropic\Beta\Messages\BetaFallbackParam\Thinking\BetaThinkingConfigBetweenTools;
 use Anthropic\Beta\Messages\BetaFallbackParam\Thinking\Type;
 use Anthropic\Beta\Messages\BetaThinkingBlockBinding;
 use Anthropic\Beta\Messages\BetaThinkingConfigAdaptive;
+use Anthropic\Beta\Messages\BetaThinkingConfigBetweenTools;
 use Anthropic\Beta\Messages\BetaThinkingConfigDisabled;
 use Anthropic\Beta\Messages\BetaThinkingConfigEnabled;
 use Anthropic\Beta\Messages\BetaThinkingConfigEnabled\Display;
@@ -18,7 +18,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 /**
  * @phpstan-import-type BetaThinkingConfigEnabledShape from \Anthropic\Beta\Messages\BetaThinkingConfigEnabled
  * @phpstan-import-type BetaThinkingConfigDisabledShape from \Anthropic\Beta\Messages\BetaThinkingConfigDisabled
- * @phpstan-import-type BetaThinkingConfigBetweenToolsShape from \Anthropic\Beta\Messages\BetaFallbackParam\Thinking\BetaThinkingConfigBetweenTools
+ * @phpstan-import-type BetaThinkingConfigBetweenToolsShape from \Anthropic\Beta\Messages\BetaThinkingConfigBetweenTools
  * @phpstan-import-type BetaThinkingConfigAdaptiveShape from \Anthropic\Beta\Messages\BetaThinkingConfigAdaptive
  * @phpstan-import-type BetaThinkingBlockBindingShape from \Anthropic\Beta\Messages\BetaThinkingBlockBinding
  *

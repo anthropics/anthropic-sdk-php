@@ -11,7 +11,6 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Messages\MessageCreateParams\System;
-use Anthropic\Messages\ThinkingConfigParam\ThinkingConfigBetweenTools;
 
 /**
  * Send a structured list of input messages with text and/or image content, and the model will generate the next message in the conversation.

@@ -34,7 +34,7 @@ echo "Created environment: {$environment->id}\n";
 
 $agent = $client->beta->agents->create(
     name: 'streaming-deltas-example',
-    model: 'claude-sonnet-5'
+    model: 'claude-sonnet-5-5'
 );
 echo "Created agent: {$agent->id}\n";
 

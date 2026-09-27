@@ -8,7 +8,6 @@ use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Messages\ThinkingConfigEnabled\Display;
-use Anthropic\Messages\ThinkingConfigParam\ThinkingConfigBetweenTools;
 use Anthropic\Messages\ThinkingConfigParam\Type;
 
 /**
@@ -20,7 +19,7 @@ use Anthropic\Messages\ThinkingConfigParam\Type;
  *
  * @phpstan-import-type ThinkingConfigEnabledShape from \Anthropic\Messages\ThinkingConfigEnabled
  * @phpstan-import-type ThinkingConfigDisabledShape from \Anthropic\Messages\ThinkingConfigDisabled
- * @phpstan-import-type ThinkingConfigBetweenToolsShape from \Anthropic\Messages\ThinkingConfigParam\ThinkingConfigBetweenTools
+ * @phpstan-import-type ThinkingConfigBetweenToolsShape from \Anthropic\Messages\ThinkingConfigBetweenTools
  * @phpstan-import-type ThinkingConfigAdaptiveShape from \Anthropic\Messages\ThinkingConfigAdaptive
  *
  * @phpstan-type ThinkingConfigParamVariants = ThinkingConfigEnabled|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive

@@ -10,7 +10,6 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\MessageCountTokensParams\System;
-use Anthropic\Messages\ThinkingConfigParam\ThinkingConfigBetweenTools;
 
 /**
  * Count the number of tokens in a Message.

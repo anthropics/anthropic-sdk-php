@@ -7,7 +7,7 @@ use Anthropic\Vertex;
 $client = Vertex\Client::fromEnvironment(region: 'us-east5', projectId: 'my-project-id');
 
 $response = $client->messages->countTokens(
-    model: 'claude-sonnet-5',
+    model: 'claude-sonnet-5-5',
     messages: [
         [
             'role' => 'user',

@@ -71,7 +71,7 @@ $client = new Client(
 $stream = $client->messages->createStream(
   maxTokens: 1024,
   messages: [['role' => 'user', 'content' => 'Hello, Claude']],
-  model: Model::CLAUDE_SONNET_5,
+  model: Model::CLAUDE_SONNET_5_5,
 );
 
 foreach ($stream as $message) {
@@ -126,7 +126,7 @@ class Article extends StructuredOutputModel
 $message = $client->messages->create(
   maxTokens: 1024,
   messages: [['role' => 'user', 'content' => 'Write an article about PHP']],
-  model: 'claude-sonnet-5',
+  model: 'claude-sonnet-5-5',
   outputConfig: ['format' => Article::class],
 );
 
@@ -180,7 +180,7 @@ try {
   $message = $client->messages->create(
     maxTokens: 1024,
     messages: [['role' => 'user', 'content' => 'Hello, Claude']],
-    model: Model::CLAUDE_SONNET_5,
+    model: Model::CLAUDE_SONNET_5_5,
   );
 } catch (APIConnectionException $e) {
   echo "The server could not be reached", PHP_EOL;
@@ -230,7 +230,7 @@ $client = new Client(requestOptions: ['maxRetries' => 0]);
 $result = $client->messages->create(
   maxTokens: 1024,
   messages: [['role' => 'user', 'content' => 'Hello, Claude']],
-  model: Model::CLAUDE_SONNET_5,
+  model: Model::CLAUDE_SONNET_5_5,
   requestOptions: ['maxRetries' => 5],
 );
 ```
@@ -283,7 +283,7 @@ use Anthropic\Messages\Model;
 $message = $client->messages->create(
   maxTokens: 1024,
   messages: [['role' => 'user', 'content' => 'Hello, Claude']],
-  model: Model::CLAUDE_SONNET_5,
+  model: Model::CLAUDE_SONNET_5_5,
   requestOptions: [
     'extraQueryParams' => ['my_query_parameter' => 'value'],
     'extraBodyParams' => ['my_body_parameter' => 'value'],
@@ -353,7 +353,7 @@ $client = new Client(requestOptions: ['middleware' => [$logger, new TracingMiddl
 $client->messages->create(
   maxTokens: 1024,
   messages: [['role' => 'user', 'content' => 'Hello, Claude']],
-  model: 'claude-sonnet-5',
+  model: 'claude-sonnet-5-5',
   requestOptions: ['middleware' => [$logger]],
 );
 ```

@@ -18,6 +18,11 @@ enum Model: string
     // Anthropic model identifiers
 
     /**
+     * Efficient model for coding and agents.
+     */
+    case CLAUDE_SONNET_5_5 = 'claude-sonnet-5-5';
+
+    /**
      * Frontier intelligence for ambitious tasks across coding, scientific discovery, and enterprise workflows.
      */
     case CLAUDE_FABLE_5_1 = 'claude-fable-5-1';
@@ -33,7 +38,7 @@ enum Model: string
     case CLAUDE_MYTHOS_5_1 = 'claude-mythos-5-1';
 
     /**
-     * High-performance model for coding and agents.
+     * Efficient model for coding and agents.
      */
     case CLAUDE_SONNET_5 = 'claude-sonnet-5';
 

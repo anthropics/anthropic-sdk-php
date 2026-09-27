@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Messages\ThinkingConfigParam;
+namespace Anthropic\Messages;
 
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;

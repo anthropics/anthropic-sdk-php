@@ -77,7 +77,7 @@ $stream = $client->messages->createStream(
             'content' => 'Recommend 3 classic books that everyone should read. Include a mix of genres.',
         ],
     ],
-    model: 'claude-sonnet-5',
+    model: 'claude-sonnet-5-5',
     outputConfig: ['format' => BookList::class]
 );
 

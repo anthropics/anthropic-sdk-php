@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaThinkingConfigEnabled\Display;
-use Anthropic\Beta\Messages\BetaThinkingConfigParam\BetaThinkingConfigBetweenTools;
 use Anthropic\Beta\Messages\BetaThinkingConfigParam\Type;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
@@ -20,7 +19,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  *
  * @phpstan-import-type BetaThinkingConfigEnabledShape from \Anthropic\Beta\Messages\BetaThinkingConfigEnabled
  * @phpstan-import-type BetaThinkingConfigDisabledShape from \Anthropic\Beta\Messages\BetaThinkingConfigDisabled
- * @phpstan-import-type BetaThinkingConfigBetweenToolsShape from \Anthropic\Beta\Messages\BetaThinkingConfigParam\BetaThinkingConfigBetweenTools
+ * @phpstan-import-type BetaThinkingConfigBetweenToolsShape from \Anthropic\Beta\Messages\BetaThinkingConfigBetweenTools
  * @phpstan-import-type BetaThinkingConfigAdaptiveShape from \Anthropic\Beta\Messages\BetaThinkingConfigAdaptive
  * @phpstan-import-type BetaThinkingBlockBindingShape from \Anthropic\Beta\Messages\BetaThinkingBlockBinding
  *

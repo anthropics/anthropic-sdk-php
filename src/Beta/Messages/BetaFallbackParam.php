@@ -6,7 +6,6 @@ namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\Messages\BetaFallbackParam\Speed;
 use Anthropic\Beta\Messages\BetaFallbackParam\Thinking;
-use Anthropic\Beta\Messages\BetaFallbackParam\Thinking\BetaThinkingConfigBetweenTools;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;

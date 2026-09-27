@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Messages\BetaFallbackParam\Thinking;
+namespace Anthropic\Beta\Messages;
 
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;

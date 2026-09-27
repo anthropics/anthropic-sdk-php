@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Beta\Messages\BetaThinkingConfigParam\BetaThinkingConfigBetweenTools;
 use Anthropic\Beta\Messages\MessageCountTokensParams\Speed;
 use Anthropic\Beta\Messages\MessageCountTokensParams\System;
 use Anthropic\Beta\Messages\MessageCountTokensParams\Tool;
