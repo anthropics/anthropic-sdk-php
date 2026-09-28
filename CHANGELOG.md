@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.52.0 (2026-09-28)
+
+Full Changelog: [v0.51.0...v0.52.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.51.0...v0.52.0)
+
+### Features
+
+* **api:** add between_tools thinking type ([4bf61e7](https://github.com/anthropics/anthropic-sdk-php/commit/4bf61e7e2115f69e374a4fa814ea3f971b6a25e8))
+* **api:** add claude-sonnet-5-5 ([0e38168](https://github.com/anthropics/anthropic-sdk-php/commit/0e38168374f7ab3318fa4a1612ed0b0b420faa79))
+* **api:** add include_inherited and source to workspace rate limits ([6bfd72b](https://github.com/anthropics/anthropic-sdk-php/commit/6bfd72b9373b5fe70371b134094e24c58643e061))
+* **api:** add typed event type values to the Managed Agents events list filter ([fd60f4d](https://github.com/anthropics/anthropic-sdk-php/commit/fd60f4d725cae324769cdd7ede5ad2a367be5990))
+* **api:** cache diagnostics GA — diagnostics on Message / MessageCreateParams ([be20d8a](https://github.com/anthropics/anthropic-sdk-php/commit/be20d8ac95190cac9884e73bf8bf38b20bc111fc))
+* **vertex:** accept region, deprecate location ([0502828](https://github.com/anthropics/anthropic-sdk-php/commit/0502828330eea01989d6d9dcc6fb0eebc3db192b))
+
+
+### Bug Fixes
+
+* **bedrock,foundry:** follow the messages contract in restricted message services ([#239](https://github.com/anthropics/anthropic-sdk-php/issues/239)) ([ff90d1f](https://github.com/anthropics/anthropic-sdk-php/commit/ff90d1f544ff432ad5180ad0d2f42c9c890800c3))
+* **client:** keep `request` paths that start with `/` on the base URL ([30cab70](https://github.com/anthropics/anthropic-sdk-php/commit/30cab70601a039c91de98c43f328e33e91e2635e))
+* **client:** send no placeholder filename for unnamed file uploads ([ddac599](https://github.com/anthropics/anthropic-sdk-php/commit/ddac5994ce674003dc3edb2f8d2675c1d7d371c1))
+* **helpers:** degrade between_tools thinking to disabled on fallback hops ([#244](https://github.com/anthropics/anthropic-sdk-php/issues/244)) ([980bcdf](https://github.com/anthropics/anthropic-sdk-php/commit/980bcdfbc53e384609fdebea6e3a4115b3b4ea3c))
+* **streaming:** deliver events as they arrive with the Guzzle client ([760d6f2](https://github.com/anthropics/anthropic-sdk-php/commit/760d6f28e72ac4b052df118c21635bb1a2b54508))
+
+
+### Chores
+
+* **api:** deprecate the betas param on GA models and completions methods ([962dfba](https://github.com/anthropics/anthropic-sdk-php/commit/962dfba49d497106cccc181cbdaa99a1f59a6a35))
+* **ci:** choose the CI runner by repository ([3dbe93a](https://github.com/anthropics/anthropic-sdk-php/commit/3dbe93a62f9576b399d6ebbd8bb2cb55c897174c))
+* **docs:** clarify that stream: true returns the raw event stream ([8bd22ba](https://github.com/anthropics/anthropic-sdk-php/commit/8bd22ba8cf24ae54a3c683c4758feefbf8a9a82e))
+* **docs:** make Managed Agents actor descriptions resource-neutral ([84cb9a0](https://github.com/anthropics/anthropic-sdk-php/commit/84cb9a0195ff14383c37e8ab3bc5d6e8964cb406))
+* **docs:** restore the research-preview notice on the Dream type ([a243dee](https://github.com/anthropics/anthropic-sdk-php/commit/a243dee6e7f86c3ea97fccbd7ca4ae1514bae2b6))
+
+
+### Documentation
+
+* **api:** prefer each field's own description over its shared type's ([ec95056](https://github.com/anthropics/anthropic-sdk-php/commit/ec95056c347253050a875948e0dd2671b00850e2))
+
 ## 0.51.0 (2026-09-22)
 
 Full Changelog: [v0.50.0...v0.51.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.50.0...v0.51.0)
