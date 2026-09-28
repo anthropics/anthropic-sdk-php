@@ -148,7 +148,7 @@ final class MessageCountTokensParams implements BaseModel
      * @var ThinkingConfigParamVariants|null $thinking
      */
     #[Optional(union: ThinkingConfigParam::class)]
-    public ThinkingConfigEnabled|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking;
+    public ThinkingConfigEnabled|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive|null $thinking;
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
@@ -279,7 +279,7 @@ final class MessageCountTokensParams implements BaseModel
         CacheControlEphemeral|array|null $cacheControl = null,
         OutputConfig|array|null $outputConfig = null,
         string|array|null $system = null,
-        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking = null,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?string $userProfileID = null,
@@ -429,7 +429,7 @@ final class MessageCountTokensParams implements BaseModel
      * @param ThinkingConfigParamShape $thinking
      */
     public function withThinking(
-        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive $thinking,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive $thinking,
     ): self {
         $self = clone $this;
         $self['thinking'] = $thinking;

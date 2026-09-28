@@ -36,7 +36,7 @@ final class ManagedAgentsUserToolConfirmationEvent implements BaseModel
     public string $id;
 
     /**
-     * UserToolConfirmationResult enum.
+     * The confirmation result: 'allow' or 'deny'.
      *
      * @var value-of<Result> $result
      */
@@ -60,7 +60,7 @@ final class ManagedAgentsUserToolConfirmationEvent implements BaseModel
     public ?string $denyMessage;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the confirmation was processed.
      */
     #[Optional('processed_at', nullable: true)]
     public ?\DateTimeInterface $processedAt;
@@ -139,7 +139,7 @@ final class ManagedAgentsUserToolConfirmationEvent implements BaseModel
     }
 
     /**
-     * UserToolConfirmationResult enum.
+     * The confirmation result: 'allow' or 'deny'.
      *
      * @param Result|value-of<Result> $result
      */
@@ -185,7 +185,7 @@ final class ManagedAgentsUserToolConfirmationEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the confirmation was processed.
      */
     public function withProcessedAt(?\DateTimeInterface $processedAt): self
     {

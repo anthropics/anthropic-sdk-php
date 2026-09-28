@@ -44,7 +44,11 @@ final class BetaMessageDeltaUsage implements BaseModel
     public ?int $cacheReadInputTokens;
 
     /**
-     * Outcome of the ``fallback_credit_token`` presented on this request.
+     * Outcome of the `fallback_credit_token` presented on this request.
+     *
+     * Present on every response to a non-batch request that carried a
+     * `fallback_credit_token`, in either redemption mode; absent otherwise (batch
+     * items accept and ignore the token and carry no outcome object).
      */
     #[Required('fallback_credit')]
     public ?BetaFallbackCreditUsage $fallbackCredit;
@@ -187,7 +191,11 @@ final class BetaMessageDeltaUsage implements BaseModel
     }
 
     /**
-     * Outcome of the ``fallback_credit_token`` presented on this request.
+     * Outcome of the `fallback_credit_token` presented on this request.
+     *
+     * Present on every response to a non-batch request that carried a
+     * `fallback_credit_token`, in either redemption mode; absent otherwise (batch
+     * items accept and ignore the token and carry no outcome object).
      *
      * @param BetaFallbackCreditUsage|BetaFallbackCreditUsageShape|null $fallbackCredit
      */

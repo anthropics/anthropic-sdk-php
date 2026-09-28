@@ -21,7 +21,7 @@ $client = Foundry\Client::fromEnvironment(
 // );
 
 $response = $client->messages->create(
-    model: 'claude-sonnet-5',
+    model: 'claude-sonnet-5-5',
     maxTokens: 1024,
     messages: [
         [

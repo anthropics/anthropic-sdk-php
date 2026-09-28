@@ -51,7 +51,7 @@ final class ManagedAgentsMCPOAuthCreateParams implements BaseModel
     public ?\DateTimeInterface $expiresAt;
 
     /**
-     * OAuth refresh token parameters for creating a credential with refresh support.
+     * Refresh token configuration, if the credential supports token refresh.
      */
     #[Optional(nullable: true)]
     public ?ManagedAgentsMCPOAuthRefreshParams $refresh;
@@ -152,7 +152,7 @@ final class ManagedAgentsMCPOAuthCreateParams implements BaseModel
     }
 
     /**
-     * OAuth refresh token parameters for creating a credential with refresh support.
+     * Refresh token configuration, if the credential supports token refresh.
      *
      * @param ManagedAgentsMCPOAuthRefreshParams|ManagedAgentsMCPOAuthRefreshParamsShape|null $refresh
      */

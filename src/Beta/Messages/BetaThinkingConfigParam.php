@@ -19,11 +19,12 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  *
  * @phpstan-import-type BetaThinkingConfigEnabledShape from \Anthropic\Beta\Messages\BetaThinkingConfigEnabled
  * @phpstan-import-type BetaThinkingConfigDisabledShape from \Anthropic\Beta\Messages\BetaThinkingConfigDisabled
+ * @phpstan-import-type BetaThinkingConfigBetweenToolsShape from \Anthropic\Beta\Messages\BetaThinkingConfigBetweenTools
  * @phpstan-import-type BetaThinkingConfigAdaptiveShape from \Anthropic\Beta\Messages\BetaThinkingConfigAdaptive
  * @phpstan-import-type BetaThinkingBlockBindingShape from \Anthropic\Beta\Messages\BetaThinkingBlockBinding
  *
- * @phpstan-type BetaThinkingConfigParamVariants = BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive
- * @phpstan-type BetaThinkingConfigParamShape = BetaThinkingConfigParamVariants|BetaThinkingConfigEnabledShape|BetaThinkingConfigDisabledShape|BetaThinkingConfigAdaptiveShape
+ * @phpstan-type BetaThinkingConfigParamVariants = BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive
+ * @phpstan-type BetaThinkingConfigParamShape = BetaThinkingConfigParamVariants|BetaThinkingConfigEnabledShape|BetaThinkingConfigDisabledShape|BetaThinkingConfigBetweenToolsShape|BetaThinkingConfigAdaptiveShape
  */
 final class BetaThinkingConfigParam implements ConverterSource
 {
@@ -42,6 +43,7 @@ final class BetaThinkingConfigParam implements ConverterSource
         return [
             'enabled' => BetaThinkingConfigEnabled::class,
             'disabled' => BetaThinkingConfigDisabled::class,
+            'between_tools' => BetaThinkingConfigBetweenTools::class,
             'adaptive' => BetaThinkingConfigAdaptive::class,
         ];
     }
@@ -52,7 +54,7 @@ final class BetaThinkingConfigParam implements ConverterSource
      * @param BetaThinkingBlockBinding|BetaThinkingBlockBindingShape|null $blockBinding
      * @param ($type is Type::ENABLED|'enabled' ? Display|value-of<Display>|null : BetaThinkingConfigAdaptive\Display|value-of<BetaThinkingConfigAdaptive\Display>|null) $display
      *
-     * @return ($type is Type::ENABLED|'enabled' ? BetaThinkingConfigEnabled : ($type is Type::DISABLED|'disabled' ? BetaThinkingConfigDisabled : ($type is Type::ADAPTIVE|'adaptive' ? BetaThinkingConfigAdaptive : BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive)))
+     * @return ($type is Type::ENABLED|'enabled' ? BetaThinkingConfigEnabled : ($type is Type::DISABLED|'disabled' ? BetaThinkingConfigDisabled : ($type is Type::BETWEEN_TOOLS|'between_tools' ? BetaThinkingConfigBetweenTools : ($type is Type::ADAPTIVE|'adaptive' ? BetaThinkingConfigAdaptive : BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive))))
      *
      * @throws \UnhandledMatchError
      */
@@ -61,7 +63,7 @@ final class BetaThinkingConfigParam implements ConverterSource
         ?int $budgetTokens = null,
         BetaThinkingBlockBinding|array|null $blockBinding = null,
         Display|BetaThinkingConfigAdaptive\Display|string|null $display = null,
-    ): BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive {
+    ): BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive {
         return match ($type) {
             Type::ENABLED, 'enabled' => BetaThinkingConfigEnabled::with(
                 budgetTokens: $budgetTokens ?? throw new \ArgumentCountError('$budgetTokens is required'),
@@ -69,6 +71,8 @@ final class BetaThinkingConfigParam implements ConverterSource
                 display: $display,
             ),
             Type::DISABLED, 'disabled' => BetaThinkingConfigDisabled::with(),
+            Type::BETWEEN_TOOLS, 'between_tools' => BetaThinkingConfigBetweenTools::with(
+            ),
             Type::ADAPTIVE, 'adaptive' => BetaThinkingConfigAdaptive::with(
                 blockBinding: $blockBinding,
                 // @phpstan-ignore argument.type

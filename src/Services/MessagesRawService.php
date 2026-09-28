@@ -10,6 +10,7 @@ use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
 use Anthropic\Messages\CacheControlEphemeral;
+use Anthropic\Messages\DiagnosticsParam;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCountTokensParams;
 use Anthropic\Messages\MessageCreateParams;
@@ -36,6 +37,7 @@ use Anthropic\SSEStream;
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type MessageCreateParamsContainerShape from \Anthropic\Messages\MessageCreateParamsContainer
+ * @phpstan-import-type DiagnosticsParamShape from \Anthropic\Messages\DiagnosticsParam
  * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
  * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
  * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCreateParams\System as SystemShape1
@@ -67,6 +69,7 @@ final class MessagesRawService implements MessagesRawContract
      *   model: string|Model|value-of<Model>,
      *   cacheControl?: CacheControlEphemeral|CacheControlEphemeralShape|null,
      *   container?: MessageCreateParamsContainerShape|null,
+     *   diagnostics?: DiagnosticsParam|DiagnosticsParamShape|null,
      *   inferenceGeo?: string|null,
      *   metadata?: Metadata|MetadataShape,
      *   outputConfig?: OutputConfig|OutputConfigShape,
@@ -127,6 +130,7 @@ final class MessagesRawService implements MessagesRawContract
      *   model: string|Model|value-of<Model>,
      *   cacheControl?: CacheControlEphemeral|CacheControlEphemeralShape|null,
      *   container?: MessageCreateParamsContainerShape|null,
+     *   diagnostics?: DiagnosticsParam|DiagnosticsParamShape|null,
      *   inferenceGeo?: string|null,
      *   metadata?: Metadata|MetadataShape,
      *   outputConfig?: OutputConfig|OutputConfigShape,

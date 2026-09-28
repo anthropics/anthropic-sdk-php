@@ -11,6 +11,7 @@ use Anthropic\Lib\Helpers\StructuredOutput;
 use Anthropic\Core\Util;
 use Anthropic\Messages\CacheControlEphemeral;
 use Anthropic\Messages\ContainerParams;
+use Anthropic\Messages\DiagnosticsParam;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Messages\MessageParam;
@@ -26,6 +27,7 @@ use Anthropic\Messages\RawMessageStartEvent;
 use Anthropic\Messages\RawMessageStopEvent;
 use Anthropic\Messages\ThinkingConfigAdaptive;
 use Anthropic\Messages\TextBlock;
+use Anthropic\Messages\ThinkingConfigBetweenTools;
 use Anthropic\Messages\ThinkingConfigDisabled;
 use Anthropic\Messages\ThinkingConfigEnabled;
 use Anthropic\Messages\ToolChoiceAny;
@@ -42,6 +44,7 @@ use Anthropic\Services\Messages\BatchesService;
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type MessageCreateParamsContainerShape from \Anthropic\Messages\MessageCreateParamsContainer
+ * @phpstan-import-type DiagnosticsParamShape from \Anthropic\Messages\DiagnosticsParam
  * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
  * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
  * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCreateParams\System as SystemShape1
@@ -140,6 +143,7 @@ final class MessagesService implements MessagesContract
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
      * @param MessageCreateParamsContainerShape|null $container body param: Container identifier for reuse across requests
+     * @param DiagnosticsParam|DiagnosticsParamShape|null $diagnostics Body param: Request-level diagnostics. Supply `previous_message_id` to have the response include `diagnostics.cache_miss_reason` explaining any prompt-cache divergence from that prior request.
      * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param Metadata|MetadataShape $metadata body param: An object describing metadata about the request
      * @param OutputConfig|OutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
@@ -250,6 +254,7 @@ final class MessagesService implements MessagesContract
         Model|string $model,
         CacheControlEphemeral|array|null $cacheControl = null,
         string|ContainerParams|array|null $container = null,
+        DiagnosticsParam|array|null $diagnostics = null,
         ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
@@ -257,7 +262,7 @@ final class MessagesService implements MessagesContract
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
-        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking = null,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?int $topK = null,
@@ -276,6 +281,7 @@ final class MessagesService implements MessagesContract
                 'model' => $model,
                 'cacheControl' => $cacheControl,
                 'container' => $container,
+                'diagnostics' => $diagnostics,
                 'inferenceGeo' => $inferenceGeo,
                 'metadata' => $metadata,
                 'outputConfig' => $outputConfig,
@@ -389,6 +395,7 @@ final class MessagesService implements MessagesContract
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
      * @param MessageCreateParamsContainerShape|null $container body param: Container identifier for reuse across requests
+     * @param DiagnosticsParam|DiagnosticsParamShape|null $diagnostics Body param: Request-level diagnostics. Supply `previous_message_id` to have the response include `diagnostics.cache_miss_reason` explaining any prompt-cache divergence from that prior request.
      * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param Metadata|MetadataShape $metadata body param: An object describing metadata about the request
      * @param OutputConfig|OutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
@@ -501,6 +508,7 @@ final class MessagesService implements MessagesContract
         Model|string $model,
         CacheControlEphemeral|array|null $cacheControl = null,
         string|ContainerParams|array|null $container = null,
+        DiagnosticsParam|array|null $diagnostics = null,
         ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
@@ -508,7 +516,7 @@ final class MessagesService implements MessagesContract
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
-        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking = null,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?int $topK = null,
@@ -527,6 +535,7 @@ final class MessagesService implements MessagesContract
                 'model' => $model,
                 'cacheControl' => $cacheControl,
                 'container' => $container,
+                'diagnostics' => $diagnostics,
                 'inferenceGeo' => $inferenceGeo,
                 'metadata' => $metadata,
                 'outputConfig' => $outputConfig,
@@ -699,7 +708,7 @@ final class MessagesService implements MessagesContract
         CacheControlEphemeral|array|null $cacheControl = null,
         OutputConfig|array|null $outputConfig = null,
         string|array|null $system = null,
-        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking = null,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?string $userProfileID = null,
@@ -742,7 +751,7 @@ final class MessagesService implements MessagesContract
      */
     private static function warnIfDeprecatedThinkingConfig(
         Model|string $model,
-        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking,
+        object|array|null $thinking,
     ): void {
         // Check if model is in the list of models that should warn on thinking.type=enabled
         $modelString = $model instanceof Model ? $model->value : $model;

@@ -44,7 +44,7 @@ final class ManagedAgentsSpanOutcomeEvaluationStartEvent implements BaseModel
     public string $outcomeID;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when outcome evaluation started.
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
@@ -138,7 +138,7 @@ final class ManagedAgentsSpanOutcomeEvaluationStartEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when outcome evaluation started.
      */
     public function withProcessedAt(\DateTimeInterface $processedAt): self
     {

@@ -84,7 +84,7 @@ final class AgentUpdateParams implements BaseModel
     public BetaManagedAgentsModelConfigParams|string|null $model;
 
     /**
-     * A coordinator topology: the session's primary thread orchestrates work by spawning session threads, each running an agent drawn from the `agents` roster.
+     * Multiagent orchestration configuration. Full replacement. Omit to preserve; send null to clear.
      */
     #[Optional(nullable: true)]
     public ?BetaManagedAgentsMultiagentParams $multiagent;
@@ -241,7 +241,7 @@ final class AgentUpdateParams implements BaseModel
     }
 
     /**
-     * A coordinator topology: the session's primary thread orchestrates work by spawning session threads, each running an agent drawn from the `agents` roster.
+     * Multiagent orchestration configuration. Full replacement. Omit to preserve; send null to clear.
      *
      * @param BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null $multiagent
      */

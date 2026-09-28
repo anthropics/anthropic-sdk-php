@@ -15,7 +15,7 @@ $client = Bedrock\Client::fromEnvironment();
 // );
 
 $response = $client->messages->create(
-    model: 'global.anthropic.claude-sonnet-5',
+    model: 'global.anthropic.claude-sonnet-5-5',
     maxTokens: 1024,
     messages: [
         [

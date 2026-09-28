@@ -40,7 +40,7 @@ final class ManagedAgentsSessionUsageSnapshot implements BaseModel
     public ?float $activeSeconds;
 
     /**
-     * Prompt-cache creation token usage broken down by cache lifetime.
+     * Tokens used to create prompt cache entries, broken down by cache TTL.
      */
     #[Optional('cache_creation')]
     public ?BetaManagedAgentsCacheCreationUsage $cacheCreation;
@@ -58,7 +58,7 @@ final class ManagedAgentsSessionUsageSnapshot implements BaseModel
     public ?int $inputTokens;
 
     /**
-     * A monetary amount in a specific currency.
+     * Cumulative list cost of the session across all turns, priced at public list rates.
      */
     #[Optional('list_cost')]
     public ?BetaMonetaryAmount $listCost;
@@ -70,7 +70,7 @@ final class ManagedAgentsSessionUsageSnapshot implements BaseModel
     public ?int $outputTokens;
 
     /**
-     * Cumulative count of server-executed tool invocations, broken down by tool.
+     * Cumulative server-executed tool usage across all turns.
      */
     #[Optional('server_tool_use')]
     public ?BetaManagedAgentsServerToolUsage $serverToolUse;
@@ -123,7 +123,7 @@ final class ManagedAgentsSessionUsageSnapshot implements BaseModel
     }
 
     /**
-     * Prompt-cache creation token usage broken down by cache lifetime.
+     * Tokens used to create prompt cache entries, broken down by cache TTL.
      *
      * @param BetaManagedAgentsCacheCreationUsage|BetaManagedAgentsCacheCreationUsageShape $cacheCreation
      */
@@ -159,7 +159,7 @@ final class ManagedAgentsSessionUsageSnapshot implements BaseModel
     }
 
     /**
-     * A monetary amount in a specific currency.
+     * Cumulative list cost of the session across all turns, priced at public list rates.
      *
      * @param BetaMonetaryAmount|BetaMonetaryAmountShape $listCost
      */
@@ -183,7 +183,7 @@ final class ManagedAgentsSessionUsageSnapshot implements BaseModel
     }
 
     /**
-     * Cumulative count of server-executed tool invocations, broken down by tool.
+     * Cumulative server-executed tool usage across all turns.
      *
      * @param BetaManagedAgentsServerToolUsage|BetaManagedAgentsServerToolUsageShape $serverToolUse
      */

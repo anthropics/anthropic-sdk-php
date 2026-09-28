@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Regular text content.
+ * Content block in a mid-conversation system message. Text-only.
  *
  * @phpstan-type BetaManagedAgentsSystemContentBlockShape = array{
  *   text: string, type: Type|value-of<Type>

@@ -46,7 +46,7 @@ final class BetaManagedAgentsSystemMessageEvent implements BaseModel
     public string $type;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when this system message was processed.
      */
     #[Optional('processed_at', nullable: true)]
     public ?\DateTimeInterface $processedAt;
@@ -134,7 +134,7 @@ final class BetaManagedAgentsSystemMessageEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when this system message was processed.
      */
     public function withProcessedAt(?\DateTimeInterface $processedAt): self
     {

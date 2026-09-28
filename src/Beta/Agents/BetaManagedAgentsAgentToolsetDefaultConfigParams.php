@@ -31,7 +31,7 @@ final class BetaManagedAgentsAgentToolsetDefaultConfigParams implements BaseMode
     public ?bool $enabled;
 
     /**
-     * Permission policy for tool execution.
+     * Default permission policy for tools. Controls whether tool calls are auto-approved or require confirmation.
      *
      * @var PermissionPolicyVariants|null $permissionPolicy
      */
@@ -78,7 +78,7 @@ final class BetaManagedAgentsAgentToolsetDefaultConfigParams implements BaseMode
     }
 
     /**
-     * Permission policy for tool execution.
+     * Default permission policy for tools. Controls whether tool calls are auto-approved or require confirmation.
      *
      * @param PermissionPolicyShape|null $permissionPolicy
      */

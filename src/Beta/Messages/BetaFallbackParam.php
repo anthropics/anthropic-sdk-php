@@ -63,7 +63,7 @@ final class BetaFallbackParam implements BaseModel
 
     /** @var ThinkingVariants|null $thinking */
     #[Optional(union: Thinking::class, nullable: true)]
-    public BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking;
+    public BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking;
 
     /**
      * `new BetaFallbackParam()` is missing required properties by the API.
@@ -99,7 +99,7 @@ final class BetaFallbackParam implements BaseModel
         ?int $maxTokens = null,
         BetaOutputConfig|array|null $outputConfig = null,
         Speed|string|null $speed = null,
-        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking = null,
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking = null,
     ): self {
         $self = new self;
 
@@ -165,7 +165,7 @@ final class BetaFallbackParam implements BaseModel
      * @param ThinkingShape|null $thinking
      */
     public function withThinking(
-        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking,
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking,
     ): self {
         $self = clone $this;
         $self['thinking'] = $thinking;

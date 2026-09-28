@@ -137,14 +137,9 @@ final class MessageCountTokensParams implements BaseModel
     public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * Compact the whole conversation and return a signed `compaction` block,
-     * alone, that a later request sends back first in `messages`, in place of
-     * the messages it summarizes. There is no trigger and no pause flag: sending
-     * the parameter compacts, and nothing is sampled after the block.
+     * Compaction configuration.
      *
-     * The summarization prompt is the server's own unless `instructions` are
-     * given, which then replace it for this request; a value that is empty or
-     * only whitespace counts as absent.
+     * When set on `POST /v1/messages`, the request is a compaction request: the conversation in `messages` is summarized and the response holds only the resulting `compaction` block (`stop_reason` `"compaction"`), which later requests send first in `messages` in place of the messages it summarizes. `POST /v1/messages/count_tokens` accepts this parameter and ignores it: the count it returns is for the conversation in `messages` as sent. Cannot be combined with `context_management`.
      */
     #[Optional(nullable: true)]
     public ?BetaCompactionConfig $compaction;
@@ -182,7 +177,7 @@ final class MessageCountTokensParams implements BaseModel
     public ?BetaJSONOutputFormat $outputFormat;
 
     /**
-     * Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Not all models support `fast`; invalid combinations are rejected at create time.
+     * The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
      *
      * @var value-of<Speed>|null $speed
      */
@@ -209,7 +204,7 @@ final class MessageCountTokensParams implements BaseModel
      * @var BetaThinkingConfigParamVariants|null $thinking
      */
     #[Optional(union: BetaThinkingConfigParam::class)]
-    public BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking;
+    public BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking;
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
@@ -359,7 +354,7 @@ final class MessageCountTokensParams implements BaseModel
         BetaJSONOutputFormat|array|null $outputFormat = null,
         Speed|string|null $speed = null,
         string|array|null $system = null,
-        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking = null,
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking = null,
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?array $betas = null,
@@ -479,14 +474,9 @@ final class MessageCountTokensParams implements BaseModel
     }
 
     /**
-     * Compact the whole conversation and return a signed `compaction` block,
-     * alone, that a later request sends back first in `messages`, in place of
-     * the messages it summarizes. There is no trigger and no pause flag: sending
-     * the parameter compacts, and nothing is sampled after the block.
+     * Compaction configuration.
      *
-     * The summarization prompt is the server's own unless `instructions` are
-     * given, which then replace it for this request; a value that is empty or
-     * only whitespace counts as absent.
+     * When set on `POST /v1/messages`, the request is a compaction request: the conversation in `messages` is summarized and the response holds only the resulting `compaction` block (`stop_reason` `"compaction"`), which later requests send first in `messages` in place of the messages it summarizes. `POST /v1/messages/count_tokens` accepts this parameter and ignores it: the count it returns is for the conversation in `messages` as sent. Cannot be combined with `context_management`.
      *
      * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction
      */
@@ -558,7 +548,7 @@ final class MessageCountTokensParams implements BaseModel
     }
 
     /**
-     * Inference speed mode. `fast` provides significantly faster output token generation at premium pricing. Not all models support `fast`; invalid combinations are rejected at create time.
+     * The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
      *
      * @param Speed|value-of<Speed>|null $speed
      */
@@ -595,7 +585,7 @@ final class MessageCountTokensParams implements BaseModel
      * @param BetaThinkingConfigParamShape $thinking
      */
     public function withThinking(
-        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive $thinking,
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive $thinking,
     ): self {
         $self = clone $this;
         $self['thinking'] = $thinking;

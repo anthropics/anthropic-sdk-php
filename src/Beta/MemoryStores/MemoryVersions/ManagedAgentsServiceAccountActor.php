@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * Attribution for a write made by a workload authenticated as a service account, for example via Workload Identity Federation.
+ * A workload authenticated as a service account, for example via Workload Identity Federation.
  *
  * @phpstan-type ManagedAgentsServiceAccountActorShape = array{
  *   serviceAccountID: string, type: 'service_account_actor'
@@ -26,7 +26,7 @@ final class ManagedAgentsServiceAccountActor implements BaseModel
     public string $type = 'service_account_actor';
 
     /**
-     * ID of the service account that performed the write (a `svac_...` value).
+     * ID of the service account (a `svac_...` value).
      */
     #[Required('service_account_id')]
     public string $serviceAccountID;
@@ -65,7 +65,7 @@ final class ManagedAgentsServiceAccountActor implements BaseModel
     }
 
     /**
-     * ID of the service account that performed the write (a `svac_...` value).
+     * ID of the service account (a `svac_...` value).
      */
     public function withServiceAccountID(string $serviceAccountID): self
     {

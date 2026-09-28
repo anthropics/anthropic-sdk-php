@@ -29,11 +29,13 @@ final class RateLimitsRawService implements RateLimitsRawContract
     /**
      * @api
      *
-     * List rate-limit overrides configured for a workspace.
+     * List a workspace's rate limits.
      *
-     * Returns only the groups and limiter types that have a workspace-level
-     * override. Groups without overrides inherit the organization limits and
-     * are not listed; use `GET /v1/organizations/rate_limits` to see those.
+     * By default, returns only the groups and limiter types that have a
+     * workspace-level override. With `include_inherited=true`, returns every
+     * group with organization-level limits the workspace can see, listing for
+     * each the values it inherits from the organization as well as its own
+     * overrides. Each value's `source` says which it is.
      *
      * When `limit` is omitted, every matching entry is returned in a single
      * page; when `limit` truncates the result, follow `next_page` to fetch
@@ -42,6 +44,7 @@ final class RateLimitsRawService implements RateLimitsRawContract
      * @param string $workspaceID the ID of the workspace
      * @param array{
      *   groupType?: GroupType|value-of<GroupType>|null,
+     *   includeInherited?: bool,
      *   limit?: int|null,
      *   page?: string|null,
      * }|RateLimitListParams $params
@@ -67,7 +70,12 @@ final class RateLimitsRawService implements RateLimitsRawContract
             path: [
                 'v1/organizations/workspaces/%1$s/rate_limits?beta=true', $workspaceID,
             ],
-            query: Util::array_transform_keys($parsed, ['groupType' => 'group_type']),
+            query: Util::array_transform_keys(
+                $parsed,
+                [
+                    'groupType' => 'group_type', 'includeInherited' => 'include_inherited',
+                ],
+            ),
             options: $options,
             convert: BetaWorkspaceRateLimit::class,
             page: PageCursor::class,

@@ -14,6 +14,7 @@ use Anthropic\Lib\Contracts\StructuredOutputModel;
  * @phpstan-import-type ContentBlockVariants from \Anthropic\Messages\ContentBlock
  * @phpstan-import-type ContainerShape from \Anthropic\Messages\Container
  * @phpstan-import-type ContentBlockShape from \Anthropic\Messages\ContentBlock
+ * @phpstan-import-type DiagnosticsShape from \Anthropic\Messages\Diagnostics
  * @phpstan-import-type RefusalStopDetailsShape from \Anthropic\Messages\RefusalStopDetails
  * @phpstan-import-type UsageShape from \Anthropic\Messages\Usage
  *
@@ -21,6 +22,7 @@ use Anthropic\Lib\Contracts\StructuredOutputModel;
  *   id: string,
  *   container: null|Container|ContainerShape,
  *   content: list<ContentBlockShape>,
+ *   diagnostics: null|Diagnostics|DiagnosticsShape,
  *   model: string|Model|value-of<Model>,
  *   role: 'assistant',
  *   stopDetails: null|RefusalStopDetails|RefusalStopDetailsShape,
@@ -64,7 +66,9 @@ final class Message implements BaseModel
     public string $id;
 
     /**
-     * Information about the container used in the request (for the code execution tool).
+     * Information about the container used in this request.
+     *
+     * This will be non-null if a container tool (e.g. code execution) was used.
      */
     #[Required]
     public ?Container $container;
@@ -102,6 +106,12 @@ final class Message implements BaseModel
     public array $content;
 
     /**
+     * Request-level diagnostics. `null` when the request did not supply `diagnostics`, or when it did and no prompt-cache divergence was detected.
+     */
+    #[Required]
+    public ?Diagnostics $diagnostics;
+
+    /**
      * The model that will complete your prompt.
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
@@ -112,7 +122,9 @@ final class Message implements BaseModel
     public string $model;
 
     /**
-     * Structured information about a refusal.
+     * Structured information about why model output stopped.
+     *
+     * This is `null` when the `stop_reason` has no additional detail to report.
      */
     #[Required('stop_details')]
     public ?RefusalStopDetails $stopDetails;
@@ -167,6 +179,7 @@ final class Message implements BaseModel
      *   id: ...,
      *   container: ...,
      *   content: ...,
+     *   diagnostics: ...,
      *   model: ...,
      *   stopDetails: ...,
      *   stopReason: ...,
@@ -182,6 +195,7 @@ final class Message implements BaseModel
      *   ->withID(...)
      *   ->withContainer(...)
      *   ->withContent(...)
+     *   ->withDiagnostics(...)
      *   ->withModel(...)
      *   ->withStopDetails(...)
      *   ->withStopReason(...)
@@ -221,6 +235,7 @@ final class Message implements BaseModel
      *
      * @param Container|ContainerShape|null $container
      * @param list<ContentBlockShape> $content
+     * @param Diagnostics|DiagnosticsShape|null $diagnostics
      * @param string|Model|value-of<Model> $model
      * @param RefusalStopDetails|RefusalStopDetailsShape|null $stopDetails
      * @param StopReason|value-of<StopReason>|null $stopReason
@@ -230,6 +245,7 @@ final class Message implements BaseModel
         string $id,
         Container|array|null $container,
         array $content,
+        Diagnostics|array|null $diagnostics,
         Model|string $model,
         RefusalStopDetails|array|null $stopDetails,
         StopReason|string|null $stopReason,
@@ -241,6 +257,7 @@ final class Message implements BaseModel
         $self['id'] = $id;
         $self['container'] = $container;
         $self['content'] = $content;
+        $self['diagnostics'] = $diagnostics;
         $self['model'] = $model;
         $self['stopDetails'] = $stopDetails;
         $self['stopReason'] = $stopReason;
@@ -264,7 +281,9 @@ final class Message implements BaseModel
     }
 
     /**
-     * Information about the container used in the request (for the code execution tool).
+     * Information about the container used in this request.
+     *
+     * This will be non-null if a container tool (e.g. code execution) was used.
      *
      * @param Container|ContainerShape|null $container
      */
@@ -314,6 +333,19 @@ final class Message implements BaseModel
     }
 
     /**
+     * Request-level diagnostics. `null` when the request did not supply `diagnostics`, or when it did and no prompt-cache divergence was detected.
+     *
+     * @param Diagnostics|DiagnosticsShape|null $diagnostics
+     */
+    public function withDiagnostics(Diagnostics|array|null $diagnostics): self
+    {
+        $self = clone $this;
+        $self['diagnostics'] = $diagnostics;
+
+        return $self;
+    }
+
+    /**
      * The model that will complete your prompt.
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
@@ -344,7 +376,9 @@ final class Message implements BaseModel
     }
 
     /**
-     * Structured information about a refusal.
+     * Structured information about why model output stopped.
+     *
+     * This is `null` when the `stop_reason` has no additional detail to report.
      *
      * @param RefusalStopDetails|RefusalStopDetailsShape|null $stopDetails
      */

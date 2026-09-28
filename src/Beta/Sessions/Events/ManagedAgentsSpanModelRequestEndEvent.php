@@ -47,13 +47,13 @@ final class ManagedAgentsSpanModelRequestEndEvent implements BaseModel
     public string $modelRequestStartID;
 
     /**
-     * Token usage for a single model request.
+     * Token usage for this model request.
      */
     #[Required('model_usage')]
     public ManagedAgentsSpanModelUsage $modelUsage;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the model request completed.
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
@@ -156,7 +156,7 @@ final class ManagedAgentsSpanModelRequestEndEvent implements BaseModel
     }
 
     /**
-     * Token usage for a single model request.
+     * Token usage for this model request.
      *
      * @param ManagedAgentsSpanModelUsage|ManagedAgentsSpanModelUsageShape $modelUsage
      */
@@ -170,7 +170,7 @@ final class ManagedAgentsSpanModelRequestEndEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the model request completed.
      */
     public function withProcessedAt(\DateTimeInterface $processedAt): self
     {

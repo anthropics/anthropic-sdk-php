@@ -787,6 +787,18 @@ class RefusalFallbackStreamingTest extends TestCase
         $this->assertSame(self::FALLBACK_MODEL, $bodies[1]['model']);
     }
 
+    public function testBetweenToolsThinkingDegradesToDisabledOnTheHop(): void
+    {
+        $this->serve(self::sseResponse(self::streamA()), self::sseResponse(self::streamB()));
+        $client = $this->makeClient(new RefusalFallbackMiddleware(self::FALLBACKS));
+
+        self::collect($this->createStream($client, thinking: ['type' => 'between_tools']));
+
+        $bodies = $this->requestBodies();
+        $this->assertSame(['type' => 'between_tools'], $bodies[0]['thinking']);
+        $this->assertSame(['type' => 'disabled'], $bodies[1]['thinking']);
+    }
+
     // --- cancellation -----------------------------------------------------------
 
     public function testClosingTheStreamMidPassthroughTearsDownWithoutAFallbackRequest(): void
@@ -1134,15 +1146,17 @@ class RefusalFallbackStreamingTest extends TestCase
 
     /**
      * @param list<string>|null $betas
+     * @param array{type: 'between_tools'}|null $thinking
      *
      * @return EventStream
      */
-    private function createStream(Client $client, ?array $betas = null): BaseStream
+    private function createStream(Client $client, ?array $betas = null, ?array $thinking = null): BaseStream
     {
         return $client->beta->messages->createStream(
             maxTokens: 1024,
             messages: [['role' => 'user', 'content' => 'Hey claudius! Can you tell me what a solar eclipse is?']],
             model: 'claude-fable-5',
+            thinking: $thinking,
             betas: $betas,
         );
     }

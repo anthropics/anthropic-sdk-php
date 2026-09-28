@@ -96,9 +96,9 @@ class UtilTest extends TestCase
         $cases = [
             ['model/vendor.model-v1:0/invoke', 'http://localhost/prefix/model/vendor.model-v1:0/invoke'],
             ['dog?cat=meow#tail', 'http://localhost/prefix/dog?cat=meow'],
-            ['/dog', 'http://localhost/dog'],
+            ['/dog', 'http://localhost/prefix/dog'],
             ['https://example.com/absolute/path?dog=woof', 'https://example.com/absolute/path?dog=woof'],
-            ['//example.com/absolute/path', 'http://example.com/absolute/path'],
+            ['//example.com/absolute/path', 'http://localhost/prefix/example.com/absolute/path'],
         ];
 
         foreach ($cases as [$path, $output]) {

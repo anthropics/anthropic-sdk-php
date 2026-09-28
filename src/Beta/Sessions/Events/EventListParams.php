@@ -24,7 +24,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   limit?: int|null,
  *   order?: null|Order|value-of<Order>,
  *   page?: string|null,
- *   types?: list<string>|null,
+ *   types?: list<ManagedAgentsSessionEventType|value-of<ManagedAgentsSessionEventType>>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  *   workspaceID?: string|null,
  * }
@@ -79,9 +79,9 @@ final class EventListParams implements BaseModel
     /**
      * Filter by event type. Values match the `type` field on returned events (for example, `user.message` or `agent.tool_use`). Omit to return all event types.
      *
-     * @var list<string>|null $types
+     * @var list<value-of<ManagedAgentsSessionEventType>>|null $types
      */
-    #[Optional(list: 'string')]
+    #[Optional(list: ManagedAgentsSessionEventType::class)]
     public ?array $types;
 
     /**
@@ -111,7 +111,7 @@ final class EventListParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Order|value-of<Order>|null $order
-     * @param list<string>|null $types
+     * @param list<ManagedAgentsSessionEventType|value-of<ManagedAgentsSessionEventType>>|null $types
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
@@ -221,7 +221,7 @@ final class EventListParams implements BaseModel
     /**
      * Filter by event type. Values match the `type` field on returned events (for example, `user.message` or `agent.tool_use`). Omit to return all event types.
      *
-     * @param list<string> $types
+     * @param list<ManagedAgentsSessionEventType|value-of<ManagedAgentsSessionEventType>> $types
      */
     public function withTypes(array $types): self
     {

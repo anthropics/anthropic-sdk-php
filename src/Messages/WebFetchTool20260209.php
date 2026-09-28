@@ -107,12 +107,7 @@ final class WebFetchTool20260209 implements BaseModel
     public ?bool $strict;
 
     /**
-     * Which sources contribute to the set of URLs web fetch may fetch.
-     *
-     * Each key is a tagged variant: ``user_input`` is ``all`` or ``none``; the
-     * two tool filters are ``all``, ``none``, ``only`` (only the named tools'
-     * results) or ``except`` (every result but the named tools'). A named tool
-     * must be declared in this request's ``tools[]``.
+     * Which sources contribute to the set of URLs the tool may fetch. Omitted means every source.
      */
     #[Optional('url_sources', nullable: true)]
     public ?WebFetchURLSources $urlSources;
@@ -298,12 +293,7 @@ final class WebFetchTool20260209 implements BaseModel
     }
 
     /**
-     * Which sources contribute to the set of URLs web fetch may fetch.
-     *
-     * Each key is a tagged variant: ``user_input`` is ``all`` or ``none``; the
-     * two tool filters are ``all``, ``none``, ``only`` (only the named tools'
-     * results) or ``except`` (every result but the named tools'). A named tool
-     * must be declared in this request's ``tools[]``.
+     * Which sources contribute to the set of URLs the tool may fetch. Omitted means every source.
      *
      * @param WebFetchURLSources|WebFetchURLSourcesShape|null $urlSources
      */

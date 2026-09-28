@@ -43,7 +43,7 @@ final class ManagedAgentsAgentMessageEvent implements BaseModel
     public array $content;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when this response was generated.
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
@@ -126,7 +126,7 @@ final class ManagedAgentsAgentMessageEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when this response was generated.
      */
     public function withProcessedAt(\DateTimeInterface $processedAt): self
     {

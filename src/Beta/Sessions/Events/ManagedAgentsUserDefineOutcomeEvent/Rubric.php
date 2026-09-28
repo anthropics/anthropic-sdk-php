@@ -11,7 +11,7 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Rubric for grading the quality of an outcome.
+ * How to grade the outcome. File rubrics are currently resolved to their text content; clients should handle both variants.
  *
  * @phpstan-import-type ManagedAgentsFileRubricShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsFileRubric
  * @phpstan-import-type ManagedAgentsTextRubricShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsTextRubric

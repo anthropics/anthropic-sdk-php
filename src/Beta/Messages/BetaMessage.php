@@ -73,7 +73,9 @@ final class BetaMessage implements BaseModel
     public string $id;
 
     /**
-     * Information about the container used in the request (for the code execution tool).
+     * Information about the container used in this request.
+     *
+     * This will be non-null if a container tool (e.g. code execution) was used.
      */
     #[Required]
     public ?BetaContainer $container;
@@ -119,8 +121,7 @@ final class BetaMessage implements BaseModel
     public ?BetaContextManagementResponse $contextManagement;
 
     /**
-     * Request-level diagnostics: why the prompt cache could not fully reuse
-     * the prefix of the request named by `diagnostics.previous_message_id`.
+     * Request-level diagnostics. `null` when the request did not supply `diagnostics`, or when it did and no prompt-cache divergence was detected.
      */
     #[Required]
     public ?BetaDiagnostics $diagnostics;
@@ -136,7 +137,9 @@ final class BetaMessage implements BaseModel
     public string $model;
 
     /**
-     * Structured information about a refusal.
+     * Structured information about why model output stopped.
+     *
+     * This is `null` when the `stop_reason` has no additional detail to report.
      */
     #[Required('stop_details')]
     public ?BetaRefusalStopDetails $stopDetails;
@@ -334,7 +337,9 @@ final class BetaMessage implements BaseModel
     }
 
     /**
-     * Information about the container used in the request (for the code execution tool).
+     * Information about the container used in this request.
+     *
+     * This will be non-null if a container tool (e.g. code execution) was used.
      *
      * @param BetaContainer|BetaContainerShape|null $container
      */
@@ -400,8 +405,7 @@ final class BetaMessage implements BaseModel
     }
 
     /**
-     * Request-level diagnostics: why the prompt cache could not fully reuse
-     * the prefix of the request named by `diagnostics.previous_message_id`.
+     * Request-level diagnostics. `null` when the request did not supply `diagnostics`, or when it did and no prompt-cache divergence was detected.
      *
      * @param BetaDiagnostics|BetaDiagnosticsShape|null $diagnostics
      */
@@ -445,7 +449,9 @@ final class BetaMessage implements BaseModel
     }
 
     /**
-     * Structured information about a refusal.
+     * Structured information about why model output stopped.
+     *
+     * This is `null` when the `stop_reason` has no additional detail to report.
      *
      * @param BetaRefusalStopDetails|BetaRefusalStopDetailsShape|null $stopDetails
      */

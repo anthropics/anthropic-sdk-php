@@ -63,7 +63,7 @@ final class BetaManagedAgentsUserToolResultEvent implements BaseModel
     public ?bool $isError;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when this result was processed.
      */
     #[Optional('processed_at', nullable: true)]
     public ?\DateTimeInterface $processedAt;
@@ -185,7 +185,7 @@ final class BetaManagedAgentsUserToolResultEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when this result was processed.
      */
     public function withProcessedAt(?\DateTimeInterface $processedAt): self
     {

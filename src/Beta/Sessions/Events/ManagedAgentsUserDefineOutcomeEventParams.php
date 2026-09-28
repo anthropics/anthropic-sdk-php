@@ -36,7 +36,7 @@ final class ManagedAgentsUserDefineOutcomeEventParams implements BaseModel
     public string $description;
 
     /**
-     * Rubric for grading the quality of an outcome.
+     * How to grade the outcome. Text or file reference.
      *
      * @var RubricVariants $rubric
      */
@@ -114,7 +114,7 @@ final class ManagedAgentsUserDefineOutcomeEventParams implements BaseModel
     }
 
     /**
-     * Rubric for grading the quality of an outcome.
+     * How to grade the outcome. Text or file reference.
      *
      * @param RubricShape $rubric
      */

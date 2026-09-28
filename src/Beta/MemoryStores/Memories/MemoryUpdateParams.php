@@ -61,7 +61,7 @@ final class MemoryUpdateParams implements BaseModel
     public ?string $path;
 
     /**
-     * Optimistic-concurrency precondition: the update applies only if the memory's stored `content_sha256` equals the supplied value. On mismatch, the request returns `memory_precondition_failed_error` (HTTP 409); re-read the memory and retry against the fresh state. If the precondition fails but the stored state already exactly matches the requested `content` and `path`, the server returns 200 instead of 409.
+     * Optional optimistic-concurrency precondition. When supplied, the update applies only if the memory's current state matches; on mismatch the request returns `memory_precondition_failed_error` (HTTP 409). When omitted, the update is unconditional.
      */
     #[Optional]
     public ?ManagedAgentsPrecondition $precondition;
@@ -180,7 +180,7 @@ final class MemoryUpdateParams implements BaseModel
     }
 
     /**
-     * Optimistic-concurrency precondition: the update applies only if the memory's stored `content_sha256` equals the supplied value. On mismatch, the request returns `memory_precondition_failed_error` (HTTP 409); re-read the memory and retry against the fresh state. If the precondition fails but the stored state already exactly matches the requested `content` and `path`, the server returns 200 instead of 409.
+     * Optional optimistic-concurrency precondition. When supplied, the update applies only if the memory's current state matches; on mismatch the request returns `memory_precondition_failed_error` (HTTP 409). When omitted, the update is unconditional.
      *
      * @param ManagedAgentsPrecondition|ManagedAgentsPreconditionShape $precondition
      */

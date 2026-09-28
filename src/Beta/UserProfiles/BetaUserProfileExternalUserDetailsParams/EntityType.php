@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\UserProfiles\BetaUserProfileExternalUserDetailsParams;
 
 /**
- * What kind of entity the profile represents, as the platform states it: `individual`, `business`, `non_profit` or `government`.
+ * What kind of entity the profile represents: `individual`, `business`, `non_profit` or `government`.
  */
 enum EntityType: string
 {

@@ -22,7 +22,7 @@ final class BetaUserProfileEnrollmentURL implements BaseModel
     use SdkModel;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When this enrollment URL expires, in RFC 3339 format.
      */
     #[Required('expires_at')]
     public \DateTimeInterface $expiresAt;
@@ -85,7 +85,7 @@ final class BetaUserProfileEnrollmentURL implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When this enrollment URL expires, in RFC 3339 format.
      */
     public function withExpiresAt(\DateTimeInterface $expiresAt): self
     {

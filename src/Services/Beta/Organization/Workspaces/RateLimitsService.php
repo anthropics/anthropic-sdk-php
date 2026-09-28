@@ -34,11 +34,13 @@ final class RateLimitsService implements RateLimitsContract
     /**
      * @api
      *
-     * List rate-limit overrides configured for a workspace.
+     * List a workspace's rate limits.
      *
-     * Returns only the groups and limiter types that have a workspace-level
-     * override. Groups without overrides inherit the organization limits and
-     * are not listed; use `GET /v1/organizations/rate_limits` to see those.
+     * By default, returns only the groups and limiter types that have a
+     * workspace-level override. With `include_inherited=true`, returns every
+     * group with organization-level limits the workspace can see, listing for
+     * each the values it inherits from the organization as well as its own
+     * overrides. Each value's `source` says which it is.
      *
      * When `limit` is omitted, every matching entry is returned in a single
      * page; when `limit` truncates the result, follow `next_page` to fetch
@@ -46,6 +48,7 @@ final class RateLimitsService implements RateLimitsContract
      *
      * @param string $workspaceID the ID of the workspace
      * @param GroupType|value-of<GroupType>|null $groupType filter by group type
+     * @param bool $includeInherited also list the limiter values the workspace inherits from the organization, including groups with no workspace-level override
      * @param int|null $limit Maximum number of items to return per page. Ranges from `1` to `1000`.
      *
      * When omitted, every remaining entry is returned in a single page and `next_page` is `null`.
@@ -59,12 +62,18 @@ final class RateLimitsService implements RateLimitsContract
     public function list(
         string $workspaceID,
         GroupType|string|null $groupType = null,
+        ?bool $includeInherited = null,
         ?int $limit = null,
         ?string $page = null,
         RequestOptions|array|null $requestOptions = null,
     ): PageCursor {
         $params = Util::removeNulls(
-            ['groupType' => $groupType, 'limit' => $limit, 'page' => $page]
+            [
+                'groupType' => $groupType,
+                'includeInherited' => $includeInherited,
+                'limit' => $limit,
+                'page' => $page,
+            ],
         );
 
         // @phpstan-ignore-next-line argument.type

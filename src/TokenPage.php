@@ -15,7 +15,9 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * @phpstan-type TokenPageShape = array{
- *   data?: list<mixed>|null, hasMore?: bool|null, nextPage?: string|null
+ *   data?: list<array<string,mixed>>|null,
+ *   hasMore?: bool|null,
+ *   nextPage?: string|null,
  * }
  *
  * @template TItem

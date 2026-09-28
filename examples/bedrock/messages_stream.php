@@ -13,7 +13,7 @@ use Anthropic\Messages\RawMessageStopEvent;
 $client = Bedrock\Client::fromEnvironment();
 
 $stream = $client->messages->createStream(
-    model: 'global.anthropic.claude-sonnet-5',
+    model: 'global.anthropic.claude-sonnet-5-5',
     maxTokens: 1024,
     messages: [
         [

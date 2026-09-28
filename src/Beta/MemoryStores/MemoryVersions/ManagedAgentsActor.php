@@ -9,7 +9,7 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Identifies who performed a write or redact operation. Captured at write time on the `memory_version` row. The API key that created a session is not recorded on agent writes; attribution answers who made the write, not who is ultimately responsible. Look up session provenance separately via the [Sessions API](/en/api/beta/sessions/retrieve).
+ * Identifies who performed an operation. Recorded when the operation happens and not updated afterwards, so the ID may refer to a user, service account, API key, or session that has since been deleted.
  *
  * @phpstan-import-type ManagedAgentsSessionActorShape from \Anthropic\Beta\MemoryStores\MemoryVersions\ManagedAgentsSessionActor
  * @phpstan-import-type ManagedAgentsAPIActorShape from \Anthropic\Beta\MemoryStores\MemoryVersions\ManagedAgentsAPIActor

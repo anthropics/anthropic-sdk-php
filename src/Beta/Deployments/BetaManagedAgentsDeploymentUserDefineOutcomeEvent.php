@@ -38,7 +38,7 @@ final class BetaManagedAgentsDeploymentUserDefineOutcomeEvent implements BaseMod
     public string $description;
 
     /**
-     * Rubric for grading the quality of an outcome.
+     * How to grade the outcome. Text or file reference.
      *
      * @var RubricVariants $rubric
      */
@@ -116,7 +116,7 @@ final class BetaManagedAgentsDeploymentUserDefineOutcomeEvent implements BaseMod
     }
 
     /**
-     * Rubric for grading the quality of an outcome.
+     * How to grade the outcome. Text or file reference.
      *
      * @param RubricShape $rubric
      */

@@ -47,7 +47,7 @@ final class BetaManagedAgentsMCPToolsetParams implements BaseModel
     public ?array $configs;
 
     /**
-     * Default configuration for all tools from an MCP server.
+     * Default configuration for all tools from this server.
      */
     #[Optional('default_config', nullable: true)]
     public ?BetaManagedAgentsMCPToolsetDefaultConfigParams $defaultConfig;
@@ -133,7 +133,7 @@ final class BetaManagedAgentsMCPToolsetParams implements BaseModel
     }
 
     /**
-     * Default configuration for all tools from an MCP server.
+     * Default configuration for all tools from this server.
      *
      * @param BetaManagedAgentsMCPToolsetDefaultConfigParams|BetaManagedAgentsMCPToolsetDefaultConfigParamsShape|null $defaultConfig
      */

@@ -12,7 +12,7 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Authentication details for a credential.
+ * Authentication configuration for this credential.
  *
  * @phpstan-import-type ManagedAgentsMCPOAuthAuthResponseShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsMCPOAuthAuthResponse
  * @phpstan-import-type ManagedAgentsStaticBearerAuthResponseShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsStaticBearerAuthResponse

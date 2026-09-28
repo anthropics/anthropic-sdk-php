@@ -65,7 +65,7 @@ final class BetaManagedAgentsWebSearchToolConfigParams implements BaseModel
     public ?bool $enabled;
 
     /**
-     * Permission policy for tool execution.
+     * Permission policy for this tool. Controls whether tool calls are auto-approved or require confirmation.
      *
      * @var PermissionPolicyVariants|null $permissionPolicy
      */
@@ -173,7 +173,7 @@ final class BetaManagedAgentsWebSearchToolConfigParams implements BaseModel
     }
 
     /**
-     * Permission policy for tool execution.
+     * Permission policy for this tool. Controls whether tool calls are auto-approved or require confirmation.
      *
      * @param PermissionPolicyShape|null $permissionPolicy
      */

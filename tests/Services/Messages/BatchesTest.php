@@ -73,6 +73,7 @@ final class BatchesTest extends TestCase
                                 ],
                             ],
                         ],
+                        'diagnostics' => ['previousMessageID' => 'previous_message_id'],
                         'inferenceGeo' => 'inference_geo',
                         'metadata' => ['userID' => '13803d75-b4b5-4c3e-b2a2-6f21399b021b'],
                         'outputConfig' => [

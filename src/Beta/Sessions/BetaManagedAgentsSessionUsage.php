@@ -38,7 +38,7 @@ final class BetaManagedAgentsSessionUsage implements BaseModel
     public ?float $activeSeconds;
 
     /**
-     * Prompt-cache creation token usage broken down by cache lifetime.
+     * Tokens used to create prompt cache entries, broken down by cache TTL.
      */
     #[Optional('cache_creation')]
     public ?BetaManagedAgentsCacheCreationUsage $cacheCreation;
@@ -56,7 +56,7 @@ final class BetaManagedAgentsSessionUsage implements BaseModel
     public ?int $inputTokens;
 
     /**
-     * A monetary amount in a specific currency.
+     * Cumulative list cost of the session across all turns, priced at public list rates. Absent until cost tracking is available for the session.
      */
     #[Optional('list_cost', nullable: true)]
     public ?BetaMonetaryAmount $listCost;
@@ -68,7 +68,7 @@ final class BetaManagedAgentsSessionUsage implements BaseModel
     public ?int $outputTokens;
 
     /**
-     * Cumulative count of server-executed tool invocations, broken down by tool.
+     * Cumulative server-executed tool usage across all turns. Absent until server-tool tracking is available for the session.
      */
     #[Optional('server_tool_use', nullable: true)]
     public ?BetaManagedAgentsServerToolUsage $serverToolUse;
@@ -121,7 +121,7 @@ final class BetaManagedAgentsSessionUsage implements BaseModel
     }
 
     /**
-     * Prompt-cache creation token usage broken down by cache lifetime.
+     * Tokens used to create prompt cache entries, broken down by cache TTL.
      *
      * @param BetaManagedAgentsCacheCreationUsage|BetaManagedAgentsCacheCreationUsageShape $cacheCreation
      */
@@ -157,7 +157,7 @@ final class BetaManagedAgentsSessionUsage implements BaseModel
     }
 
     /**
-     * A monetary amount in a specific currency.
+     * Cumulative list cost of the session across all turns, priced at public list rates. Absent until cost tracking is available for the session.
      *
      * @param BetaMonetaryAmount|BetaMonetaryAmountShape|null $listCost
      */
@@ -181,7 +181,7 @@ final class BetaManagedAgentsSessionUsage implements BaseModel
     }
 
     /**
-     * Cumulative count of server-executed tool invocations, broken down by tool.
+     * Cumulative server-executed tool usage across all turns. Absent until server-tool tracking is available for the session.
      *
      * @param BetaManagedAgentsServerToolUsage|BetaManagedAgentsServerToolUsageShape|null $serverToolUse
      */

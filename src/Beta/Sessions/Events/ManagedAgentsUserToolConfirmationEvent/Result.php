@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events\ManagedAgentsUserToolConfirmationEvent;
 
 /**
- * UserToolConfirmationResult enum.
+ * The confirmation result: 'allow' or 'deny'.
  */
 enum Result: string
 {

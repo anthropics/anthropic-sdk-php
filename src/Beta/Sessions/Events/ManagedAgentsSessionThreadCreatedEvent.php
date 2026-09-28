@@ -38,7 +38,7 @@ final class ManagedAgentsSessionThreadCreatedEvent implements BaseModel
     public string $agentName;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the thread was created.
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
@@ -127,7 +127,7 @@ final class ManagedAgentsSessionThreadCreatedEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the thread was created.
      */
     public function withProcessedAt(\DateTimeInterface $processedAt): self
     {

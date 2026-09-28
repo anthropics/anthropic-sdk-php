@@ -64,7 +64,7 @@ final class BetaWorkspaceRateLimit implements BaseModel
     public string $groupType;
 
     /**
-     * The limiter values overridden for this group in this workspace. Limiter types without a workspace override are omitted and inherit the organization value.
+     * The workspace's limiter values for this group. By default only the limiter types with a workspace-level override are listed. With `include_inherited` set to `true`, the limiter types the workspace inherits from the organization are listed too, each marked by `source`.
      *
      * @var list<BetaWorkspaceRateLimitValue> $limits
      */
@@ -80,13 +80,13 @@ final class BetaWorkspaceRateLimit implements BaseModel
     public ?array $models;
 
     /**
-     * The `id` of the organization's RateLimit entry this override applies to.
+     * The `id` of the organization's RateLimit entry this entry applies to.
      */
     #[Required('rate_limit_id')]
     public string $rateLimitID;
 
     /**
-     * ID of the Workspace this override applies to.
+     * ID of the Workspace this entry applies to.
      */
     #[Required('workspace_id')]
     public string $workspaceID;
@@ -181,7 +181,7 @@ final class BetaWorkspaceRateLimit implements BaseModel
     }
 
     /**
-     * The limiter values overridden for this group in this workspace. Limiter types without a workspace override are omitted and inherit the organization value.
+     * The workspace's limiter values for this group. By default only the limiter types with a workspace-level override are listed. With `include_inherited` set to `true`, the limiter types the workspace inherits from the organization are listed too, each marked by `source`.
      *
      * @param list<BetaWorkspaceRateLimitValue|BetaWorkspaceRateLimitValueShape> $limits
      */
@@ -207,7 +207,7 @@ final class BetaWorkspaceRateLimit implements BaseModel
     }
 
     /**
-     * The `id` of the organization's RateLimit entry this override applies to.
+     * The `id` of the organization's RateLimit entry this entry applies to.
      */
     public function withRateLimitID(string $rateLimitID): self
     {
@@ -231,7 +231,7 @@ final class BetaWorkspaceRateLimit implements BaseModel
     }
 
     /**
-     * ID of the Workspace this override applies to.
+     * ID of the Workspace this entry applies to.
      */
     public function withWorkspaceID(string $workspaceID): self
     {

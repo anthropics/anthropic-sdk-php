@@ -9,10 +9,10 @@ use Anthropic\Messages\RawMessageStartEvent;
 use Anthropic\Messages\RawMessageStopEvent;
 use Anthropic\Vertex;
 
-$client = Vertex\Client::fromEnvironment(location: 'us-east5', projectId: 'my-project-id');
+$client = Vertex\Client::fromEnvironment(region: 'us-east5', projectId: 'my-project-id');
 
 $stream = $client->messages->createStream(
-    model: 'claude-sonnet-5',
+    model: 'claude-sonnet-5-5',
     maxTokens: 1024,
     messages: [
         [

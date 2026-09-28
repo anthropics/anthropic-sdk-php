@@ -437,6 +437,21 @@ class RetryTest extends TestCase
     }
 
     #[Test]
+    public function testFilePartFromStreamWithoutUriHasEmptyFilename(): void
+    {
+        [$client, $transporter] = $this->buildClient();
+        $transporter->addResponse($this->response(200));
+        $resource = self::socketContaining('hello,world');
+
+        try {
+            $client->request('POST', '/files', headers: ['Content-Type' => 'multipart/form-data'], body: ['file' => FileParam::fromResource($resource)]);
+        } finally {
+            fclose($resource);
+        }
+        $this->assertStringContainsString("name=\"file\"; filename=\"\"\r\n", $transporter->sent[0]);
+    }
+
+    #[Test]
     public function testFilePartFromNonSeekableStreamIsSentOnce(): void
     {
         // A socket cannot be read twice, so the first attempt's outcome is final even though the status is retryable

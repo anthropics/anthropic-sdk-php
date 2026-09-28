@@ -150,8 +150,7 @@ abstract class BaseClient
 
         $body = Util::mergeBody($body, extraBody: $options->extraBodyParams);
 
-        // Request paths are relative to the base URL, so a leading slash must not discard the base URL's own path prefix.
-        $parsedPath = ltrim(Util::parsePath($path), '/');
+        $parsedPath = Util::parsePath($path);
 
         /** @var array<string,mixed> $mergedQuery */
         $mergedQuery = array_merge_recursive(

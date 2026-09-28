@@ -30,9 +30,7 @@ final class BetaThinkingConfigAdaptive implements BaseModel
     public string $type = 'adaptive';
 
     /**
-     * Controls for block binding: what happens when a thinking block this
-     * request sends back fails the conversation check. Every field is optional;
-     * an empty object means every default.
+     * Controls for block binding: what happens when a thinking block this request sends back fails the conversation check. `null`, absent or an empty object means every default.
      */
     #[Optional('block_binding', nullable: true)]
     public ?BetaThinkingBlockBinding $blockBinding;
@@ -82,9 +80,7 @@ final class BetaThinkingConfigAdaptive implements BaseModel
     }
 
     /**
-     * Controls for block binding: what happens when a thinking block this
-     * request sends back fails the conversation check. Every field is optional;
-     * an empty object means every default.
+     * Controls for block binding: what happens when a thinking block this request sends back fails the conversation check. `null`, absent or an empty object means every default.
      *
      * @param BetaThinkingBlockBinding|BetaThinkingBlockBindingShape|null $blockBinding
      */

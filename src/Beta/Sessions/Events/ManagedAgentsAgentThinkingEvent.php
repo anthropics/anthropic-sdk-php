@@ -28,7 +28,7 @@ final class ManagedAgentsAgentThinkingEvent implements BaseModel
     public string $id;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when this thinking was produced.
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
@@ -92,7 +92,7 @@ final class ManagedAgentsAgentThinkingEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when this thinking was produced.
      */
     public function withProcessedAt(\DateTimeInterface $processedAt): self
     {

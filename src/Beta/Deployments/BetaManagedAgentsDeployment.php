@@ -57,19 +57,19 @@ final class BetaManagedAgentsDeployment implements BaseModel
     public string $id;
 
     /**
-     * A resolved agent reference with a concrete version.
+     * Reference to the agent this deployment runs, resolved to a concrete version.
      */
     #[Required]
     public BetaManagedAgentsAgentReference $agent;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Time the deployment was archived. Null if not archived.
      */
     #[Required('archived_at')]
     public ?\DateTimeInterface $archivedAt;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Time the deployment was created.
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
@@ -112,7 +112,7 @@ final class BetaManagedAgentsDeployment implements BaseModel
     public string $name;
 
     /**
-     * Why a deployment is paused. Non-null exactly when `status` is `paused`.
+     * Why the deployment is `paused`. Non-null exactly when `status` is `paused`; null otherwise.
      *
      * @var BetaManagedAgentsDeploymentPausedReasonVariants|null $pausedReason
      */
@@ -131,13 +131,13 @@ final class BetaManagedAgentsDeployment implements BaseModel
     public array $resources;
 
     /**
-     * 5-field POSIX cron schedule with computed runtime timestamps.
+     * Recurring cron schedule. Presence enables scheduled execution; null means manual-only. Includes computed timestamps (next fire times, last run) on the cron variant.
      */
     #[Required]
     public ?BetaManagedAgentsSchedule $schedule;
 
     /**
-     * Lifecycle status of a deployment.
+     * Computed status of the deployment: `active` or `paused`. Archived deployments report `active` with `archived_at` set.
      *
      * @var value-of<BetaManagedAgentsDeploymentStatus> $status
      */
@@ -149,7 +149,7 @@ final class BetaManagedAgentsDeployment implements BaseModel
     public string $type;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Time the deployment was last updated.
      */
     #[Required('updated_at')]
     public \DateTimeInterface $updatedAt;
@@ -163,7 +163,7 @@ final class BetaManagedAgentsDeployment implements BaseModel
     public array $vaultIDs;
 
     /**
-     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     * Spend ceiling stamped onto each session created from this deployment. Absent when no budget is set.
      */
     #[Optional(nullable: true)]
     public ?BetaManagedAgentsBudgetLimit $budget;
@@ -291,7 +291,7 @@ final class BetaManagedAgentsDeployment implements BaseModel
     }
 
     /**
-     * A resolved agent reference with a concrete version.
+     * Reference to the agent this deployment runs, resolved to a concrete version.
      *
      * @param BetaManagedAgentsAgentReference|BetaManagedAgentsAgentReferenceShape $agent
      */
@@ -305,7 +305,7 @@ final class BetaManagedAgentsDeployment implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Time the deployment was archived. Null if not archived.
      */
     public function withArchivedAt(?\DateTimeInterface $archivedAt): self
     {
@@ -316,7 +316,7 @@ final class BetaManagedAgentsDeployment implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Time the deployment was created.
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
@@ -386,7 +386,7 @@ final class BetaManagedAgentsDeployment implements BaseModel
     }
 
     /**
-     * Why a deployment is paused. Non-null exactly when `status` is `paused`.
+     * Why the deployment is `paused`. Non-null exactly when `status` is `paused`; null otherwise.
      *
      * @param BetaManagedAgentsDeploymentPausedReasonShape|null $pausedReason
      */
@@ -413,7 +413,7 @@ final class BetaManagedAgentsDeployment implements BaseModel
     }
 
     /**
-     * 5-field POSIX cron schedule with computed runtime timestamps.
+     * Recurring cron schedule. Presence enables scheduled execution; null means manual-only. Includes computed timestamps (next fire times, last run) on the cron variant.
      *
      * @param BetaManagedAgentsSchedule|BetaManagedAgentsScheduleShape|null $schedule
      */
@@ -427,7 +427,7 @@ final class BetaManagedAgentsDeployment implements BaseModel
     }
 
     /**
-     * Lifecycle status of a deployment.
+     * Computed status of the deployment: `active` or `paused`. Archived deployments report `active` with `archived_at` set.
      *
      * @param BetaManagedAgentsDeploymentStatus|value-of<BetaManagedAgentsDeploymentStatus> $status
      */
@@ -452,7 +452,7 @@ final class BetaManagedAgentsDeployment implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Time the deployment was last updated.
      */
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
@@ -476,7 +476,7 @@ final class BetaManagedAgentsDeployment implements BaseModel
     }
 
     /**
-     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     * Spend ceiling stamped onto each session created from this deployment. Absent when no budget is set.
      *
      * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
      */

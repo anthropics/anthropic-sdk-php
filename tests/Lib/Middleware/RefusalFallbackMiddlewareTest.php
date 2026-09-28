@@ -5,6 +5,7 @@ namespace Tests\Lib\Middleware;
 use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Beta\Messages\BetaOutputConfig;
 use Anthropic\Beta\Messages\BetaThinkingConfigAdaptive;
+use Anthropic\Beta\Messages\BetaThinkingConfigBetweenTools;
 use Anthropic\Beta\Messages\BetaThinkingConfigDisabled;
 use Anthropic\Beta\Messages\BetaThinkingConfigEnabled;
 use Anthropic\Client;
@@ -327,6 +328,32 @@ class RefusalFallbackMiddlewareTest extends TestCase
         $this->assertSame(self::FALLBACK, $leg['model']);
         $this->assertSame(1024, $leg['max_tokens']);
         $this->assertEquals(['type' => 'enabled', 'budget_tokens' => 1024], $leg['thinking']);
+    }
+
+    public function testBetweenToolsThinkingDegradesToDisabledOnTheHop(): void
+    {
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_1'));
+        $this->transporter->addResponse(self::message(model: self::FALLBACK));
+
+        $this->create($this->client(), thinking: ['type' => 'between_tools']);
+
+        $requests = $this->transporter->getRequests();
+        $this->assertSame(['type' => 'between_tools'], self::bodyOf($requests[0])['thinking']);
+        $this->assertSame(['type' => 'disabled'], self::bodyOf($requests[1])['thinking']);
+    }
+
+    public function testAnEntryThatSetsThinkingOverridesBetweenTools(): void
+    {
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_1'));
+        $this->transporter->addResponse(self::message(model: self::FALLBACK));
+
+        $middleware = new RefusalFallbackMiddleware([
+            ['model' => self::FALLBACK, 'thinking' => ['type' => 'between_tools']],
+        ]);
+
+        $this->create($this->client($middleware), thinking: ['type' => 'between_tools']);
+
+        $this->assertSame(['type' => 'between_tools'], self::bodyOf($this->transporter->getRequests()[1])['thinking']);
     }
 
     public function testHopsPatchTheOriginalParamsAndNeverCompound(): void
@@ -966,7 +993,7 @@ class RefusalFallbackMiddlewareTest extends TestCase
         ?string $fallbackCreditToken = null,
         ?array $fallbacks = null,
         ?array $requestOptions = null,
-        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigAdaptive|null $thinking = null,
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking = null,
         BetaOutputConfig|array|null $outputConfig = null,
     ): BetaMessage {
         return $client->beta->messages->create(

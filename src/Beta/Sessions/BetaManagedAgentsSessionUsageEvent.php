@@ -37,7 +37,7 @@ final class BetaManagedAgentsSessionUsageEvent implements BaseModel
     public string $id;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the snapshot was taken.
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
@@ -47,13 +47,13 @@ final class BetaManagedAgentsSessionUsageEvent implements BaseModel
     public string $type;
 
     /**
-     * Point-in-time snapshot of a session's cumulative usage.
+     * The session's cumulative usage at the snapshot time.
      */
     #[Required]
     public ManagedAgentsSessionUsageSnapshot $usage;
 
     /**
-     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     * The session's configured budget at the snapshot time, or null when the session has no budget.
      */
     #[Optional(nullable: true)]
     public ?BetaManagedAgentsBudgetLimit $budget;
@@ -123,7 +123,7 @@ final class BetaManagedAgentsSessionUsageEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the snapshot was taken.
      */
     public function withProcessedAt(\DateTimeInterface $processedAt): self
     {
@@ -145,7 +145,7 @@ final class BetaManagedAgentsSessionUsageEvent implements BaseModel
     }
 
     /**
-     * Point-in-time snapshot of a session's cumulative usage.
+     * The session's cumulative usage at the snapshot time.
      *
      * @param ManagedAgentsSessionUsageSnapshot|ManagedAgentsSessionUsageSnapshotShape $usage
      */
@@ -159,7 +159,7 @@ final class BetaManagedAgentsSessionUsageEvent implements BaseModel
     }
 
     /**
-     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     * The session's configured budget at the snapshot time, or null when the session has no budget.
      *
      * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
      */

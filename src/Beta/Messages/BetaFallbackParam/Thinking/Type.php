@@ -10,5 +10,7 @@ enum Type: string
 
     case DISABLED = 'disabled';
 
+    case BETWEEN_TOOLS = 'between_tools';
+
     case ADAPTIVE = 'adaptive';
 }

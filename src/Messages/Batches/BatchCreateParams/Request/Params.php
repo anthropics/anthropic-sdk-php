@@ -12,11 +12,13 @@ use Anthropic\Messages\Batches\BatchCreateParams\Request\Params\ServiceTier;
 use Anthropic\Messages\Batches\BatchCreateParams\Request\Params\System;
 use Anthropic\Messages\CacheControlEphemeral;
 use Anthropic\Messages\ContainerParams;
+use Anthropic\Messages\DiagnosticsParam;
 use Anthropic\Messages\MessageParam;
 use Anthropic\Messages\Metadata;
 use Anthropic\Messages\Model;
 use Anthropic\Messages\OutputConfig;
 use Anthropic\Messages\ThinkingConfigAdaptive;
+use Anthropic\Messages\ThinkingConfigBetweenTools;
 use Anthropic\Messages\ThinkingConfigDisabled;
 use Anthropic\Messages\ThinkingConfigEnabled;
 use Anthropic\Messages\ThinkingConfigParam;
@@ -40,6 +42,7 @@ use Anthropic\Messages\ToolUnion;
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type MessageCreateParamsContainerShape from \Anthropic\Messages\MessageCreateParamsContainer
+ * @phpstan-import-type DiagnosticsParamShape from \Anthropic\Messages\DiagnosticsParam
  * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
  * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
  * @phpstan-import-type SystemShape from \Anthropic\Messages\Batches\BatchCreateParams\Request\Params\System
@@ -53,6 +56,7 @@ use Anthropic\Messages\ToolUnion;
  *   model: string|Model|value-of<Model>,
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   container?: MessageCreateParamsContainerShape|null,
+ *   diagnostics?: null|DiagnosticsParam|DiagnosticsParamShape,
  *   inferenceGeo?: string|null,
  *   metadata?: null|Metadata|MetadataShape,
  *   outputConfig?: null|OutputConfig|OutputConfigShape,
@@ -165,6 +169,12 @@ final class Params implements BaseModel
     public string|ContainerParams|null $container;
 
     /**
+     * Request-level diagnostics. Supply `previous_message_id` to have the response include `diagnostics.cache_miss_reason` explaining any prompt-cache divergence from that prior request.
+     */
+    #[Optional(nullable: true)]
+    public ?DiagnosticsParam $diagnostics;
+
+    /**
      * Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      */
     #[Optional('inference_geo', nullable: true)]
@@ -205,9 +215,9 @@ final class Params implements BaseModel
     public ?array $stopSequences;
 
     /**
-     * Whether to incrementally stream the response using server-sent events.
+     * Whether to incrementally stream the response using server-sent events. When `true`, SDKs return a raw event stream.
      *
-     * See [streaming](https://platform.claude.com/docs/en/build-with-claude/streaming) for details.
+     * In the TypeScript, Python and Ruby SDKs, the recommended way to stream is `messages.stream()`. It sets `stream` for you and accumulates the events into the final message. See [Streaming with SDKs](https://platform.claude.com/docs/en/build-with-claude/streaming#streaming-with-sdks) for an example in each language.
      */
     #[Optional]
     public ?bool $stream;
@@ -244,7 +254,7 @@ final class Params implements BaseModel
      * @var ThinkingConfigParamVariants|null $thinking
      */
     #[Optional(union: ThinkingConfigParam::class)]
-    public ThinkingConfigEnabled|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking;
+    public ThinkingConfigEnabled|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive|null $thinking;
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
@@ -374,6 +384,7 @@ final class Params implements BaseModel
      * @param string|Model|value-of<Model> $model
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      * @param MessageCreateParamsContainerShape|null $container
+     * @param DiagnosticsParam|DiagnosticsParamShape|null $diagnostics
      * @param Metadata|MetadataShape|null $metadata
      * @param OutputConfig|OutputConfigShape|null $outputConfig
      * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
@@ -389,6 +400,7 @@ final class Params implements BaseModel
         Model|string $model,
         CacheControlEphemeral|array|null $cacheControl = null,
         string|ContainerParams|array|null $container = null,
+        DiagnosticsParam|array|null $diagnostics = null,
         ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
@@ -397,7 +409,7 @@ final class Params implements BaseModel
         ?bool $stream = null,
         string|array|null $system = null,
         ?float $temperature = null,
-        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking = null,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?int $topK = null,
@@ -411,6 +423,7 @@ final class Params implements BaseModel
 
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $container && $self['container'] = $container;
+        null !== $diagnostics && $self['diagnostics'] = $diagnostics;
         null !== $inferenceGeo && $self['inferenceGeo'] = $inferenceGeo;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $outputConfig && $self['outputConfig'] = $outputConfig;
@@ -549,6 +562,20 @@ final class Params implements BaseModel
     }
 
     /**
+     * Request-level diagnostics. Supply `previous_message_id` to have the response include `diagnostics.cache_miss_reason` explaining any prompt-cache divergence from that prior request.
+     *
+     * @param DiagnosticsParam|DiagnosticsParamShape|null $diagnostics
+     */
+    public function withDiagnostics(
+        DiagnosticsParam|array|null $diagnostics
+    ): self {
+        $self = clone $this;
+        $self['diagnostics'] = $diagnostics;
+
+        return $self;
+    }
+
+    /**
      * Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      */
     public function withInferenceGeo(?string $inferenceGeo): self
@@ -618,9 +645,9 @@ final class Params implements BaseModel
     }
 
     /**
-     * Whether to incrementally stream the response using server-sent events.
+     * Whether to incrementally stream the response using server-sent events. When `true`, SDKs return a raw event stream.
      *
-     * See [streaming](https://platform.claude.com/docs/en/build-with-claude/streaming) for details.
+     * In the TypeScript, Python and Ruby SDKs, the recommended way to stream is `messages.stream()`. It sets `stream` for you and accumulates the events into the final message. See [Streaming with SDKs](https://platform.claude.com/docs/en/build-with-claude/streaming#streaming-with-sdks) for an example in each language.
      */
     public function withStream(bool $stream): self
     {
@@ -670,7 +697,7 @@ final class Params implements BaseModel
      * @param ThinkingConfigParamShape $thinking
      */
     public function withThinking(
-        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive $thinking,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive $thinking,
     ): self {
         $self = clone $this;
         $self['thinking'] = $thinking;

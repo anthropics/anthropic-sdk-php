@@ -29,6 +29,7 @@ use Anthropic\Messages\MessageCreateParams\System;
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type MessageCreateParamsContainerShape from \Anthropic\Messages\MessageCreateParamsContainer
+ * @phpstan-import-type DiagnosticsParamShape from \Anthropic\Messages\DiagnosticsParam
  * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
  * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
  * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCreateParams\System
@@ -42,6 +43,7 @@ use Anthropic\Messages\MessageCreateParams\System;
  *   model: string|Model|value-of<Model>,
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   container?: MessageCreateParamsContainerShape|null,
+ *   diagnostics?: null|DiagnosticsParam|DiagnosticsParamShape,
  *   inferenceGeo?: string|null,
  *   metadata?: null|Metadata|MetadataShape,
  *   outputConfig?: null|OutputConfig|OutputConfigShape,
@@ -156,6 +158,12 @@ final class MessageCreateParams implements BaseModel
     public string|ContainerParams|null $container;
 
     /**
+     * Request-level diagnostics. Supply `previous_message_id` to have the response include `diagnostics.cache_miss_reason` explaining any prompt-cache divergence from that prior request.
+     */
+    #[Optional(nullable: true)]
+    public ?DiagnosticsParam $diagnostics;
+
+    /**
      * Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      */
     #[Optional('inference_geo', nullable: true)]
@@ -227,7 +235,7 @@ final class MessageCreateParams implements BaseModel
      * @var ThinkingConfigParamVariants|null $thinking
      */
     #[Optional(union: ThinkingConfigParam::class)]
-    public ThinkingConfigEnabled|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking;
+    public ThinkingConfigEnabled|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive|null $thinking;
 
     /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
@@ -371,6 +379,7 @@ final class MessageCreateParams implements BaseModel
      * @param string|Model|value-of<Model> $model
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      * @param MessageCreateParamsContainerShape|null $container
+     * @param DiagnosticsParam|DiagnosticsParamShape|null $diagnostics
      * @param Metadata|MetadataShape|null $metadata
      * @param OutputConfig|OutputConfigShape|null $outputConfig
      * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
@@ -386,6 +395,7 @@ final class MessageCreateParams implements BaseModel
         Model|string $model,
         CacheControlEphemeral|array|null $cacheControl = null,
         string|ContainerParams|array|null $container = null,
+        DiagnosticsParam|array|null $diagnostics = null,
         ?string $inferenceGeo = null,
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
@@ -393,7 +403,7 @@ final class MessageCreateParams implements BaseModel
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
-        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive|null $thinking = null,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?int $topK = null,
@@ -409,6 +419,7 @@ final class MessageCreateParams implements BaseModel
 
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $container && $self['container'] = $container;
+        null !== $diagnostics && $self['diagnostics'] = $diagnostics;
         null !== $inferenceGeo && $self['inferenceGeo'] = $inferenceGeo;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $outputConfig && $self['outputConfig'] = $outputConfig;
@@ -548,6 +559,20 @@ final class MessageCreateParams implements BaseModel
     }
 
     /**
+     * Request-level diagnostics. Supply `previous_message_id` to have the response include `diagnostics.cache_miss_reason` explaining any prompt-cache divergence from that prior request.
+     *
+     * @param DiagnosticsParam|DiagnosticsParamShape|null $diagnostics
+     */
+    public function withDiagnostics(
+        DiagnosticsParam|array|null $diagnostics
+    ): self {
+        $self = clone $this;
+        $self['diagnostics'] = $diagnostics;
+
+        return $self;
+    }
+
+    /**
      * Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      */
     public function withInferenceGeo(?string $inferenceGeo): self
@@ -656,7 +681,7 @@ final class MessageCreateParams implements BaseModel
      * @param ThinkingConfigParamShape $thinking
      */
     public function withThinking(
-        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigAdaptive $thinking,
+        ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive $thinking,
     ): self {
         $self = clone $this;
         $self['thinking'] = $thinking;

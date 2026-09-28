@@ -26,7 +26,7 @@ final class ManagedAgentsImageBlock implements BaseModel
     use SdkModel;
 
     /**
-     * Union type for image source variants.
+     * The source of the image data.
      *
      * @var SourceVariants $source
      */
@@ -77,7 +77,7 @@ final class ManagedAgentsImageBlock implements BaseModel
     }
 
     /**
-     * Union type for image source variants.
+     * The source of the image data.
      *
      * @param SourceShape $source
      */

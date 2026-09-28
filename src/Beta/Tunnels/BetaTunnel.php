@@ -37,13 +37,13 @@ final class BetaTunnel implements BaseModel
     public string $id;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * RFC 3339 datetime string indicating when the tunnel was archived. Null if it is not archived.
      */
     #[Required('archived_at')]
     public ?\DateTimeInterface $archivedAt;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * RFC 3339 datetime string indicating when the tunnel was created.
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
@@ -121,7 +121,7 @@ final class BetaTunnel implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * RFC 3339 datetime string indicating when the tunnel was archived. Null if it is not archived.
      */
     public function withArchivedAt(?\DateTimeInterface $archivedAt): self
     {
@@ -132,7 +132,7 @@ final class BetaTunnel implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * RFC 3339 datetime string indicating when the tunnel was created.
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {

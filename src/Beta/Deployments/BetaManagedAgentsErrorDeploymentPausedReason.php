@@ -26,7 +26,7 @@ final class BetaManagedAgentsErrorDeploymentPausedReason implements BaseModel
     use SdkModel;
 
     /**
-     * The error that triggered an auto-pause. Matches the failed run's `error.type`.
+     * The failed run's error.
      *
      * @var BetaManagedAgentsDeploymentPausedReasonErrorVariants $error
      */
@@ -79,7 +79,7 @@ final class BetaManagedAgentsErrorDeploymentPausedReason implements BaseModel
     }
 
     /**
-     * The error that triggered an auto-pause. Matches the failed run's `error.type`.
+     * The failed run's error.
      *
      * @param BetaManagedAgentsDeploymentPausedReasonErrorShape $error
      */

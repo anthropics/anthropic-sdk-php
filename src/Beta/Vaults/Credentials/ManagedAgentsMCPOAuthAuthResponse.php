@@ -44,7 +44,7 @@ final class ManagedAgentsMCPOAuthAuthResponse implements BaseModel
     public ?\DateTimeInterface $expiresAt;
 
     /**
-     * OAuth refresh token configuration returned in credential responses.
+     * Refresh token configuration, if the credential supports token refresh.
      */
     #[Optional(nullable: true)]
     public ?ManagedAgentsMCPOAuthRefreshResponse $refresh;
@@ -127,7 +127,7 @@ final class ManagedAgentsMCPOAuthAuthResponse implements BaseModel
     }
 
     /**
-     * OAuth refresh token configuration returned in credential responses.
+     * Refresh token configuration, if the credential supports token refresh.
      *
      * @param ManagedAgentsMCPOAuthRefreshResponse|ManagedAgentsMCPOAuthRefreshResponseShape|null $refresh
      */

@@ -25,7 +25,7 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Why the run failed to create a session. The type identifies the failure; message is human-readable detail.
+ * Populated on creation failure. Null on success. Exactly one of `session_id` or `error` is non-null.
  *
  * @phpstan-import-type BetaManagedAgentsEnvironmentArchivedRunErrorShape from \Anthropic\Beta\DeploymentRuns\BetaManagedAgentsEnvironmentArchivedRunError
  * @phpstan-import-type BetaManagedAgentsAgentArchivedRunErrorShape from \Anthropic\Beta\DeploymentRuns\BetaManagedAgentsAgentArchivedRunError

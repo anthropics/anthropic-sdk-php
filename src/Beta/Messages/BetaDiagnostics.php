@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Beta\Messages\BetaDiagnostics\CacheMissReason;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -13,11 +12,11 @@ use Anthropic\Core\Contracts\BaseModel;
  * Request-level diagnostics: why the prompt cache could not fully reuse
  * the prefix of the request named by `diagnostics.previous_message_id`.
  *
- * @phpstan-import-type CacheMissReasonVariants from \Anthropic\Beta\Messages\BetaDiagnostics\CacheMissReason
- * @phpstan-import-type CacheMissReasonShape from \Anthropic\Beta\Messages\BetaDiagnostics\CacheMissReason
+ * @phpstan-import-type BetaCacheMissReasonVariants from \Anthropic\Beta\Messages\BetaCacheMissReason
+ * @phpstan-import-type BetaCacheMissReasonShape from \Anthropic\Beta\Messages\BetaCacheMissReason
  *
  * @phpstan-type BetaDiagnosticsShape = array{
- *   cacheMissReason: CacheMissReasonShape|null
+ *   cacheMissReason: BetaCacheMissReasonShape|null
  * }
  */
 final class BetaDiagnostics implements BaseModel
@@ -28,9 +27,9 @@ final class BetaDiagnostics implements BaseModel
     /**
      * Explains why the prompt cache could not fully reuse the prefix from the request identified by `diagnostics.previous_message_id`. `null` means diagnosis is still pending — the response was serialized before the background comparison completed.
      *
-     * @var CacheMissReasonVariants|null $cacheMissReason
+     * @var BetaCacheMissReasonVariants|null $cacheMissReason
      */
-    #[Required('cache_miss_reason', union: CacheMissReason::class)]
+    #[Required('cache_miss_reason', union: BetaCacheMissReason::class)]
     public BetaCacheMissModelChanged|BetaCacheMissSystemChanged|BetaCacheMissToolsChanged|BetaCacheMissMessagesChanged|BetaCacheMissPreviousMessageNotFound|BetaCacheMissUnavailable|null $cacheMissReason;
 
     /**
@@ -57,7 +56,7 @@ final class BetaDiagnostics implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CacheMissReasonShape|null $cacheMissReason
+     * @param BetaCacheMissReasonShape|null $cacheMissReason
      */
     public static function with(
         BetaCacheMissModelChanged|array|BetaCacheMissSystemChanged|BetaCacheMissToolsChanged|BetaCacheMissMessagesChanged|BetaCacheMissPreviousMessageNotFound|BetaCacheMissUnavailable|null $cacheMissReason,
@@ -72,7 +71,7 @@ final class BetaDiagnostics implements BaseModel
     /**
      * Explains why the prompt cache could not fully reuse the prefix from the request identified by `diagnostics.previous_message_id`. `null` means diagnosis is still pending — the response was serialized before the background comparison completed.
      *
-     * @param CacheMissReasonShape|null $cacheMissReason
+     * @param BetaCacheMissReasonShape|null $cacheMissReason
      */
     public function withCacheMissReason(
         BetaCacheMissModelChanged|array|BetaCacheMissSystemChanged|BetaCacheMissToolsChanged|BetaCacheMissMessagesChanged|BetaCacheMissPreviousMessageNotFound|BetaCacheMissUnavailable|null $cacheMissReason,

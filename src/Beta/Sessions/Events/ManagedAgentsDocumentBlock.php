@@ -30,7 +30,7 @@ final class ManagedAgentsDocumentBlock implements BaseModel
     use SdkModel;
 
     /**
-     * Union type for document source variants.
+     * The source of the document data.
      *
      * @var SourceVariants $source
      */
@@ -98,7 +98,7 @@ final class ManagedAgentsDocumentBlock implements BaseModel
     }
 
     /**
-     * Union type for document source variants.
+     * The source of the document data.
      *
      * @param SourceShape $source
      */

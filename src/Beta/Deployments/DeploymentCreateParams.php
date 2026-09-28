@@ -81,7 +81,7 @@ final class DeploymentCreateParams implements BaseModel
     public string $name;
 
     /**
-     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     * Enforced spend ceiling stamped onto each session created from this deployment, copied at session-creation time. Omit to leave sessions uncapped. The deployment agent's model must have a public list price, or the request is rejected; a multiagent roster is re-validated in full when each fire copies the cap, which fails closed the same way.
      */
     #[Optional(nullable: true)]
     public ?BetaManagedAgentsBudgetLimit $budget;
@@ -109,7 +109,7 @@ final class DeploymentCreateParams implements BaseModel
     public ?array $resources;
 
     /**
-     * 5-field POSIX cron schedule. Literal wall-clock matching in the configured timezone.
+     * Optional recurring cron schedule. When present, the deployment fires automatically. Both expression and timezone are required when schedule is set.
      */
     #[Optional(nullable: true)]
     public ?BetaManagedAgentsScheduleParams $schedule;
@@ -260,7 +260,7 @@ final class DeploymentCreateParams implements BaseModel
     }
 
     /**
-     * A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     * Enforced spend ceiling stamped onto each session created from this deployment, copied at session-creation time. Omit to leave sessions uncapped. The deployment agent's model must have a public list price, or the request is rejected; a multiagent roster is re-validated in full when each fire copies the cap, which fails closed the same way.
      *
      * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
      */
@@ -311,7 +311,7 @@ final class DeploymentCreateParams implements BaseModel
     }
 
     /**
-     * 5-field POSIX cron schedule. Literal wall-clock matching in the configured timezone.
+     * Optional recurring cron schedule. When present, the deployment fires automatically. Both expression and timezone are required when schedule is set.
      *
      * @param BetaManagedAgentsScheduleParams|BetaManagedAgentsScheduleParamsShape|null $schedule
      */

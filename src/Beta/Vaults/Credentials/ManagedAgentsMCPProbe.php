@@ -24,7 +24,7 @@ final class ManagedAgentsMCPProbe implements BaseModel
     use SdkModel;
 
     /**
-     * An HTTP response captured during a credential validation probe.
+     * The captured HTTP error response. Null when no HTTP response was received (timeout, DNS, TLS).
      */
     #[Required('http_response')]
     public ?ManagedAgentsRefreshHTTPResponse $httpResponse;
@@ -74,7 +74,7 @@ final class ManagedAgentsMCPProbe implements BaseModel
     }
 
     /**
-     * An HTTP response captured during a credential validation probe.
+     * The captured HTTP error response. Null when no HTTP response was received (timeout, DNS, TLS).
      *
      * @param ManagedAgentsRefreshHTTPResponse|ManagedAgentsRefreshHTTPResponseShape|null $httpResponse
      */

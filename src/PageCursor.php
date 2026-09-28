@@ -15,7 +15,7 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * @phpstan-type PageCursorShape = array{
- *   data?: list<mixed>|null, nextPage?: string|null
+ *   data?: list<array<string,mixed>>|null, nextPage?: string|null
  * }
  *
  * @template TItem

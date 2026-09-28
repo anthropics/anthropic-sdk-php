@@ -62,7 +62,7 @@ final class ManagedAgentsSpanOutcomeEvaluationEndEvent implements BaseModel
     public string $outcomeID;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when outcome evaluation ended.
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
@@ -78,7 +78,7 @@ final class ManagedAgentsSpanOutcomeEvaluationEndEvent implements BaseModel
     public string $type;
 
     /**
-     * Token usage for a single model request.
+     * Aggregate token usage for this evaluation cycle. Sums across all grader model requests within the cycle.
      */
     #[Required]
     public ManagedAgentsSpanModelUsage $usage;
@@ -212,7 +212,7 @@ final class ManagedAgentsSpanOutcomeEvaluationEndEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when outcome evaluation ended.
      */
     public function withProcessedAt(\DateTimeInterface $processedAt): self
     {
@@ -245,7 +245,7 @@ final class ManagedAgentsSpanOutcomeEvaluationEndEvent implements BaseModel
     }
 
     /**
-     * Token usage for a single model request.
+     * Aggregate token usage for this evaluation cycle. Sums across all grader model requests within the cycle.
      *
      * @param ManagedAgentsSpanModelUsage|ManagedAgentsSpanModelUsageShape $usage
      */

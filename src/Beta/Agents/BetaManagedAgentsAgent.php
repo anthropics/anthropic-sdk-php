@@ -50,7 +50,7 @@ final class BetaManagedAgentsAgent implements BaseModel
     public string $id;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the agent was archived. Null if not archived.
      */
     #[Required('archived_at')]
     public ?\DateTimeInterface $archivedAt;
@@ -82,7 +82,7 @@ final class BetaManagedAgentsAgent implements BaseModel
     public BetaManagedAgentsModelConfig $model;
 
     /**
-     * Resolved coordinator topology with a concrete agent roster.
+     * Multiagent orchestration configuration. Null when the agent is single-threaded.
      */
     #[Required]
     public ?BetaManagedAgentsMultiagent $multiagent;
@@ -227,7 +227,7 @@ final class BetaManagedAgentsAgent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the agent was archived. Null if not archived.
      */
     public function withArchivedAt(?\DateTimeInterface $archivedAt): self
     {
@@ -292,7 +292,7 @@ final class BetaManagedAgentsAgent implements BaseModel
     }
 
     /**
-     * Resolved coordinator topology with a concrete agent roster.
+     * Multiagent orchestration configuration. Null when the agent is single-threaded.
      *
      * @param BetaManagedAgentsMultiagent|BetaManagedAgentsMultiagentShape|null $multiagent
      */

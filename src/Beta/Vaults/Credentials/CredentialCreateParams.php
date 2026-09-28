@@ -35,7 +35,7 @@ final class CredentialCreateParams implements BaseModel
     use SdkParams;
 
     /**
-     * Authentication details for creating a credential.
+     * Authentication configuration for the credential.
      *
      * @var AuthVariants $auth
      */
@@ -120,7 +120,7 @@ final class CredentialCreateParams implements BaseModel
     }
 
     /**
-     * Authentication details for creating a credential.
+     * Authentication configuration for the credential.
      *
      * @param AuthShape $auth
      */

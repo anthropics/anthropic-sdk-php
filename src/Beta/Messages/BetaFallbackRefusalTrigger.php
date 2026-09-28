@@ -27,7 +27,7 @@ final class BetaFallbackRefusalTrigger implements BaseModel
     public string $type = 'refusal';
 
     /**
-     * The policy category that triggered a refusal.
+     * The policy category that triggered the `from` model's refusal at this hop. `null` when the refusal doesn't map to a named category. Same vocabulary as `stop_details.category`.
      *
      * @var value-of<Category>|null $category
      */
@@ -70,7 +70,7 @@ final class BetaFallbackRefusalTrigger implements BaseModel
     }
 
     /**
-     * The policy category that triggered a refusal.
+     * The policy category that triggered the `from` model's refusal at this hop. `null` when the refusal doesn't map to a named category. Same vocabulary as `stop_details.category`.
      *
      * @param Category|value-of<Category>|null $category
      */

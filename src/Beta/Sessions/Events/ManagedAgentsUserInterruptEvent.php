@@ -36,7 +36,7 @@ final class ManagedAgentsUserInterruptEvent implements BaseModel
     public string $type;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the interrupt was processed.
      */
     #[Optional('processed_at', nullable: true)]
     public ?\DateTimeInterface $processedAt;
@@ -113,7 +113,7 @@ final class ManagedAgentsUserInterruptEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the interrupt was processed.
      */
     public function withProcessedAt(?\DateTimeInterface $processedAt): self
     {

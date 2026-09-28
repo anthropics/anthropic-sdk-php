@@ -34,11 +34,11 @@ interface DeploymentsContract
      * @param string $environmentID body param: ID of the `environment` defining the container configuration for sessions created from this deployment
      * @param list<BetaManagedAgentsDeploymentInitialEventParamsShape> $initialEvents Body param: Events to send to each session immediately after creation. At least 1, maximum 50.
      * @param string $name body param: Human-readable name for the deployment
-     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget Body param: A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget Body param: Enforced spend ceiling stamped onto each session created from this deployment, copied at session-creation time. Omit to leave sessions uncapped. The deployment agent's model must have a public list price, or the request is rejected; a multiagent roster is re-validated in full when each fire copies the cap, which fails closed the same way.
      * @param string|null $description body param: Description of what the deployment does
      * @param array<string,string> $metadata Body param: Arbitrary key-value metadata. Maximum 16 pairs, keys up to 64 chars, values up to 512 chars.
      * @param list<ResourceShape> $resources Body param: Resources (e.g. repositories, files) to mount into each session's container. Maximum 500.
-     * @param BetaManagedAgentsScheduleParams|BetaManagedAgentsScheduleParamsShape|null $schedule Body param: 5-field POSIX cron schedule. Literal wall-clock matching in the configured timezone.
+     * @param BetaManagedAgentsScheduleParams|BetaManagedAgentsScheduleParamsShape|null $schedule Body param: Optional recurring cron schedule. When present, the deployment fires automatically. Both expression and timezone are required when schedule is set.
      * @param list<string> $vaultIDs Body param: Vault IDs for stored credentials the agent can use during sessions created from this deployment. Maximum 50.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
@@ -88,14 +88,14 @@ interface DeploymentsContract
      *
      * @param string $deploymentID path param: Unique identifier of the deployment to update
      * @param AgentShape1 $agent Body param: Agent to deploy. Accepts the `agent` ID string, which re-pins to the latest version, or an `agent` object with both id and version specified. Omit to preserve. Cannot be cleared.
-     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget Body param: A hard spend ceiling. The session stops issuing new model requests once the tracked list cost reaches `max_list_cost`.
+     * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget Body param: Spend ceiling for future sessions. Full replacement. Omit to preserve; send null to clear (sessions created afterwards are uncapped). The deployment agent's model must have a public list price, or the request is rejected; a multiagent roster is re-validated in full when each fire copies the cap, which fails closed the same way.
      * @param string|null $description Body param: Description. Omit to preserve; send empty string or null to clear.
      * @param string $environmentID Body param: ID of the `environment` where sessions run. Omit to preserve. Cannot be cleared.
      * @param list<BetaManagedAgentsDeploymentInitialEventParamsShape> $initialEvents Body param: Initial events. Full replacement. Omit to preserve. Cannot be cleared. At least 1, maximum 50.
      * @param array<string,string|null>|null $metadata Body param: Metadata patch. Set a key to a string to upsert it, or to null to delete it. Omit the field to preserve. The stored bag is limited to 16 keys (up to 64 chars each) with values up to 512 chars.
      * @param string $name Body param: Human-readable name. Must be non-empty. Omit to preserve. Cannot be cleared.
      * @param list<ResourceShape1>|null $resources Body param: Session resources. Full replacement. Omit to preserve; send empty array or null to clear. Maximum 500.
-     * @param BetaManagedAgentsScheduleParams|BetaManagedAgentsScheduleParamsShape|null $schedule Body param: 5-field POSIX cron schedule. Literal wall-clock matching in the configured timezone.
+     * @param BetaManagedAgentsScheduleParams|BetaManagedAgentsScheduleParamsShape|null $schedule Body param: Cron schedule. Full replacement. Omit to preserve; send null to clear (revert to manual-only).
      * @param list<string>|null $vaultIDs Body param: Vault IDs. Full replacement. Omit to preserve; send empty array or null to clear. Maximum 50.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).

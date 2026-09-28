@@ -15,7 +15,7 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * @phpstan-type PageShape = array{
- *   data?: list<mixed>|null,
+ *   data?: list<array<string,mixed>>|null,
  *   hasMore?: bool|null,
  *   firstID?: string|null,
  *   lastID?: string|null,

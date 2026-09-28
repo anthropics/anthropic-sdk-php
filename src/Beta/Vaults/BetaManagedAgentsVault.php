@@ -34,7 +34,7 @@ final class BetaManagedAgentsVault implements BaseModel
     public string $id;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the vault was archived. Null if not archived.
      */
     #[Required('archived_at')]
     public ?\DateTimeInterface $archivedAt;
@@ -145,7 +145,7 @@ final class BetaManagedAgentsVault implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the vault was archived. Null if not archived.
      */
     public function withArchivedAt(?\DateTimeInterface $archivedAt): self
     {

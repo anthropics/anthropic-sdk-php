@@ -58,7 +58,7 @@ final class EffortCapability implements BaseModel
     public bool $supported;
 
     /**
-     * Indicates whether a capability is supported.
+     * Whether the model supports xhigh effort level.
      */
     #[Required]
     public ?CapabilitySupport $xhigh;
@@ -185,7 +185,7 @@ final class EffortCapability implements BaseModel
     }
 
     /**
-     * Indicates whether a capability is supported.
+     * Whether the model supports xhigh effort level.
      *
      * @param CapabilitySupport|CapabilitySupportShape|null $xhigh
      */

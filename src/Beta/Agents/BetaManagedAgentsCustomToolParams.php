@@ -33,7 +33,7 @@ final class BetaManagedAgentsCustomToolParams implements BaseModel
     public string $description;
 
     /**
-     * JSON Schema for custom tool input parameters.
+     * JSON Schema defining the expected input parameters for the tool.
      */
     #[Required('input_schema')]
     public BetaManagedAgentsCustomToolInputSchema $inputSchema;
@@ -109,7 +109,7 @@ final class BetaManagedAgentsCustomToolParams implements BaseModel
     }
 
     /**
-     * JSON Schema for custom tool input parameters.
+     * JSON Schema defining the expected input parameters for the tool.
      *
      * @param BetaManagedAgentsCustomToolInputSchema|BetaManagedAgentsCustomToolInputSchemaShape $inputSchema
      */

@@ -74,14 +74,10 @@ interface RulesContract
      * @param bool|null $appliesToAllWorkspaces Body param: When true, enables this rule for every workspace in the org (including workspaces created later). Setting `false` is rejected with 400 if no workspace would remain enabled; a rule with only a legacy `workspace_id` binding continues to mint.
      * @param array<string,string>|null $attributes Body param: Replaces the CEL expressions `{name: expr}` extracting named values from claims. Send null to clear them. Not yet supported; any non-empty value is rejected with 400.
      * @param string|null $description Body param: Replaces the description. Omit to leave unchanged; send `null` to clear (the field is stored as an empty string).
-     * @param BetaFederationRuleMatch|BetaFederationRuleMatchShape|null $match Body param: Does the incoming JWT qualify?
-     *
-     * All populated fields must pass; omitted fields are skipped. At least one
-     * of `subject_prefix` (other than a wildcard-only value like `*`), `claims`,
-     * or `condition` is required; `audience` alone is not sufficient.
+     * @param BetaFederationRuleMatch|BetaFederationRuleMatchShape|null $match Body param: Replaces the entire match object. All populated matcher fields must pass.
      * @param string|null $name Body param: Replaces the slug identifier (lowercase, digits, hyphens). Unique within the organization; a duplicate name returns 409.
      * @param string|null $oauthScope Body param: Replaces the space-separated OAuth scopes granted on minted tokens. OAuth callers may only set `workspace:developer` or `workspace:inference`; other scopes (such as `org:admin`) require a Console session.
-     * @param BetaServiceAccountTarget|BetaServiceAccountTargetShape|null $target body param: Bind to a fixed service account by ID
+     * @param BetaServiceAccountTarget|BetaServiceAccountTargetShape|null $target Body param: Replaces the entire target object. Currently always a `service_account` target.
      * @param int|null $tokenLifetimeSeconds Body param: Replaces the lifetime in seconds for access tokens minted via this rule (60-86400). Minted tokens are capped at `max(60, min(this value, 2 × remaining assertion validity))` seconds.
      * @param string|null $workspaceID Body param: Replaces the existing single workspace enablement (the previous one is removed). Rejected with 400 if the rule is enabled for more than one workspace; use the `/federation_rules/{federation_rule_id}/workspaces` sub-resource instead.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use

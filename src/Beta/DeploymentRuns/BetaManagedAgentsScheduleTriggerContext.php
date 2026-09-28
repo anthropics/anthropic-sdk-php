@@ -22,7 +22,7 @@ final class BetaManagedAgentsScheduleTriggerContext implements BaseModel
     use SdkModel;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * The UTC instant at which the cron expression matched in the configured timezone, before jitter is applied. At most one run is recorded per (`deployment_id`, `scheduled_at`) pair.
      */
     #[Required('scheduled_at')]
     public \DateTimeInterface $scheduledAt;
@@ -72,7 +72,7 @@ final class BetaManagedAgentsScheduleTriggerContext implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * The UTC instant at which the cron expression matched in the configured timezone, before jitter is applied. At most one run is recorded per (`deployment_id`, `scheduled_at`) pair.
      */
     public function withScheduledAt(\DateTimeInterface $scheduledAt): self
     {

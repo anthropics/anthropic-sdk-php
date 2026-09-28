@@ -32,7 +32,9 @@ final class BetaRefusalStopDetails implements BaseModel
     public string $type = 'refusal';
 
     /**
-     * The policy category that triggered a refusal.
+     * The policy category that triggered the refusal.
+     *
+     * `null` when the refusal doesn't map to a named category.
      *
      * @var value-of<Category>|null $category
      */
@@ -158,7 +160,9 @@ final class BetaRefusalStopDetails implements BaseModel
     }
 
     /**
-     * The policy category that triggered a refusal.
+     * The policy category that triggered the refusal.
+     *
+     * `null` when the refusal doesn't map to a named category.
      *
      * @param Category|value-of<Category>|null $category
      */

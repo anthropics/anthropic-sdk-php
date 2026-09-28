@@ -17,7 +17,7 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Updated authentication details for a credential.
+ * Updated authentication configuration. The `type` is immutable; the variant sent must match the stored credential's type.
  *
  * @phpstan-import-type ManagedAgentsMCPOAuthUpdateParamsShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsMCPOAuthUpdateParams
  * @phpstan-import-type ManagedAgentsStaticBearerUpdateParamsShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsStaticBearerUpdateParams

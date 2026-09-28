@@ -29,6 +29,8 @@ final class ModelRetrieveParams implements BaseModel
     use SdkParams;
 
     /**
+     * @deprecated Deprecated. This parameter will be removed from this method in a future release. To use beta features, call the beta models methods (`client.beta.models`) instead.
+     *
      * Optional header to specify the beta version(s) you want to use.
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas

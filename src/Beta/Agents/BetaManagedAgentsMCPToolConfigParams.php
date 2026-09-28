@@ -40,7 +40,7 @@ final class BetaManagedAgentsMCPToolConfigParams implements BaseModel
     public ?bool $enabled;
 
     /**
-     * Permission policy for tool execution.
+     * Permission policy for this tool. Overrides the `default_config` setting.
      *
      * @var PermissionPolicyVariants|null $permissionPolicy
      */
@@ -115,7 +115,7 @@ final class BetaManagedAgentsMCPToolConfigParams implements BaseModel
     }
 
     /**
-     * Permission policy for tool execution.
+     * Permission policy for this tool. Overrides the `default_config` setting.
      *
      * @param PermissionPolicyShape|null $permissionPolicy
      */

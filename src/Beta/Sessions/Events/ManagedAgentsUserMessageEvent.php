@@ -48,7 +48,7 @@ final class ManagedAgentsUserMessageEvent implements BaseModel
     public string $type;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the agent finished processing this message.
      */
     #[Optional('processed_at', nullable: true)]
     public ?\DateTimeInterface $processedAt;
@@ -136,7 +136,7 @@ final class ManagedAgentsUserMessageEvent implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * Timestamp when the agent finished processing this message.
      */
     public function withProcessedAt(?\DateTimeInterface $processedAt): self
     {
