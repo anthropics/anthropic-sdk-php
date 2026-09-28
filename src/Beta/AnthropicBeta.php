@@ -101,4 +101,6 @@ enum AnthropicBeta: string
     case INLINE_TOOLS_2026_09_15 = 'inline-tools-2026-09-15';
 
     case MCP_CLIENT_2026_09_15 = 'mcp-client-2026-09-15';
+
+    case CE_PLUGINS_2026_09_01 = 'ce-plugins-2026-09-01';
 }
