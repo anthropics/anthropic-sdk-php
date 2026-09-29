@@ -21,4 +21,14 @@ enum Type: string
     case BILLING_ERROR = 'billing_error';
 
     case CREDENTIAL_HOST_UNREACHABLE_ERROR = 'credential_host_unreachable_error';
+
+    case REPOSITORY_AUTHENTICATION_ERROR = 'repository_authentication_error';
+
+    case REPOSITORY_FORBIDDEN_ERROR = 'repository_forbidden_error';
+
+    case REPOSITORY_NOT_FOUND_ERROR = 'repository_not_found_error';
+
+    case REPOSITORY_CHECKOUT_ERROR = 'repository_checkout_error';
+
+    case REPOSITORY_CLONE_ERROR = 'repository_clone_error';
 }
