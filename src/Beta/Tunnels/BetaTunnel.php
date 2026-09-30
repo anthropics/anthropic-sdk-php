@@ -12,16 +12,12 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * An MCP tunnel.
  *
- * @phpstan-import-type BetaTunnelTransportVariants from \Anthropic\Beta\Tunnels\BetaTunnelTransport
- * @phpstan-import-type BetaTunnelTransportShape from \Anthropic\Beta\Tunnels\BetaTunnelTransport
- *
  * @phpstan-type BetaTunnelShape = array{
  *   id: string,
  *   archivedAt: \DateTimeInterface|null,
  *   createdAt: \DateTimeInterface,
  *   displayName: string|null,
  *   domain: string,
- *   transport: BetaTunnelTransportShape,
  *   type: 'tunnel',
  * }
  */
@@ -65,25 +61,12 @@ final class BetaTunnel implements BaseModel
     public string $domain;
 
     /**
-     * How traffic reaches the tunnel. Chosen by Anthropic per organization when the tunnel is created; read-only and present on every tunnel, so automation can tell which connector to deploy. A union discriminated on `type`: `{"type": "cloudflare"}` or `{"type": "relay"}`. In the create response a `relay` tunnel's transport also carries `token`, its relay token, shown that once; no read carries a token.
-     *
-     * @var BetaTunnelTransportVariants $transport
-     */
-    #[Required(union: BetaTunnelTransport::class)]
-    public BetaCloudflareTunnelTransport|BetaRelayTunnelTransport $transport;
-
-    /**
      * `new BetaTunnel()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
      * BetaTunnel::with(
-     *   id: ...,
-     *   archivedAt: ...,
-     *   createdAt: ...,
-     *   displayName: ...,
-     *   domain: ...,
-     *   transport: ...,
+     *   id: ..., archivedAt: ..., createdAt: ..., displayName: ..., domain: ...
      * )
      * ```
      *
@@ -96,7 +79,6 @@ final class BetaTunnel implements BaseModel
      *   ->withCreatedAt(...)
      *   ->withDisplayName(...)
      *   ->withDomain(...)
-     *   ->withTransport(...)
      * ```
      */
     public function __construct()
@@ -108,8 +90,6 @@ final class BetaTunnel implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param BetaTunnelTransportShape $transport
      */
     public static function with(
         string $id,
@@ -117,7 +97,6 @@ final class BetaTunnel implements BaseModel
         \DateTimeInterface $createdAt,
         ?string $displayName,
         string $domain,
-        BetaCloudflareTunnelTransport|array|BetaRelayTunnelTransport $transport,
     ): self {
         $self = new self;
 
@@ -126,7 +105,6 @@ final class BetaTunnel implements BaseModel
         $self['createdAt'] = $createdAt;
         $self['displayName'] = $displayName;
         $self['domain'] = $domain;
-        $self['transport'] = $transport;
 
         return $self;
     }
@@ -182,20 +160,6 @@ final class BetaTunnel implements BaseModel
     {
         $self = clone $this;
         $self['domain'] = $domain;
-
-        return $self;
-    }
-
-    /**
-     * How traffic reaches the tunnel. Chosen by Anthropic per organization when the tunnel is created; read-only and present on every tunnel, so automation can tell which connector to deploy. A union discriminated on `type`: `{"type": "cloudflare"}` or `{"type": "relay"}`. In the create response a `relay` tunnel's transport also carries `token`, its relay token, shown that once; no read carries a token.
-     *
-     * @param BetaTunnelTransportShape $transport
-     */
-    public function withTransport(
-        BetaCloudflareTunnelTransport|array|BetaRelayTunnelTransport $transport
-    ): self {
-        $self = clone $this;
-        $self['transport'] = $transport;
 
         return $self;
     }
