@@ -68,6 +68,7 @@ final class BetaThinkingConfigParam implements ConverterSource
             Type::ENABLED, 'enabled' => BetaThinkingConfigEnabled::with(
                 budgetTokens: $budgetTokens ?? throw new \ArgumentCountError('$budgetTokens is required'),
                 blockBinding: $blockBinding,
+                // @phpstan-ignore argument.type
                 display: $display,
             ),
             Type::DISABLED, 'disabled' => BetaThinkingConfigDisabled::with(),

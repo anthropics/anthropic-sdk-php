@@ -64,6 +64,7 @@ final class ThinkingConfigParam implements ConverterSource
         return match ($type) {
             Type::ENABLED, 'enabled' => ThinkingConfigEnabled::with(
                 budgetTokens: $budgetTokens ?? throw new \ArgumentCountError('$budgetTokens is required'),
+                // @phpstan-ignore argument.type
                 display: $display,
             ),
             Type::DISABLED, 'disabled' => ThinkingConfigDisabled::with(),

@@ -81,7 +81,9 @@ final class Edit implements ConverterSource
                 clearAtLeast: $clearAtLeast,
                 clearToolInputs: $clearToolInputs,
                 excludeTools: $excludeTools,
+                // @phpstan-ignore argument.type
                 keep: $keep,
+                // @phpstan-ignore argument.type
                 trigger: $trigger,
             ),
             Type::CLEAR_THINKING_20251015, 'clear_thinking_20251015' => BetaClearThinking20251015Edit::with(

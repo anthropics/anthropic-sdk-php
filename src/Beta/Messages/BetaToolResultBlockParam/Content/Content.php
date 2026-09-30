@@ -103,9 +103,11 @@ final class Content implements ConverterSource
             Type::TEXT, 'text' => BetaTextBlockParam::with(
                 text: $text ?? throw new \ArgumentCountError('$text is required'),
                 cacheControl: $cacheControl,
+                // @phpstan-ignore argument.type
                 citations: $citations,
             ),
             Type::IMAGE, 'image' => BetaImageBlockParam::with(
+                // @phpstan-ignore argument.type
                 source: $source ?? throw new \ArgumentCountError('$source is required'),
                 cacheControl: $cacheControl,
                 transformations: $transformations,

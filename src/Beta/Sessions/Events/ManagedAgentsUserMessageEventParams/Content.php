@@ -78,6 +78,7 @@ final class Content implements ConverterSource
             ),
             Type::IMAGE, 'image' => ManagedAgentsImageBlock::with(
                 type: 'image',
+                // @phpstan-ignore argument.type
                 source: $source ?? throw new \ArgumentCountError('$source is required'),
             ),
             Type::DOCUMENT, 'document' => ManagedAgentsDocumentBlock::with(

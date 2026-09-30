@@ -106,11 +106,15 @@ enum Model: string
 
     /**
      * High-performance model for agents and coding.
+     *
+     * @deprecated Will reach end-of-life on November 30, 2026. Please migrate to claude-sonnet-5-5. Visit https://docs.anthropic.com/en/docs/resources/model-deprecations for more information.
      */
     case CLAUDE_SONNET_4_5 = 'claude-sonnet-4-5';
 
     /**
      * High-performance model for agents and coding.
+     *
+     * @deprecated Will reach end-of-life on November 30, 2026. Please migrate to claude-sonnet-5-5. Visit https://docs.anthropic.com/en/docs/resources/model-deprecations for more information.
      */
     case CLAUDE_SONNET_4_5_20250929 = 'claude-sonnet-4-5-20250929';
 
