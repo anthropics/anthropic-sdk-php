@@ -116,6 +116,9 @@ enum Model: string
 
     // AWS Bedrock model identifiers
 
+    /**
+     * @deprecated Will reach end-of-life on Bedrock on March 30, 2027. Please migrate to a newer model. Visit https://docs.anthropic.com/en/docs/resources/model-deprecations for more information.
+     */
     case BEDROCK_CLAUDE_SONNET_4_5_20250929 = 'anthropic.claude-sonnet-4-5-20250929-v1:0';
 
     /**
@@ -141,6 +144,9 @@ enum Model: string
 
     case VERTEX_CLAUDE_OPUS_4_1_20250805 = 'claude-opus-4-1@20250805';
 
+    /**
+     * @deprecated Will reach end-of-life on Vertex AI on November 30, 2026. Please migrate to a newer model. Visit https://docs.anthropic.com/en/docs/resources/model-deprecations for more information.
+     */
     case VERTEX_CLAUDE_SONNET_4_5_20250929 = 'claude-sonnet-4-5@20250929';
 
     /**
