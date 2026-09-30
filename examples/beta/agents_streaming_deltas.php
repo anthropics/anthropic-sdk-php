@@ -14,7 +14,6 @@ use Anthropic\Beta\Sessions\BetaManagedAgentsAgentMessagePreview;
 use Anthropic\Beta\Sessions\BetaManagedAgentsDeltaEvent;
 use Anthropic\Beta\Sessions\BetaManagedAgentsStartEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentMessageEvent;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionEndTurn;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionErrorEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusIdleEvent;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSpanModelRequestEndEvent;
@@ -96,9 +95,9 @@ foreach ($stream as $event) {
         // previews, so drop them; reconciled canonical messages survive.
         $messages = EventAccumulator::closeOpenPreviews($messages);
     } elseif ($event instanceof ManagedAgentsSessionStatusIdleEvent) {
-        if ($event->stopReason instanceof ManagedAgentsSessionEndTurn) {
-            break;
-        }
+        // The session is no longer doing work (whatever the stop reason) and the
+        // stream stays open, so stop reading.
+        break;
     } elseif ($event instanceof ManagedAgentsSessionErrorEvent) {
         fwrite(STDERR, "[error] {$event->error->type}: {$event->error->message}\n");
         break;

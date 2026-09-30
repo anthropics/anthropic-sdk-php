@@ -13,4 +13,6 @@ enum Type: string
     case RETRIES_EXHAUSTED = 'retries_exhausted';
 
     case BUDGET_REACHED = 'budget_reached';
+
+    case REFUSAL = 'refusal';
 }

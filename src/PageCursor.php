@@ -95,10 +95,6 @@ final class PageCursor implements BaseModel, BasePage
      */
     public function nextRequest(): ?array
     {
-        if (!count($this->getItems())) {
-            return null;
-        }
-
         if (!($next = $this->nextPage ?? null)) {
             return null;
         }

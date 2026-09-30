@@ -103,11 +103,7 @@ final class BetaManagedAgentsSession implements BaseModel
     #[Required]
     public BetaManagedAgentsSessionStats $stats;
 
-    /**
-     * SessionStatus enum.
-     *
-     * @var value-of<Status> $status
-     */
+    /** @var value-of<Status> $status */
     #[Required(enum: Status::class)]
     public string $status;
 
@@ -369,8 +365,6 @@ final class BetaManagedAgentsSession implements BaseModel
     }
 
     /**
-     * SessionStatus enum.
-     *
      * @param Status|value-of<Status> $status
      */
     public function withStatus(Status|string $status): self

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\SessionListParams;
 
-/**
- * SessionStatus enum.
- */
 enum Status: string
 {
     /**

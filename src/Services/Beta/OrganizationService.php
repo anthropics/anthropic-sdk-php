@@ -9,13 +9,19 @@ use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\OrganizationContract;
+use Anthropic\Services\Beta\Organization\AnalyticsService;
 use Anthropic\Services\Beta\Organization\APIKeysService;
 use Anthropic\Services\Beta\Organization\ComplianceSettingsService;
 use Anthropic\Services\Beta\Organization\ExternalKeysService;
 use Anthropic\Services\Beta\Organization\FederationService;
 use Anthropic\Services\Beta\Organization\InvitesService;
+use Anthropic\Services\Beta\Organization\PluginMarketplacesService;
+use Anthropic\Services\Beta\Organization\PluginsService;
 use Anthropic\Services\Beta\Organization\RateLimitsService;
+use Anthropic\Services\Beta\Organization\RBACGroupsService;
+use Anthropic\Services\Beta\Organization\RBACRolesService;
 use Anthropic\Services\Beta\Organization\ServiceAccountsService;
+use Anthropic\Services\Beta\Organization\SpendLimitsService;
 use Anthropic\Services\Beta\Organization\UsersService;
 use Anthropic\Services\Beta\Organization\WorkspacesService;
 
@@ -75,6 +81,36 @@ final class OrganizationService implements OrganizationContract
     public ComplianceSettingsService $complianceSettings;
 
     /**
+     * @api
+     */
+    public AnalyticsService $analytics;
+
+    /**
+     * @api
+     */
+    public SpendLimitsService $spendLimits;
+
+    /**
+     * @api
+     */
+    public RBACGroupsService $rbacGroups;
+
+    /**
+     * @api
+     */
+    public RBACRolesService $rbacRoles;
+
+    /**
+     * @api
+     */
+    public PluginsService $plugins;
+
+    /**
+     * @api
+     */
+    public PluginMarketplacesService $pluginMarketplaces;
+
+    /**
      * @internal
      */
     public function __construct(private Client $client)
@@ -89,6 +125,12 @@ final class OrganizationService implements OrganizationContract
         $this->workspaces = new WorkspacesService($client);
         $this->rateLimits = new RateLimitsService($client);
         $this->complianceSettings = new ComplianceSettingsService($client);
+        $this->analytics = new AnalyticsService($client);
+        $this->spendLimits = new SpendLimitsService($client);
+        $this->rbacGroups = new RBACGroupsService($client);
+        $this->rbacRoles = new RBACRolesService($client);
+        $this->plugins = new PluginsService($client);
+        $this->pluginMarketplaces = new PluginMarketplacesService($client);
     }
 
     /**

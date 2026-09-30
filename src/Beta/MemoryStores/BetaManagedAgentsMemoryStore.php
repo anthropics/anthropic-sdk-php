@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Anthropic\Beta\MemoryStores;
 
 use Anthropic\Beta\MemoryStores\BetaManagedAgentsMemoryStore\Type;
-use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -15,13 +14,13 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type BetaManagedAgentsMemoryStoreShape = array{
  *   id: string,
+ *   archivedAt: \DateTimeInterface|null,
  *   createdAt: \DateTimeInterface,
+ *   description: string,
+ *   metadata: array<string,string>,
  *   name: string,
  *   type: Type|value-of<Type>,
  *   updatedAt: \DateTimeInterface,
- *   archivedAt?: \DateTimeInterface|null,
- *   description?: string|null,
- *   metadata?: array<string,string>|null,
  * }
  */
 final class BetaManagedAgentsMemoryStore implements BaseModel
@@ -36,10 +35,30 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
     public string $id;
 
     /**
+     * Timestamp when the store was archived, or `null` if active. Set once and never cleared; archiving is one-way. Archived stores are read-only and cannot be attached to new sessions.
+     */
+    #[Required('archived_at')]
+    public ?\DateTimeInterface $archivedAt;
+
+    /**
      * Timestamp when the store was created.
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
+
+    /**
+     * Free-text description of what the store contains, up to 1024 characters. Included in the agent's system prompt when the store is attached, so word it to be useful to the agent. Empty string when unset.
+     */
+    #[Required]
+    public string $description;
+
+    /**
+     * Arbitrary key-value tags for your own bookkeeping (such as the end user a store belongs to). Up to 16 pairs; keys 1–64 characters; values up to 512 characters. Returned on retrieve/list but not filterable.
+     *
+     * @var array<string,string> $metadata
+     */
+    #[Required(map: 'string')]
+    public array $metadata;
 
     /**
      * Human-readable name for the store. 1–255 characters. The store's mount-path slug under `/mnt/memory/` is derived from this name.
@@ -58,32 +77,19 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
     public \DateTimeInterface $updatedAt;
 
     /**
-     * Timestamp when the store was archived, or `null` if active. Set once and never cleared; archiving is one-way. Archived stores are read-only and cannot be attached to new sessions.
-     */
-    #[Optional('archived_at', nullable: true)]
-    public ?\DateTimeInterface $archivedAt;
-
-    /**
-     * Free-text description of what the store contains, up to 1024 characters. Included in the agent's system prompt when the store is attached, so word it to be useful to the agent. Empty string when unset.
-     */
-    #[Optional]
-    public ?string $description;
-
-    /**
-     * Arbitrary key-value tags for your own bookkeeping (such as the end user a store belongs to). Up to 16 pairs; keys 1–64 characters; values up to 512 characters. Returned on retrieve/list but not filterable.
-     *
-     * @var array<string,string>|null $metadata
-     */
-    #[Optional(map: 'string')]
-    public ?array $metadata;
-
-    /**
      * `new BetaManagedAgentsMemoryStore()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
      * BetaManagedAgentsMemoryStore::with(
-     *   id: ..., createdAt: ..., name: ..., type: ..., updatedAt: ...
+     *   id: ...,
+     *   archivedAt: ...,
+     *   createdAt: ...,
+     *   description: ...,
+     *   metadata: ...,
+     *   name: ...,
+     *   type: ...,
+     *   updatedAt: ...,
      * )
      * ```
      *
@@ -92,7 +98,10 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
      * ```
      * (new BetaManagedAgentsMemoryStore)
      *   ->withID(...)
+     *   ->withArchivedAt(...)
      *   ->withCreatedAt(...)
+     *   ->withDescription(...)
+     *   ->withMetadata(...)
      *   ->withName(...)
      *   ->withType(...)
      *   ->withUpdatedAt(...)
@@ -108,30 +117,29 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param array<string,string> $metadata
      * @param Type|value-of<Type> $type
-     * @param array<string,string>|null $metadata
      */
     public static function with(
         string $id,
+        ?\DateTimeInterface $archivedAt,
         \DateTimeInterface $createdAt,
+        string $description,
+        array $metadata,
         string $name,
         Type|string $type,
         \DateTimeInterface $updatedAt,
-        ?\DateTimeInterface $archivedAt = null,
-        ?string $description = null,
-        ?array $metadata = null,
     ): self {
         $self = new self;
 
         $self['id'] = $id;
+        $self['archivedAt'] = $archivedAt;
         $self['createdAt'] = $createdAt;
+        $self['description'] = $description;
+        $self['metadata'] = $metadata;
         $self['name'] = $name;
         $self['type'] = $type;
         $self['updatedAt'] = $updatedAt;
-
-        null !== $archivedAt && $self['archivedAt'] = $archivedAt;
-        null !== $description && $self['description'] = $description;
-        null !== $metadata && $self['metadata'] = $metadata;
 
         return $self;
     }
@@ -148,12 +156,47 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
     }
 
     /**
+     * Timestamp when the store was archived, or `null` if active. Set once and never cleared; archiving is one-way. Archived stores are read-only and cannot be attached to new sessions.
+     */
+    public function withArchivedAt(?\DateTimeInterface $archivedAt): self
+    {
+        $self = clone $this;
+        $self['archivedAt'] = $archivedAt;
+
+        return $self;
+    }
+
+    /**
      * Timestamp when the store was created.
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $self = clone $this;
         $self['createdAt'] = $createdAt;
+
+        return $self;
+    }
+
+    /**
+     * Free-text description of what the store contains, up to 1024 characters. Included in the agent's system prompt when the store is attached, so word it to be useful to the agent. Empty string when unset.
+     */
+    public function withDescription(string $description): self
+    {
+        $self = clone $this;
+        $self['description'] = $description;
+
+        return $self;
+    }
+
+    /**
+     * Arbitrary key-value tags for your own bookkeeping (such as the end user a store belongs to). Up to 16 pairs; keys 1–64 characters; values up to 512 characters. Returned on retrieve/list but not filterable.
+     *
+     * @param array<string,string> $metadata
+     */
+    public function withMetadata(array $metadata): self
+    {
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
         return $self;
     }
@@ -187,41 +230,6 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
     {
         $self = clone $this;
         $self['updatedAt'] = $updatedAt;
-
-        return $self;
-    }
-
-    /**
-     * Timestamp when the store was archived, or `null` if active. Set once and never cleared; archiving is one-way. Archived stores are read-only and cannot be attached to new sessions.
-     */
-    public function withArchivedAt(?\DateTimeInterface $archivedAt): self
-    {
-        $self = clone $this;
-        $self['archivedAt'] = $archivedAt;
-
-        return $self;
-    }
-
-    /**
-     * Free-text description of what the store contains, up to 1024 characters. Included in the agent's system prompt when the store is attached, so word it to be useful to the agent. Empty string when unset.
-     */
-    public function withDescription(string $description): self
-    {
-        $self = clone $this;
-        $self['description'] = $description;
-
-        return $self;
-    }
-
-    /**
-     * Arbitrary key-value tags for your own bookkeeping (such as the end user a store belongs to). Up to 16 pairs; keys 1–64 characters; values up to 512 characters. Returned on retrieve/list but not filterable.
-     *
-     * @param array<string,string> $metadata
-     */
-    public function withMetadata(array $metadata): self
-    {
-        $self = clone $this;
-        $self['metadata'] = $metadata;
 
         return $self;
     }

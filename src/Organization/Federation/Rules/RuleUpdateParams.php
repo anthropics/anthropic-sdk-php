@@ -1,0 +1,232 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\Organization\Federation\Rules;
+
+use Anthropic\Core\Attributes\Optional;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Concerns\SdkParams;
+use Anthropic\Core\Contracts\BaseModel;
+
+/**
+ * **Requires an OAuth access token with the `org:admin` scope**, from `ant auth login --scope org:admin` or a workload identity federation rule; Admin API keys are not accepted. See [Manage WIF with the Admin API](/docs/en/manage-claude/wif-admin-api).
+ *
+ * Partially update a federation rule.
+ *
+ * `issuer_id` is immutable. `match` and `target` are replaced as whole
+ * objects when set. Referenced service accounts and workspaces must exist
+ * in your organization; invalid references are rejected with a 400 error.
+ * Archived rules cannot be updated; this returns 400. Create a new rule
+ * instead. Rules on well-known shared issuers (GitHub Actions, GitLab,
+ * Buildkite, Terraform Cloud, Google) must constrain tenant identity via
+ * an identity-bearing claim, a tenant-pinning subject prefix (such as
+ * `repo:YOUR_ORG/...`), or a CEL condition referencing one of those
+ * identity claims (e.g. `claims.repository_owner`). On these issuers the
+ * requirement is re-checked on every update; if an existing rule's stored
+ * match does not yet constrain tenant identity, any update (even a rename
+ * or description change) must also supply a conforming `match` in the same
+ * request. OAuth callers may only manage rules whose `oauth_scope` is
+ * `workspace:developer` or `workspace:inference`; other scopes require a
+ * Console session.
+ *
+ * @see Anthropic\Services\Organization\Federation\RulesService::update()
+ *
+ * @phpstan-import-type FederationRuleMatchShape from \Anthropic\Organization\Federation\Rules\FederationRuleMatch
+ * @phpstan-import-type ServiceAccountTargetShape from \Anthropic\Organization\Federation\Rules\ServiceAccountTarget
+ *
+ * @phpstan-type RuleUpdateParamsShape = array{
+ *   appliesToAllWorkspaces?: bool|null,
+ *   description?: string|null,
+ *   match?: null|FederationRuleMatch|FederationRuleMatchShape,
+ *   name?: string|null,
+ *   oauthScope?: string|null,
+ *   target?: null|ServiceAccountTarget|ServiceAccountTargetShape,
+ *   tokenLifetimeSeconds?: int|null,
+ *   workspaceID?: string|null,
+ * }
+ */
+final class RuleUpdateParams implements BaseModel
+{
+    /** @use SdkModel<RuleUpdateParamsShape> */
+    use SdkModel;
+    use SdkParams;
+
+    /**
+     * When true, enables this rule for every workspace in the org (including workspaces created later). Setting `false` is rejected with 400 if no workspace would remain enabled; a rule with only a legacy `workspace_id` binding continues to mint.
+     */
+    #[Optional('applies_to_all_workspaces', nullable: true)]
+    public ?bool $appliesToAllWorkspaces;
+
+    /**
+     * Replaces the description. Omit to leave unchanged; send `null` to clear (the field is stored as an empty string).
+     */
+    #[Optional(nullable: true)]
+    public ?string $description;
+
+    /**
+     * Replaces the entire match object. All populated matcher fields must pass.
+     */
+    #[Optional(nullable: true)]
+    public ?FederationRuleMatch $match;
+
+    /**
+     * Replaces the slug identifier (lowercase, digits, hyphens). Unique within the organization; a duplicate name returns 409.
+     */
+    #[Optional(nullable: true)]
+    public ?string $name;
+
+    /**
+     * Replaces the space-separated OAuth scopes granted on minted tokens. OAuth callers may only set `workspace:developer` or `workspace:inference`; other scopes (such as `org:admin`) require a Console session.
+     */
+    #[Optional('oauth_scope', nullable: true)]
+    public ?string $oauthScope;
+
+    /**
+     * Replaces the entire target object. Currently always a `service_account` target.
+     */
+    #[Optional(nullable: true)]
+    public ?ServiceAccountTarget $target;
+
+    /**
+     * Replaces the lifetime in seconds for access tokens minted via this rule (60-86400). Minted tokens are capped at `max(60, min(this value, 2 × remaining assertion validity))` seconds.
+     */
+    #[Optional('token_lifetime_seconds', nullable: true)]
+    public ?int $tokenLifetimeSeconds;
+
+    /**
+     * Replaces the existing single workspace enablement (the previous one is removed). Rejected with 400 if the rule is enabled for more than one workspace; use the `/federation_rules/{federation_rule_id}/workspaces` sub-resource instead.
+     */
+    #[Optional('workspace_id', nullable: true)]
+    public ?string $workspaceID;
+
+    public function __construct()
+    {
+        $this->initialize();
+    }
+
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param FederationRuleMatch|FederationRuleMatchShape|null $match
+     * @param ServiceAccountTarget|ServiceAccountTargetShape|null $target
+     */
+    public static function with(
+        ?bool $appliesToAllWorkspaces = null,
+        ?string $description = null,
+        FederationRuleMatch|array|null $match = null,
+        ?string $name = null,
+        ?string $oauthScope = null,
+        ServiceAccountTarget|array|null $target = null,
+        ?int $tokenLifetimeSeconds = null,
+        ?string $workspaceID = null,
+    ): self {
+        $self = new self;
+
+        null !== $appliesToAllWorkspaces && $self['appliesToAllWorkspaces'] = $appliesToAllWorkspaces;
+        null !== $description && $self['description'] = $description;
+        null !== $match && $self['match'] = $match;
+        null !== $name && $self['name'] = $name;
+        null !== $oauthScope && $self['oauthScope'] = $oauthScope;
+        null !== $target && $self['target'] = $target;
+        null !== $tokenLifetimeSeconds && $self['tokenLifetimeSeconds'] = $tokenLifetimeSeconds;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
+
+        return $self;
+    }
+
+    /**
+     * When true, enables this rule for every workspace in the org (including workspaces created later). Setting `false` is rejected with 400 if no workspace would remain enabled; a rule with only a legacy `workspace_id` binding continues to mint.
+     */
+    public function withAppliesToAllWorkspaces(
+        ?bool $appliesToAllWorkspaces
+    ): self {
+        $self = clone $this;
+        $self['appliesToAllWorkspaces'] = $appliesToAllWorkspaces;
+
+        return $self;
+    }
+
+    /**
+     * Replaces the description. Omit to leave unchanged; send `null` to clear (the field is stored as an empty string).
+     */
+    public function withDescription(?string $description): self
+    {
+        $self = clone $this;
+        $self['description'] = $description;
+
+        return $self;
+    }
+
+    /**
+     * Replaces the entire match object. All populated matcher fields must pass.
+     *
+     * @param FederationRuleMatch|FederationRuleMatchShape|null $match
+     */
+    public function withMatch(FederationRuleMatch|array|null $match): self
+    {
+        $self = clone $this;
+        $self['match'] = $match;
+
+        return $self;
+    }
+
+    /**
+     * Replaces the slug identifier (lowercase, digits, hyphens). Unique within the organization; a duplicate name returns 409.
+     */
+    public function withName(?string $name): self
+    {
+        $self = clone $this;
+        $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * Replaces the space-separated OAuth scopes granted on minted tokens. OAuth callers may only set `workspace:developer` or `workspace:inference`; other scopes (such as `org:admin`) require a Console session.
+     */
+    public function withOAuthScope(?string $oauthScope): self
+    {
+        $self = clone $this;
+        $self['oauthScope'] = $oauthScope;
+
+        return $self;
+    }
+
+    /**
+     * Replaces the entire target object. Currently always a `service_account` target.
+     *
+     * @param ServiceAccountTarget|ServiceAccountTargetShape|null $target
+     */
+    public function withTarget(ServiceAccountTarget|array|null $target): self
+    {
+        $self = clone $this;
+        $self['target'] = $target;
+
+        return $self;
+    }
+
+    /**
+     * Replaces the lifetime in seconds for access tokens minted via this rule (60-86400). Minted tokens are capped at `max(60, min(this value, 2 × remaining assertion validity))` seconds.
+     */
+    public function withTokenLifetimeSeconds(?int $tokenLifetimeSeconds): self
+    {
+        $self = clone $this;
+        $self['tokenLifetimeSeconds'] = $tokenLifetimeSeconds;
+
+        return $self;
+    }
+
+    /**
+     * Replaces the existing single workspace enablement (the previous one is removed). Rejected with 400 if the rule is enabled for more than one workspace; use the `/federation_rules/{federation_rule_id}/workspaces` sub-resource instead.
+     */
+    public function withWorkspaceID(?string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
+
+        return $self;
+    }
+}
