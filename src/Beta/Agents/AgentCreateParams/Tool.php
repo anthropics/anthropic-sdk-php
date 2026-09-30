@@ -75,7 +75,9 @@ final class Tool implements ConverterSource
         return match ($type) {
             Type::AGENT_TOOLSET_20260401, 'agent_toolset_20260401' => BetaManagedAgentsAgentToolset20260401Params::with(
                 type: 'agent_toolset_20260401',
+                // @phpstan-ignore argument.type
                 configs: $configs,
+                // @phpstan-ignore argument.type
                 defaultConfig: $defaultConfig,
             ),
             Type::MCP_TOOLSET, 'mcp_toolset' => BetaManagedAgentsMCPToolsetParams::with(

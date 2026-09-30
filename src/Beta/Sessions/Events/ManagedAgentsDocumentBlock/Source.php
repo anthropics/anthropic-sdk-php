@@ -67,6 +67,7 @@ final class Source implements ConverterSource
             Type::BASE64, 'base64' => ManagedAgentsBase64DocumentSource::with(
                 type: 'base64',
                 data: $data ?? throw new \ArgumentCountError('$data is required'),
+                // @phpstan-ignore argument.type
                 mediaType: $mediaType ?? throw new \ArgumentCountError('$mediaType is required'),
             ),
             Type::TEXT, 'text' => ManagedAgentsPlainTextDocumentSource::with(

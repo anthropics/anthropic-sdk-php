@@ -6,9 +6,11 @@ namespace Anthropic\ServiceContracts\Beta\Organization;
 
 use Anthropic\Beta\Organization\SpendLimits\SpendLimit;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitDeleteResponse;
+use Anthropic\Beta\Organization\SpendLimits\SpendLimitListParams;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitSetParams;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
 /**
@@ -29,6 +31,21 @@ interface SpendLimitsRawContract
     public function retrieve(
         string $spendLimitID,
         RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param array<string,mixed>|SpendLimitListParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<PageCursor<SpendLimit>>
+     *
+     * @throws APIException
+     */
+    public function list(
+        array|SpendLimitListParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**

@@ -63,8 +63,9 @@ final class ToolChange implements ConverterSource
     ): BetaRequestToolAdditionBlock|BetaRequestToolRemovalBlock {
         return match ($type) {
             Type::TOOL_ADDITION, 'tool_addition' => BetaRequestToolAdditionBlock::with(
+                // @phpstan-ignore argument.type
                 tool: $tool,
-                cacheControl: $cacheControl
+                cacheControl: $cacheControl,
             ),
             Type::TOOL_REMOVAL, 'tool_removal' => BetaRequestToolRemovalBlock::with(
                 // @phpstan-ignore argument.type

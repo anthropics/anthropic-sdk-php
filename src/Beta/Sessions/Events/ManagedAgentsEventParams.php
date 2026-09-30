@@ -82,6 +82,7 @@ final class ManagedAgentsEventParams implements ConverterSource
         return match ($type) {
             Type::USER_MESSAGE, 'user.message' => ManagedAgentsUserMessageEventParams::with(
                 type: 'user.message',
+                // @phpstan-ignore argument.type
                 content: $content ?? throw new \ArgumentCountError('$content is required'),
             ),
             Type::USER_INTERRUPT, 'user.interrupt' => ManagedAgentsUserInterruptEventParams::with(

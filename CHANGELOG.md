@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.54.0 (2026-09-30)
+
+Full Changelog: [v0.53.0...v0.54.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.53.0...v0.54.0)
+
+### Features
+
+* **api:** add list spend limits endpoint ([1794c87](https://github.com/anthropics/anthropic-sdk-php/commit/1794c87374c014e943d56c817c0ca021e61772ce))
+
+
+### Chores
+
+* **api:** mark Claude Sonnet 4.5 as deprecated (end-of-life November 30, 2026) ([70cd75d](https://github.com/anthropics/anthropic-sdk-php/commit/70cd75d81df895e8cfbf208b5a12d77f1e238a79))
+* **client:** deprecate sonnet 4.5 on bedrock / vertex ([ba17fb4](https://github.com/anthropics/anthropic-sdk-php/commit/ba17fb4a82a87448ff1613cb803c75881570bb3a))
+* **internal:** make generated code pass newer phpstan versions ([70cd75d](https://github.com/anthropics/anthropic-sdk-php/commit/70cd75d81df895e8cfbf208b5a12d77f1e238a79))
+
 ## 0.53.0 (2026-09-30)
 
 Full Changelog: [v0.52.0...v0.53.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.52.0...v0.53.0)

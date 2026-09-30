@@ -124,9 +124,11 @@ final class ContentBlockParam implements ConverterSource
             Type::TEXT, 'text' => TextBlockParam::with(
                 text: $text ?? throw new \ArgumentCountError('$text is required'),
                 cacheControl: $cacheControl,
+                // @phpstan-ignore argument.type
                 citations: $citations,
             ),
             Type::IMAGE, 'image' => ImageBlockParam::with(
+                // @phpstan-ignore argument.type
                 source: $source ?? throw new \ArgumentCountError('$source is required'),
                 cacheControl: $cacheControl,
                 transformations: $transformations,
@@ -141,6 +143,7 @@ final class ContentBlockParam implements ConverterSource
                 title: $title,
             ),
             Type::SEARCH_RESULT, 'search_result' => SearchResultBlockParam::with(
+                // @phpstan-ignore argument.type
                 content: $content ?? throw new \ArgumentCountError('$content is required'),
                 // @phpstan-ignore argument.type
                 source: $source ?? throw new \ArgumentCountError('$source is required'),
@@ -159,8 +162,10 @@ final class ContentBlockParam implements ConverterSource
             Type::TOOL_USE, 'tool_use' => ToolUseBlockParam::with(
                 id: $id ?? throw new \ArgumentCountError('$id is required'),
                 input: $input ?? throw new \ArgumentCountError('$input is required'),
+                // @phpstan-ignore argument.type
                 name: $name ?? throw new \ArgumentCountError('$name is required'),
                 cacheControl: $cacheControl,
+                // @phpstan-ignore argument.type
                 caller: $caller,
                 toolsetName: $toolsetName,
             ),

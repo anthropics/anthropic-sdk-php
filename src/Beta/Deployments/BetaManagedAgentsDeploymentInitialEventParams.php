@@ -69,6 +69,7 @@ final class BetaManagedAgentsDeploymentInitialEventParams implements ConverterSo
         return match ($type) {
             Type::USER_MESSAGE, 'user.message' => ManagedAgentsUserMessageEventParams::with(
                 type: 'user.message',
+                // @phpstan-ignore argument.type
                 content: $content ?? throw new \ArgumentCountError('$content is required'),
             ),
             Type::USER_DEFINE_OUTCOME, 'user.define_outcome' => ManagedAgentsUserDefineOutcomeEventParams::with(

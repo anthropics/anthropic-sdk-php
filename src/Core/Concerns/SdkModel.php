@@ -133,23 +133,15 @@ trait SdkModel
      */
     public function offsetExists(mixed $offset): bool
     {
-        // @phpstan-ignore-next-line function.alreadyNarrowedType
-        if (!is_string($offset)) {
-            throw new \InvalidArgumentException;
-        }
+        self::requireStringOffset($offset);
 
         if (array_key_exists($offset, array: $this->_data)) {
             return true;
         }
 
         if (array_key_exists($offset, array: self::$converter->properties)) {
-            if (isset($this->{$offset})) {
-                return true;
-            }
-
-            $property = self::$converter->properties[$offset]->property;
-
-            return $property->isInitialized($this);
+            return isset($this->{$offset})
+                || self::$converter->properties[$offset]->property->isInitialized($this);
         }
 
         return false;
@@ -162,10 +154,7 @@ trait SdkModel
      */
     public function &offsetGet(mixed $offset): mixed
     {
-        // @phpstan-ignore-next-line function.alreadyNarrowedType
-        if (!is_string($offset)) {
-            throw new \InvalidArgumentException;
-        }
+        self::requireStringOffset($offset);
 
         // @phpstan-ignore-next-line function.alreadyNarrowedType
         if (!$this->offsetExists($offset)) {
@@ -189,10 +178,7 @@ trait SdkModel
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
-        // @phpstan-ignore-next-line function.alreadyNarrowedType
-        if (!is_string($offset)) {
-            throw new \InvalidArgumentException;
-        }
+        self::requireStringOffset($offset);
 
         $type = array_key_exists($offset, array: self::$converter->properties)
             ? self::$converter->properties[$offset]->type
@@ -224,10 +210,7 @@ trait SdkModel
      */
     public function offsetUnset(mixed $offset): void
     {
-        // @phpstan-ignore-next-line function.alreadyNarrowedType
-        if (!is_string($offset)) {
-            throw new \InvalidArgumentException;
-        }
+        self::requireStringOffset($offset);
 
         // @phpstan-ignore-next-line function.alreadyNarrowedType
         if (property_exists($this, property: $offset)) {
@@ -300,5 +283,17 @@ trait SdkModel
         }
 
         return $value;
+    }
+
+    /**
+     * @internal
+     */
+    private static function requireStringOffset(mixed $offset): void
+    {
+        // A separate method: the array-access methods document $offset as a string, so PHPStan reports is_string() there as always true.
+        // PHPStan 2.2.4 to 2.2.13 report that for a trait even under an ignore comment, so do not inline this check.
+        if (!is_string($offset)) {
+            throw new \InvalidArgumentException;
+        }
     }
 }

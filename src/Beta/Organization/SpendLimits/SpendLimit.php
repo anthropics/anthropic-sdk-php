@@ -21,6 +21,7 @@ use Anthropic\Core\Conversion\ConstantOf;
  *   amount: string|null,
  *   createdAt: \DateTimeInterface,
  *   currency: string,
+ *   isEnabled: bool,
  *   period: SpendLimitPeriod|value-of<SpendLimitPeriod>,
  *   scope: ScopeShape,
  *   type: 'spend_limit',
@@ -65,6 +66,12 @@ final class SpendLimit implements BaseModel
     public string $currency;
 
     /**
+     * Read-only. `false` when extra usage is switched off for this organization (`organization` limit) or for this member (`user` limit); `amount` is kept and applies again when it's switched back on. Always `true` for other limits.
+     */
+    #[Required('is_enabled')]
+    public bool $isEnabled;
+
+    /**
      * Length of the window the limit resets over. `amount` caps spend within each period.
      *
      * @var value-of<SpendLimitPeriod> $period
@@ -96,6 +103,7 @@ final class SpendLimit implements BaseModel
      *   amount: ...,
      *   createdAt: ...,
      *   currency: ...,
+     *   isEnabled: ...,
      *   period: ...,
      *   scope: ...,
      *   updatedAt: ...,
@@ -110,6 +118,7 @@ final class SpendLimit implements BaseModel
      *   ->withAmount(...)
      *   ->withCreatedAt(...)
      *   ->withCurrency(...)
+     *   ->withIsEnabled(...)
      *   ->withPeriod(...)
      *   ->withScope(...)
      *   ->withUpdatedAt(...)
@@ -133,6 +142,7 @@ final class SpendLimit implements BaseModel
         ?string $amount,
         \DateTimeInterface $createdAt,
         string $currency,
+        bool $isEnabled,
         SpendLimitPeriod|string $period,
         SpendLimitUserScope|array|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope $scope,
         \DateTimeInterface $updatedAt,
@@ -143,6 +153,7 @@ final class SpendLimit implements BaseModel
         $self['amount'] = $amount;
         $self['createdAt'] = $createdAt;
         $self['currency'] = $currency;
+        $self['isEnabled'] = $isEnabled;
         $self['period'] = $period;
         $self['scope'] = $scope;
         $self['updatedAt'] = $updatedAt;
@@ -190,6 +201,17 @@ final class SpendLimit implements BaseModel
     {
         $self = clone $this;
         $self['currency'] = $currency;
+
+        return $self;
+    }
+
+    /**
+     * Read-only. `false` when extra usage is switched off for this organization (`organization` limit) or for this member (`user` limit); `amount` is kept and applies again when it's switched back on. Always `true` for other limits.
+     */
+    public function withIsEnabled(bool $isEnabled): self
+    {
+        $self = clone $this;
+        $self['isEnabled'] = $isEnabled;
 
         return $self;
     }

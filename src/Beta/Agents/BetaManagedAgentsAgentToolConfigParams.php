@@ -84,7 +84,8 @@ final class BetaManagedAgentsAgentToolConfigParams implements ConverterSource
             Type::BASH, 'bash' => BetaManagedAgentsBashToolConfigParams::with(
                 type: 'bash',
                 enabled: $enabled,
-                permissionPolicy: $permissionPolicy
+                // @phpstan-ignore argument.type
+                permissionPolicy: $permissionPolicy,
             ),
             Type::EDIT, 'edit' => BetaManagedAgentsEditToolConfigParams::with(
                 type: 'edit',

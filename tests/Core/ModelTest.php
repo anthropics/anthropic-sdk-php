@@ -142,6 +142,39 @@ class ModelTest extends TestCase
     }
 
     #[Test]
+    public function testNonStringOffsetThrows(): void
+    {
+        $model = new Dog(name: 'Bob', ageYears: 12, owner: null);
+        $calls = [
+            'offsetExists' => function () use ($model): void {
+                // @phpstan-ignore-next-line argument.type
+                $model->offsetExists(0);
+            },
+            'offsetGet' => function () use ($model): void {
+                // @phpstan-ignore-next-line argument.type
+                $model->offsetGet(0);
+            },
+            'offsetSet' => function () use ($model): void {
+                // @phpstan-ignore-next-line argument.type
+                $model->offsetSet(0, 'x');
+            },
+            'offsetUnset' => function () use ($model): void {
+                // @phpstan-ignore-next-line argument.type
+                $model->offsetUnset(0);
+            },
+        ];
+
+        foreach ($calls as $method => $call) {
+            try {
+                $call();
+                $this->fail("Expected {$method}(0) to throw an InvalidArgumentException");
+            } catch (\InvalidArgumentException) {
+                $this->addToAssertionCount(1);
+            }
+        }
+    }
+
+    #[Test]
     public function testDiscernsBetweenNullAndUnset(): void
     {
         $modelUnsetFriends = new Dog(name: 'Bob', ageYears: 12, owner: null);
