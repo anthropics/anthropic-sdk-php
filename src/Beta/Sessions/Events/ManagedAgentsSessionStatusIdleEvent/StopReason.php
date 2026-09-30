@@ -6,6 +6,7 @@ namespace Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusIdleEvent;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionBudgetReached;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionEndTurn;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionRefusal;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionRequiresAction;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionRetriesExhausted;
 use Anthropic\Core\Concerns\SdkUnion;
@@ -17,9 +18,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type ManagedAgentsSessionRequiresActionShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionRequiresAction
  * @phpstan-import-type ManagedAgentsSessionRetriesExhaustedShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionRetriesExhausted
  * @phpstan-import-type ManagedAgentsSessionBudgetReachedShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionBudgetReached
+ * @phpstan-import-type ManagedAgentsSessionRefusalShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionRefusal
  *
- * @phpstan-type StopReasonVariants = ManagedAgentsSessionEndTurn|ManagedAgentsSessionRequiresAction|ManagedAgentsSessionRetriesExhausted|ManagedAgentsSessionBudgetReached
- * @phpstan-type StopReasonShape = StopReasonVariants|ManagedAgentsSessionEndTurnShape|ManagedAgentsSessionRequiresActionShape|ManagedAgentsSessionRetriesExhaustedShape|ManagedAgentsSessionBudgetReachedShape
+ * @phpstan-type StopReasonVariants = ManagedAgentsSessionEndTurn|ManagedAgentsSessionRequiresAction|ManagedAgentsSessionRetriesExhausted|ManagedAgentsSessionBudgetReached|ManagedAgentsSessionRefusal
+ * @phpstan-type StopReasonShape = StopReasonVariants|ManagedAgentsSessionEndTurnShape|ManagedAgentsSessionRequiresActionShape|ManagedAgentsSessionRetriesExhaustedShape|ManagedAgentsSessionBudgetReachedShape|ManagedAgentsSessionRefusalShape
  */
 final class StopReason implements ConverterSource
 {
@@ -40,6 +42,7 @@ final class StopReason implements ConverterSource
             'requires_action' => ManagedAgentsSessionRequiresAction::class,
             'retries_exhausted' => ManagedAgentsSessionRetriesExhausted::class,
             'budget_reached' => ManagedAgentsSessionBudgetReached::class,
+            'refusal' => ManagedAgentsSessionRefusal::class,
         ];
     }
 }
