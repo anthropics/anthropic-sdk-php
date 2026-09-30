@@ -1,5 +1,38 @@
 # Changelog
 
+## 0.53.0 (2026-09-30)
+
+Full Changelog: [v0.52.0...v0.53.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.52.0...v0.53.0)
+
+### Features
+
+* **api:** add a refusal stop reason and stop_details to Managed Agents session idle events ([dbe2a7a](https://github.com/anthropics/anthropic-sdk-php/commit/dbe2a7afb0a74d3b8deee566d749bd7a614ec081))
+* **api:** add Claude Enterprise analytics, spend limits, and RBAC groups and roles to the Admin API ([d6814d0](https://github.com/anthropics/anthropic-sdk-php/commit/d6814d0496b48e7b697986e762ece1a27e403137))
+* **api:** add per-user usage and cost reports to the Admin API analytics ([a04d8f3](https://github.com/anthropics/anthropic-sdk-php/commit/a04d8f3a429385f90c6847cf03358962e62470ce))
+* **api:** add Plugins and Plugin Marketplaces to the Admin API ([3f22e51](https://github.com/anthropics/anthropic-sdk-php/commit/3f22e51282141d677f2db6cf38919fc5aed30b4f))
+* **api:** add repository error types to Managed Agents session errors ([e60e647](https://github.com/anthropics/anthropic-sdk-php/commit/e60e647a219718a82ccc4008fe6f80187114a8c0))
+* **api:** allow removing a plugin's org-wide installation setting ([3b6398b](https://github.com/anthropics/anthropic-sdk-php/commit/3b6398bde9ce3f7e25b79f887979e9ca81db1484))
+* **api:** MCP tunnels beta: add read-only `transport` object to Tunnel and return the one-time relay `token` in the create response ([3c9236e](https://github.com/anthropics/anthropic-sdk-php/commit/3c9236ebacd14c0085c66c4a28c37d9bcd1446d3))
+* **api:** Organization API endpoints are now GA ([0611b83](https://github.com/anthropics/anthropic-sdk-php/commit/0611b83a254e7dd6db4aa4826c1f4429f525f260))
+
+
+### Bug Fixes
+
+* **api:** make memory store description, metadata, archived_at required ([ebcc8b5](https://github.com/anthropics/anthropic-sdk-php/commit/ebcc8b5330bf9e3557789b9887ba2449970c0b73))
+* **api:** type admin plugin preference and marketplace fields as enums ([8739e6d](https://github.com/anthropics/anthropic-sdk-php/commit/8739e6db2a1b7e82570deda1bdafc5445b3a0f88))
+* **pagination:** auto-paging continues past an empty page while next_page is set ([4d6c47f](https://github.com/anthropics/anthropic-sdk-php/commit/4d6c47fa959a7e0cf53f0480044b916138ce0b0f))
+
+
+### Chores
+
+* **api:** update MCP Tunnels types and descriptions ([45168f1](https://github.com/anthropics/anthropic-sdk-php/commit/45168f1273608c8098b567a0266f4e130ec6e4d4))
+* **docs:** remove placeholder enum descriptions ([d4aaed3](https://github.com/anthropics/anthropic-sdk-php/commit/d4aaed33186dca5a422915b8fa6c4ca6c422512b))
+
+
+### Documentation
+
+* **examples:** stop reading session events on any idle that needs no action ([#250](https://github.com/anthropics/anthropic-sdk-php/issues/250)) ([7302b11](https://github.com/anthropics/anthropic-sdk-php/commit/7302b11fa63ab32f624814470bd1da97c1bb4b38))
+
 ## 0.52.0 (2026-09-28)
 
 Full Changelog: [v0.51.0...v0.52.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.51.0...v0.52.0)
