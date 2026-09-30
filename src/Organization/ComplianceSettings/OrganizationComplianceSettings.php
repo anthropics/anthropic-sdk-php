@@ -1,0 +1,97 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\Organization\ComplianceSettings;
+
+use Anthropic\Core\Attributes\Required;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
+
+/**
+ * @phpstan-import-type ComplianceSettingsStateVariants from \Anthropic\Organization\ComplianceSettings\ComplianceSettingsState
+ * @phpstan-import-type ComplianceSettingsStateShape from \Anthropic\Organization\ComplianceSettings\ComplianceSettingsState
+ *
+ * @phpstan-type OrganizationComplianceSettingsShape = array{
+ *   state: ComplianceSettingsStateShape, type: 'compliance_settings'
+ * }
+ */
+final class OrganizationComplianceSettings implements BaseModel
+{
+    /** @use SdkModel<OrganizationComplianceSettingsShape> */
+    use SdkModel;
+
+    /** @var 'compliance_settings' $type */
+    #[Required(type: new ConstantOf('compliance_settings'))]
+    public string $type = 'compliance_settings';
+
+    /**
+     * Whether the Compliance API is enabled for this organization.
+     *
+     * @var ComplianceSettingsStateVariants $state
+     */
+    #[Required(union: ComplianceSettingsState::class)]
+    public ComplianceSettingsStateEnabled|ComplianceSettingsStateDisabled $state;
+
+    /**
+     * `new OrganizationComplianceSettings()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * OrganizationComplianceSettings::with(state: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new OrganizationComplianceSettings)->withState(...)
+     * ```
+     */
+    public function __construct()
+    {
+        $this->initialize();
+    }
+
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param ComplianceSettingsStateShape $state
+     */
+    public static function with(
+        ComplianceSettingsStateEnabled|array|ComplianceSettingsStateDisabled $state
+    ): self {
+        $self = new self;
+
+        $self['state'] = $state;
+
+        return $self;
+    }
+
+    /**
+     * Whether the Compliance API is enabled for this organization.
+     *
+     * @param ComplianceSettingsStateShape $state
+     */
+    public function withState(
+        ComplianceSettingsStateEnabled|array|ComplianceSettingsStateDisabled $state
+    ): self {
+        $self = clone $this;
+        $self['state'] = $state;
+
+        return $self;
+    }
+
+    /**
+     * @param 'compliance_settings' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+}

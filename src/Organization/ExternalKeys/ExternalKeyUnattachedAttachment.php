@@ -1,0 +1,49 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\Organization\ExternalKeys;
+
+use Anthropic\Core\Attributes\Required;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
+
+/**
+ * @phpstan-type ExternalKeyUnattachedAttachmentShape = array{type: 'unattached'}
+ */
+final class ExternalKeyUnattachedAttachment implements BaseModel
+{
+    /** @use SdkModel<ExternalKeyUnattachedAttachmentShape> */
+    use SdkModel;
+
+    /** @var 'unattached' $type */
+    #[Required(type: new ConstantOf('unattached'))]
+    public string $type = 'unattached';
+
+    public function __construct()
+    {
+        $this->initialize();
+    }
+
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function with(): self
+    {
+        return new self;
+    }
+
+    /**
+     * @param 'unattached' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+}
