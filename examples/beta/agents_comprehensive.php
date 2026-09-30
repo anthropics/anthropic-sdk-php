@@ -15,7 +15,7 @@
 require_once dirname(__DIR__, 2).'/vendor/autoload.php';
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentCustomToolUseEvent;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionEndTurn;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionRequiresAction;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusIdleEvent;
 use Anthropic\Client;
 use Anthropic\Core\FileParam;
@@ -134,8 +134,9 @@ foreach ($stream as $event) {
     }
 
     if ($event instanceof ManagedAgentsSessionStatusIdleEvent) {
-        if ($event->stopReason instanceof ManagedAgentsSessionEndTurn) {
-            echo "  → Session completed (end_turn)\n";
+        // After any idle other than requires_action nothing more arrives
+        if (!$event->stopReason instanceof ManagedAgentsSessionRequiresAction) {
+            echo "  → Session idle\n";
             break;
         }
 
