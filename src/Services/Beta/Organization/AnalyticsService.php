@@ -14,7 +14,9 @@ use Anthropic\Services\Beta\Organization\Analytics\PluginsService;
 use Anthropic\Services\Beta\Organization\Analytics\SkillsService;
 use Anthropic\Services\Beta\Organization\Analytics\SummariesService;
 use Anthropic\Services\Beta\Organization\Analytics\UsageReportService;
+use Anthropic\Services\Beta\Organization\Analytics\UserCostReportService;
 use Anthropic\Services\Beta\Organization\Analytics\UsersService;
+use Anthropic\Services\Beta\Organization\Analytics\UserUsageReportService;
 
 final class AnalyticsService implements AnalyticsContract
 {
@@ -66,7 +68,17 @@ final class AnalyticsService implements AnalyticsContract
     /**
      * @api
      */
+    public UserUsageReportService $userUsageReport;
+
+    /**
+     * @api
+     */
     public CostReportService $costReport;
+
+    /**
+     * @api
+     */
+    public UserCostReportService $userCostReport;
 
     /**
      * @internal
@@ -82,6 +94,8 @@ final class AnalyticsService implements AnalyticsContract
         $this->skills = new SkillsService($client);
         $this->artifacts = new ArtifactsService($client);
         $this->usageReport = new UsageReportService($client);
+        $this->userUsageReport = new UserUsageReportService($client);
         $this->costReport = new CostReportService($client);
+        $this->userCostReport = new UserCostReportService($client);
     }
 }
