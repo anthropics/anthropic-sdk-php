@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace Anthropic\Services\Beta\Organization;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimit;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitDeleteResponse;
+use Anthropic\Beta\Organization\SpendLimits\SpendLimitListParams;
+use Anthropic\Beta\Organization\SpendLimits\SpendLimitListParams\ScopeType;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitPeriod;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitSetParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Util;
+use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\SpendLimitsRawContract;
 
@@ -48,6 +53,60 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
             path: ['v1/organizations/spend_limits/%1$s?beta=true', $spendLimitID],
             options: $requestOptions,
             convert: SpendLimit::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * List the organization's spend limits.
+     *
+     * A Claude Console organization's limits come in an order that is stable across
+     * pages. A Claude Enterprise organization's are grouped by scope type,
+     * in the order `organization`, `seat_tier`, `rbac_group`,
+     * `organization_service`, `user`; within a type they come in a fixed order that
+     * is not creation order.
+     *
+     * @param array{
+     *   limit?: int,
+     *   page?: string|null,
+     *   scopeType?: list<ScopeType|value-of<ScopeType>>|null,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     * }|SpendLimitListParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<PageCursor<SpendLimit>>
+     *
+     * @throws APIException
+     */
+    public function list(
+        array|SpendLimitListParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = SpendLimitListParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+        $query_params = array_flip(['limit', 'page', 'scopeType']);
+
+        /** @var array<string,string> */
+        $header_params = array_diff_key($parsed, $query_params);
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: 'v1/organizations/spend_limits?beta=true',
+            query: Util::array_transform_keys(
+                array_intersect_key($parsed, $query_params),
+                ['scopeType' => 'scope_type'],
+            ),
+            headers: Util::array_transform_keys(
+                $header_params,
+                ['betas' => 'anthropic-beta']
+            ),
+            options: $options,
+            convert: SpendLimit::class,
+            page: PageCursor::class,
         );
     }
 

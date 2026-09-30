@@ -7,6 +7,7 @@ use Anthropic\Beta\Organization\SpendLimits\SpendLimitDeleteResponse;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitPeriod;
 use Anthropic\Client;
 use Anthropic\Core\Util;
+use Anthropic\PageCursor;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -38,6 +39,20 @@ final class SpendLimitsTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(SpendLimit::class, $result);
+    }
+
+    #[Test]
+    public function testList(): void
+    {
+        $page = $this->client->beta->organization->spendLimits->list();
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(PageCursor::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(SpendLimit::class, $item);
+        }
     }
 
     #[Test]

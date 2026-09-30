@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts\Beta\Organization;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimit;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitDeleteResponse;
+use Anthropic\Beta\Organization\SpendLimits\SpendLimitListParams\ScopeType;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitOrganizationScope;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitPeriod;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitUserScope;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitWorkspaceScope;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
 /**
@@ -31,6 +34,27 @@ interface SpendLimitsContract
         string $spendLimitID,
         RequestOptions|array|null $requestOptions = null
     ): SpendLimit;
+
+    /**
+     * @api
+     *
+     * @param int $limit Query param: Maximum number of limits per page. Defaults to `20`.
+     * @param string|null $page query param: Opaque cursor from a previous response's `next_page` field
+     * @param list<ScopeType|value-of<ScopeType>>|null $scopeType Query param: Return only limits with these scope types. A Claude Console organization has `organization` and `workspace` limits; a Claude Enterprise organization has `organization`, `seat_tier`, `rbac_group`, `organization_service` and `user` limits. Omit for all.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `spend-limit-reads-2026-09-26` in this header
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return PageCursor<SpendLimit>
+     *
+     * @throws APIException
+     */
+    public function list(
+        ?int $limit = null,
+        ?string $page = null,
+        ?array $scopeType = null,
+        ?array $betas = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): PageCursor;
 
     /**
      * @api
