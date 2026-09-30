@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\BetaManagedAgentsSession;
 
-/**
- * SessionStatus enum.
- */
 enum Status: string
 {
     /**
