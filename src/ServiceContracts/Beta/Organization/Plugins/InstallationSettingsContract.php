@@ -48,7 +48,7 @@ interface InstallationSettingsContract
     /**
      * @api
      *
-     * @param string $target Path param: The RBAC Group (ID prefixed `rbac_group_`) whose own setting is removed. The literal `organization` is refused with a 400: an organization-wide setting cannot be removed.
+     * @param string $target Path param: The target whose own setting is removed: the literal `organization` for the Plugin's organization-wide setting, or an RBAC Group's ID (prefixed `rbac_group_`) for that group's own setting. Removing the `organization` setting returns the Plugin to its marketplace's default.
      * @param string $pluginID path param: ID of the Plugin (prefixed `plugin_`)
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `ce-plugins-2026-09-01` in this header
      * @param RequestOpts|null $requestOptions

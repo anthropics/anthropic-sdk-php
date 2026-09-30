@@ -90,11 +90,17 @@ final class InstallationSettingsService implements InstallationSettingsContract
     /**
      * @api
      *
-     * Remove one RBAC Group's own installation setting for an organization-owned Plugin,
-     * so that the group's members fall back to the Plugin's organization-wide setting or
-     * to the settings of their other groups.
+     * Remove an organization-owned Plugin's own installation setting for the whole
+     * organization or for one RBAC Group.
      *
-     * A group that holds no setting returns 404, and so does a member-owned Plugin.
+     * Removing the `organization` target returns the Plugin to its marketplace's default
+     * installation setting and leaves the groups' settings in place. Removing a group's
+     * setting makes the group's members fall back to the Plugin's organization-wide setting
+     * or to the settings of their other groups.
+     *
+     * A target that holds no setting of its own returns 404 (a Plugin that already inherits
+     * its marketplace's default holds no `organization` setting), and so does a member-owned
+     * Plugin.
      *
      * A removal counts as one of the Plugin's installation-setting writes: send all of those
      * writes one at a time. If several arrive for the same Plugin at the same time, the server
@@ -106,7 +112,7 @@ final class InstallationSettingsService implements InstallationSettingsContract
      *
      * Every request must include the beta header `anthropic-beta: ce-plugins-2026-09-01`. A request without it returns `404`, exactly as if the endpoint did not exist. The Plugins API is in beta and is available to Claude Enterprise organizations only. It is not available to Claude Platform (Claude Console) organizations, or to organizations with HIPAA readiness enabled.
      *
-     * @param string $target Path param: The RBAC Group (ID prefixed `rbac_group_`) whose own setting is removed. The literal `organization` is refused with a 400: an organization-wide setting cannot be removed.
+     * @param string $target Path param: The target whose own setting is removed: the literal `organization` for the Plugin's organization-wide setting, or an RBAC Group's ID (prefixed `rbac_group_`) for that group's own setting. Removing the `organization` setting returns the Plugin to its marketplace's default.
      * @param string $pluginID path param: ID of the Plugin (prefixed `plugin_`)
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `ce-plugins-2026-09-01` in this header
      * @param RequestOpts|null $requestOptions
