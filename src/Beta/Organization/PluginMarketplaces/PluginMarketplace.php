@@ -22,13 +22,13 @@ use Anthropic\Core\Conversion\ConstantOf;
  * @phpstan-type PluginMarketplaceShape = array{
  *   id: string,
  *   createdAt: \DateTimeInterface,
- *   defaultInstallationPreference: string|null|DefaultInstallationPreference|value-of<DefaultInstallationPreference>,
+ *   defaultInstallationPreference: null|DefaultInstallationPreference|value-of<DefaultInstallationPreference>,
  *   lastSyncEndedAt: \DateTimeInterface|null,
  *   lastSyncReadSha: string|null,
  *   name: string,
  *   owner: OwnerShape,
- *   source: string|Source|value-of<Source>,
- *   syncStatus: string|null|SyncStatus|value-of<SyncStatus>,
+ *   source: Source|value-of<Source>,
+ *   syncStatus: null|SyncStatus|value-of<SyncStatus>,
  *   type: 'plugin_marketplace',
  * }
  */
@@ -60,7 +60,7 @@ final class PluginMarketplace implements BaseModel
     /**
      * Organization plugin marketplace: the organization-wide setting every Plugin in it with no setting of its own gets. Null for a member's personal plugin marketplace. One of `required`, `auto_install`, `available`, `not_available`; a value this API does not yet name is returned as stored.
      *
-     * @var string|value-of<DefaultInstallationPreference>|null $defaultInstallationPreference
+     * @var value-of<DefaultInstallationPreference>|null $defaultInstallationPreference
      */
     #[Required(
         'default_installation_preference',
@@ -97,7 +97,7 @@ final class PluginMarketplace implements BaseModel
     /**
      * Where the plugin marketplace's Plugins come from: `manual` when they are uploaded; `github`, `gitlab` or `public_git` when they are synchronized from the Git repository the owner connected, into which nothing can be uploaded; `directory` is Anthropic's own catalog, which this API does not list. A value this API does not yet name is returned as stored.
      *
-     * @var string|value-of<Source> $source
+     * @var value-of<Source> $source
      */
     #[Required(enum: Source::class)]
     public string $source;
@@ -105,7 +105,7 @@ final class PluginMarketplace implements BaseModel
     /**
      * Outcome of the plugin marketplace's most recent synchronization: one of `success`, `in_progress`, `failed_content`, `failed_transient`, `failed_auth`, `failed_limits`; a value this API does not yet name is returned as stored. Null until a synchronization is first attempted — so always for a `manual` plugin marketplace.
      *
-     * @var string|value-of<SyncStatus>|null $syncStatus
+     * @var value-of<SyncStatus>|null $syncStatus
      */
     #[Required('sync_status', enum: SyncStatus::class)]
     public ?string $syncStatus;
@@ -153,10 +153,10 @@ final class PluginMarketplace implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|DefaultInstallationPreference|value-of<DefaultInstallationPreference>|null $defaultInstallationPreference
+     * @param DefaultInstallationPreference|value-of<DefaultInstallationPreference>|null $defaultInstallationPreference
      * @param OwnerShape $owner
-     * @param string|Source|value-of<Source> $source
-     * @param string|SyncStatus|value-of<SyncStatus>|null $syncStatus
+     * @param Source|value-of<Source> $source
+     * @param SyncStatus|value-of<SyncStatus>|null $syncStatus
      */
     public static function with(
         string $id,
@@ -209,7 +209,7 @@ final class PluginMarketplace implements BaseModel
     /**
      * Organization plugin marketplace: the organization-wide setting every Plugin in it with no setting of its own gets. Null for a member's personal plugin marketplace. One of `required`, `auto_install`, `available`, `not_available`; a value this API does not yet name is returned as stored.
      *
-     * @param string|DefaultInstallationPreference|value-of<DefaultInstallationPreference>|null $defaultInstallationPreference
+     * @param DefaultInstallationPreference|value-of<DefaultInstallationPreference>|null $defaultInstallationPreference
      */
     public function withDefaultInstallationPreference(
         DefaultInstallationPreference|string|null $defaultInstallationPreference
@@ -271,7 +271,7 @@ final class PluginMarketplace implements BaseModel
     /**
      * Where the plugin marketplace's Plugins come from: `manual` when they are uploaded; `github`, `gitlab` or `public_git` when they are synchronized from the Git repository the owner connected, into which nothing can be uploaded; `directory` is Anthropic's own catalog, which this API does not list. A value this API does not yet name is returned as stored.
      *
-     * @param string|Source|value-of<Source> $source
+     * @param Source|value-of<Source> $source
      */
     public function withSource(Source|string $source): self
     {
@@ -284,7 +284,7 @@ final class PluginMarketplace implements BaseModel
     /**
      * Outcome of the plugin marketplace's most recent synchronization: one of `success`, `in_progress`, `failed_content`, `failed_transient`, `failed_auth`, `failed_limits`; a value this API does not yet name is returned as stored. Null until a synchronization is first attempted — so always for a `manual` plugin marketplace.
      *
-     * @param string|SyncStatus|value-of<SyncStatus>|null $syncStatus
+     * @param SyncStatus|value-of<SyncStatus>|null $syncStatus
      */
     public function withSyncStatus(SyncStatus|string|null $syncStatus): self
     {

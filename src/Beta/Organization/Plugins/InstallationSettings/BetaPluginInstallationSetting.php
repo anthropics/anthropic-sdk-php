@@ -24,7 +24,7 @@ use Anthropic\Core\Conversion\ConstantOf;
  *
  * @phpstan-type BetaPluginInstallationSettingShape = array{
  *   createdAt: \DateTimeInterface,
- *   installationPreference: string|InstallationPreference|value-of<InstallationPreference>,
+ *   installationPreference: InstallationPreference|value-of<InstallationPreference>,
  *   pluginID: string,
  *   target: TargetShape,
  *   type: 'plugin_installation_setting',
@@ -53,7 +53,7 @@ final class BetaPluginInstallationSetting implements BaseModel
     /**
      * The setting the target holds for this Plugin. One of `required`, `auto_install`, `available`, `not_available`; a value this API does not yet name is returned as stored.
      *
-     * @var string|value-of<InstallationPreference> $installationPreference
+     * @var value-of<InstallationPreference> $installationPreference
      */
     #[Required('installation_preference', enum: InstallationPreference::class)]
     public string $installationPreference;
@@ -113,7 +113,7 @@ final class BetaPluginInstallationSetting implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param string|InstallationPreference|value-of<InstallationPreference> $installationPreference
+     * @param InstallationPreference|value-of<InstallationPreference> $installationPreference
      * @param TargetShape $target
      */
     public static function with(
@@ -148,7 +148,7 @@ final class BetaPluginInstallationSetting implements BaseModel
     /**
      * The setting the target holds for this Plugin. One of `required`, `auto_install`, `available`, `not_available`; a value this API does not yet name is returned as stored.
      *
-     * @param string|InstallationPreference|value-of<InstallationPreference> $installationPreference
+     * @param InstallationPreference|value-of<InstallationPreference> $installationPreference
      */
     public function withInstallationPreference(
         InstallationPreference|string $installationPreference

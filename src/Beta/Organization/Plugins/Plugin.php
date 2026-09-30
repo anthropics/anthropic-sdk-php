@@ -33,7 +33,7 @@ use Anthropic\Core\Conversion\ConstantOf;
  *   manifestVersion: string|null,
  *   marketplaceID: string,
  *   name: string,
- *   organizationInstallationPreference: string|null|OrganizationInstallationPreference|value-of<OrganizationInstallationPreference>,
+ *   organizationInstallationPreference: null|OrganizationInstallationPreference|value-of<OrganizationInstallationPreference>,
  *   organizationInstallationPreferenceInherited: bool|null,
  *   owner: OwnerShape,
  *   reach: null|Reach|value-of<Reach>,
@@ -129,7 +129,7 @@ final class Plugin implements BaseModel
     /**
      * Organization-owned Plugin: the organization-wide installation setting every member gets unless an RBAC Group they belong to holds its own — the Plugin's own setting, or its plugin marketplace's default. Null for a member-owned Plugin, which has shares instead. One of `required`, `auto_install`, `available`, `not_available`; a value this API does not yet name is returned as stored.
      *
-     * @var string|value-of<OrganizationInstallationPreference>|null $organizationInstallationPreference
+     * @var value-of<OrganizationInstallationPreference>|null $organizationInstallationPreference
      */
     #[Required(
         'organization_installation_preference',
@@ -241,7 +241,7 @@ final class Plugin implements BaseModel
      * @param list<PluginComponent|PluginComponentShape>|null $components
      * @param PluginContentScan|PluginContentScanShape|null $contentScan
      * @param CreatedByShape|null $createdBy
-     * @param string|OrganizationInstallationPreference|value-of<OrganizationInstallationPreference>|null $organizationInstallationPreference
+     * @param OrganizationInstallationPreference|value-of<OrganizationInstallationPreference>|null $organizationInstallationPreference
      * @param OwnerShape $owner
      * @param Reach|value-of<Reach>|null $reach
      */
@@ -421,7 +421,7 @@ final class Plugin implements BaseModel
     /**
      * Organization-owned Plugin: the organization-wide installation setting every member gets unless an RBAC Group they belong to holds its own — the Plugin's own setting, or its plugin marketplace's default. Null for a member-owned Plugin, which has shares instead. One of `required`, `auto_install`, `available`, `not_available`; a value this API does not yet name is returned as stored.
      *
-     * @param string|OrganizationInstallationPreference|value-of<OrganizationInstallationPreference>|null $organizationInstallationPreference
+     * @param OrganizationInstallationPreference|value-of<OrganizationInstallationPreference>|null $organizationInstallationPreference
      */
     public function withOrganizationInstallationPreference(
         OrganizationInstallationPreference|string|null $organizationInstallationPreference,
