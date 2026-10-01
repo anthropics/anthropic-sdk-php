@@ -12,7 +12,6 @@ use Anthropic\PageCursor;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -205,10 +204,6 @@ final class CredentialsTest extends TestCase
     #[Test]
     public function testMCPOAuthValidate(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('prism can\'t find endpoint with beta only tag');
-        }
-
         $result = $this->client->beta->vaults->credentials->mcpOAuthValidate(
             'vcrd_011CZkZEMt8gZan2iYOQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv'
@@ -221,10 +216,6 @@ final class CredentialsTest extends TestCase
     #[Test]
     public function testMCPOAuthValidateWithOptionalParams(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('prism can\'t find endpoint with beta only tag');
-        }
-
         $result = $this->client->beta->vaults->credentials->mcpOAuthValidate(
             'vcrd_011CZkZEMt8gZan2iYOQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
