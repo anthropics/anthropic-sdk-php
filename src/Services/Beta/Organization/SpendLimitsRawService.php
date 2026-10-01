@@ -104,7 +104,12 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
                 $header_params,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options,
+            options: RequestOptions::parse(
+                [
+                    'extraHeaders' => ['anthropic-beta' => 'spend-limit-reads-2026-09-26'],
+                ],
+                $options,
+            ),
             convert: SpendLimit::class,
             page: PageCursor::class,
         );
