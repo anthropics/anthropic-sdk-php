@@ -18,6 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   afterID?: string|null,
  *   beforeID?: string|null,
  *   includeArchived?: bool|null,
+ *   includeDefault?: bool|null,
  *   limit?: int|null,
  * }
  */
@@ -46,6 +47,12 @@ final class WorkspaceListParams implements BaseModel
     public ?bool $includeArchived;
 
     /**
+     * Whether to include the organization's default Workspace in the response.
+     */
+    #[Optional]
+    public ?bool $includeDefault;
+
+    /**
      * Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
@@ -67,6 +74,7 @@ final class WorkspaceListParams implements BaseModel
         ?string $afterID = null,
         ?string $beforeID = null,
         ?bool $includeArchived = null,
+        ?bool $includeDefault = null,
         ?int $limit = null,
     ): self {
         $self = new self;
@@ -74,6 +82,7 @@ final class WorkspaceListParams implements BaseModel
         null !== $afterID && $self['afterID'] = $afterID;
         null !== $beforeID && $self['beforeID'] = $beforeID;
         null !== $includeArchived && $self['includeArchived'] = $includeArchived;
+        null !== $includeDefault && $self['includeDefault'] = $includeDefault;
         null !== $limit && $self['limit'] = $limit;
 
         return $self;
@@ -108,6 +117,17 @@ final class WorkspaceListParams implements BaseModel
     {
         $self = clone $this;
         $self['includeArchived'] = $includeArchived;
+
+        return $self;
+    }
+
+    /**
+     * Whether to include the organization's default Workspace in the response.
+     */
+    public function withIncludeDefault(bool $includeDefault): self
+    {
+        $self = clone $this;
+        $self['includeDefault'] = $includeDefault;
 
         return $self;
     }
