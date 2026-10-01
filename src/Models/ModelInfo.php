@@ -17,6 +17,7 @@ use Anthropic\Core\Conversion\ConstantOf;
  *   capabilities: null|ModelCapabilities|ModelCapabilitiesShape,
  *   createdAt: \DateTimeInterface,
  *   displayName: string,
+ *   line: null|ModelLine|value-of<ModelLine>,
  *   maxInputTokens: int|null,
  *   maxTokens: int|null,
  *   type: 'model',
@@ -62,6 +63,14 @@ final class ModelInfo implements BaseModel
     public string $displayName;
 
     /**
+     * The model line this model belongs to, such as `opus` for both Claude Opus 4.5 and Claude Opus 4.6. More lines may be added. `null` when the model belongs to no line, as a fine-tuned model does; do not infer a line from the `id`.
+     *
+     * @var value-of<ModelLine>|null $line
+     */
+    #[Required(enum: ModelLine::class)]
+    public ?string $line;
+
+    /**
      * Maximum input context window size in tokens for this model.
      */
     #[Required('max_input_tokens')]
@@ -83,6 +92,7 @@ final class ModelInfo implements BaseModel
      *   capabilities: ...,
      *   createdAt: ...,
      *   displayName: ...,
+     *   line: ...,
      *   maxInputTokens: ...,
      *   maxTokens: ...,
      * )
@@ -96,6 +106,7 @@ final class ModelInfo implements BaseModel
      *   ->withCapabilities(...)
      *   ->withCreatedAt(...)
      *   ->withDisplayName(...)
+     *   ->withLine(...)
      *   ->withMaxInputTokens(...)
      *   ->withMaxTokens(...)
      * ```
@@ -111,12 +122,14 @@ final class ModelInfo implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ModelCapabilities|ModelCapabilitiesShape|null $capabilities
+     * @param ModelLine|value-of<ModelLine>|null $line
      */
     public static function with(
         string $id,
         ModelCapabilities|array|null $capabilities,
         \DateTimeInterface $createdAt,
         string $displayName,
+        ModelLine|string|null $line,
         ?int $maxInputTokens,
         ?int $maxTokens,
     ): self {
@@ -126,6 +139,7 @@ final class ModelInfo implements BaseModel
         $self['capabilities'] = $capabilities;
         $self['createdAt'] = $createdAt;
         $self['displayName'] = $displayName;
+        $self['line'] = $line;
         $self['maxInputTokens'] = $maxInputTokens;
         $self['maxTokens'] = $maxTokens;
 
@@ -175,6 +189,19 @@ final class ModelInfo implements BaseModel
     {
         $self = clone $this;
         $self['displayName'] = $displayName;
+
+        return $self;
+    }
+
+    /**
+     * The model line this model belongs to, such as `opus` for both Claude Opus 4.5 and Claude Opus 4.6. More lines may be added. `null` when the model belongs to no line, as a fine-tuned model does; do not infer a line from the `id`.
+     *
+     * @param ModelLine|value-of<ModelLine>|null $line
+     */
+    public function withLine(ModelLine|string|null $line): self
+    {
+        $self = clone $this;
+        $self['line'] = $line;
 
         return $self;
     }
