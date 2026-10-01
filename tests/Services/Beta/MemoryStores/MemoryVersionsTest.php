@@ -11,7 +11,6 @@ use Anthropic\PageCursor;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -61,10 +60,6 @@ final class MemoryVersionsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('buildURL drops path-level query params');
-        }
-
         $page = $this->client->beta->memoryStores->memoryVersions->list(
             'memory_store_id'
         );

@@ -137,10 +137,6 @@ final class CredentialsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('buildURL drops path-level query params');
-        }
-
         $page = $this->client->beta->vaults->credentials->list(
             'vlt_011CZkZDLs7fYzm1hXNPeRjv'
         );

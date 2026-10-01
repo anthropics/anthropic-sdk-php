@@ -9,7 +9,6 @@ use Anthropic\PageCursor;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -32,10 +31,6 @@ final class EventsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('buildURL drops path-level query params');
-        }
-
         $page = $this->client->beta->sessions->threads->events->list(
             'sthr_011CZkZVWa6oIjw0rgXZpnBt',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
@@ -53,10 +48,6 @@ final class EventsTest extends TestCase
     #[Test]
     public function testListWithOptionalParams(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('buildURL drops path-level query params');
-        }
-
         $page = $this->client->beta->sessions->threads->events->list(
             'sthr_011CZkZVWa6oIjw0rgXZpnBt',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
