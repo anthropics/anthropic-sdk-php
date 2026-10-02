@@ -110,7 +110,7 @@ final class AgentUpdateParams implements BaseModel
     public ?string $system;
 
     /**
-     * Tool configurations available to the agent. Full replacement. Omit to preserve; send empty array or null to clear. Maximum of 128 tools across all toolsets allowed.
+     * Tool configurations available to the agent. Full replacement. Omit to preserve; send empty array or null to clear. Maximum of 256 tools across all toolsets allowed.
      *
      * @var list<ToolVariants>|null $tools
      */
@@ -290,7 +290,7 @@ final class AgentUpdateParams implements BaseModel
     }
 
     /**
-     * Tool configurations available to the agent. Full replacement. Omit to preserve; send empty array or null to clear. Maximum of 128 tools across all toolsets allowed.
+     * Tool configurations available to the agent. Full replacement. Omit to preserve; send empty array or null to clear. Maximum of 256 tools across all toolsets allowed.
      *
      * @param list<ToolShape>|null $tools
      */

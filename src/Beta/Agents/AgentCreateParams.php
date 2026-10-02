@@ -105,7 +105,7 @@ final class AgentCreateParams implements BaseModel
     public ?string $system;
 
     /**
-     * Tool configurations available to the agent. Maximum of 128 tools across all toolsets allowed.
+     * Tool configurations available to the agent. Maximum of 256 tools across all toolsets allowed.
      *
      * @var list<ToolVariants>|null $tools
      */
@@ -292,7 +292,7 @@ final class AgentCreateParams implements BaseModel
     }
 
     /**
-     * Tool configurations available to the agent. Maximum of 128 tools across all toolsets allowed.
+     * Tool configurations available to the agent. Maximum of 256 tools across all toolsets allowed.
      *
      * @param list<ToolShape> $tools
      */

@@ -62,7 +62,7 @@ final class AgentsService implements AgentsContract
      * @param BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null $multiagent Body param: Multiagent orchestration configuration. Currently supports the `coordinator` topology with a roster of 1-20 agents.
      * @param list<BetaManagedAgentsSkillParamsShape> $skills body param: Skills available to the agent
      * @param string|null $system body param: System prompt for the agent
-     * @param list<ToolShape> $tools Body param: Tool configurations available to the agent. Maximum of 128 tools across all toolsets allowed.
+     * @param list<ToolShape> $tools Body param: Tool configurations available to the agent. Maximum of 256 tools across all toolsets allowed.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -153,7 +153,7 @@ final class AgentsService implements AgentsContract
      * @param string $name Body param: Human-readable name. Must be non-empty. Omit to preserve. Cannot be cleared.
      * @param list<BetaManagedAgentsSkillParamsShape>|null $skills Body param: Skills. Full replacement. Omit to preserve; send empty array or null to clear.
      * @param string|null $system Body param: System prompt. Omit to preserve; send empty string or null to clear.
-     * @param list<ToolShape1>|null $tools Body param: Tool configurations available to the agent. Full replacement. Omit to preserve; send empty array or null to clear. Maximum of 128 tools across all toolsets allowed.
+     * @param list<ToolShape1>|null $tools Body param: Tool configurations available to the agent. Full replacement. Omit to preserve; send empty array or null to clear. Maximum of 256 tools across all toolsets allowed.
      * @param int $version Body param: The agent's current version, used to prevent concurrent overwrites. Obtain this value from a create or retrieve response. Must be at least 1 if specified. When supplied, the request fails if it does not match the server's current version; omit to apply the update unconditionally.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
