@@ -338,8 +338,8 @@ final class Util
             if (is_null($value)) {
                 /** @var RequestInterface */
                 $req = $req->withoutHeader($name);
-            } else {
-                $value = is_array($value) ? array_map(static fn ($v) => self::strVal($v), array: $value) : self::strVal($value);
+            } elseif ([] !== $value) {
+                $value = is_array($value) ? implode(',', array_map(static fn ($v) => self::strVal($v), array: $value)) : self::strVal($value);
 
                 /** @var RequestInterface */
                 $req = $req->withHeader($name, $value);
