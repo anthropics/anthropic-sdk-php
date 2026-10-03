@@ -25,6 +25,10 @@ trait SdkStream
     /** @var \Generator<TEvent> */
     private \Generator $generator;
 
+    private bool $closed = false;
+
+    private bool $started = false;
+
     public function __construct(
         protected string|Converter|ConverterSource $convert,
         protected RequestInterface $request,
@@ -33,7 +37,14 @@ trait SdkStream
     ) {
         // @phpstan-ignore-next-line
         $this->stream = $parsedBody;
-        $this->generator = $this->parsedGenerator();
+        $this->generator = (function (): \Generator {
+            if ($this->closed) {
+                return;
+            }
+            $this->started = true;
+
+            yield from $this->parsedGenerator();
+        })();
     }
 
     /** @return \Iterator<TEvent> */
@@ -44,11 +55,21 @@ trait SdkStream
 
     public function close(): void
     {
+        if ($this->closed) {
+            return;
+        }
+        $this->closed = true;
+
         try {
-            $this->stream->throw(new IteratorExit);
+            // Throwing into an unstarted parser would first advance it to a
+            // yield, which can perform a blocking body read merely to close.
+            if ($this->started) {
+                $this->generator->throw(new IteratorExit);
+            }
         } catch (IteratorExit $_) {
             // IteratorExit shouldn't be noticed.
-            return;
+        } finally {
+            $this->response->getBody()->close();
         }
     }
 
