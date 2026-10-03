@@ -13,6 +13,7 @@ use Anthropic\Core\Conversion\ConstantOf;
  * @phpstan-type RBACRoleShape = array{
  *   id: string,
  *   createdAt: \DateTimeInterface,
+ *   displayName: string,
  *   name: string,
  *   type: 'rbac_role',
  *   updatedAt: \DateTimeInterface,
@@ -46,7 +47,15 @@ final class RBACRole implements BaseModel
     public \DateTimeInterface $createdAt;
 
     /**
-     * Name of the RBAC Role.
+     * Name of the RBAC Role. For a role created by Anthropic, this name can differ from the label claude.ai shows, and Anthropic may change the name. To keep a lasting reference to a role, store its `id`.
+     */
+    #[Required('display_name')]
+    public string $displayName;
+
+    /**
+     * @deprecated Use `display_name` instead; `name` always has the same value.
+     *
+     * Deprecated: use `display_name` instead. Name of the RBAC Role; always the same value as `display_name`.
      */
     #[Required]
     public string $name;
@@ -62,7 +71,9 @@ final class RBACRole implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * RBACRole::with(id: ..., createdAt: ..., name: ..., updatedAt: ...)
+     * RBACRole::with(
+     *   id: ..., createdAt: ..., displayName: ..., name: ..., updatedAt: ...
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -71,6 +82,7 @@ final class RBACRole implements BaseModel
      * (new RBACRole)
      *   ->withID(...)
      *   ->withCreatedAt(...)
+     *   ->withDisplayName(...)
      *   ->withName(...)
      *   ->withUpdatedAt(...)
      * ```
@@ -88,6 +100,7 @@ final class RBACRole implements BaseModel
     public static function with(
         string $id,
         \DateTimeInterface $createdAt,
+        string $displayName,
         string $name,
         \DateTimeInterface $updatedAt,
     ): self {
@@ -95,6 +108,7 @@ final class RBACRole implements BaseModel
 
         $self['id'] = $id;
         $self['createdAt'] = $createdAt;
+        $self['displayName'] = $displayName;
         $self['name'] = $name;
         $self['updatedAt'] = $updatedAt;
 
@@ -124,7 +138,18 @@ final class RBACRole implements BaseModel
     }
 
     /**
-     * Name of the RBAC Role.
+     * Name of the RBAC Role. For a role created by Anthropic, this name can differ from the label claude.ai shows, and Anthropic may change the name. To keep a lasting reference to a role, store its `id`.
+     */
+    public function withDisplayName(string $displayName): self
+    {
+        $self = clone $this;
+        $self['displayName'] = $displayName;
+
+        return $self;
+    }
+
+    /**
+     * Deprecated: use `display_name` instead. Name of the RBAC Role; always the same value as `display_name`.
      */
     public function withName(string $name): self
     {
