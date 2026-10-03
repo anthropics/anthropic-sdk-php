@@ -197,7 +197,8 @@ final class BedrockMiddleware implements Middleware
 }
 
 /**
- * One read() returns one generator yield. Psr7\Utils::streamFor(Generator)
+ * One read() returns at most one generator yield, bounded by the requested length.
+ * Psr7\Utils::streamFor(Generator)
  * would wrap in PumpStream, whose read($n) keeps pulling until $n bytes are
  * buffered — with an 8KB consumer that parses dozens of frames from the
  * network before yielding the first.
@@ -208,6 +209,10 @@ final class GeneratorStream implements StreamInterface
 {
     private bool $primed = false;
 
+    private string $buffer = '';
+
+    private int $offset = 0;
+
     /**
      * @param \Generator<string> $source
      */
@@ -215,20 +220,36 @@ final class GeneratorStream implements StreamInterface
 
     public function read($length): string
     {
-        if (null === $this->source) {
+        if ($length < 0) {
+            throw new \RuntimeException('Read length must be non-negative.');
+        }
+        if (0 === $length || null === $this->source) {
             return '';
         }
-        if ($this->primed) {
-            $this->source->next();
+        if ('' === $this->buffer) {
+            if ($this->primed) {
+                $this->source->next();
+            }
+            $this->primed = true;
+            if (!$this->source->valid()) {
+                return '';
+            }
+            $this->buffer = $this->source->current();
         }
-        $this->primed = true;
 
-        return $this->source->valid() ? $this->source->current() : '';
+        $part = substr($this->buffer, $this->offset, $length);
+        $this->offset += strlen($part);
+        if ($this->offset === strlen($this->buffer)) {
+            $this->buffer = '';
+            $this->offset = 0;
+        }
+
+        return $part;
     }
 
     public function eof(): bool
     {
-        return null === $this->source || ($this->primed && !$this->source->valid());
+        return null === $this->source || ('' === $this->buffer && $this->primed && !$this->source->valid());
     }
 
     public function isReadable(): bool
@@ -239,12 +260,16 @@ final class GeneratorStream implements StreamInterface
     public function close(): void
     {
         $this->source = null;
+        $this->buffer = '';
+        $this->offset = 0;
         $this->inner->close();
     }
 
     public function detach()
     {
         $this->source = null;
+        $this->buffer = '';
+        $this->offset = 0;
 
         return $this->inner->detach();
     }
@@ -288,7 +313,7 @@ final class GeneratorStream implements StreamInterface
     {
         $out = '';
         while (!$this->eof()) {
-            $out .= $this->read(0);
+            $out .= $this->read(8192);
         }
 
         return $out;
