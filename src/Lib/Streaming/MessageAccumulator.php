@@ -28,6 +28,7 @@ use Anthropic\Messages\Message;
  *   the block's `input` when the block completes; until then the snapshot
  *   keeps the start event's `{}` placeholder.
  * - `citations_delta` appends to the block's `citations` list.
+ * - `compaction_delta` replaces the fields it carries, including explicit nulls.
  * - `message_delta` overwrites `stop_reason`/`stop_sequence`/`stop_details`,
  *   always replaces `usage.output_tokens` (the API streams cumulative
  *   totals), and replaces `container`, `context_management`,
@@ -266,8 +267,11 @@ final class MessageAccumulator
                 break;
 
             case 'compaction_delta':
-                $block['content'] = self::str($block['content'] ?? null).self::str($delta['content'] ?? null);
-                $block['encrypted_content'] = $delta['encrypted_content'] ?? null;
+                foreach (['content', 'encrypted_content'] as $field) {
+                    if (array_key_exists($field, $delta)) {
+                        $block[$field] = $delta[$field];
+                    }
+                }
 
                 break;
 
