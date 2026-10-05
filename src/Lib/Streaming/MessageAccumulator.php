@@ -26,7 +26,8 @@ use Anthropic\Messages\Message;
  * - `text_delta`/`thinking_delta`/`signature_delta` append to their block.
  * - `input_json_delta` chunks concatenate into a buffer that is decoded into
  *   the block's `input` when the block completes; until then the snapshot
- *   keeps the start event's `{}` placeholder.
+ *   keeps the start event's `{}` placeholder. Empty object values remain
+ *   objects when the accumulated message is serialized.
  * - `citations_delta` appends to the block's `citations` list.
  * - `message_delta` overwrites `stop_reason`/`stop_sequence`/`stop_details`,
  *   always replaces `usage.output_tokens` (the API streams cumulative
@@ -126,7 +127,7 @@ final class MessageAccumulator
             foreach ($this->inputBuffers as $index => $buffer) {
                 // an incomplete buffer (stream still mid-block) decodes to
                 // null and the start event's placeholder stays
-                $decoded = json_decode($buffer, associative: true);
+                $decoded = self::decodeInput($buffer);
                 $block = $content[$index] ?? null;
                 if (!is_null($decoded) && is_array($block)) {
                     $block['input'] = $decoded;
@@ -288,7 +289,7 @@ final class MessageAccumulator
         }
         unset($this->inputBuffers[$index]);
 
-        $decoded = json_decode($buffer, associative: true);
+        $decoded = self::decodeInput($buffer);
         if (is_null($decoded)) {
             // a block cut open by a refusal can complete with an incomplete
             // buffer; the start event's placeholder stays
@@ -310,6 +311,14 @@ final class MessageAccumulator
             $snapshot['content'] = $content;
         }
         $this->snapshot = $snapshot;
+    }
+
+    private static function decodeInput(string $buffer): mixed
+    {
+        $decoded = json_decode($buffer, associative: false);
+
+        // The input map expects a PHP array; nested empty objects must remain objects.
+        return $decoded instanceof \stdClass ? (array) $decoded : $decoded;
     }
 
     private static function str(mixed $value): string
