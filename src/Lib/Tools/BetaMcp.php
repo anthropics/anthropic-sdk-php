@@ -311,6 +311,10 @@ final class BetaMcp
     public static function convertToolResult(CallToolResult $result): string|array
     {
         if ($result->isError) {
+            if ([] === $result->content && null !== $result->structuredContent) {
+                throw new \RuntimeException(json_encode($result->structuredContent, JSON_THROW_ON_ERROR));
+            }
+
             $blocks = array_map(
                 static fn (Content $item): array => self::content($item),
                 array_values($result->content),

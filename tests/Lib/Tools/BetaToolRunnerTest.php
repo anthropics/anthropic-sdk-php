@@ -25,10 +25,12 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Exceptions\BadRequestException;
 use Anthropic\Core\Util;
+use Anthropic\Lib\Tools\BetaMcp;
 use Anthropic\Lib\Tools\BetaRunnableTool;
 use Anthropic\Lib\Tools\BetaToolRunner;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
+use Mcp\Schema\Result\CallToolResult;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -76,6 +78,38 @@ final class BetaToolRunnerTest extends TestCase
             apiKey: 'test-api-key',
             requestOptions: ['transporter' => $this->transporter],
         );
+    }
+
+    #[Test]
+    public function testStructuredMcpErrorReachesTheNextRequestAsAnError(): void
+    {
+        $payload = ['error' => ['field' => 'location', 'code' => 17], 'retryable' => false];
+        $result = new CallToolResult([], true, $payload);
+        $tool = $this->makeWeatherTool(static function () use ($result): void {
+            BetaMcp::convertToolResult($result);
+        });
+        $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'invalid']));
+        $this->transporter->addResponse($this->textResponse('Please supply another location.'));
+        $final = $this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [self::INITIAL_MESSAGE],
+            model: 'claude-opus-4-6',
+            tools: [$tool],
+        )->runUntilDone();
+        $request = $this->requestBody(1);
+        $messages = $request['messages'];
+        $this->assertIsArray($messages);
+        $message = $messages[array_key_last($messages)];
+        $this->assertIsArray($message);
+        $content = $message['content'];
+        $this->assertIsArray($content);
+        $block = $content[0];
+        $this->assertIsArray($block);
+        $this->assertTrue($block['is_error']);
+        $this->assertSame('tool_1', $block['tool_use_id']);
+        $this->assertSame('Error: '.json_encode($payload, JSON_THROW_ON_ERROR), $block['content']);
+        $this->assertSame('end_turn', $final->stopReason);
+        $this->assertCount(2, $this->transporter->getRequests());
     }
 
     // -------------------------------------------------------------------------
