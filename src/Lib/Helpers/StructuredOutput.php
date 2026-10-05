@@ -273,8 +273,14 @@ final class StructuredOutput
             if (is_numeric($maximum) && $value > $maximum) {
                 $violations[] = "Value {$value} exceeds maximum {$maximum}";
             }
-            if (is_numeric($multipleOf) && 0.0 !== fmod((float) $value, (float) $multipleOf)) {
-                $violations[] = "Value {$value} is not a multiple of {$multipleOf}";
+            if (is_numeric($multipleOf)) {
+                // Converting large integers to float can change their divisibility.
+                $remainder = is_int($value) && is_int($multipleOf) && 0 !== $multipleOf
+                    ? $value % $multipleOf
+                    : fmod((float) $value, (float) $multipleOf);
+                if (0.0 !== (float) $remainder) {
+                    $violations[] = "Value {$value} is not a multiple of {$multipleOf}";
+                }
             }
         }
 
