@@ -20,6 +20,7 @@ use Mcp\Schema\Enum\Role;
 use Mcp\Schema\Result\CallToolResult;
 use Mcp\Schema\Result\ReadResourceResult;
 use Mcp\Schema\Tool;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -30,6 +31,108 @@ use PHPUnit\Framework\TestCase;
  */
 final class BetaMcpTest extends TestCase
 {
+    #[Test]
+    #[DataProvider('imageMediaTypes')]
+    public function testImageMediaTypeVariants(string $mime, string $expected): void
+    {
+        $image = new ImageContent('AQID', $mime);
+        $before = json_encode($image, JSON_THROW_ON_ERROR);
+        $block = BetaMcp::content($image, cacheControl: ['type' => 'ephemeral']);
+        $this->assertSame([
+            'type' => 'image',
+            'source' => ['type' => 'base64', 'data' => 'AQID', 'media_type' => $expected],
+            'cache_control' => ['type' => 'ephemeral'],
+        ], $block);
+        $message = BetaMcp::message(new PromptMessage(Role::User, $image));
+        $this->assertSame($block['source'], $message['content'][0]['source']);
+        $this->assertSame($before, json_encode($image, JSON_THROW_ON_ERROR));
+    }
+
+    /** @return iterable<string, array{string, string}> */
+    public static function imageMediaTypes(): iterable
+    {
+        foreach (['image/jpeg', 'image/png', 'image/gif', 'image/webp'] as $expected) {
+            foreach ([$expected, strtoupper($expected), $expected.'; charset=binary', ' '.strtoupper($expected).' ; profile="A;B" '] as $mime) {
+                yield $mime => [$mime, $expected];
+            }
+        }
+    }
+
+    #[Test]
+    #[DataProvider('resourceMediaTypes')]
+    public function testResourceMediaTypesSelectTheFirstSupportedItem(string $mime, string $expected): void
+    {
+        $resource = new BlobResourceContents('file:///item', $mime, base64_encode('exact bytes'));
+        $result = new ReadResourceResult([
+            new BlobResourceContents('file:///unknown', 'application/octet-stream', 'AA=='),
+            $resource,
+            new TextResourceContents('file:///fallback', 'text/plain', 'wrong item'),
+        ]);
+        $before = json_encode($result, JSON_THROW_ON_ERROR);
+        $block = BetaMcp::resourceToContent($result, cacheControl: ['type' => 'ephemeral']);
+        $source = $block['source'];
+        $this->assertIsArray($source);
+        $this->assertSame($expected, $source['media_type']);
+        $this->assertSame('text/plain' === $expected ? 'exact bytes' : base64_encode('exact bytes'), $source['data']);
+        $this->assertSame(['type' => 'ephemeral'], $block['cache_control']);
+        $this->assertSame($source, BetaMcp::content(new EmbeddedResource($resource))['source']);
+        $file = BetaMcp::resourceToFile(new ReadResourceResult([$resource]));
+        $this->assertSame($mime, $file->contentType);
+        $this->assertSame('exact bytes', $file->data);
+        $this->assertSame($before, json_encode($result, JSON_THROW_ON_ERROR));
+    }
+
+    /** @return iterable<string, array{string, string}> */
+    public static function resourceMediaTypes(): iterable
+    {
+        yield 'image' => [' IMAGE/PNG ; profile="A;B" ', 'image/png'];
+
+        yield 'pdf' => ['Application/PDF; version=1.7', 'application/pdf'];
+
+        yield 'text' => ['TEXT/PLAIN; charset=utf-8', 'text/plain'];
+
+        yield 'markdown' => [' Text/Markdown ; charset=utf-8 ', 'text/plain'];
+    }
+
+    #[Test]
+    public function testNormalizedMediaTypesKeepUnsupportedAndMissingBlobChecks(): void
+    {
+        foreach (['IMAGE/BMP; version=1', 'application/octet-stream', '', '; charset=utf-8'] as $mime) {
+            try {
+                BetaMcp::resourceToContent(new ReadResourceResult([new BlobResourceContents('file:///x', $mime, 'AQID')]));
+                $this->fail('Unsupported resource accepted');
+            } catch (UnsupportedMCPValueError $error) {
+                $this->assertStringContainsString('No supported MIME type', $error->getMessage());
+            }
+        }
+        foreach (['IMAGE/PNG; version=1', 'APPLICATION/PDF; version=1'] as $mime) {
+            try {
+                BetaMcp::content(new EmbeddedResource(new TextResourceContents('file:///x', $mime, 'not a blob')));
+                $this->fail('Missing blob accepted');
+            } catch (UnsupportedMCPValueError $error) {
+                $this->assertStringContainsString('must have blob data', $error->getMessage());
+            }
+        }
+        $block = BetaMcp::resourceToContent(new ReadResourceResult([new TextResourceContents('file:///x', null, 'default')]));
+        $source = $block['source'];
+        $this->assertIsArray($source);
+        $this->assertSame('default', $source['data']);
+    }
+
+    #[Test]
+    public function testRunnableToolReturnsNormalizedImageResults(): void
+    {
+        $tool = BetaMcp::tool(
+            self::makeTool(name: 'image'),
+            self::makeClient(fn (string $name, array $args): CallToolResult => new CallToolResult([
+                new ImageContent('AQID', 'IMAGE/PNG; profile=srgb'),
+            ])),
+        );
+        $this->assertSame([
+            ['type' => 'image', 'source' => ['type' => 'base64', 'data' => 'AQID', 'media_type' => 'image/png']],
+        ], $tool->run([]));
+    }
+
     // -------------------------------------------------------------------------
     // tool()
     // -------------------------------------------------------------------------
