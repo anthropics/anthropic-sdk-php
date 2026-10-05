@@ -126,6 +126,7 @@ class ModelWithArrayOfObjects implements StructuredOutputModel
 class ModelWithArrayMinItemsUnsupported implements StructuredOutputModel
 {
     use StructuredOutputModelTrait;
+
     /** @var array<SkillItem> */
     #[Constrained(description: 'Items with high minItems', itemClass: SkillItem::class, minItems: 5)]
     public array $items;
@@ -190,8 +191,39 @@ class ModelWithUntypedProperty implements StructuredOutputModel
 {
     use StructuredOutputModelTrait;
     public string $name;
+
     /** @phpstan-ignore-next-line missingType.property */
     public $anything;
+}
+
+class DescribedChildModel implements StructuredOutputModel
+{
+    use StructuredOutputModelTrait;
+    public string $name;
+
+    public static function description(): ?string
+    {
+        return 'Reusable child description';
+    }
+}
+
+class ModelWithNestedDescriptions implements StructuredOutputModel
+{
+    use StructuredOutputModelTrait;
+
+    #[Constrained(description: 'Home address recipient')]
+    public DescribedChildModel $home;
+
+    #[Constrained(description: 'Optional billing recipient')]
+    public ?DescribedChildModel $billing = null;
+
+    public DescribedChildModel $plain;
+
+    #[Constrained(description: '')]
+    public DescribedChildModel $emptyDescription;
+
+    #[Constrained(description: 'Shipping destination')]
+    public NestedAddress $shipping;
 }
 
 /**
@@ -199,11 +231,50 @@ class ModelWithUntypedProperty implements StructuredOutputModel
  */
 #[CoversClass(StructuredOutput::class)]
 #[CoversClass(SchemaInference::class)]
-#[CoversClass(\Anthropic\Lib\Concerns\StructuredOutputModelTrait::class)]
+#[CoversClass(StructuredOutputModelTrait::class)]
 #[CoversClass(Required::class)]
 #[CoversClass(Constrained::class)]
 class StructuredOutputTest extends TestCase
 {
+    #[Test]
+    public function testNestedPropertyDescriptionsOverrideChildDescriptions(): void
+    {
+        $schema = StructuredOutput::toJsonSchema(ModelWithNestedDescriptions::class);
+
+        /** @var array<string, array<string, mixed>> $properties */
+        $properties = $schema['properties'];
+        $this->assertSame('Home address recipient', $properties['home']['description']);
+        $this->assertSame('Optional billing recipient', $properties['billing']['description']);
+        $this->assertSame('Shipping destination', $properties['shipping']['description']);
+        $this->assertSame('Reusable child description', $properties['plain']['description']);
+        $this->assertSame('Reusable child description', $properties['emptyDescription']['description']);
+
+        /** @var list<string> $required */
+        $required = $schema['required'];
+        $this->assertContains('home', $required);
+        $this->assertNotContains('billing', $required);
+        foreach (['home', 'billing', 'plain', 'emptyDescription'] as $field) {
+            $child = $properties[$field];
+            unset($child['description']);
+            $base = StructuredOutput::toJsonSchema(DescribedChildModel::class);
+            unset($base['description']);
+            $this->assertSame($base, $child);
+        }
+        $this->assertSame('Reusable child description', DescribedChildModel::description());
+        $this->assertSame($schema, StructuredOutput::toJsonSchema(ModelWithNestedDescriptions::class));
+    }
+
+    #[Test]
+    public function testNestedDescriptionsReachTheDistilledOutputFormat(): void
+    {
+        $params = ['outputConfig' => ['format' => ModelWithNestedDescriptions::class]];
+        $this->assertSame(ModelWithNestedDescriptions::class, StructuredOutput::distillInputSchemas($params));
+        $encoded = json_encode($params, JSON_THROW_ON_ERROR);
+        $this->assertStringContainsString('Home address recipient', $encoded);
+        $this->assertStringContainsString('Optional billing recipient', $encoded);
+        $this->assertStringContainsString('Shipping destination', $encoded);
+    }
+
     // =========================================================================
     // Schema Generation Tests
     // =========================================================================
@@ -676,18 +747,21 @@ class StructuredOutputTest extends TestCase
         $constraints = StructuredOutput::getConstraintsForModel(ModelWithUnsupportedConstraints::class);
 
         $this->assertArrayHasKey('age', $constraints);
+
         /** @var array{minimum: int, maximum: int} $ageConstraints */
         $ageConstraints = $constraints['age'];
         $this->assertEquals(0, $ageConstraints['minimum']);
         $this->assertEquals(150, $ageConstraints['maximum']);
 
         $this->assertArrayHasKey('username', $constraints);
+
         /** @var array{minLength: int, maxLength: int} $usernameConstraints */
         $usernameConstraints = $constraints['username'];
         $this->assertEquals(3, $usernameConstraints['minLength']);
         $this->assertEquals(20, $usernameConstraints['maxLength']);
 
         $this->assertArrayHasKey('score', $constraints);
+
         /** @var array{multipleOf: float} $scoreConstraints */
         $scoreConstraints = $constraints['score'];
         $this->assertEquals(0.5, $scoreConstraints['multipleOf']);
