@@ -376,7 +376,8 @@ abstract class BaseClient
             $req = $this->transformRequest($req);
             // transformRequest() may sign each attempt, but credentials must never follow a redirect chain off the original origin.
             if ($crossOrigin) {
-                foreach (self::REDIRECT_SENSITIVE_HEADERS as $header) {
+                // SigV4 signing sends temporary credentials' session token in its own header.
+                foreach ([...self::REDIRECT_SENSITIVE_HEADERS, 'X-Amz-Security-Token'] as $header) {
                     $req = $req->withoutHeader($header);
                 }
             }

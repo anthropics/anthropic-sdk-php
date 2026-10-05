@@ -113,10 +113,13 @@ You can use PHP classes to define structured output schemas. The SDK will automa
 ```php
 <?php
 
-use Anthropic\Core\Helpers\StructuredOutputModel;
+use Anthropic\Lib\Concerns\StructuredOutputModelTrait;
+use Anthropic\Lib\Contracts\StructuredOutputModel;
 
-class Article extends StructuredOutputModel
+class Article implements StructuredOutputModel
 {
+    use StructuredOutputModelTrait;
+
     public string $title;
     public string $summary;
     /** @var string[] */
@@ -294,11 +297,11 @@ $message = $client->messages->create(
 
 #### Undocumented request params
 
-If you want to explicitly send an extra param, you can do so with the `extra_query`, `extra_body`, and `extra_headers` under the `request_options:` parameter when making a request, as seen in the examples above.
+If you want to explicitly send an extra param, you can do so with the `extraQueryParams`, `extraBodyParams`, and `extraHeaders` under the `requestOptions:` parameter when making a request, as seen in the examples above.
 
 #### Undocumented endpoints
 
-To make requests to undocumented endpoints while retaining the benefit of auth, retries, and so on, you can make requests using `client.request`, like so:
+To make requests to undocumented endpoints while retaining the benefit of auth, retries, and so on, you can make requests using `$client->request`, like so:
 
 ```php
 <?php
