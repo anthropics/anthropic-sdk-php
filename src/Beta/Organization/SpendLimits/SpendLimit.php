@@ -13,8 +13,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * A configured spend limit: a cap on metered spend for one scope and period.
  *
- * @phpstan-import-type ScopeVariants from \Anthropic\Beta\Organization\SpendLimits\SpendLimit\Scope
  * @phpstan-import-type ScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimit\Scope
+ * @phpstan-import-type ScopeVariants from \Anthropic\Beta\Organization\SpendLimits\SpendLimit\Scope
  *
  * @phpstan-type SpendLimitShape = array{
  *   id: string,

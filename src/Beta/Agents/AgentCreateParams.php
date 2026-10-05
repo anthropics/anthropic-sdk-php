@@ -19,14 +19,14 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Beta\AgentsService::create()
  *
- * @phpstan-import-type ModelVariants from \Anthropic\Beta\Agents\AgentCreateParams\Model
- * @phpstan-import-type BetaManagedAgentsSkillParamsVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
- * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\AgentCreateParams\Tool
  * @phpstan-import-type ModelShape from \Anthropic\Beta\Agents\AgentCreateParams\Model
  * @phpstan-import-type BetaManagedAgentsURLMCPServerParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams
  * @phpstan-import-type BetaManagedAgentsMultiagentParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams
  * @phpstan-import-type BetaManagedAgentsSkillParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Agents\AgentCreateParams\Tool
+ * @phpstan-import-type ModelVariants from \Anthropic\Beta\Agents\AgentCreateParams\Model
+ * @phpstan-import-type BetaManagedAgentsSkillParamsVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
+ * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\AgentCreateParams\Tool
  *
  * @phpstan-type AgentCreateParamsShape = array{
  *   model: ModelShape,

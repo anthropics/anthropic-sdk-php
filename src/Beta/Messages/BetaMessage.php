@@ -13,8 +13,6 @@ use Anthropic\Lib\Contracts\StructuredOutputModel;
 use Anthropic\Messages\Model;
 
 /**
- * @phpstan-import-type BetaContentBlockVariants from \Anthropic\Beta\Messages\BetaContentBlock
- * @phpstan-import-type BetaInputTransformationVariants from \Anthropic\Beta\Messages\BetaInputTransformation
  * @phpstan-import-type BetaContainerShape from \Anthropic\Beta\Messages\BetaContainer
  * @phpstan-import-type BetaContentBlockShape from \Anthropic\Beta\Messages\BetaContentBlock
  * @phpstan-import-type BetaContextManagementResponseShape from \Anthropic\Beta\Messages\BetaContextManagementResponse
@@ -22,6 +20,8 @@ use Anthropic\Messages\Model;
  * @phpstan-import-type BetaRefusalStopDetailsShape from \Anthropic\Beta\Messages\BetaRefusalStopDetails
  * @phpstan-import-type BetaUsageShape from \Anthropic\Beta\Messages\BetaUsage
  * @phpstan-import-type BetaInputTransformationShape from \Anthropic\Beta\Messages\BetaInputTransformation
+ * @phpstan-import-type BetaContentBlockVariants from \Anthropic\Beta\Messages\BetaContentBlock
+ * @phpstan-import-type BetaInputTransformationVariants from \Anthropic\Beta\Messages\BetaInputTransformation
  *
  * @phpstan-type BetaMessageShape = array{
  *   id: string,

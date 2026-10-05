@@ -18,8 +18,8 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Beta\EnvironmentsService::create()
  *
- * @phpstan-import-type ConfigVariants from \Anthropic\Beta\Environments\EnvironmentCreateParams\Config
  * @phpstan-import-type ConfigShape from \Anthropic\Beta\Environments\EnvironmentCreateParams\Config
+ * @phpstan-import-type ConfigVariants from \Anthropic\Beta\Environments\EnvironmentCreateParams\Config
  *
  * @phpstan-type EnvironmentCreateParamsShape = array{
  *   name: string,

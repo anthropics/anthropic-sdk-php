@@ -11,8 +11,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Lib\Contracts\StructuredOutputModel;
 
 /**
- * @phpstan-import-type BetaTextCitationVariants from \Anthropic\Beta\Messages\BetaTextCitation
  * @phpstan-import-type BetaTextCitationShape from \Anthropic\Beta\Messages\BetaTextCitation
+ * @phpstan-import-type BetaTextCitationVariants from \Anthropic\Beta\Messages\BetaTextCitation
  *
  * @phpstan-type BetaTextBlockShape = array{
  *   citations: list<BetaTextCitationShape>|null, text: string, type: 'text'

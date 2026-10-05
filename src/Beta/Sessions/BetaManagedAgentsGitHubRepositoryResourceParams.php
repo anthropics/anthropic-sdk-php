@@ -14,8 +14,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Mount a GitHub repository into the session's container.
  *
- * @phpstan-import-type CheckoutVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsGitHubRepositoryResourceParams\Checkout
  * @phpstan-import-type CheckoutShape from \Anthropic\Beta\Sessions\BetaManagedAgentsGitHubRepositoryResourceParams\Checkout
+ * @phpstan-import-type CheckoutVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsGitHubRepositoryResourceParams\Checkout
  *
  * @phpstan-type BetaManagedAgentsGitHubRepositoryResourceParamsShape = array{
  *   type: Type|value-of<Type>,

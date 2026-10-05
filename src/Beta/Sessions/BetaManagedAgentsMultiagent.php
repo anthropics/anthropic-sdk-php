@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Resolved multiagent orchestration configuration as returned in API responses.
  *
- * @phpstan-import-type AgentVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagent\Agent
  * @phpstan-import-type AgentShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagent\Agent
+ * @phpstan-import-type AgentVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagent\Agent
  *
  * @phpstan-type BetaManagedAgentsMultiagentShape = array{
  *   agents: list<AgentShape>, type: Type|value-of<Type>

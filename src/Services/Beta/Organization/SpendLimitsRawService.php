@@ -20,8 +20,8 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\SpendLimitsRawContract;
 
 /**
- * @phpstan-import-type ScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitSetParams\Scope
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type ScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitSetParams\Scope
  */
 final class SpendLimitsRawService implements SpendLimitsRawContract
 {

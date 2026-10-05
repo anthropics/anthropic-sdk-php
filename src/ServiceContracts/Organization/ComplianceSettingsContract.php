@@ -11,8 +11,8 @@ use Anthropic\Organization\ComplianceSettings\OrganizationComplianceSettings;
 use Anthropic\RequestOptions;
 
 /**
- * @phpstan-import-type ComplianceSettingsStateParamShape from \Anthropic\Organization\ComplianceSettings\ComplianceSettingsStateParam
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type ComplianceSettingsStateParamShape from \Anthropic\Organization\ComplianceSettings\ComplianceSettingsStateParam
  */
 interface ComplianceSettingsContract
 {

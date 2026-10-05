@@ -18,10 +18,10 @@ use Anthropic\Organization\ExternalKeys\ExternalKey\ProviderConfig;
  * workspace references it, the provider fields become effectively immutable
  * (existing encrypted data needs the config for decrypt).
  *
- * @phpstan-import-type AttachmentVariants from \Anthropic\Organization\ExternalKeys\ExternalKey\Attachment
- * @phpstan-import-type ProviderConfigVariants from \Anthropic\Organization\ExternalKeys\ExternalKey\ProviderConfig
  * @phpstan-import-type AttachmentShape from \Anthropic\Organization\ExternalKeys\ExternalKey\Attachment
  * @phpstan-import-type ProviderConfigShape from \Anthropic\Organization\ExternalKeys\ExternalKey\ProviderConfig
+ * @phpstan-import-type AttachmentVariants from \Anthropic\Organization\ExternalKeys\ExternalKey\Attachment
+ * @phpstan-import-type ProviderConfigVariants from \Anthropic\Organization\ExternalKeys\ExternalKey\ProviderConfig
  *
  * @phpstan-type ExternalKeyShape = array{
  *   id: string,

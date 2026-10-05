@@ -14,12 +14,12 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Resolved `agent` definition for a single `session_thread`. Snapshot of the agent at thread creation time. The multiagent roster is not repeated here; read it from `Session.agent`.
  *
- * @phpstan-import-type SkillVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Skill
- * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Tool
  * @phpstan-import-type BetaManagedAgentsMCPServerURLDefinitionShape from \Anthropic\Beta\Agents\BetaManagedAgentsMCPServerURLDefinition
  * @phpstan-import-type BetaManagedAgentsModelConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfig
  * @phpstan-import-type SkillShape from \Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Skill
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Tool
+ * @phpstan-import-type SkillVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Skill
+ * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Tool
  *
  * @phpstan-type BetaManagedAgentsSessionThreadAgentShape = array{
  *   id: string,

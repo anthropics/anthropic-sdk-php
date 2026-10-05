@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type ComplianceSettingsStateVariants from \Anthropic\Organization\ComplianceSettings\ComplianceSettingsState
  * @phpstan-import-type ComplianceSettingsStateShape from \Anthropic\Organization\ComplianceSettings\ComplianceSettingsState
+ * @phpstan-import-type ComplianceSettingsStateVariants from \Anthropic\Organization\ComplianceSettings\ComplianceSettingsState
  *
  * @phpstan-type OrganizationComplianceSettingsShape = array{
  *   state: ComplianceSettingsStateShape, type: 'compliance_settings'

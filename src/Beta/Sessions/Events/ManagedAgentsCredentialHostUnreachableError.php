@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * An `environment_variable` credential's `auth.networking.allowed_hosts` includes a host the environment's network policy does not permit.
  *
- * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsCredentialHostUnreachableError\RetryStatus
  * @phpstan-import-type RetryStatusShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsCredentialHostUnreachableError\RetryStatus
+ * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsCredentialHostUnreachableError\RetryStatus
  *
  * @phpstan-type ManagedAgentsCredentialHostUnreachableErrorShape = array{
  *   credentialID: string,

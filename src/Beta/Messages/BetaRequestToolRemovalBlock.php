@@ -18,9 +18,9 @@ use Anthropic\Core\Conversion\ConstantOf;
  * request's ``tools`` or defined earlier in ``messages``. It is no longer
  * offered to the model from this point in the conversation onward.
  *
- * @phpstan-import-type ToolVariants from \Anthropic\Beta\Messages\BetaRequestToolRemovalBlock\Tool
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Messages\BetaRequestToolRemovalBlock\Tool
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type ToolVariants from \Anthropic\Beta\Messages\BetaRequestToolRemovalBlock\Tool
  *
  * @phpstan-type BetaRequestToolRemovalBlockShape = array{
  *   tool: ToolShape,

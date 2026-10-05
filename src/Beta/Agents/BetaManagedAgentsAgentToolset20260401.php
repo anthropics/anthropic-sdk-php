@@ -10,9 +10,9 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-import-type BetaManagedAgentsAgentToolConfigVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfig
  * @phpstan-import-type BetaManagedAgentsAgentToolConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfig
  * @phpstan-import-type BetaManagedAgentsAgentToolsetDefaultConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolsetDefaultConfig
+ * @phpstan-import-type BetaManagedAgentsAgentToolConfigVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfig
  *
  * @phpstan-type BetaManagedAgentsAgentToolset20260401Shape = array{
  *   configs: list<BetaManagedAgentsAgentToolConfigShape>,

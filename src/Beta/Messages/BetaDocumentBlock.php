@@ -11,9 +11,9 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type SourceVariants from \Anthropic\Beta\Messages\BetaDocumentBlock\Source
  * @phpstan-import-type BetaCitationConfigShape from \Anthropic\Beta\Messages\BetaCitationConfig
  * @phpstan-import-type SourceShape from \Anthropic\Beta\Messages\BetaDocumentBlock\Source
+ * @phpstan-import-type SourceVariants from \Anthropic\Beta\Messages\BetaDocumentBlock\Source
  *
  * @phpstan-type BetaDocumentBlockShape = array{
  *   citations: null|BetaCitationConfig|BetaCitationConfigShape,

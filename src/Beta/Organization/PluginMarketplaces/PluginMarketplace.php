@@ -16,8 +16,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type OwnerVariants from \Anthropic\Beta\Organization\PluginMarketplaces\PluginMarketplace\Owner
  * @phpstan-import-type OwnerShape from \Anthropic\Beta\Organization\PluginMarketplaces\PluginMarketplace\Owner
+ * @phpstan-import-type OwnerVariants from \Anthropic\Beta\Organization\PluginMarketplaces\PluginMarketplace\Owner
  *
  * @phpstan-type PluginMarketplaceShape = array{
  *   id: string,

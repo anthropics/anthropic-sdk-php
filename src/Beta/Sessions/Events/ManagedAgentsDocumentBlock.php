@@ -14,8 +14,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Document content, either specified directly as base64 data, as text, or as a reference via a URL.
  *
- * @phpstan-import-type SourceVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsDocumentBlock\Source
  * @phpstan-import-type SourceShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsDocumentBlock\Source
+ * @phpstan-import-type SourceVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsDocumentBlock\Source
  *
  * @phpstan-type ManagedAgentsDocumentBlockShape = array{
  *   source: SourceShape,

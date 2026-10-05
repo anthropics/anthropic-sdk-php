@@ -18,9 +18,9 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type GroupVariants from \Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimit\Group
  * @phpstan-import-type GroupShape from \Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimit\Group
  * @phpstan-import-type BetaWorkspaceRateLimitValueShape from \Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimitValue
+ * @phpstan-import-type GroupVariants from \Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimit\Group
  *
  * @phpstan-type BetaWorkspaceRateLimitShape = array{
  *   group: GroupShape,

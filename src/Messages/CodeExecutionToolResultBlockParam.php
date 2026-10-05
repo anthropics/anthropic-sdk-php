@@ -11,9 +11,9 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type CodeExecutionToolResultBlockParamContentVariants from \Anthropic\Messages\CodeExecutionToolResultBlockParamContent
  * @phpstan-import-type CodeExecutionToolResultBlockParamContentShape from \Anthropic\Messages\CodeExecutionToolResultBlockParamContent
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ * @phpstan-import-type CodeExecutionToolResultBlockParamContentVariants from \Anthropic\Messages\CodeExecutionToolResultBlockParamContent
  *
  * @phpstan-type CodeExecutionToolResultBlockParamShape = array{
  *   content: CodeExecutionToolResultBlockParamContentShape,

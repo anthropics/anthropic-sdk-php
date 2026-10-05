@@ -14,12 +14,12 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Per-member effective-limit report row (`GET /spend_limits/effective`).
  *
- * @phpstan-import-type ActorVariants from \Anthropic\Beta\Organization\SpendLimits\SpendSummary\Actor
- * @phpstan-import-type ScopeVariants from \Anthropic\Beta\Organization\SpendLimits\SpendSummary\Scope
- * @phpstan-import-type SourceVariants from \Anthropic\Beta\Organization\SpendLimits\SpendSummary\Source
  * @phpstan-import-type ActorShape from \Anthropic\Beta\Organization\SpendLimits\SpendSummary\Actor
  * @phpstan-import-type ScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendSummary\Scope
  * @phpstan-import-type SourceShape from \Anthropic\Beta\Organization\SpendLimits\SpendSummary\Source
+ * @phpstan-import-type ActorVariants from \Anthropic\Beta\Organization\SpendLimits\SpendSummary\Actor
+ * @phpstan-import-type ScopeVariants from \Anthropic\Beta\Organization\SpendLimits\SpendSummary\Scope
+ * @phpstan-import-type SourceVariants from \Anthropic\Beta\Organization\SpendLimits\SpendSummary\Source
  *
  * @phpstan-type SpendSummaryShape = array{
  *   actor: ActorShape,

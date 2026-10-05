@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * A user message sent to the session.
  *
- * @phpstan-import-type ContentVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentUserMessageEvent\Content
  * @phpstan-import-type ContentShape from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentUserMessageEvent\Content
+ * @phpstan-import-type ContentVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentUserMessageEvent\Content
  *
  * @phpstan-type BetaManagedAgentsDeploymentUserMessageEventShape = array{
  *   content: list<ContentShape>, type: Type|value-of<Type>

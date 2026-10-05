@@ -15,13 +15,13 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * A Managed Agents `session`.
  *
- * @phpstan-import-type ManagedAgentsSessionResourceVariants from \Anthropic\Beta\Sessions\Resources\ManagedAgentsSessionResource
  * @phpstan-import-type BetaManagedAgentsSessionAgentShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent
  * @phpstan-import-type BetaManagedAgentsBudgetLimitShape from \Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit
  * @phpstan-import-type BetaManagedAgentsOutcomeEvaluationResourceShape from \Anthropic\Beta\Sessions\BetaManagedAgentsOutcomeEvaluationResource
  * @phpstan-import-type ManagedAgentsSessionResourceShape from \Anthropic\Beta\Sessions\Resources\ManagedAgentsSessionResource
  * @phpstan-import-type BetaManagedAgentsSessionStatsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionStats
  * @phpstan-import-type BetaManagedAgentsSessionUsageShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionUsage
+ * @phpstan-import-type ManagedAgentsSessionResourceVariants from \Anthropic\Beta\Sessions\Resources\ManagedAgentsSessionResource
  *
  * @phpstan-type BetaManagedAgentsSessionShape = array{
  *   id: string,

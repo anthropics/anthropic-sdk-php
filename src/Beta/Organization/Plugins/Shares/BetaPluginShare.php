@@ -18,8 +18,8 @@ use Anthropic\Core\Conversion\ConstantOf;
  * read-only in this API and have no ID of their own; who gave a share is
  * recorded on the Compliance API activity feed, not here.
  *
- * @phpstan-import-type TargetVariants from \Anthropic\Beta\Organization\Plugins\Shares\BetaPluginShare\Target
  * @phpstan-import-type TargetShape from \Anthropic\Beta\Organization\Plugins\Shares\BetaPluginShare\Target
+ * @phpstan-import-type TargetVariants from \Anthropic\Beta\Organization\Plugins\Shares\BetaPluginShare\Target
  *
  * @phpstan-type BetaPluginShareShape = array{
  *   grantedAt: \DateTimeInterface,

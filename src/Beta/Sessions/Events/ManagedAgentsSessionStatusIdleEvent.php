@@ -13,9 +13,9 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Indicates the agent has paused and is awaiting user input.
  *
- * @phpstan-import-type StopReasonVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusIdleEvent\StopReason
  * @phpstan-import-type ManagedAgentsSessionRefusalStopDetailsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionRefusalStopDetails
  * @phpstan-import-type StopReasonShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusIdleEvent\StopReason
+ * @phpstan-import-type StopReasonVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusIdleEvent\StopReason
  *
  * @phpstan-type ManagedAgentsSessionStatusIdleEventShape = array{
  *   id: string,

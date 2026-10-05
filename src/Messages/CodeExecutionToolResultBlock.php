@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type CodeExecutionToolResultBlockContentVariants from \Anthropic\Messages\CodeExecutionToolResultBlockContent
  * @phpstan-import-type CodeExecutionToolResultBlockContentShape from \Anthropic\Messages\CodeExecutionToolResultBlockContent
+ * @phpstan-import-type CodeExecutionToolResultBlockContentVariants from \Anthropic\Messages\CodeExecutionToolResultBlockContent
  *
  * @phpstan-type CodeExecutionToolResultBlockShape = array{
  *   content: CodeExecutionToolResultBlockContentShape,

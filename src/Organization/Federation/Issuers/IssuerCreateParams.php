@@ -28,8 +28,8 @@ use Anthropic\Organization\Federation\Issuers\IssuerCreateParams\JWKS;
  *
  * @see Anthropic\Services\Organization\Federation\IssuersService::create()
  *
- * @phpstan-import-type JWKSVariants from \Anthropic\Organization\Federation\Issuers\IssuerCreateParams\JWKS
  * @phpstan-import-type JWKSShape from \Anthropic\Organization\Federation\Issuers\IssuerCreateParams\JWKS
+ * @phpstan-import-type JWKSVariants from \Anthropic\Organization\Federation\Issuers\IssuerCreateParams\JWKS
  *
  * @phpstan-type IssuerCreateParamsShape = array{
  *   issuerURL: string,

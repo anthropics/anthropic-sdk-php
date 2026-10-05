@@ -12,8 +12,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Resolved default configuration for all tools from an MCP server.
  *
- * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsMCPToolsetDefaultConfig\PermissionPolicy
  * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsMCPToolsetDefaultConfig\PermissionPolicy
+ * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsMCPToolsetDefaultConfig\PermissionPolicy
  *
  * @phpstan-type BetaManagedAgentsMCPToolsetDefaultConfigShape = array{
  *   enabled: bool, permissionPolicy: PermissionPolicyShape

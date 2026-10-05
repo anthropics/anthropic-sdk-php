@@ -19,13 +19,13 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Reference to an `agent` plus optional configuration overrides. Each provided field replaces the agent's value for the caller's use; the agent resource is unchanged.
  *
- * @phpstan-import-type ModelVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsAgentWithOverridesParams\Model
- * @phpstan-import-type BetaManagedAgentsSkillParamsVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
- * @phpstan-import-type ToolVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsAgentWithOverridesParams\Tool
  * @phpstan-import-type BetaManagedAgentsURLMCPServerParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams
  * @phpstan-import-type ModelShape from \Anthropic\Beta\Sessions\BetaManagedAgentsAgentWithOverridesParams\Model
  * @phpstan-import-type BetaManagedAgentsSkillParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Sessions\BetaManagedAgentsAgentWithOverridesParams\Tool
+ * @phpstan-import-type ModelVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsAgentWithOverridesParams\Model
+ * @phpstan-import-type BetaManagedAgentsSkillParamsVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
+ * @phpstan-import-type ToolVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsAgentWithOverridesParams\Tool
  *
  * @phpstan-type BetaManagedAgentsAgentWithOverridesParamsShape = array{
  *   id: string,

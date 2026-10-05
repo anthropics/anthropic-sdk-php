@@ -32,19 +32,19 @@ use Anthropic\ServiceContracts\MessagesRawContract;
 use Anthropic\SSEStream;
 
 /**
- * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCountTokensParams\System
- * @phpstan-import-type MessageCountTokensToolShape from \Anthropic\Messages\MessageCountTokensTool
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type MessageCreateParamsContainerShape from \Anthropic\Messages\MessageCreateParamsContainer
  * @phpstan-import-type DiagnosticsParamShape from \Anthropic\Messages\DiagnosticsParam
  * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
  * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
- * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCreateParams\System as SystemShape1
+ * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCreateParams\System
  * @phpstan-import-type ThinkingConfigParamShape from \Anthropic\Messages\ThinkingConfigParam
  * @phpstan-import-type ToolChoiceShape from \Anthropic\Messages\ToolChoice
  * @phpstan-import-type ToolUnionShape from \Anthropic\Messages\ToolUnion
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCountTokensParams\System as SystemShape1
+ * @phpstan-import-type MessageCountTokensToolShape from \Anthropic\Messages\MessageCountTokensTool
  */
 final class MessagesRawService implements MessagesRawContract
 {
@@ -75,7 +75,7 @@ final class MessagesRawService implements MessagesRawContract
      *   outputConfig?: OutputConfig|OutputConfigShape,
      *   serviceTier?: ServiceTier|value-of<ServiceTier>,
      *   stopSequences?: list<string>,
-     *   system?: SystemShape1,
+     *   system?: SystemShape,
      *   temperature?: float,
      *   thinking?: ThinkingConfigParamShape,
      *   toolChoice?: ToolChoiceShape,
@@ -136,7 +136,7 @@ final class MessagesRawService implements MessagesRawContract
      *   outputConfig?: OutputConfig|OutputConfigShape,
      *   serviceTier?: ServiceTier|value-of<ServiceTier>,
      *   stopSequences?: list<string>,
-     *   system?: SystemShape1,
+     *   system?: SystemShape,
      *   temperature?: float,
      *   thinking?: ThinkingConfigParamShape,
      *   toolChoice?: ToolChoiceShape,
@@ -204,7 +204,7 @@ final class MessagesRawService implements MessagesRawContract
      *   model: string|Model|value-of<Model>,
      *   cacheControl?: CacheControlEphemeral|CacheControlEphemeralShape|null,
      *   outputConfig?: OutputConfig|OutputConfigShape,
-     *   system?: SystemShape,
+     *   system?: SystemShape1,
      *   thinking?: ThinkingConfigParamShape,
      *   toolChoice?: ToolChoiceShape,
      *   tools?: list<MessageCountTokensToolShape>,

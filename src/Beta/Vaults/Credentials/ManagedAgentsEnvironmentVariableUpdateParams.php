@@ -13,9 +13,9 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Parameters for updating an environment variable credential. `secret_name` is immutable.
  *
- * @phpstan-import-type ManagedAgentsCredentialNetworkingParamsVariants from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredentialNetworkingParams
  * @phpstan-import-type ManagedAgentsInjectionLocationUpdateParamsShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsInjectionLocationUpdateParams
  * @phpstan-import-type ManagedAgentsCredentialNetworkingParamsShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredentialNetworkingParams
+ * @phpstan-import-type ManagedAgentsCredentialNetworkingParamsVariants from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredentialNetworkingParams
  *
  * @phpstan-type ManagedAgentsEnvironmentVariableUpdateParamsShape = array{
  *   type: Type|value-of<Type>,

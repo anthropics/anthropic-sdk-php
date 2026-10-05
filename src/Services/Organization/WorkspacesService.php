@@ -19,8 +19,8 @@ use Anthropic\Services\Organization\Workspaces\ServiceAccountsService;
 
 /**
  * @phpstan-import-type DataResidencyCreateConfigShape from \Anthropic\Organization\Workspaces\DataResidencyCreateConfig
- * @phpstan-import-type DataResidencyUpdateConfigShape from \Anthropic\Organization\Workspaces\DataResidencyUpdateConfig
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type DataResidencyUpdateConfigShape from \Anthropic\Organization\Workspaces\DataResidencyUpdateConfig
  */
 final class WorkspacesService implements WorkspacesContract
 {

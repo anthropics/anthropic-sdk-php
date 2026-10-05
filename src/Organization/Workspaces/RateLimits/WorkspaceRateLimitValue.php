@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Organization\Workspaces\RateLimits\WorkspaceRateLimitValue\Source;
 
 /**
- * @phpstan-import-type SourceVariants from \Anthropic\Organization\Workspaces\RateLimits\WorkspaceRateLimitValue\Source
  * @phpstan-import-type SourceShape from \Anthropic\Organization\Workspaces\RateLimits\WorkspaceRateLimitValue\Source
+ * @phpstan-import-type SourceVariants from \Anthropic\Organization\Workspaces\RateLimits\WorkspaceRateLimitValue\Source
  *
  * @phpstan-type WorkspaceRateLimitValueShape = array{
  *   orgLimit: int|null, source: SourceShape, type: string, value: int

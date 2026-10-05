@@ -29,8 +29,8 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Beta\Organization\Federation\IssuersService::create()
  *
- * @phpstan-import-type JWKSVariants from \Anthropic\Beta\Organization\Federation\Issuers\IssuerCreateParams\JWKS
  * @phpstan-import-type JWKSShape from \Anthropic\Beta\Organization\Federation\Issuers\IssuerCreateParams\JWKS
+ * @phpstan-import-type JWKSVariants from \Anthropic\Beta\Organization\Federation\Issuers\IssuerCreateParams\JWKS
  *
  * @phpstan-type IssuerCreateParamsShape = array{
  *   issuerURL: string,

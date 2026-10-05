@@ -12,10 +12,10 @@ use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\ImageBlockParam\Source;
 
 /**
- * @phpstan-import-type SourceVariants from \Anthropic\Messages\ImageBlockParam\Source
  * @phpstan-import-type SourceShape from \Anthropic\Messages\ImageBlockParam\Source
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type ImageTransformationsParamShape from \Anthropic\Messages\ImageTransformationsParam
+ * @phpstan-import-type SourceVariants from \Anthropic\Messages\ImageBlockParam\Source
  *
  * @phpstan-type ImageBlockParamShape = array{
  *   source: SourceShape,

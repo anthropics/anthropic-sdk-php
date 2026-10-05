@@ -9,11 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-import-type BetaIterationsUsageItemVariants from \Anthropic\Beta\Messages\BetaIterationsUsageItem
  * @phpstan-import-type BetaFallbackCreditUsageShape from \Anthropic\Beta\Messages\BetaFallbackCreditUsage
  * @phpstan-import-type BetaIterationsUsageItemShape from \Anthropic\Beta\Messages\BetaIterationsUsageItem
  * @phpstan-import-type BetaOutputTokensDetailsShape from \Anthropic\Beta\Messages\BetaOutputTokensDetails
  * @phpstan-import-type BetaServerToolUsageShape from \Anthropic\Beta\Messages\BetaServerToolUsage
+ * @phpstan-import-type BetaIterationsUsageItemVariants from \Anthropic\Beta\Messages\BetaIterationsUsageItem
  *
  * @phpstan-type BetaMessageDeltaUsageShape = array{
  *   cacheCreationInputTokens: int|null,

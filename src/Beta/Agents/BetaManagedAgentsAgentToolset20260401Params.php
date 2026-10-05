@@ -13,9 +13,9 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Configuration for built-in agent tools. Use this to enable or disable groups of tools available to the agent.
  *
- * @phpstan-import-type BetaManagedAgentsAgentToolConfigParamsVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfigParams
  * @phpstan-import-type BetaManagedAgentsAgentToolConfigParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfigParams
  * @phpstan-import-type BetaManagedAgentsAgentToolsetDefaultConfigParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolsetDefaultConfigParams
+ * @phpstan-import-type BetaManagedAgentsAgentToolConfigParamsVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolConfigParams
  *
  * @phpstan-type BetaManagedAgentsAgentToolset20260401ParamsShape = array{
  *   type: Type|value-of<Type>,

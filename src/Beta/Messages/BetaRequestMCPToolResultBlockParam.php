@@ -12,9 +12,9 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type ContentVariants from \Anthropic\Beta\Messages\BetaRequestMCPToolResultBlockParam\Content
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaRequestMCPToolResultBlockParam\Content
+ * @phpstan-import-type ContentVariants from \Anthropic\Beta\Messages\BetaRequestMCPToolResultBlockParam\Content
  *
  * @phpstan-type BetaRequestMCPToolResultBlockParamShape = array{
  *   toolUseID: string,

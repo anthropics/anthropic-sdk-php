@@ -21,11 +21,6 @@ use Anthropic\Messages\MessageCreateParams\System;
  *
  * @see Anthropic\Services\MessagesService::create()
  *
- * @phpstan-import-type MessageCreateParamsContainerVariants from \Anthropic\Messages\MessageCreateParamsContainer
- * @phpstan-import-type SystemVariants from \Anthropic\Messages\MessageCreateParams\System
- * @phpstan-import-type ThinkingConfigParamVariants from \Anthropic\Messages\ThinkingConfigParam
- * @phpstan-import-type ToolChoiceVariants from \Anthropic\Messages\ToolChoice
- * @phpstan-import-type ToolUnionVariants from \Anthropic\Messages\ToolUnion
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type MessageCreateParamsContainerShape from \Anthropic\Messages\MessageCreateParamsContainer
@@ -36,6 +31,11 @@ use Anthropic\Messages\MessageCreateParams\System;
  * @phpstan-import-type ThinkingConfigParamShape from \Anthropic\Messages\ThinkingConfigParam
  * @phpstan-import-type ToolChoiceShape from \Anthropic\Messages\ToolChoice
  * @phpstan-import-type ToolUnionShape from \Anthropic\Messages\ToolUnion
+ * @phpstan-import-type MessageCreateParamsContainerVariants from \Anthropic\Messages\MessageCreateParamsContainer
+ * @phpstan-import-type SystemVariants from \Anthropic\Messages\MessageCreateParams\System
+ * @phpstan-import-type ThinkingConfigParamVariants from \Anthropic\Messages\ThinkingConfigParam
+ * @phpstan-import-type ToolChoiceVariants from \Anthropic\Messages\ToolChoice
+ * @phpstan-import-type ToolUnionVariants from \Anthropic\Messages\ToolUnion
  *
  * @phpstan-type MessageCreateParamsShape = array{
  *   maxTokens: int,

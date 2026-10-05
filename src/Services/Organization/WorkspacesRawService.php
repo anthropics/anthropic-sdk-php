@@ -20,8 +20,8 @@ use Anthropic\ServiceContracts\Organization\WorkspacesRawContract;
 
 /**
  * @phpstan-import-type DataResidencyCreateConfigShape from \Anthropic\Organization\Workspaces\DataResidencyCreateConfig
- * @phpstan-import-type DataResidencyUpdateConfigShape from \Anthropic\Organization\Workspaces\DataResidencyUpdateConfig
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type DataResidencyUpdateConfigShape from \Anthropic\Organization\Workspaces\DataResidencyUpdateConfig
  */
 final class WorkspacesRawService implements WorkspacesRawContract
 {

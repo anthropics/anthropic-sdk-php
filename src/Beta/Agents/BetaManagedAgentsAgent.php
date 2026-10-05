@@ -15,13 +15,13 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * A Managed Agents `agent`.
  *
- * @phpstan-import-type SkillVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgent\Skill
- * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgent\Tool
  * @phpstan-import-type BetaManagedAgentsMCPServerURLDefinitionShape from \Anthropic\Beta\Agents\BetaManagedAgentsMCPServerURLDefinition
  * @phpstan-import-type BetaManagedAgentsModelConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfig
  * @phpstan-import-type BetaManagedAgentsMultiagentShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagent
  * @phpstan-import-type SkillShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgent\Skill
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgent\Tool
+ * @phpstan-import-type SkillVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgent\Skill
+ * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgent\Tool
  *
  * @phpstan-type BetaManagedAgentsAgentShape = array{
  *   id: string,

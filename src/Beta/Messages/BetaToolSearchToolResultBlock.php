@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type ContentVariants from \Anthropic\Beta\Messages\BetaToolSearchToolResultBlock\Content
  * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaToolSearchToolResultBlock\Content
+ * @phpstan-import-type ContentVariants from \Anthropic\Beta\Messages\BetaToolSearchToolResultBlock\Content
  *
  * @phpstan-type BetaToolSearchToolResultBlockShape = array{
  *   content: ContentShape, toolUseID: string, type: 'tool_search_tool_result'

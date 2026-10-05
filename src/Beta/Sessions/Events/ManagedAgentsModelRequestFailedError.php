@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * A model request failed for a reason other than overload or rate-limiting.
  *
- * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsModelRequestFailedError\RetryStatus
  * @phpstan-import-type RetryStatusShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsModelRequestFailedError\RetryStatus
+ * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsModelRequestFailedError\RetryStatus
  *
  * @phpstan-type ManagedAgentsModelRequestFailedErrorShape = array{
  *   message: string, retryStatus: RetryStatusShape, type: Type|value-of<Type>

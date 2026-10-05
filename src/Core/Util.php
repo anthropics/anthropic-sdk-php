@@ -257,6 +257,11 @@ final class Util
             $base = str_starts_with($path, '/') ? $base->withPath($path) : $base->withPath(rtrim($base->getPath(), '/').'/'.$path);
         }
 
+        // parse_str() rewrites keys such as `page.token`, so a query with nothing to merge into it is kept as written.
+        if ('' === $base->getQuery() && [] === $query) {
+            return $base->withQuery($pathQuery);
+        }
+
         [$q1, $q2] = [[], []];
         parse_str($base->getQuery(), $q1);
         parse_str($pathQuery, $q2);

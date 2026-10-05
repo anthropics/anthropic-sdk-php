@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Event emitted when the agent invokes a tool provided by an MCP server.
  *
- * @phpstan-import-type ManagedAgentsAgentToolEvaluationVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolEvaluation
  * @phpstan-import-type ManagedAgentsAgentToolEvaluationShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolEvaluation
+ * @phpstan-import-type ManagedAgentsAgentToolEvaluationVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolEvaluation
  *
  * @phpstan-type ManagedAgentsAgentMCPToolUseEventShape = array{
  *   id: string,

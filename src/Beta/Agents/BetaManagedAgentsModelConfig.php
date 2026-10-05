@@ -14,8 +14,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Model identifier and configuration.
  *
- * @phpstan-import-type EffortVariants from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfig\Effort
  * @phpstan-import-type EffortShape from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfig\Effort
+ * @phpstan-import-type EffortVariants from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfig\Effort
  *
  * @phpstan-type BetaManagedAgentsModelConfigShape = array{
  *   id: string|BetaManagedAgentsModel|value-of<BetaManagedAgentsModel>,

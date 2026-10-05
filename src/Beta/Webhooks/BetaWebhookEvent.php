@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type BetaWebhookEventDataVariants from \Anthropic\Beta\Webhooks\BetaWebhookEventData
  * @phpstan-import-type BetaWebhookEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookEventData
+ * @phpstan-import-type BetaWebhookEventDataVariants from \Anthropic\Beta\Webhooks\BetaWebhookEventData
  *
  * @phpstan-type BetaWebhookEventShape = array{
  *   id: string,

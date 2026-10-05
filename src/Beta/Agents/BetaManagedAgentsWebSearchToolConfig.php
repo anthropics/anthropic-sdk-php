@@ -14,9 +14,9 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * Configuration for the web_search tool.
  *
- * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsWebSearchToolConfig\PermissionPolicy
  * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsWebSearchToolConfig\PermissionPolicy
  * @phpstan-import-type BetaManagedAgentsUserLocationShape from \Anthropic\Beta\Agents\BetaManagedAgentsUserLocation
+ * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsWebSearchToolConfig\PermissionPolicy
  *
  * @phpstan-type BetaManagedAgentsWebSearchToolConfigShape = array{
  *   enabled: bool,

@@ -22,9 +22,9 @@ use Anthropic\Core\Conversion\ConstantOf;
  * definition also requires the ``mcp-client-2026-09-15`` beta. The tool is
  * offered to the model from this point in the conversation onward.
  *
- * @phpstan-import-type ToolVariants from \Anthropic\Beta\Messages\BetaRequestToolAdditionBlock\Tool
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Messages\BetaRequestToolAdditionBlock\Tool
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type ToolVariants from \Anthropic\Beta\Messages\BetaRequestToolAdditionBlock\Tool
  *
  * @phpstan-type BetaRequestToolAdditionBlockShape = array{
  *   tool: ToolShape,

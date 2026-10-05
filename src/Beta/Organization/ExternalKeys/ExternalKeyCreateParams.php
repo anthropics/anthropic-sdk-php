@@ -17,8 +17,8 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Beta\Organization\ExternalKeysService::create()
  *
- * @phpstan-import-type ProviderConfigVariants from \Anthropic\Beta\Organization\ExternalKeys\ExternalKeyCreateParams\ProviderConfig
  * @phpstan-import-type ProviderConfigShape from \Anthropic\Beta\Organization\ExternalKeys\ExternalKeyCreateParams\ProviderConfig
+ * @phpstan-import-type ProviderConfigVariants from \Anthropic\Beta\Organization\ExternalKeys\ExternalKeyCreateParams\ProviderConfig
  *
  * @phpstan-type ExternalKeyCreateParamsShape = array{
  *   providerConfig: ProviderConfigShape,

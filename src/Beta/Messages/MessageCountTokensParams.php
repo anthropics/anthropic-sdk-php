@@ -24,10 +24,6 @@ use Anthropic\Messages\Model;
  *
  * @see Anthropic\Services\Beta\MessagesService::countTokens()
  *
- * @phpstan-import-type SystemVariants from \Anthropic\Beta\Messages\MessageCountTokensParams\System
- * @phpstan-import-type BetaThinkingConfigParamVariants from \Anthropic\Beta\Messages\BetaThinkingConfigParam
- * @phpstan-import-type BetaToolChoiceVariants from \Anthropic\Beta\Messages\BetaToolChoice
- * @phpstan-import-type ToolVariants from \Anthropic\Beta\Messages\MessageCountTokensParams\Tool
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type BetaCompactionConfigShape from \Anthropic\Beta\Messages\BetaCompactionConfig
@@ -39,6 +35,10 @@ use Anthropic\Messages\Model;
  * @phpstan-import-type BetaThinkingConfigParamShape from \Anthropic\Beta\Messages\BetaThinkingConfigParam
  * @phpstan-import-type BetaToolChoiceShape from \Anthropic\Beta\Messages\BetaToolChoice
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Messages\MessageCountTokensParams\Tool
+ * @phpstan-import-type SystemVariants from \Anthropic\Beta\Messages\MessageCountTokensParams\System
+ * @phpstan-import-type BetaThinkingConfigParamVariants from \Anthropic\Beta\Messages\BetaThinkingConfigParam
+ * @phpstan-import-type BetaToolChoiceVariants from \Anthropic\Beta\Messages\BetaToolChoice
+ * @phpstan-import-type ToolVariants from \Anthropic\Beta\Messages\MessageCountTokensParams\Tool
  *
  * @phpstan-type MessageCountTokensParamsShape = array{
  *   messages: list<BetaMessageParam|BetaMessageParamShape>,

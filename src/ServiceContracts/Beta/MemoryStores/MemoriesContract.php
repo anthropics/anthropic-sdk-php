@@ -15,8 +15,8 @@ use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
 /**
- * @phpstan-import-type ManagedAgentsPreconditionShape from \Anthropic\Beta\MemoryStores\Memories\ManagedAgentsPrecondition
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type ManagedAgentsPreconditionShape from \Anthropic\Beta\MemoryStores\Memories\ManagedAgentsPrecondition
  */
 interface MemoriesContract
 {

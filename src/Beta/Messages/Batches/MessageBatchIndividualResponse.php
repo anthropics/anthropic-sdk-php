@@ -11,8 +11,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * This is a single line in the response `.jsonl` file and does not represent the response as a whole.
  *
- * @phpstan-import-type MessageBatchResultVariants from \Anthropic\Beta\Messages\Batches\MessageBatchResult
  * @phpstan-import-type MessageBatchResultShape from \Anthropic\Beta\Messages\Batches\MessageBatchResult
+ * @phpstan-import-type MessageBatchResultVariants from \Anthropic\Beta\Messages\Batches\MessageBatchResult
  *
  * @phpstan-type MessageBatchIndividualResponseShape = array{
  *   customID: string, result: MessageBatchResultShape

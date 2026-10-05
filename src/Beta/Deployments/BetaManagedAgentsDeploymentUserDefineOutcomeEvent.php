@@ -16,8 +16,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * An outcome the agent should work toward. The agent begins work on receipt.
  *
- * @phpstan-import-type RubricVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentUserDefineOutcomeEvent\Rubric
  * @phpstan-import-type RubricShape from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentUserDefineOutcomeEvent\Rubric
+ * @phpstan-import-type RubricVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentUserDefineOutcomeEvent\Rubric
  *
  * @phpstan-type BetaManagedAgentsDeploymentUserDefineOutcomeEventShape = array{
  *   description: string,

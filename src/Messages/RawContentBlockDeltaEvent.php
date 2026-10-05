@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type RawContentBlockDeltaVariants from \Anthropic\Messages\RawContentBlockDelta
  * @phpstan-import-type RawContentBlockDeltaShape from \Anthropic\Messages\RawContentBlockDelta
+ * @phpstan-import-type RawContentBlockDeltaVariants from \Anthropic\Messages\RawContentBlockDelta
  *
  * @phpstan-type RawContentBlockDeltaEventShape = array{
  *   delta: RawContentBlockDeltaShape, index: int, type: 'content_block_delta'

@@ -12,11 +12,11 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type BetaInputTransformationVariants from \Anthropic\Beta\Messages\BetaInputTransformation
  * @phpstan-import-type BetaContextManagementResponseShape from \Anthropic\Beta\Messages\BetaContextManagementResponse
  * @phpstan-import-type DeltaShape from \Anthropic\Beta\Messages\BetaRawMessageDeltaEvent\Delta
  * @phpstan-import-type BetaMessageDeltaUsageShape from \Anthropic\Beta\Messages\BetaMessageDeltaUsage
  * @phpstan-import-type BetaInputTransformationShape from \Anthropic\Beta\Messages\BetaInputTransformation
+ * @phpstan-import-type BetaInputTransformationVariants from \Anthropic\Beta\Messages\BetaInputTransformation
  *
  * @phpstan-type BetaRawMessageDeltaEventShape = array{
  *   contextManagement: null|BetaContextManagementResponse|BetaContextManagementResponseShape,

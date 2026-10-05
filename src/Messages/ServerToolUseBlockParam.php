@@ -13,9 +13,9 @@ use Anthropic\Messages\ServerToolUseBlockParam\Caller;
 use Anthropic\Messages\ServerToolUseBlockParam\Name;
 
 /**
- * @phpstan-import-type CallerVariants from \Anthropic\Messages\ServerToolUseBlockParam\Caller
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type CallerShape from \Anthropic\Messages\ServerToolUseBlockParam\Caller
+ * @phpstan-import-type CallerVariants from \Anthropic\Messages\ServerToolUseBlockParam\Caller
  *
  * @phpstan-type ServerToolUseBlockParamShape = array{
  *   id: string,

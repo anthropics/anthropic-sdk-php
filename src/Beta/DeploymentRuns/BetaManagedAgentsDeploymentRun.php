@@ -14,11 +14,11 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * A persistent, append-only record of a single deployment execution. Records session creation success or failure — no session lifecycle tracking.
  *
- * @phpstan-import-type ErrorVariants from \Anthropic\Beta\DeploymentRuns\BetaManagedAgentsDeploymentRun\Error
- * @phpstan-import-type BetaManagedAgentsTriggerContextVariants from \Anthropic\Beta\DeploymentRuns\BetaManagedAgentsTriggerContext
  * @phpstan-import-type BetaManagedAgentsAgentReferenceShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgentReference
  * @phpstan-import-type ErrorShape from \Anthropic\Beta\DeploymentRuns\BetaManagedAgentsDeploymentRun\Error
  * @phpstan-import-type BetaManagedAgentsTriggerContextShape from \Anthropic\Beta\DeploymentRuns\BetaManagedAgentsTriggerContext
+ * @phpstan-import-type ErrorVariants from \Anthropic\Beta\DeploymentRuns\BetaManagedAgentsDeploymentRun\Error
+ * @phpstan-import-type BetaManagedAgentsTriggerContextVariants from \Anthropic\Beta\DeploymentRuns\BetaManagedAgentsTriggerContext
  *
  * @phpstan-type BetaManagedAgentsDeploymentRunShape = array{
  *   id: string,

@@ -27,8 +27,8 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Beta\Organization\ComplianceSettingsService::update()
  *
- * @phpstan-import-type ComplianceSettingsStateParamVariants from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsStateParam
  * @phpstan-import-type ComplianceSettingsStateParamShape from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsStateParam
+ * @phpstan-import-type ComplianceSettingsStateParamVariants from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsStateParam
  *
  * @phpstan-type ComplianceSettingUpdateParamsShape = array{
  *   state: ComplianceSettingsStateParamShape

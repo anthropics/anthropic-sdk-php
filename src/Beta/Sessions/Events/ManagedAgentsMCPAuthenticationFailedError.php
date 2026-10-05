@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Authentication to an MCP server failed.
  *
- * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsMCPAuthenticationFailedError\RetryStatus
  * @phpstan-import-type RetryStatusShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsMCPAuthenticationFailedError\RetryStatus
+ * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsMCPAuthenticationFailedError\RetryStatus
  *
  * @phpstan-type ManagedAgentsMCPAuthenticationFailedErrorShape = array{
  *   mcpServerName: string,

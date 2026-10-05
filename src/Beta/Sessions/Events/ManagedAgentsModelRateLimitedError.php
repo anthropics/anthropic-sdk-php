@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * The model request was rate-limited.
  *
- * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsModelRateLimitedError\RetryStatus
  * @phpstan-import-type RetryStatusShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsModelRateLimitedError\RetryStatus
+ * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsModelRateLimitedError\RetryStatus
  *
  * @phpstan-type ManagedAgentsModelRateLimitedErrorShape = array{
  *   message: string, retryStatus: RetryStatusShape, type: Type|value-of<Type>

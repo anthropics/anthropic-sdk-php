@@ -15,15 +15,15 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * A deployment is a configured instance of an agent — it binds the agent to everything needed to run it autonomously: an environment, credentials, initial events, and an optional schedule.
  *
- * @phpstan-import-type BetaManagedAgentsDeploymentInitialEventVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentInitialEvent
- * @phpstan-import-type BetaManagedAgentsDeploymentPausedReasonVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentPausedReason
- * @phpstan-import-type BetaManagedAgentsSessionResourceConfigVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsSessionResourceConfig
  * @phpstan-import-type BetaManagedAgentsAgentReferenceShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgentReference
  * @phpstan-import-type BetaManagedAgentsDeploymentInitialEventShape from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentInitialEvent
  * @phpstan-import-type BetaManagedAgentsDeploymentPausedReasonShape from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentPausedReason
  * @phpstan-import-type BetaManagedAgentsSessionResourceConfigShape from \Anthropic\Beta\Deployments\BetaManagedAgentsSessionResourceConfig
  * @phpstan-import-type BetaManagedAgentsScheduleShape from \Anthropic\Beta\Deployments\BetaManagedAgentsSchedule
  * @phpstan-import-type BetaManagedAgentsBudgetLimitShape from \Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit
+ * @phpstan-import-type BetaManagedAgentsDeploymentInitialEventVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentInitialEvent
+ * @phpstan-import-type BetaManagedAgentsDeploymentPausedReasonVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentPausedReason
+ * @phpstan-import-type BetaManagedAgentsSessionResourceConfigVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsSessionResourceConfig
  *
  * @phpstan-type BetaManagedAgentsDeploymentShape = array{
  *   id: string,

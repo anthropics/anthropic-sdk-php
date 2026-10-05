@@ -12,8 +12,8 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-import-type AllowedInferenceGeosVariants from \Anthropic\Beta\Organization\Workspaces\DataResidency\AllowedInferenceGeos
  * @phpstan-import-type AllowedInferenceGeosShape from \Anthropic\Beta\Organization\Workspaces\DataResidency\AllowedInferenceGeos
+ * @phpstan-import-type AllowedInferenceGeosVariants from \Anthropic\Beta\Organization\Workspaces\DataResidency\AllowedInferenceGeos
  *
  * @phpstan-type DataResidencyShape = array{
  *   allowedInferenceGeos: AllowedInferenceGeosShape,

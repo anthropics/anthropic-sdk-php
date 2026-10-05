@@ -16,9 +16,9 @@ use Anthropic\Organization\Federation\Issuers\FederationIssuer\JWKS;
  * Records an external IdP the organization trusts for the RFC 7523
  * jwt-bearer grant. The `issuer_url` must match the JWT `iss` claim exactly.
  *
- * @phpstan-import-type JWKSVariants from \Anthropic\Organization\Federation\Issuers\FederationIssuer\JWKS
  * @phpstan-import-type JWKSShape from \Anthropic\Organization\Federation\Issuers\FederationIssuer\JWKS
  * @phpstan-import-type FederationIssuerPollStatusShape from \Anthropic\Organization\Federation\Issuers\FederationIssuerPollStatus
+ * @phpstan-import-type JWKSVariants from \Anthropic\Organization\Federation\Issuers\FederationIssuer\JWKS
  *
  * @phpstan-type FederationIssuerShape = array{
  *   id: string,

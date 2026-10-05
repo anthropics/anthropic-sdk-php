@@ -13,9 +13,9 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-import-type ContentVariants from \Anthropic\Beta\Messages\BetaMessageParam\Content
  * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaMessageParam\Content
  * @phpstan-import-type BetaSystemMessageOutputConfigShape from \Anthropic\Beta\Messages\BetaSystemMessageOutputConfig
+ * @phpstan-import-type ContentVariants from \Anthropic\Beta\Messages\BetaMessageParam\Content
  *
  * @phpstan-type BetaMessageParamShape = array{
  *   content: ContentShape,

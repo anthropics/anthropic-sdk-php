@@ -16,8 +16,8 @@ use Anthropic\Core\Conversion\ConstantOf;
  * MCP toolset, or as the tool definition in effect at the end of the
  * range, by value. Send it back unchanged.
  *
- * @phpstan-import-type ToolVariants from \Anthropic\Beta\Messages\BetaResponseToolAdditionBlock\Tool
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Messages\BetaResponseToolAdditionBlock\Tool
+ * @phpstan-import-type ToolVariants from \Anthropic\Beta\Messages\BetaResponseToolAdditionBlock\Tool
  *
  * @phpstan-type BetaResponseToolAdditionBlockShape = array{
  *   tool: ToolShape, type: 'tool_addition'

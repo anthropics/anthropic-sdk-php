@@ -27,8 +27,8 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Beta\Organization\SpendLimitsService::set()
  *
- * @phpstan-import-type ScopeVariants from \Anthropic\Beta\Organization\SpendLimits\SpendLimitSetParams\Scope
  * @phpstan-import-type ScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitSetParams\Scope
+ * @phpstan-import-type ScopeVariants from \Anthropic\Beta\Organization\SpendLimits\SpendLimitSetParams\Scope
  *
  * @phpstan-type SpendLimitSetParamsShape = array{
  *   amount: string|null,

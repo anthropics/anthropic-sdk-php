@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Event emitted when the agent invokes a built-in agent tool.
  *
- * @phpstan-import-type ManagedAgentsAgentToolEvaluationVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolEvaluation
  * @phpstan-import-type ManagedAgentsAgentToolEvaluationShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolEvaluation
+ * @phpstan-import-type ManagedAgentsAgentToolEvaluationVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolEvaluation
  *
  * @phpstan-type ManagedAgentsAgentToolUseEventShape = array{
  *   id: string,

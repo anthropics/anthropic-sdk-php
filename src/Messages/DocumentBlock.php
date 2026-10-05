@@ -11,9 +11,9 @@ use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\DocumentBlock\Source;
 
 /**
- * @phpstan-import-type SourceVariants from \Anthropic\Messages\DocumentBlock\Source
  * @phpstan-import-type CitationsConfigShape from \Anthropic\Messages\CitationsConfig
  * @phpstan-import-type SourceShape from \Anthropic\Messages\DocumentBlock\Source
+ * @phpstan-import-type SourceVariants from \Anthropic\Messages\DocumentBlock\Source
  *
  * @phpstan-type DocumentBlockShape = array{
  *   citations: null|CitationsConfig|CitationsConfigShape,

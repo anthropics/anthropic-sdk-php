@@ -15,10 +15,10 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * An execution thread within a `session`. Each session has one primary thread plus zero or more child threads spawned by the coordinator.
  *
- * @phpstan-import-type AgentVariants from \Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThread\Agent
  * @phpstan-import-type AgentShape from \Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThread\Agent
  * @phpstan-import-type ManagedAgentsSessionThreadStatsShape from \Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThreadStats
  * @phpstan-import-type ManagedAgentsSessionThreadUsageShape from \Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThreadUsage
+ * @phpstan-import-type AgentVariants from \Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThread\Agent
  *
  * @phpstan-type ManagedAgentsSessionThreadShape = array{
  *   id: string,

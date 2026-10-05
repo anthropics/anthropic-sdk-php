@@ -55,6 +55,22 @@ abstract class BaseClient
     }
 
     /**
+     * @internal
+     */
+    public function nextPageUrl(string $reference): string
+    {
+        $base = $this->baseUrl;
+        $uri = Util::resolveUri($base, reference: $reference);
+        // The follow-up request carries this client's credentials, so a response must not steer it to another
+        // scheme, host, port or userinfo. The message leaves the URL out because it may hold a token.
+        if ($uri->getScheme() !== $base->getScheme() || $uri->getAuthority() !== $base->getAuthority()) {
+            throw new \RuntimeException('The next page URL points away from the client base URL');
+        }
+
+        return $uri->withFragment('')->__toString();
+    }
+
+    /**
      * @param string|list<mixed> $path
      * @param array<string,mixed> $query
      * @param array<string,mixed> $headers
@@ -77,7 +93,7 @@ abstract class BaseClient
         ?string $stream = null,
         RequestOptions|array|null $options = [],
     ): BaseResponse {
-        [$req, $opts] = $this->buildRequest(
+        [$req, $opts, $uri] = $this->buildRequest(
             method: $method,
             // @phpstan-ignore argument.type
             path: $path,
@@ -88,7 +104,7 @@ abstract class BaseClient
             // @phpstan-ignore argument.type
             opts: $options,
         );
-        ['method' => $method, 'path' => $uri, 'headers' => $headers, 'body' => $data] = $req;
+        ['method' => $method, 'headers' => $headers, 'body' => $data] = $req;
         assert(!is_null($opts->requestFactory));
 
         $request = $opts->requestFactory->createRequest($method, uri: $uri);
@@ -136,7 +152,7 @@ abstract class BaseClient
      * @param array<string,string|int|list<string|int>|null> $headers
      * @param RequestOpts|null $opts
      *
-     * @return array{NormalizedRequest, RequestOptions}
+     * @return array{NormalizedRequest, RequestOptions, string}
      */
     protected function buildRequest(
         string $method,
@@ -180,9 +196,9 @@ abstract class BaseClient
             ...$idempotencyHeaders,
         ];
 
-        $req = ['method' => strtoupper($method), 'path' => $uri, 'query' => $mergedQuery, 'headers' => $mergedHeaders, 'body' => $body];
+        $req = ['method' => strtoupper($method), 'path' => $parsedPath, 'query' => $mergedQuery, 'headers' => $mergedHeaders, 'body' => $body];
 
-        return [$req, $options];
+        return [$req, $options, $uri];
     }
 
     /**

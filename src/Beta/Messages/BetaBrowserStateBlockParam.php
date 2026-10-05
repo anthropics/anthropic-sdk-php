@@ -19,10 +19,10 @@ use Anthropic\Core\Conversion\ConstantOf;
  * browser toolset member `tool_use`. The server renders the
  * model-visible text from it; the model never sees the raw fields.
  *
- * @phpstan-import-type BetaBrowserStateChangeVariants from \Anthropic\Beta\Messages\BetaBrowserStateChange
  * @phpstan-import-type BetaBrowserStateTabEntryShape from \Anthropic\Beta\Messages\BetaBrowserStateTabEntry
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type BetaBrowserStateChangeShape from \Anthropic\Beta\Messages\BetaBrowserStateChange
+ * @phpstan-import-type BetaBrowserStateChangeVariants from \Anthropic\Beta\Messages\BetaBrowserStateChange
  *
  * @phpstan-type BetaBrowserStateBlockParamShape = array{
  *   tabs: list<BetaBrowserStateTabEntry|BetaBrowserStateTabEntryShape>,

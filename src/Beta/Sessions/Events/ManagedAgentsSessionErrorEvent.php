@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * An error event indicating a problem occurred during session execution.
  *
- * @phpstan-import-type ErrorVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionErrorEvent\Error
  * @phpstan-import-type ErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionErrorEvent\Error
+ * @phpstan-import-type ErrorVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionErrorEvent\Error
  *
  * @phpstan-type ManagedAgentsSessionErrorEventShape = array{
  *   id: string,

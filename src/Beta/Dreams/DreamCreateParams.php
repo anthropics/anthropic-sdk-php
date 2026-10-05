@@ -20,12 +20,12 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Beta\DreamsService::create()
  *
- * @phpstan-import-type BetaDreamInputVariants from \Anthropic\Beta\Dreams\BetaDreamInput
- * @phpstan-import-type ModelVariants from \Anthropic\Beta\Dreams\DreamCreateParams\Model
- * @phpstan-import-type BetaOutputBehaviorVariants from \Anthropic\Beta\Dreams\BetaOutputBehavior
  * @phpstan-import-type BetaDreamInputShape from \Anthropic\Beta\Dreams\BetaDreamInput
  * @phpstan-import-type ModelShape from \Anthropic\Beta\Dreams\DreamCreateParams\Model
  * @phpstan-import-type BetaOutputBehaviorShape from \Anthropic\Beta\Dreams\BetaOutputBehavior
+ * @phpstan-import-type BetaDreamInputVariants from \Anthropic\Beta\Dreams\BetaDreamInput
+ * @phpstan-import-type ModelVariants from \Anthropic\Beta\Dreams\DreamCreateParams\Model
+ * @phpstan-import-type BetaOutputBehaviorVariants from \Anthropic\Beta\Dreams\BetaOutputBehavior
  *
  * @phpstan-type DreamCreateParamsShape = array{
  *   inputs: list<BetaDreamInputShape>,

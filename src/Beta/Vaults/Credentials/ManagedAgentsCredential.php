@@ -14,8 +14,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * A credential stored in a vault. Sensitive fields are never returned in responses.
  *
- * @phpstan-import-type AuthVariants from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredential\Auth
  * @phpstan-import-type AuthShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredential\Auth
+ * @phpstan-import-type AuthVariants from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredential\Auth
  *
  * @phpstan-type ManagedAgentsCredentialShape = array{
  *   id: string,

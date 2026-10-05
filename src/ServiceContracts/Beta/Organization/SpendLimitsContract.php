@@ -19,8 +19,8 @@ use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
 /**
- * @phpstan-import-type ScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitSetParams\Scope
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type ScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitSetParams\Scope
  */
 interface SpendLimitsContract
 {

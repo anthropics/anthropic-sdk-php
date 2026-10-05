@@ -12,9 +12,9 @@ use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\ToolResultBlockParam\Content;
 
 /**
- * @phpstan-import-type ContentVariants from \Anthropic\Messages\ToolResultBlockParam\Content
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type ContentShape from \Anthropic\Messages\ToolResultBlockParam\Content
+ * @phpstan-import-type ContentVariants from \Anthropic\Messages\ToolResultBlockParam\Content
  *
  * @phpstan-type ToolResultBlockParamShape = array{
  *   toolUseID: string,

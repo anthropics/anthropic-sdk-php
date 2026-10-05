@@ -12,8 +12,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * The resolved permission_policy was auto: the server judged this invocation individually.
  *
- * @phpstan-import-type ManagedAgentsAgentAutoEvaluatedPermissionVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentAutoEvaluatedPermission
  * @phpstan-import-type ManagedAgentsAgentAutoEvaluatedPermissionShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentAutoEvaluatedPermission
+ * @phpstan-import-type ManagedAgentsAgentAutoEvaluatedPermissionVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentAutoEvaluatedPermission
  *
  * @phpstan-type ManagedAgentsAgentToolEvaluationAutoShape = array{
  *   evaluatedPermission: ManagedAgentsAgentAutoEvaluatedPermissionShape,

@@ -24,8 +24,8 @@ use Anthropic\Services\Beta\Organization\SpendLimits\EffectiveService;
 use Anthropic\Services\Beta\Organization\SpendLimits\IncreaseRequestsService;
 
 /**
- * @phpstan-import-type ScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitSetParams\Scope
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type ScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitSetParams\Scope
  */
 final class SpendLimitsService implements SpendLimitsContract
 {

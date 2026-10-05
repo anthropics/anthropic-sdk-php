@@ -38,8 +38,6 @@ use Anthropic\ServiceContracts\Beta\MessagesRawContract;
 use Anthropic\SSEStream;
 
 /**
- * @phpstan-import-type SystemShape from \Anthropic\Beta\Messages\MessageCountTokensParams\System
- * @phpstan-import-type ToolShape from \Anthropic\Beta\Messages\MessageCountTokensParams\Tool
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type BetaCompactionConfigShape from \Anthropic\Beta\Messages\BetaCompactionConfig
@@ -52,11 +50,13 @@ use Anthropic\SSEStream;
  * @phpstan-import-type BetaMetadataShape from \Anthropic\Beta\Messages\BetaMetadata
  * @phpstan-import-type BetaOutputConfigShape from \Anthropic\Beta\Messages\BetaOutputConfig
  * @phpstan-import-type BetaJSONOutputFormatShape from \Anthropic\Beta\Messages\BetaJSONOutputFormat
- * @phpstan-import-type SystemShape from \Anthropic\Beta\Messages\MessageCreateParams\System as SystemShape1
+ * @phpstan-import-type SystemShape from \Anthropic\Beta\Messages\MessageCreateParams\System
  * @phpstan-import-type BetaThinkingConfigParamShape from \Anthropic\Beta\Messages\BetaThinkingConfigParam
  * @phpstan-import-type BetaToolChoiceShape from \Anthropic\Beta\Messages\BetaToolChoice
  * @phpstan-import-type BetaToolUnionShape from \Anthropic\Beta\Messages\BetaToolUnion
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type SystemShape from \Anthropic\Beta\Messages\MessageCountTokensParams\System as SystemShape1
+ * @phpstan-import-type ToolShape from \Anthropic\Beta\Messages\MessageCountTokensParams\Tool
  */
 final class MessagesRawService implements MessagesRawContract
 {
@@ -94,7 +94,7 @@ final class MessagesRawService implements MessagesRawContract
      *   serviceTier?: ServiceTier|value-of<ServiceTier>,
      *   speed?: Speed|value-of<Speed>|null,
      *   stopSequences?: list<string>,
-     *   system?: SystemShape1,
+     *   system?: SystemShape,
      *   temperature?: float,
      *   thinking?: BetaThinkingConfigParamShape,
      *   toolChoice?: BetaToolChoiceShape,
@@ -164,7 +164,7 @@ final class MessagesRawService implements MessagesRawContract
      *   serviceTier?: ServiceTier|value-of<ServiceTier>,
      *   speed?: Speed|value-of<Speed>|null,
      *   stopSequences?: list<string>,
-     *   system?: SystemShape1,
+     *   system?: SystemShape,
      *   temperature?: float,
      *   thinking?: BetaThinkingConfigParamShape,
      *   toolChoice?: BetaToolChoiceShape,
@@ -239,7 +239,7 @@ final class MessagesRawService implements MessagesRawContract
      *   outputConfig?: BetaOutputConfig|BetaOutputConfigShape,
      *   outputFormat?: BetaJSONOutputFormat|BetaJSONOutputFormatShape|null,
      *   speed?: MessageCountTokensParams\Speed|value-of<MessageCountTokensParams\Speed>|null,
-     *   system?: SystemShape,
+     *   system?: SystemShape1,
      *   thinking?: BetaThinkingConfigParamShape,
      *   toolChoice?: BetaToolChoiceShape,
      *   tools?: list<ToolShape>,

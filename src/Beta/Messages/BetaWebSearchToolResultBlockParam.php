@@ -12,11 +12,11 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type BetaWebSearchToolResultBlockParamContentVariants from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlockParamContent
- * @phpstan-import-type CallerVariants from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlockParam\Caller
  * @phpstan-import-type BetaWebSearchToolResultBlockParamContentShape from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlockParamContent
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type CallerShape from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlockParam\Caller
+ * @phpstan-import-type BetaWebSearchToolResultBlockParamContentVariants from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlockParamContent
+ * @phpstan-import-type CallerVariants from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlockParam\Caller
  *
  * @phpstan-type BetaWebSearchToolResultBlockParamShape = array{
  *   content: BetaWebSearchToolResultBlockParamContentShape,

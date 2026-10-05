@@ -33,19 +33,19 @@ use Anthropic\Messages\ToolChoiceTool;
 use Anthropic\RequestOptions;
 
 /**
- * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCountTokensParams\System
- * @phpstan-import-type MessageCountTokensToolShape from \Anthropic\Messages\MessageCountTokensTool
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type MessageCreateParamsContainerShape from \Anthropic\Messages\MessageCreateParamsContainer
  * @phpstan-import-type DiagnosticsParamShape from \Anthropic\Messages\DiagnosticsParam
  * @phpstan-import-type MetadataShape from \Anthropic\Messages\Metadata
  * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
- * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCreateParams\System as SystemShape1
+ * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCreateParams\System
  * @phpstan-import-type ThinkingConfigParamShape from \Anthropic\Messages\ThinkingConfigParam
  * @phpstan-import-type ToolChoiceShape from \Anthropic\Messages\ToolChoice
  * @phpstan-import-type ToolUnionShape from \Anthropic\Messages\ToolUnion
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type SystemShape from \Anthropic\Messages\MessageCountTokensParams\System as SystemShape1
+ * @phpstan-import-type MessageCountTokensToolShape from \Anthropic\Messages\MessageCountTokensTool
  */
 interface MessagesContract
 {
@@ -124,7 +124,7 @@ interface MessagesContract
      * Our models will normally stop when they have naturally completed their turn, which will result in a response `stop_reason` of `"end_turn"`.
      *
      * If you want the model to stop generating when it encounters custom strings of text, you can use the `stop_sequences` parameter. If the model encounters one of the custom sequences, the response `stop_reason` value will be `"stop_sequence"` and the response `stop_sequence` value will contain the matched stop sequence.
-     * @param SystemShape1 $system Body param: System prompt.
+     * @param SystemShape $system Body param: System prompt.
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#give-claude-a-role).
      * @param float $temperature Body param: Amount of randomness injected into the response.
@@ -316,7 +316,7 @@ interface MessagesContract
      * Our models will normally stop when they have naturally completed their turn, which will result in a response `stop_reason` of `"end_turn"`.
      *
      * If you want the model to stop generating when it encounters custom strings of text, you can use the `stop_sequences` parameter. If the model encounters one of the custom sequences, the response `stop_reason` value will be `"stop_sequence"` and the response `stop_sequence` value will contain the matched stop sequence.
-     * @param SystemShape1 $system Body param: System prompt.
+     * @param SystemShape $system Body param: System prompt.
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#give-claude-a-role).
      * @param float $temperature Body param: Amount of randomness injected into the response.
@@ -491,7 +491,7 @@ interface MessagesContract
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
      * @param OutputConfig|OutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
-     * @param SystemShape $system Body param: System prompt.
+     * @param SystemShape1 $system Body param: System prompt.
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#give-claude-a-role).
      * @param ThinkingConfigParamShape $thinking Body param: Configuration for enabling Claude's extended thinking.

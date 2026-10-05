@@ -11,10 +11,10 @@ use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\WebSearchToolResultBlock\Caller;
 
 /**
- * @phpstan-import-type CallerVariants from \Anthropic\Messages\WebSearchToolResultBlock\Caller
- * @phpstan-import-type WebSearchToolResultBlockContentVariants from \Anthropic\Messages\WebSearchToolResultBlockContent
  * @phpstan-import-type CallerShape from \Anthropic\Messages\WebSearchToolResultBlock\Caller
  * @phpstan-import-type WebSearchToolResultBlockContentShape from \Anthropic\Messages\WebSearchToolResultBlockContent
+ * @phpstan-import-type CallerVariants from \Anthropic\Messages\WebSearchToolResultBlock\Caller
+ * @phpstan-import-type WebSearchToolResultBlockContentVariants from \Anthropic\Messages\WebSearchToolResultBlockContent
  *
  * @phpstan-type WebSearchToolResultBlockShape = array{
  *   caller: CallerShape,

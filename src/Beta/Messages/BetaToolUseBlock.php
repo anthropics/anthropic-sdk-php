@@ -12,8 +12,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type CallerVariants from \Anthropic\Beta\Messages\BetaToolUseBlock\Caller
  * @phpstan-import-type CallerShape from \Anthropic\Beta\Messages\BetaToolUseBlock\Caller
+ * @phpstan-import-type CallerVariants from \Anthropic\Beta\Messages\BetaToolUseBlock\Caller
  *
  * @phpstan-type BetaToolUseBlockShape = array{
  *   id: string,

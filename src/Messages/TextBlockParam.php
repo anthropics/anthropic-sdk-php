@@ -11,9 +11,9 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type TextCitationParamVariants from \Anthropic\Messages\TextCitationParam
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type TextCitationParamShape from \Anthropic\Messages\TextCitationParam
+ * @phpstan-import-type TextCitationParamVariants from \Anthropic\Messages\TextCitationParam
  *
  * @phpstan-type TextBlockParamShape = array{
  *   text: string,

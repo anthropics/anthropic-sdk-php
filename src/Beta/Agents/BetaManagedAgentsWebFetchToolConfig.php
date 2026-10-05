@@ -14,8 +14,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * Configuration for the web_fetch tool.
  *
- * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsWebFetchToolConfig\PermissionPolicy
  * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsWebFetchToolConfig\PermissionPolicy
+ * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsWebFetchToolConfig\PermissionPolicy
  *
  * @phpstan-type BetaManagedAgentsWebFetchToolConfigShape = array{
  *   enabled: bool,

@@ -15,8 +15,8 @@ use Anthropic\Core\Conversion\ConstantOf;
  * request's `tools` (or an MCP tool or toolset) that the compacted range
  * withdrew. Send it back unchanged.
  *
- * @phpstan-import-type ToolVariants from \Anthropic\Beta\Messages\BetaResponseToolRemovalBlock\Tool
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Messages\BetaResponseToolRemovalBlock\Tool
+ * @phpstan-import-type ToolVariants from \Anthropic\Beta\Messages\BetaResponseToolRemovalBlock\Tool
  *
  * @phpstan-type BetaResponseToolRemovalBlockShape = array{
  *   tool: ToolShape, type: 'tool_removal'

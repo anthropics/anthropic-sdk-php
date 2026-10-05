@@ -18,8 +18,8 @@ use Anthropic\Core\Conversion\ConstantOf;
  * summary (e.g., malformed output from the model). Clients may round-trip
  * compaction blocks with null content; the server treats them as no-ops.
  *
- * @phpstan-import-type ToolChangeVariants from \Anthropic\Beta\Messages\BetaCompactionBlock\ToolChange
  * @phpstan-import-type ToolChangeShape from \Anthropic\Beta\Messages\BetaCompactionBlock\ToolChange
+ * @phpstan-import-type ToolChangeVariants from \Anthropic\Beta\Messages\BetaCompactionBlock\ToolChange
  *
  * @phpstan-type BetaCompactionBlockShape = array{
  *   content: string|null,

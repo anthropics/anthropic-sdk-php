@@ -11,8 +11,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type CitationVariants from \Anthropic\Beta\Messages\BetaCitationsDelta\Citation
  * @phpstan-import-type CitationShape from \Anthropic\Beta\Messages\BetaCitationsDelta\Citation
+ * @phpstan-import-type CitationVariants from \Anthropic\Beta\Messages\BetaCitationsDelta\Citation
  *
  * @phpstan-type BetaCitationsDeltaShape = array{
  *   citation: CitationShape, type: 'citations_delta'

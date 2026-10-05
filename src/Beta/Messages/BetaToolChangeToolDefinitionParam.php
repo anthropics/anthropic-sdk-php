@@ -14,8 +14,8 @@ use Anthropic\Core\Conversion\ConstantOf;
  * `tools` accepts, an MCP toolset included). An `mcp_toolset` given here
  * also requires the `mcp-client-2026-09-15` beta.
  *
- * @phpstan-import-type BetaToolUnionVariants from \Anthropic\Beta\Messages\BetaToolUnion
  * @phpstan-import-type BetaToolUnionShape from \Anthropic\Beta\Messages\BetaToolUnion
+ * @phpstan-import-type BetaToolUnionVariants from \Anthropic\Beta\Messages\BetaToolUnion
  *
  * @phpstan-type BetaToolChangeToolDefinitionParamShape = array{
  *   definition: BetaToolUnionShape, type: 'tool_definition'

@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * The model is currently overloaded. Emitted after automatic retries are exhausted.
  *
- * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsModelOverloadedError\RetryStatus
  * @phpstan-import-type RetryStatusShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsModelOverloadedError\RetryStatus
+ * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsModelOverloadedError\RetryStatus
  *
  * @phpstan-type ManagedAgentsModelOverloadedErrorShape = array{
  *   message: string, retryStatus: RetryStatusShape, type: Type|value-of<Type>

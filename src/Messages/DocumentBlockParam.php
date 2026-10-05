@@ -12,10 +12,10 @@ use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\DocumentBlockParam\Source;
 
 /**
- * @phpstan-import-type SourceVariants from \Anthropic\Messages\DocumentBlockParam\Source
  * @phpstan-import-type SourceShape from \Anthropic\Messages\DocumentBlockParam\Source
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type CitationsConfigParamShape from \Anthropic\Messages\CitationsConfigParam
+ * @phpstan-import-type SourceVariants from \Anthropic\Messages\DocumentBlockParam\Source
  *
  * @phpstan-type DocumentBlockParamShape = array{
  *   source: SourceShape,

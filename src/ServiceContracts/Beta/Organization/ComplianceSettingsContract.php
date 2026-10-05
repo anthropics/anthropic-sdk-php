@@ -11,8 +11,8 @@ use Anthropic\Core\Exceptions\APIException;
 use Anthropic\RequestOptions;
 
 /**
- * @phpstan-import-type ComplianceSettingsStateParamShape from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsStateParam
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type ComplianceSettingsStateParamShape from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsStateParam
  */
 interface ComplianceSettingsContract
 {
