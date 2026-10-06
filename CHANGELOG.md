@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.55.1](https://github.com/anthropics/anthropic-sdk-php/compare/v0.55.0...v0.55.1) (2026-10-06)
+
+### Chores
+
+* **docs:** fix example IDs in sessions, agents and vault credentials
+* **internal:** bump phpstan to 2.2.13
+
 ## [0.55.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.54.0...v0.55.0) (2026-10-06)
 
 ### Features
@@ -30,7 +37,6 @@
 * **docs:** correct example groups in rate limit list description
 * **docs:** correct when usage and cost report data becomes final
 * **docs:** update the description of the Model line field
-* **internal:** bump phpstan to 2.2.13
 * **internal:** list imported phpstan types in order of first use
 * **internal:** tidy the doc comments of model constructors and of the SSE stream
 * **tests:** run tests skipped for a query param bug that is now fixed
