@@ -14,6 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type CapabilitySupportShape from \Anthropic\Models\CapabilitySupport
  * @phpstan-import-type ContextManagementCapabilityShape from \Anthropic\Models\ContextManagementCapability
  * @phpstan-import-type EffortCapabilityShape from \Anthropic\Models\EffortCapability
+ * @phpstan-import-type ServerToolsCapabilityShape from \Anthropic\Models\ServerToolsCapability
  * @phpstan-import-type ThinkingCapabilityShape from \Anthropic\Models\ThinkingCapability
  *
  * @phpstan-type ModelCapabilitiesShape = array{
@@ -24,6 +25,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   effort: EffortCapability|EffortCapabilityShape,
  *   imageInput: CapabilitySupport|CapabilitySupportShape,
  *   pdfInput: CapabilitySupport|CapabilitySupportShape,
+ *   serverTools: ServerToolsCapability|ServerToolsCapabilityShape,
  *   structuredOutputs: CapabilitySupport|CapabilitySupportShape,
  *   thinking: ThinkingCapability|ThinkingCapabilityShape,
  * }
@@ -46,7 +48,7 @@ final class ModelCapabilities implements BaseModel
     public CapabilitySupport $citations;
 
     /**
-     * Whether the model supports code execution tools.
+     * Whether code that the model runs in the code execution tool can call the request's other tools, as in programmatic tool calling and dynamic filtering for web search and web fetch. Support for the code execution tool itself is in `server_tools.code_execution`.
      */
     #[Required('code_execution')]
     public CapabilitySupport $codeExecution;
@@ -76,6 +78,12 @@ final class ModelCapabilities implements BaseModel
     public CapabilitySupport $pdfInput;
 
     /**
+     * Whether this model supports the web search and code execution server tools. `supported` is true when the model supports at least one of the tools. A supported tool can still be rejected for your organization, for example when an admin has turned web search off.
+     */
+    #[Required('server_tools')]
+    public ServerToolsCapability $serverTools;
+
+    /**
      * Whether the model supports structured output / JSON mode / strict tool schemas.
      */
     #[Required('structured_outputs')]
@@ -100,6 +108,7 @@ final class ModelCapabilities implements BaseModel
      *   effort: ...,
      *   imageInput: ...,
      *   pdfInput: ...,
+     *   serverTools: ...,
      *   structuredOutputs: ...,
      *   thinking: ...,
      * )
@@ -116,6 +125,7 @@ final class ModelCapabilities implements BaseModel
      *   ->withEffort(...)
      *   ->withImageInput(...)
      *   ->withPDFInput(...)
+     *   ->withServerTools(...)
      *   ->withStructuredOutputs(...)
      *   ->withThinking(...)
      * ```
@@ -137,6 +147,7 @@ final class ModelCapabilities implements BaseModel
      * @param EffortCapability|EffortCapabilityShape $effort
      * @param CapabilitySupport|CapabilitySupportShape $imageInput
      * @param CapabilitySupport|CapabilitySupportShape $pdfInput
+     * @param ServerToolsCapability|ServerToolsCapabilityShape $serverTools
      * @param CapabilitySupport|CapabilitySupportShape $structuredOutputs
      * @param ThinkingCapability|ThinkingCapabilityShape $thinking
      */
@@ -148,6 +159,7 @@ final class ModelCapabilities implements BaseModel
         EffortCapability|array $effort,
         CapabilitySupport|array $imageInput,
         CapabilitySupport|array $pdfInput,
+        ServerToolsCapability|array $serverTools,
         CapabilitySupport|array $structuredOutputs,
         ThinkingCapability|array $thinking,
     ): self {
@@ -160,6 +172,7 @@ final class ModelCapabilities implements BaseModel
         $self['effort'] = $effort;
         $self['imageInput'] = $imageInput;
         $self['pdfInput'] = $pdfInput;
+        $self['serverTools'] = $serverTools;
         $self['structuredOutputs'] = $structuredOutputs;
         $self['thinking'] = $thinking;
 
@@ -193,7 +206,7 @@ final class ModelCapabilities implements BaseModel
     }
 
     /**
-     * Whether the model supports code execution tools.
+     * Whether code that the model runs in the code execution tool can call the request's other tools, as in programmatic tool calling and dynamic filtering for web search and web fetch. Support for the code execution tool itself is in `server_tools.code_execution`.
      *
      * @param CapabilitySupport|CapabilitySupportShape $codeExecution
      */
@@ -255,6 +268,20 @@ final class ModelCapabilities implements BaseModel
     {
         $self = clone $this;
         $self['pdfInput'] = $pdfInput;
+
+        return $self;
+    }
+
+    /**
+     * Whether this model supports the web search and code execution server tools. `supported` is true when the model supports at least one of the tools. A supported tool can still be rejected for your organization, for example when an admin has turned web search off.
+     *
+     * @param ServerToolsCapability|ServerToolsCapabilityShape $serverTools
+     */
+    public function withServerTools(
+        ServerToolsCapability|array $serverTools
+    ): self {
+        $self = clone $this;
+        $self['serverTools'] = $serverTools;
 
         return $self;
     }

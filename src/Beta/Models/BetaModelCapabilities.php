@@ -15,6 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type BetaCompactionCapabilityShape from \Anthropic\Beta\Models\BetaCompactionCapability
  * @phpstan-import-type BetaContextManagementCapabilityShape from \Anthropic\Beta\Models\BetaContextManagementCapability
  * @phpstan-import-type BetaEffortCapabilityShape from \Anthropic\Beta\Models\BetaEffortCapability
+ * @phpstan-import-type BetaServerToolsCapabilityShape from \Anthropic\Beta\Models\BetaServerToolsCapability
  * @phpstan-import-type BetaThinkingCapabilityShape from \Anthropic\Beta\Models\BetaThinkingCapability
  *
  * @phpstan-type BetaModelCapabilitiesShape = array{
@@ -26,6 +27,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   effort: BetaEffortCapability|BetaEffortCapabilityShape,
  *   imageInput: BetaCapabilitySupport|BetaCapabilitySupportShape,
  *   pdfInput: BetaCapabilitySupport|BetaCapabilitySupportShape,
+ *   serverTools: BetaServerToolsCapability|BetaServerToolsCapabilityShape,
  *   structuredOutputs: BetaCapabilitySupport|BetaCapabilitySupportShape,
  *   thinking: BetaThinkingCapability|BetaThinkingCapabilityShape,
  * }
@@ -48,7 +50,7 @@ final class BetaModelCapabilities implements BaseModel
     public BetaCapabilitySupport $citations;
 
     /**
-     * Whether the model supports code execution tools.
+     * Whether code that the model runs in the code execution tool can call the request's other tools, as in programmatic tool calling and dynamic filtering for web search and web fetch. Support for the code execution tool itself is in `server_tools.code_execution`.
      */
     #[Required('code_execution')]
     public BetaCapabilitySupport $codeExecution;
@@ -84,6 +86,12 @@ final class BetaModelCapabilities implements BaseModel
     public BetaCapabilitySupport $pdfInput;
 
     /**
+     * Whether this model supports the web search and code execution server tools. `supported` is true when the model supports at least one of the tools. A supported tool can still be rejected for your organization, for example when an admin has turned web search off.
+     */
+    #[Required('server_tools')]
+    public BetaServerToolsCapability $serverTools;
+
+    /**
      * Whether the model supports structured output / JSON mode / strict tool schemas.
      */
     #[Required('structured_outputs')]
@@ -109,6 +117,7 @@ final class BetaModelCapabilities implements BaseModel
      *   effort: ...,
      *   imageInput: ...,
      *   pdfInput: ...,
+     *   serverTools: ...,
      *   structuredOutputs: ...,
      *   thinking: ...,
      * )
@@ -126,6 +135,7 @@ final class BetaModelCapabilities implements BaseModel
      *   ->withEffort(...)
      *   ->withImageInput(...)
      *   ->withPDFInput(...)
+     *   ->withServerTools(...)
      *   ->withStructuredOutputs(...)
      *   ->withThinking(...)
      * ```
@@ -148,6 +158,7 @@ final class BetaModelCapabilities implements BaseModel
      * @param BetaEffortCapability|BetaEffortCapabilityShape $effort
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $imageInput
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $pdfInput
+     * @param BetaServerToolsCapability|BetaServerToolsCapabilityShape $serverTools
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $structuredOutputs
      * @param BetaThinkingCapability|BetaThinkingCapabilityShape $thinking
      */
@@ -160,6 +171,7 @@ final class BetaModelCapabilities implements BaseModel
         BetaEffortCapability|array $effort,
         BetaCapabilitySupport|array $imageInput,
         BetaCapabilitySupport|array $pdfInput,
+        BetaServerToolsCapability|array $serverTools,
         BetaCapabilitySupport|array $structuredOutputs,
         BetaThinkingCapability|array $thinking,
     ): self {
@@ -173,6 +185,7 @@ final class BetaModelCapabilities implements BaseModel
         $self['effort'] = $effort;
         $self['imageInput'] = $imageInput;
         $self['pdfInput'] = $pdfInput;
+        $self['serverTools'] = $serverTools;
         $self['structuredOutputs'] = $structuredOutputs;
         $self['thinking'] = $thinking;
 
@@ -206,7 +219,7 @@ final class BetaModelCapabilities implements BaseModel
     }
 
     /**
-     * Whether the model supports code execution tools.
+     * Whether code that the model runs in the code execution tool can call the request's other tools, as in programmatic tool calling and dynamic filtering for web search and web fetch. Support for the code execution tool itself is in `server_tools.code_execution`.
      *
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $codeExecution
      */
@@ -283,6 +296,20 @@ final class BetaModelCapabilities implements BaseModel
     {
         $self = clone $this;
         $self['pdfInput'] = $pdfInput;
+
+        return $self;
+    }
+
+    /**
+     * Whether this model supports the web search and code execution server tools. `supported` is true when the model supports at least one of the tools. A supported tool can still be rejected for your organization, for example when an admin has turned web search off.
+     *
+     * @param BetaServerToolsCapability|BetaServerToolsCapabilityShape $serverTools
+     */
+    public function withServerTools(
+        BetaServerToolsCapability|array $serverTools
+    ): self {
+        $self = clone $this;
+        $self['serverTools'] = $serverTools;
 
         return $self;
     }
