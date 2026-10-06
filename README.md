@@ -249,7 +249,6 @@ use Anthropic\Core\FileParam;
 
 // Pass a string with filename and content type:
 $contents = file_get_contents('/path/to/file');
-// Pass a string with filename and content type:
 $fileMetadata = $client->files->upload(
   file: FileParam::fromString($contents, filename: '/path/to/file', contentType: '…'),
 );
