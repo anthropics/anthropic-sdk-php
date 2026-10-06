@@ -24,6 +24,7 @@
 ### Chores
 
 * **api:** mark the Text Completions API as deprecated
+* **ci:** check that pull requests update the changelog
 * **ci:** compare breaking change detection against the last release
 * **docs:** correct example groups in rate limit list description
 * **docs:** correct when usage and cost report data becomes final
