@@ -11,8 +11,4 @@ enum Type: string
     case ORGANIZATION = 'organization';
 
     case WORKSPACE = 'workspace';
-
-    case OAUTH_APP = 'oauth_app';
-
-    case OAUTH_APP_DEFAULT = 'oauth_app_default';
 }

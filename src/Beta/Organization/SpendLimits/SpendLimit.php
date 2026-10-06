@@ -85,7 +85,7 @@ final class SpendLimit implements BaseModel
      * @var ScopeVariants $scope
      */
     #[Required(union: Scope::class)]
-    public SpendLimitUserScope|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope|SpendLimitOAuthAppScope|SpendLimitOAuthAppDefaultScope $scope;
+    public SpendLimitUserScope|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope $scope;
 
     /**
      * RFC 3339 datetime at which the spend limit was last modified.
@@ -144,7 +144,7 @@ final class SpendLimit implements BaseModel
         string $currency,
         bool $isEnabled,
         SpendLimitPeriod|string $period,
-        SpendLimitUserScope|array|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope|SpendLimitOAuthAppScope|SpendLimitOAuthAppDefaultScope $scope,
+        SpendLimitUserScope|array|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope $scope,
         \DateTimeInterface $updatedAt,
     ): self {
         $self = new self;
@@ -235,7 +235,7 @@ final class SpendLimit implements BaseModel
      * @param ScopeShape $scope
      */
     public function withScope(
-        SpendLimitUserScope|array|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope|SpendLimitOAuthAppScope|SpendLimitOAuthAppDefaultScope $scope,
+        SpendLimitUserScope|array|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope $scope,
     ): self {
         $self = clone $this;
         $self['scope'] = $scope;

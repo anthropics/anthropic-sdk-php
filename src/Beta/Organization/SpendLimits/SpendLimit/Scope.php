@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\SpendLimits\SpendLimit;
 
-use Anthropic\Beta\Organization\SpendLimits\SpendLimitOAuthAppDefaultScope;
-use Anthropic\Beta\Organization\SpendLimits\SpendLimitOAuthAppScope;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitOrganizationScope;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitOrganizationServiceScope;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitRBACGroupScope;
@@ -25,11 +23,9 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type SpendLimitOrganizationServiceScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitOrganizationServiceScope
  * @phpstan-import-type SpendLimitOrganizationScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitOrganizationScope
  * @phpstan-import-type SpendLimitWorkspaceScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitWorkspaceScope
- * @phpstan-import-type SpendLimitOAuthAppScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitOAuthAppScope
- * @phpstan-import-type SpendLimitOAuthAppDefaultScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitOAuthAppDefaultScope
  *
- * @phpstan-type ScopeVariants = SpendLimitUserScope|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope|SpendLimitOAuthAppScope|SpendLimitOAuthAppDefaultScope
- * @phpstan-type ScopeShape = ScopeVariants|SpendLimitUserScopeShape|SpendLimitSeatTierScopeShape|SpendLimitRBACGroupScopeShape|SpendLimitOrganizationServiceScopeShape|SpendLimitOrganizationScopeShape|SpendLimitWorkspaceScopeShape|SpendLimitOAuthAppScopeShape|SpendLimitOAuthAppDefaultScopeShape
+ * @phpstan-type ScopeVariants = SpendLimitUserScope|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope
+ * @phpstan-type ScopeShape = ScopeVariants|SpendLimitUserScopeShape|SpendLimitSeatTierScopeShape|SpendLimitRBACGroupScopeShape|SpendLimitOrganizationServiceScopeShape|SpendLimitOrganizationScopeShape|SpendLimitWorkspaceScopeShape
  */
 final class Scope implements ConverterSource
 {
@@ -52,8 +48,6 @@ final class Scope implements ConverterSource
             'organization_service' => SpendLimitOrganizationServiceScope::class,
             'organization' => SpendLimitOrganizationScope::class,
             'workspace' => SpendLimitWorkspaceScope::class,
-            'oauth_app' => SpendLimitOAuthAppScope::class,
-            'oauth_app_default' => SpendLimitOAuthAppDefaultScope::class,
         ];
     }
 }
