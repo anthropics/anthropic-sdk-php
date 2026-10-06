@@ -111,6 +111,7 @@ final class BetaToolRunner implements \IteratorAggregate
 
     /**
      * Run the full loop and return the final BetaMessage.
+     * A final compaction without a summary leaves the preceding answer intact.
      *
      * @throws \RuntimeException If the loop produces no messages
      */
@@ -118,7 +119,9 @@ final class BetaToolRunner implements \IteratorAggregate
     {
         $last = null;
         foreach ($this as $message) {
-            $last = $message;
+            if (!$this->compacting || self::hasCompactionSummary($message)) {
+                $last = $message;
+            }
         }
 
         if (null === $last) {
@@ -568,7 +571,7 @@ final class BetaToolRunner implements \IteratorAggregate
         return $value;
     }
 
-    private function registerCompactionResponse(BetaMessage $message): void
+    private static function hasCompactionSummary(BetaMessage $message): bool
     {
         foreach ($message->content as $block) {
             // By type, not class: a block type this SDK version does not model is parsed into another block's class.
@@ -577,21 +580,28 @@ final class BetaToolRunner implements \IteratorAggregate
             }
 
             $summary = $block['content'] ?? null;
-            if (null === $summary || '' === $summary) {
-                continue;
+            if (null !== $summary && '' !== $summary) {
+                return true;
             }
+        }
 
-            // The history's tool_removal blocks go with it, so what they took away leaves the dispatch map first.
-            // Worked out before the yield, so a `tools` list the caller sets while handling the response stays whole.
-            $this->runnableToolsByName = array_diff_key($this->runnableToolsByName, $this->removedByHistory);
+        return false;
+    }
 
-            // The response has to be sent back as it came, first, replacing the messages it summarizes.
-            $this->messages = [['role' => 'assistant', 'content' => $message->content]];
+    private function registerCompactionResponse(BetaMessage $message): void
+    {
+        if (!self::hasCompactionSummary($message)) {
+            trigger_error('Compaction produced no summary; keeping the conversation as it is.', E_USER_WARNING);
 
             return;
         }
 
-        trigger_error('Compaction produced no summary; keeping the conversation as it is.', E_USER_WARNING);
+        // The history's tool_removal blocks go with it, so what they took away leaves the dispatch map first.
+        // Worked out before the yield, so a `tools` list the caller sets while handling the response stays whole.
+        $this->runnableToolsByName = array_diff_key($this->runnableToolsByName, $this->removedByHistory);
+
+        // The response has to be sent back as it came, first, replacing the messages it summarizes.
+        $this->messages = [['role' => 'assistant', 'content' => $message->content]];
     }
 
     /**
