@@ -11,6 +11,7 @@
 
 * **docs:** fix example IDs in sessions, agents and vault credentials
 * **internal:** bump phpstan to 2.2.13
+* **internal:** remove unused release configuration
 
 ## [0.55.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.54.0...v0.55.0) (2026-10-06)
 
