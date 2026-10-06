@@ -20,6 +20,7 @@ use Mcp\Schema\Enum\Role;
 use Mcp\Schema\Result\CallToolResult;
 use Mcp\Schema\Result\ReadResourceResult;
 use Mcp\Schema\Tool;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -133,6 +134,63 @@ final class BetaMcpTest extends TestCase
         $this->expectExceptionMessage('it broke');
 
         $runnable->run([]);
+    }
+
+    /** @param array<mixed> $payload */
+    #[Test]
+    #[DataProvider('structuredErrors')]
+    public function testStructuredOnlyErrorsRetainTheirPayload(array $payload): void
+    {
+        $result = new CallToolResult(content: [], isError: true, structuredContent: $payload);
+        $runnable = BetaMcp::tool(self::makeTool(name: 'structured_error'), self::makeClient(
+            fn (string $name, array $args): CallToolResult => $result,
+        ));
+        $expected = json_encode($payload, JSON_THROW_ON_ERROR);
+
+        try {
+            $runnable->run([]);
+            $this->fail('An MCP error must remain an exception');
+        } catch (\RuntimeException $error) {
+            $this->assertSame($expected, $error->getMessage());
+        }
+        $this->assertSame($payload, $result->structuredContent);
+        $this->assertTrue($result->isError);
+        $this->assertSame([], $result->content);
+    }
+
+    /** @return iterable<string, array{array<mixed>}> */
+    public static function structuredErrors(): iterable
+    {
+        yield 'details' => [['error' => 'invalid location', 'field' => 'city']];
+
+        yield 'falsy values' => [['retryable' => false, 'attempts' => 0, 'detail' => null, 'message' => '']];
+
+        yield 'nested' => [['error' => ['code' => 17, 'items' => [1, 2], 'empty' => []]]];
+
+        yield 'unicode and integer' => [['message' => 'Żółć', 'identifier' => PHP_INT_MAX]];
+
+        yield 'empty' => [[]];
+    }
+
+    #[Test]
+    public function testUnstructuredErrorContentStillTakesPrecedence(): void
+    {
+        $result = new CallToolResult(
+            content: [new TextContent('existing error message')],
+            isError: true,
+            structuredContent: ['ignored' => 'structured fallback'],
+        );
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('existing error message');
+        BetaMcp::convertToolResult($result);
+    }
+
+    #[Test]
+    public function testAbsentStructuredErrorRetainsGenericMessage(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('MCP tool reported an error');
+        BetaMcp::convertToolResult(new CallToolResult([], true));
     }
 
     // -------------------------------------------------------------------------
