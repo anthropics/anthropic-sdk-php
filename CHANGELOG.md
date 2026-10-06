@@ -10,6 +10,7 @@
 * **api:** add line to model objects
 * **api:** add OAuth app scopes to organization spend limits
 * **api:** add url_sources to the Managed Agents web_fetch tool config
+* **api:** add web search and code execution support to model capabilities
 * **api:** filter organization spend limits by OAuth app scope
 
 
