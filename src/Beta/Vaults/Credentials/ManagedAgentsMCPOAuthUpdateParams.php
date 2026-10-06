@@ -60,7 +60,7 @@ final class ManagedAgentsMCPOAuthUpdateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsMCPOAuthUpdateParams)->withType(...)
+     * (new ManagedAgentsMCPOAuthUpdateParams())->withType(...)
      * ```
      */
     public function __construct()

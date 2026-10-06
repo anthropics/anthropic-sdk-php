@@ -76,7 +76,7 @@ final class PluginUpdateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PluginUpdateParams)->withServedVersionID(...)
+     * (new PluginUpdateParams())->withServedVersionID(...)
      * ```
      */
     public function __construct()

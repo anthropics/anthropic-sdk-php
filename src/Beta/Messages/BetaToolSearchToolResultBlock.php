@@ -44,7 +44,7 @@ final class BetaToolSearchToolResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaToolSearchToolResultBlock)->withContent(...)->withToolUseID(...)
+     * (new BetaToolSearchToolResultBlock())->withContent(...)->withToolUseID(...)
      * ```
      */
     public function __construct()

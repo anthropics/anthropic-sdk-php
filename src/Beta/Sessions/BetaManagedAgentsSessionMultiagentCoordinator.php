@@ -48,7 +48,7 @@ final class BetaManagedAgentsSessionMultiagentCoordinator implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsSessionMultiagentCoordinator)
+     * (new BetaManagedAgentsSessionMultiagentCoordinator())
      *   ->withAgents(...)
      *   ->withType(...)
      * ```

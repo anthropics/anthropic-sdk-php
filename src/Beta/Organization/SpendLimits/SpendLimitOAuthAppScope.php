@@ -47,7 +47,7 @@ final class SpendLimitOAuthAppScope implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SpendLimitOAuthAppScope)->withOAuthAppID(...)
+     * (new SpendLimitOAuthAppScope())->withOAuthAppID(...)
      * ```
      */
     public function __construct()

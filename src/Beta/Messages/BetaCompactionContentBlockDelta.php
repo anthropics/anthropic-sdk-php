@@ -43,7 +43,7 @@ final class BetaCompactionContentBlockDelta implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCompactionContentBlockDelta)
+     * (new BetaCompactionContentBlockDelta())
      *   ->withContent(...)
      *   ->withEncryptedContent(...)
      * ```

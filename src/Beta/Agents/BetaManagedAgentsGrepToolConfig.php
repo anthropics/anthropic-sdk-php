@@ -58,7 +58,7 @@ final class BetaManagedAgentsGrepToolConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsGrepToolConfig)
+     * (new BetaManagedAgentsGrepToolConfig())
      *   ->withEnabled(...)
      *   ->withPermissionPolicy(...)
      * ```

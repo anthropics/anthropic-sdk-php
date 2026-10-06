@@ -108,7 +108,7 @@ final class ModelCapabilities implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ModelCapabilities)
+     * (new ModelCapabilities())
      *   ->withBatch(...)
      *   ->withCitations(...)
      *   ->withCodeExecution(...)

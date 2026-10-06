@@ -45,7 +45,7 @@ final class ComplianceSettings implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ComplianceSettings)->withState(...)
+     * (new ComplianceSettings())->withState(...)
      * ```
      */
     public function __construct()

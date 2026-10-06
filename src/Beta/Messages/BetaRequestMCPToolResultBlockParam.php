@@ -60,7 +60,7 @@ final class BetaRequestMCPToolResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRequestMCPToolResultBlockParam)->withToolUseID(...)
+     * (new BetaRequestMCPToolResultBlockParam())->withToolUseID(...)
      * ```
      */
     public function __construct()

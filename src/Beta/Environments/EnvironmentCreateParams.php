@@ -100,7 +100,7 @@ final class EnvironmentCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new EnvironmentCreateParams)->withName(...)
+     * (new EnvironmentCreateParams())->withName(...)
      * ```
      */
     public function __construct()

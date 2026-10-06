@@ -44,7 +44,7 @@ final class ToolSearchToolResultErrorParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ToolSearchToolResultErrorParam)->withErrorCode(...)
+     * (new ToolSearchToolResultErrorParam())->withErrorCode(...)
      * ```
      */
     public function __construct()

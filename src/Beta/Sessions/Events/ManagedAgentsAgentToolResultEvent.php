@@ -80,7 +80,7 @@ final class ManagedAgentsAgentToolResultEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsAgentToolResultEvent)
+     * (new ManagedAgentsAgentToolResultEvent())
      *   ->withID(...)
      *   ->withProcessedAt(...)
      *   ->withToolUseID(...)

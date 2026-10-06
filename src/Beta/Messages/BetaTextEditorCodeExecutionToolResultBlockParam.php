@@ -57,7 +57,7 @@ final class BetaTextEditorCodeExecutionToolResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaTextEditorCodeExecutionToolResultBlockParam)
+     * (new BetaTextEditorCodeExecutionToolResultBlockParam())
      *   ->withContent(...)
      *   ->withToolUseID(...)
      * ```

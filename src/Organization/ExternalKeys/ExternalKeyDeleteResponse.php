@@ -40,7 +40,7 @@ final class ExternalKeyDeleteResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ExternalKeyDeleteResponse)->withID(...)
+     * (new ExternalKeyDeleteResponse())->withID(...)
      * ```
      */
     public function __construct()

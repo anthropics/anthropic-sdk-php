@@ -44,7 +44,7 @@ final class BetaAdvisorToolResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaAdvisorToolResultBlock)->withContent(...)->withToolUseID(...)
+     * (new BetaAdvisorToolResultBlock())->withContent(...)->withToolUseID(...)
      * ```
      */
     public function __construct()

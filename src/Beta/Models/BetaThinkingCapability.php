@@ -45,7 +45,7 @@ final class BetaThinkingCapability implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaThinkingCapability)->withSupported(...)->withTypes(...)
+     * (new BetaThinkingCapability())->withSupported(...)->withTypes(...)
      * ```
      */
     public function __construct()

@@ -59,7 +59,7 @@ final class BetaTextEditorCodeExecutionViewResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaTextEditorCodeExecutionViewResultBlockParam)
+     * (new BetaTextEditorCodeExecutionViewResultBlockParam())
      *   ->withContent(...)
      *   ->withFileType(...)
      * ```

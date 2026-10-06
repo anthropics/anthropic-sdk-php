@@ -71,7 +71,7 @@ final class WorkspaceAddParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WorkspaceAddParams)->withWorkspaceID(...)->withWorkspaceRole(...)
+     * (new WorkspaceAddParams())->withWorkspaceID(...)->withWorkspaceRole(...)
      * ```
      */
     public function __construct()

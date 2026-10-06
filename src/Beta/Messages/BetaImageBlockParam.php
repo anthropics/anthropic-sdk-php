@@ -60,7 +60,7 @@ final class BetaImageBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaImageBlockParam)->withSource(...)
+     * (new BetaImageBlockParam())->withSource(...)
      * ```
      */
     public function __construct()

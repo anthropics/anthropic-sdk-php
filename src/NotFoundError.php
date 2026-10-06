@@ -37,7 +37,7 @@ final class NotFoundError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new NotFoundError)->withMessage(...)
+     * (new NotFoundError())->withMessage(...)
      * ```
      */
     public function __construct()

@@ -65,7 +65,7 @@ final class ExternalKeyCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ExternalKeyCreateParams)->withProviderConfig(...)
+     * (new ExternalKeyCreateParams())->withProviderConfig(...)
      * ```
      */
     public function __construct()

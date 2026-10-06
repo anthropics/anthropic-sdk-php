@@ -58,7 +58,7 @@ final class BetaDocumentBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaDocumentBlock)->withCitations(...)->withSource(...)->withTitle(...)
+     * (new BetaDocumentBlock())->withCitations(...)->withSource(...)->withTitle(...)
      * ```
      */
     public function __construct()

@@ -60,7 +60,7 @@ final class ImageBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ImageBlockParam)->withSource(...)
+     * (new ImageBlockParam())->withSource(...)
      * ```
      */
     public function __construct()

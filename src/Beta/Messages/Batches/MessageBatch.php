@@ -126,7 +126,7 @@ final class MessageBatch implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MessageBatch)
+     * (new MessageBatch())
      *   ->withID(...)
      *   ->withArchivedAt(...)
      *   ->withCancelInitiatedAt(...)

@@ -52,7 +52,7 @@ final class MemberRemoveResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MemberRemoveResponse)->withUserID(...)->withWorkspaceID(...)
+     * (new MemberRemoveResponse())->withUserID(...)->withWorkspaceID(...)
      * ```
      */
     public function __construct()

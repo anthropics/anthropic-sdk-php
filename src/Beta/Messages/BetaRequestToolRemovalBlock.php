@@ -58,7 +58,7 @@ final class BetaRequestToolRemovalBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRequestToolRemovalBlock)->withTool(...)
+     * (new BetaRequestToolRemovalBlock())->withTool(...)
      * ```
      */
     public function __construct()

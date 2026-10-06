@@ -44,7 +44,7 @@ final class RawContentBlockDeltaEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new RawContentBlockDeltaEvent)->withDelta(...)->withIndex(...)
+     * (new RawContentBlockDeltaEvent())->withDelta(...)->withIndex(...)
      * ```
      */
     public function __construct()

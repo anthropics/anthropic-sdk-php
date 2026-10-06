@@ -66,7 +66,7 @@ final class ManagedAgentsEnvironmentVariableAuthResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsEnvironmentVariableAuthResponse)
+     * (new ManagedAgentsEnvironmentVariableAuthResponse())
      *   ->withInjectionLocation(...)
      *   ->withNetworking(...)
      *   ->withSecretName(...)

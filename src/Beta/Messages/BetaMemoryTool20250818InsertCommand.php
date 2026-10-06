@@ -58,7 +58,7 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMemoryTool20250818InsertCommand)
+     * (new BetaMemoryTool20250818InsertCommand())
      *   ->withInsertLine(...)
      *   ->withInsertText(...)
      *   ->withPath(...)

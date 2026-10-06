@@ -47,7 +47,7 @@ final class BetaManagedAgentsStartEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsStartEvent)->withEvent(...)->withType(...)
+     * (new BetaManagedAgentsStartEvent())->withEvent(...)->withType(...)
      * ```
      */
     public function __construct()

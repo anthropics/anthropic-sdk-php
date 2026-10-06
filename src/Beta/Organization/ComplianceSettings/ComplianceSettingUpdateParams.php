@@ -59,7 +59,7 @@ final class ComplianceSettingUpdateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ComplianceSettingUpdateParams)->withState(...)
+     * (new ComplianceSettingUpdateParams())->withState(...)
      * ```
      */
     public function __construct()

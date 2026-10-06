@@ -130,7 +130,7 @@ final class SessionCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SessionCreateParams)->withAgent(...)->withEnvironmentID(...)
+     * (new SessionCreateParams())->withAgent(...)->withEnvironmentID(...)
      * ```
      */
     public function __construct()

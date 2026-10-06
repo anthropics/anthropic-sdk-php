@@ -65,7 +65,7 @@ final class ManagedAgentsRepositoryCloneError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsRepositoryCloneError)
+     * (new ManagedAgentsRepositoryCloneError())
      *   ->withMessage(...)
      *   ->withRepositoryURL(...)
      *   ->withRetryStatus(...)

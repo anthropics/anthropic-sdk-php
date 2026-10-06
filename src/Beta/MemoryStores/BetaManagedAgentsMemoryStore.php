@@ -96,7 +96,7 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMemoryStore)
+     * (new BetaManagedAgentsMemoryStore())
      *   ->withID(...)
      *   ->withArchivedAt(...)
      *   ->withCreatedAt(...)

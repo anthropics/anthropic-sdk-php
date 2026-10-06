@@ -181,7 +181,7 @@ final class BetaDream implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaDream)
+     * (new BetaDream())
      *   ->withID(...)
      *   ->withArchivedAt(...)
      *   ->withCreatedAt(...)

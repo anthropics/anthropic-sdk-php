@@ -46,7 +46,7 @@ final class BetaToolChangeToolDefinition implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaToolChangeToolDefinition)->withDefinition(...)
+     * (new BetaToolChangeToolDefinition())->withDefinition(...)
      * ```
      */
     public function __construct()

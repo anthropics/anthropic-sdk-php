@@ -35,7 +35,7 @@ final class BetaURLImageSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaURLImageSource)->withURL(...)
+     * (new BetaURLImageSource())->withURL(...)
      * ```
      */
     public function __construct()

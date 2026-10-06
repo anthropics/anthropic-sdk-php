@@ -48,7 +48,7 @@ final class BetaManagedAgentsMultiagentParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMultiagentParams)->withAgents(...)->withType(...)
+     * (new BetaManagedAgentsMultiagentParams())->withAgents(...)->withType(...)
      * ```
      */
     public function __construct()

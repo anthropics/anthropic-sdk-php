@@ -61,7 +61,7 @@ final class ManagedAgentsSessionErrorEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSessionErrorEvent)
+     * (new ManagedAgentsSessionErrorEvent())
      *   ->withID(...)
      *   ->withError(...)
      *   ->withProcessedAt(...)

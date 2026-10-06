@@ -91,7 +91,7 @@ final class OrganizationRateLimit implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new OrganizationRateLimit)
+     * (new OrganizationRateLimit())
      *   ->withID(...)
      *   ->withGroup(...)
      *   ->withGroupType(...)

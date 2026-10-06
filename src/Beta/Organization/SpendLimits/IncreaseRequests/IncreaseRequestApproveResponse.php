@@ -104,7 +104,7 @@ final class IncreaseRequestApproveResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new IncreaseRequestApproveResponse)
+     * (new IncreaseRequestApproveResponse())
      *   ->withID(...)
      *   ->withActor(...)
      *   ->withCreatedAt(...)

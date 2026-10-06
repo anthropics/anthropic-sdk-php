@@ -111,7 +111,7 @@ final class BetaModelInfo implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaModelInfo)
+     * (new BetaModelInfo())
      *   ->withID(...)
      *   ->withAllowedFallbackModels(...)
      *   ->withCapabilities(...)

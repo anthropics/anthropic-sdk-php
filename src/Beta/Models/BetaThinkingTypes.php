@@ -53,7 +53,10 @@ final class BetaThinkingTypes implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaThinkingTypes)->withAdaptive(...)->withDisabled(...)->withEnabled(...)
+     * (new BetaThinkingTypes())
+     *   ->withAdaptive(...)
+     *   ->withDisabled(...)
+     *   ->withEnabled(...)
      * ```
      */
     public function __construct()

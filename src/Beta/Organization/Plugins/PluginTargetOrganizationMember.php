@@ -44,7 +44,7 @@ final class PluginTargetOrganizationMember implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PluginTargetOrganizationMember)->withUserID(...)
+     * (new PluginTargetOrganizationMember())->withUserID(...)
      * ```
      */
     public function __construct()

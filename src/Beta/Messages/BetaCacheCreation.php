@@ -43,7 +43,7 @@ final class BetaCacheCreation implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCacheCreation)
+     * (new BetaCacheCreation())
      *   ->withEphemeral1hInputTokens(...)
      *   ->withEphemeral5mInputTokens(...)
      * ```

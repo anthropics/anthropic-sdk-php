@@ -46,7 +46,7 @@ final class BetaFallbackCreditUsage implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaFallbackCreditUsage)->withStatus(...)
+     * (new BetaFallbackCreditUsage())->withStatus(...)
      * ```
      */
     public function __construct()

@@ -75,7 +75,7 @@ final class BetaCompactionBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCompactionBlock)->withContent(...)->withEncryptedContent(...)
+     * (new BetaCompactionBlock())->withContent(...)->withEncryptedContent(...)
      * ```
      */
     public function __construct()

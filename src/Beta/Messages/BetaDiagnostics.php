@@ -43,7 +43,7 @@ final class BetaDiagnostics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaDiagnostics)->withCacheMissReason(...)
+     * (new BetaDiagnostics())->withCacheMissReason(...)
      * ```
      */
     public function __construct()

@@ -101,7 +101,7 @@ final class ModelInfo implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ModelInfo)
+     * (new ModelInfo())
      *   ->withID(...)
      *   ->withCapabilities(...)
      *   ->withCreatedAt(...)

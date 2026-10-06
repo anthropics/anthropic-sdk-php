@@ -63,7 +63,7 @@ final class WebFetchToolResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WebFetchToolResultBlockParam)->withContent(...)->withToolUseID(...)
+     * (new WebFetchToolResultBlockParam())->withContent(...)->withToolUseID(...)
      * ```
      */
     public function __construct()

@@ -60,7 +60,7 @@ final class BetaWebhookEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookEvent)->withID(...)->withCreatedAt(...)->withData(...)
+     * (new BetaWebhookEvent())->withID(...)->withCreatedAt(...)->withData(...)
      * ```
      */
     public function __construct()

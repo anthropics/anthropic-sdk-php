@@ -52,7 +52,7 @@ var_dump($message->content);
 It is recommended to use the static `with` constructor `Base64ImageSource::with(data: 'U3RhaW5sZXNzIHJvY2tz', ...)`
 and named parameters to initialize value objects.
 
-However, builders are also provided `(new Base64ImageSource)->withData('U3RhaW5sZXNzIHJvY2tz')`.
+However, builders are also provided `(new Base64ImageSource())->withData('U3RhaW5sZXNzIHJvY2tz')`.
 
 ### Streaming
 

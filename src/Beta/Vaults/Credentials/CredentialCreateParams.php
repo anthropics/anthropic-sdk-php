@@ -83,7 +83,7 @@ final class CredentialCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CredentialCreateParams)->withAuth(...)
+     * (new CredentialCreateParams())->withAuth(...)
      * ```
      */
     public function __construct()

@@ -55,7 +55,7 @@ final class BetaTextBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaTextBlockParam)->withText(...)
+     * (new BetaTextBlockParam())->withText(...)
      * ```
      */
     public function __construct()

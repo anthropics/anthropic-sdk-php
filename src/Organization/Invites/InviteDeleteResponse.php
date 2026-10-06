@@ -46,7 +46,7 @@ final class InviteDeleteResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new InviteDeleteResponse)->withID(...)
+     * (new InviteDeleteResponse())->withID(...)
      * ```
      */
     public function __construct()

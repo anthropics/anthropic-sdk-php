@@ -65,7 +65,7 @@ final class BetaCitationPageLocation implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCitationPageLocation)
+     * (new BetaCitationPageLocation())
      *   ->withCitedText(...)
      *   ->withDocumentIndex(...)
      *   ->withDocumentTitle(...)

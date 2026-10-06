@@ -72,7 +72,7 @@ final class BetaPluginShare implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaPluginShare)->withGrantedAt(...)->withPluginID(...)->withTarget(...)
+     * (new BetaPluginShare())->withGrantedAt(...)->withPluginID(...)->withTarget(...)
      * ```
      */
     public function __construct()

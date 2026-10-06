@@ -77,7 +77,7 @@ final class ManagedAgentsMCPOAuthRefreshParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsMCPOAuthRefreshParams)
+     * (new ManagedAgentsMCPOAuthRefreshParams())
      *   ->withClientID(...)
      *   ->withRefreshToken(...)
      *   ->withTokenEndpoint(...)

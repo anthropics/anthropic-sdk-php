@@ -63,7 +63,7 @@ final class DataResidency implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new DataResidency)
+     * (new DataResidency())
      *   ->withAllowedInferenceGeos(...)
      *   ->withDefaultInferenceGeo(...)
      *   ->withWorkspaceGeo(...)

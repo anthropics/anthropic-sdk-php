@@ -40,7 +40,7 @@ final class WebFetchURLSourceToolReference implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WebFetchURLSourceToolReference)->withName(...)
+     * (new WebFetchURLSourceToolReference())->withName(...)
      * ```
      */
     public function __construct()

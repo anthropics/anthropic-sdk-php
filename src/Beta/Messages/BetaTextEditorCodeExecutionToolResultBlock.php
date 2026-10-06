@@ -46,7 +46,7 @@ final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaTextEditorCodeExecutionToolResultBlock)
+     * (new BetaTextEditorCodeExecutionToolResultBlock())
      *   ->withContent(...)
      *   ->withToolUseID(...)
      * ```

@@ -42,7 +42,7 @@ final class ManagedAgentsTextRubricParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsTextRubricParams)->withContent(...)->withType(...)
+     * (new ManagedAgentsTextRubricParams())->withContent(...)->withType(...)
      * ```
      */
     public function __construct()

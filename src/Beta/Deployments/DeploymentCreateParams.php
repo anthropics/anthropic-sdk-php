@@ -151,7 +151,7 @@ final class DeploymentCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new DeploymentCreateParams)
+     * (new DeploymentCreateParams())
      *   ->withAgent(...)
      *   ->withEnvironmentID(...)
      *   ->withInitialEvents(...)

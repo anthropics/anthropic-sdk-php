@@ -71,7 +71,7 @@ final class ManagedAgentsSearchResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSearchResultBlock)
+     * (new ManagedAgentsSearchResultBlock())
      *   ->withCitations(...)
      *   ->withContent(...)
      *   ->withSource(...)

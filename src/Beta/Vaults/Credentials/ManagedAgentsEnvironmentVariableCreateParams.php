@@ -73,7 +73,7 @@ final class ManagedAgentsEnvironmentVariableCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsEnvironmentVariableCreateParams)
+     * (new ManagedAgentsEnvironmentVariableCreateParams())
      *   ->withNetworking(...)
      *   ->withSecretName(...)
      *   ->withSecretValue(...)

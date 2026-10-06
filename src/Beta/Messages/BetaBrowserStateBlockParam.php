@@ -77,7 +77,7 @@ final class BetaBrowserStateBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaBrowserStateBlockParam)->withTabs(...)
+     * (new BetaBrowserStateBlockParam())->withTabs(...)
      * ```
      */
     public function __construct()

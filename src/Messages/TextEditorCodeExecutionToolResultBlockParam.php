@@ -55,7 +55,7 @@ final class TextEditorCodeExecutionToolResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new TextEditorCodeExecutionToolResultBlockParam)
+     * (new TextEditorCodeExecutionToolResultBlockParam())
      *   ->withContent(...)
      *   ->withToolUseID(...)
      * ```

@@ -117,7 +117,7 @@ final class BetaMessageDeltaUsage implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMessageDeltaUsage)
+     * (new BetaMessageDeltaUsage())
      *   ->withCacheCreationInputTokens(...)
      *   ->withCacheReadInputTokens(...)
      *   ->withFallbackCredit(...)

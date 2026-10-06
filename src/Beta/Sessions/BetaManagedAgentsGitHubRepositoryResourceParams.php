@@ -71,7 +71,7 @@ final class BetaManagedAgentsGitHubRepositoryResourceParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsGitHubRepositoryResourceParams)
+     * (new BetaManagedAgentsGitHubRepositoryResourceParams())
      *   ->withType(...)
      *   ->withURL(...)
      * ```

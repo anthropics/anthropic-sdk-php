@@ -148,7 +148,7 @@ final class SelfHostedWork implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SelfHostedWork)
+     * (new SelfHostedWork())
      *   ->withID(...)
      *   ->withAcknowledgedAt(...)
      *   ->withCreatedAt(...)

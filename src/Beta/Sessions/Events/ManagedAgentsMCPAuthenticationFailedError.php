@@ -65,7 +65,7 @@ final class ManagedAgentsMCPAuthenticationFailedError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsMCPAuthenticationFailedError)
+     * (new ManagedAgentsMCPAuthenticationFailedError())
      *   ->withMCPServerName(...)
      *   ->withMessage(...)
      *   ->withRetryStatus(...)

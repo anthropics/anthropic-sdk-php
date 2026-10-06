@@ -50,7 +50,7 @@ final class BetaResponseToolRemovalBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaResponseToolRemovalBlock)->withTool(...)
+     * (new BetaResponseToolRemovalBlock())->withTool(...)
      * ```
      */
     public function __construct()

@@ -44,7 +44,7 @@ final class UserUpdateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new UserUpdateParams)->withRole(...)
+     * (new UserUpdateParams())->withRole(...)
      * ```
      */
     public function __construct()

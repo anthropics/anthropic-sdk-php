@@ -46,7 +46,7 @@ final class BetaManagedAgentsWebFetchURLSourceToolReference implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsWebFetchURLSourceToolReference)->withName(...)
+     * (new BetaManagedAgentsWebFetchURLSourceToolReference())->withName(...)
      * ```
      */
     public function __construct()

@@ -63,7 +63,7 @@ final class ManagedAgentsUserToolConfirmationEventParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsUserToolConfirmationEventParams)
+     * (new ManagedAgentsUserToolConfirmationEventParams())
      *   ->withResult(...)
      *   ->withToolUseID(...)
      *   ->withType(...)

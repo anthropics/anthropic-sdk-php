@@ -239,7 +239,7 @@ final class BetaMessage implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMessage)
+     * (new BetaMessage())
      *   ->withID(...)
      *   ->withContainer(...)
      *   ->withContent(...)

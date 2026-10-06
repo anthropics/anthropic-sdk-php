@@ -168,7 +168,7 @@ final class BetaManagedAgentsSession implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsSession)
+     * (new BetaManagedAgentsSession())
      *   ->withID(...)
      *   ->withAgent(...)
      *   ->withArchivedAt(...)

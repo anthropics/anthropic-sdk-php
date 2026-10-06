@@ -72,7 +72,7 @@ final class PluginMarketplaceValidateArchiveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PluginMarketplaceValidateArchiveParams)->withArchive(...)
+     * (new PluginMarketplaceValidateArchiveParams())->withArchive(...)
      * ```
      */
     public function __construct()

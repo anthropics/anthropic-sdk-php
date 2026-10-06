@@ -63,7 +63,7 @@ final class WorkspaceMember implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WorkspaceMember)
+     * (new WorkspaceMember())
      *   ->withUserID(...)
      *   ->withWorkspaceID(...)
      *   ->withWorkspaceRole(...)

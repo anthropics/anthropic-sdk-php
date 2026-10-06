@@ -35,7 +35,7 @@ final class BetaCountTokensContextManagementResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCountTokensContextManagementResponse)->withOriginalInputTokens(...)
+     * (new BetaCountTokensContextManagementResponse())->withOriginalInputTokens(...)
      * ```
      */
     public function __construct()

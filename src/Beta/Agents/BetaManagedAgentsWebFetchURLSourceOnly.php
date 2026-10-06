@@ -47,7 +47,7 @@ final class BetaManagedAgentsWebFetchURLSourceOnly implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsWebFetchURLSourceOnly)->withTools(...)
+     * (new BetaManagedAgentsWebFetchURLSourceOnly())->withTools(...)
      * ```
      */
     public function __construct()

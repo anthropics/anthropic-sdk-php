@@ -130,7 +130,7 @@ final class APIKey implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new APIKey)
+     * (new APIKey())
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withCreatedBy(...)

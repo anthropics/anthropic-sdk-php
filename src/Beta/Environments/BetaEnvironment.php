@@ -124,7 +124,7 @@ final class BetaEnvironment implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaEnvironment)
+     * (new BetaEnvironment())
      *   ->withID(...)
      *   ->withArchivedAt(...)
      *   ->withConfig(...)

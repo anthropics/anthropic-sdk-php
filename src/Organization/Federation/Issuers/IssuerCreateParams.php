@@ -88,7 +88,7 @@ final class IssuerCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new IssuerCreateParams)->withIssuerURL(...)->withName(...)
+     * (new IssuerCreateParams())->withIssuerURL(...)->withName(...)
      * ```
      */
     public function __construct()

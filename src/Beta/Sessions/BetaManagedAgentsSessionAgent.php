@@ -112,7 +112,7 @@ final class BetaManagedAgentsSessionAgent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsSessionAgent)
+     * (new BetaManagedAgentsSessionAgent())
      *   ->withID(...)
      *   ->withDescription(...)
      *   ->withMCPServers(...)

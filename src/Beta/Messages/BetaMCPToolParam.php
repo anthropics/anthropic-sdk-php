@@ -53,7 +53,7 @@ final class BetaMCPToolParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMCPToolParam)->withInputSchema(...)->withName(...)
+     * (new BetaMCPToolParam())->withInputSchema(...)->withName(...)
      * ```
      */
     public function __construct()

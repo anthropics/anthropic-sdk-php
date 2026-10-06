@@ -53,7 +53,7 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMemoryTool20250818ViewCommand)->withPath(...)
+     * (new BetaMemoryTool20250818ViewCommand())->withPath(...)
      * ```
      */
     public function __construct()

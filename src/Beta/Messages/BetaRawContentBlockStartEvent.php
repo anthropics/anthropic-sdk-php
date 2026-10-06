@@ -45,7 +45,7 @@ final class BetaRawContentBlockStartEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRawContentBlockStartEvent)->withContentBlock(...)->withIndex(...)
+     * (new BetaRawContentBlockStartEvent())->withContentBlock(...)->withIndex(...)
      * ```
      */
     public function __construct()

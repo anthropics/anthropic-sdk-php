@@ -59,7 +59,7 @@ final class WorkspaceRateLimitValue implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WorkspaceRateLimitValue)
+     * (new WorkspaceRateLimitValue())
      *   ->withOrgLimit(...)
      *   ->withSource(...)
      *   ->withType(...)

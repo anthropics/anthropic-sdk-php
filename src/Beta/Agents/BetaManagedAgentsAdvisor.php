@@ -42,7 +42,7 @@ final class BetaManagedAgentsAdvisor implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAdvisor)->withModel(...)->withType(...)
+     * (new BetaManagedAgentsAdvisor())->withModel(...)->withType(...)
      * ```
      */
     public function __construct()

@@ -48,7 +48,7 @@ final class BetaManagedAgentsAgentToolsetDefaultConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAgentToolsetDefaultConfig)
+     * (new BetaManagedAgentsAgentToolsetDefaultConfig())
      *   ->withEnabled(...)
      *   ->withPermissionPolicy(...)
      * ```

@@ -66,7 +66,7 @@ final class ManagedAgentsUserDefineOutcomeEventParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsUserDefineOutcomeEventParams)
+     * (new ManagedAgentsUserDefineOutcomeEventParams())
      *   ->withDescription(...)
      *   ->withRubric(...)
      *   ->withType(...)

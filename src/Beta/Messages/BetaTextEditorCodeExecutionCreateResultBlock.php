@@ -37,7 +37,7 @@ final class BetaTextEditorCodeExecutionCreateResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaTextEditorCodeExecutionCreateResultBlock)->withIsFileUpdate(...)
+     * (new BetaTextEditorCodeExecutionCreateResultBlock())->withIsFileUpdate(...)
      * ```
      */
     public function __construct()

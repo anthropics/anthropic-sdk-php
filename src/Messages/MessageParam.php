@@ -42,7 +42,7 @@ final class MessageParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MessageParam)->withContent(...)->withRole(...)
+     * (new MessageParam())->withContent(...)->withRole(...)
      * ```
      */
     public function __construct()

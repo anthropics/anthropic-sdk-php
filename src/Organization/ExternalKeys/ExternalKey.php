@@ -102,7 +102,7 @@ final class ExternalKey implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ExternalKey)
+     * (new ExternalKey())
      *   ->withID(...)
      *   ->withAttachment(...)
      *   ->withCreatedAt(...)

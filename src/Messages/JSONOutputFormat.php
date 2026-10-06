@@ -42,7 +42,7 @@ final class JSONOutputFormat implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new JSONOutputFormat)->withSchema(...)
+     * (new JSONOutputFormat())->withSchema(...)
      * ```
      */
     public function __construct()

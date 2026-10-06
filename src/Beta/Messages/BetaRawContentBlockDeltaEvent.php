@@ -44,7 +44,7 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRawContentBlockDeltaEvent)->withDelta(...)->withIndex(...)
+     * (new BetaRawContentBlockDeltaEvent())->withDelta(...)->withIndex(...)
      * ```
      */
     public function __construct()

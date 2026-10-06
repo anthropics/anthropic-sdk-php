@@ -163,7 +163,7 @@ final class AnalyticsUsageBucketedResult implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsUsageBucketedResult)
+     * (new AnalyticsUsageBucketedResult())
      *   ->withCacheCreation(...)
      *   ->withCacheReadInputTokens(...)
      *   ->withClaudeTagCategory(...)

@@ -36,7 +36,7 @@ final class ManagedAgentsSessionRetriesExhausted implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSessionRetriesExhausted)->withType(...)
+     * (new ManagedAgentsSessionRetriesExhausted())->withType(...)
      * ```
      */
     public function __construct()

@@ -76,7 +76,7 @@ final class BetaRBACRolePermission implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRBACRolePermission)->withAction(...)->withResource(...)
+     * (new BetaRBACRolePermission())->withAction(...)->withResource(...)
      * ```
      */
     public function __construct()

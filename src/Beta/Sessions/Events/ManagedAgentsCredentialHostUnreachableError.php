@@ -72,7 +72,7 @@ final class ManagedAgentsCredentialHostUnreachableError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsCredentialHostUnreachableError)
+     * (new ManagedAgentsCredentialHostUnreachableError())
      *   ->withCredentialID(...)
      *   ->withMessage(...)
      *   ->withRetryStatus(...)

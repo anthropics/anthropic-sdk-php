@@ -58,7 +58,7 @@ final class BetaManagedAgentsReadToolConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsReadToolConfig)
+     * (new BetaManagedAgentsReadToolConfig())
      *   ->withEnabled(...)
      *   ->withPermissionPolicy(...)
      * ```

@@ -40,7 +40,7 @@ final class BetaOutputTokensDetails implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaOutputTokensDetails)->withThinkingTokens(...)
+     * (new BetaOutputTokensDetails())->withThinkingTokens(...)
      * ```
      */
     public function __construct()

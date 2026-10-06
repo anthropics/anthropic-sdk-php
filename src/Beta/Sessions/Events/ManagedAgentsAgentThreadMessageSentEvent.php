@@ -80,7 +80,7 @@ final class ManagedAgentsAgentThreadMessageSentEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsAgentThreadMessageSentEvent)
+     * (new ManagedAgentsAgentThreadMessageSentEvent())
      *   ->withID(...)
      *   ->withContent(...)
      *   ->withProcessedAt(...)

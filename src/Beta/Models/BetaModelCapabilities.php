@@ -117,7 +117,7 @@ final class BetaModelCapabilities implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaModelCapabilities)
+     * (new BetaModelCapabilities())
      *   ->withBatch(...)
      *   ->withCitations(...)
      *   ->withCodeExecution(...)

@@ -46,7 +46,7 @@ final class ManagedAgentsMCPProbe implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsMCPProbe)->withHTTPResponse(...)->withMethod(...)
+     * (new ManagedAgentsMCPProbe())->withHTTPResponse(...)->withMethod(...)
      * ```
      */
     public function __construct()

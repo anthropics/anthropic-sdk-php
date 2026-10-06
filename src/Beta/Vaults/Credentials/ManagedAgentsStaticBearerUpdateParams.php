@@ -43,7 +43,7 @@ final class ManagedAgentsStaticBearerUpdateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsStaticBearerUpdateParams)->withType(...)
+     * (new ManagedAgentsStaticBearerUpdateParams())->withType(...)
      * ```
      */
     public function __construct()

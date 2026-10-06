@@ -44,7 +44,7 @@ final class ManagedAgentsSessionRequiresAction implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSessionRequiresAction)->withEventIDs(...)->withType(...)
+     * (new ManagedAgentsSessionRequiresAction())->withEventIDs(...)->withType(...)
      * ```
      */
     public function __construct()

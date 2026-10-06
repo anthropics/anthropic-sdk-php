@@ -51,7 +51,7 @@ final class ToolChoiceTool implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ToolChoiceTool)->withName(...)
+     * (new ToolChoiceTool())->withName(...)
      * ```
      */
     public function __construct()

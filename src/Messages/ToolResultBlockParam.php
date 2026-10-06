@@ -67,7 +67,7 @@ final class ToolResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ToolResultBlockParam)->withToolUseID(...)
+     * (new ToolResultBlockParam())->withToolUseID(...)
      * ```
      */
     public function __construct()

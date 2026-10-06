@@ -191,7 +191,7 @@ final class Message implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Message)
+     * (new Message())
      *   ->withID(...)
      *   ->withContainer(...)
      *   ->withContent(...)

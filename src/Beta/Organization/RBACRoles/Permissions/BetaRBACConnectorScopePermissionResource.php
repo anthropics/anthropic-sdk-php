@@ -56,7 +56,7 @@ final class BetaRBACConnectorScopePermissionResource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRBACConnectorScopePermissionResource)
+     * (new BetaRBACConnectorScopePermissionResource())
      *   ->withConnectorID(...)
      *   ->withScope(...)
      * ```

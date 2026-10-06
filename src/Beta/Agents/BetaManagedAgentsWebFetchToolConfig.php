@@ -83,7 +83,7 @@ final class BetaManagedAgentsWebFetchToolConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsWebFetchToolConfig)
+     * (new BetaManagedAgentsWebFetchToolConfig())
      *   ->withEnabled(...)
      *   ->withPermissionPolicy(...)
      *   ->withURLSources(...)

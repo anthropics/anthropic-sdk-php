@@ -156,7 +156,7 @@ final class BetaUsage implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaUsage)
+     * (new BetaUsage())
      *   ->withCacheCreation(...)
      *   ->withCacheCreationInputTokens(...)
      *   ->withCacheReadInputTokens(...)

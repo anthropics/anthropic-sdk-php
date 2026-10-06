@@ -36,7 +36,7 @@ final class ManagedAgentsRetryStatusTerminal implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsRetryStatusTerminal)->withType(...)
+     * (new ManagedAgentsRetryStatusTerminal())->withType(...)
      * ```
      */
     public function __construct()

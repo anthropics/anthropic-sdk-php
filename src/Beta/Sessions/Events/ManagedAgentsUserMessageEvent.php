@@ -64,7 +64,7 @@ final class ManagedAgentsUserMessageEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsUserMessageEvent)
+     * (new ManagedAgentsUserMessageEvent())
      *   ->withID(...)
      *   ->withContent(...)
      *   ->withType(...)

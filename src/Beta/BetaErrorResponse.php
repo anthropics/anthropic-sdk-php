@@ -44,7 +44,7 @@ final class BetaErrorResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaErrorResponse)->withError(...)->withRequestID(...)
+     * (new BetaErrorResponse())->withError(...)->withRequestID(...)
      * ```
      */
     public function __construct()

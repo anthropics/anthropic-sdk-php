@@ -159,7 +159,7 @@ final class FederationIssuer implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new FederationIssuer)
+     * (new FederationIssuer())
      *   ->withID(...)
      *   ->withArchivedAt(...)
      *   ->withArchivedByActorID(...)

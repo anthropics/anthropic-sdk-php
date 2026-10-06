@@ -70,7 +70,7 @@ final class BetaRBACGroupMember implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRBACGroupMember)
+     * (new BetaRBACGroupMember())
      *   ->withCreatedAt(...)
      *   ->withEmail(...)
      *   ->withRBACGroupID(...)

@@ -73,7 +73,7 @@ final class AnalyticsCoreCodeMetrics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsCoreCodeMetrics)
+     * (new AnalyticsCoreCodeMetrics())
      *   ->withArtifactsCreatedCount(...)
      *   ->withCommitCount(...)
      *   ->withDistinctSessionCount(...)

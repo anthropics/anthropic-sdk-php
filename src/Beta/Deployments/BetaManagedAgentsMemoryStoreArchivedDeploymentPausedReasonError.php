@@ -38,7 +38,7 @@ final class BetaManagedAgentsMemoryStoreArchivedDeploymentPausedReasonError impl
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMemoryStoreArchivedDeploymentPausedReasonError)
+     * (new BetaManagedAgentsMemoryStoreArchivedDeploymentPausedReasonError())
      *   ->withType(...)
      * ```
      */

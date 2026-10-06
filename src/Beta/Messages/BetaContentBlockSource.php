@@ -42,7 +42,7 @@ final class BetaContentBlockSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaContentBlockSource)->withContent(...)
+     * (new BetaContentBlockSource())->withContent(...)
      * ```
      */
     public function __construct()

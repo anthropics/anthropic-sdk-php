@@ -71,7 +71,7 @@ final class AnalyticsScienceMetrics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsScienceMetrics)
+     * (new AnalyticsScienceMetrics())
      *   ->withDelegationCount(...)
      *   ->withDistinctSessionCount(...)
      *   ->withMessageCount(...)

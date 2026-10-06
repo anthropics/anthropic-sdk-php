@@ -48,7 +48,7 @@ final class BrowserStateChangeTabOpened implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BrowserStateChangeTabOpened)->withTabID(...)
+     * (new BrowserStateChangeTabOpened())->withTabID(...)
      * ```
      */
     public function __construct()

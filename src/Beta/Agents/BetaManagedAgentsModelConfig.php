@@ -72,7 +72,7 @@ final class BetaManagedAgentsModelConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsModelConfig)->withID(...)
+     * (new BetaManagedAgentsModelConfig())->withID(...)
      * ```
      */
     public function __construct()

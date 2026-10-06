@@ -55,7 +55,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebSearchToolResultBlock)->withContent(...)->withToolUseID(...)
+     * (new BetaWebSearchToolResultBlock())->withContent(...)->withToolUseID(...)
      * ```
      */
     public function __construct()

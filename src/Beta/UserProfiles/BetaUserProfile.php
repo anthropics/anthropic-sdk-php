@@ -130,7 +130,7 @@ final class BetaUserProfile implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaUserProfile)
+     * (new BetaUserProfile())
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withMetadata(...)

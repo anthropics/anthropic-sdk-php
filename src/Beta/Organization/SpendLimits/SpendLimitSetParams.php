@@ -80,7 +80,7 @@ final class SpendLimitSetParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SpendLimitSetParams)->withAmount(...)->withScope(...)
+     * (new SpendLimitSetParams())->withAmount(...)->withScope(...)
      * ```
      */
     public function __construct()

@@ -131,7 +131,7 @@ final class PluginMarketplace implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PluginMarketplace)
+     * (new PluginMarketplace())
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withDefaultInstallationPreference(...)

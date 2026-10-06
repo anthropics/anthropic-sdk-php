@@ -65,7 +65,7 @@ final class DocumentBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new DocumentBlockParam)->withSource(...)
+     * (new DocumentBlockParam())->withSource(...)
      * ```
      */
     public function __construct()

@@ -42,7 +42,7 @@ final class ContentBlockSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ContentBlockSource)->withContent(...)
+     * (new ContentBlockSource())->withContent(...)
      * ```
      */
     public function __construct()

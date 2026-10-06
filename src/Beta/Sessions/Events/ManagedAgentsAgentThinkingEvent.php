@@ -48,7 +48,7 @@ final class ManagedAgentsAgentThinkingEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsAgentThinkingEvent)
+     * (new ManagedAgentsAgentThinkingEvent())
      *   ->withID(...)
      *   ->withProcessedAt(...)
      *   ->withType(...)

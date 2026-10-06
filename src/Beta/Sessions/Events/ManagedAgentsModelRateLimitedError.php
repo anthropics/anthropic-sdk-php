@@ -56,7 +56,7 @@ final class ManagedAgentsModelRateLimitedError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsModelRateLimitedError)
+     * (new ManagedAgentsModelRateLimitedError())
      *   ->withMessage(...)
      *   ->withRetryStatus(...)
      *   ->withType(...)

@@ -85,7 +85,7 @@ final class TunnelCertificate implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new TunnelCertificate)
+     * (new TunnelCertificate())
      *   ->withID(...)
      *   ->withArchivedAt(...)
      *   ->withCreatedAt(...)

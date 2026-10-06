@@ -64,7 +64,7 @@ final class ManagedAgentsDocumentBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsDocumentBlock)->withSource(...)->withType(...)
+     * (new ManagedAgentsDocumentBlock())->withSource(...)->withType(...)
      * ```
      */
     public function __construct()

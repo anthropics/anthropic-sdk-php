@@ -48,7 +48,7 @@ final class BetaWebhookVaultCreatedEventData implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookVaultCreatedEventData)
+     * (new BetaWebhookVaultCreatedEventData())
      *   ->withID(...)
      *   ->withOrganizationID(...)
      *   ->withWorkspaceID(...)

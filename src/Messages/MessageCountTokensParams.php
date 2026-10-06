@@ -251,7 +251,7 @@ final class MessageCountTokensParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MessageCountTokensParams)->withMessages(...)->withModel(...)
+     * (new MessageCountTokensParams())->withMessages(...)->withModel(...)
      * ```
      */
     public function __construct()

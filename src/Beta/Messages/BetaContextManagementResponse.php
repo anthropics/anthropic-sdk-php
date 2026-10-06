@@ -41,7 +41,7 @@ final class BetaContextManagementResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaContextManagementResponse)->withAppliedEdits(...)
+     * (new BetaContextManagementResponse())->withAppliedEdits(...)
      * ```
      */
     public function __construct()

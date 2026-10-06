@@ -41,7 +41,7 @@ final class CacheCreation implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CacheCreation)
+     * (new CacheCreation())
      *   ->withEphemeral1hInputTokens(...)
      *   ->withEphemeral5mInputTokens(...)
      * ```

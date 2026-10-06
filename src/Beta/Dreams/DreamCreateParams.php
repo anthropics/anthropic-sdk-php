@@ -105,7 +105,7 @@ final class DreamCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new DreamCreateParams)->withInputs(...)->withModel(...)
+     * (new DreamCreateParams())->withInputs(...)->withModel(...)
      * ```
      */
     public function __construct()

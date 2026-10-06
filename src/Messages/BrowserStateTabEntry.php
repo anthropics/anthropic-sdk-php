@@ -63,7 +63,7 @@ final class BrowserStateTabEntry implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BrowserStateTabEntry)->withTabID(...)->withTitle(...)->withURL(...)
+     * (new BrowserStateTabEntry())->withTabID(...)->withTitle(...)->withURL(...)
      * ```
      */
     public function __construct()

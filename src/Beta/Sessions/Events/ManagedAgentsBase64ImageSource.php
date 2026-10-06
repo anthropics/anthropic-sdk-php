@@ -48,7 +48,7 @@ final class ManagedAgentsBase64ImageSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsBase64ImageSource)
+     * (new ManagedAgentsBase64ImageSource())
      *   ->withData(...)
      *   ->withMediaType(...)
      *   ->withType(...)

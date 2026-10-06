@@ -70,7 +70,7 @@ final class MemoryRetrieveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MemoryRetrieveParams)->withMemoryStoreID(...)
+     * (new MemoryRetrieveParams())->withMemoryStoreID(...)
      * ```
      */
     public function __construct()

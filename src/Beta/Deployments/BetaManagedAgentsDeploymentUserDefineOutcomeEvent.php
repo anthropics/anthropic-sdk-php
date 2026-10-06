@@ -68,7 +68,7 @@ final class BetaManagedAgentsDeploymentUserDefineOutcomeEvent implements BaseMod
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsDeploymentUserDefineOutcomeEvent)
+     * (new BetaManagedAgentsDeploymentUserDefineOutcomeEvent())
      *   ->withDescription(...)
      *   ->withRubric(...)
      *   ->withType(...)

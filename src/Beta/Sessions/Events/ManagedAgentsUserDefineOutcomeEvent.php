@@ -92,7 +92,7 @@ final class ManagedAgentsUserDefineOutcomeEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsUserDefineOutcomeEvent)
+     * (new ManagedAgentsUserDefineOutcomeEvent())
      *   ->withID(...)
      *   ->withDescription(...)
      *   ->withMaxIterations(...)

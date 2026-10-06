@@ -48,7 +48,7 @@ final class RawContentBlockStartEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new RawContentBlockStartEvent)->withContentBlock(...)->withIndex(...)
+     * (new RawContentBlockStartEvent())->withContentBlock(...)->withIndex(...)
      * ```
      */
     public function __construct()

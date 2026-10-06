@@ -43,7 +43,7 @@ final class BetaDreamError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaDreamError)->withMessage(...)->withType(...)
+     * (new BetaDreamError())->withMessage(...)->withType(...)
      * ```
      */
     public function __construct()

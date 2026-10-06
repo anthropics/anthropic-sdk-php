@@ -37,7 +37,7 @@ final class AnalyticsConnectorChatMetrics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsConnectorChatMetrics)
+     * (new AnalyticsConnectorChatMetrics())
      *   ->withDistinctConversationConnectorUsedCount(...)
      * ```
      */

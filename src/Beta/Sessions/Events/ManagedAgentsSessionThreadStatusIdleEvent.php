@@ -89,7 +89,7 @@ final class ManagedAgentsSessionThreadStatusIdleEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSessionThreadStatusIdleEvent)
+     * (new ManagedAgentsSessionThreadStatusIdleEvent())
      *   ->withID(...)
      *   ->withAgentName(...)
      *   ->withProcessedAt(...)

@@ -137,7 +137,7 @@ final class Workspace implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Workspace)
+     * (new Workspace())
      *   ->withID(...)
      *   ->withArchivedAt(...)
      *   ->withCompartmentID(...)

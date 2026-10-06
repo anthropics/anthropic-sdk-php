@@ -466,7 +466,7 @@ final class Params implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Params)->withMaxTokens(...)->withMessages(...)->withModel(...)
+     * (new Params())->withMaxTokens(...)->withMessages(...)->withModel(...)
      * ```
      */
     public function __construct()

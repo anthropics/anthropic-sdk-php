@@ -139,7 +139,7 @@ final class AgentCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AgentCreateParams)->withModel(...)->withName(...)
+     * (new AgentCreateParams())->withModel(...)->withName(...)
      * ```
      */
     public function __construct()

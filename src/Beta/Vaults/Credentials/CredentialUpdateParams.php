@@ -91,7 +91,7 @@ final class CredentialUpdateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CredentialUpdateParams)->withVaultID(...)
+     * (new CredentialUpdateParams())->withVaultID(...)
      * ```
      */
     public function __construct()

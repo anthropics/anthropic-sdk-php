@@ -42,7 +42,7 @@ final class BetaManagedAgentsVaultArchivedRunError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsVaultArchivedRunError)->withMessage(...)->withType(...)
+     * (new BetaManagedAgentsVaultArchivedRunError())->withMessage(...)->withType(...)
      * ```
      */
     public function __construct()

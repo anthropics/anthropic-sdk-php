@@ -53,7 +53,7 @@ final class ThinkingTypes implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ThinkingTypes)->withAdaptive(...)->withDisabled(...)->withEnabled(...)
+     * (new ThinkingTypes())->withAdaptive(...)->withDisabled(...)->withEnabled(...)
      * ```
      */
     public function __construct()

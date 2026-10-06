@@ -51,7 +51,7 @@ final class BetaManagedAgentsMCPToolConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMCPToolConfig)
+     * (new BetaManagedAgentsMCPToolConfig())
      *   ->withEnabled(...)
      *   ->withName(...)
      *   ->withPermissionPolicy(...)

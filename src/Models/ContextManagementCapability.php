@@ -65,7 +65,7 @@ final class ContextManagementCapability implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ContextManagementCapability)
+     * (new ContextManagementCapability())
      *   ->withClearThinking20251015(...)
      *   ->withClearToolUses20250919(...)
      *   ->withCompact20260112(...)

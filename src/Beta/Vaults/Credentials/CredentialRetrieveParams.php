@@ -61,7 +61,7 @@ final class CredentialRetrieveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CredentialRetrieveParams)->withVaultID(...)
+     * (new CredentialRetrieveParams())->withVaultID(...)
      * ```
      */
     public function __construct()

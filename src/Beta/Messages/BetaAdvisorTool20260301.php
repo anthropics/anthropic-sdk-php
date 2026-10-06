@@ -108,7 +108,7 @@ final class BetaAdvisorTool20260301 implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaAdvisorTool20260301)->withModel(...)
+     * (new BetaAdvisorTool20260301())->withModel(...)
      * ```
      */
     public function __construct()

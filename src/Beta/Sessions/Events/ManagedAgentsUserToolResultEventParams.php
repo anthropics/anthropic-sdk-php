@@ -64,7 +64,9 @@ final class ManagedAgentsUserToolResultEventParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsUserToolResultEventParams)->withToolUseID(...)->withType(...)
+     * (new ManagedAgentsUserToolResultEventParams())
+     *   ->withToolUseID(...)
+     *   ->withType(...)
      * ```
      */
     public function __construct()

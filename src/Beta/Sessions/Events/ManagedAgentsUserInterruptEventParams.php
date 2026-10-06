@@ -43,7 +43,7 @@ final class ManagedAgentsUserInterruptEventParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsUserInterruptEventParams)->withType(...)
+     * (new ManagedAgentsUserInterruptEventParams())->withType(...)
      * ```
      */
     public function __construct()

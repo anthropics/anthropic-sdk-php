@@ -56,7 +56,7 @@ final class ManagedAgentsModelOverloadedError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsModelOverloadedError)
+     * (new ManagedAgentsModelOverloadedError())
      *   ->withMessage(...)
      *   ->withRetryStatus(...)
      *   ->withType(...)

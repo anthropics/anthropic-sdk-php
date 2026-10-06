@@ -165,7 +165,7 @@ final class AnalyticsSkillActivity implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsSkillActivity)
+     * (new AnalyticsSkillActivity())
      *   ->withChatMetrics(...)
      *   ->withClaudeCodeMetrics(...)
      *   ->withCoworkMetrics(...)

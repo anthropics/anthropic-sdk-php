@@ -58,7 +58,7 @@ final class DocumentBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new DocumentBlock)->withCitations(...)->withSource(...)->withTitle(...)
+     * (new DocumentBlock())->withCitations(...)->withSource(...)->withTitle(...)
      * ```
      */
     public function __construct()

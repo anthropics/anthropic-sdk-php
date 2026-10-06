@@ -57,7 +57,7 @@ final class BetaFederationIssuerPollStatus implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaFederationIssuerPollStatus)
+     * (new BetaFederationIssuerPollStatus())
      *   ->withConsecutiveFailures(...)
      *   ->withLastFetchedAt(...)
      *   ->withNextPollAt(...)

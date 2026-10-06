@@ -39,7 +39,7 @@ final class RawMessageStartEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new RawMessageStartEvent)->withMessage(...)
+     * (new RawMessageStartEvent())->withMessage(...)
      * ```
      */
     public function __construct()

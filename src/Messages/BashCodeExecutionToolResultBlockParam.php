@@ -55,7 +55,7 @@ final class BashCodeExecutionToolResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BashCodeExecutionToolResultBlockParam)
+     * (new BashCodeExecutionToolResultBlockParam())
      *   ->withContent(...)
      *   ->withToolUseID(...)
      * ```

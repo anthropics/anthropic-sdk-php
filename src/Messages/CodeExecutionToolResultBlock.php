@@ -46,7 +46,7 @@ final class CodeExecutionToolResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CodeExecutionToolResultBlock)->withContent(...)->withToolUseID(...)
+     * (new CodeExecutionToolResultBlock())->withContent(...)->withToolUseID(...)
      * ```
      */
     public function __construct()

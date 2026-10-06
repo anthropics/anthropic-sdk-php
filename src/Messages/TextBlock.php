@@ -77,7 +77,7 @@ final class TextBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new TextBlock)->withCitations(...)->withText(...)
+     * (new TextBlock())->withCitations(...)->withText(...)
      * ```
      */
     public function __construct()

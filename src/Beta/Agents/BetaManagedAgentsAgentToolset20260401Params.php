@@ -57,7 +57,7 @@ final class BetaManagedAgentsAgentToolset20260401Params implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAgentToolset20260401Params)->withType(...)
+     * (new BetaManagedAgentsAgentToolset20260401Params())->withType(...)
      * ```
      */
     public function __construct()

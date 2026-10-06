@@ -66,7 +66,7 @@ final class BetaMessageParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMessageParam)->withContent(...)->withRole(...)
+     * (new BetaMessageParam())->withContent(...)->withRole(...)
      * ```
      */
     public function __construct()

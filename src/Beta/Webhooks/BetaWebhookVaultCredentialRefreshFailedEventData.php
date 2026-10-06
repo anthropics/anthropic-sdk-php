@@ -58,7 +58,7 @@ final class BetaWebhookVaultCredentialRefreshFailedEventData implements BaseMode
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookVaultCredentialRefreshFailedEventData)
+     * (new BetaWebhookVaultCredentialRefreshFailedEventData())
      *   ->withID(...)
      *   ->withOrganizationID(...)
      *   ->withVaultID(...)

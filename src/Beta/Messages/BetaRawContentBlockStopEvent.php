@@ -37,7 +37,7 @@ final class BetaRawContentBlockStopEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRawContentBlockStopEvent)->withIndex(...)
+     * (new BetaRawContentBlockStopEvent())->withIndex(...)
      * ```
      */
     public function __construct()

@@ -60,7 +60,7 @@ final class ServiceAccountUpdateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ServiceAccountUpdateParams)->withWorkspaceID(...)->withWorkspaceRole(...)
+     * (new ServiceAccountUpdateParams())->withWorkspaceID(...)->withWorkspaceRole(...)
      * ```
      */
     public function __construct()

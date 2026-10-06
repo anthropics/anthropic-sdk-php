@@ -77,7 +77,7 @@ final class BetaManagedAgentsWebSearchToolConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsWebSearchToolConfig)
+     * (new BetaManagedAgentsWebSearchToolConfig())
      *   ->withEnabled(...)
      *   ->withPermissionPolicy(...)
      * ```

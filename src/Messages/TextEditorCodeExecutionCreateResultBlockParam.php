@@ -37,7 +37,7 @@ final class TextEditorCodeExecutionCreateResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new TextEditorCodeExecutionCreateResultBlockParam)->withIsFileUpdate(...)
+     * (new TextEditorCodeExecutionCreateResultBlockParam())->withIsFileUpdate(...)
      * ```
      */
     public function __construct()

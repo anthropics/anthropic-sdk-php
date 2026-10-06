@@ -75,7 +75,7 @@ final class FederationRuleWorkspace implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new FederationRuleWorkspace)
+     * (new FederationRuleWorkspace())
      *   ->withCreatedAt(...)
      *   ->withCreatedByActorID(...)
      *   ->withFederationRuleID(...)

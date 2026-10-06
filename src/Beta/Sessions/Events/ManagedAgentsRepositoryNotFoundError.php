@@ -65,7 +65,7 @@ final class ManagedAgentsRepositoryNotFoundError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsRepositoryNotFoundError)
+     * (new ManagedAgentsRepositoryNotFoundError())
      *   ->withMessage(...)
      *   ->withRepositoryURL(...)
      *   ->withRetryStatus(...)

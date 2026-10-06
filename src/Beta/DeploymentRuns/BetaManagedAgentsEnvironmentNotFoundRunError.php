@@ -42,7 +42,7 @@ final class BetaManagedAgentsEnvironmentNotFoundRunError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsEnvironmentNotFoundRunError)
+     * (new BetaManagedAgentsEnvironmentNotFoundRunError())
      *   ->withMessage(...)
      *   ->withType(...)
      * ```

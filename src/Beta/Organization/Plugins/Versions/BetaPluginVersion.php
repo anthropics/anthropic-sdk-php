@@ -144,7 +144,7 @@ final class BetaPluginVersion implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaPluginVersion)
+     * (new BetaPluginVersion())
      *   ->withID(...)
      *   ->withComponents(...)
      *   ->withContentScan(...)

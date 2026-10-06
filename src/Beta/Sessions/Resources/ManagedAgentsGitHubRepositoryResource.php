@@ -74,7 +74,7 @@ final class ManagedAgentsGitHubRepositoryResource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsGitHubRepositoryResource)
+     * (new ManagedAgentsGitHubRepositoryResource())
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withMountPath(...)

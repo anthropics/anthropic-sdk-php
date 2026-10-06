@@ -51,7 +51,7 @@ final class BetaResponseToolAdditionBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaResponseToolAdditionBlock)->withTool(...)
+     * (new BetaResponseToolAdditionBlock())->withTool(...)
      * ```
      */
     public function __construct()

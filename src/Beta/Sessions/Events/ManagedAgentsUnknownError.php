@@ -54,7 +54,7 @@ final class ManagedAgentsUnknownError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsUnknownError)
+     * (new ManagedAgentsUnknownError())
      *   ->withMessage(...)
      *   ->withRetryStatus(...)
      *   ->withType(...)

@@ -55,7 +55,7 @@ final class CodeExecutionResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CodeExecutionResultBlock)
+     * (new CodeExecutionResultBlock())
      *   ->withContent(...)
      *   ->withReturnCode(...)
      *   ->withStderr(...)

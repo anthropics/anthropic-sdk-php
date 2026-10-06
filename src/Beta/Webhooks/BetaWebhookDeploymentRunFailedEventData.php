@@ -51,7 +51,7 @@ final class BetaWebhookDeploymentRunFailedEventData implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookDeploymentRunFailedEventData)
+     * (new BetaWebhookDeploymentRunFailedEventData())
      *   ->withID(...)
      *   ->withOrganizationID(...)
      *   ->withWorkspaceID(...)

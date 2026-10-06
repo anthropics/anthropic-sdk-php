@@ -44,7 +44,7 @@ final class OrganizationRateLimitFilesGroup implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new OrganizationRateLimitFilesGroup)->withID(...)
+     * (new OrganizationRateLimitFilesGroup())->withID(...)
      * ```
      */
     public function __construct()

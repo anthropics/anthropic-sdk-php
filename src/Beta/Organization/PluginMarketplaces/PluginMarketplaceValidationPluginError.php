@@ -49,7 +49,7 @@ final class PluginMarketplaceValidationPluginError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PluginMarketplaceValidationPluginError)
+     * (new PluginMarketplaceValidationPluginError())
      *   ->withError(...)
      *   ->withErrorCode(...)
      *   ->withName(...)

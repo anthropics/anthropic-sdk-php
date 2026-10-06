@@ -113,7 +113,7 @@ final class SpendLimit implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SpendLimit)
+     * (new SpendLimit())
      *   ->withID(...)
      *   ->withAmount(...)
      *   ->withCreatedAt(...)

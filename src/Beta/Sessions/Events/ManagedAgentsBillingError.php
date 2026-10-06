@@ -54,7 +54,7 @@ final class ManagedAgentsBillingError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsBillingError)
+     * (new ManagedAgentsBillingError())
      *   ->withMessage(...)
      *   ->withRetryStatus(...)
      *   ->withType(...)

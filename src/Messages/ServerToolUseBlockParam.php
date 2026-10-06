@@ -67,7 +67,7 @@ final class ServerToolUseBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ServerToolUseBlockParam)->withID(...)->withInput(...)->withName(...)
+     * (new ServerToolUseBlockParam())->withID(...)->withInput(...)->withName(...)
      * ```
      */
     public function __construct()

@@ -44,7 +44,7 @@ final class WebFetchURLSourceExcept implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WebFetchURLSourceExcept)->withTools(...)
+     * (new WebFetchURLSourceExcept())->withTools(...)
      * ```
      */
     public function __construct()

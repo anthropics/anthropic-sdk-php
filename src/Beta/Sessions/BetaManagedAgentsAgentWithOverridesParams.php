@@ -108,7 +108,7 @@ final class BetaManagedAgentsAgentWithOverridesParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAgentWithOverridesParams)->withID(...)->withType(...)
+     * (new BetaManagedAgentsAgentWithOverridesParams())->withID(...)->withType(...)
      * ```
      */
     public function __construct()

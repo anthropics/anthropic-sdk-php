@@ -65,7 +65,7 @@ final class ManagedAgentsRepositoryCheckoutError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsRepositoryCheckoutError)
+     * (new ManagedAgentsRepositoryCheckoutError())
      *   ->withMessage(...)
      *   ->withRepositoryURL(...)
      *   ->withRetryStatus(...)

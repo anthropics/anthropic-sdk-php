@@ -67,7 +67,7 @@ final class ManagedAgentsEnvironmentVariableUpdateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsEnvironmentVariableUpdateParams)->withType(...)
+     * (new ManagedAgentsEnvironmentVariableUpdateParams())->withType(...)
      * ```
      */
     public function __construct()

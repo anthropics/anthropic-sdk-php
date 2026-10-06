@@ -64,7 +64,7 @@ final class BetaToolUseBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaToolUseBlock)->withID(...)->withInput(...)->withName(...)
+     * (new BetaToolUseBlock())->withID(...)->withInput(...)->withName(...)
      * ```
      */
     public function __construct()

@@ -52,7 +52,7 @@ final class MessageBatchIndividualResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MessageBatchIndividualResponse)->withCustomID(...)->withResult(...)
+     * (new MessageBatchIndividualResponse())->withCustomID(...)->withResult(...)
      * ```
      */
     public function __construct()

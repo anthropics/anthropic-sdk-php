@@ -55,7 +55,7 @@ final class BetaWebFetchToolResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebFetchToolResultBlock)->withContent(...)->withToolUseID(...)
+     * (new BetaWebFetchToolResultBlock())->withContent(...)->withToolUseID(...)
      * ```
      */
     public function __construct()

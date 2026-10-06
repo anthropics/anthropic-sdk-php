@@ -58,7 +58,7 @@ final class ThreadArchiveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ThreadArchiveParams)->withSessionID(...)
+     * (new ThreadArchiveParams())->withSessionID(...)
      * ```
      */
     public function __construct()

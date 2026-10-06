@@ -57,7 +57,7 @@ final class BetaMCPToolUseBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMCPToolUseBlock)
+     * (new BetaMCPToolUseBlock())
      *   ->withID(...)
      *   ->withInput(...)
      *   ->withName(...)

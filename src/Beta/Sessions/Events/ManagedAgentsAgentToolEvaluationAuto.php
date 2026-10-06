@@ -51,7 +51,7 @@ final class ManagedAgentsAgentToolEvaluationAuto implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsAgentToolEvaluationAuto)->withEvaluatedPermission(...)
+     * (new ManagedAgentsAgentToolEvaluationAuto())->withEvaluatedPermission(...)
      * ```
      */
     public function __construct()

@@ -65,7 +65,7 @@ final class BetaRequestDocumentBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRequestDocumentBlock)->withSource(...)
+     * (new BetaRequestDocumentBlock())->withSource(...)
      * ```
      */
     public function __construct()

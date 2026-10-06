@@ -43,7 +43,7 @@ final class Diagnostics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Diagnostics)->withCacheMissReason(...)
+     * (new Diagnostics())->withCacheMissReason(...)
      * ```
      */
     public function __construct()

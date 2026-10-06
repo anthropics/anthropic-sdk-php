@@ -65,7 +65,7 @@ final class ManagedAgentsMCPConnectionFailedError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsMCPConnectionFailedError)
+     * (new ManagedAgentsMCPConnectionFailedError())
      *   ->withMCPServerName(...)
      *   ->withMessage(...)
      *   ->withRetryStatus(...)

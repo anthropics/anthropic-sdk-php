@@ -94,7 +94,7 @@ final class BetaSpendLimitIncreaseRequest implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaSpendLimitIncreaseRequest)
+     * (new BetaSpendLimitIncreaseRequest())
      *   ->withID(...)
      *   ->withActor(...)
      *   ->withCreatedAt(...)

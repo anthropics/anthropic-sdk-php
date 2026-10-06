@@ -61,7 +61,7 @@ final class CredentialDeleteParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CredentialDeleteParams)->withVaultID(...)
+     * (new CredentialDeleteParams())->withVaultID(...)
      * ```
      */
     public function __construct()

@@ -159,7 +159,7 @@ final class BetaFederationIssuer implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaFederationIssuer)
+     * (new BetaFederationIssuer())
      *   ->withID(...)
      *   ->withArchivedAt(...)
      *   ->withArchivedByActorID(...)

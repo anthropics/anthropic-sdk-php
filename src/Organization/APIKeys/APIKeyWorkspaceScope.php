@@ -44,7 +44,7 @@ final class APIKeyWorkspaceScope implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new APIKeyWorkspaceScope)->withWorkspaceID(...)
+     * (new APIKeyWorkspaceScope())->withWorkspaceID(...)
      * ```
      */
     public function __construct()

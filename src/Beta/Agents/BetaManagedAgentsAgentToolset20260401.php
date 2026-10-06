@@ -52,7 +52,7 @@ final class BetaManagedAgentsAgentToolset20260401 implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAgentToolset20260401)
+     * (new BetaManagedAgentsAgentToolset20260401())
      *   ->withConfigs(...)
      *   ->withDefaultConfig(...)
      *   ->withType(...)

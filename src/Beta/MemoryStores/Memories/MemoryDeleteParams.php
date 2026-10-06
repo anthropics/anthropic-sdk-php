@@ -70,7 +70,7 @@ final class MemoryDeleteParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MemoryDeleteParams)->withMemoryStoreID(...)
+     * (new MemoryDeleteParams())->withMemoryStoreID(...)
      * ```
      */
     public function __construct()

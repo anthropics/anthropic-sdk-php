@@ -48,7 +48,7 @@ final class BetaManagedAgentsDeploymentSystemMessageEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsDeploymentSystemMessageEvent)
+     * (new BetaManagedAgentsDeploymentSystemMessageEvent())
      *   ->withContent(...)
      *   ->withType(...)
      * ```

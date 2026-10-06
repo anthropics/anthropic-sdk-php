@@ -73,7 +73,7 @@ final class BetaManagedAgentsWebFetchURLSources implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsWebFetchURLSources)
+     * (new BetaManagedAgentsWebFetchURLSources())
      *   ->withClientToolResults(...)
      *   ->withServerToolResults(...)
      *   ->withUserInput(...)

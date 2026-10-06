@@ -55,7 +55,7 @@ final class BetaBashCodeExecutionToolResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaBashCodeExecutionToolResultBlockParam)
+     * (new BetaBashCodeExecutionToolResultBlockParam())
      *   ->withContent(...)
      *   ->withToolUseID(...)
      * ```

@@ -51,7 +51,7 @@ final class BetaMCPToolResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMCPToolResultBlock)
+     * (new BetaMCPToolResultBlock())
      *   ->withContent(...)
      *   ->withIsError(...)
      *   ->withToolUseID(...)

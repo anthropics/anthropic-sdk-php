@@ -72,7 +72,7 @@ final class ToolUseBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ToolUseBlockParam)->withID(...)->withInput(...)->withName(...)
+     * (new ToolUseBlockParam())->withID(...)->withInput(...)->withName(...)
      * ```
      */
     public function __construct()

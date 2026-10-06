@@ -112,7 +112,7 @@ final class ManagedAgentsAgentMCPToolUseEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsAgentMCPToolUseEvent)
+     * (new ManagedAgentsAgentMCPToolUseEvent())
      *   ->withID(...)
      *   ->withInput(...)
      *   ->withMCPServerName(...)

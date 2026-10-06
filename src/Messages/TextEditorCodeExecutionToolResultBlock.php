@@ -46,7 +46,7 @@ final class TextEditorCodeExecutionToolResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new TextEditorCodeExecutionToolResultBlock)
+     * (new TextEditorCodeExecutionToolResultBlock())
      *   ->withContent(...)
      *   ->withToolUseID(...)
      * ```

@@ -36,7 +36,7 @@ final class BetaManagedAgentsAlwaysAllowPolicy implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAlwaysAllowPolicy)->withType(...)
+     * (new BetaManagedAgentsAlwaysAllowPolicy())->withType(...)
      * ```
      */
     public function __construct()

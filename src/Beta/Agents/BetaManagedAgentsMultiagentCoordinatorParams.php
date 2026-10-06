@@ -49,7 +49,7 @@ final class BetaManagedAgentsMultiagentCoordinatorParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMultiagentCoordinatorParams)
+     * (new BetaManagedAgentsMultiagentCoordinatorParams())
      *   ->withAgents(...)
      *   ->withType(...)
      * ```

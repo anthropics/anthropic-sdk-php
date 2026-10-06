@@ -58,7 +58,7 @@ final class ServerToolUseBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ServerToolUseBlock)
+     * (new ServerToolUseBlock())
      *   ->withID(...)
      *   ->withCaller(...)
      *   ->withInput(...)

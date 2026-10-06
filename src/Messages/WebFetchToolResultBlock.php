@@ -54,7 +54,7 @@ final class WebFetchToolResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WebFetchToolResultBlock)
+     * (new WebFetchToolResultBlock())
      *   ->withCaller(...)
      *   ->withContent(...)
      *   ->withToolUseID(...)

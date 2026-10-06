@@ -44,7 +44,7 @@ final class ErrorResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ErrorResponse)->withError(...)->withRequestID(...)
+     * (new ErrorResponse())->withError(...)->withRequestID(...)
      * ```
      */
     public function __construct()

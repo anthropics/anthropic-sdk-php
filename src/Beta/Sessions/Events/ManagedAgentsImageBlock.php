@@ -48,7 +48,7 @@ final class ManagedAgentsImageBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsImageBlock)->withSource(...)->withType(...)
+     * (new ManagedAgentsImageBlock())->withSource(...)->withType(...)
      * ```
      */
     public function __construct()

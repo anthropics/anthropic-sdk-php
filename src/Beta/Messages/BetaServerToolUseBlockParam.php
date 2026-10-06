@@ -67,7 +67,7 @@ final class BetaServerToolUseBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaServerToolUseBlockParam)->withID(...)->withInput(...)->withName(...)
+     * (new BetaServerToolUseBlockParam())->withID(...)->withInput(...)->withName(...)
      * ```
      */
     public function __construct()

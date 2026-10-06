@@ -55,7 +55,7 @@ final class TextBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new TextBlockParam)->withText(...)
+     * (new TextBlockParam())->withText(...)
      * ```
      */
     public function __construct()

@@ -66,7 +66,7 @@ final class EventSendParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new EventSendParams)->withEvents(...)
+     * (new EventSendParams())->withEvents(...)
      * ```
      */
     public function __construct()

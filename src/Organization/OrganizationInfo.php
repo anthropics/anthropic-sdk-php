@@ -52,7 +52,7 @@ final class OrganizationInfo implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new OrganizationInfo)->withID(...)->withName(...)
+     * (new OrganizationInfo())->withID(...)->withName(...)
      * ```
      */
     public function __construct()

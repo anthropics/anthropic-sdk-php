@@ -64,7 +64,7 @@ final class BetaDeletedPluginInstallationSetting implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaDeletedPluginInstallationSetting)->withPluginID(...)->withTarget(...)
+     * (new BetaDeletedPluginInstallationSetting())->withPluginID(...)->withTarget(...)
      * ```
      */
     public function __construct()

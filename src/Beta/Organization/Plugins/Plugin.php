@@ -207,7 +207,7 @@ final class Plugin implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Plugin)
+     * (new Plugin())
      *   ->withID(...)
      *   ->withComponents(...)
      *   ->withContentScan(...)

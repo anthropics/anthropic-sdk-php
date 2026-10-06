@@ -130,7 +130,7 @@ final class ManagedAgentsSessionThread implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSessionThread)
+     * (new ManagedAgentsSessionThread())
      *   ->withID(...)
      *   ->withAgent(...)
      *   ->withArchivedAt(...)

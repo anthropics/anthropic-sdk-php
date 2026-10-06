@@ -47,7 +47,7 @@ final class ManagedAgentsMemoryPreconditionFailedError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsMemoryPreconditionFailedError)->withType(...)
+     * (new ManagedAgentsMemoryPreconditionFailedError())->withType(...)
      * ```
      */
     public function __construct()

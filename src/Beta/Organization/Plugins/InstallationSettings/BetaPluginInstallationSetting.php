@@ -95,7 +95,7 @@ final class BetaPluginInstallationSetting implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaPluginInstallationSetting)
+     * (new BetaPluginInstallationSetting())
      *   ->withCreatedAt(...)
      *   ->withInstallationPreference(...)
      *   ->withPluginID(...)

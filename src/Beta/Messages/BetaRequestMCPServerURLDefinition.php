@@ -53,7 +53,7 @@ final class BetaRequestMCPServerURLDefinition implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRequestMCPServerURLDefinition)->withName(...)->withURL(...)
+     * (new BetaRequestMCPServerURLDefinition())->withName(...)->withURL(...)
      * ```
      */
     public function __construct()

@@ -42,7 +42,7 @@ final class BetaCitationsDelta implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCitationsDelta)->withCitation(...)
+     * (new BetaCitationsDelta())->withCitation(...)
      * ```
      */
     public function __construct()

@@ -43,7 +43,7 @@ final class ManagedAgentsInjectionLocationResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsInjectionLocationResponse)->withBody(...)->withHeader(...)
+     * (new ManagedAgentsInjectionLocationResponse())->withBody(...)->withHeader(...)
      * ```
      */
     public function __construct()

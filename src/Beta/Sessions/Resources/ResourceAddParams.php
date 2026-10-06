@@ -74,7 +74,7 @@ final class ResourceAddParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ResourceAddParams)->withFileID(...)->withType(...)
+     * (new ResourceAddParams())->withFileID(...)->withType(...)
      * ```
      */
     public function __construct()

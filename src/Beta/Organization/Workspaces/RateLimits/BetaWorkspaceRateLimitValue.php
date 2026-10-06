@@ -61,7 +61,7 @@ final class BetaWorkspaceRateLimitValue implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWorkspaceRateLimitValue)
+     * (new BetaWorkspaceRateLimitValue())
      *   ->withOrgLimit(...)
      *   ->withSource(...)
      *   ->withType(...)

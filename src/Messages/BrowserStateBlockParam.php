@@ -73,7 +73,7 @@ final class BrowserStateBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BrowserStateBlockParam)->withTabs(...)
+     * (new BrowserStateBlockParam())->withTabs(...)
      * ```
      */
     public function __construct()

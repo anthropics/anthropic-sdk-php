@@ -36,7 +36,7 @@ final class ManagedAgentsTokenEndpointAuthPostResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsTokenEndpointAuthPostResponse)->withType(...)
+     * (new ManagedAgentsTokenEndpointAuthPostResponse())->withType(...)
      * ```
      */
     public function __construct()

@@ -57,7 +57,7 @@ final class RefusalStopDetails implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new RefusalStopDetails)->withCategory(...)->withExplanation(...)
+     * (new RefusalStopDetails())->withCategory(...)->withExplanation(...)
      * ```
      */
     public function __construct()

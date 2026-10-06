@@ -96,7 +96,7 @@ final class BetaMessageIterationUsage implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMessageIterationUsage)
+     * (new BetaMessageIterationUsage())
      *   ->withCacheCreation(...)
      *   ->withCacheCreationInputTokens(...)
      *   ->withCacheReadInputTokens(...)

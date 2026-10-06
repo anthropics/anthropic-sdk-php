@@ -113,7 +113,7 @@ final class Usage implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Usage)
+     * (new Usage())
      *   ->withCacheCreation(...)
      *   ->withCacheCreationInputTokens(...)
      *   ->withCacheReadInputTokens(...)

@@ -35,7 +35,7 @@ final class URLImageSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new URLImageSource)->withURL(...)
+     * (new URLImageSource())->withURL(...)
      * ```
      */
     public function __construct()

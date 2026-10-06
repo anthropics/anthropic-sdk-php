@@ -98,7 +98,7 @@ final class SpendSummary implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SpendSummary)
+     * (new SpendSummary())
      *   ->withActor(...)
      *   ->withAmount(...)
      *   ->withCurrency(...)

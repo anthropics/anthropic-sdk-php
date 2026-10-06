@@ -63,7 +63,7 @@ final class CertificateCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CertificateCreateParams)->withCACertificatePEM(...)
+     * (new CertificateCreateParams())->withCACertificatePEM(...)
      * ```
      */
     public function __construct()

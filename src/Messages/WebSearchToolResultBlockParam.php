@@ -63,7 +63,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WebSearchToolResultBlockParam)->withContent(...)->withToolUseID(...)
+     * (new WebSearchToolResultBlockParam())->withContent(...)->withToolUseID(...)
      * ```
      */
     public function __construct()

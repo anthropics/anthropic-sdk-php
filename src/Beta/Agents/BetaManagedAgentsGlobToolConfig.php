@@ -58,7 +58,7 @@ final class BetaManagedAgentsGlobToolConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsGlobToolConfig)
+     * (new BetaManagedAgentsGlobToolConfig())
      *   ->withEnabled(...)
      *   ->withPermissionPolicy(...)
      * ```

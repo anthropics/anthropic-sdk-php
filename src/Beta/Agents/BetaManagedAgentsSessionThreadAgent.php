@@ -101,7 +101,7 @@ final class BetaManagedAgentsSessionThreadAgent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsSessionThreadAgent)
+     * (new BetaManagedAgentsSessionThreadAgent())
      *   ->withID(...)
      *   ->withDescription(...)
      *   ->withMCPServers(...)

@@ -101,7 +101,7 @@ final class BetaRawMessageDeltaEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRawMessageDeltaEvent)
+     * (new BetaRawMessageDeltaEvent())
      *   ->withContextManagement(...)
      *   ->withDelta(...)
      *   ->withUsage(...)

@@ -37,7 +37,7 @@ final class RateLimitError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new RateLimitError)->withMessage(...)
+     * (new RateLimitError())->withMessage(...)
      * ```
      */
     public function __construct()

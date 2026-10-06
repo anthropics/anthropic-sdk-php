@@ -77,7 +77,7 @@ final class BetaTextBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaTextBlock)->withCitations(...)->withText(...)
+     * (new BetaTextBlock())->withCitations(...)->withText(...)
      * ```
      */
     public function __construct()

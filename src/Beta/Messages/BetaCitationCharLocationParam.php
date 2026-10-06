@@ -60,7 +60,7 @@ final class BetaCitationCharLocationParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCitationCharLocationParam)
+     * (new BetaCitationCharLocationParam())
      *   ->withCitedText(...)
      *   ->withDocumentIndex(...)
      *   ->withDocumentTitle(...)

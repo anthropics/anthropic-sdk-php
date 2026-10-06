@@ -78,7 +78,7 @@ final class OrganizationUser implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new OrganizationUser)
+     * (new OrganizationUser())
      *   ->withID(...)
      *   ->withAddedAt(...)
      *   ->withEmail(...)

@@ -39,7 +39,7 @@ final class MemberRemoveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MemberRemoveParams)->withWorkspaceID(...)
+     * (new MemberRemoveParams())->withWorkspaceID(...)
      * ```
      */
     public function __construct()

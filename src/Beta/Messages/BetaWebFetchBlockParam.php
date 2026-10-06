@@ -55,7 +55,7 @@ final class BetaWebFetchBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebFetchBlockParam)->withContent(...)->withURL(...)
+     * (new BetaWebFetchBlockParam())->withContent(...)->withURL(...)
      * ```
      */
     public function __construct()

@@ -56,7 +56,7 @@ final class ManagedAgentsModelRequestFailedError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsModelRequestFailedError)
+     * (new ManagedAgentsModelRequestFailedError())
      *   ->withMessage(...)
      *   ->withRetryStatus(...)
      *   ->withType(...)

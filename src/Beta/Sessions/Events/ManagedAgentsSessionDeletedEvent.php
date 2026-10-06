@@ -48,7 +48,7 @@ final class ManagedAgentsSessionDeletedEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSessionDeletedEvent)
+     * (new ManagedAgentsSessionDeletedEvent())
      *   ->withID(...)
      *   ->withProcessedAt(...)
      *   ->withType(...)

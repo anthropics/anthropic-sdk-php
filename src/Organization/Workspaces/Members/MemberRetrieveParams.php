@@ -39,7 +39,7 @@ final class MemberRetrieveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MemberRetrieveParams)->withWorkspaceID(...)
+     * (new MemberRetrieveParams())->withWorkspaceID(...)
      * ```
      */
     public function __construct()

@@ -64,7 +64,11 @@ final class ToolUseBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ToolUseBlock)->withID(...)->withCaller(...)->withInput(...)->withName(...)
+     * (new ToolUseBlock())
+     *   ->withID(...)
+     *   ->withCaller(...)
+     *   ->withInput(...)
+     *   ->withName(...)
      * ```
      */
     public function __construct()

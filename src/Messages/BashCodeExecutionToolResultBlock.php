@@ -46,7 +46,7 @@ final class BashCodeExecutionToolResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BashCodeExecutionToolResultBlock)->withContent(...)->withToolUseID(...)
+     * (new BashCodeExecutionToolResultBlock())->withContent(...)->withToolUseID(...)
      * ```
      */
     public function __construct()

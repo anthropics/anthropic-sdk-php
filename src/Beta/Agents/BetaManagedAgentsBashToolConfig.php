@@ -58,7 +58,7 @@ final class BetaManagedAgentsBashToolConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsBashToolConfig)
+     * (new BetaManagedAgentsBashToolConfig())
      *   ->withEnabled(...)
      *   ->withPermissionPolicy(...)
      * ```

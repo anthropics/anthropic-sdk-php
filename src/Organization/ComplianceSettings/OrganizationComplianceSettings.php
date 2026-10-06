@@ -45,7 +45,7 @@ final class OrganizationComplianceSettings implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new OrganizationComplianceSettings)->withState(...)
+     * (new OrganizationComplianceSettings())->withState(...)
      * ```
      */
     public function __construct()

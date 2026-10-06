@@ -81,7 +81,7 @@ final class ArtifactListParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ArtifactListParams)->withDate(...)
+     * (new ArtifactListParams())->withDate(...)
      * ```
      */
     public function __construct()

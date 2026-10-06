@@ -362,7 +362,10 @@ final class MessageCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MessageCreateParams)->withMaxTokens(...)->withMessages(...)->withModel(...)
+     * (new MessageCreateParams())
+     *   ->withMaxTokens(...)
+     *   ->withMessages(...)
+     *   ->withModel(...)
      * ```
      */
     public function __construct()

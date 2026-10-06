@@ -46,7 +46,9 @@ final class BetaBashCodeExecutionToolResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaBashCodeExecutionToolResultBlock)->withContent(...)->withToolUseID(...)
+     * (new BetaBashCodeExecutionToolResultBlock())
+     *   ->withContent(...)
+     *   ->withToolUseID(...)
      * ```
      */
     public function __construct()

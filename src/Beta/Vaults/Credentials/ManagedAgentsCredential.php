@@ -110,7 +110,7 @@ final class ManagedAgentsCredential implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsCredential)
+     * (new ManagedAgentsCredential())
      *   ->withID(...)
      *   ->withArchivedAt(...)
      *   ->withAuth(...)
