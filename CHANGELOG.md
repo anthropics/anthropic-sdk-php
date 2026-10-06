@@ -10,6 +10,7 @@
 ### Chores
 
 * **docs:** fix example IDs in sessions, agents and vault credentials
+* **docs:** update Managed Agents multiagent and thread descriptions
 * **internal:** bump phpstan to 2.2.13
 * **internal:** remove unused release configuration
 

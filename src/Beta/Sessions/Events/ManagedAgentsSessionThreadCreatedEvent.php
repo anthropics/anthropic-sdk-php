@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Emitted when a subagent is spawned as a new thread. Written to the parent thread's output stream so clients observing the session see child creation.
+ * Emitted when a child thread is created. Written to the parent thread's output stream so clients observing the session see child creation.
  *
  * @phpstan-type ManagedAgentsSessionThreadCreatedEventShape = array{
  *   id: string,

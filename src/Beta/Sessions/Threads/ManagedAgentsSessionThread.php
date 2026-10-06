@@ -13,7 +13,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * An execution thread within a `session`. Each session has one primary thread plus zero or more child threads spawned by the coordinator.
+ * An execution thread within a `session`. Each session has one primary thread plus zero or more child threads.
  *
  * @phpstan-import-type AgentShape from \Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThread\Agent
  * @phpstan-import-type ManagedAgentsSessionThreadStatsShape from \Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThreadStats

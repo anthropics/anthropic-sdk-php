@@ -85,7 +85,7 @@ final class AgentCreateParams implements BaseModel
     public ?array $metadata;
 
     /**
-     * Multiagent orchestration configuration. Currently supports the `coordinator` topology with a roster of 1-20 agents.
+     * Multiagent orchestration configuration.
      */
     #[Optional(nullable: true)]
     public ?BetaManagedAgentsMultiagentParams $multiagent;
@@ -254,7 +254,7 @@ final class AgentCreateParams implements BaseModel
     }
 
     /**
-     * Multiagent orchestration configuration. Currently supports the `coordinator` topology with a roster of 1-20 agents.
+     * Multiagent orchestration configuration.
      *
      * @param BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null $multiagent
      */

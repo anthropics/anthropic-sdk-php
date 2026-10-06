@@ -59,7 +59,7 @@ final class AgentsService implements AgentsContract
      * @param string|null $description body param: Description of what the agent does
      * @param list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape> $mcpServers Body param: MCP servers this agent connects to. Maximum 20. Names must be unique within the array. Every server must be referenced by an `mcp_toolset` in `tools`; unreferenced servers are rejected. See the [MCP connector guide](https://platform.claude.com/docs/en/managed-agents/mcp-connector).
      * @param array<string,string> $metadata Body param: Arbitrary key-value metadata. Maximum 16 pairs, keys up to 64 chars, values up to 512 chars.
-     * @param BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null $multiagent Body param: Multiagent orchestration configuration. Currently supports the `coordinator` topology with a roster of 1-20 agents.
+     * @param BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null $multiagent body param: Multiagent orchestration configuration
      * @param list<BetaManagedAgentsSkillParamsShape> $skills body param: Skills available to the agent
      * @param string|null $system body param: System prompt for the agent
      * @param list<ToolShape> $tools Body param: Tool configurations available to the agent. Maximum of 256 tools across all toolsets allowed.
