@@ -109,6 +109,21 @@ class UtilTest extends TestCase
     }
 
     #[Test]
+    public function testParsePathRejectsDotSegments(): void
+    {
+        $this->assertSame('cards/..%2Fsecrets', Util::parsePath(['cards/%1$s', '../secrets']));
+        $this->assertSame('cards/%252e%252e', Util::parsePath(['cards/%1$s', '%2e%2e']));
+
+        foreach ([['cards/%1$s', '.'], ['cards/%1$s', '..'], ['cards/%1$s/items', '..'], ['cards/%1$s?beta=true', '..'], ['cards/%1$s#top', '..']] as $path) {
+            try {
+                Util::parsePath($path);
+                $this->fail('Expected a dot segment to be rejected: '.json_encode($path));
+            } catch (\InvalidArgumentException) {
+            }
+        }
+    }
+
+    #[Test]
     public function testMergeBodyStdClassBaseWithArrayExtra(): void
     {
         $body = (object) ['model' => 'model-x', 'max_tokens' => 1];

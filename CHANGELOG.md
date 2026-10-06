@@ -2,6 +2,11 @@
 
 ## [0.55.1](https://github.com/anthropics/anthropic-sdk-php/compare/v0.55.0...v0.55.1) (2026-10-06)
 
+### Bug Fixes
+
+* **client:** refuse path parameters that form a "." or ".." path segment
+
+
 ### Chores
 
 * **docs:** fix example IDs in sessions, agents and vault credentials
