@@ -745,6 +745,91 @@ final class MiddlewareThirdPartyTest extends TestCase
         $this->assertSame('/health', $seen?->getUri()->getPath());
     }
 
+    #[DataProvider('boundedReadSizes')]
+    public function testBedrockDecodedReadsRespectLengthWithoutLosingBytes(int $length): void
+    {
+        $jsons = [$this->messageStartJson(), '{"type":"message_stop"}'];
+        $source = $this->eventstreamChunk($jsons[0]).$this->eventstreamChunk($jsons[1]);
+        $highWater = 0;
+        $body = $this->decodedBedrockBody($source, $highWater);
+        $expected = "event: message_start\ndata: {$jsons[0]}\n\nevent: message_stop\ndata: {$jsons[1]}\n\n";
+        $actual = '';
+        while (!$body->eof()) {
+            $part = $body->read($length);
+            $this->assertLessThanOrEqual($length, strlen($part));
+            $actual .= $part;
+            $this->assertLessThanOrEqual(strlen($expected), strlen($actual));
+        }
+        $this->assertSame($expected, $actual);
+        $this->assertSame('', $body->read($length));
+    }
+
+    /** @return iterable<string, array{int}> */
+    public static function boundedReadSizes(): iterable
+    {
+        yield 'single byte' => [1];
+
+        yield 'small fragments' => [7];
+
+        yield 'frame boundary' => [49];
+
+        yield 'large read' => [8192];
+    }
+
+    public function testBedrockZeroReadDoesNotStartOrAdvanceTheDecoder(): void
+    {
+        $frame = $this->eventstreamChunk($this->messageStartJson());
+        $highWater = 0;
+        $body = $this->decodedBedrockBody($frame, $highWater);
+        $this->assertSame('', $body->read(0));
+        $this->assertSame(0, $highWater);
+        $this->assertFalse($body->eof());
+        $this->assertSame('event: ', $body->read(7));
+        $this->assertSame('', $body->read(0));
+        $this->assertSame("message_start\ndata: {$this->messageStartJson()}\n\n", $body->getContents());
+        $this->assertTrue($body->eof());
+    }
+
+    public function testBedrockPartialReadDoesNotPrefetchTheNextNetworkFrame(): void
+    {
+        $first = $this->eventstreamChunk($this->messageStartJson());
+        $second = $this->eventstreamChunk('{"type":"message_stop"}');
+        $highWater = 0;
+        $body = $this->decodedBedrockBody($first.$second, $highWater);
+        $this->assertSame('e', $body->read(1));
+        $this->assertLessThanOrEqual(strlen($first) + 1, $highWater);
+        $remaining = "vent: message_start\ndata: {$this->messageStartJson()}\n\n";
+        $this->assertSame($remaining, $body->read(8192));
+        $this->assertLessThanOrEqual(strlen($first) + 1, $highWater);
+        $this->assertStringStartsWith('event: message_stop', $body->read(8192));
+    }
+
+    public function testBedrockNegativeReadRejectsBeforeConsumingData(): void
+    {
+        $highWater = 0;
+        $body = $this->decodedBedrockBody($this->eventstreamChunk('{"type":"message_stop"}'), $highWater);
+
+        try {
+            $body->read(-1);
+            $this->fail('A negative read must be rejected.');
+        } catch (\RuntimeException $exception) {
+            $this->assertStringContainsString('non-negative', $exception->getMessage());
+        }
+        $this->assertSame(0, $highWater);
+        $this->assertStringStartsWith('event: message_stop', $body->getContents());
+    }
+
+    public function testBedrockClosingDiscardsBufferedRemainder(): void
+    {
+        $highWater = 0;
+        $body = $this->decodedBedrockBody($this->eventstreamChunk('{"type":"message_stop"}'), $highWater);
+        $this->assertSame('e', $body->read(1));
+        $body->close();
+        $this->assertTrue($body->eof());
+        $this->assertSame('', $body->read(1));
+        $this->assertSame('', $body->getContents());
+    }
+
     /**
      * Identity passthrough that pins the middleware callable's signature so
      * PHPStan infers `$next` inside the closures passed to it.
@@ -773,6 +858,20 @@ final class MiddlewareThirdPartyTest extends TestCase
             ->withHeader('Content-Type', 'application/json')
             ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream($body))
         ;
+    }
+
+    private function decodedBedrockBody(string $wire, int &$highWater): StreamInterface
+    {
+        $response = Psr17FactoryDiscovery::findResponseFactory()->createResponse(200)
+            ->withHeader('Content-Type', 'application/vnd.amazon.eventstream')
+            ->withBody($this->eagerEofStream($wire, $highWater))
+        ;
+        $middleware = new BedrockMiddleware(Psr17FactoryDiscovery::findStreamFactory(), static fn (RequestInterface $request): RequestInterface => $request);
+
+        return $middleware->handle(
+            Psr17FactoryDiscovery::findRequestFactory()->createRequest('POST', 'https://example.test/x'),
+            static fn (RequestInterface $request): ResponseInterface => $response,
+        )->getBody();
     }
 
     private function eventstreamResponse(string $body, bool $eagerEof = false): ResponseInterface
