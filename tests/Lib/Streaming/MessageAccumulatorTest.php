@@ -416,6 +416,106 @@ class MessageAccumulatorTest extends TestCase
         $accumulator->accumulate(['type' => 'content_block_delta', 'index' => 0, 'delta' => ['type' => 'text_delta', 'text' => 'x']]);
     }
 
+    /**
+     * @param array<string, mixed> $delta
+     * @param array<string, mixed> $expected
+     */
+    #[DataProvider('compactionReplacements')]
+    public function testCompactionDeltaReplacesPresentFields(array $delta, array $expected): void
+    {
+        $initial = ['type' => 'compaction', 'content' => 'old summary', 'encrypted_content' => 'checkpoint', 'signature' => 'signature'];
+        $accumulator = MessageAccumulator::forBetaMessages()
+            ->accumulate(['type' => 'message_start', 'message' => self::startMessage()])
+            ->accumulate(['type' => 'content_block_start', 'index' => 0, 'content_block' => $initial])
+            ->accumulate(['type' => 'content_block_delta', 'index' => 0, 'delta' => ['type' => 'compaction_delta', ...$delta]])
+        ;
+
+        foreach ($expected as $field => $value) {
+            $this->assertSame($value, self::blockField($accumulator->message()->jsonSerialize(), 0, $field));
+        }
+        $this->assertSame('signature', self::blockField($accumulator->message()->jsonSerialize(), 0, 'signature'));
+        $accumulator->accumulate(['type' => 'content_block_stop', 'index' => 0])->accumulate(['type' => 'message_stop']);
+        $this->assertTrue($accumulator->isComplete());
+        foreach ($expected as $field => $value) {
+            $this->assertSame($value, self::blockField($accumulator->message()->jsonSerialize(), 0, $field));
+        }
+    }
+
+    /** @return iterable<string, array{array<string, mixed>, array<string, mixed>}> */
+    public static function compactionReplacements(): iterable
+    {
+        yield 'replacement' => [
+            ['content' => 'new summary', 'encrypted_content' => 'new checkpoint'],
+            ['content' => 'new summary', 'encrypted_content' => 'new checkpoint'],
+        ];
+
+        yield 'failed compaction' => [
+            ['content' => null, 'encrypted_content' => null],
+            ['content' => null, 'encrypted_content' => null],
+        ];
+
+        yield 'summary only' => [
+            ['content' => 'new summary'],
+            ['content' => 'new summary', 'encrypted_content' => 'checkpoint'],
+        ];
+
+        yield 'metadata only' => [
+            ['encrypted_content' => 'new checkpoint'],
+            ['content' => 'old summary', 'encrypted_content' => 'new checkpoint'],
+        ];
+
+        yield 'clear summary only' => [
+            ['content' => null],
+            ['content' => null, 'encrypted_content' => 'checkpoint'],
+        ];
+
+        yield 'clear metadata only' => [
+            ['encrypted_content' => null],
+            ['content' => 'old summary', 'encrypted_content' => null],
+        ];
+
+        yield 'missing fields' => [[], ['content' => 'old summary', 'encrypted_content' => 'checkpoint']];
+    }
+
+    public function testFailedCompactionFromTypedStreamRoundTripsAsNull(): void
+    {
+        $events = [
+            ['type' => 'message_start', 'message' => self::startMessage()],
+            ['type' => 'content_block_start', 'index' => 0, 'content_block' => [
+                'type' => 'compaction', 'content' => '', 'encrypted_content' => 'checkpoint',
+            ]],
+            ['type' => 'content_block_delta', 'index' => 0, 'delta' => [
+                'type' => 'compaction_delta', 'content' => null, 'encrypted_content' => null,
+            ]],
+            ['type' => 'content_block_stop', 'index' => 0],
+            ['type' => 'message_stop'],
+        ];
+        $sse = '';
+        foreach ($events as $event) {
+            $sse .= 'event: '.$event['type']."\ndata: ".json_encode($event, JSON_THROW_ON_ERROR)."\n\n";
+        }
+        $response = Psr17FactoryDiscovery::findResponseFactory()->createResponse()
+            ->withHeader('Content-Type', 'text/event-stream')
+            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream($sse))
+        ;
+        $client = self::client($response);
+        $accumulator = MessageAccumulator::forBetaMessages();
+        foreach ($client->beta->messages->createStream(1024, [['role' => 'user', 'content' => 'hi']], 'test-model') as $event) {
+            $accumulator->accumulate($event);
+        }
+        $wire = json_decode(json_encode($accumulator->message(), JSON_THROW_ON_ERROR), true, flags: JSON_THROW_ON_ERROR);
+        $this->assertIsArray($wire);
+        $content = $wire['content'];
+        $this->assertIsArray($content);
+        $block = $content[0];
+        $this->assertIsArray($block);
+        $this->assertArrayHasKey('content', $block);
+        $this->assertNull($block['content']);
+        $this->assertArrayHasKey('encrypted_content', $block);
+        $this->assertNull($block['encrypted_content']);
+        $this->assertTrue($accumulator->isComplete());
+    }
+
     // ── harness ──────────────────────────────────────────────────────
 
     /** @return iterable<string,array{string}> */
