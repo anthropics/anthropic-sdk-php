@@ -115,19 +115,22 @@ final class SchemaInference
         $constraintAttributes = $property->getAttributes(Constrained::class);
         $constraint = !empty($constraintAttributes) ? $constraintAttributes[0]->newInstance() : null;
 
-        // Check if PHP type is a class that implements StructuredOutputModel (for nested objects)
-        $phpType = $inferred['phpType'];
-        if (null !== $phpType && class_exists($phpType) && is_subclass_of($phpType, StructuredOutputModel::class)) {
-            $schema = StructuredOutput::toJsonSchema($phpType);
-
-            // Keep the required status from type inference
-            return ['schema' => $schema, 'required' => $required, 'unsupportedConstraints' => []];
-        }
-
         // Start building description from #[Constrained]
         $description = (null !== $constraint && null !== $constraint->description && '' !== $constraint->description)
             ? $constraint->description
             : null;
+
+        // Check if PHP type is a class that implements StructuredOutputModel (for nested objects)
+        $phpType = $inferred['phpType'];
+        if (null !== $phpType && class_exists($phpType) && is_subclass_of($phpType, StructuredOutputModel::class)) {
+            $schema = StructuredOutput::toJsonSchema($phpType);
+            if (null !== $description) {
+                $schema['description'] = $description;
+            }
+
+            // Keep the required status from type inference
+            return ['schema' => $schema, 'required' => $required, 'unsupportedConstraints' => []];
+        }
 
         // Collect validation-only constraints from #[Constrained]
         if (null !== $constraint) {
