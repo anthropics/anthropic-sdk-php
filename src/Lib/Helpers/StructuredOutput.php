@@ -146,7 +146,8 @@ final class StructuredOutput
                 try {
                     $json = json_decode($block['text'], true, 512, JSON_THROW_ON_ERROR);
 
-                    if (!is_array($json)) {
+                    // Associative decoding turns both JSON objects and arrays into PHP arrays.
+                    if (!is_array($json) || !str_starts_with(ltrim($block['text']), '{')) {
                         throw new \RuntimeException('Expected JSON object, got '.gettype($json));
                     }
 
