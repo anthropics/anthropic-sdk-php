@@ -30,6 +30,7 @@
 * **docs:** correct example groups in rate limit list description
 * **docs:** correct when usage and cost report data becomes final
 * **docs:** update the description of the Model line field
+* **internal:** bump phpstan to 2.2.13
 * **internal:** list imported phpstan types in order of first use
 * **internal:** tidy the doc comments of model constructors and of the SSE stream
 * **tests:** run tests skipped for a query param bug that is now fixed
