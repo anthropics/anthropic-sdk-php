@@ -54,7 +54,7 @@ final class BetaClearToolUses20250919EditResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaClearToolUses20250919EditResponse)
+     * (new BetaClearToolUses20250919EditResponse())
      *   ->withClearedInputTokens(...)
      *   ->withClearedToolUses(...)
      * ```

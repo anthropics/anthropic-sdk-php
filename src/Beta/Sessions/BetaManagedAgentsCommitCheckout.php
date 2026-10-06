@@ -40,7 +40,7 @@ final class BetaManagedAgentsCommitCheckout implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsCommitCheckout)->withSha(...)->withType(...)
+     * (new BetaManagedAgentsCommitCheckout())->withSha(...)->withType(...)
      * ```
      */
     public function __construct()

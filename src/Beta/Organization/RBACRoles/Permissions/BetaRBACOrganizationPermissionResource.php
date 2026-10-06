@@ -44,7 +44,7 @@ final class BetaRBACOrganizationPermissionResource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRBACOrganizationPermissionResource)->withOrganizationID(...)
+     * (new BetaRBACOrganizationPermissionResource())->withOrganizationID(...)
      * ```
      */
     public function __construct()

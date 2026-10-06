@@ -85,7 +85,7 @@ final class SkillVersion implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SkillVersion)
+     * (new SkillVersion())
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withDescription(...)

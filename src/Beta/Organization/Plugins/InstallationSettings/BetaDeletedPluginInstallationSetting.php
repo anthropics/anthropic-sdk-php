@@ -17,8 +17,8 @@ use Anthropic\Core\Conversion\ConstantOf;
  * Confirmation that one target's installation setting was removed, naming
  * the Plugin and the target in place of an ID.
  *
- * @phpstan-import-type TargetVariants from \Anthropic\Beta\Organization\Plugins\InstallationSettings\BetaDeletedPluginInstallationSetting\Target
  * @phpstan-import-type TargetShape from \Anthropic\Beta\Organization\Plugins\InstallationSettings\BetaDeletedPluginInstallationSetting\Target
+ * @phpstan-import-type TargetVariants from \Anthropic\Beta\Organization\Plugins\InstallationSettings\BetaDeletedPluginInstallationSetting\Target
  *
  * @phpstan-type BetaDeletedPluginInstallationSettingShape = array{
  *   pluginID: string,
@@ -64,7 +64,7 @@ final class BetaDeletedPluginInstallationSetting implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaDeletedPluginInstallationSetting)->withPluginID(...)->withTarget(...)
+     * (new BetaDeletedPluginInstallationSetting())->withPluginID(...)->withTarget(...)
      * ```
      */
     public function __construct()

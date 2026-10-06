@@ -52,7 +52,7 @@ final class WebSearchResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WebSearchResultBlock)
+     * (new WebSearchResultBlock())
      *   ->withEncryptedContent(...)
      *   ->withPageAge(...)
      *   ->withTitle(...)

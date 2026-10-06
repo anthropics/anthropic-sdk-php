@@ -63,7 +63,7 @@ final class Delta implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Delta)
+     * (new Delta())
      *   ->withContainer(...)
      *   ->withStopDetails(...)
      *   ->withStopReason(...)

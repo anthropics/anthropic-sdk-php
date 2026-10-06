@@ -37,7 +37,7 @@ final class SpendLimitOrganizationServiceScope implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SpendLimitOrganizationServiceScope)->withService(...)
+     * (new SpendLimitOrganizationServiceScope())->withService(...)
      * ```
      */
     public function __construct()

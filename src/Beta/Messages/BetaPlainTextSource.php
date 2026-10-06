@@ -41,7 +41,7 @@ final class BetaPlainTextSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaPlainTextSource)->withData(...)
+     * (new BetaPlainTextSource())->withData(...)
      * ```
      */
     public function __construct()

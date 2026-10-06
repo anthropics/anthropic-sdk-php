@@ -55,7 +55,7 @@ final class Container implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Container)->withID(...)->withExpiresAt(...)->withSkills(...)
+     * (new Container())->withID(...)->withExpiresAt(...)->withSkills(...)
      * ```
      */
     public function __construct()

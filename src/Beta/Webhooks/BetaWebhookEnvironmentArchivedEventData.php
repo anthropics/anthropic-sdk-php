@@ -51,7 +51,7 @@ final class BetaWebhookEnvironmentArchivedEventData implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookEnvironmentArchivedEventData)
+     * (new BetaWebhookEnvironmentArchivedEventData())
      *   ->withID(...)
      *   ->withOrganizationID(...)
      *   ->withWorkspaceID(...)

@@ -54,7 +54,7 @@ final class WebFetchBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WebFetchBlock)->withContent(...)->withRetrievedAt(...)->withURL(...)
+     * (new WebFetchBlock())->withContent(...)->withRetrievedAt(...)->withURL(...)
      * ```
      */
     public function __construct()

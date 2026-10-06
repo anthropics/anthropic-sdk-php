@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Echo of a `user.define_outcome` input event. Carries the server-generated `outcome_id` that subsequent `span.outcome_evaluation_*` events reference.
  *
- * @phpstan-import-type RubricVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserDefineOutcomeEvent\Rubric
  * @phpstan-import-type RubricShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserDefineOutcomeEvent\Rubric
+ * @phpstan-import-type RubricVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserDefineOutcomeEvent\Rubric
  *
  * @phpstan-type ManagedAgentsUserDefineOutcomeEventShape = array{
  *   id: string,
@@ -92,7 +92,7 @@ final class ManagedAgentsUserDefineOutcomeEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsUserDefineOutcomeEvent)
+     * (new ManagedAgentsUserDefineOutcomeEvent())
      *   ->withID(...)
      *   ->withDescription(...)
      *   ->withMaxIterations(...)

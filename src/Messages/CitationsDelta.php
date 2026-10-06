@@ -11,8 +11,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\CitationsDelta\Citation;
 
 /**
- * @phpstan-import-type CitationVariants from \Anthropic\Messages\CitationsDelta\Citation
  * @phpstan-import-type CitationShape from \Anthropic\Messages\CitationsDelta\Citation
+ * @phpstan-import-type CitationVariants from \Anthropic\Messages\CitationsDelta\Citation
  *
  * @phpstan-type CitationsDeltaShape = array{
  *   citation: CitationShape, type: 'citations_delta'
@@ -42,7 +42,7 @@ final class CitationsDelta implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CitationsDelta)->withCitation(...)
+     * (new CitationsDelta())->withCitation(...)
      * ```
      */
     public function __construct()

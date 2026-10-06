@@ -66,7 +66,7 @@ final class EventListParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new EventListParams)->withSessionID(...)
+     * (new EventListParams())->withSessionID(...)
      * ```
      */
     public function __construct()

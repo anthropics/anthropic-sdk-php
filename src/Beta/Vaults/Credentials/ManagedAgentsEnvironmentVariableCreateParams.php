@@ -13,9 +13,9 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Parameters for creating an environment variable credential.
  *
- * @phpstan-import-type ManagedAgentsCredentialNetworkingParamsVariants from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredentialNetworkingParams
  * @phpstan-import-type ManagedAgentsCredentialNetworkingParamsShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredentialNetworkingParams
  * @phpstan-import-type ManagedAgentsInjectionLocationParamsShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsInjectionLocationParams
+ * @phpstan-import-type ManagedAgentsCredentialNetworkingParamsVariants from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredentialNetworkingParams
  *
  * @phpstan-type ManagedAgentsEnvironmentVariableCreateParamsShape = array{
  *   networking: ManagedAgentsCredentialNetworkingParamsShape,
@@ -73,7 +73,7 @@ final class ManagedAgentsEnvironmentVariableCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsEnvironmentVariableCreateParams)
+     * (new ManagedAgentsEnvironmentVariableCreateParams())
      *   ->withNetworking(...)
      *   ->withSecretName(...)
      *   ->withSecretValue(...)

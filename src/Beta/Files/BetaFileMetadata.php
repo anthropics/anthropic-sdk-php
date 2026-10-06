@@ -103,7 +103,7 @@ final class BetaFileMetadata implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaFileMetadata)
+     * (new BetaFileMetadata())
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withFilename(...)

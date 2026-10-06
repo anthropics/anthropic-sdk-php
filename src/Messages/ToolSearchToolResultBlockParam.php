@@ -11,9 +11,9 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type ContentVariants from \Anthropic\Messages\ToolSearchToolResultBlockParam\Content
  * @phpstan-import-type ContentShape from \Anthropic\Messages\ToolSearchToolResultBlockParam\Content
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ * @phpstan-import-type ContentVariants from \Anthropic\Messages\ToolSearchToolResultBlockParam\Content
  *
  * @phpstan-type ToolSearchToolResultBlockParamShape = array{
  *   content: ContentShape,
@@ -55,7 +55,7 @@ final class ToolSearchToolResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ToolSearchToolResultBlockParam)->withContent(...)->withToolUseID(...)
+     * (new ToolSearchToolResultBlockParam())->withContent(...)->withToolUseID(...)
      * ```
      */
     public function __construct()

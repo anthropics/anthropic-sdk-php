@@ -76,7 +76,7 @@ final class ToolSearchToolBm25_20251119 implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ToolSearchToolBm25_20251119)->withType(...)
+     * (new ToolSearchToolBm25_20251119())->withType(...)
      * ```
      */
     public function __construct()

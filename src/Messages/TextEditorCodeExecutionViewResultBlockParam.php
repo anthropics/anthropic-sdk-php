@@ -57,7 +57,7 @@ final class TextEditorCodeExecutionViewResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new TextEditorCodeExecutionViewResultBlockParam)
+     * (new TextEditorCodeExecutionViewResultBlockParam())
      *   ->withContent(...)
      *   ->withFileType(...)
      * ```

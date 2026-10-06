@@ -36,7 +36,7 @@ final class BetaManagedAgentsEffortMedium implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsEffortMedium)->withType(...)
+     * (new BetaManagedAgentsEffortMedium())->withType(...)
      * ```
      */
     public function __construct()

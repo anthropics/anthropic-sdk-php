@@ -36,7 +36,7 @@ final class ManagedAgentsUnrestrictedCredentialNetworkingParams implements BaseM
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsUnrestrictedCredentialNetworkingParams)->withType(...)
+     * (new ManagedAgentsUnrestrictedCredentialNetworkingParams())->withType(...)
      * ```
      */
     public function __construct()

@@ -37,7 +37,7 @@ final class BashCodeExecutionOutputBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BashCodeExecutionOutputBlockParam)->withFileID(...)
+     * (new BashCodeExecutionOutputBlockParam())->withFileID(...)
      * ```
      */
     public function __construct()

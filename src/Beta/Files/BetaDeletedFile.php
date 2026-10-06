@@ -47,7 +47,7 @@ final class BetaDeletedFile implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaDeletedFile)->withID(...)
+     * (new BetaDeletedFile())->withID(...)
      * ```
      */
     public function __construct()

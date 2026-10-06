@@ -28,6 +28,7 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
+ * @phpstan-import-type BetaTextBlockParamShape from \Anthropic\Beta\Messages\BetaTextBlockParam
  * @phpstan-import-type BetaImageBlockParamShape from \Anthropic\Beta\Messages\BetaImageBlockParam
  * @phpstan-import-type BetaSearchResultBlockParamShape from \Anthropic\Beta\Messages\BetaSearchResultBlockParam
  * @phpstan-import-type BetaRequestDocumentBlockShape from \Anthropic\Beta\Messages\BetaRequestDocumentBlock
@@ -41,7 +42,6 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type BetaImageTransformationsParamShape from \Anthropic\Beta\Messages\BetaImageTransformationsParam
  * @phpstan-import-type BetaBrowserStateTabEntryShape from \Anthropic\Beta\Messages\BetaBrowserStateTabEntry
  * @phpstan-import-type BetaBrowserStateChangeShape from \Anthropic\Beta\Messages\BetaBrowserStateChange
- * @phpstan-import-type BetaTextBlockParamShape from \Anthropic\Beta\Messages\BetaTextBlockParam
  *
  * @phpstan-type ContentVariants = BetaTextBlockParam|BetaImageBlockParam|BetaSearchResultBlockParam|BetaRequestDocumentBlock|BetaToolReferenceBlockParam|BetaBrowserStateBlockParam
  * @phpstan-type ContentShape = ContentVariants|BetaTextBlockParamShape|BetaImageBlockParamShape|BetaSearchResultBlockParamShape|BetaRequestDocumentBlockShape|BetaToolReferenceBlockParamShape|BetaBrowserStateBlockParamShape

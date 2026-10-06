@@ -40,7 +40,7 @@ final class BetaManagedAgentsSelfHostedResourcesUnsupportedDeploymentPausedReaso
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsSelfHostedResourcesUnsupportedDeploymentPausedReasonError)
+     * (new BetaManagedAgentsSelfHostedResourcesUnsupportedDeploymentPausedReasonError())
      *   ->withType(...)
      * ```
      */

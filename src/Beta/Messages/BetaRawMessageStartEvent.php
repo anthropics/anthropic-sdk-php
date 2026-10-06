@@ -39,7 +39,7 @@ final class BetaRawMessageStartEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRawMessageStartEvent)->withMessage(...)
+     * (new BetaRawMessageStartEvent())->withMessage(...)
      * ```
      */
     public function __construct()

@@ -35,7 +35,7 @@ final class CapabilitySupport implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CapabilitySupport)->withSupported(...)
+     * (new CapabilitySupport())->withSupported(...)
      * ```
      */
     public function __construct()

@@ -48,7 +48,7 @@ final class ManagedAgentsSystemMessageEventParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSystemMessageEventParams)->withContent(...)->withType(...)
+     * (new ManagedAgentsSystemMessageEventParams())->withContent(...)->withType(...)
      * ```
      */
     public function __construct()

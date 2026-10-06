@@ -67,7 +67,7 @@ final class BetaDreamUsage implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaDreamUsage)
+     * (new BetaDreamUsage())
      *   ->withCacheCreationInputTokens(...)
      *   ->withCacheReadInputTokens(...)
      *   ->withInputTokens(...)

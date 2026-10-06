@@ -65,7 +65,7 @@ final class WorkHeartbeatParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WorkHeartbeatParams)->withEnvironmentID(...)
+     * (new WorkHeartbeatParams())->withEnvironmentID(...)
      * ```
      */
     public function __construct()

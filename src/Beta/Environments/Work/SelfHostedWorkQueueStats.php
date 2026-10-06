@@ -72,7 +72,7 @@ final class SelfHostedWorkQueueStats implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SelfHostedWorkQueueStats)
+     * (new SelfHostedWorkQueueStats())
      *   ->withDepth(...)
      *   ->withOldestQueuedAt(...)
      *   ->withPending(...)

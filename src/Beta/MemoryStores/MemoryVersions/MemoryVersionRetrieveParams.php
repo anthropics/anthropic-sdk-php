@@ -71,7 +71,7 @@ final class MemoryVersionRetrieveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MemoryVersionRetrieveParams)->withMemoryStoreID(...)
+     * (new MemoryVersionRetrieveParams())->withMemoryStoreID(...)
      * ```
      */
     public function __construct()

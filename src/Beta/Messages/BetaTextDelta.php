@@ -35,7 +35,7 @@ final class BetaTextDelta implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaTextDelta)->withText(...)
+     * (new BetaTextDelta())->withText(...)
      * ```
      */
     public function __construct()

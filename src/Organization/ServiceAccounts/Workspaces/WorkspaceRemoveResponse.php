@@ -48,7 +48,7 @@ final class WorkspaceRemoveResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WorkspaceRemoveResponse)->withServiceAccountID(...)->withWorkspaceID(...)
+     * (new WorkspaceRemoveResponse())->withServiceAccountID(...)->withWorkspaceID(...)
      * ```
      */
     public function __construct()

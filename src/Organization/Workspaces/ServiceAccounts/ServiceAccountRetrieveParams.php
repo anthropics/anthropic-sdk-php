@@ -48,7 +48,7 @@ final class ServiceAccountRetrieveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ServiceAccountRetrieveParams)->withWorkspaceID(...)
+     * (new ServiceAccountRetrieveParams())->withWorkspaceID(...)
      * ```
      */
     public function __construct()

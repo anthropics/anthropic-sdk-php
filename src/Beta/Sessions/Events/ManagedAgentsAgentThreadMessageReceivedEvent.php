@@ -14,8 +14,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Delivery event written to the target thread's input stream when an agent-to-agent message arrives.
  *
- * @phpstan-import-type ContentVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentThreadMessageReceivedEvent\Content
  * @phpstan-import-type ContentShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentThreadMessageReceivedEvent\Content
+ * @phpstan-import-type ContentVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentThreadMessageReceivedEvent\Content
  *
  * @phpstan-type ManagedAgentsAgentThreadMessageReceivedEventShape = array{
  *   id: string,
@@ -80,7 +80,7 @@ final class ManagedAgentsAgentThreadMessageReceivedEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsAgentThreadMessageReceivedEvent)
+     * (new ManagedAgentsAgentThreadMessageReceivedEvent())
      *   ->withID(...)
      *   ->withContent(...)
      *   ->withFromSessionThreadID(...)

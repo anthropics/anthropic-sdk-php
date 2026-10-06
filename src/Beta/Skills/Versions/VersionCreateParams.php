@@ -66,7 +66,7 @@ final class VersionCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new VersionCreateParams)->withFiles(...)
+     * (new VersionCreateParams())->withFiles(...)
      * ```
      */
     public function __construct()

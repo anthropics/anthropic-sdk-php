@@ -63,7 +63,10 @@ final class SearchResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SearchResultBlockParam)->withContent(...)->withSource(...)->withTitle(...)
+     * (new SearchResultBlockParam())
+     *   ->withContent(...)
+     *   ->withSource(...)
+     *   ->withTitle(...)
      * ```
      */
     public function __construct()

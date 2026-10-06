@@ -42,7 +42,7 @@ final class BetaSkillSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaSkillSource)->withType(...)
+     * (new BetaSkillSource())->withType(...)
      * ```
      */
     public function __construct()

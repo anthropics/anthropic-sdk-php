@@ -11,12 +11,12 @@ use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Lib\Contracts\StructuredOutputModel;
 
 /**
- * @phpstan-import-type ContentBlockVariants from \Anthropic\Messages\ContentBlock
  * @phpstan-import-type ContainerShape from \Anthropic\Messages\Container
  * @phpstan-import-type ContentBlockShape from \Anthropic\Messages\ContentBlock
  * @phpstan-import-type DiagnosticsShape from \Anthropic\Messages\Diagnostics
  * @phpstan-import-type RefusalStopDetailsShape from \Anthropic\Messages\RefusalStopDetails
  * @phpstan-import-type UsageShape from \Anthropic\Messages\Usage
+ * @phpstan-import-type ContentBlockVariants from \Anthropic\Messages\ContentBlock
  *
  * @phpstan-type MessageShape = array{
  *   id: string,
@@ -191,7 +191,7 @@ final class Message implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Message)
+     * (new Message())
      *   ->withID(...)
      *   ->withContainer(...)
      *   ->withContent(...)

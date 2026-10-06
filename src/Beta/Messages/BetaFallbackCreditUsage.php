@@ -12,8 +12,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Outcome of the ``fallback_credit_token`` presented on this request.
  *
- * @phpstan-import-type StatusVariants from \Anthropic\Beta\Messages\BetaFallbackCreditUsage\Status
  * @phpstan-import-type StatusShape from \Anthropic\Beta\Messages\BetaFallbackCreditUsage\Status
+ * @phpstan-import-type StatusVariants from \Anthropic\Beta\Messages\BetaFallbackCreditUsage\Status
  *
  * @phpstan-type BetaFallbackCreditUsageShape = array{status: StatusShape}
  */
@@ -46,7 +46,7 @@ final class BetaFallbackCreditUsage implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaFallbackCreditUsage)->withStatus(...)
+     * (new BetaFallbackCreditUsage())->withStatus(...)
      * ```
      */
     public function __construct()

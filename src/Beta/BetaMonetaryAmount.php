@@ -45,7 +45,7 @@ final class BetaMonetaryAmount implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMonetaryAmount)->withAmount(...)->withCurrency(...)
+     * (new BetaMonetaryAmount())->withAmount(...)->withCurrency(...)
      * ```
      */
     public function __construct()

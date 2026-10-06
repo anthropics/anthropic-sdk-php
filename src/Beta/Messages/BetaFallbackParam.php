@@ -20,9 +20,9 @@ use Anthropic\Messages\Model;
  * attempt only and are validated as if the request were made to `model`.
  * Any other key is rejected at parse time.
  *
- * @phpstan-import-type ThinkingVariants from \Anthropic\Beta\Messages\BetaFallbackParam\Thinking
  * @phpstan-import-type BetaOutputConfigShape from \Anthropic\Beta\Messages\BetaOutputConfig
  * @phpstan-import-type ThinkingShape from \Anthropic\Beta\Messages\BetaFallbackParam\Thinking
+ * @phpstan-import-type ThinkingVariants from \Anthropic\Beta\Messages\BetaFallbackParam\Thinking
  *
  * @phpstan-type BetaFallbackParamShape = array{
  *   model: string|Model|value-of<Model>,
@@ -76,7 +76,7 @@ final class BetaFallbackParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaFallbackParam)->withModel(...)
+     * (new BetaFallbackParam())->withModel(...)
      * ```
      */
     public function __construct()

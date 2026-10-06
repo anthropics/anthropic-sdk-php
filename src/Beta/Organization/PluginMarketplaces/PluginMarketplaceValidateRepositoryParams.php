@@ -78,7 +78,7 @@ final class PluginMarketplaceValidateRepositoryParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PluginMarketplaceValidateRepositoryParams)->withRepositoryURL(...)
+     * (new PluginMarketplaceValidateRepositoryParams())->withRepositoryURL(...)
      * ```
      */
     public function __construct()

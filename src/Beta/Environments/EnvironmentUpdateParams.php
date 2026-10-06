@@ -18,8 +18,8 @@ use Anthropic\Core\Conversion\MapOf;
  *
  * @see Anthropic\Services\Beta\EnvironmentsService::update()
  *
- * @phpstan-import-type ConfigVariants from \Anthropic\Beta\Environments\EnvironmentUpdateParams\Config
  * @phpstan-import-type ConfigShape from \Anthropic\Beta\Environments\EnvironmentUpdateParams\Config
+ * @phpstan-import-type ConfigVariants from \Anthropic\Beta\Environments\EnvironmentUpdateParams\Config
  *
  * @phpstan-type EnvironmentUpdateParamsShape = array{
  *   config?: ConfigShape|null,

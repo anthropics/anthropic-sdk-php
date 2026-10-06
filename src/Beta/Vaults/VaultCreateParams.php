@@ -70,7 +70,7 @@ final class VaultCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new VaultCreateParams)->withDisplayName(...)
+     * (new VaultCreateParams())->withDisplayName(...)
      * ```
      */
     public function __construct()

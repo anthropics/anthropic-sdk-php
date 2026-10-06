@@ -46,7 +46,7 @@ final class Request implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Request)->withCustomID(...)->withParams(...)
+     * (new Request())->withCustomID(...)->withParams(...)
      * ```
      */
     public function __construct()

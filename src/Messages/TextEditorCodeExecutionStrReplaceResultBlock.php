@@ -59,7 +59,7 @@ final class TextEditorCodeExecutionStrReplaceResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new TextEditorCodeExecutionStrReplaceResultBlock)
+     * (new TextEditorCodeExecutionStrReplaceResultBlock())
      *   ->withLines(...)
      *   ->withNewLines(...)
      *   ->withNewStart(...)

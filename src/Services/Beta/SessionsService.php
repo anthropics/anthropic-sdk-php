@@ -25,11 +25,11 @@ use Anthropic\Services\Beta\Sessions\ThreadsService;
 
 /**
  * @phpstan-import-type AgentShape from \Anthropic\Beta\Sessions\SessionCreateParams\Agent
+ * @phpstan-import-type BetaManagedAgentsBudgetLimitShape from \Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit
  * @phpstan-import-type InitialEventShape from \Anthropic\Beta\Sessions\SessionCreateParams\InitialEvent
  * @phpstan-import-type ResourceShape from \Anthropic\Beta\Sessions\SessionCreateParams\Resource
- * @phpstan-import-type BetaManagedAgentsSessionAgentUpdateShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgentUpdate
- * @phpstan-import-type BetaManagedAgentsBudgetLimitShape from \Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type BetaManagedAgentsSessionAgentUpdateShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgentUpdate
  */
 final class SessionsService implements SessionsContract
 {

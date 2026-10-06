@@ -44,7 +44,7 @@ final class SpendLimitUserScope implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SpendLimitUserScope)->withUserID(...)
+     * (new SpendLimitUserScope())->withUserID(...)
      * ```
      */
     public function __construct()

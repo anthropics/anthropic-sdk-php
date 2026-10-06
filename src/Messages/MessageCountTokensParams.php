@@ -20,10 +20,6 @@ use Anthropic\Messages\MessageCountTokensParams\System;
  *
  * @see Anthropic\Services\MessagesService::countTokens()
  *
- * @phpstan-import-type SystemVariants from \Anthropic\Messages\MessageCountTokensParams\System
- * @phpstan-import-type ThinkingConfigParamVariants from \Anthropic\Messages\ThinkingConfigParam
- * @phpstan-import-type ToolChoiceVariants from \Anthropic\Messages\ToolChoice
- * @phpstan-import-type MessageCountTokensToolVariants from \Anthropic\Messages\MessageCountTokensTool
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type OutputConfigShape from \Anthropic\Messages\OutputConfig
@@ -31,6 +27,10 @@ use Anthropic\Messages\MessageCountTokensParams\System;
  * @phpstan-import-type ThinkingConfigParamShape from \Anthropic\Messages\ThinkingConfigParam
  * @phpstan-import-type ToolChoiceShape from \Anthropic\Messages\ToolChoice
  * @phpstan-import-type MessageCountTokensToolShape from \Anthropic\Messages\MessageCountTokensTool
+ * @phpstan-import-type SystemVariants from \Anthropic\Messages\MessageCountTokensParams\System
+ * @phpstan-import-type ThinkingConfigParamVariants from \Anthropic\Messages\ThinkingConfigParam
+ * @phpstan-import-type ToolChoiceVariants from \Anthropic\Messages\ToolChoice
+ * @phpstan-import-type MessageCountTokensToolVariants from \Anthropic\Messages\MessageCountTokensTool
  *
  * @phpstan-type MessageCountTokensParamsShape = array{
  *   messages: list<MessageParam|MessageParamShape>,
@@ -251,7 +251,7 @@ final class MessageCountTokensParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MessageCountTokensParams)->withMessages(...)->withModel(...)
+     * (new MessageCountTokensParams())->withMessages(...)->withModel(...)
      * ```
      */
     public function __construct()

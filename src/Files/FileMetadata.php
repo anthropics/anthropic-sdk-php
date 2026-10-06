@@ -94,7 +94,7 @@ final class FileMetadata implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new FileMetadata)
+     * (new FileMetadata())
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withFilename(...)

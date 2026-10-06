@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type BetaWebhookEventDataVariants from \Anthropic\Beta\Webhooks\BetaWebhookEventData
  * @phpstan-import-type BetaWebhookEventDataShape from \Anthropic\Beta\Webhooks\BetaWebhookEventData
+ * @phpstan-import-type BetaWebhookEventDataVariants from \Anthropic\Beta\Webhooks\BetaWebhookEventData
  *
  * @phpstan-type BetaWebhookEventShape = array{
  *   id: string,
@@ -60,7 +60,7 @@ final class BetaWebhookEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookEvent)->withID(...)->withCreatedAt(...)->withData(...)
+     * (new BetaWebhookEvent())->withID(...)->withCreatedAt(...)->withData(...)
      * ```
      */
     public function __construct()

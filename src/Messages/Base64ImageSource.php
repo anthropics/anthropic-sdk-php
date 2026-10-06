@@ -42,7 +42,7 @@ final class Base64ImageSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Base64ImageSource)->withData(...)->withMediaType(...)
+     * (new Base64ImageSource())->withData(...)->withMediaType(...)
      * ```
      */
     public function __construct()

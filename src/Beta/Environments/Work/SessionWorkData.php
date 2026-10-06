@@ -47,7 +47,7 @@ final class SessionWorkData implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SessionWorkData)->withID(...)
+     * (new SessionWorkData())->withID(...)
      * ```
      */
     public function __construct()

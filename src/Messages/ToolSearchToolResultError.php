@@ -43,7 +43,7 @@ final class ToolSearchToolResultError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ToolSearchToolResultError)->withErrorCode(...)->withErrorMessage(...)
+     * (new ToolSearchToolResultError())->withErrorCode(...)->withErrorMessage(...)
      * ```
      */
     public function __construct()

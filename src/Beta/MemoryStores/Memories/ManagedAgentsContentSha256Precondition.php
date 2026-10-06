@@ -43,7 +43,7 @@ final class ManagedAgentsContentSha256Precondition implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsContentSha256Precondition)->withType(...)
+     * (new ManagedAgentsContentSha256Precondition())->withType(...)
      * ```
      */
     public function __construct()

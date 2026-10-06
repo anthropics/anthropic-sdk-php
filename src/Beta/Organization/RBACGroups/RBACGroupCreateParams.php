@@ -41,7 +41,7 @@ final class RBACGroupCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new RBACGroupCreateParams)->withName(...)
+     * (new RBACGroupCreateParams())->withName(...)
      * ```
      */
     public function __construct()

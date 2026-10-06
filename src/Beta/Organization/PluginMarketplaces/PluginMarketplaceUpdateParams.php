@@ -67,7 +67,7 @@ final class PluginMarketplaceUpdateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PluginMarketplaceUpdateParams)->withDefaultInstallationPreference(...)
+     * (new PluginMarketplaceUpdateParams())->withDefaultInstallationPreference(...)
      * ```
      */
     public function __construct()

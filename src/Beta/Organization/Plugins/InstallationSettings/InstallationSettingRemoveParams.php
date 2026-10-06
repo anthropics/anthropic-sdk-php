@@ -72,7 +72,7 @@ final class InstallationSettingRemoveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new InstallationSettingRemoveParams)->withPluginID(...)
+     * (new InstallationSettingRemoveParams())->withPluginID(...)
      * ```
      */
     public function __construct()

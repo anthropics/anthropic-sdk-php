@@ -67,7 +67,7 @@ final class BetaThinkingDroppedInputTransformation implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaThinkingDroppedInputTransformation)->withPath(...)->withReason(...)
+     * (new BetaThinkingDroppedInputTransformation())->withPath(...)->withReason(...)
      * ```
      */
     public function __construct()

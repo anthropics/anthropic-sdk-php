@@ -55,7 +55,7 @@ final class BetaContainer implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaContainer)->withID(...)->withExpiresAt(...)->withSkills(...)
+     * (new BetaContainer())->withID(...)->withExpiresAt(...)->withSkills(...)
      * ```
      */
     public function __construct()

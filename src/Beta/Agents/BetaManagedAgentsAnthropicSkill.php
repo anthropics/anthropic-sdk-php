@@ -42,7 +42,7 @@ final class BetaManagedAgentsAnthropicSkill implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAnthropicSkill)
+     * (new BetaManagedAgentsAnthropicSkill())
      *   ->withSkillID(...)
      *   ->withType(...)
      *   ->withVersion(...)

@@ -50,7 +50,7 @@ final class ManagedAgentsSpanModelRequestStartEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSpanModelRequestStartEvent)
+     * (new ManagedAgentsSpanModelRequestStartEvent())
      *   ->withID(...)
      *   ->withProcessedAt(...)
      *   ->withType(...)

@@ -73,7 +73,7 @@ final class BetaTunnel implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaTunnel)
+     * (new BetaTunnel())
      *   ->withID(...)
      *   ->withArchivedAt(...)
      *   ->withCreatedAt(...)

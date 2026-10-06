@@ -35,7 +35,7 @@ final class BetaCapabilitySupport implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCapabilitySupport)->withSupported(...)
+     * (new BetaCapabilitySupport())->withSupported(...)
      * ```
      */
     public function __construct()

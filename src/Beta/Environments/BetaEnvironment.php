@@ -15,8 +15,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * Unified Environment resource for both cloud and self-hosted environments.
  *
- * @phpstan-import-type ConfigVariants from \Anthropic\Beta\Environments\BetaEnvironment\Config
  * @phpstan-import-type ConfigShape from \Anthropic\Beta\Environments\BetaEnvironment\Config
+ * @phpstan-import-type ConfigVariants from \Anthropic\Beta\Environments\BetaEnvironment\Config
  *
  * @phpstan-type BetaEnvironmentShape = array{
  *   id: string,
@@ -124,7 +124,7 @@ final class BetaEnvironment implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaEnvironment)
+     * (new BetaEnvironment())
      *   ->withID(...)
      *   ->withArchivedAt(...)
      *   ->withConfig(...)

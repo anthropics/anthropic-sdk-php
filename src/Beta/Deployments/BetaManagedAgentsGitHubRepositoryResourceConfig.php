@@ -16,8 +16,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * A GitHub repository mounted into each session's container. The authorization token is write-only and never returned.
  *
- * @phpstan-import-type CheckoutVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsGitHubRepositoryResourceConfig\Checkout
  * @phpstan-import-type CheckoutShape from \Anthropic\Beta\Deployments\BetaManagedAgentsGitHubRepositoryResourceConfig\Checkout
+ * @phpstan-import-type CheckoutVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsGitHubRepositoryResourceConfig\Checkout
  *
  * @phpstan-type BetaManagedAgentsGitHubRepositoryResourceConfigShape = array{
  *   type: Type|value-of<Type>,
@@ -66,7 +66,7 @@ final class BetaManagedAgentsGitHubRepositoryResourceConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsGitHubRepositoryResourceConfig)
+     * (new BetaManagedAgentsGitHubRepositoryResourceConfig())
      *   ->withType(...)
      *   ->withURL(...)
      * ```

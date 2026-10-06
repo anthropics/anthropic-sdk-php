@@ -52,7 +52,7 @@ final class AnalyticsUser implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsUser)->withID(...)->withEmailAddress(...)
+     * (new AnalyticsUser())->withID(...)->withEmailAddress(...)
      * ```
      */
     public function __construct()

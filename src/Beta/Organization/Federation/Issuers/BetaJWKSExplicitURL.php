@@ -49,7 +49,7 @@ final class BetaJWKSExplicitURL implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaJWKSExplicitURL)->withURL(...)
+     * (new BetaJWKSExplicitURL())->withURL(...)
      * ```
      */
     public function __construct()

@@ -14,8 +14,8 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-import-type CheckoutVariants from \Anthropic\Beta\Sessions\Resources\ManagedAgentsGitHubRepositoryResource\Checkout
  * @phpstan-import-type CheckoutShape from \Anthropic\Beta\Sessions\Resources\ManagedAgentsGitHubRepositoryResource\Checkout
+ * @phpstan-import-type CheckoutVariants from \Anthropic\Beta\Sessions\Resources\ManagedAgentsGitHubRepositoryResource\Checkout
  *
  * @phpstan-type ManagedAgentsGitHubRepositoryResourceShape = array{
  *   id: string,
@@ -74,7 +74,7 @@ final class ManagedAgentsGitHubRepositoryResource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsGitHubRepositoryResource)
+     * (new ManagedAgentsGitHubRepositoryResource())
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withMountPath(...)

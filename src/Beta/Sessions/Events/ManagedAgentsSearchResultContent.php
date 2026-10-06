@@ -42,7 +42,7 @@ final class ManagedAgentsSearchResultContent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSearchResultContent)->withText(...)->withType(...)
+     * (new ManagedAgentsSearchResultContent())->withText(...)->withType(...)
      * ```
      */
     public function __construct()

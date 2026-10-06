@@ -44,7 +44,7 @@ final class APIKeyServiceAccountActor implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new APIKeyServiceAccountActor)->withServiceAccountID(...)
+     * (new APIKeyServiceAccountActor())->withServiceAccountID(...)
      * ```
      */
     public function __construct()

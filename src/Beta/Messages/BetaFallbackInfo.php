@@ -40,7 +40,7 @@ final class BetaFallbackInfo implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaFallbackInfo)->withModel(...)
+     * (new BetaFallbackInfo())->withModel(...)
      * ```
      */
     public function __construct()

@@ -39,7 +39,7 @@ final class BashCodeExecutionToolResultErrorParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BashCodeExecutionToolResultErrorParam)->withErrorCode(...)
+     * (new BashCodeExecutionToolResultErrorParam())->withErrorCode(...)
      * ```
      */
     public function __construct()

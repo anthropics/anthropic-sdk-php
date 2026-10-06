@@ -42,7 +42,7 @@ final class BetaManagedAgentsMCPServerURLDefinition implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMCPServerURLDefinition)
+     * (new BetaManagedAgentsMCPServerURLDefinition())
      *   ->withName(...)
      *   ->withType(...)
      *   ->withURL(...)

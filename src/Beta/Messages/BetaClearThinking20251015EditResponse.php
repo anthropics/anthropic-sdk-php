@@ -54,7 +54,7 @@ final class BetaClearThinking20251015EditResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaClearThinking20251015EditResponse)
+     * (new BetaClearThinking20251015EditResponse())
      *   ->withClearedInputTokens(...)
      *   ->withClearedThinkingTurns(...)
      * ```

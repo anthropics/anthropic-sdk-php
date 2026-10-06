@@ -93,7 +93,7 @@ final class BetaUserProfileExternalUserDetails implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaUserProfileExternalUserDetails)
+     * (new BetaUserProfileExternalUserDetails())
      *   ->withAccountStatus(...)
      *   ->withCountry(...)
      *   ->withEmailHash(...)

@@ -19,10 +19,10 @@ use Anthropic\Core\Conversion\ConstantOf;
  * browser toolset member `tool_use`. The server renders the
  * model-visible text from it; the model never sees the raw fields.
  *
- * @phpstan-import-type BrowserStateChangeVariants from \Anthropic\Messages\BrowserStateChange
  * @phpstan-import-type BrowserStateTabEntryShape from \Anthropic\Messages\BrowserStateTabEntry
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type BrowserStateChangeShape from \Anthropic\Messages\BrowserStateChange
+ * @phpstan-import-type BrowserStateChangeVariants from \Anthropic\Messages\BrowserStateChange
  *
  * @phpstan-type BrowserStateBlockParamShape = array{
  *   tabs: list<BrowserStateTabEntry|BrowserStateTabEntryShape>,
@@ -73,7 +73,7 @@ final class BrowserStateBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BrowserStateBlockParam)->withTabs(...)
+     * (new BrowserStateBlockParam())->withTabs(...)
      * ```
      */
     public function __construct()

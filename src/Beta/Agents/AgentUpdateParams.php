@@ -19,14 +19,14 @@ use Anthropic\Core\Conversion\MapOf;
  *
  * @see Anthropic\Services\Beta\AgentsService::update()
  *
- * @phpstan-import-type ModelVariants from \Anthropic\Beta\Agents\AgentUpdateParams\Model
- * @phpstan-import-type BetaManagedAgentsSkillParamsVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
- * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\AgentUpdateParams\Tool
  * @phpstan-import-type BetaManagedAgentsURLMCPServerParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams
  * @phpstan-import-type ModelShape from \Anthropic\Beta\Agents\AgentUpdateParams\Model
  * @phpstan-import-type BetaManagedAgentsMultiagentParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams
  * @phpstan-import-type BetaManagedAgentsSkillParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Agents\AgentUpdateParams\Tool
+ * @phpstan-import-type ModelVariants from \Anthropic\Beta\Agents\AgentUpdateParams\Model
+ * @phpstan-import-type BetaManagedAgentsSkillParamsVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
+ * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\AgentUpdateParams\Tool
  *
  * @phpstan-type AgentUpdateParamsShape = array{
  *   description?: string|null,
@@ -110,7 +110,7 @@ final class AgentUpdateParams implements BaseModel
     public ?string $system;
 
     /**
-     * Tool configurations available to the agent. Full replacement. Omit to preserve; send empty array or null to clear. Maximum of 128 tools across all toolsets allowed.
+     * Tool configurations available to the agent. Full replacement. Omit to preserve; send empty array or null to clear. Maximum of 256 tools across all toolsets allowed.
      *
      * @var list<ToolVariants>|null $tools
      */
@@ -290,7 +290,7 @@ final class AgentUpdateParams implements BaseModel
     }
 
     /**
-     * Tool configurations available to the agent. Full replacement. Omit to preserve; send empty array or null to clear. Maximum of 128 tools across all toolsets allowed.
+     * Tool configurations available to the agent. Full replacement. Omit to preserve; send empty array or null to clear. Maximum of 256 tools across all toolsets allowed.
      *
      * @param list<ToolShape>|null $tools
      */

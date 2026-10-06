@@ -13,11 +13,11 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type PrincipalVariants from \Anthropic\Beta\Organization\APIKeys\APIKey\Principal
- * @phpstan-import-type ScopeVariants from \Anthropic\Beta\Organization\APIKeys\APIKey\Scope
  * @phpstan-import-type APIKeyCreatedByShape from \Anthropic\Beta\Organization\APIKeys\APIKeyCreatedBy
  * @phpstan-import-type PrincipalShape from \Anthropic\Beta\Organization\APIKeys\APIKey\Principal
  * @phpstan-import-type ScopeShape from \Anthropic\Beta\Organization\APIKeys\APIKey\Scope
+ * @phpstan-import-type PrincipalVariants from \Anthropic\Beta\Organization\APIKeys\APIKey\Principal
+ * @phpstan-import-type ScopeVariants from \Anthropic\Beta\Organization\APIKeys\APIKey\Scope
  *
  * @phpstan-type APIKeyShape = array{
  *   id: string,
@@ -140,7 +140,7 @@ final class APIKey implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new APIKey)
+     * (new APIKey())
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withCreatedBy(...)

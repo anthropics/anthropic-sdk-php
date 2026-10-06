@@ -19,8 +19,8 @@ use Anthropic\Core\Conversion\ConstantOf;
  * target. It has no ID of its own: it is addressed by the Plugin's ID and the
  * target.
  *
- * @phpstan-import-type TargetVariants from \Anthropic\Beta\Organization\Plugins\InstallationSettings\BetaPluginInstallationSetting\Target
  * @phpstan-import-type TargetShape from \Anthropic\Beta\Organization\Plugins\InstallationSettings\BetaPluginInstallationSetting\Target
+ * @phpstan-import-type TargetVariants from \Anthropic\Beta\Organization\Plugins\InstallationSettings\BetaPluginInstallationSetting\Target
  *
  * @phpstan-type BetaPluginInstallationSettingShape = array{
  *   createdAt: \DateTimeInterface,
@@ -95,7 +95,7 @@ final class BetaPluginInstallationSetting implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaPluginInstallationSetting)
+     * (new BetaPluginInstallationSetting())
      *   ->withCreatedAt(...)
      *   ->withInstallationPreference(...)
      *   ->withPluginID(...)

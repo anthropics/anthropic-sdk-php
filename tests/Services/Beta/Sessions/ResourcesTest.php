@@ -11,7 +11,6 @@ use Anthropic\PageCursor;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -34,10 +33,6 @@ final class ResourcesTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('prism can\'t find endpoint with beta only tag');
-        }
-
         $result = $this->client->beta->sessions->resources->retrieve(
             'sesrsc_011CZkZBJq5dWxk9fVLNcPht',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
@@ -50,10 +45,6 @@ final class ResourcesTest extends TestCase
     #[Test]
     public function testRetrieveWithOptionalParams(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('prism can\'t find endpoint with beta only tag');
-        }
-
         $result = $this->client->beta->sessions->resources->retrieve(
             'sesrsc_011CZkZBJq5dWxk9fVLNcPht',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
@@ -68,10 +59,6 @@ final class ResourcesTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('prism can\'t find endpoint with beta only tag');
-        }
-
         $result = $this->client->beta->sessions->resources->update(
             'sesrsc_011CZkZBJq5dWxk9fVLNcPht',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
@@ -85,10 +72,6 @@ final class ResourcesTest extends TestCase
     #[Test]
     public function testUpdateWithOptionalParams(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('prism can\'t find endpoint with beta only tag');
-        }
-
         $result = $this->client->beta->sessions->resources->update(
             'sesrsc_011CZkZBJq5dWxk9fVLNcPht',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
@@ -104,10 +87,6 @@ final class ResourcesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('prism can\'t find endpoint with beta only tag');
-        }
-
         $page = $this->client->beta->sessions->resources->list(
             'sesn_011CZkZAtmR3yMPDzynEDxu7'
         );
@@ -124,10 +103,6 @@ final class ResourcesTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('prism can\'t find endpoint with beta only tag');
-        }
-
         $result = $this->client->beta->sessions->resources->delete(
             'sesrsc_011CZkZBJq5dWxk9fVLNcPht',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
@@ -140,10 +115,6 @@ final class ResourcesTest extends TestCase
     #[Test]
     public function testDeleteWithOptionalParams(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('prism can\'t find endpoint with beta only tag');
-        }
-
         $result = $this->client->beta->sessions->resources->delete(
             'sesrsc_011CZkZBJq5dWxk9fVLNcPht',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
@@ -158,10 +129,6 @@ final class ResourcesTest extends TestCase
     #[Test]
     public function testAdd(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('prism can\'t find endpoint with beta only tag');
-        }
-
         $result = $this->client->beta->sessions->resources->add(
             'sesn_011CZkZAtmR3yMPDzynEDxu7',
             fileID: 'file_011CNha8iCJcU1wXNR6q4V8w',
@@ -175,10 +142,6 @@ final class ResourcesTest extends TestCase
     #[Test]
     public function testAddWithOptionalParams(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('prism can\'t find endpoint with beta only tag');
-        }
-
         $result = $this->client->beta->sessions->resources->add(
             'sesn_011CZkZAtmR3yMPDzynEDxu7',
             fileID: 'file_011CNha8iCJcU1wXNR6q4V8w',

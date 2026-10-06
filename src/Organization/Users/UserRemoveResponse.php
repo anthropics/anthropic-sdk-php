@@ -44,7 +44,7 @@ final class UserRemoveResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new UserRemoveResponse)->withID(...)
+     * (new UserRemoveResponse())->withID(...)
      * ```
      */
     public function __construct()

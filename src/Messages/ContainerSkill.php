@@ -52,7 +52,7 @@ final class ContainerSkill implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ContainerSkill)->withSkillID(...)->withType(...)->withVersion(...)
+     * (new ContainerSkill())->withSkillID(...)->withType(...)->withVersion(...)
      * ```
      */
     public function __construct()

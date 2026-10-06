@@ -55,7 +55,7 @@ final class BetaCodeExecutionResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCodeExecutionResultBlockParam)
+     * (new BetaCodeExecutionResultBlockParam())
      *   ->withContent(...)
      *   ->withReturnCode(...)
      *   ->withStderr(...)

@@ -42,7 +42,7 @@ final class BetaManagedAgentsVaultNotFoundRunError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsVaultNotFoundRunError)->withMessage(...)->withType(...)
+     * (new BetaManagedAgentsVaultNotFoundRunError())->withMessage(...)->withType(...)
      * ```
      */
     public function __construct()

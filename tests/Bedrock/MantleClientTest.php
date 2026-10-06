@@ -191,6 +191,32 @@ class MantleClientTest extends TestCase
         $this->assertSame('session-token', $request->getHeaderLine('X-Amz-Security-Token'));
     }
 
+    public function testSigV4CredentialsNotSentOnCrossOriginRedirect(): void
+    {
+        $client = new MantleClient(
+            awsAccessKey: 'AKID',
+            awsSecretAccessKey: 'secret',
+            awsSessionToken: 'session-token',
+            awsRegion: 'us-west-2',
+            requestOptions: ['transporter' => $this->transporter],
+        );
+
+        $this->transporter->addResponse(
+            Psr17FactoryDiscovery::findResponseFactory()
+                ->createResponse(307)
+                ->withHeader('Location', 'https://elsewhere.example/v1/messages')
+        );
+
+        $client->messages->create(1024, [], 'claude-haiku-4-5');
+
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(2, $requests);
+        $this->assertSame('session-token', $requests[0]->getHeaderLine('X-Amz-Security-Token'));
+        $this->assertSame('elsewhere.example', $requests[1]->getUri()->getHost());
+        $this->assertFalse($requests[1]->hasHeader('Authorization'));
+        $this->assertFalse($requests[1]->hasHeader('X-Amz-Security-Token'));
+    }
+
     public function testExplicitCredsOverrideEnvApiKey(): void
     {
         putenv('AWS_BEARER_TOKEN_BEDROCK=env-key');

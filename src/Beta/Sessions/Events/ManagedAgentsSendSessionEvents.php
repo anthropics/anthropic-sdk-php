@@ -12,8 +12,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Events that were successfully sent to the session.
  *
- * @phpstan-import-type DataVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsSendSessionEvents\Data
  * @phpstan-import-type DataShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSendSessionEvents\Data
+ * @phpstan-import-type DataVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsSendSessionEvents\Data
  *
  * @phpstan-type ManagedAgentsSendSessionEventsShape = array{
  *   data?: list<DataShape>|null

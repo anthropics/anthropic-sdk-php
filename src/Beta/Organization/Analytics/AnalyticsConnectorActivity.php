@@ -155,7 +155,7 @@ final class AnalyticsConnectorActivity implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsConnectorActivity)
+     * (new AnalyticsConnectorActivity())
      *   ->withChatMetrics(...)
      *   ->withClaudeCodeMetrics(...)
      *   ->withConnectorName(...)

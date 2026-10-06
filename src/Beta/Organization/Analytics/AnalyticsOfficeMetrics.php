@@ -62,7 +62,7 @@ final class AnalyticsOfficeMetrics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsOfficeMetrics)
+     * (new AnalyticsOfficeMetrics())
      *   ->withExcel(...)
      *   ->withOutlook(...)
      *   ->withPowerpoint(...)

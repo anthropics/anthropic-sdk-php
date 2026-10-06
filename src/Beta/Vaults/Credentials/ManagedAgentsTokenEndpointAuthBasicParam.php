@@ -42,7 +42,7 @@ final class ManagedAgentsTokenEndpointAuthBasicParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsTokenEndpointAuthBasicParam)
+     * (new ManagedAgentsTokenEndpointAuthBasicParam())
      *   ->withClientSecret(...)
      *   ->withType(...)
      * ```

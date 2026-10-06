@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Image content specified directly as base64 data or as a reference via a URL.
  *
- * @phpstan-import-type SourceVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsImageBlock\Source
  * @phpstan-import-type SourceShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsImageBlock\Source
+ * @phpstan-import-type SourceVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsImageBlock\Source
  *
  * @phpstan-type ManagedAgentsImageBlockShape = array{
  *   source: SourceShape, type: Type|value-of<Type>
@@ -48,7 +48,7 @@ final class ManagedAgentsImageBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsImageBlock)->withSource(...)->withType(...)
+     * (new ManagedAgentsImageBlock())->withSource(...)->withType(...)
      * ```
      */
     public function __construct()

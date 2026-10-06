@@ -58,7 +58,7 @@ final class BetaWebhookVaultCredentialDeletedEventData implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookVaultCredentialDeletedEventData)
+     * (new BetaWebhookVaultCredentialDeletedEventData())
      *   ->withID(...)
      *   ->withOrganizationID(...)
      *   ->withVaultID(...)

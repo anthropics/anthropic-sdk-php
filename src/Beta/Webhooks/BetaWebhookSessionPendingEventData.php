@@ -51,7 +51,7 @@ final class BetaWebhookSessionPendingEventData implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookSessionPendingEventData)
+     * (new BetaWebhookSessionPendingEventData())
      *   ->withID(...)
      *   ->withOrganizationID(...)
      *   ->withWorkspaceID(...)

@@ -42,7 +42,7 @@ final class BetaBase64ImageSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaBase64ImageSource)->withData(...)->withMediaType(...)
+     * (new BetaBase64ImageSource())->withData(...)->withMediaType(...)
      * ```
      */
     public function __construct()

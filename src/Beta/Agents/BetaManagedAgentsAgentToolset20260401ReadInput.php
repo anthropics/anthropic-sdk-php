@@ -50,7 +50,7 @@ final class BetaManagedAgentsAgentToolset20260401ReadInput implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAgentToolset20260401ReadInput)->withFilePath(...)
+     * (new BetaManagedAgentsAgentToolset20260401ReadInput())->withFilePath(...)
      * ```
      */
     public function __construct()

@@ -46,7 +46,7 @@ final class WorkspaceRemoveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WorkspaceRemoveParams)->withFederationRuleID(...)
+     * (new WorkspaceRemoveParams())->withFederationRuleID(...)
      * ```
      */
     public function __construct()

@@ -15,8 +15,8 @@ use Anthropic\Core\Conversion\ConstantOf;
  * form of a `tools` entry, without `cache_control`. Send it back unchanged
  * with the block.
  *
- * @phpstan-import-type BetaResponseToolUnionVariants from \Anthropic\Beta\Messages\BetaResponseToolUnion
  * @phpstan-import-type BetaResponseToolUnionShape from \Anthropic\Beta\Messages\BetaResponseToolUnion
+ * @phpstan-import-type BetaResponseToolUnionVariants from \Anthropic\Beta\Messages\BetaResponseToolUnion
  *
  * @phpstan-type BetaToolChangeToolDefinitionShape = array{
  *   definition: BetaResponseToolUnionShape, type: 'tool_definition'
@@ -46,7 +46,7 @@ final class BetaToolChangeToolDefinition implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaToolChangeToolDefinition)->withDefinition(...)
+     * (new BetaToolChangeToolDefinition())->withDefinition(...)
      * ```
      */
     public function __construct()

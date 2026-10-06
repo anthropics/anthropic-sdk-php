@@ -39,7 +39,7 @@ final class AnalyticsConnectorOfficeProductMetrics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsConnectorOfficeProductMetrics)
+     * (new AnalyticsConnectorOfficeProductMetrics())
      *   ->withDistinctSessionConnectorUsedCount(...)
      * ```
      */

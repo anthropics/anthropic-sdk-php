@@ -37,7 +37,7 @@ final class BetaTextEditorCodeExecutionCreateResultBlockParam implements BaseMod
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaTextEditorCodeExecutionCreateResultBlockParam)->withIsFileUpdate(...)
+     * (new BetaTextEditorCodeExecutionCreateResultBlockParam())->withIsFileUpdate(...)
      * ```
      */
     public function __construct()

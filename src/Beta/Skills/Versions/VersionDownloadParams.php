@@ -63,7 +63,7 @@ final class VersionDownloadParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new VersionDownloadParams)->withSkillID(...)
+     * (new VersionDownloadParams())->withSkillID(...)
      * ```
      */
     public function __construct()

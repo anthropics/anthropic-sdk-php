@@ -42,7 +42,7 @@ final class BetaManagedAgentsSessionResourceNotFoundRunError implements BaseMode
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsSessionResourceNotFoundRunError)
+     * (new BetaManagedAgentsSessionResourceNotFoundRunError())
      *   ->withMessage(...)
      *   ->withType(...)
      * ```

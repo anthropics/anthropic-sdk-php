@@ -123,7 +123,7 @@ final class ServiceAccount implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ServiceAccount)
+     * (new ServiceAccount())
      *   ->withID(...)
      *   ->withArchivedAt(...)
      *   ->withArchivedByActorID(...)

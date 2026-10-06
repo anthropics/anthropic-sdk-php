@@ -11,9 +11,9 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type BetaTextCitationParamVariants from \Anthropic\Beta\Messages\BetaTextCitationParam
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type BetaTextCitationParamShape from \Anthropic\Beta\Messages\BetaTextCitationParam
+ * @phpstan-import-type BetaTextCitationParamVariants from \Anthropic\Beta\Messages\BetaTextCitationParam
  *
  * @phpstan-type BetaTextBlockParamShape = array{
  *   text: string,
@@ -55,7 +55,7 @@ final class BetaTextBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaTextBlockParam)->withText(...)
+     * (new BetaTextBlockParam())->withText(...)
      * ```
      */
     public function __construct()

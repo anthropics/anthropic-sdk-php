@@ -48,7 +48,7 @@ final class BetaTunnelToken implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaTunnelToken)->withID(...)->withTunnelToken(...)
+     * (new BetaTunnelToken())->withID(...)->withTunnelToken(...)
      * ```
      */
     public function __construct()

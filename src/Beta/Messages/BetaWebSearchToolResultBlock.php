@@ -12,10 +12,10 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type BetaWebSearchToolResultBlockContentVariants from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlockContent
- * @phpstan-import-type CallerVariants from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlock\Caller
  * @phpstan-import-type BetaWebSearchToolResultBlockContentShape from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlockContent
  * @phpstan-import-type CallerShape from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlock\Caller
+ * @phpstan-import-type BetaWebSearchToolResultBlockContentVariants from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlockContent
+ * @phpstan-import-type CallerVariants from \Anthropic\Beta\Messages\BetaWebSearchToolResultBlock\Caller
  *
  * @phpstan-type BetaWebSearchToolResultBlockShape = array{
  *   content: BetaWebSearchToolResultBlockContentShape,
@@ -55,7 +55,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebSearchToolResultBlock)->withContent(...)->withToolUseID(...)
+     * (new BetaWebSearchToolResultBlock())->withContent(...)->withToolUseID(...)
      * ```
      */
     public function __construct()

@@ -35,7 +35,7 @@ final class BetaThinkingTurns implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaThinkingTurns)->withValue(...)
+     * (new BetaThinkingTurns())->withValue(...)
      * ```
      */
     public function __construct()

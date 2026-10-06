@@ -52,8 +52,8 @@ use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
 /**
- * @phpstan-import-type ManagedAgentsEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsEventParams
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type ManagedAgentsEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsEventParams
  */
 interface EventsContract
 {

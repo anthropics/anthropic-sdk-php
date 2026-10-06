@@ -106,7 +106,7 @@ final class BetaTool implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaTool)->withInputSchema(...)->withName(...)
+     * (new BetaTool())->withInputSchema(...)->withName(...)
      * ```
      */
     public function __construct()

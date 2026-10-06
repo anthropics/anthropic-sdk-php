@@ -13,8 +13,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * The repository host reported the repository as not found.
  *
- * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryNotFoundError\RetryStatus
  * @phpstan-import-type RetryStatusShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryNotFoundError\RetryStatus
+ * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryNotFoundError\RetryStatus
  *
  * @phpstan-type ManagedAgentsRepositoryNotFoundErrorShape = array{
  *   message: string,
@@ -65,7 +65,7 @@ final class ManagedAgentsRepositoryNotFoundError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsRepositoryNotFoundError)
+     * (new ManagedAgentsRepositoryNotFoundError())
      *   ->withMessage(...)
      *   ->withRepositoryURL(...)
      *   ->withRetryStatus(...)

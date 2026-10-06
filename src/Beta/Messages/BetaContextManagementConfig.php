@@ -10,8 +10,8 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-import-type EditVariants from \Anthropic\Beta\Messages\BetaContextManagementConfig\Edit
  * @phpstan-import-type EditShape from \Anthropic\Beta\Messages\BetaContextManagementConfig\Edit
+ * @phpstan-import-type EditVariants from \Anthropic\Beta\Messages\BetaContextManagementConfig\Edit
  *
  * @phpstan-type BetaContextManagementConfigShape = array{
  *   edits?: list<EditShape>|null

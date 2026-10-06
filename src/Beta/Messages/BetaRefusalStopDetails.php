@@ -121,7 +121,7 @@ final class BetaRefusalStopDetails implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRefusalStopDetails)
+     * (new BetaRefusalStopDetails())
      *   ->withCategory(...)
      *   ->withExplanation(...)
      *   ->withFallbackCreditToken(...)

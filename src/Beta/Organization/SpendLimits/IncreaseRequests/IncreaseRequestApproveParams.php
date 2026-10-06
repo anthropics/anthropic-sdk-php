@@ -57,7 +57,7 @@ final class IncreaseRequestApproveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new IncreaseRequestApproveParams)->withAmount(...)
+     * (new IncreaseRequestApproveParams())->withAmount(...)
      * ```
      */
     public function __construct()

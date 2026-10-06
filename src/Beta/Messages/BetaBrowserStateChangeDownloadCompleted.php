@@ -68,7 +68,9 @@ final class BetaBrowserStateChangeDownloadCompleted implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaBrowserStateChangeDownloadCompleted)->withDownloadID(...)->withURL(...)
+     * (new BetaBrowserStateChangeDownloadCompleted())
+     *   ->withDownloadID(...)
+     *   ->withURL(...)
      * ```
      */
     public function __construct()

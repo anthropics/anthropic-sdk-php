@@ -109,7 +109,7 @@ final class AnalyticsArtifactActivity implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsArtifactActivity)
+     * (new AnalyticsArtifactActivity())
      *   ->withArtifactType(...)
      *   ->withArtifactsCreatedCount(...)
      *   ->withDistinctUserCount(...)

@@ -42,7 +42,7 @@ final class ManagedAgentsAPIActor implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsAPIActor)->withAPIKeyID(...)->withType(...)
+     * (new ManagedAgentsAPIActor())->withAPIKeyID(...)->withType(...)
      * ```
      */
     public function __construct()

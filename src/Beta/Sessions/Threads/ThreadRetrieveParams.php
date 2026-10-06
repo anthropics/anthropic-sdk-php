@@ -58,7 +58,7 @@ final class ThreadRetrieveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ThreadRetrieveParams)->withSessionID(...)
+     * (new ThreadRetrieveParams())->withSessionID(...)
      * ```
      */
     public function __construct()

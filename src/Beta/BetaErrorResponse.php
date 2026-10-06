@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type BetaErrorVariants from \Anthropic\Beta\BetaError
  * @phpstan-import-type BetaErrorShape from \Anthropic\Beta\BetaError
+ * @phpstan-import-type BetaErrorVariants from \Anthropic\Beta\BetaError
  *
  * @phpstan-type BetaErrorResponseShape = array{
  *   error: BetaErrorShape, requestID: string|null, type: 'error'
@@ -44,7 +44,7 @@ final class BetaErrorResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaErrorResponse)->withError(...)->withRequestID(...)
+     * (new BetaErrorResponse())->withError(...)->withRequestID(...)
      * ```
      */
     public function __construct()

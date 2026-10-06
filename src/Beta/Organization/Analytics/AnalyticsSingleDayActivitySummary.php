@@ -248,7 +248,7 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsSingleDayActivitySummary)
+     * (new AnalyticsSingleDayActivitySummary())
      *   ->withAssignedSeatCount(...)
      *   ->withCoworkDailyActiveUserCount(...)
      *   ->withCoworkMonthlyActiveUserCount(...)

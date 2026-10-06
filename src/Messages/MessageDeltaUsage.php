@@ -85,7 +85,7 @@ final class MessageDeltaUsage implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MessageDeltaUsage)
+     * (new MessageDeltaUsage())
      *   ->withCacheCreationInputTokens(...)
      *   ->withCacheReadInputTokens(...)
      *   ->withInputTokens(...)

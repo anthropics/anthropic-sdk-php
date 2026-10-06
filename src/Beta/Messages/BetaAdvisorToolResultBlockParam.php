@@ -11,9 +11,9 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type ContentVariants from \Anthropic\Beta\Messages\BetaAdvisorToolResultBlockParam\Content
  * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaAdvisorToolResultBlockParam\Content
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type ContentVariants from \Anthropic\Beta\Messages\BetaAdvisorToolResultBlockParam\Content
  *
  * @phpstan-type BetaAdvisorToolResultBlockParamShape = array{
  *   content: ContentShape,
@@ -55,7 +55,7 @@ final class BetaAdvisorToolResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaAdvisorToolResultBlockParam)->withContent(...)->withToolUseID(...)
+     * (new BetaAdvisorToolResultBlockParam())->withContent(...)->withToolUseID(...)
      * ```
      */
     public function __construct()

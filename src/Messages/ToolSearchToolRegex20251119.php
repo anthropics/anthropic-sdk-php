@@ -76,7 +76,7 @@ final class ToolSearchToolRegex20251119 implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ToolSearchToolRegex20251119)->withType(...)
+     * (new ToolSearchToolRegex20251119())->withType(...)
      * ```
      */
     public function __construct()

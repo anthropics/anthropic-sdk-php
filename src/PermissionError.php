@@ -37,7 +37,7 @@ final class PermissionError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PermissionError)->withMessage(...)
+     * (new PermissionError())->withMessage(...)
      * ```
      */
     public function __construct()

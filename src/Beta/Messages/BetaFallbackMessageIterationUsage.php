@@ -103,7 +103,7 @@ final class BetaFallbackMessageIterationUsage implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaFallbackMessageIterationUsage)
+     * (new BetaFallbackMessageIterationUsage())
      *   ->withCacheCreation(...)
      *   ->withCacheCreationInputTokens(...)
      *   ->withCacheReadInputTokens(...)

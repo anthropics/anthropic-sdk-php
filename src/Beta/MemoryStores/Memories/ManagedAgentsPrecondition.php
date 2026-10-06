@@ -43,7 +43,7 @@ final class ManagedAgentsPrecondition implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsPrecondition)->withType(...)
+     * (new ManagedAgentsPrecondition())->withType(...)
      * ```
      */
     public function __construct()

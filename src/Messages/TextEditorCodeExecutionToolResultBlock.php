@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type ContentVariants from \Anthropic\Messages\TextEditorCodeExecutionToolResultBlock\Content
  * @phpstan-import-type ContentShape from \Anthropic\Messages\TextEditorCodeExecutionToolResultBlock\Content
+ * @phpstan-import-type ContentVariants from \Anthropic\Messages\TextEditorCodeExecutionToolResultBlock\Content
  *
  * @phpstan-type TextEditorCodeExecutionToolResultBlockShape = array{
  *   content: ContentShape,
@@ -46,7 +46,7 @@ final class TextEditorCodeExecutionToolResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new TextEditorCodeExecutionToolResultBlock)
+     * (new TextEditorCodeExecutionToolResultBlock())
      *   ->withContent(...)
      *   ->withToolUseID(...)
      * ```

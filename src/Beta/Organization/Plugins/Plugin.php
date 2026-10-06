@@ -14,12 +14,12 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type CreatedByVariants from \Anthropic\Beta\Organization\Plugins\Plugin\CreatedBy
- * @phpstan-import-type OwnerVariants from \Anthropic\Beta\Organization\Plugins\Plugin\Owner
  * @phpstan-import-type PluginComponentShape from \Anthropic\Beta\Organization\Plugins\PluginComponent
  * @phpstan-import-type PluginContentScanShape from \Anthropic\Beta\Organization\Plugins\PluginContentScan
  * @phpstan-import-type CreatedByShape from \Anthropic\Beta\Organization\Plugins\Plugin\CreatedBy
  * @phpstan-import-type OwnerShape from \Anthropic\Beta\Organization\Plugins\Plugin\Owner
+ * @phpstan-import-type CreatedByVariants from \Anthropic\Beta\Organization\Plugins\Plugin\CreatedBy
+ * @phpstan-import-type OwnerVariants from \Anthropic\Beta\Organization\Plugins\Plugin\Owner
  *
  * @phpstan-type PluginShape = array{
  *   id: string,
@@ -207,7 +207,7 @@ final class Plugin implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Plugin)
+     * (new Plugin())
      *   ->withID(...)
      *   ->withComponents(...)
      *   ->withContentScan(...)

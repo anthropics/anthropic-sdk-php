@@ -37,7 +37,7 @@ final class BetaInputTokensClearAtLeast implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaInputTokensClearAtLeast)->withValue(...)
+     * (new BetaInputTokensClearAtLeast())->withValue(...)
      * ```
      */
     public function __construct()

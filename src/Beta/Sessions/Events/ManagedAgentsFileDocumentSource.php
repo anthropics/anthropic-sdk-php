@@ -42,7 +42,7 @@ final class ManagedAgentsFileDocumentSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsFileDocumentSource)->withFileID(...)->withType(...)
+     * (new ManagedAgentsFileDocumentSource())->withFileID(...)->withType(...)
      * ```
      */
     public function __construct()

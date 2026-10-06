@@ -60,7 +60,7 @@ final class WorkRetrieveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WorkRetrieveParams)->withEnvironmentID(...)
+     * (new WorkRetrieveParams())->withEnvironmentID(...)
      * ```
      */
     public function __construct()

@@ -83,7 +83,7 @@ final class BetaCompactionIterationUsage implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCompactionIterationUsage)
+     * (new BetaCompactionIterationUsage())
      *   ->withCacheCreation(...)
      *   ->withCacheCreationInputTokens(...)
      *   ->withCacheReadInputTokens(...)

@@ -33,7 +33,7 @@ final class MessageTokensCount implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MessageTokensCount)->withInputTokens(...)
+     * (new MessageTokensCount())->withInputTokens(...)
      * ```
      */
     public function __construct()

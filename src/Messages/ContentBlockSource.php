@@ -11,8 +11,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\ContentBlockSource\Content;
 
 /**
- * @phpstan-import-type ContentVariants from \Anthropic\Messages\ContentBlockSource\Content
  * @phpstan-import-type ContentShape from \Anthropic\Messages\ContentBlockSource\Content
+ * @phpstan-import-type ContentVariants from \Anthropic\Messages\ContentBlockSource\Content
  *
  * @phpstan-type ContentBlockSourceShape = array{
  *   content: ContentShape, type: 'content'
@@ -42,7 +42,7 @@ final class ContentBlockSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ContentBlockSource)->withContent(...)
+     * (new ContentBlockSource())->withContent(...)
      * ```
      */
     public function __construct()

@@ -50,7 +50,7 @@ final class MemberUpdateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MemberUpdateParams)->withWorkspaceID(...)->withWorkspaceRole(...)
+     * (new MemberUpdateParams())->withWorkspaceID(...)->withWorkspaceRole(...)
      * ```
      */
     public function __construct()

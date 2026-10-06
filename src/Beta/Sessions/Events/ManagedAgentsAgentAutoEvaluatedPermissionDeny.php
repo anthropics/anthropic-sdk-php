@@ -42,7 +42,7 @@ final class ManagedAgentsAgentAutoEvaluatedPermissionDeny implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsAgentAutoEvaluatedPermissionDeny)->withReasonCode(...)
+     * (new ManagedAgentsAgentAutoEvaluatedPermissionDeny())->withReasonCode(...)
      * ```
      */
     public function __construct()

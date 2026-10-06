@@ -48,7 +48,7 @@ final class ServiceAccountRemoveResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ServiceAccountRemoveResponse)
+     * (new ServiceAccountRemoveResponse())
      *   ->withServiceAccountID(...)
      *   ->withWorkspaceID(...)
      * ```

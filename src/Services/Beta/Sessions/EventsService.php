@@ -55,8 +55,8 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Sessions\EventsContract;
 
 /**
- * @phpstan-import-type ManagedAgentsEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsEventParams
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type ManagedAgentsEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsEventParams
  */
 final class EventsService implements EventsContract
 {

@@ -37,7 +37,7 @@ final class BetaGatewayTimeoutError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaGatewayTimeoutError)->withMessage(...)
+     * (new BetaGatewayTimeoutError())->withMessage(...)
      * ```
      */
     public function __construct()

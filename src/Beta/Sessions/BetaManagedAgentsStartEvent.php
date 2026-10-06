@@ -12,8 +12,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Opens a preview of a buffered event. Carries the previewed event's type and id only. Followed by zero or more event_delta events with the same event id, normally concluded by the buffered event carrying that id. If the producing model request ends without that event (an error or interrupt mid-stream), its terminal span.model_request_end closes the preview. Only sent on stream connections that opt in via event_deltas; never appears in event history.
  *
- * @phpstan-import-type BetaManagedAgentsStartEventPreviewVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsStartEventPreview
  * @phpstan-import-type BetaManagedAgentsStartEventPreviewShape from \Anthropic\Beta\Sessions\BetaManagedAgentsStartEventPreview
+ * @phpstan-import-type BetaManagedAgentsStartEventPreviewVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsStartEventPreview
  *
  * @phpstan-type BetaManagedAgentsStartEventShape = array{
  *   event: BetaManagedAgentsStartEventPreviewShape, type: Type|value-of<Type>
@@ -47,7 +47,7 @@ final class BetaManagedAgentsStartEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsStartEvent)->withEvent(...)->withType(...)
+     * (new BetaManagedAgentsStartEvent())->withEvent(...)->withType(...)
      * ```
      */
     public function __construct()

@@ -41,13 +41,6 @@ use Anthropic\Messages\Model;
  *
  * See the [Messages API reference](https://platform.claude.com/docs/en/api/messages) for full documentation on available parameters.
  *
- * @phpstan-import-type ContainerVariants from \Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\Container
- * @phpstan-import-type FallbackCreditTokenVariants from \Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\FallbackCreditToken
- * @phpstan-import-type BetaFallbacksParamVariants from \Anthropic\Beta\Messages\BetaFallbacksParam
- * @phpstan-import-type SystemVariants from \Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\System
- * @phpstan-import-type BetaThinkingConfigParamVariants from \Anthropic\Beta\Messages\BetaThinkingConfigParam
- * @phpstan-import-type BetaToolChoiceVariants from \Anthropic\Beta\Messages\BetaToolChoice
- * @phpstan-import-type BetaToolUnionVariants from \Anthropic\Beta\Messages\BetaToolUnion
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type BetaCompactionConfigShape from \Anthropic\Beta\Messages\BetaCompactionConfig
@@ -64,6 +57,13 @@ use Anthropic\Messages\Model;
  * @phpstan-import-type BetaThinkingConfigParamShape from \Anthropic\Beta\Messages\BetaThinkingConfigParam
  * @phpstan-import-type BetaToolChoiceShape from \Anthropic\Beta\Messages\BetaToolChoice
  * @phpstan-import-type BetaToolUnionShape from \Anthropic\Beta\Messages\BetaToolUnion
+ * @phpstan-import-type ContainerVariants from \Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\Container
+ * @phpstan-import-type FallbackCreditTokenVariants from \Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\FallbackCreditToken
+ * @phpstan-import-type BetaFallbacksParamVariants from \Anthropic\Beta\Messages\BetaFallbacksParam
+ * @phpstan-import-type SystemVariants from \Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\System
+ * @phpstan-import-type BetaThinkingConfigParamVariants from \Anthropic\Beta\Messages\BetaThinkingConfigParam
+ * @phpstan-import-type BetaToolChoiceVariants from \Anthropic\Beta\Messages\BetaToolChoice
+ * @phpstan-import-type BetaToolUnionVariants from \Anthropic\Beta\Messages\BetaToolUnion
  *
  * @phpstan-type ParamsShape = array{
  *   maxTokens: int,
@@ -466,7 +466,7 @@ final class Params implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Params)->withMaxTokens(...)->withMessages(...)->withModel(...)
+     * (new Params())->withMaxTokens(...)->withMessages(...)->withModel(...)
      * ```
      */
     public function __construct()

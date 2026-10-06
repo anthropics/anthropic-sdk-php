@@ -13,8 +13,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * Configuration for the write tool.
  *
- * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsWriteToolConfig\PermissionPolicy
  * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsWriteToolConfig\PermissionPolicy
+ * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsWriteToolConfig\PermissionPolicy
  *
  * @phpstan-type BetaManagedAgentsWriteToolConfigShape = array{
  *   enabled: bool,
@@ -58,7 +58,7 @@ final class BetaManagedAgentsWriteToolConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsWriteToolConfig)
+     * (new BetaManagedAgentsWriteToolConfig())
      *   ->withEnabled(...)
      *   ->withPermissionPolicy(...)
      * ```

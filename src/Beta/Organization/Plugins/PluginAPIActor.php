@@ -42,7 +42,7 @@ final class PluginAPIActor implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PluginAPIActor)->withAPIKeyID(...)
+     * (new PluginAPIActor())->withAPIKeyID(...)
      * ```
      */
     public function __construct()

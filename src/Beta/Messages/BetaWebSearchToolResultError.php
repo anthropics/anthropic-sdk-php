@@ -39,7 +39,7 @@ final class BetaWebSearchToolResultError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebSearchToolResultError)->withErrorCode(...)
+     * (new BetaWebSearchToolResultError())->withErrorCode(...)
      * ```
      */
     public function __construct()

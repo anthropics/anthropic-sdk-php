@@ -42,7 +42,7 @@ final class ManagedAgentsUserActor implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsUserActor)->withType(...)->withUserID(...)
+     * (new ManagedAgentsUserActor())->withType(...)->withUserID(...)
      * ```
      */
     public function __construct()

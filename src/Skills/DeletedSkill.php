@@ -46,7 +46,7 @@ final class DeletedSkill implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new DeletedSkill)->withID(...)
+     * (new DeletedSkill())->withID(...)
      * ```
      */
     public function __construct()

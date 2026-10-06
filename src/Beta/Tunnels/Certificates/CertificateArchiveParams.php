@@ -63,7 +63,7 @@ final class CertificateArchiveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CertificateArchiveParams)->withTunnelID(...)
+     * (new CertificateArchiveParams())->withTunnelID(...)
      * ```
      */
     public function __construct()

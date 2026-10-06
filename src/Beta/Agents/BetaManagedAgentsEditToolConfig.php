@@ -13,8 +13,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * Configuration for the edit tool.
  *
- * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsEditToolConfig\PermissionPolicy
  * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsEditToolConfig\PermissionPolicy
+ * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsEditToolConfig\PermissionPolicy
  *
  * @phpstan-type BetaManagedAgentsEditToolConfigShape = array{
  *   enabled: bool,
@@ -58,7 +58,7 @@ final class BetaManagedAgentsEditToolConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsEditToolConfig)
+     * (new BetaManagedAgentsEditToolConfig())
      *   ->withEnabled(...)
      *   ->withPermissionPolicy(...)
      * ```

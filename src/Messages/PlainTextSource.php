@@ -41,7 +41,7 @@ final class PlainTextSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PlainTextSource)->withData(...)
+     * (new PlainTextSource())->withData(...)
      * ```
      */
     public function __construct()

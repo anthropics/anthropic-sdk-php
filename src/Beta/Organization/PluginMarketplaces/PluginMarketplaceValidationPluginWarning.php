@@ -41,7 +41,7 @@ final class PluginMarketplaceValidationPluginWarning implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PluginMarketplaceValidationPluginWarning)
+     * (new PluginMarketplaceValidationPluginWarning())
      *   ->withErrorCode(...)
      *   ->withMessage(...)
      * ```

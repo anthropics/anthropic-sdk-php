@@ -52,7 +52,7 @@ final class BetaManagedAgentsDeltaEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsDeltaEvent)
+     * (new BetaManagedAgentsDeltaEvent())
      *   ->withDelta(...)
      *   ->withEventID(...)
      *   ->withType(...)
