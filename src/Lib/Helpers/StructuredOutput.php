@@ -101,7 +101,8 @@ final class StructuredOutput
 
         $jsonSchema = [
             'type' => 'object',
-            'properties' => $properties,
+            // JSON Schema requires a property map even when the model has no fields.
+            'properties' => $properties ?: new \stdClass,
         ];
 
         if (!empty($required)) {
