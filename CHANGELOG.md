@@ -18,6 +18,7 @@
 * **api:** update spend limit schemas
 * **docs:** describe a federation rule's target by its type
 * **docs:** fix example IDs in sessions, agents and vault credentials
+* **docs:** note that listing Claude Console spend limits is in early access
 * **docs:** update Managed Agents multiagent and thread descriptions
 * **docs:** update the activity summaries endpoint description
 * **internal:** add REVIEW.md with review instructions
