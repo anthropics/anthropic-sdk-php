@@ -221,8 +221,15 @@ final class Util
 
         [$template] = $path;
         $mapped = array_map(static fn ($s) => rawurlencode(self::strVal($s)), array: array_slice($path, 1));
+        $parsed = sprintf($template, ...$mapped);
 
-        return sprintf($template, ...$mapped);
+        foreach ($mapped as $segment) {
+            if ('.' === $segment || '..' === $segment) {
+                throw new \InvalidArgumentException(sprintf('The path "%s" has the dot segment "%s", which would send the request to a different URL. A path parameter cannot be "." or "..".', $parsed, $segment));
+            }
+        }
+
+        return $parsed;
     }
 
     /**

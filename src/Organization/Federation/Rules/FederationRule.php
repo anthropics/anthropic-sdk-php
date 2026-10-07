@@ -127,7 +127,7 @@ final class FederationRule implements BaseModel
     public string $oauthScope;
 
     /**
-     * Identity that tokens minted via this rule act as. Currently always a `service_account` target.
+     * What this rule targets. Check `type` before reading the other fields. Tokens minted via a rule whose target `type` is `service_account` act as that service account.
      */
     #[Required]
     public ServiceAccountTarget $target;
@@ -399,7 +399,7 @@ final class FederationRule implements BaseModel
     }
 
     /**
-     * Identity that tokens minted via this rule act as. Currently always a `service_account` target.
+     * What this rule targets. Check `type` before reading the other fields. Tokens minted via a rule whose target `type` is `service_account` act as that service account.
      *
      * @param ServiceAccountTarget|ServiceAccountTargetShape $target
      */

@@ -32,7 +32,7 @@ final class EventsTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->sessions->threads->events->list(
-            'sthr_011CZkZVWa6oIjw0rgXZpnBt',
+            'sthr_011CZkZVWa6oJjw1rgXZpnBt',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
         );
 
@@ -49,7 +49,7 @@ final class EventsTest extends TestCase
     public function testListWithOptionalParams(): void
     {
         $page = $this->client->beta->sessions->threads->events->list(
-            'sthr_011CZkZVWa6oIjw0rgXZpnBt',
+            'sthr_011CZkZVWa6oJjw1rgXZpnBt',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
             limit: 0,
             page: 'page',

@@ -71,7 +71,7 @@ final class CredentialsTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->vaults->credentials->retrieve(
-            'vcrd_011CZkZEMt8gZan2iYOQfSkw',
+            'vcrd_011CZkZEMt8gZan2iYPQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv'
         );
 
@@ -83,7 +83,7 @@ final class CredentialsTest extends TestCase
     public function testRetrieveWithOptionalParams(): void
     {
         $result = $this->client->beta->vaults->credentials->retrieve(
-            'vcrd_011CZkZEMt8gZan2iYOQfSkw',
+            'vcrd_011CZkZEMt8gZan2iYPQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
@@ -97,7 +97,7 @@ final class CredentialsTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->beta->vaults->credentials->update(
-            'vcrd_011CZkZEMt8gZan2iYOQfSkw',
+            'vcrd_011CZkZEMt8gZan2iYPQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv'
         );
 
@@ -109,7 +109,7 @@ final class CredentialsTest extends TestCase
     public function testUpdateWithOptionalParams(): void
     {
         $result = $this->client->beta->vaults->credentials->update(
-            'vcrd_011CZkZEMt8gZan2iYOQfSkw',
+            'vcrd_011CZkZEMt8gZan2iYPQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
             auth: [
                 'type' => 'mcp_oauth',
@@ -153,7 +153,7 @@ final class CredentialsTest extends TestCase
     public function testDelete(): void
     {
         $result = $this->client->beta->vaults->credentials->delete(
-            'vcrd_011CZkZEMt8gZan2iYOQfSkw',
+            'vcrd_011CZkZEMt8gZan2iYPQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv'
         );
 
@@ -165,7 +165,7 @@ final class CredentialsTest extends TestCase
     public function testDeleteWithOptionalParams(): void
     {
         $result = $this->client->beta->vaults->credentials->delete(
-            'vcrd_011CZkZEMt8gZan2iYOQfSkw',
+            'vcrd_011CZkZEMt8gZan2iYPQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
@@ -179,7 +179,7 @@ final class CredentialsTest extends TestCase
     public function testArchive(): void
     {
         $result = $this->client->beta->vaults->credentials->archive(
-            'vcrd_011CZkZEMt8gZan2iYOQfSkw',
+            'vcrd_011CZkZEMt8gZan2iYPQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv'
         );
 
@@ -191,7 +191,7 @@ final class CredentialsTest extends TestCase
     public function testArchiveWithOptionalParams(): void
     {
         $result = $this->client->beta->vaults->credentials->archive(
-            'vcrd_011CZkZEMt8gZan2iYOQfSkw',
+            'vcrd_011CZkZEMt8gZan2iYPQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
@@ -205,7 +205,7 @@ final class CredentialsTest extends TestCase
     public function testMCPOAuthValidate(): void
     {
         $result = $this->client->beta->vaults->credentials->mcpOAuthValidate(
-            'vcrd_011CZkZEMt8gZan2iYOQfSkw',
+            'vcrd_011CZkZEMt8gZan2iYPQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv'
         );
 
@@ -217,7 +217,7 @@ final class CredentialsTest extends TestCase
     public function testMCPOAuthValidateWithOptionalParams(): void
     {
         $result = $this->client->beta->vaults->credentials->mcpOAuthValidate(
-            'vcrd_011CZkZEMt8gZan2iYOQfSkw',
+            'vcrd_011CZkZEMt8gZan2iYPQfSkw',
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',

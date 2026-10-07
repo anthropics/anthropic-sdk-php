@@ -22,7 +22,7 @@ final class BetaManagedAgentsAdvisorParams implements BaseModel
     use SdkModel;
 
     /**
-     * A Claude model id. The model must be permitted as an advisor for this agent's model — see the sessions/threads/advisor spec.
+     * A Claude model id. The model must be permitted as an advisor for this agent's model.
      */
     #[Required]
     public string $model;
@@ -68,7 +68,7 @@ final class BetaManagedAgentsAdvisorParams implements BaseModel
     }
 
     /**
-     * A Claude model id. The model must be permitted as an advisor for this agent's model — see the sessions/threads/advisor spec.
+     * A Claude model id. The model must be permitted as an advisor for this agent's model.
      */
     public function withModel(string $model): self
     {

@@ -6,6 +6,7 @@ namespace Anthropic\Services\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Models\BetaModelInfo;
+use Anthropic\Beta\Models\ModelListParams\Lifecycle;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
@@ -72,6 +73,7 @@ final class ModelsService implements ModelsContract
      *
      * @param string $afterID Query param: ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
      * @param string $beforeID Query param: ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
+     * @param list<Lifecycle|value-of<Lifecycle>> $lifecycle Query param: Filter the list to models in any of the given lifecycle stages (`active`, `deprecated`, or `retired`). Up to 3 values. When omitted, the list contains the `active` and `deprecated` models; `retired` models appear only when `retired` is requested explicitly.
      * @param int $limit Query param: Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
@@ -88,6 +90,7 @@ final class ModelsService implements ModelsContract
     public function list(
         ?string $afterID = null,
         ?string $beforeID = null,
+        ?array $lifecycle = null,
         ?int $limit = null,
         ?array $betas = null,
         ?string $workspaceID = null,
@@ -97,6 +100,7 @@ final class ModelsService implements ModelsContract
             [
                 'afterID' => $afterID,
                 'beforeID' => $beforeID,
+                'lifecycle' => $lifecycle,
                 'limit' => $limit,
                 'betas' => $betas,
                 'workspaceID' => $workspaceID,

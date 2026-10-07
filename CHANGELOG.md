@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.56.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.55.0...v0.56.0) (2026-10-07)
+
+### Features
+
+* **api:** add claude-haiku-5-5 and typed computer and browser toolset tool calls
+* **api:** add lifecycle stage fields and filter to /v1/models
+
+
+### Bug Fixes
+
+* **client:** refuse path parameters that form a "." or ".." path segment
+
+
+### Chores
+
+* **api:** update spend limit schemas
+* **docs:** describe a federation rule's target by its type
+* **docs:** fix example IDs in sessions, agents and vault credentials
+* **docs:** update Managed Agents multiagent and thread descriptions
+* **docs:** update the activity summaries endpoint description
+* **internal:** add REVIEW.md with review instructions
+* **internal:** bump phpstan to 2.2.13
+* **internal:** remove unused release configuration
+
 ## [0.55.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.54.0...v0.55.0) (2026-10-06)
 
 ### Features
@@ -8,10 +32,8 @@
 * **api:** add display_name to RBAC roles and deprecate name
 * **api:** add include_default parameter to list workspaces
 * **api:** add line to model objects
-* **api:** add OAuth app scopes to organization spend limits
 * **api:** add url_sources to the Managed Agents web_fetch tool config
 * **api:** add web search and code execution support to model capabilities
-* **api:** filter organization spend limits by OAuth app scope
 
 
 ### Bug Fixes

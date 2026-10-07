@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Models\ModelListParams\Lifecycle;
 
 /**
  * List available models.
@@ -20,6 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type ModelListParamsShape = array{
  *   afterID?: string|null,
  *   beforeID?: string|null,
+ *   lifecycle?: list<Lifecycle|value-of<Lifecycle>>|null,
  *   limit?: int|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  *   workspaceID?: string|null,
@@ -42,6 +44,14 @@ final class ModelListParams implements BaseModel
      */
     #[Optional]
     public ?string $beforeID;
+
+    /**
+     * Filter the list to models in any of the given lifecycle stages (`active`, `deprecated`, or `retired`). Up to 3 values. When omitted, the list contains the `active` and `deprecated` models; `retired` models appear only when `retired` is requested explicitly.
+     *
+     * @var list<value-of<Lifecycle>>|null $lifecycle
+     */
+    #[Optional(list: Lifecycle::class)]
+    public ?array $lifecycle;
 
     /**
      * Number of items to return per page.
@@ -79,11 +89,13 @@ final class ModelListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param list<Lifecycle|value-of<Lifecycle>>|null $lifecycle
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
         ?string $afterID = null,
         ?string $beforeID = null,
+        ?array $lifecycle = null,
         ?int $limit = null,
         ?array $betas = null,
         ?string $workspaceID = null,
@@ -92,6 +104,7 @@ final class ModelListParams implements BaseModel
 
         null !== $afterID && $self['afterID'] = $afterID;
         null !== $beforeID && $self['beforeID'] = $beforeID;
+        null !== $lifecycle && $self['lifecycle'] = $lifecycle;
         null !== $limit && $self['limit'] = $limit;
         null !== $betas && $self['betas'] = $betas;
         null !== $workspaceID && $self['workspaceID'] = $workspaceID;
@@ -117,6 +130,19 @@ final class ModelListParams implements BaseModel
     {
         $self = clone $this;
         $self['beforeID'] = $beforeID;
+
+        return $self;
+    }
+
+    /**
+     * Filter the list to models in any of the given lifecycle stages (`active`, `deprecated`, or `retired`). Up to 3 values. When omitted, the list contains the `active` and `deprecated` models; `retired` models appear only when `retired` is requested explicitly.
+     *
+     * @param list<Lifecycle|value-of<Lifecycle>> $lifecycle
+     */
+    public function withLifecycle(array $lifecycle): self
+    {
+        $self = clone $this;
+        $self['lifecycle'] = $lifecycle;
 
         return $self;
     }

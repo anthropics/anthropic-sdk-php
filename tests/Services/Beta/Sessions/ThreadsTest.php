@@ -33,7 +33,7 @@ final class ThreadsTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->sessions->threads->retrieve(
-            'sthr_011CZkZVWa6oIjw0rgXZpnBt',
+            'sthr_011CZkZVWa6oJjw1rgXZpnBt',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
         );
 
@@ -45,7 +45,7 @@ final class ThreadsTest extends TestCase
     public function testRetrieveWithOptionalParams(): void
     {
         $result = $this->client->beta->sessions->threads->retrieve(
-            'sthr_011CZkZVWa6oIjw0rgXZpnBt',
+            'sthr_011CZkZVWa6oJjw1rgXZpnBt',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
@@ -75,7 +75,7 @@ final class ThreadsTest extends TestCase
     public function testArchive(): void
     {
         $result = $this->client->beta->sessions->threads->archive(
-            'sthr_011CZkZVWa6oIjw0rgXZpnBt',
+            'sthr_011CZkZVWa6oJjw1rgXZpnBt',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
         );
 
@@ -87,7 +87,7 @@ final class ThreadsTest extends TestCase
     public function testArchiveWithOptionalParams(): void
     {
         $result = $this->client->beta->sessions->threads->archive(
-            'sthr_011CZkZVWa6oIjw0rgXZpnBt',
+            'sthr_011CZkZVWa6oJjw1rgXZpnBt',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',

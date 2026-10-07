@@ -123,8 +123,8 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
      * For a Claude Enterprise organization, this deletes a per-user override, and
      * the member falls back to any inherited spend limit at that period. Its
      * seat-tier, group, and organization-level rows cannot be deleted via this
-     * endpoint. A Claude Console organization deletes any of its limits. Deleting
-     * `organization` and `workspace` limits is in an early access preview.
+     * endpoint. A Claude Console organization deletes its organization and
+     * workspace limits. Deleting them through the API is in an early access preview.
      *
      * @param string $spendLimitID ID of the Spend Limit
      * @param RequestOpts|null $requestOptions
@@ -154,12 +154,10 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
      * Upsert keyed on (scope, period): setting a limit that already exists
      * overwrites it in place. A Claude Enterprise organization sets `user`
      * limits. Its seat-tier, group, and organization-level defaults are configured
-     * in claude.ai. A Claude Console organization sets `organization`,
-     * `workspace`, `oauth_app` and `oauth_app_default` limits, which are monthly
-     * and always carry an amount. Setting `organization` and `workspace` limits is
-     * in an early access preview. To request access, contact your Anthropic account
-     * team. Setting `oauth_app` and `oauth_app_default` limits is in a private
-     * beta; requests from organizations outside it get a 400.
+     * in claude.ai. A Claude Console organization sets `organization` and
+     * `workspace` limits, which are monthly and always carry an amount. Setting those
+     * limits is in an early access preview. To request access, contact your
+     * Anthropic account team.
      *
      * @param array{
      *   amount: string|null,
