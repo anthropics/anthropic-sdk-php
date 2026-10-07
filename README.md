@@ -1,4 +1,4 @@
-# Claude SDK for PHP
+# Claude SDK for PHP!
 
 [![Packagist Version](https://img.shields.io/packagist/v/anthropic-ai/sdk.svg)](https://packagist.org/packages/anthropic-ai/sdk)
 
