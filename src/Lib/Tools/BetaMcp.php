@@ -187,7 +187,8 @@ final class BetaMcp
         }
 
         if ($content instanceof ImageContent) {
-            if (!self::isSupportedImageType($content->mimeType)) {
+            $mimeType = self::normalizeMimeType($content->mimeType);
+            if (!self::isSupportedImageType($mimeType)) {
                 throw new UnsupportedMCPValueError("Unsupported image MIME type: {$content->mimeType}");
             }
             $block = [
@@ -195,7 +196,7 @@ final class BetaMcp
                 'source' => [
                     'type' => 'base64',
                     'data' => $content->data,
-                    'media_type' => $content->mimeType,
+                    'media_type' => $mimeType,
                 ],
             ];
             if (null !== $cacheControl) {
@@ -338,7 +339,7 @@ final class BetaMcp
         ResourceContents $resource,
         ?array $cacheControl,
     ): array {
-        $mimeType = $resource->mimeType;
+        $mimeType = null === $resource->mimeType ? null : self::normalizeMimeType($resource->mimeType);
 
         if (is_string($mimeType) && self::isSupportedImageType($mimeType)) {
             if (!$resource instanceof BlobResourceContents) {
@@ -410,7 +411,7 @@ final class BetaMcp
         }
 
         throw new UnsupportedMCPValueError(
-            "Unsupported MIME type \"{$mimeType}\" for resource: {$resource->uri}",
+            "Unsupported MIME type \"{$resource->mimeType}\" for resource: {$resource->uri}",
         );
     }
 
@@ -432,6 +433,11 @@ final class BetaMcp
         return '' !== $joined ? $joined : 'MCP tool reported an error';
     }
 
+    private static function normalizeMimeType(string $mimeType): string
+    {
+        return strtolower(trim(explode(';', $mimeType, 2)[0]));
+    }
+
     private static function isSupportedImageType(string $mimeType): bool
     {
         return in_array($mimeType, self::SUPPORTED_IMAGE_TYPES, true);
@@ -443,9 +449,10 @@ final class BetaMcp
             return true;
         }
 
+        $mimeType = self::normalizeMimeType($mimeType);
+
         return str_starts_with($mimeType, 'text/')
             || 'application/pdf' === $mimeType
             || self::isSupportedImageType($mimeType);
     }
-
 }
