@@ -59,7 +59,7 @@ final class BetaTextEditorCodeExecutionStrReplaceResultBlock implements BaseMode
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaTextEditorCodeExecutionStrReplaceResultBlock)
+     * (new BetaTextEditorCodeExecutionStrReplaceResultBlock())
      *   ->withLines(...)
      *   ->withNewLines(...)
      *   ->withNewStart(...)

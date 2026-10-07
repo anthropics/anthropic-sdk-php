@@ -53,7 +53,7 @@ final class BetaFallbackCreditTokenParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaFallbackCreditTokenParam)->withToken(...)
+     * (new BetaFallbackCreditTokenParam())->withToken(...)
      * ```
      */
     public function __construct()

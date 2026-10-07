@@ -82,7 +82,7 @@ final class ManagedAgentsMemoryStoreResource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsMemoryStoreResource)->withMemoryStoreID(...)->withType(...)
+     * (new ManagedAgentsMemoryStoreResource())->withMemoryStoreID(...)->withType(...)
      * ```
      */
     public function __construct()

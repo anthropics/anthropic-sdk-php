@@ -18,8 +18,8 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\MemoryStores\MemoriesContract;
 
 /**
- * @phpstan-import-type ManagedAgentsPreconditionShape from \Anthropic\Beta\MemoryStores\Memories\ManagedAgentsPrecondition
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type ManagedAgentsPreconditionShape from \Anthropic\Beta\MemoryStores\Memories\ManagedAgentsPrecondition
  */
 final class MemoriesService implements MemoriesContract
 {

@@ -50,7 +50,7 @@ final class BetaManagedAgentsCronScheduleParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsCronScheduleParams)
+     * (new BetaManagedAgentsCronScheduleParams())
      *   ->withExpression(...)
      *   ->withTimezone(...)
      *   ->withType(...)

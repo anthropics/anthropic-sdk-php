@@ -41,7 +41,9 @@ final class BetaServerToolUsage implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaServerToolUsage)->withWebFetchRequests(...)->withWebSearchRequests(...)
+     * (new BetaServerToolUsage())
+     *   ->withWebFetchRequests(...)
+     *   ->withWebSearchRequests(...)
      * ```
      */
     public function __construct()

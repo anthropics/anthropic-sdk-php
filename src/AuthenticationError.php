@@ -37,7 +37,7 @@ final class AuthenticationError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AuthenticationError)->withMessage(...)
+     * (new AuthenticationError())->withMessage(...)
      * ```
      */
     public function __construct()

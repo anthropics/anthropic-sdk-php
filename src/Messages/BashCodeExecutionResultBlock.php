@@ -55,7 +55,7 @@ final class BashCodeExecutionResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BashCodeExecutionResultBlock)
+     * (new BashCodeExecutionResultBlock())
      *   ->withContent(...)
      *   ->withReturnCode(...)
      *   ->withStderr(...)

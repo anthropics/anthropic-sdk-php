@@ -19,12 +19,12 @@ use Anthropic\Core\Contracts\BaseModel;
  * results) or ``except`` (every result but the named tools'). A named tool
  * must be declared in this request's ``tools[]``.
  *
- * @phpstan-import-type ClientToolResultsVariants from \Anthropic\Beta\Messages\BetaWebFetchURLSources\ClientToolResults
- * @phpstan-import-type ServerToolResultsVariants from \Anthropic\Beta\Messages\BetaWebFetchURLSources\ServerToolResults
- * @phpstan-import-type UserInputVariants from \Anthropic\Beta\Messages\BetaWebFetchURLSources\UserInput
  * @phpstan-import-type ClientToolResultsShape from \Anthropic\Beta\Messages\BetaWebFetchURLSources\ClientToolResults
  * @phpstan-import-type ServerToolResultsShape from \Anthropic\Beta\Messages\BetaWebFetchURLSources\ServerToolResults
  * @phpstan-import-type UserInputShape from \Anthropic\Beta\Messages\BetaWebFetchURLSources\UserInput
+ * @phpstan-import-type ClientToolResultsVariants from \Anthropic\Beta\Messages\BetaWebFetchURLSources\ClientToolResults
+ * @phpstan-import-type ServerToolResultsVariants from \Anthropic\Beta\Messages\BetaWebFetchURLSources\ServerToolResults
+ * @phpstan-import-type UserInputVariants from \Anthropic\Beta\Messages\BetaWebFetchURLSources\UserInput
  *
  * @phpstan-type BetaWebFetchURLSourcesShape = array{
  *   clientToolResults?: ClientToolResultsShape|null,

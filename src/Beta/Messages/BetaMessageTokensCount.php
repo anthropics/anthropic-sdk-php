@@ -44,7 +44,7 @@ final class BetaMessageTokensCount implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMessageTokensCount)->withContextManagement(...)->withInputTokens(...)
+     * (new BetaMessageTokensCount())->withContextManagement(...)->withInputTokens(...)
      * ```
      */
     public function __construct()

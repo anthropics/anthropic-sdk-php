@@ -16,10 +16,10 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type CreatedByVariants from \Anthropic\Beta\Organization\Plugins\Versions\BetaPluginVersion\CreatedBy
  * @phpstan-import-type PluginComponentShape from \Anthropic\Beta\Organization\Plugins\PluginComponent
  * @phpstan-import-type PluginContentScanShape from \Anthropic\Beta\Organization\Plugins\PluginContentScan
  * @phpstan-import-type CreatedByShape from \Anthropic\Beta\Organization\Plugins\Versions\BetaPluginVersion\CreatedBy
+ * @phpstan-import-type CreatedByVariants from \Anthropic\Beta\Organization\Plugins\Versions\BetaPluginVersion\CreatedBy
  *
  * @phpstan-type BetaPluginVersionShape = array{
  *   id: string,
@@ -144,7 +144,7 @@ final class BetaPluginVersion implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaPluginVersion)
+     * (new BetaPluginVersion())
      *   ->withID(...)
      *   ->withComponents(...)
      *   ->withContentScan(...)

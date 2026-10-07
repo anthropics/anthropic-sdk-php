@@ -65,7 +65,7 @@ final class BetaContextManagementCapability implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaContextManagementCapability)
+     * (new BetaContextManagementCapability())
      *   ->withClearThinking20251015(...)
      *   ->withClearToolUses20250919(...)
      *   ->withCompact20260112(...)

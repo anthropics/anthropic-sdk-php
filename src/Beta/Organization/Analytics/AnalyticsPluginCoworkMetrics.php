@@ -37,7 +37,7 @@ final class AnalyticsPluginCoworkMetrics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsPluginCoworkMetrics)->withDistinctSessionPluginUsedCount(...)
+     * (new AnalyticsPluginCoworkMetrics())->withDistinctSessionPluginUsedCount(...)
      * ```
      */
     public function __construct()

@@ -48,7 +48,7 @@ final class BetaAdvisorRedactedResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaAdvisorRedactedResultBlock)
+     * (new BetaAdvisorRedactedResultBlock())
      *   ->withEncryptedContent(...)
      *   ->withStopReason(...)
      * ```

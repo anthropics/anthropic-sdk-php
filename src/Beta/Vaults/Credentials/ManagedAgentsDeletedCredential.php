@@ -42,7 +42,7 @@ final class ManagedAgentsDeletedCredential implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsDeletedCredential)->withID(...)->withType(...)
+     * (new ManagedAgentsDeletedCredential())->withID(...)->withType(...)
      * ```
      */
     public function __construct()

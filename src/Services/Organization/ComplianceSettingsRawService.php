@@ -13,8 +13,8 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Organization\ComplianceSettingsRawContract;
 
 /**
- * @phpstan-import-type ComplianceSettingsStateParamShape from \Anthropic\Organization\ComplianceSettings\ComplianceSettingsStateParam
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type ComplianceSettingsStateParamShape from \Anthropic\Organization\ComplianceSettings\ComplianceSettingsStateParam
  */
 final class ComplianceSettingsRawService implements ComplianceSettingsRawContract
 {

@@ -48,7 +48,7 @@ final class BetaWebhookAgentDeletedEventData implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookAgentDeletedEventData)
+     * (new BetaWebhookAgentDeletedEventData())
      *   ->withID(...)
      *   ->withOrganizationID(...)
      *   ->withWorkspaceID(...)

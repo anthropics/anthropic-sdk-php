@@ -51,7 +51,7 @@ final class BetaWebhookSessionRequiresActionEventData implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookSessionRequiresActionEventData)
+     * (new BetaWebhookSessionRequiresActionEventData())
      *   ->withID(...)
      *   ->withOrganizationID(...)
      *   ->withWorkspaceID(...)

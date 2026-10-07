@@ -14,8 +14,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Event sent by the client providing the result of an agent-toolset tool execution. Only valid on `self_hosted` environments, where sandbox-routed tools are executed by the client rather than the server.
  *
- * @phpstan-import-type ContentVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsUserToolResultEvent\Content
  * @phpstan-import-type ContentShape from \Anthropic\Beta\Sessions\BetaManagedAgentsUserToolResultEvent\Content
+ * @phpstan-import-type ContentVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsUserToolResultEvent\Content
  *
  * @phpstan-type BetaManagedAgentsUserToolResultEventShape = array{
  *   id: string,
@@ -85,7 +85,7 @@ final class BetaManagedAgentsUserToolResultEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsUserToolResultEvent)
+     * (new BetaManagedAgentsUserToolResultEvent())
      *   ->withID(...)
      *   ->withToolUseID(...)
      *   ->withType(...)

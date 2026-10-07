@@ -15,8 +15,9 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * Configuration override for the web_fetch tool.
  *
- * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsWebFetchToolConfigParams\PermissionPolicy
  * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsWebFetchToolConfigParams\PermissionPolicy
+ * @phpstan-import-type BetaManagedAgentsWebFetchURLSourcesParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsWebFetchURLSourcesParams
+ * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsWebFetchToolConfigParams\PermissionPolicy
  *
  * @phpstan-type BetaManagedAgentsWebFetchToolConfigParamsShape = array{
  *   name: 'web_fetch',
@@ -26,6 +27,7 @@ use Anthropic\Core\Conversion\ConstantOf;
  *   maxContentTokens?: int|null,
  *   permissionPolicy?: PermissionPolicyShape|null,
  *   type?: null|Type|value-of<Type>,
+ *   urlSources?: null|BetaManagedAgentsWebFetchURLSourcesParams|BetaManagedAgentsWebFetchURLSourcesParamsShape,
  * }
  */
 final class BetaManagedAgentsWebFetchToolConfigParams implements BaseModel
@@ -85,6 +87,12 @@ final class BetaManagedAgentsWebFetchToolConfigParams implements BaseModel
     #[Optional(enum: Type::class)]
     public ?string $type;
 
+    /**
+     * Which sources contribute URLs the tool may fetch. Omit to allow every source.
+     */
+    #[Optional('url_sources', nullable: true)]
+    public ?BetaManagedAgentsWebFetchURLSourcesParams $urlSources;
+
     public function __construct()
     {
         $this->initialize();
@@ -99,6 +107,7 @@ final class BetaManagedAgentsWebFetchToolConfigParams implements BaseModel
      * @param list<string>|null $blockedDomains
      * @param PermissionPolicyShape|null $permissionPolicy
      * @param Type|value-of<Type>|null $type
+     * @param BetaManagedAgentsWebFetchURLSourcesParams|BetaManagedAgentsWebFetchURLSourcesParamsShape|null $urlSources
      */
     public static function with(
         ?array $allowedDomains = null,
@@ -107,6 +116,7 @@ final class BetaManagedAgentsWebFetchToolConfigParams implements BaseModel
         ?int $maxContentTokens = null,
         BetaManagedAgentsAlwaysAllowPolicy|array|BetaManagedAgentsAlwaysAskPolicy|BetaManagedAgentsAutoPolicy|null $permissionPolicy = null,
         Type|string|null $type = null,
+        BetaManagedAgentsWebFetchURLSourcesParams|array|null $urlSources = null,
     ): self {
         $self = new self;
 
@@ -116,6 +126,7 @@ final class BetaManagedAgentsWebFetchToolConfigParams implements BaseModel
         null !== $maxContentTokens && $self['maxContentTokens'] = $maxContentTokens;
         null !== $permissionPolicy && $self['permissionPolicy'] = $permissionPolicy;
         null !== $type && $self['type'] = $type;
+        null !== $urlSources && $self['urlSources'] = $urlSources;
 
         return $self;
     }
@@ -202,6 +213,20 @@ final class BetaManagedAgentsWebFetchToolConfigParams implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * Which sources contribute URLs the tool may fetch. Omit to allow every source.
+     *
+     * @param BetaManagedAgentsWebFetchURLSourcesParams|BetaManagedAgentsWebFetchURLSourcesParamsShape|null $urlSources
+     */
+    public function withURLSources(
+        BetaManagedAgentsWebFetchURLSourcesParams|array|null $urlSources
+    ): self {
+        $self = clone $this;
+        $self['urlSources'] = $urlSources;
 
         return $self;
     }

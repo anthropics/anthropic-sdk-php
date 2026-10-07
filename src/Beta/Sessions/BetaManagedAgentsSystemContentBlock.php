@@ -42,7 +42,7 @@ final class BetaManagedAgentsSystemContentBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsSystemContentBlock)->withText(...)->withType(...)
+     * (new BetaManagedAgentsSystemContentBlock())->withText(...)->withType(...)
      * ```
      */
     public function __construct()

@@ -50,7 +50,7 @@ final class PluginComponent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PluginComponent)->withDescription(...)->withName(...)->withType(...)
+     * (new PluginComponent())->withDescription(...)->withName(...)->withType(...)
      * ```
      */
     public function __construct()

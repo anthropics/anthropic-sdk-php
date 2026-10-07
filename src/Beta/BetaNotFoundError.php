@@ -37,7 +37,7 @@ final class BetaNotFoundError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaNotFoundError)->withMessage(...)
+     * (new BetaNotFoundError())->withMessage(...)
      * ```
      */
     public function __construct()

@@ -51,7 +51,7 @@ final class WorkAckParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WorkAckParams)->withEnvironmentID(...)
+     * (new WorkAckParams())->withEnvironmentID(...)
      * ```
      */
     public function __construct()

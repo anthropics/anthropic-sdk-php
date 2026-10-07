@@ -49,7 +49,7 @@ final class BetaManagedAgentsAnthropicSkillParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAnthropicSkillParams)->withSkillID(...)->withType(...)
+     * (new BetaManagedAgentsAnthropicSkillParams())->withSkillID(...)->withType(...)
      * ```
      */
     public function __construct()

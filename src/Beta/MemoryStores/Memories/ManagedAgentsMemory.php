@@ -110,7 +110,7 @@ final class ManagedAgentsMemory implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsMemory)
+     * (new ManagedAgentsMemory())
      *   ->withID(...)
      *   ->withContentSha256(...)
      *   ->withContentSizeBytes(...)

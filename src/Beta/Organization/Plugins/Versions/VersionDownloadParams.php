@@ -79,7 +79,7 @@ final class VersionDownloadParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new VersionDownloadParams)->withPluginID(...)
+     * (new VersionDownloadParams())->withPluginID(...)
      * ```
      */
     public function __construct()

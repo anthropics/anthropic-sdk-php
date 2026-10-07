@@ -51,7 +51,7 @@ final class BetaWebhookSessionStatusIdledEventData implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookSessionStatusIdledEventData)
+     * (new BetaWebhookSessionStatusIdledEventData())
      *   ->withID(...)
      *   ->withOrganizationID(...)
      *   ->withWorkspaceID(...)

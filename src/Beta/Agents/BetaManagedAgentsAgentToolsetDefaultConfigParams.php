@@ -12,8 +12,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Default configuration for all tools in a toolset.
  *
- * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolsetDefaultConfigParams\PermissionPolicy
  * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolsetDefaultConfigParams\PermissionPolicy
+ * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgentToolsetDefaultConfigParams\PermissionPolicy
  *
  * @phpstan-type BetaManagedAgentsAgentToolsetDefaultConfigParamsShape = array{
  *   enabled?: bool|null, permissionPolicy?: PermissionPolicyShape|null

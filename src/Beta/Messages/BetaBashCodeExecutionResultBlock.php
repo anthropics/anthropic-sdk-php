@@ -55,7 +55,7 @@ final class BetaBashCodeExecutionResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaBashCodeExecutionResultBlock)
+     * (new BetaBashCodeExecutionResultBlock())
      *   ->withContent(...)
      *   ->withReturnCode(...)
      *   ->withStderr(...)

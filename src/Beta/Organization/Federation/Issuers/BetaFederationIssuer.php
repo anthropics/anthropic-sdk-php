@@ -16,9 +16,9 @@ use Anthropic\Core\Conversion\ConstantOf;
  * Records an external IdP the organization trusts for the RFC 7523
  * jwt-bearer grant. The `issuer_url` must match the JWT `iss` claim exactly.
  *
- * @phpstan-import-type JWKSVariants from \Anthropic\Beta\Organization\Federation\Issuers\BetaFederationIssuer\JWKS
  * @phpstan-import-type JWKSShape from \Anthropic\Beta\Organization\Federation\Issuers\BetaFederationIssuer\JWKS
  * @phpstan-import-type BetaFederationIssuerPollStatusShape from \Anthropic\Beta\Organization\Federation\Issuers\BetaFederationIssuerPollStatus
+ * @phpstan-import-type JWKSVariants from \Anthropic\Beta\Organization\Federation\Issuers\BetaFederationIssuer\JWKS
  *
  * @phpstan-type BetaFederationIssuerShape = array{
  *   id: string,
@@ -159,7 +159,7 @@ final class BetaFederationIssuer implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaFederationIssuer)
+     * (new BetaFederationIssuer())
      *   ->withID(...)
      *   ->withArchivedAt(...)
      *   ->withArchivedByActorID(...)

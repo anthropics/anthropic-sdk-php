@@ -41,7 +41,7 @@ final class ToolSearchToolSearchResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ToolSearchToolSearchResultBlockParam)->withToolReferences(...)
+     * (new ToolSearchToolSearchResultBlockParam())->withToolReferences(...)
      * ```
      */
     public function __construct()

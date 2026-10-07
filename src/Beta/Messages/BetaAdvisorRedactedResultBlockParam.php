@@ -46,7 +46,7 @@ final class BetaAdvisorRedactedResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaAdvisorRedactedResultBlockParam)->withEncryptedContent(...)
+     * (new BetaAdvisorRedactedResultBlockParam())->withEncryptedContent(...)
      * ```
      */
     public function __construct()

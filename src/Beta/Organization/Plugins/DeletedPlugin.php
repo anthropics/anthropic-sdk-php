@@ -42,7 +42,7 @@ final class DeletedPlugin implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new DeletedPlugin)->withID(...)
+     * (new DeletedPlugin())->withID(...)
      * ```
      */
     public function __construct()

@@ -70,7 +70,7 @@ final class WorkUpdateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WorkUpdateParams)->withEnvironmentID(...)->withMetadata(...)
+     * (new WorkUpdateParams())->withEnvironmentID(...)->withMetadata(...)
      * ```
      */
     public function __construct()

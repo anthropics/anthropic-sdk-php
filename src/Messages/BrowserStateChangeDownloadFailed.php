@@ -55,7 +55,7 @@ final class BrowserStateChangeDownloadFailed implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BrowserStateChangeDownloadFailed)->withDownloadID(...)->withURL(...)
+     * (new BrowserStateChangeDownloadFailed())->withDownloadID(...)->withURL(...)
      * ```
      */
     public function __construct()

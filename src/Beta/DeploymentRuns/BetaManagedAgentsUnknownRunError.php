@@ -42,7 +42,7 @@ final class BetaManagedAgentsUnknownRunError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsUnknownRunError)->withMessage(...)->withType(...)
+     * (new BetaManagedAgentsUnknownRunError())->withMessage(...)->withType(...)
      * ```
      */
     public function __construct()

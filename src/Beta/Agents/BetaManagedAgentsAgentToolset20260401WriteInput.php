@@ -46,7 +46,7 @@ final class BetaManagedAgentsAgentToolset20260401WriteInput implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAgentToolset20260401WriteInput)
+     * (new BetaManagedAgentsAgentToolset20260401WriteInput())
      *   ->withContent(...)
      *   ->withFilePath(...)
      * ```

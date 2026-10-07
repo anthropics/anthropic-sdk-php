@@ -50,7 +50,7 @@ final class ManagedAgentsSessionStatusRunningEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSessionStatusRunningEvent)
+     * (new ManagedAgentsSessionStatusRunningEvent())
      *   ->withID(...)
      *   ->withProcessedAt(...)
      *   ->withType(...)

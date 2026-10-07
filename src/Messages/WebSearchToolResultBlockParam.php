@@ -12,11 +12,11 @@ use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\WebSearchToolResultBlockParam\Caller;
 
 /**
- * @phpstan-import-type WebSearchToolResultBlockParamContentVariants from \Anthropic\Messages\WebSearchToolResultBlockParamContent
- * @phpstan-import-type CallerVariants from \Anthropic\Messages\WebSearchToolResultBlockParam\Caller
  * @phpstan-import-type WebSearchToolResultBlockParamContentShape from \Anthropic\Messages\WebSearchToolResultBlockParamContent
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type CallerShape from \Anthropic\Messages\WebSearchToolResultBlockParam\Caller
+ * @phpstan-import-type WebSearchToolResultBlockParamContentVariants from \Anthropic\Messages\WebSearchToolResultBlockParamContent
+ * @phpstan-import-type CallerVariants from \Anthropic\Messages\WebSearchToolResultBlockParam\Caller
  *
  * @phpstan-type WebSearchToolResultBlockParamShape = array{
  *   content: WebSearchToolResultBlockParamContentShape,
@@ -63,7 +63,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WebSearchToolResultBlockParam)->withContent(...)->withToolUseID(...)
+     * (new WebSearchToolResultBlockParam())->withContent(...)->withToolUseID(...)
      * ```
      */
     public function __construct()

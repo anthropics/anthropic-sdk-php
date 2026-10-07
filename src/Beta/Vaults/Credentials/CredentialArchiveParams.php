@@ -61,7 +61,7 @@ final class CredentialArchiveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CredentialArchiveParams)->withVaultID(...)
+     * (new CredentialArchiveParams())->withVaultID(...)
      * ```
      */
     public function __construct()

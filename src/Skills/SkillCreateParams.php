@@ -65,7 +65,7 @@ final class SkillCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SkillCreateParams)->withFiles(...)
+     * (new SkillCreateParams())->withFiles(...)
      * ```
      */
     public function __construct()

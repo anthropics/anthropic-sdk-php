@@ -15,8 +15,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * An object that defines additional configuration control over model use.
  *
- * @phpstan-import-type EffortVariants from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfigParams\Effort
  * @phpstan-import-type EffortShape from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfigParams\Effort
+ * @phpstan-import-type EffortVariants from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfigParams\Effort
  *
  * @phpstan-type BetaManagedAgentsModelConfigParamsShape = array{
  *   id: string|BetaManagedAgentsModel|value-of<BetaManagedAgentsModel>,
@@ -73,7 +73,7 @@ final class BetaManagedAgentsModelConfigParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsModelConfigParams)->withID(...)
+     * (new BetaManagedAgentsModelConfigParams())->withID(...)
      * ```
      */
     public function __construct()

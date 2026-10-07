@@ -13,8 +13,8 @@ use Anthropic\RequestOptions;
 
 /**
  * @phpstan-import-type DataResidencyCreateConfigShape from \Anthropic\Organization\Workspaces\DataResidencyCreateConfig
- * @phpstan-import-type DataResidencyUpdateConfigShape from \Anthropic\Organization\Workspaces\DataResidencyUpdateConfig
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type DataResidencyUpdateConfigShape from \Anthropic\Organization\Workspaces\DataResidencyUpdateConfig
  */
 interface WorkspacesContract
 {
@@ -100,6 +100,7 @@ interface WorkspacesContract
      * @param string $afterID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
      * @param string $beforeID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
      * @param bool $includeArchived Whether to include Workspaces that have been archived in the response
+     * @param bool $includeDefault Whether to include the organization's default Workspace in the response
      * @param int $limit Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
@@ -113,6 +114,7 @@ interface WorkspacesContract
         ?string $afterID = null,
         ?string $beforeID = null,
         ?bool $includeArchived = null,
+        ?bool $includeDefault = null,
         ?int $limit = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page;

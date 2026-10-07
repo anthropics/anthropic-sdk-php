@@ -55,7 +55,7 @@ final class BetaManagedAgentsCustomTool implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsCustomTool)
+     * (new BetaManagedAgentsCustomTool())
      *   ->withDescription(...)
      *   ->withInputSchema(...)
      *   ->withName(...)

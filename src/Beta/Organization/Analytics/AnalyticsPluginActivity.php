@@ -124,7 +124,7 @@ final class AnalyticsPluginActivity implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsPluginActivity)
+     * (new AnalyticsPluginActivity())
      *   ->withClaudeCodeMetrics(...)
      *   ->withCoworkMetrics(...)
      *   ->withDistinctUserCount(...)

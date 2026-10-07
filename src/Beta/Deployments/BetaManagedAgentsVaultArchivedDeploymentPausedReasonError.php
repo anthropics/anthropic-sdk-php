@@ -36,7 +36,7 @@ final class BetaManagedAgentsVaultArchivedDeploymentPausedReasonError implements
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsVaultArchivedDeploymentPausedReasonError)->withType(...)
+     * (new BetaManagedAgentsVaultArchivedDeploymentPausedReasonError())->withType(...)
      * ```
      */
     public function __construct()

@@ -55,7 +55,7 @@ final class AnalyticsCostReportTimeBucket implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsCostReportTimeBucket)
+     * (new AnalyticsCostReportTimeBucket())
      *   ->withEndingAt(...)
      *   ->withResults(...)
      *   ->withStartingAt(...)

@@ -95,7 +95,7 @@ final class BetaPackages implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaPackages)
+     * (new BetaPackages())
      *   ->withApt(...)
      *   ->withCargo(...)
      *   ->withGem(...)

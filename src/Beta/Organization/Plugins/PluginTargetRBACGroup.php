@@ -44,7 +44,7 @@ final class PluginTargetRBACGroup implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PluginTargetRBACGroup)->withRBACGroupID(...)
+     * (new PluginTargetRBACGroup())->withRBACGroupID(...)
      * ```
      */
     public function __construct()

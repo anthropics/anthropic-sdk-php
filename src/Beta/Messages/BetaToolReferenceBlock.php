@@ -37,7 +37,7 @@ final class BetaToolReferenceBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaToolReferenceBlock)->withToolName(...)
+     * (new BetaToolReferenceBlock())->withToolName(...)
      * ```
      */
     public function __construct()

@@ -12,7 +12,6 @@ use Anthropic\PageCursor;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -98,10 +97,6 @@ final class DeploymentsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('buildURL drops path-level query params');
-        }
-
         $result = $this->client->beta->deployments->retrieve(
             'depl_011CZkZcDH3vPqd7xnEfwTai'
         );
@@ -124,10 +119,6 @@ final class DeploymentsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('buildURL drops path-level query params');
-        }
-
         $page = $this->client->beta->deployments->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

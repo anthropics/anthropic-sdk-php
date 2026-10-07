@@ -50,7 +50,7 @@ final class BetaMemoryTool20250818RenameCommand implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMemoryTool20250818RenameCommand)->withNewPath(...)->withOldPath(...)
+     * (new BetaMemoryTool20250818RenameCommand())->withNewPath(...)->withOldPath(...)
      * ```
      */
     public function __construct()

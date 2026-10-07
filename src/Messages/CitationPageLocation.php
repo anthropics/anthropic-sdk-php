@@ -65,7 +65,7 @@ final class CitationPageLocation implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CitationPageLocation)
+     * (new CitationPageLocation())
      *   ->withCitedText(...)
      *   ->withDocumentIndex(...)
      *   ->withDocumentTitle(...)

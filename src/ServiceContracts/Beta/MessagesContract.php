@@ -42,8 +42,6 @@ use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
 
 /**
- * @phpstan-import-type SystemShape from \Anthropic\Beta\Messages\MessageCountTokensParams\System
- * @phpstan-import-type ToolShape from \Anthropic\Beta\Messages\MessageCountTokensParams\Tool
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type BetaCompactionConfigShape from \Anthropic\Beta\Messages\BetaCompactionConfig
@@ -56,11 +54,13 @@ use Anthropic\RequestOptions;
  * @phpstan-import-type BetaMetadataShape from \Anthropic\Beta\Messages\BetaMetadata
  * @phpstan-import-type BetaOutputConfigShape from \Anthropic\Beta\Messages\BetaOutputConfig
  * @phpstan-import-type BetaJSONOutputFormatShape from \Anthropic\Beta\Messages\BetaJSONOutputFormat
- * @phpstan-import-type SystemShape from \Anthropic\Beta\Messages\MessageCreateParams\System as SystemShape1
+ * @phpstan-import-type SystemShape from \Anthropic\Beta\Messages\MessageCreateParams\System
  * @phpstan-import-type BetaThinkingConfigParamShape from \Anthropic\Beta\Messages\BetaThinkingConfigParam
  * @phpstan-import-type BetaToolChoiceShape from \Anthropic\Beta\Messages\BetaToolChoice
  * @phpstan-import-type BetaToolUnionShape from \Anthropic\Beta\Messages\BetaToolUnion
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type SystemShape from \Anthropic\Beta\Messages\MessageCountTokensParams\System as SystemShape1
+ * @phpstan-import-type ToolShape from \Anthropic\Beta\Messages\MessageCountTokensParams\Tool
  */
 interface MessagesContract
 {
@@ -171,7 +171,7 @@ interface MessagesContract
      * Our models will normally stop when they have naturally completed their turn, which will result in a response `stop_reason` of `"end_turn"`.
      *
      * If you want the model to stop generating when it encounters custom strings of text, you can use the `stop_sequences` parameter. If the model encounters one of the custom sequences, the response `stop_reason` value will be `"stop_sequence"` and the response `stop_sequence` value will contain the matched stop sequence.
-     * @param SystemShape1 $system Body param: System prompt.
+     * @param SystemShape $system Body param: System prompt.
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#give-claude-a-role).
      * @param float $temperature Body param: Amount of randomness injected into the response.
@@ -404,7 +404,7 @@ interface MessagesContract
      * Our models will normally stop when they have naturally completed their turn, which will result in a response `stop_reason` of `"end_turn"`.
      *
      * If you want the model to stop generating when it encounters custom strings of text, you can use the `stop_sequences` parameter. If the model encounters one of the custom sequences, the response `stop_reason` value will be `"stop_sequence"` and the response `stop_sequence` value will contain the matched stop sequence.
-     * @param SystemShape1 $system Body param: System prompt.
+     * @param SystemShape $system Body param: System prompt.
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#give-claude-a-role).
      * @param float $temperature Body param: Amount of randomness injected into the response.
@@ -599,7 +599,7 @@ interface MessagesContract
      *
      * A schema to specify Claude's output format in responses. This parameter will be removed in a future release.
      * @param \Anthropic\Beta\Messages\MessageCountTokensParams\Speed|value-of<\Anthropic\Beta\Messages\MessageCountTokensParams\Speed>|null $speed Body param: The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
-     * @param SystemShape $system Body param: System prompt.
+     * @param SystemShape1 $system Body param: System prompt.
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#give-claude-a-role).
      * @param BetaThinkingConfigParamShape $thinking Body param: Configuration for enabling Claude's extended thinking.

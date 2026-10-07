@@ -37,7 +37,7 @@ final class AnalyticsSkillCoworkMetrics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsSkillCoworkMetrics)->withDistinctSessionSkillUsedCount(...)
+     * (new AnalyticsSkillCoworkMetrics())->withDistinctSessionSkillUsedCount(...)
      * ```
      */
     public function __construct()

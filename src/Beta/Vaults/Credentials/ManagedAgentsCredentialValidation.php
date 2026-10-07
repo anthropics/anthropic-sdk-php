@@ -99,7 +99,7 @@ final class ManagedAgentsCredentialValidation implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsCredentialValidation)
+     * (new ManagedAgentsCredentialValidation())
      *   ->withCredentialID(...)
      *   ->withHasRefreshToken(...)
      *   ->withMCPProbe(...)

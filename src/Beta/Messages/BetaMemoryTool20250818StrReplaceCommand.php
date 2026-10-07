@@ -58,7 +58,7 @@ final class BetaMemoryTool20250818StrReplaceCommand implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMemoryTool20250818StrReplaceCommand)
+     * (new BetaMemoryTool20250818StrReplaceCommand())
      *   ->withNewStr(...)
      *   ->withOldStr(...)
      *   ->withPath(...)

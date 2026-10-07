@@ -12,8 +12,8 @@ use Anthropic\Messages\ServerToolUseBlock\Caller;
 use Anthropic\Messages\ServerToolUseBlock\Name;
 
 /**
- * @phpstan-import-type CallerVariants from \Anthropic\Messages\ServerToolUseBlock\Caller
  * @phpstan-import-type CallerShape from \Anthropic\Messages\ServerToolUseBlock\Caller
+ * @phpstan-import-type CallerVariants from \Anthropic\Messages\ServerToolUseBlock\Caller
  *
  * @phpstan-type ServerToolUseBlockShape = array{
  *   id: string,
@@ -58,7 +58,7 @@ final class ServerToolUseBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ServerToolUseBlock)
+     * (new ServerToolUseBlock())
      *   ->withID(...)
      *   ->withCaller(...)
      *   ->withInput(...)

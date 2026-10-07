@@ -12,8 +12,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\ToolUseBlock\Caller;
 
 /**
- * @phpstan-import-type CallerVariants from \Anthropic\Messages\ToolUseBlock\Caller
  * @phpstan-import-type CallerShape from \Anthropic\Messages\ToolUseBlock\Caller
+ * @phpstan-import-type CallerVariants from \Anthropic\Messages\ToolUseBlock\Caller
  *
  * @phpstan-type ToolUseBlockShape = array{
  *   id: string,
@@ -64,7 +64,11 @@ final class ToolUseBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ToolUseBlock)->withID(...)->withCaller(...)->withInput(...)->withName(...)
+     * (new ToolUseBlock())
+     *   ->withID(...)
+     *   ->withCaller(...)
+     *   ->withInput(...)
+     *   ->withName(...)
      * ```
      */
     public function __construct()

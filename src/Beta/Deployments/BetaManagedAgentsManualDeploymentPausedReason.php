@@ -36,7 +36,7 @@ final class BetaManagedAgentsManualDeploymentPausedReason implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsManualDeploymentPausedReason)->withType(...)
+     * (new BetaManagedAgentsManualDeploymentPausedReason())->withType(...)
      * ```
      */
     public function __construct()

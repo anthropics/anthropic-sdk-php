@@ -40,7 +40,7 @@ final class ThinkingDelta implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ThinkingDelta)->withThinking(...)
+     * (new ThinkingDelta())->withThinking(...)
      * ```
      */
     public function __construct()

@@ -51,7 +51,7 @@ final class BetaWebhookSessionOutcomeEvaluationEndedEventData implements BaseMod
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookSessionOutcomeEvaluationEndedEventData)
+     * (new BetaWebhookSessionOutcomeEvaluationEndedEventData())
      *   ->withID(...)
      *   ->withOrganizationID(...)
      *   ->withWorkspaceID(...)

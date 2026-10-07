@@ -39,7 +39,7 @@ final class SpendLimitScopedAPIKeyActor implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SpendLimitScopedAPIKeyActor)->withScopedAPIKeyID(...)
+     * (new SpendLimitScopedAPIKeyActor())->withScopedAPIKeyID(...)
      * ```
      */
     public function __construct()

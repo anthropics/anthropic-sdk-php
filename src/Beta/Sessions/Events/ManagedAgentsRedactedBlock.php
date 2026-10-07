@@ -34,7 +34,7 @@ final class ManagedAgentsRedactedBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsRedactedBlock)->withType(...)
+     * (new ManagedAgentsRedactedBlock())->withType(...)
      * ```
      */
     public function __construct()

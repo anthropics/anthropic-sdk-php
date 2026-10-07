@@ -40,7 +40,7 @@ final class BetaWebFetchURLSourceToolReference implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebFetchURLSourceToolReference)->withName(...)
+     * (new BetaWebFetchURLSourceToolReference())->withName(...)
      * ```
      */
     public function __construct()

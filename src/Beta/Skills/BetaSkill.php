@@ -101,7 +101,7 @@ final class BetaSkill implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaSkill)
+     * (new BetaSkill())
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withDisplayName(...)

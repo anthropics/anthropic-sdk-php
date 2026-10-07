@@ -34,11 +34,6 @@ use Anthropic\Messages\ToolUnion;
  *
  * See the [Messages API reference](https://platform.claude.com/docs/en/api/messages) for full documentation on available parameters.
  *
- * @phpstan-import-type MessageCreateParamsContainerVariants from \Anthropic\Messages\MessageCreateParamsContainer
- * @phpstan-import-type SystemVariants from \Anthropic\Messages\Batches\BatchCreateParams\Request\Params\System
- * @phpstan-import-type ThinkingConfigParamVariants from \Anthropic\Messages\ThinkingConfigParam
- * @phpstan-import-type ToolChoiceVariants from \Anthropic\Messages\ToolChoice
- * @phpstan-import-type ToolUnionVariants from \Anthropic\Messages\ToolUnion
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type MessageCreateParamsContainerShape from \Anthropic\Messages\MessageCreateParamsContainer
@@ -49,6 +44,11 @@ use Anthropic\Messages\ToolUnion;
  * @phpstan-import-type ThinkingConfigParamShape from \Anthropic\Messages\ThinkingConfigParam
  * @phpstan-import-type ToolChoiceShape from \Anthropic\Messages\ToolChoice
  * @phpstan-import-type ToolUnionShape from \Anthropic\Messages\ToolUnion
+ * @phpstan-import-type MessageCreateParamsContainerVariants from \Anthropic\Messages\MessageCreateParamsContainer
+ * @phpstan-import-type SystemVariants from \Anthropic\Messages\Batches\BatchCreateParams\Request\Params\System
+ * @phpstan-import-type ThinkingConfigParamVariants from \Anthropic\Messages\ThinkingConfigParam
+ * @phpstan-import-type ToolChoiceVariants from \Anthropic\Messages\ToolChoice
+ * @phpstan-import-type ToolUnionVariants from \Anthropic\Messages\ToolUnion
  *
  * @phpstan-type ParamsShape = array{
  *   maxTokens: int,
@@ -367,7 +367,7 @@ final class Params implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Params)->withMaxTokens(...)->withMessages(...)->withModel(...)
+     * (new Params())->withMaxTokens(...)->withMessages(...)->withModel(...)
      * ```
      */
     public function __construct()

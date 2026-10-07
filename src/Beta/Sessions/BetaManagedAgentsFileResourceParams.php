@@ -49,7 +49,7 @@ final class BetaManagedAgentsFileResourceParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsFileResourceParams)->withFileID(...)->withType(...)
+     * (new BetaManagedAgentsFileResourceParams())->withFileID(...)->withType(...)
      * ```
      */
     public function __construct()

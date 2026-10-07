@@ -11,10 +11,10 @@ use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\WebFetchToolResultBlock\Caller;
 
 /**
- * @phpstan-import-type CallerVariants from \Anthropic\Messages\WebFetchToolResultBlock\Caller
- * @phpstan-import-type ContentVariants from \Anthropic\Messages\WebFetchToolResultBlock\Content
  * @phpstan-import-type CallerShape from \Anthropic\Messages\WebFetchToolResultBlock\Caller
  * @phpstan-import-type ContentShape from \Anthropic\Messages\WebFetchToolResultBlock\Content
+ * @phpstan-import-type CallerVariants from \Anthropic\Messages\WebFetchToolResultBlock\Caller
+ * @phpstan-import-type ContentVariants from \Anthropic\Messages\WebFetchToolResultBlock\Content
  *
  * @phpstan-type WebFetchToolResultBlockShape = array{
  *   caller: CallerShape,
@@ -54,7 +54,7 @@ final class WebFetchToolResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WebFetchToolResultBlock)
+     * (new WebFetchToolResultBlock())
      *   ->withCaller(...)
      *   ->withContent(...)
      *   ->withToolUseID(...)

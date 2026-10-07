@@ -37,7 +37,7 @@ final class SpendLimitSeatTierScope implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SpendLimitSeatTierScope)->withSeatTier(...)
+     * (new SpendLimitSeatTierScope())->withSeatTier(...)
      * ```
      */
     public function __construct()

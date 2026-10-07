@@ -44,7 +44,7 @@ final class OrganizationRateLimitWebSearchGroup implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new OrganizationRateLimitWebSearchGroup)->withID(...)
+     * (new OrganizationRateLimitWebSearchGroup())->withID(...)
      * ```
      */
     public function __construct()

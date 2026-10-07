@@ -119,7 +119,7 @@ final class PluginMarketplaceValidationReport implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PluginMarketplaceValidationReport)
+     * (new PluginMarketplaceValidationReport())
      *   ->withCommitSha(...)
      *   ->withManifestError(...)
      *   ->withManifestErrorCode(...)

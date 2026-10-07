@@ -61,7 +61,7 @@ final class BetaManagedAgentsMemoryStoreResourceParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMemoryStoreResourceParam)
+     * (new BetaManagedAgentsMemoryStoreResourceParam())
      *   ->withMemoryStoreID(...)
      *   ->withType(...)
      * ```

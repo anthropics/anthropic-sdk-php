@@ -52,7 +52,7 @@ final class BetaContainerSkill implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaContainerSkill)->withSkillID(...)->withType(...)->withVersion(...)
+     * (new BetaContainerSkill())->withSkillID(...)->withType(...)->withVersion(...)
      * ```
      */
     public function __construct()

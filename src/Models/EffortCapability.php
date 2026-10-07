@@ -76,7 +76,7 @@ final class EffortCapability implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new EffortCapability)
+     * (new EffortCapability())
      *   ->withHigh(...)
      *   ->withLow(...)
      *   ->withMax(...)

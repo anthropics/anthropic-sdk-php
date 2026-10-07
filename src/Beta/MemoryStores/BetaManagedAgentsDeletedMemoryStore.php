@@ -42,7 +42,7 @@ final class BetaManagedAgentsDeletedMemoryStore implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsDeletedMemoryStore)->withID(...)->withType(...)
+     * (new BetaManagedAgentsDeletedMemoryStore())->withID(...)->withType(...)
      * ```
      */
     public function __construct()

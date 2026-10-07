@@ -63,25 +63,26 @@ final class BidirectionalPageCursor implements BaseModel, BasePage
     ) {
         $this->initialize();
 
-        if (!is_array($this->parsedBody)) {
+        $page = Conversion::coerce(self::class, value: $this->parsedBody);
+        if (!$page instanceof self) {
             return;
         }
 
-        // @phpstan-ignore-next-line argument.type
-        self::__unserialize($this->parsedBody);
+        self::__unserialize($page->toProperties());
 
-        if (is_array($items = $this->offsetGet('data'))) {
+        // The page class is shared across list methods, so the item type arrives
+        // at runtime and the items are converted separately.
+        if (is_array($items = $this->data ?? null)) {
+            /** @var list<TItem> $parsed */
             $parsed = Conversion::coerce(new ListOf($convert), value: $items);
-            // @phpstan-ignore-next-line
-            $this->offsetSet('data', value: $parsed);
+            $this->data = $parsed;
         }
     }
 
     /** @return list<TItem> */
     public function getItems(): array
     {
-        // @phpstan-ignore-next-line return.type
-        return $this->offsetGet('data') ?? [];
+        return $this->data ?? [];
     }
 
     /**
@@ -105,9 +106,11 @@ final class BidirectionalPageCursor implements BaseModel, BasePage
         }
 
         $nextRequest = $this->requestInfo;
-        $nextRequest['query'] = [...$nextRequest['query'], 'page' => $next];
+        $nextRequest['query'] = array_replace(
+            $nextRequest['query'],
+            ['page' => $next]
+        );
 
-        // @phpstan-ignore-next-line return.type
-        return [$nextRequest, $this->options];
+        return [$nextRequest, $this->options->withExtraQueryParams([])];
     }
 }

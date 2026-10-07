@@ -43,7 +43,7 @@ final class AnalyticsLinesOfCode implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsLinesOfCode)->withAddedCount(...)->withRemovedCount(...)
+     * (new AnalyticsLinesOfCode())->withAddedCount(...)->withRemovedCount(...)
      * ```
      */
     public function __construct()

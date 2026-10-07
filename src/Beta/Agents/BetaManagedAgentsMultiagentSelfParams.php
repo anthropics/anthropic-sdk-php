@@ -36,7 +36,7 @@ final class BetaManagedAgentsMultiagentSelfParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMultiagentSelfParams)->withType(...)
+     * (new BetaManagedAgentsMultiagentSelfParams())->withType(...)
      * ```
      */
     public function __construct()

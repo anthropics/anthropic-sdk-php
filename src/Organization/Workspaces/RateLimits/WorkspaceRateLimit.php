@@ -17,9 +17,9 @@ use Anthropic\Organization\RateLimits\OrganizationRateLimitWebSearchGroup;
 use Anthropic\Organization\Workspaces\RateLimits\WorkspaceRateLimit\Group;
 
 /**
- * @phpstan-import-type GroupVariants from \Anthropic\Organization\Workspaces\RateLimits\WorkspaceRateLimit\Group
  * @phpstan-import-type GroupShape from \Anthropic\Organization\Workspaces\RateLimits\WorkspaceRateLimit\Group
  * @phpstan-import-type WorkspaceRateLimitValueShape from \Anthropic\Organization\Workspaces\RateLimits\WorkspaceRateLimitValue
+ * @phpstan-import-type GroupVariants from \Anthropic\Organization\Workspaces\RateLimits\WorkspaceRateLimit\Group
  *
  * @phpstan-type WorkspaceRateLimitShape = array{
  *   group: GroupShape,
@@ -92,7 +92,7 @@ final class WorkspaceRateLimit implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WorkspaceRateLimit)
+     * (new WorkspaceRateLimit())
      *   ->withGroup(...)
      *   ->withLimits(...)
      *   ->withModels(...)

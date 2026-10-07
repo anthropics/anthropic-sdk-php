@@ -28,6 +28,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsGrepToolConfigParams\PermissionPolicy as PermissionPolicyShape5
  * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsWebFetchToolConfigParams\PermissionPolicy as PermissionPolicyShape6
  * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsWebSearchToolConfigParams\PermissionPolicy as PermissionPolicyShape7
+ * @phpstan-import-type BetaManagedAgentsWebFetchURLSourcesParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsWebFetchURLSourcesParams
  * @phpstan-import-type BetaManagedAgentsUserLocationShape from \Anthropic\Beta\Agents\BetaManagedAgentsUserLocation
  *
  * @phpstan-type BetaManagedAgentsAgentToolConfigParamsVariants = BetaManagedAgentsBashToolConfigParams|BetaManagedAgentsEditToolConfigParams|BetaManagedAgentsReadToolConfigParams|BetaManagedAgentsWriteToolConfigParams|BetaManagedAgentsGlobToolConfigParams|BetaManagedAgentsGrepToolConfigParams|BetaManagedAgentsWebFetchToolConfigParams|BetaManagedAgentsWebSearchToolConfigParams
@@ -65,6 +66,7 @@ final class BetaManagedAgentsAgentToolConfigParams implements ConverterSource
      * @param ($type is Type::BASH|'bash' ? PermissionPolicyShape|null : ($type is Type::EDIT|'edit' ? PermissionPolicyShape1|null : ($type is Type::READ|'read' ? PermissionPolicyShape2|null : ($type is Type::WRITE|'write' ? PermissionPolicyShape3|null : ($type is Type::GLOB|'glob' ? PermissionPolicyShape4|null : ($type is Type::GREP|'grep' ? PermissionPolicyShape5|null : ($type is Type::WEB_FETCH|'web_fetch' ? PermissionPolicyShape6|null : PermissionPolicyShape7|null))))))) $permissionPolicy
      * @param list<string>|null $allowedDomains
      * @param list<string>|null $blockedDomains
+     * @param BetaManagedAgentsWebFetchURLSourcesParams|BetaManagedAgentsWebFetchURLSourcesParamsShape|null $urlSources
      * @param BetaManagedAgentsUserLocation|BetaManagedAgentsUserLocationShape|null $userLocation
      *
      * @return ($type is Type::BASH|'bash' ? BetaManagedAgentsBashToolConfigParams : ($type is Type::EDIT|'edit' ? BetaManagedAgentsEditToolConfigParams : ($type is Type::READ|'read' ? BetaManagedAgentsReadToolConfigParams : ($type is Type::WRITE|'write' ? BetaManagedAgentsWriteToolConfigParams : ($type is Type::GLOB|'glob' ? BetaManagedAgentsGlobToolConfigParams : ($type is Type::GREP|'grep' ? BetaManagedAgentsGrepToolConfigParams : ($type is Type::WEB_FETCH|'web_fetch' ? BetaManagedAgentsWebFetchToolConfigParams : ($type is Type::WEB_SEARCH|'web_search' ? BetaManagedAgentsWebSearchToolConfigParams : BetaManagedAgentsBashToolConfigParams|BetaManagedAgentsEditToolConfigParams|BetaManagedAgentsReadToolConfigParams|BetaManagedAgentsWriteToolConfigParams|BetaManagedAgentsGlobToolConfigParams|BetaManagedAgentsGrepToolConfigParams|BetaManagedAgentsWebFetchToolConfigParams|BetaManagedAgentsWebSearchToolConfigParams))))))))
@@ -78,6 +80,7 @@ final class BetaManagedAgentsAgentToolConfigParams implements ConverterSource
         ?array $allowedDomains = null,
         ?array $blockedDomains = null,
         ?int $maxContentTokens = null,
+        BetaManagedAgentsWebFetchURLSourcesParams|array|null $urlSources = null,
         BetaManagedAgentsUserLocation|array|null $userLocation = null,
     ): BetaManagedAgentsBashToolConfigParams|BetaManagedAgentsEditToolConfigParams|BetaManagedAgentsReadToolConfigParams|BetaManagedAgentsWriteToolConfigParams|BetaManagedAgentsGlobToolConfigParams|BetaManagedAgentsGrepToolConfigParams|BetaManagedAgentsWebFetchToolConfigParams|BetaManagedAgentsWebSearchToolConfigParams {
         return match ($type) {
@@ -125,6 +128,7 @@ final class BetaManagedAgentsAgentToolConfigParams implements ConverterSource
                 maxContentTokens: $maxContentTokens,
                 // @phpstan-ignore argument.type
                 permissionPolicy: $permissionPolicy,
+                urlSources: $urlSources,
             ),
             Type::WEB_SEARCH, 'web_search' => BetaManagedAgentsWebSearchToolConfigParams::with(
                 type: 'web_search',

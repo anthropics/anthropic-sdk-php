@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type ContentVariants from \Anthropic\Messages\ToolSearchToolResultBlock\Content
  * @phpstan-import-type ContentShape from \Anthropic\Messages\ToolSearchToolResultBlock\Content
+ * @phpstan-import-type ContentVariants from \Anthropic\Messages\ToolSearchToolResultBlock\Content
  *
  * @phpstan-type ToolSearchToolResultBlockShape = array{
  *   content: ContentShape, toolUseID: string, type: 'tool_search_tool_result'
@@ -44,7 +44,7 @@ final class ToolSearchToolResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ToolSearchToolResultBlock)->withContent(...)->withToolUseID(...)
+     * (new ToolSearchToolResultBlock())->withContent(...)->withToolUseID(...)
      * ```
      */
     public function __construct()

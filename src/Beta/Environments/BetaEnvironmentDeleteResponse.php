@@ -46,7 +46,7 @@ final class BetaEnvironmentDeleteResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaEnvironmentDeleteResponse)->withID(...)->withType(...)
+     * (new BetaEnvironmentDeleteResponse())->withID(...)->withType(...)
      * ```
      */
     public function __construct()

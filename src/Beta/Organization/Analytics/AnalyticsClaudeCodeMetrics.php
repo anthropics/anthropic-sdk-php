@@ -47,7 +47,7 @@ final class AnalyticsClaudeCodeMetrics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsClaudeCodeMetrics)->withCoreMetrics(...)->withToolActions(...)
+     * (new AnalyticsClaudeCodeMetrics())->withCoreMetrics(...)->withToolActions(...)
      * ```
      */
     public function __construct()

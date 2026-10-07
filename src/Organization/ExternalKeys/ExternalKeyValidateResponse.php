@@ -56,7 +56,7 @@ final class ExternalKeyValidateResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ExternalKeyValidateResponse)->withError(...)->withStatus(...)
+     * (new ExternalKeyValidateResponse())->withError(...)->withStatus(...)
      * ```
      */
     public function __construct()

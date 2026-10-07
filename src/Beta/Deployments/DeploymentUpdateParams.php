@@ -19,14 +19,14 @@ use Anthropic\Core\Conversion\MapOf;
  *
  * @see Anthropic\Services\Beta\DeploymentsService::update()
  *
- * @phpstan-import-type AgentVariants from \Anthropic\Beta\Deployments\DeploymentUpdateParams\Agent
- * @phpstan-import-type BetaManagedAgentsDeploymentInitialEventParamsVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentInitialEventParams
- * @phpstan-import-type ResourceVariants from \Anthropic\Beta\Deployments\DeploymentUpdateParams\Resource
  * @phpstan-import-type AgentShape from \Anthropic\Beta\Deployments\DeploymentUpdateParams\Agent
  * @phpstan-import-type BetaManagedAgentsBudgetLimitShape from \Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit
  * @phpstan-import-type BetaManagedAgentsDeploymentInitialEventParamsShape from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentInitialEventParams
  * @phpstan-import-type ResourceShape from \Anthropic\Beta\Deployments\DeploymentUpdateParams\Resource
  * @phpstan-import-type BetaManagedAgentsScheduleParamsShape from \Anthropic\Beta\Deployments\BetaManagedAgentsScheduleParams
+ * @phpstan-import-type AgentVariants from \Anthropic\Beta\Deployments\DeploymentUpdateParams\Agent
+ * @phpstan-import-type BetaManagedAgentsDeploymentInitialEventParamsVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentInitialEventParams
+ * @phpstan-import-type ResourceVariants from \Anthropic\Beta\Deployments\DeploymentUpdateParams\Resource
  *
  * @phpstan-type DeploymentUpdateParamsShape = array{
  *   agent?: AgentShape|null,

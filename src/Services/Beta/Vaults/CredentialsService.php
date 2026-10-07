@@ -23,8 +23,8 @@ use Anthropic\ServiceContracts\Beta\Vaults\CredentialsContract;
 
 /**
  * @phpstan-import-type AuthShape from \Anthropic\Beta\Vaults\Credentials\CredentialCreateParams\Auth
- * @phpstan-import-type AuthShape from \Anthropic\Beta\Vaults\Credentials\CredentialUpdateParams\Auth as AuthShape1
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type AuthShape from \Anthropic\Beta\Vaults\Credentials\CredentialUpdateParams\Auth as AuthShape1
  */
 final class CredentialsService implements CredentialsContract
 {

@@ -48,7 +48,7 @@ final class BetaManagedAgentsAgentToolset20260401GlobInput implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAgentToolset20260401GlobInput)->withPattern(...)
+     * (new BetaManagedAgentsAgentToolset20260401GlobInput())->withPattern(...)
      * ```
      */
     public function __construct()

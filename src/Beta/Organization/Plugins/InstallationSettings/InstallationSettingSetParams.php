@@ -78,7 +78,7 @@ final class InstallationSettingSetParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new InstallationSettingSetParams)
+     * (new InstallationSettingSetParams())
      *   ->withPluginID(...)
      *   ->withInstallationPreference(...)
      * ```

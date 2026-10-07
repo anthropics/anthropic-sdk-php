@@ -42,7 +42,7 @@ final class BetaManagedAgentsCustomSkill implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsCustomSkill)
+     * (new BetaManagedAgentsCustomSkill())
      *   ->withSkillID(...)
      *   ->withType(...)
      *   ->withVersion(...)

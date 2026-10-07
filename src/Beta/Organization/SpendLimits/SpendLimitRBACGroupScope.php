@@ -37,7 +37,7 @@ final class SpendLimitRBACGroupScope implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SpendLimitRBACGroupScope)->withRBACGroupID(...)
+     * (new SpendLimitRBACGroupScope())->withRBACGroupID(...)
      * ```
      */
     public function __construct()

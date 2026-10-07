@@ -113,7 +113,7 @@ final class OrganizationInvite implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new OrganizationInvite)
+     * (new OrganizationInvite())
      *   ->withID(...)
      *   ->withAcceptedAt(...)
      *   ->withEmail(...)

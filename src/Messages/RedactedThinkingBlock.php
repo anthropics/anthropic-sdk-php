@@ -44,7 +44,7 @@ final class RedactedThinkingBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new RedactedThinkingBlock)->withData(...)
+     * (new RedactedThinkingBlock())->withData(...)
      * ```
      */
     public function __construct()

@@ -40,7 +40,7 @@ final class BetaManagedAgentsSessionResourceNotFoundDeploymentPausedReasonError 
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsSessionResourceNotFoundDeploymentPausedReasonError)
+     * (new BetaManagedAgentsSessionResourceNotFoundDeploymentPausedReasonError())
      *   ->withType(...)
      * ```
      */

@@ -42,7 +42,7 @@ final class ManagedAgentsURLDocumentSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsURLDocumentSource)->withType(...)->withURL(...)
+     * (new ManagedAgentsURLDocumentSource())->withType(...)->withURL(...)
      * ```
      */
     public function __construct()

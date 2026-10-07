@@ -39,7 +39,7 @@ final class AnalyticsConnectorClaudeCodeMetrics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsConnectorClaudeCodeMetrics)
+     * (new AnalyticsConnectorClaudeCodeMetrics())
      *   ->withDistinctSessionConnectorUsedCount(...)
      * ```
      */

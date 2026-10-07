@@ -42,7 +42,7 @@ final class APIKeyUserActor implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new APIKeyUserActor)->withUserID(...)
+     * (new APIKeyUserActor())->withUserID(...)
      * ```
      */
     public function __construct()

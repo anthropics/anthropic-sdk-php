@@ -18,8 +18,8 @@ use Anthropic\Core\Conversion\MapOf;
  *
  * @see Anthropic\Services\Beta\Vaults\CredentialsService::update()
  *
- * @phpstan-import-type AuthVariants from \Anthropic\Beta\Vaults\Credentials\CredentialUpdateParams\Auth
  * @phpstan-import-type AuthShape from \Anthropic\Beta\Vaults\Credentials\CredentialUpdateParams\Auth
+ * @phpstan-import-type AuthVariants from \Anthropic\Beta\Vaults\Credentials\CredentialUpdateParams\Auth
  *
  * @phpstan-type CredentialUpdateParamsShape = array{
  *   vaultID: string,
@@ -91,7 +91,7 @@ final class CredentialUpdateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CredentialUpdateParams)->withVaultID(...)
+     * (new CredentialUpdateParams())->withVaultID(...)
      * ```
      */
     public function __construct()

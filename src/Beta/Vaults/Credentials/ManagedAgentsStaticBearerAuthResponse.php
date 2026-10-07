@@ -42,7 +42,7 @@ final class ManagedAgentsStaticBearerAuthResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsStaticBearerAuthResponse)
+     * (new ManagedAgentsStaticBearerAuthResponse())
      *   ->withMCPServerURL(...)
      *   ->withType(...)
      * ```

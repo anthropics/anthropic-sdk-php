@@ -52,7 +52,7 @@ final class BetaOrganization implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaOrganization)->withID(...)->withName(...)
+     * (new BetaOrganization())->withID(...)->withName(...)
      * ```
      */
     public function __construct()

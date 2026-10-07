@@ -45,7 +45,7 @@ final class BetaFallbackRefusalTrigger implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaFallbackRefusalTrigger)->withCategory(...)
+     * (new BetaFallbackRefusalTrigger())->withCategory(...)
      * ```
      */
     public function __construct()

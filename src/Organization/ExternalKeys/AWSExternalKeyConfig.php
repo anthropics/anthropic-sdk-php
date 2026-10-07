@@ -47,7 +47,7 @@ final class AWSExternalKeyConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AWSExternalKeyConfig)->withKMSARN(...)
+     * (new AWSExternalKeyConfig())->withKMSARN(...)
      * ```
      */
     public function __construct()

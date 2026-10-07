@@ -11,8 +11,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Lib\Contracts\StructuredOutputModel;
 
 /**
- * @phpstan-import-type TextCitationVariants from \Anthropic\Messages\TextCitation
  * @phpstan-import-type TextCitationShape from \Anthropic\Messages\TextCitation
+ * @phpstan-import-type TextCitationVariants from \Anthropic\Messages\TextCitation
  *
  * @phpstan-type TextBlockShape = array{
  *   citations: list<TextCitationShape>|null, text: string, type: 'text'
@@ -77,7 +77,7 @@ final class TextBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new TextBlock)->withCitations(...)->withText(...)
+     * (new TextBlock())->withCitations(...)->withText(...)
      * ```
      */
     public function __construct()

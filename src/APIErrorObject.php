@@ -35,7 +35,7 @@ final class APIErrorObject implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new APIErrorObject)->withMessage(...)
+     * (new APIErrorObject())->withMessage(...)
      * ```
      */
     public function __construct()

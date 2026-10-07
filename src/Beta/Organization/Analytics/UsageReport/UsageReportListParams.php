@@ -183,7 +183,7 @@ final class UsageReportListParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new UsageReportListParams)->withStartingAt(...)
+     * (new UsageReportListParams())->withStartingAt(...)
      * ```
      */
     public function __construct()

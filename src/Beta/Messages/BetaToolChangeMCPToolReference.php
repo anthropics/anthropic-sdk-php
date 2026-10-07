@@ -43,7 +43,7 @@ final class BetaToolChangeMCPToolReference implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaToolChangeMCPToolReference)->withName(...)->withServerName(...)
+     * (new BetaToolChangeMCPToolReference())->withName(...)->withServerName(...)
      * ```
      */
     public function __construct()

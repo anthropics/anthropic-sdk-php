@@ -14,8 +14,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Parameters for providing the result of a custom tool execution.
  *
- * @phpstan-import-type ContentVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserCustomToolResultEventParams\Content
  * @phpstan-import-type ContentShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserCustomToolResultEventParams\Content
+ * @phpstan-import-type ContentVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserCustomToolResultEventParams\Content
  *
  * @phpstan-type ManagedAgentsUserCustomToolResultEventParamsShape = array{
  *   customToolUseID: string,
@@ -66,7 +66,7 @@ final class ManagedAgentsUserCustomToolResultEventParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsUserCustomToolResultEventParams)
+     * (new ManagedAgentsUserCustomToolResultEventParams())
      *   ->withCustomToolUseID(...)
      *   ->withType(...)
      * ```

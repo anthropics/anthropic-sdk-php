@@ -14,8 +14,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Event representing the result of an agent tool execution.
  *
- * @phpstan-import-type ContentVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolResultEvent\Content
  * @phpstan-import-type ContentShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolResultEvent\Content
+ * @phpstan-import-type ContentVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolResultEvent\Content
  *
  * @phpstan-type ManagedAgentsAgentToolResultEventShape = array{
  *   id: string,
@@ -80,7 +80,7 @@ final class ManagedAgentsAgentToolResultEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsAgentToolResultEvent)
+     * (new ManagedAgentsAgentToolResultEvent())
      *   ->withID(...)
      *   ->withProcessedAt(...)
      *   ->withToolUseID(...)

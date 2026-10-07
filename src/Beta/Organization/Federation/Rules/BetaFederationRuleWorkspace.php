@@ -75,7 +75,7 @@ final class BetaFederationRuleWorkspace implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaFederationRuleWorkspace)
+     * (new BetaFederationRuleWorkspace())
      *   ->withCreatedAt(...)
      *   ->withCreatedByActorID(...)
      *   ->withFederationRuleID(...)

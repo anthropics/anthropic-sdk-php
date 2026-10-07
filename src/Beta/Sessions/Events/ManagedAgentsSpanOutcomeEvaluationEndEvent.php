@@ -104,7 +104,7 @@ final class ManagedAgentsSpanOutcomeEvaluationEndEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSpanOutcomeEvaluationEndEvent)
+     * (new ManagedAgentsSpanOutcomeEvaluationEndEvent())
      *   ->withID(...)
      *   ->withExplanation(...)
      *   ->withIteration(...)

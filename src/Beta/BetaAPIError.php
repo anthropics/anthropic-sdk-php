@@ -35,7 +35,7 @@ final class BetaAPIError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaAPIError)->withMessage(...)
+     * (new BetaAPIError())->withMessage(...)
      * ```
      */
     public function __construct()

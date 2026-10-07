@@ -20,9 +20,9 @@ use Anthropic\Core\Conversion\ConstantOf;
  * When content is None, the block represents a failed compaction. The server
  * treats these as no-ops. Empty string content is not allowed.
  *
- * @phpstan-import-type ToolChangeVariants from \Anthropic\Beta\Messages\BetaCompactionBlockParam\ToolChange
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type ToolChangeShape from \Anthropic\Beta\Messages\BetaCompactionBlockParam\ToolChange
+ * @phpstan-import-type ToolChangeVariants from \Anthropic\Beta\Messages\BetaCompactionBlockParam\ToolChange
  *
  * @phpstan-type BetaCompactionBlockParamShape = array{
  *   type: 'compaction',

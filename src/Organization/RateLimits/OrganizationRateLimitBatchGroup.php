@@ -44,7 +44,7 @@ final class OrganizationRateLimitBatchGroup implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new OrganizationRateLimitBatchGroup)->withID(...)
+     * (new OrganizationRateLimitBatchGroup())->withID(...)
      * ```
      */
     public function __construct()

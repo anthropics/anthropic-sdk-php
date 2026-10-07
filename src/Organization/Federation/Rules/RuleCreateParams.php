@@ -119,7 +119,7 @@ final class RuleCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new RuleCreateParams)
+     * (new RuleCreateParams())
      *   ->withIssuerID(...)
      *   ->withMatch(...)
      *   ->withName(...)

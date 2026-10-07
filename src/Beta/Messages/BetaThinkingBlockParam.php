@@ -48,7 +48,7 @@ final class BetaThinkingBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaThinkingBlockParam)->withSignature(...)->withThinking(...)
+     * (new BetaThinkingBlockParam())->withSignature(...)->withThinking(...)
      * ```
      */
     public function __construct()

@@ -50,7 +50,7 @@ final class ThinkingBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ThinkingBlock)->withSignature(...)->withThinking(...)
+     * (new ThinkingBlock())->withSignature(...)->withThinking(...)
      * ```
      */
     public function __construct()

@@ -61,7 +61,7 @@ final class MemoryVersionRedactParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MemoryVersionRedactParams)->withMemoryStoreID(...)
+     * (new MemoryVersionRedactParams())->withMemoryStoreID(...)
      * ```
      */
     public function __construct()

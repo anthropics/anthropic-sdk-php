@@ -57,7 +57,7 @@ final class FileUploadParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new FileUploadParams)->withFile(...)
+     * (new FileUploadParams())->withFile(...)
      * ```
      */
     public function __construct()

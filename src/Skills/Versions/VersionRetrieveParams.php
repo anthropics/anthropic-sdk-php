@@ -52,7 +52,7 @@ final class VersionRetrieveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new VersionRetrieveParams)->withSkillID(...)
+     * (new VersionRetrieveParams())->withSkillID(...)
      * ```
      */
     public function __construct()

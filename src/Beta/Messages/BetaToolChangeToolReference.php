@@ -43,7 +43,7 @@ final class BetaToolChangeToolReference implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaToolChangeToolReference)->withName(...)
+     * (new BetaToolChangeToolReference())->withName(...)
      * ```
      */
     public function __construct()

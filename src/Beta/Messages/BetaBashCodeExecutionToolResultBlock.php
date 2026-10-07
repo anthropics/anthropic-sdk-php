@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type ContentVariants from \Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultBlock\Content
  * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultBlock\Content
+ * @phpstan-import-type ContentVariants from \Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultBlock\Content
  *
  * @phpstan-type BetaBashCodeExecutionToolResultBlockShape = array{
  *   content: ContentShape,
@@ -46,7 +46,9 @@ final class BetaBashCodeExecutionToolResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaBashCodeExecutionToolResultBlock)->withContent(...)->withToolUseID(...)
+     * (new BetaBashCodeExecutionToolResultBlock())
+     *   ->withContent(...)
+     *   ->withToolUseID(...)
      * ```
      */
     public function __construct()

@@ -38,7 +38,7 @@ final class ManagedAgentsConflictError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsConflictError)->withType(...)
+     * (new ManagedAgentsConflictError())->withType(...)
      * ```
      */
     public function __construct()

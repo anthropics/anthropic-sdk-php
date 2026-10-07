@@ -43,7 +43,9 @@ final class AnalyticsToolActionCounts implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsToolActionCounts)->withAcceptedCount(...)->withRejectedCount(...)
+     * (new AnalyticsToolActionCounts())
+     *   ->withAcceptedCount(...)
+     *   ->withRejectedCount(...)
      * ```
      */
     public function __construct()

@@ -35,7 +35,7 @@ final class BetaFileDocumentSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaFileDocumentSource)->withFileID(...)
+     * (new BetaFileDocumentSource())->withFileID(...)
      * ```
      */
     public function __construct()

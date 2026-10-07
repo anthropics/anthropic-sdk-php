@@ -44,7 +44,7 @@ final class APIKeyCreatedBy implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new APIKeyCreatedBy)->withID(...)->withType(...)
+     * (new APIKeyCreatedBy())->withID(...)->withType(...)
      * ```
      */
     public function __construct()

@@ -73,7 +73,9 @@ final class ServiceAccountAddParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ServiceAccountAddParams)->withServiceAccountID(...)->withWorkspaceRole(...)
+     * (new ServiceAccountAddParams())
+     *   ->withServiceAccountID(...)
+     *   ->withWorkspaceRole(...)
      * ```
      */
     public function __construct()

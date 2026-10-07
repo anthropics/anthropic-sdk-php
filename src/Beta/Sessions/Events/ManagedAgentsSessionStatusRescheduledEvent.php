@@ -50,7 +50,7 @@ final class ManagedAgentsSessionStatusRescheduledEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSessionStatusRescheduledEvent)
+     * (new ManagedAgentsSessionStatusRescheduledEvent())
      *   ->withID(...)
      *   ->withProcessedAt(...)
      *   ->withType(...)

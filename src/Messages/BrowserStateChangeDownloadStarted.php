@@ -48,7 +48,7 @@ final class BrowserStateChangeDownloadStarted implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BrowserStateChangeDownloadStarted)->withDownloadID(...)->withURL(...)
+     * (new BrowserStateChangeDownloadStarted())->withDownloadID(...)->withURL(...)
      * ```
      */
     public function __construct()

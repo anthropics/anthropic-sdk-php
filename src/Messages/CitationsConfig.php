@@ -30,7 +30,7 @@ final class CitationsConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CitationsConfig)->withEnabled(...)
+     * (new CitationsConfig())->withEnabled(...)
      * ```
      */
     public function __construct()

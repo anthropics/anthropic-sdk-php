@@ -1,5 +1,49 @@
 # Changelog
 
+## [0.55.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.54.0...v0.55.0) (2026-10-06)
+
+### Features
+
+* **api:** add disabled to thinking types in model capabilities
+* **api:** add display_name to RBAC roles and deprecate name
+* **api:** add include_default parameter to list workspaces
+* **api:** add line to model objects
+* **api:** add OAuth app scopes to organization spend limits
+* **api:** add url_sources to the Managed Agents web_fetch tool config
+* **api:** add web search and code execution support to model capabilities
+* **api:** filter organization spend limits by OAuth app scope
+
+
+### Bug Fixes
+
+* **api:** send the beta header by default when listing spend limits
+* **client:** drop the AWS session token on cross-origin redirects (#256)
+* **client:** send array header params as a single comma-separated header
+* **pagination:** continue auto-paging past the first page
+
+
+### Chores
+
+* **api:** mark the Text Completions API as deprecated
+* **ci:** check that pull requests update the changelog
+* **ci:** compare breaking change detection against the last release
+* **docs:** correct example groups in rate limit list description
+* **docs:** correct when usage and cost report data becomes final
+* **docs:** update the description of the Model line field
+* **internal:** list imported phpstan types in order of first use
+* **internal:** tidy the doc comments of model constructors and of the SSE stream
+* **tests:** run tests skipped for a query param bug that is now fixed
+* **tests:** run tests that an older mock server could not serve
+
+
+### Documentation
+
+* **api:** state the agent tools limit as 256
+* fix the structured output example in the README
+* match buildRequest return type in Foundry and Mantle clients
+* **php:** remove a repeated comment from the file upload example in the README
+* **php:** use the PHP names of the request options in the README
+
 ## 0.54.0 (2026-09-30)
 
 Full Changelog: [v0.53.0...v0.54.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.53.0...v0.54.0)

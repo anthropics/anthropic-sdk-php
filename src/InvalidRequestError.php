@@ -37,7 +37,7 @@ final class InvalidRequestError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new InvalidRequestError)->withMessage(...)
+     * (new InvalidRequestError())->withMessage(...)
      * ```
      */
     public function __construct()

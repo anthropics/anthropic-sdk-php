@@ -50,7 +50,7 @@ final class ToolReferenceBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ToolReferenceBlockParam)->withToolName(...)
+     * (new ToolReferenceBlockParam())->withToolName(...)
      * ```
      */
     public function __construct()

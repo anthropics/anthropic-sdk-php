@@ -46,7 +46,7 @@ final class BetaThinkingDelta implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaThinkingDelta)->withEstimatedTokens(...)->withThinking(...)
+     * (new BetaThinkingDelta())->withEstimatedTokens(...)->withThinking(...)
      * ```
      */
     public function __construct()

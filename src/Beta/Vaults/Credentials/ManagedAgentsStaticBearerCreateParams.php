@@ -50,7 +50,7 @@ final class ManagedAgentsStaticBearerCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsStaticBearerCreateParams)
+     * (new ManagedAgentsStaticBearerCreateParams())
      *   ->withToken(...)
      *   ->withMCPServerURL(...)
      *   ->withType(...)

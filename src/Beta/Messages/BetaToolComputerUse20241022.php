@@ -102,7 +102,7 @@ final class BetaToolComputerUse20241022 implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaToolComputerUse20241022)
+     * (new BetaToolComputerUse20241022())
      *   ->withDisplayHeightPx(...)
      *   ->withDisplayWidthPx(...)
      * ```

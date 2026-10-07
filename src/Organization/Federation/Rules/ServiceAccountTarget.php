@@ -51,7 +51,7 @@ final class ServiceAccountTarget implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ServiceAccountTarget)->withServiceAccountID(...)
+     * (new ServiceAccountTarget())->withServiceAccountID(...)
      * ```
      */
     public function __construct()

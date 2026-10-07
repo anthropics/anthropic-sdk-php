@@ -50,7 +50,7 @@ final class PluginUserActor implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PluginUserActor)->withEmailAddress(...)->withUserID(...)
+     * (new PluginUserActor())->withEmailAddress(...)->withUserID(...)
      * ```
      */
     public function __construct()

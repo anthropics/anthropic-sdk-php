@@ -40,7 +40,7 @@ final class BetaCacheMissToolsChanged implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCacheMissToolsChanged)->withCacheMissedInputTokens(...)
+     * (new BetaCacheMissToolsChanged())->withCacheMissedInputTokens(...)
      * ```
      */
     public function __construct()

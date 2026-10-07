@@ -12,11 +12,11 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type ContentVariants from \Anthropic\Beta\Messages\BetaWebFetchToolResultBlockParam\Content
- * @phpstan-import-type CallerVariants from \Anthropic\Beta\Messages\BetaWebFetchToolResultBlockParam\Caller
  * @phpstan-import-type ContentShape from \Anthropic\Beta\Messages\BetaWebFetchToolResultBlockParam\Content
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type CallerShape from \Anthropic\Beta\Messages\BetaWebFetchToolResultBlockParam\Caller
+ * @phpstan-import-type ContentVariants from \Anthropic\Beta\Messages\BetaWebFetchToolResultBlockParam\Content
+ * @phpstan-import-type CallerVariants from \Anthropic\Beta\Messages\BetaWebFetchToolResultBlockParam\Caller
  *
  * @phpstan-type BetaWebFetchToolResultBlockParamShape = array{
  *   content: ContentShape,
@@ -63,7 +63,7 @@ final class BetaWebFetchToolResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebFetchToolResultBlockParam)->withContent(...)->withToolUseID(...)
+     * (new BetaWebFetchToolResultBlockParam())->withContent(...)->withToolUseID(...)
      * ```
      */
     public function __construct()

@@ -41,7 +41,7 @@ final class Base64PDFSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Base64PDFSource)->withData(...)
+     * (new Base64PDFSource())->withData(...)
      * ```
      */
     public function __construct()

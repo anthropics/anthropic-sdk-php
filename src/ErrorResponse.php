@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type ErrorObjectVariants from \Anthropic\ErrorObject
  * @phpstan-import-type ErrorObjectShape from \Anthropic\ErrorObject
+ * @phpstan-import-type ErrorObjectVariants from \Anthropic\ErrorObject
  *
  * @phpstan-type ErrorResponseShape = array{
  *   error: ErrorObjectShape, requestID: string|null, type: 'error'
@@ -44,7 +44,7 @@ final class ErrorResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ErrorResponse)->withError(...)->withRequestID(...)
+     * (new ErrorResponse())->withError(...)->withRequestID(...)
      * ```
      */
     public function __construct()

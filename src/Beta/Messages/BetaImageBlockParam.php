@@ -12,10 +12,10 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type SourceVariants from \Anthropic\Beta\Messages\BetaImageBlockParam\Source
  * @phpstan-import-type SourceShape from \Anthropic\Beta\Messages\BetaImageBlockParam\Source
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type BetaImageTransformationsParamShape from \Anthropic\Beta\Messages\BetaImageTransformationsParam
+ * @phpstan-import-type SourceVariants from \Anthropic\Beta\Messages\BetaImageBlockParam\Source
  *
  * @phpstan-type BetaImageBlockParamShape = array{
  *   source: SourceShape,
@@ -60,7 +60,7 @@ final class BetaImageBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaImageBlockParam)->withSource(...)
+     * (new BetaImageBlockParam())->withSource(...)
      * ```
      */
     public function __construct()

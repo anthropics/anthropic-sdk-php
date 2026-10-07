@@ -99,7 +99,7 @@ final class BetaResponseTool implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaResponseTool)->withInputSchema(...)->withName(...)
+     * (new BetaResponseTool())->withInputSchema(...)->withName(...)
      * ```
      */
     public function __construct()

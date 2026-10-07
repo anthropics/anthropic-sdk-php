@@ -137,7 +137,7 @@ final class ManagedAgentsMemoryVersion implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsMemoryVersion)
+     * (new ManagedAgentsMemoryVersion())
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withMemoryID(...)

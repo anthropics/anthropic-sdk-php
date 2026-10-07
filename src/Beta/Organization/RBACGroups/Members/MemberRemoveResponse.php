@@ -50,7 +50,7 @@ final class MemberRemoveResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MemberRemoveResponse)->withRBACGroupID(...)->withUserID(...)
+     * (new MemberRemoveResponse())->withRBACGroupID(...)->withUserID(...)
      * ```
      */
     public function __construct()

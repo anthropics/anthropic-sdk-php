@@ -77,7 +77,7 @@ final class MemoryCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MemoryCreateParams)->withContent(...)->withPath(...)
+     * (new MemoryCreateParams())->withContent(...)->withPath(...)
      * ```
      */
     public function __construct()
