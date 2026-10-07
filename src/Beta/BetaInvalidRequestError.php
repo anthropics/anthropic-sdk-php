@@ -37,7 +37,7 @@ final class BetaInvalidRequestError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaInvalidRequestError)->withMessage(...)
+     * (new BetaInvalidRequestError())->withMessage(...)
      * ```
      */
     public function __construct()

@@ -39,7 +39,7 @@ final class WebFetchToolResultErrorBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WebFetchToolResultErrorBlockParam)->withErrorCode(...)
+     * (new WebFetchToolResultErrorBlockParam())->withErrorCode(...)
      * ```
      */
     public function __construct()

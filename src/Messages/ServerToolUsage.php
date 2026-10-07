@@ -41,7 +41,7 @@ final class ServerToolUsage implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ServerToolUsage)->withWebFetchRequests(...)->withWebSearchRequests(...)
+     * (new ServerToolUsage())->withWebFetchRequests(...)->withWebSearchRequests(...)
      * ```
      */
     public function __construct()

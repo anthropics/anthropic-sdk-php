@@ -11,8 +11,8 @@ use Anthropic\Messages\MessageParam\Content;
 use Anthropic\Messages\MessageParam\Role;
 
 /**
- * @phpstan-import-type ContentVariants from \Anthropic\Messages\MessageParam\Content
  * @phpstan-import-type ContentShape from \Anthropic\Messages\MessageParam\Content
+ * @phpstan-import-type ContentVariants from \Anthropic\Messages\MessageParam\Content
  *
  * @phpstan-type MessageParamShape = array{
  *   content: ContentShape, role: Role|value-of<Role>
@@ -42,7 +42,7 @@ final class MessageParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MessageParam)->withContent(...)->withRole(...)
+     * (new MessageParam())->withContent(...)->withRole(...)
      * ```
      */
     public function __construct()

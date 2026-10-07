@@ -38,7 +38,7 @@ final class BetaManagedAgentsEnvironmentNotFoundDeploymentPausedReasonError impl
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsEnvironmentNotFoundDeploymentPausedReasonError)
+     * (new BetaManagedAgentsEnvironmentNotFoundDeploymentPausedReasonError())
      *   ->withType(...)
      * ```
      */

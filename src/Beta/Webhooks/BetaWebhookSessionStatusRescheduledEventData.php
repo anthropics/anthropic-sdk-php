@@ -51,7 +51,7 @@ final class BetaWebhookSessionStatusRescheduledEventData implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookSessionStatusRescheduledEventData)
+     * (new BetaWebhookSessionStatusRescheduledEventData())
      *   ->withID(...)
      *   ->withOrganizationID(...)
      *   ->withWorkspaceID(...)

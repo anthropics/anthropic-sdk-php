@@ -62,7 +62,7 @@ final class ManagedAgentsMemoryPathConflictError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsMemoryPathConflictError)->withType(...)
+     * (new ManagedAgentsMemoryPathConflictError())->withType(...)
      * ```
      */
     public function __construct()

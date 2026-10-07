@@ -13,9 +13,9 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Mid-session agent configuration update. Only `tools` and `mcp_servers` are updatable. Full replacement: the provided array becomes the new value. To preserve existing entries, GET the session, modify the array, and POST it back.
  *
- * @phpstan-import-type ToolVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgentUpdate\Tool
  * @phpstan-import-type BetaManagedAgentsURLMCPServerParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgentUpdate\Tool
+ * @phpstan-import-type ToolVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgentUpdate\Tool
  *
  * @phpstan-type BetaManagedAgentsSessionAgentUpdateShape = array{
  *   mcpServers?: list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null,

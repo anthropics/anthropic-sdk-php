@@ -50,7 +50,7 @@ final class BetaToolReferenceBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaToolReferenceBlockParam)->withToolName(...)
+     * (new BetaToolReferenceBlockParam())->withToolName(...)
      * ```
      */
     public function __construct()

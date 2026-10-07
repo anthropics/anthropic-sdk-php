@@ -37,7 +37,7 @@ final class BetaServerToolCaller20260120 implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaServerToolCaller20260120)->withToolID(...)
+     * (new BetaServerToolCaller20260120())->withToolID(...)
      * ```
      */
     public function __construct()

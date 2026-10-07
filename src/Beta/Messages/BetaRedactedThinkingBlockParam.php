@@ -40,7 +40,7 @@ final class BetaRedactedThinkingBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRedactedThinkingBlockParam)->withData(...)
+     * (new BetaRedactedThinkingBlockParam())->withData(...)
      * ```
      */
     public function __construct()

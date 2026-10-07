@@ -39,7 +39,7 @@ final class BetaCodeExecutionToolResultErrorParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCodeExecutionToolResultErrorParam)->withErrorCode(...)
+     * (new BetaCodeExecutionToolResultErrorParam())->withErrorCode(...)
      * ```
      */
     public function __construct()

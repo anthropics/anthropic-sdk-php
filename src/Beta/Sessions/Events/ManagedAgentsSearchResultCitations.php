@@ -35,7 +35,7 @@ final class ManagedAgentsSearchResultCitations implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSearchResultCitations)->withEnabled(...)
+     * (new ManagedAgentsSearchResultCitations())->withEnabled(...)
      * ```
      */
     public function __construct()

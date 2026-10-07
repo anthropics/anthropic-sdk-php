@@ -41,7 +41,7 @@ final class BetaAdvisorResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaAdvisorResultBlockParam)->withText(...)
+     * (new BetaAdvisorResultBlockParam())->withText(...)
      * ```
      */
     public function __construct()

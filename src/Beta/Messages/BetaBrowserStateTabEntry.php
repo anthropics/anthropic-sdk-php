@@ -63,7 +63,7 @@ final class BetaBrowserStateTabEntry implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaBrowserStateTabEntry)->withTabID(...)->withTitle(...)->withURL(...)
+     * (new BetaBrowserStateTabEntry())->withTabID(...)->withTitle(...)->withURL(...)
      * ```
      */
     public function __construct()

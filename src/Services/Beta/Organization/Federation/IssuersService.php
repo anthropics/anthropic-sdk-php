@@ -18,8 +18,8 @@ use Anthropic\ServiceContracts\Beta\Organization\Federation\IssuersContract;
 
 /**
  * @phpstan-import-type JWKSShape from \Anthropic\Beta\Organization\Federation\Issuers\IssuerCreateParams\JWKS
- * @phpstan-import-type JWKSShape from \Anthropic\Beta\Organization\Federation\Issuers\IssuerUpdateParams\JWKS as JWKSShape1
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type JWKSShape from \Anthropic\Beta\Organization\Federation\Issuers\IssuerUpdateParams\JWKS as JWKSShape1
  */
 final class IssuersService implements IssuersContract
 {

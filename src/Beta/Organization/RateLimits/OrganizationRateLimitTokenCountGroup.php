@@ -44,7 +44,7 @@ final class OrganizationRateLimitTokenCountGroup implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new OrganizationRateLimitTokenCountGroup)->withID(...)
+     * (new OrganizationRateLimitTokenCountGroup())->withID(...)
      * ```
      */
     public function __construct()

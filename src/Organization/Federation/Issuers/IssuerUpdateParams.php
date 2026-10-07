@@ -24,8 +24,8 @@ use Anthropic\Organization\Federation\Issuers\IssuerUpdateParams\JWKS;
  *
  * @see Anthropic\Services\Organization\Federation\IssuersService::update()
  *
- * @phpstan-import-type JWKSVariants from \Anthropic\Organization\Federation\Issuers\IssuerUpdateParams\JWKS
  * @phpstan-import-type JWKSShape from \Anthropic\Organization\Federation\Issuers\IssuerUpdateParams\JWKS
+ * @phpstan-import-type JWKSVariants from \Anthropic\Organization\Federation\Issuers\IssuerUpdateParams\JWKS
  *
  * @phpstan-type IssuerUpdateParamsShape = array{
  *   checkJTI?: bool|null,

@@ -46,7 +46,7 @@ final class DeletedMessageBatch implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new DeletedMessageBatch)->withID(...)
+     * (new DeletedMessageBatch())->withID(...)
      * ```
      */
     public function __construct()

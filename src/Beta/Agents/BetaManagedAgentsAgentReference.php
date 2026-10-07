@@ -42,7 +42,7 @@ final class BetaManagedAgentsAgentReference implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAgentReference)
+     * (new BetaManagedAgentsAgentReference())
      *   ->withID(...)
      *   ->withType(...)
      *   ->withVersion(...)

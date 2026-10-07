@@ -50,7 +50,7 @@ final class BetaThinkingBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaThinkingBlock)->withSignature(...)->withThinking(...)
+     * (new BetaThinkingBlock())->withSignature(...)->withThinking(...)
      * ```
      */
     public function __construct()

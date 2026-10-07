@@ -78,7 +78,7 @@ final class ServiceAccountWorkspaceMember implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ServiceAccountWorkspaceMember)
+     * (new ServiceAccountWorkspaceMember())
      *   ->withCreatedByActorID(...)
      *   ->withImplicit(...)
      *   ->withServiceAccountID(...)

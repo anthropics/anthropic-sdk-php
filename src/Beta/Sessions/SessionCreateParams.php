@@ -18,13 +18,13 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Beta\SessionsService::create()
  *
- * @phpstan-import-type AgentVariants from \Anthropic\Beta\Sessions\SessionCreateParams\Agent
- * @phpstan-import-type InitialEventVariants from \Anthropic\Beta\Sessions\SessionCreateParams\InitialEvent
- * @phpstan-import-type ResourceVariants from \Anthropic\Beta\Sessions\SessionCreateParams\Resource
  * @phpstan-import-type AgentShape from \Anthropic\Beta\Sessions\SessionCreateParams\Agent
  * @phpstan-import-type BetaManagedAgentsBudgetLimitShape from \Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit
  * @phpstan-import-type InitialEventShape from \Anthropic\Beta\Sessions\SessionCreateParams\InitialEvent
  * @phpstan-import-type ResourceShape from \Anthropic\Beta\Sessions\SessionCreateParams\Resource
+ * @phpstan-import-type AgentVariants from \Anthropic\Beta\Sessions\SessionCreateParams\Agent
+ * @phpstan-import-type InitialEventVariants from \Anthropic\Beta\Sessions\SessionCreateParams\InitialEvent
+ * @phpstan-import-type ResourceVariants from \Anthropic\Beta\Sessions\SessionCreateParams\Resource
  *
  * @phpstan-type SessionCreateParamsShape = array{
  *   agent: AgentShape,
@@ -130,7 +130,7 @@ final class SessionCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SessionCreateParams)->withAgent(...)->withEnvironmentID(...)
+     * (new SessionCreateParams())->withAgent(...)->withEnvironmentID(...)
      * ```
      */
     public function __construct()

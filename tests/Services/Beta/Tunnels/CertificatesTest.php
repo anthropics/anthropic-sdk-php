@@ -10,7 +10,6 @@ use Anthropic\PageCursor;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -59,10 +58,6 @@ final class CertificatesTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('buildURL drops path-level query params');
-        }
-
         $result = $this->client->beta->tunnels->certificates->retrieve(
             'certificate_id',
             tunnelID: 'tunnel_id'
@@ -75,10 +70,6 @@ final class CertificatesTest extends TestCase
     #[Test]
     public function testRetrieveWithOptionalParams(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('buildURL drops path-level query params');
-        }
-
         $result = $this->client->beta->tunnels->certificates->retrieve(
             'certificate_id',
             tunnelID: 'tunnel_id',
@@ -93,10 +84,6 @@ final class CertificatesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('buildURL drops path-level query params');
-        }
-
         $page = $this->client->beta->tunnels->certificates->list('tunnel_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

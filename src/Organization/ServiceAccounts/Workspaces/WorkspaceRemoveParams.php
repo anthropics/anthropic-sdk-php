@@ -49,7 +49,7 @@ final class WorkspaceRemoveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WorkspaceRemoveParams)->withServiceAccountID(...)
+     * (new WorkspaceRemoveParams())->withServiceAccountID(...)
      * ```
      */
     public function __construct()

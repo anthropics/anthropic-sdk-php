@@ -25,8 +25,8 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Beta\Organization\Federation\IssuersService::update()
  *
- * @phpstan-import-type JWKSVariants from \Anthropic\Beta\Organization\Federation\Issuers\IssuerUpdateParams\JWKS
  * @phpstan-import-type JWKSShape from \Anthropic\Beta\Organization\Federation\Issuers\IssuerUpdateParams\JWKS
+ * @phpstan-import-type JWKSVariants from \Anthropic\Beta\Organization\Federation\Issuers\IssuerUpdateParams\JWKS
  *
  * @phpstan-type IssuerUpdateParamsShape = array{
  *   checkJTI?: bool|null,

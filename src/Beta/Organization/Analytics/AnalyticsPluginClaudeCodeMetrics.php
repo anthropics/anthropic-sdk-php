@@ -37,7 +37,8 @@ final class AnalyticsPluginClaudeCodeMetrics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsPluginClaudeCodeMetrics)->withDistinctSessionPluginUsedCount(...)
+     * (new AnalyticsPluginClaudeCodeMetrics())
+     *   ->withDistinctSessionPluginUsedCount(...)
      * ```
      */
     public function __construct()

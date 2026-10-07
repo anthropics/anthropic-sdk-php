@@ -63,7 +63,7 @@ final class CertificateRetrieveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CertificateRetrieveParams)->withTunnelID(...)
+     * (new CertificateRetrieveParams())->withTunnelID(...)
      * ```
      */
     public function __construct()

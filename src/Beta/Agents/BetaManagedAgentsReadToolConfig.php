@@ -13,8 +13,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * Configuration for the read tool.
  *
- * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsReadToolConfig\PermissionPolicy
  * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsReadToolConfig\PermissionPolicy
+ * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsReadToolConfig\PermissionPolicy
  *
  * @phpstan-type BetaManagedAgentsReadToolConfigShape = array{
  *   enabled: bool,
@@ -58,7 +58,7 @@ final class BetaManagedAgentsReadToolConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsReadToolConfig)
+     * (new BetaManagedAgentsReadToolConfig())
      *   ->withEnabled(...)
      *   ->withPermissionPolicy(...)
      * ```

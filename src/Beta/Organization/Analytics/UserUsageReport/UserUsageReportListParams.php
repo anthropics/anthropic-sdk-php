@@ -213,7 +213,7 @@ final class UserUsageReportListParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new UserUsageReportListParams)->withStartingAt(...)
+     * (new UserUsageReportListParams())->withStartingAt(...)
      * ```
      */
     public function __construct()

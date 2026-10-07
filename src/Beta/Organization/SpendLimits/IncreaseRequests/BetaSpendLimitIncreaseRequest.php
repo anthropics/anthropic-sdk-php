@@ -16,11 +16,11 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type ActorVariants from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\BetaSpendLimitIncreaseRequest\Actor
- * @phpstan-import-type ResolvedByVariants from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\BetaSpendLimitIncreaseRequest\ResolvedBy
  * @phpstan-import-type ActorShape from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\BetaSpendLimitIncreaseRequest\Actor
  * @phpstan-import-type ResolvedByShape from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\BetaSpendLimitIncreaseRequest\ResolvedBy
  * @phpstan-import-type SpendSummaryShape from \Anthropic\Beta\Organization\SpendLimits\SpendSummary
+ * @phpstan-import-type ActorVariants from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\BetaSpendLimitIncreaseRequest\Actor
+ * @phpstan-import-type ResolvedByVariants from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\BetaSpendLimitIncreaseRequest\ResolvedBy
  *
  * @phpstan-type BetaSpendLimitIncreaseRequestShape = array{
  *   id: string,
@@ -94,7 +94,7 @@ final class BetaSpendLimitIncreaseRequest implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaSpendLimitIncreaseRequest)
+     * (new BetaSpendLimitIncreaseRequest())
      *   ->withID(...)
      *   ->withActor(...)
      *   ->withCreatedAt(...)

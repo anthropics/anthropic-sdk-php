@@ -37,7 +37,7 @@ final class BetaPermissionError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaPermissionError)->withMessage(...)
+     * (new BetaPermissionError())->withMessage(...)
      * ```
      */
     public function __construct()

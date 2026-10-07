@@ -19,14 +19,14 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Beta\AgentsService::create()
  *
- * @phpstan-import-type ModelVariants from \Anthropic\Beta\Agents\AgentCreateParams\Model
- * @phpstan-import-type BetaManagedAgentsSkillParamsVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
- * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\AgentCreateParams\Tool
  * @phpstan-import-type ModelShape from \Anthropic\Beta\Agents\AgentCreateParams\Model
  * @phpstan-import-type BetaManagedAgentsURLMCPServerParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams
  * @phpstan-import-type BetaManagedAgentsMultiagentParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams
  * @phpstan-import-type BetaManagedAgentsSkillParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Agents\AgentCreateParams\Tool
+ * @phpstan-import-type ModelVariants from \Anthropic\Beta\Agents\AgentCreateParams\Model
+ * @phpstan-import-type BetaManagedAgentsSkillParamsVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
+ * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\AgentCreateParams\Tool
  *
  * @phpstan-type AgentCreateParamsShape = array{
  *   model: ModelShape,
@@ -105,7 +105,7 @@ final class AgentCreateParams implements BaseModel
     public ?string $system;
 
     /**
-     * Tool configurations available to the agent. Maximum of 128 tools across all toolsets allowed.
+     * Tool configurations available to the agent. Maximum of 256 tools across all toolsets allowed.
      *
      * @var list<ToolVariants>|null $tools
      */
@@ -139,7 +139,7 @@ final class AgentCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AgentCreateParams)->withModel(...)->withName(...)
+     * (new AgentCreateParams())->withModel(...)->withName(...)
      * ```
      */
     public function __construct()
@@ -292,7 +292,7 @@ final class AgentCreateParams implements BaseModel
     }
 
     /**
-     * Tool configurations available to the agent. Maximum of 128 tools across all toolsets allowed.
+     * Tool configurations available to the agent. Maximum of 256 tools across all toolsets allowed.
      *
      * @param list<ToolShape> $tools
      */

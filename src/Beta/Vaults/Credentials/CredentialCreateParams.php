@@ -17,8 +17,8 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Beta\Vaults\CredentialsService::create()
  *
- * @phpstan-import-type AuthVariants from \Anthropic\Beta\Vaults\Credentials\CredentialCreateParams\Auth
  * @phpstan-import-type AuthShape from \Anthropic\Beta\Vaults\Credentials\CredentialCreateParams\Auth
+ * @phpstan-import-type AuthVariants from \Anthropic\Beta\Vaults\Credentials\CredentialCreateParams\Auth
  *
  * @phpstan-type CredentialCreateParamsShape = array{
  *   auth: AuthShape,
@@ -83,7 +83,7 @@ final class CredentialCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CredentialCreateParams)->withAuth(...)
+     * (new CredentialCreateParams())->withAuth(...)
      * ```
      */
     public function __construct()

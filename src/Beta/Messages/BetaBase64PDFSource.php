@@ -41,7 +41,7 @@ final class BetaBase64PDFSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaBase64PDFSource)->withData(...)
+     * (new BetaBase64PDFSource())->withData(...)
      * ```
      */
     public function __construct()

@@ -42,7 +42,7 @@ final class SkillSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SkillSource)->withType(...)
+     * (new SkillSource())->withType(...)
      * ```
      */
     public function __construct()

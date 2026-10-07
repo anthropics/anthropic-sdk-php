@@ -38,7 +38,7 @@ final class BetaManagedAgentsWorkspaceArchivedDeploymentPausedReasonError implem
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsWorkspaceArchivedDeploymentPausedReasonError)
+     * (new BetaManagedAgentsWorkspaceArchivedDeploymentPausedReasonError())
      *   ->withType(...)
      * ```
      */

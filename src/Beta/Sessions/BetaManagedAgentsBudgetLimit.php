@@ -46,7 +46,7 @@ final class BetaManagedAgentsBudgetLimit implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsBudgetLimit)->withMaxListCost(...)->withType(...)
+     * (new BetaManagedAgentsBudgetLimit())->withMaxListCost(...)->withType(...)
      * ```
      */
     public function __construct()

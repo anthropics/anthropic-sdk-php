@@ -39,7 +39,7 @@ final class BetaAdvisorToolResultErrorParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaAdvisorToolResultErrorParam)->withErrorCode(...)
+     * (new BetaAdvisorToolResultErrorParam())->withErrorCode(...)
      * ```
      */
     public function __construct()

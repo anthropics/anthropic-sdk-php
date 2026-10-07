@@ -42,7 +42,7 @@ final class ManagedAgentsServiceAccountActor implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsServiceAccountActor)->withServiceAccountID(...)
+     * (new ManagedAgentsServiceAccountActor())->withServiceAccountID(...)
      * ```
      */
     public function __construct()

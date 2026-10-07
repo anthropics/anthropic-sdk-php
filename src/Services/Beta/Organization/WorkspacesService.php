@@ -20,8 +20,8 @@ use Anthropic\Services\Beta\Organization\Workspaces\ServiceAccountsService;
 
 /**
  * @phpstan-import-type DataResidencyCreateConfigShape from \Anthropic\Beta\Organization\Workspaces\DataResidencyCreateConfig
- * @phpstan-import-type DataResidencyUpdateConfigShape from \Anthropic\Beta\Organization\Workspaces\DataResidencyUpdateConfig
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type DataResidencyUpdateConfigShape from \Anthropic\Beta\Organization\Workspaces\DataResidencyUpdateConfig
  */
 final class WorkspacesService implements WorkspacesContract
 {
@@ -184,6 +184,7 @@ final class WorkspacesService implements WorkspacesContract
      * @param string $afterID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
      * @param string $beforeID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
      * @param bool $includeArchived Whether to include Workspaces that have been archived in the response
+     * @param bool $includeDefault Whether to include the organization's default Workspace in the response
      * @param int $limit Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
@@ -197,6 +198,7 @@ final class WorkspacesService implements WorkspacesContract
         ?string $afterID = null,
         ?string $beforeID = null,
         ?bool $includeArchived = null,
+        ?bool $includeDefault = null,
         ?int $limit = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page {
@@ -205,6 +207,7 @@ final class WorkspacesService implements WorkspacesContract
                 'afterID' => $afterID,
                 'beforeID' => $beforeID,
                 'includeArchived' => $includeArchived,
+                'includeDefault' => $includeDefault,
                 'limit' => $limit,
             ],
         );

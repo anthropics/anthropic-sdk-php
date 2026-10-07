@@ -39,7 +39,7 @@ final class CodeExecutionToolResultError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CodeExecutionToolResultError)->withErrorCode(...)
+     * (new CodeExecutionToolResultError())->withErrorCode(...)
      * ```
      */
     public function __construct()

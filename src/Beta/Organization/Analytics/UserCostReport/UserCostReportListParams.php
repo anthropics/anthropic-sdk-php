@@ -213,7 +213,7 @@ final class UserCostReportListParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new UserCostReportListParams)->withStartingAt(...)
+     * (new UserCostReportListParams())->withStartingAt(...)
      * ```
      */
     public function __construct()

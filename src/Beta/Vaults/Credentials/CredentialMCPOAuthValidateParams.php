@@ -61,7 +61,7 @@ final class CredentialMCPOAuthValidateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CredentialMCPOAuthValidateParams)->withVaultID(...)
+     * (new CredentialMCPOAuthValidateParams())->withVaultID(...)
      * ```
      */
     public function __construct()

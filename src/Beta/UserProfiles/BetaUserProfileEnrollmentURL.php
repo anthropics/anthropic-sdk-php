@@ -52,7 +52,7 @@ final class BetaUserProfileEnrollmentURL implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaUserProfileEnrollmentURL)
+     * (new BetaUserProfileEnrollmentURL())
      *   ->withExpiresAt(...)
      *   ->withType(...)
      *   ->withURL(...)

@@ -14,12 +14,12 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Per-member effective-limit report row (`GET /spend_limits/effective`).
  *
- * @phpstan-import-type ActorVariants from \Anthropic\Beta\Organization\SpendLimits\SpendSummary\Actor
- * @phpstan-import-type ScopeVariants from \Anthropic\Beta\Organization\SpendLimits\SpendSummary\Scope
- * @phpstan-import-type SourceVariants from \Anthropic\Beta\Organization\SpendLimits\SpendSummary\Source
  * @phpstan-import-type ActorShape from \Anthropic\Beta\Organization\SpendLimits\SpendSummary\Actor
  * @phpstan-import-type ScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendSummary\Scope
  * @phpstan-import-type SourceShape from \Anthropic\Beta\Organization\SpendLimits\SpendSummary\Source
+ * @phpstan-import-type ActorVariants from \Anthropic\Beta\Organization\SpendLimits\SpendSummary\Actor
+ * @phpstan-import-type ScopeVariants from \Anthropic\Beta\Organization\SpendLimits\SpendSummary\Scope
+ * @phpstan-import-type SourceVariants from \Anthropic\Beta\Organization\SpendLimits\SpendSummary\Source
  *
  * @phpstan-type SpendSummaryShape = array{
  *   actor: ActorShape,
@@ -69,11 +69,11 @@ final class SpendSummary implements BaseModel
 
     /** @var ScopeVariants $scope */
     #[Required(union: Scope::class)]
-    public SpendLimitUserScope|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope $scope;
+    public SpendLimitUserScope|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope|SpendLimitOAuthAppScope|SpendLimitOAuthAppDefaultScope $scope;
 
     /** @var SourceVariants $source */
     #[Required(union: Source::class)]
-    public SpendLimitUserScope|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope $source;
+    public SpendLimitUserScope|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope|SpendLimitOAuthAppScope|SpendLimitOAuthAppDefaultScope $source;
 
     #[Required('spend_limit_id')]
     public string $spendLimitID;
@@ -98,7 +98,7 @@ final class SpendSummary implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SpendSummary)
+     * (new SpendSummary())
      *   ->withActor(...)
      *   ->withAmount(...)
      *   ->withCurrency(...)
@@ -130,8 +130,8 @@ final class SpendSummary implements BaseModel
         string $currency,
         SpendLimitPeriod|string $period,
         string $periodToDateSpend,
-        SpendLimitUserScope|array|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope $scope,
-        SpendLimitUserScope|array|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope $source,
+        SpendLimitUserScope|array|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope|SpendLimitOAuthAppScope|SpendLimitOAuthAppDefaultScope $scope,
+        SpendLimitUserScope|array|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope|SpendLimitOAuthAppScope|SpendLimitOAuthAppDefaultScope $source,
         string $spendLimitID,
     ): self {
         $self = new self;
@@ -210,7 +210,7 @@ final class SpendSummary implements BaseModel
      * @param ScopeShape $scope
      */
     public function withScope(
-        SpendLimitUserScope|array|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope $scope,
+        SpendLimitUserScope|array|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope|SpendLimitOAuthAppScope|SpendLimitOAuthAppDefaultScope $scope,
     ): self {
         $self = clone $this;
         $self['scope'] = $scope;
@@ -222,7 +222,7 @@ final class SpendSummary implements BaseModel
      * @param SourceShape $source
      */
     public function withSource(
-        SpendLimitUserScope|array|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope $source,
+        SpendLimitUserScope|array|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope|SpendLimitOAuthAppScope|SpendLimitOAuthAppDefaultScope $source,
     ): self {
         $self = clone $this;
         $self['source'] = $source;

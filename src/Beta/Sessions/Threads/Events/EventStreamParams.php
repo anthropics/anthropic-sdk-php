@@ -68,7 +68,7 @@ final class EventStreamParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new EventStreamParams)->withSessionID(...)
+     * (new EventStreamParams())->withSessionID(...)
      * ```
      */
     public function __construct()

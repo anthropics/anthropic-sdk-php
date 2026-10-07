@@ -50,7 +50,7 @@ final class BetaMemoryTool20250818CreateCommand implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMemoryTool20250818CreateCommand)->withFileText(...)->withPath(...)
+     * (new BetaMemoryTool20250818CreateCommand())->withFileText(...)->withPath(...)
      * ```
      */
     public function __construct()

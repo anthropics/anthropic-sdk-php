@@ -36,7 +36,7 @@ final class ManagedAgentsSessionEndTurn implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSessionEndTurn)->withType(...)
+     * (new ManagedAgentsSessionEndTurn())->withType(...)
      * ```
      */
     public function __construct()

@@ -42,7 +42,9 @@ final class BetaManagedAgentsMCPEgressBlockedRunError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMCPEgressBlockedRunError)->withMessage(...)->withType(...)
+     * (new BetaManagedAgentsMCPEgressBlockedRunError())
+     *   ->withMessage(...)
+     *   ->withType(...)
      * ```
      */
     public function __construct()

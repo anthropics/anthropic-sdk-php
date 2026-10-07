@@ -73,7 +73,7 @@ final class BetaCitationContentBlockLocationParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCitationContentBlockLocationParam)
+     * (new BetaCitationContentBlockLocationParam())
      *   ->withCitedText(...)
      *   ->withDocumentIndex(...)
      *   ->withDocumentTitle(...)

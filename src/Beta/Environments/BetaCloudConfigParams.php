@@ -17,9 +17,9 @@ use Anthropic\Core\Conversion\ConstantOf;
  * Fields default to null; on update, omitted fields preserve the
  * existing value.
  *
- * @phpstan-import-type NetworkingVariants from \Anthropic\Beta\Environments\BetaCloudConfigParams\Networking
  * @phpstan-import-type NetworkingShape from \Anthropic\Beta\Environments\BetaCloudConfigParams\Networking
  * @phpstan-import-type BetaPackagesParamsShape from \Anthropic\Beta\Environments\BetaPackagesParams
+ * @phpstan-import-type NetworkingVariants from \Anthropic\Beta\Environments\BetaCloudConfigParams\Networking
  *
  * @phpstan-type BetaCloudConfigParamsShape = array{
  *   type: 'cloud',

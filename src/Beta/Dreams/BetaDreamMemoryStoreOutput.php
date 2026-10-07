@@ -44,7 +44,7 @@ final class BetaDreamMemoryStoreOutput implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaDreamMemoryStoreOutput)->withMemoryStoreID(...)->withType(...)
+     * (new BetaDreamMemoryStoreOutput())->withMemoryStoreID(...)->withType(...)
      * ```
      */
     public function __construct()

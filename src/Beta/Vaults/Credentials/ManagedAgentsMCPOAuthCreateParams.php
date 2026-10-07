@@ -69,7 +69,7 @@ final class ManagedAgentsMCPOAuthCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsMCPOAuthCreateParams)
+     * (new ManagedAgentsMCPOAuthCreateParams())
      *   ->withAccessToken(...)
      *   ->withMCPServerURL(...)
      *   ->withType(...)

@@ -65,7 +65,7 @@ final class BetaThinkingConfigEnabled implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaThinkingConfigEnabled)->withBudgetTokens(...)
+     * (new BetaThinkingConfigEnabled())->withBudgetTokens(...)
      * ```
      */
     public function __construct()

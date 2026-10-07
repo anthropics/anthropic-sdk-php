@@ -101,7 +101,7 @@ final class Skill implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Skill)
+     * (new Skill())
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withDisplayName(...)

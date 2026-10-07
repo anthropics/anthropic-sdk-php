@@ -46,7 +46,7 @@ final class SpendLimitWorkspaceScope implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SpendLimitWorkspaceScope)->withWorkspaceID(...)
+     * (new SpendLimitWorkspaceScope())->withWorkspaceID(...)
      * ```
      */
     public function __construct()

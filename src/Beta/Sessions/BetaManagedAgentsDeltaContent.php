@@ -52,7 +52,7 @@ final class BetaManagedAgentsDeltaContent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsDeltaContent)->withContent(...)->withType(...)
+     * (new BetaManagedAgentsDeltaContent())->withContent(...)->withType(...)
      * ```
      */
     public function __construct()

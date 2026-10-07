@@ -53,7 +53,7 @@ final class ManagedAgentsPlainTextDocumentSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsPlainTextDocumentSource)
+     * (new ManagedAgentsPlainTextDocumentSource())
      *   ->withData(...)
      *   ->withMediaType(...)
      *   ->withType(...)

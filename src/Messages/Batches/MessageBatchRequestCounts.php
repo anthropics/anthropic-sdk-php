@@ -69,7 +69,7 @@ final class MessageBatchRequestCounts implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MessageBatchRequestCounts)
+     * (new MessageBatchRequestCounts())
      *   ->withCanceled(...)
      *   ->withErrored(...)
      *   ->withExpired(...)

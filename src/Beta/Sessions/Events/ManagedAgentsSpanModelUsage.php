@@ -74,7 +74,7 @@ final class ManagedAgentsSpanModelUsage implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSpanModelUsage)
+     * (new ManagedAgentsSpanModelUsage())
      *   ->withCacheCreationInputTokens(...)
      *   ->withCacheReadInputTokens(...)
      *   ->withInputTokens(...)

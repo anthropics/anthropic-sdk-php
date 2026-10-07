@@ -42,7 +42,7 @@ final class ManagedAgentsFileRubricParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsFileRubricParams)->withFileID(...)->withType(...)
+     * (new ManagedAgentsFileRubricParams())->withFileID(...)->withType(...)
      * ```
      */
     public function __construct()

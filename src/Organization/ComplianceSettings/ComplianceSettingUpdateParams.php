@@ -27,8 +27,8 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Organization\ComplianceSettingsService::update()
  *
- * @phpstan-import-type ComplianceSettingsStateParamVariants from \Anthropic\Organization\ComplianceSettings\ComplianceSettingsStateParam
  * @phpstan-import-type ComplianceSettingsStateParamShape from \Anthropic\Organization\ComplianceSettings\ComplianceSettingsStateParam
+ * @phpstan-import-type ComplianceSettingsStateParamVariants from \Anthropic\Organization\ComplianceSettings\ComplianceSettingsStateParam
  *
  * @phpstan-type ComplianceSettingUpdateParamsShape = array{
  *   state: ComplianceSettingsStateParamShape
@@ -59,7 +59,7 @@ final class ComplianceSettingUpdateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ComplianceSettingUpdateParams)->withState(...)
+     * (new ComplianceSettingUpdateParams())->withState(...)
      * ```
      */
     public function __construct()

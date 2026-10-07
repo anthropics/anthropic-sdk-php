@@ -62,8 +62,8 @@ use Anthropic\ServiceContracts\Beta\Sessions\EventsRawContract;
 use Anthropic\SSEStream;
 
 /**
- * @phpstan-import-type ManagedAgentsEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsEventParams
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type ManagedAgentsEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsEventParams
  */
 final class EventsRawService implements EventsRawContract
 {

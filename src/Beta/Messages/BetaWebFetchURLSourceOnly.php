@@ -44,7 +44,7 @@ final class BetaWebFetchURLSourceOnly implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebFetchURLSourceOnly)->withTools(...)
+     * (new BetaWebFetchURLSourceOnly())->withTools(...)
      * ```
      */
     public function __construct()

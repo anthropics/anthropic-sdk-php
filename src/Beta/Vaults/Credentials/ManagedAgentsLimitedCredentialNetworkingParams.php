@@ -46,7 +46,7 @@ final class ManagedAgentsLimitedCredentialNetworkingParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsLimitedCredentialNetworkingParams)
+     * (new ManagedAgentsLimitedCredentialNetworkingParams())
      *   ->withAllowedHosts(...)
      *   ->withType(...)
      * ```

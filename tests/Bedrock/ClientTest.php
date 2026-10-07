@@ -120,6 +120,36 @@ final class ClientTest extends TestCase
         $this->assertNotSame('', $request->getHeaderLine('x-amz-date'));
     }
 
+    public function testSigV4CredentialsNotSentOnCrossOriginRedirect(): void
+    {
+        $client = Client::withCredentials(
+            accessKeyId: 'test-access-key',
+            secretAccessKey: 'test-secret-key',
+            region: 'us-east-1',
+            securityToken: 'session-token',
+            requestOptions: ['transporter' => $this->transporter],
+        );
+
+        $this->transporter->addResponse(
+            Psr17FactoryDiscovery::findResponseFactory()
+                ->createResponse(307)
+                ->withHeader('Location', 'https://elsewhere.example/invoke')
+        );
+
+        $client->messages->create(
+            maxTokens: 1024,
+            messages: [['content' => 'Hello', 'role' => 'user']],
+            model: 'anthropic.claude-3-5-sonnet-20241022-v2:0',
+        );
+
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(2, $requests);
+        $this->assertSame('session-token', $requests[0]->getHeaderLine('X-Amz-Security-Token'));
+        $this->assertSame('elsewhere.example', $requests[1]->getUri()->getHost());
+        $this->assertFalse($requests[1]->hasHeader('Authorization'));
+        $this->assertFalse($requests[1]->hasHeader('X-Amz-Security-Token'));
+    }
+
     public function testExtraQueryParamsKeepGeneratedEncoding(): void
     {
         $client = Client::withApiKey(

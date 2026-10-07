@@ -35,7 +35,7 @@ final class FileDocumentSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new FileDocumentSource)->withFileID(...)
+     * (new FileDocumentSource())->withFileID(...)
      * ```
      */
     public function __construct()

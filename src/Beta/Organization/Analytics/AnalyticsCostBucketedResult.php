@@ -163,7 +163,7 @@ final class AnalyticsCostBucketedResult implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsCostBucketedResult)
+     * (new AnalyticsCostBucketedResult())
      *   ->withAmount(...)
      *   ->withClaudeTagCategory(...)
      *   ->withClaudeTagUserID(...)

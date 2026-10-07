@@ -65,7 +65,7 @@ final class BetaLimitedNetwork implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaLimitedNetwork)
+     * (new BetaLimitedNetwork())
      *   ->withAllowMCPServers(...)
      *   ->withAllowPackageManagers(...)
      *   ->withAllowedHosts(...)

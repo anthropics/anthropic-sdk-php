@@ -13,9 +13,9 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * `cloud` environment configuration.
  *
- * @phpstan-import-type NetworkingVariants from \Anthropic\Beta\Environments\BetaCloudConfig\Networking
  * @phpstan-import-type NetworkingShape from \Anthropic\Beta\Environments\BetaCloudConfig\Networking
  * @phpstan-import-type BetaPackagesShape from \Anthropic\Beta\Environments\BetaPackages
+ * @phpstan-import-type NetworkingVariants from \Anthropic\Beta\Environments\BetaCloudConfig\Networking
  *
  * @phpstan-type BetaCloudConfigShape = array{
  *   networking: NetworkingShape,
@@ -61,7 +61,7 @@ final class BetaCloudConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCloudConfig)->withNetworking(...)->withPackages(...)
+     * (new BetaCloudConfig())->withNetworking(...)->withPackages(...)
      * ```
      */
     public function __construct()

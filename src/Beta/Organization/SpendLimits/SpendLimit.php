@@ -13,8 +13,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * A configured spend limit: a cap on metered spend for one scope and period.
  *
- * @phpstan-import-type ScopeVariants from \Anthropic\Beta\Organization\SpendLimits\SpendLimit\Scope
  * @phpstan-import-type ScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimit\Scope
+ * @phpstan-import-type ScopeVariants from \Anthropic\Beta\Organization\SpendLimits\SpendLimit\Scope
  *
  * @phpstan-type SpendLimitShape = array{
  *   id: string,
@@ -85,7 +85,7 @@ final class SpendLimit implements BaseModel
      * @var ScopeVariants $scope
      */
     #[Required(union: Scope::class)]
-    public SpendLimitUserScope|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope $scope;
+    public SpendLimitUserScope|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope|SpendLimitOAuthAppScope|SpendLimitOAuthAppDefaultScope $scope;
 
     /**
      * RFC 3339 datetime at which the spend limit was last modified.
@@ -113,7 +113,7 @@ final class SpendLimit implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SpendLimit)
+     * (new SpendLimit())
      *   ->withID(...)
      *   ->withAmount(...)
      *   ->withCreatedAt(...)
@@ -144,7 +144,7 @@ final class SpendLimit implements BaseModel
         string $currency,
         bool $isEnabled,
         SpendLimitPeriod|string $period,
-        SpendLimitUserScope|array|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope $scope,
+        SpendLimitUserScope|array|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope|SpendLimitOAuthAppScope|SpendLimitOAuthAppDefaultScope $scope,
         \DateTimeInterface $updatedAt,
     ): self {
         $self = new self;
@@ -235,7 +235,7 @@ final class SpendLimit implements BaseModel
      * @param ScopeShape $scope
      */
     public function withScope(
-        SpendLimitUserScope|array|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope $scope,
+        SpendLimitUserScope|array|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope|SpendLimitOAuthAppScope|SpendLimitOAuthAppDefaultScope $scope,
     ): self {
         $self = clone $this;
         $self['scope'] = $scope;

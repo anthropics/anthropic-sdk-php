@@ -51,7 +51,7 @@ final class WebSearchResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WebSearchResultBlockParam)
+     * (new WebSearchResultBlockParam())
      *   ->withEncryptedContent(...)
      *   ->withTitle(...)
      *   ->withURL(...)

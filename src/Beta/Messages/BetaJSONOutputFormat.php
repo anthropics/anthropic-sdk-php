@@ -42,7 +42,7 @@ final class BetaJSONOutputFormat implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaJSONOutputFormat)->withSchema(...)
+     * (new BetaJSONOutputFormat())->withSchema(...)
      * ```
      */
     public function __construct()

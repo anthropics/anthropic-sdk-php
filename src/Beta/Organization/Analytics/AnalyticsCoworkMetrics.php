@@ -160,7 +160,7 @@ final class AnalyticsCoworkMetrics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsCoworkMetrics)
+     * (new AnalyticsCoworkMetrics())
      *   ->withActionCount(...)
      *   ->withArtifactsCreatedCount(...)
      *   ->withConnectorsUsedCount(...)

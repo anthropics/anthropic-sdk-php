@@ -40,7 +40,7 @@ final class OutputTokensDetails implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new OutputTokensDetails)->withThinkingTokens(...)
+     * (new OutputTokensDetails())->withThinkingTokens(...)
      * ```
      */
     public function __construct()

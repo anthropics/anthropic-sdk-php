@@ -47,7 +47,7 @@ final class SelfHostedWorkListResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SelfHostedWorkListResponse)->withData(...)->withNextPage(...)
+     * (new SelfHostedWorkListResponse())->withData(...)->withNextPage(...)
      * ```
      */
     public function __construct()

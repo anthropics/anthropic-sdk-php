@@ -39,7 +39,7 @@ final class WebSearchToolResultError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WebSearchToolResultError)->withErrorCode(...)
+     * (new WebSearchToolResultError())->withErrorCode(...)
      * ```
      */
     public function __construct()

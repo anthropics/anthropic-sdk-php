@@ -44,7 +44,7 @@ final class BetaRBACConnectorPermissionResource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRBACConnectorPermissionResource)->withConnectorID(...)
+     * (new BetaRBACConnectorPermissionResource())->withConnectorID(...)
      * ```
      */
     public function __construct()

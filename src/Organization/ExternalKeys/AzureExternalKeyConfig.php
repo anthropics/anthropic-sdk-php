@@ -63,7 +63,7 @@ final class AzureExternalKeyConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AzureExternalKeyConfig)
+     * (new AzureExternalKeyConfig())
      *   ->withKeyName(...)
      *   ->withTenantID(...)
      *   ->withVaultURI(...)

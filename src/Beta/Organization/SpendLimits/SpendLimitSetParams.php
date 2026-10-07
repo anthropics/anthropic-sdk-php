@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\SpendLimits;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitSetParams\Scope;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
@@ -17,20 +18,23 @@ use Anthropic\Core\Contracts\BaseModel;
  * Upsert keyed on (scope, period): setting a limit that already exists
  * overwrites it in place. A Claude Enterprise organization sets `user`
  * limits. Its seat-tier, group, and organization-level defaults are configured
- * in claude.ai. A Claude Console organization sets `organization` and
- * `workspace` limits, which are monthly and always carry an amount. Setting those
- * limits is in an early access preview. To request access, contact your
- * Anthropic account team.
+ * in claude.ai. A Claude Console organization sets `organization`,
+ * `workspace`, `oauth_app` and `oauth_app_default` limits, which are monthly
+ * and always carry an amount. Setting `organization` and `workspace` limits is
+ * in an early access preview. To request access, contact your Anthropic account
+ * team. Setting `oauth_app` and `oauth_app_default` limits is in a private
+ * beta; requests from organizations outside it get a 400.
  *
  * @see Anthropic\Services\Beta\Organization\SpendLimitsService::set()
  *
- * @phpstan-import-type ScopeVariants from \Anthropic\Beta\Organization\SpendLimits\SpendLimitSetParams\Scope
  * @phpstan-import-type ScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitSetParams\Scope
+ * @phpstan-import-type ScopeVariants from \Anthropic\Beta\Organization\SpendLimits\SpendLimitSetParams\Scope
  *
  * @phpstan-type SpendLimitSetParamsShape = array{
  *   amount: string|null,
  *   scope: ScopeShape,
  *   period?: null|SpendLimitPeriod|value-of<SpendLimitPeriod>,
+ *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
 final class SpendLimitSetParams implements BaseModel
@@ -46,16 +50,24 @@ final class SpendLimitSetParams implements BaseModel
     public ?string $amount;
 
     /**
-     * What the limit applies to. Claude Enterprise organizations set `user` limits. Claude Console organizations set `organization` and `workspace` limits. Any other combination returns 400. Setting `organization` and `workspace` limits through the API is in an early access preview. To request access, contact your Anthropic account team.
+     * What the limit applies to. Claude Enterprise organizations set `user` limits. Claude Console organizations set `organization`, `workspace`, `oauth_app` and `oauth_app_default` limits. Any other combination returns 400. Setting `organization` and `workspace` limits through the API is in an early access preview. To request access, contact your Anthropic account team. Setting `oauth_app` and `oauth_app_default` limits is in a private beta; requests from organizations outside it get a 400.
      *
      * @var ScopeVariants $scope
      */
     #[Required(union: Scope::class)]
-    public SpendLimitUserScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope $scope;
+    public SpendLimitUserScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope|SpendLimitOAuthAppScope|SpendLimitOAuthAppDefaultScope $scope;
 
     /** @var value-of<SpendLimitPeriod>|null $period */
     #[Optional(enum: SpendLimitPeriod::class)]
     public ?string $period;
+
+    /**
+     * Optional header to specify the beta version(s) you want to use.
+     *
+     * @var list<string|value-of<AnthropicBeta>>|null $betas
+     */
+    #[Optional(list: AnthropicBeta::class)]
+    public ?array $betas;
 
     /**
      * `new SpendLimitSetParams()` is missing required properties by the API.
@@ -68,7 +80,7 @@ final class SpendLimitSetParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SpendLimitSetParams)->withAmount(...)->withScope(...)
+     * (new SpendLimitSetParams())->withAmount(...)->withScope(...)
      * ```
      */
     public function __construct()
@@ -83,11 +95,13 @@ final class SpendLimitSetParams implements BaseModel
      *
      * @param ScopeShape $scope
      * @param SpendLimitPeriod|value-of<SpendLimitPeriod>|null $period
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
         ?string $amount,
-        SpendLimitUserScope|array|SpendLimitOrganizationScope|SpendLimitWorkspaceScope $scope,
+        SpendLimitUserScope|array|SpendLimitOrganizationScope|SpendLimitWorkspaceScope|SpendLimitOAuthAppScope|SpendLimitOAuthAppDefaultScope $scope,
         SpendLimitPeriod|string|null $period = null,
+        ?array $betas = null,
     ): self {
         $self = new self;
 
@@ -95,6 +109,7 @@ final class SpendLimitSetParams implements BaseModel
         $self['scope'] = $scope;
 
         null !== $period && $self['period'] = $period;
+        null !== $betas && $self['betas'] = $betas;
 
         return $self;
     }
@@ -111,12 +126,12 @@ final class SpendLimitSetParams implements BaseModel
     }
 
     /**
-     * What the limit applies to. Claude Enterprise organizations set `user` limits. Claude Console organizations set `organization` and `workspace` limits. Any other combination returns 400. Setting `organization` and `workspace` limits through the API is in an early access preview. To request access, contact your Anthropic account team.
+     * What the limit applies to. Claude Enterprise organizations set `user` limits. Claude Console organizations set `organization`, `workspace`, `oauth_app` and `oauth_app_default` limits. Any other combination returns 400. Setting `organization` and `workspace` limits through the API is in an early access preview. To request access, contact your Anthropic account team. Setting `oauth_app` and `oauth_app_default` limits is in a private beta; requests from organizations outside it get a 400.
      *
      * @param ScopeShape $scope
      */
     public function withScope(
-        SpendLimitUserScope|array|SpendLimitOrganizationScope|SpendLimitWorkspaceScope $scope,
+        SpendLimitUserScope|array|SpendLimitOrganizationScope|SpendLimitWorkspaceScope|SpendLimitOAuthAppScope|SpendLimitOAuthAppDefaultScope $scope,
     ): self {
         $self = clone $this;
         $self['scope'] = $scope;
@@ -131,6 +146,19 @@ final class SpendLimitSetParams implements BaseModel
     {
         $self = clone $this;
         $self['period'] = $period;
+
+        return $self;
+    }
+
+    /**
+     * Optional header to specify the beta version(s) you want to use.
+     *
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas
+     */
+    public function withBetas(array $betas): self
+    {
+        $self = clone $this;
+        $self['betas'] = $betas;
 
         return $self;
     }

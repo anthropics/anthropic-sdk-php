@@ -42,7 +42,7 @@ final class BetaManagedAgentsWorkspaceArchivedRunError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsWorkspaceArchivedRunError)
+     * (new BetaManagedAgentsWorkspaceArchivedRunError())
      *   ->withMessage(...)
      *   ->withType(...)
      * ```

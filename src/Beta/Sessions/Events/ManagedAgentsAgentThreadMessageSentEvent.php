@@ -14,8 +14,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Observability event emitted to the sender's output stream when an agent-to-agent message is sent.
  *
- * @phpstan-import-type ContentVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentThreadMessageSentEvent\Content
  * @phpstan-import-type ContentShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentThreadMessageSentEvent\Content
+ * @phpstan-import-type ContentVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsAgentThreadMessageSentEvent\Content
  *
  * @phpstan-type ManagedAgentsAgentThreadMessageSentEventShape = array{
  *   id: string,
@@ -80,7 +80,7 @@ final class ManagedAgentsAgentThreadMessageSentEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsAgentThreadMessageSentEvent)
+     * (new ManagedAgentsAgentThreadMessageSentEvent())
      *   ->withID(...)
      *   ->withContent(...)
      *   ->withProcessedAt(...)

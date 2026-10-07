@@ -14,14 +14,16 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * Configuration for the web_fetch tool.
  *
- * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsWebFetchToolConfig\PermissionPolicy
  * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsWebFetchToolConfig\PermissionPolicy
+ * @phpstan-import-type BetaManagedAgentsWebFetchURLSourcesShape from \Anthropic\Beta\Agents\BetaManagedAgentsWebFetchURLSources
+ * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsWebFetchToolConfig\PermissionPolicy
  *
  * @phpstan-type BetaManagedAgentsWebFetchToolConfigShape = array{
  *   enabled: bool,
  *   name: 'web_fetch',
  *   permissionPolicy: PermissionPolicyShape,
  *   type: 'web_fetch',
+ *   urlSources: null|BetaManagedAgentsWebFetchURLSources|BetaManagedAgentsWebFetchURLSourcesShape,
  *   allowedDomains?: list<string>|null,
  *   blockedDomains?: list<string>|null,
  *   maxContentTokens?: int|null,
@@ -51,6 +53,12 @@ final class BetaManagedAgentsWebFetchToolConfig implements BaseModel
     #[Required('permission_policy', union: PermissionPolicy::class)]
     public BetaManagedAgentsAlwaysAllowPolicy|BetaManagedAgentsAlwaysAskPolicy|BetaManagedAgentsAutoPolicy $permissionPolicy;
 
+    /**
+     * Which sources contribute URLs the tool may fetch, always in the object form. Null when not set, which allows every source.
+     */
+    #[Required('url_sources')]
+    public ?BetaManagedAgentsWebFetchURLSources $urlSources;
+
     /** @var list<string>|null $allowedDomains */
     #[Optional('allowed_domains', list: 'string')]
     public ?array $allowedDomains;
@@ -67,15 +75,18 @@ final class BetaManagedAgentsWebFetchToolConfig implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsWebFetchToolConfig::with(enabled: ..., permissionPolicy: ...)
+     * BetaManagedAgentsWebFetchToolConfig::with(
+     *   enabled: ..., permissionPolicy: ..., urlSources: ...
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsWebFetchToolConfig)
+     * (new BetaManagedAgentsWebFetchToolConfig())
      *   ->withEnabled(...)
      *   ->withPermissionPolicy(...)
+     *   ->withURLSources(...)
      * ```
      */
     public function __construct()
@@ -89,12 +100,14 @@ final class BetaManagedAgentsWebFetchToolConfig implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param PermissionPolicyShape $permissionPolicy
+     * @param BetaManagedAgentsWebFetchURLSources|BetaManagedAgentsWebFetchURLSourcesShape|null $urlSources
      * @param list<string>|null $allowedDomains
      * @param list<string>|null $blockedDomains
      */
     public static function with(
         bool $enabled,
         BetaManagedAgentsAlwaysAllowPolicy|array|BetaManagedAgentsAlwaysAskPolicy|BetaManagedAgentsAutoPolicy $permissionPolicy,
+        BetaManagedAgentsWebFetchURLSources|array|null $urlSources,
         ?array $allowedDomains = null,
         ?array $blockedDomains = null,
         ?int $maxContentTokens = null,
@@ -103,6 +116,7 @@ final class BetaManagedAgentsWebFetchToolConfig implements BaseModel
 
         $self['enabled'] = $enabled;
         $self['permissionPolicy'] = $permissionPolicy;
+        $self['urlSources'] = $urlSources;
 
         null !== $allowedDomains && $self['allowedDomains'] = $allowedDomains;
         null !== $blockedDomains && $self['blockedDomains'] = $blockedDomains;
@@ -151,6 +165,20 @@ final class BetaManagedAgentsWebFetchToolConfig implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * Which sources contribute URLs the tool may fetch, always in the object form. Null when not set, which allows every source.
+     *
+     * @param BetaManagedAgentsWebFetchURLSources|BetaManagedAgentsWebFetchURLSourcesShape|null $urlSources
+     */
+    public function withURLSources(
+        BetaManagedAgentsWebFetchURLSources|array|null $urlSources
+    ): self {
+        $self = clone $this;
+        $self['urlSources'] = $urlSources;
 
         return $self;
     }

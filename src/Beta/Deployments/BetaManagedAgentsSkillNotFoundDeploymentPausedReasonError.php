@@ -36,7 +36,7 @@ final class BetaManagedAgentsSkillNotFoundDeploymentPausedReasonError implements
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsSkillNotFoundDeploymentPausedReasonError)->withType(...)
+     * (new BetaManagedAgentsSkillNotFoundDeploymentPausedReasonError())->withType(...)
      * ```
      */
     public function __construct()

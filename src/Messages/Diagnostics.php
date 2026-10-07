@@ -12,8 +12,8 @@ use Anthropic\Core\Contracts\BaseModel;
  * Request-level diagnostics: why the prompt cache could not fully reuse
  * the prefix of the request named by `diagnostics.previous_message_id`.
  *
- * @phpstan-import-type CacheMissReasonVariants from \Anthropic\Messages\CacheMissReason
  * @phpstan-import-type CacheMissReasonShape from \Anthropic\Messages\CacheMissReason
+ * @phpstan-import-type CacheMissReasonVariants from \Anthropic\Messages\CacheMissReason
  *
  * @phpstan-type DiagnosticsShape = array{
  *   cacheMissReason: CacheMissReasonShape|null
@@ -43,7 +43,7 @@ final class Diagnostics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Diagnostics)->withCacheMissReason(...)
+     * (new Diagnostics())->withCacheMissReason(...)
      * ```
      */
     public function __construct()

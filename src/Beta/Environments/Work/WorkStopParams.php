@@ -67,7 +67,7 @@ final class WorkStopParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WorkStopParams)->withEnvironmentID(...)
+     * (new WorkStopParams())->withEnvironmentID(...)
      * ```
      */
     public function __construct()

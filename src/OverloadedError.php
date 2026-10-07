@@ -37,7 +37,7 @@ final class OverloadedError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new OverloadedError)->withMessage(...)
+     * (new OverloadedError())->withMessage(...)
      * ```
      */
     public function __construct()

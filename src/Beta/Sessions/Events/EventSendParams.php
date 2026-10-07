@@ -16,8 +16,8 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Beta\Sessions\EventsService::send()
  *
- * @phpstan-import-type ManagedAgentsEventParamsVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsEventParams
  * @phpstan-import-type ManagedAgentsEventParamsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsEventParams
+ * @phpstan-import-type ManagedAgentsEventParamsVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsEventParams
  *
  * @phpstan-type EventSendParamsShape = array{
  *   events: list<ManagedAgentsEventParamsShape>,
@@ -66,7 +66,7 @@ final class EventSendParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new EventSendParams)->withEvents(...)
+     * (new EventSendParams())->withEvents(...)
      * ```
      */
     public function __construct()

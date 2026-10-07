@@ -33,7 +33,7 @@ final class AnalyticsServerToolUse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsServerToolUse)->withWebSearchRequests(...)
+     * (new AnalyticsServerToolUse())->withWebSearchRequests(...)
      * ```
      */
     public function __construct()

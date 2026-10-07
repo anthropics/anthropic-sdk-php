@@ -10,8 +10,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type BetaRawContentBlockDeltaVariants from \Anthropic\Beta\Messages\BetaRawContentBlockDelta
  * @phpstan-import-type BetaRawContentBlockDeltaShape from \Anthropic\Beta\Messages\BetaRawContentBlockDelta
+ * @phpstan-import-type BetaRawContentBlockDeltaVariants from \Anthropic\Beta\Messages\BetaRawContentBlockDelta
  *
  * @phpstan-type BetaRawContentBlockDeltaEventShape = array{
  *   delta: BetaRawContentBlockDeltaShape, index: int, type: 'content_block_delta'
@@ -44,7 +44,7 @@ final class BetaRawContentBlockDeltaEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRawContentBlockDeltaEvent)->withDelta(...)->withIndex(...)
+     * (new BetaRawContentBlockDeltaEvent())->withDelta(...)->withIndex(...)
      * ```
      */
     public function __construct()

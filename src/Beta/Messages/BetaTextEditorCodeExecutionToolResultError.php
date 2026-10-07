@@ -48,7 +48,7 @@ final class BetaTextEditorCodeExecutionToolResultError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaTextEditorCodeExecutionToolResultError)
+     * (new BetaTextEditorCodeExecutionToolResultError())
      *   ->withErrorCode(...)
      *   ->withErrorMessage(...)
      * ```

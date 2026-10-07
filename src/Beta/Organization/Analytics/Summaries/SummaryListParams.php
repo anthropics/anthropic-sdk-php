@@ -83,7 +83,7 @@ final class SummaryListParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SummaryListParams)->withStartingDate(...)
+     * (new SummaryListParams())->withStartingDate(...)
      * ```
      */
     public function __construct()

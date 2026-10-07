@@ -44,7 +44,7 @@ final class BetaOutputBehaviorUpdateExisting implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaOutputBehaviorUpdateExisting)->withMemoryStoreID(...)->withType(...)
+     * (new BetaOutputBehaviorUpdateExisting())->withMemoryStoreID(...)->withType(...)
      * ```
      */
     public function __construct()

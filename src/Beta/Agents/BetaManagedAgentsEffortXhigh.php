@@ -36,7 +36,7 @@ final class BetaManagedAgentsEffortXhigh implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsEffortXhigh)->withType(...)
+     * (new BetaManagedAgentsEffortXhigh())->withType(...)
      * ```
      */
     public function __construct()

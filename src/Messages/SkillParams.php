@@ -53,7 +53,7 @@ final class SkillParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SkillParams)->withSkillID(...)->withType(...)
+     * (new SkillParams())->withSkillID(...)->withType(...)
      * ```
      */
     public function __construct()

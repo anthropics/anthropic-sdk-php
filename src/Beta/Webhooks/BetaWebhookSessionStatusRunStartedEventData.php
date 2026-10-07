@@ -51,7 +51,7 @@ final class BetaWebhookSessionStatusRunStartedEventData implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookSessionStatusRunStartedEventData)
+     * (new BetaWebhookSessionStatusRunStartedEventData())
      *   ->withID(...)
      *   ->withOrganizationID(...)
      *   ->withWorkspaceID(...)

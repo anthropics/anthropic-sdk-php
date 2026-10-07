@@ -42,7 +42,7 @@ final class ManagedAgentsURLImageSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsURLImageSource)->withType(...)->withURL(...)
+     * (new ManagedAgentsURLImageSource())->withType(...)->withURL(...)
      * ```
      */
     public function __construct()

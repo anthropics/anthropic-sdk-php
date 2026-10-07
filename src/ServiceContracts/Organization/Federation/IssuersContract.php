@@ -14,8 +14,8 @@ use Anthropic\RequestOptions;
 
 /**
  * @phpstan-import-type JWKSShape from \Anthropic\Organization\Federation\Issuers\IssuerCreateParams\JWKS
- * @phpstan-import-type JWKSShape from \Anthropic\Organization\Federation\Issuers\IssuerUpdateParams\JWKS as JWKSShape1
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type JWKSShape from \Anthropic\Organization\Federation\Issuers\IssuerUpdateParams\JWKS as JWKSShape1
  */
 interface IssuersContract
 {

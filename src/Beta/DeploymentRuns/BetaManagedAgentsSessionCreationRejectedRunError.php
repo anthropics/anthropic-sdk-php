@@ -42,7 +42,7 @@ final class BetaManagedAgentsSessionCreationRejectedRunError implements BaseMode
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsSessionCreationRejectedRunError)
+     * (new BetaManagedAgentsSessionCreationRejectedRunError())
      *   ->withMessage(...)
      *   ->withType(...)
      * ```

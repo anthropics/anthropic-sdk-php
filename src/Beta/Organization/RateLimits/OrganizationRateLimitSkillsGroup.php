@@ -44,7 +44,7 @@ final class OrganizationRateLimitSkillsGroup implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new OrganizationRateLimitSkillsGroup)->withID(...)
+     * (new OrganizationRateLimitSkillsGroup())->withID(...)
      * ```
      */
     public function __construct()

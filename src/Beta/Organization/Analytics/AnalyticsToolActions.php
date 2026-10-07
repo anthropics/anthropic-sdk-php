@@ -62,7 +62,7 @@ final class AnalyticsToolActions implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsToolActions)
+     * (new AnalyticsToolActions())
      *   ->withEditTool(...)
      *   ->withMultiEditTool(...)
      *   ->withNotebookEditTool(...)

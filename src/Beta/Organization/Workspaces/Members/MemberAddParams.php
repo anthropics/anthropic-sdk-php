@@ -51,7 +51,7 @@ final class MemberAddParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MemberAddParams)->withUserID(...)->withWorkspaceRole(...)
+     * (new MemberAddParams())->withUserID(...)->withWorkspaceRole(...)
      * ```
      */
     public function __construct()

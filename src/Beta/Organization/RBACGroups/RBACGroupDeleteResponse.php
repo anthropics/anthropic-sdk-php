@@ -46,7 +46,7 @@ final class RBACGroupDeleteResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new RBACGroupDeleteResponse)->withID(...)
+     * (new RBACGroupDeleteResponse())->withID(...)
      * ```
      */
     public function __construct()

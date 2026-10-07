@@ -13,8 +13,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * Configuration for the grep tool.
  *
- * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsGrepToolConfig\PermissionPolicy
  * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsGrepToolConfig\PermissionPolicy
+ * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsGrepToolConfig\PermissionPolicy
  *
  * @phpstan-type BetaManagedAgentsGrepToolConfigShape = array{
  *   enabled: bool,
@@ -58,7 +58,7 @@ final class BetaManagedAgentsGrepToolConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsGrepToolConfig)
+     * (new BetaManagedAgentsGrepToolConfig())
      *   ->withEnabled(...)
      *   ->withPermissionPolicy(...)
      * ```

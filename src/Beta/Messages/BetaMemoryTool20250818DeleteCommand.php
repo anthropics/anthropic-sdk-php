@@ -44,7 +44,7 @@ final class BetaMemoryTool20250818DeleteCommand implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMemoryTool20250818DeleteCommand)->withPath(...)
+     * (new BetaMemoryTool20250818DeleteCommand())->withPath(...)
      * ```
      */
     public function __construct()

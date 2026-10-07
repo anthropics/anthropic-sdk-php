@@ -15,8 +15,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * Configuration override for the read tool.
  *
- * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsReadToolConfigParams\PermissionPolicy
  * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsReadToolConfigParams\PermissionPolicy
+ * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsReadToolConfigParams\PermissionPolicy
  *
  * @phpstan-type BetaManagedAgentsReadToolConfigParamsShape = array{
  *   name: 'read',

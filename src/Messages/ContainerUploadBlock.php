@@ -39,7 +39,7 @@ final class ContainerUploadBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ContainerUploadBlock)->withFileID(...)
+     * (new ContainerUploadBlock())->withFileID(...)
      * ```
      */
     public function __construct()

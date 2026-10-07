@@ -35,7 +35,7 @@ final class FileImageSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new FileImageSource)->withFileID(...)
+     * (new FileImageSource())->withFileID(...)
      * ```
      */
     public function __construct()

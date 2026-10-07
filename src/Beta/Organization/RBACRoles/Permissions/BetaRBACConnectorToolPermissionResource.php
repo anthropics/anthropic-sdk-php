@@ -55,7 +55,7 @@ final class BetaRBACConnectorToolPermissionResource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRBACConnectorToolPermissionResource)
+     * (new BetaRBACConnectorToolPermissionResource())
      *   ->withConnectorID(...)
      *   ->withToolName(...)
      * ```

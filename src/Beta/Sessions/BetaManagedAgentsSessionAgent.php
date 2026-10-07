@@ -16,13 +16,13 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Resolved `agent` definition for a `session`. Snapshot of the `agent` at `session` creation time.
  *
- * @phpstan-import-type SkillVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent\Skill
- * @phpstan-import-type ToolVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent\Tool
  * @phpstan-import-type BetaManagedAgentsMCPServerURLDefinitionShape from \Anthropic\Beta\Agents\BetaManagedAgentsMCPServerURLDefinition
  * @phpstan-import-type BetaManagedAgentsModelConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfig
  * @phpstan-import-type BetaManagedAgentsSessionMultiagentCoordinatorShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionMultiagentCoordinator
  * @phpstan-import-type SkillShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent\Skill
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent\Tool
+ * @phpstan-import-type SkillVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent\Skill
+ * @phpstan-import-type ToolVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent\Tool
  *
  * @phpstan-type BetaManagedAgentsSessionAgentShape = array{
  *   id: string,
@@ -112,7 +112,7 @@ final class BetaManagedAgentsSessionAgent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsSessionAgent)
+     * (new BetaManagedAgentsSessionAgent())
      *   ->withID(...)
      *   ->withDescription(...)
      *   ->withMCPServers(...)

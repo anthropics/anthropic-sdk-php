@@ -38,7 +38,7 @@ final class BetaOutputBehaviorCreateNew implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaOutputBehaviorCreateNew)->withType(...)
+     * (new BetaOutputBehaviorCreateNew())->withType(...)
      * ```
      */
     public function __construct()

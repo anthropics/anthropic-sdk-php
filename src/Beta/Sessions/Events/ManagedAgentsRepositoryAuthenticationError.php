@@ -13,8 +13,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * The repository host rejected the credentials, or required credentials and received none.
  *
- * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryAuthenticationError\RetryStatus
  * @phpstan-import-type RetryStatusShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryAuthenticationError\RetryStatus
+ * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryAuthenticationError\RetryStatus
  *
  * @phpstan-type ManagedAgentsRepositoryAuthenticationErrorShape = array{
  *   message: string,
@@ -65,7 +65,7 @@ final class ManagedAgentsRepositoryAuthenticationError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsRepositoryAuthenticationError)
+     * (new ManagedAgentsRepositoryAuthenticationError())
      *   ->withMessage(...)
      *   ->withRepositoryURL(...)
      *   ->withRetryStatus(...)

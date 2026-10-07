@@ -53,7 +53,7 @@ final class BetaSkillParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaSkillParams)->withSkillID(...)->withType(...)
+     * (new BetaSkillParams())->withSkillID(...)->withType(...)
      * ```
      */
     public function __construct()

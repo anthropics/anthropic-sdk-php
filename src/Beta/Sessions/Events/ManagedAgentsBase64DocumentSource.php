@@ -48,7 +48,7 @@ final class ManagedAgentsBase64DocumentSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsBase64DocumentSource)
+     * (new ManagedAgentsBase64DocumentSource())
      *   ->withData(...)
      *   ->withMediaType(...)
      *   ->withType(...)

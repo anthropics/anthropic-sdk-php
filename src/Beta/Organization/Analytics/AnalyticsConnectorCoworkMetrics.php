@@ -37,7 +37,7 @@ final class AnalyticsConnectorCoworkMetrics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsConnectorCoworkMetrics)
+     * (new AnalyticsConnectorCoworkMetrics())
      *   ->withDistinctSessionConnectorUsedCount(...)
      * ```
      */

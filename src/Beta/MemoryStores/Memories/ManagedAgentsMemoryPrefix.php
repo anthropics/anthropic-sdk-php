@@ -42,7 +42,7 @@ final class ManagedAgentsMemoryPrefix implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsMemoryPrefix)->withPath(...)->withType(...)
+     * (new ManagedAgentsMemoryPrefix())->withPath(...)->withType(...)
      * ```
      */
     public function __construct()

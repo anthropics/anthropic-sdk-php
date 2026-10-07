@@ -37,7 +37,7 @@ final class RawContentBlockStopEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new RawContentBlockStopEvent)->withIndex(...)
+     * (new RawContentBlockStopEvent())->withIndex(...)
      * ```
      */
     public function __construct()

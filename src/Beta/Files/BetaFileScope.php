@@ -42,7 +42,7 @@ final class BetaFileScope implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaFileScope)->withID(...)
+     * (new BetaFileScope())->withID(...)
      * ```
      */
     public function __construct()

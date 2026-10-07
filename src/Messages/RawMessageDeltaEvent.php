@@ -57,7 +57,7 @@ final class RawMessageDeltaEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new RawMessageDeltaEvent)->withDelta(...)->withUsage(...)
+     * (new RawMessageDeltaEvent())->withDelta(...)->withUsage(...)
      * ```
      */
     public function __construct()

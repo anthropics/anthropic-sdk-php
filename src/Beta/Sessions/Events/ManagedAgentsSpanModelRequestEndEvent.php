@@ -80,7 +80,7 @@ final class ManagedAgentsSpanModelRequestEndEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSpanModelRequestEndEvent)
+     * (new ManagedAgentsSpanModelRequestEndEvent())
      *   ->withID(...)
      *   ->withIsError(...)
      *   ->withModelRequestStartID(...)

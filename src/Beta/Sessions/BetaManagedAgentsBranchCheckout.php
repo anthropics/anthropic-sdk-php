@@ -40,7 +40,7 @@ final class BetaManagedAgentsBranchCheckout implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsBranchCheckout)->withName(...)->withType(...)
+     * (new BetaManagedAgentsBranchCheckout())->withName(...)->withType(...)
      * ```
      */
     public function __construct()

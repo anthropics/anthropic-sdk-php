@@ -58,7 +58,7 @@ final class ManagedAgentsUserInterruptEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsUserInterruptEvent)->withID(...)->withType(...)
+     * (new ManagedAgentsUserInterruptEvent())->withID(...)->withType(...)
      * ```
      */
     public function __construct()

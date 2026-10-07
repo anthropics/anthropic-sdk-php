@@ -61,7 +61,7 @@ final class BetaManagedAgentsAgentToolset20260401EditInput implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAgentToolset20260401EditInput)
+     * (new BetaManagedAgentsAgentToolset20260401EditInput())
      *   ->withFilePath(...)
      *   ->withNewString(...)
      *   ->withOldString(...)

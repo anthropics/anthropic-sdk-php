@@ -44,7 +44,7 @@ final class BetaManagedAgentsSelfHostedResourcesUnsupportedRunError implements B
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsSelfHostedResourcesUnsupportedRunError)
+     * (new BetaManagedAgentsSelfHostedResourcesUnsupportedRunError())
      *   ->withMessage(...)
      *   ->withType(...)
      * ```

@@ -66,7 +66,7 @@ final class ManagedAgentsSessionThreadStatusRescheduledEvent implements BaseMode
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSessionThreadStatusRescheduledEvent)
+     * (new ManagedAgentsSessionThreadStatusRescheduledEvent())
      *   ->withID(...)
      *   ->withAgentName(...)
      *   ->withProcessedAt(...)

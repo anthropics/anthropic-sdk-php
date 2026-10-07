@@ -37,7 +37,7 @@ final class AnalyticsSkillClaudeCodeMetrics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsSkillClaudeCodeMetrics)->withDistinctSessionSkillUsedCount(...)
+     * (new AnalyticsSkillClaudeCodeMetrics())->withDistinctSessionSkillUsedCount(...)
      * ```
      */
     public function __construct()

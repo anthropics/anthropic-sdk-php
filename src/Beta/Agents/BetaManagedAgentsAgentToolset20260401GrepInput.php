@@ -46,7 +46,7 @@ final class BetaManagedAgentsAgentToolset20260401GrepInput implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAgentToolset20260401GrepInput)->withPattern(...)
+     * (new BetaManagedAgentsAgentToolset20260401GrepInput())->withPattern(...)
      * ```
      */
     public function __construct()

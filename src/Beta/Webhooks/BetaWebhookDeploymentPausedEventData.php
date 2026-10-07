@@ -51,7 +51,7 @@ final class BetaWebhookDeploymentPausedEventData implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookDeploymentPausedEventData)
+     * (new BetaWebhookDeploymentPausedEventData())
      *   ->withID(...)
      *   ->withOrganizationID(...)
      *   ->withWorkspaceID(...)

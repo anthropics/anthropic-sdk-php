@@ -24,13 +24,6 @@ use Anthropic\Messages\Model;
  *
  * @see Anthropic\Services\Beta\MessagesService::create()
  *
- * @phpstan-import-type ContainerVariants from \Anthropic\Beta\Messages\MessageCreateParams\Container
- * @phpstan-import-type FallbackCreditTokenVariants from \Anthropic\Beta\Messages\MessageCreateParams\FallbackCreditToken
- * @phpstan-import-type BetaFallbacksParamVariants from \Anthropic\Beta\Messages\BetaFallbacksParam
- * @phpstan-import-type SystemVariants from \Anthropic\Beta\Messages\MessageCreateParams\System
- * @phpstan-import-type BetaThinkingConfigParamVariants from \Anthropic\Beta\Messages\BetaThinkingConfigParam
- * @phpstan-import-type BetaToolChoiceVariants from \Anthropic\Beta\Messages\BetaToolChoice
- * @phpstan-import-type BetaToolUnionVariants from \Anthropic\Beta\Messages\BetaToolUnion
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type BetaCompactionConfigShape from \Anthropic\Beta\Messages\BetaCompactionConfig
@@ -47,6 +40,13 @@ use Anthropic\Messages\Model;
  * @phpstan-import-type BetaThinkingConfigParamShape from \Anthropic\Beta\Messages\BetaThinkingConfigParam
  * @phpstan-import-type BetaToolChoiceShape from \Anthropic\Beta\Messages\BetaToolChoice
  * @phpstan-import-type BetaToolUnionShape from \Anthropic\Beta\Messages\BetaToolUnion
+ * @phpstan-import-type ContainerVariants from \Anthropic\Beta\Messages\MessageCreateParams\Container
+ * @phpstan-import-type FallbackCreditTokenVariants from \Anthropic\Beta\Messages\MessageCreateParams\FallbackCreditToken
+ * @phpstan-import-type BetaFallbacksParamVariants from \Anthropic\Beta\Messages\BetaFallbacksParam
+ * @phpstan-import-type SystemVariants from \Anthropic\Beta\Messages\MessageCreateParams\System
+ * @phpstan-import-type BetaThinkingConfigParamVariants from \Anthropic\Beta\Messages\BetaThinkingConfigParam
+ * @phpstan-import-type BetaToolChoiceVariants from \Anthropic\Beta\Messages\BetaToolChoice
+ * @phpstan-import-type BetaToolUnionVariants from \Anthropic\Beta\Messages\BetaToolUnion
  *
  * @phpstan-type MessageCreateParamsShape = array{
  *   maxTokens: int,
@@ -466,7 +466,10 @@ final class MessageCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MessageCreateParams)->withMaxTokens(...)->withMessages(...)->withModel(...)
+     * (new MessageCreateParams())
+     *   ->withMaxTokens(...)
+     *   ->withMessages(...)
+     *   ->withModel(...)
      * ```
      */
     public function __construct()

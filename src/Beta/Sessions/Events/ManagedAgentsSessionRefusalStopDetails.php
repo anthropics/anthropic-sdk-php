@@ -53,7 +53,7 @@ final class ManagedAgentsSessionRefusalStopDetails implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSessionRefusalStopDetails)
+     * (new ManagedAgentsSessionRefusalStopDetails())
      *   ->withCategory(...)
      *   ->withExplanation(...)
      * ```

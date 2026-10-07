@@ -86,7 +86,7 @@ final class BetaManagedAgentsOutcomeEvaluationResource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsOutcomeEvaluationResource)
+     * (new BetaManagedAgentsOutcomeEvaluationResource())
      *   ->withCompletedAt(...)
      *   ->withDescription(...)
      *   ->withExplanation(...)

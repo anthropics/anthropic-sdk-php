@@ -37,7 +37,7 @@ final class ServerToolCaller20260120 implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ServerToolCaller20260120)->withToolID(...)
+     * (new ServerToolCaller20260120())->withToolID(...)
      * ```
      */
     public function __construct()

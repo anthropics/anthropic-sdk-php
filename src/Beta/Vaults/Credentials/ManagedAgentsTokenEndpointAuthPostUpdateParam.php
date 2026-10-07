@@ -43,7 +43,7 @@ final class ManagedAgentsTokenEndpointAuthPostUpdateParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsTokenEndpointAuthPostUpdateParam)->withType(...)
+     * (new ManagedAgentsTokenEndpointAuthPostUpdateParam())->withType(...)
      * ```
      */
     public function __construct()

@@ -40,7 +40,7 @@ final class SelfHostedWorkUpdateRequest implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SelfHostedWorkUpdateRequest)->withMetadata(...)
+     * (new SelfHostedWorkUpdateRequest())->withMetadata(...)
      * ```
      */
     public function __construct()

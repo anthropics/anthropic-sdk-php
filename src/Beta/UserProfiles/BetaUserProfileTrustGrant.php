@@ -40,7 +40,7 @@ final class BetaUserProfileTrustGrant implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaUserProfileTrustGrant)->withStatus(...)
+     * (new BetaUserProfileTrustGrant())->withStatus(...)
      * ```
      */
     public function __construct()

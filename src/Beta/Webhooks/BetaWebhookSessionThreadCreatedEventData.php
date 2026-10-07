@@ -58,7 +58,7 @@ final class BetaWebhookSessionThreadCreatedEventData implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookSessionThreadCreatedEventData)
+     * (new BetaWebhookSessionThreadCreatedEventData())
      *   ->withID(...)
      *   ->withOrganizationID(...)
      *   ->withSessionThreadID(...)

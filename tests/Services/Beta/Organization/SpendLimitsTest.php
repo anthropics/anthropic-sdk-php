@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta\Organization;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimit;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitDeleteResponse;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitPeriod;
@@ -85,6 +86,7 @@ final class SpendLimitsTest extends TestCase
             amount: '50000',
             scope: ['type' => 'user', 'userID' => 'user_01WCz1FkmYMm4gnmykNKUu3Q'],
             period: SpendLimitPeriod::MONTHLY,
+            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

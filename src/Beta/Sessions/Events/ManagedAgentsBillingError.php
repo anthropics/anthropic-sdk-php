@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * The caller's organization or workspace cannot make model requests — out of credits or spend limit reached. Retrying with the same credentials will not succeed; the caller must resolve the billing state.
  *
- * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsBillingError\RetryStatus
  * @phpstan-import-type RetryStatusShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsBillingError\RetryStatus
+ * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsBillingError\RetryStatus
  *
  * @phpstan-type ManagedAgentsBillingErrorShape = array{
  *   message: string, retryStatus: RetryStatusShape, type: Type|value-of<Type>
@@ -54,7 +54,7 @@ final class ManagedAgentsBillingError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsBillingError)
+     * (new ManagedAgentsBillingError())
      *   ->withMessage(...)
      *   ->withRetryStatus(...)
      *   ->withType(...)

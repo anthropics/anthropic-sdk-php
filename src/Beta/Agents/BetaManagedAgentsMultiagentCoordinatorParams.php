@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * A coordinator topology: the session's primary thread orchestrates work by spawning session threads, each running an agent drawn from the `agents` roster.
  *
- * @phpstan-import-type BetaManagedAgentsMultiagentRosterEntryParamsVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentRosterEntryParams
  * @phpstan-import-type BetaManagedAgentsMultiagentRosterEntryParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentRosterEntryParams
+ * @phpstan-import-type BetaManagedAgentsMultiagentRosterEntryParamsVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentRosterEntryParams
  *
  * @phpstan-type BetaManagedAgentsMultiagentCoordinatorParamsShape = array{
  *   agents: list<BetaManagedAgentsMultiagentRosterEntryParamsShape>,
@@ -49,7 +49,7 @@ final class BetaManagedAgentsMultiagentCoordinatorParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMultiagentCoordinatorParams)
+     * (new BetaManagedAgentsMultiagentCoordinatorParams())
      *   ->withAgents(...)
      *   ->withType(...)
      * ```

@@ -40,7 +40,7 @@ final class BetaManagedAgentsAgentMessagePreview implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAgentMessagePreview)->withID(...)->withType(...)
+     * (new BetaManagedAgentsAgentMessagePreview())->withID(...)->withType(...)
      * ```
      */
     public function __construct()

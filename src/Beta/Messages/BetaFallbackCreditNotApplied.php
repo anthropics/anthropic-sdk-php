@@ -66,7 +66,7 @@ final class BetaFallbackCreditNotApplied implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaFallbackCreditNotApplied)->withReason(...)
+     * (new BetaFallbackCreditNotApplied())->withReason(...)
      * ```
      */
     public function __construct()

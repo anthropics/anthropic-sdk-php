@@ -49,7 +49,7 @@ final class JWKSExplicitURL implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new JWKSExplicitURL)->withURL(...)
+     * (new JWKSExplicitURL())->withURL(...)
      * ```
      */
     public function __construct()

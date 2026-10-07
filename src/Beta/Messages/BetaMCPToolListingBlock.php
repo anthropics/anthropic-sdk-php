@@ -50,7 +50,7 @@ final class BetaMCPToolListingBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMCPToolListingBlock)->withMCPServerName(...)->withTools(...)
+     * (new BetaMCPToolListingBlock())->withMCPServerName(...)->withTools(...)
      * ```
      */
     public function __construct()

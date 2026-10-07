@@ -36,7 +36,7 @@ final class BetaManagedAgentsUnknownDeploymentPausedReasonError implements BaseM
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsUnknownDeploymentPausedReasonError)->withType(...)
+     * (new BetaManagedAgentsUnknownDeploymentPausedReasonError())->withType(...)
      * ```
      */
     public function __construct()

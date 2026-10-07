@@ -63,7 +63,7 @@ final class BetaManagedAgentsMCPToolsetParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMCPToolsetParams)->withMCPServerName(...)->withType(...)
+     * (new BetaManagedAgentsMCPToolsetParams())->withMCPServerName(...)->withType(...)
      * ```
      */
     public function __construct()

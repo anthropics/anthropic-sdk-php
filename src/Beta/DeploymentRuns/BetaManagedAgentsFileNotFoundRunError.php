@@ -42,7 +42,7 @@ final class BetaManagedAgentsFileNotFoundRunError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsFileNotFoundRunError)->withMessage(...)->withType(...)
+     * (new BetaManagedAgentsFileNotFoundRunError())->withMessage(...)->withType(...)
      * ```
      */
     public function __construct()

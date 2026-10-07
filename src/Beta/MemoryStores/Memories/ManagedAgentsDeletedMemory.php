@@ -42,7 +42,7 @@ final class ManagedAgentsDeletedMemory implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsDeletedMemory)->withID(...)->withType(...)
+     * (new ManagedAgentsDeletedMemory())->withID(...)->withType(...)
      * ```
      */
     public function __construct()

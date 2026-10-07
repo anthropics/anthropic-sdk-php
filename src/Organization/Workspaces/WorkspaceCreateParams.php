@@ -84,7 +84,7 @@ final class WorkspaceCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WorkspaceCreateParams)->withName(...)
+     * (new WorkspaceCreateParams())->withName(...)
      * ```
      */
     public function __construct()

@@ -12,8 +12,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * A scheduled fire recorded a failed run whose error auto-pauses the deployment.
  *
- * @phpstan-import-type BetaManagedAgentsDeploymentPausedReasonErrorVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentPausedReasonError
  * @phpstan-import-type BetaManagedAgentsDeploymentPausedReasonErrorShape from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentPausedReasonError
+ * @phpstan-import-type BetaManagedAgentsDeploymentPausedReasonErrorVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentPausedReasonError
  *
  * @phpstan-type BetaManagedAgentsErrorDeploymentPausedReasonShape = array{
  *   error: BetaManagedAgentsDeploymentPausedReasonErrorShape,
@@ -48,7 +48,7 @@ final class BetaManagedAgentsErrorDeploymentPausedReason implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsErrorDeploymentPausedReason)
+     * (new BetaManagedAgentsErrorDeploymentPausedReason())
      *   ->withError(...)
      *   ->withType(...)
      * ```
