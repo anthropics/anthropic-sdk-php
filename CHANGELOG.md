@@ -18,6 +18,7 @@
 * **docs:** describe a federation rule's target by its type
 * **docs:** fix example IDs in sessions, agents and vault credentials
 * **docs:** update Managed Agents multiagent and thread descriptions
+* **docs:** update the activity summaries endpoint description
 * **internal:** add REVIEW.md with review instructions
 * **internal:** bump phpstan to 2.2.13
 * **internal:** remove unused release configuration
