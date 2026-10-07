@@ -28,10 +28,12 @@ use Anthropic\Core\Util;
 use Anthropic\Lib\Tools\BetaRunnableTool;
 use Anthropic\Lib\Tools\BetaToolRunner;
 use Http\Discovery\Psr17FactoryDiscovery;
+use Http\Message\RequestMatcher\CallbackRequestMatcher;
 use Http\Mock\Client as MockClient;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -240,6 +242,76 @@ final class BetaToolRunnerTest extends TestCase
         $textBlock = $final->content[0];
         $this->assertInstanceOf(BetaTextBlock::class, $textBlock);
         $this->assertSame('Sunny in NYC.', $textBlock->text);
+    }
+
+    /** @param list<array<string, mixed>> $content */
+    #[Test]
+    #[DataProvider('finalCompactionResults')]
+    public function testRunUntilDoneKeepsAnswerWhenFinalCompactionHasNoSummary(array $content, string $reason, bool $hasSummary): void
+    {
+        $runner = $this->compactRunner(maxIterations: 1);
+        $calls = 0;
+        $this->transporter->on(
+            new CallbackRequestMatcher(static fn (RequestInterface $request): bool => true),
+            function (RequestInterface $request) use ($runner, $content, $reason, &$calls): ResponseInterface {
+                ++$calls;
+                if (1 === $calls) {
+                    // Schedule through a public callback while the final request is in flight.
+                    $runner->compactBeforeNextTurn();
+
+                    return $this->textResponse('Keep this answer.', 'msg_answer');
+                }
+                $this->assertSame(2, $calls);
+
+                return $this->compactedResponse($content, $reason);
+            },
+        );
+        $final = null;
+        $warnings = $this->captureWarnings(function () use ($runner, &$final): void {
+            $final = $runner->runUntilDone();
+        });
+        $this->assertInstanceOf(BetaMessage::class, $final);
+        $this->assertSame($hasSummary ? 'msg_compacted' : 'msg_answer', $final->id);
+        $this->assertCount(2, $this->transporter->getRequests());
+        $this->assertSame(['type' => 'summarize'], $this->requestBody(1)['compaction']);
+        $sent = $this->sentMessages(1);
+        $this->assertEquals(['role' => 'assistant', 'content' => [['type' => 'text', 'text' => 'Keep this answer.']]], $sent[1]);
+        if ($hasSummary) {
+            $this->assertSame([], $warnings);
+            $this->assertEquals([['role' => 'assistant', 'content' => $content]], $this->currentMessages($runner));
+        } else {
+            $this->assertSame(['Compaction produced no summary; keeping the conversation as it is.'], $warnings);
+            $this->assertEquals($sent, $this->currentMessages($runner));
+            $this->assertInstanceOf(BetaTextBlock::class, $final->content[0]);
+            $this->assertSame('Keep this answer.', $final->content[0]->text);
+        }
+    }
+
+    /** @return iterable<string, array{list<array<string, mixed>>, string, bool}> */
+    public static function finalCompactionResults(): iterable
+    {
+        yield 'missing summary' => [[['type' => 'compaction', 'content' => null]], 'compaction', false];
+
+        yield 'empty summary' => [[['type' => 'compaction', 'content' => '']], 'compaction', false];
+
+        yield 'no blocks' => [[], 'max_tokens', false];
+
+        yield 'unrelated text' => [[['type' => 'text', 'text' => 'not a summary']], 'end_turn', false];
+
+        yield 'summary' => [[['type' => 'compaction', 'content' => 'Useful summary']], 'compaction', true];
+
+        yield 'zero text summary' => [[['type' => 'compaction', 'content' => '0']], 'compaction', true];
+    }
+
+    #[Test]
+    public function testRunUntilDoneDoesNotDiscardOrdinaryEmptyFinalMessages(): void
+    {
+        $this->transporter->addResponse($this->compactedResponse([], 'max_tokens'));
+        $runner = $this->compactRunner();
+        $message = $runner->runUntilDone();
+        $this->assertSame('msg_compacted', $message->id);
+        $this->assertSame('max_tokens', $message->stopReason);
+        $this->assertCount(1, $this->transporter->getRequests());
     }
 
     // -------------------------------------------------------------------------
