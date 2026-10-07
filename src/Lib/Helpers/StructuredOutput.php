@@ -35,6 +35,13 @@ use Anthropic\Messages\JSONOutputFormat;
 final class StructuredOutput
 {
     /**
+     * Tracks model classes currently being processed to detect circular references.
+     *
+     * @var list<class-string<StructuredOutputModel>>
+     */
+    private static array $buildingSchemas = [];
+
+    /**
      * Extracts structured output models from request parameters and converts them to JSON schemas.
      *
      * This method:
@@ -79,45 +86,60 @@ final class StructuredOutput
      */
     public static function toJsonSchema(string $modelClass): array
     {
-        $reflection = new \ReflectionClass($modelClass);
-        $properties = [];
-        $required = [];
+        if (in_array($modelClass, self::$buildingSchemas, true)) {
+            $cycle = implode(' → ', [...self::$buildingSchemas, $modelClass]);
 
-        foreach ($reflection->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
-            if ($property->isStatic()) {
-                continue;
+            throw new \InvalidArgumentException(
+                "Circular reference detected while generating JSON schema for \"{$modelClass}\".\n"
+                    . "Schema generation cycle: {$cycle}"
+            );
+        }
+
+        self::$buildingSchemas[] = $modelClass;
+
+        try {
+            $reflection = new \ReflectionClass($modelClass);
+            $properties = [];
+            $required = [];
+
+            foreach ($reflection->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
+                if ($property->isStatic()) {
+                    continue;
+                }
+
+                // Use schema inference to build property schema
+                $result = SchemaInference::buildPropertySchema($property);
+                $propertyName = $property->getName();
+
+                $properties[$propertyName] = $result['schema'];
+
+                if ($result['required']) {
+                    $required[] = $propertyName;
+                }
             }
 
-            // Use schema inference to build property schema
-            $result = SchemaInference::buildPropertySchema($property);
-            $propertyName = $property->getName();
+            $jsonSchema = [
+                'type' => 'object',
+                'properties' => $properties,
+            ];
 
-            $properties[$propertyName] = $result['schema'];
-
-            if ($result['required']) {
-                $required[] = $propertyName;
+            if (!empty($required)) {
+                $jsonSchema['required'] = $required;
             }
+
+            // Always add additionalProperties: false for objects
+            $jsonSchema['additionalProperties'] = false;
+
+            // Add model description if available
+            $description = $modelClass::description();
+            if (null !== $description) {
+                $jsonSchema['description'] = $description;
+            }
+
+            return $jsonSchema;
+        } finally {
+            array_pop(self::$buildingSchemas);
         }
-
-        $jsonSchema = [
-            'type' => 'object',
-            'properties' => $properties,
-        ];
-
-        if (!empty($required)) {
-            $jsonSchema['required'] = $required;
-        }
-
-        // Always add additionalProperties: false for objects
-        $jsonSchema['additionalProperties'] = false;
-
-        // Add model description if available
-        $description = $modelClass::description();
-        if (null !== $description) {
-            $jsonSchema['description'] = $description;
-        }
-
-        return $jsonSchema;
     }
 
     /**
