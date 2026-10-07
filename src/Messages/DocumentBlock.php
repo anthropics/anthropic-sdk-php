@@ -11,9 +11,9 @@ use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\DocumentBlock\Source;
 
 /**
- * @phpstan-import-type SourceVariants from \Anthropic\Messages\DocumentBlock\Source
  * @phpstan-import-type CitationsConfigShape from \Anthropic\Messages\CitationsConfig
  * @phpstan-import-type SourceShape from \Anthropic\Messages\DocumentBlock\Source
+ * @phpstan-import-type SourceVariants from \Anthropic\Messages\DocumentBlock\Source
  *
  * @phpstan-type DocumentBlockShape = array{
  *   citations: null|CitationsConfig|CitationsConfigShape,
@@ -58,7 +58,7 @@ final class DocumentBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new DocumentBlock)->withCitations(...)->withSource(...)->withTitle(...)
+     * (new DocumentBlock())->withCitations(...)->withSource(...)->withTitle(...)
      * ```
      */
     public function __construct()

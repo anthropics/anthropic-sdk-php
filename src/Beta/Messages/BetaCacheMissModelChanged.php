@@ -40,7 +40,7 @@ final class BetaCacheMissModelChanged implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCacheMissModelChanged)->withCacheMissedInputTokens(...)
+     * (new BetaCacheMissModelChanged())->withCacheMissedInputTokens(...)
      * ```
      */
     public function __construct()

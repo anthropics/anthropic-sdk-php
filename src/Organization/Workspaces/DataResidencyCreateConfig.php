@@ -12,8 +12,8 @@ use Anthropic\Organization\Workspaces\DataResidencyCreateConfig\DefaultInference
 use Anthropic\Organization\Workspaces\DataResidencyCreateConfig\WorkspaceGeo;
 
 /**
- * @phpstan-import-type AllowedInferenceGeosVariants from \Anthropic\Organization\Workspaces\DataResidencyCreateConfig\AllowedInferenceGeos
  * @phpstan-import-type AllowedInferenceGeosShape from \Anthropic\Organization\Workspaces\DataResidencyCreateConfig\AllowedInferenceGeos
+ * @phpstan-import-type AllowedInferenceGeosVariants from \Anthropic\Organization\Workspaces\DataResidencyCreateConfig\AllowedInferenceGeos
  *
  * @phpstan-type DataResidencyCreateConfigShape = array{
  *   allowedInferenceGeos?: AllowedInferenceGeosShape|null,

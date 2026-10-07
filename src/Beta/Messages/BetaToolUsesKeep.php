@@ -35,7 +35,7 @@ final class BetaToolUsesKeep implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaToolUsesKeep)->withValue(...)
+     * (new BetaToolUsesKeep())->withValue(...)
      * ```
      */
     public function __construct()

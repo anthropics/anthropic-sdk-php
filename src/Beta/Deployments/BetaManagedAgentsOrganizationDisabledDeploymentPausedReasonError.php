@@ -40,7 +40,7 @@ final class BetaManagedAgentsOrganizationDisabledDeploymentPausedReasonError imp
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsOrganizationDisabledDeploymentPausedReasonError)
+     * (new BetaManagedAgentsOrganizationDisabledDeploymentPausedReasonError())
      *   ->withType(...)
      * ```
      */

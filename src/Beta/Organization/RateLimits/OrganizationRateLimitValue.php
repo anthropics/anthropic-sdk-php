@@ -39,7 +39,7 @@ final class OrganizationRateLimitValue implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new OrganizationRateLimitValue)->withType(...)->withValue(...)
+     * (new OrganizationRateLimitValue())->withType(...)->withValue(...)
      * ```
      */
     public function __construct()

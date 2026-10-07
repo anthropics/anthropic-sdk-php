@@ -94,7 +94,7 @@ final class RBACGroup implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new RBACGroup)
+     * (new RBACGroup())
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withName(...)

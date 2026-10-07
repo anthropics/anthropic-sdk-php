@@ -57,7 +57,7 @@ final class EncryptedCodeExecutionResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new EncryptedCodeExecutionResultBlock)
+     * (new EncryptedCodeExecutionResultBlock())
      *   ->withContent(...)
      *   ->withEncryptedStdout(...)
      *   ->withReturnCode(...)

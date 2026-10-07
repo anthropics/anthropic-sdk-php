@@ -196,7 +196,7 @@ final class AnalyticsUsageUsersItem implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsUsageUsersItem)
+     * (new AnalyticsUsageUsersItem())
      *   ->withActor(...)
      *   ->withCacheCreation(...)
      *   ->withCacheReadInputTokens(...)

@@ -13,7 +13,7 @@ Full documentation is available at **[platform.claude.com/docs/en/api/sdks/php](
 <!-- x-release-please-start-version -->
 
 ```sh
-composer require "anthropic-ai/sdk:^0.54.0"
+composer require "anthropic-ai/sdk:^0.55.0"
 ```
 
 <!-- x-release-please-end -->
@@ -52,7 +52,7 @@ var_dump($message->content);
 It is recommended to use the static `with` constructor `Base64ImageSource::with(data: 'U3RhaW5sZXNzIHJvY2tz', ...)`
 and named parameters to initialize value objects.
 
-However, builders are also provided `(new Base64ImageSource)->withData('U3RhaW5sZXNzIHJvY2tz')`.
+However, builders are also provided `(new Base64ImageSource())->withData('U3RhaW5sZXNzIHJvY2tz')`.
 
 ### Streaming
 
@@ -113,10 +113,13 @@ You can use PHP classes to define structured output schemas. The SDK will automa
 ```php
 <?php
 
-use Anthropic\Core\Helpers\StructuredOutputModel;
+use Anthropic\Lib\Concerns\StructuredOutputModelTrait;
+use Anthropic\Lib\Contracts\StructuredOutputModel;
 
-class Article extends StructuredOutputModel
+class Article implements StructuredOutputModel
 {
+    use StructuredOutputModelTrait;
+
     public string $title;
     public string $summary;
     /** @var string[] */
@@ -246,7 +249,6 @@ use Anthropic\Core\FileParam;
 
 // Pass a string with filename and content type:
 $contents = file_get_contents('/path/to/file');
-// Pass a string with filename and content type:
 $fileMetadata = $client->files->upload(
   file: FileParam::fromString($contents, filename: '/path/to/file', contentType: '…'),
 );
@@ -294,11 +296,11 @@ $message = $client->messages->create(
 
 #### Undocumented request params
 
-If you want to explicitly send an extra param, you can do so with the `extra_query`, `extra_body`, and `extra_headers` under the `request_options:` parameter when making a request, as seen in the examples above.
+If you want to explicitly send an extra param, you can do so with the `extraQueryParams`, `extraBodyParams`, and `extraHeaders` under the `requestOptions:` parameter when making a request, as seen in the examples above.
 
 #### Undocumented endpoints
 
-To make requests to undocumented endpoints while retaining the benefit of auth, retries, and so on, you can make requests using `client.request`, like so:
+To make requests to undocumented endpoints while retaining the benefit of auth, retries, and so on, you can make requests using `$client->request`, like so:
 
 ```php
 <?php

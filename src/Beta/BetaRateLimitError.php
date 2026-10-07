@@ -37,7 +37,7 @@ final class BetaRateLimitError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRateLimitError)->withMessage(...)
+     * (new BetaRateLimitError())->withMessage(...)
      * ```
      */
     public function __construct()

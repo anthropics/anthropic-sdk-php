@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * OAuth refresh token configuration returned in credential responses.
  *
- * @phpstan-import-type TokenEndpointAuthVariants from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsMCPOAuthRefreshResponse\TokenEndpointAuth
  * @phpstan-import-type TokenEndpointAuthShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsMCPOAuthRefreshResponse\TokenEndpointAuth
+ * @phpstan-import-type TokenEndpointAuthVariants from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsMCPOAuthRefreshResponse\TokenEndpointAuth
  *
  * @phpstan-type ManagedAgentsMCPOAuthRefreshResponseShape = array{
  *   clientID: string,
@@ -70,7 +70,7 @@ final class ManagedAgentsMCPOAuthRefreshResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsMCPOAuthRefreshResponse)
+     * (new ManagedAgentsMCPOAuthRefreshResponse())
      *   ->withClientID(...)
      *   ->withTokenEndpoint(...)
      *   ->withTokenEndpointAuth(...)

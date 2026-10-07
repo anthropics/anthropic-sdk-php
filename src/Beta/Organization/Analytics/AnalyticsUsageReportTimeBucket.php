@@ -55,7 +55,7 @@ final class AnalyticsUsageReportTimeBucket implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsUsageReportTimeBucket)
+     * (new AnalyticsUsageReportTimeBucket())
      *   ->withEndingAt(...)
      *   ->withResults(...)
      *   ->withStartingAt(...)

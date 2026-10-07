@@ -63,7 +63,7 @@ final class InviteCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new InviteCreateParams)->withEmail(...)->withRole(...)
+     * (new InviteCreateParams())->withEmail(...)->withRole(...)
      * ```
      */
     public function __construct()

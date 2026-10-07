@@ -76,7 +76,7 @@ final class BetaEffortCapability implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaEffortCapability)
+     * (new BetaEffortCapability())
      *   ->withHigh(...)
      *   ->withLow(...)
      *   ->withMax(...)

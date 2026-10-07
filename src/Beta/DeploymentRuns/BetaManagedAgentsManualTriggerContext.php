@@ -36,7 +36,7 @@ final class BetaManagedAgentsManualTriggerContext implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsManualTriggerContext)->withType(...)
+     * (new BetaManagedAgentsManualTriggerContext())->withType(...)
      * ```
      */
     public function __construct()

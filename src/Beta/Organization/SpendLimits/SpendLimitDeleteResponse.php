@@ -37,7 +37,7 @@ final class SpendLimitDeleteResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SpendLimitDeleteResponse)->withID(...)
+     * (new SpendLimitDeleteResponse())->withID(...)
      * ```
      */
     public function __construct()

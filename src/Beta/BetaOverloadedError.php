@@ -37,7 +37,7 @@ final class BetaOverloadedError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaOverloadedError)->withMessage(...)
+     * (new BetaOverloadedError())->withMessage(...)
      * ```
      */
     public function __construct()

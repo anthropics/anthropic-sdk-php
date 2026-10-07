@@ -55,7 +55,7 @@ final class PluginContentScan implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PluginContentScan)->withAssessment(...)->withReason(...)->withStatus(...)
+     * (new PluginContentScan())->withAssessment(...)->withReason(...)->withStatus(...)
      * ```
      */
     public function __construct()

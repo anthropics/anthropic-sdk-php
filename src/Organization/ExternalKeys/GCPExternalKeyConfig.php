@@ -38,7 +38,7 @@ final class GCPExternalKeyConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new GCPExternalKeyConfig)->withKeyName(...)
+     * (new GCPExternalKeyConfig())->withKeyName(...)
      * ```
      */
     public function __construct()

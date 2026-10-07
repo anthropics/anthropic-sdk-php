@@ -11,8 +11,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type ResourceVariants from \Anthropic\Beta\Organization\RBACRoles\Permissions\BetaRBACRolePermission\Resource
  * @phpstan-import-type ResourceShape from \Anthropic\Beta\Organization\RBACRoles\Permissions\BetaRBACRolePermission\Resource
+ * @phpstan-import-type ResourceVariants from \Anthropic\Beta\Organization\RBACRoles\Permissions\BetaRBACRolePermission\Resource
  *
  * @phpstan-type BetaRBACRolePermissionShape = array{
  *   action: string, resource: ResourceShape, type: 'rbac_role_permission'
@@ -76,7 +76,7 @@ final class BetaRBACRolePermission implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRBACRolePermission)->withAction(...)->withResource(...)
+     * (new BetaRBACRolePermission())->withAction(...)->withResource(...)
      * ```
      */
     public function __construct()

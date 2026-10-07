@@ -55,7 +55,7 @@ final class BetaManagedAgentsMCPToolset implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMCPToolset)
+     * (new BetaManagedAgentsMCPToolset())
      *   ->withConfigs(...)
      *   ->withDefaultConfig(...)
      *   ->withMCPServerName(...)

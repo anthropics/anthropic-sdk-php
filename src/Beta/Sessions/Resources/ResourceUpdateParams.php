@@ -65,7 +65,7 @@ final class ResourceUpdateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ResourceUpdateParams)->withSessionID(...)->withAuthorizationToken(...)
+     * (new ResourceUpdateParams())->withSessionID(...)->withAuthorizationToken(...)
      * ```
      */
     public function __construct()

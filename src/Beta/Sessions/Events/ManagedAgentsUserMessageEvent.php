@@ -14,8 +14,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * A user message event in the session conversation.
  *
- * @phpstan-import-type ContentVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserMessageEvent\Content
  * @phpstan-import-type ContentShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserMessageEvent\Content
+ * @phpstan-import-type ContentVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserMessageEvent\Content
  *
  * @phpstan-type ManagedAgentsUserMessageEventShape = array{
  *   id: string,
@@ -64,7 +64,7 @@ final class ManagedAgentsUserMessageEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsUserMessageEvent)
+     * (new ManagedAgentsUserMessageEvent())
      *   ->withID(...)
      *   ->withContent(...)
      *   ->withType(...)

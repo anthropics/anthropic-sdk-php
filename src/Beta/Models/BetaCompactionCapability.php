@@ -47,7 +47,7 @@ final class BetaCompactionCapability implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCompactionCapability)->withSummarize(...)->withSupported(...)
+     * (new BetaCompactionCapability())->withSummarize(...)->withSupported(...)
      * ```
      */
     public function __construct()

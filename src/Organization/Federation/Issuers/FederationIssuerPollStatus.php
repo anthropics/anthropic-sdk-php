@@ -57,7 +57,7 @@ final class FederationIssuerPollStatus implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new FederationIssuerPollStatus)
+     * (new FederationIssuerPollStatus())
      *   ->withConsecutiveFailures(...)
      *   ->withLastFetchedAt(...)
      *   ->withNextPollAt(...)

@@ -54,7 +54,7 @@ final class ThinkingConfigEnabled implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ThinkingConfigEnabled)->withBudgetTokens(...)
+     * (new ThinkingConfigEnabled())->withBudgetTokens(...)
      * ```
      */
     public function __construct()

@@ -127,7 +127,7 @@ final class AnalyticsChatMetrics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsChatMetrics)
+     * (new AnalyticsChatMetrics())
      *   ->withConnectorsUsedCount(...)
      *   ->withDistinctArtifactsCreatedCount(...)
      *   ->withDistinctConnectorsUsedCount(...)

@@ -48,7 +48,7 @@ final class BetaManagedAgentsScheduleParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsScheduleParams)
+     * (new BetaManagedAgentsScheduleParams())
      *   ->withExpression(...)
      *   ->withTimezone(...)
      *   ->withType(...)

@@ -49,7 +49,7 @@ final class TextEditorCodeExecutionToolResultErrorParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new TextEditorCodeExecutionToolResultErrorParam)->withErrorCode(...)
+     * (new TextEditorCodeExecutionToolResultErrorParam())->withErrorCode(...)
      * ```
      */
     public function __construct()

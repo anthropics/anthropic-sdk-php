@@ -63,7 +63,7 @@ final class VersionDeleteParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new VersionDeleteParams)->withSkillID(...)
+     * (new VersionDeleteParams())->withSkillID(...)
      * ```
      */
     public function __construct()

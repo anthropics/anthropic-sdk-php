@@ -65,7 +65,7 @@ final class BetaThinkingMismatchAllowedInputTransformation implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaThinkingMismatchAllowedInputTransformation)
+     * (new BetaThinkingMismatchAllowedInputTransformation())
      *   ->withPath(...)
      *   ->withReason(...)
      * ```

@@ -9,12 +9,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Supported thinking type configurations.
+ * Which `thinking.type` values the model accepts on requests. Read each key on its own: for example, `enabled` can be false while `disabled` is true.
  *
  * @phpstan-import-type BetaCapabilitySupportShape from \Anthropic\Beta\Models\BetaCapabilitySupport
  *
  * @phpstan-type BetaThinkingTypesShape = array{
  *   adaptive: BetaCapabilitySupport|BetaCapabilitySupportShape,
+ *   disabled: BetaCapabilitySupport|BetaCapabilitySupportShape,
  *   enabled: BetaCapabilitySupport|BetaCapabilitySupportShape,
  * }
  */
@@ -24,13 +25,19 @@ final class BetaThinkingTypes implements BaseModel
     use SdkModel;
 
     /**
-     * Whether the model supports thinking with type 'adaptive' (auto).
+     * Whether the model accepts thinking with type 'adaptive' (the model decides whether and how much to think).
      */
     #[Required]
     public BetaCapabilitySupport $adaptive;
 
     /**
-     * Whether the model supports thinking with type 'enabled'.
+     * Whether the model accepts thinking with type 'disabled' (thinking turned off). False exactly when a request that sends it gets a 400 from this model. True on a model that does not support thinking.
+     */
+    #[Required]
+    public BetaCapabilitySupport $disabled;
+
+    /**
+     * Whether the model accepts thinking with type 'enabled' (extended thinking with a caller-set `budget_tokens`).
      */
     #[Required]
     public BetaCapabilitySupport $enabled;
@@ -40,13 +47,16 @@ final class BetaThinkingTypes implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaThinkingTypes::with(adaptive: ..., enabled: ...)
+     * BetaThinkingTypes::with(adaptive: ..., disabled: ..., enabled: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaThinkingTypes)->withAdaptive(...)->withEnabled(...)
+     * (new BetaThinkingTypes())
+     *   ->withAdaptive(...)
+     *   ->withDisabled(...)
+     *   ->withEnabled(...)
      * ```
      */
     public function __construct()
@@ -60,22 +70,25 @@ final class BetaThinkingTypes implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $adaptive
+     * @param BetaCapabilitySupport|BetaCapabilitySupportShape $disabled
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $enabled
      */
     public static function with(
         BetaCapabilitySupport|array $adaptive,
-        BetaCapabilitySupport|array $enabled
+        BetaCapabilitySupport|array $disabled,
+        BetaCapabilitySupport|array $enabled,
     ): self {
         $self = new self;
 
         $self['adaptive'] = $adaptive;
+        $self['disabled'] = $disabled;
         $self['enabled'] = $enabled;
 
         return $self;
     }
 
     /**
-     * Whether the model supports thinking with type 'adaptive' (auto).
+     * Whether the model accepts thinking with type 'adaptive' (the model decides whether and how much to think).
      *
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $adaptive
      */
@@ -88,7 +101,20 @@ final class BetaThinkingTypes implements BaseModel
     }
 
     /**
-     * Whether the model supports thinking with type 'enabled'.
+     * Whether the model accepts thinking with type 'disabled' (thinking turned off). False exactly when a request that sends it gets a 400 from this model. True on a model that does not support thinking.
+     *
+     * @param BetaCapabilitySupport|BetaCapabilitySupportShape $disabled
+     */
+    public function withDisabled(BetaCapabilitySupport|array $disabled): self
+    {
+        $self = clone $this;
+        $self['disabled'] = $disabled;
+
+        return $self;
+    }
+
+    /**
+     * Whether the model accepts thinking with type 'enabled' (extended thinking with a caller-set `budget_tokens`).
      *
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $enabled
      */

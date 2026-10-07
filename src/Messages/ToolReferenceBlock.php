@@ -37,7 +37,7 @@ final class ToolReferenceBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ToolReferenceBlock)->withToolName(...)
+     * (new ToolReferenceBlock())->withToolName(...)
      * ```
      */
     public function __construct()

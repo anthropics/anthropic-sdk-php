@@ -52,7 +52,7 @@ final class BetaWebSearchResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebSearchResultBlock)
+     * (new BetaWebSearchResultBlock())
      *   ->withEncryptedContent(...)
      *   ->withPageAge(...)
      *   ->withTitle(...)

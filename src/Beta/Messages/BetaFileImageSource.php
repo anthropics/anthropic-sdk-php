@@ -35,7 +35,7 @@ final class BetaFileImageSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaFileImageSource)->withFileID(...)
+     * (new BetaFileImageSource())->withFileID(...)
      * ```
      */
     public function __construct()

@@ -99,7 +99,7 @@ final class PluginCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PluginCreateParams)->withFiles(...)
+     * (new PluginCreateParams())->withFiles(...)
      * ```
      */
     public function __construct()

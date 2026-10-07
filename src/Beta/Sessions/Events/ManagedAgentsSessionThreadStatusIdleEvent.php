@@ -13,9 +13,9 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * A session thread has yielded and is awaiting input. Emitted on the thread's own stream and cross-posted to the primary stream for child threads.
  *
- * @phpstan-import-type StopReasonVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionThreadStatusIdleEvent\StopReason
  * @phpstan-import-type ManagedAgentsSessionRefusalStopDetailsShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionRefusalStopDetails
  * @phpstan-import-type StopReasonShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionThreadStatusIdleEvent\StopReason
+ * @phpstan-import-type StopReasonVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsSessionThreadStatusIdleEvent\StopReason
  *
  * @phpstan-type ManagedAgentsSessionThreadStatusIdleEventShape = array{
  *   id: string,
@@ -89,7 +89,7 @@ final class ManagedAgentsSessionThreadStatusIdleEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSessionThreadStatusIdleEvent)
+     * (new ManagedAgentsSessionThreadStatusIdleEvent())
      *   ->withID(...)
      *   ->withAgentName(...)
      *   ->withProcessedAt(...)

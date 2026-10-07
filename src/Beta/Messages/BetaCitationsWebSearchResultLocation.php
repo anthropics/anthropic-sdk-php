@@ -52,7 +52,7 @@ final class BetaCitationsWebSearchResultLocation implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCitationsWebSearchResultLocation)
+     * (new BetaCitationsWebSearchResultLocation())
      *   ->withCitedText(...)
      *   ->withEncryptedIndex(...)
      *   ->withTitle(...)

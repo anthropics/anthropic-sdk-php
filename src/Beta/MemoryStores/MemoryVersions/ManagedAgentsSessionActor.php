@@ -42,7 +42,7 @@ final class ManagedAgentsSessionActor implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSessionActor)->withSessionID(...)->withType(...)
+     * (new ManagedAgentsSessionActor())->withSessionID(...)->withType(...)
      * ```
      */
     public function __construct()

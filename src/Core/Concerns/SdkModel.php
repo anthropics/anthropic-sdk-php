@@ -186,8 +186,8 @@ trait SdkModel
 
         $coerced = Conversion::coerce($type, value: $value, state: new CoerceState(translateNames: false));
 
-        // @phpstan-ignore-next-line function.alreadyNarrowedType
-        if (property_exists($this, property: $offset)) {
+        // Only API properties are set from data, so a key can't reach private state such as `_data`.
+        if (array_key_exists($offset, array: self::$converter->properties)) {
             try {
                 // @phpstan-ignore-next-line assign.propertyType
                 $this->{$offset} = $coerced;
@@ -212,8 +212,7 @@ trait SdkModel
     {
         self::requireStringOffset($offset);
 
-        // @phpstan-ignore-next-line function.alreadyNarrowedType
-        if (property_exists($this, property: $offset)) {
+        if (array_key_exists($offset, array: self::$converter->properties)) {
             unset($this->{$offset});
         }
 

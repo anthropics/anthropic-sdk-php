@@ -53,7 +53,7 @@ final class BetaTokenTaskBudget implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaTokenTaskBudget)->withTotal(...)
+     * (new BetaTokenTaskBudget())->withTotal(...)
      * ```
      */
     public function __construct()

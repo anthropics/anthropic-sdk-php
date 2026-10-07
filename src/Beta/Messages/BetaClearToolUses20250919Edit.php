@@ -13,12 +13,12 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type ClearToolInputsVariants from \Anthropic\Beta\Messages\BetaClearToolUses20250919Edit\ClearToolInputs
- * @phpstan-import-type TriggerVariants from \Anthropic\Beta\Messages\BetaClearToolUses20250919Edit\Trigger
  * @phpstan-import-type BetaInputTokensClearAtLeastShape from \Anthropic\Beta\Messages\BetaInputTokensClearAtLeast
  * @phpstan-import-type ClearToolInputsShape from \Anthropic\Beta\Messages\BetaClearToolUses20250919Edit\ClearToolInputs
  * @phpstan-import-type BetaToolUsesKeepShape from \Anthropic\Beta\Messages\BetaToolUsesKeep
  * @phpstan-import-type TriggerShape from \Anthropic\Beta\Messages\BetaClearToolUses20250919Edit\Trigger
+ * @phpstan-import-type ClearToolInputsVariants from \Anthropic\Beta\Messages\BetaClearToolUses20250919Edit\ClearToolInputs
+ * @phpstan-import-type TriggerVariants from \Anthropic\Beta\Messages\BetaClearToolUses20250919Edit\Trigger
  *
  * @phpstan-type BetaClearToolUses20250919EditShape = array{
  *   type: 'clear_tool_uses_20250919',

@@ -12,8 +12,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type KeepVariants from \Anthropic\Beta\Messages\BetaClearThinking20251015Edit\Keep
  * @phpstan-import-type KeepShape from \Anthropic\Beta\Messages\BetaClearThinking20251015Edit\Keep
+ * @phpstan-import-type KeepVariants from \Anthropic\Beta\Messages\BetaClearThinking20251015Edit\Keep
  *
  * @phpstan-type BetaClearThinking20251015EditShape = array{
  *   type: 'clear_thinking_20251015', keep?: KeepShape|null

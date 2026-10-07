@@ -73,7 +73,7 @@ final class SelfHostedWorkHeartbeatResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SelfHostedWorkHeartbeatResponse)
+     * (new SelfHostedWorkHeartbeatResponse())
      *   ->withLastHeartbeat(...)
      *   ->withLeaseExtended(...)
      *   ->withState(...)

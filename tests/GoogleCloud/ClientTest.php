@@ -461,11 +461,22 @@ final class ClientTest extends TestCase
 
     public function testBearerNotSentOnCrossOriginRedirect(): void
     {
-        // BaseClient::followRedirect() does not strip Authorization on a
-        // cross-host redirect, and transformRequest() re-applies it on the
-        // redirected hop — same gap as Aws\Client. Tracked as a Core
-        // follow-up; unskip once followRedirect() drops auth on host change.
-        $this->markTestSkipped('Core followRedirect() does not yet strip auth on cross-host redirect (shared with Aws\Client)');
+        $client = $this->makeClient();
+
+        $this->transporter->addResponse(
+            Psr17FactoryDiscovery::findResponseFactory()
+                ->createResponse(307)
+                ->withHeader('Location', 'https://elsewhere.example/v1/messages')
+        );
+        $this->transporter->addResponse($this->jsonResponse());
+
+        $client->messages->create(1024, [], 'claude-haiku-4-5');
+
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(2, $requests);
+        $this->assertSame('Bearer adc-token', $requests[0]->getHeaderLine('Authorization'));
+        $this->assertSame('elsewhere.example', $requests[1]->getUri()->getHost());
+        $this->assertFalse($requests[1]->hasHeader('Authorization'));
     }
 
     // ── Surface ─────────────────────────────────────────────────────

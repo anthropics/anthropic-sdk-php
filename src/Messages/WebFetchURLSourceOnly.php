@@ -44,7 +44,7 @@ final class WebFetchURLSourceOnly implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WebFetchURLSourceOnly)->withTools(...)
+     * (new WebFetchURLSourceOnly())->withTools(...)
      * ```
      */
     public function __construct()

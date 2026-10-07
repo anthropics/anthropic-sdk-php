@@ -46,7 +46,7 @@ final class ManagedAgentsLimitedCredentialNetworkingResponse implements BaseMode
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsLimitedCredentialNetworkingResponse)
+     * (new ManagedAgentsLimitedCredentialNetworkingResponse())
      *   ->withAllowedHosts(...)
      *   ->withType(...)
      * ```

@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Resolved coordinator topology with a concrete agent roster.
  *
- * @phpstan-import-type AgentVariants from \Anthropic\Beta\Agents\BetaManagedAgentsMultiagentCoordinator\Agent
  * @phpstan-import-type AgentShape from \Anthropic\Beta\Agents\BetaManagedAgentsMultiagentCoordinator\Agent
+ * @phpstan-import-type AgentVariants from \Anthropic\Beta\Agents\BetaManagedAgentsMultiagentCoordinator\Agent
  *
  * @phpstan-type BetaManagedAgentsMultiagentCoordinatorShape = array{
  *   agents: list<AgentShape>, type: Type|value-of<Type>
@@ -48,7 +48,7 @@ final class BetaManagedAgentsMultiagentCoordinator implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMultiagentCoordinator)->withAgents(...)->withType(...)
+     * (new BetaManagedAgentsMultiagentCoordinator())->withAgents(...)->withType(...)
      * ```
      */
     public function __construct()

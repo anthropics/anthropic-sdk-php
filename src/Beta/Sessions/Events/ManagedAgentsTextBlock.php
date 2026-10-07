@@ -42,7 +42,7 @@ final class ManagedAgentsTextBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsTextBlock)->withText(...)->withType(...)
+     * (new ManagedAgentsTextBlock())->withText(...)->withType(...)
      * ```
      */
     public function __construct()

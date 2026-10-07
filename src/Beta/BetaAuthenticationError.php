@@ -37,7 +37,7 @@ final class BetaAuthenticationError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaAuthenticationError)->withMessage(...)
+     * (new BetaAuthenticationError())->withMessage(...)
      * ```
      */
     public function __construct()

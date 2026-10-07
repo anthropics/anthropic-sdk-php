@@ -45,7 +45,7 @@ final class JWKSInline implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new JWKSInline)->withKeys(...)
+     * (new JWKSInline())->withKeys(...)
      * ```
      */
     public function __construct()

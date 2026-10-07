@@ -12,9 +12,9 @@ use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Messages\ToolUseBlockParam\Caller;
 
 /**
- * @phpstan-import-type CallerVariants from \Anthropic\Messages\ToolUseBlockParam\Caller
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
  * @phpstan-import-type CallerShape from \Anthropic\Messages\ToolUseBlockParam\Caller
+ * @phpstan-import-type CallerVariants from \Anthropic\Messages\ToolUseBlockParam\Caller
  *
  * @phpstan-type ToolUseBlockParamShape = array{
  *   id: string,
@@ -72,7 +72,7 @@ final class ToolUseBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ToolUseBlockParam)->withID(...)->withInput(...)->withName(...)
+     * (new ToolUseBlockParam())->withID(...)->withInput(...)->withName(...)
      * ```
      */
     public function __construct()

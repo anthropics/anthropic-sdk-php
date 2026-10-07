@@ -50,7 +50,7 @@ final class ManagedAgentsAgentThreadContextCompactedEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsAgentThreadContextCompactedEvent)
+     * (new ManagedAgentsAgentThreadContextCompactedEvent())
      *   ->withID(...)
      *   ->withProcessedAt(...)
      *   ->withType(...)

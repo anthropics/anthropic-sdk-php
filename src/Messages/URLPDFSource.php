@@ -35,7 +35,7 @@ final class URLPDFSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new URLPDFSource)->withURL(...)
+     * (new URLPDFSource())->withURL(...)
      * ```
      */
     public function __construct()

@@ -48,7 +48,7 @@ final class ThinkingBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ThinkingBlockParam)->withSignature(...)->withThinking(...)
+     * (new ThinkingBlockParam())->withSignature(...)->withThinking(...)
      * ```
      */
     public function __construct()

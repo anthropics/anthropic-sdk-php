@@ -23,8 +23,8 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * @phpstan-import-type NormalizedRequest from \Anthropic\Core\BaseClient
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type NormalizedRequest from \Anthropic\Core\BaseClient
  */
 class Client extends BaseClient
 {
@@ -237,7 +237,7 @@ class Client extends BaseClient
      * @param array<string,string|int|list<string|int>|null> $headers
      * @param RequestOpts|null $opts
      *
-     * @return array{NormalizedRequest, RequestOptions}
+     * @return array{NormalizedRequest, RequestOptions, string}
      */
     protected function buildRequest(
         string $method,

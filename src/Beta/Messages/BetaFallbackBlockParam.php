@@ -72,7 +72,7 @@ final class BetaFallbackBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaFallbackBlockParam)->withFrom(...)->withTo(...)
+     * (new BetaFallbackBlockParam())->withFrom(...)->withTo(...)
      * ```
      */
     public function __construct()

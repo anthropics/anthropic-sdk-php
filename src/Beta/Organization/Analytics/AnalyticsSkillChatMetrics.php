@@ -37,7 +37,7 @@ final class AnalyticsSkillChatMetrics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsSkillChatMetrics)->withDistinctConversationSkillUsedCount(...)
+     * (new AnalyticsSkillChatMetrics())->withDistinctConversationSkillUsedCount(...)
      * ```
      */
     public function __construct()

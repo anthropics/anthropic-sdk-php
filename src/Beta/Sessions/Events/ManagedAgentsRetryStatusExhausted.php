@@ -36,7 +36,7 @@ final class ManagedAgentsRetryStatusExhausted implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsRetryStatusExhausted)->withType(...)
+     * (new ManagedAgentsRetryStatusExhausted())->withType(...)
      * ```
      */
     public function __construct()

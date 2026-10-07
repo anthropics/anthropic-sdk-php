@@ -68,7 +68,7 @@ final class AnalyticsUserActor implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsUserActor)
+     * (new AnalyticsUserActor())
      *   ->withDeleted(...)
      *   ->withEmailAddress(...)
      *   ->withName(...)

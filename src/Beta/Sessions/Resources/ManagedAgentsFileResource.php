@@ -67,7 +67,7 @@ final class ManagedAgentsFileResource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsFileResource)
+     * (new ManagedAgentsFileResource())
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withFileID(...)

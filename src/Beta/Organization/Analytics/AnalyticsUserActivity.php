@@ -131,7 +131,7 @@ final class AnalyticsUserActivity implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsUserActivity)
+     * (new AnalyticsUserActivity())
      *   ->withChatMetrics(...)
      *   ->withClaudeCodeMetrics(...)
      *   ->withCoworkMetrics(...)

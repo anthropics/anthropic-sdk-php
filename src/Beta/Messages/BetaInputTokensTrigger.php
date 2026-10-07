@@ -37,7 +37,7 @@ final class BetaInputTokensTrigger implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaInputTokensTrigger)->withValue(...)
+     * (new BetaInputTokensTrigger())->withValue(...)
      * ```
      */
     public function __construct()

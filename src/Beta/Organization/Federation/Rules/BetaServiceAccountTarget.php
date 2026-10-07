@@ -51,7 +51,7 @@ final class BetaServiceAccountTarget implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaServiceAccountTarget)->withServiceAccountID(...)
+     * (new BetaServiceAccountTarget())->withServiceAccountID(...)
      * ```
      */
     public function __construct()

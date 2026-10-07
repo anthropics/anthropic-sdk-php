@@ -11,9 +11,9 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type ContentVariants from \Anthropic\Messages\TextEditorCodeExecutionToolResultBlockParam\Content
  * @phpstan-import-type ContentShape from \Anthropic\Messages\TextEditorCodeExecutionToolResultBlockParam\Content
  * @phpstan-import-type CacheControlEphemeralShape from \Anthropic\Messages\CacheControlEphemeral
+ * @phpstan-import-type ContentVariants from \Anthropic\Messages\TextEditorCodeExecutionToolResultBlockParam\Content
  *
  * @phpstan-type TextEditorCodeExecutionToolResultBlockParamShape = array{
  *   content: ContentShape,
@@ -55,7 +55,7 @@ final class TextEditorCodeExecutionToolResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new TextEditorCodeExecutionToolResultBlockParam)
+     * (new TextEditorCodeExecutionToolResultBlockParam())
      *   ->withContent(...)
      *   ->withToolUseID(...)
      * ```

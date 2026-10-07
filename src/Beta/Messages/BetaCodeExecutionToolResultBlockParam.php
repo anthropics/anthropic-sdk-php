@@ -11,9 +11,9 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type BetaCodeExecutionToolResultBlockParamContentVariants from \Anthropic\Beta\Messages\BetaCodeExecutionToolResultBlockParamContent
  * @phpstan-import-type BetaCodeExecutionToolResultBlockParamContentShape from \Anthropic\Beta\Messages\BetaCodeExecutionToolResultBlockParamContent
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
+ * @phpstan-import-type BetaCodeExecutionToolResultBlockParamContentVariants from \Anthropic\Beta\Messages\BetaCodeExecutionToolResultBlockParamContent
  *
  * @phpstan-type BetaCodeExecutionToolResultBlockParamShape = array{
  *   content: BetaCodeExecutionToolResultBlockParamContentShape,
@@ -55,7 +55,7 @@ final class BetaCodeExecutionToolResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCodeExecutionToolResultBlockParam)
+     * (new BetaCodeExecutionToolResultBlockParam())
      *   ->withContent(...)
      *   ->withToolUseID(...)
      * ```

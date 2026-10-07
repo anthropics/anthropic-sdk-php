@@ -16,8 +16,8 @@ use Anthropic\RequestOptions;
 
 /**
  * @phpstan-import-type ConfigShape from \Anthropic\Beta\Environments\EnvironmentCreateParams\Config
- * @phpstan-import-type ConfigShape from \Anthropic\Beta\Environments\EnvironmentUpdateParams\Config as ConfigShape1
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type ConfigShape from \Anthropic\Beta\Environments\EnvironmentUpdateParams\Config as ConfigShape1
  */
 interface EnvironmentsContract
 {

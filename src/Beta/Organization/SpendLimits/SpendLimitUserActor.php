@@ -72,7 +72,7 @@ final class SpendLimitUserActor implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new SpendLimitUserActor)
+     * (new SpendLimitUserActor())
      *   ->withDeleted(...)
      *   ->withEmailAddress(...)
      *   ->withName(...)

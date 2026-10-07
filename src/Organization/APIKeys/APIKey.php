@@ -13,11 +13,11 @@ use Anthropic\Organization\APIKeys\APIKey\Scope;
 use Anthropic\Organization\APIKeys\APIKey\Status;
 
 /**
- * @phpstan-import-type PrincipalVariants from \Anthropic\Organization\APIKeys\APIKey\Principal
- * @phpstan-import-type ScopeVariants from \Anthropic\Organization\APIKeys\APIKey\Scope
  * @phpstan-import-type APIKeyCreatedByShape from \Anthropic\Organization\APIKeys\APIKeyCreatedBy
  * @phpstan-import-type PrincipalShape from \Anthropic\Organization\APIKeys\APIKey\Principal
  * @phpstan-import-type ScopeShape from \Anthropic\Organization\APIKeys\APIKey\Scope
+ * @phpstan-import-type PrincipalVariants from \Anthropic\Organization\APIKeys\APIKey\Principal
+ * @phpstan-import-type ScopeVariants from \Anthropic\Organization\APIKeys\APIKey\Scope
  *
  * @phpstan-type APIKeyShape = array{
  *   id: string,
@@ -130,7 +130,7 @@ final class APIKey implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new APIKey)
+     * (new APIKey())
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withCreatedBy(...)

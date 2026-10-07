@@ -93,7 +93,7 @@ final class MemoryUpdateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MemoryUpdateParams)->withMemoryStoreID(...)
+     * (new MemoryUpdateParams())->withMemoryStoreID(...)
      * ```
      */
     public function __construct()

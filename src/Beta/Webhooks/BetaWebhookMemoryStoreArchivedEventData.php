@@ -51,7 +51,7 @@ final class BetaWebhookMemoryStoreArchivedEventData implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookMemoryStoreArchivedEventData)
+     * (new BetaWebhookMemoryStoreArchivedEventData())
      *   ->withID(...)
      *   ->withOrganizationID(...)
      *   ->withWorkspaceID(...)

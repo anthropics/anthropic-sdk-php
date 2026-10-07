@@ -88,7 +88,7 @@ final class BetaManagedAgentsVault implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsVault)
+     * (new BetaManagedAgentsVault())
      *   ->withID(...)
      *   ->withArchivedAt(...)
      *   ->withCreatedAt(...)

@@ -36,7 +36,7 @@ final class BetaManagedAgentsFileNotFoundDeploymentPausedReasonError implements 
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsFileNotFoundDeploymentPausedReasonError)->withType(...)
+     * (new BetaManagedAgentsFileNotFoundDeploymentPausedReasonError())->withType(...)
      * ```
      */
     public function __construct()

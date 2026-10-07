@@ -40,7 +40,7 @@ final class BetaSignatureDelta implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaSignatureDelta)->withSignature(...)
+     * (new BetaSignatureDelta())->withSignature(...)
      * ```
      */
     public function __construct()

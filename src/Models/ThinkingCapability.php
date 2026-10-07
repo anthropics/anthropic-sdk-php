@@ -45,7 +45,7 @@ final class ThinkingCapability implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ThinkingCapability)->withSupported(...)->withTypes(...)
+     * (new ThinkingCapability())->withSupported(...)->withTypes(...)
      * ```
      */
     public function __construct()

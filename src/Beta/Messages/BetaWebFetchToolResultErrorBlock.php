@@ -39,7 +39,7 @@ final class BetaWebFetchToolResultErrorBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebFetchToolResultErrorBlock)->withErrorCode(...)
+     * (new BetaWebFetchToolResultErrorBlock())->withErrorCode(...)
      * ```
      */
     public function __construct()

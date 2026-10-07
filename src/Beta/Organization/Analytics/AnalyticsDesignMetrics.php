@@ -63,7 +63,7 @@ final class AnalyticsDesignMetrics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsDesignMetrics)
+     * (new AnalyticsDesignMetrics())
      *   ->withDistinctProjectsCreatedCount(...)
      *   ->withDistinctProjectsUsedCount(...)
      *   ->withDistinctSessionCount(...)

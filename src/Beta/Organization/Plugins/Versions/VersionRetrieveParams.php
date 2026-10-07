@@ -63,7 +63,7 @@ final class VersionRetrieveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new VersionRetrieveParams)->withPluginID(...)
+     * (new VersionRetrieveParams())->withPluginID(...)
      * ```
      */
     public function __construct()

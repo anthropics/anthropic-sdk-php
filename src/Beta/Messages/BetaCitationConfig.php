@@ -30,7 +30,7 @@ final class BetaCitationConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaCitationConfig)->withEnabled(...)
+     * (new BetaCitationConfig())->withEnabled(...)
      * ```
      */
     public function __construct()

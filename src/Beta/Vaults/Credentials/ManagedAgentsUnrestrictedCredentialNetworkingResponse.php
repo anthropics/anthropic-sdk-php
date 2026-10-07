@@ -36,7 +36,7 @@ final class ManagedAgentsUnrestrictedCredentialNetworkingResponse implements Bas
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsUnrestrictedCredentialNetworkingResponse)->withType(...)
+     * (new ManagedAgentsUnrestrictedCredentialNetworkingResponse())->withType(...)
      * ```
      */
     public function __construct()

@@ -37,7 +37,7 @@ final class GatewayTimeoutError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new GatewayTimeoutError)->withMessage(...)
+     * (new GatewayTimeoutError())->withMessage(...)
      * ```
      */
     public function __construct()

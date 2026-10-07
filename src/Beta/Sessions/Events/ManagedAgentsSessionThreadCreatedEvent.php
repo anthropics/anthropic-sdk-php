@@ -66,7 +66,7 @@ final class ManagedAgentsSessionThreadCreatedEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSessionThreadCreatedEvent)
+     * (new ManagedAgentsSessionThreadCreatedEvent())
      *   ->withID(...)
      *   ->withAgentName(...)
      *   ->withProcessedAt(...)

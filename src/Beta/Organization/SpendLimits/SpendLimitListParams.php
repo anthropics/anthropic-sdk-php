@@ -48,7 +48,7 @@ final class SpendLimitListParams implements BaseModel
     public ?string $page;
 
     /**
-     * Return only limits with these scope types. A Claude Console organization has `organization` and `workspace` limits; a Claude Enterprise organization has `organization`, `seat_tier`, `rbac_group`, `organization_service` and `user` limits. Omit for all.
+     * Return only limits with these scope types. A Claude Console organization has `organization`, `workspace`, `oauth_app` and `oauth_app_default` limits; a Claude Enterprise organization has `organization`, `seat_tier`, `rbac_group`, `organization_service` and `user` limits. Omit for all.
      *
      * @var list<value-of<ScopeType>>|null $scopeType
      */
@@ -115,7 +115,7 @@ final class SpendLimitListParams implements BaseModel
     }
 
     /**
-     * Return only limits with these scope types. A Claude Console organization has `organization` and `workspace` limits; a Claude Enterprise organization has `organization`, `seat_tier`, `rbac_group`, `organization_service` and `user` limits. Omit for all.
+     * Return only limits with these scope types. A Claude Console organization has `organization`, `workspace`, `oauth_app` and `oauth_app_default` limits; a Claude Enterprise organization has `organization`, `seat_tier`, `rbac_group`, `organization_service` and `user` limits. Omit for all.
      *
      * @param list<ScopeType|value-of<ScopeType>>|null $scopeType
      */

@@ -37,7 +37,8 @@ final class AnalyticsSkillOfficeProductMetrics implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AnalyticsSkillOfficeProductMetrics)->withDistinctSessionSkillUsedCount(...)
+     * (new AnalyticsSkillOfficeProductMetrics())
+     *   ->withDistinctSessionSkillUsedCount(...)
      * ```
      */
     public function __construct()

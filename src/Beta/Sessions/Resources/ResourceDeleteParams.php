@@ -58,7 +58,7 @@ final class ResourceDeleteParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ResourceDeleteParams)->withSessionID(...)
+     * (new ResourceDeleteParams())->withSessionID(...)
      * ```
      */
     public function __construct()

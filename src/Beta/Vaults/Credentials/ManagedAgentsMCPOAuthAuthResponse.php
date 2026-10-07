@@ -60,7 +60,7 @@ final class ManagedAgentsMCPOAuthAuthResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsMCPOAuthAuthResponse)->withMCPServerURL(...)->withType(...)
+     * (new ManagedAgentsMCPOAuthAuthResponse())->withMCPServerURL(...)->withType(...)
      * ```
      */
     public function __construct()

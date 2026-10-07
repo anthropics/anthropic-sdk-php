@@ -13,9 +13,9 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Environment variable credential details. The secret value is never returned.
  *
- * @phpstan-import-type NetworkingVariants from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsEnvironmentVariableAuthResponse\Networking
  * @phpstan-import-type ManagedAgentsInjectionLocationResponseShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsInjectionLocationResponse
  * @phpstan-import-type NetworkingShape from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsEnvironmentVariableAuthResponse\Networking
+ * @phpstan-import-type NetworkingVariants from \Anthropic\Beta\Vaults\Credentials\ManagedAgentsEnvironmentVariableAuthResponse\Networking
  *
  * @phpstan-type ManagedAgentsEnvironmentVariableAuthResponseShape = array{
  *   injectionLocation: ManagedAgentsInjectionLocationResponse|ManagedAgentsInjectionLocationResponseShape,
@@ -66,7 +66,7 @@ final class ManagedAgentsEnvironmentVariableAuthResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsEnvironmentVariableAuthResponse)
+     * (new ManagedAgentsEnvironmentVariableAuthResponse())
      *   ->withInjectionLocation(...)
      *   ->withNetworking(...)
      *   ->withSecretName(...)

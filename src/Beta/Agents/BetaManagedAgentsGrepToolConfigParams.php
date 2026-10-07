@@ -15,8 +15,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * Configuration override for the grep tool.
  *
- * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsGrepToolConfigParams\PermissionPolicy
  * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsGrepToolConfigParams\PermissionPolicy
+ * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsGrepToolConfigParams\PermissionPolicy
  *
  * @phpstan-type BetaManagedAgentsGrepToolConfigParamsShape = array{
  *   name: 'grep',

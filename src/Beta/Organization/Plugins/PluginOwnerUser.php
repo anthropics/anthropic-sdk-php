@@ -42,7 +42,7 @@ final class PluginOwnerUser implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PluginOwnerUser)->withUserID(...)
+     * (new PluginOwnerUser())->withUserID(...)
      * ```
      */
     public function __construct()

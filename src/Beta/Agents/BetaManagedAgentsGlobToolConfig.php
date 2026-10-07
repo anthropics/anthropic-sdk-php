@@ -13,8 +13,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * Configuration for the glob tool.
  *
- * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsGlobToolConfig\PermissionPolicy
  * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsGlobToolConfig\PermissionPolicy
+ * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsGlobToolConfig\PermissionPolicy
  *
  * @phpstan-type BetaManagedAgentsGlobToolConfigShape = array{
  *   enabled: bool,
@@ -58,7 +58,7 @@ final class BetaManagedAgentsGlobToolConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsGlobToolConfig)
+     * (new BetaManagedAgentsGlobToolConfig())
      *   ->withEnabled(...)
      *   ->withPermissionPolicy(...)
      * ```

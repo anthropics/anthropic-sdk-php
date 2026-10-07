@@ -57,7 +57,7 @@ final class BetaEncryptedCodeExecutionResultBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaEncryptedCodeExecutionResultBlock)
+     * (new BetaEncryptedCodeExecutionResultBlock())
      *   ->withContent(...)
      *   ->withEncryptedStdout(...)
      *   ->withReturnCode(...)

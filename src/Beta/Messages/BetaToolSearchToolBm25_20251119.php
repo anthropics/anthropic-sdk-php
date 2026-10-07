@@ -76,7 +76,7 @@ final class BetaToolSearchToolBm25_20251119 implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaToolSearchToolBm25_20251119)->withType(...)
+     * (new BetaToolSearchToolBm25_20251119())->withType(...)
      * ```
      */
     public function __construct()

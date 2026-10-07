@@ -47,7 +47,7 @@ final class DeletedFile implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new DeletedFile)->withID(...)
+     * (new DeletedFile())->withID(...)
      * ```
      */
     public function __construct()

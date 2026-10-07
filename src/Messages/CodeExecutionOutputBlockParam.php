@@ -37,7 +37,7 @@ final class CodeExecutionOutputBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CodeExecutionOutputBlockParam)->withFileID(...)
+     * (new CodeExecutionOutputBlockParam())->withFileID(...)
      * ```
      */
     public function __construct()

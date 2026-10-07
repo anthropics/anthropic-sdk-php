@@ -17,12 +17,12 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type ActorVariants from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\IncreaseRequestApproveResponse\Actor
- * @phpstan-import-type ResolvedByVariants from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\IncreaseRequestApproveResponse\ResolvedBy
  * @phpstan-import-type ActorShape from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\IncreaseRequestApproveResponse\Actor
  * @phpstan-import-type ResolvedByShape from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\IncreaseRequestApproveResponse\ResolvedBy
  * @phpstan-import-type SpendLimitShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimit
  * @phpstan-import-type SpendSummaryShape from \Anthropic\Beta\Organization\SpendLimits\SpendSummary
+ * @phpstan-import-type ActorVariants from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\IncreaseRequestApproveResponse\Actor
+ * @phpstan-import-type ResolvedByVariants from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\IncreaseRequestApproveResponse\ResolvedBy
  *
  * @phpstan-type IncreaseRequestApproveResponseShape = array{
  *   id: string,
@@ -104,7 +104,7 @@ final class IncreaseRequestApproveResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new IncreaseRequestApproveResponse)
+     * (new IncreaseRequestApproveResponse())
      *   ->withID(...)
      *   ->withActor(...)
      *   ->withCreatedAt(...)

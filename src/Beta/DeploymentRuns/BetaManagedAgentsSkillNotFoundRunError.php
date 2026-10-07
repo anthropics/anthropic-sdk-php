@@ -42,7 +42,7 @@ final class BetaManagedAgentsSkillNotFoundRunError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsSkillNotFoundRunError)->withMessage(...)->withType(...)
+     * (new BetaManagedAgentsSkillNotFoundRunError())->withMessage(...)->withType(...)
      * ```
      */
     public function __construct()

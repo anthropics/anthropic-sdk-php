@@ -34,7 +34,7 @@ final class BetaManagedAgentsEffortMax implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsEffortMax)->withType(...)
+     * (new BetaManagedAgentsEffortMax())->withType(...)
      * ```
      */
     public function __construct()

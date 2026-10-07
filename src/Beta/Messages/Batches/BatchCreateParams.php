@@ -77,7 +77,7 @@ final class BatchCreateParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BatchCreateParams)->withRequests(...)
+     * (new BatchCreateParams())->withRequests(...)
      * ```
      */
     public function __construct()

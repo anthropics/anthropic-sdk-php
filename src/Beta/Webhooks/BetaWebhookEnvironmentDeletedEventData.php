@@ -51,7 +51,7 @@ final class BetaWebhookEnvironmentDeletedEventData implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebhookEnvironmentDeletedEventData)
+     * (new BetaWebhookEnvironmentDeletedEventData())
      *   ->withID(...)
      *   ->withOrganizationID(...)
      *   ->withWorkspaceID(...)

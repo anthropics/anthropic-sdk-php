@@ -40,7 +40,7 @@ final class MessageBatchSucceededResult implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MessageBatchSucceededResult)->withMessage(...)
+     * (new MessageBatchSucceededResult())->withMessage(...)
      * ```
      */
     public function __construct()

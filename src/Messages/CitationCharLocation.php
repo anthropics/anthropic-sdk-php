@@ -65,7 +65,7 @@ final class CitationCharLocation implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CitationCharLocation)
+     * (new CitationCharLocation())
      *   ->withCitedText(...)
      *   ->withDocumentIndex(...)
      *   ->withDocumentTitle(...)

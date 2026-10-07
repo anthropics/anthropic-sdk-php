@@ -13,8 +13,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type CallerVariants from \Anthropic\Beta\Messages\BetaServerToolUseBlock\Caller
  * @phpstan-import-type CallerShape from \Anthropic\Beta\Messages\BetaServerToolUseBlock\Caller
+ * @phpstan-import-type CallerVariants from \Anthropic\Beta\Messages\BetaServerToolUseBlock\Caller
  *
  * @phpstan-type BetaServerToolUseBlockShape = array{
  *   id: string,
@@ -59,7 +59,7 @@ final class BetaServerToolUseBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaServerToolUseBlock)->withID(...)->withInput(...)->withName(...)
+     * (new BetaServerToolUseBlock())->withID(...)->withInput(...)->withName(...)
      * ```
      */
     public function __construct()

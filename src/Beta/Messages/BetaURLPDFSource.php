@@ -35,7 +35,7 @@ final class BetaURLPDFSource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaURLPDFSource)->withURL(...)
+     * (new BetaURLPDFSource())->withURL(...)
      * ```
      */
     public function __construct()

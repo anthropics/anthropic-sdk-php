@@ -42,7 +42,7 @@ final class BetaManagedAgentsDeletedVault implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsDeletedVault)->withID(...)->withType(...)
+     * (new BetaManagedAgentsDeletedVault())->withID(...)->withType(...)
      * ```
      */
     public function __construct()

@@ -84,7 +84,7 @@ final class BetaManagedAgentsSessionUpdatedEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsSessionUpdatedEvent)
+     * (new BetaManagedAgentsSessionUpdatedEvent())
      *   ->withID(...)
      *   ->withProcessedAt(...)
      *   ->withType(...)

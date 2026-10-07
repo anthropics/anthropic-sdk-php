@@ -187,7 +187,7 @@ final class FederationRule implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new FederationRule)
+     * (new FederationRule())
      *   ->withID(...)
      *   ->withAppliesToAllWorkspaces(...)
      *   ->withArchivedAt(...)

@@ -39,7 +39,7 @@ final class BetaManagedAgentsDeletedSession implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsDeletedSession)->withID(...)->withType(...)
+     * (new BetaManagedAgentsDeletedSession())->withID(...)->withType(...)
      * ```
      */
     public function __construct()

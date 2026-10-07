@@ -37,7 +37,7 @@ final class BetaInputJSONDelta implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaInputJSONDelta)->withPartialJSON(...)
+     * (new BetaInputJSONDelta())->withPartialJSON(...)
      * ```
      */
     public function __construct()

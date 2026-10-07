@@ -50,7 +50,7 @@ final class OrganizationRateLimitModelGroup implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new OrganizationRateLimitModelGroup)->withID(...)->withDisplayName(...)
+     * (new OrganizationRateLimitModelGroup())->withID(...)->withDisplayName(...)
      * ```
      */
     public function __construct()

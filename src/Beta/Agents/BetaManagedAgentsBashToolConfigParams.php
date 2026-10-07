@@ -15,8 +15,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * Configuration override for the bash tool.
  *
- * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsBashToolConfigParams\PermissionPolicy
  * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsBashToolConfigParams\PermissionPolicy
+ * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsBashToolConfigParams\PermissionPolicy
  *
  * @phpstan-type BetaManagedAgentsBashToolConfigParamsShape = array{
  *   name: 'bash',

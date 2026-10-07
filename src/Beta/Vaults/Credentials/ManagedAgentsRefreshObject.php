@@ -49,7 +49,7 @@ final class ManagedAgentsRefreshObject implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsRefreshObject)->withHTTPResponse(...)->withStatus(...)
+     * (new ManagedAgentsRefreshObject())->withHTTPResponse(...)->withStatus(...)
      * ```
      */
     public function __construct()

@@ -51,7 +51,7 @@ final class BetaToolChoiceTool implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaToolChoiceTool)->withName(...)
+     * (new BetaToolChoiceTool())->withName(...)
      * ```
      */
     public function __construct()

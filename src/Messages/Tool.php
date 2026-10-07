@@ -106,7 +106,7 @@ final class Tool implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Tool)->withInputSchema(...)->withName(...)
+     * (new Tool())->withInputSchema(...)->withName(...)
      * ```
      */
     public function __construct()

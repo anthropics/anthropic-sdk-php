@@ -48,7 +48,7 @@ final class BetaDreamSessionsInput implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaDreamSessionsInput)->withSessionIDs(...)->withType(...)
+     * (new BetaDreamSessionsInput())->withSessionIDs(...)->withType(...)
      * ```
      */
     public function __construct()

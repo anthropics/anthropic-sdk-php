@@ -38,7 +38,7 @@ final class BetaManagedAgentsMCPEgressBlockedDeploymentPausedReasonError impleme
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMCPEgressBlockedDeploymentPausedReasonError)
+     * (new BetaManagedAgentsMCPEgressBlockedDeploymentPausedReasonError())
      *   ->withType(...)
      * ```
      */

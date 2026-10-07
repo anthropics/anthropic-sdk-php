@@ -49,7 +49,7 @@ final class BetaDreamModelConfig implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaDreamModelConfig)->withID(...)
+     * (new BetaDreamModelConfig())->withID(...)
      * ```
      */
     public function __construct()

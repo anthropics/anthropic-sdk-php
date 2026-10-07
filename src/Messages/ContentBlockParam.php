@@ -11,6 +11,7 @@ use Anthropic\Messages\ContentBlockParam\Type;
 use Anthropic\Messages\ServerToolUseBlockParam\Name;
 
 /**
+ * @phpstan-import-type TextBlockParamShape from \Anthropic\Messages\TextBlockParam
  * @phpstan-import-type ImageBlockParamShape from \Anthropic\Messages\ImageBlockParam
  * @phpstan-import-type DocumentBlockParamShape from \Anthropic\Messages\DocumentBlockParam
  * @phpstan-import-type SearchResultBlockParamShape from \Anthropic\Messages\SearchResultBlockParam
@@ -43,7 +44,6 @@ use Anthropic\Messages\ServerToolUseBlockParam\Name;
  * @phpstan-import-type CallerShape from \Anthropic\Messages\ServerToolUseBlockParam\Caller as CallerShape1
  * @phpstan-import-type CallerShape from \Anthropic\Messages\WebSearchToolResultBlockParam\Caller as CallerShape2
  * @phpstan-import-type CallerShape from \Anthropic\Messages\WebFetchToolResultBlockParam\Caller as CallerShape3
- * @phpstan-import-type TextBlockParamShape from \Anthropic\Messages\TextBlockParam
  *
  * @phpstan-type ContentBlockParamVariants = TextBlockParam|ImageBlockParam|DocumentBlockParam|SearchResultBlockParam|ThinkingBlockParam|RedactedThinkingBlockParam|ToolUseBlockParam|ToolResultBlockParam|ServerToolUseBlockParam|WebSearchToolResultBlockParam|WebFetchToolResultBlockParam|CodeExecutionToolResultBlockParam|BashCodeExecutionToolResultBlockParam|TextEditorCodeExecutionToolResultBlockParam|ToolSearchToolResultBlockParam|ContainerUploadBlockParam
  * @phpstan-type ContentBlockParamShape = ContentBlockParamVariants|TextBlockParamShape|ImageBlockParamShape|DocumentBlockParamShape|SearchResultBlockParamShape|ThinkingBlockParamShape|RedactedThinkingBlockParamShape|ToolUseBlockParamShape|ToolResultBlockParamShape|ServerToolUseBlockParamShape|WebSearchToolResultBlockParamShape|WebFetchToolResultBlockParamShape|CodeExecutionToolResultBlockParamShape|BashCodeExecutionToolResultBlockParamShape|TextEditorCodeExecutionToolResultBlockParamShape|ToolSearchToolResultBlockParamShape|ContainerUploadBlockParamShape

@@ -58,7 +58,7 @@ final class ResourceRetrieveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ResourceRetrieveParams)->withSessionID(...)
+     * (new ResourceRetrieveParams())->withSessionID(...)
      * ```
      */
     public function __construct()

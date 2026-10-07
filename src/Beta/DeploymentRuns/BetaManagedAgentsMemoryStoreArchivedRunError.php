@@ -42,7 +42,7 @@ final class BetaManagedAgentsMemoryStoreArchivedRunError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMemoryStoreArchivedRunError)
+     * (new BetaManagedAgentsMemoryStoreArchivedRunError())
      *   ->withMessage(...)
      *   ->withType(...)
      * ```

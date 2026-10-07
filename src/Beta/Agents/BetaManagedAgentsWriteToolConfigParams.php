@@ -15,8 +15,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * Configuration override for the write tool.
  *
- * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsWriteToolConfigParams\PermissionPolicy
  * @phpstan-import-type PermissionPolicyShape from \Anthropic\Beta\Agents\BetaManagedAgentsWriteToolConfigParams\PermissionPolicy
+ * @phpstan-import-type PermissionPolicyVariants from \Anthropic\Beta\Agents\BetaManagedAgentsWriteToolConfigParams\PermissionPolicy
  *
  * @phpstan-type BetaManagedAgentsWriteToolConfigParamsShape = array{
  *   name: 'write',

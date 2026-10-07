@@ -183,7 +183,7 @@ final class CostReportListParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CostReportListParams)->withStartingAt(...)
+     * (new CostReportListParams())->withStartingAt(...)
      * ```
      */
     public function __construct()

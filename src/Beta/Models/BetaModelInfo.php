@@ -18,6 +18,7 @@ use Anthropic\Core\Conversion\ConstantOf;
  *   capabilities: null|BetaModelCapabilities|BetaModelCapabilitiesShape,
  *   createdAt: \DateTimeInterface,
  *   displayName: string,
+ *   line: null|BetaModelLine|value-of<BetaModelLine>,
  *   maxInputTokens: int|null,
  *   maxTokens: int|null,
  *   type: 'model',
@@ -71,6 +72,14 @@ final class BetaModelInfo implements BaseModel
     public string $displayName;
 
     /**
+     * The model line this model belongs to, such as `opus` for both Claude Opus 4.5 and Claude Opus 4.6. More lines may be added. `null` when the model belongs to no line; do not infer a line from the `id`.
+     *
+     * @var value-of<BetaModelLine>|null $line
+     */
+    #[Required(enum: BetaModelLine::class)]
+    public ?string $line;
+
+    /**
      * Maximum input context window size in tokens for this model.
      */
     #[Required('max_input_tokens')]
@@ -93,6 +102,7 @@ final class BetaModelInfo implements BaseModel
      *   capabilities: ...,
      *   createdAt: ...,
      *   displayName: ...,
+     *   line: ...,
      *   maxInputTokens: ...,
      *   maxTokens: ...,
      * )
@@ -101,12 +111,13 @@ final class BetaModelInfo implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaModelInfo)
+     * (new BetaModelInfo())
      *   ->withID(...)
      *   ->withAllowedFallbackModels(...)
      *   ->withCapabilities(...)
      *   ->withCreatedAt(...)
      *   ->withDisplayName(...)
+     *   ->withLine(...)
      *   ->withMaxInputTokens(...)
      *   ->withMaxTokens(...)
      * ```
@@ -123,6 +134,7 @@ final class BetaModelInfo implements BaseModel
      *
      * @param list<string>|null $allowedFallbackModels
      * @param BetaModelCapabilities|BetaModelCapabilitiesShape|null $capabilities
+     * @param BetaModelLine|value-of<BetaModelLine>|null $line
      */
     public static function with(
         string $id,
@@ -130,6 +142,7 @@ final class BetaModelInfo implements BaseModel
         BetaModelCapabilities|array|null $capabilities,
         \DateTimeInterface $createdAt,
         string $displayName,
+        BetaModelLine|string|null $line,
         ?int $maxInputTokens,
         ?int $maxTokens,
     ): self {
@@ -140,6 +153,7 @@ final class BetaModelInfo implements BaseModel
         $self['capabilities'] = $capabilities;
         $self['createdAt'] = $createdAt;
         $self['displayName'] = $displayName;
+        $self['line'] = $line;
         $self['maxInputTokens'] = $maxInputTokens;
         $self['maxTokens'] = $maxTokens;
 
@@ -203,6 +217,19 @@ final class BetaModelInfo implements BaseModel
     {
         $self = clone $this;
         $self['displayName'] = $displayName;
+
+        return $self;
+    }
+
+    /**
+     * The model line this model belongs to, such as `opus` for both Claude Opus 4.5 and Claude Opus 4.6. More lines may be added. `null` when the model belongs to no line; do not infer a line from the `id`.
+     *
+     * @param BetaModelLine|value-of<BetaModelLine>|null $line
+     */
+    public function withLine(BetaModelLine|string|null $line): self
+    {
+        $self = clone $this;
+        $self['line'] = $line;
 
         return $self;
     }

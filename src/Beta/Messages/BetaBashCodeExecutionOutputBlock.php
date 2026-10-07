@@ -37,7 +37,7 @@ final class BetaBashCodeExecutionOutputBlock implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaBashCodeExecutionOutputBlock)->withFileID(...)
+     * (new BetaBashCodeExecutionOutputBlock())->withFileID(...)
      * ```
      */
     public function __construct()

@@ -36,7 +36,7 @@ final class ManagedAgentsTokenEndpointAuthNoneParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsTokenEndpointAuthNoneParam)->withType(...)
+     * (new ManagedAgentsTokenEndpointAuthNoneParam())->withType(...)
      * ```
      */
     public function __construct()

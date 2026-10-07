@@ -12,8 +12,8 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Multiagent orchestration configuration. Currently supports the `coordinator` topology.
  *
- * @phpstan-import-type BetaManagedAgentsMultiagentRosterEntryParamsVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentRosterEntryParams
  * @phpstan-import-type BetaManagedAgentsMultiagentRosterEntryParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentRosterEntryParams
+ * @phpstan-import-type BetaManagedAgentsMultiagentRosterEntryParamsVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentRosterEntryParams
  *
  * @phpstan-type BetaManagedAgentsMultiagentParamsShape = array{
  *   agents: list<BetaManagedAgentsMultiagentRosterEntryParamsShape>,
@@ -48,7 +48,7 @@ final class BetaManagedAgentsMultiagentParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMultiagentParams)->withAgents(...)->withType(...)
+     * (new BetaManagedAgentsMultiagentParams())->withAgents(...)->withType(...)
      * ```
      */
     public function __construct()

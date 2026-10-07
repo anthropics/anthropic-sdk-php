@@ -20,8 +20,8 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @see Anthropic\Services\Beta\Organization\ExternalKeysService::update()
  *
- * @phpstan-import-type ProviderConfigVariants from \Anthropic\Beta\Organization\ExternalKeys\ExternalKeyUpdateParams\ProviderConfig
  * @phpstan-import-type ProviderConfigShape from \Anthropic\Beta\Organization\ExternalKeys\ExternalKeyUpdateParams\ProviderConfig
+ * @phpstan-import-type ProviderConfigVariants from \Anthropic\Beta\Organization\ExternalKeys\ExternalKeyUpdateParams\ProviderConfig
  *
  * @phpstan-type ExternalKeyUpdateParamsShape = array{
  *   displayName?: string|null,

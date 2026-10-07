@@ -45,7 +45,7 @@ final class BetaJWKSInline implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaJWKSInline)->withKeys(...)
+     * (new BetaJWKSInline())->withKeys(...)
      * ```
      */
     public function __construct()

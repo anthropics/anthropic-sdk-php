@@ -48,7 +48,7 @@ final class BetaBrowserStateChangeTabOpened implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaBrowserStateChangeTabOpened)->withTabID(...)
+     * (new BetaBrowserStateChangeTabOpened())->withTabID(...)
      * ```
      */
     public function __construct()

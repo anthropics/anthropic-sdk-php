@@ -35,7 +35,7 @@ final class BillingError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BillingError)->withMessage(...)
+     * (new BillingError())->withMessage(...)
      * ```
      */
     public function __construct()

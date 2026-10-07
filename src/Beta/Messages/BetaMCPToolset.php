@@ -84,7 +84,7 @@ final class BetaMCPToolset implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaMCPToolset)->withMCPServerName(...)
+     * (new BetaMCPToolset())->withMCPServerName(...)
      * ```
      */
     public function __construct()

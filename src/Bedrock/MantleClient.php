@@ -118,7 +118,7 @@ final class MantleClient extends BaseClient
      * @param array<string,string|int|list<string|int>|null> $headers
      * @param RequestOpts|null $opts
      *
-     * @return array{NormalizedRequest, RequestOptions}
+     * @return array{NormalizedRequest, RequestOptions, string}
      */
     protected function buildRequest(
         string $method,

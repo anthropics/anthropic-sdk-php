@@ -11,9 +11,9 @@ use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Organization\RateLimits\OrganizationRateLimit\Group;
 
 /**
- * @phpstan-import-type GroupVariants from \Anthropic\Organization\RateLimits\OrganizationRateLimit\Group
  * @phpstan-import-type GroupShape from \Anthropic\Organization\RateLimits\OrganizationRateLimit\Group
  * @phpstan-import-type OrganizationRateLimitValueShape from \Anthropic\Organization\RateLimits\OrganizationRateLimitValue
+ * @phpstan-import-type GroupVariants from \Anthropic\Organization\RateLimits\OrganizationRateLimit\Group
  *
  * @phpstan-type OrganizationRateLimitShape = array{
  *   id: string,
@@ -77,7 +77,7 @@ final class OrganizationRateLimit implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new OrganizationRateLimit)
+     * (new OrganizationRateLimit())
      *   ->withID(...)
      *   ->withGroup(...)
      *   ->withLimits(...)

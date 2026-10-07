@@ -39,7 +39,7 @@ final class ManagedAgentsDeleteSessionResource implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsDeleteSessionResource)->withID(...)->withType(...)
+     * (new ManagedAgentsDeleteSessionResource())->withID(...)->withType(...)
      * ```
      */
     public function __construct()

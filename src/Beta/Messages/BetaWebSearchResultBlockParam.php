@@ -51,7 +51,7 @@ final class BetaWebSearchResultBlockParam implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaWebSearchResultBlockParam)
+     * (new BetaWebSearchResultBlockParam())
      *   ->withEncryptedContent(...)
      *   ->withTitle(...)
      *   ->withURL(...)

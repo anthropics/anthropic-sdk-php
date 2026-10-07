@@ -13,8 +13,8 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * The requested branch or commit does not exist in the repository.
  *
- * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryCheckoutError\RetryStatus
  * @phpstan-import-type RetryStatusShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryCheckoutError\RetryStatus
+ * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryCheckoutError\RetryStatus
  *
  * @phpstan-type ManagedAgentsRepositoryCheckoutErrorShape = array{
  *   message: string,
@@ -65,7 +65,7 @@ final class ManagedAgentsRepositoryCheckoutError implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsRepositoryCheckoutError)
+     * (new ManagedAgentsRepositoryCheckoutError())
      *   ->withMessage(...)
      *   ->withRepositoryURL(...)
      *   ->withRetryStatus(...)

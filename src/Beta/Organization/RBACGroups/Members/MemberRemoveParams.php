@@ -41,7 +41,7 @@ final class MemberRemoveParams implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MemberRemoveParams)->withRBACGroupID(...)
+     * (new MemberRemoveParams())->withRBACGroupID(...)
      * ```
      */
     public function __construct()

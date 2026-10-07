@@ -11,8 +11,8 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type ContentBlockVariants from \Anthropic\Beta\Messages\BetaRawContentBlockStartEvent\ContentBlock
  * @phpstan-import-type ContentBlockShape from \Anthropic\Beta\Messages\BetaRawContentBlockStartEvent\ContentBlock
+ * @phpstan-import-type ContentBlockVariants from \Anthropic\Beta\Messages\BetaRawContentBlockStartEvent\ContentBlock
  *
  * @phpstan-type BetaRawContentBlockStartEventShape = array{
  *   contentBlock: ContentBlockShape, index: int, type: 'content_block_start'
@@ -45,7 +45,7 @@ final class BetaRawContentBlockStartEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaRawContentBlockStartEvent)->withContentBlock(...)->withIndex(...)
+     * (new BetaRawContentBlockStartEvent())->withContentBlock(...)->withIndex(...)
      * ```
      */
     public function __construct()

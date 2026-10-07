@@ -21,8 +21,8 @@ use Anthropic\ServiceContracts\Beta\Organization\WorkspacesRawContract;
 
 /**
  * @phpstan-import-type DataResidencyCreateConfigShape from \Anthropic\Beta\Organization\Workspaces\DataResidencyCreateConfig
- * @phpstan-import-type DataResidencyUpdateConfigShape from \Anthropic\Beta\Organization\Workspaces\DataResidencyUpdateConfig
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type DataResidencyUpdateConfigShape from \Anthropic\Beta\Organization\Workspaces\DataResidencyUpdateConfig
  */
 final class WorkspacesRawService implements WorkspacesRawContract
 {
@@ -147,7 +147,11 @@ final class WorkspacesRawService implements WorkspacesRawContract
      * List Workspaces
      *
      * @param array{
-     *   afterID?: string, beforeID?: string, includeArchived?: bool, limit?: int
+     *   afterID?: string,
+     *   beforeID?: string,
+     *   includeArchived?: bool,
+     *   includeDefault?: bool,
+     *   limit?: int,
      * }|WorkspaceListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -174,6 +178,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
                     'afterID' => 'after_id',
                     'beforeID' => 'before_id',
                     'includeArchived' => 'include_archived',
+                    'includeDefault' => 'include_default',
                 ],
             ),
             options: $options,

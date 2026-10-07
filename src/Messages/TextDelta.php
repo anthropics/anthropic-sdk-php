@@ -35,7 +35,7 @@ final class TextDelta implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new TextDelta)->withText(...)
+     * (new TextDelta())->withText(...)
      * ```
      */
     public function __construct()

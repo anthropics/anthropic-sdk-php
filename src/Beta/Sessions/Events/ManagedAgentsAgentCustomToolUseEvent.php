@@ -76,7 +76,7 @@ final class ManagedAgentsAgentCustomToolUseEvent implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsAgentCustomToolUseEvent)
+     * (new ManagedAgentsAgentCustomToolUseEvent())
      *   ->withID(...)
      *   ->withInput(...)
      *   ->withName(...)
