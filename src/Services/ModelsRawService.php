@@ -11,6 +11,7 @@ use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
 use Anthropic\Models\ModelInfo;
 use Anthropic\Models\ModelListParams;
+use Anthropic\Models\ModelListParams\Lifecycle;
 use Anthropic\Models\ModelRetrieveParams;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
@@ -80,6 +81,7 @@ final class ModelsRawService implements ModelsRawContract
      * @param array{
      *   afterID?: string,
      *   beforeID?: string,
+     *   lifecycle?: list<Lifecycle|value-of<Lifecycle>>,
      *   limit?: int,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -98,7 +100,7 @@ final class ModelsRawService implements ModelsRawContract
             $params,
             $requestOptions,
         );
-        $query_params = array_flip(['afterID', 'beforeID', 'limit']);
+        $query_params = array_flip(['afterID', 'beforeID', 'lifecycle', 'limit']);
 
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);

@@ -5,6 +5,7 @@
 ### Features
 
 * **api:** add claude-haiku-5-5 and typed computer and browser toolset tool calls
+* **api:** add lifecycle stage fields and filter to /v1/models
 
 
 ### Bug Fixes

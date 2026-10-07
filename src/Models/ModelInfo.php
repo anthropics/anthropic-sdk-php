@@ -8,6 +8,7 @@ use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
+use Anthropic\Models\ModelInfo\Lifecycle;
 
 /**
  * @phpstan-import-type ModelCapabilitiesShape from \Anthropic\Models\ModelCapabilities
@@ -16,10 +17,13 @@ use Anthropic\Core\Conversion\ConstantOf;
  *   id: string,
  *   capabilities: null|ModelCapabilities|ModelCapabilitiesShape,
  *   createdAt: \DateTimeInterface,
+ *   deprecatedAt: \DateTimeInterface|null,
  *   displayName: string,
+ *   lifecycle: Lifecycle|value-of<Lifecycle>,
  *   line: null|ModelLine|value-of<ModelLine>,
  *   maxInputTokens: int|null,
  *   maxTokens: int|null,
+ *   retiresAt: \DateTimeInterface|null,
  *   type: 'model',
  * }
  */
@@ -57,10 +61,28 @@ final class ModelInfo implements BaseModel
     public \DateTimeInterface $createdAt;
 
     /**
+     * RFC 3339 datetime string representing the time of the model's most recent deprecation. Populated for `deprecated` and `retired` models; `null` while the model is `active`.
+     */
+    #[Required('deprecated_at')]
+    public ?\DateTimeInterface $deprecatedAt;
+
+    /**
      * A human-readable name for the model.
      */
     #[Required('display_name')]
     public string $displayName;
+
+    /**
+     * The model's current lifecycle stage.
+     *
+     * - `active`: The model is available for use, open to new adopters, and not scheduled for retirement.
+     * - `deprecated`: The model remains callable for organizations with existing access, but is headed for retirement and closed to new adopters.
+     * - `retired`: The model is no longer available for use; inference requests naming it fail. It remains in the catalogue as the historical record of its retirement.
+     *
+     * @var value-of<Lifecycle> $lifecycle
+     */
+    #[Required(enum: Lifecycle::class)]
+    public string $lifecycle;
 
     /**
      * The model line this model belongs to, such as `opus` for both Claude Opus 4.5 and Claude Opus 4.6. More lines may be added. `null` when the model belongs to no line; do not infer a line from the `id`.
@@ -83,6 +105,12 @@ final class ModelInfo implements BaseModel
     public ?int $maxTokens;
 
     /**
+     * RFC 3339 datetime string representing the model's currently scheduled retirement date. The schedule can be revised until retirement occurs; `null` while the model is `active` or while no retirement is scheduled. A past date on a `deprecated` model means retirement is overdue, not that it has occurred: `lifecycle` is the retirement signal.
+     */
+    #[Required('retires_at')]
+    public ?\DateTimeInterface $retiresAt;
+
+    /**
      * `new ModelInfo()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -91,10 +119,13 @@ final class ModelInfo implements BaseModel
      *   id: ...,
      *   capabilities: ...,
      *   createdAt: ...,
+     *   deprecatedAt: ...,
      *   displayName: ...,
+     *   lifecycle: ...,
      *   line: ...,
      *   maxInputTokens: ...,
      *   maxTokens: ...,
+     *   retiresAt: ...,
      * )
      * ```
      *
@@ -105,10 +136,13 @@ final class ModelInfo implements BaseModel
      *   ->withID(...)
      *   ->withCapabilities(...)
      *   ->withCreatedAt(...)
+     *   ->withDeprecatedAt(...)
      *   ->withDisplayName(...)
+     *   ->withLifecycle(...)
      *   ->withLine(...)
      *   ->withMaxInputTokens(...)
      *   ->withMaxTokens(...)
+     *   ->withRetiresAt(...)
      * ```
      */
     public function __construct()
@@ -123,25 +157,32 @@ final class ModelInfo implements BaseModel
      *
      * @param ModelCapabilities|ModelCapabilitiesShape|null $capabilities
      * @param ModelLine|value-of<ModelLine>|null $line
+     * @param Lifecycle|value-of<Lifecycle> $lifecycle
      */
     public static function with(
         string $id,
         ModelCapabilities|array|null $capabilities,
         \DateTimeInterface $createdAt,
+        ?\DateTimeInterface $deprecatedAt,
         string $displayName,
         ModelLine|string|null $line,
         ?int $maxInputTokens,
         ?int $maxTokens,
+        ?\DateTimeInterface $retiresAt,
+        Lifecycle|string $lifecycle = 'active',
     ): self {
         $self = new self;
 
         $self['id'] = $id;
         $self['capabilities'] = $capabilities;
         $self['createdAt'] = $createdAt;
+        $self['deprecatedAt'] = $deprecatedAt;
         $self['displayName'] = $displayName;
+        $self['lifecycle'] = $lifecycle;
         $self['line'] = $line;
         $self['maxInputTokens'] = $maxInputTokens;
         $self['maxTokens'] = $maxTokens;
+        $self['retiresAt'] = $retiresAt;
 
         return $self;
     }
@@ -183,12 +224,40 @@ final class ModelInfo implements BaseModel
     }
 
     /**
+     * RFC 3339 datetime string representing the time of the model's most recent deprecation. Populated for `deprecated` and `retired` models; `null` while the model is `active`.
+     */
+    public function withDeprecatedAt(?\DateTimeInterface $deprecatedAt): self
+    {
+        $self = clone $this;
+        $self['deprecatedAt'] = $deprecatedAt;
+
+        return $self;
+    }
+
+    /**
      * A human-readable name for the model.
      */
     public function withDisplayName(string $displayName): self
     {
         $self = clone $this;
         $self['displayName'] = $displayName;
+
+        return $self;
+    }
+
+    /**
+     * The model's current lifecycle stage.
+     *
+     * - `active`: The model is available for use, open to new adopters, and not scheduled for retirement.
+     * - `deprecated`: The model remains callable for organizations with existing access, but is headed for retirement and closed to new adopters.
+     * - `retired`: The model is no longer available for use; inference requests naming it fail. It remains in the catalogue as the historical record of its retirement.
+     *
+     * @param Lifecycle|value-of<Lifecycle> $lifecycle
+     */
+    public function withLifecycle(Lifecycle|string $lifecycle): self
+    {
+        $self = clone $this;
+        $self['lifecycle'] = $lifecycle;
 
         return $self;
     }
@@ -224,6 +293,17 @@ final class ModelInfo implements BaseModel
     {
         $self = clone $this;
         $self['maxTokens'] = $maxTokens;
+
+        return $self;
+    }
+
+    /**
+     * RFC 3339 datetime string representing the model's currently scheduled retirement date. The schedule can be revised until retirement occurs; `null` while the model is `active` or while no retirement is scheduled. A past date on a `deprecated` model means retirement is overdue, not that it has occurred: `lifecycle` is the retirement signal.
+     */
+    public function withRetiresAt(?\DateTimeInterface $retiresAt): self
+    {
+        $self = clone $this;
+        $self['retiresAt'] = $retiresAt;
 
         return $self;
     }

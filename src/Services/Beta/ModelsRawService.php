@@ -7,6 +7,7 @@ namespace Anthropic\Services\Beta;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Models\BetaModelInfo;
 use Anthropic\Beta\Models\ModelListParams;
+use Anthropic\Beta\Models\ModelListParams\Lifecycle;
 use Anthropic\Beta\Models\ModelRetrieveParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
@@ -80,6 +81,7 @@ final class ModelsRawService implements ModelsRawContract
      * @param array{
      *   afterID?: string,
      *   beforeID?: string,
+     *   lifecycle?: list<Lifecycle|value-of<Lifecycle>>,
      *   limit?: int,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -98,7 +100,7 @@ final class ModelsRawService implements ModelsRawContract
             $params,
             $requestOptions,
         );
-        $query_params = array_flip(['afterID', 'beforeID', 'limit']);
+        $query_params = array_flip(['afterID', 'beforeID', 'lifecycle', 'limit']);
 
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);
