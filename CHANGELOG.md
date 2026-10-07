@@ -31,10 +31,8 @@
 * **api:** add display_name to RBAC roles and deprecate name
 * **api:** add include_default parameter to list workspaces
 * **api:** add line to model objects
-* **api:** add OAuth app scopes to organization spend limits
 * **api:** add url_sources to the Managed Agents web_fetch tool config
 * **api:** add web search and code execution support to model capabilities
-* **api:** filter organization spend limits by OAuth app scope
 
 
 ### Bug Fixes
