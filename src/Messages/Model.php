@@ -18,6 +18,11 @@ enum Model: string
     // Anthropic model identifiers
 
     /**
+     * Fastest model for high-volume, real-time tasks.
+     */
+    case CLAUDE_HAIKU_5_5 = 'claude-haiku-5-5';
+
+    /**
      * Efficient model for coding and agents.
      */
     case CLAUDE_SONNET_5_5 = 'claude-sonnet-5-5';

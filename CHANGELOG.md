@@ -1,6 +1,11 @@
 # Changelog
 
-## [0.55.1](https://github.com/anthropics/anthropic-sdk-php/compare/v0.55.0...v0.55.1) (2026-10-06)
+## [0.56.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.55.0...v0.56.0) (2026-10-07)
+
+### Features
+
+* **api:** add claude-haiku-5-5 and typed computer and browser toolset tool calls
+
 
 ### Bug Fixes
 
