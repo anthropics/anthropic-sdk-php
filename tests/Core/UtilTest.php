@@ -124,6 +124,20 @@ class UtilTest extends TestCase
     }
 
     #[Test]
+    public function testParsePathRejectsEmptyValues(): void
+    {
+        $this->assertSame('cards/0', Util::parsePath(['cards/%1$s', '0']));
+
+        foreach ([['cards/%1$s', ''], ['cards/%1$s/items', ''], ['cards/%1$s%2$s', '', 'x']] as $path) {
+            try {
+                Util::parsePath($path);
+                $this->fail('Expected an empty value to be rejected: '.json_encode($path));
+            } catch (\InvalidArgumentException) {
+            }
+        }
+    }
+
+    #[Test]
     public function testMergeBodyStdClassBaseWithArrayExtra(): void
     {
         $body = (object) ['model' => 'model-x', 'max_tokens' => 1];

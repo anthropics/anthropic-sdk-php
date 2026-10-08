@@ -227,6 +227,9 @@ final class Util
             if ('.' === $segment || '..' === $segment) {
                 throw new \InvalidArgumentException(sprintf('The path "%s" has the dot segment "%s", which would send the request to a different URL. A path parameter cannot be "." or "..".', $parsed, $segment));
             }
+            if ('' === $segment) {
+                throw new \InvalidArgumentException(sprintf('The path "%s" has an empty path parameter, which would send the request to a different URL. A path parameter cannot be empty.', $parsed));
+            }
         }
 
         return $parsed;

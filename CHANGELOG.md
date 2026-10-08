@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.56.1](https://github.com/anthropics/anthropic-sdk-php/compare/v0.56.0...v0.56.1) (2026-10-08)
+
+### Bug Fixes
+
+* **client:** throw before sending a request with an empty path parameter
+
+
+### Chores
+
+* **docs:** note that listing Claude Console spend limits is in early access
+
 ## [0.56.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.55.0...v0.56.0) (2026-10-07)
 
 ### Features
@@ -18,7 +29,6 @@
 * **api:** update spend limit schemas
 * **docs:** describe a federation rule's target by its type
 * **docs:** fix example IDs in sessions, agents and vault credentials
-* **docs:** note that listing Claude Console spend limits is in early access
 * **docs:** update Managed Agents multiagent and thread descriptions
 * **docs:** update the activity summaries endpoint description
 * **internal:** add REVIEW.md with review instructions
