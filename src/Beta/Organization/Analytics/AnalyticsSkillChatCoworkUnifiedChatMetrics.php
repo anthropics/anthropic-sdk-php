@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Organization\Analytics\AnalyticsSkillActivity\ChatCoworkUnifiedMetrics;
+namespace Anthropic\Beta\Organization\Analytics;
 
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -12,11 +12,13 @@ use Anthropic\Core\Contracts\BaseModel;
  * A skill's use in chat conversations recorded while members had
  * Chat and Cowork unified turned on.
  *
- * @phpstan-type ChatShape = array{distinctConversationSkillUsedCount: int|null}
+ * @phpstan-type AnalyticsSkillChatCoworkUnifiedChatMetricsShape = array{
+ *   distinctConversationSkillUsedCount: int|null
+ * }
  */
-final class Chat implements BaseModel
+final class AnalyticsSkillChatCoworkUnifiedChatMetrics implements BaseModel
 {
-    /** @use SdkModel<ChatShape> */
+    /** @use SdkModel<AnalyticsSkillChatCoworkUnifiedChatMetricsShape> */
     use SdkModel;
 
     /**
@@ -26,17 +28,20 @@ final class Chat implements BaseModel
     public ?int $distinctConversationSkillUsedCount;
 
     /**
-     * `new Chat()` is missing required properties by the API.
+     * `new AnalyticsSkillChatCoworkUnifiedChatMetrics()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Chat::with(distinctConversationSkillUsedCount: ...)
+     * AnalyticsSkillChatCoworkUnifiedChatMetrics::with(
+     *   distinctConversationSkillUsedCount: ...
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Chat())->withDistinctConversationSkillUsedCount(...)
+     * (new AnalyticsSkillChatCoworkUnifiedChatMetrics())
+     *   ->withDistinctConversationSkillUsedCount(...)
      * ```
      */
     public function __construct()

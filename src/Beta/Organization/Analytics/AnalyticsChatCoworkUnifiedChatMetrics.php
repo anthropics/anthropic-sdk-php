@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Organization\Analytics\AnalyticsUserActivity\ChatCoworkUnifiedMetrics;
+namespace Anthropic\Beta\Organization\Analytics;
 
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * Chat activity recorded while members had Chat and Cowork unified turned
  * on.
  *
- * @phpstan-type ChatShape = array{
+ * @phpstan-type AnalyticsChatCoworkUnifiedChatMetricsShape = array{
  *   connectorsUsedCount: int,
  *   distinctArtifactsCreatedCount: int,
  *   distinctConnectorsUsedCount: int|null,
@@ -27,9 +27,9 @@ use Anthropic\Core\Contracts\BaseModel;
  *   thinkingMessageCount: int,
  * }
  */
-final class Chat implements BaseModel
+final class AnalyticsChatCoworkUnifiedChatMetrics implements BaseModel
 {
-    /** @use SdkModel<ChatShape> */
+    /** @use SdkModel<AnalyticsChatCoworkUnifiedChatMetricsShape> */
     use SdkModel;
 
     /**
@@ -57,7 +57,7 @@ final class Chat implements BaseModel
     public ?int $distinctConversationCount;
 
     /**
-     * Same measure as `chat_metrics.distinct_files_uploaded_count`, for activity recorded while members had Chat and Cowork unified turned on. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
+     * Same measure as `chat_metrics.distinct_files_uploaded_count`, for activity recorded while members had Chat and Cowork unified turned on. It counts uploaded files as well as files Claude created and images returned by Claude's tools, such as screenshots. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
      */
     #[Required('distinct_files_uploaded_count')]
     public ?int $distinctFilesUploadedCount;
@@ -105,11 +105,11 @@ final class Chat implements BaseModel
     public int $thinkingMessageCount;
 
     /**
-     * `new Chat()` is missing required properties by the API.
+     * `new AnalyticsChatCoworkUnifiedChatMetrics()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Chat::with(
+     * AnalyticsChatCoworkUnifiedChatMetrics::with(
      *   connectorsUsedCount: ...,
      *   distinctArtifactsCreatedCount: ...,
      *   distinctConnectorsUsedCount: ...,
@@ -128,7 +128,7 @@ final class Chat implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Chat())
+     * (new AnalyticsChatCoworkUnifiedChatMetrics())
      *   ->withConnectorsUsedCount(...)
      *   ->withDistinctArtifactsCreatedCount(...)
      *   ->withDistinctConnectorsUsedCount(...)
@@ -233,7 +233,7 @@ final class Chat implements BaseModel
     }
 
     /**
-     * Same measure as `chat_metrics.distinct_files_uploaded_count`, for activity recorded while members had Chat and Cowork unified turned on. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
+     * Same measure as `chat_metrics.distinct_files_uploaded_count`, for activity recorded while members had Chat and Cowork unified turned on. It counts uploaded files as well as files Claude created and images returned by Claude's tools, such as screenshots. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
      */
     public function withDistinctFilesUploadedCount(
         ?int $distinctFilesUploadedCount

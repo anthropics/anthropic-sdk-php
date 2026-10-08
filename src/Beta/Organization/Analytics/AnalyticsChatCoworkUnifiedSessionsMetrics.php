@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Organization\Analytics\AnalyticsUserActivity\ChatCoworkUnifiedMetrics;
+namespace Anthropic\Beta\Organization\Analytics;
 
-use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -13,29 +12,29 @@ use Anthropic\Core\Contracts\BaseModel;
  * Cowork session activity recorded while members had Chat and Cowork
  * unified turned on.
  *
- * @phpstan-type SessionsShape = array{
+ * @phpstan-type AnalyticsChatCoworkUnifiedSessionsMetricsShape = array{
  *   actionCount: int,
  *   artifactsCreatedCount: int,
  *   connectorsUsedCount: int,
  *   dispatchTurnCount: int,
  *   distinctConnectorsUsedCount: int|null,
+ *   distinctPluginsUsedCount: int|null,
  *   distinctSessionCount: int|null,
  *   distinctSkillsUsedCount: int|null,
+ *   editToolCount: int|null,
+ *   fileEditCount: int|null,
  *   messageCount: int,
+ *   multiEditToolCount: int|null,
+ *   notebookEditToolCount: int|null,
+ *   pluginsUsedCount: int|null,
+ *   sessionsWithFileEditsCount: int|null,
  *   skillsUsedCount: int,
- *   distinctPluginsUsedCount?: int|null,
- *   editToolCount?: int|null,
- *   fileEditCount?: int|null,
- *   multiEditToolCount?: int|null,
- *   notebookEditToolCount?: int|null,
- *   pluginsUsedCount?: int|null,
- *   sessionsWithFileEditsCount?: int|null,
- *   writeToolCount?: int|null,
+ *   writeToolCount: int|null,
  * }
  */
-final class Sessions implements BaseModel
+final class AnalyticsChatCoworkUnifiedSessionsMetrics implements BaseModel
 {
-    /** @use SdkModel<SessionsShape> */
+    /** @use SdkModel<AnalyticsChatCoworkUnifiedSessionsMetricsShape> */
     use SdkModel;
 
     /**
@@ -69,6 +68,12 @@ final class Sessions implements BaseModel
     public ?int $distinctConnectorsUsedCount;
 
     /**
+     * Same measure as `cowork_metrics.distinct_plugins_used_count`, for activity recorded while members had Chat and Cowork unified turned on. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
+     */
+    #[Required('distinct_plugins_used_count')]
+    public ?int $distinctPluginsUsedCount;
+
+    /**
      * Same measure as `cowork_metrics.distinct_session_count`, for activity recorded while members had Chat and Cowork unified turned on. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
      */
     #[Required('distinct_session_count')]
@@ -81,10 +86,46 @@ final class Sessions implements BaseModel
     public ?int $distinctSkillsUsedCount;
 
     /**
+     * Same measure as `cowork_metrics.edit_tool_count`, for activity recorded while members had Chat and Cowork unified turned on.
+     */
+    #[Required('edit_tool_count')]
+    public ?int $editToolCount;
+
+    /**
+     * Same measure as `cowork_metrics.file_edit_count`, for activity recorded while members had Chat and Cowork unified turned on.
+     */
+    #[Required('file_edit_count')]
+    public ?int $fileEditCount;
+
+    /**
      * Same measure as `cowork_metrics.message_count`, for activity recorded while members had Chat and Cowork unified turned on.
      */
     #[Required('message_count')]
     public int $messageCount;
+
+    /**
+     * Same measure as `cowork_metrics.multi_edit_tool_count`, for activity recorded while members had Chat and Cowork unified turned on. Claude no longer has a multi-edit tool, so expect 0 when not null; each edit is now a separate Edit tool call, counted in `edit_tool_count` and `file_edit_count`.
+     */
+    #[Required('multi_edit_tool_count')]
+    public ?int $multiEditToolCount;
+
+    /**
+     * Same measure as `cowork_metrics.notebook_edit_tool_count`, for activity recorded while members had Chat and Cowork unified turned on.
+     */
+    #[Required('notebook_edit_tool_count')]
+    public ?int $notebookEditToolCount;
+
+    /**
+     * Same measure as `cowork_metrics.plugins_used_count`, for activity recorded while members had Chat and Cowork unified turned on.
+     */
+    #[Required('plugins_used_count')]
+    public ?int $pluginsUsedCount;
+
+    /**
+     * Same measure as `cowork_metrics.sessions_with_file_edits_count`, for activity recorded while members had Chat and Cowork unified turned on. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
+     */
+    #[Required('sessions_with_file_edits_count')]
+    public ?int $sessionsWithFileEditsCount;
 
     /**
      * Same measure as `cowork_metrics.skills_used_count`, for activity recorded while members had Chat and Cowork unified turned on.
@@ -93,84 +134,58 @@ final class Sessions implements BaseModel
     public int $skillsUsedCount;
 
     /**
-     * Same measure as `cowork_metrics.distinct_plugins_used_count`, for activity recorded while members had Chat and Cowork unified turned on. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
-     */
-    #[Optional('distinct_plugins_used_count', nullable: true)]
-    public ?int $distinctPluginsUsedCount;
-
-    /**
-     * Same measure as `cowork_metrics.edit_tool_count`, for activity recorded while members had Chat and Cowork unified turned on.
-     */
-    #[Optional('edit_tool_count', nullable: true)]
-    public ?int $editToolCount;
-
-    /**
-     * Same measure as `cowork_metrics.file_edit_count`, for activity recorded while members had Chat and Cowork unified turned on.
-     */
-    #[Optional('file_edit_count', nullable: true)]
-    public ?int $fileEditCount;
-
-    /**
-     * Same measure as `cowork_metrics.multi_edit_tool_count`, for activity recorded while members had Chat and Cowork unified turned on.
-     */
-    #[Optional('multi_edit_tool_count', nullable: true)]
-    public ?int $multiEditToolCount;
-
-    /**
-     * Same measure as `cowork_metrics.notebook_edit_tool_count`, for activity recorded while members had Chat and Cowork unified turned on.
-     */
-    #[Optional('notebook_edit_tool_count', nullable: true)]
-    public ?int $notebookEditToolCount;
-
-    /**
-     * Same measure as `cowork_metrics.plugins_used_count`, for activity recorded while members had Chat and Cowork unified turned on.
-     */
-    #[Optional('plugins_used_count', nullable: true)]
-    public ?int $pluginsUsedCount;
-
-    /**
-     * Same measure as `cowork_metrics.sessions_with_file_edits_count`, for activity recorded while members had Chat and Cowork unified turned on. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
-     */
-    #[Optional('sessions_with_file_edits_count', nullable: true)]
-    public ?int $sessionsWithFileEditsCount;
-
-    /**
      * Same measure as `cowork_metrics.write_tool_count`, for activity recorded while members had Chat and Cowork unified turned on.
      */
-    #[Optional('write_tool_count', nullable: true)]
+    #[Required('write_tool_count')]
     public ?int $writeToolCount;
 
     /**
-     * `new Sessions()` is missing required properties by the API.
+     * `new AnalyticsChatCoworkUnifiedSessionsMetrics()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Sessions::with(
+     * AnalyticsChatCoworkUnifiedSessionsMetrics::with(
      *   actionCount: ...,
      *   artifactsCreatedCount: ...,
      *   connectorsUsedCount: ...,
      *   dispatchTurnCount: ...,
      *   distinctConnectorsUsedCount: ...,
+     *   distinctPluginsUsedCount: ...,
      *   distinctSessionCount: ...,
      *   distinctSkillsUsedCount: ...,
+     *   editToolCount: ...,
+     *   fileEditCount: ...,
      *   messageCount: ...,
+     *   multiEditToolCount: ...,
+     *   notebookEditToolCount: ...,
+     *   pluginsUsedCount: ...,
+     *   sessionsWithFileEditsCount: ...,
      *   skillsUsedCount: ...,
+     *   writeToolCount: ...,
      * )
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Sessions())
+     * (new AnalyticsChatCoworkUnifiedSessionsMetrics())
      *   ->withActionCount(...)
      *   ->withArtifactsCreatedCount(...)
      *   ->withConnectorsUsedCount(...)
      *   ->withDispatchTurnCount(...)
      *   ->withDistinctConnectorsUsedCount(...)
+     *   ->withDistinctPluginsUsedCount(...)
      *   ->withDistinctSessionCount(...)
      *   ->withDistinctSkillsUsedCount(...)
+     *   ->withEditToolCount(...)
+     *   ->withFileEditCount(...)
      *   ->withMessageCount(...)
+     *   ->withMultiEditToolCount(...)
+     *   ->withNotebookEditToolCount(...)
+     *   ->withPluginsUsedCount(...)
+     *   ->withSessionsWithFileEditsCount(...)
      *   ->withSkillsUsedCount(...)
+     *   ->withWriteToolCount(...)
      * ```
      */
     public function __construct()
@@ -189,18 +204,18 @@ final class Sessions implements BaseModel
         int $connectorsUsedCount,
         int $dispatchTurnCount,
         ?int $distinctConnectorsUsedCount,
+        ?int $distinctPluginsUsedCount,
         ?int $distinctSessionCount,
         ?int $distinctSkillsUsedCount,
+        ?int $editToolCount,
+        ?int $fileEditCount,
         int $messageCount,
+        ?int $multiEditToolCount,
+        ?int $notebookEditToolCount,
+        ?int $pluginsUsedCount,
+        ?int $sessionsWithFileEditsCount,
         int $skillsUsedCount,
-        ?int $distinctPluginsUsedCount = null,
-        ?int $editToolCount = null,
-        ?int $fileEditCount = null,
-        ?int $multiEditToolCount = null,
-        ?int $notebookEditToolCount = null,
-        ?int $pluginsUsedCount = null,
-        ?int $sessionsWithFileEditsCount = null,
-        ?int $writeToolCount = null,
+        ?int $writeToolCount,
     ): self {
         $self = new self;
 
@@ -209,19 +224,18 @@ final class Sessions implements BaseModel
         $self['connectorsUsedCount'] = $connectorsUsedCount;
         $self['dispatchTurnCount'] = $dispatchTurnCount;
         $self['distinctConnectorsUsedCount'] = $distinctConnectorsUsedCount;
+        $self['distinctPluginsUsedCount'] = $distinctPluginsUsedCount;
         $self['distinctSessionCount'] = $distinctSessionCount;
         $self['distinctSkillsUsedCount'] = $distinctSkillsUsedCount;
+        $self['editToolCount'] = $editToolCount;
+        $self['fileEditCount'] = $fileEditCount;
         $self['messageCount'] = $messageCount;
+        $self['multiEditToolCount'] = $multiEditToolCount;
+        $self['notebookEditToolCount'] = $notebookEditToolCount;
+        $self['pluginsUsedCount'] = $pluginsUsedCount;
+        $self['sessionsWithFileEditsCount'] = $sessionsWithFileEditsCount;
         $self['skillsUsedCount'] = $skillsUsedCount;
-
-        null !== $distinctPluginsUsedCount && $self['distinctPluginsUsedCount'] = $distinctPluginsUsedCount;
-        null !== $editToolCount && $self['editToolCount'] = $editToolCount;
-        null !== $fileEditCount && $self['fileEditCount'] = $fileEditCount;
-        null !== $multiEditToolCount && $self['multiEditToolCount'] = $multiEditToolCount;
-        null !== $notebookEditToolCount && $self['notebookEditToolCount'] = $notebookEditToolCount;
-        null !== $pluginsUsedCount && $self['pluginsUsedCount'] = $pluginsUsedCount;
-        null !== $sessionsWithFileEditsCount && $self['sessionsWithFileEditsCount'] = $sessionsWithFileEditsCount;
-        null !== $writeToolCount && $self['writeToolCount'] = $writeToolCount;
+        $self['writeToolCount'] = $writeToolCount;
 
         return $self;
     }
@@ -283,6 +297,18 @@ final class Sessions implements BaseModel
     }
 
     /**
+     * Same measure as `cowork_metrics.distinct_plugins_used_count`, for activity recorded while members had Chat and Cowork unified turned on. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
+     */
+    public function withDistinctPluginsUsedCount(
+        ?int $distinctPluginsUsedCount
+    ): self {
+        $self = clone $this;
+        $self['distinctPluginsUsedCount'] = $distinctPluginsUsedCount;
+
+        return $self;
+    }
+
+    /**
      * Same measure as `cowork_metrics.distinct_session_count`, for activity recorded while members had Chat and Cowork unified turned on. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
      */
     public function withDistinctSessionCount(?int $distinctSessionCount): self
@@ -301,40 +327,6 @@ final class Sessions implements BaseModel
     ): self {
         $self = clone $this;
         $self['distinctSkillsUsedCount'] = $distinctSkillsUsedCount;
-
-        return $self;
-    }
-
-    /**
-     * Same measure as `cowork_metrics.message_count`, for activity recorded while members had Chat and Cowork unified turned on.
-     */
-    public function withMessageCount(int $messageCount): self
-    {
-        $self = clone $this;
-        $self['messageCount'] = $messageCount;
-
-        return $self;
-    }
-
-    /**
-     * Same measure as `cowork_metrics.skills_used_count`, for activity recorded while members had Chat and Cowork unified turned on.
-     */
-    public function withSkillsUsedCount(int $skillsUsedCount): self
-    {
-        $self = clone $this;
-        $self['skillsUsedCount'] = $skillsUsedCount;
-
-        return $self;
-    }
-
-    /**
-     * Same measure as `cowork_metrics.distinct_plugins_used_count`, for activity recorded while members had Chat and Cowork unified turned on. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
-     */
-    public function withDistinctPluginsUsedCount(
-        ?int $distinctPluginsUsedCount
-    ): self {
-        $self = clone $this;
-        $self['distinctPluginsUsedCount'] = $distinctPluginsUsedCount;
 
         return $self;
     }
@@ -362,7 +354,18 @@ final class Sessions implements BaseModel
     }
 
     /**
-     * Same measure as `cowork_metrics.multi_edit_tool_count`, for activity recorded while members had Chat and Cowork unified turned on.
+     * Same measure as `cowork_metrics.message_count`, for activity recorded while members had Chat and Cowork unified turned on.
+     */
+    public function withMessageCount(int $messageCount): self
+    {
+        $self = clone $this;
+        $self['messageCount'] = $messageCount;
+
+        return $self;
+    }
+
+    /**
+     * Same measure as `cowork_metrics.multi_edit_tool_count`, for activity recorded while members had Chat and Cowork unified turned on. Claude no longer has a multi-edit tool, so expect 0 when not null; each edit is now a separate Edit tool call, counted in `edit_tool_count` and `file_edit_count`.
      */
     public function withMultiEditToolCount(?int $multiEditToolCount): self
     {
@@ -402,6 +405,17 @@ final class Sessions implements BaseModel
     ): self {
         $self = clone $this;
         $self['sessionsWithFileEditsCount'] = $sessionsWithFileEditsCount;
+
+        return $self;
+    }
+
+    /**
+     * Same measure as `cowork_metrics.skills_used_count`, for activity recorded while members had Chat and Cowork unified turned on.
+     */
+    public function withSkillsUsedCount(int $skillsUsedCount): self
+    {
+        $self = clone $this;
+        $self['skillsUsedCount'] = $skillsUsedCount;
 
         return $self;
     }

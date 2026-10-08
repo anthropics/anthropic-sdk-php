@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Organization\Analytics\AnalyticsConnectorActivity\ChatCoworkUnifiedMetrics;
+namespace Anthropic\Beta\Organization\Analytics;
 
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -12,13 +12,13 @@ use Anthropic\Core\Contracts\BaseModel;
  * A connector's use in chat conversations recorded while members had
  * Chat and Cowork unified turned on.
  *
- * @phpstan-type ChatShape = array{
+ * @phpstan-type AnalyticsConnectorChatCoworkUnifiedChatMetricsShape = array{
  *   distinctConversationConnectorUsedCount: int|null
  * }
  */
-final class Chat implements BaseModel
+final class AnalyticsConnectorChatCoworkUnifiedChatMetrics implements BaseModel
 {
-    /** @use SdkModel<ChatShape> */
+    /** @use SdkModel<AnalyticsConnectorChatCoworkUnifiedChatMetricsShape> */
     use SdkModel;
 
     /**
@@ -28,17 +28,20 @@ final class Chat implements BaseModel
     public ?int $distinctConversationConnectorUsedCount;
 
     /**
-     * `new Chat()` is missing required properties by the API.
+     * `new AnalyticsConnectorChatCoworkUnifiedChatMetrics()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Chat::with(distinctConversationConnectorUsedCount: ...)
+     * AnalyticsConnectorChatCoworkUnifiedChatMetrics::with(
+     *   distinctConversationConnectorUsedCount: ...
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Chat())->withDistinctConversationConnectorUsedCount(...)
+     * (new AnalyticsConnectorChatCoworkUnifiedChatMetrics())
+     *   ->withDistinctConversationConnectorUsedCount(...)
      * ```
      */
     public function __construct()
