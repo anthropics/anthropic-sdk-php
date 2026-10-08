@@ -28,6 +28,9 @@ use Psr\Http\Message\ResponseInterface;
  */
 class Client extends BaseClient
 {
+    /** @internal */
+    public const ANTHROPIC_API_VERSION = '2023-06-01';
+
     public string $apiKey;
 
     public string $authToken;
@@ -120,7 +123,7 @@ class Client extends BaseClient
 
         /** @var array<string, string|null> $headers */
         $headers = [
-            'anthropic-version' => '2023-06-01',
+            'anthropic-version' => self::ANTHROPIC_API_VERSION,
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
             'User-Agent' => sprintf('anthropic/PHP %s', VERSION),
