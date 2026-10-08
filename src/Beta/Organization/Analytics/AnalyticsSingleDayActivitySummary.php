@@ -26,6 +26,9 @@ use Anthropic\Core\Contracts\BaseModel;
  *   startingAt: \DateTimeInterface,
  *   weeklyActiveUserCount: int,
  *   weeklyAdoptionRate: float|null,
+ *   chatCoworkUnifiedDailyActiveUserCount?: int|null,
+ *   chatCoworkUnifiedMonthlyActiveUserCount?: int|null,
+ *   chatCoworkUnifiedWeeklyActiveUserCount?: int|null,
  *   chatDailyActiveUserCount?: int|null,
  *   chatMonthlyActiveUserCount?: int|null,
  *   chatWeeklyActiveUserCount?: int|null,
@@ -126,6 +129,24 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
      */
     #[Required('weekly_adoption_rate')]
     public ?float $weeklyAdoptionRate;
+
+    /**
+     * Number of users with activity in Chat and Cowork unified on the requested day. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     */
+    #[Optional('chat_cowork_unified_daily_active_user_count', nullable: true)]
+    public ?int $chatCoworkUnifiedDailyActiveUserCount;
+
+    /**
+     * Number of users with activity in Chat and Cowork unified in the 30-day rolling window. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     */
+    #[Optional('chat_cowork_unified_monthly_active_user_count', nullable: true)]
+    public ?int $chatCoworkUnifiedMonthlyActiveUserCount;
+
+    /**
+     * Number of users with activity in Chat and Cowork unified in the 7-day rolling window. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     */
+    #[Optional('chat_cowork_unified_weekly_active_user_count', nullable: true)]
+    public ?int $chatCoworkUnifiedWeeklyActiveUserCount;
 
     /**
      * Number of users with claude.ai (chat) activity on the requested day. Omitted from the response while the per-product breakdown is not enabled for this organization.
@@ -288,6 +309,9 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
         \DateTimeInterface $startingAt,
         int $weeklyActiveUserCount,
         ?float $weeklyAdoptionRate,
+        ?int $chatCoworkUnifiedDailyActiveUserCount = null,
+        ?int $chatCoworkUnifiedMonthlyActiveUserCount = null,
+        ?int $chatCoworkUnifiedWeeklyActiveUserCount = null,
         ?int $chatDailyActiveUserCount = null,
         ?int $chatMonthlyActiveUserCount = null,
         ?int $chatWeeklyActiveUserCount = null,
@@ -321,6 +345,9 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
         $self['weeklyActiveUserCount'] = $weeklyActiveUserCount;
         $self['weeklyAdoptionRate'] = $weeklyAdoptionRate;
 
+        null !== $chatCoworkUnifiedDailyActiveUserCount && $self['chatCoworkUnifiedDailyActiveUserCount'] = $chatCoworkUnifiedDailyActiveUserCount;
+        null !== $chatCoworkUnifiedMonthlyActiveUserCount && $self['chatCoworkUnifiedMonthlyActiveUserCount'] = $chatCoworkUnifiedMonthlyActiveUserCount;
+        null !== $chatCoworkUnifiedWeeklyActiveUserCount && $self['chatCoworkUnifiedWeeklyActiveUserCount'] = $chatCoworkUnifiedWeeklyActiveUserCount;
         null !== $chatDailyActiveUserCount && $self['chatDailyActiveUserCount'] = $chatDailyActiveUserCount;
         null !== $chatMonthlyActiveUserCount && $self['chatMonthlyActiveUserCount'] = $chatMonthlyActiveUserCount;
         null !== $chatWeeklyActiveUserCount && $self['chatWeeklyActiveUserCount'] = $chatWeeklyActiveUserCount;
@@ -484,6 +511,42 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
     {
         $self = clone $this;
         $self['weeklyAdoptionRate'] = $weeklyAdoptionRate;
+
+        return $self;
+    }
+
+    /**
+     * Number of users with activity in Chat and Cowork unified on the requested day. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     */
+    public function withChatCoworkUnifiedDailyActiveUserCount(
+        ?int $chatCoworkUnifiedDailyActiveUserCount
+    ): self {
+        $self = clone $this;
+        $self['chatCoworkUnifiedDailyActiveUserCount'] = $chatCoworkUnifiedDailyActiveUserCount;
+
+        return $self;
+    }
+
+    /**
+     * Number of users with activity in Chat and Cowork unified in the 30-day rolling window. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     */
+    public function withChatCoworkUnifiedMonthlyActiveUserCount(
+        ?int $chatCoworkUnifiedMonthlyActiveUserCount
+    ): self {
+        $self = clone $this;
+        $self['chatCoworkUnifiedMonthlyActiveUserCount'] = $chatCoworkUnifiedMonthlyActiveUserCount;
+
+        return $self;
+    }
+
+    /**
+     * Number of users with activity in Chat and Cowork unified in the 7-day rolling window. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     */
+    public function withChatCoworkUnifiedWeeklyActiveUserCount(
+        ?int $chatCoworkUnifiedWeeklyActiveUserCount
+    ): self {
+        $self = clone $this;
+        $self['chatCoworkUnifiedWeeklyActiveUserCount'] = $chatCoworkUnifiedWeeklyActiveUserCount;
 
         return $self;
     }

@@ -1,6 +1,11 @@
 # Changelog
 
-## [0.56.1](https://github.com/anthropics/anthropic-sdk-php/compare/v0.56.0...v0.56.1) (2026-10-08)
+## [0.57.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.56.0...v0.57.0) (2026-10-08)
+
+### Features
+
+* **api:** add types for the Chat and Cowork unified analytics metrics
+
 
 ### Bug Fixes
 
