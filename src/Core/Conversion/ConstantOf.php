@@ -18,7 +18,7 @@ final class ConstantOf implements Converter
     {
         $this->tally($value, state: $state);
 
-        return $value;
+        return $value instanceof \BackedEnum ? $value->value : $value;
     }
 
     public function dump(mixed $value, DumpState $state): mixed
@@ -30,6 +30,9 @@ final class ConstantOf implements Converter
 
     private function tally(mixed $value, CoerceState|DumpState $state): void
     {
+        if ($value instanceof \BackedEnum) {
+            $value = $value->value;
+        }
         if ($value === $this->value) {
             ++$state->yes;
         } elseif (gettype($value) === gettype($this->value)) {

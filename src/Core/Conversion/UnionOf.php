@@ -120,6 +120,9 @@ final class UnionOf implements Converter
             && array_key_exists($this->discriminator, array: $value)
         ) {
             $discriminator = $value[$this->discriminator];
+            if ($discriminator instanceof \BackedEnum) {
+                $discriminator = $discriminator->value;
+            }
             if (!is_string($discriminator)) {
                 return null;
             }

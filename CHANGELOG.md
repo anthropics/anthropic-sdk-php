@@ -7,6 +7,11 @@
 * **api:** add organization_type_not_supported error to spend limit lists
 
 
+### Bug Fixes
+
+* **client:** accept backed enums as union discriminators in array params
+
+
 ### Chores
 
 * **docs:** correct prefill, thinking, fallback and model descriptions
