@@ -1,6 +1,11 @@
 # Changelog
 
-## [0.57.1](https://github.com/anthropics/anthropic-sdk-php/compare/v0.57.0...v0.57.1) (2026-10-09)
+## [0.58.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.57.0...v0.58.0) (2026-10-09)
+
+### Features
+
+* **api:** add organization_type_not_supported error to spend limit lists
+
 
 ### Chores
 

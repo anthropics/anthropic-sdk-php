@@ -77,16 +77,14 @@ final class SpendLimitsService implements SpendLimitsContract
      *
      * List the organization's spend limits.
      *
-     * A Claude Console organization's limits come in an order that is stable across
-     * pages. A Claude Enterprise organization's are grouped by scope type,
-     * in the order `organization`, `seat_tier`, `rbac_group`,
-     * `organization_service`, `user`; within a type they come in a fixed order that
-     * is not creation order. Listing Claude Console limits is in an early access
-     * preview. To request access, contact your Anthropic account team.
+     * Limits are grouped by scope type, in the order `organization`, `seat_tier`,
+     * `rbac_group`, `organization_service`, `user`; within a type they come in a
+     * fixed order that is not creation order. Supported for Claude Enterprise
+     * organizations only, not for Claude Console organizations.
      *
      * @param int $limit Query param: Maximum number of limits per page. Defaults to `20`.
      * @param string|null $page query param: Opaque cursor from a previous response's `next_page` field
-     * @param list<ScopeType|value-of<ScopeType>>|null $scopeType Query param: Return only limits with these scope types. A Claude Console organization has `organization` and `workspace` limits; a Claude Enterprise organization has `organization`, `seat_tier`, `rbac_group`, `organization_service` and `user` limits. Omit for all.
+     * @param list<ScopeType|value-of<ScopeType>>|null $scopeType Query param: Return only limits with these scope types. Omit for all.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `spend-limit-reads-2026-09-26` in this header
      * @param RequestOpts|null $requestOptions
      *
