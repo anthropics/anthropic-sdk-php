@@ -42,7 +42,7 @@ final class BatchesTest extends TestCase
                     'params' => [
                         'maxTokens' => 1024,
                         'messages' => [['content' => 'Hello, world', 'role' => 'user']],
-                        'model' => Model::CLAUDE_OPUS_5,
+                        'model' => Model::CLAUDE_OPUS_5_5,
                     ],
                 ],
             ],
@@ -69,7 +69,7 @@ final class BatchesTest extends TestCase
                                 'outputConfig' => ['effort' => 'low'],
                             ],
                         ],
-                        'model' => Model::CLAUDE_OPUS_5,
+                        'model' => Model::CLAUDE_OPUS_5_5,
                         'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                         'compaction' => [
                             'type' => 'summarize', 'instructions' => 'instructions',

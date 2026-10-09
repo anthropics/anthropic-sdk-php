@@ -136,7 +136,7 @@ class ClientTest extends TestCase
             $client->messages->create(
                 maxTokens: 1024,
                 messages: [['content' => 'Hello, world', 'role' => 'user']],
-                model: Model::CLAUDE_OPUS_5,
+                model: Model::CLAUDE_OPUS_5_5,
             );
             $this->fail('Expected an API status exception');
         } catch (APIStatusException $e) {
@@ -168,7 +168,7 @@ class ClientTest extends TestCase
             $client->messages->create(
                 maxTokens: 1024,
                 messages: [['content' => 'Hello, world', 'role' => 'user']],
-                model: Model::CLAUDE_OPUS_5,
+                model: Model::CLAUDE_OPUS_5_5,
             );
             $this->fail('Expected an API status exception');
         } catch (APIStatusException $e) {
@@ -195,7 +195,7 @@ class ClientTest extends TestCase
             foreach ($client->messages->createStream(
                 maxTokens: 1024,
                 messages: [['content' => 'Hello, world', 'role' => 'user']],
-                model: Model::CLAUDE_OPUS_5,
+                model: Model::CLAUDE_OPUS_5_5,
             ) as $_);
 
             $this->fail('expected an APIStatusException');

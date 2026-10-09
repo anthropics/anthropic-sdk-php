@@ -34,7 +34,7 @@ final class AgentsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->beta->agents->create(
-            model: BetaManagedAgentsModel::CLAUDE_OPUS_5,
+            model: BetaManagedAgentsModel::CLAUDE_OPUS_5_5,
             name: 'My First Agent'
         );
 
@@ -46,7 +46,7 @@ final class AgentsTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->beta->agents->create(
-            model: BetaManagedAgentsModel::CLAUDE_OPUS_5,
+            model: BetaManagedAgentsModel::CLAUDE_OPUS_5_5,
             name: 'My First Agent',
             description: 'A general-purpose starter agent.',
             mcpServers: [
