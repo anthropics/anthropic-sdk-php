@@ -20,6 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type BetaManagedAgentsMultiagentShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagent
  * @phpstan-import-type SkillShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgent\Skill
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgent\Tool
+ * @phpstan-import-type BetaManagedAgentsMultiagentVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagent
  * @phpstan-import-type SkillVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgent\Skill
  * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgent\Tool
  *
@@ -31,7 +32,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   mcpServers: list<BetaManagedAgentsMCPServerURLDefinition|BetaManagedAgentsMCPServerURLDefinitionShape>,
  *   metadata: array<string,string>,
  *   model: BetaManagedAgentsModelConfig|BetaManagedAgentsModelConfigShape,
- *   multiagent: null|BetaManagedAgentsMultiagent|BetaManagedAgentsMultiagentShape,
+ *   multiagent: BetaManagedAgentsMultiagentShape|null,
  *   name: string,
  *   skills: list<SkillShape>,
  *   system: string|null,
@@ -83,9 +84,11 @@ final class BetaManagedAgentsAgent implements BaseModel
 
     /**
      * Multiagent orchestration configuration. Null when the agent is single-threaded.
+     *
+     * @var BetaManagedAgentsMultiagentVariants|null $multiagent
      */
-    #[Required]
-    public ?BetaManagedAgentsMultiagent $multiagent;
+    #[Required(union: BetaManagedAgentsMultiagent::class)]
+    public BetaManagedAgentsMultiagentCoordinator|BetaManagedAgentsMultiagent20261001|null $multiagent;
 
     #[Required]
     public string $name;
@@ -175,7 +178,7 @@ final class BetaManagedAgentsAgent implements BaseModel
      * @param list<BetaManagedAgentsMCPServerURLDefinition|BetaManagedAgentsMCPServerURLDefinitionShape> $mcpServers
      * @param array<string,string> $metadata
      * @param BetaManagedAgentsModelConfig|BetaManagedAgentsModelConfigShape $model
-     * @param BetaManagedAgentsMultiagent|BetaManagedAgentsMultiagentShape|null $multiagent
+     * @param BetaManagedAgentsMultiagentShape|null $multiagent
      * @param list<SkillShape> $skills
      * @param list<ToolShape> $tools
      * @param Type|value-of<Type> $type
@@ -188,7 +191,7 @@ final class BetaManagedAgentsAgent implements BaseModel
         array $mcpServers,
         array $metadata,
         BetaManagedAgentsModelConfig|array $model,
-        BetaManagedAgentsMultiagent|array|null $multiagent,
+        BetaManagedAgentsMultiagentCoordinator|array|BetaManagedAgentsMultiagent20261001|null $multiagent,
         string $name,
         array $skills,
         ?string $system,
@@ -294,10 +297,10 @@ final class BetaManagedAgentsAgent implements BaseModel
     /**
      * Multiagent orchestration configuration. Null when the agent is single-threaded.
      *
-     * @param BetaManagedAgentsMultiagent|BetaManagedAgentsMultiagentShape|null $multiagent
+     * @param BetaManagedAgentsMultiagentShape|null $multiagent
      */
     public function withMultiagent(
-        BetaManagedAgentsMultiagent|array|null $multiagent
+        BetaManagedAgentsMultiagentCoordinator|array|BetaManagedAgentsMultiagent20261001|null $multiagent,
     ): self {
         $self = clone $this;
         $self['multiagent'] = $multiagent;

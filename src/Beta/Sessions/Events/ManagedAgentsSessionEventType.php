@@ -76,4 +76,18 @@ enum ManagedAgentsSessionEventType: string
     case SYSTEM_MESSAGE = 'system.message';
 
     case SESSION_USAGE = 'session.usage';
+
+    case WORKFLOW_RUN_CREATED = 'workflow_run.created';
+
+    case WORKFLOW_RUN_STATUS_RUNNING = 'workflow_run.status_running';
+
+    case WORKFLOW_RUN_STATUS_IDLE = 'workflow_run.status_idle';
+
+    case WORKFLOW_RUN_STATUS_ENDED = 'workflow_run.status_ended';
+
+    case WORKFLOW_RUN_ERROR = 'workflow_run.error';
+
+    case WORKFLOW_RUN_PHASE_STARTED = 'workflow_run.phase_started';
+
+    case WORKFLOW_RUN_PHASE_ENDED = 'workflow_run.phase_ended';
 }

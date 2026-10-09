@@ -18,6 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   processedAt: \DateTimeInterface,
  *   sessionThreadID: string,
  *   type: Type|value-of<Type>,
+ *   workflowRunID: string|null,
  * }
  */
 final class ManagedAgentsSessionThreadCreatedEvent implements BaseModel
@@ -54,12 +55,23 @@ final class ManagedAgentsSessionThreadCreatedEvent implements BaseModel
     public string $type;
 
     /**
+     * Identifier of the workflow run that created the thread, or `null` for any other thread.
+     */
+    #[Required('workflow_run_id')]
+    public ?string $workflowRunID;
+
+    /**
      * `new ManagedAgentsSessionThreadCreatedEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
      * ManagedAgentsSessionThreadCreatedEvent::with(
-     *   id: ..., agentName: ..., processedAt: ..., sessionThreadID: ..., type: ...
+     *   id: ...,
+     *   agentName: ...,
+     *   processedAt: ...,
+     *   sessionThreadID: ...,
+     *   type: ...,
+     *   workflowRunID: ...,
      * )
      * ```
      *
@@ -72,6 +84,7 @@ final class ManagedAgentsSessionThreadCreatedEvent implements BaseModel
      *   ->withProcessedAt(...)
      *   ->withSessionThreadID(...)
      *   ->withType(...)
+     *   ->withWorkflowRunID(...)
      * ```
      */
     public function __construct()
@@ -92,6 +105,7 @@ final class ManagedAgentsSessionThreadCreatedEvent implements BaseModel
         \DateTimeInterface $processedAt,
         string $sessionThreadID,
         Type|string $type,
+        ?string $workflowRunID,
     ): self {
         $self = new self;
 
@@ -100,6 +114,7 @@ final class ManagedAgentsSessionThreadCreatedEvent implements BaseModel
         $self['processedAt'] = $processedAt;
         $self['sessionThreadID'] = $sessionThreadID;
         $self['type'] = $type;
+        $self['workflowRunID'] = $workflowRunID;
 
         return $self;
     }
@@ -155,6 +170,17 @@ final class ManagedAgentsSessionThreadCreatedEvent implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * Identifier of the workflow run that created the thread, or `null` for any other thread.
+     */
+    public function withWorkflowRunID(?string $workflowRunID): self
+    {
+        $self = clone $this;
+        $self['workflowRunID'] = $workflowRunID;
 
         return $self;
     }

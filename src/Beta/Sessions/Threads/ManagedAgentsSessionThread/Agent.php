@@ -6,6 +6,7 @@ namespace Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThread;
 
 use Anthropic\Beta\Agents\BetaManagedAgentsAdvisor;
 use Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent;
+use Anthropic\Beta\Sessions\Threads\ManagedAgentsInlineAgent;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
@@ -15,9 +16,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  *
  * @phpstan-import-type BetaManagedAgentsSessionThreadAgentShape from \Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent
  * @phpstan-import-type BetaManagedAgentsAdvisorShape from \Anthropic\Beta\Agents\BetaManagedAgentsAdvisor
+ * @phpstan-import-type ManagedAgentsInlineAgentShape from \Anthropic\Beta\Sessions\Threads\ManagedAgentsInlineAgent
  *
- * @phpstan-type AgentVariants = BetaManagedAgentsSessionThreadAgent|BetaManagedAgentsAdvisor
- * @phpstan-type AgentShape = AgentVariants|BetaManagedAgentsSessionThreadAgentShape|BetaManagedAgentsAdvisorShape
+ * @phpstan-type AgentVariants = BetaManagedAgentsSessionThreadAgent|BetaManagedAgentsAdvisor|ManagedAgentsInlineAgent
+ * @phpstan-type AgentShape = AgentVariants|BetaManagedAgentsSessionThreadAgentShape|BetaManagedAgentsAdvisorShape|ManagedAgentsInlineAgentShape
  */
 final class Agent implements ConverterSource
 {
@@ -36,6 +38,7 @@ final class Agent implements ConverterSource
         return [
             'agent' => BetaManagedAgentsSessionThreadAgent::class,
             'advisor' => BetaManagedAgentsAdvisor::class,
+            'inline' => ManagedAgentsInlineAgent::class,
         ];
     }
 }

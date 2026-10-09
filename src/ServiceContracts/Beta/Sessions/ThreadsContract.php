@@ -6,6 +6,7 @@ namespace Anthropic\ServiceContracts\Beta\Sessions;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThread;
+use Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThreadStatus;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -42,6 +43,9 @@ interface ThreadsContract
      * @param string $sessionID Path param
      * @param int $limit Query param: Maximum results per page. Defaults to 1000.
      * @param string $page Query param: Opaque pagination cursor from a previous response's `next_page`. Forward-only.
+     * @param list<ManagedAgentsSessionThreadStatus|value-of<ManagedAgentsSessionThreadStatus>> $statuses Query param: Return only threads that have one of these statuses.
+     *
+     * Repeat the parameter to give more than one status. Leave it out to return threads of every status.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -56,6 +60,7 @@ interface ThreadsContract
         string $sessionID,
         ?int $limit = null,
         ?string $page = null,
+        ?array $statuses = null,
         ?array $betas = null,
         ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,

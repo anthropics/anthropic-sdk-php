@@ -18,9 +18,10 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-import-type BetaManagedAgentsMCPServerURLDefinitionShape from \Anthropic\Beta\Agents\BetaManagedAgentsMCPServerURLDefinition
  * @phpstan-import-type BetaManagedAgentsModelConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfig
- * @phpstan-import-type BetaManagedAgentsSessionMultiagentCoordinatorShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionMultiagentCoordinator
+ * @phpstan-import-type BetaManagedAgentsSessionMultiagentShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionMultiagent
  * @phpstan-import-type SkillShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent\Skill
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent\Tool
+ * @phpstan-import-type BetaManagedAgentsSessionMultiagentVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionMultiagent
  * @phpstan-import-type SkillVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent\Skill
  * @phpstan-import-type ToolVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsSessionAgent\Tool
  *
@@ -29,7 +30,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   description: string|null,
  *   mcpServers: list<BetaManagedAgentsMCPServerURLDefinition|BetaManagedAgentsMCPServerURLDefinitionShape>,
  *   model: BetaManagedAgentsModelConfig|BetaManagedAgentsModelConfigShape,
- *   multiagent: null|BetaManagedAgentsSessionMultiagentCoordinator|BetaManagedAgentsSessionMultiagentCoordinatorShape,
+ *   multiagent: BetaManagedAgentsSessionMultiagentShape|null,
  *   name: string,
  *   skills: list<SkillShape>,
  *   system: string|null,
@@ -64,9 +65,11 @@ final class BetaManagedAgentsSessionAgent implements BaseModel
 
     /**
      * Resolved multiagent orchestration configuration. Null when the agent is single-threaded.
+     *
+     * @var BetaManagedAgentsSessionMultiagentVariants|null $multiagent
      */
-    #[Required]
-    public ?BetaManagedAgentsSessionMultiagentCoordinator $multiagent;
+    #[Required(union: BetaManagedAgentsSessionMultiagent::class)]
+    public BetaManagedAgentsSessionMultiagentCoordinator|BetaManagedAgentsSessionMultiagent20261001|null $multiagent;
 
     #[Required]
     public string $name;
@@ -138,7 +141,7 @@ final class BetaManagedAgentsSessionAgent implements BaseModel
      *
      * @param list<BetaManagedAgentsMCPServerURLDefinition|BetaManagedAgentsMCPServerURLDefinitionShape> $mcpServers
      * @param BetaManagedAgentsModelConfig|BetaManagedAgentsModelConfigShape $model
-     * @param BetaManagedAgentsSessionMultiagentCoordinator|BetaManagedAgentsSessionMultiagentCoordinatorShape|null $multiagent
+     * @param BetaManagedAgentsSessionMultiagentShape|null $multiagent
      * @param list<SkillShape> $skills
      * @param list<ToolShape> $tools
      * @param Type|value-of<Type> $type
@@ -148,7 +151,7 @@ final class BetaManagedAgentsSessionAgent implements BaseModel
         ?string $description,
         array $mcpServers,
         BetaManagedAgentsModelConfig|array $model,
-        BetaManagedAgentsSessionMultiagentCoordinator|array|null $multiagent,
+        BetaManagedAgentsSessionMultiagentCoordinator|array|BetaManagedAgentsSessionMultiagent20261001|null $multiagent,
         string $name,
         array $skills,
         ?string $system,
@@ -216,10 +219,10 @@ final class BetaManagedAgentsSessionAgent implements BaseModel
     /**
      * Resolved multiagent orchestration configuration. Null when the agent is single-threaded.
      *
-     * @param BetaManagedAgentsSessionMultiagentCoordinator|BetaManagedAgentsSessionMultiagentCoordinatorShape|null $multiagent
+     * @param BetaManagedAgentsSessionMultiagentShape|null $multiagent
      */
     public function withMultiagent(
-        BetaManagedAgentsSessionMultiagentCoordinator|array|null $multiagent
+        BetaManagedAgentsSessionMultiagentCoordinator|array|BetaManagedAgentsSessionMultiagent20261001|null $multiagent,
     ): self {
         $self = clone $this;
         $self['multiagent'] = $multiagent;
