@@ -12,7 +12,6 @@ use Anthropic\Beta\Agents\AgentUpdateParams;
 use Anthropic\Beta\Agents\BetaManagedAgentsAgent;
 use Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams;
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
@@ -50,7 +49,7 @@ final class AgentsRawService implements AgentsRawContract
      *   description?: string|null,
      *   mcpServers?: list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>,
      *   metadata?: array<string,string>,
-     *   multiagent?: BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null,
+     *   multiagent?: BetaManagedAgentsMultiagentParamsShape|null,
      *   skills?: list<BetaManagedAgentsSkillParamsShape>,
      *   system?: string|null,
      *   tools?: list<ToolShape>,
@@ -156,7 +155,7 @@ final class AgentsRawService implements AgentsRawContract
      *   mcpServers?: list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null,
      *   metadata?: array<string,string|null>|null,
      *   model?: ModelShape1,
-     *   multiagent?: BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null,
+     *   multiagent?: BetaManagedAgentsMultiagentParamsShape|null,
      *   name?: string,
      *   skills?: list<BetaManagedAgentsSkillParamsShape>|null,
      *   system?: string|null,

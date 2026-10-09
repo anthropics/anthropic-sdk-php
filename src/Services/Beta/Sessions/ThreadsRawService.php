@@ -6,6 +6,7 @@ namespace Anthropic\Services\Beta\Sessions;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThread;
+use Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThreadStatus;
 use Anthropic\Beta\Sessions\Threads\ThreadArchiveParams;
 use Anthropic\Beta\Sessions\Threads\ThreadListParams;
 use Anthropic\Beta\Sessions\Threads\ThreadRetrieveParams;
@@ -84,6 +85,7 @@ final class ThreadsRawService implements ThreadsRawContract
      * @param array{
      *   limit?: int,
      *   page?: string,
+     *   statuses?: list<ManagedAgentsSessionThreadStatus|value-of<ManagedAgentsSessionThreadStatus>>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
      * }|ThreadListParams $params
@@ -102,7 +104,7 @@ final class ThreadsRawService implements ThreadsRawContract
             $params,
             $requestOptions,
         );
-        $query_params = array_flip(['limit', 'page']);
+        $query_params = array_flip(['limit', 'page', 'statuses']);
 
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);

@@ -4,97 +4,82 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions;
 
+use Anthropic\Beta\Agents\BetaManagedAgentsMultiagent20261001Params;
+use Anthropic\Beta\Agents\BetaManagedAgentsMultiagentAdvisorDisabledParams;
+use Anthropic\Beta\Agents\BetaManagedAgentsMultiagentAdvisorEnabledParams;
+use Anthropic\Beta\Agents\BetaManagedAgentsMultiagentCoordinatorParams;
+use Anthropic\Beta\Agents\BetaManagedAgentsMultiagentSubagentsDisabledParams;
+use Anthropic\Beta\Agents\BetaManagedAgentsMultiagentSubagentsEnabledParams;
+use Anthropic\Beta\Agents\BetaManagedAgentsMultiagentWorkflowsDisabledParams;
+use Anthropic\Beta\Agents\BetaManagedAgentsMultiagentWorkflowsEnabledParams;
 use Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams\Type;
-use Anthropic\Core\Attributes\Required;
-use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Concerns\SdkUnion;
+use Anthropic\Core\Conversion\Contracts\Converter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * Multiagent orchestration configuration.
  *
+ * @phpstan-import-type BetaManagedAgentsMultiagentCoordinatorParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsMultiagentCoordinatorParams
+ * @phpstan-import-type BetaManagedAgentsMultiagent20261001ParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsMultiagent20261001Params
  * @phpstan-import-type BetaManagedAgentsMultiagentRosterEntryParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentRosterEntryParams
- * @phpstan-import-type BetaManagedAgentsMultiagentRosterEntryParamsVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentRosterEntryParams
+ * @phpstan-import-type BetaManagedAgentsMultiagentAdvisorParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsMultiagentAdvisorParams
+ * @phpstan-import-type BetaManagedAgentsMultiagentSubagentsParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsMultiagentSubagentsParams
+ * @phpstan-import-type BetaManagedAgentsMultiagentWorkflowsParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsMultiagentWorkflowsParams
  *
- * @phpstan-type BetaManagedAgentsMultiagentParamsShape = array{
- *   agents: list<BetaManagedAgentsMultiagentRosterEntryParamsShape>,
- *   type: Type|value-of<Type>,
- * }
+ * @phpstan-type BetaManagedAgentsMultiagentParamsVariants = BetaManagedAgentsMultiagentCoordinatorParams|BetaManagedAgentsMultiagent20261001Params
+ * @phpstan-type BetaManagedAgentsMultiagentParamsShape = BetaManagedAgentsMultiagentParamsVariants|BetaManagedAgentsMultiagentCoordinatorParamsShape|BetaManagedAgentsMultiagent20261001ParamsShape
  */
-final class BetaManagedAgentsMultiagentParams implements BaseModel
+final class BetaManagedAgentsMultiagentParams implements ConverterSource
 {
-    /** @use SdkModel<BetaManagedAgentsMultiagentParamsShape> */
-    use SdkModel;
+    use SdkUnion;
 
-    /**
-     * Agents the coordinator may spawn as session threads. 1–20 entries. Each entry is an agent ID string, a versioned `{"type":"agent","id","version"}` reference, or `{"type":"self"}` to allow recursive self-invocation. Entries must reference distinct agents (after resolving `self` and string forms); at most one `self`. Referenced agents must exist, must not be archived, and must not themselves have `multiagent` set (depth limit 1).
-     *
-     * @var list<BetaManagedAgentsMultiagentRosterEntryParamsVariants> $agents
-     */
-    #[Required(list: BetaManagedAgentsMultiagentRosterEntryParams::class)]
-    public array $agents;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
-    /**
-     * `new BetaManagedAgentsMultiagentParams()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * BetaManagedAgentsMultiagentParams::with(agents: ..., type: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new BetaManagedAgentsMultiagentParams())->withAgents(...)->withType(...)
-     * ```
-     */
-    public function __construct()
+    public static function discriminator(): string
     {
-        $this->initialize();
+        return 'type';
     }
 
     /**
-     * Construct an instance from the required parameters.
-     *
-     * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param list<BetaManagedAgentsMultiagentRosterEntryParamsShape> $agents
-     * @param Type|value-of<Type> $type
+     * @return list<string|Converter|ConverterSource>|array<string,string|Converter|ConverterSource>
      */
-    public static function with(array $agents, Type|string $type): self
+    public static function variants(): array
     {
-        $self = new self;
-
-        $self['agents'] = $agents;
-        $self['type'] = $type;
-
-        return $self;
+        return [
+            'coordinator' => BetaManagedAgentsMultiagentCoordinatorParams::class,
+            'multiagent_20261001' => BetaManagedAgentsMultiagent20261001Params::class,
+        ];
     }
 
     /**
-     * Agents the coordinator may spawn as session threads. 1–20 entries. Each entry is an agent ID string, a versioned `{"type":"agent","id","version"}` reference, or `{"type":"self"}` to allow recursive self-invocation. Entries must reference distinct agents (after resolving `self` and string forms); at most one `self`. Referenced agents must exist, must not be archived, and must not themselves have `multiagent` set (depth limit 1).
+     * Constructs the variant whose `type` matches the given value, forwarding the remaining arguments to its own `with()`.
      *
-     * @param list<BetaManagedAgentsMultiagentRosterEntryParamsShape> $agents
+     * @param list<BetaManagedAgentsMultiagentRosterEntryParamsShape>|null $agents
+     * @param BetaManagedAgentsMultiagentAdvisorParamsShape|null $advisor
+     * @param BetaManagedAgentsMultiagentSubagentsParamsShape|null $subagents
+     * @param BetaManagedAgentsMultiagentWorkflowsParamsShape|null $workflows
+     *
+     * @return ($type is Type::COORDINATOR|'coordinator' ? BetaManagedAgentsMultiagentCoordinatorParams : ($type is Type::MULTIAGENT_20261001|'multiagent_20261001' ? BetaManagedAgentsMultiagent20261001Params : BetaManagedAgentsMultiagentCoordinatorParams|BetaManagedAgentsMultiagent20261001Params))
+     *
+     * @throws \UnhandledMatchError
      */
-    public function withAgents(array $agents): self
-    {
-        $self = clone $this;
-        $self['agents'] = $agents;
-
-        return $self;
-    }
-
-    /**
-     * @param Type|value-of<Type> $type
-     */
-    public function withType(Type|string $type): self
-    {
-        $self = clone $this;
-        $self['type'] = $type;
-
-        return $self;
+    public static function with(
+        Type|string $type,
+        ?array $agents = null,
+        BetaManagedAgentsMultiagentAdvisorEnabledParams|array|BetaManagedAgentsMultiagentAdvisorDisabledParams|null $advisor = null,
+        BetaManagedAgentsMultiagentSubagentsEnabledParams|array|BetaManagedAgentsMultiagentSubagentsDisabledParams|null $subagents = null,
+        BetaManagedAgentsMultiagentWorkflowsEnabledParams|array|BetaManagedAgentsMultiagentWorkflowsDisabledParams|null $workflows = null,
+    ): BetaManagedAgentsMultiagentCoordinatorParams|BetaManagedAgentsMultiagent20261001Params {
+        return match ($type) {
+            Type::COORDINATOR, 'coordinator' => BetaManagedAgentsMultiagentCoordinatorParams::with(
+                type: 'coordinator',
+                agents: $agents ?? throw new \ArgumentCountError('$agents is required'),
+            ),
+            Type::MULTIAGENT_20261001, 'multiagent_20261001' => BetaManagedAgentsMultiagent20261001Params::with(
+                advisor: $advisor,
+                subagents: $subagents,
+                workflows: $workflows
+            ),
+            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
+        };
     }
 }

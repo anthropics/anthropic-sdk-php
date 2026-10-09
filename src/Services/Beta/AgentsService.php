@@ -7,9 +7,10 @@ namespace Anthropic\Services\Beta;
 use Anthropic\Beta\Agents\BetaManagedAgentsAgent;
 use Anthropic\Beta\Agents\BetaManagedAgentsModel;
 use Anthropic\Beta\Agents\BetaManagedAgentsModelConfigParams;
+use Anthropic\Beta\Agents\BetaManagedAgentsMultiagent20261001Params;
+use Anthropic\Beta\Agents\BetaManagedAgentsMultiagentCoordinatorParams;
 use Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams;
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
@@ -59,7 +60,7 @@ final class AgentsService implements AgentsContract
      * @param string|null $description body param: Description of what the agent does
      * @param list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape> $mcpServers Body param: MCP servers this agent connects to. Maximum 20. Names must be unique within the array. Every server must be referenced by an `mcp_toolset` in `tools`; unreferenced servers are rejected. See the [MCP connector guide](https://platform.claude.com/docs/en/managed-agents/mcp-connector).
      * @param array<string,string> $metadata Body param: Arbitrary key-value metadata. Maximum 16 pairs, keys up to 64 chars, values up to 512 chars.
-     * @param BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null $multiagent body param: Multiagent orchestration configuration
+     * @param BetaManagedAgentsMultiagentParamsShape|null $multiagent body param: Multiagent orchestration configuration
      * @param list<BetaManagedAgentsSkillParamsShape> $skills body param: Skills available to the agent
      * @param string|null $system body param: System prompt for the agent
      * @param list<ToolShape> $tools Body param: Tool configurations available to the agent. Maximum of 256 tools across all toolsets allowed.
@@ -77,7 +78,7 @@ final class AgentsService implements AgentsContract
         ?string $description = null,
         ?array $mcpServers = null,
         ?array $metadata = null,
-        BetaManagedAgentsMultiagentParams|array|null $multiagent = null,
+        BetaManagedAgentsMultiagentCoordinatorParams|array|BetaManagedAgentsMultiagent20261001Params|null $multiagent = null,
         ?array $skills = null,
         ?string $system = null,
         ?array $tools = null,
@@ -149,7 +150,7 @@ final class AgentsService implements AgentsContract
      * @param list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null $mcpServers Body param: MCP servers. Full replacement. Omit to preserve; send empty array or `null` to clear. Names must be unique. Maximum 20. Every server must be referenced by an `mcp_toolset` in the agent's resulting `tools`; unreferenced servers are rejected. See the [MCP connector guide](https://platform.claude.com/docs/en/managed-agents/mcp-connector).
      * @param array<string,string|null>|null $metadata Body param: Metadata patch. Set a key to a string to upsert it, or to null to delete it. Omit the field to preserve. The stored bag is limited to 16 keys (up to 64 chars each) with values up to 512 chars.
      * @param ModelShape1 $model Body param: Model identifier. Accepts the [model string](https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison), e.g. `claude-opus-5`, or a `model_config` object for additional configuration control. Omit to preserve. Cannot be cleared.
-     * @param BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null $multiagent Body param: Multiagent orchestration configuration. Full replacement. Omit to preserve; send null to clear.
+     * @param BetaManagedAgentsMultiagentParamsShape|null $multiagent Body param: Multiagent orchestration configuration. Full replacement. Omit to preserve; send null to clear.
      * @param string $name Body param: Human-readable name. Must be non-empty. Omit to preserve. Cannot be cleared.
      * @param list<BetaManagedAgentsSkillParamsShape>|null $skills Body param: Skills. Full replacement. Omit to preserve; send empty array or null to clear.
      * @param string|null $system Body param: System prompt. Omit to preserve; send empty string or null to clear.
@@ -169,7 +170,7 @@ final class AgentsService implements AgentsContract
         ?array $mcpServers = null,
         ?array $metadata = null,
         BetaManagedAgentsModel|BetaManagedAgentsModelConfigParams|array|string|null $model = null,
-        BetaManagedAgentsMultiagentParams|array|null $multiagent = null,
+        BetaManagedAgentsMultiagentCoordinatorParams|array|BetaManagedAgentsMultiagent20261001Params|null $multiagent = null,
         ?string $name = null,
         ?array $skills = null,
         ?string $system = null,

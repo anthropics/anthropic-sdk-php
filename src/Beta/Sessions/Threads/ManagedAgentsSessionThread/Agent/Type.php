@@ -9,4 +9,6 @@ enum Type: string
     case AGENT = 'agent';
 
     case ADVISOR = 'advisor';
+
+    case INLINE = 'inline';
 }

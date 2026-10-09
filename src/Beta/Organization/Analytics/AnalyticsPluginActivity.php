@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\Analytics;
 
+use Anthropic\Beta\Organization\Analytics\AnalyticsPluginActivity\ChatCoworkUnifiedMetrics;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -12,14 +13,15 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Per-plugin install + invocation activity for a given day.
  *
- * With `group_by[]=user_id` / `rbac_group_id` / `product` (`cowork` /
- * `claude_code` only on this endpoint) each row is one (plugin, user),
- * (plugin, group), or (plugin, product) cut: the flat `user_id` /
- * `rbac_group_id` / `product` keys carry the cut and the counts are
- * scoped to it.
+ * With `group_by[]=user_id` / `rbac_group_id` / `product` (`cowork`,
+ * `claude_code` and `chat_cowork_unified` only on this endpoint) each row is
+ * one (plugin, user), (plugin, group), or (plugin, product) cut: the flat
+ * `user_id` / `rbac_group_id` / `product` keys carry the cut and the counts
+ * are scoped to it.
  *
  * @phpstan-import-type AnalyticsPluginClaudeCodeMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsPluginClaudeCodeMetrics
  * @phpstan-import-type AnalyticsPluginCoworkMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsPluginCoworkMetrics
+ * @phpstan-import-type ChatCoworkUnifiedMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsPluginActivity\ChatCoworkUnifiedMetrics
  *
  * @phpstan-type AnalyticsPluginActivityShape = array{
  *   claudeCodeMetrics: AnalyticsPluginClaudeCodeMetrics|AnalyticsPluginClaudeCodeMetricsShape,
@@ -28,6 +30,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   installCount: int|null,
  *   invocationCount: int,
  *   pluginName: string,
+ *   chatCoworkUnifiedMetrics?: null|ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape,
  *   pluginID?: string|null,
  *   product?: string|null,
  *   rbacGroupID?: string|null,
@@ -77,13 +80,19 @@ final class AnalyticsPluginActivity implements BaseModel
     public string $pluginName;
 
     /**
+     * Plugin use recorded while members had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on. A count is null in date-range mode where it cannot be computed. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     */
+    #[Optional('chat_cowork_unified_metrics', nullable: true)]
+    public ?ChatCoworkUnifiedMetrics $chatCoworkUnifiedMetrics;
+
+    /**
      * Stable plugin identifier when available (e.g. `serena@claude-plugins-official`). Null for third-party Claude Code plugins (redacted at the source) and Cowork slash commands that carry only a hashed id.
      */
     #[Optional('plugin_id', nullable: true)]
     public ?string $pluginID;
 
     /**
-     * Product that produced this row's activity: one of `chat`, `claude_code`, `cowork`, or `office_agent` (the canonical Cost & Usage product naming; an `office_agent` row's per-surface breakdown is in its `office_metrics`). On `/plugins` only `cowork` and `claude_code` occur (the only surfaces with plugin attribution); on `/artifacts` only `chat`, `claude_code`, and `cowork` occur (the surfaces that create artifacts); `/apps/chat/projects` does not support the product dimension (a `product` entry in `group_by[]` or `filter[]` there is rejected). Present only when the request grouped by `product`.
+     * Product that produced this row's activity: one of `chat`, `claude_code`, `cowork`, `office_agent`, or `chat_cowork_unified` (Chat and Cowork unified). These are the canonical Cost & Usage product names; an `office_agent` row's per-surface breakdown is in its `office_metrics`. On `/plugins` only `cowork`, `claude_code` and `chat_cowork_unified` occur (the only surfaces with plugin attribution); on `/artifacts` only `chat`, `claude_code`, `cowork` and `chat_cowork_unified` occur (the surfaces that create artifacts); `/apps/chat/projects` does not support the product dimension (a `product` entry in `group_by[]` or `filter[]` there is rejected). Present only when the request grouped by `product`.
      */
     #[Optional(nullable: true)]
     public ?string $product;
@@ -145,6 +154,7 @@ final class AnalyticsPluginActivity implements BaseModel
      *
      * @param AnalyticsPluginClaudeCodeMetrics|AnalyticsPluginClaudeCodeMetricsShape $claudeCodeMetrics
      * @param AnalyticsPluginCoworkMetrics|AnalyticsPluginCoworkMetricsShape $coworkMetrics
+     * @param ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
      */
     public static function with(
         AnalyticsPluginClaudeCodeMetrics|array $claudeCodeMetrics,
@@ -153,6 +163,7 @@ final class AnalyticsPluginActivity implements BaseModel
         ?int $installCount,
         int $invocationCount,
         string $pluginName,
+        ChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics = null,
         ?string $pluginID = null,
         ?string $product = null,
         ?string $rbacGroupID = null,
@@ -168,6 +179,7 @@ final class AnalyticsPluginActivity implements BaseModel
         $self['invocationCount'] = $invocationCount;
         $self['pluginName'] = $pluginName;
 
+        null !== $chatCoworkUnifiedMetrics && $self['chatCoworkUnifiedMetrics'] = $chatCoworkUnifiedMetrics;
         null !== $pluginID && $self['pluginID'] = $pluginID;
         null !== $product && $self['product'] = $product;
         null !== $rbacGroupID && $self['rbacGroupID'] = $rbacGroupID;
@@ -250,6 +262,20 @@ final class AnalyticsPluginActivity implements BaseModel
     }
 
     /**
+     * Plugin use recorded while members had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on. A count is null in date-range mode where it cannot be computed. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     *
+     * @param ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
+     */
+    public function withChatCoworkUnifiedMetrics(
+        ChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics
+    ): self {
+        $self = clone $this;
+        $self['chatCoworkUnifiedMetrics'] = $chatCoworkUnifiedMetrics;
+
+        return $self;
+    }
+
+    /**
      * Stable plugin identifier when available (e.g. `serena@claude-plugins-official`). Null for third-party Claude Code plugins (redacted at the source) and Cowork slash commands that carry only a hashed id.
      */
     public function withPluginID(?string $pluginID): self
@@ -261,7 +287,7 @@ final class AnalyticsPluginActivity implements BaseModel
     }
 
     /**
-     * Product that produced this row's activity: one of `chat`, `claude_code`, `cowork`, or `office_agent` (the canonical Cost & Usage product naming; an `office_agent` row's per-surface breakdown is in its `office_metrics`). On `/plugins` only `cowork` and `claude_code` occur (the only surfaces with plugin attribution); on `/artifacts` only `chat`, `claude_code`, and `cowork` occur (the surfaces that create artifacts); `/apps/chat/projects` does not support the product dimension (a `product` entry in `group_by[]` or `filter[]` there is rejected). Present only when the request grouped by `product`.
+     * Product that produced this row's activity: one of `chat`, `claude_code`, `cowork`, `office_agent`, or `chat_cowork_unified` (Chat and Cowork unified). These are the canonical Cost & Usage product names; an `office_agent` row's per-surface breakdown is in its `office_metrics`. On `/plugins` only `cowork`, `claude_code` and `chat_cowork_unified` occur (the only surfaces with plugin attribution); on `/artifacts` only `chat`, `claude_code`, `cowork` and `chat_cowork_unified` occur (the surfaces that create artifacts); `/apps/chat/projects` does not support the product dimension (a `product` entry in `group_by[]` or `filter[]` there is rejected). Present only when the request grouped by `product`.
      */
     public function withProduct(?string $product): self
     {

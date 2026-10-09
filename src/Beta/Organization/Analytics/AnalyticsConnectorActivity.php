@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\Analytics;
 
+use Anthropic\Beta\Organization\Analytics\AnalyticsConnectorActivity\ChatCoworkUnifiedMetrics;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -16,6 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type AnalyticsConnectorClaudeCodeMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsConnectorClaudeCodeMetrics
  * @phpstan-import-type AnalyticsConnectorCoworkMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsConnectorCoworkMetrics
  * @phpstan-import-type AnalyticsConnectorOfficeMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsConnectorOfficeMetrics
+ * @phpstan-import-type ChatCoworkUnifiedMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsConnectorActivity\ChatCoworkUnifiedMetrics
  *
  * @phpstan-type AnalyticsConnectorActivityShape = array{
  *   chatMetrics: AnalyticsConnectorChatMetrics|AnalyticsConnectorChatMetricsShape,
@@ -24,6 +26,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   coworkMetrics: AnalyticsConnectorCoworkMetrics|AnalyticsConnectorCoworkMetricsShape,
  *   distinctUserCount: int,
  *   officeMetrics: AnalyticsConnectorOfficeMetrics|AnalyticsConnectorOfficeMetricsShape,
+ *   chatCoworkUnifiedMetrics?: null|ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape,
  *   connectorDisplayName?: string|null,
  *   individualAuthDistinctUserCount?: int|null,
  *   managedAuthDistinctUserCount?: int|null,
@@ -78,6 +81,12 @@ final class AnalyticsConnectorActivity implements BaseModel
     public AnalyticsConnectorOfficeMetrics $officeMetrics;
 
     /**
+     * Connector use recorded while members had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on, split into chat conversations and Cowork sessions. A count is null in date-range mode where it cannot be computed. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     */
+    #[Optional('chat_cowork_unified_metrics', nullable: true)]
+    public ?ChatCoworkUnifiedMetrics $chatCoworkUnifiedMetrics;
+
+    /**
      * Human-readable display name for rows whose `connector_name` is an opaque connector id rather than a readable name, resolved at request time from the organization's connectors (including connectors that have since been removed). `connector_name` remains the row's stable key for sorting and pagination, and `filter[]=connector_name:{value}` also matches these rows by display name. Display names are not unique, and the same connector's claude.ai usage can appear under a separate row with a readable `connector_name`. Null when `connector_name` is already a readable name, when the id cannot be resolved to one of the organization's connectors, or when display-name resolution is not enabled for this organization.
      */
     #[Optional('connector_display_name', nullable: true)]
@@ -96,7 +105,7 @@ final class AnalyticsConnectorActivity implements BaseModel
     public ?int $managedAuthDistinctUserCount;
 
     /**
-     * Product that produced this row's activity: one of `chat`, `claude_code`, `cowork`, or `office_agent` (the canonical Cost & Usage product naming; an `office_agent` row's per-surface breakdown is in its `office_metrics`). On `/plugins` only `cowork` and `claude_code` occur (the only surfaces with plugin attribution); on `/artifacts` only `chat`, `claude_code`, and `cowork` occur (the surfaces that create artifacts); `/apps/chat/projects` does not support the product dimension (a `product` entry in `group_by[]` or `filter[]` there is rejected). Present only when the request grouped by `product`.
+     * Product that produced this row's activity: one of `chat`, `claude_code`, `cowork`, `office_agent`, or `chat_cowork_unified` (Chat and Cowork unified). These are the canonical Cost & Usage product names; an `office_agent` row's per-surface breakdown is in its `office_metrics`. On `/plugins` only `cowork`, `claude_code` and `chat_cowork_unified` occur (the only surfaces with plugin attribution); on `/artifacts` only `chat`, `claude_code`, `cowork` and `chat_cowork_unified` occur (the surfaces that create artifacts); `/apps/chat/projects` does not support the product dimension (a `product` entry in `group_by[]` or `filter[]` there is rejected). Present only when the request grouped by `product`.
      */
     #[Optional(nullable: true)]
     public ?string $product;
@@ -178,6 +187,7 @@ final class AnalyticsConnectorActivity implements BaseModel
      * @param AnalyticsConnectorClaudeCodeMetrics|AnalyticsConnectorClaudeCodeMetricsShape $claudeCodeMetrics
      * @param AnalyticsConnectorCoworkMetrics|AnalyticsConnectorCoworkMetricsShape $coworkMetrics
      * @param AnalyticsConnectorOfficeMetrics|AnalyticsConnectorOfficeMetricsShape $officeMetrics
+     * @param ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
      */
     public static function with(
         AnalyticsConnectorChatMetrics|array $chatMetrics,
@@ -186,6 +196,7 @@ final class AnalyticsConnectorActivity implements BaseModel
         AnalyticsConnectorCoworkMetrics|array $coworkMetrics,
         int $distinctUserCount,
         AnalyticsConnectorOfficeMetrics|array $officeMetrics,
+        ChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics = null,
         ?string $connectorDisplayName = null,
         ?int $individualAuthDistinctUserCount = null,
         ?int $managedAuthDistinctUserCount = null,
@@ -206,6 +217,7 @@ final class AnalyticsConnectorActivity implements BaseModel
         $self['distinctUserCount'] = $distinctUserCount;
         $self['officeMetrics'] = $officeMetrics;
 
+        null !== $chatCoworkUnifiedMetrics && $self['chatCoworkUnifiedMetrics'] = $chatCoworkUnifiedMetrics;
         null !== $connectorDisplayName && $self['connectorDisplayName'] = $connectorDisplayName;
         null !== $individualAuthDistinctUserCount && $self['individualAuthDistinctUserCount'] = $individualAuthDistinctUserCount;
         null !== $managedAuthDistinctUserCount && $self['managedAuthDistinctUserCount'] = $managedAuthDistinctUserCount;
@@ -299,6 +311,20 @@ final class AnalyticsConnectorActivity implements BaseModel
     }
 
     /**
+     * Connector use recorded while members had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on, split into chat conversations and Cowork sessions. A count is null in date-range mode where it cannot be computed. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     *
+     * @param ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
+     */
+    public function withChatCoworkUnifiedMetrics(
+        ChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics
+    ): self {
+        $self = clone $this;
+        $self['chatCoworkUnifiedMetrics'] = $chatCoworkUnifiedMetrics;
+
+        return $self;
+    }
+
+    /**
      * Human-readable display name for rows whose `connector_name` is an opaque connector id rather than a readable name, resolved at request time from the organization's connectors (including connectors that have since been removed). `connector_name` remains the row's stable key for sorting and pagination, and `filter[]=connector_name:{value}` also matches these rows by display name. Display names are not unique, and the same connector's claude.ai usage can appear under a separate row with a readable `connector_name`. Null when `connector_name` is already a readable name, when the id cannot be resolved to one of the organization's connectors, or when display-name resolution is not enabled for this organization.
      */
     public function withConnectorDisplayName(
@@ -335,7 +361,7 @@ final class AnalyticsConnectorActivity implements BaseModel
     }
 
     /**
-     * Product that produced this row's activity: one of `chat`, `claude_code`, `cowork`, or `office_agent` (the canonical Cost & Usage product naming; an `office_agent` row's per-surface breakdown is in its `office_metrics`). On `/plugins` only `cowork` and `claude_code` occur (the only surfaces with plugin attribution); on `/artifacts` only `chat`, `claude_code`, and `cowork` occur (the surfaces that create artifacts); `/apps/chat/projects` does not support the product dimension (a `product` entry in `group_by[]` or `filter[]` there is rejected). Present only when the request grouped by `product`.
+     * Product that produced this row's activity: one of `chat`, `claude_code`, `cowork`, `office_agent`, or `chat_cowork_unified` (Chat and Cowork unified). These are the canonical Cost & Usage product names; an `office_agent` row's per-surface breakdown is in its `office_metrics`. On `/plugins` only `cowork`, `claude_code` and `chat_cowork_unified` occur (the only surfaces with plugin attribution); on `/artifacts` only `chat`, `claude_code`, `cowork` and `chat_cowork_unified` occur (the surfaces that create artifacts); `/apps/chat/projects` does not support the product dimension (a `product` entry in `group_by[]` or `filter[]` there is rejected). Present only when the request grouped by `product`.
      */
     public function withProduct(?string $product): self
     {

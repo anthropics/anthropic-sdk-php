@@ -33,7 +33,9 @@ final class EffectiveRawService implements EffectiveRawContract
      *
      * Returns one row per (member, period) the member resolves a spend limit
      * for, with the `source` scope the spend limit was inherited from.
-     * Paginates by member, so a member's periods never split across pages.
+     * Paginates by member, so a member's periods never split across pages. Listing
+     * Claude Console limits is in an early access preview. To request access,
+     * contact your Anthropic account team.
      *
      * @param array{
      *   limit?: int,

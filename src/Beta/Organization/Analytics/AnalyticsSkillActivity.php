@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\Analytics;
 
+use Anthropic\Beta\Organization\Analytics\AnalyticsSkillActivity\ChatCoworkUnifiedMetrics;
 use Anthropic\Beta\Organization\Analytics\AnalyticsSkillActivity\ShareStatus;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
@@ -17,6 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type AnalyticsSkillClaudeCodeMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsSkillClaudeCodeMetrics
  * @phpstan-import-type AnalyticsSkillCoworkMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsSkillCoworkMetrics
  * @phpstan-import-type AnalyticsSkillOfficeMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsSkillOfficeMetrics
+ * @phpstan-import-type ChatCoworkUnifiedMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsSkillActivity\ChatCoworkUnifiedMetrics
  *
  * @phpstan-type AnalyticsSkillActivityShape = array{
  *   chatMetrics: AnalyticsSkillChatMetrics|AnalyticsSkillChatMetricsShape,
@@ -26,6 +28,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   officeMetrics: AnalyticsSkillOfficeMetrics|AnalyticsSkillOfficeMetricsShape,
  *   skillName: string,
  *   attributedListPrice?: string|null,
+ *   chatCoworkUnifiedMetrics?: null|ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape,
  *   currency?: string|null,
  *   enableCount?: int|null,
  *   estimatedOverageSpend?: string|null,
@@ -86,6 +89,12 @@ final class AnalyticsSkillActivity implements BaseModel
     public ?string $attributedListPrice;
 
     /**
+     * Skill use recorded while members had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on, split into chat conversations and Cowork sessions. A count is null in date-range mode where it cannot be computed. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     */
+    #[Optional('chat_cowork_unified_metrics', nullable: true)]
+    public ?ChatCoworkUnifiedMetrics $chatCoworkUnifiedMetrics;
+
+    /**
      * Currency for this row's monetary fields (`estimated_overage_spend` and `attributed_list_price`), as an uppercase ISO-4217 code. Always "USD" when either amount is populated; null whenever both amounts are null.
      */
     #[Optional(nullable: true)]
@@ -110,7 +119,7 @@ final class AnalyticsSkillActivity implements BaseModel
     public ?int $invocationCount;
 
     /**
-     * Product that produced this row's activity: one of `chat`, `claude_code`, `cowork`, or `office_agent` (the canonical Cost & Usage product naming; an `office_agent` row's per-surface breakdown is in its `office_metrics`). On `/plugins` only `cowork` and `claude_code` occur (the only surfaces with plugin attribution); on `/artifacts` only `chat`, `claude_code`, and `cowork` occur (the surfaces that create artifacts); `/apps/chat/projects` does not support the product dimension (a `product` entry in `group_by[]` or `filter[]` there is rejected). Present only when the request grouped by `product`.
+     * Product that produced this row's activity: one of `chat`, `claude_code`, `cowork`, `office_agent`, or `chat_cowork_unified` (Chat and Cowork unified). These are the canonical Cost & Usage product names; an `office_agent` row's per-surface breakdown is in its `office_metrics`. On `/plugins` only `cowork`, `claude_code` and `chat_cowork_unified` occur (the only surfaces with plugin attribution); on `/artifacts` only `chat`, `claude_code`, `cowork` and `chat_cowork_unified` occur (the surfaces that create artifacts); `/apps/chat/projects` does not support the product dimension (a `product` entry in `group_by[]` or `filter[]` there is rejected). Present only when the request grouped by `product`.
      */
     #[Optional(nullable: true)]
     public ?string $product;
@@ -188,6 +197,7 @@ final class AnalyticsSkillActivity implements BaseModel
      * @param AnalyticsSkillClaudeCodeMetrics|AnalyticsSkillClaudeCodeMetricsShape $claudeCodeMetrics
      * @param AnalyticsSkillCoworkMetrics|AnalyticsSkillCoworkMetricsShape $coworkMetrics
      * @param AnalyticsSkillOfficeMetrics|AnalyticsSkillOfficeMetricsShape $officeMetrics
+     * @param ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
      * @param ShareStatus|value-of<ShareStatus>|null $shareStatus
      */
     public static function with(
@@ -198,6 +208,7 @@ final class AnalyticsSkillActivity implements BaseModel
         AnalyticsSkillOfficeMetrics|array $officeMetrics,
         string $skillName,
         ?string $attributedListPrice = null,
+        ChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics = null,
         ?string $currency = null,
         ?int $enableCount = null,
         ?string $estimatedOverageSpend = null,
@@ -219,6 +230,7 @@ final class AnalyticsSkillActivity implements BaseModel
         $self['skillName'] = $skillName;
 
         null !== $attributedListPrice && $self['attributedListPrice'] = $attributedListPrice;
+        null !== $chatCoworkUnifiedMetrics && $self['chatCoworkUnifiedMetrics'] = $chatCoworkUnifiedMetrics;
         null !== $currency && $self['currency'] = $currency;
         null !== $enableCount && $self['enableCount'] = $enableCount;
         null !== $estimatedOverageSpend && $self['estimatedOverageSpend'] = $estimatedOverageSpend;
@@ -323,6 +335,20 @@ final class AnalyticsSkillActivity implements BaseModel
     }
 
     /**
+     * Skill use recorded while members had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on, split into chat conversations and Cowork sessions. A count is null in date-range mode where it cannot be computed. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     *
+     * @param ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
+     */
+    public function withChatCoworkUnifiedMetrics(
+        ChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics
+    ): self {
+        $self = clone $this;
+        $self['chatCoworkUnifiedMetrics'] = $chatCoworkUnifiedMetrics;
+
+        return $self;
+    }
+
+    /**
      * Currency for this row's monetary fields (`estimated_overage_spend` and `attributed_list_price`), as an uppercase ISO-4217 code. Always "USD" when either amount is populated; null whenever both amounts are null.
      */
     public function withCurrency(?string $currency): self
@@ -368,7 +394,7 @@ final class AnalyticsSkillActivity implements BaseModel
     }
 
     /**
-     * Product that produced this row's activity: one of `chat`, `claude_code`, `cowork`, or `office_agent` (the canonical Cost & Usage product naming; an `office_agent` row's per-surface breakdown is in its `office_metrics`). On `/plugins` only `cowork` and `claude_code` occur (the only surfaces with plugin attribution); on `/artifacts` only `chat`, `claude_code`, and `cowork` occur (the surfaces that create artifacts); `/apps/chat/projects` does not support the product dimension (a `product` entry in `group_by[]` or `filter[]` there is rejected). Present only when the request grouped by `product`.
+     * Product that produced this row's activity: one of `chat`, `claude_code`, `cowork`, `office_agent`, or `chat_cowork_unified` (Chat and Cowork unified). These are the canonical Cost & Usage product names; an `office_agent` row's per-surface breakdown is in its `office_metrics`. On `/plugins` only `cowork`, `claude_code` and `chat_cowork_unified` occur (the only surfaces with plugin attribution); on `/artifacts` only `chat`, `claude_code`, `cowork` and `chat_cowork_unified` occur (the surfaces that create artifacts); `/apps/chat/projects` does not support the product dimension (a `product` entry in `group_by[]` or `filter[]` there is rejected). Present only when the request grouped by `product`.
      */
     public function withProduct(?string $product): self
     {

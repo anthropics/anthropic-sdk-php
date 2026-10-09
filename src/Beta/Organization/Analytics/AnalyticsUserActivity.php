@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\Analytics;
 
+use Anthropic\Beta\Organization\Analytics\AnalyticsUserActivity\ChatCoworkUnifiedMetrics;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -18,6 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type AnalyticsDesignMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsDesignMetrics
  * @phpstan-import-type AnalyticsOfficeMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsOfficeMetrics
  * @phpstan-import-type AnalyticsScienceMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsScienceMetrics
+ * @phpstan-import-type ChatCoworkUnifiedMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsUserActivity\ChatCoworkUnifiedMetrics
  * @phpstan-import-type AnalyticsUserShape from \Anthropic\Beta\Organization\Analytics\AnalyticsUser
  *
  * @phpstan-type AnalyticsUserActivityShape = array{
@@ -28,6 +30,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   officeMetrics: AnalyticsOfficeMetrics|AnalyticsOfficeMetricsShape,
  *   scienceMetrics: AnalyticsScienceMetrics|AnalyticsScienceMetricsShape,
  *   webSearchCount: int,
+ *   chatCoworkUnifiedMetrics?: null|ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape,
  *   distinctUserCount?: int|null,
  *   lastActivityDate?: string|null,
  *   rbacGroupID?: string|null,
@@ -81,6 +84,12 @@ final class AnalyticsUserActivity implements BaseModel
      */
     #[Required('web_search_count')]
     public int $webSearchCount;
+
+    /**
+     * Activity recorded while the member had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on, split into `chat` (chat activity) and `sessions` (Cowork activity). Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     */
+    #[Optional('chat_cowork_unified_metrics', nullable: true)]
+    public ?ChatCoworkUnifiedMetrics $chatCoworkUnifiedMetrics;
 
     /**
      * Number of distinct active users represented by this row. Only set for grouped rollups (`group_by[]`); null for per-user rows. In date-range mode, recomputed as an exact distinct count of the group's active members over the requested window, never a sum of per-day values.
@@ -157,6 +166,7 @@ final class AnalyticsUserActivity implements BaseModel
      * @param AnalyticsDesignMetrics|AnalyticsDesignMetricsShape $designMetrics
      * @param AnalyticsOfficeMetrics|AnalyticsOfficeMetricsShape $officeMetrics
      * @param AnalyticsScienceMetrics|AnalyticsScienceMetricsShape $scienceMetrics
+     * @param ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
      * @param AnalyticsUser|AnalyticsUserShape|null $user
      */
     public static function with(
@@ -167,6 +177,7 @@ final class AnalyticsUserActivity implements BaseModel
         AnalyticsOfficeMetrics|array $officeMetrics,
         AnalyticsScienceMetrics|array $scienceMetrics,
         int $webSearchCount,
+        ChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics = null,
         ?int $distinctUserCount = null,
         ?string $lastActivityDate = null,
         ?string $rbacGroupID = null,
@@ -183,6 +194,7 @@ final class AnalyticsUserActivity implements BaseModel
         $self['scienceMetrics'] = $scienceMetrics;
         $self['webSearchCount'] = $webSearchCount;
 
+        null !== $chatCoworkUnifiedMetrics && $self['chatCoworkUnifiedMetrics'] = $chatCoworkUnifiedMetrics;
         null !== $distinctUserCount && $self['distinctUserCount'] = $distinctUserCount;
         null !== $lastActivityDate && $self['lastActivityDate'] = $lastActivityDate;
         null !== $rbacGroupID && $self['rbacGroupID'] = $rbacGroupID;
@@ -283,6 +295,20 @@ final class AnalyticsUserActivity implements BaseModel
     {
         $self = clone $this;
         $self['webSearchCount'] = $webSearchCount;
+
+        return $self;
+    }
+
+    /**
+     * Activity recorded while the member had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on, split into `chat` (chat activity) and `sessions` (Cowork activity). Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     *
+     * @param ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
+     */
+    public function withChatCoworkUnifiedMetrics(
+        ChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics
+    ): self {
+        $self = clone $this;
+        $self['chatCoworkUnifiedMetrics'] = $chatCoworkUnifiedMetrics;
 
         return $self;
     }

@@ -18,6 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type ThreadListParamsShape = array{
  *   limit?: int|null,
  *   page?: string|null,
+ *   statuses?: list<ManagedAgentsSessionThreadStatus|value-of<ManagedAgentsSessionThreadStatus>>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  *   workspaceID?: string|null,
  * }
@@ -39,6 +40,16 @@ final class ThreadListParams implements BaseModel
      */
     #[Optional]
     public ?string $page;
+
+    /**
+     * Return only threads that have one of these statuses.
+     *
+     * Repeat the parameter to give more than one status. Leave it out to return threads of every status.
+     *
+     * @var list<value-of<ManagedAgentsSessionThreadStatus>>|null $statuses
+     */
+    #[Optional(list: ManagedAgentsSessionThreadStatus::class)]
+    public ?array $statuses;
 
     /**
      * Optional header to specify the beta version(s) you want to use.
@@ -66,11 +77,13 @@ final class ThreadListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param list<ManagedAgentsSessionThreadStatus|value-of<ManagedAgentsSessionThreadStatus>>|null $statuses
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
         ?int $limit = null,
         ?string $page = null,
+        ?array $statuses = null,
         ?array $betas = null,
         ?string $workspaceID = null,
     ): self {
@@ -78,6 +91,7 @@ final class ThreadListParams implements BaseModel
 
         null !== $limit && $self['limit'] = $limit;
         null !== $page && $self['page'] = $page;
+        null !== $statuses && $self['statuses'] = $statuses;
         null !== $betas && $self['betas'] = $betas;
         null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
@@ -102,6 +116,21 @@ final class ThreadListParams implements BaseModel
     {
         $self = clone $this;
         $self['page'] = $page;
+
+        return $self;
+    }
+
+    /**
+     * Return only threads that have one of these statuses.
+     *
+     * Repeat the parameter to give more than one status. Leave it out to return threads of every status.
+     *
+     * @param list<ManagedAgentsSessionThreadStatus|value-of<ManagedAgentsSessionThreadStatus>> $statuses
+     */
+    public function withStatuses(array $statuses): self
+    {
+        $self = clone $this;
+        $self['statuses'] = $statuses;
 
         return $self;
     }

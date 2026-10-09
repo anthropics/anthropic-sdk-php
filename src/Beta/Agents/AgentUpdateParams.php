@@ -25,6 +25,7 @@ use Anthropic\Core\Conversion\MapOf;
  * @phpstan-import-type BetaManagedAgentsSkillParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Agents\AgentUpdateParams\Tool
  * @phpstan-import-type ModelVariants from \Anthropic\Beta\Agents\AgentUpdateParams\Model
+ * @phpstan-import-type BetaManagedAgentsMultiagentParamsVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams
  * @phpstan-import-type BetaManagedAgentsSkillParamsVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
  * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\AgentUpdateParams\Tool
  *
@@ -33,7 +34,7 @@ use Anthropic\Core\Conversion\MapOf;
  *   mcpServers?: list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null,
  *   metadata?: array<string,string|null>|null,
  *   model?: ModelShape|null,
- *   multiagent?: null|BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape,
+ *   multiagent?: BetaManagedAgentsMultiagentParamsShape|null,
  *   name?: string|null,
  *   skills?: list<BetaManagedAgentsSkillParamsShape>|null,
  *   system?: string|null,
@@ -85,9 +86,11 @@ final class AgentUpdateParams implements BaseModel
 
     /**
      * Multiagent orchestration configuration. Full replacement. Omit to preserve; send null to clear.
+     *
+     * @var BetaManagedAgentsMultiagentParamsVariants|null $multiagent
      */
-    #[Optional(nullable: true)]
-    public ?BetaManagedAgentsMultiagentParams $multiagent;
+    #[Optional(union: BetaManagedAgentsMultiagentParams::class, nullable: true)]
+    public BetaManagedAgentsMultiagentCoordinatorParams|BetaManagedAgentsMultiagent20261001Params|null $multiagent;
 
     /**
      * Human-readable name. Must be non-empty. Omit to preserve. Cannot be cleared.
@@ -152,7 +155,7 @@ final class AgentUpdateParams implements BaseModel
      * @param list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null $mcpServers
      * @param array<string,string|null>|null $metadata
      * @param ModelShape|null $model
-     * @param BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null $multiagent
+     * @param BetaManagedAgentsMultiagentParamsShape|null $multiagent
      * @param list<BetaManagedAgentsSkillParamsShape>|null $skills
      * @param list<ToolShape>|null $tools
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
@@ -162,7 +165,7 @@ final class AgentUpdateParams implements BaseModel
         ?array $mcpServers = null,
         ?array $metadata = null,
         BetaManagedAgentsModel|BetaManagedAgentsModelConfigParams|array|string|null $model = null,
-        BetaManagedAgentsMultiagentParams|array|null $multiagent = null,
+        BetaManagedAgentsMultiagentCoordinatorParams|array|BetaManagedAgentsMultiagent20261001Params|null $multiagent = null,
         ?string $name = null,
         ?array $skills = null,
         ?string $system = null,
@@ -243,10 +246,10 @@ final class AgentUpdateParams implements BaseModel
     /**
      * Multiagent orchestration configuration. Full replacement. Omit to preserve; send null to clear.
      *
-     * @param BetaManagedAgentsMultiagentParams|BetaManagedAgentsMultiagentParamsShape|null $multiagent
+     * @param BetaManagedAgentsMultiagentParamsShape|null $multiagent
      */
     public function withMultiagent(
-        BetaManagedAgentsMultiagentParams|array|null $multiagent
+        BetaManagedAgentsMultiagentCoordinatorParams|array|BetaManagedAgentsMultiagent20261001Params|null $multiagent,
     ): self {
         $self = clone $this;
         $self['multiagent'] = $multiagent;

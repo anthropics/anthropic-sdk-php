@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.57.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.56.0...v0.57.0) (2026-10-09)
+
+### Features
+
+* **api:** add types for the Chat and Cowork unified analytics metrics
+* **api:** add workflows, multiagent configuration and thread status filtering to Managed Agents
+
+
+### Bug Fixes
+
+* **client:** throw before sending a request with an empty path parameter
+
+
+### Chores
+
+* **docs:** note that listing Claude Console spend limits is in early access
+* **internal:** name the default API version header value
+
 ## [0.56.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.55.0...v0.56.0) (2026-10-07)
 
 ### Features

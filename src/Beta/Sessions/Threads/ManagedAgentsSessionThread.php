@@ -32,6 +32,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   type: Type|value-of<Type>,
  *   updatedAt: \DateTimeInterface,
  *   usage: null|ManagedAgentsSessionThreadUsage|ManagedAgentsSessionThreadUsageShape,
+ *   workflowRunID: string|null,
  * }
  */
 final class ManagedAgentsSessionThread implements BaseModel
@@ -51,7 +52,7 @@ final class ManagedAgentsSessionThread implements BaseModel
      * @var AgentVariants $agent
      */
     #[Required(union: Agent::class)]
-    public BetaManagedAgentsSessionThreadAgent|BetaManagedAgentsAdvisor $agent;
+    public BetaManagedAgentsSessionThreadAgent|BetaManagedAgentsAdvisor|ManagedAgentsInlineAgent $agent;
 
     /**
      * When the thread was archived. Null if not archived.
@@ -108,6 +109,12 @@ final class ManagedAgentsSessionThread implements BaseModel
     public ?ManagedAgentsSessionThreadUsage $usage;
 
     /**
+     * Identifier of the workflow run that created the thread, or `null` for any other thread.
+     */
+    #[Required('workflow_run_id')]
+    public ?string $workflowRunID;
+
+    /**
      * `new ManagedAgentsSessionThread()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -124,6 +131,7 @@ final class ManagedAgentsSessionThread implements BaseModel
      *   type: ...,
      *   updatedAt: ...,
      *   usage: ...,
+     *   workflowRunID: ...,
      * )
      * ```
      *
@@ -142,6 +150,7 @@ final class ManagedAgentsSessionThread implements BaseModel
      *   ->withType(...)
      *   ->withUpdatedAt(...)
      *   ->withUsage(...)
+     *   ->withWorkflowRunID(...)
      * ```
      */
     public function __construct()
@@ -162,7 +171,7 @@ final class ManagedAgentsSessionThread implements BaseModel
      */
     public static function with(
         string $id,
-        BetaManagedAgentsSessionThreadAgent|array|BetaManagedAgentsAdvisor $agent,
+        BetaManagedAgentsSessionThreadAgent|array|BetaManagedAgentsAdvisor|ManagedAgentsInlineAgent $agent,
         ?\DateTimeInterface $archivedAt,
         \DateTimeInterface $createdAt,
         ?string $parentThreadID,
@@ -172,6 +181,7 @@ final class ManagedAgentsSessionThread implements BaseModel
         Type|string $type,
         \DateTimeInterface $updatedAt,
         ManagedAgentsSessionThreadUsage|array|null $usage,
+        ?string $workflowRunID,
     ): self {
         $self = new self;
 
@@ -186,6 +196,7 @@ final class ManagedAgentsSessionThread implements BaseModel
         $self['type'] = $type;
         $self['updatedAt'] = $updatedAt;
         $self['usage'] = $usage;
+        $self['workflowRunID'] = $workflowRunID;
 
         return $self;
     }
@@ -207,7 +218,7 @@ final class ManagedAgentsSessionThread implements BaseModel
      * @param AgentShape $agent
      */
     public function withAgent(
-        BetaManagedAgentsSessionThreadAgent|array|BetaManagedAgentsAdvisor $agent
+        BetaManagedAgentsSessionThreadAgent|array|BetaManagedAgentsAdvisor|ManagedAgentsInlineAgent $agent,
     ): self {
         $self = clone $this;
         $self['agent'] = $agent;
@@ -319,6 +330,17 @@ final class ManagedAgentsSessionThread implements BaseModel
     ): self {
         $self = clone $this;
         $self['usage'] = $usage;
+
+        return $self;
+    }
+
+    /**
+     * Identifier of the workflow run that created the thread, or `null` for any other thread.
+     */
+    public function withWorkflowRunID(?string $workflowRunID): self
+    {
+        $self = clone $this;
+        $self['workflowRunID'] = $workflowRunID;
 
         return $self;
     }
