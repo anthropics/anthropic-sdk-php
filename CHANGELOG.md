@@ -2,6 +2,11 @@
 
 ## [0.57.1](https://github.com/anthropics/anthropic-sdk-php/compare/v0.57.0...v0.57.1) (2026-10-09)
 
+### Chores
+
+* **docs:** correct prefill, thinking, fallback and model descriptions
+
+
 ### Documentation
 
 * **api:** clarify when custom tool results can be sent

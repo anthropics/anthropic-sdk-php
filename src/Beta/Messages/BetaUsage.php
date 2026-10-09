@@ -82,7 +82,6 @@ final class BetaUsage implements BaseModel
      * Per-iteration token usage breakdown.
      *
      * Each entry represents one sampling iteration, with its own input/output token counts and cache statistics, discriminated by `type`. For `message` entries (model sampling iterations, such as the turns of a server-side tool use loop), this allows you to:
-     * - Determine which iterations exceeded long context thresholds (>=200k tokens)
      * - Calculate the context window size from the last `message` entry
      * - Understand token accumulation across server-side tool use loops
      *
@@ -302,7 +301,6 @@ final class BetaUsage implements BaseModel
      * Per-iteration token usage breakdown.
      *
      * Each entry represents one sampling iteration, with its own input/output token counts and cache statistics, discriminated by `type`. For `message` entries (model sampling iterations, such as the turns of a server-side tool use loop), this allows you to:
-     * - Determine which iterations exceeded long context thresholds (>=200k tokens)
      * - Calculate the context window size from the last `message` entry
      * - Understand token accumulation across server-side tool use loops
      *

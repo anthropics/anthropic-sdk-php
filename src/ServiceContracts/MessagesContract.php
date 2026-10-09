@@ -65,7 +65,7 @@ interface MessagesContract
      *
      * Each input message must be an object with a `role` and `content`. You can specify a single `user`-role message, or you can include multiple `user` and `assistant` messages.
      *
-     * If the final message uses the `assistant` role, the response content will continue immediately from the content in that message. This can be used to constrain part of the model's response.
+     * If the final message uses the `assistant` role, the response content will continue immediately from the content in that message. This can be used to constrain part of the model's response. This is called prefill. On models that don't support prefill, creating a message that ends with a partial `assistant` response returns a 400 error. See [Prefill not supported](https://platform.claude.com/docs/en/api/errors#prefill-not-supported).
      *
      * Example with a single `user` message:
      *
@@ -83,7 +83,7 @@ interface MessagesContract
      * ]
      * ```
      *
-     * Example with a partially-filled response from Claude:
+     * Example with a partially-filled response from Claude, for models that support prefill:
      *
      * ```json
      * [
@@ -132,11 +132,11 @@ interface MessagesContract
      * Defaults to `1.0`. Ranges from `0.0` to `1.0`. Use `temperature` closer to `0.0` for analytical / multiple choice, and closer to `1.0` for creative and generative tasks.
      *
      * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
-     * @param ThinkingConfigParamShape $thinking Body param: Configuration for enabling Claude's extended thinking.
+     * @param ThinkingConfigParamShape $thinking Body param: Configuration for Claude's thinking.
      *
-     * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
+     * With `{"type": "adaptive"}`, Claude decides when and how much to think. With `{"type": "enabled"}` (manual extended thinking), you set a `budget_tokens` of at least 1,024. Thinking tokens count toward your `max_tokens` limit.
      *
-     * See [extended thinking](https://platform.claude.com/docs/en/build-with-claude/extended-thinking) for details.
+     * Which `type` values are accepted, and what happens when you omit `thinking`, depend on the model. See [thinking](https://platform.claude.com/docs/en/build-with-claude/thinking#configuring-thinking) for each model's behavior.
      * @param ToolChoiceShape $toolChoice Body param: How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      * @param list<ToolUnionShape> $tools Body param: Definitions of tools that the model may use.
      *
@@ -257,7 +257,7 @@ interface MessagesContract
      *
      * Each input message must be an object with a `role` and `content`. You can specify a single `user`-role message, or you can include multiple `user` and `assistant` messages.
      *
-     * If the final message uses the `assistant` role, the response content will continue immediately from the content in that message. This can be used to constrain part of the model's response.
+     * If the final message uses the `assistant` role, the response content will continue immediately from the content in that message. This can be used to constrain part of the model's response. This is called prefill. On models that don't support prefill, creating a message that ends with a partial `assistant` response returns a 400 error. See [Prefill not supported](https://platform.claude.com/docs/en/api/errors#prefill-not-supported).
      *
      * Example with a single `user` message:
      *
@@ -275,7 +275,7 @@ interface MessagesContract
      * ]
      * ```
      *
-     * Example with a partially-filled response from Claude:
+     * Example with a partially-filled response from Claude, for models that support prefill:
      *
      * ```json
      * [
@@ -324,11 +324,11 @@ interface MessagesContract
      * Defaults to `1.0`. Ranges from `0.0` to `1.0`. Use `temperature` closer to `0.0` for analytical / multiple choice, and closer to `1.0` for creative and generative tasks.
      *
      * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
-     * @param ThinkingConfigParamShape $thinking Body param: Configuration for enabling Claude's extended thinking.
+     * @param ThinkingConfigParamShape $thinking Body param: Configuration for Claude's thinking.
      *
-     * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
+     * With `{"type": "adaptive"}`, Claude decides when and how much to think. With `{"type": "enabled"}` (manual extended thinking), you set a `budget_tokens` of at least 1,024. Thinking tokens count toward your `max_tokens` limit.
      *
-     * See [extended thinking](https://platform.claude.com/docs/en/build-with-claude/extended-thinking) for details.
+     * Which `type` values are accepted, and what happens when you omit `thinking`, depend on the model. See [thinking](https://platform.claude.com/docs/en/build-with-claude/thinking#configuring-thinking) for each model's behavior.
      * @param ToolChoiceShape $toolChoice Body param: How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      * @param list<ToolUnionShape> $tools Body param: Definitions of tools that the model may use.
      *
@@ -444,7 +444,7 @@ interface MessagesContract
      *
      * Each input message must be an object with a `role` and `content`. You can specify a single `user`-role message, or you can include multiple `user` and `assistant` messages.
      *
-     * If the final message uses the `assistant` role, the response content will continue immediately from the content in that message. This can be used to constrain part of the model's response.
+     * If the final message uses the `assistant` role, the response content will continue immediately from the content in that message. This can be used to constrain part of the model's response. This is called prefill. On models that don't support prefill, creating a message that ends with a partial `assistant` response returns a 400 error. See [Prefill not supported](https://platform.claude.com/docs/en/api/errors#prefill-not-supported).
      *
      * Example with a single `user` message:
      *
@@ -462,7 +462,7 @@ interface MessagesContract
      * ]
      * ```
      *
-     * Example with a partially-filled response from Claude:
+     * Example with a partially-filled response from Claude, for models that support prefill:
      *
      * ```json
      * [
@@ -494,11 +494,11 @@ interface MessagesContract
      * @param SystemShape1 $system Body param: System prompt.
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#give-claude-a-role).
-     * @param ThinkingConfigParamShape $thinking Body param: Configuration for enabling Claude's extended thinking.
+     * @param ThinkingConfigParamShape $thinking Body param: Configuration for Claude's thinking.
      *
-     * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
+     * With `{"type": "adaptive"}`, Claude decides when and how much to think. With `{"type": "enabled"}` (manual extended thinking), you set a `budget_tokens` of at least 1,024. Thinking tokens count toward your `max_tokens` limit.
      *
-     * See [extended thinking](https://platform.claude.com/docs/en/build-with-claude/extended-thinking) for details.
+     * Which `type` values are accepted, and what happens when you omit `thinking`, depend on the model. See [thinking](https://platform.claude.com/docs/en/build-with-claude/thinking#configuring-thinking) for each model's behavior.
      * @param ToolChoiceShape $toolChoice Body param: How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      * @param list<MessageCountTokensToolShape> $tools Body param: Definitions of tools that the model may use.
      *
