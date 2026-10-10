@@ -66,7 +66,7 @@ final class SpendLimit implements BaseModel
     public string $currency;
 
     /**
-     * Read-only. `false` when extra usage is switched off for this organization (`organization` limit) or for this member (`user` limit); `amount` is kept and applies again when it's switched back on. Always `true` for other limits.
+     * Read-only. `false` when extra usage is switched off for this organization (`organization` limit); `amount` is kept and applies again when it's switched back on. Always `true` for other limits.
      */
     #[Required('is_enabled')]
     public bool $isEnabled;
@@ -206,7 +206,7 @@ final class SpendLimit implements BaseModel
     }
 
     /**
-     * Read-only. `false` when extra usage is switched off for this organization (`organization` limit) or for this member (`user` limit); `amount` is kept and applies again when it's switched back on. Always `true` for other limits.
+     * Read-only. `false` when extra usage is switched off for this organization (`organization` limit); `amount` is kept and applies again when it's switched back on. Always `true` for other limits.
      */
     public function withIsEnabled(bool $isEnabled): self
     {

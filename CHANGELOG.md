@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.58.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.57.0...v0.58.0) (2026-10-09)
+## [0.58.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.57.0...v0.58.0) (2026-10-10)
 
 ### Features
 
@@ -21,6 +21,7 @@
 ### Documentation
 
 * **api:** clarify when custom tool results can be sent
+* **api:** say is_enabled is always true for user spend limits
 
 ## [0.57.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.56.0...v0.57.0) (2026-10-09)
 
