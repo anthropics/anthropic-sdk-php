@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.58.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.57.0...v0.58.0) (2026-10-10)
+## [0.58.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.57.0...v0.58.0) (2026-10-13)
 
 ### Features
 
@@ -10,6 +10,7 @@
 ### Bug Fixes
 
 * **client:** accept backed enums as union discriminators in array params
+* **client:** treat proxy-authorization as a sensitive header
 
 
 ### Chores

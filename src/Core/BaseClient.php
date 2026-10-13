@@ -34,7 +34,12 @@ abstract class BaseClient
 {
     /** Credential-bearing headers, never sent once a redirect chain has left the original origin. */
     private const REDIRECT_SENSITIVE_HEADERS = [
-        'Authorization', 'Cookie', 'Proxy-Authorization', 'X-Api-Key',
+        'authorization',
+        'proxy-authorization',
+        'api-key',
+        'x-api-key',
+        'cookie',
+        'set-cookie',
     ];
 
     private UriInterface $baseUrl;
