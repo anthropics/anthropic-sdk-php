@@ -373,12 +373,30 @@ class MessageAccumulatorTest extends TestCase
         $this->assertSame('typed', self::blockField($accumulator->message()->jsonSerialize(), index: 0, field: 'text'));
     }
 
-    public function testThrowsOnEventBeforeMessageStart(): void
+    #[DataProvider('accumulators')]
+    public function testIgnoresUnknownEventTypesAndEventsBeforeMessageStart(MessageAccumulator $accumulator): void
     {
-        $this->expectException(\LogicException::class);
-        $this->expectExceptionMessage('before "message_start"');
+        $unknown = ['type' => 'future_event', 'usage' => ['output_tokens' => 99]];
 
-        MessageAccumulator::forMessages()->accumulate(['type' => 'content_block_stop', 'index' => 0]);
+        $accumulator
+            ->accumulate($unknown)
+            ->accumulate(['type' => 'content_block_stop', 'index' => 0])
+            ->accumulate(['type' => 'message_start', 'message' => self::startMessage()])
+            ->accumulate($unknown)
+            ->accumulate(['type' => 'message_stop'])
+            ->accumulate($unknown)
+        ;
+
+        $this->assertTrue($accumulator->isComplete());
+        self::assertDeepSubset(self::startMessage(), actual: $accumulator->message()->jsonSerialize());
+    }
+
+    /** @return iterable<string,array{MessageAccumulator}> */
+    public static function accumulators(): iterable
+    {
+        yield 'ga' => [MessageAccumulator::forMessages()];
+
+        yield 'beta' => [MessageAccumulator::forBetaMessages()];
     }
 
     public function testThrowsOnSecondMessageStart(): void

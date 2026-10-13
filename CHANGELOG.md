@@ -13,6 +13,11 @@
 * **client:** treat proxy-authorization as a sensitive header
 
 
+### Bug Fixes
+
+* **streaming:** ignore events before message_start in MessageAccumulator
+
+
 ### Chores
 
 * **docs:** correct prefill, thinking, fallback and model descriptions
