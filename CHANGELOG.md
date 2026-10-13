@@ -22,6 +22,7 @@
 
 * **docs:** correct prefill, thinking, fallback and model descriptions
 * **docs:** update model examples
+* **internal:** narrow the tripwire test rule in the contributor guides
 
 
 ### Documentation
