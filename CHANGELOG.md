@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.59.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.58.0...v0.59.0) (2026-10-14)
+
+### Features
+
+* **api:** return a Console organization's usage-tier spend cap as a read-only spend limit
+
 ## [0.58.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.57.0...v0.58.0) (2026-10-14)
 
 ### Features

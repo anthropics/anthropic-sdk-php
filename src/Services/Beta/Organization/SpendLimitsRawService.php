@@ -132,7 +132,8 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
      * the member falls back to any inherited spend limit at that period. Its
      * seat-tier, group, and organization-level rows cannot be deleted via this
      * endpoint. A Claude Console organization deletes its organization and
-     * workspace limits. Deleting them through the API is in an early access preview.
+     * workspace limits, but not its `usage_tier` limit. Deleting organization and
+     * workspace limits through the API is in an early access preview.
      *
      * @param string $spendLimitID ID of the Spend Limit
      * @param RequestOpts|null $requestOptions

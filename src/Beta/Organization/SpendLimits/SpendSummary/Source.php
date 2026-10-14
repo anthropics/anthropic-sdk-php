@@ -8,6 +8,7 @@ use Anthropic\Beta\Organization\SpendLimits\SpendLimitOrganizationScope;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitOrganizationServiceScope;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitRBACGroupScope;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitSeatTierScope;
+use Anthropic\Beta\Organization\SpendLimits\SpendLimitUsageTierScope;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitUserScope;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitWorkspaceScope;
 use Anthropic\Core\Concerns\SdkUnion;
@@ -21,9 +22,10 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type SpendLimitOrganizationServiceScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitOrganizationServiceScope
  * @phpstan-import-type SpendLimitOrganizationScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitOrganizationScope
  * @phpstan-import-type SpendLimitWorkspaceScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitWorkspaceScope
+ * @phpstan-import-type SpendLimitUsageTierScopeShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitUsageTierScope
  *
- * @phpstan-type SourceVariants = SpendLimitUserScope|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope
- * @phpstan-type SourceShape = SourceVariants|SpendLimitUserScopeShape|SpendLimitSeatTierScopeShape|SpendLimitRBACGroupScopeShape|SpendLimitOrganizationServiceScopeShape|SpendLimitOrganizationScopeShape|SpendLimitWorkspaceScopeShape
+ * @phpstan-type SourceVariants = SpendLimitUserScope|SpendLimitSeatTierScope|SpendLimitRBACGroupScope|SpendLimitOrganizationServiceScope|SpendLimitOrganizationScope|SpendLimitWorkspaceScope|SpendLimitUsageTierScope
+ * @phpstan-type SourceShape = SourceVariants|SpendLimitUserScopeShape|SpendLimitSeatTierScopeShape|SpendLimitRBACGroupScopeShape|SpendLimitOrganizationServiceScopeShape|SpendLimitOrganizationScopeShape|SpendLimitWorkspaceScopeShape|SpendLimitUsageTierScopeShape
  */
 final class Source implements ConverterSource
 {
@@ -46,6 +48,7 @@ final class Source implements ConverterSource
             'organization_service' => SpendLimitOrganizationServiceScope::class,
             'organization' => SpendLimitOrganizationScope::class,
             'workspace' => SpendLimitWorkspaceScope::class,
+            'usage_tier' => SpendLimitUsageTierScope::class,
         ];
     }
 }
