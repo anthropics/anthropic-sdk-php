@@ -13,6 +13,7 @@
 
 ### Bug Fixes
 
+* **api:** rename telemetry destination test response model
 * **client:** accept backed enums as union discriminators in array params
 * **client:** treat proxy-authorization as a sensitive header
 

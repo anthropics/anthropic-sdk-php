@@ -11,8 +11,8 @@ use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationCreate
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationDeleteParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationListParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationRetrieveParams;
-use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTest;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTestParams;
+use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTestResponse;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTracesParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationUpdateParams;
 use Anthropic\Client;
@@ -353,7 +353,7 @@ final class TelemetryDestinationsRawService implements TelemetryDestinationsRawC
      * }|TelemetryDestinationTestParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<TelemetryDestinationTest>
+     * @return BaseResponse<TelemetryDestinationTestResponse>
      *
      * @throws APIException
      */
@@ -392,7 +392,7 @@ final class TelemetryDestinationsRawService implements TelemetryDestinationsRawC
                     'anthropic.organization.telemetry_destination.id' => $destinationID,
                 ],
             )),
-            convert: TelemetryDestinationTest::class,
+            convert: TelemetryDestinationTestResponse::class,
         );
     }
 }

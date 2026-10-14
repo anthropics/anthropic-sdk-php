@@ -15,14 +15,14 @@ use Anthropic\Core\Conversion\ConstantOf;
  * @phpstan-import-type TelemetryDestinationTestResultShape from \Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTestResult
  * @phpstan-import-type TelemetryDestinationTestResultVariants from \Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTestResult
  *
- * @phpstan-type TelemetryDestinationTestShape = array{
+ * @phpstan-type TelemetryDestinationTestResponseShape = array{
  *   result: TelemetryDestinationTestResultShape,
  *   type: 'telemetry_destination_test',
  * }
  */
-final class TelemetryDestinationTest implements BaseModel
+final class TelemetryDestinationTestResponse implements BaseModel
 {
-    /** @use SdkModel<TelemetryDestinationTestShape> */
+    /** @use SdkModel<TelemetryDestinationTestResponseShape> */
     use SdkModel;
 
     /** @var 'telemetry_destination_test' $type */
@@ -38,17 +38,17 @@ final class TelemetryDestinationTest implements BaseModel
     public TelemetryDestinationTestSuccess|TelemetryDestinationTestFailure $result;
 
     /**
-     * `new TelemetryDestinationTest()` is missing required properties by the API.
+     * `new TelemetryDestinationTestResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * TelemetryDestinationTest::with(result: ...)
+     * TelemetryDestinationTestResponse::with(result: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new TelemetryDestinationTest())->withResult(...)
+     * (new TelemetryDestinationTestResponse())->withResult(...)
      * ```
      */
     public function __construct()

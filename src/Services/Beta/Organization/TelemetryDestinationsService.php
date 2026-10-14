@@ -9,7 +9,7 @@ use Anthropic\Beta\Organization\TelemetryDestinations\DeletedTelemetryDestinatio
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestination;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationStateDisabledParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationStateEnabledParams;
-use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTest;
+use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTestResponse;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTracesParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationWorkspacesAllParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationWorkspacesExcludeParams;
@@ -278,7 +278,7 @@ final class TelemetryDestinationsService implements TelemetryDestinationsContrac
         string $destinationID,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
-    ): TelemetryDestinationTest {
+    ): TelemetryDestinationTestResponse {
         $params = Util::removeNulls(['betas' => $betas]);
 
         // @phpstan-ignore-next-line argument.type

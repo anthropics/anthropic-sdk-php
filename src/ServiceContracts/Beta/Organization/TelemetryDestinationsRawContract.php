@@ -10,8 +10,8 @@ use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationCreate
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationDeleteParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationListParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationRetrieveParams;
-use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTest;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTestParams;
+use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTestResponse;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationUpdateParams;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
@@ -111,7 +111,7 @@ interface TelemetryDestinationsRawContract
      * @param array<string,mixed>|TelemetryDestinationTestParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<TelemetryDestinationTest>
+     * @return BaseResponse<TelemetryDestinationTestResponse>
      *
      * @throws APIException
      */
