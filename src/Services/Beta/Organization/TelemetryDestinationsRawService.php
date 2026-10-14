@@ -11,6 +11,8 @@ use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationCreate
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationDeleteParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationListParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationRetrieveParams;
+use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTest;
+use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTestParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTracesParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationUpdateParams;
 use Anthropic\Client;
@@ -337,6 +339,60 @@ final class TelemetryDestinationsRawService implements TelemetryDestinationsRawC
                 ],
             )),
             convert: DeletedTelemetryDestination::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Send one test span, named `anthropic.test`, to the destination with its registered headers, once and without retries, and report the destination's answer. The response is 200 whether or not the destination answered with a 2xx status: its `result` has the type `success`, or the type `failure` and the reason in `error`. The destination's configuration, `state` and `delivery_health` do not change. A disabled destination can be tested too. Wait 10 seconds between tests of one destination; a request that comes sooner may be answered with status 429.
+     *
+     * @param string $destinationID ID of the destination to test (starts with `tdst_`)
+     * @param array{
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     * }|TelemetryDestinationTestParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<TelemetryDestinationTest>
+     *
+     * @throws APIException
+     */
+    public function test(
+        string $destinationID,
+        array|TelemetryDestinationTestParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = TelemetryDestinationTestParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: [
+                'v1/organizations/telemetry_destinations/%1$s/test?beta=true',
+                $destinationID,
+            ],
+            headers: Util::array_transform_keys(
+                $parsed,
+                ['betas' => 'anthropic-beta']
+            ),
+            options: RequestOptions::parse(
+                [
+                    'extraHeaders' => [
+                        'anthropic-beta' => 'telemetry-destinations-2026-08-11',
+                    ],
+                ],
+                $options,
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.telemetry_destinations.test',
+                route: '/v1/organizations/telemetry_destinations/{destination_id}/test',
+                attributes: [
+                    'anthropic.organization.telemetry_destination.id' => $destinationID,
+                ],
+            )),
+            convert: TelemetryDestinationTest::class,
         );
     }
 }

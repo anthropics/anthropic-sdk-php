@@ -9,6 +9,7 @@ use Anthropic\Beta\Organization\TelemetryDestinations\DeletedTelemetryDestinatio
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestination;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationStateDisabledParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationStateEnabledParams;
+use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTest;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTracesParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationWorkspacesAllParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationWorkspacesExcludeParams;
@@ -258,6 +259,30 @@ final class TelemetryDestinationsService implements TelemetryDestinationsContrac
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($destinationID, params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * Send one test span, named `anthropic.test`, to the destination with its registered headers, once and without retries, and report the destination's answer. The response is 200 whether or not the destination answered with a 2xx status: its `result` has the type `success`, or the type `failure` and the reason in `error`. The destination's configuration, `state` and `delivery_health` do not change. A disabled destination can be tested too. Wait 10 seconds between tests of one destination; a request that comes sooner may be answered with status 429.
+     *
+     * @param string $destinationID ID of the destination to test (starts with `tdst_`)
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function test(
+        string $destinationID,
+        ?array $betas = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): TelemetryDestinationTest {
+        $params = Util::removeNulls(['betas' => $betas]);
+
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->test($destinationID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

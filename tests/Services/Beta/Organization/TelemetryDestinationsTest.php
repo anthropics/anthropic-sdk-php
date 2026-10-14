@@ -6,6 +6,7 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Organization\TelemetryDestinations\DeletedTelemetryDestination;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestination;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationContentMode;
+use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTest;
 use Anthropic\Client;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
@@ -113,5 +114,16 @@ final class TelemetryDestinationsTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DeletedTelemetryDestination::class, $result);
+    }
+
+    #[Test]
+    public function testTest(): void
+    {
+        $result = $this->client->beta->organization->telemetryDestinations->test(
+            'destination_id'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(TelemetryDestinationTest::class, $result);
     }
 }

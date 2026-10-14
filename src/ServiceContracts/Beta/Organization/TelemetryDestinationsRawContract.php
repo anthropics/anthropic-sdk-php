@@ -10,6 +10,8 @@ use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationCreate
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationDeleteParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationListParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationRetrieveParams;
+use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTest;
+use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTestParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationUpdateParams;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
@@ -99,6 +101,23 @@ interface TelemetryDestinationsRawContract
     public function delete(
         string $destinationID,
         array|TelemetryDestinationDeleteParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $destinationID ID of the destination to test (starts with `tdst_`)
+     * @param array<string,mixed>|TelemetryDestinationTestParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<TelemetryDestinationTest>
+     *
+     * @throws APIException
+     */
+    public function test(
+        string $destinationID,
+        array|TelemetryDestinationTestParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

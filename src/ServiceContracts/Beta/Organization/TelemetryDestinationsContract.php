@@ -9,6 +9,7 @@ use Anthropic\Beta\Organization\TelemetryDestinations\DeletedTelemetryDestinatio
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestination;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationStateDisabledParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationStateEnabledParams;
+use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTest;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationTracesParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationWorkspacesAllParams;
 use Anthropic\Beta\Organization\TelemetryDestinations\TelemetryDestinationWorkspacesExcludeParams;
@@ -149,4 +150,19 @@ interface TelemetryDestinationsContract
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): DeletedTelemetryDestination;
+
+    /**
+     * @api
+     *
+     * @param string $destinationID ID of the destination to test (starts with `tdst_`)
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function test(
+        string $destinationID,
+        ?array $betas = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): TelemetryDestinationTest;
 }
