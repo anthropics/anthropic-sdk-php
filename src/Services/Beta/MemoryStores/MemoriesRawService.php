@@ -19,6 +19,7 @@ use Anthropic\Beta\MemoryStores\Memories\MemoryUpdateParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -85,7 +86,13 @@ final class MemoriesRawService implements MemoriesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.memory_stores.memories.create',
+                route: '/v1/memory_stores/{memory_store_id}/memories',
+                query: ['view'],
+                attributes: ['gen_ai.memory.store.id' => $memoryStoreID],
+                createdId: 'gen_ai.memory.record.id',
+            )),
             convert: ManagedAgentsMemory::class,
         );
     }
@@ -142,7 +149,15 @@ final class MemoriesRawService implements MemoriesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.memory_stores.memories.retrieve',
+                route: '/v1/memory_stores/{memory_store_id}/memories/{memory_id}',
+                query: ['view'],
+                attributes: [
+                    'gen_ai.memory.store.id' => $memoryStoreID,
+                    'gen_ai.memory.record.id' => $memoryID,
+                ],
+            )),
             convert: ManagedAgentsMemory::class,
         );
     }
@@ -207,7 +222,15 @@ final class MemoriesRawService implements MemoriesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.memory_stores.memories.update',
+                route: '/v1/memory_stores/{memory_store_id}/memories/{memory_id}',
+                query: ['view'],
+                attributes: [
+                    'gen_ai.memory.store.id' => $memoryStoreID,
+                    'gen_ai.memory.record.id' => $memoryID,
+                ],
+            )),
             convert: ManagedAgentsMemory::class,
         );
     }
@@ -266,7 +289,13 @@ final class MemoriesRawService implements MemoriesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.memory_stores.memories.list',
+                route: '/v1/memory_stores/{memory_store_id}/memories',
+                query: ['depth', 'limit', 'page', 'path_prefix', 'view'],
+                contentQuery: ['page'],
+                attributes: ['gen_ai.memory.store.id' => $memoryStoreID],
+            )),
             convert: ManagedAgentsMemoryListItem::class,
             page: PageCursor::class,
         );
@@ -327,7 +356,15 @@ final class MemoriesRawService implements MemoriesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.memory_stores.memories.delete',
+                route: '/v1/memory_stores/{memory_store_id}/memories/{memory_id}',
+                query: ['expected_content_sha256'],
+                attributes: [
+                    'gen_ai.memory.store.id' => $memoryStoreID,
+                    'gen_ai.memory.record.id' => $memoryID,
+                ],
+            )),
             convert: ManagedAgentsDeletedMemory::class,
         );
     }

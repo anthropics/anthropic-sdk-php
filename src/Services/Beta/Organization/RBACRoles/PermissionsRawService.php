@@ -9,6 +9,7 @@ use Anthropic\Beta\Organization\RBACRoles\Permissions\PermissionListParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\RBACRoles\PermissionsRawContract;
@@ -56,7 +57,12 @@ final class PermissionsRawService implements PermissionsRawContract
                 'v1/organizations/rbac_roles/%1$s/permissions?beta=true', $rbacRoleID,
             ],
             query: $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.rbac_roles.permissions.list',
+                route: '/v1/organizations/rbac_roles/{rbac_role_id}/permissions',
+                query: ['limit', 'page'],
+                attributes: ['anthropic.organization.rbac_role.id' => $rbacRoleID],
+            )),
             convert: BetaRBACRolePermission::class,
             page: PageCursor::class,
         );

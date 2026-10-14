@@ -13,6 +13,7 @@ use Anthropic\Beta\Tunnels\Certificates\TunnelCertificate;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -76,7 +77,12 @@ final class CertificatesRawService implements CertificatesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.tunnels.certificates.create',
+                route: '/v1/tunnels/{tunnel_id}/certificates',
+                attributes: ['anthropic.tunnel.id' => $tunnelID],
+                createdId: 'anthropic.tunnel.certificate.id',
+            )),
             convert: TunnelCertificate::class,
         );
     }
@@ -127,7 +133,14 @@ final class CertificatesRawService implements CertificatesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.tunnels.certificates.retrieve',
+                route: '/v1/tunnels/{tunnel_id}/certificates/{certificate_id}',
+                attributes: [
+                    'anthropic.tunnel.id' => $tunnelID,
+                    'anthropic.tunnel.certificate.id' => $certificateID,
+                ],
+            )),
             convert: TunnelCertificate::class,
         );
     }
@@ -184,7 +197,12 @@ final class CertificatesRawService implements CertificatesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.tunnels.certificates.list',
+                route: '/v1/tunnels/{tunnel_id}/certificates',
+                query: ['include_archived', 'limit', 'page'],
+                attributes: ['anthropic.tunnel.id' => $tunnelID],
+            )),
             convert: TunnelCertificate::class,
             page: PageCursor::class,
         );
@@ -238,7 +256,14 @@ final class CertificatesRawService implements CertificatesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.tunnels.certificates.archive',
+                route: '/v1/tunnels/{tunnel_id}/certificates/{certificate_id}/archive',
+                attributes: [
+                    'anthropic.tunnel.id' => $tunnelID,
+                    'anthropic.tunnel.certificate.id' => $certificateID,
+                ],
+            )),
             convert: TunnelCertificate::class,
         );
     }

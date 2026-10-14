@@ -58,6 +58,7 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -126,7 +127,15 @@ final class EventsRawService implements EventsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.threads.events.list',
+                route: '/v1/sessions/{session_id}/threads/{thread_id}/events',
+                query: ['limit', 'page'],
+                attributes: [
+                    'anthropic.session.id' => $sessionID,
+                    'anthropic.session.thread.id' => $threadID,
+                ],
+            )),
             convert: ManagedAgentsSessionEvent::class,
             page: PageCursor::class,
         );
@@ -183,7 +192,15 @@ final class EventsRawService implements EventsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.threads.events.stream',
+                route: '/v1/sessions/{session_id}/threads/{thread_id}/stream',
+                query: ['event_deltas'],
+                attributes: [
+                    'anthropic.session.id' => $sessionID,
+                    'anthropic.session.thread.id' => $threadID,
+                ],
+            )),
             convert: ManagedAgentsStreamSessionThreadEvents::class,
             stream: SSEStream::class,
         );

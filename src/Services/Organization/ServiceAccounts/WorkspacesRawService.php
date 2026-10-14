@@ -7,6 +7,7 @@ namespace Anthropic\Services\Organization\ServiceAccounts;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Organization\ServiceAccounts\ServiceAccountWorkspaceMember;
 use Anthropic\Organization\ServiceAccounts\Workspaces\WorkspaceAddParams;
 use Anthropic\Organization\ServiceAccounts\Workspaces\WorkspaceListParams;
@@ -74,7 +75,14 @@ final class WorkspacesRawService implements WorkspacesRawContract
                 'v1/organizations/service_accounts/%1$s/workspaces', $serviceAccountID,
             ],
             query: $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.service_accounts.workspaces.list',
+                route: '/v1/organizations/service_accounts/{service_account_id}/workspaces',
+                query: ['limit', 'page'],
+                attributes: [
+                    'anthropic.organization.service_account.id' => $serviceAccountID,
+                ],
+            )),
             convert: ServiceAccountWorkspaceMember::class,
             page: PageCursor::class,
         );
@@ -121,7 +129,16 @@ final class WorkspacesRawService implements WorkspacesRawContract
                 'v1/organizations/service_accounts/%1$s/workspaces', $serviceAccountID,
             ],
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.service_accounts.workspaces.add',
+                route: '/v1/organizations/service_accounts/{service_account_id}/workspaces',
+                attributes: [
+                    'anthropic.organization.service_account.id' => $serviceAccountID,
+                ],
+                createdId: [
+                    'anthropic.organization.service_account.workspace.id' => 'workspace_id',
+                ],
+            )),
             convert: ServiceAccountWorkspaceMember::class,
         );
     }
@@ -169,7 +186,14 @@ final class WorkspacesRawService implements WorkspacesRawContract
                 $serviceAccountID,
                 $workspaceID,
             ],
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.service_accounts.workspaces.remove',
+                route: '/v1/organizations/service_accounts/{service_account_id}/workspaces/{workspace_id}',
+                attributes: [
+                    'anthropic.organization.service_account.id' => $serviceAccountID,
+                    'anthropic.organization.service_account.workspace.id' => $workspaceID,
+                ],
+            )),
             convert: WorkspaceRemoveResponse::class,
         );
     }

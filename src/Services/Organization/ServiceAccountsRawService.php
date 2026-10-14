@@ -7,6 +7,7 @@ namespace Anthropic\Services\Organization;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\Organization\ServiceAccounts\ServiceAccount;
 use Anthropic\Organization\ServiceAccounts\ServiceAccountCreateParams;
@@ -68,7 +69,11 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
             method: 'post',
             path: 'v1/organizations/service_accounts',
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.service_accounts.create',
+                route: '/v1/organizations/service_accounts',
+                createdId: 'anthropic.organization.service_account.id',
+            )),
             convert: ServiceAccount::class,
         );
     }
@@ -95,7 +100,13 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/organizations/service_accounts/%1$s', $serviceAccountID],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.service_accounts.retrieve',
+                route: '/v1/organizations/service_accounts/{service_account_id}',
+                attributes: [
+                    'anthropic.organization.service_account.id' => $serviceAccountID,
+                ],
+            )),
             convert: ServiceAccount::class,
         );
     }
@@ -138,7 +149,13 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
             method: 'post',
             path: ['v1/organizations/service_accounts/%1$s', $serviceAccountID],
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.service_accounts.update',
+                route: '/v1/organizations/service_accounts/{service_account_id}',
+                attributes: [
+                    'anthropic.organization.service_account.id' => $serviceAccountID,
+                ],
+            )),
             convert: ServiceAccount::class,
         );
     }
@@ -180,7 +197,11 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
                 $parsed,
                 ['includeArchived' => 'include_archived']
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.service_accounts.list',
+                route: '/v1/organizations/service_accounts',
+                query: ['include_archived', 'limit', 'page'],
+            )),
             convert: ServiceAccount::class,
             page: PageCursor::class,
         );
@@ -215,7 +236,13 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
             path: [
                 'v1/organizations/service_accounts/%1$s/archive', $serviceAccountID,
             ],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.service_accounts.archive',
+                route: '/v1/organizations/service_accounts/{service_account_id}/archive',
+                attributes: [
+                    'anthropic.organization.service_account.id' => $serviceAccountID,
+                ],
+            )),
             convert: ServiceAccount::class,
         );
     }

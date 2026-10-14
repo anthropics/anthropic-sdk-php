@@ -15,6 +15,7 @@ use Anthropic\Beta\Organization\Plugins\InstallationSettings\InstallationSetting
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -93,7 +94,12 @@ final class InstallationSettingsRawService implements InstallationSettingsRawCon
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.plugins.installation_settings.list',
+                route: '/v1/organizations/plugins/{plugin_id}/installation_settings',
+                query: ['limit', 'organization_id', 'page', 'target_type'],
+                attributes: ['anthropic.organization.plugin.id' => $pluginID],
+            )),
             convert: BetaPluginInstallationSetting::class,
             page: PageCursor::class,
         );
@@ -161,7 +167,14 @@ final class InstallationSettingsRawService implements InstallationSettingsRawCon
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.plugins.installation_settings.remove',
+                route: '/v1/organizations/plugins/{plugin_id}/installation_settings/{target}',
+                attributes: [
+                    'anthropic.organization.plugin.id' => $pluginID,
+                    'anthropic.organization.plugin.installation_setting.id' => $target,
+                ],
+            )),
             convert: BetaDeletedPluginInstallationSetting::class,
         );
     }
@@ -231,7 +244,14 @@ final class InstallationSettingsRawService implements InstallationSettingsRawCon
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.plugins.installation_settings.set',
+                route: '/v1/organizations/plugins/{plugin_id}/installation_settings/{target}',
+                attributes: [
+                    'anthropic.organization.plugin.id' => $pluginID,
+                    'anthropic.organization.plugin.installation_setting.id' => $target,
+                ],
+            )),
             convert: BetaPluginInstallationSetting::class,
         );
     }

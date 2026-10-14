@@ -7,6 +7,7 @@ namespace Anthropic\Services\Organization;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Organization\ExternalKeys\ExternalKey;
 use Anthropic\Organization\ExternalKeys\ExternalKeyCreateParams;
 use Anthropic\Organization\ExternalKeys\ExternalKeyCreateParams\Geo;
@@ -61,7 +62,11 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
             method: 'post',
             path: 'v1/organizations/external_keys',
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.external_keys.create',
+                route: '/v1/organizations/external_keys',
+                createdId: 'anthropic.organization.external_key.id',
+            )),
             convert: ExternalKey::class,
         );
     }
@@ -86,7 +91,13 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/organizations/external_keys/%1$s', $externalKeyID],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.external_keys.retrieve',
+                route: '/v1/organizations/external_keys/{external_key_id}',
+                attributes: [
+                    'anthropic.organization.external_key.id' => $externalKeyID,
+                ],
+            )),
             convert: ExternalKey::class,
         );
     }
@@ -127,7 +138,13 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
             method: 'post',
             path: ['v1/organizations/external_keys/%1$s', $externalKeyID],
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.external_keys.update',
+                route: '/v1/organizations/external_keys/{external_key_id}',
+                attributes: [
+                    'anthropic.organization.external_key.id' => $externalKeyID,
+                ],
+            )),
             convert: ExternalKey::class,
         );
     }
@@ -161,7 +178,11 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
             method: 'get',
             path: 'v1/organizations/external_keys',
             query: $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.external_keys.list',
+                route: '/v1/organizations/external_keys',
+                query: ['limit', 'page'],
+            )),
             convert: ExternalKey::class,
             page: PageCursor::class,
         );
@@ -189,7 +210,13 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
         return $this->client->request(
             method: 'delete',
             path: ['v1/organizations/external_keys/%1$s', $externalKeyID],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.external_keys.delete',
+                route: '/v1/organizations/external_keys/{external_key_id}',
+                attributes: [
+                    'anthropic.organization.external_key.id' => $externalKeyID,
+                ],
+            )),
             convert: ExternalKeyDeleteResponse::class,
         );
     }
@@ -219,7 +246,13 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
         return $this->client->request(
             method: 'post',
             path: ['v1/organizations/external_keys/%1$s/validate', $externalKeyID],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.external_keys.validate',
+                route: '/v1/organizations/external_keys/{external_key_id}/validate',
+                attributes: [
+                    'anthropic.organization.external_key.id' => $externalKeyID,
+                ],
+            )),
             convert: ExternalKeyValidateResponse::class,
         );
     }

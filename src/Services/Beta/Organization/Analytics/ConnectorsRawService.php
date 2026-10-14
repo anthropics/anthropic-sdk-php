@@ -11,6 +11,7 @@ use Anthropic\Beta\Organization\Analytics\Connectors\ConnectorListParams\Order;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -80,7 +81,22 @@ final class ConnectorsRawService implements ConnectorsRawContract
                     'startingDate' => 'starting_date',
                 ],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.analytics.connectors.list',
+                route: '/v1/organizations/analytics/connectors',
+                query: [
+                    'date',
+                    'ending_date',
+                    'filter',
+                    'group_by',
+                    'limit',
+                    'order',
+                    'order_by',
+                    'page',
+                    'starting_date',
+                ],
+                contentQuery: ['filter'],
+            )),
             convert: AnalyticsConnectorActivity::class,
             page: PageCursor::class,
         );

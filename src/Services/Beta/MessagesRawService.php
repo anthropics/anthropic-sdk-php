@@ -31,6 +31,7 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
@@ -137,7 +138,10 @@ final class MessagesRawService implements MessagesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.messages.create',
+                route: '/v1/messages',
+            )),
             convert: BetaMessage::class,
         );
     }
@@ -214,7 +218,10 @@ final class MessagesRawService implements MessagesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.messages.create',
+                route: '/v1/messages',
+            )),
             convert: BetaRawMessageStreamEvent::class,
             stream: SSEStream::class,
         );
@@ -279,7 +286,10 @@ final class MessagesRawService implements MessagesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.messages.count_tokens',
+                route: '/v1/messages/count_tokens',
+            )),
             convert: BetaMessageTokensCount::class,
         );
     }

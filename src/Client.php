@@ -25,6 +25,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  * @phpstan-import-type NormalizedRequest from \Anthropic\Core\BaseClient
+ * @phpstan-import-type OpenTelemetryOptions from \Anthropic\Core\BaseClient
  */
 class Client extends BaseClient
 {
@@ -73,6 +74,7 @@ class Client extends BaseClient
 
     /**
      * @param RequestOpts|null $requestOptions
+     * @param OpenTelemetryOptions|null $openTelemetry OpenTelemetry tracing of this client's API calls. Each call emits a span when the application has registered a tracer provider with the OpenTelemetry API. `false`, short for `['traces' => false]`, disables the spans, and `['traces' => false]` is itself short for `['traces' => ['enabled' => false]]`. `traces.contentMode` set to `'content'` adds the content of requests and responses to the spans, within `traces.maxContentBytes` bytes for each span when it is set. `propagation` set to `false` sends the requests without the trace context of their span, for an application whose HTTP client instrumentation already propagates it, so that a request does not carry it twice. The environment variables `ANTHROPIC_OPEN_TELEMETRY`, `ANTHROPIC_OPEN_TELEMETRY_PROPAGATION`, `ANTHROPIC_OPEN_TELEMETRY_TRACES_CONTENT_MODE` and `ANTHROPIC_OPEN_TELEMETRY_TRACES_MAX_CONTENT_BYTES` apply to a client that leaves `traces.enabled`, `propagation`, `traces.contentMode` or `traces.maxContentBytes` unset. The client reads them once, when it is built.
      */
     public function __construct(
         ?string $apiKey = null,
@@ -81,6 +83,7 @@ class Client extends BaseClient
         ?string $baseUrl = null,
         RequestOptions|array|null $requestOptions = null,
         ?CredentialResult $credentials = null,
+        array|false|null $openTelemetry = null,
     ) {
         $this->apiKey = (string) ($apiKey ?? getenv('ANTHROPIC_API_KEY'));
         $this->authToken = (string) ($authToken ?? getenv('ANTHROPIC_AUTH_TOKEN'));
@@ -148,7 +151,8 @@ class Client extends BaseClient
         parent::__construct(
             headers: $headers,
             baseUrl: $baseUrl,
-            options: $options
+            options: $options,
+            openTelemetry: $openTelemetry
         );
 
         $this->messages = new MessagesService($this);

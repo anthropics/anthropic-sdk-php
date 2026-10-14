@@ -18,6 +18,7 @@ use Anthropic\Beta\Organization\Analytics\UserUsageReport\UserUsageReportListPar
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -105,7 +106,31 @@ final class UserUsageReportRawService implements UserUsageReportRawContract
                     'userIDs' => 'user_ids',
                 ],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.analytics.user_usage_report.list',
+                route: '/v1/organizations/analytics/user_usage_report',
+                query: [
+                    'bucket_width',
+                    'claude_tag_categories',
+                    'claude_tag_user_ids',
+                    'context_windows',
+                    'ending_at',
+                    'exclude_deleted_users',
+                    'group_by',
+                    'inference_geos',
+                    'limit',
+                    'models',
+                    'order',
+                    'order_by',
+                    'page',
+                    'products',
+                    'rbac_group_ids',
+                    'slack_channel_ids',
+                    'speeds',
+                    'starting_at',
+                    'user_ids',
+                ],
+            )),
             convert: AnalyticsUsageUsersItem::class,
             page: PageCursor::class,
         );

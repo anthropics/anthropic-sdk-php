@@ -15,6 +15,7 @@ use Anthropic\Beta\Dreams\DreamRetrieveParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -84,7 +85,11 @@ final class DreamsRawService implements DreamsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'dreaming-2026-04-21']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.dreams.create',
+                route: '/v1/dreams',
+                createdId: 'anthropic.dream.id',
+            )),
             convert: BetaDream::class,
         );
     }
@@ -132,7 +137,11 @@ final class DreamsRawService implements DreamsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'dreaming-2026-04-21']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.dreams.retrieve',
+                route: '/v1/dreams/{dream_id}',
+                attributes: ['anthropic.dream.id' => $dreamID],
+            )),
             convert: BetaDream::class,
         );
     }
@@ -205,7 +214,18 @@ final class DreamsRawService implements DreamsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'dreaming-2026-04-21']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.dreams.list',
+                route: '/v1/dreams',
+                query: [
+                    'created_at[gt]',
+                    'created_at[lt]',
+                    'include_archived',
+                    'limit',
+                    'page',
+                    'statuses',
+                ],
+            )),
             convert: BetaDream::class,
             page: PageCursor::class,
         );
@@ -254,7 +274,11 @@ final class DreamsRawService implements DreamsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'dreaming-2026-04-21']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.dreams.archive',
+                route: '/v1/dreams/{dream_id}/archive',
+                attributes: ['anthropic.dream.id' => $dreamID],
+            )),
             convert: BetaDream::class,
         );
     }
@@ -302,7 +326,11 @@ final class DreamsRawService implements DreamsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'dreaming-2026-04-21']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.dreams.cancel',
+                route: '/v1/dreams/{dream_id}/cancel',
+                attributes: ['anthropic.dream.id' => $dreamID],
+            )),
             convert: BetaDream::class,
         );
     }

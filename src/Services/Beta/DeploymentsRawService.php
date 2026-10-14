@@ -21,6 +21,7 @@ use Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -96,7 +97,11 @@ final class DeploymentsRawService implements DeploymentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.deployments.create',
+                route: '/v1/deployments',
+                createdId: 'anthropic.deployment.id',
+            )),
             convert: BetaManagedAgentsDeployment::class,
         );
     }
@@ -140,7 +145,11 @@ final class DeploymentsRawService implements DeploymentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.deployments.retrieve',
+                route: '/v1/deployments/{deployment_id}',
+                attributes: ['anthropic.deployment.id' => $deploymentID],
+            )),
             convert: BetaManagedAgentsDeployment::class,
         );
     }
@@ -199,7 +208,11 @@ final class DeploymentsRawService implements DeploymentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.deployments.update',
+                route: '/v1/deployments/{deployment_id}',
+                attributes: ['anthropic.deployment.id' => $deploymentID],
+            )),
             convert: BetaManagedAgentsDeployment::class,
         );
     }
@@ -271,7 +284,19 @@ final class DeploymentsRawService implements DeploymentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.deployments.list',
+                route: '/v1/deployments',
+                query: [
+                    'agent_id',
+                    'created_at[gte]',
+                    'created_at[lte]',
+                    'include_archived',
+                    'limit',
+                    'page',
+                    'status',
+                ],
+            )),
             convert: BetaManagedAgentsDeployment::class,
             page: PageCursor::class,
         );
@@ -316,7 +341,11 @@ final class DeploymentsRawService implements DeploymentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.deployments.archive',
+                route: '/v1/deployments/{deployment_id}/archive',
+                attributes: ['anthropic.deployment.id' => $deploymentID],
+            )),
             convert: BetaManagedAgentsDeployment::class,
         );
     }
@@ -360,7 +389,11 @@ final class DeploymentsRawService implements DeploymentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.deployments.pause',
+                route: '/v1/deployments/{deployment_id}/pause',
+                attributes: ['anthropic.deployment.id' => $deploymentID],
+            )),
             convert: BetaManagedAgentsDeployment::class,
         );
     }
@@ -404,7 +437,11 @@ final class DeploymentsRawService implements DeploymentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.deployments.run',
+                route: '/v1/deployments/{deployment_id}/run',
+                attributes: ['anthropic.deployment.id' => $deploymentID],
+            )),
             convert: BetaManagedAgentsDeploymentRun::class,
         );
     }
@@ -448,7 +485,11 @@ final class DeploymentsRawService implements DeploymentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.deployments.unpause',
+                route: '/v1/deployments/{deployment_id}/unpause',
+                attributes: ['anthropic.deployment.id' => $deploymentID],
+            )),
             convert: BetaManagedAgentsDeployment::class,
         );
     }

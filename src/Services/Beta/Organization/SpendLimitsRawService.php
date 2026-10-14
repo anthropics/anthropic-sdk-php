@@ -14,6 +14,7 @@ use Anthropic\Beta\Organization\SpendLimits\SpendLimitSetParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -51,7 +52,11 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/organizations/spend_limits/%1$s?beta=true', $spendLimitID],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.spend_limits.retrieve',
+                route: '/v1/organizations/spend_limits/{spend_limit_id}',
+                attributes: ['anthropic.organization.spend_limit.id' => $spendLimitID],
+            )),
             convert: SpendLimit::class,
         );
     }
@@ -108,7 +113,11 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
                     'extraHeaders' => ['anthropic-beta' => 'spend-limit-reads-2026-09-26'],
                 ],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.spend_limits.list',
+                route: '/v1/organizations/spend_limits',
+                query: ['limit', 'page', 'scope_type'],
+            )),
             convert: SpendLimit::class,
             page: PageCursor::class,
         );
@@ -140,7 +149,11 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
         return $this->client->request(
             method: 'delete',
             path: ['v1/organizations/spend_limits/%1$s?beta=true', $spendLimitID],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.spend_limits.delete',
+                route: '/v1/organizations/spend_limits/{spend_limit_id}',
+                attributes: ['anthropic.organization.spend_limit.id' => $spendLimitID],
+            )),
             convert: SpendLimitDeleteResponse::class,
         );
     }
@@ -192,7 +205,11 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.spend_limits.set',
+                route: '/v1/organizations/spend_limits',
+                createdId: 'anthropic.organization.spend_limit.id',
+            )),
             convert: SpendLimit::class,
         );
     }

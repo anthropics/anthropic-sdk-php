@@ -19,6 +19,7 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\FileParam;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -86,7 +87,14 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.plugin_marketplaces.retrieve',
+                route: '/v1/organizations/plugin_marketplaces/{marketplace_id}',
+                query: ['organization_id'],
+                attributes: [
+                    'anthropic.organization.plugin_marketplace.id' => $marketplaceID,
+                ],
+            )),
             convert: PluginMarketplace::class,
         );
     }
@@ -144,7 +152,13 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.plugin_marketplaces.update',
+                route: '/v1/organizations/plugin_marketplaces/{marketplace_id}',
+                attributes: [
+                    'anthropic.organization.plugin_marketplace.id' => $marketplaceID,
+                ],
+            )),
             convert: PluginMarketplace::class,
         );
     }
@@ -208,7 +222,11 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.plugin_marketplaces.list',
+                route: '/v1/organizations/plugin_marketplaces',
+                query: ['limit', 'organization_id', 'owner_type', 'page', 'source'],
+            )),
             convert: PluginMarketplace::class,
             page: PageCursor::class,
         );
@@ -279,7 +297,10 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.plugin_marketplaces.validate_archive',
+                route: '/v1/organizations/plugin_marketplaces/validate_archive',
+            )),
             convert: PluginMarketplaceValidationReport::class,
         );
     }
@@ -344,7 +365,10 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.plugin_marketplaces.validate_repository',
+                route: '/v1/organizations/plugin_marketplaces/validate_repository',
+            )),
             convert: PluginMarketplaceValidationReport::class,
         );
     }

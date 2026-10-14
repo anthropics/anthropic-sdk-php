@@ -7,6 +7,7 @@ namespace Anthropic\Services\Organization;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\Organization\Invites\InviteCreateParams;
 use Anthropic\Organization\Invites\InviteCreateParams\Role;
@@ -59,7 +60,11 @@ final class InvitesRawService implements InvitesRawContract
             method: 'post',
             path: 'v1/organizations/invites',
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.invites.create',
+                route: '/v1/organizations/invites',
+                createdId: 'anthropic.organization.invite.id',
+            )),
             convert: OrganizationInvite::class,
         );
     }
@@ -84,7 +89,11 @@ final class InvitesRawService implements InvitesRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/organizations/invites/%1$s', $inviteID],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.invites.retrieve',
+                route: '/v1/organizations/invites/{invite_id}',
+                attributes: ['anthropic.organization.invite.id' => $inviteID],
+            )),
             convert: OrganizationInvite::class,
         );
     }
@@ -125,7 +134,11 @@ final class InvitesRawService implements InvitesRawContract
                 $parsed,
                 ['afterID' => 'after_id', 'beforeID' => 'before_id']
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.invites.list',
+                route: '/v1/organizations/invites',
+                query: ['after_id', 'before_id', 'email', 'limit', 'roles', 'statuses'],
+            )),
             convert: OrganizationInvite::class,
             page: Page::class,
         );
@@ -151,7 +164,11 @@ final class InvitesRawService implements InvitesRawContract
         return $this->client->request(
             method: 'delete',
             path: ['v1/organizations/invites/%1$s', $inviteID],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.invites.delete',
+                route: '/v1/organizations/invites/{invite_id}',
+                attributes: ['anthropic.organization.invite.id' => $inviteID],
+            )),
             convert: InviteDeleteResponse::class,
         );
     }

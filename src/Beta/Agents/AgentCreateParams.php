@@ -20,11 +20,13 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\AgentsService::create()
  *
  * @phpstan-import-type ModelShape from \Anthropic\Beta\Agents\AgentCreateParams\Model
+ * @phpstan-import-type BetaManagedAgentsExecutionIdentityParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsExecutionIdentityParams
  * @phpstan-import-type BetaManagedAgentsURLMCPServerParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams
  * @phpstan-import-type BetaManagedAgentsMultiagentParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams
  * @phpstan-import-type BetaManagedAgentsSkillParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Agents\AgentCreateParams\Tool
  * @phpstan-import-type ModelVariants from \Anthropic\Beta\Agents\AgentCreateParams\Model
+ * @phpstan-import-type BetaManagedAgentsExecutionIdentityParamsVariants from \Anthropic\Beta\Agents\BetaManagedAgentsExecutionIdentityParams
  * @phpstan-import-type BetaManagedAgentsMultiagentParamsVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams
  * @phpstan-import-type BetaManagedAgentsSkillParamsVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
  * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\AgentCreateParams\Tool
@@ -33,6 +35,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   model: ModelShape,
  *   name: string,
  *   description?: string|null,
+ *   executionIdentity?: BetaManagedAgentsExecutionIdentityParamsShape|null,
  *   mcpServers?: list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null,
  *   metadata?: array<string,string>|null,
  *   multiagent?: BetaManagedAgentsMultiagentParamsShape|null,
@@ -68,6 +71,18 @@ final class AgentCreateParams implements BaseModel
      */
     #[Optional(nullable: true)]
     public ?string $description;
+
+    /**
+     * Execution principal for runs of this agent. Omitting it, sending null, or sending `{"type": "service_account"}` stores the default.
+     *
+     * @var BetaManagedAgentsExecutionIdentityParamsVariants|null $executionIdentity
+     */
+    #[Optional(
+        'execution_identity',
+        union: BetaManagedAgentsExecutionIdentityParams::class,
+        nullable: true,
+    )]
+    public BetaManagedAgentsAWSRoleExecutionIdentityParams|BetaManagedAgentsServiceAccountExecutionIdentityParams|null $executionIdentity;
 
     /**
      * MCP servers this agent connects to. Maximum 20. Names must be unique within the array. Every server must be referenced by an `mcp_toolset` in `tools`; unreferenced servers are rejected. See the [MCP connector guide](https://platform.claude.com/docs/en/managed-agents/mcp-connector).
@@ -156,6 +171,7 @@ final class AgentCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ModelShape $model
+     * @param BetaManagedAgentsExecutionIdentityParamsShape|null $executionIdentity
      * @param list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null $mcpServers
      * @param array<string,string>|null $metadata
      * @param BetaManagedAgentsMultiagentParamsShape|null $multiagent
@@ -167,6 +183,7 @@ final class AgentCreateParams implements BaseModel
         BetaManagedAgentsModel|BetaManagedAgentsModelConfigParams|array|string $model,
         string $name,
         ?string $description = null,
+        BetaManagedAgentsAWSRoleExecutionIdentityParams|array|BetaManagedAgentsServiceAccountExecutionIdentityParams|null $executionIdentity = null,
         ?array $mcpServers = null,
         ?array $metadata = null,
         BetaManagedAgentsMultiagentCoordinatorParams|array|BetaManagedAgentsMultiagent20261001Params|null $multiagent = null,
@@ -182,6 +199,7 @@ final class AgentCreateParams implements BaseModel
         $self['name'] = $name;
 
         null !== $description && $self['description'] = $description;
+        null !== $executionIdentity && $self['executionIdentity'] = $executionIdentity;
         null !== $mcpServers && $self['mcpServers'] = $mcpServers;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $multiagent && $self['multiagent'] = $multiagent;
@@ -226,6 +244,20 @@ final class AgentCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['description'] = $description;
+
+        return $self;
+    }
+
+    /**
+     * Execution principal for runs of this agent. Omitting it, sending null, or sending `{"type": "service_account"}` stores the default.
+     *
+     * @param BetaManagedAgentsExecutionIdentityParamsShape|null $executionIdentity
+     */
+    public function withExecutionIdentity(
+        BetaManagedAgentsAWSRoleExecutionIdentityParams|array|BetaManagedAgentsServiceAccountExecutionIdentityParams|null $executionIdentity,
+    ): self {
+        $self = clone $this;
+        $self['executionIdentity'] = $executionIdentity;
 
         return $self;
     }

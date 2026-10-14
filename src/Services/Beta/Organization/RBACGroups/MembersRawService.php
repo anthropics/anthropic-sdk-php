@@ -12,6 +12,7 @@ use Anthropic\Beta\Organization\RBACGroups\Members\MemberRemoveResponse;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\RBACGroups\MembersRawContract;
@@ -59,7 +60,12 @@ final class MembersRawService implements MembersRawContract
                 'v1/organizations/rbac_groups/%1$s/members?beta=true', $rbacGroupID,
             ],
             query: $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.rbac_groups.members.list',
+                route: '/v1/organizations/rbac_groups/{rbac_group_id}/members',
+                query: ['limit', 'page'],
+                attributes: ['anthropic.organization.rbac_group.id' => $rbacGroupID],
+            )),
             convert: BetaRBACGroupMember::class,
             page: PageCursor::class,
         );
@@ -97,7 +103,12 @@ final class MembersRawService implements MembersRawContract
                 'v1/organizations/rbac_groups/%1$s/members?beta=true', $rbacGroupID,
             ],
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.rbac_groups.members.add',
+                route: '/v1/organizations/rbac_groups/{rbac_group_id}/members',
+                attributes: ['anthropic.organization.rbac_group.id' => $rbacGroupID],
+                createdId: ['anthropic.organization.rbac_group.member.id' => 'user_id'],
+            )),
             convert: BetaRBACGroupMember::class,
         );
     }
@@ -137,7 +148,14 @@ final class MembersRawService implements MembersRawContract
                 $rbacGroupID,
                 $userID,
             ],
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.rbac_groups.members.remove',
+                route: '/v1/organizations/rbac_groups/{rbac_group_id}/members/{user_id}',
+                attributes: [
+                    'anthropic.organization.rbac_group.id' => $rbacGroupID,
+                    'anthropic.organization.rbac_group.member.id' => $userID,
+                ],
+            )),
             convert: MemberRemoveResponse::class,
         );
     }

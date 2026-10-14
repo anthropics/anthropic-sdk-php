@@ -21,6 +21,7 @@ use Anthropic\BidirectionalPageCursor;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\SessionsRawContract;
@@ -91,7 +92,11 @@ final class SessionsRawService implements SessionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.create',
+                route: '/v1/sessions',
+                createdId: 'anthropic.session.id',
+            )),
             convert: BetaManagedAgentsSession::class,
         );
     }
@@ -134,7 +139,11 @@ final class SessionsRawService implements SessionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.retrieve',
+                route: '/v1/sessions/{session_id}',
+                attributes: ['anthropic.session.id' => $sessionID],
+            )),
             convert: BetaManagedAgentsSession::class,
         );
     }
@@ -188,7 +197,11 @@ final class SessionsRawService implements SessionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.update',
+                route: '/v1/sessions/{session_id}',
+                attributes: ['anthropic.session.id' => $sessionID],
+            )),
             convert: BetaManagedAgentsSession::class,
         );
     }
@@ -277,7 +290,25 @@ final class SessionsRawService implements SessionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.list',
+                route: '/v1/sessions',
+                query: [
+                    'agent_id',
+                    'agent_version',
+                    'created_at[gt]',
+                    'created_at[gte]',
+                    'created_at[lt]',
+                    'created_at[lte]',
+                    'deployment_id',
+                    'include_archived',
+                    'limit',
+                    'memory_store_id',
+                    'order',
+                    'page',
+                    'statuses',
+                ],
+            )),
             convert: BetaManagedAgentsSession::class,
             page: BidirectionalPageCursor::class,
         );
@@ -321,7 +352,11 @@ final class SessionsRawService implements SessionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.delete',
+                route: '/v1/sessions/{session_id}',
+                attributes: ['anthropic.session.id' => $sessionID],
+            )),
             convert: BetaManagedAgentsDeletedSession::class,
         );
     }
@@ -364,7 +399,11 @@ final class SessionsRawService implements SessionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.archive',
+                route: '/v1/sessions/{session_id}/archive',
+                attributes: ['anthropic.session.id' => $sessionID],
+            )),
             convert: BetaManagedAgentsSession::class,
         );
     }

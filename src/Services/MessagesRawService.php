@@ -8,6 +8,7 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\Messages\CacheControlEphemeral;
 use Anthropic\Messages\DiagnosticsParam;
@@ -116,7 +117,10 @@ final class MessagesRawService implements MessagesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.messages.create',
+                route: '/v1/messages',
+            )),
             convert: Message::class,
         );
     }
@@ -184,7 +188,10 @@ final class MessagesRawService implements MessagesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.messages.create',
+                route: '/v1/messages',
+            )),
             convert: RawMessageStreamEvent::class,
             stream: SSEStream::class,
         );
@@ -242,7 +249,10 @@ final class MessagesRawService implements MessagesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.messages.count_tokens',
+                route: '/v1/messages/count_tokens',
+            )),
             convert: MessageTokensCount::class,
         );
     }

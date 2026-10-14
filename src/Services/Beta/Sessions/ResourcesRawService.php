@@ -21,6 +21,7 @@ use Anthropic\Beta\Sessions\Resources\ResourceUpdateResponse;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -81,7 +82,14 @@ final class ResourcesRawService implements ResourcesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.resources.retrieve',
+                route: '/v1/sessions/{session_id}/resources/{resource_id}',
+                attributes: [
+                    'anthropic.session.id' => $sessionID,
+                    'anthropic.session.resource.id' => $resourceID,
+                ],
+            )),
             convert: ResourceGetResponse::class,
         );
     }
@@ -136,7 +144,14 @@ final class ResourcesRawService implements ResourcesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.resources.update',
+                route: '/v1/sessions/{session_id}/resources/{resource_id}',
+                attributes: [
+                    'anthropic.session.id' => $sessionID,
+                    'anthropic.session.resource.id' => $resourceID,
+                ],
+            )),
             convert: ResourceUpdateResponse::class,
         );
     }
@@ -187,7 +202,12 @@ final class ResourcesRawService implements ResourcesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.resources.list',
+                route: '/v1/sessions/{session_id}/resources',
+                query: ['limit', 'page'],
+                attributes: ['anthropic.session.id' => $sessionID],
+            )),
             convert: ManagedAgentsSessionResource::class,
             page: PageCursor::class,
         );
@@ -237,7 +257,14 @@ final class ResourcesRawService implements ResourcesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.resources.delete',
+                route: '/v1/sessions/{session_id}/resources/{resource_id}',
+                attributes: [
+                    'anthropic.session.id' => $sessionID,
+                    'anthropic.session.resource.id' => $resourceID,
+                ],
+            )),
             convert: ManagedAgentsDeleteSessionResource::class,
         );
     }
@@ -289,7 +316,12 @@ final class ResourcesRawService implements ResourcesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.resources.add',
+                route: '/v1/sessions/{session_id}/resources',
+                attributes: ['anthropic.session.id' => $sessionID],
+                createdId: 'anthropic.session.resource.id',
+            )),
             convert: ManagedAgentsFileResource::class,
         );
     }

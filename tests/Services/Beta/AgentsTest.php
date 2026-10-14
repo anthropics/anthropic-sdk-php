@@ -49,6 +49,7 @@ final class AgentsTest extends TestCase
             model: BetaManagedAgentsModel::CLAUDE_OPUS_5_5,
             name: 'My First Agent',
             description: 'A general-purpose starter agent.',
+            executionIdentity: ['roleARN' => 'role_arn', 'type' => 'aws_role'],
             mcpServers: [
                 [
                     'name' => 'example-mcp',

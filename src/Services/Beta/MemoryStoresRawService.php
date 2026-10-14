@@ -16,6 +16,7 @@ use Anthropic\Beta\MemoryStores\MemoryStoreUpdateParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -77,7 +78,11 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.memory_stores.create',
+                route: '/v1/memory_stores',
+                createdId: 'gen_ai.memory.store.id',
+            )),
             convert: BetaManagedAgentsMemoryStore::class,
         );
     }
@@ -121,7 +126,11 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.memory_stores.retrieve',
+                route: '/v1/memory_stores/{memory_store_id}',
+                attributes: ['gen_ai.memory.store.id' => $memoryStoreID],
+            )),
             convert: BetaManagedAgentsMemoryStore::class,
         );
     }
@@ -173,7 +182,11 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.memory_stores.update',
+                route: '/v1/memory_stores/{memory_store_id}',
+                attributes: ['gen_ai.memory.store.id' => $memoryStoreID],
+            )),
             convert: BetaManagedAgentsMemoryStore::class,
         );
     }
@@ -234,7 +247,17 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.memory_stores.list',
+                route: '/v1/memory_stores',
+                query: [
+                    'created_at[gte]',
+                    'created_at[lte]',
+                    'include_archived',
+                    'limit',
+                    'page',
+                ],
+            )),
             convert: BetaManagedAgentsMemoryStore::class,
             page: PageCursor::class,
         );
@@ -279,7 +302,11 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.memory_stores.delete',
+                route: '/v1/memory_stores/{memory_store_id}',
+                attributes: ['gen_ai.memory.store.id' => $memoryStoreID],
+            )),
             convert: BetaManagedAgentsDeletedMemoryStore::class,
         );
     }
@@ -323,7 +350,11 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.memory_stores.archive',
+                route: '/v1/memory_stores/{memory_store_id}/archive',
+                attributes: ['gen_ai.memory.store.id' => $memoryStoreID],
+            )),
             convert: BetaManagedAgentsMemoryStore::class,
         );
     }

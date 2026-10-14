@@ -13,6 +13,7 @@ use Anthropic\Beta\Sessions\Threads\ThreadRetrieveParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -71,7 +72,14 @@ final class ThreadsRawService implements ThreadsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.threads.retrieve',
+                route: '/v1/sessions/{session_id}/threads/{thread_id}',
+                attributes: [
+                    'anthropic.session.id' => $sessionID,
+                    'anthropic.session.thread.id' => $threadID,
+                ],
+            )),
             convert: ManagedAgentsSessionThread::class,
         );
     }
@@ -123,7 +131,12 @@ final class ThreadsRawService implements ThreadsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.threads.list',
+                route: '/v1/sessions/{session_id}/threads',
+                query: ['limit', 'page', 'statuses'],
+                attributes: ['anthropic.session.id' => $sessionID],
+            )),
             convert: ManagedAgentsSessionThread::class,
             page: PageCursor::class,
         );
@@ -173,7 +186,14 @@ final class ThreadsRawService implements ThreadsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.threads.archive',
+                route: '/v1/sessions/{session_id}/threads/{thread_id}/archive',
+                attributes: [
+                    'anthropic.session.id' => $sessionID,
+                    'anthropic.session.thread.id' => $threadID,
+                ],
+            )),
             convert: ManagedAgentsSessionThread::class,
         );
     }

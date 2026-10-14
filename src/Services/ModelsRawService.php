@@ -8,6 +8,7 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\Models\ModelInfo;
 use Anthropic\Models\ModelListParams;
@@ -66,7 +67,11 @@ final class ModelsRawService implements ModelsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.models.retrieve',
+                route: '/v1/models/{model_id}',
+                attributes: ['anthropic.model.id' => $modelID],
+            )),
             convert: ModelInfo::class,
         );
     }
@@ -119,7 +124,11 @@ final class ModelsRawService implements ModelsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.models.list',
+                route: '/v1/models',
+                query: ['after_id', 'before_id', 'lifecycle', 'limit'],
+            )),
             convert: ModelInfo::class,
             page: Page::class,
         );

@@ -12,6 +12,7 @@ use Anthropic\Beta\Organization\Users\UserUpdateParams\Role;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
@@ -48,7 +49,11 @@ final class UsersRawService implements UsersRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/organizations/users/%1$s?beta=true', $userID],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.users.retrieve',
+                route: '/v1/organizations/users/{user_id}',
+                attributes: ['anthropic.organization.user.id' => $userID],
+            )),
             convert: OrganizationUser::class,
         );
     }
@@ -81,7 +86,11 @@ final class UsersRawService implements UsersRawContract
             method: 'post',
             path: ['v1/organizations/users/%1$s?beta=true', $userID],
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.users.update',
+                route: '/v1/organizations/users/{user_id}',
+                attributes: ['anthropic.organization.user.id' => $userID],
+            )),
             convert: OrganizationUser::class,
         );
     }
@@ -121,7 +130,11 @@ final class UsersRawService implements UsersRawContract
                 $parsed,
                 ['afterID' => 'after_id', 'beforeID' => 'before_id']
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.users.list',
+                route: '/v1/organizations/users',
+                query: ['after_id', 'before_id', 'email', 'limit', 'roles'],
+            )),
             convert: OrganizationUser::class,
             page: Page::class,
         );
@@ -147,7 +160,11 @@ final class UsersRawService implements UsersRawContract
         return $this->client->request(
             method: 'delete',
             path: ['v1/organizations/users/%1$s?beta=true', $userID],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.users.remove',
+                route: '/v1/organizations/users/{user_id}',
+                attributes: ['anthropic.organization.user.id' => $userID],
+            )),
             convert: UserRemoveResponse::class,
         );
     }

@@ -9,6 +9,7 @@ use Anthropic\Beta\Organization\RBACRoles\RBACRoleListParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\RBACRolesRawContract;
@@ -46,7 +47,11 @@ final class RBACRolesRawService implements RBACRolesRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/organizations/rbac_roles/%1$s?beta=true', $rbacRoleID],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.rbac_roles.retrieve',
+                route: '/v1/organizations/rbac_roles/{rbac_role_id}',
+                attributes: ['anthropic.organization.rbac_role.id' => $rbacRoleID],
+            )),
             convert: RBACRole::class,
         );
     }
@@ -79,7 +84,11 @@ final class RBACRolesRawService implements RBACRolesRawContract
             method: 'get',
             path: 'v1/organizations/rbac_roles?beta=true',
             query: $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.rbac_roles.list',
+                route: '/v1/organizations/rbac_roles',
+                query: ['limit', 'page'],
+            )),
             convert: RBACRole::class,
             page: PageCursor::class,
         );

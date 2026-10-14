@@ -12,6 +12,7 @@ use Anthropic\Beta\DeploymentRuns\DeploymentRunRetrieveParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -67,7 +68,11 @@ final class DeploymentRunsRawService implements DeploymentRunsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.deployment_runs.retrieve',
+                route: '/v1/deployment_runs/{deployment_run_id}',
+                attributes: ['anthropic.deployment_run.id' => $deploymentRunID],
+            )),
             convert: BetaManagedAgentsDeploymentRun::class,
         );
     }
@@ -146,7 +151,21 @@ final class DeploymentRunsRawService implements DeploymentRunsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.deployment_runs.list',
+                route: '/v1/deployment_runs',
+                query: [
+                    'created_at[gt]',
+                    'created_at[gte]',
+                    'created_at[lt]',
+                    'created_at[lte]',
+                    'deployment_id',
+                    'has_error',
+                    'limit',
+                    'page',
+                    'trigger_type',
+                ],
+            )),
             convert: BetaManagedAgentsDeploymentRun::class,
             page: PageCursor::class,
         );

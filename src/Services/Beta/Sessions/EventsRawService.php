@@ -62,6 +62,7 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -151,7 +152,21 @@ final class EventsRawService implements EventsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.events.list',
+                route: '/v1/sessions/{session_id}/events',
+                query: [
+                    'created_at[gt]',
+                    'created_at[gte]',
+                    'created_at[lt]',
+                    'created_at[lte]',
+                    'limit',
+                    'order',
+                    'page',
+                    'types',
+                ],
+                attributes: ['anthropic.session.id' => $sessionID],
+            )),
             convert: ManagedAgentsSessionEvent::class,
             page: PageCursor::class,
         );
@@ -202,7 +217,11 @@ final class EventsRawService implements EventsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.events.send',
+                route: '/v1/sessions/{session_id}/events',
+                attributes: ['anthropic.session.id' => $sessionID],
+            )),
             convert: ManagedAgentsSendSessionEvents::class,
         );
     }
@@ -253,7 +272,12 @@ final class EventsRawService implements EventsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.sessions.events.stream',
+                route: '/v1/sessions/{session_id}/events/stream',
+                query: ['event_deltas'],
+                attributes: ['anthropic.session.id' => $sessionID],
+            )),
             convert: ManagedAgentsStreamSessionEvents::class,
             stream: SSEStream::class,
         );

@@ -15,6 +15,7 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -22,6 +23,7 @@ use Anthropic\ServiceContracts\Beta\AgentsRawContract;
 
 /**
  * @phpstan-import-type ModelShape from \Anthropic\Beta\Agents\AgentCreateParams\Model
+ * @phpstan-import-type BetaManagedAgentsExecutionIdentityParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsExecutionIdentityParams
  * @phpstan-import-type BetaManagedAgentsURLMCPServerParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams
  * @phpstan-import-type BetaManagedAgentsMultiagentParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams
  * @phpstan-import-type BetaManagedAgentsSkillParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
@@ -47,6 +49,7 @@ final class AgentsRawService implements AgentsRawContract
      *   model: ModelShape,
      *   name: string,
      *   description?: string|null,
+     *   executionIdentity?: BetaManagedAgentsExecutionIdentityParamsShape|null,
      *   mcpServers?: list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>,
      *   metadata?: array<string,string>,
      *   multiagent?: BetaManagedAgentsMultiagentParamsShape|null,
@@ -89,7 +92,11 @@ final class AgentsRawService implements AgentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.agents.create',
+                route: '/v1/agents',
+                createdId: 'gen_ai.agent.id',
+            )),
             convert: BetaManagedAgentsAgent::class,
         );
     }
@@ -139,7 +146,12 @@ final class AgentsRawService implements AgentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.agents.retrieve',
+                route: '/v1/agents/{agent_id}',
+                query: ['version'],
+                attributes: ['gen_ai.agent.id' => $agentID],
+            )),
             convert: BetaManagedAgentsAgent::class,
         );
     }
@@ -152,6 +164,7 @@ final class AgentsRawService implements AgentsRawContract
      * @param string $agentID path param: Unique identifier of the agent to update
      * @param array{
      *   description?: string|null,
+     *   executionIdentity?: BetaManagedAgentsExecutionIdentityParamsShape|null,
      *   mcpServers?: list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null,
      *   metadata?: array<string,string|null>|null,
      *   model?: ModelShape1,
@@ -198,7 +211,11 @@ final class AgentsRawService implements AgentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.agents.update',
+                route: '/v1/agents/{agent_id}',
+                attributes: ['gen_ai.agent.id' => $agentID],
+            )),
             convert: BetaManagedAgentsAgent::class,
         );
     }
@@ -259,7 +276,17 @@ final class AgentsRawService implements AgentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.agents.list',
+                route: '/v1/agents',
+                query: [
+                    'created_at[gte]',
+                    'created_at[lte]',
+                    'include_archived',
+                    'limit',
+                    'page',
+                ],
+            )),
             convert: BetaManagedAgentsAgent::class,
             page: PageCursor::class,
         );
@@ -304,7 +331,11 @@ final class AgentsRawService implements AgentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.agents.archive',
+                route: '/v1/agents/{agent_id}/archive',
+                attributes: ['gen_ai.agent.id' => $agentID],
+            )),
             convert: BetaManagedAgentsAgent::class,
         );
     }

@@ -15,11 +15,13 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * A Managed Agents `agent`.
  *
+ * @phpstan-import-type BetaManagedAgentsExecutionIdentityShape from \Anthropic\Beta\Agents\BetaManagedAgentsExecutionIdentity
  * @phpstan-import-type BetaManagedAgentsMCPServerURLDefinitionShape from \Anthropic\Beta\Agents\BetaManagedAgentsMCPServerURLDefinition
  * @phpstan-import-type BetaManagedAgentsModelConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfig
  * @phpstan-import-type BetaManagedAgentsMultiagentShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagent
  * @phpstan-import-type SkillShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgent\Skill
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Agents\BetaManagedAgentsAgent\Tool
+ * @phpstan-import-type BetaManagedAgentsExecutionIdentityVariants from \Anthropic\Beta\Agents\BetaManagedAgentsExecutionIdentity
  * @phpstan-import-type BetaManagedAgentsMultiagentVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagent
  * @phpstan-import-type SkillVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgent\Skill
  * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\BetaManagedAgentsAgent\Tool
@@ -29,6 +31,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   archivedAt: \DateTimeInterface|null,
  *   createdAt: \DateTimeInterface,
  *   description: string|null,
+ *   executionIdentity: BetaManagedAgentsExecutionIdentityShape,
  *   mcpServers: list<BetaManagedAgentsMCPServerURLDefinition|BetaManagedAgentsMCPServerURLDefinitionShape>,
  *   metadata: array<string,string>,
  *   model: BetaManagedAgentsModelConfig|BetaManagedAgentsModelConfigShape,
@@ -64,6 +67,17 @@ final class BetaManagedAgentsAgent implements BaseModel
 
     #[Required]
     public ?string $description;
+
+    /**
+     * Execution principal for runs of this agent. Always present; `{"type": "service_account"}` when runs carry no customer-named principal.
+     *
+     * @var BetaManagedAgentsExecutionIdentityVariants $executionIdentity
+     */
+    #[Required(
+        'execution_identity',
+        union: BetaManagedAgentsExecutionIdentity::class
+    )]
+    public BetaManagedAgentsAWSRoleExecutionIdentity|BetaManagedAgentsServiceAccountExecutionIdentity $executionIdentity;
 
     /** @var list<BetaManagedAgentsMCPServerURLDefinition> $mcpServers */
     #[Required(
@@ -130,6 +144,7 @@ final class BetaManagedAgentsAgent implements BaseModel
      *   archivedAt: ...,
      *   createdAt: ...,
      *   description: ...,
+     *   executionIdentity: ...,
      *   mcpServers: ...,
      *   metadata: ...,
      *   model: ...,
@@ -152,6 +167,7 @@ final class BetaManagedAgentsAgent implements BaseModel
      *   ->withArchivedAt(...)
      *   ->withCreatedAt(...)
      *   ->withDescription(...)
+     *   ->withExecutionIdentity(...)
      *   ->withMCPServers(...)
      *   ->withMetadata(...)
      *   ->withModel(...)
@@ -175,6 +191,7 @@ final class BetaManagedAgentsAgent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param BetaManagedAgentsExecutionIdentityShape $executionIdentity
      * @param list<BetaManagedAgentsMCPServerURLDefinition|BetaManagedAgentsMCPServerURLDefinitionShape> $mcpServers
      * @param array<string,string> $metadata
      * @param BetaManagedAgentsModelConfig|BetaManagedAgentsModelConfigShape $model
@@ -188,6 +205,7 @@ final class BetaManagedAgentsAgent implements BaseModel
         ?\DateTimeInterface $archivedAt,
         \DateTimeInterface $createdAt,
         ?string $description,
+        BetaManagedAgentsAWSRoleExecutionIdentity|array|BetaManagedAgentsServiceAccountExecutionIdentity $executionIdentity,
         array $mcpServers,
         array $metadata,
         BetaManagedAgentsModelConfig|array $model,
@@ -206,6 +224,7 @@ final class BetaManagedAgentsAgent implements BaseModel
         $self['archivedAt'] = $archivedAt;
         $self['createdAt'] = $createdAt;
         $self['description'] = $description;
+        $self['executionIdentity'] = $executionIdentity;
         $self['mcpServers'] = $mcpServers;
         $self['metadata'] = $metadata;
         $self['model'] = $model;
@@ -255,6 +274,20 @@ final class BetaManagedAgentsAgent implements BaseModel
     {
         $self = clone $this;
         $self['description'] = $description;
+
+        return $self;
+    }
+
+    /**
+     * Execution principal for runs of this agent. Always present; `{"type": "service_account"}` when runs carry no customer-named principal.
+     *
+     * @param BetaManagedAgentsExecutionIdentityShape $executionIdentity
+     */
+    public function withExecutionIdentity(
+        BetaManagedAgentsAWSRoleExecutionIdentity|array|BetaManagedAgentsServiceAccountExecutionIdentity $executionIdentity,
+    ): self {
+        $self = clone $this;
+        $self['executionIdentity'] = $executionIdentity;
 
         return $self;
     }

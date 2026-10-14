@@ -16,6 +16,7 @@ use Anthropic\Beta\Organization\Workspaces\ServiceAccounts\ServiceAccountUpdateP
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -81,7 +82,14 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.workspaces.service_accounts.retrieve',
+                route: '/v1/organizations/workspaces/{workspace_id}/service_accounts/{service_account_id}',
+                attributes: [
+                    'anthropic.organization.workspace.id' => $workspaceID,
+                    'anthropic.organization.workspace.service_account.id' => $serviceAccountID,
+                ],
+            )),
             convert: ServiceAccountWorkspaceMember::class,
         );
     }
@@ -141,7 +149,14 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
                 array_diff_key($parsed, array_flip(array_keys($header_params))),
                 array_flip(['workspaceID']),
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.workspaces.service_accounts.update',
+                route: '/v1/organizations/workspaces/{workspace_id}/service_accounts/{service_account_id}',
+                attributes: [
+                    'anthropic.organization.workspace.id' => $workspaceID,
+                    'anthropic.organization.workspace.service_account.id' => $serviceAccountID,
+                ],
+            )),
             convert: ServiceAccountWorkspaceMember::class,
         );
     }
@@ -198,7 +213,12 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
                 $header_params,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.workspaces.service_accounts.list',
+                route: '/v1/organizations/workspaces/{workspace_id}/service_accounts',
+                query: ['limit', 'page'],
+                attributes: ['anthropic.organization.workspace.id' => $workspaceID],
+            )),
             convert: ServiceAccountWorkspaceMember::class,
             page: PageCursor::class,
         );
@@ -258,7 +278,14 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.workspaces.service_accounts.add',
+                route: '/v1/organizations/workspaces/{workspace_id}/service_accounts',
+                attributes: ['anthropic.organization.workspace.id' => $workspaceID],
+                createdId: [
+                    'anthropic.organization.workspace.service_account.id' => 'service_account_id',
+                ],
+            )),
             convert: ServiceAccountWorkspaceMember::class,
         );
     }
@@ -311,7 +338,14 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.workspaces.service_accounts.remove',
+                route: '/v1/organizations/workspaces/{workspace_id}/service_accounts/{service_account_id}',
+                attributes: [
+                    'anthropic.organization.workspace.id' => $workspaceID,
+                    'anthropic.organization.workspace.service_account.id' => $serviceAccountID,
+                ],
+            )),
             convert: ServiceAccountRemoveResponse::class,
         );
     }

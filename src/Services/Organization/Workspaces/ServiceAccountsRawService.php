@@ -7,6 +7,7 @@ namespace Anthropic\Services\Organization\Workspaces;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Organization\ServiceAccounts\ServiceAccountWorkspaceMember;
 use Anthropic\Organization\Workspaces\NoBillingWorkspaceRole;
 use Anthropic\Organization\Workspaces\ServiceAccounts\ServiceAccountAddParams;
@@ -72,7 +73,14 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
                 $workspaceID,
                 $serviceAccountID,
             ],
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.workspaces.service_accounts.retrieve',
+                route: '/v1/organizations/workspaces/{workspace_id}/service_accounts/{service_account_id}',
+                attributes: [
+                    'anthropic.organization.workspace.id' => $workspaceID,
+                    'anthropic.organization.workspace.service_account.id' => $serviceAccountID,
+                ],
+            )),
             convert: ServiceAccountWorkspaceMember::class,
         );
     }
@@ -122,7 +130,14 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
                 $serviceAccountID,
             ],
             body: (object) array_diff_key($parsed, array_flip(['workspaceID'])),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.workspaces.service_accounts.update',
+                route: '/v1/organizations/workspaces/{workspace_id}/service_accounts/{service_account_id}',
+                attributes: [
+                    'anthropic.organization.workspace.id' => $workspaceID,
+                    'anthropic.organization.workspace.service_account.id' => $serviceAccountID,
+                ],
+            )),
             convert: ServiceAccountWorkspaceMember::class,
         );
     }
@@ -164,7 +179,12 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
             method: 'get',
             path: ['v1/organizations/workspaces/%1$s/service_accounts', $workspaceID],
             query: $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.workspaces.service_accounts.list',
+                route: '/v1/organizations/workspaces/{workspace_id}/service_accounts',
+                query: ['limit', 'page'],
+                attributes: ['anthropic.organization.workspace.id' => $workspaceID],
+            )),
             convert: ServiceAccountWorkspaceMember::class,
             page: PageCursor::class,
         );
@@ -211,7 +231,14 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
             method: 'post',
             path: ['v1/organizations/workspaces/%1$s/service_accounts', $workspaceID],
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.workspaces.service_accounts.add',
+                route: '/v1/organizations/workspaces/{workspace_id}/service_accounts',
+                attributes: ['anthropic.organization.workspace.id' => $workspaceID],
+                createdId: [
+                    'anthropic.organization.workspace.service_account.id' => 'service_account_id',
+                ],
+            )),
             convert: ServiceAccountWorkspaceMember::class,
         );
     }
@@ -257,7 +284,14 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
                 $workspaceID,
                 $serviceAccountID,
             ],
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.workspaces.service_accounts.remove',
+                route: '/v1/organizations/workspaces/{workspace_id}/service_accounts/{service_account_id}',
+                attributes: [
+                    'anthropic.organization.workspace.id' => $workspaceID,
+                    'anthropic.organization.workspace.service_account.id' => $serviceAccountID,
+                ],
+            )),
             convert: ServiceAccountRemoveResponse::class,
         );
     }

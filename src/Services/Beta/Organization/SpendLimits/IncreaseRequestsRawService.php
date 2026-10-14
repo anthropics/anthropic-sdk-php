@@ -14,6 +14,7 @@ use Anthropic\Beta\Organization\SpendLimits\SpendLimitPeriod;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -56,7 +57,13 @@ final class IncreaseRequestsRawService implements IncreaseRequestsRawContract
                 'v1/organizations/spend_limit_increase_requests/%1$s?beta=true',
                 $spendLimitIncreaseRequestID,
             ],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.spend_limits.increase_requests.retrieve',
+                route: '/v1/organizations/spend_limit_increase_requests/{spend_limit_increase_request_id}',
+                attributes: [
+                    'anthropic.organization.spend_limit_increase_request.id' => $spendLimitIncreaseRequestID,
+                ],
+            )),
             convert: BetaSpendLimitIncreaseRequest::class,
         );
     }
@@ -95,7 +102,11 @@ final class IncreaseRequestsRawService implements IncreaseRequestsRawContract
             method: 'get',
             path: 'v1/organizations/spend_limit_increase_requests?beta=true',
             query: Util::array_transform_keys($parsed, ['actorIDs' => 'actor_ids']),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.spend_limits.increase_requests.list',
+                route: '/v1/organizations/spend_limit_increase_requests',
+                query: ['actor_ids', 'limit', 'page', 'status'],
+            )),
             convert: BetaSpendLimitIncreaseRequest::class,
             page: PageCursor::class,
         );
@@ -141,7 +152,13 @@ final class IncreaseRequestsRawService implements IncreaseRequestsRawContract
                 $spendLimitIncreaseRequestID,
             ],
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.spend_limits.increase_requests.approve',
+                route: '/v1/organizations/spend_limit_increase_requests/{spend_limit_increase_request_id}/approve',
+                attributes: [
+                    'anthropic.organization.spend_limit_increase_request.id' => $spendLimitIncreaseRequestID,
+                ],
+            )),
             convert: IncreaseRequestApproveResponse::class,
         );
     }
@@ -180,7 +197,13 @@ final class IncreaseRequestsRawService implements IncreaseRequestsRawContract
                 $spendLimitIncreaseRequestID,
             ],
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.spend_limits.increase_requests.deny',
+                route: '/v1/organizations/spend_limit_increase_requests/{spend_limit_increase_request_id}/deny',
+                attributes: [
+                    'anthropic.organization.spend_limit_increase_request.id' => $spendLimitIncreaseRequestID,
+                ],
+            )),
             convert: BetaSpendLimitIncreaseRequest::class,
         );
     }

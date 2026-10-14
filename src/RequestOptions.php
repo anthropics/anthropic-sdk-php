@@ -7,6 +7,8 @@ namespace Anthropic;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Implementation\ApiCallInfo;
+use Anthropic\Core\Tracing;
 use Anthropic\Lib\Middleware\BetaFallbackState;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -32,6 +34,7 @@ use Psr\Http\Message\UriFactoryInterface;
  *   uriFactory?: UriFactoryInterface|null,
  *   streamFactory?: StreamFactoryInterface|null,
  *   requestFactory?: RequestFactoryInterface|null,
+ *   openTelemetry?: array{conversationId?: string|null}|null,
  * }
  * @phpstan-type RequestOpts = null|RequestOptions|RequestOptionShape
  */
@@ -109,6 +112,23 @@ final class RequestOptions implements BaseModel
     #[Optional]
     public ?RequestFactoryInterface $requestFactory;
 
+    /**
+     * OpenTelemetry settings for this request's span. The SDK does not send them to the API. `conversationId`
+     * becomes the span's `gen_ai.conversation.id`. It is the only key: any other, or a value that is no string, is
+     * refused with an `InvalidArgumentException`. A request's settings replace those in the request options of its
+     * client whole, as every request option does: only a request that leaves the option out keeps the client's.
+     *
+     * @var array{conversationId?: string|null}|null $openTelemetry
+     */
+    #[Optional]
+    public ?array $openTelemetry;
+
+    /**
+     * What the SDK method that makes the request knows of its API call, for the call's span. Only the SDK sets it, with
+     * {@see self::withApiCall()}: it is no request option, so an array of request options has no key for it.
+     */
+    private ?ApiCallInfo $apiCall = null;
+
     public function __construct()
     {
         $this->initialize();
@@ -122,13 +142,22 @@ final class RequestOptions implements BaseModel
         $parsed = array_map(static fn ($o) => $o instanceof self ? $o->toProperties() : $o ?? [], array: $options);
 
         // @phpstan-ignore-next-line argument.type
-        return self::with(...array_merge(...$parsed));
+        $self = self::with(...array_merge(...$parsed));
+        // The last options that name the API call win, as with every request option.
+        foreach ($options as $o) {
+            if ($o instanceof self && !is_null($o->apiCall)) {
+                $self->apiCall = $o->apiCall;
+            }
+        }
+
+        return $self;
     }
 
     /**
      * @param array<string,string|int|list<string|int>|null>|null $extraHeaders
      * @param array<string,mixed>|null $extraQueryParams
      * @param list<MiddlewareItem>|null $middleware
+     * @param array{conversationId?: string|null}|null $openTelemetry
      */
     public static function with(
         ?float $timeout = null,
@@ -145,7 +174,9 @@ final class RequestOptions implements BaseModel
         ?UriFactoryInterface $uriFactory = null,
         ?StreamFactoryInterface $streamFactory = null,
         ?RequestFactoryInterface $requestFactory = null,
+        ?array $openTelemetry = null,
     ): self {
+        Tracing::validateRequestOption($openTelemetry);
         $self = new self;
 
         null !== $timeout && $self->timeout = $timeout;
@@ -164,6 +195,7 @@ final class RequestOptions implements BaseModel
         null !== $uriFactory && $self->uriFactory = $uriFactory;
         null !== $streamFactory && $self->streamFactory = $streamFactory;
         null !== $requestFactory && $self->requestFactory = $requestFactory;
+        null !== $openTelemetry && $self->openTelemetry = $openTelemetry;
 
         return $self;
     }
@@ -271,5 +303,41 @@ final class RequestOptions implements BaseModel
         $self->requestFactory = $requestFactory;
 
         return $self;
+    }
+
+    /**
+     * @param array{conversationId?: string|null} $openTelemetry
+     */
+    public function withOpenTelemetry(array $openTelemetry): self
+    {
+        Tracing::validateRequestOption($openTelemetry);
+        $self = clone $this;
+        $self->openTelemetry = $openTelemetry;
+
+        return $self;
+    }
+
+    /**
+     * @internal
+     *
+     * These options for a request of the API call `$apiCall`, which the SDK method that makes the request describes
+     * for the call's span
+     */
+    public function withApiCall(?ApiCallInfo $apiCall): self
+    {
+        $self = clone $this;
+        $self->apiCall = $apiCall;
+
+        return $self;
+    }
+
+    /**
+     * @internal
+     *
+     * What the SDK method that makes the request set with {@see self::withApiCall()}
+     */
+    public function apiCall(): ?ApiCallInfo
+    {
+        return $this->apiCall;
     }
 }

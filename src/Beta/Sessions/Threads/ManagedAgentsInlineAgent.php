@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Threads;
 
+use Anthropic\Beta\Agents\BetaManagedAgentsAWSRoleExecutionIdentity;
+use Anthropic\Beta\Agents\BetaManagedAgentsExecutionIdentity;
 use Anthropic\Beta\Agents\BetaManagedAgentsMCPServerURLDefinition;
 use Anthropic\Beta\Agents\BetaManagedAgentsModelConfig;
+use Anthropic\Beta\Agents\BetaManagedAgentsServiceAccountExecutionIdentity;
 use Anthropic\Beta\Sessions\Threads\ManagedAgentsInlineAgent\Skill;
 use Anthropic\Beta\Sessions\Threads\ManagedAgentsInlineAgent\Tool;
 use Anthropic\Core\Attributes\Required;
@@ -16,15 +19,18 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * An agent that has no Agent resource, and so no `id` or `version`. It is defined inline, in a workflow run's plan or when a session thread is spawned, and is not saved.
  *
+ * @phpstan-import-type BetaManagedAgentsExecutionIdentityShape from \Anthropic\Beta\Agents\BetaManagedAgentsExecutionIdentity
  * @phpstan-import-type BetaManagedAgentsMCPServerURLDefinitionShape from \Anthropic\Beta\Agents\BetaManagedAgentsMCPServerURLDefinition
  * @phpstan-import-type BetaManagedAgentsModelConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfig
  * @phpstan-import-type SkillShape from \Anthropic\Beta\Sessions\Threads\ManagedAgentsInlineAgent\Skill
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Sessions\Threads\ManagedAgentsInlineAgent\Tool
+ * @phpstan-import-type BetaManagedAgentsExecutionIdentityVariants from \Anthropic\Beta\Agents\BetaManagedAgentsExecutionIdentity
  * @phpstan-import-type SkillVariants from \Anthropic\Beta\Sessions\Threads\ManagedAgentsInlineAgent\Skill
  * @phpstan-import-type ToolVariants from \Anthropic\Beta\Sessions\Threads\ManagedAgentsInlineAgent\Tool
  *
  * @phpstan-type ManagedAgentsInlineAgentShape = array{
  *   description: string|null,
+ *   executionIdentity: BetaManagedAgentsExecutionIdentityShape,
  *   mcpServers: list<BetaManagedAgentsMCPServerURLDefinition|BetaManagedAgentsMCPServerURLDefinitionShape>,
  *   model: BetaManagedAgentsModelConfig|BetaManagedAgentsModelConfigShape,
  *   name: string,
@@ -45,6 +51,17 @@ final class ManagedAgentsInlineAgent implements BaseModel
 
     #[Required]
     public ?string $description;
+
+    /**
+     * The session's execution principal.
+     *
+     * @var BetaManagedAgentsExecutionIdentityVariants $executionIdentity
+     */
+    #[Required(
+        'execution_identity',
+        union: BetaManagedAgentsExecutionIdentity::class
+    )]
+    public BetaManagedAgentsAWSRoleExecutionIdentity|BetaManagedAgentsServiceAccountExecutionIdentity $executionIdentity;
 
     /** @var list<BetaManagedAgentsMCPServerURLDefinition> $mcpServers */
     #[Required(
@@ -83,6 +100,7 @@ final class ManagedAgentsInlineAgent implements BaseModel
      * ```
      * ManagedAgentsInlineAgent::with(
      *   description: ...,
+     *   executionIdentity: ...,
      *   mcpServers: ...,
      *   model: ...,
      *   name: ...,
@@ -97,6 +115,7 @@ final class ManagedAgentsInlineAgent implements BaseModel
      * ```
      * (new ManagedAgentsInlineAgent())
      *   ->withDescription(...)
+     *   ->withExecutionIdentity(...)
      *   ->withMCPServers(...)
      *   ->withModel(...)
      *   ->withName(...)
@@ -115,6 +134,7 @@ final class ManagedAgentsInlineAgent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param BetaManagedAgentsExecutionIdentityShape $executionIdentity
      * @param list<BetaManagedAgentsMCPServerURLDefinition|BetaManagedAgentsMCPServerURLDefinitionShape> $mcpServers
      * @param BetaManagedAgentsModelConfig|BetaManagedAgentsModelConfigShape $model
      * @param list<SkillShape> $skills
@@ -122,6 +142,7 @@ final class ManagedAgentsInlineAgent implements BaseModel
      */
     public static function with(
         ?string $description,
+        BetaManagedAgentsAWSRoleExecutionIdentity|array|BetaManagedAgentsServiceAccountExecutionIdentity $executionIdentity,
         array $mcpServers,
         BetaManagedAgentsModelConfig|array $model,
         string $name,
@@ -132,6 +153,7 @@ final class ManagedAgentsInlineAgent implements BaseModel
         $self = new self;
 
         $self['description'] = $description;
+        $self['executionIdentity'] = $executionIdentity;
         $self['mcpServers'] = $mcpServers;
         $self['model'] = $model;
         $self['name'] = $name;
@@ -146,6 +168,20 @@ final class ManagedAgentsInlineAgent implements BaseModel
     {
         $self = clone $this;
         $self['description'] = $description;
+
+        return $self;
+    }
+
+    /**
+     * The session's execution principal.
+     *
+     * @param BetaManagedAgentsExecutionIdentityShape $executionIdentity
+     */
+    public function withExecutionIdentity(
+        BetaManagedAgentsAWSRoleExecutionIdentity|array|BetaManagedAgentsServiceAccountExecutionIdentity $executionIdentity,
+    ): self {
+        $self = clone $this;
+        $self['executionIdentity'] = $executionIdentity;
 
         return $self;
     }

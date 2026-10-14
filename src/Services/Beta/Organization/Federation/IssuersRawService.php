@@ -14,6 +14,7 @@ use Anthropic\Beta\Organization\Federation\Issuers\IssuerUpdateParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -85,7 +86,11 @@ final class IssuersRawService implements IssuersRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.issuers.create',
+                route: '/v1/organizations/federation_issuers',
+                createdId: 'anthropic.organization.federation_issuer.id',
+            )),
             convert: BetaFederationIssuer::class,
         );
     }
@@ -128,7 +133,13 @@ final class IssuersRawService implements IssuersRawContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.issuers.retrieve',
+                route: '/v1/organizations/federation_issuers/{federation_issuer_id}',
+                attributes: [
+                    'anthropic.organization.federation_issuer.id' => $federationIssuerID,
+                ],
+            )),
             convert: BetaFederationIssuer::class,
         );
     }
@@ -189,7 +200,13 @@ final class IssuersRawService implements IssuersRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.issuers.update',
+                route: '/v1/organizations/federation_issuers/{federation_issuer_id}',
+                attributes: [
+                    'anthropic.organization.federation_issuer.id' => $federationIssuerID,
+                ],
+            )),
             convert: BetaFederationIssuer::class,
         );
     }
@@ -240,7 +257,11 @@ final class IssuersRawService implements IssuersRawContract
                 $header_params,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.issuers.list',
+                route: '/v1/organizations/federation_issuers',
+                query: ['include_archived', 'limit', 'page'],
+            )),
             convert: BetaFederationIssuer::class,
             page: PageCursor::class,
         );
@@ -289,7 +310,13 @@ final class IssuersRawService implements IssuersRawContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.issuers.archive',
+                route: '/v1/organizations/federation_issuers/{federation_issuer_id}/archive',
+                attributes: [
+                    'anthropic.organization.federation_issuer.id' => $federationIssuerID,
+                ],
+            )),
             convert: BetaFederationIssuer::class,
         );
     }
